@@ -1,97 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/8] git-gc --auto: add documentation.
-Date: Mon, 17 Sep 2007 01:27:10 -0700
-Message-ID: <11900176353572-git-send-email-gitster@pobox.com>
-References: <1190017633436-git-send-email-gitster@pobox.com>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 17 11:43:33 2007
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] It doesn't make sense to sink below an unapplied patch
+Date: Mon, 17 Sep 2007 11:49:28 +0200
+Message-ID: <20070917094928.GC8657@diana.vm.bytemark.co.uk>
+References: <20070914002031.GC23330@diana.vm.bytemark.co.uk> <20070914005231.17533.17120.stgit@yoghurt> <9e4733910709131822s3c519a3bj7e42c0ecaa89fb6e@mail.gmail.com> <20070914060456.GA27014@diana.vm.bytemark.co.uk> <9e4733910709140715g3cc3e47fu2eb24eed6d4e2c08@mail.gmail.com> <20070914150609.GA319@diana.vm.bytemark.co.uk> <9e4733910709140918wbe94b5eu6ec326b25b0f3d42@mail.gmail.com> <20070915232252.GA25507@diana.vm.bytemark.co.uk> <87veaab93v.fsf@morpheus.local>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Mon Sep 17 11:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXD8b-0006vM-G3
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 11:43:29 +0200
+	id 1IXDEc-00008f-8R
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 11:49:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003AbXIQJnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 05:43:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753927AbXIQJnP
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 05:43:15 -0400
-Received: from fed1rmmtao105.cox.net ([68.230.241.41]:42683 "EHLO
-	fed1rmmtao105.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753905AbXIQJnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 05:43:12 -0400
-X-Greylist: delayed 4537 seconds by postgrey-1.27 at vger.kernel.org; Mon, 17 Sep 2007 05:42:51 EDT
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070917082715.EPYQ11237.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Mon, 17 Sep 2007 04:27:15 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id pLTF1X00E1gtr5g0000000; Mon, 17 Sep 2007 04:27:15 -0400
-X-Mailer: git-send-email 1.5.3.1.967.g6bb01
-In-Reply-To: <1190017633436-git-send-email-gitster@pobox.com>
+	id S1752622AbXIQJtf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Sep 2007 05:49:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752626AbXIQJtf
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 05:49:35 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2192 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752424AbXIQJte (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 05:49:34 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IXDEO-0002fv-00; Mon, 17 Sep 2007 10:49:28 +0100
+Content-Disposition: inline
+In-Reply-To: <87veaab93v.fsf@morpheus.local>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58421>
 
-This documents the auto-packing of loose objects performed by
-git-gc --auto.
+On 2007-09-16 23:20:36 +0200, David K=E5gedal wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config.txt |    7 +++++++
- Documentation/git-gc.txt |   11 ++++++++++-
- 2 files changed, 17 insertions(+), 1 deletions(-)
+> Karl Hasselstr=F6m <kha@treskal.com> writes:
+>
+> > Another idea that's been kicked around is to have a general
+> > reorder command, that spawns an editor and lets you move around
+> > (and delete) patch names until you're satisfied. (This too would
+> > be implemented in terms of push and pop of single patches.)
+>
+> This of course sounds very much like "git rebase -i", but the
+> semantics would maybe not be identical.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 866e053..3643c0b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -439,6 +439,13 @@ gc.aggressiveWindow::
- 	algorithm used by 'git gc --aggressive'.  This defaults
- 	to 10.
- 
-+gc.auto::
-+	When there are approximately more than this many loose
-+	objects in the repository, `git gc --auto` that is
-+	invoked by some Porcelain commands will create a new
-+	pack and prune them.  Setting this to 0 disables the
-+	auto garbage collection.
-+
- gc.packrefs::
- 	`git gc` does not run `git pack-refs` in a bare repository by
- 	default so that older dumb-transport clients can still fetch
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index c7742ca..40c1ce4 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -8,7 +8,7 @@ git-gc - Cleanup unnecessary files and optimize the local repository
- 
- SYNOPSIS
- --------
--'git-gc' [--prune] [--aggressive]
-+'git-gc' [--prune] [--aggressive] [--auto]
- 
- DESCRIPTION
- -----------
-@@ -43,6 +43,15 @@ OPTIONS
- 	persistent, so this option only needs to be used occasionally; every
- 	few hundred changesets or so.
- 
-+--auto::
-+	With this option, `git gc` checks if there are too many
-+	loose objects in the repository and runs
-+	gitlink:git-repack[1] with `-d -l` option to pack them.
-+	The threshold is set with `gc.auto` configuration
-+	variable, and can be disabled by setting it to 0.  Some
-+	Porcelain commands use this after they perform operation
-+	that could create many loose objects automatically.
-+
- Configuration
- -------------
- 
--- 
-1.5.3.1.967.g6bb01
+=46or one, the StGit version would have to update StGit's metadata. :-)
+
+> One feature from rebase I'd like to see if this was implemented is
+> the "squash" option to join two patches. But it would probably be
+> called "fold" to keep with stgit terminology.
+
+I actually started to write such a command this weekend, but I didn't
+have time to finish it. I did however come to the conclusion that I'd
+want to refactor the relationship between patches and commits first.
+(Which was why I was so pleasantly surprised that you spent part of
+the weekend doing precisely that!)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
