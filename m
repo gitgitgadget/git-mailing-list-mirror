@@ -1,60 +1,86 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: testsuite problems
-Date: Mon, 17 Sep 2007 23:17:42 +0200
-Message-ID: <20070917211742.GF19019@genesis.frugalware.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: testsuite problems
+Date: Mon, 17 Sep 2007 23:41:03 +0200
+Message-ID: <20070917214103.GA13298@artemis.corp>
+References: <20070917211742.GF19019@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="vA66WO2vHvL/CRSR"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 17 23:20:06 2007
+Content-Type: multipart/signed; boundary="/9DWx/yDrRhgMJTb";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Sep 17 23:43:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXO0T-0003rO-Qc
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 23:19:50 +0200
+	id 1IXOMj-0004FC-By
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 23:42:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760982AbXIQVRy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 17:17:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760974AbXIQVRy
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 17:17:54 -0400
-Received: from mx2.mail.elte.hu ([157.181.151.9]:36693 "EHLO mx2.mail.elte.hu"
+	id S1758740AbXIQVlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 17:41:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758689AbXIQVlL
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 17:41:11 -0400
+Received: from pan.madism.org ([88.191.52.104]:60652 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932669AbXIQVRw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 17:17:52 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx2.mail.elte.hu with esmtp (Exim)
-	id 1IXNyW-0002L3-Uh
-	from <vmiklos@frugalware.org>
-	for <git@vger.kernel.org>; Mon, 17 Sep 2007 23:17:51 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id CCCE71678012; Mon, 17 Sep 2007 23:17:43 +0200 (CEST)
+	id S1758563AbXIQVlK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 17:41:10 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 060001F7CA;
+	Mon, 17 Sep 2007 23:41:04 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 104E1344C33; Mon, 17 Sep 2007 23:41:04 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.5000]
+In-Reply-To: <20070917211742.GF19019@genesis.frugalware.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58483>
 
 
---vA66WO2vHvL/CRSR
-Content-Type: text/plain; charset=us-ascii
+--/9DWx/yDrRhgMJTb
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-hello,
+On Mon, Sep 17, 2007 at 09:17:42PM +0000, Miklos Vajna wrote:
+> hello,
+>=20
+> i was running 'make test' on v1.5.3.1-109-gacd6917 and i hit the
+> following issue:
+>=20
+[...]
+> * FAIL 21: validate file contents
+>         diff -r a d/a
+> *   ok 22: git archive --format=3Dzip with prefix
+> *   ok 23: extract ZIP archive with prefix
+> *   ok 24: validate filenames with prefix
+> * FAIL 25: validate file contents with prefix
+>         diff -r a e/prefix/a
+> *   ok 26: git archive --list outside of a git repo
+> * failed 2 among 26 test(s)
+> make[1]: *** [t5000-tar-tree.sh] Error 1
+> make[1]: Leaving directory `/home/vmiklos/git/git/t'
+> make: *** [test] Error 2
 
-i was running 'make test' on v1.5.3.1-109-gacd6917 and i hit the
-following issue:
+  Well, it works for me:
 
+$ git describe && git st
+v1.5.3.1-109-gacd6917
+# Not currently on any branch.
+nothing to commit (working directory clean)
+
+$ cd t && ./t5000-tar-tree.sh
+*   ok 1: populate workdir
+*   ok 2: add files to repository
+*   ok 3: git archive
+*   ok 4: git tar-tree
+*   ok 5: git archive vs. git tar-tree
 *   ok 6: validate file modification time
 *   ok 7: git get-tar-commit-id
 *   ok 8: extract tar archive
@@ -67,44 +93,33 @@ following issue:
 *   ok 15: create an archive with a substfile
 *   ok 16: extract substfile
 *   ok 17: validate substfile contents
-*   ok 18: git archive --format=zip
+*   ok 18: git archive --format=3Dzip
 *   ok 19: extract ZIP archive
 *   ok 20: validate filenames
-* FAIL 21: validate file contents
-        diff -r a d/a
-*   ok 22: git archive --format=zip with prefix
+*   ok 21: validate file contents
+*   ok 22: git archive --format=3Dzip with prefix
 *   ok 23: extract ZIP archive with prefix
 *   ok 24: validate filenames with prefix
-* FAIL 25: validate file contents with prefix
-        diff -r a e/prefix/a
+*   ok 25: validate file contents with prefix
 *   ok 26: git archive --list outside of a git repo
-* failed 2 among 26 test(s)
-make[1]: *** [t5000-tar-tree.sh] Error 1
-make[1]: Leaving directory `/home/vmiklos/git/git/t'
-make: *** [test] Error 2
+* passed all 26 test(s)
 
-$ tar --version
-tar (GNU tar) 1.18
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-$ diff --version
-diff (GNU diffutils) 2.8.1
-
-maybe these versions are too new or old? if i missed any needed info,
-please let me know.
-
-thanks,
-- VMiklos
-
---vA66WO2vHvL/CRSR
+--/9DWx/yDrRhgMJTb
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFG7u72e81tAgORUJYRAnQqAJ9YwfUs2Ko9/c5M6dMCA7JkcamRJwCfTIg+
-6K0ypVmJRJVN4qxuhojrC/c=
-=U4Cc
+iD8DBQBG7vRvvGr7W6HudhwRAusnAJsGIvGZDC9TFaoFl8/Q8dmspS4GUACfR4su
+nqVFifgkGI1Dmq8xW5SqUUM=
+=BIPv
 -----END PGP SIGNATURE-----
 
---vA66WO2vHvL/CRSR--
+--/9DWx/yDrRhgMJTb--
