@@ -1,68 +1,53 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH 00/13] Eliminate 'top' and 'bottom' files
-Date: Mon, 17 Sep 2007 10:17:02 +0200
-Message-ID: <20070917081702.GB8657@diana.vm.bytemark.co.uk>
-References: <20070914222819.7001.55921.stgit@morpheus.local> <20070915234244.GD25507@diana.vm.bytemark.co.uk> <b0943d9e0709160028h41a67474g6b379a45c4c88432@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 10:17:34 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/8] Updated git-gc --auto series.
+Date: Mon, 17 Sep 2007 01:43:25 -0700
+Message-ID: <11900186052005-git-send-email-gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 17 10:45:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXBnR-00009N-Nr
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 10:17:34 +0200
+	id 1IXCEL-00089U-K3
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 10:45:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752642AbXIQIRK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Sep 2007 04:17:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXIQIRI
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 04:17:08 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2505 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752381AbXIQIRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 04:17:07 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IXBmw-0002Ni-00; Mon, 17 Sep 2007 09:17:02 +0100
-Content-Disposition: inline
-In-Reply-To: <b0943d9e0709160028h41a67474g6b379a45c4c88432@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756706AbXIQIna (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 04:43:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756056AbXIQIn3
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 04:43:29 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55294 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756225AbXIQIn2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 04:43:28 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E349413686D
+	for <git@vger.kernel.org>; Mon, 17 Sep 2007 04:43:48 -0400 (EDT)
+X-Mailer: git-send-email 1.5.3.1.967.g6bb01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58395>
 
-On 2007-09-16 08:28:53 +0100, Catalin Marinas wrote:
+An updated series of "git-gc --auto", on top of 'next',
+consisting of 8 patches, will follow this message.
 
-> We should get rid of top.old and bottom.old as well.
+Differences from the previous round are:
 
-Yeah, I guess that data could be computed from the patch log?
+ - Earlier if you have too many unreachable loose objects,
+   automated gc would have tried to "repack -d -l" which would
+   not improve the situation at all every time it was run.  It
+   now at least warns upon such a situation;
 
-> My question - does this conflict with the DAG patches in any way? I
-> intend to include the them at some point, once I get a chance to
-> test the performance penalty with a big tree like the Linux kernel.
+ - pack-objects learned --keep-unreachable option which helps
+   "repack -a -d" not to lose packed but unreachable objects
+   while repacking existing packs into a new pack;
 
-I haven't been able to get rid of all the expensive DAG walking, so
-I've been considering a different approach: continue using the current
-applied and unapplied files if the existing HEAD =3D=3D top patch check
-passes, and letting the assimilate command do a full DAG walk to
-regenerate those files. (And by "full DAG walk", I mean walking from
-HEAD down to the first commit with parents !=3D 1; the patches we see
-are applied (in the order we see them), and the rest are unapplied.)
+ - repack learned -A option which is similar to -a but gives
+   --keep-unreachable to underlying pack-objects;
 
-> Is there any patch which consists of more than one commit? Maybe
-> only uncommit could generate one but I think we put some tests in
-> place.
+ - "git-gc --auto" runs "git-repack -A -d -l" when there are too
+   many packs in the repository;
 
-Uncommit does not generate such patches, unless I've made a thinko; I
-don't approve of them. But I always assumed they could exist, since
-the code (at least in places) seems careful to not assume anything
-about the number of commits between top and bottom.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+ - These changes are documented ;-)
