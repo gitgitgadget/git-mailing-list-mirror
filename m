@@ -1,81 +1,90 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Mon, 17 Sep 2007 12:07:55 -0400
-Message-ID: <20070917160755.GA11287@pe.Belkin>
-References: <11900314321506-git-send-email-hjemli@gmail.com> <46EE7584.8010202@op5.se> <8c5c35580709170616i49a8836hb60423c5eebf601d@mail.gmail.com> <Pine.LNX.4.64.0709171422340.28586@racer.site> <8c5c35580709170638mc0c8279pa86d71bd79fd3084@mail.gmail.com> <Pine.LNX.4.64.0709171454031.28586@racer.site> <8c5c35580709170712v2f5df7b1w8fa0377b69f24988@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: xmemdup patches
+Date: Mon, 17 Sep 2007 18:11:13 +0200
+Message-ID: <20070917161113.GB460@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Wong <normalperson@yhbt.net>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 17 18:08:04 2007
+Content-Type: multipart/signed; boundary="ZfOjI3PrQbgiZnxM";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 17 18:11:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXJ8k-0003gR-2S
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 18:08:02 +0200
+	id 1IXJBv-0004rt-Nf
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 18:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754480AbXIQQH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 12:07:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754276AbXIQQH5
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 12:07:57 -0400
-Received: from eastrmmtao107.cox.net ([68.230.240.59]:65383 "EHLO
-	eastrmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752833AbXIQQH4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 12:07:56 -0400
-Received: from eastrmimpo01.cox.net ([68.1.16.119])
-          by eastrmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070917160756.CACD25010.eastrmmtao107.cox.net@eastrmimpo01.cox.net>;
-          Mon, 17 Sep 2007 12:07:56 -0400
-Received: from localhost ([68.0.253.29])
-	by eastrmimpo01.cox.net with bizsmtp
-	id pU7v1X00N0epFYL0000000; Mon, 17 Sep 2007 12:07:56 -0400
-Received: from chris by localhost with local (Exim 4.66)
-	(envelope-from <c.shoemaker@cox.net>)
-	id 1IXJ8d-0003Du-Rk; Mon, 17 Sep 2007 12:07:55 -0400
+	id S1751970AbXIQQLP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 12:11:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751969AbXIQQLP
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 12:11:15 -0400
+Received: from pan.madism.org ([88.191.52.104]:48338 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751220AbXIQQLP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 12:11:15 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id BCBC26AB
+	for <git@vger.kernel.org>; Mon, 17 Sep 2007 18:11:13 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 0FD72344A49; Mon, 17 Sep 2007 18:11:13 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <8c5c35580709170712v2f5df7b1w8fa0377b69f24988@mail.gmail.com>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58455>
 
-On Mon, Sep 17, 2007 at 04:12:56PM +0200, Lars Hjemli wrote:
-> On 9/17/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > But then, I do not use svn branches here, and that might be the problem?
-> 
-> Probably. The case I'm trying to solve is:
->   -git-svn branch A is merged into git-svn branch B
->   -A is a fast-forward of B
 
-Ah, now I see what you mean.  But, IIUC, if you want to dcommit your
-merge, you should treat it the way svn treats it, with git-merge
---squash.  Then, dcommit won't be confused about the branch you're
-committing to.
+--ZfOjI3PrQbgiZnxM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--chris
+  I noticed a lot of places in git's code use code like:
 
-> 
-> This might look unrealistic, but it happened to me today when I wanted
-> to merge a feature-branch into a relase-branch. The release-branch had
-> previously been merged into the feature-branch (to get a few
-> bugfixes), but the release-branch had not changed since this merge. So
-> when merging the feature-branch into the release-branch it just
-> fast-forwarded, leaving me with an 'un-dcomittable' release-branch. I
-> obviously could have done the merge in subversion (haha!), but doing
-> it in git preserves the correct history.
-> 
-> Btw: I have redone the merge with --no-ff, and dcommit then worked
-> like a charm ;-)
-> 
-> -- 
-> larsh
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+  char *res;
+
+  ...
+
+  res =3D xmalloc(len + 1);
+  memcpy(res, src, len);
+  res[len] =3D '\0';
+  return res;
+
+  I've added a "xmemdup" function that duplicates a portion of memory,
+also adding an extra NUL after the end of the buffer. There was a
+xstrndup already, doing almost the same, except that it worked like
+strndup, meaning that it duplicates the memory areay up to len or the
+first embeded NUL. The extra scan costs, and is often not necessary (as
+we want to extract a token from a buffer we just validated e.g.).
+
+  There were 41 of those places.
+
+
+  I'm not a huge fan of "xmemdup" as I would not have supposed that a
+function called like that would add the extra NUL, so I'm 100% okay with
+someone coming up with any better name.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--ZfOjI3PrQbgiZnxM
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG7qchvGr7W6HudhwRAkcoAJ9/D9QcatcPVOUb1c/FpXjcqWOoTACePhrC
+2eibtKhKBvAag4+IKvToNLU=
+=TbQw
+-----END PGP SIGNATURE-----
+
+--ZfOjI3PrQbgiZnxM--
