@@ -1,76 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: commit summary, --pretty=short and other tools
-Date: Mon, 17 Sep 2007 07:42:37 -0400
-Message-ID: <20070917114237.GA14707@coredump.intra.peff.net>
-References: <20070917112136.GA30201@glandium.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] instaweb: support for Ruby's WEBrick server
+Date: Mon, 17 Sep 2007 04:55:18 -0700
+Message-ID: <20070917115518.GA26815@soma>
+References: <618c07250709161935g333f0536q31b453bd58f2d75d@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Mon Sep 17 13:42:48 2007
+To: Mike Dalessio <mike@csa.net>
+X-From: git-owner@vger.kernel.org Mon Sep 17 13:55:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXF00-0005Zu-Qs
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 13:42:45 +0200
+	id 1IXFCH-0001mw-3q
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 13:55:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752368AbXIQLmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 07:42:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752794AbXIQLmk
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 07:42:40 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3488 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752368AbXIQLmk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 07:42:40 -0400
-Received: (qmail 13461 invoked by uid 111); 17 Sep 2007 11:42:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 17 Sep 2007 07:42:38 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Sep 2007 07:42:37 -0400
+	id S1753534AbXIQLzV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 07:55:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752928AbXIQLzV
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 07:55:21 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:49829 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752843AbXIQLzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 07:55:20 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 4B51F7DC029;
+	Mon, 17 Sep 2007 04:55:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20070917112136.GA30201@glandium.org>
+In-Reply-To: <618c07250709161935g333f0536q31b453bd58f2d75d@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58427>
 
-On Mon, Sep 17, 2007 at 01:21:36PM +0200, Mike Hommey wrote:
-
-> ... and I happen to not have done the "followed by a blank line" part.
-
-If this isn't a published repo, you can fix it with filter-branch:
-
-git filter-branch --msg-filter 'sed "1a
-"'
-
-> Now, git log --pretty=oneline (for instance), shows me the full commit
-> message on one line, which is not really what I would expect...
+Mike Dalessio <mike@csa.net> wrote:
+> running the webrick server with git requires Ruby and Ruby's YAML and
+> Webrick libraries (both of which come standard with Ruby). nice for
+> single-user standalone invocations.
 > 
-> On the other hand, and that's how I got trapped into this, gitweb and
-> gitk only display the first line, be it followed by a blank line or not.
+> the --httpd=webrick option generates a (short!) ruby script on the fly to
+> read httpd.conf options and invoke the web server via library call. this
+> script is placed in the .git/gitweb directory.
 
-This was changed recently for git-log and company, but gitk and gitweb
-have not followed suit.  Traditionally, the behavior was to take the
-first line. This was changed in 4234a761 to take the first paragraph.
-The rationale was that people without the nice one-line summaries are
-typically importing old histories, and the paragraph makes a much more
-sensible summary (as opposed to cutting off the summary in
-mid-sentence).
+Nice.  I'm in favor of adding WEBrick since it's fairly commonly
+installed on developer boxes and is more consistently available
+if available at all.  Apache and lighttpd may not be compiled
+with some modules we need.
 
-> So, IMHO, there would be 2 solutions:
-> - either change --pretty=oneline,short and other similar things to take
->   only the first line and change the git-commit manpage (and whenever
->   else this might be written)
-> - or change gitweb, gitk and any other tool that would only take the
->   first line so that it takes the same summary as --pretty=oneline.
+I'm having trouble applying this patch, however.  It's
+whitespace-mangled and using long lines doesn't help mailers much.
+
+> Signed-off-by: Mike Dalessio <mike.dalessio@gmail.com>
+> ---
+>  Documentation/git-instaweb.txt |    3 ++-
+>  git-instaweb.sh                |   29 ++++++++++++++++++++++++++++-
+>  2 files changed, 30 insertions(+), 2 deletions(-)
 > 
-> What do you think ?
+> +webrick_conf () {
+> +    # generate a standalone server script in $fqgitdir/gitweb.
+> +        cat > "$fqgitdir/gitweb/$httpd" <<EOF
+> +#! /usr/bin/ruby
 
-It depends on whether people like the new behavior. I think it is more
-sensible in every case _except_ the one you have mentioned, but your
-case is hopefully somewhat rare (though it just made it to the public in
-1.5.3, so yours might be the first of many comments).
+Could we make the shebang dynamic? (capturing the output of `which ruby`
+maybe, or just breaking down and using /usr/bin/env ruby).  The ruby
+binary seems to appear all over the place on the filesystem from my
+experience, especially with its popularity amongst OSX users.
 
-I do agree that it makes sense for all of the tools to be consistent.
-
--Peff
+-- 
+Eric Wong
