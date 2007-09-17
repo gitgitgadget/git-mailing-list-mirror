@@ -1,64 +1,87 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: List of bugs and suggestions
-Date: Tue, 18 Sep 2007 00:26:20 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709180023060.28586@racer.site>
-References: <20070917225441.GA32647@nan92-1-81-57-214-146.fbx.proxad.net>
+Subject: Re: [PATCH 4/9] Introduce entry point for launching add--interactive.
+Date: Tue, 18 Sep 2007 00:27:54 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709180027100.28586@racer.site>
+References: <11890382183913-git-send-email-krh@redhat.com> 
+ <11890382242333-git-send-email-krh@redhat.com>  <11890382243290-git-send-email-krh@redhat.com>
+  <11890382253220-git-send-email-krh@redhat.com>  <Pine.LNX.4.64.0709061729270.28586@racer.site>
+ <1190070792.10112.15.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: GIT list <git@vger.kernel.org>
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 01:27:15 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-459764579-1190071674=:28586"
+Cc: git@vger.kernel.org
+To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 01:28:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXPzm-0001MP-Pi
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 01:27:15 +0200
+	id 1IXQ1G-0001r4-QT
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 01:28:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654AbXIQX1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 19:27:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754454AbXIQX1J
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 19:27:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:45067 "HELO mail.gmx.net"
+	id S1754590AbXIQX2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 19:28:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbXIQX2n
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 19:28:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:32931 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754422AbXIQX1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 19:27:07 -0400
-Received: (qmail invoked by alias); 17 Sep 2007 23:27:06 -0000
+	id S1754454AbXIQX2l (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 19:28:41 -0400
+Received: (qmail invoked by alias); 17 Sep 2007 23:28:40 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp001) with SMTP; 18 Sep 2007 01:27:06 +0200
+  by mail.gmx.net (mp051) with SMTP; 18 Sep 2007 01:28:40 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/s7BoxMeXs2GlVRv+6/ALSjAH+6JYH2YQxFd8bcl
-	AhMh5E0hqg9xM2
+X-Provags-ID: V01U2FsdGVkX18Yvykepy8YB6WWJL++Uz7Lv8x9FgGHKxZUVMeBn7
+	l22h4VSkJRzQnx
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070917225441.GA32647@nan92-1-81-57-214-146.fbx.proxad.net>
+In-Reply-To: <1190070792.10112.15.camel@hinata.boston.redhat.com>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58498>
+
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323584-459764579-1190071674=:28586
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
 Hi,
 
-On Tue, 18 Sep 2007, Yann Dirson wrote:
+On Mon, 17 Sep 2007, Kristian H?gsberg wrote:
 
-> 	stash:
+> On Thu, 2007-09-06 at 17:31 +0100, Johannes Schindelin wrote:
+> > 
+> > On Wed, 5 Sep 2007, Kristian Høgsberg wrote:
+> > 
+> > > diff --git a/builtin-add.c b/builtin-add.c
+> > > index 3dd4ded..e79e8f7 100644
+> > > --- a/builtin-add.c
+> > > +++ b/builtin-add.c
+> > > @@ -153,6 +154,13 @@ static int git_add_config(const char *var, const char *value)
+> > >  	return git_default_config(var, value);
+> > >  }
+> > >  
+> > > +int interactive_add(void)
+> > > +{
+> > > +	const char *argv[2] = { "add--interactive", NULL };
+> > > +
+> > > +	return run_command_v_opt(argv, RUN_GIT_CMD);
+> > > +}
+> > 
+> > I'd rather have this in builtin-commit.c, since it is quite funny if 
+> > builtin-add.c has code to fork() and exec() itself (eventually, that 
+> > is) ;-)
 > 
-> - "git stash show junk" acts like "git stash show"
-> 
-> - changes stashed in the index are unstashed only in workdir.  If that's 
-> intended, a note in the "stash apply" doc would be useful; but then I am 
-> left puzzled as to the usefulness of storing the index state in the 
-> stash branch: it could surely be applied by a variant of "stash apply", 
-> but such a command does not seem to exist yet ?
+> Huh... it ends up in the same binary, and interactive_add() sounds like 
+> it should live in builtin-add.c rather than builtin-commit.c.  Either 
+> way, I don't care too much, but can we fix it up later?
 
-It does, but it is not documented: "git stash apply --index".
+Well, you are probably right on the former, and therefore we do not have 
+to do the latter.
 
-> 	misc git:
-> 
-> - git has problems with cascaded alternates that use relative paths.
-
-Known error, Pasky has lamented about that already.  I think we could get 
-away with using make_absolute_path() cleverly.
-
-Ciao,
+Thanks,
 Dscho
+
+--8323584-459764579-1190071674=:28586--
