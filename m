@@ -1,7 +1,7 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 5/8] git-gc --auto: add documentation.
-Date: Mon, 17 Sep 2007 01:44:51 -0700
-Message-ID: <11900187073420-git-send-email-gitster@pobox.com>
+Subject: [PATCH 6/8] git-gc --auto: protect ourselves from accumulated cruft
+Date: Mon, 17 Sep 2007 01:44:52 -0700
+Message-ID: <11900187102681-git-send-email-gitster@pobox.com>
 References: <11900186941912-git-send-email-gitster@pobox.com>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
@@ -10,84 +10,96 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXCER-00089U-HN
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 10:45:27 +0200
+	id 1IXCES-00089U-Nh
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 10:45:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756791AbXIQIpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 04:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756910AbXIQIpO
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 04:45:14 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55320 "EHLO
+	id S1756919AbXIQIpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 04:45:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756762AbXIQIpV
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 04:45:21 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:55324 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755849AbXIQIpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 04:45:11 -0400
+	with ESMTP id S1756909AbXIQIpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 04:45:13 -0400
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A0B601368AD;
-	Mon, 17 Sep 2007 04:45:30 -0400 (EDT)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id CE80F1368AF;
+	Mon, 17 Sep 2007 04:45:33 -0400 (EDT)
 X-Mailer: git-send-email 1.5.3.1.967.g6bb01
 In-Reply-To: <11900186941912-git-send-email-gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58399>
 
-This documents the auto-packing of loose objects performed by
-git-gc --auto.
+Deciding to run "repack -d -l" when there are too many
+loose objects would backfire when there are too many loose
+objects that are unreachable, because repacking that way would
+never improve the situation.  Detect that case by checking the
+number of loose objects again after automatic garbage collection
+runs, and issue an warning to run "prune" manually.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.txt |    7 +++++++
- Documentation/git-gc.txt |   11 ++++++++++-
- 2 files changed, 17 insertions(+), 1 deletions(-)
+ builtin-gc.c |   25 +++++++++++++++++--------
+ 1 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 866e053..3643c0b 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -439,6 +439,13 @@ gc.aggressiveWindow::
- 	algorithm used by 'git gc --aggressive'.  This defaults
- 	to 10.
+diff --git a/builtin-gc.c b/builtin-gc.c
+index f046a2a..bf29f5e 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -64,7 +64,7 @@ static void append_option(const char **cmd, const char *opt, int max_length)
+ 	cmd[i] = NULL;
+ }
  
-+gc.auto::
-+	When there are approximately more than this many loose
-+	objects in the repository, `git gc --auto` that is
-+	invoked by some Porcelain commands will create a new
-+	pack and prune them.  Setting this to 0 disables the
-+	auto garbage collection.
+-static int need_to_gc(void)
++static int too_many_loose_objects(void)
+ {
+ 	/*
+ 	 * Quickly check if a "gc" is needed, by estimating how
+@@ -80,13 +80,6 @@ static int need_to_gc(void)
+ 	int num_loose = 0;
+ 	int needed = 0;
+ 
+-	/*
+-	 * Setting gc.auto to 0 or negative can disable the
+-	 * automatic gc
+-	 */
+-	if (gc_auto_threshold <= 0)
+-		return 0;
+-
+ 	if (sizeof(path) <= snprintf(path, sizeof(path), "%s/17", objdir)) {
+ 		warning("insanely long object directory %.*s", 50, objdir);
+ 		return 0;
+@@ -109,6 +102,18 @@ static int need_to_gc(void)
+ 	return needed;
+ }
+ 
++static int need_to_gc(void)
++{
++	/*
++	 * Setting gc.auto to 0 or negative can disable the
++	 * automatic gc
++	 */
++	if (gc_auto_threshold <= 0)
++		return 0;
 +
- gc.packrefs::
- 	`git gc` does not run `git pack-refs` in a bare repository by
- 	default so that older dumb-transport clients can still fetch
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index c7742ca..40c1ce4 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -8,7 +8,7 @@ git-gc - Cleanup unnecessary files and optimize the local repository
- 
- SYNOPSIS
- --------
--'git-gc' [--prune] [--aggressive]
-+'git-gc' [--prune] [--aggressive] [--auto]
- 
- DESCRIPTION
- -----------
-@@ -43,6 +43,15 @@ OPTIONS
- 	persistent, so this option only needs to be used occasionally; every
- 	few hundred changesets or so.
- 
-+--auto::
-+	With this option, `git gc` checks if there are too many
-+	loose objects in the repository and runs
-+	gitlink:git-repack[1] with `-d -l` option to pack them.
-+	The threshold is set with `gc.auto` configuration
-+	variable, and can be disabled by setting it to 0.  Some
-+	Porcelain commands use this after they perform operation
-+	that could create many loose objects automatically.
++	return too_many_loose_objects();
++}
 +
- Configuration
- -------------
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -170,5 +175,9 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 	if (run_command_v_opt(argv_rerere, RUN_GIT_CMD))
+ 		return error(FAILED_RUN, argv_rerere[0]);
  
++	if (auto_gc && too_many_loose_objects())
++		warning("There are too many unreachable loose objects; "
++			"run 'git prune' to remove them.");
++
+ 	return 0;
+ }
 -- 
 1.5.3.1.967.g6bb01
