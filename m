@@ -1,73 +1,180 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-gui i18n status?
-Date: Sun, 16 Sep 2007 23:20:42 -0400
-Message-ID: <20070917032042.GF3099@spearce.org>
-References: <20070901042924.GE18160@spearce.org> <20070902022444.GK18160@spearce.org> <Pine.LNX.4.64.0709021320230.28586@racer.site> <200709161403.50780.stimming@tuhh.de>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/3] rev-list --bisect: Move finding bisection into
+ do_find_bisection.
+Date: Mon, 17 Sep 2007 05:28:20 +0200
+Message-ID: <20070917052820.e83f31d5.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Mon Sep 17 05:20:53 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Sep 17 05:21:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IX7AK-0001m8-FH
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 05:20:52 +0200
+	id 1IX7Ai-0001sR-Uo
+	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 05:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751443AbXIQDUs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 16 Sep 2007 23:20:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751103AbXIQDUs
-	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 23:20:48 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:49225 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750794AbXIQDUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Sep 2007 23:20:48 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IX79z-0007UH-D8; Sun, 16 Sep 2007 23:20:31 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 36CFF20FBAE; Sun, 16 Sep 2007 23:20:42 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200709161403.50780.stimming@tuhh.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751641AbXIQDVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Sep 2007 23:21:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751578AbXIQDVN
+	(ORCPT <rfc822;git-outgoing>); Sun, 16 Sep 2007 23:21:13 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:58918 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751103AbXIQDVM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Sep 2007 23:21:12 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 9A2F41AB2B9;
+	Mon, 17 Sep 2007 05:21:11 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 67AB31AB2B4;
+	Mon, 17 Sep 2007 05:21:11 +0200 (CEST)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58378>
 
-Christian Stimming <stimming@tuhh.de> wrote:
-> One question came up when seeing the i18n code really in git-gui.git: How are 
-> translators supposed to submit new or updated translations? Is 
-> git-gui-i18n.git of any use anymore? This doesn't seem so. Should updated 
-> translations just be submitted by email to git@vger? In any case, the 
-> instructions in po/README should probably be updated to explain the 
-> recommended way of submitting translation updates. 
+This factorises some code and make a big function smaller.
 
-I was sort of hoping Dscho would be able to answer that.  ;-)
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-list.c |   90 +++++++++++++++++++++++++++------------------------
+ 1 files changed, 48 insertions(+), 42 deletions(-)
 
-I can play patch-monkey and apply things people send to the mailing
-list.  I'm also willing to pull from a tree if the commit history
-is clean and mergable.  Since each language more or less stands
-on its own in its own .po file translators may find it easier to
-email patches.  I dunno, I'm not a translator.
+	This patch series is a resend with the changes Junio asked for. 
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index ac551d5..2dae287 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -268,39 +268,12 @@ static void show_list(const char *debug, int counted, int nr,
+  * unknown.  After running count_distance() first, they will get zero
+  * or positive distance.
+  */
+-
+-static struct commit_list *find_bisection(struct commit_list *list,
+-					  int *reaches, int *all)
++static struct commit_list *do_find_bisection(struct commit_list *list,
++					     int nr, int *weights)
+ {
+-	int n, nr, on_list, counted, distance;
+-	struct commit_list *p, *best, *next, *last;
+-	int *weights;
+-
+-	show_list("bisection 2 entry", 0, 0, list);
+-
+-	/*
+-	 * Count the number of total and tree-changing items on the
+-	 * list, while reversing the list.
+-	 */
+-	for (nr = on_list = 0, last = NULL, p = list;
+-	     p;
+-	     p = next) {
+-		unsigned flags = p->item->object.flags;
++	int n, counted, distance;
++	struct commit_list *p, *best;
  
-> Oh, and po/git-gui.pot should probably be updated to reflect the latest string 
-> additions and changes. 
-
-Yes.  Dscho was looking at creating a custom diff filter for git
-that would better handle showing diffs here.  I was sort of waiting
-for progress from that (if any) before doing the pot update.  I also
-have a lot of UI work that I wanted to do in the 0.9.x series and
-those are likely to create/change the sets of messages we need
-to translate.
-
+-		next = p->next;
+-		if (flags & UNINTERESTING)
+-			continue;
+-		p->next = last;
+-		last = p;
+-		if (!revs.prune_fn || (flags & TREECHANGE))
+-			nr++;
+-		on_list++;
+-	}
+-	list = last;
+-	show_list("bisection 2 sorted", 0, nr, list);
+-
+-	*all = nr;
+-	weights = xcalloc(on_list, sizeof(*weights));
+ 	counted = 0;
+ 
+ 	for (n = 0, p = list; p; p = p->next) {
+@@ -357,12 +330,8 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 		weight_set(p, distance);
+ 
+ 		/* Does it happen to be at exactly half-way? */
+-		if (halfway(p, distance, nr)) {
+-			p->next = NULL;
+-			*reaches = distance;
+-			free(weights);
++		if (halfway(p, distance, nr))
+ 			return p;
+-		}
+ 		counted++;
+ 	}
+ 
+@@ -400,12 +369,8 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 
+ 			/* Does it happen to be at exactly half-way? */
+ 			distance = weight(p);
+-			if (halfway(p, distance, nr)) {
+-				p->next = NULL;
+-				*reaches = distance;
+-				free(weights);
++			if (halfway(p, distance, nr))
+ 				return p;
+-			}
+ 		}
+ 	}
+ 
+@@ -425,12 +390,53 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 		if (distance > counted) {
+ 			best = p;
+ 			counted = distance;
+-			*reaches = weight(p);
+ 		}
+ 	}
++	return best;
++}
++
++static struct commit_list *find_bisection(struct commit_list *list,
++					  int *reaches, int *all)
++{
++	int nr, on_list;
++	struct commit_list *p, *best, *next, *last;
++	int *weights;
++
++	show_list("bisection 2 entry", 0, 0, list);
++
++	/*
++	 * Count the number of total and tree-changing items on the
++	 * list, while reversing the list.
++	 */
++	for (nr = on_list = 0, last = NULL, p = list;
++	     p;
++	     p = next) {
++		unsigned flags = p->item->object.flags;
++
++		next = p->next;
++		if (flags & UNINTERESTING)
++			continue;
++		p->next = last;
++		last = p;
++		if (!revs.prune_fn || (flags & TREECHANGE))
++			nr++;
++		on_list++;
++	}
++	list = last;
++	show_list("bisection 2 sorted", 0, nr, list);
++
++	*all = nr;
++	weights = xcalloc(on_list, sizeof(*weights));
++
++	/* Do the real work of finding bisection commit. */
++	best = do_find_bisection(list, nr, weights);
++
+ 	if (best)
+ 		best->next = NULL;
++
++	*reaches = weight(best);
+ 	free(weights);
++
+ 	return best;
+ }
+ 
 -- 
-Shawn.
+1.5.3.1.59.g93705
