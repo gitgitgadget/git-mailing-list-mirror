@@ -1,69 +1,94 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+From: Miklos Vajna <vmiklos@frugalware.org>
 Subject: Re: testsuite problems
-Date: Mon, 17 Sep 2007 23:50:32 +0200
-Message-ID: <46EEF6A8.1030308@lsrfire.ath.cx>
-References: <20070917211742.GF19019@genesis.frugalware.org>
+Date: Tue, 18 Sep 2007 00:04:08 +0200
+Message-ID: <20070917220408.GG19019@genesis.frugalware.org>
+References: <20070917211742.GF19019@genesis.frugalware.org> <46EEF6A8.1030308@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="vJguvTgX93MxBIIe"
 Cc: git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Mon Sep 17 23:54:01 2007
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Tue Sep 18 00:06:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXOXX-0008A2-C0
-	for gcvg-git-2@gmane.org; Mon, 17 Sep 2007 23:53:59 +0200
+	id 1IXOjR-0003e6-7D
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 00:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760159AbXIQVuv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Sep 2007 17:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760134AbXIQVuu
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 17:50:50 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:50499
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760125AbXIQVut (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Sep 2007 17:50:49 -0400
-Received: from [10.0.1.201] (p57B7E410.dip.t-dialin.net [87.183.228.16])
-	by neapel230.server4you.de (Postfix) with ESMTP id 4038F873BA;
-	Mon, 17 Sep 2007 23:50:48 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20070917211742.GF19019@genesis.frugalware.org>
+	id S1753040AbXIQWEQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 18:04:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752838AbXIQWEQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 18:04:16 -0400
+Received: from mx3.mail.elte.hu ([157.181.1.138]:44942 "EHLO mx3.mail.elte.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752554AbXIQWEP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 18:04:15 -0400
+Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
+	by mx3.mail.elte.hu with esmtp (Exim)
+	id 1IXOhS-00079U-6a
+	from <vmiklos@frugalware.org>; Tue, 18 Sep 2007 00:04:14 +0200
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id DC6371678012; Tue, 18 Sep 2007 00:04:08 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46EEF6A8.1030308@lsrfire.ath.cx>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+X-ELTE-VirusStatus: clean
+X-ELTE-SpamScore: -1.4
+X-ELTE-SpamLevel: 
+X-ELTE-SpamCheck: no
+X-ELTE-SpamVersion: ELTE 2.0 
+X-ELTE-SpamCheck-Details: score=-1.4 required=5.9 tests=BAYES_00,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
+	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
+	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58485>
 
-Miklos Vajna schrieb:
-> *   ok 18: git archive --format=3Dzip
-> *   ok 19: extract ZIP archive
-> *   ok 20: validate filenames
-> * FAIL 21: validate file contents
->         diff -r a d/a
-> *   ok 22: git archive --format=3Dzip with prefix
-> *   ok 23: extract ZIP archive with prefix
-> *   ok 24: validate filenames with prefix
-> * FAIL 25: validate file contents with prefix
->         diff -r a e/prefix/a
-> *   ok 26: git archive --list outside of a git repo
-> * failed 2 among 26 test(s)
-> make[1]: *** [t5000-tar-tree.sh] Error 1
-> make[1]: Leaving directory `/home/vmiklos/git/git/t'
-> make: *** [test] Error 2
->=20
-> $ tar --version
-> tar (GNU tar) 1.18
->=20
-> $ diff --version
-> diff (GNU diffutils) 2.8.1
->=20
-> maybe these versions are too new or old? if i missed any needed info,
-> please let me know.
 
-The failing tests check ZIP file creation, not tar file creation.
-Perhaps your unzip command works a bit differently from Info-ZIP's?
+--vJguvTgX93MxBIIe
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also, what is the difference between t/trash/a and t/trash/d/a after
-running the test script (that's what test 21 is comparing)?
+On Mon, Sep 17, 2007 at 11:50:32PM +0200, Ren=E9 Scharfe <rene.scharfe@lsrf=
+ire.ath.cx> wrote:
+> The failing tests check ZIP file creation, not tar file creation.
+> Perhaps your unzip command works a bit differently from Info-ZIP's?
 
-Ren=E9
+$ zip -v
+Copyright (c) 1990-2006 Info-ZIP - Type 'zip "-L"' for software license.
+This is Zip 2.32 (June 19th 2006), by Info-ZIP.
+
+should this version be ok?
+
+> Also, what is the difference between t/trash/a and t/trash/d/a after
+> running the test script (that's what test 21 is comparing)?
+
+$ diff -Naur t/trash/a t/trash/d/a
+diff -Naur t/trash/a/l1 t/trash/d/a/l1
+--- t/trash/a/l1        2007-09-17 23:10:03.000000000 +0200
++++ t/trash/d/a/l1      2007-09-17 23:10:03.000000000 +0200
+@@ -1 +1 @@
+-simple textfile
++a
+\ No newline at end of file
+
+thanks,
+- VMiklos
+
+--vJguvTgX93MxBIIe
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFG7vnYe81tAgORUJYRAuQlAKCjMYHKp2XJcKjSGvyXDKW6/OUkxwCgpsfE
+pksfP/7WNRiehpUHo7/kep0=
+=FjoW
+-----END PGP SIGNATURE-----
+
+--vJguvTgX93MxBIIe--
