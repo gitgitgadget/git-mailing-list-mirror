@@ -1,170 +1,230 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: List of bugs and suggestions
-Date: Tue, 18 Sep 2007 00:54:41 +0200
-Message-ID: <20070917225441.GA32647@nan92-1-81-57-214-146.fbx.proxad.net>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH 9/9] Implement git commit as a builtin command.
+Date: Mon, 17 Sep 2007 18:58:01 -0400
+Message-ID: <1190069881.10112.10.camel@hinata.boston.redhat.com>
+References: <11890382183913-git-send-email-krh@redhat.com>
+	 <11890382242333-git-send-email-krh@redhat.com>
+	 <11890382243290-git-send-email-krh@redhat.com>
+	 <11890382253220-git-send-email-krh@redhat.com>
+	 <11890382252522-git-send-email-krh@redhat.com>
+	 <1189038225525-git-send-email-krh@redhat.com>
+	 <11890382262161-git-send-email-krh@redhat.com>
+	 <11890382264046-git-send-email-krh@redhat.com>
+	 <11890382271931-git-send-email-krh@redhat.com>
+	 <Pine.LNX.4.64.0709061741370.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: GIT list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 00:56:09 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 18 00:58:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXPVg-0001Gm-Si
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 00:56:09 +0200
+	id 1IXPYA-0001yK-La
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 00:58:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759059AbXIQWzW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 18:55:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759052AbXIQWzW
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 18:55:22 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:45435 "EHLO smtp3-g19.free.fr"
+	id S1757989AbXIQW6P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Sep 2007 18:58:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757018AbXIQW6O
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 18:58:14 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:42561 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758983AbXIQWzU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 18:55:20 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id BAD058B3A
-	for <git@vger.kernel.org>; Tue, 18 Sep 2007 00:55:18 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 958378385
-	for <git@vger.kernel.org>; Tue, 18 Sep 2007 00:55:18 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 3D9711F024; Tue, 18 Sep 2007 00:54:41 +0200 (CEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1756589AbXIQW6N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 18:58:13 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8HMw7LC016484
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 17 Sep 2007 18:58:07 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8HMw7HX003770;
+	Mon, 17 Sep 2007 18:58:07 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8HMw698008415;
+	Mon, 17 Sep 2007 18:58:06 -0400
+In-Reply-To: <Pine.LNX.4.64.0709061741370.28586@racer.site>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58492>
 
-Here are a list of issues I wrote down while using git and friends at
-work, but did not take time to report of fix myself before.  They are
-relative to git 1.5.3.
+On Thu, 2007-09-06 at 17:59 +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Wed, 5 Sep 2007, Kristian H=C3=B8gsberg wrote:
+>=20
+> >  contrib/examples/git-commit.sh |  665 ++++++++++++++++++++++++++++=
++++++++
+> >  git-commit.sh                  |  665 ----------------------------=
+-------
+>=20
+> You might want to use "git format-patch -M" next time ;-)
+>=20
+> > @@ -357,7 +358,6 @@ BUILTIN_OBJS =3D \
+> >  	builtin-rev-parse.o \
+> >  	builtin-revert.o \
+> >  	builtin-rm.o \
+> > -	builtin-runstatus.o \
+>=20
+> Better keep it; some people's scripts could depend on it.
 
-BUGS
+Seriously?  Why don't we remove it and see if somebody yells?  It's mor=
+e
+of an implementation detail than most other git commands; if you need
+status output in your script why wouldn't you just run git status?
 
-	gitk:
+> > +struct option {
+> > +    enum option_type type;
+> > +    const char *long_name;
+> > +    char short_name;
+> > +    void *value;
+> > +};
+> > +
+> > +static int scan_options(const char ***argv, struct option *options=
+)
+> > +{
+>=20
+> I would not (no longer, anyway) be opposed to replacing the option pa=
+rsing=20
+> in git with getopt(); I hear that it is small enough to keep a copy i=
+n=20
+> compat/getopt.c.
+>=20
+> But let's go forward with builtin-commit; getopt() can come later.
 
-- when selecting again a "local changes" pseudo-patch, gitk re-reads
-the diff, and the results can be confusing if HEAD changed since last
-full reload (eg. git-commit or stg/guilt push/pop).  Should detect the
-HEAD change and propose a reload.
+I don't know.  I think it's a situation much like the string library
+discussion.  It's a small enough dependency (70 lines!) that there's no
+gain in depending on an external implementation, and we can tailor it t=
+o
+gits needs as we extend the use within git.  And we can call it gitopt!
 
-- clicking in diff-contents or file-list panes does not move focus out
-of text fields (must click eg. between fields instead).  I remember
-routinely click in diff-contents to focus out of the search field.
+> > +static char *
+> > +prepare_index(const char **files, const char *prefix)
+> > +{
+> > +	int fd;
+> > +	struct tree *tree;
+> > +	struct lock_file *next_index_lock;
+> > +
+> > +	fd =3D hold_locked_index(&lock_file, 1);
+> > +	if (read_cache() < 0)
+> > +		die("index file corrupt");
+> > +
+> > +	if (all) {
+> > +		add_files_to_cache(fd, files, NULL);
+> > +		return lock_file.filename;
+> > +	} else if (also) {
+> > +		add_files_to_cache(fd, files, prefix);
+> > +		return lock_file.filename;
+> > +	}
+> > +
+> > +	if (interactive)
+> > +		interactive_add();
+> > +
+> > +	if (*files =3D=3D NULL) {
+> > +		/* Commit index as-is. */
+> > +		rollback_lock_file(&lock_file);
+> > +		return get_index_file();
+> > +	}
+> > +
+> > +	/*
+> > +	 * FIXME: Warn on unknown files.  Shell script does
+> > +	 *
+> > +	 *   commit_only=3D`git-ls-files --error-unmatch -- "$@"`
+> > +	 */
+> > +
+> > +	/*
+> > +	 * FIXME: shell script does
+> > +	 *
+> > +	 *   git-read-tree --index-output=3D"$TMP_INDEX" -i -m HEAD
+> > +	 *
+> > +	 * which warns about unmerged files in the index.
+> > +	 */
+> > +
+> > +	/* update the user index file */
+> > +	add_files_to_cache(fd, files, prefix);
+>=20
+> I suspect this, or ...
+>=20
+> > +
+> > +	if (!initial_commit) {
+> > +		tree =3D parse_tree_indirect(head_sha1);
+> > +		if (!tree)
+> > +			die("failed to unpack HEAD tree object");
+> > +		if (read_tree(tree, 0, NULL))
+> > +			die("failed to read HEAD tree object");
+> > +	}
+> > +
+> > +	/* Uh oh, abusing lock_file to create a garbage collected file */
+> > +	next_index_lock =3D xmalloc(sizeof(*next_index_lock));
+> > +	fd =3D hold_lock_file_for_update(next_index_lock,
+> > +				       git_path("next-index-%d", getpid()), 1);
+> > +	add_files_to_cache(fd, files, prefix);
+>=20
+> ... this, but not both.
 
-- if a file that is modified and copied in the same commit, clicking
-on the original in file-list pane jumps to the "copy" entry.  This can
-easily cause overlooking of changes to the original file.
+No, this needs both.  The first add_files_to_cache() call updates the
+user index (.git/index) by adding the given files, then we build a
+temporary index from a tree and add the files to that index.
 
+>=20
+> > +/* Find out if the message starting at position 'start' in the str=
+buf
+> > + * contains only whitespace and Signed-off-by lines. */
+> > +static int message_is_empty(struct strbuf *sb, int start)
+> > +{
+> > +	static const char signed_off_by[] =3D "Signed-off-by: ";
+>=20
+> I think you already defined that globally earlier.
 
-	stash:
+Ah, yes, fixed.
 
-- "git stash show junk" acts like "git stash show"
+> In the function message_is_empty() you write:
+>=20
+> > +	/* See if the template is just a prefix of the message. */
+> > +	strbuf_init(&tmpl);
+> > +	if (template_file && strbuf_read_path(&tmpl, template_file) > 0) =
+{
+> > +		stripspace(&tmpl, 1);
+> > +		if (start + tmpl.len <=3D sb->len &&
+> > +		    memcmp(tmpl.buf, sb->buf + start, tmpl.len) =3D=3D 0)
+> > +			start +=3D tmpl.len;
+>=20
+> Could we not bail out here, if there is no match?  In that case, the=20
+> message is clearly not empty...
 
-- changes stashed in the index are unstashed only in workdir.  If
-that's intended, a note in the "stash apply" doc would be useful; but
-then I am left puzzled as to the usefulness of storing the index state
-in the stash branch: it could surely be applied by a variant of "stash
-apply", but such a command does not seem to exist yet ?
+The contents could be just sign-off-by's.
 
+> > +	/* Check if the rest is just whitespace and Signed-of-by's. */
+> > +	for (i =3D start; i < sb->len; i++) {
+> > +		nl =3D memchr(sb->buf + i, '\n', sb->len - i);
+> > +		if (nl)
+> > +			eol =3D nl - sb->buf;
+> > +		else
+> > +			eol =3D sb->len;
+>=20
+> Why not just "if (isspace(sb->buf[i]) || sb->buf[i] =3D=3D '\n') cont=
+inue;"?=20
+> This would also catch the cases where people indent their S-O-Bs.
+>=20
+> > +
+> > +		if (strlen(signed_off_by) <=3D eol - i &&
+> > +		    !prefixcmp(sb->buf + i, signed_off_by)) {
+> > +			i =3D eol;
+> > +			continue;
+> > +		}
+> > +		while (i < eol)
+> > +			if (!isspace(sb->buf[i++]))
+> > +				return 0;
+> > +	}
+> > +
+> > +	return 1;
+> > +}
+>=20
+> I did not review the rest of the code closely yet...
 
-	misc git:
+I'm sending an updated version against Pierre's strbuf changes now.
+It's a smaller patch set, so hopefully we can get it in soon.
 
-- git has problems with cascaded alternates that use relative paths.
-	"git clone -s A B && git clone -s B C" puts absolute paths in
-	info/alternates - there is probably a good reason, but it will
-	obviously hurt when moving the clone.  Further more,
-	Documentation/repository-layout.txt says scary things about
-	using absolute paths there.  But if one manually sets up
-	alternates in a set of repositories (easily reproduced by
-	hand-editing the alternates files in the B clone
-	described above), one ends with commits from A not being seen,
-	and the following error message on each command run with C,
-	even when no object lookup from A is required:
-
-| $ git fsck
-| error: .git/objects/../../../B/.git/objects: ignoring relative alternate object store ../../../A/.git/objects
-
-
-- repack -a -l (after transitionning a repo to alternates) does not
-detect that old packs including objects now in alternate.
-	I had 2 branches in a single repo and changed the setup to 2
-	repos (initialize by "cp -al" and removing unwanted refs from
-	each repo), A finally referencing B as remote and alternate.
-	"git repack -a -l" in A seems to correctly only include only
-	local objects in the pack, but all the old packs containing
-	objects now in B are kept.
-
-
-SUGGESTIONS
-
-git-diff*:
-
-- could allow to declare word separators for --color-words
-
-- could print hunk number in header (a la filterdiff --annotate)
-
-
-gitk:
-
-- on-demand loading of additional revs (eg. ancestors from reflogs)
-
-- non-printable keystrokes could be made available from within text
-fields (F5, PgUp, etc)
-
-- large commits would be made easier to navigate with some additionnal
-highlighting/coloring.  Eg:
- - coloring of add/remove (and copy/move ?) in patch file list
- - move selection in patch file list according to currently selected
-   search match when there is one, or according to the file(s) whose
-   diff currently appears
- - highlight search matches in patch file list
- - highlight search matches, and the file selected from the patch file
-   list, in/beside the patch display slider
-
-- file list could have its own focus history
-
-- for large commits, it takes time to get the full diff.  Showing the
-progress (nfiles processed / nfiles in commit) would be nice
-
-- a "goto prev file" binding to reverse 'f' key (or quickly find in
-which file a search match occured) would be great
-
-- a "scroll diff view to next hunk" key binding ('h' ?)
-
-- search backwards, and case-insensitively
-
-- a list of known heads to jump to would be useful to quickly navigate
-in multiple-head display mode.
-
-- selecting a file in file list xould put filename in paste buffer,
-like what's done for commit ids in history pane.
-
-- "lock selected diff" toggle, to avoid losing a particular diff by
-error (esp. useful when getting an expensive diff relatively to
-selected commit)
-
-
-stgit:
-
-- derive a stack-log from patch logs
-	The ordering information provided by patchlogs and starck
-	reflog could be used to present a history of what happenned in
-	a stack (eg. when coming back from holiday wondering what one
-	was doing before leaving).
-
-
-stgit contrib scripts (mostly reminders to myself ;):
-
-- stg-whatchanged does not identify conflicts caused by "stg pick --fold"
-
-- stg-fold-files-from cannot fold binary files (filterdiff limitation)
-      =>  the following only works for filenames with no special char
-	  (would need --zero):
-            git show --binary $(stg id occ53) -- $(stg files --bare occ53|grep '^doc/') | stg fold
-      => the following does not work either:
-            git show --binary $(stg id occ53) -- $(git-ls-tree --name-only $(stg id occ53) doc/)
-
-- stg-fold-files-from using non-git-aware filterdiff causes git-apply to
-mistake a "add content to an empty file" hunk for a "create file" hunk
+Kristian
