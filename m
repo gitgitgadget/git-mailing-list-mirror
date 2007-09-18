@@ -1,77 +1,89 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Tue, 18 Sep 2007 14:38:52 +0200
-Message-ID: <8c5c35580709180538o15619c14uf3125bea2360f88b@mail.gmail.com>
-References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com>
-	 <11900461843997-git-send-email-hjemli@gmail.com>
-	 <20070918005013.GA6368@muzzle>
-	 <8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com>
-	 <7v4phsxy55.fsf@gitster.siamese.dyndns.org>
-	 <46EF7EA1.6020402@vilain.net> <46EF9687.6070304@vilain.net>
-	 <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
-	 <Pine.LNX.4.64.0709181319050.28586@racer.site>
+From: "Alex Unleashed" <unledev@gmail.com>
+Subject: Re: [PATCH] git-send-email: Add a --cc-nobody option
+Date: Tue, 18 Sep 2007 14:50:10 +0200
+Message-ID: <5e4707340709180550w3211e95fqd9fd648aab8ce78a@mail.gmail.com>
+References: <11901157221792-git-send-email-felipebalbi@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 14:39:13 2007
+Cc: git@vger.kernel.org, ae@op5.se,
+	"Felipe Balbi" <felipe.lima@indt.org.br>
+To: "felipebalbi@users.sourceforge.net" 
+	<felipebalbi@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 14:50:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXcM1-00006m-B9
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:39:01 +0200
+	id 1IXcX1-0004gz-MD
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754027AbXIRMiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 08:38:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754264AbXIRMiz
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:38:55 -0400
-Received: from qb-out-0506.google.com ([72.14.204.227]:65467 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753659AbXIRMiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 08:38:54 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so1978453qbe
-        for <git@vger.kernel.org>; Tue, 18 Sep 2007 05:38:54 -0700 (PDT)
+	id S1753631AbXIRMuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 08:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbXIRMuO
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:50:14 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:13861 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752752AbXIRMuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 08:50:12 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1427491nfb
+        for <git@vger.kernel.org>; Tue, 18 Sep 2007 05:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=yHgJSjSHgFhvZ2ZyZH0qVOphyJnuDPBjhtHpfu0M1g8=;
-        b=ktNneTy6MxB3PDUBHBigvw6bTPxQZ7KyM0fL6PMPeOXSDVl446mM3FjVrvz3j9+z/kU7M4lHa6mIxAC2T//NdVbOZld00mxqSqA0isEnOOkklvhIBqQs9xfLc9tS6mIaRj9PQstTGNOATVoEEofWrYw3l8gMeG+DNqZcuOD51ok=
+        bh=BqpP3gMYNwG0B/PtL/QLbyQWCevM6Hr0iSVjUqk+uy0=;
+        b=c9pZpvTRcvAqoon3jJ7YBEu4dXq3ceoIrp+1uPJQPDEiA+E7M94/ESjcjb6dZ/KCw5WlMItuFAAj66l94FmJCmybwH4orWFFJHE9+jOPWpu1jB0oFodr7YtbpIS996RngQloZy/eiNQJfz/kFxPe8tw4pc5dg1gj8o4nBm1dlQo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=iO4nee/EC33FZaJtpmXwGJW0dZYszTf40xF2RaUz5i5DZmvSLO2qB91abpUhQO8TGmw037RNaI2UfzM9fbQOcHZaFHpW4IeckXwe9zrKdPrFdQcoxFq+5kOLIHJO5WLDpRAPNNNoYRC44IbcV6Wx2kHoCyRd11TEEQZS10S4wx8=
-Received: by 10.114.109.1 with SMTP id h1mr1761260wac.1190119132934;
-        Tue, 18 Sep 2007 05:38:52 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Tue, 18 Sep 2007 05:38:52 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0709181319050.28586@racer.site>
+        b=WJH9t9HHG1Hg1xq7Mj/bCj305MZRe51ZEGu3aE01EDc6ktRg9GqVaAXLR+w/44j4WEg+qhzXCW0s+6iF7OMvQnWPP6yET8tkCnWmRCQNsdG8/Myw7A60oillSCTvUAOBdEHCsmen1Zpw4qEHDGeu/gTD9N1aDemMC/VQfBNSEwg=
+Received: by 10.86.51.2 with SMTP id y2mr4621019fgy.1190119810224;
+        Tue, 18 Sep 2007 05:50:10 -0700 (PDT)
+Received: by 10.86.71.16 with HTTP; Tue, 18 Sep 2007 05:50:10 -0700 (PDT)
+In-Reply-To: <11901157221792-git-send-email-felipebalbi@users.sourceforge.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58598>
 
-[...stripped the Cc, as we're slightly changing topic...]
-
-On 9/18/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Tue, 18 Sep 2007, Lars Hjemli wrote:
-> > Sidenote: this might be slightly controversial, but I've sometimes
-> > missed a --no-ff option to 'git merge' when working on plain git
-> > repositories; IMHO preserving the 'logical' merge history when the merge
-> > of a topic branch results in a fast-forward can be interesting.
+On 9/18/07, felipebalbi@users.sourceforge.net
+<felipebalbi@users.sourceforge.net> wrote:
+> From: Felipe Balbi <felipe.lima@indt.org.br>
 >
-> Linus explained a lot of times why this is wrong.  It encourages
-> upstream-downstream thinking.  We should really turn this into a FAQ.
+> This patch adds a --cc-nobody option to avoid sending emails
+> to everybody but the ones listed by --to option.
+>
+> Signed-off-by: Felipe Balbi <felipe.lima@indt.org.br>
 
-Well, the cases where I've wanted to do this is when I've developed
-some new feature in cgit as a topic branch. I've then merged the topic
-branch into my master branch which had been idle since the creation of
-the topic branch (cgit doesn't get as many patches as git...). So I
-get a fast-forward and my precious topic-branch is no longer visible
-(at least for anyone cloning my repo). Not very important, but I'd
-like to preserve the fact that this was a topic branch. How would this
-encourage 'upstream-downstream thinking'?
+I wrote a similar patch a couple months ago, but they differ slightly,
+maybe the code has changed somewhat:
+http://marc.info/?l=git&m=118200193310898&w=2
 
--- 
-larsh
+--cc-nobody sounds better to me.
+
+>                                 } elsif (/^(Cc|From):\s+(.*)$/) {
+> -                                       if (unquote_rfc2047($2) eq $sender) {
+> -                                               next if ($suppress_from);
+> +                                       if (unquote_rfc2047($2)) {
+> +                                               next if ($cc_nobody);
+> +                                       }
+> +                                       elsif (unquote_rfc2047($2) eq $sender) {
+> +                                               next if ($suppress_from|$cc_nobody);
+>                                         }
+>                                         elsif ($1 eq 'From') {
+>                                                 $author = unquote_rfc2047($2);
+
+Here you could probably skip the whole branch if you check $cc_nobody
+first of all.
+
+> @@ -707,7 +715,7 @@ foreach my $t (@files) {
+>                         }
+>                 } else {
+>                         $message .=  $_;
+> -                       if (/^(Signed-off-by|Cc): (.*)$/i && $signed_off_cc) {
+> +                       if (/^(Signed-off-by|Cc): (.*)$/i && $signed_off_cc && !$cc_nobody) {
+
+Minor, but almost the same here.
+
+Alex
