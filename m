@@ -1,145 +1,75 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] instaweb: added support Ruby's WEBrick server
-Date: Tue, 18 Sep 2007 13:40:33 -0700
-Message-ID: <20070918204012.GA28273@untitled>
-References: <20070918121634.E8EFF814635@cyrano>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Mention that 'push .. master' is in explicit form master:refs/heads/master
+Date: Tue, 18 Sep 2007 13:54:26 -0700
+Message-ID: <7vfy1bvgn1.fsf@gitster.siamese.dyndns.org>
+References: <wsuomgyu.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: mike dalessio <mike@csa.net>
-X-From: git-owner@vger.kernel.org Tue Sep 18 22:40:42 2007
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 22:54:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXjs8-0003Hz-DS
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 22:40:40 +0200
+	id 1IXk5i-0008W7-Lz
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 22:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985AbXIRUkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 16:40:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbXIRUkf
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 16:40:35 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:51427 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751167AbXIRUke (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 16:40:34 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 073CC7DC029;
-	Tue, 18 Sep 2007 13:40:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20070918121634.E8EFF814635@cyrano>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754867AbXIRUyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 16:54:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755028AbXIRUyd
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 16:54:33 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35622 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750871AbXIRUyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 16:54:32 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 63CA01378B5;
+	Tue, 18 Sep 2007 16:54:50 -0400 (EDT)
+In-Reply-To: <wsuomgyu.fsf@blue.sea.net> (Jari Aalto's message of "Tue, 18 Sep
+	2007 12:59:53 +0300")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58633>
 
-mike dalessio <mike@csa.net> wrote:
-> running the webrick server with git requires Ruby and Ruby's YAML and
-> Webrick libraries (both of which come standard with Ruby). nice for
-> single-user standalone invocations.
-> 
-> the --httpd=webrick option generates a ruby script on the fly to read
-> httpd.conf options and invoke the web server via library call. this
-> script is placed in the .git/gitweb directory. it also generates a
-> shell script in a feeble attempt to invoke ruby in a portable manner,
-> which assumes that 'ruby' is in the user's $PATH.
-> 
-> Signed-off-by: Mike Dalessio <mike@csa.net>
+Jari Aalto <jari.aalto@cante.net> writes:
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
-
+> Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
 > ---
->  Documentation/git-instaweb.txt |    3 +-
->  git-instaweb.sh                |   44 +++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 45 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-> index cec60ee..914fc4c 100644
-> --- a/Documentation/git-instaweb.txt
-> +++ b/Documentation/git-instaweb.txt
-> @@ -27,7 +27,8 @@ OPTIONS
->  	The HTTP daemon command-line that will be executed.
->  	Command-line options may be specified here, and the
->  	configuration file will be added at the end of the command-line.
-> -	Currently, lighttpd and apache2 are the only supported servers.
-> +	Currently, lighttpd, apache2 and webrick are the only supported
-> +	servers.
->  	(Default: lighttpd)
->  
->  -m|--module-path::
-> diff --git a/git-instaweb.sh b/git-instaweb.sh
-> index b79c6b6..803a754 100755
-> --- a/git-instaweb.sh
-> +++ b/git-instaweb.sh
-> @@ -37,7 +37,9 @@ start_httpd () {
->  	else
->  		# many httpds are installed in /usr/sbin or /usr/local/sbin
->  		# these days and those are not in most users $PATHs
-> -		for i in /usr/local/sbin /usr/sbin
-> +		# in addition, we may have generated a server script
-> +		# in $fqgitdir/gitweb.
-> +		for i in /usr/local/sbin /usr/sbin $fqgitdir/gitweb
->  		do
->  			if test -x "$i/$httpd_only"
->  			then
-> @@ -137,6 +139,43 @@ GIT_DIR="$fqgitdir"
->  export GIT_EXEC_PATH GIT_DIR
->  
->  
-> +webrick_conf () {
-> +	# generate a standalone server script in $fqgitdir/gitweb.
-> +	cat > "$fqgitdir/gitweb/$httpd.rb" <<EOF
-> +require 'webrick'
-> +require 'yaml'
-> +options = YAML::load_file(ARGV[0])
-> +options[:StartCallback] = proc do
-> +  File.open(options[:PidFile],"w") do |f|
-> +    f.puts Process.pid
-> +  end
-> +end
-> +options[:ServerType] = WEBrick::Daemon
-> +server = WEBrick::HTTPServer.new(options)
-> +['INT', 'TERM'].each do |signal|
-> +  trap(signal) {server.shutdown}
-> +end
-> +server.start
-> +EOF
-> +	# generate a shell script to invoke the above ruby script,
-> +	# which assumes _ruby_ is in the user's $PATH. that's _one_
-> +	# portable way to run ruby, which could be installed anywhere,
-> +	# really.
-> +	cat > "$fqgitdir/gitweb/$httpd" <<EOF
-> +#! /bin/sh
-> +ruby $fqgitdir/gitweb/$httpd.rb \$*
-> +EOF
-> +	chmod +x "$fqgitdir/gitweb/$httpd"
+>  Documentation/git-push.txt |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+> index 7b8e075..71ac450 100644
+> --- a/Documentation/git-push.txt
+> +++ b/Documentation/git-push.txt
+> @@ -105,7 +105,9 @@ git push origin master::
+>  	Find a ref that matches `master` in the source repository
+>  	(most likely, it would find `refs/heads/master`), and update
+>  	the same ref (e.g. `refs/heads/master`) in `origin` repository
+> -	with it.
+> +	with it. The following would be exactly same command:
 > +
-> +	cat > "$conf" <<EOF
-> +:Port: $port
-> +:DocumentRoot: "$fqgitdir/gitweb"
-> +:DirectoryIndex: ["gitweb.cgi"]
-> +:PidFile: "$fqgitdir/pid"
-> +EOF
-> +	test "$local" = true && echo ':BindAddress: "127.0.0.1"' >> "$conf"
-> +}
-> +
->  lighttpd_conf () {
->  	cat > "$conf" <<EOF
->  server.document-root = "$fqgitdir/gitweb"
-> @@ -237,6 +276,9 @@ case "$httpd" in
->  *apache2*)
->  	apache2_conf
->  	;;
-> +webrick)
-> +	webrick_conf
-> +	;;
->  *)
->  	echo "Unknown httpd specified: $httpd"
->  	exit 1
-> -- 
-> 1.5.2.5
-> 
+> +	git push origin master:refs/heads/master
 
--- 
-Eric Wong
+They _might_ be exactly the same.
+
+The reason people often explicitly write
+
+	$ git push $URL refs/heads/master:refs/heads/master
+
+in their insns for newbies is because this form would not be
+affected by the random factors at $URL repository (or your
+repository) and will consistently get the same result.
+
+	$ git push $URL foo
+
+may push branch head 'foo' or tag 'foo' depending on which one
+you have locally.  Having both is not encouraged, but spelling
+the insn out explicitly as refs/heads/foo makes it clear the
+command is talking about the branch even when there is a tag
+with the same name.
