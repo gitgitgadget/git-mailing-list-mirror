@@ -1,84 +1,55 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] contrib/fast-import: add perl version of simple example
-Date: Tue, 18 Sep 2007 13:28:27 +0200
-Message-ID: <46EFB65B.6030202@op5.se>
-References: <20070918072627.GB3506@coredump.intra.peff.net> <Pine.LNX.4.64.0709181115250.28586@racer.site> <46EFA84C.3080906@op5.se> <20070918103051.GA22239@coredump.intra.peff.net> <Pine.LNX.4.64.0709181217200.28586@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 13:28:38 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: commit summary, --pretty=short and other tools
+Date: Tue, 18 Sep 2007 13:43:09 +0200
+Message-ID: <E934A152-BE07-484D-96DF-11B1BC64EB49@wincent.com>
+References: <20070917112136.GA30201@glandium.org> <55887C88-8523-4839-8B91-236256A5E893@lrde.epita.fr> <46EF7BF7.3070107@op5.se> <Pine.LNX.4.64.0709181109130.28586@racer.site> <CEE6032F-39FB-42D8-A57A-671E4E0875C7@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>, Mike Hommey <mh@glandium.org>,
+	git@vger.kernel.org
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 18 13:44:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXbFt-0005wh-VS
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:28:38 +0200
+	id 1IXbUm-0002bL-9G
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754401AbXIRL2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 07:28:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754442AbXIRL2c
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:28:32 -0400
-Received: from mail.op5.se ([193.201.96.20]:36002 "EHLO mail.op5.se"
+	id S1754500AbXIRLn4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 07:43:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754179AbXIRLnz
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:43:55 -0400
+Received: from wincent.com ([72.3.236.74]:44277 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754269AbXIRL2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 07:28:32 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 475A819445E;
-	Tue, 18 Sep 2007 13:28:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.382
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.382 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.017, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xtbHIyHS7C8h; Tue, 18 Sep 2007 13:28:29 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 140291943F5;
-	Tue, 18 Sep 2007 13:28:28 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <Pine.LNX.4.64.0709181217200.28586@racer.site>
+	id S1752779AbXIRLnz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2007 07:43:55 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l8IBhH8i021100;
+	Tue, 18 Sep 2007 06:43:17 -0500
+In-Reply-To: <CEE6032F-39FB-42D8-A57A-671E4E0875C7@lrde.epita.fr>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58583>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 18 Sep 2007, Jeff King wrote:
-> 
->> I think he means a dump that you can meaningfully edit with sed or a 
->> text editor. And even nicer, one that could be fed back into 
->> git-fast-import. So you could do something like:
->>
->> git-fast-export A..B >dump
->> vi dump
->> git-fast-import <dump
->>
->> to rewrite history in a very flexible way.
-> 
-> Exactly what I meant.  Some people seem to have problems with 
-> filter-branch, but somehow no proper bug report, let alone fix, evolved 
-> from that.
-> 
+El 18/9/2007, a las 12:27, Benoit SIGOURE escribi=F3:
 
-The main problem is that it in my use-cases fixes a nuisance, but not a
-real problem, while the man-page SYNOPSIS consists of a full 5 lines, most
-of which are far from obvious at a first glance. The seeming effort involved
-just doesn't seem worth bothering with.
+> OK, look, I think this is the typical case where there is no single =20
+> solution to fit all use cases.
+> To handle this specific case, you could say "OK let's stop at =20
+> punctuation symbols then".  But what if my commit message is "Add =20
+> namespace::member whatever."
 
-> I guess these people are more comfortable with what you just described.
-> 
+Uh, I don't think you'd stop a punctuation symbol unless it was the =20
+last non-whitespace character before the newline.
 
-I know I would be, especially since all changes would show up in an entirely
-different repo. I know filter-branch is probably completely safe, but even a
-0.1% risk of losing *anything* isn't worth taking to fix a small nuisance.
+Even then, as Johannes says, "oneline" is only meant as a hint =20
+anyway, so it doesn't really matter that much.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Wincent
