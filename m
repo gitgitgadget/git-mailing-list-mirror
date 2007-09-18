@@ -1,97 +1,96 @@
-From: "Felipe Balbi" <felipebalbi@users.sourceforge.net>
-Subject: Re: [PATCH 1/1] git-send-email: Add a --suppress-all option
-Date: Tue, 18 Sep 2007 10:39:37 -0400
-Message-ID: <31e679430709180739xf2eaa32i8233059fbfb38f12@mail.gmail.com>
-References: <11900540373215-git-send-email-felipebalbi@users.sourceforge.net>
-	 <46EF8107.1030607@op5.se> <20070918132251.GB12120@fieldses.org>
-	 <86bqc03vrq.fsf@lola.quinscape.zz>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: testsuite problems
+Date: Tue, 18 Sep 2007 16:57:33 +0200
+Message-ID: <46EFE75D.7000805@lsrfire.ath.cx>
+References: <20070917211742.GF19019@genesis.frugalware.org> <46EEF6A8.1030308@lsrfire.ath.cx> <20070917220408.GG19019@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 16:39:55 2007
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Sep 18 16:58:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXeEr-0000qt-1m
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 16:39:45 +0200
+	id 1IXeWR-0000Ko-L6
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 16:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755734AbXIROjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 10:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755363AbXIROjj
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 10:39:39 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:15038 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755303AbXIROjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 10:39:39 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1140631nze
-        for <git@vger.kernel.org>; Tue, 18 Sep 2007 07:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=jfRPsurfwphbiPRvwJ5DFgnVOBA/Q3yVTAlOp2RCpik=;
-        b=HqDUC6w9s8rqeq/5Km2YTBwSbCu41/Txg0WETHT/LaAIdxhCaYL5/SyzYtKzGuILkfSfxYUlvdsGW4APOGz9SKFdsOGd3xeSGkCpJWVHVRZQikaYxGlE0jarh8R36dDa8enn7/f4SRheij0XDxN+UI4MnUmXLuFKZC2oOPbirCs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=lFnK6zHmNMBFd600LW8yGw8GZpwvkVKteCKB4uLB4clAmxvHk8X9HWhc8oUkQpSMr3Y8WsuznRXqSoqo2eDGv+LGel4c0RH1ISfzciIN3SZ63Sryc9an2x3wx473mHeNl2Z84/8kLv1DpWAn3xaLsqpiZRBIjrrP+MqYfbIseUI=
-Received: by 10.114.52.1 with SMTP id z1mr2627112waz.1190126377862;
-        Tue, 18 Sep 2007 07:39:37 -0700 (PDT)
-Received: by 10.114.61.4 with HTTP; Tue, 18 Sep 2007 07:39:37 -0700 (PDT)
-In-Reply-To: <86bqc03vrq.fsf@lola.quinscape.zz>
-Content-Disposition: inline
-X-Google-Sender-Auth: 87cc3187c3f39a3b
+	id S1757829AbXIRO5t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 10:57:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757799AbXIRO5t
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 10:57:49 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:48718
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757766AbXIRO5s (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2007 10:57:48 -0400
+Received: from [10.0.1.201] (p57B7C83E.dip.t-dialin.net [87.183.200.62])
+	by neapel230.server4you.de (Postfix) with ESMTP id 08556873BA;
+	Tue, 18 Sep 2007 16:57:46 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20070917220408.GG19019@genesis.frugalware.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58616>
 
-Hi,
+Miklos Vajna schrieb:
+> On Mon, Sep 17, 2007 at 11:50:32PM +0200, Ren=E9 Scharfe <rene.scharf=
+e@lsrfire.ath.cx> wrote:
+>> The failing tests check ZIP file creation, not tar file creation.
+>> Perhaps your unzip command works a bit differently from Info-ZIP's?
+>=20
+> $ zip -v
+> Copyright (c) 1990-2006 Info-ZIP - Type 'zip "-L"' for software licen=
+se.
+> This is Zip 2.32 (June 19th 2006), by Info-ZIP.
+>=20
+> should this version be ok?
 
-On 9/18/07, David Kastrup <dak@gnu.org> wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
->
-> > On Tue, Sep 18, 2007 at 09:40:55AM +0200, Andreas Ericsson wrote:
-> >> Felipe Balbi wrote:
-> >>> From: Felipe Balbi <felipe.lima@indt.org.br>
-> >>> This patch adds a --suppress-all option to avoid sending emails
-> >>> to everybody but the ones listed by --to option.
-> >>
-> >> To my minds eye, --suppress-all is equivalent to --dry-run. Could you
-> >> rename it to "--cc-nobody" or some such?
-> >>
-> >> On a side-note, I've never really understood why git-send-email *by
-> >> default*
-> >> sends to a bazillion people. Does anybody ever use it without suppressing
-> >> most of the CC targets?
-> >
-> > Yes.  I never suppress the cc's.  The cc-everyone thing is standard on
-> > the kernel mailing lists.
-> >
-> > The one exception is if I'm just sending the series to myself as a test.
->
-> Wouldn't --no-cc be a nicer option name?
+Info-ZIP zip and unzip are two different programs, each with their
+own version numbers.
 
-It'll probably conflict if I don't wanna CC patch's author nor
-Signed-off-by but DO want to CC somebody special like the maintainer.
+>> Also, what is the difference between t/trash/a and t/trash/d/a after
+>> running the test script (that's what test 21 is comparing)?
+>=20
+> $ diff -Naur t/trash/a t/trash/d/a
+> diff -Naur t/trash/a/l1 t/trash/d/a/l1
+> --- t/trash/a/l1        2007-09-17 23:10:03.000000000 +0200
+> +++ t/trash/d/a/l1      2007-09-17 23:10:03.000000000 +0200
+> @@ -1 +1 @@
+> -simple textfile
+> +a
+> \ No newline at end of file
 
-the option is changed to --cc-nobody and it's already resent. :-)
+Ah!  l1 is a symlink to a.  The target of a symlink is stored as file
+content in a ZIP archive and marked with a special flag.  An unzipper
+that doesn't understand this flag would create a file containing the
+link target's name instead of a symlink pointing to the target.
 
->
-> --
-> David Kastrup
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+The unzip on my system says:
 
+  $ unzip -v
+  UnZip 5.52 of 28 February 2005, by Ubuntu. Original by Info-ZIP.
 
--- 
-Best Regards,
+  Latest sources and executables are at  ftp://ftp.info-zip.org/pub/inf=
+ozip/ ;
+  see ftp://ftp.info-zip.org/pub/infozip/UnZip.html for other sites.
 
-Felipe Balbi
-felipebalbi@users.sourceforge.net
+  Compiled with gcc 4.1.2 (Ubuntu 4.1.2-0ubuntu4) for Unix (Linux ELF) =
+on Mar 31 2007.
+
+  UnZip special compilation options:
+          ACORN_FTYPE_NFS
+          COPYRIGHT_CLEAN (PKZIP 0.9x unreducing method not supported)
+          SET_DIR_ATTRIB
+          TIMESTAMP
+          USE_EF_UT_TIME
+          USE_UNSHRINK (PKZIP/Zip 1.x unshrinking method supported)
+          USE_DEFLATE64 (PKZIP 4.x Deflate64(tm) supported)
+          VMS_TEXT_CONV
+          WILD_STOP_AT_DIR
+          [decryption, version 2.9 of 05 May 2000]
+
+I suspect you need SET_DIR_ATTRIB in order to extract symlinks.
+
+Ren=E9
