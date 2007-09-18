@@ -1,66 +1,68 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diffcore-rename performance mode
-Date: Tue, 18 Sep 2007 04:54:13 -0400
-Message-ID: <20070918085413.GA11751@coredump.intra.peff.net>
-References: <20070918082321.GA9883@coredump.intra.peff.net> <7vsl5cwe6p.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/5] builtin-fetch: Don't segfault on "fetch +foo"
+Date: Tue, 18 Sep 2007 04:54:48 -0400
+Message-ID: <20070918085448.GA5390@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 10:54:23 2007
+X-From: git-owner@vger.kernel.org Tue Sep 18 10:55:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXYqc-0001A8-DF
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 10:54:23 +0200
+	id 1IXYru-0001jx-7R
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 10:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752372AbXIRIyR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 04:54:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752724AbXIRIyQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 04:54:16 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4206 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752372AbXIRIyQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 04:54:16 -0400
-Received: (qmail 26091 invoked by uid 111); 18 Sep 2007 08:54:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 18 Sep 2007 04:54:14 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2007 04:54:13 -0400
+	id S1755898AbXIRIyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 04:54:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbXIRIyx
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 04:54:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52369 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753365AbXIRIyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 04:54:51 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IXYqy-00067Y-LH; Tue, 18 Sep 2007 04:54:44 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 108B120FBAE; Tue, 18 Sep 2007 04:54:48 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vsl5cwe6p.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58548>
 
-On Tue, Sep 18, 2007 at 01:49:50AM -0700, Junio C Hamano wrote:
+If we are fetching something and were configured to do a forced
+fetch and have no local ref to store the fetched object into we
+cannot mark the local ref as having a forced update.  Instead we
+should just silently discard the + request.
 
-> > However, keeping around _just_ the
-> > cnt_data caused only about 100M of extra memory consumption (and gave
-> > the same performance boost).
-> 
-> That would be an interesting and relatively low-hanging optimization.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ remote.c |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-OK, I will work up a patch. Is it worth making it configurable? Since it
-is a space-time tradeoff, if you are tight on memory, it might actually
-hurt performance. However, I have only looked at the numbers for my
-massive data set...I can produce memory usage numbers for the kernel,
-too.
-
-> I think it was just a hash table with linear overflow (if your
-> spot is occupied by somebody else, you look for the next
-> available vacant spot -- works only if you do not ever delete
-> items from the table) but sorry, I do not recall the rationale
-> for picking that data structure.  I vaguely recall I did some
-> measurement between that and the usual "an array that is indexed
-> with a hash value that holds heads of linked lists" and pointer
-> chasing appeared quite cache-unfriendly to the point that it
-> actually degraded performance, but did not try very hard to
-> optimize it.
-
-I thought we were holding counts of hashes, in which case there _is_ no
-overflow. We only care if you hit the hash fingerprint or not. But
-perhaps I am mistaken...I will have to look more closely at the code.
-
--Peff
+diff --git a/remote.c b/remote.c
+index 73a34c9..af3c46b 100644
+--- a/remote.c
++++ b/remote.c
+@@ -875,8 +875,7 @@ int get_fetch_map(struct ref *remote_refs,
+ 					 refspec->src : "HEAD");
+ 
+ 		ref_map->peer_ref = get_local_ref(refspec->dst);
+-
+-		if (refspec->force)
++		if (ref_map->peer_ref && refspec->force)
+ 			ref_map->peer_ref->force = 1;
+ 	}
+ 
+-- 
+1.5.3.1.1000.g7319b
