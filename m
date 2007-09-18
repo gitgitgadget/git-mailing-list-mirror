@@ -1,79 +1,75 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Tue, 18 Sep 2007 23:50:50 +1200
-Message-ID: <46EFBB9A.5070404@vilain.net>
-References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com>	 <11900461843997-git-send-email-hjemli@gmail.com>	 <20070918005013.GA6368@muzzle>	 <8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com>	 <7v4phsxy55.fsf@gitster.siamese.dyndns.org>	 <46EF7EA1.6020402@vilain.net> <46EF9687.6070304@vilain.net> <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
+From: "Felipe Balbi" <felipebalbi@users.sourceforge.net>
+Subject: Re: [PATCH] git-send-email: Add a --cc-nobody option
+Date: Tue, 18 Sep 2007 07:51:27 -0400
+Message-ID: <31e679430709180451h6e451c33lcc9c07e06cc2a869@mail.gmail.com>
+References: <11901157221792-git-send-email-felipebalbi@users.sourceforge.net>
+	 <46EFBB5A.7090505@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Eric Wong <normalperson@yhbt.net>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 13:50:38 2007
+Cc: git@vger.kernel.org, "Felipe Balbi" <felipe.lima@indt.org.br>
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Sep 18 13:51:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXbb6-0005lC-GT
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:50:33 +0200
+	id 1IXbc8-0006Ep-V3
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755526AbXIRLt7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 07:49:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755538AbXIRLt6
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:49:58 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60251 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755526AbXIRLt6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 07:49:58 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 8278323C266; Tue, 18 Sep 2007 23:49:55 +1200 (NZST)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id D412A23C262;
-	Tue, 18 Sep 2007 23:49:50 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1755538AbXIRLvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 07:51:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbXIRLva
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:51:30 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:35860 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753209AbXIRLv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 07:51:29 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2387959wah
+        for <git@vger.kernel.org>; Tue, 18 Sep 2007 04:51:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=wJ3ZMixt1NMY6i24VHbC1b8hF5cdp6E0nh3/UNrHfYE=;
+        b=JxFiCiqGXmyBr3qUkcwimcPo9Qdv3WdD1pIcP8Vmq750fRCA+Y+AXY6KvhJkji4xXwKr7kt66ydBsmBEbwf+CBTeQDx8g3nqxbjCqJ0WYm7B98nkCLbA3DklEMC3rm2C8DqiBcLA+wt3VIW4mDDvei8oAs3bNgJpFq6jYAKwhOo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=YGi1psn0puQukcFnb+a80RbcTkoeCIfYJoiFtYjjVmNG+x8jIwyIYvZ5H1q9bMbEGIclheplVb0QhuKrOLqFlKT/c2Sq8f9kLRmhdH4itlqscUXkKOWxPpB6V3VRK16Y8X/4YRpLRo//UkpdIW8lZ+OjWGwhokgcqGzKTwx9W/M=
+Received: by 10.114.112.1 with SMTP id k1mr1555524wac.1190116287268;
+        Tue, 18 Sep 2007 04:51:27 -0700 (PDT)
+Received: by 10.114.61.4 with HTTP; Tue, 18 Sep 2007 04:51:27 -0700 (PDT)
+In-Reply-To: <46EFBB5A.7090505@op5.se>
+Content-Disposition: inline
+X-Google-Sender-Auth: 2587c51a07cd1eae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58586>
 
-Lars Hjemli wrote:
-> On 9/18/07, Sam Vilain <sam@vilain.net> wrote:
->   
->> I think that writing a real fast-forward merge should only happen on
->> dcommit, not git merge, because that is what is required for SVN.
->>     
+On 9/18/07, Andreas Ericsson <ae@op5.se> wrote:
+> felipebalbi@users.sourceforge.net wrote:
+> > From: Felipe Balbi <felipe.lima@indt.org.br>
+> >
+> > This patch adds a --cc-nobody option to avoid sending emails
+> > to everybody but the ones listed by --to option.
+> >
 >
-> I don't think git-svn has any way of knowing that the user wanted a
-> merge, unless a merge commit is present. So the user would have to
-> specify the set of commits which should be considered a merge during
-> dcommit (this would actually resemble how merges are performed in
-> subversion).
->   
+> Sounds much better than --suppress-all. Thanks
 
-Sure it can.  If you're committing to branch X, and the current tree has
-a whole lot of commits above that, then it should do the only thing you
-can do with SVN.
+Yeah, sure...
+np :-)
 
-Which is write a squash commit, and set the "svn:merge" and/or
-"svk:merge" properties to represent what happened.
+>
+> --
+> Andreas Ericsson                   andreas.ericsson@op5.se
+> OP5 AB                             www.op5.se
+> Tel: +46 8-230225                  Fax: +46 8-230231
+>
 
-> Sidenote: this might be slightly controversial, but I've sometimes
-> missed a --no-ff option to 'git merge' when working on plain git
-> repositories; IMHO preserving the 'logical' merge history when the
-> merge of a topic branch results in a fast-forward can be interesting.
 
-If you really want one, use git commit-tree directly.
+-- 
+Best Regards,
 
-Sam.
+Felipe Balbi
+felipebalbi@users.sourceforge.net
