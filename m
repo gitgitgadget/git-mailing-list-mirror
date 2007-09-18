@@ -1,93 +1,81 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: State of Perforce importing.
-Date: Tue, 18 Sep 2007 08:58:21 +0200
-Message-ID: <200709180858.25188.simon@lst.de>
-References: <20070917193027.GA24282@old.davidb.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: commit summary, --pretty=short and other tools
+Date: Tue, 18 Sep 2007 09:19:19 +0200
+Message-ID: <46EF7BF7.3070107@op5.se>
+References: <20070917112136.GA30201@glandium.org> <55887C88-8523-4839-8B91-236256A5E893@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3543000.Z0HXOezftx";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 08:55:59 2007
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 18 09:19:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXX01-000170-2A
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 08:55:57 +0200
+	id 1IXXMl-0006n3-36
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 09:19:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754477AbXIRGzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 02:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754519AbXIRGzx
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 02:55:53 -0400
-Received: from verein.lst.de ([213.95.11.210]:41027 "EHLO mail.lst.de"
+	id S1754443AbXIRHTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 03:19:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753937AbXIRHTW
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 03:19:22 -0400
+Received: from mail.op5.se ([193.201.96.20]:54889 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754456AbXIRGzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 02:55:52 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l8I6tfA5019814
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Tue, 18 Sep 2007 08:55:44 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070917193027.GA24282@old.davidb.org>
-X-Spam-Score: 0.1 () HTML_MESSAGE
-X-Scanned-By: MIMEDefang 2.39
+	id S1753511AbXIRHTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 03:19:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A904119446F;
+	Tue, 18 Sep 2007 09:19:20 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id akIB0gD+cJnD; Tue, 18 Sep 2007 09:19:20 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id 3351719443B;
+	Tue, 18 Sep 2007 09:19:20 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <55887C88-8523-4839-8B91-236256A5E893@lrde.epita.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58531>
 
---nextPart3543000.Z0HXOezftx
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Benoit SIGOURE wrote:
+> 
+> My opinion is that it would be better to keep the first line and never 
+> ever rewrite the commit messages.
+> 
 
-On Monday 17 September 2007 21:30:28 David Brown wrote:
-> I'd like to track a lot of code living in a Perforce repository, so I've
-> been playing with 'git-p4.py'.  Is the one in the contrib/fast-import
-> directory the latest version, or is there a better place.
+I've had reason to ponder this quite a lot, as I've imported 15 repos from
+CVS and SVN where the commit authors did not follow the git-recommended way
+of doing things, but rather put everything as one paragraph, usually without
+linebreaks, in the commit message.
 
-This is indeed the latest version (on contrib/fast-import).
+>From what I've read from those rather horrid commit-messages so far, it's
+usually correct to grab the first sentence in case the empty line isn't
+there, so:
 
-> So far, it is having a couple of problems:
->
->    - The commit comment is empty.  It doesn't seem to grab the Perforce
->      description, and the user seems to be <a@b>.
+const char *find_commit_subject_end(const char *commit_msg)
+{
+	const char *dot, *paragraph_end;
+	
+	paragraph_end = strstr(commit_msg, "\n\n");
+	dot = strchr(commit_msg, '.');
+	
+	return min_non_null(dot, paragraph_end); 
+}
 
-This may be a problem with the python output of perforce. Can you run the=20
-following command?
+would probably get it right very nearly always.
 
-	git-p4 debug change <a change number in your depot>
+I'll submit a patch in 3 hours when I get my lunch, unless someone
+beats me to it.
 
-That should print a dictionary that has a 'desc' field containing the commi=
-t=20
-comment/log and a 'user' field that has the perforce user name.
-
->    - Every revision seems to check every file out of Perforce.  This means
->      that for the directory I want, every revision is going to take about
-> 20 minutes.
-
-=46or every revision only every _changed_ file is retrieved (using p4=20
-print //path/file#revision).
-
-
-Simon
-
---nextPart3543000.Z0HXOezftx
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG73cRWXvMThJCpvIRAsFsAJ4tTUa4jV2ul4yyH9Ykjh48efAHCwCgxqPt
-i6KCyW7TqlZrsoqUA9eFfs0=
-=Z7t1
------END PGP SIGNATURE-----
-
---nextPart3543000.Z0HXOezftx--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
