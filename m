@@ -1,56 +1,54 @@
-From: Andreas Ericsson <ae@op5.se>
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
 Subject: Re: commit summary, --pretty=short and other tools
-Date: Tue, 18 Sep 2007 12:23:58 +0200
-Message-ID: <46EFA73E.9080807@op5.se>
+Date: Tue, 18 Sep 2007 12:27:14 +0200
+Message-ID: <CEE6032F-39FB-42D8-A57A-671E4E0875C7@lrde.epita.fr>
 References: <20070917112136.GA30201@glandium.org> <55887C88-8523-4839-8B91-236256A5E893@lrde.epita.fr> <46EF7BF7.3070107@op5.se> <Pine.LNX.4.64.0709181109130.28586@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-73--796846623"
 Content-Transfer-Encoding: 7bit
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+Cc: Andreas Ericsson <ae@op5.se>, Mike Hommey <mh@glandium.org>,
+	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 12:24:18 2007
+X-From: git-owner@vger.kernel.org Tue Sep 18 12:28:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXaFc-0003nf-4K
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 12:24:17 +0200
+	id 1IXaJN-0004ul-ER
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 12:28:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430AbXIRKYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 06:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752221AbXIRKYF
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 06:24:05 -0400
-Received: from mail.op5.se ([193.201.96.20]:33732 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752148AbXIRKYE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 06:24:04 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1B26919446F;
-	Tue, 18 Sep 2007 12:24:00 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.378
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.378 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, AWL=0.021, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Y3-M4rhWnwbm; Tue, 18 Sep 2007 12:23:59 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 66B861943F5;
-	Tue, 18 Sep 2007 12:23:59 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+	id S1754751AbXIRK1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 06:27:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXIRK1h
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 06:27:37 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:60794 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754720AbXIRK1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 06:27:36 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IXaIn-0003u2-O7; Tue, 18 Sep 2007 12:27:33 +0200
 In-Reply-To: <Pine.LNX.4.64.0709181109130.28586@racer.site>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58572>
 
-Johannes Schindelin wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-73--796846623
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+
+On Sep 18, 2007, at 12:13 PM, Johannes Schindelin wrote:
+
 > Hi,
-> 
+>
 > On Tue, 18 Sep 2007, Andreas Ericsson wrote:
-> 
+>
 >> const char *find_commit_subject_end(const char *commit_msg)
 >> {
 >> 	const char *dot, *paragraph_end;
@@ -59,25 +57,47 @@ Johannes Schindelin wrote:
 >> 		return min_non_null(dot, paragraph_end); }
 >>
 >> would probably get it right very nearly always.
-> 
+>
 > Counterexample (not even mentioning the missing handling of NULL):
-> 
-
-Well, pseudo code doesn't have to handle NULL's, as it never gets bad
-pseudo-input ;-)
-
-> http://brick.kernel.dk/git/?p=qemu.git;a=commit;h=eb66d86e295cd5a8f13221589806e15db62a62fa
-> 
-> And no, the responsible developer showed a strong unwillingness to adapt 
+>
+> http://brick.kernel.dk/git/? 
+> p=qemu.git;a=commit;h=eb66d86e295cd5a8f13221589806e15db62a62fa
+>
+> And no, the responsible developer showed a strong unwillingness to  
+> adapt
 > to better tools and workflows.
-> 
+>
 
-Hmm, how about any interpunctuation char or newline followed by newline or
-the first dot?
+OK, look, I think this is the typical case where there is no single  
+solution to fit all use cases.
+To handle this specific case, you could say "OK let's stop at  
+punctuation symbols then".  But what if my commit message is "Add  
+namespace::member whatever."
 
-It would cover this case and not be overly hard to code.
+If there is a single line followed by a blank line: it's a git-style  
+commit message, do what was done before.
+Otherwise, we need some heuristic to find the relevant part of the  
+commit message (if there is such a relevant part in the first place!).
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-73--796846623
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFG76gCwwE67wC8PUkRAhcGAKCYZHhiiC5jRgXwAt5B+d+D2lShdQCgpYv1
+d3/32IfPa2wWHbDWhaqM6CA=
+=CHPZ
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-73--796846623--
