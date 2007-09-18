@@ -1,83 +1,88 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [rfc] git submodules howto
-Date: Tue, 18 Sep 2007 17:47:34 +0200
-Message-ID: <20070918154734.GP19019@genesis.frugalware.org>
-References: <20070918105538.GL19019@genesis.frugalware.org> <20070918132940.GC12120@fieldses.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Latest builtin-commit series
+Date: Tue, 18 Sep 2007 11:23:29 -0400
+Message-ID: <1190129009.23692.24.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="B9BE8dkJ1pIKavwa"
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 17:49:49 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 18 17:49:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXfJo-0003gV-Ni
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 17:48:57 +0200
+	id 1IXfKL-0003sz-RR
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 17:49:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760131AbXIRPrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 11:47:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759763AbXIRPrq
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 11:47:46 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:36236 "EHLO mx3.mail.elte.hu"
+	id S1759267AbXIRPtR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 11:49:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759255AbXIRPtR
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 11:49:17 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:37833 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759749AbXIRPro (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 11:47:44 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IXfIa-0002n3-8g
-	from <vmiklos@frugalware.org>; Tue, 18 Sep 2007 17:47:43 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id A95BC1678012; Tue, 18 Sep 2007 17:47:34 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20070918132940.GC12120@fieldses.org>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: 1.1
-X-ELTE-SpamLevel: s
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=1.1 required=5.9 tests=BAYES_50,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	1.0 BAYES_50               BODY: Bayesian spam probability is 40 to 60%
-	[score: 0.4177]
+	id S1757457AbXIRPtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 11:49:15 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8IFmQ0E026411
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Sep 2007 11:48:43 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IFNZAI002586;
+	Tue, 18 Sep 2007 11:23:35 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IFNYWK030852;
+	Tue, 18 Sep 2007 11:23:34 -0400
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58622>
 
+Hi,
 
---B9BE8dkJ1pIKavwa
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I sent out a new builtin-commit patch series last night, and figured I
+should have written a cover letter to describe the changes there.
+Better late than never:
 
-On Tue, Sep 18, 2007 at 09:29:40AM -0400, "J. Bruce Fields" <bfields@fields=
-es.org> wrote:
-> > 2) does this worth adding to the documentation? maybe to a .txt under
-> > Documentation/howto? or to git-submodule.txt?
->=20
-> Could you add it as a new chapter to user-manual.txt (probably just
-> after the "git concepts" chapter), and then add links to that chapter
-> from git-submodule(1) and gitmodules(5)?
+      * rebase to Pierres strbuf changes.  Note, there is still some
+        strbuf tweaking required, to let stripspace work on a strbuf.
+        Also, I changed the semantics of stripspace to always add a
+        newline if the last line doesn't have one.  I believe the
+        current odd semantics (always remove the last newline) comes
+        from not being able to easily add a newline, but now that it's a
+        strbuf, that's easy.
 
-hm, i did not know about the wiki page Michael created yesterday. so i
-don't know what's the rule in case: if something is already in the wiki
-then should or should not it be added to the 'official docs'?
+      * Fixing the last bug that caused trouble in the test suite: even
+        if run_status says there's nothing to commit, proceed if we're
+        doing a merge.
 
-- VMiklos
+      * Set the test suite default editor to '/bin/true' instead of ':'.
+        Since we're not exec'ing the editor from shell anymore, ':'
+        won't work.  Maybe we should special case ':' in launch_editor
+        or perhaps make launch_editor use system(3).  Not sure.
 
---B9BE8dkJ1pIKavwa
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+      * The first few patches are good to go, and if we can get them
+        committed to next, we can focus on the builtin-commit patch.
+        Specifically:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+                0001-Enable-wt-status-output-to-a-given-FILE-pointer.patch
+                0002-Enable-wt-status-to-run-against-non-standard-index-f.patch
+                0003-Introduce-entry-point-for-launching-add-interactive.patch
+                0004-Clean-up-stripspace-a-bit-use-strbuf-even-more.patch
+                0005-Add-strbuf_read_file.patch
+                0006-Export-rerere-and-launch_editor.patch
+                        (edit our "and launch_editor" from the title)
+                
+        should all be fine and easy to review, whereas 
+        
+                0007-Implement-git-commit-as-a-builtin-command.patch
+                
+        will probably need some careful reviewing.  That said, it is
+        feature complete, the code is nice enough and it passes the test
+        suite.  It's just a very important part of git :)
 
-iD8DBQFG7/MWe81tAgORUJYRAkxtAKCEsztwASF9LJCkYvPamweALuLRjACgkwZF
-E04WR48J6YzlUanLj6lAju4=
-=7zvb
------END PGP SIGNATURE-----
+cheers,
+Kristian
 
---B9BE8dkJ1pIKavwa--
+(sorry about the duplicate mail)
