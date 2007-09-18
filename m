@@ -1,65 +1,57 @@
-From: Ben Konrath <bkonrath@redhat.com>
-Subject: Re: [EGIT PATCH] Add feature and plugin.
-Date: Tue, 18 Sep 2007 17:20:16 -0400
-Message-ID: <1190150416.21540.0.camel@plug>
-References: <20070917185310.GA6042@toast.toronto.redhat.com>
-	 <46EF81BD.7010609@op5.se>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Latest builtin-commit series
+Date: Tue, 18 Sep 2007 23:39:03 +0200
+Message-ID: <20070918213903.GA14488@steel.home>
+References: <1190129009.23692.24.camel@hinata.boston.redhat.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Sep 18 23:21:38 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 23:39:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXkVk-0000yQ-NF
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 23:21:37 +0200
+	id 1IXkmz-0006Ot-U8
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 23:39:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750875AbXIRVUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 17:20:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750939AbXIRVUq
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 17:20:46 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:37907 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750858AbXIRVUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 17:20:45 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8ILKevF007921
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Sep 2007 17:20:40 -0400
-Received: from pobox.toronto.redhat.com (pobox.toronto.redhat.com [172.16.14.4])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8ILKQWr021259;
-	Tue, 18 Sep 2007 17:20:40 -0400
-Received: from [127.0.0.1] (sebastian-int.corp.redhat.com [172.16.52.221])
-	by pobox.toronto.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l8ILKOwK022943;
-	Tue, 18 Sep 2007 17:20:25 -0400
-In-Reply-To: <46EF81BD.7010609@op5.se>
-X-Mailer: Evolution 2.10.3 (2.10.3-4.fc7) 
+	id S1752208AbXIRVjL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 17:39:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752239AbXIRVjJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 17:39:09 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:20224 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751627AbXIRVjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 17:39:08 -0400
+Received: from tigra.home (Faaaa.f.strato-dslnet.de [195.4.170.170])
+	by post.webmailer.de (fruni mo49) (RZmta 12.10)
+	with ESMTP id Y04833j8ILbY4e ; Tue, 18 Sep 2007 23:39:04 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id AC3E227752;
+	Tue, 18 Sep 2007 23:39:04 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 0457BBF18; Tue, 18 Sep 2007 23:39:03 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1190129009.23692.24.camel@hinata.boston.redhat.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolCodE=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58634>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58635>
 
-On Tue, 2007-09-18 at 09:43 +0200, Andreas Ericsson wrote:
-> Ben Konrath wrote:
-> > Hi,
-> > 
-> > I made a feature and associated branding plugin for Egit. Including
-> > these two plugins allows us to build Egit for Fedora but it also makes
-> > it easy to create an update site for Egit.
-> 
-> 
-> 
-> > These two plugins also add an
-> > entry for Egit in Help -> About Eclipse -> Feature Details. 
-> > 
-> 
-> When you start writing "also" in your commit messages, it's a pretty good
-> sign that you should have made many smaller commits rathern than one large.
+Kristian H=F8gsberg, Tue, Sep 18, 2007 17:23:29 +0200:
+>       * Set the test suite default editor to '/bin/true' instead of '=
+:'.
+>         Since we're not exec'ing the editor from shell anymore, ':'
+>         won't work.  Maybe we should special case ':' in launch_edito=
+r
+>         or perhaps make launch_editor use system(3).  Not sure.
 
-Ok thanks. I think that I could have split this up into two commits.
-I'll take that into consideration for future work.
-
-Cheers, Ben
+Special case "" (empty string)? MinGW may have problems with
+/bin/true, any future exotic ports notwithstanding (OS/2, anyone?).
