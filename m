@@ -1,82 +1,70 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 9/9] Implement git commit as a builtin command.
-Date: Mon, 17 Sep 2007 20:11:25 -0400
-Message-ID: <1190074285.10112.25.camel@hinata.boston.redhat.com>
-References: <11890382242333-git-send-email-krh@redhat.com>
-	 <11890382243290-git-send-email-krh@redhat.com>
-	 <11890382253220-git-send-email-krh@redhat.com>
-	 <11890382252522-git-send-email-krh@redhat.com>
-	 <1189038225525-git-send-email-krh@redhat.com>
-	 <11890382262161-git-send-email-krh@redhat.com>
-	 <11890382264046-git-send-email-krh@redhat.com>
-	 <11890382271931-git-send-email-krh@redhat.com>
-	 <Pine.LNX.4.64.0709061741370.28586@racer.site>
-	 <1190069881.10112.10.camel@hinata.boston.redhat.com>
-	 <20070917235645.GG24342@sigill.intra.peff.net>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: Re: rename detection limit checking, cherry picking, and git am -3
+Date: Mon, 17 Sep 2007 20:18:27 -0400
+Message-ID: <46EF1953.6060106@gmail.com>
+References: <46EDF54F.5030503@gmail.com> <20070917034742.GG3099@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Sep 18 02:11:42 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 18 02:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXQgn-0003Gv-EN
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 02:11:41 +0200
+	id 1IXQnZ-0004hd-EZ
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 02:18:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756233AbXIRALh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Sep 2007 20:11:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756221AbXIRALh
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 20:11:37 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:57282 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752056AbXIRALg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 20:11:36 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8I0BVhp014242
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 17 Sep 2007 20:11:31 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8I0BVcR023673;
-	Mon, 17 Sep 2007 20:11:31 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8I0BVwo022568;
-	Mon, 17 Sep 2007 20:11:31 -0400
-In-Reply-To: <20070917235645.GG24342@sigill.intra.peff.net>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1758404AbXIRASd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 20:18:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757642AbXIRASd
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 20:18:33 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:33696 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757468AbXIRASb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 20:18:31 -0400
+Received: by an-out-0708.google.com with SMTP id d31so255592and
+        for <git@vger.kernel.org>; Mon, 17 Sep 2007 17:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=58HjSgvE9l4rTXYP8yCBpeYQYvsxwthjmMq2nvRDx0Y=;
+        b=kV/yYFP1Boz1REYbrgpE1n28BAWrK+KR7y/KNj8s3B30vgkprqHhl6w1EMB3qx6pqU7BJ8auGBmdURsKaSzZzdAfP98mt/PLKMflYoi6CUhmsC9bE73ZQmgshDx1AELdE84p7LvTSYX8DqvOgdHmbbIWKVUjNMxDUzqr/h0ULKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=Cu35HgYLrFwOeDOGZyWrtgNQ7RAEmyJFHp/jrZNtS48uSjrmI/8BAzU0m9WdyBbk9bUb67dQ5SpB3IUDNW2F8gdKpUueDdchFmOPJTqsmnE1VMUbqWW4ogUwINvyuW8QT9XEE3rx1wh+a+tY/7G/AiWodOlSJXusk2h1Tz8nU64=
+Received: by 10.100.139.12 with SMTP id m12mr8607368and.1190074710974;
+        Mon, 17 Sep 2007 17:18:30 -0700 (PDT)
+Received: from ?192.168.100.117? ( [71.246.202.205])
+        by mx.google.com with ESMTPS id h38sm9757796wxd.2007.09.17.17.18.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 17 Sep 2007 17:18:29 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20070917034742.GG3099@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58511>
 
+Shawn O. Pearce wrote:
+> In this case `git am -3` creates a tree object containing only
+> the files modified by the patch and then feeds that tree into
+> git-merge-recursive.  Now if you go study git-revert's code you'll
+> see it actually just calls git-merge-recursive on three trees,
+> but these are three complete trees.
+>
+> So what's probably happening here is there's less candidates on one
+> side in the `am -3` case, so we spend a lot less time generating
+> the rename matrix, searching for a match, and we get better changes
+> of finding a match.
+>
+>   
+Thanks for the explanation. For my case, there are < 500 files 
+(including renamed files) in common between the two branches, giving 
+~2000*4000 files that have no correspondence for which git can try to 
+find renames. Clearly, reducing the one side from 4000 files to 1 file 
+has an enormous payoff.
 
-On Mon, 2007-09-17 at 19:56 -0400, Jeff King wrote:
-> On Mon, Sep 17, 2007 at 06:58:01PM -0400, Kristian H=C3=B8gsberg wrot=
-e:
->=20
-> > > > -	builtin-runstatus.o \
-> > >=20
-> > > Better keep it; some people's scripts could depend on it.
-> >=20
-> > Seriously?  Why don't we remove it and see if somebody yells?  It's=
- more
-> > of an implementation detail than most other git commands; if you ne=
-ed
-> > status output in your script why wouldn't you just run git status?
->=20
-> As the author of builtin-runstatus, I had always intended that it was=
- a
-> temporary part of the transition to a C git-commit, and would go away
-> then. But I see in the interim somebody documented it.  It should
-> perhaps have been called git-status--helper, and the documentation
-> should have read "DO NOT USE THIS."
-
-That's what I suspected, thanks for clearing that up.  It definitely
-feels more like a step towards a built-in commit than a useful command
-on it's own.  It plugs right into this work, so as such, it's been a
-success.
-
-Kristian
+Mark
