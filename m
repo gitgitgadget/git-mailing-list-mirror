@@ -1,89 +1,84 @@
-From: "Alex Unleashed" <unledev@gmail.com>
-Subject: Re: [PATCH] git-send-email: Add a --cc-nobody option
-Date: Tue, 18 Sep 2007 14:50:10 +0200
-Message-ID: <5e4707340709180550w3211e95fqd9fd648aab8ce78a@mail.gmail.com>
-References: <11901157221792-git-send-email-felipebalbi@users.sourceforge.net>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: git-svn error when cloning apache repo
+Date: Tue, 18 Sep 2007 08:53:52 -0400
+Message-ID: <20070918125352.GA19524@falcon.digizenstudio.com>
+References: <20070915230833.GA8525@falcon.digizenstudio.com> <46ED17A9.2010603@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, ae@op5.se,
-	"Felipe Balbi" <felipe.lima@indt.org.br>
-To: "felipebalbi@users.sourceforge.net" 
-	<felipebalbi@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Sep 18 14:50:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 14:54:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXcX1-0004gz-MD
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:50:24 +0200
+	id 1IXcae-0006DH-CM
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:54:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXIRMuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 08:50:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753861AbXIRMuO
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:50:14 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:13861 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752752AbXIRMuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 08:50:12 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so1427491nfb
-        for <git@vger.kernel.org>; Tue, 18 Sep 2007 05:50:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=BqpP3gMYNwG0B/PtL/QLbyQWCevM6Hr0iSVjUqk+uy0=;
-        b=c9pZpvTRcvAqoon3jJ7YBEu4dXq3ceoIrp+1uPJQPDEiA+E7M94/ESjcjb6dZ/KCw5WlMItuFAAj66l94FmJCmybwH4orWFFJHE9+jOPWpu1jB0oFodr7YtbpIS996RngQloZy/eiNQJfz/kFxPe8tw4pc5dg1gj8o4nBm1dlQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WJH9t9HHG1Hg1xq7Mj/bCj305MZRe51ZEGu3aE01EDc6ktRg9GqVaAXLR+w/44j4WEg+qhzXCW0s+6iF7OMvQnWPP6yET8tkCnWmRCQNsdG8/Myw7A60oillSCTvUAOBdEHCsmen1Zpw4qEHDGeu/gTD9N1aDemMC/VQfBNSEwg=
-Received: by 10.86.51.2 with SMTP id y2mr4621019fgy.1190119810224;
-        Tue, 18 Sep 2007 05:50:10 -0700 (PDT)
-Received: by 10.86.71.16 with HTTP; Tue, 18 Sep 2007 05:50:10 -0700 (PDT)
-In-Reply-To: <11901157221792-git-send-email-felipebalbi@users.sourceforge.net>
+	id S1752221AbXIRMyC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 08:54:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751755AbXIRMyB
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:54:01 -0400
+Received: from k2smtpout03-01.prod.mesa1.secureserver.net ([64.202.189.171]:34096
+	"HELO k2smtpout03-01.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751538AbXIRMyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 08:54:00 -0400
+Received: (qmail 20768 invoked from network); 18 Sep 2007 12:53:59 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout03-01.prod.mesa1.secureserver.net (64.202.189.171) with ESMTP; 18 Sep 2007 12:53:59 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 7CF3D100A1A;
+	Tue, 18 Sep 2007 12:53:59 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KTSxbON7VOxO; Tue, 18 Sep 2007 08:53:53 -0400 (EDT)
+Received: from falcon (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id AFA86100A0E;
+	Tue, 18 Sep 2007 08:53:53 -0400 (EDT)
+Received: by falcon (Postfix, from userid 1000)
+	id CB0327B520; Tue, 18 Sep 2007 08:53:52 -0400 (EDT)
+Mail-Followup-To: Sam Vilain <sam@vilain.net>, git <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <46ED17A9.2010603@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58599>
 
-On 9/18/07, felipebalbi@users.sourceforge.net
-<felipebalbi@users.sourceforge.net> wrote:
-> From: Felipe Balbi <felipe.lima@indt.org.br>
->
-> This patch adds a --cc-nobody option to avoid sending emails
-> to everybody but the ones listed by --to option.
->
-> Signed-off-by: Felipe Balbi <felipe.lima@indt.org.br>
+On Sun, Sep 16, 2007 at 11:46:49PM +1200, Sam Vilain wrote:
+> Jing Xue wrote:
+> > $ git svn clone https://svn.apache.org/repos/asf/incubator/ivy/core/ ivy-core -T trunk -b branches -t tags
+> > Initialized empty Git repository in .git/
+> > Using higher level of URL: https://svn.apache.org/repos/asf/incubator/ivy/core => https://svn.apache.org/repos/asf
+> >   
+> 
+> I'm fairly sure this is where it went wrong. Try editing .git/config and
+> putting your original URL in the source URL, and re-try the fetch.
 
-I wrote a similar patch a couple months ago, but they differ slightly,
-maybe the code has changed somewhat:
-http://marc.info/?l=git&m=118200193310898&w=2
+Hmm... thanks, but didn't work. The repo didn't look right to begin
+with. The HEAD pointed to refs/heads/master as usual, but there was
+nothing in refs/heads at all.
 
---cc-nobody sounds better to me.
+I also tried:
+git svn clone https://svn.apache.org/repos/asf/ ivy-core -s --prefix=incubator/ivy/core/
 
->                                 } elsif (/^(Cc|From):\s+(.*)$/) {
-> -                                       if (unquote_rfc2047($2) eq $sender) {
-> -                                               next if ($suppress_from);
-> +                                       if (unquote_rfc2047($2)) {
-> +                                               next if ($cc_nobody);
-> +                                       }
-> +                                       elsif (unquote_rfc2047($2) eq $sender) {
-> +                                               next if ($suppress_from|$cc_nobody);
->                                         }
->                                         elsif ($1 eq 'From') {
->                                                 $author = unquote_rfc2047($2);
+And got no errors, but there wasn't any working tree in ivy-core
+afterwards. Then I tried 'git svn rebase':
 
-Here you could probably skip the whole branch if you check $cc_nobody
-first of all.
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+fatal: Needed a single revision
+invalid upstream
 
-> @@ -707,7 +715,7 @@ foreach my $t (@files) {
->                         }
->                 } else {
->                         $message .=  $_;
-> -                       if (/^(Signed-off-by|Cc): (.*)$/i && $signed_off_cc) {
-> +                       if (/^(Signed-off-by|Cc): (.*)$/i && $signed_off_cc && !$cc_nobody) {
+Due to the same "nothing in refs/heads" situation. Also there is this
+23M file .git/svn/incubator/ivy/core/trunk/.rev_db.13f79535-47bb-0310-9956-ffa450edef6
+that contains all 0's.
 
-Minor, but almost the same here.
+The part before "I also tried..." was with git 1.5.3.  "I also tried..."
+was with git 1.5.3.1.112.gb7a2 as of last night.
 
-Alex
+Cheers.
+-- 
+Jing Xue
