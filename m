@@ -1,71 +1,60 @@
-From: =?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
-Subject: [PATCH] Fixed update-hook example allow-users format.
-Date: Tue, 18 Sep 2007 15:26:09 +0300
-Message-ID: <1190118369327-git-send-email-v@pp.inet.fi>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 18 14:27:06 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-merge: add option --no-ff
+Date: Tue, 18 Sep 2007 13:29:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709181319050.28586@racer.site>
+References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com> 
+ <11900461843997-git-send-email-hjemli@gmail.com>  <20070918005013.GA6368@muzzle>
+  <8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com> 
+ <7v4phsxy55.fsf@gitster.siamese.dyndns.org>  <46EF7EA1.6020402@vilain.net>
+ <46EF9687.6070304@vilain.net> <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Sam Vilain <sam@vilain.net>, Junio C Hamano <gitster@pobox.com>,
+	Eric Wong <normalperson@yhbt.net>,
+	Andreas Ericsson <ae@op5.se>,
+	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 14:30:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXcAT-0003hl-OL
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:27:06 +0200
+	id 1IXcDc-0004z5-28
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:30:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755451AbXIRM07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 08:26:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbXIRM07
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:26:59 -0400
-Received: from gw01.mail.saunalahti.fi ([195.197.172.115]:47327 "EHLO
-	gw01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753718AbXIRM06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 08:26:58 -0400
-Received: from localhost.localdomain (GYKMMMCCLXXV.dsl.saunalahti.fi [85.77.38.176])
-	by gw01.mail.saunalahti.fi (Postfix) with ESMTP id CCDAA1510CC;
-	Tue, 18 Sep 2007 15:26:48 +0300 (EEST)
-X-Mailer: git-send-email 1.5.3.1.2.gd7c01
+	id S1756199AbXIRMaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 08:30:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755933AbXIRMaP
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:30:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51428 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755860AbXIRMaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 08:30:14 -0400
+Received: (qmail invoked by alias); 18 Sep 2007 12:30:11 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 18 Sep 2007 14:30:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18cghAEDkUcfuzo+frg9BdIv9brYJtgIZrUVFeoKJ
+	m2sVToUW+dkBNk
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58594>
 
-The example provided with the update-hook-example does not work on
-either bash 2.05b.0(1)-release nor 3.1.17(1)-release. The matcher did
-not match the lines that it advertised to match, such as:
+Hi,
 
-refs/heads/bw/        linus
-refs/heads/tmp/*      *
+On Tue, 18 Sep 2007, Lars Hjemli wrote:
 
-In POSIX 1003.2 regular expressions, the star (*), is not an wildcard
-meaning "match everything", it matches 0 or more matches of the atom
-preceding it.
+> Sidenote: this might be slightly controversial, but I've sometimes 
+> missed a --no-ff option to 'git merge' when working on plain git 
+> repositories; IMHO preserving the 'logical' merge history when the merge 
+> of a topic branch results in a fast-forward can be interesting.
 
-So to match "refs/heads/bw/topic-branch", the matcher should be written
-as "refs/heads/bw/.*" to match "refs/heads/bw/" and everything after it.
----
- Documentation/howto/update-hook-example.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Linus explained a lot of times why this is wrong.  It encourages 
+upstream-downstream thinking.  We should really turn this into a FAQ.
 
-diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
-index 3a33696..88765b5 100644
---- a/Documentation/howto/update-hook-example.txt
-+++ b/Documentation/howto/update-hook-example.txt
-@@ -158,11 +158,11 @@ This uses two files, $GIT_DIR/info/allowed-users and
- allowed-groups, to describe which heads can be pushed into by
- whom.  The format of each file would look like this:
- 
--	refs/heads/master	junio
-+        refs/heads/master	junio
-         refs/heads/cogito$	pasky
--	refs/heads/bw/		linus
--        refs/heads/tmp/		*
--        refs/tags/v[0-9]*	junio
-+        refs/heads/bw/.*	linus
-+        refs/heads/tmp/.*	.*
-+        refs/tags/v[0-9].*	junio
- 
- With this, Linus can push or create "bw/penguin" or "bw/zebra"
- or "bw/panda" branches, Pasky can do only "cogito", and JC can
--- 
-1.5.3.1.2.gd7c01
+Ciao,
+Dscho
