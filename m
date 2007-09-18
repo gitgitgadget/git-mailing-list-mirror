@@ -1,87 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] Fix lapsus in builtin-apply.c
-Date: Tue, 18 Sep 2007 12:12:58 +0200
-Message-ID: <20070918101258.GA304@artemis.corp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: commit summary, --pretty=short and other tools
+Date: Tue, 18 Sep 2007 11:13:46 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709181109130.28586@racer.site>
+References: <20070917112136.GA30201@glandium.org>
+ <55887C88-8523-4839-8B91-236256A5E893@lrde.epita.fr> <46EF7BF7.3070107@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="jI8keyz6grp/JLjh";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 12:13:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Sep 18 12:14:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXa50-0000e6-8J
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 12:13:19 +0200
+	id 1IXa6S-00015R-5L
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 12:14:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbXIRKNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 06:13:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbXIRKNE
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 06:13:04 -0400
-Received: from pan.madism.org ([88.191.52.104]:44832 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752240AbXIRKND (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 06:13:03 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 9FE5A20767;
-	Tue, 18 Sep 2007 12:12:59 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A36C81A3A5; Tue, 18 Sep 2007 12:12:58 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Madmutt/devel (Linux)
+	id S1753771AbXIRKOj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 06:14:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753557AbXIRKOj
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 06:14:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33049 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753320AbXIRKOi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 06:14:38 -0400
+Received: (qmail invoked by alias); 18 Sep 2007 10:14:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 18 Sep 2007 12:14:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+JCecA8S+JYQzyx5i7xW6xMFZEoM7L5iJSfTRVGb
+	A3of8iKXsE5MZr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46EF7BF7.3070107@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58568>
 
+Hi,
 
---jI8keyz6grp/JLjh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 18 Sep 2007, Andreas Ericsson wrote:
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
+> const char *find_commit_subject_end(const char *commit_msg)
+> {
+> 	const char *dot, *paragraph_end;
+> 		paragraph_end = strstr(commit_msg, "\n\n");
+> 	dot = strchr(commit_msg, '.');
+> 		return min_non_null(dot, paragraph_end); }
+> 
+> would probably get it right very nearly always.
 
-  I found this issue trying to refactor the "quote" module. It's
-definitely worth to push this in maint.
+Counterexample (not even mentioning the missing handling of NULL):
 
- builtin-apply.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+http://brick.kernel.dk/git/?p=qemu.git;a=commit;h=eb66d86e295cd5a8f13221589806e15db62a62fa
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 05ce220..86d89a4 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -254,7 +254,7 @@ static char *find_name(const char *line, char *def, int=
- p_value, int terminate)
- 		if (name) {
- 			char *cp =3D name;
- 			while (p_value) {
--				cp =3D strchr(name, '/');
-+				cp =3D strchr(cp, '/');
- 				if (!cp)
- 					break;
- 				cp++;
---=20
-1.5.3.1
+And no, the responsible developer showed a strong unwillingness to adapt 
+to better tools and workflows.
 
-
---jI8keyz6grp/JLjh
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG76SqvGr7W6HudhwRAsygAJ96WDOGDFuq/xfzof+RC6KukOA0qgCgno8P
-bIfOPVScAbnIA99W08TwVGY=
-=2AW1
------END PGP SIGNATURE-----
-
---jI8keyz6grp/JLjh--
+Ciao,
+Dscho
