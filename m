@@ -1,78 +1,58 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Mon, 17 Sep 2007 17:50:13 -0700
-Message-ID: <20070918005013.GA6368@muzzle>
-References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com> <11900461843997-git-send-email-hjemli@gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH 3/3] git-apply: add tests for stripping of leading and
+	trailing whitespace
+Date: Mon, 17 Sep 2007 20:53:49 -0400
+Message-ID: <20070918005349.GB2443@fieldses.org>
+References: <11899829424040-git-send-email-bfields@citi.umich.edu> <11899829424173-git-send-email-bfields@citi.umich.edu> <1189982942187-git-send-email-bfields@citi.umich.edu> <11899829421064-git-send-email-bfields@citi.umich.edu> <m3myvlv0m0.fsf@maximus.localdomain> <20070917150213.GB4957@fieldses.org> <m31wcwsvpt.fsf@maximus.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 02:50:28 2007
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Krzysztof Halasa <khc@pm.waw.pl>
+X-From: git-owner@vger.kernel.org Tue Sep 18 02:54:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXRIE-00034V-OM
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 02:50:23 +0200
+	id 1IXRLl-0003qJ-4V
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 02:54:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753838AbXIRAuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Sep 2007 20:50:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbXIRAuS
-	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 20:50:18 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:50344 "EHLO hand.yhbt.net"
+	id S1753506AbXIRAx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Sep 2007 20:53:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752242AbXIRAx5
+	(ORCPT <rfc822;git-outgoing>); Mon, 17 Sep 2007 20:53:57 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:52647 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752536AbXIRAuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Sep 2007 20:50:16 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 693BE7DC029;
-	Mon, 17 Sep 2007 17:50:13 -0700 (PDT)
+	id S1752072AbXIRAx4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Sep 2007 20:53:56 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IXRLZ-0001Z6-Gh; Mon, 17 Sep 2007 20:53:49 -0400
 Content-Disposition: inline
-In-Reply-To: <11900461843997-git-send-email-hjemli@gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <m31wcwsvpt.fsf@maximus.localdomain>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58515>
 
-Lars Hjemli <hjemli@gmail.com> wrote:
-> This option forces fast-forward merges to create a "true" merge commit,
-> i.e. a commit with multiple parents.
+On Tue, Sep 18, 2007 at 01:44:46AM +0200, Krzysztof Halasa wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
 > 
-> Although a fast-forward merge would normally be the right thing to do with
-> git branches, it is suboptimal when operating on git-svn branches since it
-> makes 'git-svn dcommit' fail to recognize the correct upstream subversion
-> branch. But performing such a merge with --no-ff specified will both make
-> git-svn dcommit recognize the correct upstream and create the logically
-> correct history in subversion (the merge performed in git will be recorded
-> as a single revision in subversion, not as a series of revisions seemingly
-> cherry-picked from the merged branch).
+> >> It may be valid, some projects use tabs for indentation and spaces
+> >> for alignment, e.g.:
+> >
+> > Yeah, I know.  I was hoping that the stripspace behavior was already
+> > specific enough to the linux-kernel style that we could just assume that 
+> > it was only used by developers on projects with the same style.
 > 
-> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+> Actually I would consider linux kernel an example of such project
+> with spaces for alignment. Except that current tools are not to
+> the task. Someday...
 
-Would automatically enabling --no-ff when it detects merging of two (or
-more) SVN branches be a good thing?  We can add scripting support to
-git-svn for detecting if any given commit is really from SVN or not.
-Then we could do something like this in git-merge
+I guess I haven't followed previous arguments on the subject, but based
+on checkpatch.pl I was assuming the tabs-whenever-possible policy had
+won out.
 
----------------------------- 8< --------------------------------
-if git-svn test-svn-commits "$@"
-then
-	no_ff=t
-	no_fast_forward_strategies=$all_strategies
-fi
----------------------------- 8< --------------------------------
+Anyway, I can only care about whitespace for so long....
 
-It'd probably prevent a lot of users from shooting themselves in the
-foot if they forget to read or learn about the --no-ff option.
-
-> ---
-> 
-> When updating git-svn.txt, I noticed that we might want to update the 
-> section "DESIGN PHILOSOPHY". Eric?
-
-Yeah.  That's very much out of date.  I'll update it in a bit.
-
--- 
-Eric Wong
+--b.
