@@ -1,80 +1,59 @@
-From: Ben Konrath <bkonrath@redhat.com>
-Subject: [EGIT PATCH] Change to simplified icon.
-Date: Tue, 18 Sep 2007 18:24:16 -0400
-Message-ID: <20070918222416.GB11990@toast.toronto.redhat.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Latest builtin-commit series
+Date: Tue, 18 Sep 2007 23:24:36 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709182324230.28395@racer.site>
+References: <1190129009.23692.24.camel@hinata.boston.redhat.com>
+ <20070918213903.GA14488@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 00:24:30 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 00:25:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXlUZ-00031r-MY
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:24:28 +0200
+	id 1IXlVh-0003NG-FT
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751163AbXIRWYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 18:24:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751305AbXIRWYU
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:24:20 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:55734 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751036AbXIRWYT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 18:24:19 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8IMOHf3010234
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Sep 2007 18:24:17 -0400
-Received: from pobox.toronto.redhat.com (pobox.toronto.redhat.com [172.16.14.4])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IMOHKJ013698;
-	Tue, 18 Sep 2007 18:24:17 -0400
-Received: from touchme.toronto.redhat.com (IDENT:postfix@touchme.toronto.redhat.com [172.16.14.9])
-	by pobox.toronto.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l8IMOHZ7032453;
-	Tue, 18 Sep 2007 18:24:17 -0400
-Received: from toast.toronto.redhat.com (toast.toronto.redhat.com [172.16.14.221])
-	by touchme.toronto.redhat.com (Postfix) with ESMTP
-	id DE6928001FF; Tue, 18 Sep 2007 18:24:16 -0400 (EDT)
-Received: from toast.toronto.redhat.com (localhost.localdomain [127.0.0.1])
-	by toast.toronto.redhat.com (8.14.1/8.13.0) with ESMTP id l8IMOG04012014;
-	Tue, 18 Sep 2007 18:24:16 -0400
-Received: (from bkonrath@localhost)
-	by toast.toronto.redhat.com (8.14.1/8.14.1/Submit) id l8IMOG1c012013;
-	Tue, 18 Sep 2007 18:24:16 -0400
-Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-02-12)
+	id S1751439AbXIRWZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 18:25:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbXIRWZb
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:25:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51509 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751399AbXIRWZa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 18:25:30 -0400
+Received: (qmail invoked by alias); 18 Sep 2007 22:25:28 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp001) with SMTP; 19 Sep 2007 00:25:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/lxNENF5blhJPP8nd70w3u7lJlkoqB2botBmSn5g
+	8bhnF+xqjWjunA
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070918213903.GA14488@steel.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58640>
 
-Hi Robin,
+Hi,
 
-Here's a patch that changes the icon to something that is a little more
-aesthetically pleasing than the one I iniitially submitted. Feel free to
-use the one you like best.
+On Tue, 18 Sep 2007, Alex Riesen wrote:
 
-Cheers, Ben
+> Kristian H?gsberg, Tue, Sep 18, 2007 17:23:29 +0200:
+> >       * Set the test suite default editor to '/bin/true' instead of ':'.
+> >         Since we're not exec'ing the editor from shell anymore, ':'
+> >         won't work.  Maybe we should special case ':' in launch_editor
+> >         or perhaps make launch_editor use system(3).  Not sure.
+> 
+> Special case "" (empty string)? MinGW may have problems with
+> /bin/true, any future exotic ports notwithstanding (OS/2, anyone?).
 
-Signed-off-by: Ben Konrath <bkonrath@redhat.com>
----
- org.spearce.egit/egit.png |  Bin 305 -> 226 bytes
- 1 files changed, 0 insertions(+), 0 deletions(-)
+No problem.  At least in msysGit.
 
-diff --git a/org.spearce.egit/egit.png b/org.spearce.egit/egit.png
-index 6e231c2c78068d313500afd0192962de8c8028d5..6782d4ab9b757aaa2c3d5edad42215ea02456836 100644
-GIT binary patch
-delta 128
-zc$@)%0Du3n0^$LXK?o5MJ0{fucRrCxENxgxL_t(Y$L*B44FDhv17pNqjD{GE$xJ~P
-zx*(py?zrZRNB~JYnPi6}fdmqmWq0m?BZUm`dpCgoqL=^;XxQg39(gUo$^d^orn8sp
-i65v`i2_%r<6Ttw60WCp3d$>IS0000<MNUMnLSTZ2z%jJ|
-
-delta 208
-zc$@*y05AXI0kHy*K?n>MDJ}#O78sF9EPtm-L_t(Y$L&;G4!|G?6SI5mXvU-MWZege
-zOB9Ki`S{Q;t(bz85&$=Hc{g|sC%C#_QY79WU<g4YYd?XW_(#bqO3c~g4CgB`xQyg0
-zFV@9K?UxZyrk{c7I9H}(nSaW(v2QkAiA`2oS2kIRM*uZ?QR7&d2dySw^A{aA-95;z
-zAIc?o10DFh3XY082`G|iI97Z`lTEg&;HzcId6nL2#m}H^LGS`$*mx<?D@u<50000<
-KMNUMnLSTZEmRRfn
-
--- 
-1.5.2.4
+Ciao,
+Dscho
