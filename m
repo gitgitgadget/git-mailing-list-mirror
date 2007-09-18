@@ -1,90 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] Make git-pull give hints on what to do when there is no branch to merge from
-Date: Tue, 18 Sep 2007 16:00:47 -0700
-Message-ID: <7vsl5btw80.fsf@gitster.siamese.dyndns.org>
-References: <1190077493.22387.54.camel@cacharro.xalalinux.org>
-	<1190077948.22387.66.camel@cacharro.xalalinux.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: Latest builtin-commit series
+Date: Tue, 18 Sep 2007 19:15:01 -0400
+Message-ID: <1190157301.7157.1.camel@hinata.boston.redhat.com>
+References: <1190129009.23692.24.camel@hinata.boston.redhat.com>
+	 <7vbqbzvcf4.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Federico Mena Quintero <federico@novell.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 01:01:03 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 01:15:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXm3y-0003uE-A6
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 01:01:02 +0200
+	id 1IXmHt-0007TL-NM
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 01:15:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750939AbXIRXA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 19:00:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbXIRXA5
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 19:00:57 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37525 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750875AbXIRXA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 19:00:56 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4489A1379F3;
-	Tue, 18 Sep 2007 19:01:13 -0400 (EDT)
-In-Reply-To: <1190077948.22387.66.camel@cacharro.xalalinux.org> (Federico Mena
-	Quintero's message of "Mon, 17 Sep 2007 20:12:28 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752399AbXIRXPU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 19:15:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbXIRXPU
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 19:15:20 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:39297 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751904AbXIRXPT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 19:15:19 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8INF8so001750
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Sep 2007 19:15:08 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8INF8Id028389;
+	Tue, 18 Sep 2007 19:15:08 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8INF7Oc009076;
+	Tue, 18 Sep 2007 19:15:07 -0400
+In-Reply-To: <7vbqbzvcf4.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58656>
 
-Federico Mena Quintero <federico@novell.com> writes:
 
-> Signed-off-by: Federico Mena Quintero <federico@gnu.org>
-> ---
->  git-pull.sh |    6 +++++-
->  1 files changed, 5 insertions(+), 1 deletions(-)
->
-> diff --git a/git-pull.sh b/git-pull.sh
-> index 5e96d1f..7beef4d 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -98,7 +98,11 @@ case "$merge_head" in
->  	curr_branch=${curr_branch#refs/heads/}
->  
->  	echo >&2 "Warning: No merge candidate found because value of config option
-> -         \"branch.${curr_branch}.merge\" does not match any remote branch fetched."
-> +         \"branch.${curr_branch}.merge\" does not match any remote branch fetched.
-> +         This branch is not set up to track any other branches.  Please name which
-> +         branch you want to merge from on the command line, or if you almost always
-> +         want to merge from the same branch, then set this up with
-> +         \"git branch --track\"."
+On Tue, 2007-09-18 at 15:25 -0700, Junio C Hamano wrote:
+> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+>=20
+> > Better late than never:
+> >
+> >       * rebase to Pierres strbuf changes.  Note, there is still som=
+e
+> >         strbuf tweaking required, to let stripspace work on a strbu=
+f.
+> >         Also, I changed the semantics of stripspace to always add a
+> >         newline if the last line doesn't have one.  I believe the
+> >         current odd semantics (always remove the last newline) come=
+s
+> >         from not being able to easily add a newline, but now that i=
+t's a
+> >         strbuf, that's easy.
+>=20
+> I do not find the "remove trailing newline" so odd.  Didn't it
+> come because you sometimes needed to _not_ add it?
 
-This is a nice attempt, but can you use "git branch --track" to
-set this?  What does the command line look like?
+All users add a trailing newline if it's not present after stripping.
 
-This error can come when branch.<foo>.merge does not match what
-remote.<bar>.fetch says (where branch.<foo>.remote is <bar>),
-but it is my understanding that the builtin-fetch work by Daniel
-and Shawn would fetch branch.<foo>.merge as well to reduce this
-error.  Another possibility is when the user does not have any
-branch.<foo>.merge.
+> >       * Set the test suite default editor to '/bin/true' instead of=
+ ':'.
+> >         Since we're not exec'ing the editor from shell anymore, ':'
+> >         won't work.  Maybe we should special case ':' in launch_edi=
+tor
+> >         or perhaps make launch_editor use system(3).  Not sure.
+>=20
+> We've had a few threads on the list about what to do with:
+>=20
+> 	GIT_EDITOR=3D'emacs -nw'
+>=20
+> I think David's 08874658b450600e72bb7cb0d0747c1ec4b0bfe1
+> (git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR
+> accept commands) is a sensible to deal with this issue, and
+> prefer to see the same semantics kept in the C version.
 
-I am inclined to suggest rewording the message like this, and
-make this condition an error (i.e. "exit 1"):
+Ok, I'll take a look at that commit.
 
-    You asked me to pull without telling me which branch you
-    want to merge with, and 'branch.${curr_branch}.merge' in
-    your configuration file does not tell me either.  Please
-    name which branch you want to merge on the command line and
-    try again.
-
-    If you often merge with the same branch, you may want to
-    configure the following variables in your configuration
-    file:
-
-	branch.${curr_branch}.remote = <nickname>
-	branch.${curr_branch}.merge = <remote-ref>
-        remote.<nickname>.url = <url>
-        remote.<nickname>.fetch = <refspec>
-
-    See git-config(1) for details.
+Kristian
