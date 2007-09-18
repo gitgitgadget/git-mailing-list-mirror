@@ -1,73 +1,64 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Tue, 18 Sep 2007 13:19:08 +0200
-Message-ID: <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
-References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com>
-	 <11900461843997-git-send-email-hjemli@gmail.com>
-	 <20070918005013.GA6368@muzzle>
-	 <8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com>
-	 <7v4phsxy55.fsf@gitster.siamese.dyndns.org>
-	 <46EF7EA1.6020402@vilain.net> <46EF9687.6070304@vilain.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] contrib/fast-import: add perl version of simple example
+Date: Tue, 18 Sep 2007 12:18:24 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709181217200.28586@racer.site>
+References: <20070918072627.GB3506@coredump.intra.peff.net>
+ <Pine.LNX.4.64.0709181115250.28586@racer.site> <46EFA84C.3080906@op5.se>
+ <20070918103051.GA22239@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Eric Wong" <normalperson@yhbt.net>,
-	"Andreas Ericsson" <ae@op5.se>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Chris Shoemaker" <c.shoemaker@cox.net>, git@vger.kernel.org
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Tue Sep 18 13:19:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 13:19:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXb6v-0002sQ-0e
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:19:21 +0200
+	id 1IXb6w-0002sQ-FT
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755472AbXIRLTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 07:19:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755390AbXIRLTK
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:19:10 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:49279 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755234AbXIRLTJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 07:19:09 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1567513rvb
-        for <git@vger.kernel.org>; Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iR8U96l1LUo9xurP5wCz7mRfsnXJzNp+g4M8Su4xQRk=;
-        b=r+Mh2ivHuXsld52Fc/ekYWuW+aZYXdATzEc+kkiRi9r6Xw6YO5KMUqjdzcqcCtf8xqnBKuUR06xUEpJViHrn3mpQsnSp5PzPZoPSq7Tm1/GGOdEiSvPwBcuJMBF6ty19SUjqS0bJyKo+SH5WGJ6YdXzqm0gbbA6tjvbPSAXgFF0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NUbQoRuHYNdq8GPd8F4zMzCCswtiyfTdiJC2Fq5Omk+kVypnsYOq+qwnpkHsmx8V2ELcSX2yym6lm4YumHyRy5bmRtpOYz+Qj2W2PfC9y7mPbeQewnGMfzY9QSqjBTh2DDDzesxJpAQ/OVq9CmfZWahU4vOOhvxuH480Lqai0pU=
-Received: by 10.114.136.1 with SMTP id j1mr216342wad.1190114348078;
-        Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
-Received: by 10.115.73.2 with HTTP; Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
-In-Reply-To: <46EF9687.6070304@vilain.net>
-Content-Disposition: inline
+	id S1755503AbXIRLTQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 07:19:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755499AbXIRLTP
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:19:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49257 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755390AbXIRLTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 07:19:14 -0400
+Received: (qmail invoked by alias); 18 Sep 2007 11:19:10 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp003) with SMTP; 18 Sep 2007 13:19:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19GsZ5oZVRG0cBvUbScKPs1eA8YJtcebfLNy/2iS4
+	Jvs/sJr7mVPk6I
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070918103051.GA22239@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58580>
 
-On 9/18/07, Sam Vilain <sam@vilain.net> wrote:
-> I think that writing a real fast-forward merge should only happen on
-> dcommit, not git merge, because that is what is required for SVN.
+Hi,
 
-I don't think git-svn has any way of knowing that the user wanted a
-merge, unless a merge commit is present. So the user would have to
-specify the set of commits which should be considered a merge during
-dcommit (this would actually resemble how merges are performed in
-subversion).
+On Tue, 18 Sep 2007, Jeff King wrote:
 
-Sidenote: this might be slightly controversial, but I've sometimes
-missed a --no-ff option to 'git merge' when working on plain git
-repositories; IMHO preserving the 'logical' merge history when the
-merge of a topic branch results in a fast-forward can be interesting.
+> I think he means a dump that you can meaningfully edit with sed or a 
+> text editor. And even nicer, one that could be fed back into 
+> git-fast-import. So you could do something like:
+> 
+> git-fast-export A..B >dump
+> vi dump
+> git-fast-import <dump
+> 
+> to rewrite history in a very flexible way.
 
--- 
-larsh
+Exactly what I meant.  Some people seem to have problems with 
+filter-branch, but somehow no proper bug report, let alone fix, evolved 
+from that.
+
+I guess these people are more comfortable with what you just described.
+
+Ciao,
+Dscho
