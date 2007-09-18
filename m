@@ -1,59 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Latest builtin-commit series
-Date: Tue, 18 Sep 2007 23:24:36 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709182324230.28395@racer.site>
+Date: Tue, 18 Sep 2007 15:25:35 -0700
+Message-ID: <7vbqbzvcf4.fsf@gitster.siamese.dyndns.org>
 References: <1190129009.23692.24.camel@hinata.boston.redhat.com>
- <20070918213903.GA14488@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 00:25:37 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 00:26:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXlVh-0003NG-FT
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:25:37 +0200
+	id 1IXlW1-0003UF-0U
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:25:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbXIRWZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 18:25:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751088AbXIRWZb
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:25:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51509 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751399AbXIRWZa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 18:25:30 -0400
-Received: (qmail invoked by alias); 18 Sep 2007 22:25:28 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp001) with SMTP; 19 Sep 2007 00:25:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/lxNENF5blhJPP8nd70w3u7lJlkoqB2botBmSn5g
-	8bhnF+xqjWjunA
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070918213903.GA14488@steel.home>
-X-Y-GMX-Trusted: 0
+	id S1751643AbXIRWZo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 18:25:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751395AbXIRWZn
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:25:43 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37042 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820AbXIRWZn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2007 18:25:43 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DF995137A0E;
+	Tue, 18 Sep 2007 18:25:59 -0400 (EDT)
+In-Reply-To: <1190129009.23692.24.camel@hinata.boston.redhat.com> (Kristian
+	=?utf-8?Q?H=C3=B8gsberg's?= message of "Tue, 18 Sep 2007 11:23:29 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58641>
 
-Hi,
+Kristian H=C3=B8gsberg <krh@redhat.com> writes:
 
-On Tue, 18 Sep 2007, Alex Riesen wrote:
+> Better late than never:
+>
+>       * rebase to Pierres strbuf changes.  Note, there is still some
+>         strbuf tweaking required, to let stripspace work on a strbuf.
+>         Also, I changed the semantics of stripspace to always add a
+>         newline if the last line doesn't have one.  I believe the
+>         current odd semantics (always remove the last newline) comes
+>         from not being able to easily add a newline, but now that it'=
+s a
+>         strbuf, that's easy.
 
-> Kristian H?gsberg, Tue, Sep 18, 2007 17:23:29 +0200:
-> >       * Set the test suite default editor to '/bin/true' instead of ':'.
-> >         Since we're not exec'ing the editor from shell anymore, ':'
-> >         won't work.  Maybe we should special case ':' in launch_editor
-> >         or perhaps make launch_editor use system(3).  Not sure.
-> 
-> Special case "" (empty string)? MinGW may have problems with
-> /bin/true, any future exotic ports notwithstanding (OS/2, anyone?).
+I do not find the "remove trailing newline" so odd.  Didn't it
+come because you sometimes needed to _not_ add it?
 
-No problem.  At least in msysGit.
+>       * Set the test suite default editor to '/bin/true' instead of '=
+:'.
+>         Since we're not exec'ing the editor from shell anymore, ':'
+>         won't work.  Maybe we should special case ':' in launch_edito=
+r
+>         or perhaps make launch_editor use system(3).  Not sure.
 
-Ciao,
-Dscho
+We've had a few threads on the list about what to do with:
+
+	GIT_EDITOR=3D'emacs -nw'
+
+I think David's 08874658b450600e72bb7cb0d0747c1ec4b0bfe1
+(git-sh-setup.sh: make GIT_EDITOR/core.editor/VISUAL/EDITOR
+accept commands) is a sensible to deal with this issue, and
+prefer to see the same semantics kept in the C version.
