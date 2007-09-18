@@ -1,64 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] contrib/fast-import: add perl version of simple example
-Date: Tue, 18 Sep 2007 12:17:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709181216040.28586@racer.site>
-References: <20070918072627.GB3506@coredump.intra.peff.net>
- <Pine.LNX.4.64.0709181115250.28586@racer.site> <46EFA84C.3080906@op5.se>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] git-merge: add option --no-ff
+Date: Tue, 18 Sep 2007 13:19:08 +0200
+Message-ID: <8c5c35580709180419i4500a2d4s8a997d45dd31944e@mail.gmail.com>
+References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com>
+	 <11900461843997-git-send-email-hjemli@gmail.com>
+	 <20070918005013.GA6368@muzzle>
+	 <8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com>
+	 <7v4phsxy55.fsf@gitster.siamese.dyndns.org>
+	 <46EF7EA1.6020402@vilain.net> <46EF9687.6070304@vilain.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Sep 18 13:18:19 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Eric Wong" <normalperson@yhbt.net>,
+	"Andreas Ericsson" <ae@op5.se>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Chris Shoemaker" <c.shoemaker@cox.net>, git@vger.kernel.org
+To: "Sam Vilain" <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 13:19:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXb5u-0002ao-4d
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:18:19 +0200
+	id 1IXb6v-0002sQ-0e
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 13:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754531AbXIRLSK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 07:18:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755421AbXIRLSI
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:18:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54495 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754531AbXIRLSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 07:18:07 -0400
-Received: (qmail invoked by alias); 18 Sep 2007 11:18:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 18 Sep 2007 13:18:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/g79FdUTTgr15e+JLVDNlUhTFjlwdmxUcHWtjLJt
-	xFKSPi0+XMowSW
-X-X-Sender: gene099@racer.site
-In-Reply-To: <46EFA84C.3080906@op5.se>
-X-Y-GMX-Trusted: 0
+	id S1755472AbXIRLTL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 07:19:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755390AbXIRLTK
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 07:19:10 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:49279 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755234AbXIRLTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 07:19:09 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1567513rvb
+        for <git@vger.kernel.org>; Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=iR8U96l1LUo9xurP5wCz7mRfsnXJzNp+g4M8Su4xQRk=;
+        b=r+Mh2ivHuXsld52Fc/ekYWuW+aZYXdATzEc+kkiRi9r6Xw6YO5KMUqjdzcqcCtf8xqnBKuUR06xUEpJViHrn3mpQsnSp5PzPZoPSq7Tm1/GGOdEiSvPwBcuJMBF6ty19SUjqS0bJyKo+SH5WGJ6YdXzqm0gbbA6tjvbPSAXgFF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=NUbQoRuHYNdq8GPd8F4zMzCCswtiyfTdiJC2Fq5Omk+kVypnsYOq+qwnpkHsmx8V2ELcSX2yym6lm4YumHyRy5bmRtpOYz+Qj2W2PfC9y7mPbeQewnGMfzY9QSqjBTh2DDDzesxJpAQ/OVq9CmfZWahU4vOOhvxuH480Lqai0pU=
+Received: by 10.114.136.1 with SMTP id j1mr216342wad.1190114348078;
+        Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
+Received: by 10.115.73.2 with HTTP; Tue, 18 Sep 2007 04:19:08 -0700 (PDT)
+In-Reply-To: <46EF9687.6070304@vilain.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58579>
 
-Hi,
+On 9/18/07, Sam Vilain <sam@vilain.net> wrote:
+> I think that writing a real fast-forward merge should only happen on
+> dcommit, not git merge, because that is what is required for SVN.
 
-On Tue, 18 Sep 2007, Andreas Ericsson wrote:
+I don't think git-svn has any way of knowing that the user wanted a
+merge, unless a merge commit is present. So the user would have to
+specify the set of commits which should be considered a merge during
+dcommit (this would actually resemble how merges are performed in
+subversion).
 
-> Johannes Schindelin wrote:
->
-> > Maybe somebody will then grab the low-hanging fruit of writing a 
-> > "git-fast-export", which can be used to dump a complete repository in 
-> > text format?
-> 
-> I thought that was already taken care of since format-patch handles
-> --root flag properly?
+Sidenote: this might be slightly controversial, but I've sometimes
+missed a --no-ff option to 'git merge' when working on plain git
+repositories; IMHO preserving the 'logical' merge history when the
+merge of a topic branch results in a fast-forward can be interesting.
 
-Umm.  Probably you forgot about merge commits, right?  And about more than 
-one branch?
-
-> Otherwise, "git repack -a --window=0 --depth=0" should provide an easily 
-> parseable dump of an entire repo.
-
-This is not a dump.  It is a log.
-
-Ciao,
-Dscho
+-- 
+larsh
