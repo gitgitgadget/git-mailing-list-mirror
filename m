@@ -1,64 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-merge: add option --no-ff
-Date: Tue, 18 Sep 2007 19:30:41 +1200
-Message-ID: <46EF7EA1.6020402@vilain.net>
-References: <8c5c35580709170817s467fa7dv375952f872bba0e3@mail.gmail.com>	<11900461843997-git-send-email-hjemli@gmail.com>	<20070918005013.GA6368@muzzle>	<8c5c35580709172312w55613a1bw8cc58b200c526fab@mail.gmail.com> <7v4phsxy55.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 1/1] git-send-email: Add a --suppress-all option
+Date: Tue, 18 Sep 2007 09:40:55 +0200
+Message-ID: <46EF8107.1030607@op5.se>
+References: <11900540373215-git-send-email-felipebalbi@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>, Eric Wong <normalperson@yhbt.net>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Chris Shoemaker <c.shoemaker@cox.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 18 09:29:14 2007
+Cc: git@vger.kernel.org, Felipe Balbi <felipe.lima@indt.org.br>
+To: Felipe Balbi <felipebalbi@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Sep 18 09:41:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXXW2-0001UR-HH
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 09:29:02 +0200
+	id 1IXXhh-0004uK-HN
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 09:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766AbXIRH2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 03:28:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754780AbXIRH2y
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 03:28:54 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:42895 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754766AbXIRH2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 03:28:54 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 1972723C262; Tue, 18 Sep 2007 19:28:53 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 7B47820C2CA;
-	Tue, 18 Sep 2007 19:28:48 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <7v4phsxy55.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
+	id S1754443AbXIRHk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 03:40:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754373AbXIRHk6
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 03:40:58 -0400
+Received: from mail.op5.se ([193.201.96.20]:55696 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753732AbXIRHk5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 03:40:57 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 256E919439E;
+	Tue, 18 Sep 2007 09:40:56 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id M5oAzj91MUPG; Tue, 18 Sep 2007 09:40:55 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id AD13D194345;
+	Tue, 18 Sep 2007 09:40:55 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <11900540373215-git-send-email-felipebalbi@users.sourceforge.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58538>
 
-Junio C Hamano wrote:
-> "Lars Hjemli" <hjemli@gmail.com> writes:
+Felipe Balbi wrote:
+> From: Felipe Balbi <felipe.lima@indt.org.br>
 > 
->> On 9/18/07, Eric Wong <normalperson@yhbt.net> wrote:
->>> Would automatically enabling --no-ff when it detects merging of two (or
->>> more) SVN branches be a good thing?
->> I'd say 'git-svn merge' as a wrapper for 'git merge --no-ff' would be cleaner.
+> This patch adds a --suppress-all option to avoid sending emails
+> to everybody but the ones listed by --to option.
 > 
-> That unfortunately does not solve the problem.
 
-I think we 'just' need to fix pushing merges back to SVN - so that they
-properly set Subversion 1.5+ (and possibly SVK) merge attributes - and
-if it is ambiguous which branch to push to, force the user to decide.
+To my minds eye, --suppress-all is equivalent to --dry-run. Could you
+rename it to "--cc-nobody" or some such?
 
-Sam.
+On a side-note, I've never really understood why git-send-email *by default*
+sends to a bazillion people. Does anybody ever use it without suppressing
+most of the CC targets?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
