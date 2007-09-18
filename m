@@ -1,34 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 0/5] More builtin-fetch fixes
-Date: Tue, 18 Sep 2007 04:54:44 -0400
-Message-ID: <20070918085444.GN3099@spearce.org>
+Subject: [PATCH 2/5] Don't attempt to merge non-existant remotes in t5515
+Date: Tue, 18 Sep 2007 04:54:51 -0400
+Message-ID: <20070918085451.GB5390@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 10:55:52 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 10:55:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXYrt-0001jx-6r
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 10:55:41 +0200
+	id 1IXYrv-0001jx-84
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 10:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755886AbXIRIyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 04:54:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753407AbXIRIyw
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 04:54:52 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:52367 "EHLO
+	id S1753654AbXIRIy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 04:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753597AbXIRIy5
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 04:54:57 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52373 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755859AbXIRIyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 04:54:50 -0400
+	with ESMTP id S1753407AbXIRIyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 04:54:55 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IXYqv-00067U-Cd; Tue, 18 Sep 2007 04:54:41 -0400
+	id 1IXYr1-00067h-NB; Tue, 18 Sep 2007 04:54:47 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 87E3120FBAE; Tue, 18 Sep 2007 04:54:44 -0400 (EDT)
+	id 1C76420FBAE; Tue, 18 Sep 2007 04:54:51 -0400 (EDT)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -39,29 +38,44 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58551>
 
-Yet another round of builtin-fetch fixes.  This series fixes the
-latest breakage in `pu` for this topic along with an annoying
-warning when using the http transport.
+This was actually reverted in 756373da by Junio.  We no longer
+support merging the right hand side of a fetchspec in a branch's
+branch.$name.merge configuration setting as we interpret these
+names as being only those published by the remote we are going to
+fetch from.
 
-The third patch in the series is a behavior change for git-fetch.
-The commit message discusses it in detail.  Junio and I kicked this
-around on #git earlier this morning.
+The older shell based implementation of git-fetch did not report an
+error when branch.$name.merge was referencing a branch that does
+not exist on the remote and we are running `git fetch` for the
+current branch.  The new builtin-fetch does notice this failure
+and aborts the fetch, thus breaking the tests.
 
-At this point myself and a few other experienced-with-Git coworkers
-are running this builtin-fetch "in production" for all daily tasks.
-We don't use *everything* that the tool supports as I did not know
-about this breakage in branch.$name.merge until tonight when Junio
-mentioned it, but for some of the really common cases we are quite
-happy with builtin-fetch.  Especially its performance as we're
-seeing speedups of 25x or more on Cygwin/Windows.
+Junio and I kicked it around on #git earlier today and decided that
+the best approach here is to error out and tell the user that their
+configuration is wrong, as this is likely more user friendly than
+silently ignoring the user's request.  Since the new builtin-fetch
+is already issuing the error there is no code change required, we
+just need to remove the bad configuration from our test.
 
-I still believe there's work yet to be done on this topic as I'm
-quite sure the transfer.unpackLimit is not being honored.  I meant
-to look at that tonight but wound up wasting all night and morning on
-the 3rd patch of this series.  I will try to work on the unpackLimit
-issue Tuesday or Wednesday this week.
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ t/t5515-fetch-merge-logic.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
+diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
+index 6c9cc67..31c1081 100755
+--- a/t/t5515-fetch-merge-logic.sh
++++ b/t/t5515-fetch-merge-logic.sh
+@@ -84,8 +84,7 @@ test_expect_success setup '
+ 		git config branch.br-$remote-merge.merge refs/heads/three &&
+ 		git config branch.br-$remote-octopus.remote $remote &&
+ 		git config branch.br-$remote-octopus.merge refs/heads/one &&
+-		git config --add branch.br-$remote-octopus.merge two &&
+-		git config --add branch.br-$remote-octopus.merge remotes/rem/three
++		git config --add branch.br-$remote-octopus.merge two
+ 	done
+ '
+ 
 -- 
-Shawn.
+1.5.3.1.1000.g7319b
