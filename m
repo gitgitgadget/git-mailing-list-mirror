@@ -1,75 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: diffcore-rename performance mode
-Date: Tue, 18 Sep 2007 15:12:48 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0709181510460.16478@woody.linux-foundation.org>
-References: <20070918082321.GA9883@coredump.intra.peff.net>
+From: Ben Konrath <bkonrath@redhat.com>
+Subject: [EGIT PATCH] Remove src dir and entry in build.properties.
+Date: Tue, 18 Sep 2007 18:20:57 -0400
+Message-ID: <20070918222057.GA11990@toast.toronto.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 00:13:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 00:21:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXlJw-0008CX-AB
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:13:28 +0200
+	id 1IXlRV-00029Q-3U
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 00:21:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754674AbXIRWNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 18:13:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbXIRWNW
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:13:22 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51659 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751435AbXIRWNV (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 18 Sep 2007 18:13:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8IMCaJn021254
+	id S1753748AbXIRWVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 18:21:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752919AbXIRWVK
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 18:21:10 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:55074 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750770AbXIRWVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 18:21:08 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8IMKx2L009049
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Sep 2007 15:12:37 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8IMCYkj025862;
-	Tue, 18 Sep 2007 15:12:34 -0700
-In-Reply-To: <20070918082321.GA9883@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.742 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.35__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	Tue, 18 Sep 2007 18:20:59 -0400
+Received: from pobox.toronto.redhat.com (pobox.toronto.redhat.com [172.16.14.4])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IMKxlb013039;
+	Tue, 18 Sep 2007 18:20:59 -0400
+Received: from touchme.toronto.redhat.com (IDENT:postfix@touchme.toronto.redhat.com [172.16.14.9])
+	by pobox.toronto.redhat.com (8.12.11.20060308/8.12.11) with ESMTP id l8IMKwai032288;
+	Tue, 18 Sep 2007 18:20:59 -0400
+Received: from toast.toronto.redhat.com (toast.toronto.redhat.com [172.16.14.221])
+	by touchme.toronto.redhat.com (Postfix) with ESMTP
+	id B50B18001FF; Tue, 18 Sep 2007 18:20:58 -0400 (EDT)
+Received: from toast.toronto.redhat.com (localhost.localdomain [127.0.0.1])
+	by toast.toronto.redhat.com (8.14.1/8.13.0) with ESMTP id l8IMKwIR012002;
+	Tue, 18 Sep 2007 18:20:58 -0400
+Received: (from bkonrath@localhost)
+	by toast.toronto.redhat.com (8.14.1/8.14.1/Submit) id l8IMKvc6012001;
+	Tue, 18 Sep 2007 18:20:57 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58638>
 
+Hi Robin,
 
+This is just a small clean up patch for the branding plugin.
 
-On Tue, 18 Sep 2007, Jeff King wrote:
-> 
-> With this patch:
-> 
-> diff --git a/diffcore-rename.c b/diffcore-rename.c
-> index 6bde439..531a844 100644
-> --- a/diffcore-rename.c
-> +++ b/diffcore-rename.c
-> @@ -362,10 +362,7 @@ void diffcore_rename(struct diff_options *options)
->  			m->score = estimate_similarity(one, two,
->  						       minimum_score);
->  			m->name_score = basename_same(one, two);
-> -			diff_free_filespec_data(one);
->  		}
-> -		/* We do not need the text anymore */
-> -		diff_free_filespec_data(two);
->  		dst_cnt++;
->  	}
->  	/* cost matrix sorted by most to least similar pair */
-> 
-> My 20-minute diff becomes a 2-minute diff.
+CHeers, Ben
 
-I think this is a reasonable patch, but only now *after* we limit the 
-rename matrix.
+Signed-off-by: Ben Konrath <bkonrath@redhat.com>
+---
+ org.spearce.egit/build.properties |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
+ delete mode 100644 org.spearce.egit/src/.gitignore
 
-The whole reason for freeing the filespec data was to avoid exploding the 
-memory usage, but now that we aggressively limit the number of renames in 
-flight anyway, I think we can probably remove the code that frees the file 
-data in between all the rename similarity analysis.
-
-			Linus
+diff --git a/org.spearce.egit/build.properties b/org.spearce.egit/build.properties
+index 2a21c05..22d4e45 100644
+--- a/org.spearce.egit/build.properties
++++ b/org.spearce.egit/build.properties
+@@ -1,5 +1,3 @@
+-source.. = src/
+-output.. = bin/
+ bin.includes = META-INF/,\
+                egit.png,\
+                about.ini
+diff --git a/org.spearce.egit/src/.gitignore b/org.spearce.egit/src/.gitignore
+deleted file mode 100644
+index e69de29..0000000
+-- 
+1.5.2.4
