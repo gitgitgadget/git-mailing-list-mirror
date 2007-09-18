@@ -1,91 +1,71 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 4/7] Clean up stripspace a bit, use strbuf even more.
-Date: Tue, 18 Sep 2007 09:52:17 -0400
-Message-ID: <1190123537.23692.2.camel@hinata.boston.redhat.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 7/7] Implement git commit as a builtin command.
+Date: Tue, 18 Sep 2007 14:58:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709181453220.28586@racer.site>
 References: <1190074008617-git-send-email-krh@redhat.com>
-	 <1190074014548-git-send-email-krh@redhat.com>
-	 <11900740142347-git-send-email-krh@redhat.com>
-	 <11900740153845-git-send-email-krh@redhat.com>
-	 <Pine.LNX.4.64.0709181411200.28586@racer.site>
+ <1190074014548-git-send-email-krh@redhat.com> <11900740142347-git-send-email-krh@redhat.com>
+ <11900740153845-git-send-email-krh@redhat.com> <11900740154136-git-send-email-krh@redhat.com>
+ <1190074016669-git-send-email-krh@redhat.com> <11900740163661-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 18 15:52:37 2007
+To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 15:59:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXdVC-0005gZ-8P
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 15:52:34 +0200
+	id 1IXdbu-0000N6-LF
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 15:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754314AbXIRNw1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 09:52:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754056AbXIRNw1
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 09:52:27 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:53395 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751447AbXIRNw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 09:52:26 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8IDqNox016930
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 18 Sep 2007 09:52:23 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IDqNbM017674;
-	Tue, 18 Sep 2007 09:52:23 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IDqMMv001469;
-	Tue, 18 Sep 2007 09:52:23 -0400
-In-Reply-To: <Pine.LNX.4.64.0709181411200.28586@racer.site>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1754750AbXIRN7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 09:59:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754883AbXIRN7V
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 09:59:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38729 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753753AbXIRN7U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 09:59:20 -0400
+Received: (qmail invoked by alias); 18 Sep 2007 13:59:18 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 18 Sep 2007 15:59:18 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YfJkTjb1YQCyAVsCmeJqIdgv1uzF6dv5JQbM/mC
+	uKdX6bcc8sYMwa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11900740163661-git-send-email-krh@redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58610>
 
+Hi,
 
-On Tue, 2007-09-18 at 14:12 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> I really like your patch, except for this:
->=20
-> On Mon, 17 Sep 2007, Kristian H=C3=B8gsberg wrote:
->=20
-> > diff --git a/builtin.h b/builtin.h
-> > index 03ee7bf..d6f2c76 100644
-> > --- a/builtin.h
-> > +++ b/builtin.h
-> > @@ -7,7 +7,6 @@ extern const char git_version_string[];
-> >  extern const char git_usage_string[];
-> > =20
-> >  extern void help_unknown_cmd(const char *cmd);
-> > -extern size_t stripspace(char *buffer, size_t length, int skip_com=
-ments);
-> >  extern int write_tree(unsigned char *sha1, int missing_ok, const c=
-har *prefix);
-> >  extern void prune_packed_objects(int);
-> > =20
-> > diff --git a/strbuf.h b/strbuf.h
-> > index 21fc111..5960637 100644
-> > --- a/strbuf.h
-> > +++ b/strbuf.h
-> > @@ -98,4 +98,6 @@ extern ssize_t strbuf_read(struct strbuf *, int f=
-d, size_t hint);
-> > =20
-> >  extern void read_line(struct strbuf *, FILE *, int);
-> > =20
-> > +extern void stripspace(struct strbuf *buf, int skip_comments);
-> > +
-> >  #endif /* STRBUF_H */
->=20
-> If you do that, you have to move the function "stripspace" to strbuf.=
-c,=20
-> too...
+very nice!
 
-Right, the alternative is to #include strbuf.h in builtin.h, or maybe
-just add struct strbuf; at the top.  And with Pierres latest patch
-strbuf is included everywhere, so maybe this is already moot.
+Four nits, though, and a half:
 
-Kristian
+- it would be nicer to put the option parsing it option.[ch] (you would 
+  also need to pass the usage line then, instead of hardwiring it to 
+  "git_commit_usage"),
+
+- it seems more logical to me to call it "parse_option()" than 
+  "scan_options()", since that is what it does,
+
+- you might want to rename OPTION_NONE to OPTION_BOOLEAN, and maybe even 
+  allow "--no-<option>" in that case for free,
+
+- wt_status_prepare() could take a parameter "index_file", which would 
+  default to git_path("index") when passed as NULL, and
+
+- launch_editor() is defined in builtin-tag.c, which is not part of the 
+  library, and therefore it would be technically more correct to either 
+  move the function to editor.c (my preferred solution), or declare it in 
+  builtin.h instead of strbuf.h.
+
+As you can see, my nits are really minor, which means that I am pretty 
+happy with your work!
+
+Thanks,
+Dscho
