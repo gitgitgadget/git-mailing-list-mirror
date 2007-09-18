@@ -1,135 +1,71 @@
-From: mike@csa.net (mike dalessio)
-Subject: [PATCH] instaweb: added support Ruby's WEBrick server
-Date: Tue, 18 Sep 2007 08:16:34 -0400 (EDT)
-Message-ID: <20070918121634.E8EFF814635@cyrano>
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org, mike@csa.net, normalperson@yhbt.net
-X-From: git-owner@vger.kernel.org Tue Sep 18 14:16:42 2007
+From: =?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
+Subject: [PATCH] Fixed update-hook example allow-users format.
+Date: Tue, 18 Sep 2007 15:26:09 +0300
+Message-ID: <1190118369327-git-send-email-v@pp.inet.fi>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 18 14:27:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXc0P-00080z-3N
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:16:41 +0200
+	id 1IXcAT-0003hl-OL
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 14:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755841AbXIRMQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 08:16:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755604AbXIRMQg
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:16:36 -0400
-Received: from mta4.srv.hcvlny.cv.net ([167.206.4.199]:60056 "EHLO
-	mta4.srv.hcvlny.cv.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754504AbXIRMQg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 08:16:36 -0400
-Received: from cyrano (ool-44c1f12b.dyn.optonline.net [68.193.241.43])
- by mta4.srv.hcvlny.cv.net
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTP id <0JOK0061RCRNCSC0@mta4.srv.hcvlny.cv.net> for
- git@vger.kernel.org; Tue, 18 Sep 2007 08:16:35 -0400 (EDT)
-Received: by cyrano (Postfix, from userid 1001)	id E8EFF814635; Tue,
- 18 Sep 2007 08:16:34 -0400 (EDT)
+	id S1755451AbXIRM07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 08:26:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbXIRM07
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 08:26:59 -0400
+Received: from gw01.mail.saunalahti.fi ([195.197.172.115]:47327 "EHLO
+	gw01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718AbXIRM06 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 08:26:58 -0400
+Received: from localhost.localdomain (GYKMMMCCLXXV.dsl.saunalahti.fi [85.77.38.176])
+	by gw01.mail.saunalahti.fi (Postfix) with ESMTP id CCDAA1510CC;
+	Tue, 18 Sep 2007 15:26:48 +0300 (EEST)
+X-Mailer: git-send-email 1.5.3.1.2.gd7c01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58593>
 
-running the webrick server with git requires Ruby and Ruby's YAML and
-Webrick libraries (both of which come standard with Ruby). nice for
-single-user standalone invocations.
+The example provided with the update-hook-example does not work on
+either bash 2.05b.0(1)-release nor 3.1.17(1)-release. The matcher did
+not match the lines that it advertised to match, such as:
 
-the --httpd=webrick option generates a ruby script on the fly to read
-httpd.conf options and invoke the web server via library call. this
-script is placed in the .git/gitweb directory. it also generates a
-shell script in a feeble attempt to invoke ruby in a portable manner,
-which assumes that 'ruby' is in the user's $PATH.
+refs/heads/bw/        linus
+refs/heads/tmp/*      *
 
-Signed-off-by: Mike Dalessio <mike@csa.net>
+In POSIX 1003.2 regular expressions, the star (*), is not an wildcard
+meaning "match everything", it matches 0 or more matches of the atom
+preceding it.
+
+So to match "refs/heads/bw/topic-branch", the matcher should be written
+as "refs/heads/bw/.*" to match "refs/heads/bw/" and everything after it.
 ---
- Documentation/git-instaweb.txt |    3 +-
- git-instaweb.sh                |   44 +++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 45 insertions(+), 2 deletions(-)
+ Documentation/howto/update-hook-example.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-instaweb.txt b/Documentation/git-instaweb.txt
-index cec60ee..914fc4c 100644
---- a/Documentation/git-instaweb.txt
-+++ b/Documentation/git-instaweb.txt
-@@ -27,7 +27,8 @@ OPTIONS
- 	The HTTP daemon command-line that will be executed.
- 	Command-line options may be specified here, and the
- 	configuration file will be added at the end of the command-line.
--	Currently, lighttpd and apache2 are the only supported servers.
-+	Currently, lighttpd, apache2 and webrick are the only supported
-+	servers.
- 	(Default: lighttpd)
+diff --git a/Documentation/howto/update-hook-example.txt b/Documentation/howto/update-hook-example.txt
+index 3a33696..88765b5 100644
+--- a/Documentation/howto/update-hook-example.txt
++++ b/Documentation/howto/update-hook-example.txt
+@@ -158,11 +158,11 @@ This uses two files, $GIT_DIR/info/allowed-users and
+ allowed-groups, to describe which heads can be pushed into by
+ whom.  The format of each file would look like this:
  
- -m|--module-path::
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index b79c6b6..803a754 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -37,7 +37,9 @@ start_httpd () {
- 	else
- 		# many httpds are installed in /usr/sbin or /usr/local/sbin
- 		# these days and those are not in most users $PATHs
--		for i in /usr/local/sbin /usr/sbin
-+		# in addition, we may have generated a server script
-+		# in $fqgitdir/gitweb.
-+		for i in /usr/local/sbin /usr/sbin $fqgitdir/gitweb
- 		do
- 			if test -x "$i/$httpd_only"
- 			then
-@@ -137,6 +139,43 @@ GIT_DIR="$fqgitdir"
- export GIT_EXEC_PATH GIT_DIR
+-	refs/heads/master	junio
++        refs/heads/master	junio
+         refs/heads/cogito$	pasky
+-	refs/heads/bw/		linus
+-        refs/heads/tmp/		*
+-        refs/tags/v[0-9]*	junio
++        refs/heads/bw/.*	linus
++        refs/heads/tmp/.*	.*
++        refs/tags/v[0-9].*	junio
  
- 
-+webrick_conf () {
-+	# generate a standalone server script in $fqgitdir/gitweb.
-+	cat > "$fqgitdir/gitweb/$httpd.rb" <<EOF
-+require 'webrick'
-+require 'yaml'
-+options = YAML::load_file(ARGV[0])
-+options[:StartCallback] = proc do
-+  File.open(options[:PidFile],"w") do |f|
-+    f.puts Process.pid
-+  end
-+end
-+options[:ServerType] = WEBrick::Daemon
-+server = WEBrick::HTTPServer.new(options)
-+['INT', 'TERM'].each do |signal|
-+  trap(signal) {server.shutdown}
-+end
-+server.start
-+EOF
-+	# generate a shell script to invoke the above ruby script,
-+	# which assumes _ruby_ is in the user's $PATH. that's _one_
-+	# portable way to run ruby, which could be installed anywhere,
-+	# really.
-+	cat > "$fqgitdir/gitweb/$httpd" <<EOF
-+#! /bin/sh
-+ruby $fqgitdir/gitweb/$httpd.rb \$*
-+EOF
-+	chmod +x "$fqgitdir/gitweb/$httpd"
-+
-+	cat > "$conf" <<EOF
-+:Port: $port
-+:DocumentRoot: "$fqgitdir/gitweb"
-+:DirectoryIndex: ["gitweb.cgi"]
-+:PidFile: "$fqgitdir/pid"
-+EOF
-+	test "$local" = true && echo ':BindAddress: "127.0.0.1"' >> "$conf"
-+}
-+
- lighttpd_conf () {
- 	cat > "$conf" <<EOF
- server.document-root = "$fqgitdir/gitweb"
-@@ -237,6 +276,9 @@ case "$httpd" in
- *apache2*)
- 	apache2_conf
- 	;;
-+webrick)
-+	webrick_conf
-+	;;
- *)
- 	echo "Unknown httpd specified: $httpd"
- 	exit 1
+ With this, Linus can push or create "bw/penguin" or "bw/zebra"
+ or "bw/panda" branches, Pasky can do only "cogito", and JC can
 -- 
-1.5.2.5
+1.5.3.1.2.gd7c01
