@@ -1,68 +1,100 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: State of Perforce importing.
-Date: Tue, 18 Sep 2007 19:27:13 +1200
-Message-ID: <46EF7DD1.9090301@vilain.net>
-References: <20070917193027.GA24282@old.davidb.org>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] contrib/fast-import: add simple shell example
+Date: Tue, 18 Sep 2007 03:26:01 -0400
+Message-ID: <20070918072601.GA3506@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 09:25:41 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 18 09:26:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXXSi-0000Yj-Jf
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 09:25:36 +0200
+	id 1IXXTI-0000jp-2C
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 09:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754061AbXIRHZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 03:25:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754051AbXIRHZ3
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 03:25:29 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:39663 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753986AbXIRHZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 03:25:29 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id F39FB23C261; Tue, 18 Sep 2007 19:25:26 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id F227320C2CA;
-	Tue, 18 Sep 2007 19:25:20 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <20070917193027.GA24282@old.davidb.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1754159AbXIRH0G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Sep 2007 03:26:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754051AbXIRH0F
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 03:26:05 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2859 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753937AbXIRH0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 03:26:04 -0400
+Received: (qmail 25450 invoked by uid 111); 18 Sep 2007 07:26:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 18 Sep 2007 03:26:02 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Sep 2007 03:26:01 -0400
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58533>
 
-David Brown wrote:
-> I'd like to track a lot of code living in a Perforce repository, so I've
-> been playing with 'git-p4.py'.  Is the one in the contrib/fast-import
-> directory the latest version, or is there a better place.
+=46rom: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 
-I'm pretty close to giving a newer one a spin, that actually imports
-from the raw perforce back-end files without needing the perforce
-server.  I am hoping that this should give a very clean import and will
-be very fast and efficient, sending files that share ancestry to gfi in
-sequence so that the on-the-fly delta system works.
+This example just puts a directory under git control. It is
+significantly slower than using the git tools directly, but
+hopefully shows a bit how fast-import works.
 
-If you're interested, take a look at
-http://utsl.gen.nz/gitweb/?p=git-p4raw;a=summary.  Expect the commands
-that say "WIP" to be rebased :-).  It requires Postgres - I haven't yet
-re-written the SQL queries that step outside of MySQL's little box.
+  [jk: added header comments]
 
-It could possibly be adapted to use the p4 client (though I'd expect
-that to be relatively slow per-revision), and possibly be extended to be
-bidirectional as all of the upstream change number information is
-recorded, a la git-svn.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/fast-import/git-import.sh |   38 +++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 38 insertions(+), 0 deletions(-)
+ create mode 100755 contrib/fast-import/git-import.sh
 
-Sam.
+diff --git a/contrib/fast-import/git-import.sh b/contrib/fast-import/gi=
+t-import.sh
+new file mode 100755
+index 0000000..0ca7718
+--- /dev/null
++++ b/contrib/fast-import/git-import.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
++#
++# Performs an initial import of a directory. This is the equivalent
++# of doing 'git init; git add .; git commit'. It's a lot slower,
++# but is meant to be a simple fast-import example.
++
++if [ -z "$1" -o -z "$2" ]; then
++	echo "Usage: git-import branch import-message"
++	exit 1
++fi
++
++USERNAME=3D"$(git config user.name)"
++EMAIL=3D"$(git config user.email)"
++
++if [ -z "$USERNAME" -o -z "$EMAIL" ]; then
++	echo "You need to set user name and email"
++	exit 1
++fi
++
++git init
++
++(
++	cat <<EOF
++commit refs/heads/$1
++committer $USERNAME <$EMAIL> now
++data <<MSGEOF
++$2
++MSGEOF
++
++EOF
++	find * -type f|while read i;do
++		echo "M 100644 inline $i"
++		echo data $(stat -c '%s' "$i")
++		cat "$i"
++		echo
++	done
++	echo
++) | git fast-import --date-format=3Dnow
+--=20
+1.5.3.1.967.g6bb01
