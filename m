@@ -1,106 +1,93 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 3/5] Correct handling of branch.$name.merge in builtin-fetch
-Date: Tue, 18 Sep 2007 11:05:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0709181034300.5298@iabervon.org>
-References: <20070918085453.GC5390@spearce.org>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH 7/7] Implement git commit as a builtin command.
+Date: Tue, 18 Sep 2007 11:07:32 -0400
+Message-ID: <1190128052.23692.6.camel@hinata.boston.redhat.com>
+References: <1190074008617-git-send-email-krh@redhat.com>
+	 <1190074014548-git-send-email-krh@redhat.com>
+	 <11900740142347-git-send-email-krh@redhat.com>
+	 <11900740153845-git-send-email-krh@redhat.com>
+	 <11900740154136-git-send-email-krh@redhat.com>
+	 <1190074016669-git-send-email-krh@redhat.com>
+	 <11900740163661-git-send-email-krh@redhat.com>
+	 <Pine.LNX.4.64.0709181453220.28586@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Sep 18 17:06:31 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 18 17:07:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXee7-0003Pv-OM
-	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 17:05:52 +0200
+	id 1IXeg3-0004J8-Kp
+	for gcvg-git-2@gmane.org; Tue, 18 Sep 2007 17:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757967AbXIRPFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 11:05:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758939AbXIRPFr
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 11:05:47 -0400
-Received: from iabervon.org ([66.92.72.58]:60543 "EHLO iabervon.org"
+	id S1759237AbXIRPHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 11:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759246AbXIRPHm
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 11:07:42 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:52070 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753029AbXIRPFq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 11:05:46 -0400
-Received: (qmail 26103 invoked by uid 1000); 18 Sep 2007 15:05:37 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 18 Sep 2007 15:05:37 -0000
-In-Reply-To: <20070918085453.GC5390@spearce.org>
+	id S1759239AbXIRPHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 11:07:41 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.1/8.13.1) with ESMTP id l8IF7ccb001221
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 18 Sep 2007 11:07:38 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IF7bvd027108;
+	Tue, 18 Sep 2007 11:07:37 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l8IF7bf6026238;
+	Tue, 18 Sep 2007 11:07:37 -0400
+In-Reply-To: <Pine.LNX.4.64.0709181453220.28586@racer.site>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58618>
 
-On Tue, 18 Sep 2007, Shawn O. Pearce wrote:
-
-> My prior bug fix for git-push titled "Don't configure remote "." to
-> fetch everything to itself" actually broke t5520 as we were unable
-> to evaluate a branch configuration of:
+On Tue, 2007-09-18 at 14:58 +0100, Johannes Schindelin wrote:
+> Hi,
 > 
->   [branch "copy"]
->     remote = .
->     merge = refs/heads/master
+> very nice!
 > 
-> as remote "." did not have a "remote...fetch" configuration entry to
-> offer up refs/heads/master as a possible candidate available to be
-> fetched and merged.  In shell script git-fetch and prior to the above
-> mentioned commit this was hardcoded for a url of "." to be the set of
-> local branches.
-
-Ah, right. When you removed that, I remembered there being some reason I'd 
-put it in, but I couldn't remember what it was, and knew you'd turn it up 
-before I would.
-
-> Chasing down this bug led me to the conclusion that our prior behavior
-> with regards to branch.$name.merge was incorrect.  In the shell script
-> based git-fetch implementation we only fetched and merged a branch if
-> it appeared both in branch.$name.merge *and* in remote.$r.fetch, where
-> $r = branch.$name.remote.  In other words in the following config file:
+> Four nits, though, and a half:
 > 
->   [remote "origin"]
->     url = git://git.kernel.org/pub/scm/git/git.git
->     fetch = refs/heads/master:refs/remotes/origin/master
->   [branch "master"]
->     remote = origin
->     merge = refs/heads/master
->   [branch "pu"]
->     remote = origin
->     merge = refs/heads/pu
-> 
-> Attempting to run `git pull` while on branch "pu" would always give
-> the user "Already up-to-date" as git-fetch did not fetch pu and thus
-> did not mark it for merge in .git/FETCH_HEAD.  The configured merge
-> would always be ignored and the user would be left scratching her
-> confused head wondering why merge did not work on "pu" but worked
-> fine on "master".
-> 
-> If we are using the "default fetch" specification for the current
-> branch and the current branch has a branch.$name.merge configured
-> we now union it with the list of refs in remote.$r.fetch.  This
-> way the above configuration does what the user expects it to do,
-> which is to fetch only "master" by default but when on "pu" to
-> fetch both "master" and "pu".
+> - it would be nicer to put the option parsing it option.[ch] (you would 
+>   also need to pass the usage line then, instead of hardwiring it to 
+>   "git_commit_usage"),
 
-And store master, but don't store pu. This looks like the right solution 
-to me.
+Yes, good point.
 
-> This uncovered some breakage in the test suite where old-style Cogito
-> branches (.git/branches/$r) did not fetch the branches listed in
-> .git/config for merging and thus did not actually merge them if the
-> user tried to use `git pull` on that branch.  Junio and I discussed
-> it on list and felt that the union approach here makes more sense to
-> DWIM for the end-user than silently ignoring their configured request
-> so the test vectors for t5515 have been updated to include for-merge
-> lines in .git/FETCH_HEAD where they have been configured for-merge
-> in .git/config.
+> - it seems more logical to me to call it "parse_option()" than 
+>   "scan_options()", since that is what it does,
 
-Ah, okay. This is one of the things I'd changed, to make it obey the merge 
-configuration (which meant that it didn't get anything to merge), which 
-had previously been ignored. So there's nothing that's expecting exactly 
-the behavior that you're changing away from, except for that test case.
+Yup.
 
-This whole series looks good to me.
+> - you might want to rename OPTION_NONE to OPTION_BOOLEAN, and maybe even 
+>   allow "--no-<option>" in that case for free,
 
-	-Daniel
-*This .sig left intentionally blank*
+Agree.
+
+> - wt_status_prepare() could take a parameter "index_file", which would 
+>   default to git_path("index") when passed as NULL, and
+
+Yeah, the way I did it, I preserved the API, but that's not really a
+concern, I guess.
+
+> - launch_editor() is defined in builtin-tag.c, which is not part of the 
+>   library, and therefore it would be technically more correct to either 
+>   move the function to editor.c (my preferred solution), or declare it in 
+>   builtin.h instead of strbuf.h.
+
+Yeah, and we should move the stripspace code there too.  Or maybe we
+should rename that strbuf_stripspace and put it in strbuf.c.
+
+> As you can see, my nits are really minor, which means that I am pretty 
+> happy with your work!
+
+Great, I hope we can get it in soon :)
+
+Kristian
