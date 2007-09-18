@@ -1,60 +1,72 @@
-From: David Brown <git@davidb.org>
-Subject: Re: State of Perforce importing.
-Date: Tue, 18 Sep 2007 16:19:21 -0700
-Message-ID: <20070918231921.GA17652@old.davidb.org>
-References: <20070917193027.GA24282@old.davidb.org> <46EF7DD1.9090301@vilain.net> <20070918154918.GA19106@old.davidb.org> <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Problem with merge when renaming
+Date: Tue, 18 Sep 2007 16:27:01 -0700
+Message-ID: <7vejgvtv0a.fsf@gitster.siamese.dyndns.org>
+References: <95b3d0af0709181334y1e21507ey485860e4d45aa26f@mail.gmail.com>
+	<7v7imnvca0.fsf@gitster.siamese.dyndns.org>
+	<20070918224447.GC14488@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: Sam Vilain <sam@vilain.net>, Git <git@vger.kernel.org>
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 01:19:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Euresti <evelio@gmail.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 01:27:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXmLr-0008Nq-BI
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 01:19:31 +0200
+	id 1IXmTK-0001lA-BX
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 01:27:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752399AbXIRXT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 19:19:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbXIRXT0
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 19:19:26 -0400
-Received: from mail.davidb.org ([66.93.32.219]:49650 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751026AbXIRXT0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 19:19:26 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IXmLh-0004qE-NB; Tue, 18 Sep 2007 16:19:21 -0700
-Mail-Followup-To: Reece Dunn <msclrhd@googlemail.com>,
-	Sam Vilain <sam@vilain.net>, Git <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753978AbXIRX1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 19:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753486AbXIRX1I
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 19:27:08 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37850 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751439AbXIRX1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 19:27:07 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2D613137A87;
+	Tue, 18 Sep 2007 19:27:25 -0400 (EDT)
+In-Reply-To: <20070918224447.GC14488@steel.home> (Alex Riesen's message of
+	"Wed, 19 Sep 2007 00:44:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58659>
 
-On Tue, Sep 18, 2007 at 06:53:45PM +0100, Reece Dunn wrote:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
->The main issues with using client workspaces is that they require you
->to use `p4 sync`, whereas git-p4 uses `p4 print` and that they may
->change as the repository changes, but Perforce does not track these
->changes.
+> Junio C Hamano, Wed, Sep 19, 2007 00:28:39 +0200:
+>> "David Euresti" <evelio@gmail.com> writes:
+>> 
+>> > I think I found a problem when you move a file into a directory of the
+>> > same name.  Here's what I did.
+>> 
+>> Two questions.
+>> 
+>>  (1) git --version?
+>
+> it happens with very recent git (as of today)
+>
+>>  (2) if you do "git merge -s resolve" instead of just "git
+>>      merge", do you see a difference?
+>
+> yes: it has more error output.
+>
+> Trying really trivial in-index merge...
+> warning: Merge requires file-level merging
+> Nope, a really trivial in-index merge not possible
+> Trying simple merge.
+> Simple merge failed, trying Automatic merge.
+> error: init: is a directory - add individual files instead
+> fatal: Unable to process path init
+> fatal: merge program failed
+> Automatic merge failed; fix conflicts and then commit the result.
 
-Unfortunately, we have one project that heavily abuses P4 client specs.
-For every release, someone creates a >900 line client spec and labels the
-files in it.  Those are the versions that need to get checked in, and
-without rewriting much of what P4 does, I'm going to have to let P4 do the
-syncing and checking out.
+Isn't this the same as the known issue here?
 
->I would not do that. It is a good idea to keep the original log
->messages, even if it does make for an uninformative shortlog. Look at
->some of the CVS/SVN imported logs!
-
-I think what I want then is something to filter between 'git log' and 'git
-shortlog' that would find a summary line in the commit message and copy it
-to the top.  It wouldn't change the history, but clean it up for shortlog's
-purpose.
-
-David
+	<http://permalink.gmane.org/gmane.comp.version-control.git/53402>
