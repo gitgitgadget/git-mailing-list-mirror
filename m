@@ -1,74 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: [PATCH] Documentation/git-svn: updated design philosophy notes
-Date: Tue, 18 Sep 2007 16:50:42 -0700
-Message-ID: <20070918235042.GA11992@untitled>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 4/5] Full rework of quote_c_style and write_name_quoted.
+Date: Wed, 19 Sep 2007 02:07:57 +0200
+Message-ID: <20070919000757.GC4535@artemis.corp>
+References: <20070918223947.GB4535@artemis.corp> <20070918224122.2B55D344AB3@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/signed; boundary="B4IIlcmfBL/1gGOG";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 01:50:58 2007
+X-From: git-owner@vger.kernel.org Wed Sep 19 02:08:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXmqC-0006zn-NN
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 01:50:53 +0200
+	id 1IXn7E-0002SN-Jl
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 02:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751049AbXIRXur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 19:50:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751147AbXIRXur
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 19:50:47 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:51673 "EHLO hand.yhbt.net"
+	id S1752422AbXISAIA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 20:08:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752431AbXISAIA
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 20:08:00 -0400
+Received: from pan.madism.org ([88.191.52.104]:54400 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990AbXIRXur (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 19:50:47 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id A66037DC029;
-	Tue, 18 Sep 2007 16:50:42 -0700 (PDT)
+	id S1752403AbXISAH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 20:07:59 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id CA50520A4D;
+	Wed, 19 Sep 2007 02:07:57 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 599D8344AFC; Wed, 19 Sep 2007 02:07:57 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20070918224122.2B55D344AB3@madism.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58662>
 
-This section has not been updated in a while and
---branches/--tags/--trunk options are commonly used nowadays.
 
-Noticed-by: Lars Hjemli <hjemli@gmail.com>
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
- Documentation/git-svn.txt |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
+--B4IIlcmfBL/1gGOG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  Eric Wong <normalperson@yhbt.net> wrote:
-  > Lars Hjemli <hjemli@gmail.com> wrote:
-  > > When updating git-svn.txt, I noticed that we might want to update the
-  > > section "DESIGN PHILOSOPHY". Eric?
-  > 
-  > Yeah.  That's very much out of date.  I'll update it in a bit.
+On Tue, Sep 18, 2007 at 10:00:51PM +0000, Pierre Habouzit wrote:
+> +		cp =3D strchr(qname.buf + qname.len + 3 - max, '/');
+> +		if (cp)
+> +			cp =3D qname.buf + qname.len + 3 - max;
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index be2e34e..e157c6a 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -478,11 +478,12 @@ previous commits in SVN.
- DESIGN PHILOSOPHY
- -----------------
- Merge tracking in Subversion is lacking and doing branched development
--with Subversion is cumbersome as a result.  git-svn does not do
--automated merge/branch tracking by default and leaves it entirely up to
--the user on the git side.  git-svn does however follow copy
--history of the directory that it is tracking, however (much like
--how 'svn log' works).
-+with Subversion can be cumbersome as a result.  While git-svn can track
-+copy history (including branches and tags) for repositories adopting a
-+standard layout, it cannot yet represent merge history that happened
-+inside git back upstream to SVN users.  Therefore it is advised that
-+users keep history as linear as possible inside git to ease
-+compatibility with SVN (see the CAVEATS section below).
- 
- CAVEATS
- -------
--- 
-Eric Wong
+  OMG, this is supposed to be if (!cp) of course...
+
+  I wonder how this passed the testsuite.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--B4IIlcmfBL/1gGOG
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG8GhdvGr7W6HudhwRAsc6AJwLEGRzej0fIi2OcBmRM9uGHlnLeACdGxFe
+bzOW+f3IjbL5Xn0qf3yCSkw=
+=w6SV
+-----END PGP SIGNATURE-----
+
+--B4IIlcmfBL/1gGOG--
