@@ -1,92 +1,82 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: State of Perforce importing.
-Date: Wed, 19 Sep 2007 08:19:11 +0200
-Message-ID: <200709190819.12188.simon@lst.de>
-References: <20070917193027.GA24282@old.davidb.org> <20070918233749.GA19533@old.davidb.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 4/5] Full rework of quote_c_style and write_name_quoted.
+Date: Wed, 19 Sep 2007 08:37:31 +0200
+Message-ID: <46F0C3AB.8010801@op5.se>
+References: <20070918223947.GB4535@artemis.corp> <20070918224122.2B55D344AB3@madism.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1787942.rEsDhzYc52";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 08:16:45 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 08:37:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXsrb-0007wB-Fw
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 08:16:43 +0200
+	id 1IXtBv-0004Wi-MG
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 08:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836AbXISGQh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 02:16:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbXISGQh
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 02:16:37 -0400
-Received: from verein.lst.de ([213.95.11.210]:34822 "EHLO mail.lst.de"
+	id S1752503AbXISGhj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 02:37:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752138AbXISGhj
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 02:37:39 -0400
+Received: from mail.op5.se ([193.201.96.20]:39313 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432AbXISGQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 02:16:37 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l8J6GQA5021314
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Wed, 19 Sep 2007 08:16:30 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20070918233749.GA19533@old.davidb.org>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1751927AbXISGhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 02:37:38 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 246FB19445E;
+	Wed, 19 Sep 2007 08:37:36 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ehvTbVPuBOQf; Wed, 19 Sep 2007 08:37:35 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id A669419435A;
+	Wed, 19 Sep 2007 08:37:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
+In-Reply-To: <20070918224122.2B55D344AB3@madism.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58682>
 
---nextPart1787942.rEsDhzYc52
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Pierre Habouzit wrote:
+>  
+> diff --git a/builtin-blame.c b/builtin-blame.c
+> index e364b6c..16c0ca8 100644
+> --- a/builtin-blame.c
+> +++ b/builtin-blame.c
+> @@ -1430,8 +1430,7 @@ static void get_commit_info(struct commit *commit,
+>  static void write_filename_info(const char *path)
+>  {
+>  	printf("filename ");
+> -	write_name_quoted(NULL, 0, path, 1, stdout);
+> -	putchar('\n');
+> +	write_name_quoted(path, stdout, '\n');
+>  }
+>  
 
-On Wednesday 19 September 2007 01:37:49 David Brown wrote:
-> On Mon, Sep 17, 2007 at 12:30:28PM -0700, David Brown wrote:
-> > I'd like to track a lot of code living in a Perforce repository, so I've
-> > been playing with 'git-p4.py'.  Is the one in the contrib/fast-import
-> > directory the latest version, or is there a better place.
-> >
-> > So far, it is having a couple of problems:
-> >
-> >   - The commit comment is empty.  It doesn't seem to grab the Perforce
-> >     description, and the user seems to be <a@b>.
-> >
-> >   - Every revision seems to check every file out of Perforce.  This means
-> >     that for the directory I want, every revision is going to take about
-> > 20 minutes.
->
-> An additional problem:
->
->    - git-p4 doesn't preserve the execute permission bit from Perforce.
+This looks like a candidate for a macro. I'm not sure if gcc optimizes
+sibling calls in void functions with -O2, and it doesn't inline without
+-O3.
 
-Hmm, can you paste the output of
+>  
+> -static void diff_flush_raw(struct diff_filepair *p,
+> -			   struct diff_options *options)
+> +static void diff_flush_raw(struct diff_filepair *p, struct diff_options *opt)
 
-	p4 fstat //path/in/depot/to/file/that/is/imported/incorrectly
+Parameter rename? I'd have thought the patch was big enough as it is ;-)
 
-? I'm interested in the type of the file that p4 reports.
 
-FWIW it works for me ;-)
+Other than that, the diffstat calls this a good patch, and given the fact that
+all your previous series passed all tests, I assume this one does too.
 
-Thanks,
-Simon
-
---nextPart1787942.rEsDhzYc52
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG8L9gWXvMThJCpvIRAqaYAKDBA+4cRmP5/FxwPwaa+2DpzKK5CACg4/Q5
-1snKKUwVHdeW2hnbK6PeL0c=
-=KsPz
------END PGP SIGNATURE-----
-
---nextPart1787942.rEsDhzYc52--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
