@@ -1,72 +1,109 @@
-From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: State of Perforce importing.
-Date: Wed, 19 Sep 2007 22:20:10 +0100
-Message-ID: <3f4fd2640709191420w1245449cwb9646b6c6e0e1c82@mail.gmail.com>
-References: <20070917193027.GA24282@old.davidb.org>
-	 <46EF7DD1.9090301@vilain.net> <20070918154918.GA19106@old.davidb.org>
-	 <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com>
-	 <46F06C0F.3040609@vilain.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: "Sam Vilain" <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 23:20:27 2007
+From: "Steven Burns" <royalstream@hotmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Wed, 19 Sep 2007 13:56:51 -0600
+Message-ID: <fcrutu$16f$1@sea.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se>  <1189004090.20311.12.camel@hinata.boston.redhat.com>  <vpq642pkoln.fsf@bauges.imag.fr>  <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>  <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 20 00:30:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IY6y3-000310-4o
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 23:20:19 +0200
+	id 1IY83k-0000Xm-Hi
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 00:30:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbXISVUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 17:20:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbXISVUO
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 17:20:14 -0400
-Received: from wr-out-0506.google.com ([64.233.184.230]:48316 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751586AbXISVUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 17:20:12 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so157278wra
-        for <git@vger.kernel.org>; Wed, 19 Sep 2007 14:20:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0zmJBw2quRiHMLvs1jp8e1LnROlUMO05/smIpI9X0ic=;
-        b=HpY0cJC2sG4ChAUKlH82Ik6d4eiK92lMyXsLOUU67KHt5irz30I0EkMWhzJhH5YrpqpkQfEIl2HnMKdzZ2zrqlSJ7Xv5S+N/vqocqZZsr7mg+xTQE5yUwKd+BI/MoPFstQsEhWAigbh4SrfKvuUY7w8VfmnuxR2E92RZ4+w/75o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ds9JuOvpOC6rwUpbl+BX/0mbhd3buFKeZUSZ8j2zqyLBgsSUa/gcozxk4vho+4fHq7uqu5BjGO/3tHdt92qPrmFjCL+J3sCgqrbl7d8LFO2TaWTwmpRJgZeRsUH0JZ+lmazGJM3uH27VjQ881jtKfco6+mU45i0tCr37TOzbUIk=
-Received: by 10.142.88.20 with SMTP id l20mr30346wfb.1190236810600;
-        Wed, 19 Sep 2007 14:20:10 -0700 (PDT)
-Received: by 10.141.87.20 with HTTP; Wed, 19 Sep 2007 14:20:10 -0700 (PDT)
-In-Reply-To: <46F06C0F.3040609@vilain.net>
-Content-Disposition: inline
+	id S1752432AbXISWaL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 18:30:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751585AbXISWaL
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 18:30:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:32993 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751220AbXISWaJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 18:30:09 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IY83X-0007cY-0u
+	for git@vger.kernel.org; Thu, 20 Sep 2007 00:30:03 +0200
+Received: from 200.9.63.21 ([200.9.63.21])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 00:30:03 +0200
+Received: from royalstream by 200.9.63.21 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 00:30:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 200.9.63.21
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.3138
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+X-RFC2646: Format=Flowed; Original
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58738>
+X-Spam-Report: 6.3 points;
+ *  0.0 RCVD_BY_IP Received by mail server with no name
+ *  4.0 RCVD_NUMERIC_HELO Received: contains an IP address used for HELO
+ *  1.1 FORGED_HOTMAIL_RCVD2 hotmail.com 'From' address, but no 'Received:'
+ *  1.2 PRIORITY_NO_NAME Message has priority, but no X-Mailer/User-Agent
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58739>
 
-On 19/09/2007, Sam Vilain <sam@vilain.net> wrote:
-> Reece Dunn wrote:
-> > There is no need to create yet another Perforce importing tool, git-p4
-> > works well in most cases. If we focus on improving git-p4, extending
-> > it to support the functionality mentioned here, fix the issues that
-> > there are with it, then that will be more beneficial to the community
-> > as they will not have to learn another tool with a different set of
-> > bugs and issues.
+To me, the only thing that C++ has that all other mentioned languages lack 
+is the power you get from the templates and generic programming.
+Sorting will always be faster if you can call the comparison function 
+directly without using a function pointer, and the only way you can create a 
+generic sorting algorithm is that way.
+
+Thinking about it with a cold head, most things to hate about C++ are not in 
+the language but in its libraries.
+The only feature I hate from the language itself is the preprocessor 
+(macros), which you get in C too.
+
+And maybe I also hate the fact that C++ allows for unexperienced programmers 
+to create a bunch of classes and hierarchies that make sense to nobody but 
+them. Or even worse, unexperienced programmers start writing their own 
+frameworks, wrapping and re-wrapping, the same good old C function one 
+thousand times.
+
+I guess that is why most C++ based projects out there have a strict list of 
+rules and conventions, you cannot have a stable project without them.
+
+But, nothing prevents anybody from programming in C++ the way you describe, 
+using simple and clear core structures with some basic methods that 
+complement them (not obscure them) and make it easier to write the 
+algorithms.
+Sadly, once you start using std::string, their overly complicated and fancy 
+iostreams, and bulky classes that hide too much from you, I have no other 
+choice than to agree and call the whole thing a mess.
+
+Steven Burns
+
+
+"Linus Torvalds" <torvalds@linux-foundation.org> wrote in message 
+news:alpine.LFD.0.999.0709070203200.5626@evo.linux-foundation.org...
 >
-> I like my approach; it's clean and I think shows a tasteful level of
-> distrust towards the sanity and integrity of the data held by Perforce.
->  Actually it really helped me understand what was really going on;
-> because the information as displayed by for instance "p4 integrate" is
-> a lot more confusing than the underlying tables (IMHO).
-
-I agree. What I wasn't clear about in that paragraph, but had eluded
-to in other comments in that email, is that having both git-p4 and
-git-p4raw is a good thing as they operate on two differing use cases.
-What I was referring to there is to have another equivalent of git-p4
-that interfaced using the p4 client.
-
-- Reece
+>
+> On Fri, 7 Sep 2007, Linus Torvalds wrote:
+>>
+>> The fact is, git is better than the other SCM's. And good taste (and C) 
+>> is
+>> one of the reasons for that.
+>
+> To be very specific:
+> - simple and clear core datastructures, with *very* lean and aggressive
+>   code to manage them that takes the whole approach of "simplicity over
+>   fancy" to the extreme.
+> - a willingness to not abstract away the data structures and algorithms,
+>   because those are the *whole*point* of core git.
+>
+> And if you want a fancier language, C++ is absolutely the worst one to
+> choose. If you want real high-level, pick one that has true high-level
+> features like garbage collection or a good system integration, rather than
+> something that lacks both the sparseness and straightforwardness of C,
+> *and* doesn't even have the high-level bindings to important concepts.
+>
+> IOW, C++ is in that inconvenient spot where it doesn't help make things
+> simple enough to be truly usable for prototyping or simple GUI
+> programming, and yet isn't the lean system programming language that C is
+> that actively encourags you to use simple and direct constructs.
+>
+> Linus 
