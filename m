@@ -1,61 +1,58 @@
-From: Sam Vilain <sam@vilain.net>
+From: David Brown <git@davidb.org>
 Subject: Re: State of Perforce importing.
-Date: Wed, 19 Sep 2007 12:23:43 +1200
-Message-ID: <46F06C0F.3040609@vilain.net>
-References: <20070917193027.GA24282@old.davidb.org>	 <46EF7DD1.9090301@vilain.net> <20070918154918.GA19106@old.davidb.org> <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com>
+Date: Tue, 18 Sep 2007 17:26:17 -0700
+Message-ID: <20070919002617.GA22187@old.davidb.org>
+References: <20070917193027.GA24282@old.davidb.org> <46EF7DD1.9090301@vilain.net> <20070918154918.GA19106@old.davidb.org> <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com> <20070918231921.GA17652@old.davidb.org> <46F06B5C.2050207@vilain.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git <git@vger.kernel.org>
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 02:22:05 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Reece Dunn <msclrhd@googlemail.com>, Git <git@vger.kernel.org>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Sep 19 02:26:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXnKN-0005kV-Iu
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 02:22:03 +0200
+	id 1IXnOc-0006lO-2h
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 02:26:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751381AbXISAVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 20:21:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751379AbXISAVv
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 20:21:51 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:46586 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751320AbXISAVu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 20:21:50 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id B16BF21CFB9; Wed, 19 Sep 2007 12:21:49 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 2849321CFB6;
-	Wed, 19 Sep 2007 12:21:46 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1751460AbXISA0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 20:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456AbXISA0U
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 20:26:20 -0400
+Received: from mail.davidb.org ([66.93.32.219]:34746 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751397AbXISA0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 20:26:19 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
+	id 1IXnOT-0005oD-E2; Tue, 18 Sep 2007 17:26:17 -0700
+Mail-Followup-To: Sam Vilain <sam@vilain.net>,
+	Reece Dunn <msclrhd@googlemail.com>, Git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <46F06B5C.2050207@vilain.net>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58667>
 
-Reece Dunn wrote:
-> There is no need to create yet another Perforce importing tool, git-p4
-> works well in most cases. If we focus on improving git-p4, extending
-> it to support the functionality mentioned here, fix the issues that
-> there are with it, then that will be more beneficial to the community
-> as they will not have to learn another tool with a different set of
-> bugs and issues.
+On Wed, Sep 19, 2007 at 12:20:44PM +1200, Sam Vilain wrote:
 
-I like my approach; it's clean and I think shows a tasteful level of
-distrust towards the sanity and integrity of the data held by Perforce.
- Actually it really helped me understand what was really going on;
-because the information as displayed by for instance "p4 integrate" is
-a lot more confusing than the underlying tables (IMHO).
+>If you can get a hold of the "checkpoint" and "journal" files, you could
+>probably throw the client spec data into a few Pg tables, chuck a couple
+>of constraints on it to confirm that it works the way you thought, and
+>then get the information on what's where using a SQL query.  The file
+>images themselves can come from wherever, it doesn't really matter
+>because there are MD5 hashes in the data tables you can use to confirm
+>you got the right file.
 
-Sam.
+In my instance, I don't have an account on the P4 server, so I'm going to
+have to deal with this through P4's normal client.
+
+I don't have much confidence that P4 really knows what it is doing when it
+comes to integrate, so I'm not much worried about branches.  But, I do want
+to accurately get the history of a particular branch.
+
+So far, the only thing that isn't working is the execute bit doesn't get
+set on files that should have it.
+
+Dave
