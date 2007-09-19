@@ -1,62 +1,77 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [EGIT PATCH] Change to simplified icon.
-Date: Wed, 19 Sep 2007 20:19:12 +0200
-Message-ID: <200709192019.13096.robin.rosenberg.lists@dewire.com>
-References: <20070918222416.GB11990@toast.toronto.redhat.com>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: Re: State of Perforce importing.
+Date: Wed, 19 Sep 2007 19:23:41 +0100
+Message-ID: <3f4fd2640709191123j64b53878vc96d785c13c3bca2@mail.gmail.com>
+References: <20070917193027.GA24282@old.davidb.org>
+	 <20070918233749.GA19533@old.davidb.org>
+	 <200709190819.12188.simon@lst.de>
+	 <20070919171243.GA23902@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ben Konrath <bkonrath@redhat.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 20:33:26 2007
+To: "Simon Hausmann" <simon@lst.de>, Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 20:41:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IY4G4-0003PZ-8G
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 20:26:44 +0200
+	id 1IY4DF-0002jS-5l
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 20:23:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551AbXISS0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 14:26:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbXISS0i
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 14:26:38 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:28844 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756473AbXISS0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 14:26:38 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 56CED8030DA;
-	Wed, 19 Sep 2007 20:18:27 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 32493-10; Wed, 19 Sep 2007 20:18:27 +0200 (CEST)
-Received: from [10.9.0.7] (unknown [10.9.0.7])
-	by dewire.com (Postfix) with ESMTP id 0866E80264D;
-	Wed, 19 Sep 2007 20:18:27 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <20070918222416.GB11990@toast.toronto.redhat.com>
+	id S1755052AbXISSXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 14:23:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754878AbXISSXo
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 14:23:44 -0400
+Received: from wr-out-0506.google.com ([64.233.184.226]:28116 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753183AbXISSXn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 14:23:43 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so120178wra
+        for <git@vger.kernel.org>; Wed, 19 Sep 2007 11:23:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=01xHxCs+jHnlYUyP8y/oekP5rCQaSJFy1RxV06L0O/w=;
+        b=U7c5of2Y4PcJ4y1f1uQHrTdVGLSWoUqwnw/e8y00LaxBZKOxAAvAtZ95tU6EgjIOX+av3SPvjHUN1ADrzpkpzGX1d/ZdEIvm2h0oo1CmgmjKhJ3yr4Ndfp+o4HCxJ77/DSWfi64rq4ykF52JVv765YhdT7uAYI2lL20MGx4ZoQA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=rt+R+TdKAPyOX/1Kv/o+tnnQEFJeFEpn36ms2y86MRvYUZfhaaJxc6XY5pDZnpwN6PsxsDoivHT3VwpilwopWrujzLPQmjcutzRfX7uwJRMRtHXaqd00aV/GqxFxXP4/MfLHoL8ZcxZ4spUTZxjb8HYuY9QTTWD5yEOdpdgqsSY=
+Received: by 10.142.105.14 with SMTP id d14mr410721wfc.1190226221507;
+        Wed, 19 Sep 2007 11:23:41 -0700 (PDT)
+Received: by 10.141.87.20 with HTTP; Wed, 19 Sep 2007 11:23:41 -0700 (PDT)
+In-Reply-To: <20070919171243.GA23902@old.davidb.org>
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58719>
 
-onsdag 19 september 2007 skrev Ben Konrath:
-> Hi Robin,
-> 
-> Here's a patch that changes the icon to something that is a little more
-> aesthetically pleasing than the one I iniitially submitted. Feel free to
-> use the one you like best.
+On 19/09/2007, David Brown <git@davidb.org> wrote:
+> On Wed, Sep 19, 2007 at 08:19:11AM +0200, Simon Hausmann wrote:
+>
+> >> An additional problem:
+> >>
+> >>    - git-p4 doesn't preserve the execute permission bit from Perforce.
+> >
+> >Hmm, can you paste the output of
+> >
+> >       p4 fstat //path/in/depot/to/file/that/is/imported/incorrectly
+> >
+> >? I'm interested in the type of the file that p4 reports.
+>
+>    headType kxtext
+>
+> so the problem is that the git-p4 is only looking for an 'x' at the start.
+> According to 'p4 help filetypes', we need to use execute for any of:
+>
+>    cxtext, kxtext, uxbinary,  and the others that start with 'x'.
+>
+> I think it would be sufficient to check the first or second character for
+> an 'x'.  I'll make a change and give it a try later today.
 
-The icon looks very similar to the one in GitWeb. The simplified is, without,
-making a bitwise compare, is seems identical to the Git icon. Is that 
-appropriate? What do the author of that icon, and other Git developers, think?
+These are the old file types. If you read the output of `p4 help
+filetypes`, the new way of specifying this is with file type
+modifiers. Therefore, you also have things like text+x.
 
-The plugin. after all, does steal ideas and repository format from Git,
-but is in fact a completely separate implementation. 
-
-I'll leave this one in my patch tree for now. The Egit icon contest is stil open to all.
-
--- robin
+- Reece
