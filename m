@@ -1,81 +1,82 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] Mention that 'push .. master' is in explicit form master:refs/heads/master
-Date: Wed, 19 Sep 2007 13:37:41 +0300
-Organization: Private
-Message-ID: <bqbzj5ze.fsf@blue.sea.net>
-References: <wsuomgyu.fsf@blue.sea.net>
-	<7vfy1bvgn1.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 19 12:38:22 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Side-by-side diff and patch visualization
+Date: Wed, 19 Sep 2007 13:40:17 +0200
+Message-ID: <A92611E8-1035-46A6-AFEF-9C8A6F93AFB1@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 19 13:40:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXwwo-0003rf-06
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 12:38:22 +0200
+	id 1IXxv0-00009G-Kd
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 13:40:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756546AbXISKiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 06:38:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756466AbXISKiS
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 06:38:18 -0400
-Received: from main.gmane.org ([80.91.229.2]:57744 "EHLO ciao.gmane.org"
+	id S1757407AbXISLka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 07:40:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755501AbXISLk3
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 07:40:29 -0400
+Received: from wincent.com ([72.3.236.74]:46522 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756431AbXISKiQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 06:38:16 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IXwv2-0002Cf-HP
-	for git@vger.kernel.org; Wed, 19 Sep 2007 12:36:33 +0200
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 19 Sep 2007 12:36:32 +0200
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 19 Sep 2007 12:36:32 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:VFuL3EK3BBt09usES3pacWBq+4E=
+	id S1756849AbXISLk3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 07:40:29 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l8JBeRoa015576
+	for <git@vger.kernel.org>; Wed, 19 Sep 2007 06:40:28 -0500
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58702>
 
-* Tue 2007-09-18 Junio C Hamano <gitster AT pobox.com>
-* Message-Id: 7vfy1bvgn1.fsf AT gitster.siamese.dyndns.org
->>  	Find a ref that matches `master` in the source repository
->>  	(most likely, it would find `refs/heads/master`), and update
->>  	the same ref (e.g. `refs/heads/master`) in `origin` repository
->> -	with it.
->> +	with it. The following would be exactly same command:
->> +
->> +	git push origin master:refs/heads/master
->
-> They _might_ be exactly the same.
->
-> The reason people often explicitly write
->
-> 	$ git push $URL refs/heads/master:refs/heads/master
->
-> in their insns for newbies is because this form would not be
-> affected by the random factors at $URL repository (or your
-> repository) and will consistently get the same result.
->
-> 	$ git push $URL foo
->
-> may push branch head 'foo' or tag 'foo' depending on which one
-> you have locally.  Having both is not encouraged, but spelling
-> the insn out explicitly as refs/heads/foo makes it clear the
-> command is talking about the branch even when there is a tag
-> with the same name.
+Does anybody know of any tools for doing side-by-side visualizations  
+of diffs and patches which work well with Git?
 
-Thank you, kindly broaden the current documentation to include this
-explanation.
+By side-by-side I mean something like what's shown in this screen shot:
 
-Jari
+<http://wincent.com/images/side-by-side-diff.png>
 
--- 
-Welcome to FOSS revolution: we fix and modify until it shines
+For simple diffs there is little advantage here over a raw textual  
+diff, but as patch complexity and size increase the side-by-side diff  
+can sometimes prove itself to be more useful:
+
+- totally flexible notion of context (you can scroll as far as you  
+want in either direction)
+
+- this flexibility comes with the same rapid movement between changes  
+(ie. up/down cursor keys to jump between hunks no matter how far  
+apart they are)
+
+- for complex diffs, truly comprehending the nature of the changes  
+may be easier in a side-by-side format
+
+- as icing on cake, the implementation in the screenshot highlights  
+the removed/added portions within each line
+
+Now, that screenshot is actually of Apple's FileMerge app on Mac OS X  
+and it would be fairly straightforward to write a dump wrapper script  
+that either just interpreted the output of git-diff, or could be used  
+in conjunction with GIT_EXTERNAL_DIFF, to feed files into opendiff  
+two at a time, but that wouldn't allow you to easily visualize diffs  
+which touch many paths.
+
+So, can anyone recommend a tool which can do this kind of side-by- 
+side visualization and plays nicely with Git? Experience with  
+opendiff and git-mergetool has spoilt me here. For most cases I would  
+continue to use vanilla git-diff (or gitk), but when I see a change  
+that I'd like to visualize side-by-side I'd like to be able to use  
+this alternative diff viewer (or can gitk already do side-by-side  
+diffs and I just haven't seen how to turn them on?). Bonus points if  
+I could not only view existing commits, but proposed commits too (ie.  
+the ability to feed in a patch and see a side-by-side visualization  
+of what the diff would look like if applied).
+
+If nothing exists I will look at quickly hacking something together  
+(most likely something that just reads the output of git-diff), but  
+it will be just that, a quick hack.
+
+Cheers,
+Wincent
