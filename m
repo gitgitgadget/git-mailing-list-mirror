@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 2/5] Refactor struct transport_ops inlined into struct transport
-Date: Wed, 19 Sep 2007 00:49:31 -0400
-Message-ID: <20070919044931.GB17107@spearce.org>
+Subject: [PATCH 4/5] Ensure builtin-fetch honors {fetch,transfer}.unpackLimit
+Date: Wed, 19 Sep 2007 00:49:39 -0400
+Message-ID: <20070919044939.GD17107@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 06:50:00 2007
+X-From: git-owner@vger.kernel.org Wed Sep 19 06:50:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXrVf-00072u-8l
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 06:49:59 +0200
+	id 1IXrVg-00072u-QM
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 06:50:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431AbXISEtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 00:49:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbXISEtg
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 00:49:36 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38740 "EHLO
+	id S1751498AbXISEto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 00:49:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbXISEtn
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 00:49:43 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38748 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751406AbXISEtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 00:49:35 -0400
+	with ESMTP id S1751459AbXISEtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 00:49:42 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IXrVC-0006x6-RX; Wed, 19 Sep 2007 00:49:31 -0400
+	id 1IXrVK-0006xW-OW; Wed, 19 Sep 2007 00:49:38 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CAE3F20FBAE; Wed, 19 Sep 2007 00:49:31 -0400 (EDT)
+	id B432920FBAE; Wed, 19 Sep 2007 00:49:39 -0400 (EDT)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -38,241 +38,128 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58677>
 
-Aside from reducing the code by 20 lines this refactoring removes
-a level of indirection when trying to access the operations of a
-given transport "instance", making the code clearer and easier to
-follow.
+The only way to configure the unpacking limit is currently through
+the .git/config (or ~/.gitconfig) mechanism as we have no existing
+command line option interface to control this threshold on a per
+invocation basis.  This was intentional by design as the storage
+policy of the repository should be a repository-wide decision and
+should not be subject to variations made on individual command
+executions.
 
-It also has the nice effect of giving us the benefits of C99 style
-struct initialization (namely ".fetch = X") without requiring that
-level of language support from our compiler.  We don't need to worry
-about new operation methods being added as they will now be NULL'd
-out automatically by the xcalloc() we use to create the new struct
-transport we supply to the caller.
-
-This pattern already exists in struct walker, so we already have
-a precedent for it in Git.  We also don't really need to worry
-about any sort of performance decreases that may occur as a result
-of filling out 4-8 op pointers when we make a "struct transport".
-The extra few CPU cycles this requires over filling in the "struct
-transport_ops" is killed by the time it will take Git to actually
-*use* one of those functions, as most transport operations are
-going over the wire or will be copying object data locally between
-two directories.
+Earlier builtin-fetch was bypassing the unpacking limit chosen by
+the user through the configuration file as it did not reread the
+configuration options through fetch_pack_config if we called the
+internal fetch_pack() API directly.  We now ensure we always run the
+config file through fetch_pack_config at least once in this process,
+thereby setting our unpackLimit properly.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-fetch.c |    3 +-
- transport.c     |   62 +++++++++++++++++++++---------------------------------
- transport.h     |   16 ++++---------
- 3 files changed, 30 insertions(+), 51 deletions(-)
+ builtin-fetch-pack.c |   19 +++++++++++++------
+ transport.c          |    9 ---------
+ transport.h          |    3 ---
+ 3 files changed, 13 insertions(+), 18 deletions(-)
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 997a8ff..2f639cc 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -392,8 +392,7 @@ static int do_fetch(struct transport *transport,
- 	if (transport->remote->fetch_tags == -1)
- 		no_tags = 1;
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 77eb181..d128915 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -670,18 +670,24 @@ static int fetch_pack_config(const char *var, const char *value)
  
--	if (!transport->ops || !transport->ops->get_refs_list ||
--	    !transport->ops->fetch)
-+	if (!transport->get_refs_list || !transport->fetch)
- 		die("Don't know how to fetch from %s", transport->url);
+ static struct lock_file lock;
  
- 	/* if not appending, truncate FETCH_HEAD */
+-int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
++static void fetch_pack_setup()
+ {
+-	int i, ret, nr_heads;
+-	struct ref *ref;
+-	char *dest = NULL, **heads;
+-
++	static int did_setup;
++	if (did_setup)
++		return;
+ 	git_config(fetch_pack_config);
+-
+ 	if (0 <= transfer_unpack_limit)
+ 		unpack_limit = transfer_unpack_limit;
+ 	else if (0 <= fetch_unpack_limit)
+ 		unpack_limit = fetch_unpack_limit;
++	did_setup = 1;
++}
++
++int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
++{
++	int i, ret, nr_heads;
++	struct ref *ref;
++	char *dest = NULL, **heads;
+ 
+ 	nr_heads = 0;
+ 	heads = NULL;
+@@ -760,6 +766,7 @@ struct ref *fetch_pack(struct fetch_pack_args *my_args,
+ 	struct ref *ref;
+ 	struct stat st;
+ 
++	fetch_pack_setup();
+ 	memcpy(&args, my_args, sizeof(args));
+ 	if (args.depth > 0) {
+ 		if (stat(git_path("shallow"), &st))
 diff --git a/transport.c b/transport.c
-index cc76e3f..d8458dc 100644
+index 85f5b1e..a1d0a3c 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -44,8 +44,6 @@ static int disconnect_walker(struct transport *transport)
- 	return 0;
- }
- 
--static const struct transport_ops rsync_transport;
--
- static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags) {
- 	const char **argv;
- 	int argc;
-@@ -199,14 +197,6 @@ static int fetch_objs_via_curl(struct transport *transport,
- 
- #endif
- 
--static const struct transport_ops curl_transport = {
--	/* set_option */	NULL,
--	/* get_refs_list */	get_refs_via_curl,
--	/* fetch */		fetch_objs_via_curl,
--	/* push */		curl_transport_push,
--	/* disconnect */	disconnect_walker
--};
--
- struct bundle_transport_data {
- 	int fd;
- 	struct bundle_header header;
-@@ -249,14 +239,6 @@ static int close_bundle(struct transport *transport)
- 	return 0;
- }
- 
--static const struct transport_ops bundle_transport = {
--	/* set_option */	NULL,
--	/* get_refs_list */	get_refs_from_bundle,
--	/* fetch */		fetch_refs_from_bundle,
--	/* push */		NULL,
--	/* disconnect */	close_bundle
--};
--
+@@ -242,11 +242,7 @@ static int close_bundle(struct transport *transport)
  struct git_transport_data {
  	unsigned thin : 1;
  	unsigned keep : 1;
-@@ -401,13 +383,6 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 	return !!err;
- }
- 
--static const struct transport_ops git_transport = {
--	/* set_option */	set_git_option,
--	/* get_refs_list */	get_refs_via_connect,
--	/* fetch */		fetch_refs_via_pack,
--	/* push */		git_transport_push
--};
 -
- static int is_local(const char *url)
- {
- 	const char *colon = strchr(url, ':');
-@@ -431,18 +406,31 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 	ret->url = url;
- 
- 	if (!prefixcmp(url, "rsync://")) {
--		ret->ops = &rsync_transport;
-+		/* not supported; don't populate any ops */
-+
- 	} else if (!prefixcmp(url, "http://")
- 	        || !prefixcmp(url, "https://")
- 	        || !prefixcmp(url, "ftp://")) {
--		ret->ops = &curl_transport;
-+		ret->get_refs_list = get_refs_via_curl;
-+		ret->fetch = fetch_objs_via_curl;
-+		ret->push = curl_transport_push;
-+		ret->disconnect = disconnect_walker;
-+
- 	} else if (is_local(url) && is_file(url)) {
- 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
- 		ret->data = data;
--		ret->ops = &bundle_transport;
-+		ret->get_refs_list = get_refs_from_bundle;
-+		ret->fetch = fetch_refs_from_bundle;
-+		ret->disconnect = close_bundle;
-+
- 	} else {
- 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
- 		ret->data = data;
-+		ret->set_option = set_git_option;
-+		ret->get_refs_list = get_refs_via_connect;
-+		ret->fetch = fetch_refs_via_pack;
-+		ret->push = git_transport_push;
-+
- 		data->thin = 1;
- 		data->uploadpack = "git-upload-pack";
- 		if (remote && remote->uploadpack)
-@@ -451,7 +439,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
+-	int unpacklimit;
+-
+ 	int depth;
+-
+ 	const char *uploadpack;
+ 	const char *receivepack;
+ };
+@@ -267,9 +263,6 @@ static int set_git_option(struct transport *connection,
+ 	} else if (!strcmp(name, TRANS_OPT_KEEP)) {
+ 		data->keep = !!value;
+ 		return 0;
+-	} else if (!strcmp(name, TRANS_OPT_UNPACKLIMIT)) {
+-		data->unpacklimit = atoi(value);
+-		return 0;
+ 	} else if (!strcmp(name, TRANS_OPT_DEPTH)) {
+ 		if (!value)
+ 			data->depth = 0;
+@@ -318,7 +311,6 @@ static int fetch_refs_via_pack(struct transport *transport,
+ 	args.uploadpack = data->uploadpack;
+ 	args.keep_pack = data->keep;
+ 	args.lock_pack = 1;
+-	args.unpacklimit = data->unpacklimit;
+ 	args.use_thin_pack = data->thin;
+ 	args.verbose = transport->verbose;
+ 	args.depth = data->depth;
+@@ -435,7 +427,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		data->receivepack = "git-receive-pack";
  		if (remote && remote->receivepack)
  			data->receivepack = remote->receivepack;
- 		data->unpacklimit = -1;
--		ret->ops = &git_transport;
+-		data->unpacklimit = -1;
  	}
  
  	return ret;
-@@ -460,24 +447,23 @@ struct transport *transport_get(struct remote *remote, const char *url)
- int transport_set_option(struct transport *transport,
- 			 const char *name, const char *value)
- {
--	if (transport->ops->set_option)
--		return transport->ops->set_option(transport, name, value);
-+	if (transport->set_option)
-+		return transport->set_option(transport, name, value);
- 	return 1;
- }
- 
- int transport_push(struct transport *transport,
- 		   int refspec_nr, const char **refspec, int flags)
- {
--	if (!transport->ops->push)
-+	if (!transport->push)
- 		return 1;
--	return transport->ops->push(transport, refspec_nr, refspec, flags);
-+	return transport->push(transport, refspec_nr, refspec, flags);
- }
- 
- struct ref *transport_get_remote_refs(struct transport *transport)
- {
- 	if (!transport->remote_refs)
--		transport->remote_refs =
--			transport->ops->get_refs_list(transport);
-+		transport->remote_refs = transport->get_refs_list(transport);
- 	return transport->remote_refs;
- }
- 
-@@ -496,7 +482,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
- 		heads[nr_heads++] = rm;
- 	}
- 
--	rc = transport->ops->fetch(transport, nr_heads, heads);
-+	rc = transport->fetch(transport, nr_heads, heads);
- 	free(heads);
- 	return rc;
- }
-@@ -513,8 +499,8 @@ void transport_unlock_pack(struct transport *transport)
- int transport_disconnect(struct transport *transport)
- {
- 	int ret = 0;
--	if (transport->ops->disconnect)
--		ret = transport->ops->disconnect(transport);
-+	if (transport->disconnect)
-+		ret = transport->disconnect(transport);
- 	free(transport);
- 	return ret;
- }
 diff --git a/transport.h b/transport.h
-index 6a95d66..3e332ff 100644
+index 3e332ff..6e318e4 100644
 --- a/transport.h
 +++ b/transport.h
-@@ -5,22 +5,11 @@
- #include "remote.h"
+@@ -47,9 +47,6 @@ struct transport *transport_get(struct remote *, const char *);
+ /* Keep the pack that was transferred if not null */
+ #define TRANS_OPT_KEEP "keep"
  
- struct transport {
--	unsigned verbose : 1;
- 	struct remote *remote;
- 	const char *url;
+-/* Unpack the objects if fewer than this number of objects are fetched */
+-#define TRANS_OPT_UNPACKLIMIT "unpacklimit"
 -
- 	void *data;
--
- 	struct ref *remote_refs;
- 
--	const struct transport_ops *ops;
--	char *pack_lockfile;
--};
--
--#define TRANSPORT_PUSH_ALL 1
--#define TRANSPORT_PUSH_FORCE 2
--
--struct transport_ops {
- 	/**
- 	 * Returns 0 if successful, positive if the option is not
- 	 * recognized or is inapplicable, and negative if the option
-@@ -34,8 +23,13 @@ struct transport_ops {
- 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
- 
- 	int (*disconnect)(struct transport *connection);
-+	char *pack_lockfile;
-+	unsigned verbose : 1;
- };
- 
-+#define TRANSPORT_PUSH_ALL 1
-+#define TRANSPORT_PUSH_FORCE 2
-+
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
+ /* Limit the depth of the fetch if not null */
+ #define TRANS_OPT_DEPTH "depth"
  
 -- 
 1.5.3.1.195.gadd6
