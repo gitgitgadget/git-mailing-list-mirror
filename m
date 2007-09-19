@@ -1,66 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Repository backups
-Date: Wed, 19 Sep 2007 16:27:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709191627040.28395@racer.site>
-References: <31e9dd080709190814t6ef8b725w8a8320685e70578b@mail.gmail.com>
+From: David Brown <git@davidb.org>
+Subject: Re: State of Perforce importing.
+Date: Wed, 19 Sep 2007 10:12:43 -0700
+Message-ID: <20070919171243.GA23902@old.davidb.org>
+References: <20070917193027.GA24282@old.davidb.org> <20070918233749.GA19533@old.davidb.org> <200709190819.12188.simon@lst.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 17:29:19 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Git <git@vger.kernel.org>
+To: Simon Hausmann <simon@lst.de>
+X-From: git-owner@vger.kernel.org Wed Sep 19 19:12:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IY1Tv-0006W4-0R
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 17:28:51 +0200
+	id 1IY36Y-0007dt-3v
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 19:12:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145AbXISP2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 11:28:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753437AbXISP2p
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 11:28:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34623 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752953AbXISP2o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 11:28:44 -0400
-Received: (qmail invoked by alias); 19 Sep 2007 15:28:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp004) with SMTP; 19 Sep 2007 17:28:43 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+1f3ooRhq1z6OaOJUoEz/604tecZq1hA6EWjUeTX
-	k2/rlQCUxNigfC
-X-X-Sender: gene099@racer.site
-In-Reply-To: <31e9dd080709190814t6ef8b725w8a8320685e70578b@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1751375AbXISRMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 13:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXISRMp
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 13:12:45 -0400
+Received: from mail.davidb.org ([66.93.32.219]:46323 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751045AbXISRMp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 13:12:45 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
+	id 1IY36R-0006V7-JV; Wed, 19 Sep 2007 10:12:43 -0700
+Mail-Followup-To: Simon Hausmann <simon@lst.de>, Git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <200709190819.12188.simon@lst.de>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58715>
 
-Hi,
+On Wed, Sep 19, 2007 at 08:19:11AM +0200, Simon Hausmann wrote:
 
-On Wed, 19 Sep 2007, Jason Sewall wrote:
+>> An additional problem:
+>>
+>>    - git-p4 doesn't preserve the execute permission bit from Perforce.
+>
+>Hmm, can you paste the output of
+>
+>	p4 fstat //path/in/depot/to/file/that/is/imported/incorrectly
+>
+>? I'm interested in the type of the file that p4 reports.
 
-> I'd like to build a modest safety net for my various git repositories
-> in case of catastrophic failure. Currently, everything is backed up on
-> machines in the same building. I'm not expecting the Computer Science
-> building to get hit by terrorists and we're in a seismically stable
-> place, but there *is* construction nearby...
-> 
-> Anyway, my university offers a "mass storage" tape-based service that
-> is supposedly very safe. We are encouraged to give them single big
-> files for backups.
-> 
-> The temptation to just make bundles of all branch heads is great but
-> probably not what I really want - things like reflogs don't get handed
-> off with those, if I understand correctly.
-> 
-> Is there any argument against just making a tar of a bare clone of the
-> repo?
+   headType kxtext
 
-If you make a bare clone, you lose reflogs, too.
+so the problem is that the git-p4 is only looking for an 'x' at the start.
+According to 'p4 help filetypes', we need to use execute for any of:
 
-So I would backup the complete .git/ directory instead.
+   cxtext, kxtext, uxbinary,  and the others that start with 'x'.
 
-Hth,
-Dscho
+I think it would be sufficient to check the first or second character for
+an 'x'.  I'll make a change and give it a try later today.
+
+David
