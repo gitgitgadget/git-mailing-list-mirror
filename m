@@ -1,116 +1,74 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Use xmemdup in many places.
-Date: Wed, 19 Sep 2007 01:08:12 -0700
-Message-ID: <7v6427qdqr.fsf@gitster.siamese.dyndns.org>
-References: <20070917161113.GB460@artemis.corp>
-	<20070917161142.D3C9A344A49@madism.org>
+Subject: Re: [PATCH 3/5] Rework unquote_c_style to work on a strbuf.
+Date: Wed, 19 Sep 2007 01:09:19 -0700
+Message-ID: <7v4phrqdow.fsf@gitster.siamese.dyndns.org>
+References: <20070918223947.GB4535@artemis.corp>
+	<20070918224121.24C3B344AB3@madism.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 10:08:30 2007
+X-From: git-owner@vger.kernel.org Wed Sep 19 10:09:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXubh-00053P-5r
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 10:08:25 +0200
+	id 1IXucl-0005PJ-6R
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 10:09:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258AbXISIIT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 04:08:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbXISIIT
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 04:08:19 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44281 "EHLO
+	id S1753440AbXISIJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 04:09:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753288AbXISIJZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 04:09:25 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44299 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753049AbXISIIR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 04:08:17 -0400
+	with ESMTP id S1752827AbXISIJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 04:09:24 -0400
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2AD4D13463F;
-	Wed, 19 Sep 2007 04:08:36 -0400 (EDT)
-In-Reply-To: <20070917161142.D3C9A344A49@madism.org> (Pierre Habouzit's
-	message of "Sun, 16 Sep 2007 00:32:36 +0200")
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E96DB137DC4;
+	Wed, 19 Sep 2007 04:09:42 -0400 (EDT)
+In-Reply-To: <20070918224121.24C3B344AB3@madism.org> (Pierre Habouzit's
+	message of "Tue, 18 Sep 2007 23:22:47 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58689>
 
 Pierre Habouzit <madcoder@debian.org> writes:
 
+> If the gain is not obvious in the diffstat, the resulting code is more
+> readable, _and_ in checkout-index/update-index we now reuse the same buffer
+> to unquote strings instead of always freeing/mallocing.
+>
+> This also is more coherent with the next patch that reworks quoting
+> functions.
+>
+> The quoting function is also made more efficient scanning for backslashes
+> and treating portions of strings without a backslash at once.
+>
 > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 > ---
->  attr.c                  |    7 +------
->  builtin-add.c           |    8 ++------
->  builtin-apply.c         |   11 ++---------
->  builtin-fetch--tool.c   |    6 +-----
->  builtin-fmt-merge-msg.c |   17 ++++++-----------
->  builtin-for-each-ref.c  |   40 +++++++++-------------------------------
->  builtin-log.c           |   12 ++----------
->  builtin-ls-files.c      |    9 +--------
->  builtin-mv.c            |    5 +----
->  builtin-revert.c        |    4 +---
->  builtin-shortlog.c      |   11 ++---------
->  commit.c                |   16 ++++++----------
->  connect.c               |    4 +---
->  convert.c               |    7 +------
->  diff.c                  |   13 ++-----------
->  diffcore-order.c        |    7 ++-----
->  fast-import.c           |    4 +---
->  http-push.c             |    9 ++-------
->  imap-send.c             |   20 +++++---------------
->  merge-recursive.c       |   19 ++++---------------
->  refs.c                  |   12 ++++--------
->  sha1_file.c             |   12 +++---------
->  tag.c                   |    4 +---
->  23 files changed, 60 insertions(+), 197 deletions(-)
+>  builtin-apply.c          |  125 +++++++++++++++++++++++-----------------------
+>  builtin-checkout-index.c |   27 +++++-----
+>  builtin-update-index.c   |   51 ++++++++++---------
+>  fast-import.c            |   47 ++++++++---------
+>  mktree.c                 |   25 +++++----
+>  quote.c                  |   92 ++++++++++++++++------------------
+>  quote.h                  |    2 +-
+>  7 files changed, 184 insertions(+), 185 deletions(-)
 > ...
-> diff --git a/builtin-apply.c b/builtin-apply.c
-> index 05011bb..900d0a7 100644
-> --- a/builtin-apply.c
-> +++ b/builtin-apply.c
-> @@ -293,11 +293,7 @@ static char *find_name(const char *line, char *def, int p_value, int terminate)
->  			return def;
->  	}
->  
-> -	name = xmalloc(len + 1);
-> -	memcpy(name, start, len);
-> -	name[len] = 0;
-> -	free(def);
-> -	return name;
-> +	return xmemdup(start, len);
->  }
+> diff --git a/quote.c b/quote.c
+> index 4df3262..67c6527 100644
+> --- a/quote.c
+> +++ b/quote.c
+> @@ -201,68 +201,62 @@ int quote_c_style(const char *name, char *outbuf, FILE *outfp, int no_dq)
+>   * should free when done.  Updates endp pointer to point at
+>   * one past the ending double quote if given.
+>   */
 
-Did we start leaking "def" here? 
-
-> diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-> index 0afa1c5..287d52a 100644
-> --- a/builtin-for-each-ref.c
-> +++ b/builtin-for-each-ref.c
-> ...
-> @@ -305,46 +301,28 @@ static const char *find_wholine(const char *who, int wholen, const char *buf, un
-> ...
->  static const char *copy_name(const char *buf)
->  {
-> -	const char *eol = strchr(buf, '\n');
-> -	const char *eoname = strstr(buf, " <");
-> -	char *line;
-> -	int len;
-> -	if (!(eoname && eol && eoname < eol))
-> -		return "";
-> -	len = eoname - buf;
-> -	line = xmalloc(len + 1);
-> -	memcpy(line, buf, len);
-> -	line[len] = 0;
-> -	return line;
-> +	const char *cp;
-> +	for (cp = buf; *cp != '\n'; cp++) {
-> +		if (!strncmp(cp, " <", 2))
-> +			return xmemdup(buf, cp - buf);
-> +	}
-> +	return "";
->  }
-
-At least the loop should terminate upon (!*cp); if you do not
-have '\n' in the buffer what happens?
+You need to update the comment above which talks about the input
+and return values.  You no longer return an allocated memory
+which the caller should free.  You return something else.
