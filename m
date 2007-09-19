@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 1/5] Rename remote.uri to remote.url within remote handling internals
-Date: Wed, 19 Sep 2007 00:49:27 -0400
-Message-ID: <20070919044927.GA17107@spearce.org>
+Subject: [PATCH 2/5] Refactor struct transport_ops inlined into struct transport
+Date: Wed, 19 Sep 2007 00:49:31 -0400
+Message-ID: <20070919044931.GB17107@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 19 06:49:59 2007
+X-From: git-owner@vger.kernel.org Wed Sep 19 06:50:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXrVe-00072u-DX
+	id 1IXrVf-00072u-8l
 	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 06:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751060AbXISEtc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 00:49:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbXISEtc
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 00:49:32 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38737 "EHLO
+	id S1751431AbXISEtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 00:49:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751430AbXISEtg
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 00:49:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38740 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751042AbXISEtb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 00:49:31 -0400
+	with ESMTP id S1751406AbXISEtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 00:49:35 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IXrV8-0006wz-W9; Wed, 19 Sep 2007 00:49:27 -0400
+	id 1IXrVC-0006x6-RX; Wed, 19 Sep 2007 00:49:31 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EC65920FBAE; Wed, 19 Sep 2007 00:49:27 -0400 (EDT)
+	id CAE3F20FBAE; Wed, 19 Sep 2007 00:49:31 -0400 (EDT)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -38,191 +38,241 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58676>
 
-Anyplace we talk about the address of a remote repository we always
-refer to it as a URL, especially in the configuration file and
-.git/remotes where we call it "remote.$n.url" or start the first
-line with "URL:".  Calling this value a uri within the internal C
-code just doesn't jive well with our commonly accepted terms.
+Aside from reducing the code by 20 lines this refactoring removes
+a level of indirection when trying to access the operations of a
+given transport "instance", making the code clearer and easier to
+follow.
+
+It also has the nice effect of giving us the benefits of C99 style
+struct initialization (namely ".fetch = X") without requiring that
+level of language support from our compiler.  We don't need to worry
+about new operation methods being added as they will now be NULL'd
+out automatically by the xcalloc() we use to create the new struct
+transport we supply to the caller.
+
+This pattern already exists in struct walker, so we already have
+a precedent for it in Git.  We also don't really need to worry
+about any sort of performance decreases that may occur as a result
+of filling out 4-8 op pointers when we make a "struct transport".
+The extra few CPU cycles this requires over filling in the "struct
+transport_ops" is killed by the time it will take Git to actually
+*use* one of those functions, as most transport operations are
+going over the wire or will be copying object data locally between
+two directories.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- builtin-fetch.c |    2 +-
- builtin-push.c  |    8 ++++----
- remote.c        |   34 +++++++++++++++++-----------------
- remote.h        |    6 +++---
- send-pack.c     |    2 +-
- 5 files changed, 26 insertions(+), 26 deletions(-)
+ builtin-fetch.c |    3 +-
+ transport.c     |   62 +++++++++++++++++++++---------------------------------
+ transport.h     |   16 ++++---------
+ 3 files changed, 30 insertions(+), 51 deletions(-)
 
 diff --git a/builtin-fetch.c b/builtin-fetch.c
-index b9722e5..997a8ff 100644
+index 997a8ff..2f639cc 100644
 --- a/builtin-fetch.c
 +++ b/builtin-fetch.c
-@@ -530,7 +530,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	else
- 		remote = remote_get(argv[i++]);
+@@ -392,8 +392,7 @@ static int do_fetch(struct transport *transport,
+ 	if (transport->remote->fetch_tags == -1)
+ 		no_tags = 1;
  
--	transport = transport_get(remote, remote->uri[0]);
-+	transport = transport_get(remote, remote->url[0]);
- 	if (verbose >= 2)
- 		transport->verbose = 1;
- 	if (quiet)
-diff --git a/builtin-push.c b/builtin-push.c
-index 7d7e826..4ee36c2 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -57,9 +57,9 @@ static int do_push(const char *repo, int flags)
- 		refspec_nr = remote->push_refspec_nr;
- 	}
- 	errs = 0;
--	for (i = 0; i < remote->uri_nr; i++) {
-+	for (i = 0; i < remote->url_nr; i++) {
- 		struct transport *transport =
--			transport_get(remote, remote->uri[i]);
-+			transport_get(remote, remote->url[i]);
- 		int err;
- 		if (receivepack)
- 			transport_set_option(transport,
-@@ -68,14 +68,14 @@ static int do_push(const char *repo, int flags)
- 			transport_set_option(transport, TRANS_OPT_THIN, "yes");
+-	if (!transport->ops || !transport->ops->get_refs_list ||
+-	    !transport->ops->fetch)
++	if (!transport->get_refs_list || !transport->fetch)
+ 		die("Don't know how to fetch from %s", transport->url);
  
- 		if (verbose)
--			fprintf(stderr, "Pushing to %s\n", remote->uri[i]);
-+			fprintf(stderr, "Pushing to %s\n", remote->url[i]);
- 		err = transport_push(transport, refspec_nr, refspec, flags);
- 		err |= transport_disconnect(transport);
- 
- 		if (!err)
- 			continue;
- 
--		error("failed to push to '%s'", remote->uri[i]);
-+		error("failed to push to '%s'", remote->url[i]);
- 		errs++;
- 	}
- 	return !!errs;
-diff --git a/remote.c b/remote.c
-index 31e2b70..e3c3df5 100644
---- a/remote.c
-+++ b/remote.c
-@@ -32,13 +32,13 @@ static void add_fetch_refspec(struct remote *remote, const char *ref)
- 	remote->fetch_refspec_nr = nr;
- }
- 
--static void add_uri(struct remote *remote, const char *uri)
-+static void add_url(struct remote *remote, const char *url)
- {
--	int nr = remote->uri_nr + 1;
--	remote->uri =
--		xrealloc(remote->uri, nr * sizeof(char *));
--	remote->uri[nr-1] = uri;
--	remote->uri_nr = nr;
-+	int nr = remote->url_nr + 1;
-+	remote->url =
-+		xrealloc(remote->url, nr * sizeof(char *));
-+	remote->url[nr-1] = url;
-+	remote->url_nr = nr;
- }
- 
- static struct remote *make_remote(const char *name, int len)
-@@ -154,7 +154,7 @@ static void read_remotes_file(struct remote *remote)
- 
- 		switch (value_list) {
- 		case 0:
--			add_uri(remote, xstrdup(s));
-+			add_url(remote, xstrdup(s));
- 			break;
- 		case 1:
- 			add_push_refspec(remote, xstrdup(s));
-@@ -206,7 +206,7 @@ static void read_branches_file(struct remote *remote)
- 	} else {
- 		branch = "refs/heads/master";
- 	}
--	add_uri(remote, p);
-+	add_url(remote, p);
- 	add_fetch_refspec(remote, branch);
- 	remote->fetch_tags = 1; /* always auto-follow */
- }
-@@ -260,7 +260,7 @@ static int handle_config(const char *key, const char *value)
- 		return 0; /* ignore unknown booleans */
- 	}
- 	if (!strcmp(subkey, ".url")) {
--		add_uri(remote, xstrdup(value));
-+		add_url(remote, xstrdup(value));
- 	} else if (!strcmp(subkey, ".push")) {
- 		add_push_refspec(remote, xstrdup(value));
- 	} else if (!strcmp(subkey, ".fetch")) {
-@@ -347,14 +347,14 @@ struct remote *remote_get(const char *name)
- 		name = default_remote_name;
- 	ret = make_remote(name, 0);
- 	if (name[0] != '/') {
--		if (!ret->uri)
-+		if (!ret->url)
- 			read_remotes_file(ret);
--		if (!ret->uri)
-+		if (!ret->url)
- 			read_branches_file(ret);
- 	}
--	if (!ret->uri)
--		add_uri(ret, name);
--	if (!ret->uri)
-+	if (!ret->url)
-+		add_url(ret, name);
-+	if (!ret->url)
- 		return NULL;
- 	ret->fetch = parse_ref_spec(ret->fetch_refspec_nr, ret->fetch_refspec);
- 	ret->push = parse_ref_spec(ret->push_refspec_nr, ret->push_refspec);
-@@ -380,11 +380,11 @@ int for_each_remote(each_remote_fn fn, void *priv)
- 	return result;
- }
- 
--int remote_has_uri(struct remote *remote, const char *uri)
-+int remote_has_url(struct remote *remote, const char *url)
- {
- 	int i;
--	for (i = 0; i < remote->uri_nr; i++) {
--		if (!strcmp(remote->uri[i], uri))
-+	for (i = 0; i < remote->url_nr; i++) {
-+		if (!strcmp(remote->url[i], url))
- 			return 1;
- 	}
+ 	/* if not appending, truncate FETCH_HEAD */
+diff --git a/transport.c b/transport.c
+index cc76e3f..d8458dc 100644
+--- a/transport.c
++++ b/transport.c
+@@ -44,8 +44,6 @@ static int disconnect_walker(struct transport *transport)
  	return 0;
-diff --git a/remote.h b/remote.h
-index b5b558f..05add06 100644
---- a/remote.h
-+++ b/remote.h
-@@ -4,8 +4,8 @@
- struct remote {
- 	const char *name;
+ }
  
--	const char **uri;
--	int uri_nr;
-+	const char **url;
-+	int url_nr;
+-static const struct transport_ops rsync_transport;
+-
+ static int curl_transport_push(struct transport *transport, int refspec_nr, const char **refspec, int flags) {
+ 	const char **argv;
+ 	int argc;
+@@ -199,14 +197,6 @@ static int fetch_objs_via_curl(struct transport *transport,
  
- 	const char **push_refspec;
- 	struct refspec *push;
-@@ -32,7 +32,7 @@ struct remote *remote_get(const char *name);
- typedef int each_remote_fn(struct remote *remote, void *priv);
- int for_each_remote(each_remote_fn fn, void *priv);
+ #endif
  
--int remote_has_uri(struct remote *remote, const char *uri);
-+int remote_has_url(struct remote *remote, const char *url);
+-static const struct transport_ops curl_transport = {
+-	/* set_option */	NULL,
+-	/* get_refs_list */	get_refs_via_curl,
+-	/* fetch */		fetch_objs_via_curl,
+-	/* push */		curl_transport_push,
+-	/* disconnect */	disconnect_walker
+-};
+-
+ struct bundle_transport_data {
+ 	int fd;
+ 	struct bundle_header header;
+@@ -249,14 +239,6 @@ static int close_bundle(struct transport *transport)
+ 	return 0;
+ }
  
- struct refspec {
- 	unsigned force : 1;
-diff --git a/send-pack.c b/send-pack.c
-index f74e66a..4533d1b 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -420,7 +420,7 @@ int main(int argc, char **argv)
+-static const struct transport_ops bundle_transport = {
+-	/* set_option */	NULL,
+-	/* get_refs_list */	get_refs_from_bundle,
+-	/* fetch */		fetch_refs_from_bundle,
+-	/* push */		NULL,
+-	/* disconnect */	close_bundle
+-};
+-
+ struct git_transport_data {
+ 	unsigned thin : 1;
+ 	unsigned keep : 1;
+@@ -401,13 +383,6 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
+ 	return !!err;
+ }
  
- 	if (remote_name) {
- 		remote = remote_get(remote_name);
--		if (!remote_has_uri(remote, dest)) {
-+		if (!remote_has_url(remote, dest)) {
- 			die("Destination %s is not a uri for %s",
- 			    dest, remote_name);
- 		}
+-static const struct transport_ops git_transport = {
+-	/* set_option */	set_git_option,
+-	/* get_refs_list */	get_refs_via_connect,
+-	/* fetch */		fetch_refs_via_pack,
+-	/* push */		git_transport_push
+-};
+-
+ static int is_local(const char *url)
+ {
+ 	const char *colon = strchr(url, ':');
+@@ -431,18 +406,31 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 	ret->url = url;
+ 
+ 	if (!prefixcmp(url, "rsync://")) {
+-		ret->ops = &rsync_transport;
++		/* not supported; don't populate any ops */
++
+ 	} else if (!prefixcmp(url, "http://")
+ 	        || !prefixcmp(url, "https://")
+ 	        || !prefixcmp(url, "ftp://")) {
+-		ret->ops = &curl_transport;
++		ret->get_refs_list = get_refs_via_curl;
++		ret->fetch = fetch_objs_via_curl;
++		ret->push = curl_transport_push;
++		ret->disconnect = disconnect_walker;
++
+ 	} else if (is_local(url) && is_file(url)) {
+ 		struct bundle_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
+-		ret->ops = &bundle_transport;
++		ret->get_refs_list = get_refs_from_bundle;
++		ret->fetch = fetch_refs_from_bundle;
++		ret->disconnect = close_bundle;
++
+ 	} else {
+ 		struct git_transport_data *data = xcalloc(1, sizeof(*data));
+ 		ret->data = data;
++		ret->set_option = set_git_option;
++		ret->get_refs_list = get_refs_via_connect;
++		ret->fetch = fetch_refs_via_pack;
++		ret->push = git_transport_push;
++
+ 		data->thin = 1;
+ 		data->uploadpack = "git-upload-pack";
+ 		if (remote && remote->uploadpack)
+@@ -451,7 +439,6 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ 		if (remote && remote->receivepack)
+ 			data->receivepack = remote->receivepack;
+ 		data->unpacklimit = -1;
+-		ret->ops = &git_transport;
+ 	}
+ 
+ 	return ret;
+@@ -460,24 +447,23 @@ struct transport *transport_get(struct remote *remote, const char *url)
+ int transport_set_option(struct transport *transport,
+ 			 const char *name, const char *value)
+ {
+-	if (transport->ops->set_option)
+-		return transport->ops->set_option(transport, name, value);
++	if (transport->set_option)
++		return transport->set_option(transport, name, value);
+ 	return 1;
+ }
+ 
+ int transport_push(struct transport *transport,
+ 		   int refspec_nr, const char **refspec, int flags)
+ {
+-	if (!transport->ops->push)
++	if (!transport->push)
+ 		return 1;
+-	return transport->ops->push(transport, refspec_nr, refspec, flags);
++	return transport->push(transport, refspec_nr, refspec, flags);
+ }
+ 
+ struct ref *transport_get_remote_refs(struct transport *transport)
+ {
+ 	if (!transport->remote_refs)
+-		transport->remote_refs =
+-			transport->ops->get_refs_list(transport);
++		transport->remote_refs = transport->get_refs_list(transport);
+ 	return transport->remote_refs;
+ }
+ 
+@@ -496,7 +482,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 		heads[nr_heads++] = rm;
+ 	}
+ 
+-	rc = transport->ops->fetch(transport, nr_heads, heads);
++	rc = transport->fetch(transport, nr_heads, heads);
+ 	free(heads);
+ 	return rc;
+ }
+@@ -513,8 +499,8 @@ void transport_unlock_pack(struct transport *transport)
+ int transport_disconnect(struct transport *transport)
+ {
+ 	int ret = 0;
+-	if (transport->ops->disconnect)
+-		ret = transport->ops->disconnect(transport);
++	if (transport->disconnect)
++		ret = transport->disconnect(transport);
+ 	free(transport);
+ 	return ret;
+ }
+diff --git a/transport.h b/transport.h
+index 6a95d66..3e332ff 100644
+--- a/transport.h
++++ b/transport.h
+@@ -5,22 +5,11 @@
+ #include "remote.h"
+ 
+ struct transport {
+-	unsigned verbose : 1;
+ 	struct remote *remote;
+ 	const char *url;
+-
+ 	void *data;
+-
+ 	struct ref *remote_refs;
+ 
+-	const struct transport_ops *ops;
+-	char *pack_lockfile;
+-};
+-
+-#define TRANSPORT_PUSH_ALL 1
+-#define TRANSPORT_PUSH_FORCE 2
+-
+-struct transport_ops {
+ 	/**
+ 	 * Returns 0 if successful, positive if the option is not
+ 	 * recognized or is inapplicable, and negative if the option
+@@ -34,8 +23,13 @@ struct transport_ops {
+ 	int (*push)(struct transport *connection, int refspec_nr, const char **refspec, int flags);
+ 
+ 	int (*disconnect)(struct transport *connection);
++	char *pack_lockfile;
++	unsigned verbose : 1;
+ };
+ 
++#define TRANSPORT_PUSH_ALL 1
++#define TRANSPORT_PUSH_FORCE 2
++
+ /* Returns a transport suitable for the url */
+ struct transport *transport_get(struct remote *, const char *);
+ 
 -- 
 1.5.3.1.195.gadd6
