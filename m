@@ -1,76 +1,46 @@
-From: Thomas Glanzmann <thomas@glanzmann.de>
-Subject: Initial push to remote repository
-Date: Wed, 19 Sep 2007 13:35:57 +0200
-Message-ID: <20070919113557.GA24674@cip.informatik.uni-erlangen.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: Side-by-side diff and patch visualization
+Date: Wed, 19 Sep 2007 08:09:56 -0400
+Message-ID: <20070919120956.GA20715@coredump.intra.peff.net>
+References: <A92611E8-1035-46A6-AFEF-9C8A6F93AFB1@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: GIT <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 13:43:16 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Sep 19 14:10:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXxxW-00017A-26
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 13:43:10 +0200
+	id 1IXyNa-0002lm-63
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 14:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754511AbXISLnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 07:43:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754424AbXISLnE
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 07:43:04 -0400
-Received: from faui03.informatik.uni-erlangen.de ([131.188.30.103]:52296 "EHLO
-	faui03.informatik.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753845AbXISLnD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Sep 2007 07:43:03 -0400
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Sep 2007 07:43:03 EDT
-Received: by faui03.informatik.uni-erlangen.de (Postfix, from userid 31401)
-	id 228923F447; Wed, 19 Sep 2007 13:35:57 +0200 (CEST)
+	id S1753320AbXISMKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 08:10:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751414AbXISMKA
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 08:10:00 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2059 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751297AbXISMJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 08:09:59 -0400
+Received: (qmail 4555 invoked by uid 111); 19 Sep 2007 12:09:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 19 Sep 2007 08:09:58 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Sep 2007 08:09:56 -0400
 Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-05-02)
+In-Reply-To: <A92611E8-1035-46A6-AFEF-9C8A6F93AFB1@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58704>
 
-Hello,
-I used to publish my local work on a machine with all my git
-repositories using the following commands:
+On Wed, Sep 19, 2007 at 01:40:17PM +0200, Wincent Colaiuta wrote:
 
-# Publish a local created repository to a remote repository.
-ssh 131.188.30.102 git --git-dir=/home/cip/adm/sithglan/work/repositories/private/astro.git init-db
-git remote add origin 131.188.30.102:/home/cip/adm/sithglan/work/repositories/private/astro.git
-git push origin master:master
-echo >> .git/config <<EOF
-[branch "master"]
-        remote = origin
-        merge = refs/heads/master
-EOF
-git pull
+> Does anybody know of any tools for doing side-by-side visualizations of 
+> diffs and patches which work well with Git?
 
-But since my last update of git it doesn't seem to work that way anymore. Is
-there another way to do what I like to using the git way?
+Have you tried kompare?
 
-        (ad027088pc) [~] mkdir test_initial_push
-        (ad027088pc) [~] cd !$
-        (ad027088pc) [~/test_initial_push] touch a
-        (ad027088pc) [~/test_initial_push] git init
-        Initialized empty Git repository in .git/
-        (ad027088pc) [~/test_initial_push] git add a
-        (ad027088pc) [~/test_initial_push] git commit -m "whatever" a
-        Created initial commit 0d408ed: whatever
-        0 files changed, 0 insertions(+), 0 deletions(-)
-        create mode 100644 a
-        (reverse-i-search)`':
-        (ad027088pc) [~/test_initial_push] ssh 131.188.30.102 git --git-dir=/home/cip/adm/sithglan/work/repositories/private/test_initial_push.git init-db
-        Initialized empty Git repository in /home/cip/adm/sithglan/work/repositories/private/test_initial_push.git/
-        (ad027088pc) [~/test_initial_push] git remote add origin 131.188.30.102:/home/cip/adm/sithglan/work/repositories/private/test_initial_push.git/
-        You have new mail in /home/adglth0/Maildir
-        (ad027088pc) [~/test_initial_push] git push origin master:master
-        error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
-        fatal: The remote end hung up unexpectedly
-        error: failed to push to '131.188.30.102:/home/cip/adm/sithglan/work/repositories/private/test_initial_push.git/'
-        (ad027088pc) [~/test_initial_push] git version
-        git version 1.5.3.1
-        (ad027088pc) [~/test_initial_push] ssh 131.188.30.102 git version
-        git version 1.5.2.1
+  git-diff HEAD~5 | kompare -
 
-                Thomas
+-Peff
