@@ -1,72 +1,48 @@
-From: Sven Verdoolaege <skimo@kotnet.org>
-Subject: Re: [PATCH] User Manual: add a chapter for submodules
-Date: Wed, 19 Sep 2007 23:00:22 +0200
-Message-ID: <20070919210022.GJ3619MdfPADPa@greensroom.kotnet.org>
-References: <Pine.LNX.4.64.0709181405120.6203@juice.ott.cti.com>
- <20070919174250.GC16235@genesis.frugalware.org>
-Reply-To: skimo@liacs.nl
+From: David Brown <git@davidb.org>
+Subject: Re: [PATCH] [git-p4] Detect exec bit in more cases.
+Date: Wed, 19 Sep 2007 14:03:18 -0700
+Message-ID: <20070919210318.GA32131@old.davidb.org>
+References: <119022570352-git-send-email-git@davidb.org> <1190232768445-git-send-email-git@davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Wed Sep 19 23:00:40 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 19 23:03:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IY6eu-00039J-27
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 23:00:32 +0200
+	id 1IY6hf-0004UC-Sg
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 23:03:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837AbXISVAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Sep 2007 17:00:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751713AbXISVAZ
-	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 17:00:25 -0400
-Received: from psmtp08.wxs.nl ([195.121.247.22]:47789 "EHLO psmtp08.wxs.nl"
+	id S1751410AbXISVDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Sep 2007 17:03:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751214AbXISVDT
+	(ORCPT <rfc822;git-outgoing>); Wed, 19 Sep 2007 17:03:19 -0400
+Received: from mail.davidb.org ([66.93.32.219]:56336 "EHLO mail.davidb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751472AbXISVAY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Sep 2007 17:00:24 -0400
-Received: from greensroom.kotnet.org (ip54515aaa.direct-adsl.nl [84.81.90.170])
- by psmtp08.wxs.nl
- (iPlanet Messaging Server 5.2 HotFix 2.15 (built Nov 14 2006))
- with SMTP id <0JOM00DMHVOMPT@psmtp08.wxs.nl> for git@vger.kernel.org; Wed,
- 19 Sep 2007 23:00:23 +0200 (MEST)
-Received: (qmail 23118 invoked by uid 500); Wed, 19 Sep 2007 21:00:22 +0000
-In-reply-to: <20070919174250.GC16235@genesis.frugalware.org>
-Content-disposition: inline
-User-Agent: Mutt/1.5.10i
+	id S1751205AbXISVDS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Sep 2007 17:03:18 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
+	id 1IY6ha-0008OL-A6
+	for <git@vger.kernel.org>; Wed, 19 Sep 2007 14:03:18 -0700
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1190232768445-git-send-email-git@davidb.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58736>
 
-On Wed, Sep 19, 2007 at 07:42:50PM +0200, Miklos Vajna wrote:
-> +Submodules maintain their own identity; the submodule support just stores the
-> +submodule repository location and commit ID, so other developers who clone the
-> +superproject can easily clone all the submodules at the same revision.
+On Wed, Sep 19, 2007 at 01:12:48PM -0700, David Brown wrote:
+>git-p4 was missing the execute bit setting if the file had other attribute
+>bits set.
+>---
+> contrib/fast-import/git-p4 |   10 +++++++++-
+> 1 files changed, 9 insertions(+), 1 deletions(-)
 
-[..]
+I've tested this patch on our fairly large P4 repo, and at least the tip
+exactly matches the files that P4 finds.  So, it at least should be better.
+git-p4 still has some problems with case-insensitive servers.
 
-> +-------------------------------------------------
-> +$ mkdir super
-> +$ cd super
-> +$ git init
-> +$ echo hi > super.txt
-> +$ git add super.txt
-> +$ git commit -m "Initial commit of empty superproject"
-> +$ for i in a b c d
-> +do
-> +	git submodule add ~/git/$i
-> +done
-> +-------------------------------------------------
-
-You may want to warn the reader not to use local URLs here if they
-plan to publish their superproject.
-
-> +It's not safe to run `git submodule update` if you've made changes within a
-> +submodule. They will be silently overwritten:
-
-This is only true if they didn't follow your advise of checking out
-a branch first.
-
-skimo
+Dave
