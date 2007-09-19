@@ -1,58 +1,53 @@
 From: David Brown <git@davidb.org>
 Subject: Re: State of Perforce importing.
-Date: Tue, 18 Sep 2007 17:26:17 -0700
-Message-ID: <20070919002617.GA22187@old.davidb.org>
-References: <20070917193027.GA24282@old.davidb.org> <46EF7DD1.9090301@vilain.net> <20070918154918.GA19106@old.davidb.org> <3f4fd2640709181053t70b7abcdi2c4eaf67e7b75338@mail.gmail.com> <20070918231921.GA17652@old.davidb.org> <46F06B5C.2050207@vilain.net>
+Date: Tue, 18 Sep 2007 17:27:22 -0700
+Message-ID: <20070919002722.GB22187@old.davidb.org>
+References: <20070917193027.GA24282@old.davidb.org> <20070918233749.GA19533@old.davidb.org> <46F06C0C.8090201@vilain.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: Reece Dunn <msclrhd@googlemail.com>, Git <git@vger.kernel.org>
+Cc: Git <git@vger.kernel.org>
 To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Sep 19 02:26:26 2007
+X-From: git-owner@vger.kernel.org Wed Sep 19 02:27:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IXnOc-0006lO-2h
-	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 02:26:26 +0200
+	id 1IXnPc-0006v9-L9
+	for gcvg-git-2@gmane.org; Wed, 19 Sep 2007 02:27:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751460AbXISA0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Sep 2007 20:26:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751456AbXISA0U
-	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 20:26:20 -0400
-Received: from mail.davidb.org ([66.93.32.219]:34746 "EHLO mail.davidb.org"
+	id S1751456AbXISA1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Sep 2007 20:27:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXISA1X
+	(ORCPT <rfc822;git-outgoing>); Tue, 18 Sep 2007 20:27:23 -0400
+Received: from mail.davidb.org ([66.93.32.219]:34752 "EHLO mail.davidb.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751397AbXISA0T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Sep 2007 20:26:19 -0400
+	id S1751424AbXISA1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Sep 2007 20:27:23 -0400
 Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IXnOT-0005oD-E2; Tue, 18 Sep 2007 17:26:17 -0700
-Mail-Followup-To: Sam Vilain <sam@vilain.net>,
-	Reece Dunn <msclrhd@googlemail.com>, Git <git@vger.kernel.org>
+	id 1IXnPW-0005oz-Qn; Tue, 18 Sep 2007 17:27:22 -0700
+Mail-Followup-To: Sam Vilain <sam@vilain.net>, Git <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <46F06B5C.2050207@vilain.net>
+In-Reply-To: <46F06C0C.8090201@vilain.net>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58668>
 
-On Wed, Sep 19, 2007 at 12:20:44PM +1200, Sam Vilain wrote:
+On Wed, Sep 19, 2007 at 12:23:40PM +1200, Sam Vilain wrote:
+>David Brown wrote:
+>> 
+>> An additional problem:
+>> 
+>>    - git-p4 doesn't preserve the execute permission bit from Perforce.
+>
+>FWIW I found that bit on bit 9 of the 'file type' flag in the db, which
+>is the third column in the "db.rev" table.  It's used to come up with
+>the silly names like "text" vs "xtext" (difference?  well, one's
+>executable of course).
 
->If you can get a hold of the "checkpoint" and "journal" files, you could
->probably throw the client spec data into a few Pg tables, chuck a couple
->of constraints on it to confirm that it works the way you thought, and
->then get the information on what's where using a SQL query.  The file
->images themselves can come from wherever, it doesn't really matter
->because there are MD5 hashes in the data tables you can use to confirm
->you got the right file.
-
-In my instance, I don't have an account on the P4 server, so I'm going to
-have to deal with this through P4's normal client.
-
-I don't have much confidence that P4 really knows what it is doing when it
-comes to integrate, so I'm not much worried about branches.  But, I do want
-to accurately get the history of a particular branch.
-
-So far, the only thing that isn't working is the execute bit doesn't get
-set on files that should have it.
+It does come back in the 'kind' field when it asks the client for the file
+type.  I'll look into using that information to set the execute bit in the
+mode it sends off.
 
 Dave
