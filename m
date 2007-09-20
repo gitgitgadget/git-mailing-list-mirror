@@ -1,61 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] Yet another builtin-fetch round
-Date: Wed, 19 Sep 2007 22:09:42 -0700
-Message-ID: <7vsl59ly7d.fsf@gitster.siamese.dyndns.org>
-References: <20070919044923.GP3099@spearce.org>
-	<Pine.LNX.4.64.0709192233360.21941@iabervon.org>
-	<7v6426m110.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] rev-list --bisect: Fix best == NULL case.
+Date: Thu, 20 Sep 2007 07:23:01 +0200
+Message-ID: <20070920072301.689b96c9.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Sep 20 07:09:58 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Sep 20 07:16:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYEIV-0006vQ-HG
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 07:09:55 +0200
+	id 1IYEOL-00080w-R4
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 07:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752718AbXITFJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 01:09:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbXITFJu
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 01:09:50 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35011 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752610AbXITFJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 01:09:49 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 68896136FD1;
-	Thu, 20 Sep 2007 01:10:05 -0400 (EDT)
-In-Reply-To: <7v6426m110.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 19 Sep 2007 21:08:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751127AbXITFPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 01:15:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752508AbXITFPx
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 01:15:53 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:51003 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751002AbXITFPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 01:15:52 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 2897A1AB2AD;
+	Thu, 20 Sep 2007 07:15:52 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id E87111AB2C9;
+	Thu, 20 Sep 2007 07:15:51 +0200 (CEST)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58756>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-list.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
->
->> On Wed, 19 Sep 2007, Shawn O. Pearce wrote:
->>
->>> Another short series for db/fetch-pack, still in pu.  Aside from
->>> optimizing the pipeline on the native transport (so we only invoke
->>> the remote process we need once vs. twice) I'm actually now quite
->>> comfortable with this whole series and think it is ready for next.
->>
->> While it's still in pu, should these series of corrections be amended into 
->> the original series (for the ones that correct new code)? Most of the 
->> before-fixing states aren't worth saving as project history.
->
-> Yeah, I was wondering if that is a sane thing to do.  It is
-> merely additional work to arrive at the same tree state, but
-> might be a good investment in the longer term.
+ Not sure if the "if (best)" check is really needed, but it looks safer
+ with this patch.
 
-Heh, I did not realize that they are now all part of 'next' so
-that's moot.
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 899a31d..3894633 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -436,10 +436,10 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 	/* Do the real work of finding bisection commit. */
+ 	best = do_find_bisection(list, nr, weights);
+ 
+-	if (best)
++	if (best) {
+ 		best->next = NULL;
+-
+-	*reaches = weight(best);
++		*reaches = weight(best);
++	}
+ 	free(weights);
+ 
+ 	return best;
+-- 
+1.5.3.2.80.g077d6f
