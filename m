@@ -1,114 +1,63 @@
-From: "Steven Burns" <royalstream@hotmail.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Thu, 20 Sep 2007 08:06:03 -0600
-Message-ID: <fctuo4$t93$1@sea.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org> <a1bbc6950709061721r537b153eu1b0bb3c27fb7bd51@mail.gmail.com> <alpine.LFD.0.999.0709070135361.5626@evo.linux-foundation.org> <a1bbc6950709061808q85cf75co75f2331dc2bdbcbe@mail.gmail.com> <alpine.LFD.0.999.0709070212300.5626@evo.linux-foundation.org> <a1bbc6950709062009x59a41cb7re6051739c11e370c@mail.gmail.com> <20070907061554.GB30161@thunk.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 20 16:07:11 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/3] the return of the strbuf
+Date: Thu, 20 Sep 2007 10:19:06 -0400
+Message-ID: <20070920141906.GR3099@spearce.org>
+References: <20070917125211.GA18176@artemis.corp> <20070917133522.GD18176@artemis.corp> <20070918035721.GL3099@spearce.org> <Pine.LNX.4.64.0709201248400.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 20 16:19:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYMft-0006yy-R1
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 16:06:38 +0200
+	id 1IYMsC-0004RH-Iu
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 16:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754853AbXITOGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 10:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754460AbXITOGa
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 10:06:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:36390 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754865AbXITOG3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 10:06:29 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IYMfZ-000400-H2
-	for git@vger.kernel.org; Thu, 20 Sep 2007 16:06:17 +0200
-Received: from 200.9.63.21 ([200.9.63.21])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 Sep 2007 16:06:17 +0200
-Received: from royalstream by 200.9.63.21 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 20 Sep 2007 16:06:17 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 200.9.63.21
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.3138
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-X-RFC2646: Format=Flowed; Original
+	id S1756065AbXITOTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 10:19:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755873AbXITOTN
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 10:19:13 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42869 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755803AbXITOTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 10:19:11 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IYMru-0006wx-Jz; Thu, 20 Sep 2007 10:19:02 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8253B20FBAE; Thu, 20 Sep 2007 10:19:06 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709201248400.28395@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58782>
 
-> a = b + "/share/" + c + serial_num;
->
-> where you can have absolutely no idea how many memory allocations are
-> done, due to type coercions, overloaded operators
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 17 Sep 2007, Shawn O. Pearce wrote:
+> 
+> >  $ git log --pretty=format:%an --since=6.months.ago -- fast-import.c \
+> >       | sort | uniq -c | sort -nr
+...
+> FWIW I'd do
+> 
+> git shortlog -n --since=6.months.ago HEAD -- fast-import.c|grep "^[A-Z]"
+> 
+> instead...
 
-You are assuming (incorrectly) everybody will use dumb string classes like 
-that.
+Yea, Junio pointed out how stupid I was being on #git.  I don't
+know why I didn't think of using shortlog here as this is one
+of the things it was built for.  Whatever.  I forgot my git-fu
+on Monday.  :)
 
-It is very possible to create a string class that instead of allocating all
-those strings simply concatenates tiny temporary objects and performs one
-single operation in the end. Not to mention those temporaries are optimized
-away by any decent compiler and you end up with code that runs at the same
-speed as your C code.
-I've done it, many other programmers have. As a reference, I'd like to
-mention Matthew Wilson's chapter on efficient string concatenation in his
-book "Imperfect C++". He uses expression templates (that's the technique I
-just described) and gets impressive results.
-
-With that said, your point is valid. 90% of C++ programmers will use string
-classes that are very inefficient for concatenation, starting with
-std::string which I hate for that reason (and many other reasons, e.g. you 
-have to
-resort to Boost for mundane things like trimming)
-
-Steven Burns
-
-"Theodore Tso" <tytso@mit.edu> wrote in message 
-news:20070907061554.GB30161@thunk.org...
-> On Thu, Sep 06, 2007 at 08:09:23PM -0700, Dmitry Kakurin wrote:
->> > Total BS. The string/memory management is not at all relevant. Look at 
->> > the
->> > code (I bet you didn't). This isn't the important, or complex part.
->>
->> Not only have I looked at the code, I've also debugged it quite a bit.
->> Granted most of my problems had to do with handling paths on Windows
->> (i.e. string manipulations).
->
-> I consider string manipulation to be one of the places where C++ is a
-> total disaster.  It's way to easy for idiots to do something like this:
->
-> a = b + "/share/" + c + serial_num;
->
-> where you can have absolutely no idea how many memory allocations are
-> done, due to type coercions, overloaded operators (good God, you can
-> overload the comma operator in C++!!!), and then when something like
-> that ends up in an inner loop, the result is a disaster from a
-> performance point of view, and it's not even obvious *why*!
->
->> My goal is to *use* Git. When something does not work *for me* I want
->> to be able to fix it (and contribute the fix) in *shortest time
->> possible* and with *minimal efforts*. As for me it's a diversion from
->> my main activities.
->
-> Yes, and if you contribute something the shortest time possible, and
-> it ends up being crap, who gets to rewrite it and fix it?  I've seen
-> too many C++ programs which get this kind of crap added, and it's not
-> noticed right away (because C++ is really good at hiding such
-> performance killers so they are not visible), and then later on, it's
-> even harder to find the performance problems and fix them.
->
->> Now, I realize that I'm a very infrequent contributor to Git, but I
->> want my opinion to be heard.
->
-> And if git were written in C++, it's precisely the infrequent
-> contributors (who are in a hurry, who only care about the quick hack
-> to get them going, and not about the long-term maintainability and
-> performance of the package) that are be in the position to do the
-> most damage...
->
-> - Ted 
+-- 
+Shawn.
