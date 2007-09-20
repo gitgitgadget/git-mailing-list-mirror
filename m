@@ -1,68 +1,51 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] new test from the submodule chapter of the user manual
-Date: Thu, 20 Sep 2007 19:47:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709201946410.28395@racer.site>
-References: <20070920003413.GJ16235@genesis.frugalware.org>
- <7v1wcum0ox.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709201133590.28395@racer.site>
- <20070920170831.GQ16235@genesis.frugalware.org> <20070920175952.GC30391@tasint.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@citi.umich.edu>
-To: Joel Becker <Joel.Becker@oracle.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 20:48:59 2007
+From: "Matt Seitz" <matseitz@cisco.com>
+Subject: Re: Symbolic link documentation
+Date: Thu, 20 Sep 2007 11:50:57 -0700
+Message-ID: <fcufdp$bg7$1@sea.gmane.org>
+References: <70952A932255A2489522275A628B97C3052E98EB@xmb-sjc-233.amer.cisco.com> <Pine.LNX.4.64.0709201819340.28395@racer.site> <20070920172736.GU3099@spearce.org> <Pine.LNX.4.64.0709201851190.28395@racer.site>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 20 20:57:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYR58-0000XQ-A7
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 20:48:58 +0200
+	id 1IYRCr-0003oA-GP
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 20:56:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757121AbXITSs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 14:48:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757247AbXITSs1
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 14:48:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:38300 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757121AbXITSs0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 14:48:26 -0400
-Received: (qmail invoked by alias); 20 Sep 2007 18:48:25 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp033) with SMTP; 20 Sep 2007 20:48:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18UHX8pbBkUkaHlEt8U6QstHgyU0occkDVbA1Suvu
-	BAf7wEsd46CnpI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20070920175952.GC30391@tasint.org>
-X-Y-GMX-Trusted: 0
+	id S1757441AbXITS4o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 14:56:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757398AbXITS4o
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 14:56:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:46790 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753311AbXITS4n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 14:56:43 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IYRAz-0006nF-Te
+	for git@vger.kernel.org; Thu, 20 Sep 2007 20:55:01 +0200
+Received: from rain.gmane.org ([80.91.229.7])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 20:55:01 +0200
+Received: from matseitz by rain.gmane.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 20:55:01 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: rain.gmane.org
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.3138
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+X-RFC2646: Format=Flowed; Original
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58797>
 
-Hi,
+"Johannes Schindelin" <Johannes.Schindelin@gmx.de> wrote in message 
+news:Pine.LNX.4.64.0709201851190.28395@racer.site...
+>
+> Well, he asked where the git user documentation talks about symbolic
+> links, and I provided a pointer.
 
-On Thu, 20 Sep 2007, Joel Becker wrote:
-
-> On Thu, Sep 20, 2007 at 07:08:31PM +0200, Miklos Vajna wrote:
-> > +test_expect_success "create the submodules" '
-> > +	for i in a b c d
-> > +	do
-> > +		mkdir $i &&
-> > +		cd $i &&
-> > +		git init &&
-> > +		echo "module $i" > $i.txt &&
-> > +		git add $i.txt &&
-> > +		git commit -m "Initial commit, submodule $i" &&
-> > +		cd ..
-> > +	done
-> 
-> 	Silly question: why use the '&&' when you can 'set -e'?  As it
-> currently stands, a failure will still go back around the loop...
-
-A "set -e" will make the script exit AFAIR.  That's not what we want.  A 
-simple "|| break" after the "cd .." will work, though.
-
-Ciao,
-Dscho
+Thanks, I appreciated the pointers. 
