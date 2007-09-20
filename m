@@ -1,64 +1,61 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 2/7] nfv?asprintf are broken without va_copy, workaround them.
-Date: Thu, 20 Sep 2007 06:53:26 +0200
-Message-ID: <200709200653.26490.chriscool@tuxfamily.org>
-References: <1190241736-30449-1-git-send-email-madcoder@debian.org> <1190241736-30449-3-git-send-email-madcoder@debian.org> <7vwsumkll8.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Yet another builtin-fetch round
+Date: Wed, 19 Sep 2007 22:09:42 -0700
+Message-ID: <7vsl59ly7d.fsf@gitster.siamese.dyndns.org>
+References: <20070919044923.GP3099@spearce.org>
+	<Pine.LNX.4.64.0709192233360.21941@iabervon.org>
+	<7v6426m110.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 06:46:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Sep 20 07:09:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYDvl-0002Pj-B2
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 06:46:25 +0200
+	id 1IYEIV-0006vQ-HG
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 07:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751871AbXITEqU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Sep 2007 00:46:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751538AbXITEqT
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 00:46:19 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:32798 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750806AbXITEqT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 20 Sep 2007 00:46:19 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id A60A11AB2C5;
-	Thu, 20 Sep 2007 06:46:17 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 86BCD1AB2C4;
-	Thu, 20 Sep 2007 06:46:17 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <7vwsumkll8.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752718AbXITFJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 01:09:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752714AbXITFJu
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 01:09:50 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:35011 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752610AbXITFJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 01:09:49 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 68896136FD1;
+	Thu, 20 Sep 2007 01:10:05 -0400 (EDT)
+In-Reply-To: <7v6426m110.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 19 Sep 2007 21:08:43 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58755>
 
-Le jeudi 20 septembre 2007, Junio C Hamano a =E9crit :
-> > diff --git a/exec_cmd.c b/exec_cmd.c
-> > index 9b74ed2..c0f954e 100644
-> > --- a/exec_cmd.c
-> > +++ b/exec_cmd.c
-> > @@ -97,7 +97,8 @@ int execv_git_cmd(const char **argv)
-> > =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0tmp =3D argv[0];
-> > =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0argv[0] =3D git_command;
-> > =A0
-> > -=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0trace_argv_printf(argv, -1,=
- "trace: exec:");
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0trace_printf("trace: exec:"=
-);
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0trace_argv(argv, -1);
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Daniel Barkalow <barkalow@iabervon.org> writes:
 >
-> This used to be a single call into trace.c which would format a
-> single string to write(2) out. =A0Now these two messages go
-> through separate write(2) and can be broken up. =A0I think the
-> atomicity of the log/trace message was the primary reason the
-> original had such a strange calling convention.
+>> On Wed, 19 Sep 2007, Shawn O. Pearce wrote:
+>>
+>>> Another short series for db/fetch-pack, still in pu.  Aside from
+>>> optimizing the pipeline on the native transport (so we only invoke
+>>> the remote process we need once vs. twice) I'm actually now quite
+>>> comfortable with this whole series and think it is ready for next.
+>>
+>> While it's still in pu, should these series of corrections be amended into 
+>> the original series (for the ones that correct new code)? Most of the 
+>> before-fixing states aren't worth saving as project history.
+>
+> Yeah, I was wondering if that is a sane thing to do.  It is
+> merely additional work to arrive at the same tree state, but
+> might be a good investment in the longer term.
 
-That's right.
-
-Christian.
+Heh, I did not realize that they are now all part of 'next' so
+that's moot.
