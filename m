@@ -1,34 +1,35 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [SUPERSEDES PATCH 2/7] nfv?asprintf are broken without va_copy, workaround them.
-Date: Thu, 20 Sep 2007 10:43:11 +0200
-Message-ID: <20070920084311.GB2053@artemis.corp>
+Subject: [SUPERSEDES PATCH 4/7] sq_quote_argv and add_to_string rework with strbuf's.
+Date: Thu, 20 Sep 2007 10:44:41 +0200
+Message-ID: <20070920084441.GC2053@artemis.corp>
 References: <1190241736-30449-1-git-send-email-madcoder@debian.org> <1190241736-30449-2-git-send-email-madcoder@debian.org> <1190241736-30449-3-git-send-email-madcoder@debian.org> <7vwsumkll8.fsf@gitster.siamese.dyndns.org> <20070920082701.GA2053@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="EuxKj2iCbKjpUGkD";
+	protocol="application/pgp-signature"; micalg=SHA1
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 20 10:43:22 2007
+X-From: git-owner@vger.kernel.org Thu Sep 20 10:44:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYHd4-0005LU-4z
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 10:43:22 +0200
+	id 1IYHeT-0005oJ-EV
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 10:44:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753178AbXITInP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 04:43:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752827AbXITInP
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 04:43:15 -0400
-Received: from pan.madism.org ([88.191.52.104]:45337 "EHLO hermes.madism.org"
+	id S1751171AbXITIoo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 04:44:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751167AbXITIon
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 04:44:43 -0400
+Received: from pan.madism.org ([88.191.52.104]:38092 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752636AbXITInN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 04:43:13 -0400
+	id S1750786AbXITIom (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 04:44:42 -0400
 Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D67401EF4F;
-	Thu, 20 Sep 2007 10:43:11 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTP id 7997E1EF4F;
+	Thu, 20 Sep 2007 10:44:41 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id 517C82F31; Thu, 20 Sep 2007 10:43:11 +0200 (CEST)
+	id 221704B03; Thu, 20 Sep 2007 10:44:41 +0200 (CEST)
 Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
@@ -38,300 +39,327 @@ User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58764>
 
-* drop nfasprintf.
-* move nfvasprintf into imap-send.c back, and let it work on a 8k buffer,
-  and die() in case of overflow. It should be enough for imap commands, if
-  someone cares about imap-send, he's welcomed to fix it properly.
-* replace nfvasprintf use in merge-recursive with a copy of the strbuf_addf
-  logic, it's one place, we'll live with it.
-  To ease the change, output_buffer string list is replaced with a strbuf ;)
-* rework trace.c to call vsnprintf itself.  It's used to format strerror()s
-  and git command names, it should never be more than a few octets long, let
-  it work on a 8k static buffer with vsnprintf or die loudly.
+
+--EuxKj2iCbKjpUGkD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+* sq_quote_buf is made public, and works on a strbuf.
+* sq_quote_argv also works on a strbuf.
+* make sq_quote_argv take a "maxlen" argument to check the buffer won't grow
+  too big.
 
 Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
+ connect.c |   21 ++++++--------
+ git.c     |   16 +++-------
+ quote.c   |   94 +++++++++++++++------------------------------------------=
+---
+ quote.h   |    9 ++----
+ trace.c   |   25 +++++++---------
+ 5 files changed, 52 insertions(+), 113 deletions(-)
 
-  This reinstates the trace_argv_printf API. The implementation is
-stupid, but is rewritten in a latter commit. I didn't wanted to bother
-optimizing it.
-
-
- cache.h           |    2 -
- imap-send.c       |   13 ++++++++
- merge-recursive.c |   74 ++++++++++++++++++++-----------------------
- trace.c           |   90 ++++++++++++++++-------------------------------------
- 4 files changed, 74 insertions(+), 105 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index c57ccd6..b127c43 100644
---- a/cache.h
-+++ b/cache.h
-@@ -587,8 +587,6 @@ extern void *alloc_object_node(void);
- extern void alloc_report(void);
- 
- /* trace.c */
--extern int nfasprintf(char **str, const char *fmt, ...);
--extern int nfvasprintf(char **str, const char *fmt, va_list va);
- extern void trace_printf(const char *format, ...);
- extern void trace_argv_printf(const char **argv, int count, const char *format, ...);
- 
-diff --git a/imap-send.c b/imap-send.c
-index 905d097..e95cdde 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -105,6 +105,19 @@ static void free_generic_messages( message_t * );
- 
- static int nfsnprintf( char *buf, int blen, const char *fmt, ... );
- 
-+static int nfvasprintf(char **strp, const char *fmt, va_list ap)
-+{
-+	int len;
-+	char tmp[8192];
-+
-+	len = vsnprintf(tmp, sizeof(tmp), fmt, ap);
-+	if (len < 0)
-+		die("Fatal: Out of memory\n");
-+	if (len >= sizeof(tmp))
-+		die("imap command overflow !\n");
-+	*strp = xmemdupz(tmp, len);
-+	return len;
-+}
- 
- static void arc4_init( void );
- static unsigned char arc4_getbyte( void );
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 14b56c2..4e27549 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -85,63 +85,57 @@ struct stage_data
- 	unsigned processed:1;
- };
- 
--struct output_buffer
--{
--	struct output_buffer *next;
--	char *str;
--};
+diff --git a/connect.c b/connect.c
+index 1653a0e..06d279e 100644
+--- a/connect.c
++++ b/connect.c
+@@ -577,16 +577,13 @@ pid_t git_connect(int fd[2], char *url, const char *p=
+rog, int flags)
+ 	if (pid < 0)
+ 		die("unable to fork");
+ 	if (!pid) {
+-		char command[MAX_CMD_LEN];
+-		char *posn =3D command;
+-		int size =3D MAX_CMD_LEN;
+-		int of =3D 0;
++		struct strbuf cmd;
+=20
+-		of |=3D add_to_string(&posn, &size, prog, 0);
+-		of |=3D add_to_string(&posn, &size, " ", 0);
+-		of |=3D add_to_string(&posn, &size, path, 1);
 -
- static struct path_list current_file_set = {NULL, 0, 0, 1};
- static struct path_list current_directory_set = {NULL, 0, 0, 1};
- 
- static int call_depth = 0;
- static int verbosity = 2;
- static int buffer_output = 1;
--static struct output_buffer *output_list, *output_end;
-+static struct strbuf obuf = STRBUF_INIT;
- 
--static int show (int v)
-+static int show(int v)
- {
- 	return (!call_depth && verbosity >= v) || verbosity >= 5;
- }
- 
--static void output(int v, const char *fmt, ...)
-+static void flush_output(void)
- {
--	va_list args;
--	va_start(args, fmt);
--	if (buffer_output && show(v)) {
--		struct output_buffer *b = xmalloc(sizeof(*b));
--		nfvasprintf(&b->str, fmt, args);
--		b->next = NULL;
--		if (output_end)
--			output_end->next = b;
--		else
--			output_list = b;
--		output_end = b;
--	} else if (show(v)) {
--		int i;
--		for (i = call_depth; i--;)
--			fputs("  ", stdout);
--		vfprintf(stdout, fmt, args);
--		fputc('\n', stdout);
-+	if (obuf.len) {
-+		fputs(obuf.buf, stdout);
-+		strbuf_reset(&obuf);
+-		if (of)
++		strbuf_init(&cmd, MAX_CMD_LEN);
++		strbuf_addstr(&cmd, prog);
++		strbuf_addch(&cmd, ' ');
++		sq_quote_buf(&cmd, path);
++		if (cmd.len >=3D MAX_CMD_LEN)
+ 			die("command line too long");
+=20
+ 		dup2(pipefd[1][0], 0);
+@@ -606,10 +603,10 @@ pid_t git_connect(int fd[2], char *url, const char *p=
+rog, int flags)
+ 				ssh_basename++;
+=20
+ 			if (!port)
+-				execlp(ssh, ssh_basename, host, command, NULL);
++				execlp(ssh, ssh_basename, host, cmd.buf, NULL);
+ 			else
+ 				execlp(ssh, ssh_basename, "-p", port, host,
+-				       command, NULL);
++				       cmd.buf, NULL);
+ 		}
+ 		else {
+ 			unsetenv(ALTERNATE_DB_ENVIRONMENT);
+@@ -618,7 +615,7 @@ pid_t git_connect(int fd[2], char *url, const char *pro=
+g, int flags)
+ 			unsetenv(GIT_WORK_TREE_ENVIRONMENT);
+ 			unsetenv(GRAFT_ENVIRONMENT);
+ 			unsetenv(INDEX_ENVIRONMENT);
+-			execlp("sh", "sh", "-c", command, NULL);
++			execlp("sh", "sh", "-c", cmd.buf, NULL);
+ 		}
+ 		die("exec failed");
  	}
--	va_end(args);
- }
- 
--static void flush_output(void)
-+static void output(int v, const char *fmt, ...)
+diff --git a/git.c b/git.c
+index 6773c12..d7c6bca 100644
+--- a/git.c
++++ b/git.c
+@@ -187,19 +187,13 @@ static int handle_alias(int *argcp, const char ***arg=
+v)
+ 	if (alias_string) {
+ 		if (alias_string[0] =3D=3D '!') {
+ 			if (*argcp > 1) {
+-				int i, sz =3D PATH_MAX;
+-				char *s =3D xmalloc(sz), *new_alias =3D s;
++				struct strbuf buf;
+=20
+-				add_to_string(&s, &sz, alias_string, 0);
++				strbuf_init(&buf, PATH_MAX);
++				strbuf_addstr(&buf, alias_string);
++				sq_quote_argv(&buf, (*argv) + 1, *argcp - 1, PATH_MAX);
+ 				free(alias_string);
+-				alias_string =3D new_alias;
+-				for (i =3D 1; i < *argcp &&
+-					!add_to_string(&s, &sz, " ", 0) &&
+-					!add_to_string(&s, &sz, (*argv)[i], 1)
+-					; i++)
+-					; /* do nothing */
+-				if (!sz)
+-					die("Too many or long arguments");
++				alias_string =3D buf.buf;
+ 			}
+ 			trace_printf("trace: alias to shell cmd: %s =3D> %s\n",
+ 				     alias_command, alias_string + 1);
+diff --git a/quote.c b/quote.c
+index d88bf75..edd1a09 100644
+--- a/quote.c
++++ b/quote.c
+@@ -12,37 +12,31 @@
+  *  a'b      =3D=3D> a'\''b    =3D=3D> 'a'\''b'
+  *  a!b      =3D=3D> a'\!'b    =3D=3D> 'a'\!'b'
+  */
+-#undef EMIT
+-#define EMIT(x) do { if (++len < n) *bp++ =3D (x); } while(0)
+-
+ static inline int need_bs_quote(char c)
  {
--	struct output_buffer *b, *n;
--	for (b = output_list; b; b = n) {
--		int i;
--		for (i = call_depth; i--;)
--			fputs("  ", stdout);
--		fputs(b->str, stdout);
--		fputc('\n', stdout);
--		n = b->next;
--		free(b->str);
--		free(b);
-+	if (show(v)) {
-+		int len;
-+		va_list ap;
-+
-+		strbuf_grow(&obuf, call_depth);
-+		memset(obuf.buf + obuf.len, ' ', call_depth);
-+		strbuf_setlen(&obuf, obuf.len + call_depth);
-+
-+		va_start(ap, fmt);
-+		len = vsnprintf(obuf.buf, strbuf_avail(&obuf) + 1, fmt, ap);
-+		va_end(ap);
-+
-+		if (len < 0)
-+			len = 0;
-+		if (len > strbuf_avail(&obuf)) {
-+			strbuf_grow(&obuf, len);
-+			va_start(ap, fmt);
-+			len = vsnprintf(obuf.buf, strbuf_avail(&obuf) + 1, fmt, ap);
-+			va_end(ap);
-+			if (len > strbuf_avail(&obuf)) {
-+				die("this should not happen, your snprintf is broken");
-+			}
-+		}
-+
-+		strbuf_setlen(&obuf, obuf.len + len);
-+		if (!buffer_output)
-+			flush_output();
- 	}
--	output_list = NULL;
--	output_end = NULL;
+ 	return (c =3D=3D '\'' || c =3D=3D '!');
  }
- 
- static void output_commit_title(struct commit *commit)
+=20
+-static size_t sq_quote_buf(char *dst, size_t n, const char *src)
++void sq_quote_buf(struct strbuf *dst, const char *src)
+ {
+-	char c;
+-	char *bp =3D dst;
+-	size_t len =3D 0;
+-
+-	EMIT('\'');
+-	while ((c =3D *src++)) {
+-		if (need_bs_quote(c)) {
+-			EMIT('\'');
+-			EMIT('\\');
+-			EMIT(c);
+-			EMIT('\'');
+-		} else {
+-			EMIT(c);
++	char *to_free =3D NULL;
++
++	if (dst->buf =3D=3D src)
++		to_free =3D strbuf_detach(dst);
++
++	strbuf_addch(dst, '\'');
++	while (*src) {
++		size_t len =3D strcspn(src, "'\\");
++		strbuf_add(dst, src, len);
++		src +=3D len;
++		while (need_bs_quote(*src)) {
++			strbuf_addstr(dst, "'\\");
++			strbuf_addch(dst, *src++);
++			strbuf_addch(dst, '\'');
+ 		}
+ 	}
+-	EMIT('\'');
+-
+-	if ( n )
+-		*bp =3D 0;
+-
+-	return len;
++	strbuf_addch(dst, '\'');
++	free(to_free);
+ }
+=20
+ void sq_quote_print(FILE *stream, const char *src)
+@@ -62,11 +56,10 @@ void sq_quote_print(FILE *stream, const char *src)
+ 	fputc('\'', stream);
+ }
+=20
+-char *sq_quote_argv(const char** argv, int count)
++void sq_quote_argv(struct strbuf *dst, const char** argv, int count,
++                   size_t maxlen)
+ {
+-	char *buf, *to;
+ 	int i;
+-	size_t len =3D 0;
+=20
+ 	/* Count argv if needed. */
+ 	if (count < 0) {
+@@ -74,53 +67,14 @@ char *sq_quote_argv(const char** argv, int count)
+ 			; /* just counting */
+ 	}
+=20
+-	/* Special case: no argv. */
+-	if (!count)
+-		return xcalloc(1,1);
+-
+-	/* Get destination buffer length. */
+-	for (i =3D 0; i < count; i++)
+-		len +=3D sq_quote_buf(NULL, 0, argv[i]) + 1;
+-
+-	/* Alloc destination buffer. */
+-	to =3D buf =3D xmalloc(len + 1);
+-
+ 	/* Copy into destination buffer. */
++	strbuf_grow(dst, 32 * count);
+ 	for (i =3D 0; i < count; ++i) {
+-		*to++ =3D ' ';
+-		to +=3D sq_quote_buf(to, len, argv[i]);
++		strbuf_addch(dst, ' ');
++		sq_quote_buf(dst, argv[i]);
++		if (maxlen && dst->len > maxlen)
++			die("Too many or long arguments");
+ 	}
+-
+-	return buf;
+-}
+-
+-/*
+- * Append a string to a string buffer, with or without shell quoting.
+- * Return true if the buffer overflowed.
+- */
+-int add_to_string(char **ptrp, int *sizep, const char *str, int quote)
+-{
+-	char *p =3D *ptrp;
+-	int size =3D *sizep;
+-	int oc;
+-	int err =3D 0;
+-
+-	if (quote)
+-		oc =3D sq_quote_buf(p, size, str);
+-	else {
+-		oc =3D strlen(str);
+-		memcpy(p, str, (size <=3D oc) ? size - 1 : oc);
+-	}
+-
+-	if (size <=3D oc) {
+-		err =3D 1;
+-		oc =3D size - 1;
+-	}
+-
+-	*ptrp +=3D oc;
+-	**ptrp =3D '\0';
+-	*sizep -=3D oc;
+-	return err;
+ }
+=20
+ char *sq_dequote(char *arg)
+diff --git a/quote.h b/quote.h
+index 8a59cc5..78e8d3e 100644
+--- a/quote.h
++++ b/quote.h
+@@ -29,13 +29,10 @@
+  */
+=20
+ extern void sq_quote_print(FILE *stream, const char *src);
+-extern char *sq_quote_argv(const char** argv, int count);
+=20
+-/*
+- * Append a string to a string buffer, with or without shell quoting.
+- * Return true if the buffer overflowed.
+- */
+-extern int add_to_string(char **ptrp, int *sizep, const char *str, int quo=
+te);
++extern void sq_quote_buf(struct strbuf *, const char *src);
++extern void sq_quote_argv(struct strbuf *, const char **argv, int count,
++                          size_t maxlen);
+=20
+ /* This unwraps what sq_quote() produces in place, but returns
+  * NULL if the input does not look like what sq_quote would have
 diff --git a/trace.c b/trace.c
-index 7961a27..91548a5 100644
+index 91548a5..efc656b 100644
 --- a/trace.c
 +++ b/trace.c
-@@ -25,33 +25,6 @@
- #include "cache.h"
- #include "quote.h"
- 
--/* Stolen from "imap-send.c". */
--int nfvasprintf(char **strp, const char *fmt, va_list ap)
--{
--	int len;
--	char tmp[1024];
--
--	if ((len = vsnprintf(tmp, sizeof(tmp), fmt, ap)) < 0 ||
--	    !(*strp = xmalloc(len + 1)))
--		die("Fatal: Out of memory\n");
--	if (len >= (int)sizeof(tmp))
--		vsprintf(*strp, fmt, ap);
--	else
--		memcpy(*strp, tmp, len + 1);
--	return len;
--}
--
--int nfasprintf(char **str, const char *fmt, ...)
--{
--	int rc;
--	va_list args;
--
--	va_start(args, fmt);
--	rc = nfvasprintf(str, fmt, args);
--	va_end(args);
--	return rc;
--}
--
- /* Get a trace file descriptor from GIT_TRACE env variable. */
- static int get_trace_fd(int *need_close)
+@@ -85,32 +85,29 @@ void trace_printf(const char *fmt, ...)
+=20
+ void trace_argv_printf(const char **argv, int count, const char *fmt, ...)
  {
-@@ -89,63 +62,54 @@ static int get_trace_fd(int *need_close)
- static const char err_msg[] = "Could not trace into fd given by "
- 	"GIT_TRACE environment variable";
- 
--void trace_printf(const char *format, ...)
-+void trace_printf(const char *fmt, ...)
- {
--	char *trace_str;
--	va_list rest;
--	int need_close = 0;
--	int fd = get_trace_fd(&need_close);
-+	char buf[8192];
-+	va_list ap;
-+	int fd, len, need_close = 0;
- 
-+	fd = get_trace_fd(&need_close);
+-	char buf[8192];
+ 	va_list ap;
+-	char *argv_str;
+-	size_t argv_len;
++	struct strbuf trace;
+ 	int fd, len, need_close =3D 0;
+=20
+ 	fd =3D get_trace_fd(&need_close);
  	if (!fd)
  		return;
- 
--	va_start(rest, format);
--	nfvasprintf(&trace_str, format, rest);
--	va_end(rest);
+=20
++	strbuf_init(&trace, 0);
++	strbuf_grow(&trace, 8192);
++
+ 	va_start(ap, fmt);
+-	len =3D vsnprintf(buf, sizeof(buf), fmt, ap);
++	len =3D vsnprintf(trace.buf, strbuf_avail(&trace) + 1, fmt, ap);
+ 	va_end(ap);
+-	if (len >=3D sizeof(buf))
++	if (len >=3D strbuf_avail(&trace))
+ 		die("unreasonnable trace length");
++	strbuf_setlen(&trace, len);
+=20
+-	/* Get the argv string. */
+-	argv_str =3D sq_quote_argv(argv, count);
+-	argv_len =3D strlen(argv_str);
 -
--	write_or_whine_pipe(fd, trace_str, strlen(trace_str), err_msg);
+-	write_or_whine_pipe(fd, buf, len, err_msg);
+-	write_or_whine_pipe(fd, argv_str, argv_len, err_msg);
+-	write_or_whine_pipe(fd, "\n", 1, err_msg);
 -
--	free(trace_str);
-+	va_start(ap, fmt);
-+	len = vsnprintf(buf, sizeof(buf), fmt, ap);
-+	va_end(ap);
-+	if (len >= sizeof(buf))
-+		die("unreasonnable trace length");
-+	write_or_whine_pipe(fd, buf, len, err_msg);
- 
+-	free(argv_str);
++	sq_quote_argv(&trace, argv, count, 0);
++	strbuf_addch(&trace, '\n');
++	write_or_whine_pipe(fd, trace.buf, trace.len, err_msg);
+=20
++	strbuf_release(&trace);
  	if (need_close)
  		close(fd);
  }
- 
--void trace_argv_printf(const char **argv, int count, const char *format, ...)
-+void trace_argv_printf(const char **argv, int count, const char *fmt, ...)
- {
--	char *argv_str, *format_str, *trace_str;
--	size_t argv_len, format_len, trace_len;
--	va_list rest;
--	int need_close = 0;
--	int fd = get_trace_fd(&need_close);
-+	char buf[8192];
-+	va_list ap;
-+	char *argv_str;
-+	size_t argv_len;
-+	int fd, len, need_close = 0;
- 
-+	fd = get_trace_fd(&need_close);
- 	if (!fd)
- 		return;
- 
-+	va_start(ap, fmt);
-+	len = vsnprintf(buf, sizeof(buf), fmt, ap);
-+	va_end(ap);
-+	if (len >= sizeof(buf))
-+		die("unreasonnable trace length");
-+
- 	/* Get the argv string. */
- 	argv_str = sq_quote_argv(argv, count);
- 	argv_len = strlen(argv_str);
- 
--	/* Get the formated string. */
--	va_start(rest, format);
--	nfvasprintf(&format_str, format, rest);
--	va_end(rest);
--
--	/* Allocate buffer for trace string. */
--	format_len = strlen(format_str);
--	trace_len = argv_len + format_len + 1; /* + 1 for \n */
--	trace_str = xmalloc(trace_len + 1);
--
--	/* Copy everything into the trace string. */
--	strncpy(trace_str, format_str, format_len);
--	strncpy(trace_str + format_len, argv_str, argv_len);
--	strcpy(trace_str + trace_len - 1, "\n");
--
--	write_or_whine_pipe(fd, trace_str, trace_len, err_msg);
-+	write_or_whine_pipe(fd, buf, len, err_msg);
-+	write_or_whine_pipe(fd, argv_str, argv_len, err_msg);
-+	write_or_whine_pipe(fd, "\n", 1, err_msg);
- 
- 	free(argv_str);
--	free(format_str);
--	free(trace_str);
- 
- 	if (need_close)
- 		close(fd);
--- 
+--=20
 1.5.3.2.1036.gca8d2
+
+
+--EuxKj2iCbKjpUGkD
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG8jL5vGr7W6HudhwRAmzzAJ9R2kgaXSwzqPibn6KT6CMk/7UZBwCdHDN+
+EKgUjOmAEWNfGAs4CQT9XOQ=
+=bu93
+-----END PGP SIGNATURE-----
+
+--EuxKj2iCbKjpUGkD--
