@@ -1,75 +1,125 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] User Manual: add a chapter for submodules
-Date: Fri, 21 Sep 2007 00:02:04 +0200
-Message-ID: <20070920220204.GU16235@genesis.frugalware.org>
-References: <20070920003413.GJ16235@genesis.frugalware.org> <7v1wcum0ox.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 7/7] Avoid duplicating memory, and use xmemdupz instead of xstrdup.
+Date: Fri, 21 Sep 2007 00:05:06 +0200
+Message-ID: <20070920220506.GC17514@artemis.corp>
+References: <1190241736-30449-1-git-send-email-madcoder@debian.org> <1190241736-30449-2-git-send-email-madcoder@debian.org> <1190241736-30449-3-git-send-email-madcoder@debian.org> <1190241736-30449-4-git-send-email-madcoder@debian.org> <1190241736-30449-5-git-send-email-madcoder@debian.org> <1190241736-30449-6-git-send-email-madcoder@debian.org> <1190241736-30449-7-git-send-email-madcoder@debian.org> <1190241736-30449-8-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="cy9Nn4fUvYST66Pl"
-Cc: git@vger.kernel.org, "J. Bruce Fields" <bfields@citi.umich.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 00:02:33 2007
+Content-Type: multipart/signed; boundary="uXxzq0nDebZQVNAZ";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Sep 21 00:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYU6L-0001hC-4B
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 00:02:25 +0200
+	id 1IYU96-0002dR-8R
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 00:05:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003AbXITWCW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 18:02:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753009AbXITWCV
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 18:02:21 -0400
-Received: from mx3.mail.elte.hu ([157.181.1.138]:39591 "EHLO mx3.mail.elte.hu"
+	id S1751324AbXITWFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 18:05:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751450AbXITWFK
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 18:05:10 -0400
+Received: from pan.madism.org ([88.191.52.104]:57183 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751678AbXITWCT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 18:02:19 -0400
-Received: from frugalware.elte.hu ([157.181.177.34] helo=genesis.frugalware.org)
-	by mx3.mail.elte.hu with esmtp (Exim)
-	id 1IYU6C-0006VF-Dt
-	from <vmiklos@frugalware.org>; Fri, 21 Sep 2007 00:02:16 +0200
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 787551678013; Fri, 21 Sep 2007 00:02:04 +0200 (CEST)
+	id S1750800AbXITWFI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 18:05:08 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 2AEB120F23;
+	Fri, 21 Sep 2007 00:05:07 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id AEEB02E456D; Fri, 21 Sep 2007 00:05:06 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7v1wcum0ox.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
-X-ELTE-VirusStatus: clean
-X-ELTE-SpamScore: -1.4
-X-ELTE-SpamLevel: 
-X-ELTE-SpamCheck: no
-X-ELTE-SpamVersion: ELTE 2.0 
-X-ELTE-SpamCheck-Details: score=-1.4 required=5.9 tests=BAYES_00,FORGED_RCVD_HELO autolearn=no SpamAssassin version=3.1.7-deb
-	0.1 FORGED_RCVD_HELO       Received: contains a forged HELO
-	-1.5 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+In-Reply-To: <1190241736-30449-8-git-send-email-madcoder@debian.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58814>
 
 
---cy9Nn4fUvYST66Pl
-Content-Type: text/plain; charset=us-ascii
+--uXxzq0nDebZQVNAZ
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 19, 2007 at 09:15:58PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Looks Ok to me, although I didn't verify the examples by
-> actually running them myself this time (last round I did).
+On mer, sep 19, 2007 at 10:42:16 +0000, Pierre Habouzit wrote:
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> ---
+>  walker.c |   23 +++++++++--------------
+>  1 files changed, 9 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/walker.c b/walker.c
+> index 397b80d..0abdd64 100644
+> --- a/walker.c
+> +++ b/walker.c
+> @@ -213,24 +213,19 @@ int walker_targets_stdin(char ***target, const char=
+ ***write_ref)
+>  	struct strbuf buf;
+>  	*target =3D NULL; *write_ref =3D NULL;
+>  	strbuf_init(&buf, 0);
+> -	while (1) {
+> -		char *rf_one =3D NULL;
+> -		char *tg_one;
+> -
+> -		if (strbuf_getline(&buf, stdin, '\n') =3D=3D EOF)
+> -			break;
+> -		tg_one =3D buf.buf;
+> -		rf_one =3D strchr(tg_one, '\t');
+> -		if (rf_one)
+> -			*rf_one++ =3D 0;
+> +	while (strbuf_getline(&buf, stdin, '\n') !=3D EOF) {
+> +		char *rf_one =3D memchr(buf.buf, '\t', buf.len);
+> =20
+>  		if (targets >=3D targets_alloc) {
+> -			targets_alloc =3D targets_alloc ? targets_alloc * 2 : 64;
+> -			*target =3D xrealloc(*target, targets_alloc * sizeof(**target));
+> +			ALLOC_GROW(target, targets, targets_alloc);
+>  			*write_ref =3D xrealloc(*write_ref, targets_alloc * sizeof(**write_re=
+f));
+>  		}
+> -		(*target)[targets] =3D xstrdup(tg_one);
+> -		(*write_ref)[targets] =3D rf_one ? xstrdup(rf_one) : NULL;
+> +		if (rf_one) {
+> +			(*write_ref)[targets] =3D xmemdupz(rf_one, buf.len - (rf_one - buf.bu=
+f));
+> +		} else {
 
-just wanted to mention that i did verify them before sending the patch.
+  As someone pointed to me off-list the above should be:
+  +		if (rf_one) {
+  +			(*write_ref)[targets] =3D xmemdupz(rf_one + 1, buf.len - (rf_one + 1 =
+- buf.buf));
+  +		} else {
 
-- VMiklos
+  Or better:
+  +		if (rf_one) {
+  +			rf_one++; /* skip \t */
+  +			(*write_ref)[targets] =3D xmemdupz(rf_one, buf.buf + buf.len - rf_one=
+);
+  +		} else {
 
---cy9Nn4fUvYST66Pl
+  Which is definitely more readable.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--uXxzq0nDebZQVNAZ
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFG8u3ce81tAgORUJYRAjPmAJ4gf8ZyQ2F2r7dPmCsU60+SzLz89QCePbHA
-NEh13Y/9CYyCUJpYSwZ8/Qg=
-=cbF0
+iD8DBQBG8u6SvGr7W6HudhwRAnaNAJ41oHHXGLbCsbtE6p1rhSbjIpJhYACeOhDi
+VZwqdJMB4NcTYzq5wSat5dw=
+=MSMS
 -----END PGP SIGNATURE-----
 
---cy9Nn4fUvYST66Pl--
+--uXxzq0nDebZQVNAZ--
