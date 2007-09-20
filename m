@@ -1,62 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] [git-p4] Detect exec bit in more cases.
-Date: Thu, 20 Sep 2007 15:53:52 -0700
-Message-ID: <7vodfxj6db.fsf@gitster.siamese.dyndns.org>
-References: <119022570352-git-send-email-git@davidb.org>
-	<200709192103.53526.simon@lst.de>
-	<20070920151637.GA26873@old.davidb.org>
+From: Joel Becker <Joel.Becker@oracle.com>
+Subject: Re: [PATCH] new test from the submodule chapter of the user manual
+Date: Thu, 20 Sep 2007 15:56:46 -0700
+Message-ID: <20070920225646.GB3490@tasint.org>
+References: <20070920003413.GJ16235@genesis.frugalware.org> <7v1wcum0ox.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709201133590.28395@racer.site> <20070920170831.GQ16235@genesis.frugalware.org> <20070920175952.GC30391@tasint.org> <Pine.LNX.4.64.0709201946410.28395@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Simon Hausmann <simon@lst.de>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Fri Sep 21 00:54:44 2007
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@citi.umich.edu>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 21 00:57:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYUuy-0008Og-5e
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 00:54:44 +0200
+	id 1IYUxw-0000o1-Jx
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 00:57:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913AbXITWyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 18:54:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbXITWyE
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 18:54:04 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:50681 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750699AbXITWyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 18:54:03 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id BA09C138E25;
-	Thu, 20 Sep 2007 18:54:16 -0400 (EDT)
-In-Reply-To: <20070920151637.GA26873@old.davidb.org> (David Brown's message of
-	"Thu, 20 Sep 2007 08:16:37 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751000AbXITW5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 18:57:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbXITW5n
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 18:57:43 -0400
+Received: from agminet01.oracle.com ([141.146.126.228]:30971 "EHLO
+	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750961AbXITW5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 18:57:42 -0400
+Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.186.110])
+	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id l8KMvLMm014722;
+	Thu, 20 Sep 2007 17:57:21 -0500
+Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
+	by rgmgw1.us.oracle.com (Switch-3.2.4/Switch-3.2.4) with ESMTP id l8KMvKYH031214;
+	Thu, 20 Sep 2007 16:57:20 -0600
+Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.63)
+	(envelope-from <joel.becker@oracle.com>)
+	id 1IYUxU-0004GD-7w; Thu, 20 Sep 2007 15:57:20 -0700
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709201946410.28395@racer.site>
+X-Burt-Line: Trees are cool.
+X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
+	come to perfection.
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Brightmail-Tracker: AAAAAQAAAAI=
+X-Whitelist: TRUE
+X-Whitelist: TRUE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58815>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58816>
 
-David Brown <git@davidb.org> writes:
+On Thu, Sep 20, 2007 at 07:47:32PM +0100, Johannes Schindelin wrote:
+> > 	Silly question: why use the '&&' when you can 'set -e'?  As it
+> > currently stands, a failure will still go back around the loop...
+> 
+> A "set -e" will make the script exit AFAIR.  That's not what we want.  A 
+> simple "|| break" after the "cd .." will work, though.
 
-> On Wed, Sep 19, 2007 at 09:03:50PM +0200, Simon Hausmann wrote:
->>On Wednesday 19 September 2007 20:15:03 David Brown wrote:
->
->>> git-p4 was missing the execute bit setting if the file had other attribute
->>> bits set.
->>> ---
->
->>I'm fine with this, so unless you find a better way:
->>
->>Acked-By: Simon Hausmann <simon@lst.de>
->
-> I sent out an improved version of this patch yesterday
-> <1190232768445-git-send-email-git@davidb.org> that I'd like to get
-> approved.  I guess I'm not quite sure what happens at this point with a
-> patch.
+	Oh, drat.  It's run in eval, not a subshell.
 
-I still have that *768445* message as "the last one proposed as
-better than previous ones" in my mbox.
+Joel
 
-Simon?
+-- 
+
+Life's Little Instruction Book #94
+
+	"Make it a habit to do nice things for people who 
+	 will never find out."
+
+Joel Becker
+Principal Software Developer
+Oracle
+E-mail: joel.becker@oracle.com
+Phone: (650) 506-8127
