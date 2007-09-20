@@ -1,75 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Symbolic link documentation
-Date: Thu, 20 Sep 2007 14:11:00 -0400
-Message-ID: <20070920181100.GV3099@spearce.org>
-References: <70952A932255A2489522275A628B97C3052E98EB@xmb-sjc-233.amer.cisco.com> <Pine.LNX.4.64.0709201819340.28395@racer.site> <20070920172736.GU3099@spearce.org> <70952A932255A2489522275A628B97C3052E993B@xmb-sjc-233.amer.cisco.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] new test from the submodule chapter of the user manual
+Date: Thu, 20 Sep 2007 19:47:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709201946410.28395@racer.site>
+References: <20070920003413.GJ16235@genesis.frugalware.org>
+ <7v1wcum0ox.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709201133590.28395@racer.site>
+ <20070920170831.GQ16235@genesis.frugalware.org> <20070920175952.GC30391@tasint.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Matt Seitz (matseitz)" <matseitz@cisco.com>
-X-From: git-owner@vger.kernel.org Thu Sep 20 20:11:14 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Miklos Vajna <vmiklos@frugalware.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"J. Bruce Fields" <bfields@citi.umich.edu>
+To: Joel Becker <Joel.Becker@oracle.com>
+X-From: git-owner@vger.kernel.org Thu Sep 20 20:48:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYQUa-0002WX-EI
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 20:11:12 +0200
+	id 1IYR58-0000XQ-A7
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 20:48:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756761AbXITSLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 14:11:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756882AbXITSLF
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 14:11:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51721 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756728AbXITSLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 14:11:04 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IYQUJ-0001TY-A4; Thu, 20 Sep 2007 14:10:55 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2A2E020FBAE; Thu, 20 Sep 2007 14:11:01 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <70952A932255A2489522275A628B97C3052E993B@xmb-sjc-233.amer.cisco.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1757121AbXITSs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 14:48:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757247AbXITSs1
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 14:48:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38300 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757121AbXITSs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 14:48:26 -0400
+Received: (qmail invoked by alias); 20 Sep 2007 18:48:25 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp033) with SMTP; 20 Sep 2007 20:48:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18UHX8pbBkUkaHlEt8U6QstHgyU0occkDVbA1Suvu
+	BAf7wEsd46CnpI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070920175952.GC30391@tasint.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58796>
 
-"Matt Seitz (matseitz)" <matseitz@cisco.com> wrote:
-> The git-update-index and git-update-ref manual references are the
-> closest to what I was looking for.  Both are more low-level and
-> technical than what I was hoping for, and the discussion in
-> git-update-index seems targeted primarily at how symlinks are translated
-> on file systems that don't support symlinks.
+Hi,
+
+On Thu, 20 Sep 2007, Joel Becker wrote:
+
+> On Thu, Sep 20, 2007 at 07:08:31PM +0200, Miklos Vajna wrote:
+> > +test_expect_success "create the submodules" '
+> > +	for i in a b c d
+> > +	do
+> > +		mkdir $i &&
+> > +		cd $i &&
+> > +		git init &&
+> > +		echo "module $i" > $i.txt &&
+> > +		git add $i.txt &&
+> > +		git commit -m "Initial commit, submodule $i" &&
+> > +		cd ..
+> > +	done
 > 
-> I guess I was looking for something like the GNU "tar" documentation of
-> how symlinks are handled
-> (http://www.gnu.org/software/tar/manual/html_node/dereference.html#deref
-> erence).
+> 	Silly question: why use the '&&' when you can 'set -e'?  As it
+> currently stands, a failure will still go back around the loop...
 
-Git never dereferences a symlink that are stored as part of the
-revision data.  The only time we dereference a symlink is when it
-is used inside of .git/refs, or as .git/HEAD, which is what the
-git-update-ref manpage was talking about.
+A "set -e" will make the script exit AFAIR.  That's not what we want.  A 
+simple "|| break" after the "cd .." will work, though.
 
-So Git handles symlinks in the working tree *without* dereferencing
-them.  Internally we store the target of the symlink, much as
-tar would store the target of the symlink.  There is no way to
-activate a dereference behavior (--dereference / -h in GNU tar)
-as typically you want to preseve the symlink as a symlink to the
-target; its part of your source code.
-
-Maybe this is a good hint that the user manual should have a section
-on symbolic links.  Its obvious to old Git hands that a symlink is
-nothing more than a file with a slightly different mode, but that
-may not be obvious to people who are new to Git.
-
--- 
-Shawn.
+Ciao,
+Dscho
