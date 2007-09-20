@@ -1,101 +1,77 @@
-From: Dan Libby <danda@osc.co.cr>
-Subject: Re: [PATCH] git-svnimport: Use separate arguments in the pipe for git-rev-parse
-Date: Thu, 20 Sep 2007 13:40:16 -0600
-Message-ID: <200709201340.17023.danda@osc.co.cr>
-References: <200709161857.06065.danda@osc.co.cr> <7vlkb4wdzq.fsf@gitster.siamese.dyndns.org> <20070918092909.GU31176@kiste.smurf.noris.de>
+From: "Alexey Mahotkin" <squadette@gmail.com>
+Subject: [PATCH] more dependencies in doc generation
+Date: Fri, 21 Sep 2007 00:43:22 +0400
+Message-ID: <bb5b640b0709201343j5a04a554ib91785b43464d4d2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthias Urlichs <smurf@smurf.noris.de>
-X-From: git-owner@vger.kernel.org Thu Sep 20 21:40:53 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 20 22:43:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYRsx-0004LP-NQ
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 21:40:28 +0200
+	id 1IYSrz-0005XT-N8
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 22:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751596AbXITTkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 15:40:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbXITTkV
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 15:40:21 -0400
-Received: from 207-36-180-175.ptr.primarydns.com ([207.36.180.175]:42991 "EHLO
-	mail.osc.co.cr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750838AbXITTkU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 15:40:20 -0400
-Received: from [192.168.0.11] (unknown [200.122.156.92])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.osc.co.cr (Postfix) with ESMTP id 0C11DD0B95;
-	Thu, 20 Sep 2007 12:40:19 -0700 (PDT)
-User-Agent: KMail/1.9.4
-In-Reply-To: <20070918092909.GU31176@kiste.smurf.noris.de>
+	id S1751742AbXITUn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 16:43:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752022AbXITUnZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 16:43:25 -0400
+Received: from nf-out-0910.google.com ([64.233.182.187]:51883 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985AbXITUnZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 16:43:25 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so575879nfb
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 13:43:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=KMqjXA8pXlOCqQ6xn/Stst3yqCugyataOVH+DYmwj8Y=;
+        b=GOADqOK3/jFXloPEalfd97ZZpfvdMLobFaCyjBBtIX22VAgr/Fa9qP7CYpNMqOFtuFUC2k0UywcDpTnpCiV746qrGdgR7sUL2aXii55W9DleDVUKm6kLuRnSb+v+slb2BPh09GfK50JOQqOgDzbYZLLSH0olQNQUKndYx2o5jMs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=niqkRoY2DZz4tzTF4TVAtkgS1yw4PO2C91xe77m40Z9pR11i9XEN9b5OtE+Aoo8h4Te7ixO1mVMcLkChNGgTikDsTef9qohV/4EcLkBu6IRb4RqfVAW22QXfG/UTQZP0frVfph0LJa+W+SGpMvUg8VVGB5kYljTSQKjHPf+X6UQ=
+Received: by 10.86.28.5 with SMTP id b5mr1688597fgb.1190321002526;
+        Thu, 20 Sep 2007 13:43:22 -0700 (PDT)
+Received: by 10.86.66.18 with HTTP; Thu, 20 Sep 2007 13:43:22 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58803>
 
-Hi Matthias,
+Hi,
 
-So the svnimport (with your patch) chugged along for quite a while, but now 
-I've run into a new (related?) problem.  Here's the output:
+I'm trying to solve the problem with `man git-diff' (unescaped troff
+sequences in manpage), and the first thing that will obviously help is
+the following patch:
 
---
-Merge parent branch: 57b2ce794c20e71efa9c7bd0cc71df72e01f5d39
-Commit ID 37f501fd2fd0d309b4d3fdce77bac13c84646423
-Writing to refs/heads/Verny
-DONE: 2385 Verny 37f501fd2fd0d309b4d3fdce77bac13c84646423
-Switching from 37f501fd2fd0d309b4d3fdce77bac13c84646423 to 
-0e1b0bb88f077b66c6cf537899ab6c0a69d5ec30 (/Cristian new code)
-we do not like 'Cristian new code' as a tag name.
-Cannot create tag Cristian new code: Bad file descriptor
---
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index fbefe9a..310d6a5 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -135,11 +135,11 @@ clean:
+                $(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@+ $<
+        mv $@+ $@
 
-This is a fatal error that stops the import.
+-%.1 %.5 %.7 : %.xml
++%.1 %.5 %.7 : %.xml callouts.xsl
+        $(RM) $@
+        xmlto -m callouts.xsl man $<
 
-regards,
+-%.xml : %.txt
++%.xml : %.txt asciidoc.conf
+        $(RM) $@+ $@
+        $(ASCIIDOC) -b docbook -d manpage -f asciidoc.conf \
+                $(ASCIIDOC_EXTRA) -agit_version=$(GIT_VERSION) -o $@+ $<
 
-On Tuesday 18 September 2007 03:29, Matthias Urlichs wrote:
-> Some people seem to create SVN branch names with spaces
-> or other shell metacharacters.
->
-> Signed-Off-By: Matthias Urlichs <smurf@smurf.noris.de>
-> ---
->
-> Junio C Hamano:
-> > > -		open(H,"git-rev-parse --verify $parent |");
-> > > +		open(H,'-|',"git-rev-parse","--verify",$parent);
-> >
-> > I seem to be missing the context, but please describe what
-> > problem this fixes in the commit log message.  I guess some
-> > people use shell metacharacters and/or SP in their branch names
-> > and this is about that problem?
->
-> Exactly. Sorry; it seems that the original question hasn't been posted
-> to the mailing list.
->
-> diff --git a/git-svnimport.perl b/git-svnimport.perl
-> index d3ad5b9..aa5b3b2 100755
-> --- a/git-svnimport.perl
-> +++ b/git-svnimport.perl
-> @@ -633,7 +633,7 @@ sub commit {
->
->  	my $rev;
->  	if($revision > $opt_s and defined $parent) {
-> -		open(H,"git-rev-parse --verify $parent |");
-> +		open(H,'-|',"git-rev-parse","--verify",$parent);
->  		$rev = <H>;
->  		close(H) or do {
->  			print STDERR "$revision: cannot find commit '$parent'!\n";
+It helps to regenerate things correctly when the stylesheets change.
+Please apply.
+
+Thank you,
 
 -- 
-Dan Libby
-
-Open Source Consulting
-San Jose, Costa Rica
-http://osc.co.cr
-phone: 011 506 223 7382
-Fax: 011 506 223 7359
+Alexey Mahotkin
+http://www.versioncontrolblog.com/
