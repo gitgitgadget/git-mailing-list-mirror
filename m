@@ -1,54 +1,52 @@
-From: David Brown <git@davidb.org>
-Subject: Re: [PATCH] [git-p4] Detect exec bit in more cases.
-Date: Thu, 20 Sep 2007 08:16:37 -0700
-Message-ID: <20070920151637.GA26873@old.davidb.org>
-References: <119022570352-git-send-email-git@davidb.org> <200709192103.53526.simon@lst.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/5] strbuf API additions and enhancements.
+Date: Thu, 20 Sep 2007 12:10:07 -0400
+Message-ID: <20070920161007.GA22876@sigill.intra.peff.net>
+References: <20070918223947.GB4535@artemis.corp> <20070918224119.17650344AB3@madism.org> <20070919144604.7deca4f7.froese@gmx.de> <46F21097.5030901@eudaptics.com> <87lkb1iz0i.fsf@Astalo.kon.iki.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Simon Hausmann <simon@lst.de>
-X-From: git-owner@vger.kernel.org Thu Sep 20 17:17:23 2007
+To: Kalle Olavi Niemitalo <kon@iki.fi>
+X-From: git-owner@vger.kernel.org Thu Sep 20 18:10:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYNmL-0004HI-DB
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 17:17:21 +0200
+	id 1IYObm-0004Hm-7A
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 18:10:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757439AbXITPQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 11:16:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755740AbXITPQi
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 11:16:38 -0400
-Received: from mail.davidb.org ([66.93.32.219]:49316 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755781AbXITPQi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 11:16:38 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IYNld-0007zc-5G; Thu, 20 Sep 2007 08:16:37 -0700
-Mail-Followup-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
+	id S1756572AbXITQJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 12:09:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756575AbXITQJ6
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 12:09:58 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2481 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755004AbXITQJ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 12:09:58 -0400
+Received: (qmail 14234 invoked by uid 111); 20 Sep 2007 16:09:56 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 20 Sep 2007 12:09:56 -0400
+Received: (qmail 24397 invoked by uid 1000); 20 Sep 2007 16:10:07 -0000
 Content-Disposition: inline
-In-Reply-To: <200709192103.53526.simon@lst.de>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <87lkb1iz0i.fsf@Astalo.kon.iki.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58785>
 
-On Wed, Sep 19, 2007 at 09:03:50PM +0200, Simon Hausmann wrote:
->On Wednesday 19 September 2007 20:15:03 David Brown wrote:
+On Thu, Sep 20, 2007 at 10:20:29AM +0300, Kalle Olavi Niemitalo wrote:
 
->> git-p4 was missing the execute bit setting if the file had other attribute
->> bits set.
->> ---
+> Normative text in 7.15p3 confirms this: "The object ap may be
+> passed as an argument to another function; if that function
+> invokes the va_arg macro with parameter ap, the value of ap in
+> the calling function is indeterminate and shall be passed to the
+> va_end macro prior to any further reference to ap."
+> 
+> Therefore va_copy is needed here, at least in principle.
 
->I'm fine with this, so unless you find a better way:
->
->Acked-By: Simon Hausmann <simon@lst.de>
+Not just in principle; a few months ago, I ran afoul of the same issue
+using gcc + glibc6, so it is a real problem for our target platforms
+(sorry, I don't have a test case anymore, but I recall getting
+undefined-ish behavior from my print statements).
 
-I sent out an improved version of this patch yesterday
-<1190232768445-git-send-email-git@davidb.org> that I'd like to get
-approved.  I guess I'm not quite sure what happens at this point with a
-patch.
-
-Thanks,
-David
+-Peff
