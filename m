@@ -1,52 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/5] strbuf API additions and enhancements.
-Date: Thu, 20 Sep 2007 12:10:07 -0400
-Message-ID: <20070920161007.GA22876@sigill.intra.peff.net>
-References: <20070918223947.GB4535@artemis.corp> <20070918224119.17650344AB3@madism.org> <20070919144604.7deca4f7.froese@gmx.de> <46F21097.5030901@eudaptics.com> <87lkb1iz0i.fsf@Astalo.kon.iki.fi>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Prevent using bold text in entire gui for some fonts sometimes
+Date: Thu, 20 Sep 2007 13:01:24 -0400
+Message-ID: <20070920170124.GS3099@spearce.org>
+References: <981e6de60709181533o24ef0e45w7925070b5e78ef56@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Kalle Olavi Niemitalo <kon@iki.fi>
-X-From: git-owner@vger.kernel.org Thu Sep 20 18:10:44 2007
+To: Simon Sasburg <simon.sasburg@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 20 19:01:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYObm-0004Hm-7A
-	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 18:10:30 +0200
+	id 1IYPPE-0000um-F5
+	for gcvg-git-2@gmane.org; Thu, 20 Sep 2007 19:01:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756572AbXITQJ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 12:09:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756575AbXITQJ6
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 12:09:58 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2481 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755004AbXITQJ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 12:09:58 -0400
-Received: (qmail 14234 invoked by uid 111); 20 Sep 2007 16:09:56 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 20 Sep 2007 12:09:56 -0400
-Received: (qmail 24397 invoked by uid 1000); 20 Sep 2007 16:10:07 -0000
+	id S1753235AbXITRB3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 13:01:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753311AbXITRB3
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 13:01:29 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:49198 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753063AbXITRB2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 13:01:28 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IYPOx-0006il-RC; Thu, 20 Sep 2007 13:01:20 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 16A3120FBAE; Thu, 20 Sep 2007 13:01:25 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <87lkb1iz0i.fsf@Astalo.kon.iki.fi>
+In-Reply-To: <981e6de60709181533o24ef0e45w7925070b5e78ef56@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58785>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58786>
 
-On Thu, Sep 20, 2007 at 10:20:29AM +0300, Kalle Olavi Niemitalo wrote:
-
-> Normative text in 7.15p3 confirms this: "The object ap may be
-> passed as an argument to another function; if that function
-> invokes the va_arg macro with parameter ap, the value of ap in
-> the calling function is indeterminate and shall be passed to the
-> va_end macro prior to any further reference to ap."
+Simon Sasburg <simon.sasburg@gmail.com> wrote:
+> When I first saw git-gui on windows, I noticed it wasn't using ugly
+> bold fonts for it's entire gui like it was in linux. I came up with
+> the following patch to fix this there.
 > 
-> Therefore va_copy is needed here, at least in principle.
+> And it worked, trange thing was, even git-gui without this patch
+> applied was using normal fonts now. The patch didn't seem to make any
+> difference for me anymore. So I chalked this up to weirdness of my
+> system.
+> 
+> Yesterday though a saw that a friends git-gui was showing the same
+> problem with the entire gui being in bold text. And this patch fixed
+> it.
+> 
+> So its a bit weird that this patch seemed to have 'permanent' effects
+> for me, even after it was reverted.... but on the other hand it's
+> really trivial.
 
-Not just in principle; a few months ago, I ran afoul of the same issue
-using gcc + glibc6, so it is a real problem for our target platforms
-(sorry, I don't have a test case anymore, but I recall getting
-undefined-ish behavior from my print statements).
+Yea, I can't explain that either.  But this patch is really trivial
+so I'm applying it anyway.  Doesn't break anyone who was already
+using a normal weight on their font and it should prevent others
+from picking up bold everywhere.  Thanks.
 
--Peff
+-- 
+Shawn.
