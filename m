@@ -1,70 +1,61 @@
-From: jlh <jlh@gmx.ch>
-Subject: Re: Git as a filesystem
-Date: Fri, 21 Sep 2007 16:38:18 +0200
-Message-ID: <46F3D75A.2040008@gmx.ch>
-References: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>	 <Pine.LNX.4.64.0709211208440.28395@racer.site>	 <fbe8b1780709210441n281248dbh5ba9934d09d6bbfc@mail.gmail.com>	 <20070921125337.GA28456@diana.vm.bytemark.co.uk> <fbe8b1780709210628u24c14117p5174bedb3d1912cb@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: cvsimport bug on branches [was: conversion to git]
+Date: Fri, 21 Sep 2007 08:42:52 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0709210840190.16478@woody.linux-foundation.org>
+References: <loom.20070920T010842-272@post.gmane.org> <46F31BBB.1040901@byu.net>
+ <8D5EA3F4-9642-4604-963E-838D03650FBC@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Stahlir <peter.stahlir@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 16:38:57 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Eric Blake <ebb9@byu.net>, m4-patches@gnu.org,
+	Jim Meyering <jim@meyering.net>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Fri Sep 21 17:44:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYjee-00056o-2C
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 16:38:52 +0200
+	id 1IYkgc-0007ib-05
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 17:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758847AbXIUOiq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 10:38:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758874AbXIUOiq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 10:38:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47876 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752986AbXIUOip (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 10:38:45 -0400
-Received: (qmail invoked by alias); 21 Sep 2007 14:38:44 -0000
-Received: from 106.8.79.83.cust.bluewin.ch (EHLO [192.168.123.202]) [83.79.8.106]
-  by mail.gmx.net (mp041) with SMTP; 21 Sep 2007 16:38:44 +0200
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX19IjwMT46xIFyiBwH4YzOojBiFJR26SUhJpa/SGLb
-	2/1Q3yRJOC+Hsd
-User-Agent: Thunderbird 2.0.0.6 (X11/20070805)
-In-Reply-To: <fbe8b1780709210628u24c14117p5174bedb3d1912cb@mail.gmail.com>
-X-Enigmail-Version: 0.95.2
-X-Y-GMX-Trusted: 0
+	id S1761044AbXIUPob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 11:44:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761017AbXIUPoa
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 11:44:30 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51224 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759444AbXIUPo3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Sep 2007 11:44:29 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8LFgZhf017492
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 21 Sep 2007 08:42:36 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8LFgXUA010448;
+	Fri, 21 Sep 2007 08:42:34 -0700
+In-Reply-To: <8D5EA3F4-9642-4604-963E-838D03650FBC@zib.de>
+X-Spam-Status: No, hits=-2.744 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.39__
+X-MIMEDefang-Filter: lf$Revision: 1.185 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58860>
 
-Peter Stahlir wrote:
-> But the thing is, I think there is a lot of redundancy in
-> a) a Debian mirror or
 
-Yes, surely.  Your idea suggests that you want any file to be
-reconstructed on-the-fly whenever it's being requested.  Isn't
-there the danger of killing performance, the CPU being the
-bottleneck?  I imagine such a debian mirror has quite some
-traffic.
 
-> b) your disk at home.
+On Fri, 21 Sep 2007, Steffen Prohaska wrote:
+> 
+> Hard to say. The best is to avoid git-cvsimport if you need
+> to import branches correctly.
 
-I doubt so.  There sure is lots of redundancy within each file and
-that's what compressed file systems are good for.  But what you
-talk about is redundancy across (unversioned) files, and I don't
-feel there is a lot of it.  Yes, I might have a few copies of the
-file COPYING on my disk, and maybe some of my sources share a few
-functions, but this won't save me tons of space.  All my binaries,
-libraries, MP3s, videos, config files, etc don't really have any
-redundancy across file boundaries.  And even if there is, finding
-that redundancy is an O(whatever-but-not-n) operation that would
-be rather slow.
+Yes. git-cvsimport started out as a pretty quick hack, and depends on 
+cvsps which is another fairly hacky thing.
 
-I definitely see gitfs (or similar ideas) as potentially being
-useful in some cases (maybe debian mirrors could be one), but not
-for my disk at home, which I generally would prefer to be faster
-than more compressed.
+The big advantage of git-cvsimport is that it can do incremental imports, 
+which I don't think the other methods do. But if there is any choice at 
+all, and especially if you're not that interested in the incremental 
+feature (ie you can cut over to git, and perhaps use git-cvsserver to 
+"supprt" CVS users) the other CVS importers are likely to be much better.
 
-jlh
+			Linus
