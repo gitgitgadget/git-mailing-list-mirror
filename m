@@ -1,58 +1,64 @@
-From: "Peter Stahlir" <peter.stahlir@googlemail.com>
-Subject: Git as a filesystem
-Date: Fri, 21 Sep 2007 12:51:30 +0200
-Message-ID: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>
+From: Michal Vitecek <fuf@mageo.cz>
+Subject: Re: [PATCH] Added a new placeholder '%cm' for full commit message
+Date: Fri, 21 Sep 2007 13:06:46 +0200
+Message-ID: <20070921110646.GA9072@mageo.cz>
+References: <20070921101420.GD22869@mageo.cz> <Pine.LNX.4.64.0709211146090.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 21 12:51:38 2007
+X-From: git-owner@vger.kernel.org Fri Sep 21 13:06:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYg6j-00016d-Ks
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 12:51:38 +0200
+	id 1IYgLW-0006ST-Ro
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 13:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755972AbXIUKvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 06:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755893AbXIUKvd
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 06:51:33 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:13130 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754807AbXIUKvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 06:51:32 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so745688nfb
-        for <git@vger.kernel.org>; Fri, 21 Sep 2007 03:51:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=m0EOU+Yl08d04gmSdMzmYmxndvSpSnbNRqZ3vjo2dDU=;
-        b=uUzV1euISYIFnlE99qrXnDqqSz5EaXo//+2qqhXJVM2Af0+Gf3zrEsmHoUmFWnUjY13jBb0CLxja1thbWtlIzK68wglDEL5UaTMnSEPAhqhA7O3Syh4dbGv7fl28fO7qqsSOIFncsRItL/q0AF3Vds2dBn8QuV8d9IxPPmZQk7A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=TcOOI/pw59cZaqcj48KJRnSNEY/bK2Ea+YydjF5XrvI/HmulLaLeKhoSzgWOv1X8bNghYwnMBqRtO+eG+jUAz2+XMAn2IRUmrECXBE3XQXx4dHODVTzLvMiZc5SybwrC3JJ5+Pmz9+gPO42gDWg9hF5VaxPc+v3jCG8GDvYocGI=
-Received: by 10.78.150.7 with SMTP id x7mr1106193hud.1190371890935;
-        Fri, 21 Sep 2007 03:51:30 -0700 (PDT)
-Received: by 10.78.140.12 with HTTP; Fri, 21 Sep 2007 03:51:30 -0700 (PDT)
+	id S1757420AbXIULGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 07:06:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757414AbXIULGt
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 07:06:49 -0400
+Received: from interactive-1.com ([193.85.232.82]:47646 "EHLO
+	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755503AbXIULGs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 07:06:48 -0400
+Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
+	by interactive-1.com (Postfix) with ESMTP id 7079C23B2BB
+	for <git@vger.kernel.org>; Fri, 21 Sep 2007 13:06:47 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709211146090.28395@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58843>
 
-Hi!
+Johannes Schindelin wrote:
+>On Fri, 21 Sep 2007, Michal Vitecek wrote:
+>
+>> I have added a new placeholder '%cm' for a full commit message.
+>
+>You mean the raw message, including the headers?  Why not use "%r" for 
+>that?
 
-Is it possible/feasible to use git as a filesystem?
-Like having git on top of ext3.
+ No, sorry for the incorrect term. I meant the whole commit message
+ (subject + 2*\n + body).
 
-This way I could do a gitfs-gc and there is only one
-pack file sitting on the disk which is a compressed
-version of the whole system.
-I am not interested in a version controlled filesystem,
-only in the space saving aspects.
+>> I made it because I want to use my own pretty format which currently 
+>> only allows '%s' for subject and '%b' for body. But '%b' is substituted 
+>> with <undefined> if the body is "missing" which I obviously don't like 
+>> :)
+>
+>Then you should fix %b not to show "<undefined>".
 
-Thanks,
+ I'll do it if it is okay. Shall I do the same for the other
+ placeholders as well?
 
-Peter
+>And please adher to the tips in Documentation/SubmittingPatches.
+
+ Will do, sorry about the attachment - still learning :)
+
+    Thank you,
+                Michal
+-- 
+		fuf		(fuf@mageo.cz)
