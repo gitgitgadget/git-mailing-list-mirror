@@ -1,57 +1,90 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stg branch --delete doesn't work
-Date: Fri, 21 Sep 2007 11:48:30 +0200
-Message-ID: <20070921094830.GB26307@diana.vm.bytemark.co.uk>
-References: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
+From: Simon Hausmann <simon@lst.de>
+Subject: Re: [PATCH] [git-p4] Detect exec bit in more cases.
+Date: Fri, 21 Sep 2007 12:20:01 +0200
+Message-ID: <200709211220.05434.simon@lst.de>
+References: <119022570352-git-send-email-git@davidb.org> <20070920151637.GA26873@old.davidb.org> <7vodfxj6db.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, catalin.marinas@gmail.com
-To: Aneesh Kumar <aneesh.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 11:48:54 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1543943.fP3Cz6r0lx";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: David Brown <git@davidb.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 12:20:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYf81-0006QM-6q
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 11:48:53 +0200
+	id 1IYfcP-0007dM-Th
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 12:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170AbXIUJsi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Sep 2007 05:48:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755086AbXIUJsi
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 05:48:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3970 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755046AbXIUJsh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 05:48:37 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IYf7f-0006zH-00; Fri, 21 Sep 2007 10:48:31 +0100
-Content-Disposition: inline
-In-Reply-To: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1755170AbXIUKUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 06:20:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752301AbXIUKUL
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 06:20:11 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:54437 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751958AbXIUKUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 06:20:10 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 76032742AB; Fri, 21 Sep 2007 12:20:08 +0200 (CEST)
+Received: from luria.local (unknown [172.20.1.24])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id 61F10742A4; Fri, 21 Sep 2007 12:20:08 +0200 (CEST)
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+In-Reply-To: <7vodfxj6db.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58838>
 
-On 2007-09-21 10:10:45 +0530, Aneesh Kumar wrote:
+--nextPart1543943.fP3Cz6r0lx
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
 
-> [review@linux-review-ext4]$ git checkout master
-> Switched to branch "master"
-> [master@linux-review-ext4]$ stg branch --delete --force review
-> Deleting branch "review" ...
-> fatal: Needed a single revision
-> stg branch: refs/heads/review does not exist
+On Friday 21 September 2007 00:53:52 Junio C Hamano wrote:
+> David Brown <git@davidb.org> writes:
+> > On Wed, Sep 19, 2007 at 09:03:50PM +0200, Simon Hausmann wrote:
+> >>On Wednesday 19 September 2007 20:15:03 David Brown wrote:
+> >>> git-p4 was missing the execute bit setting if the file had other
+> >>> attribute bits set.
+> >>> ---
+> >>
+> >>I'm fine with this, so unless you find a better way:
+> >>
+> >>Acked-By: Simon Hausmann <simon@lst.de>
+> >
+> > I sent out an improved version of this patch yesterday
+> > <1190232768445-git-send-email-git@davidb.org> that I'd like to get
+> > approved.  I guess I'm not quite sure what happens at this point with a
+> > patch.
 >
-> And it leaves in .git/config
-> [branch "test2.stgit"]
->         stackformatversion =3D 2
+> I still have that *768445* message as "the last one proposed as
+> better than previous ones" in my mbox.
 >
-> So a later stg init also fails.
+> Simon?
 
-Ow! You'd think we'd have a test for that ...
+Indeed, the new improved version is much better :)
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Acked-By: Simon Hausmann <simon@lst.de>
+
+
+Simon
+
+--nextPart1543943.fP3Cz6r0lx
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBG85rVWXvMThJCpvIRAvZ+AJwKzE5bykbBT4ip3n5ipRvybP1t4gCgmHMm
+exKQ6j+Qj+J/1IueyU4XXI0=
+=Zb5h
+-----END PGP SIGNATURE-----
+
+--nextPart1543943.fP3Cz6r0lx--
