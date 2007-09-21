@@ -1,109 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add git-rev-list --invert-match
-Date: Fri, 21 Sep 2007 00:18:21 -0400
-Message-ID: <20070921041821.GA28245@coredump.intra.peff.net>
-References: <20070919202615.GK3076@jukie.net> <Pine.LNX.4.64.0709201132381.28395@racer.site> <20070920123849.GD12076@jukie.net> <Pine.LNX.4.64.0709201403540.28395@racer.site>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: stg branch --delete doesn't work
+Date: Fri, 21 Sep 2007 10:10:45 +0530
+Message-ID: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 21 06:18:31 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>, catalin.marinas@gmail.com
+X-From: git-owner@vger.kernel.org Fri Sep 21 06:40:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYZyI-000217-SU
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 06:18:31 +0200
+	id 1IYaJv-0005yn-T6
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 06:40:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751471AbXIUESY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 00:18:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750895AbXIUESY
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 00:18:24 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2354 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306AbXIUESY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 00:18:24 -0400
-Received: (qmail 18623 invoked by uid 111); 21 Sep 2007 04:18:22 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 21 Sep 2007 00:18:22 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2007 00:18:21 -0400
+	id S1750762AbXIUEkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 00:40:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750752AbXIUEkq
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 00:40:46 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:20739 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750707AbXIUEkq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 00:40:46 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so851867wah
+        for <git@vger.kernel.org>; Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=CrCOhnNfh9PK21qicTo8e67jqyWsOJ5JGQwVJCeHH7w=;
+        b=Nhqlu+6s/AweZfAYR0ie9jQJG9rWLpoofSuMMh5S1ZuwtxdimPD2mVI6PPF2+Ox4EeIMtlyhvjxQJGoVvdgYtrU1GHI/VsX42TtxGnPSqBvIA2b5EQBK+dOgHsQyLSFBs6ykPCEFYEV07t4pwhiYUKmo+aRoGo6XoyjFAUFWfiA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=k0USytIq94HAt56ip+C3tsc4+icl35QnisEn7KZBOCAQqUcIu0+2oNSgATa3nE38FZV+nLh7Q4YjBFLaff1AKWYp7sCf8d121u6zrrIm7/VLJ2Jm+RU6RZ65GORpRSWQejSt8wasMSezHjwzvO/uLB0CUxgU7C/R8aP32CTGlPk=
+Received: by 10.114.177.1 with SMTP id z1mr2004293wae.1190349645384;
+        Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
+Received: by 10.114.240.11 with HTTP; Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709201403540.28395@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58825>
 
-On Thu, Sep 20, 2007 at 02:12:54PM +0100, Johannes Schindelin wrote:
+[review@linux-review-ext4]$ git checkout master
+Switched to branch "master"
+[master@linux-review-ext4]$ stg branch --delete --force review
+Deleting branch "review" ...
+fatal: Needed a single revision
+stg branch: refs/heads/review does not exist
 
-> Further, it probably makes sense to have the option to say _both_: "Find 
-> me a commit that contains Bart in one line, but not Simpson, and that 
-> does not contain the word "Sverdoolaege" at all."
 
-This is perhaps a little hack-ish compared to better grep support in the
-core, but I find complex logic through command line options to be
-somewhat unreadable. I prefer something more Perl-ish like this:
+And it leaves in .git/config
+[branch "test2.stgit"]
+        stackformatversion = 2
 
-  git-revgrep 'message =~ /bart/i
-               && message !~ /Simpson/
-               && author_name !~ /Sverdoolaege/'
+So a later stg init also fails.
 
-or if you want to get complex:
 
-  git-revgrep '
-    return 0 if message =~ /Sverdoolaege/;
-    while(my $line = message =~ /^(.*bart.*)/gmi) {
-      return 1 if $line !~ /Simpson/;
-    }
-    return 0;'
-
-where revgrep is the script below:
-
--- >8 --
-#!/usr/bin/perl
-use strict;
-
-my $matcher = shift || '';
-my $matcher_sub = eval "sub { $matcher }";
-die $@ if $@;
-
-my $input = do {
-  if(@ARGV == 1 && $ARGV[0] eq '-') {
-    \*STDIN;
-  }
-  else {
-    open(my $fh, '-|', qw(git log --pretty=raw), @ARGV)
-      or die "unable to open pipe to git log: $!";
-    $fh;
-  }
-};
-
-our $commit;
-while(<$input>) {
-  if(/^commit /) {
-    try_match() if $commit;
-    $commit = $_;
-  }
-  else {
-    $commit .= $_;
-  }
-}
-try_match() if $commit;
-exit 0;
-
-sub try_match {
-  if($matcher_sub->()) {
-    print STDOUT $commit;
-  }
-}
-
-sub parse_person { $_[0] =~ /([^<]*) <([^>]*)> (.*)/ }
-sub parse_author { return parse_person($commit =~ /^author (.*)/m) }
-sub parse_committer { return parse_person($commit =~ /^committer (.*)/m) }
-sub author_name { return (parse_author)[0] }
-sub author_email { return (parse_author)[1] }
-sub author_time { return (parse_author)[2] }
-sub committer_name { return (parse_committer)[0] }
-sub committer_email { return (parse_committer)[1] }
-sub committer_time { return (parse_committer)[2] }
-sub message { return ($commit =~ /^( +.*?^$)/ms)[0] }
+-aneesh
