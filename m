@@ -1,76 +1,79 @@
-From: "Peter Stahlir" <peter.stahlir@googlemail.com>
-Subject: Re: Git as a filesystem
-Date: Fri, 21 Sep 2007 15:28:20 +0200
-Message-ID: <fbe8b1780709210628u24c14117p5174bedb3d1912cb@mail.gmail.com>
-References: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>
-	 <Pine.LNX.4.64.0709211208440.28395@racer.site>
-	 <fbe8b1780709210441n281248dbh5ba9934d09d6bbfc@mail.gmail.com>
-	 <20070921125337.GA28456@diana.vm.bytemark.co.uk>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH 4/4] t6000lib: workaround a possible dash bug
+Date: Fri, 21 Sep 2007 21:28:08 +0800
+Message-ID: <20070921132808.GB9778@gondor.apana.org.au>
+References: <11486091793385-git-send-email-normalperson@yhbt.net> <11486091792604-git-send-email-normalperson@yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Sep 21 15:28:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 21 15:29:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYiYV-0008AD-L1
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 15:28:28 +0200
+	id 1IYiZP-0000Ar-7C
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 15:29:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756837AbXIUN2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 09:28:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756585AbXIUN2W
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 09:28:22 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:17697 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754686AbXIUN2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 09:28:21 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so519978ugc
-        for <git@vger.kernel.org>; Fri, 21 Sep 2007 06:28:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=TewQR01YZ9IXHTlc92VUrQaauQdJPqc2SWGn4d/ywdA=;
-        b=sDTmu+o0xh6KKzhsJlf6F8NK1oSH+Og2C8wN5WT7vffs06s89u1/EqXf9P+HjHMRuz0Fm3H3d1A+JIfpijZAD+eSGQdfV0EHvwRS4VZAXtAnx9s/yn8ftO4tnv4c0ifbTc5zXMQ2hWmn5/7irRu3Z2fnRFbKSfzBbcZIno0nXJ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=aATPNRnA6ayj7UrmXkFQXOrzet3oCjmVMiIGI9P9qCXNlo0M9s64MJ6lpIXPGePMVXTlGXCnoUCwW+uQdKfqYkbh3sSTSbGnch2UeJxNDw9f7HbyhZAkGf6IohcU8uCEBrCpbRQsFRhWf8Y11He3d4r2J9hwWVtQ2NyUOdogZMs=
-Received: by 10.78.179.12 with SMTP id b12mr2018837huf.1190381300063;
-        Fri, 21 Sep 2007 06:28:20 -0700 (PDT)
-Received: by 10.78.140.12 with HTTP; Fri, 21 Sep 2007 06:28:20 -0700 (PDT)
-In-Reply-To: <20070921125337.GA28456@diana.vm.bytemark.co.uk>
+	id S1757954AbXIUN2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 09:28:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757956AbXIUN2z
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 09:28:55 -0400
+Received: from rhun.apana.org.au ([64.62.148.172]:1226 "EHLO
+	arnor.apana.org.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756252AbXIUN2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 09:28:54 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1IYiYX-0001jT-5A; Fri, 21 Sep 2007 23:28:29 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1IYiYD-0002bT-00; Fri, 21 Sep 2007 21:28:09 +0800
 Content-Disposition: inline
+In-Reply-To: <11486091792604-git-send-email-normalperson@yhbt.net>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58850>
 
-> > I wonder how big a deltified Debian mirror in one pack file would
-> > be. :)
->
-> Very, very close to 252 GB, since .deb files are already compressed.
+Hi Eric:
 
-Yes, but if there were deb and tar support in git (to automatically unpack
-archives and store the contents), together with the best available
-binary diffs I think the repository could be significantly smaller because
-files common to all architectures could be deltified,
+On Thu, May 25, 2006 at 07:06:18PM -0700, Eric Wong wrote:
+> pdksh doesn't need this patch, of course bash works fine since
+> that what most users use.
+> 
+> Normally, 'var=val command' seems to work fine with dash, but
+> perhaps there's something weird going on with "$@".  dash is
+> pretty widespread, so it'll be good to support this even though
+> it does seem like a bug in dash.
 
-I did a quick check with 100MB of deb archives; the result was nearly 100MB
-as you said.
-I also did a quick check with all .so files in my /usr/lib directory; it shrunk
-from 50MB to 20MB, the same is achieved with tar + bz2.
+Just going through dash issues right now.  Do you recall
+what the bug is in this case? Doing a quick test doesn't
+seem to show much:
 
-But the thing is, I think there is a lot of redundancy in
-a) a Debian mirror or
-b) your disk at home.
+dash -c 'set -- env; a=b "$@"'
 
-Telling git to handle -for example- deb archives and storing
-everything in a pack file would take advantage of redundancy across
-_all_ files.
-So the /usr/share/doc of all architectures could be compressed.
+> diff --git a/t/t6000lib.sh b/t/t6000lib.sh
+> index c6752af..d402621 100755
+> --- a/t/t6000lib.sh
+> +++ b/t/t6000lib.sh
+> @@ -69,7 +69,9 @@ on_committer_date()
+>  {
+>      _date=$1
+>      shift 1
+> -    GIT_COMMITTER_DATE=$_date "$@"
+> +    export GIT_COMMITTER_DATE="$_date"
+> +    "$@"
+> +    unset GIT_COMMITTER_DATE
+>  }
+>  
+>  # Execute a command and suppress any error output.
+> -- 
+> 1.3.2.g7d11
 
-Right?
+Thanks,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
