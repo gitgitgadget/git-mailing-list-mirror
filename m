@@ -1,60 +1,63 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: stg branch --delete doesn't work
-Date: Fri, 21 Sep 2007 10:10:45 +0530
-Message-ID: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
+From: Matthias Urlichs <smurf@smurf.noris.de>
+Subject: Re: [PATCH] git-svnimport: Use separate arguments in the pipe for git-rev-parse
+Date: Fri, 21 Sep 2007 08:11:22 +0200
+Message-ID: <20070921061122.GI11204@kiste.smurf.noris.de>
+References: <200709161857.06065.danda@osc.co.cr> <7vlkb4wdzq.fsf@gitster.siamese.dyndns.org> <20070918092909.GU31176@kiste.smurf.noris.de> <200709201340.17023.danda@osc.co.cr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>, catalin.marinas@gmail.com
-X-From: git-owner@vger.kernel.org Fri Sep 21 06:40:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dan Libby <danda@osc.co.cr>
+X-From: git-owner@vger.kernel.org Fri Sep 21 08:12:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYaJv-0005yn-T6
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 06:40:52 +0200
+	id 1IYbkY-0007K7-V5
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 08:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750762AbXIUEkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 00:40:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750752AbXIUEkq
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 00:40:46 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:20739 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750707AbXIUEkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 00:40:46 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so851867wah
-        for <git@vger.kernel.org>; Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=CrCOhnNfh9PK21qicTo8e67jqyWsOJ5JGQwVJCeHH7w=;
-        b=Nhqlu+6s/AweZfAYR0ie9jQJG9rWLpoofSuMMh5S1ZuwtxdimPD2mVI6PPF2+Ox4EeIMtlyhvjxQJGoVvdgYtrU1GHI/VsX42TtxGnPSqBvIA2b5EQBK+dOgHsQyLSFBs6ykPCEFYEV07t4pwhiYUKmo+aRoGo6XoyjFAUFWfiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=k0USytIq94HAt56ip+C3tsc4+icl35QnisEn7KZBOCAQqUcIu0+2oNSgATa3nE38FZV+nLh7Q4YjBFLaff1AKWYp7sCf8d121u6zrrIm7/VLJ2Jm+RU6RZ65GORpRSWQejSt8wasMSezHjwzvO/uLB0CUxgU7C/R8aP32CTGlPk=
-Received: by 10.114.177.1 with SMTP id z1mr2004293wae.1190349645384;
-        Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
-Received: by 10.114.240.11 with HTTP; Thu, 20 Sep 2007 21:40:45 -0700 (PDT)
+	id S1753179AbXIUGMU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 02:12:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752779AbXIUGMU
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 02:12:20 -0400
+Received: from smurf.noris.de ([192.109.102.42]:37757 "EHLO smurf.noris.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753257AbXIUGMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 02:12:19 -0400
+Received: from kiste.smurf.noris.de ([192.109.102.35])
+	by smurf.noris.de with smtp (Exim 4.63)
+	(envelope-from <smurf@smurf.noris.de>)
+	id 1IYbje-0004cj-8Q; Fri, 21 Sep 2007 08:11:31 +0200
+Received: (nullmailer pid 6960 invoked by uid 501);
+	Fri, 21 Sep 2007 06:11:22 -0000
 Content-Disposition: inline
+In-Reply-To: <200709201340.17023.danda@osc.co.cr>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Smurf-Spam-Score: -2.6 (--)
+X-Smurf-Whitelist: +relay_from_hosts
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58826>
 
-[review@linux-review-ext4]$ git checkout master
-Switched to branch "master"
-[master@linux-review-ext4]$ stg branch --delete --force review
-Deleting branch "review" ...
-fatal: Needed a single revision
-stg branch: refs/heads/review does not exist
+Hi,
 
+Dan Libby:
+> we do not like 'Cristian new code' as a tag name.
 
-And it leaves in .git/config
-[branch "test2.stgit"]
-        stackformatversion = 2
+Duh? That's a perfectly valid tag name.
+I have no idea why git croaked on this one.
 
-So a later stg init also fails.
+Please run 
 
+    strace -f -s300 -eexecve git-svnimport ... 2>&1 | \
+		grep check-ref-format | grep -v ENOENT
 
--aneesh
+and mail me the output, replacing the "..." with your normal arguments
+of course.
+
+-- 
+Matthias Urlichs   |   {M:U} IT Design @ m-u-it.de   |  smurf@smurf.noris.de
+Disclaimer: The quote was selected randomly. Really. | http://smurf.noris.de
+ - -
+Taken as a whole, the universe is absurd.
+					-- Walter Savage Landor
