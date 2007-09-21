@@ -1,96 +1,69 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [DON'T MERGE PATCH 7/7]
-Date: Fri, 21 Sep 2007 09:39:51 +0200
-Message-ID: <20070921073951.GB14008@artemis.corp>
-References: <20070920220506.GC17514@artemis.corp> <1190241736-30449-1-git-send-email-madcoder@debian.org> <1190241736-30449-2-git-send-email-madcoder@debian.org> <1190241736-30449-3-git-send-email-madcoder@debian.org> <1190241736-30449-4-git-send-email-madcoder@debian.org> <1190241736-30449-5-git-send-email-madcoder@debian.org> <1190241736-30449-6-git-send-email-madcoder@debian.org> <1190241736-30449-7-git-send-email-madcoder@debian.org> <1190241736-30449-8-git-send-email-madcoder@debian.org> <20070921070329.GB5689@artemis.corp>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] git-svn: handle changed svn command-line syntax
+Date: Fri, 21 Sep 2007 01:23:48 -0700
+Message-ID: <20070921082348.GA5152@mayonaise>
+References: <1190340155146-git-send-email-sam.vilain@catalyst.net.nz> <11903401551014-git-send-email-sam.vilain@catalyst.net.nz> <11903401551812-git-send-email-sam.vilain@catalyst.net.nz> <11903401552164-git-send-email-sam.vilain@catalyst.net.nz> <46F33734.3080408@vilain.net> <46F33A05.2000906@vilain.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="wac7ysb48OaltWcw";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 21 09:39:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Fri Sep 21 10:24:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYd7H-0004sz-43
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 09:39:59 +0200
+	id 1IYdnp-00023F-FO
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 10:23:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499AbXIUHjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 03:39:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751391AbXIUHjx
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 03:39:53 -0400
-Received: from pan.madism.org ([88.191.52.104]:45765 "EHLO hermes.madism.org"
+	id S1753859AbXIUIXw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 04:23:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbXIUIXv
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 04:23:51 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:54442 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751105AbXIUHjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 03:39:52 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id BB40620FBE;
-	Fri, 21 Sep 2007 09:39:51 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 38BD62E456D; Fri, 21 Sep 2007 09:39:51 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	git@vger.kernel.org
+	id S1752953AbXIUIXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 04:23:50 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 1A2F17DC029;
+	Fri, 21 Sep 2007 01:23:49 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 21 Sep 2007 01:23:48 -0700
 Content-Disposition: inline
-In-Reply-To: <20070921070329.GB5689@artemis.corp>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <46F33A05.2000906@vilain.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58833>
 
+Sam Vilain <sam@vilain.net> wrote:
+> Sam Vilain wrote:
+> > Sam Vilain wrote:
+> >> Previously, if you passed a revision and a path to svn, it meant to look
+> >> back at that revision and select that path.  New behaviour is to get the
+> >> path then go back to the revision.  The old syntax is selected with new
+> >> syntax PATH@REV.  This new syntax is not supported by the old tools, so we
+> >> have to try both in turn.
+> > 
+> > Blast, this analysis is wrong.  Hold off, I'll see what's really going
+> > on and re-submit.
+> 
+> ok, figured it out :)
+> 
+> I was close!  I was just thrown off by 'svn ls PATH@REV'
+> 
+> The patch is the same, just the description has changed.
+> 
+> Subject: [PATCH] git-svn: handle changed svn cp command-line syntax
+> 
+> Previously, if you passed a revision and a path to svn cp, it meant to look
+> back at that revision and select that path.  New behaviour is to get the
+> path then go back to the revision (like other commands that accept @REV
+> or -rREV do).  The more consistent syntax is not supported by the old
+> tools, so we have to try both in turn.
 
---wac7ysb48OaltWcw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The @REV and -rREV distinction/ambiguity has always confused me in svn,
+too.  It always seems that it needed to be one way sometimes, the other
+way at other times, and even _both_ at other times...
 
-On Fri, Sep 21, 2007 at 07:03:29AM +0000, Pierre Habouzit wrote:
-> On jeu, sep 20, 2007 at 10:05:06 +0000, Pierre Habouzit wrote:
-> > On mer, sep 19, 2007 at 10:42:16 +0000, Pierre Habouzit wrote:
-> >=20
-> >   As someone pointed to me off-list the above should be:
-> >   +		if (rf_one) {
-> >   +			(*write_ref)[targets] =3D xmemdupz(rf_one + 1, buf.len - (rf_one =
-+ 1 - buf.buf));
-> >   +		} else {
-> >=20
-> >   Or better:
-> >   +		if (rf_one) {
-> >   +			rf_one++; /* skip \t */
-> >   +			(*write_ref)[targets] =3D xmemdupz(rf_one, buf.buf + buf.len - rf=
-_one);
-> >   +		} else {
-> >=20
-> >   Which is definitely more readable.
->=20
->   damn it was not the error that was reported to me, there is another
-> one, I'll roll a new patch, sorry :/
-
-  Okay this patch is worthless, the previous version worked the same, I
-totally missed what it did. I should not code when I'm too tired, I'm
-sorry.
-
-  Don't merge patch 7/7 it's broken.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---wac7ysb48OaltWcw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG83VHvGr7W6HudhwRArfmAJ9uxqR+ITVmPmrnOLcuQZXG8c5RyACeJJR1
-IZ4NTE5jqYAacymVMnmuevs=
-=w9DR
------END PGP SIGNATURE-----
-
---wac7ysb48OaltWcw--
+-- 
+Eric Wong
