@@ -1,76 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
-Date: Fri, 21 Sep 2007 16:52:52 -0700
-Message-ID: <7v8x6zinjf.fsf@gitster.siamese.dyndns.org>
-References: <20070921214346.GF97288@void.codelabs.ru>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Git as a filesystem
+Date: Sat, 22 Sep 2007 11:56:38 +1200
+Message-ID: <46a038f90709211656n5b23783eu330e8b655cd42aa8@mail.gmail.com>
+References: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>
+	 <Pine.LNX.4.64.0709211208440.28395@racer.site>
+	 <fbe8b1780709210441n281248dbh5ba9934d09d6bbfc@mail.gmail.com>
+	 <20070921125337.GA28456@diana.vm.bytemark.co.uk>
+	 <fbe8b1780709210628u24c14117p5174bedb3d1912cb@mail.gmail.com>
+	 <20070921172941.GA7399@potapov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Sat Sep 22 01:53:04 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Peter Stahlir" <peter.stahlir@googlemail.com>,
+	"=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Dmitry Potapov" <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 01:56:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYsIx-0000RD-Fn
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 01:53:03 +0200
+	id 1IYsMX-00012s-Ov
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 01:56:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758512AbXIUXw6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 19:52:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757838AbXIUXw6
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 19:52:58 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43892 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758454AbXIUXw5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 19:52:57 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 183C0139979;
-	Fri, 21 Sep 2007 19:53:16 -0400 (EDT)
-In-Reply-To: <20070921214346.GF97288@void.codelabs.ru> (Eygene Ryabinkin's
-	message of "Sat, 22 Sep 2007 01:43:46 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759091AbXIUX4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 19:56:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758556AbXIUX4k
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 19:56:40 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:34187 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758393AbXIUX4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 19:56:39 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so600663ugc
+        for <git@vger.kernel.org>; Fri, 21 Sep 2007 16:56:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=WvJ/MsYgQAa8RaBF/1VSs+sWR9rwGRhdWXKaZSFBOSw=;
+        b=QCNUL2ksp/WplY8KD2yiptkVo2Lt2Shq9SFJVq9twUWMvn0c6tENa0k+Eiz9N7ckruMQgq+zgYWOQVHad0EEO1qrsHGISvxhx6y/4dv/iWMtmjkwqp0w8/FTLKXc/udVbdNotQrW5wzMK79dbrSuWSIX9UEag1jYxV094UywQmk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oBdWFC5zAJWAX+Sukesc4fnNqnWVG/OLKMfYEL8pV63kMzPa0eBmHHcrhG1eiAkaZbaT4IIUxqDt4AQwQqlCirungwmUz2c3udb/Ewh/blIdrelcMnjsKr7SjtsfAPvck/dxqgoFnaU6Kp9uY0LbdgydMlT/CksSZRIhh9wjzAE=
+Received: by 10.67.31.5 with SMTP id i5mr2641920ugj.1190418998073;
+        Fri, 21 Sep 2007 16:56:38 -0700 (PDT)
+Received: by 10.67.23.15 with HTTP; Fri, 21 Sep 2007 16:56:38 -0700 (PDT)
+In-Reply-To: <20070921172941.GA7399@potapov>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58895>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+On 9/22/07, Dmitry Potapov <dpotapov@gmail.com> wrote:
+> used to create the original file. So, if you put any .deb file in such
+> a system, you will get back a different .deb file (with a different SHA1).
+> So, aside high CPU and memory requirements, this system cannot work in
+> principle unless all users have exactly the same version of a compressor.
 
-> Good day.
->
-> I had found that FreeBSD's /bin/sh refuses to work with git 1.5.3.2.
-> correctly: no flags are recognized.  The details and fix are below.
-> I don't currently know if the Bash's behaviour is POSIXly correct
-> or the 'case' statement semantics is not very well defined.   But
-> the following patch fixes the things for the FreeBSD.
->
-> Here we go.
->
-> -----
->
-> Option parsing in the Git shell scripts uses the construct 'while
-> case "$#" in 0) break ;; esac; do ... done'.  This is neat, because
-> it needs no external commands invocation.  But in the case when
-> /bin/sh is not GNU Bash (for example, on FreeBSD) this cycle will
-> not be executed at all.
+Was thinking the same - compression machinery, ordering of the files,
+everything. It'd be a nightmare to ensure you get back the same .deb,
+without a single different bit.
 
-I do not doubt that "while case $# in 0) break ;; esac" does not
-work for your shell.  But I think the above comment is grossly
-misleading.
+Debian packaging toolchain could be reworked to use a more GIT-like
+approach - off the top of my head, at least
 
-Don't mention bash there.  You sound as if you are blaming
-bashism, but the thing is, your shell is simply broken.
+  - signing/validating the "tree" of the package rather than the
+completed package could allow the savings in distribution you mention,
+decouple the signing from the compression, and simplify things like
+debdiff
 
-You have other choices than bash on BSD don't you?
+  - git or git-like strategies for source packages
 
-My quick test shows that ksh, pdksh and dash seem to work
-correctly.  This idiom is what I picked up around late 80's from
-somebody, and kept using on many variants of Unices.  I would
-find quite surprising that something that claims to be a shell
-does not work correctly.  Even /bin/sh that comes with Solaris
-seems to work correctly, which should tell you something.
+cheers,
 
-OpenBSD's /bin/sh seems to be Ok; I do not know whose shell they
-use, but it seems to be hard-linked to /bin/ksh which is pdksh.
+
+m
