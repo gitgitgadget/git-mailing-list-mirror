@@ -1,60 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add git-rev-list --invert-match
-Date: Fri, 21 Sep 2007 05:19:03 -0400
-Message-ID: <20070921091902.GA1870@coredump.intra.peff.net>
-References: <20070919202615.GK3076@jukie.net> <Pine.LNX.4.64.0709201132381.28395@racer.site> <20070920123849.GD12076@jukie.net> <Pine.LNX.4.64.0709201403540.28395@racer.site> <20070921041821.GA28245@coredump.intra.peff.net> <Pine.LNX.4.64.0709210904210.28395@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stg branch --delete doesn't work
+Date: Fri, 21 Sep 2007 11:48:30 +0200
+Message-ID: <20070921094830.GB26307@diana.vm.bytemark.co.uk>
+References: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 21 11:19:15 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>, catalin.marinas@gmail.com
+To: Aneesh Kumar <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 21 11:48:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYefK-00049w-Ik
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 11:19:14 +0200
+	id 1IYf81-0006QM-6q
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 11:48:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751910AbXIUJTJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 05:19:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754183AbXIUJTI
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 05:19:08 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3260 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750916AbXIUJTH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 05:19:07 -0400
-Received: (qmail 20140 invoked by uid 111); 21 Sep 2007 09:19:04 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 21 Sep 2007 05:19:04 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2007 05:19:03 -0400
+	id S1755170AbXIUJsi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Sep 2007 05:48:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755086AbXIUJsi
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 05:48:38 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3970 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755046AbXIUJsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 05:48:37 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IYf7f-0006zH-00; Fri, 21 Sep 2007 10:48:31 +0100
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709210904210.28395@racer.site>
+In-Reply-To: <cc723f590709202140y677a17d0y504b8cfa8b66606b@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58837>
 
-On Fri, Sep 21, 2007 at 10:10:12AM +0100, Johannes Schindelin wrote:
+On 2007-09-21 10:10:45 +0530, Aneesh Kumar wrote:
 
-> Indeed, it has a certain elegance to it.  However, I cannot specify any 
-> rev-list options with your method, not even "--stat" or 
-> "--pretty=format:%H(%s)".
+> [review@linux-review-ext4]$ git checkout master
+> Switched to branch "master"
+> [master@linux-review-ext4]$ stg branch --delete --force review
+> Deleting branch "review" ...
+> fatal: Needed a single revision
+> stg branch: refs/heads/review does not exist
+>
+> And it leaves in .git/config
+> [branch "test2.stgit"]
+>         stackformatversion =3D 2
+>
+> So a later stg init also fails.
 
-Actually, you can pass --stat, but it erroneously is counted as part of
-the message due to a parsing bug in the script. However you are pointing
-out a larger issue, which is that the format must be parseable by the
-script. As a final step, the script could turn the output into a list of
-commits, and pipe them into a git command which pretty-printed in the
-desired format.
+Ow! You'd think we'd have a test for that ...
 
-But that is doubly hack-ish, and slow to boot.
-
-> So while your script is a good interim solution, I'd like to see a 
-> generic grep support for this feature.
-
-Yes, I don't seriously propose it for mainline git. However, I quite
-like the interface; unfortunately, to get it to work smoothly (and
-efficiently!) the perl interpreter would need to be embedded inside
-git-log. And I think I know what you will say about that... :)
-
--Peff
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
