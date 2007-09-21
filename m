@@ -1,90 +1,109 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH] git-svn: handle changed svn command-line syntax
-Date: Fri, 21 Sep 2007 15:27:01 +1200
-Message-ID: <46F33A05.2000906@vilain.net>
-References: <1190340155146-git-send-email-sam.vilain@catalyst.net.nz> <11903401551014-git-send-email-sam.vilain@catalyst.net.nz> <11903401551812-git-send-email-sam.vilain@catalyst.net.nz> <11903401552164-git-send-email-sam.vilain@catalyst.net.nz> <46F33734.3080408@vilain.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add git-rev-list --invert-match
+Date: Fri, 21 Sep 2007 00:18:21 -0400
+Message-ID: <20070921041821.GA28245@coredump.intra.peff.net>
+References: <20070919202615.GK3076@jukie.net> <Pine.LNX.4.64.0709201132381.28395@racer.site> <20070920123849.GD12076@jukie.net> <Pine.LNX.4.64.0709201403540.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Sep 21 05:33:32 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 21 06:18:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYZGj-0002Bz-Qb
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 05:33:30 +0200
+	id 1IYZyI-000217-SU
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 06:18:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335AbXIUDdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 23:33:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbXIUDdY
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 23:33:24 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:49685 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752334AbXIUDdX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 23:33:23 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
-	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
-	id 1IYZGa-0003m8-It; Fri, 21 Sep 2007 15:33:20 +1200
-Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
-	id 890051FF99; Fri, 21 Sep 2007 15:33:20 +1200 (NZST)
-FCC: imap://sam@localhost/INBOX/Sent
-X-Identity-Key: id4
-X-Mozilla-Draft-Info: internal/draft; vcard=0; receipt=0; uuencode=0
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <46F33734.3080408@vilain.net>
-X-Enigmail-Version: 0.94.2.0
+	id S1751471AbXIUESY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 00:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750895AbXIUESY
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 00:18:24 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2354 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751306AbXIUESY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 00:18:24 -0400
+Received: (qmail 18623 invoked by uid 111); 21 Sep 2007 04:18:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 21 Sep 2007 00:18:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 21 Sep 2007 00:18:21 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709201403540.28395@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58824>
 
-Sam Vilain wrote:
-> Sam Vilain wrote:
->> Previously, if you passed a revision and a path to svn, it meant to look
->> back at that revision and select that path.  New behaviour is to get the
->> path then go back to the revision.  The old syntax is selected with new
->> syntax PATH@REV.  This new syntax is not supported by the old tools, so we
->> have to try both in turn.
-> 
-> Blast, this analysis is wrong.  Hold off, I'll see what's really going
-> on and re-submit.
+On Thu, Sep 20, 2007 at 02:12:54PM +0100, Johannes Schindelin wrote:
 
-ok, figured it out :)
+> Further, it probably makes sense to have the option to say _both_: "Find 
+> me a commit that contains Bart in one line, but not Simpson, and that 
+> does not contain the word "Sverdoolaege" at all."
 
-I was close!  I was just thrown off by 'svn ls PATH@REV'
+This is perhaps a little hack-ish compared to better grep support in the
+core, but I find complex logic through command line options to be
+somewhat unreadable. I prefer something more Perl-ish like this:
 
-The patch is the same, just the description has changed.
+  git-revgrep 'message =~ /bart/i
+               && message !~ /Simpson/
+               && author_name !~ /Sverdoolaege/'
 
-Subject: [PATCH] git-svn: handle changed svn cp command-line syntax
+or if you want to get complex:
 
-Previously, if you passed a revision and a path to svn cp, it meant to look
-back at that revision and select that path.  New behaviour is to get the
-path then go back to the revision (like other commands that accept @REV
-or -rREV do).  The more consistent syntax is not supported by the old
-tools, so we have to try both in turn.
----
- t/t9104-git-svn-follow-parent.sh |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+  git-revgrep '
+    return 0 if message =~ /Sverdoolaege/;
+    while(my $line = message =~ /^(.*bart.*)/gmi) {
+      return 1 if $line !~ /Simpson/;
+    }
+    return 0;'
 
-diff --git a/t/t9104-git-svn-follow-parent.sh b/t/t9104-git-svn-follow-parent.sh
-index 9eab945..7ba7630 100755
---- a/t/t9104-git-svn-follow-parent.sh
-+++ b/t/t9104-git-svn-follow-parent.sh
-@@ -51,8 +51,10 @@ test_expect_success 'init and fetch from one svn-remote' "
-         "
- 
- test_expect_success 'follow deleted parent' "
--        svn cp -m 'resurrecting trunk as junk' \
--               -r2 $svnrepo/trunk $svnrepo/junk &&
-+        (svn cp -m 'resurrecting trunk as junk' \
-+               $svnrepo/trunk@2 $svnrepo/junk ||
-+         svn cp -m 'resurrecting trunk as junk' \
-+               -r2 $svnrepo/trunk $svnrepo/junk) &&
-         git config --add svn-remote.svn.fetch \
-           junk:refs/remotes/svn/junk &&
-         git-svn fetch -i svn/thunk &&
--- 
-1.5.3.2.3.g2f2dcc-dirty
+where revgrep is the script below:
+
+-- >8 --
+#!/usr/bin/perl
+use strict;
+
+my $matcher = shift || '';
+my $matcher_sub = eval "sub { $matcher }";
+die $@ if $@;
+
+my $input = do {
+  if(@ARGV == 1 && $ARGV[0] eq '-') {
+    \*STDIN;
+  }
+  else {
+    open(my $fh, '-|', qw(git log --pretty=raw), @ARGV)
+      or die "unable to open pipe to git log: $!";
+    $fh;
+  }
+};
+
+our $commit;
+while(<$input>) {
+  if(/^commit /) {
+    try_match() if $commit;
+    $commit = $_;
+  }
+  else {
+    $commit .= $_;
+  }
+}
+try_match() if $commit;
+exit 0;
+
+sub try_match {
+  if($matcher_sub->()) {
+    print STDOUT $commit;
+  }
+}
+
+sub parse_person { $_[0] =~ /([^<]*) <([^>]*)> (.*)/ }
+sub parse_author { return parse_person($commit =~ /^author (.*)/m) }
+sub parse_committer { return parse_person($commit =~ /^committer (.*)/m) }
+sub author_name { return (parse_author)[0] }
+sub author_email { return (parse_author)[1] }
+sub author_time { return (parse_author)[2] }
+sub committer_name { return (parse_committer)[0] }
+sub committer_email { return (parse_committer)[1] }
+sub committer_time { return (parse_committer)[2] }
+sub message { return ($commit =~ /^( +.*?^$)/ms)[0] }
