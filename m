@@ -1,57 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add ability to specify SMTP server port when using git-send-email.
-Date: Tue, 25 Sep 2007 16:25:30 -0700
-Message-ID: <7vmyva2uqd.fsf@gitster.siamese.dyndns.org>
-References: <1190759927-19493-1-git-send-email-glenn@rempe.us>
-	<Pine.LNX.4.64.0709260004090.28395@racer.site>
-	<7vzlza2vcl.fsf@gitster.siamese.dyndns.org>
+From: Kaushalya Satharasinghe <kaushalyas@zone24x7.com>
+Subject: Unable to connect to the server
+Date: Fri, 21 Sep 2007 15:10:36 +0600
+Organization: Zone24x7
+Message-ID: <1190365837.5497.4.camel@localhost>
+Reply-To: kaushalyas@zone24x7.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Glenn Rempe <glenn@rempe.us>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 01:26:25 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 26 01:31:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaJnM-00076H-Ir
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 01:26:24 +0200
+	id 1IaJrs-000052-In
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 01:31:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755168AbXIYXZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 19:25:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755158AbXIYXZi
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 19:25:38 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44559 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755112AbXIYXZh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 19:25:37 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D5C3E139CF5;
-	Tue, 25 Sep 2007 19:25:54 -0400 (EDT)
-In-Reply-To: <7vzlza2vcl.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 25 Sep 2007 16:12:10 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752628AbXIYXa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 19:30:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbXIYXa5
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 19:30:57 -0400
+Received: from relay6.slt.lk ([203.115.0.21]:39562 "EHLO relay6.slt.lk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752612AbXIYXa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 19:30:56 -0400
+X-Greylist: delayed 45665 seconds by postgrey-1.27 at vger.kernel.org; Tue, 25 Sep 2007 19:30:56 EDT
+Received: from [192.168.1.140] (localhost [127.0.0.1])
+	by relay6.slt.lk (8.13.4/8.13.4) with ESMTP id l8PAokau018586
+	for <git@vger.kernel.org>; Tue, 25 Sep 2007 16:21:00 +0530 (LKT)
+X-Mailer: Evolution 2.6.0 (2.6.0-1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59195>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Tue, 25 Sep 2007, Glenn Rempe wrote:
->>
->>> +if (($smtp_server =~ /:\d+/) && (defined $smtp_server_port)) {
->>
->> Not that I want to be a PITA, but this breaks down with IPv6, right?
->
-> Right.  Do we care about symbolic "server.addre.ss:smtp"
-> notation as well, I wonder?
+I want to checkout a git package. I installed git and when I give the
+command
+"/root/bin/git clone
+git://git.kernel.org/pub/scm/linux/kernel/git/drzeus/mmc.git /home/Kaushalya/moreWork/git_test
+"
+I got the result as
 
-Well, does it break?
+Initialized empty Git repository
+in /home/Kaushalya/moreWork/git_test/.git/
+git.kernel.org[0: 140.211.167.38]: errno=Connection timed out
+fatal: unable to connect a socket (Connection timed out)
+fetch-pack from
+'git://git.kernel.org/pub/scm/linux/kernel/git/drzeus/mmc.git' failed.
 
-BTW, I do not think we care about ":smtp"; it was a
-tongue-in-cheek comment.
+I can ping the 140.211.167.38. I am using Fedora Core 5 hosted through
+vmware 5.5. Can anyone help me out here?
+
+Thanks and regards,
+-- 
+Kaushalya Satharasinghe <kaushalyas@zone24x7.com>
+Zone24x7
