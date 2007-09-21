@@ -1,50 +1,68 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 0/3] git-svn: pass tests on svn trunk
-Date: Fri, 21 Sep 2007 01:27:24 -0700
-Message-ID: <20070921082724.GB5152@mayonaise>
-References: <1190340155146-git-send-email-sam.vilain@catalyst.net.nz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add git-rev-list --invert-match
+Date: Fri, 21 Sep 2007 10:10:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709210904210.28395@racer.site>
+References: <20070919202615.GK3076@jukie.net> <Pine.LNX.4.64.0709201132381.28395@racer.site>
+ <20070920123849.GD12076@jukie.net> <Pine.LNX.4.64.0709201403540.28395@racer.site>
+ <20070921041821.GA28245@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Sep 21 10:27:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Bart Trojanowski <bart@jukie.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 21 11:11:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYdrH-0003Ad-Gu
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 10:27:31 +0200
+	id 1IYeXf-00010G-K3
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 11:11:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753215AbXIUI10 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 04:27:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753213AbXIUI10
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 04:27:26 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:54448 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753195AbXIUI10 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 04:27:26 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id CC93C7DC029;
-	Fri, 21 Sep 2007 01:27:24 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Fri, 21 Sep 2007 01:27:24 -0700
-Content-Disposition: inline
-In-Reply-To: <1190340155146-git-send-email-sam.vilain@catalyst.net.nz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752771AbXIUJLL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 05:11:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752712AbXIUJLL
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 05:11:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57997 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752551AbXIUJLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 05:11:09 -0400
+Received: (qmail invoked by alias); 21 Sep 2007 09:11:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 21 Sep 2007 11:11:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+JgEVTxsaJ4C7PIanoTRzgh/JeF799hcoVwFwv3V
+	H+loVTltLg4Mex
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070921041821.GA28245@coredump.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58835>
 
-Sam Vilain <sam.vilain@catalyst.net.nz> wrote:
-> While svn trunk is a dubious target to integrate with, perhaps these
-> patches will prove useful to include anyway.
+Hi,
+
+On Fri, 21 Sep 2007, Jeff King wrote:
+
+> On Thu, Sep 20, 2007 at 02:12:54PM +0100, Johannes Schindelin wrote:
 > 
-> Tested against svn 1.4.2 and svn trunk r26724
+> > Further, it probably makes sense to have the option to say _both_: "Find 
+> > me a commit that contains Bart in one line, but not Simpson, and that 
+> > does not contain the word "Sverdoolaege" at all."
+> 
+> This is perhaps a little hack-ish compared to better grep support in the
+> core, but I find complex logic through command line options to be
+> somewhat unreadable. I prefer something more Perl-ish like this:
+> 
+>   git-revgrep 'message =~ /bart/i
+>                && message !~ /Simpson/
+>                && author_name !~ /Sverdoolaege/'
 
-Fine by me, as what's in trunk will likely be in a released version some
-day and I'm glad that people are already testing git-svn against it.
+Indeed, it has a certain elegance to it.  However, I cannot specify any 
+rev-list options with your method, not even "--stat" or 
+"--pretty=format:%H(%s)".
 
-This series Acked-by: Eric Wong <normalperson@yhbt.net>
+So while your script is a good interim solution, I'd like to see a 
+generic grep support for this feature.
 
--- 
-Eric Wong
+Ciao,
+Dscho
