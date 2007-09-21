@@ -1,74 +1,101 @@
-From: Joel Becker <Joel.Becker@oracle.com>
-Subject: Re: [PATCH] new test from the submodule chapter of the user manual
-Date: Thu, 20 Sep 2007 15:56:46 -0700
-Message-ID: <20070920225646.GB3490@tasint.org>
-References: <20070920003413.GJ16235@genesis.frugalware.org> <7v1wcum0ox.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709201133590.28395@racer.site> <20070920170831.GQ16235@genesis.frugalware.org> <20070920175952.GC30391@tasint.org> <Pine.LNX.4.64.0709201946410.28395@racer.site>
+From: Eric Blake <ebb9@byu.net>
+Subject: cvsimport bug on branches [was: conversion to git]
+Date: Thu, 20 Sep 2007 19:17:47 -0600
+Message-ID: <46F31BBB.1040901@byu.net>
+References: <loom.20070920T010842-272@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miklos Vajna <vmiklos@frugalware.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"J. Bruce Fields" <bfields@citi.umich.edu>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 21 00:57:52 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: m4-patches@gnu.org, Jim Meyering <jim@meyering.net>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 21 03:17:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYUxw-0000o1-Jx
-	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 00:57:49 +0200
+	id 1IYX9A-0007kg-JA
+	for gcvg-git-2@gmane.org; Fri, 21 Sep 2007 03:17:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751000AbXITW5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Sep 2007 18:57:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751102AbXITW5n
-	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 18:57:43 -0400
-Received: from agminet01.oracle.com ([141.146.126.228]:30971 "EHLO
-	agminet01.oracle.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750961AbXITW5m (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Sep 2007 18:57:42 -0400
-Received: from rgmgw1.us.oracle.com (rgmgw1.us.oracle.com [138.1.186.110])
-	by agminet01.oracle.com (Switch-3.2.4/Switch-3.1.7) with ESMTP id l8KMvLMm014722;
-	Thu, 20 Sep 2007 17:57:21 -0500
-Received: from ca-server1.us.oracle.com (ca-server1.us.oracle.com [139.185.48.5])
-	by rgmgw1.us.oracle.com (Switch-3.2.4/Switch-3.2.4) with ESMTP id l8KMvKYH031214;
-	Thu, 20 Sep 2007 16:57:20 -0600
-Received: from jlbec by ca-server1.us.oracle.com with local (Exim 4.63)
-	(envelope-from <joel.becker@oracle.com>)
-	id 1IYUxU-0004GD-7w; Thu, 20 Sep 2007 15:57:20 -0700
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709201946410.28395@racer.site>
-X-Burt-Line: Trees are cool.
-X-Red-Smith: Ninety feet between bases is perhaps as close as man has ever
-	come to perfection.
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Brightmail-Tracker: AAAAAQAAAAI=
-X-Whitelist: TRUE
-X-Whitelist: TRUE
+	id S1751102AbXIUBR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Sep 2007 21:17:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751052AbXIUBR0
+	(ORCPT <rfc822;git-outgoing>); Thu, 20 Sep 2007 21:17:26 -0400
+Received: from sccrmhc14.comcast.net ([204.127.200.84]:65532 "EHLO
+	sccrmhc14.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750974AbXIUBRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Sep 2007 21:17:25 -0400
+Received: from [192.168.0.103] (c-67-166-125-73.hsd1.co.comcast.net[67.166.125.73])
+          by comcast.net (sccrmhc14) with ESMTP
+          id <2007092101172401400rjgcle>; Fri, 21 Sep 2007 01:17:24 +0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.6) Gecko/20070728 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
+In-Reply-To: <loom.20070920T010842-272@post.gmane.org>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58817>
 
-On Thu, Sep 20, 2007 at 07:47:32PM +0100, Johannes Schindelin wrote:
-> > 	Silly question: why use the '&&' when you can 'set -e'?  As it
-> > currently stands, a failure will still go back around the loop...
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+According to Eric Blake on 9/19/2007 5:13 PM:
+> I'm working on converting M4 to git.
 > 
-> A "set -e" will make the script exit AFAIR.  That's not what we want.  A 
-> simple "|| break" after the "cd .." will work, though.
+> The initial git conversion is complete.  Feel free to check it out:
+> 
+> http://git.savannah.gnu.org/gitweb/?p=m4.git
 
-	Oh, drat.  It's run in eval, not a subshell.
+Unfortunately, after publishing this repository, I noticed that there is a
+bug in git-cvsimport, when a vendor branch is created that contains fewer
+files than the point it branched from.  Those files were not removed from
+the commit on the new branch, which means the git repository contains too
+many files compared to what the CVS repository had for any checkout along
+the branch.
 
-Joel
+For example, look at the m4-1.4.1 tag.  In CVS,
 
--- 
+http://cvs.savannah.gnu.org/viewvc/m4/?root=m4&hideattic=0&pathrev=m4-1_4_1
 
-Life's Little Instruction Book #94
+shows the following:
+ABOUT-NLS (dead) 	No revisions exist on m4-1_4_1
 
-	"Make it a habit to do nice things for people who 
-	 will never find out."
+and for the file ChangeLog, the predecessor of m4-1_4_1 (rev 1.1.1.1.2.1)
+was m4-1_4 (rev 1.1.1.1):
 
-Joel Becker
-Principal Software Developer
-Oracle
-E-mail: joel.becker@oracle.com
-Phone: (650) 506-8127
+http://cvs.savannah.gnu.org/viewvc/m4/ChangeLog?hideattic=0&view=log&root=m4&pathrev=m4-1_4_1
+
+
+But after git-cvsimport (using git 1.5.3), tag m4-1.4.1 is shown on the
+branch-1_4 branch, but with unrelated m4-1.4ppre2 as parent, instead of
+the correct m4-1.4:
+
+http://git.sv.gnu.org/gitweb/?p=m4.git;a=shortlog;h=ab2ce6be
+
+and as a result, the tree includes ABOUT-NLS (which was correctly a part
+of the m4-1.4ppre2 tag on the master branch):
+
+http://git.sv.gnu.org/gitweb/?p=m4.git;a=tree;h=ab2ce6bec48;hb=ab2ce6bec4
+
+
+Now that the repository is published, what's the best way to correct the
+history for the git m4-1.4.1 tag, to correctly pick the m4-1.4 commit as
+its parent, and to omit the files that were intentionally omitted from the
+CVS branch it was imported from?
+
+What needs to be done to git-cvsimport to make it recognize files that
+were omitted from CVS branch creation points, to avoid this problem in the
+first place?
+
+- --
+Don't work too hard, make some time for fun as well!
+
+Eric Blake             ebb9@byu.net
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.5 (Cygwin)
+Comment: Public key at home.comcast.net/~ericblake/eblake.gpg
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFG8xu684KuGfSFAYARAjd8AJ0eOWw1TFGt4zpQKIDFTGRjxzI/cgCghBpM
+W91wfRwc8Q2hoMO1WCWYtzM=
+=zzNR
+-----END PGP SIGNATURE-----
