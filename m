@@ -1,113 +1,116 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Git as a filesystem
-Date: Sat, 22 Sep 2007 15:09:01 +1200
-Message-ID: <46F4874D.8000305@vilain.net>
-References: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>	 <Pine.LNX.4.64.0709211208440.28395@racer.site>	 <fbe8b1780709210441n281248dbh5ba9934d09d6bbfc@mail.gmail.com>	 <20070921125337.GA28456@diana.vm.bytemark.co.uk>	 <fbe8b1780709210628u24c14117p5174bedb3d1912cb@mail.gmail.com>	 <20070921172941.GA7399@potapov> <46a038f90709211656n5b23783eu330e8b655cd42aa8@mail.gmail.com>
+From: Eygene Ryabinkin <rea-git@codelabs.ru>
+Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
+Date: Sat, 22 Sep 2007 07:54:34 +0400
+Message-ID: <20070922035434.GA99140@void.codelabs.ru>
+References: <20070921214346.GF97288@void.codelabs.ru> <7vlkazh1ji.fsf@gitster.siamese.dyndns.org> <20070921214346.GF97288@void.codelabs.ru> <7v8x6zinjf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Peter Stahlir <peter.stahlir@googlemail.com>,
-	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 05:13:06 2007
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 05:54:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYvQX-0004mC-Ij
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 05:13:05 +0200
+	id 1IYw4w-0002xw-CK
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 05:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756240AbXIVDIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 23:08:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756239AbXIVDIG
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 23:08:06 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:41490 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756215AbXIVDIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 23:08:05 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id A282E23C272; Sat, 22 Sep 2007 15:08:01 +1200 (NZST)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id B3DA823C26E;
-	Sat, 22 Sep 2007 15:07:54 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <46a038f90709211656n5b23783eu330e8b655cd42aa8@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1756454AbXIVDym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 23:54:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754596AbXIVDym
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 23:54:42 -0400
+Received: from pobox.codelabs.ru ([144.206.177.45]:58660 "EHLO
+	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753311AbXIVDyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 23:54:41 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
+	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
+	b=TAYtDlua/+p//dWV1K5ud/g0XaKtsPHFDc1l8ICGcrKCMfwFhMFjcaWvLbq/vcTOSS65Ds0VUp3Qy3dkDCOPtNMaMuumb/jP7ZvYBWs/hKpgavpPjw+8PPbPx6uKJkEohogsTSQ/26+MHnEF/3nMJv+sbW7722hn1V7U5pIDkv8=;
+Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
+	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
+	id 1IYw4k-0004rc-He; Sat, 22 Sep 2007 07:54:38 +0400
+Content-Disposition: inline
+In-Reply-To: <7vlkazh1ji.fsf@gitster.siamese.dyndns.org> <7v8x6zinjf.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, score=-2.4 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58914>
 
-Martin Langhoff wrote:
-> On 9/22/07, Dmitry Potapov <dpotapov@gmail.com> wrote:
->   
->> used to create the original file. So, if you put any .deb file in such
->> a system, you will get back a different .deb file (with a different SHA1).
->> So, aside high CPU and memory requirements, this system cannot work in
->> principle unless all users have exactly the same version of a compressor.
->>     
->
-> Was thinking the same - compression machinery, ordering of the files,
-> everything. It'd be a nightmare to ensure you get back the same .deb,
-> without a single different bit.
->
-> Debian packaging toolchain could be reworked to use a more GIT-like
-> approach - off the top of my head, at least
->
->   - signing/validating the "tree" of the package rather than the
-> completed package could allow the savings in distribution you mention,
-> decouple the signing from the compression, and simplify things like
-> debdiff
->
->   - git or git-like strategies for source packages
->   
+Junio, good day.
 
-Nightmare indeed.  I actually wrote a proof of concept for this idea for
-gzip.
+Fri, Sep 21, 2007 at 04:52:52PM -0700, Junio C Hamano wrote:
+> > Option parsing in the Git shell scripts uses the construct 'while
+> > case "$#" in 0) break ;; esac; do ... done'.  This is neat, because
+> > it needs no external commands invocation.  But in the case when
+> > /bin/sh is not GNU Bash (for example, on FreeBSD) this cycle will
+> > not be executed at all.
+> 
+> I do not doubt that "while case $# in 0) break ;; esac" does not
+> work for your shell.  But I think the above comment is grossly
+> misleading.
+> 
+> Don't mention bash there.  You sound as if you are blaming
+> bashism, but the thing is, your shell is simply broken.
 
-http://git.catalyst.net.nz/gw?p=git.git;a=shortlog;h=archive-blobs
-(see also
-http://planet.catalyst.net.nz/blog/2006/07/17/samv/xteddy_caught_consuming_rampant_amounts_of_disk_space)
+OK, you're right.  Especially if /bin/sh from Solaris and OpenBSD
+are working and they are not Bash.  But I would not tell that
+the shell is broken now -- I had not seen the POSIX specification.
+Does it specifies how the shell should work in this case?
 
-I usually warn people that this undertaking is "slightly insane".
+> You have other choices than bash on BSD don't you?
 
-My implementation was designed to be called like "git-hash-object". 
-What it did was look at the input stream, and detect quickly whether it
-looked like a gzip stream.  If it was, it would decompress it and then
-try to compress the first few blocks using different compression
-libraries and settings to determine what settings were used.  If it
-could find the right settings for the first meg or so, then it would
-bank on the rest being identical as well, record which compressor and
-what settings were used and write the uncompressed object, as well as
-the information needed to reconstruct the gzip header, to a new type of
-object called an "archive" object.  If the stream could not be
-reproduced then it would save the raw stream instead.  For something
-like a Debian archive, it is very likely that all compressed streams
-will be reproducible, because they will almost all be compressed using
-the same implementation of gzip.
+Did not understand the question, sorry.  The thing is that
+FreeBSD has /bin/sh that is derived from the original Berkeley
+shell.  And it is desirable to have it working with Git
+script, since I don't want to make bash (or whatever shell
+that is not /bin/sh) a dependency for the port.
 
-For tar and .ar files, this can be slightly more deterministic of
-course.  It doesn't even need to be particularly savvy of what all the
-fields are - just locate the files in the .tar, write out a tree, and
-then write a TOC that lists tree entries and contains any extra data (ie
-headers, etc).
+> My quick test shows that ksh, pdksh and dash seem to work
+> correctly.  This idiom is what I picked up around late 80's from
+> somebody, and kept using on many variants of Unices.  I would
+> find quite surprising that something that claims to be a shell
+> does not work correctly.  Even /bin/sh that comes with Solaris
+> seems to work correctly, which should tell you something.
+> 
+> OpenBSD's /bin/sh seems to be Ok; I do not know whose shell they
+> use, but it seems to be hard-linked to /bin/ksh which is pdksh.
 
-In hindsight, making a new object type was probably a mistake.  If I
-were to re-undertake this I would not go down that path, though I'd
-certainly consider using tag objects for the extra data, and throwing
-them in the tree like submodules.  It would also be essential in a
-"real" solution to bundle reference copies of the zlib and gzip
-compressors (yes, their output streams differ with longer inputs and
-even some short ones).
+OK, I think I need to find out why FreeBSD's /bin/sh behaves
+like this, because the test you propose on your next message
+works.  See below.
 
-Sam.
+By the way, my FreeBSD is 7-CURRENT, but I'll test on 6-STABLE
+and perhaps on 4-STABLE on Monday.
+
+Fri, Sep 21, 2007 at 07:33:21PM -0700, Junio C Hamano wrote:
+> I am assuming that this works around _a_ bug in that /bin/sh; I
+> would make sure I understand the nature of the bug.  Is it Ok to
+> understand that with that shell, after this construct runs:
+> 
+> 	case <some word> in
+>         <case arm #1>)
+>         	something ;;
+> 	<case arm #2>)
+>         	something else ;;
+> 	esac
+> 
+> the status from the whole case statement is false, when <some word>
+> does not match any of the glob patterns listed in any of the case arm?
+> 
+> That is, what does the shell say if you do this?
+> 
+> 	case Ultra in
+>         Super)
+>         	false ;;
+> 	Hyper)
+>         	true ;;
+> 	esac &&
+>         echo case returned ok
+
+It says 'case returned ok', so I will try to understand why it
+works here and does not work in the 'while' construct.
+
+Thanks for the pointer!
+-- 
+Eygene
