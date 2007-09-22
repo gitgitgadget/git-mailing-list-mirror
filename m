@@ -1,92 +1,65 @@
-From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 3/4] Properly remove all config for a deleted branch
-Date: Sat, 22 Sep 2007 10:46:31 +0200
-Message-ID: <20070922084630.29884.73015.stgit@yoghurt>
-References: <20070922084334.29884.60506.stgit@yoghurt>
+From: Michal Vitecek <fuf@mageo.cz>
+Subject: Re: [PATCH] Use "" instead of "<unknown>" for placeholders
+Date: Sat, 22 Sep 2007 10:53:41 +0200
+Message-ID: <46F4D815.5050602@mageo.cz>
+References: <20070921101420.GD22869@mageo.cz>	<Pine.LNX.4.64.0709211146090.28395@racer.site>	<20070921110646.GA9072@mageo.cz>	<Pine.LNX.4.64.0709211207070.28395@racer.site>	<20070921140500.GB9072@mageo.cz> <7vk5qjixqy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Aneesh Kumar <aneesh.kumar@gmail.com>,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 10:46:51 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 10:53:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ0dU-0005ZG-L8
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:46:49 +0200
+	id 1IZ0kM-00079x-DO
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:53:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751137AbXIVIqj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2007 04:46:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751224AbXIVIqi
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:46:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4113 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751137AbXIVIqh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 04:46:37 -0400
-Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
-	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1IZ0dE-0001nG-00; Sat, 22 Sep 2007 09:46:32 +0100
-In-Reply-To: <20070922084334.29884.60506.stgit@yoghurt>
-User-Agent: StGIT/0.13
+	id S1751486AbXIVIxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 04:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750974AbXIVIxt
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:53:49 -0400
+Received: from interactive-1.com ([193.85.232.82]:53463 "EHLO
+	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750783AbXIVIxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 04:53:48 -0400
+Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
+	by interactive-1.com (Postfix) with ESMTP id A004F23B30F;
+	Sat, 22 Sep 2007 10:53:43 +0200 (CEST)
+Received: from [127.0.0.1] (unknown [217.11.253.238])
+	by interactive-1.com (Postfix) with ESMTP id 824AC23B2BB;
+	Sat, 22 Sep 2007 10:53:43 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vk5qjixqy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58927>
 
-This uses "git-config --remove-section", which was first released in
-git 1.5.1-rc1. I'm not sure if this is later than what we used to
-depend on; we already use "git-config --rename-section", but that's
-been in since git 1.5.0-rc0.
+Junio C Hamano wrote:
+>>>>>> I made it because I want to use my own pretty format which currently 
+>>>>>> only allows '%s' for subject and '%b' for body. But '%b' is 
+>>>>>> substituted with <undefined> if the body is "missing" which I 
+>>>>>> obviously don't like :)
+>>>>> Then you should fix %b not to show "<undefined>".
+>>>>  I'll do it if it is okay. Shall I do the same for the other
+>>>>  placeholders as well?
+>>> Yeah.  Don't know why I did it that way.
+>>  Here comes the big patch :)
+> 
+> Now, this breaks t6006 which needs this patch.
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Oops - I'm sorry about that. I ran the test suite (1.5.3.1) but it 
+failed in 2 tests before the patch and in 2 tests after it so I 
+considered it okay.
 
----
+> Looking at this patch, I am not sure if your change is really a
+> desirable one --- shouldn't it be removing the line itself, not
+> just <unknown> token?
 
- stgit/config.py |    7 +++++++
- stgit/stack.py  |    9 ++-------
- 2 files changed, 9 insertions(+), 7 deletions(-)
+This sounds as the best solution. I'll look into it. Thanks for your time.
 
-
-diff --git a/stgit/config.py b/stgit/config.py
-index 799e1d7..51818bd 100644
---- a/stgit/config.py
-+++ b/stgit/config.py
-@@ -76,6 +76,13 @@ class GitConfig:
-             ).returns([0, 1]).run()
-         self.__cache.clear()
-=20
-+    def remove_section(self, name):
-+        """Remove a section in the config file. Silently do nothing if
-+        the section doesn't exist."""
-+        Run('git-repo-config', '--remove-section', name
-+            ).returns([0, 1]).discard_stderr().discard_output()
-+        self.__cache.clear()
-+
-     def set(self, name, value):
-         Run('git-repo-config', name, value).run()
-         self.__cache[name] =3D value
-diff --git a/stgit/stack.py b/stgit/stack.py
-index d6f6a6e..adfff25 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -744,13 +744,8 @@ class Series(PatchSet):
-             except GitException:
-                 out.warn('Could not delete branch "%s"' % self.get_nam=
-e())
-=20
--        # Cleanup parent informations
--        # FIXME: should one day make use of git-config --section-remov=
-e,
--        # scheduled for 1.5.1
--        config.unset('branch.%s.remote' % self.get_name())
--        config.unset('branch.%s.merge' % self.get_name())
--        config.unset('branch.%s.stgit.parentbranch' % self.get_name())
--        config.unset(self.format_version_key())
-+        config.remove_section('branch.%s' % self.get_name())
-+        config.remove_section('branch.%s.stgit' % self.get_name())
-=20
-     def refresh_patch(self, files =3D None, message =3D None, edit =3D=
- False,
-                       show_patch =3D False,
+-- 
+		fuf					(fuf@mageo.cz)
