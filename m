@@ -1,59 +1,57 @@
-From: Simon 'corecode' Schubert <corecode@fs.ei.tum.de>
-Subject: Re: fromcvs installation [was: cvsimport bug on branches [was: conversion
- to git]]
-Date: Sat, 22 Sep 2007 17:08:59 +0200
-Message-ID: <46F5300B.2000707@fs.ei.tum.de>
-References: <loom.20070920T010842-272@post.gmane.org> <200709212242.53131.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0709212212020.28395@racer.site> <200709220116.26369.robin.rosenberg.lists@dewire.com> <86B33DFE-65E6-4F8D-8483-509ACA4FA2F8@zib.de>
+From: Kyle Rose <krose@krose.org>
+Subject: Re: C++ *for Git*
+Date: Sat, 22 Sep 2007 11:15:22 -0400
+Organization: The Valley of Wind
+Message-ID: <46F5318A.4030103@krose.org>
+References: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=KOI8-R
 Content-Transfer-Encoding: 7bit
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Sep 22 17:09:19 2007
+Cc: Git <git@vger.kernel.org>
+To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 17:15:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ6bZ-00009z-Nj
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 17:09:14 +0200
+	id 1IZ6he-0002I8-13
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 17:15:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048AbXIVPJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 11:09:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751907AbXIVPJE
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 11:09:04 -0400
-Received: from stella.fs.ei.tum.de ([129.187.54.7]:47751 "EHLO
-	stella.fs.ei.tum.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751986AbXIVPJD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 11:09:03 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.fs.ei.tum.de (Postfix) with ESMTP id 4928F2880D;
-	Sat, 22 Sep 2007 17:09:00 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at fs.ei.tum.de
-Received: from stella.fs.ei.tum.de ([127.0.0.1])
-	by localhost (stella.fs.ei.tum.de [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id qKh2zIfgFEVM; Sat, 22 Sep 2007 17:08:59 +0200 (CEST)
-Received: from [128.178.149.21] (nslpc6.epfl.ch [128.178.149.21])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by stella.fs.ei.tum.de (Postfix) with ESMTP id 5C760287FA;
-	Sat, 22 Sep 2007 17:08:59 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.13 (X11/20070824)
-In-Reply-To: <86B33DFE-65E6-4F8D-8483-509ACA4FA2F8@zib.de>
+	id S1753302AbXIVPPY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 11:15:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752959AbXIVPPY
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 11:15:24 -0400
+Received: from kai.krose.org ([140.186.190.96]:40931 "EHLO kai.krose.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751447AbXIVPPX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 11:15:23 -0400
+Received: from [192.168.33.7] (nausicaa.valley-of-wind.krose.org [192.168.33.7])
+	by kai.krose.org (Postfix) with ESMTP id CDEC32AEC104;
+	Sat, 22 Sep 2007 11:15:47 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070802)
+In-Reply-To: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58935>
 
-Steffen Prohaska wrote:
-> Nonetheless a more detailed description how to install fromcvs
-> would be helpful. I remember it was not obvious to me.
-[..]
-> I think a step by step explanation how to proceed would have helped me.
+You know, git *is* free software.  Feel free to fork it and add all the
+C++ code you want.
 
-Could you write down what you had to do and where the problems are as an
-extension to the current README?
+FWIW, I am of the opinion that Python or Ruby (or god forbid, Perl)
+would have been a better choice for something like git that does lots of
+text processing... furthermore, I think the exception handling, garbage
+collection, and implicit object destruction provided by those languages
+(and by C++, as overwrought as it is) makes any codebase easier to
+understand and maintain.
 
-Thanks,
-  simon
+But that's irrelevant: git is written in C.  That's the way it is, and
+you should accept that or fork.
+
+Kyle
+
+Dmitry Kakurin wrote:
+> We've had this theoretical (and IMHO pointless) discussion C vs. C++ *in
+> general*.
+> In no way I want to restart it.
