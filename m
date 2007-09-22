@@ -1,87 +1,111 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: fromcvs installation [was: cvsimport bug on branches [was: conversion to git]]
-Date: Sat, 22 Sep 2007 10:07:22 +0200
-Message-ID: <86B33DFE-65E6-4F8D-8483-509ACA4FA2F8@zib.de>
-References: <loom.20070920T010842-272@post.gmane.org> <200709212242.53131.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0709212212020.28395@racer.site> <200709220116.26369.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Simon 'corecode' Schubert" <corecode@fs.ei.tum.de>
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 10:27:28 2007
+From: Vineet Kumar <vineet@doorstop.net>
+Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
+Date: Sat, 22 Sep 2007 00:34:46 -0700
+Message-ID: <20070922073446.GA3903@doorstop.net>
+References: <20070921214346.GF97288@void.codelabs.ru> <7vlkazh1ji.fsf@gitster.siamese.dyndns.org> <20070921214346.GF97288@void.codelabs.ru> <7v8x6zinjf.fsf@gitster.siamese.dyndns.org> <20070922035434.GA99140@void.codelabs.ru> <86tzpnwdha.fsf@lola.quinscape.zz> <7vd4wbgp9t.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 22 10:28:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ0Kl-0001V6-FG
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:27:27 +0200
+	id 1IZ0Lf-0001dX-FM
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752538AbXIVI1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 04:27:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752422AbXIVI1V
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:27:21 -0400
-Received: from mailer.zib.de ([130.73.108.11]:54499 "EHLO mailer.zib.de"
+	id S1753025AbXIVI2S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 04:28:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752650AbXIVI2S
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:28:18 -0400
+Received: from doorstop.net ([69.55.226.61]:39700 "EHLO philo.doorstop.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752056AbXIVI1T (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 04:27:19 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l8M8IgwI029824;
-	Sat, 22 Sep 2007 10:19:41 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db11cec.pool.einsundeins.de [77.177.28.236])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l8M8IfHt023320
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sat, 22 Sep 2007 10:18:41 +0200 (MEST)
-In-Reply-To: <200709220116.26369.robin.rosenberg.lists@dewire.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752422AbXIVI2R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 04:28:17 -0400
+X-Greylist: delayed 3208 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2007 04:28:17 EDT
+Received: from vineet by philo.doorstop.net with local (Exim 4.63)
+	(envelope-from <vineet@doorstop.net>)
+	id 1IYzVm-00012t-PN
+	for git@vger.kernel.org; Sat, 22 Sep 2007 00:34:46 -0700
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vd4wbgp9t.fsf@gitster.siamese.dyndns.org>
+X-Request-PGP: http://www.doorstop.net/gpgkey.asc
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58920>
+
+* Junio C Hamano (gitster@pobox.com) [070921 23:58]:
+> David Kastrup <dak@gnu.org> writes:
+> 
+> > Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+> >
+> >>> That is, what does the shell say if you do this?
+> >>> 
+> >>> 	case Ultra in
+> >>>         Super)
+> >>>         	false ;;
+> >>> 	Hyper)
+> >>>         	true ;;
+> >>> 	esac &&
+> >>>         echo case returned ok
+> >>
+> >> It says 'case returned ok', so I will try to understand why it
+> >> works here and does not work in the 'while' construct.
+> >
+> > What you actually need to do is
+> >
+> > false
+> > case Ultra in
+> >    Super)
+> >    	false ;;
+> > Hyper)
+> >    	true ;;
+> > esac && echo case returned ok
+> 
+> AHHHHHH.
+> 
+> Is "case" supposed to be transparent?
+
+That doesn't seem to be the case (no pun intended) on either bash or
+dash.  Here's what I tested on bash (apologies for the long lines; these
+are verbatim pastes from my shell):
+
+vineet@sprocket:~$ false
+vineet@sprocket:~$ case Super in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+super
+vineet@sprocket:~$ false
+vineet@sprocket:~$ case Hyper in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+hyper
+case returned ok
+vineet@sprocket:~$ false
+vineet@sprocket:~$ case Ultra in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+case returned ok
+vineet@sprocket:~$ 
 
 
-On Sep 22, 2007, at 1:16 AM, Robin Rosenberg wrote:
+and on dash:
 
-> fredag 21 september 2007 skrev Johannes Schindelin:
->> No, it's yet another dependency.  And the quality of the code still
->> depends on the programmer, not the language.
->
-> I think I can agree there, on both counts. But, if you want a good  
-> incremental
-> CVS importer and have access to the rcs files, that's the one there  
-> is.
->
-> git-cvsimport has a dependency on cvsps, which isn't included. You  
-> have to
-> to look it up yourself chooing among a dozen unequally bad versions.
-> Installing ruby isn't any harder.
->
-> The dependency excludes it from being included with Git, but it  
-> does not
-> disqualify it as a tool on it's own.
+vineet@sprocket:~$ dash
+$ false
+$ case Super in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+super
+$ false
+$ case Hyper in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+hyper
+case returned ok
+$ false
+$ case Ultra in Super) echo super ; false ;; Hyper) echo hyper ; true ;; esac && echo case returned ok
+case returned ok
+$ 
 
-Nonetheless a more detailed description how to install fromcvs
-would be helpful. I remember it was not obvious to me.
 
-The README of fromcvs only says
-'''
-Prerequisites:
-- ruby (1.8.5 known working)
-- fromcvs, <http://ww2.fs.ei.tum.de/~corecode/hg/fromcvs>
-- rcsparse, <http://ww2.fs.ei.tum.de/~corecode/hg/rcsparse> (ruby  
-module)
-- Ruby/RBTree, <http://raa.ruby-lang.org/project/ruby-rbtree/>
-- for git: git-fast-import, part of git 1.5
-- for db/commitset: sqlite3 + sqlite3-ruby (available as gem)
-'''
+So it seems like a "case" statement isn't special; it returns a status
+like any other statement.
 
-I didn't use ruby before and had no idea how to install a ruby module
-or what 'available as gem' means. And by the way, it was not obvious
-for me that I can download the tip of the mercurial branch by clicking
-on the 'gz' link at the top of the page.
 
-I think a step by step explanation how to proceed would have helped me.
-
-	Steffen
+Vineet
+-- 
+http://www.doorstop.net/
