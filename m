@@ -1,132 +1,74 @@
-From: Mark Levedahl <mdl123@verizon.net>
-Subject: [PATCH] git-submodule - allow a relative path as the subproject url
-Date: Sat, 22 Sep 2007 16:40:04 -0400
-Message-ID: <11904936042891-git-send-email-mdl123@verizon.net>
-Cc: Mark Levedahl <mdl123@verizon.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 22 23:40:33 2007
+From: Adam Flott <adam@npjh.com>
+Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
+Date: Sat, 22 Sep 2007 16:37:11 -0500 (CDT)
+Message-ID: <20070922162750.Y1876@localhost>
+References: <20070921214346.GF97288@void.codelabs.ru>
+ <7vlkazh1ji.fsf@gitster.siamese.dyndns.org> <20070921214346.GF97288@void.codelabs.ru>
+ <7v8x6zinjf.fsf@gitster.siamese.dyndns.org> <20070922035434.GA99140@void.codelabs.ru>
+ <7vhclngpgd.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 23:48:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZCiB-0007CG-4C
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 23:40:27 +0200
+	id 1IZCq1-0001Iw-Tp
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 23:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748AbXIVVkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 17:40:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752621AbXIVVkS
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 17:40:18 -0400
-Received: from vms048pub.verizon.net ([206.46.252.48]:44798 "EHLO
-	vms048pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752496AbXIVVkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 17:40:17 -0400
-X-Greylist: delayed 3601 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2007 17:40:17 EDT
-Received: from fal-l07294-lp.us.ray.com ([71.246.202.205])
- by vms048.mailsrvcs.net
- (Sun Java System Messaging Server 6.2-6.01 (built Apr  3 2006))
- with ESMTPA id <0JOS007S3EQSXX99@vms048.mailsrvcs.net> for
- git@vger.kernel.org; Sat, 22 Sep 2007 15:40:05 -0500 (CDT)
-X-Mailer: git-send-email 1.5.3.1.36.gf01e8
-X-Peer: 127.0.0.1
+	id S1753034AbXIVVs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 17:48:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbXIVVs2
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 17:48:28 -0400
+Received: from npjh.com ([200.46.208.52]:59286 "EHLO npjh.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751884AbXIVVs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 17:48:27 -0400
+X-Greylist: delayed 672 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2007 17:48:27 EDT
+Received: from localhost (unknown [200.46.204.191])
+	by npjh.com (Postfix) with ESMTP id CF229A3E786;
+	Sat, 22 Sep 2007 21:37:14 +0000 (UTC)
+Received: from npjh.com ([200.46.208.52])
+ by localhost (mx1.hub.org [200.46.204.191]) (amavisd-maia, port 10024)
+ with ESMTP id 63338-04; Sat, 22 Sep 2007 18:37:14 -0300 (ADT)
+Received: from an.sumeria (cpe-70-124-58-222.austin.res.rr.com [70.124.58.222])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by npjh.com (Postfix) with ESMTP id 0C957A3E08E;
+	Sat, 22 Sep 2007 21:37:13 +0000 (UTC)
+X-X-Sender: adam@localhost
+In-Reply-To: <7vhclngpgd.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58943>
 
-This allows a subproject's location to be specified and stored as relative
-to the parent project's location (e.g., ./foo, or ../foo). This url is
-stored in .gitmodules as given. It is resolved into an absolute url be
-appending it to the parent project's url when the information is written
-to .git/config (i.e., during submodule add for the originator, and
-submodule init for a downstream recipient). This allows cloning of the
-project to work "as expected" if the project is hosted on a different
-server than when the subprojects were added.
 
-Signed-off-by: Mark Levedahl <mdl123@verizon.net>
----
- Documentation/git-submodule.txt |    3 +++
- git-submodule.sh                |   34 ++++++++++++++++++++++++++++++----
- 2 files changed, 33 insertions(+), 4 deletions(-)
+On Fri, 21 Sep 2007, Junio C Hamano wrote:
 
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.txt
-index 2c48936..d421677 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -21,6 +21,9 @@ add::
- 	repository is cloned at the specified path, added to the
- 	changeset and registered in .gitmodules.   If no path is
- 	specified, the path is deduced from the repository specification.
-+        If the repository url begins with ./ or ../, it is stored as
-+        given but resolved as a relative path from the main project's
-+        url when cloning.
- 
- status::
- 	Show the status of the submodules. This will print the SHA-1 of the
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 3320998..c553e14 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -39,6 +39,19 @@ get_repo_base() {
- 	) 2>/dev/null
- }
- 
-+# Get parent project's url
-+get_parent_url ()
-+{
-+	# need to append this on parent project's url
-+	branch="$(git branch --no-color | sed -ne 's/^\* //p')"
-+	test -n "$branch" || die "I do not know what branch you are on: $branch"
-+	upstream="$(git config branch.$branch.remote)"
-+	test -n "$upstream" || die "Cannot find upstream repo for branch $branch"
-+	uprepo="$(git config remote.$upstream.url)"
-+	test -n "$upstream" || die "Cannot find url for repo $uprepo"
-+	echo "$uprepo"
-+}
-+
- #
- # Map submodule path to submodule name
- #
-@@ -105,9 +118,16 @@ module_add()
- 
- 	# Turn the source into an absolute path if
- 	# it is local
--	if base=$(get_repo_base "$repo"); then
--		repo="$base"
--	fi
-+	case $repo in
-+	.*)
-+		realrepo="$(get_parent_url)/$repo" ;;
-+	*)
-+		if base=$(get_repo_base "$repo"); then
-+			repo="$base"
-+			realrepo=$repo
-+		fi
-+		;;
-+	esac
- 
- 	# Guess path from repo if not specified or strip trailing slashes
- 	if test -z "$path"; then
-@@ -122,7 +142,7 @@ module_add()
- 	git ls-files --error-unmatch "$path" > /dev/null 2>&1 &&
- 	die "'$path' already exists in the index"
- 
--	module_clone "$path" "$repo" || exit
-+	module_clone "$path" "$realrepo" || exit
- 	(unset GIT_DIR && cd "$path" && git checkout -q ${branch:+-b "$branch" "origin/$branch"}) ||
- 	die "Unable to checkout submodule '$path'"
- 	git add "$path" ||
-@@ -153,6 +173,12 @@ modules_init()
- 		test -z "$url" &&
- 		die "No url found for submodule path '$path' in .gitmodules"
- 
-+		# Possibly a url relative to parent
-+		case $url in
-+		.*)
-+			url="$(get_parent_url)/$url";;
-+		esac
-+
- 		git config submodule."$name".url "$url" ||
- 		die "Failed to register url for submodule path '$path'"
- 
--- 
-1.5.3.1.36.gf01e8
+> I vaguely recall somebody else had exactly this issue and he
+> concluded that the shell was busted.  I do not recall the
+> details of the story but interestingly, if he did something that
+> accesses "$#" before the problematic "while case $# in ..." the
+> shell behaved for him in his experiments.
+
+That is what I did notice, just accessing $# fixed later uses of it.
+
+> Also by my comment about "/bin/sh and bash not being the only
+> shells available on FreeBSD", I did not mean that you should
+> change your /bin/sh.  You can build git with SHELL_PATH make
+> varilable pointing at a non-broken shell, which does not have to
+> be installed as /bin/sh.
+
+If one's installing from the ports tree, then the port should depend on a
+non-broken shell and set SHELL_PATH. And as for installing by hand, just print
+out a warning that SHELL_PATH points to a broken shell and be done with it.
+This is a FreeBSD bug, not a git one.
+
+I had been meaning to write up a bug about this using a small test case, but I
+couldn't reproduce it.
+
+
+Adam
