@@ -1,84 +1,366 @@
 From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 2/5] git-merge: refactor option parsing
-Date: Sat, 22 Sep 2007 02:33:03 +0200
-Message-ID: <1190421186-21784-3-git-send-email-hjemli@gmail.com>
+Subject: [PATCH 1/5] Add test-script for git-merge porcelain
+Date: Sat, 22 Sep 2007 02:33:02 +0200
+Message-ID: <1190421186-21784-2-git-send-email-hjemli@gmail.com>
 References: <1190421186-21784-1-git-send-email-hjemli@gmail.com>
- <1190421186-21784-2-git-send-email-hjemli@gmail.com>
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 02:33:05 2007
+X-From: git-owner@vger.kernel.org Sat Sep 22 02:34:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IYsvc-0000uq-QG
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 02:33:01 +0200
+	id 1IYswf-00017n-Ta
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 02:34:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758033AbXIVAcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Sep 2007 20:32:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757874AbXIVAcv
-	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 20:32:51 -0400
-Received: from mail47.e.nsc.no ([193.213.115.47]:46799 "EHLO mail47.e.nsc.no"
+	id S1754681AbXIVAdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Sep 2007 20:33:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754678AbXIVAdy
+	(ORCPT <rfc822;git-outgoing>); Fri, 21 Sep 2007 20:33:54 -0400
+Received: from mail47.e.nsc.no ([193.213.115.47]:46858 "EHLO mail47.e.nsc.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757512AbXIVAcu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Sep 2007 20:32:50 -0400
+	id S1754596AbXIVAdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Sep 2007 20:33:53 -0400
 Received: from localhost.localdomain (ti231210a341-0189.bb.online.no [88.88.168.189])
-	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id l8M0WYsP018896;
-	Sat, 22 Sep 2007 02:32:35 +0200 (MEST)
+	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id l8M0WYsO018896;
+	Sat, 22 Sep 2007 02:32:34 +0200 (MEST)
 X-Mailer: git-send-email 1.5.3.2.82.g75c8d
-In-Reply-To: <1190421186-21784-2-git-send-email-hjemli@gmail.com>
+In-Reply-To: <1190421186-21784-1-git-send-email-hjemli@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58904>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58905>
 
-Move the option parsing into a separate function as preparation for reuse
-by the next commit.
+This test-script tries to excercise the porcelainish aspects of git-merge.
 
 Signed-off-by: Lars Hjemli <hjemli@gmail.com>
 ---
- git-merge.sh |   20 ++++++++++++++------
- 1 files changed, 14 insertions(+), 6 deletions(-)
+ t/t7600-merge.sh |  317 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 317 insertions(+), 0 deletions(-)
+ create mode 100755 t/t7600-merge.sh
 
-diff --git a/git-merge.sh b/git-merge.sh
-index 3a01db0..a3ef676 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -119,11 +119,7 @@ merge_name () {
- 	fi
- }
- 
--case "$#" in 0) usage ;; esac
--
--have_message=
--while case "$#" in 0) break ;; esac
--do
-+parse_option () {
- 	case "$1" in
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
- 		--no-summa|--no-summar|--no-summary)
-@@ -166,9 +162,21 @@ do
- 		have_message=t
- 		;;
- 	-*)	usage ;;
--	*)	break ;;
-+	*)	return 1 ;;
- 	esac
- 	shift
-+	args_left="$#"
-+}
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+new file mode 100755
+index 0000000..9e58636
+--- /dev/null
++++ b/t/t7600-merge.sh
+@@ -0,0 +1,317 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Lars Hjemli
++#
 +
-+case "$#" in 0) usage ;; esac
++test_description='git-merge
 +
-+have_message=
-+while parse_option "$@"
-+do
-+	while test $args_left -lt $#
-+	do
-+		shift
-+	done
- done
- 
- if test -z "$show_diffstat"; then
++Testing basic merge operations/option parsing.'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	echo "
++1
++2
++3
++4
++5
++6
++7
++8
++9
++" > file &&
++	git add file &&
++	git commit -m "commit 0" &&
++	git tag c0 &&
++	c0=$(git rev-parse HEAD) &&
++	echo "
++1 X
++2
++3
++4
++5
++6
++7
++8
++9
++" > file &&
++	git add file &&
++	git commit -m "commit 1" &&
++	git tag c1 &&
++	c1=$(git rev-parse HEAD) &&
++	git reset --hard "$c0" &&
++	echo "
++1
++2
++3
++4
++5 X
++6
++7
++8
++9
++" > file &&
++	git add file &&
++	git commit -m "commit 2" &&
++	git tag c2 &&
++	c2=$(git rev-parse HEAD) &&
++	git reset --hard "$c0" &&
++	echo "
++1
++2
++3
++4
++5
++6
++7
++8
++9 X
++" > file &&
++	git add file &&
++	git commit -m "commit 3" &&
++	git tag c3 &&
++	c3=$(git rev-parse HEAD)
++	git reset --hard "$c0"
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'test option parsing' '
++	if git merge -$ c1
++	then
++		echo "[OOPS] -$ accepted"
++		false
++	fi &&
++	if git merge --no-such c1
++	then
++		echo "[OOPS] --no-such accepted"
++		false
++	fi &&
++	if git merge -s foobar c1
++	then
++		echo "[OOPS] -s foobar accepted"
++		false
++	fi &&
++	if git merge -s=foobar c1
++	then
++		echo "[OOPS] -s=foobar accepted"
++		false
++	fi &&
++	if git merge -m
++	then
++		echo "[OOPS] missing commit msg accepted"
++		false
++	fi &&
++	if git merge
++	then
++		echo "[OOPS] missing commit references accepted"
++		false
++	fi
++'
++
++test_expect_success 'merge c0 with c1' '
++	git reset --hard c0 &&
++	git merge c1 &&
++	test "$c1" = "$(git rev-parse HEAD)"
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'verify merge result' '
++	echo "
++1 X
++2
++3
++4
++5
++6
++7
++8
++9
++" > result.1 &&
++	cmp -s file result.1
++'
++
++test_expect_success 'merge c1 with c2' '
++	git reset --hard c1 &&
++	git merge c2 &&
++	test "$c1" = "$(git rev-parse HEAD^1)" &&
++	test "$c2" = "$(git rev-parse HEAD^2)"
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'verify merge result' '
++	echo "
++1 X
++2
++3
++4
++5 X
++6
++7
++8
++9
++" > result.1-5 &&
++	cmp -s file result.1-5
++'
++
++test_expect_success 'merge c1 with c2 and c3' '
++	git reset --hard c1 &&
++	git merge c2 c3 &&
++	test "$c1" = "$(git rev-parse HEAD^1)" &&
++	test "$c2" = "$(git rev-parse HEAD^2)" &&
++	test "$c3" = "$(git rev-parse HEAD^3)"
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'verify merge result' '
++	echo "
++1 X
++2
++3
++4
++5 X
++6
++7
++8
++9 X
++" > result.1-5-9 &&
++	cmp -s file result.1-5-9
++'
++
++test_expect_success 'merge c0 with c1 (no-commit)' '
++	git reset --hard c0 &&
++	git merge --no-commit c1 &&
++	if test "$c1" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] fast-forward not performed"
++		false
++	fi &&
++	if ! cmp -s file result.1
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'merge c1 with c2 (no-commit)' '
++	git reset --hard c1 &&
++	git merge --no-commit c2 &&
++	if test "$c1" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] HEAD changed"
++		false
++	fi &&
++	if ! cmp -s file result.1-5
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi &&
++	if test "$c2" != "$(cat .git/MERGE_HEAD)"
++	then
++		echo "[OOPS] MERGE_HEAD is wrong"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'merge c1 with c2 and c3 (no-commit)' '
++	git reset --hard c1 &&
++	git merge --no-commit c2 c3 &&
++	if test "$c1" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] HEAD changed"
++		false
++	fi &&
++	if ! cmp -s file result.1-5-9
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi &&
++	if ! grep -q "$c2" .git/MERGE_HEAD
++	then
++		echo "[OOPS] c2 not in MERGE_HEAD"
++		false
++	fi &&
++	if ! grep -q "$c3" .git/MERGE_HEAD
++	then
++		echo "[OOPS] c3 not in MERGE_HEAD"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'merge c0 with c1 (squash)' '
++	git reset --hard c0 &&
++	git merge --squash c1 &&
++	if test "$c0" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] HEAD changed"
++		false
++	fi &&
++	if ! cmp -s file result.1
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi &&
++	if test -f .git/MERGE_HEAD
++	then
++		echo "[OOPS] MERGE_HEAD exists"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'merge c1 with c2 (squash)' '
++	git reset --hard c1 &&
++	git merge --squash c2 &&
++	if test "$c1" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] new commit created"
++		false
++	fi &&
++	if ! cmp -s file result.1-5
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi &&
++	if test -f .git/MERGE_HEAD
++	then
++		echo "[OOPS] MERGE_HEAD exists"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_expect_success 'merge c1 with c2 and c3 (squash)' '
++	git reset --hard c1 &&
++	git merge --squash c2 c3 &&
++	if test "$c1" != "$(git rev-parse HEAD)"
++	then
++		echo "[OOPS] HEAD changed"
++		false
++	fi &&
++	if ! cmp -s file result.1-5-9
++	then
++		echo "[OOPS] merge result is wrong"
++		false
++	fi &&
++	if test -f .git/MERGE_HEAD
++	then
++		echo "[OOPS] MERGE_HEAD exists"
++		false
++	fi
++'
++
++test_debug 'gitk --all'
++
++test_done
 -- 
 1.5.3.2.82.g75c8d
