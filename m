@@ -1,84 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: C++ *for Git*
-Date: Sat, 22 Sep 2007 13:11:19 +0200
-Message-ID: <85lkazuf8o.fsf@lola.goethe.zz>
-References: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git as a filesystem
+Date: Sat, 22 Sep 2007 13:06:26 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709221304080.28395@racer.site>
+References: <fbe8b1780709210351x30775090ldab559f25c27645d@mail.gmail.com>
+ <Pine.LNX.4.64.0709211208440.28395@racer.site>
+ <fbe8b1780709210441n281248dbh5ba9934d09d6bbfc@mail.gmail.com>
+ <alpine.LFD.0.9999.0709210912120.32185@xanadu.home> <20070921233343.GA8327@muzzle>
+ <Pine.LNX.4.64.0709220040450.28395@racer.site> <20070922020632.GB8327@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Git" <git@vger.kernel.org>
-To: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 22 13:11:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Nicolas Pitre <nico@cam.org>,
+	Peter Stahlir <peter.stahlir@googlemail.com>,
+	git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sat Sep 22 14:07:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ2tX-0007sT-Ge
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 13:11:31 +0200
+	id 1IZ3lp-0004ls-Sa
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 14:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752762AbXIVLL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 07:11:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752758AbXIVLL0
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 07:11:26 -0400
-Received: from mail-in-08.arcor-online.net ([151.189.21.48]:47484 "EHLO
-	mail-in-08.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752680AbXIVLLZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2007 07:11:25 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-08.arcor-online.net (Postfix) with ESMTP id 6A92E27B6B4;
-	Sat, 22 Sep 2007 13:11:24 +0200 (CEST)
-Received: from mail-in-10.arcor-online.net (mail-in-10.arcor-online.net [151.189.21.50])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id 5CFFF2130AE;
-	Sat, 22 Sep 2007 13:11:24 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-012-197.pools.arcor-ip.net [84.61.12.197])
-	by mail-in-10.arcor-online.net (Postfix) with ESMTP id 364BF2351A2;
-	Sat, 22 Sep 2007 13:11:20 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9B5171CD9E3F; Sat, 22 Sep 2007 13:11:19 +0200 (CEST)
-In-Reply-To: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com> (Dmitry Kakurin's message of "Sat\, 22 Sep 2007 03\:42\:00 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4357/Fri Sep 21 11:55:46 2007 on mail-in-10.arcor-online.net
-X-Virus-Status: Clean
+	id S1751279AbXIVMH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 08:07:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751230AbXIVMH2
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 08:07:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43379 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751530AbXIVMH1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 08:07:27 -0400
+Received: (qmail invoked by alias); 22 Sep 2007 12:07:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp015) with SMTP; 22 Sep 2007 14:07:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19RCNsaQNVR8MGQXrP0OrVSKK338t3zWKdoOOhXvq
+	nu9cCxPpiHunVu
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070922020632.GB8327@muzzle>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58932>
 
-Dmitry Kakurin <dmitry.kakurin@gmail.com> writes:
+Hi,
 
-> We've had this theoretical (and IMHO pointless) discussion C vs. C++
-> *in general*.
-> In no way I want to restart it.
+On Fri, 21 Sep 2007, Eric Wong wrote:
 
-Then don't.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > On Fri, 21 Sep 2007, Eric Wong wrote:
+> > > 
+> > > On a similar note, has anybody experimented with using git to store 
+> > > maildirs or news spools?  I'd imagine the quoted portions of most 
+> > > message threads could be delta-compressed quite efficiently.
+> > 
+> > I store all my mail in a git repository.  Works beautifully.  Except 
+> > that the buffers on my laptop are constantly full :-( So a simple 
+> > commit takes some waiting.
+> > 
+> > Should be no issue on normal (desktop) machines.
+> 
+> D'oh.  I already have maildir performance problems on my laptop.
 
-> Just a very straight-forward usage of only 3 C++ features:
-> 1. Constructors
-> 2. Destructors
-> 3. Better syntax (ext_header.append_ext_header
-> vs. strbuf_append_ext_header(&ext_header, )
->
-> The generated code will be exactly the same.
+Umm.  Regular operation is not affected, since I (add and) commit only 
+when I weeded out all those spams and other unwanted mail.
 
-It won't.  It will _do_ exactly the same (modulo the tenfold
-likelihood of compiler bugs) but hardly using the same code.
+> I wonder how well only having an index and no commits (no versioning), 
+> and manual packing with pack-objects would work.  Packing could be 
+> optimized to order objects based on the Message-Id, References, and 
+> In-Reply-To headers, too.
 
-> Yet the source code becomes more readable and MUCH less error
-> prone. How is this not a win?
+The most efficient way would be to have a mailer backend accessing the 
+database, and then not have a working directory, methinks (especially with 
+these amounts of mail I am juggling ATM).
 
-Because it is just your claim that this is more readable.
+Time forbids working on this, though.
 
-> One (sensible) argument that I've heard in the previous discussion
-> was: you let a little bit of C++ in and then it gets more and more
-> complex and the code quality decreases.
-> This problem is solved by having "quality gates".
-> Again, *for Git* these quality gates already exist: only few people
-> have "commit access".
-> If/when somebody tries to be too fancy, what stops Junio from replying
-> "we don't use Library-X/C++-feature-Y in Git, please change your code
-> and resubmit" and throwing that fix away? Nothing.
-
-Well, what stops him from replying "we don't use C++ in Git, please
-change your code and resubmit"?
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Ciao,
+Dscho
