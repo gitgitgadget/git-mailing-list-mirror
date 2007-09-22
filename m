@@ -1,57 +1,105 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] git-svn: handle changed svn command-line syntax
-Date: Sat, 22 Sep 2007 11:06:17 +0200
-Message-ID: <20070922090617.GA6817@diana.vm.bytemark.co.uk>
-References: <1190340155146-git-send-email-sam.vilain@catalyst.net.nz> <11903401551014-git-send-email-sam.vilain@catalyst.net.nz> <11903401551812-git-send-email-sam.vilain@catalyst.net.nz> <11903401552164-git-send-email-sam.vilain@catalyst.net.nz> <46F33734.3080408@vilain.net> <46F33A05.2000906@vilain.net> <20070921082348.GA5152@mayonaise>
+From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
+Subject: C++ *for Git*
+Date: Sat, 22 Sep 2007 03:42:00 -0700
+Message-ID: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Sep 22 11:06:45 2007
+Content-Type: text/plain;
+	format=flowed;
+	charset="koi8-r";
+	reply-type=original
+Content-Transfer-Encoding: 7bit
+To: "Git" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 22 12:42:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ0wm-0001b8-RO
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 11:06:45 +0200
+	id 1IZ2RP-00080v-Hv
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 12:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109AbXIVJGi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2007 05:06:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751584AbXIVJGi
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 05:06:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2796 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974AbXIVJGh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 05:06:37 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IZ0wL-0001sD-00; Sat, 22 Sep 2007 10:06:17 +0100
-Content-Disposition: inline
-In-Reply-To: <20070921082348.GA5152@mayonaise>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753637AbXIVKmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 06:42:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbXIVKmH
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 06:42:07 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:65401 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472AbXIVKmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 06:42:04 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1296426wah
+        for <git@vger.kernel.org>; Sat, 22 Sep 2007 03:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        bh=KIlYOyZF2D0/bkWI5I9UnkE1gCcQNUUsNWUmKmMEAas=;
+        b=QZV9bZP6IF8KVNL0dE8aahn5VBMSgtNHc70iRtHog+uWkO7bdvUGTgG/sV1u69o3O9aWZJZ4kzMWvae/gkYhIQ6KE7rjMdj9BUbzXZSBUjh1GNwYx8pqdfqoxOGUVp+/uSfNpYSsOiSruIqc3yHlGyD4ZDh0SgVxBadnfZRIZ4I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
+        b=NjU+2lLmQJgOT6eP58ajM2h+sT4h+g6OTCl+6jiTHuyCt41CxZgFp8kiaXNBi9VExhfmX7iyUZIQthiL77Bs3AkHM09kKb15YwiM4mZJiSlBvQyIvqVHVKfI7I+PB4RFOM9RE81VtrYm7w9bP3JsOZ7vTe2vzssHfz7tGBSMUG8=
+Received: by 10.114.157.1 with SMTP id f1mr518584wae.1190457722875;
+        Sat, 22 Sep 2007 03:42:02 -0700 (PDT)
+Received: from dmitrykl2 ( [71.112.20.227])
+        by mx.google.com with ESMTPS id c20sm4224013rvf.2007.09.22.03.42.01
+        (version=SSLv3 cipher=OTHER);
+        Sat, 22 Sep 2007 03:42:01 -0700 (PDT)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Windows Mail 6.0.6000.16480
+X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58929>
 
-On 2007-09-21 01:23:48 -0700, Eric Wong wrote:
+We've had this theoretical (and IMHO pointless) discussion C vs. C++ *in 
+general*.
+In no way I want to restart it. But *very specifically*, and *for Git*:
+We already have strbuf "class" to do string/buffer manipulations.
+Kudos to Pierre Habouzit for doing the refactoring work!
+Now, what I fail to understand is how this:
 
-> The @REV and -rREV distinction/ambiguity has always confused me in sv=
-n,
-> too.  It always seems that it needed to be one way sometimes, the oth=
-er
-> way at other times, and even _both_ at other times...
+static void write_global_extended_header(const unsigned char *sha1)
+{
+    struct strbuf ext_header;
 
--rREV specifies the operative revision, and @REV specifies the peg
-revision. See the clear but dreadfully long explanation here:
+    strbuf_init(&ext_header, 0);
+    strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
+    write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
+    strbuf_release(&ext_header);
+}
 
-  http://svnbook.red-bean.com/en/1.4/svn.advanced.pegrevs.html
+is better than this:
 
-In short, it's a way to manage the complexity that comes from
-considering files (and directories!) to have an identity that is
-preserved across copies and renames.
+static void write_global_extended_header(const unsigned char *sha1)
+{
+    strbuf ext_header;
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+    ext_header.append_ext_header("comment", sha1_to_hex(sha1), 40);
+    write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
+}
+
+?
+Note, there is no Boost/multiple inheritance/template 
+metaprogramming/std::string/whatever-else-scares-you-in-C++ in the second 
+piece of code.
+Just a very straight-forward usage of only 3 C++ features:
+1. Constructors
+2. Destructors
+3. Better syntax (ext_header.append_ext_header vs. 
+strbuf_append_ext_header(&ext_header, )
+
+The generated code will be exactly the same.
+Yet the source code becomes more readable and MUCH less error prone. How is 
+this not a win?
+
+One (sensible) argument that I've heard in the previous discussion was: you 
+let a little bit of C++ in and then it gets more and more complex and the 
+code quality decreases.
+This problem is solved by having "quality gates".
+Again, *for Git* these quality gates already exist: only few people have 
+"commit access".
+If/when somebody tries to be too fancy, what stops Junio from replying "we 
+don't use Library-X/C++-feature-Y in Git, please change your code and 
+resubmit" and throwing that fix away? Nothing.
+
+- Dmitry
