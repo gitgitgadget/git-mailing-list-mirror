@@ -1,74 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
-Date: Sat, 22 Sep 2007 01:32:38 -0700
-Message-ID: <7vtzpnf6c9.fsf@gitster.siamese.dyndns.org>
-References: <20070921214346.GF97288@void.codelabs.ru>
-	<7vlkazh1ji.fsf@gitster.siamese.dyndns.org>
-	<20070921214346.GF97288@void.codelabs.ru>
-	<7v8x6zinjf.fsf@gitster.siamese.dyndns.org>
-	<20070922035434.GA99140@void.codelabs.ru>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH 0/4] Fix "stg branch --delete"
+Date: Sat, 22 Sep 2007 10:46:13 +0200
+Message-ID: <20070922084334.29884.60506.stgit@yoghurt>
+References: <20070921094830.GB26307@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Sat Sep 22 10:32:51 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Aneesh Kumar <aneesh.kumar@gmail.com>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 10:46:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ0Py-0002dS-J9
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:32:51 +0200
+	id 1IZ0dE-0005X2-0m
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 10:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751435AbXIVIcp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 04:32:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbXIVIcp
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:32:45 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:48366 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750783AbXIVIco (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 04:32:44 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D46E138664;
-	Sat, 22 Sep 2007 04:33:02 -0400 (EDT)
-In-Reply-To: <20070922035434.GA99140@void.codelabs.ru> (Eygene Ryabinkin's
-	message of "Sat, 22 Sep 2007 07:54:34 +0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750942AbXIVIq0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 22 Sep 2007 04:46:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750981AbXIVIq0
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 04:46:26 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4103 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919AbXIVIqZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 04:46:25 -0400
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1IZ0cx-0001mc-00; Sat, 22 Sep 2007 09:46:15 +0100
+In-Reply-To: <20070921094830.GB26307@diana.vm.bytemark.co.uk>
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58922>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+This fixes the two issues Aneesh reported (failed branch deletion,
+leftover config stuff), and adds a test. The test is added after the
+fixes this time, so the test suite passes at every step.
 
-> OK, you're right.  Especially if /bin/sh from Solaris and OpenBSD
-> are working and they are not Bash.  But I would not tell that
-> the shell is broken now -- I had not seen the POSIX specification.
-> Does it specifies how the shell should work in this case?
+Also available from
 
-I have always been assuming it to be the case (this construct is
-not my invention but is an old school idiom I just inherited
-from my mentor) and never looked at the spec recently, but I
-re-read it just to make sure.  The answer is yes.
+  git://repo.or.cz/stgit/kha.git safe
 
-Visit http://www.opengroup.org/onlinepubs/000095399/ and follow
-"Shell and Utilities volume (XCU)" and then "Case conditional
-construct".
+---
 
-    Exit Status
+Karl Hasselstr=C3=B6m (4):
+      Add simple test for "stg branch --delete"
+      Properly remove all config for a deleted branch
+      Don't try to delete the branch twice
+      Don't special-case the "master" branch during branch delete
 
-    The exit status of case shall be zero if no patterns are
-    matched. Otherwise, the exit status shall be the exit status of
-    the last command executed in the compound-list.
 
-So, as David suggests, if
+ stgit/commands/branch.py |   10 +---------
+ stgit/config.py          |    7 +++++++
+ stgit/stack.py           |    9 ++-------
+ t/t1005-branch-delete.sh |   29 +++++++++++++++++++++++++++++
+ 4 files changed, 39 insertions(+), 16 deletions(-)
+ create mode 100755 t/t1005-branch-delete.sh
 
-        false
-        case Ultra in
-        Super) false ;;
-        Hyper) true ;;
-        esac && echo case returned ok
-
-does not say "case returned ok", then the shell has a bit of
-problem.
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
