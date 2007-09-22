@@ -1,105 +1,95 @@
-From: Dmitry Kakurin <dmitry.kakurin@gmail.com>
-Subject: C++ *for Git*
-Date: Sat, 22 Sep 2007 03:42:00 -0700
-Message-ID: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Allow shell scripts to run with non-Bash /bin/sh
+Date: Sat, 22 Sep 2007 13:07:04 +0200
+Message-ID: <85ps0buffr.fsf@lola.goethe.zz>
+References: <20070921214346.GF97288@void.codelabs.ru>
+	<7vlkazh1ji.fsf@gitster.siamese.dyndns.org>
+	<20070921214346.GF97288@void.codelabs.ru>
+	<7v8x6zinjf.fsf@gitster.siamese.dyndns.org>
+	<20070922035434.GA99140@void.codelabs.ru>
+	<86tzpnwdha.fsf@lola.quinscape.zz>
+	<7vd4wbgp9t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="koi8-r";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: "Git" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 22 12:42:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 13:07:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZ2RP-00080v-Hv
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 12:42:27 +0200
+	id 1IZ2pd-0006a6-7x
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 13:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753637AbXIVKmI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 06:42:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752671AbXIVKmH
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 06:42:07 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:65401 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752472AbXIVKmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 06:42:04 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1296426wah
-        for <git@vger.kernel.org>; Sat, 22 Sep 2007 03:42:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        bh=KIlYOyZF2D0/bkWI5I9UnkE1gCcQNUUsNWUmKmMEAas=;
-        b=QZV9bZP6IF8KVNL0dE8aahn5VBMSgtNHc70iRtHog+uWkO7bdvUGTgG/sV1u69o3O9aWZJZ4kzMWvae/gkYhIQ6KE7rjMdj9BUbzXZSBUjh1GNwYx8pqdfqoxOGUVp+/uSfNpYSsOiSruIqc3yHlGyD4ZDh0SgVxBadnfZRIZ4I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:to:subject:date:mime-version:content-type:content-transfer-encoding:x-priority:x-msmail-priority:x-mailer:x-mimeole:from;
-        b=NjU+2lLmQJgOT6eP58ajM2h+sT4h+g6OTCl+6jiTHuyCt41CxZgFp8kiaXNBi9VExhfmX7iyUZIQthiL77Bs3AkHM09kKb15YwiM4mZJiSlBvQyIvqVHVKfI7I+PB4RFOM9RE81VtrYm7w9bP3JsOZ7vTe2vzssHfz7tGBSMUG8=
-Received: by 10.114.157.1 with SMTP id f1mr518584wae.1190457722875;
-        Sat, 22 Sep 2007 03:42:02 -0700 (PDT)
-Received: from dmitrykl2 ( [71.112.20.227])
-        by mx.google.com with ESMTPS id c20sm4224013rvf.2007.09.22.03.42.01
-        (version=SSLv3 cipher=OTHER);
-        Sat, 22 Sep 2007 03:42:01 -0700 (PDT)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Windows Mail 6.0.6000.16480
-X-MimeOLE: Produced By Microsoft MimeOLE V6.0.6000.16480
+	id S1752440AbXIVLHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 07:07:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752340AbXIVLHV
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 07:07:21 -0400
+Received: from mail-in-06.arcor-online.net ([151.189.21.46]:47878 "EHLO
+	mail-in-06.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751230AbXIVLHT (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2007 07:07:19 -0400
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mail-in-06.arcor-online.net (Postfix) with ESMTP id 45D6631EC83;
+	Sat, 22 Sep 2007 13:07:16 +0200 (CEST)
+Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 36DE21B8E55;
+	Sat, 22 Sep 2007 13:07:16 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-012-197.pools.arcor-ip.net [84.61.12.197])
+	by mail-in-05.arcor-online.net (Postfix) with ESMTP id F142B1C36B6;
+	Sat, 22 Sep 2007 13:07:07 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id BB0321CD9E3F; Sat, 22 Sep 2007 13:07:04 +0200 (CEST)
+In-Reply-To: <7vd4wbgp9t.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 21 Sep 2007 23\:58\:22 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4357/Fri Sep 21 11:55:46 2007 on mail-in-05.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58930>
 
-We've had this theoretical (and IMHO pointless) discussion C vs. C++ *in 
-general*.
-In no way I want to restart it. But *very specifically*, and *for Git*:
-We already have strbuf "class" to do string/buffer manipulations.
-Kudos to Pierre Habouzit for doing the refactoring work!
-Now, what I fail to understand is how this:
+Junio C Hamano <gitster@pobox.com> writes:
 
-static void write_global_extended_header(const unsigned char *sha1)
-{
-    struct strbuf ext_header;
+> David Kastrup <dak@gnu.org> writes:
+>
+>> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+>>
+>>>> That is, what does the shell say if you do this?
+>>>> 
+>>>> 	case Ultra in
+>>>>         Super)
+>>>>         	false ;;
+>>>> 	Hyper)
+>>>>         	true ;;
+>>>> 	esac &&
+>>>>         echo case returned ok
+>>>
+>>> It says 'case returned ok', so I will try to understand why it
+>>> works here and does not work in the 'while' construct.
+>>
+>> What you actually need to do is
+>>
+>> false
+>> case Ultra in
+>>    Super)
+>>    	false ;;
+>> Hyper)
+>>    	true ;;
+>> esac && echo case returned ok
+>
+> AHHHHHH.
+>
+> Is "case" supposed to be transparent?
 
-    strbuf_init(&ext_header, 0);
-    strbuf_append_ext_header(&ext_header, "comment", sha1_to_hex(sha1), 40);
-    write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
-    strbuf_release(&ext_header);
-}
+Not that I would know.  It is basically a revival of the
 
-is better than this:
+false
+if false then : ; fi || echo "this fails!?!"
 
-static void write_global_extended_header(const unsigned char *sha1)
-{
-    strbuf ext_header;
+bug that probably has been fixed by now.  For obvious reasons,
+conditionals without a taken branch are considered to have an exit
+code of 0.
 
-    ext_header.append_ext_header("comment", sha1_to_hex(sha1), 40);
-    write_entry(NULL, NULL, 0, ext_header.buf, ext_header.len);
-}
-
-?
-Note, there is no Boost/multiple inheritance/template 
-metaprogramming/std::string/whatever-else-scares-you-in-C++ in the second 
-piece of code.
-Just a very straight-forward usage of only 3 C++ features:
-1. Constructors
-2. Destructors
-3. Better syntax (ext_header.append_ext_header vs. 
-strbuf_append_ext_header(&ext_header, )
-
-The generated code will be exactly the same.
-Yet the source code becomes more readable and MUCH less error prone. How is 
-this not a win?
-
-One (sensible) argument that I've heard in the previous discussion was: you 
-let a little bit of C++ in and then it gets more and more complex and the 
-code quality decreases.
-This problem is solved by having "quality gates".
-Again, *for Git* these quality gates already exist: only few people have 
-"commit access".
-If/when somebody tries to be too fancy, what stops Junio from replying "we 
-don't use Library-X/C++-feature-Y in Git, please change your code and 
-resubmit" and throwing that fix away? Nothing.
-
-- Dmitry
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
