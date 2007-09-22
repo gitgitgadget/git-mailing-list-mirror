@@ -1,85 +1,163 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [OT] Re: C++ *for Git*
-Date: Sat, 22 Sep 2007 21:11:51 +0200
-Message-ID: <85bqbutszs.fsf@lola.goethe.zz>
-References: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com>
-	<46F5318A.4030103@krose.org> <877imishdp.fsf@catnip.gol.com>
-	<46F55E03.2040404@krose.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: [PATCH] new test from the submodule chapter of the user manual
+Date: Sat, 22 Sep 2007 22:05:35 +0200
+Message-ID: <20070922200535.GE24023@genesis.frugalware.org>
+References: <20070920003413.GJ16235@genesis.frugalware.org> <7v1wcum0ox.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709201133590.28395@racer.site> <20070920170831.GQ16235@genesis.frugalware.org> <7vd4wdkokn.fsf@gitster.siamese.dyndns.org> <20070921130908.GF16235@genesis.frugalware.org> <7v1wcrki96.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Git <git@vger.kernel.org>
-To: Kyle Rose <krose@krose.org>
-X-From: git-owner@vger.kernel.org Sat Sep 22 21:12:04 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"J. Bruce Fields" <bfields@citi.umich.edu>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 22 22:25:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZAOY-0000JC-Fj
-	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 21:12:02 +0200
+	id 1IZBXp-0003Vk-P1
+	for gcvg-git-2@gmane.org; Sat, 22 Sep 2007 22:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344AbXIVTL4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 15:11:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751131AbXIVTL4
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 15:11:56 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:47867 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751777AbXIVTLz (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 22 Sep 2007 15:11:55 -0400
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 1F3FD3028D9;
-	Sat, 22 Sep 2007 21:11:54 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id 0DD92346AC4;
-	Sat, 22 Sep 2007 21:11:54 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-012-197.pools.arcor-ip.net [84.61.12.197])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id D71AD1C36CF;
-	Sat, 22 Sep 2007 21:11:53 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 754A41C22919; Sat, 22 Sep 2007 21:11:51 +0200 (CEST)
-In-Reply-To: <46F55E03.2040404@krose.org> (Kyle Rose's message of "Sat\, 22 Sep 2007 14\:25\:07 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4359/Sat Sep 22 17:57:21 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1752187AbXIVUZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 16:25:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752153AbXIVUZf
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 16:25:35 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:52883 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752131AbXIVUZf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 16:25:35 -0400
+X-Greylist: delayed 1225 seconds by postgrey-1.27 at vger.kernel.org; Sat, 22 Sep 2007 16:25:34 EDT
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id A2EB81B24FC;
+	Sat, 22 Sep 2007 22:05:06 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id EA9446FCD4;
+	Sat, 22 Sep 2007 22:04:20 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id E1D4B13A4016; Sat, 22 Sep 2007 22:05:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <7v1wcrki96.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58941>
 
-Kyle Rose <krose@krose.org> writes:
+Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+---
 
-> Miles Bader wrote:
->> Of course, some of the most horrid unreadable source code I've ever seen
->> is in one of git's competitors -- written in python....
->
-> Indeed. :-)
->
-> At the office, people constantly badmouth Perl, which has some
-> admittedly evil syntax (especially around exception handling).
+On Fri, Sep 21, 2007 at 11:04:05AM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> That's horrible.  Please do not depend on object SHA1's to stay
+> the same.  If somebody makes a fix to the test to add a new file
+> in a sample subproject it would break all the rest.  Also please
+> do not depend on the progress output.
 
-Since Perl has agglomerated pretty much _every_ syntax, it is not
-surprising that evil syntax is included.
+okay, here is the third try. now checking for the result using diff-tree and
+ls-files. hopefully i did what you expected :)
 
-> C++ is in the same category as Perl IMO: too easy to produce
-> unreadable code.
+ t/t3060-subprojects-tutorial.sh |   95 +++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 95 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3060-subprojects-tutorial.sh
 
-Not quite.  Perl gives you a hundred illegible ways to _say_ the same
-thing, C++ gives you a hundred illegible ways to _achieve_ the same
-thing, but using different means.
-
-> I like Ruby, except for the performance problems.  Once they have
-> those worked out, Ruby will be "Perl done right." ;-)
-
-Ruby again is in the "throw every syntactical idiom I can think of
-together" ballpark.  I find that a design mistake in Perl, a design
-mistake in Ruby, and even in C++ (Ada syntax for templates was just
-stupid, but at least there is no alternative syntax for it).
-
-That's one of the things I like about Lua: its syntax fits on one page
-in the reference manual.  And the reference manual has a paper size of
-about A5.  While the syntax for Lisp would probably fit in the margin,
-it does so at a cost in legibility.
-
+diff --git a/t/t3060-subprojects-tutorial.sh b/t/t3060-subprojects-tutorial.sh
+new file mode 100755
+index 0000000..d46dded
+--- /dev/null
++++ b/t/t3060-subprojects-tutorial.sh
+@@ -0,0 +1,95 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Miklos Vajna
++#
++
++test_description='A simple subprojects tutorial in the form of a test case'
++
++. ./test-lib.sh
++
++test_expect_success "create the submodules" '
++	for i in a b c d
++	do
++		mkdir $i &&
++		cd $i &&
++		git init &&
++		echo "module $i" > $i.txt &&
++		git add $i.txt &&
++		git commit -m "Initial commit, submodule $i" &&
++		cd ..
++	done
++'
++
++mkdir super
++cd super
++cat >expected << EOF
++:000000 100644 00000... A	.gitmodules
++:000000 160000 00000... A	a
++:000000 160000 00000... A	b
++:000000 160000 00000... A	c
++:000000 160000 00000... A	d
++EOF
++
++test_expect_success "create the superproject" '
++	git init &&
++	echo super > super.txt &&
++	git add super.txt &&
++	git commit -m "initial" &&
++	for i in a b c d
++	do
++		git submodule add '`pwd`'/../$i
++	done &&
++	git commit -m "Add submodules a, b, c and d." &&
++	git diff-tree --abbrev=5 HEAD^ HEAD |cut -d" " -f-3,5- >current &&
++	cmp expected current
++'
++
++test_expect_success "checking if the correct commit is stored in the superproject" '
++	for i in a b c d
++	do
++		git ls-files -s $i|cut -d " " -f 2 > $i.actual &&
++		(cd $i && git-rev-parse HEAD) > $i.expected &&
++		cmp $i.actual $i.expected
++	done &&
++	cd ..
++'
++
++test_expect_success "clone the superproject" '
++	git clone super cloned &&
++	cd cloned
++'
++
++test_expect_success "submodule init" '
++	git submodule init
++'
++
++test_expect_success "submodule update" '
++	git submodule update
++'
++
++test_expect_success "checking the result of the commit in the cloned project" '
++	for i in a b c d
++	do
++		git ls-files -s $i|cut -d " " -f 2 > $i.actual &&
++		(cd $i && git-rev-parse HEAD) > $i.expected &&
++		cmp $i.actual $i.expected
++	done
++'
++
++test_expect_success "update the submodule from within the superproject" '
++	cd a &&
++	echo "adding a line again" >> a.txt &&
++	git commit -a -m "Updated the submodule from within the superproject." &&
++	git push &&
++	cd .. &&
++	git add a &&
++	git commit -m "Updated submodule a." &&
++	git push
++'
++
++test_expect_success "checking the result of the commit in the updated cloned project" '
++	git ls-files -s a|cut -d " " -f 2 > a.actual &&
++	(cd a && git-rev-parse HEAD) > a.expected &&
++	cmp a.actual a.expected
++'
++test_done
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.2.80.g077d6f-dirty
