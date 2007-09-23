@@ -1,184 +1,95 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH 4/6] git-merge: add support for branch.<name>.mergeoptions
-Date: Mon, 24 Sep 2007 00:51:43 +0200
-Message-ID: <1190587905-700-5-git-send-email-hjemli@gmail.com>
-References: <1190587905-700-1-git-send-email-hjemli@gmail.com>
- <1190587905-700-2-git-send-email-hjemli@gmail.com>
- <1190587905-700-3-git-send-email-hjemli@gmail.com>
- <1190587905-700-4-git-send-email-hjemli@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 00:52:04 2007
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [OT] Re: C++ *for Git*
+Date: Mon, 24 Sep 2007 01:10:59 +0200
+Message-ID: <200709240110.59680.robin.rosenberg.lists@dewire.com>
+References: <877imishdp.fsf@catnip.gol.com> <20070923212239.GA7249@potapov> <85ejgpkr13.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dmitry Potapov <dpotapov@nbs-eng.ru>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Alex Unleashed <alex@flawedcode.org>,
+	Kyle Rose <krose@krose.org>, Miles Bader <miles@gnu.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Git <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 01:09:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZaJ0-0002CH-HO
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 00:52:02 +0200
+	id 1IZaZr-0005oD-Qi
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 01:09:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755288AbXIWWvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2007 18:51:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755014AbXIWWvo
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 18:51:44 -0400
-Received: from mail46.e.nsc.no ([193.213.115.46]:42837 "EHLO mail46.e.nsc.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755144AbXIWWvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 18:51:44 -0400
-Received: from localhost.localdomain (ti231210a341-0189.bb.online.no [88.88.168.189])
-	by mail46.nsc.no (8.13.8/8.13.5) with ESMTP id l8NMp91P023085;
-	Mon, 24 Sep 2007 00:51:11 +0200 (MEST)
-X-Mailer: git-send-email 1.5.3.2.82.g75c8d
-In-Reply-To: <1190587905-700-4-git-send-email-hjemli@gmail.com>
+	id S1754048AbXIWXJW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2007 19:09:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753966AbXIWXJW
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 19:09:22 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:25952 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753829AbXIWXJV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 19:09:21 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 75DE980280F;
+	Mon, 24 Sep 2007 01:01:00 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 25614-10; Mon, 24 Sep 2007 01:00:47 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 6DABA80264D;
+	Mon, 24 Sep 2007 01:00:43 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <85ejgpkr13.fsf@lola.goethe.zz>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58999>
 
-This enables per branch configuration of merge options. Currently, the most
-useful options to specify per branch are --squash, --summary/--no-summary
-and possibly --strategy, but all options are supported.
+s=F6ndag 23 september 2007 skrev David Kastrup:
+> Dmitry Potapov <dpotapov@nbs-eng.ru> writes:
+>=20
+> > On Sun, Sep 23, 2007 at 09:54:10AM -0700, Linus Torvalds wrote:
+> >
+> >>  - the stuff C++ *does* have is usually nasty. Implicit
+> >>  initializers and destructors and the magic lifetime rules of
+> >>  objects etc
+> >
+> > I am not sure what is wrong with initializers and destructors in
+> > C++, but certainly there is no magic lifetime rules in C++, as it i=
+s
+> > fully determined by the scope.
+>=20
+> It has been some time since I last looked, but the lifetime of object=
+s
+> constructed in return statements was a moving target through several
+> standards.  The last standard I bothered looking at had the object
+> survive until the statement with the function call expression ended:
+> quite a strange synchronization point with regard to language design.
 
-Note: Options containing whitespace will _not_ be handled correctly. Luckily,
-the only option which can include whitespace is --message and it doesn't
-make much sense to give that option a default value.
+The idea is that you should be able to use temporaries by reference and
+trust them to be valid over function calls end even function returns, s=
+o=20
+you can write efficient matrix math libraries that do not copy data muc=
+h while
+retaining value semantics with overloaded operators. It is a purely pra=
+ctical
+matter, what actually works and is efficient, not dogmatic language "de=
+sign".
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- Documentation/config.txt    |    6 ++++
- Documentation/git-merge.txt |    4 +++
- git-merge.sh                |   21 ++++++++++++++++
- t/t7600-merge.sh            |   54 +++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 85 insertions(+), 0 deletions(-)
+Earlier versions failed to make up something useful here.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 015910f..d3c25f3 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -337,6 +337,12 @@ branch.<name>.merge::
- 	branch.<name>.merge to the desired branch, and use the special setting
- 	`.` (a period) for branch.<name>.remote.
- 
-+branch.<name>.mergeoptions::
-+	Sets default options for merging into branch <name>. The syntax and
-+	supported options are equal to that of gitlink:git-merge[1], but
-+	option values containing whitespace characters are currently not
-+	supported.
-+
- clean.requireForce::
- 	A boolean to make git-clean do nothing unless given -f or -n.  Defaults
- 	to false.
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 144bc16..b1771a1 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -58,6 +58,10 @@ merge.verbosity::
- 	above outputs debugging information.  The default is level 2.
- 	Can be overriden by 'GIT_MERGE_VERBOSITY' environment variable.
- 
-+branch.<name>.mergeoptions::
-+	Sets default options for merging into branch <name>. The syntax and
-+	supported options are equal to that of git-merge, but option values
-+	containing whitespace characters are currently not supported.
- 
- HOW MERGE WORKS
- ---------------
-diff --git a/git-merge.sh b/git-merge.sh
-index 68b3503..e95d4a7 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -168,9 +168,30 @@ parse_option () {
- 	args_left="$#"
- }
- 
-+parse_config () {
-+	while test $# -gt 0
-+	do
-+		parse_option "$@" || usage
-+		while test $args_left -lt $#
-+		do
-+			shift
-+		done
-+	done
-+}
-+
- case "$#" in 0) usage ;; esac
- 
- have_message=
-+
-+if branch=$(git-symbolic-ref -q HEAD)
-+then
-+	mergeopts=$(git config "branch.${branch#refs/heads/}.mergeoptions")
-+	if test -n "$mergeopts"
-+	then
-+		parse_config $mergeopts
-+	fi
-+fi
-+
- while parse_option "$@"
- do
- 	while test $args_left -lt $#
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index dec6ea2..110974c 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -341,4 +341,58 @@ test_expect_success 'merge c1 with c2 and c3 (squash)' '
- 
- test_debug 'gitk --all'
- 
-+test_expect_success 'merge c1 with c2 (no-commit in config)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--no-commit" &&
-+	git merge c2 &&
-+	verify_merge file result.1-5 &&
-+	verify_head $c1 &&
-+	verify_mergeheads $c2
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'merge c1 with c2 (squash in config)' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--squash" &&
-+	git merge c2 &&
-+	verify_merge file result.1-5 &&
-+	verify_head $c1 &&
-+	verify_no_mergehead &&
-+	verify_diff squash.1-5 .git/SQUASH_MSG "[OOPS] bad squash message"
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'override config option -n' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "-n" &&
-+	test_tick &&
-+	git merge --summary c2 >diffstat.txt &&
-+	verify_merge file result.1-5 msg.1-5 &&
-+	verify_parents $c1 $c2 &&
-+	if ! grep -e "^ file | \+2 +-$" diffstat.txt
-+	then
-+		echo "[OOPS] diffstat was not generated"
-+	fi
-+'
-+
-+test_debug 'gitk --all'
-+
-+test_expect_success 'override config option --summary' '
-+	git reset --hard c1 &&
-+	git config branch.master.mergeoptions "--summary" &&
-+	test_tick &&
-+	git merge -n c2 >diffstat.txt &&
-+	verify_merge file result.1-5 msg.1-5 &&
-+	verify_parents $c1 $c2 &&
-+	if grep -e "^ file | \+2 +-$" diffstat.txt
-+	then
-+		echo "[OOPS] diffstat was generated"
-+		false
-+	fi
-+'
-+
-+test_debug 'gitk --all'
-+
- test_done
--- 
-1.5.3.2.82.g75c8d
+> > In fact, other high level languages that use GC have much more
+> > unpredictable lifetime rules for objects.
+>=20
+> Mostly objects are alive as long as you can refer to them.  Not reall=
+y
+> complicated.
+
+What could be simpler, besides all static variables.
+
+-- robin
