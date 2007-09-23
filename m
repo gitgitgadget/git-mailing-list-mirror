@@ -1,74 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/5] git-merge: add support for branch.<name>.mergeoptions
-Date: Sun, 23 Sep 2007 12:20:49 -0700
-Message-ID: <7vr6kpchny.fsf@gitster.siamese.dyndns.org>
-References: <1190421186-21784-1-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-2-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-3-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-4-git-send-email-hjemli@gmail.com>
-	<7vps0adx0x.fsf@gitster.siamese.dyndns.org>
-	<8c5c35580709230331h459bd07ay8b17146b5feec212@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Uninstalling Git
+Date: Sun, 23 Sep 2007 20:31:06 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709232029490.28395@racer.site>
+References: <46F6B0CC.3040000@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 21:20:55 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: in-call@gmx.net
+X-From: git-owner@vger.kernel.org Sun Sep 23 21:32:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZX0g-0003JZ-1m
-	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 21:20:54 +0200
+	id 1IZXBg-0006ba-89
+	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 21:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752151AbXIWTUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2007 15:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752106AbXIWTUu
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 15:20:50 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:57699 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752068AbXIWTUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 15:20:50 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070923192050.YHZV24061.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Sun, 23 Sep 2007 15:20:50 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id rvLp1X00P1gtr5g0000000; Sun, 23 Sep 2007 15:20:49 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751730AbXIWTcK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2007 15:32:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751120AbXIWTcI
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 15:32:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41889 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751730AbXIWTcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 15:32:07 -0400
+Received: (qmail invoked by alias); 23 Sep 2007 19:32:06 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp054) with SMTP; 23 Sep 2007 21:32:06 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19DCWlxDQFDZRVYvM0W3VAXHI8bGHCE5ZoBX9eIIC
+	mbNwqrGmYdKUks
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46F6B0CC.3040000@gmx.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58980>
 
-"Lars Hjemli" <hjemli@gmail.com> writes:
+Hi,
 
-> On 9/23/07, Junio C Hamano <gitster@pobox.com> wrote:
->> Lars Hjemli <hjemli@gmail.com> writes:
->> > +branch=$(git-symbolic-ref HEAD | sed -e 's|^refs/heads/||')
->> > +mergeopts=$(git config "branch.$branch.mergeoptions")
->> > +parse_config $mergeopts
->>
->> What should happen when your head is detached?
->>
->
-> My plan was 'nothing', but I should have tested it (it does work, but
-> also prints an ugly "fatal: ref HEAD is not a symbolic ref").
+On Sun, 23 Sep 2007, in-call@gmx.net wrote:
 
-That, and also running "git config branch..mergeoptions" and
-expect it does not change behaviour to issue more strict
-warning, are both not so good.  Perhaps the code needs to be
-more defensive like:
+> $ make configure
+> $ ./configure --prefix=/usr/local
+> $ make all doc
+> $ sudo make install install-doc
+> 
+> First, I'd like to uninstall the thing completely, how do I do that?
 
-    if branch=$(git symbolic-ref -q HEAD)
-    then
-        mergeopts=$(git config "branch.${branch#refs/heads/}.mergeoptions")
-	if test -n "$mergeopts"
-        then
-	    parse_config $mergeopts
-	fi
-    fi
+I'd use checkinstall to install it (again), and then use the distro's 
+regular tools; in case of Ubuntu, that would be dpkg I believe.
 
+> Second, what would be the correct procedure to follow if I would like 
+> just to upgrade to a newer version? install over the older perhaps? Is 
+> that always safe in the sense that there won't be any dangling piece of 
+> bin nor doc?
 
- 
+On Linux this should be safe at all times.
+
+Hth,
+Dscho
