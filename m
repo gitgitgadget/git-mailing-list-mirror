@@ -1,259 +1,133 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: The msysGit Herald, issue 2
-Date: Sun, 23 Sep 2007 21:54:42 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709232153230.28395@racer.site>
+From: Dmitry Potapov <dpotapov@nbs-eng.ru>
+Subject: Re: [OT] Re: C++ *for Git*
+Date: Mon, 24 Sep 2007 01:22:39 +0400
+Message-ID: <20070923212239.GA7249@potapov>
+References: <877imishdp.fsf@catnip.gol.com> <46F55E03.2040404@krose.org> <5e4707340709221550o6d0a6062qd51c16a278727c29@mail.gmail.com> <20070923020951.GF24423@planck.djpig.de> <20070923062527.GA8979@old.davidb.org> <851wcpsv4z.fsf@lola.goethe.zz> <e5bfff550709230229t79004ce2j5ce8c2ae7744a7f2@mail.gmail.com> <20070923104525.GC7118@artemis.corp> <e5bfff550709230642v7fa5e837s7a5b9082b043672d@mail.gmail.com> <alpine.LFD.0.999.0709230911360.16478@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: msysgit@googlegroups.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 23 22:56:04 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	David Kastrup <dak@gnu.org>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Alex Unleashed <alex@flawedcode.org>,
+	Kyle Rose <krose@krose.org>, Miles Bader <miles@gnu.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Git <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Sep 23 23:30:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZYUZ-0006ai-CK
-	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 22:55:52 +0200
+	id 1IZZ2N-00075o-Dn
+	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 23:30:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004AbXIWUzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2007 16:55:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXIWUzp
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 16:55:45 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51692 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751120AbXIWUzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 16:55:44 -0400
-Received: (qmail invoked by alias); 23 Sep 2007 20:55:42 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp002) with SMTP; 23 Sep 2007 22:55:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/sEGFKhXvsBFyHmPWQVxVZwJrSzg/g94XlNcSuIw
-	+WSMTkBiIEvm/N
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1753050AbXIWVam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2007 17:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752717AbXIWVam
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 17:30:42 -0400
+Received: from smtp01.mtu.ru ([62.5.255.48]:64955 "EHLO smtp01.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752004AbXIWVal (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 17:30:41 -0400
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Sep 2007 17:30:40 EDT
+Received: from potapov.private (ppp85-140-169-177.pppoe.mtu-net.ru [85.140.169.177])
+	by smtp01.mtu.ru (Postfix) with ESMTP id 03B45A5202A;
+	Mon, 24 Sep 2007 01:22:40 +0400 (MSD)
+Received: from potapov.private (localhost [127.0.0.1])
+	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l8NLMgEj012274;
+	Mon, 24 Sep 2007 01:22:42 +0400
+Received: (from dpotapov@localhost)
+	by potapov.private (8.13.8/8.13.8/Submit) id l8NLMdL2012273;
+	Mon, 24 Sep 2007 01:22:39 +0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0709230911360.16478@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58985>
-
-Good morning git land!
-
-This lovely afternoon in St Andrews is as good an occasion as any to issue
-a new incarnation of the msysGit Herald, the not-quite-biweekly news letter
-to keep you informed about msysGit, the effort to bring one of the most
-powerful Source Code Management systems to the poor souls stuck with
-Windows.
-
-These are the covered topics:
-
-	WinGit 0.2
-
-	What will be in WinGit 0.3?
-
-	We're getting famous in China
-
-	Compiling Perl from scratch
-
-	Time for a new console?
-
-	Interview with Johannes "Mr mingw.git" Sixt
-
-	Still no concrete mingw/git.git merge plans yet
-
-
-WinGit 0.2
-==========
-
-By mistake, Perl was not properly installed with version 0.1 of WinGit.
-This is the most visible part that was fixed in 0.2.
-
-However, in the meantime we got our "Issue" list (see home page) cut
-almost in half.  Which means that we are mostly stuck with the hard
-problems ;-)
-
-What will be in WinGit 0.3
-=========================
-
-What will be in 0.3?  We have a proper uninstaller now.  Yes, that means
-that "Git" will be in the "Add/Remove Software" list.
-
-Also, curl, termcap, the completions, sh-add, and git-gui are actually
-installed.
-
-Maybe we'll get to the state where a link to git gui is installed in
-addition to the "Git Shell", maybe we'll succeed in merging 1.5.3.2?
-
-Who knows... ;-)
-
-
-We're getting famous in China
-=============================
-
-Apparently, there is a blog talking (amongst other things, like the
-unfamous language flame war) about "Git on Windows" in China:
-
-http://blog.csdn.net/turingbook/archive/2007/09/07/1775488.aspx
-
-I am dyslexic when it comes to Chinese, but we got some hits from
-there...
-
-
-Compiling Perl from scratch
-===========================
-
-We have an open issue called "Install scripts do not install perl modules
-for git-svn" (Issue 42).  Unfortunately, it is not really as easy as
-that...
-
-The Perl version we have does not come with valid MakeMaker information,
-and we are therefore unable to compile modules for Perl (even something
-as dirt-simple as Digest::MD5 does not work).
-
-So we tried to compile Perl from scratch -- which opened another can of
-worms.  It was not a problem at all to compile Perl for _MinGW_.  Which
-means that the resulting binary does not have any clue about the MSys
-environment (think Unix style paths, and (worse!) no shell scripts).
-
-An option would be to not care, and decouple Perl from MSys.  Another
-option would be to get Perl compiled & linked to msys-1.0.dll.
-
-This issue is not resolved yet.
-
-
-Time for a new console?
-=======================
-
-The first publically available version of msysGit recommended Rxvt, until
-I realised that there were strange stderr/stdout issues, which prevented
--- among other things -- the pager and ssh transport from working.
-
-So we reverted back to cmd as the Terminal, which has its own set of
-shortcomings (does not do ANSI well, has Control-C issues, and the
-multi-line selection being a rectangular box is outright annoying, as
-well as the missing Shift+Insert binding to paste the clipboard).
-
-Now, compiling (and possibly fixing) Rxvt seems to be out of reach for the
-moment, but Marius Storm-Olsen found the "Console" project:
-
-	http://sourceforge.net/projects/console
-
-Unfortunately, this project does not work on Windows 95/98/ME, and I would
-have liked to retain backwards compatibility (some developers, yours
-truly included, do not have Windows boxen to develop, so they have to
-resort to emulated ones -- and 2k is a real hog there, opposed to 95).
-
-However, since we already rely on the NT based family for our installer,
-that reason not to use Console seems to fall on the floor.
-
-We would need to work on it, though: ATM it has problems with selections,
-and recompiling is made difficult by the ATL dependency.
-
-
-Interview with Johannes "Mr mingw.git" Sixt
-===========================================
-
-Hannes announced an initial official version of the MinGW port of git on
-January 19th, 2007:
-
-	http://article.gmane.org/gmane.comp.version-control.git/37202
-
-For quite some time, he was the only one working on this port.  Most of
-the smoothness of the msysGit effort is his fault.
-
-So here, without further ado, the interview:
-
-> 1) How did you get involved with Git?
-
-In our shop, CVS was used for years. I have been working with patch sets 
-because it did not allow the workflow that I wanted - namely to construct
-a series of changes before making them public.
-
-When the news came out that Linus was working on a new VCS, I was
-following its development closely. From the discussions I discovered that
-git would be the tool that allowed my desired workflow.
-
-In order to get acquainted with git, I used it on my Linux projects
-(KDbg, Cinelerra).
-
-> 2) What were the reasons that you started working on Git?
-
-In our shop, which develops software for Windows, the requirement arouse
-to have several different, but related versions of the same product -
-which is  a setup that we would not be able to solve with CVS, but it
-would be a breeze with git.
-
-But we needed git on Windows. And since I dislike cygwin (for no good
-reason actually), I decided to start the native port of git to Windows
-using MSYS ang MinGW.
-
-> 3) What do you like most in Git?
-
-- Easy merging with real merge history
-- Massage a series of changes into proper shape before making it public
-
-> 4) What do you hate most in Git?
-
-You're kiddin'!
-
-> 5) What was the most surprising moment when working with Git?
-
-It merged a change I made in an old branch in a file that was moved in
-the new branch to a new location. IOW, merge across renames. Really, I
-was so surprised - I wanted to start the manual merge when I discovered
-that git had done all the work for me.
-
-> 6) What was the most frustrating moment when working with Git?
-
-Just the other day, I wanted to fetch a set of changes from a public
-repo into my test repo in order to cherry-pick from them - and it
-automatically fetched all the tags. But, the heck, I don't want them tags
-here, just the commits. I just can't figure out how to avoid the automatic
-fetching of tags.
-
-> 7) In what environment do you work?
-
-Linux (SUSE); Windows 2000, XP.
-
-> 8) What other hobbies do you have?
-
-Cuddling the brats and changing nappies - does that count as a hobby?
-
-> 9) What is your favourite movie?
-
-You think I have time to watch movies?
-
-> 10) What are your visions for Git? (I.e. where do you want it to go?)
-
-Seriously, I'm not a visionair.
-
-On *nix, git will be perfect when it is able to seamlessly serve the KDE 
-source.
-
-On Windows, git still has too many problems that we don't need a vision, yet.
-
--- Hannes
-
-
-Still no concrete mingw/git.git merge plans yet
-===============================================
-
-As mentioned in the first issue of this news letter, I sent a rather long
-list of relatively small and well contained projects, that in total would
-mean a complete merge of the mingw/4msysgit port back into git.git:
-
-	http://article.gmane.org/gmane.comp.version-control.git/57163
-
-Unfortunately, there have not been any takers (just a few "would it not
-be better to have this in git.git" sayers).
-
-In related news, it seems to be awfully more common for Windows users than
-for other people to have the attitude "I am the user.  You _have_ to help
-me."  (Remember that in our case, the users are developers, too, so they
-should be able to help themselves.)
-
-Do not let yourself fool into thinking that _all_ Windows users are like
-that.  Just enough to annoy.
-
-However, nobody stops changing until eaten by the bugs, so all of those who
-think "well, I might be able to do a small thing, just to prove that
-bastard wrong": follow the above link, read the mail (you can even just
-randomly jump around, and only read parts of it), pick a target, and say so
-on the msysGit mailing list (msysgit@googlegroups.com).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58986>
+
+On Sun, Sep 23, 2007 at 09:54:10AM -0700, Linus Torvalds wrote:
+> 
+> And we do all of this in C. There is no need to go to C++ for any "object 
+> oriented principles". It really is just a syntactic issue, and in many 
+> ways the syntax "advantage" of C++ is actually a big *disadvantage*.
+
+Certainly, in this respect, C++ provides only syntactic sugar over C,
+and there is a real danger of abuse, which leads to horrible programs.
+This is especially likely to happen to those who think that the evil
+of C++ is lying in templates, exceptions, or something other feature
+of C++, because they start to abuse the only "good" feature they know
+and inevitably end up with horrible code.
+
+> 	struct somestruct __user *p
+> 
+> to explicitly say that it's a pointer to user space - and then having 
+> every function that takes that pointer have to have that "__user" there is 
+> a VERY GOOD THING.
+
+user_ptr<somestruct> p;
+
+> 
+> That's very different from having "accessor functions" and making "p" an 
+> abstract type, and having the compiler automatically generate the right 
+> kind of access. That kind of stuff is TOTAL CRAP, and it's an example of 
+> how C++ has a horrible design, where you carry around _implicit_ knowledge 
+> instead of making the knowledge explicit and visible locally too.
+
+Whether it will convert to something or not depends entirely on the
+definition of user_ptr. So, it can be as explicit as you wish, or
+completely implicit. C++ does not impose anything on you here. So,
+the problem is not in C++ but in the crappy mentality -- "let's hide
+everything behind 'higher' abstraction" or "let's hide this thing too
+because we can". Yes, these people end up with total crap. And yes,
+those people tend to prefer C++ over C, just because C++ is better at
+hiding. But I don't think that C++ forces anyone to do that...
+
+> The same goes for things like memory allocation. Memory allocation issues 
+> are often some of the *biggest* performance issues, and that means that 
+> they have to be explicit. I'm actually a big fan of GC, but most languages 
+> that implement GC do it exactly the wrong way in my opinion: they make it 
+> a fundamental thing that covers everything, and it all happens implicitly, 
+> instead of making it explicit.
+
+Stroustrup was not a big fan of GC, so he made the language to be useful
+in absence of any GC, and it allows to manage memory and some other
+resources though not automatically, but with much less efforts than in C.
+
+Maybe, your idea of more explicit GC is better than what C++ offers. It
+is difficult for me to say without trying, but as you said most languages
+implement GC in the wrong way in your opinion, so I don't think I will
+have a chance to try any language that does it right. As to "caches" in
+Git, it works really nicely, but Git is not a programming language.
+
+> But other parts of C++ are just nasty. The whole OO layer seems designed 
+> to do a lot of things implicitly and in the wrong way.
+
+It could do a lot of things implicitly, but it does not force you,
+except calling destructor when the control leaves the scope of
+declaration, but I hardly can consider it as implicit.
+
+> I also disagree with exception handling,
+
+Perhaps, you look at it from the kernel point of view. Otherwise, I
+would like to hear your arguments against it. In fact, I don't think
+it is possible to write generic algorithms without exceptions. Of
+course, if you write a program that can print an error to stderr and
+exit, there is no much need for them. So, it may depend on the task.
+
+>  - the stuff C++ *does* have is usually nasty. Implicit initializers and 
+>    destructors and the magic lifetime rules of objects etc
+
+I am not sure what is wrong with initializers and destructors in C++,
+but certainly there is no magic lifetime rules in C++, as it is fully
+determined by the scope. In fact, other high level languages that use
+GC have much more unpredictable lifetime rules for objects.
+
+
+Dmitry Potapov
+
+PS Please, do not confuse me with Dmitry Kakurin, who started this
+thread, because my position is opposite to his. Though I like C++,
+I fully understand most of your consideration in choosing C for Git.
