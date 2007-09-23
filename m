@@ -1,361 +1,259 @@
-From: David Kastrup <dak@gnu.org>
-Subject: [PATCH] Supplant the "while case ... break ;; esac" idiom
-Date: Sun, 23 Sep 2007 22:42:08 +0200
-Organization: Organization?!?
-Message-ID: <85myvdktb3.fsf@lola.goethe.zz>
-References: <853ax5mb1j.fsf@lola.goethe.zz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: The msysGit Herald, issue 2
+Date: Sun, 23 Sep 2007 21:54:42 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709232153230.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 23 22:42:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: msysgit@googlegroups.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 23 22:56:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZYHS-0001tT-Ik
-	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 22:42:19 +0200
+	id 1IZYUZ-0006ai-CK
+	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 22:55:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751659AbXIWUmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2007 16:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751477AbXIWUmN
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 16:42:13 -0400
-Received: from mail-in-03.arcor-online.net ([151.189.21.43]:57711 "EHLO
-	mail-in-03.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751313AbXIWUmL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2007 16:42:11 -0400
-Received: from mail-in-08-z2.arcor-online.net (mail-in-08-z2.arcor-online.net [151.189.8.20])
-	by mail-in-03.arcor-online.net (Postfix) with ESMTP id B1B5D1437F8
-	for <git@vger.kernel.org>; Sun, 23 Sep 2007 22:42:09 +0200 (CEST)
-Received: from mail-in-02.arcor-online.net (mail-in-02.arcor-online.net [151.189.21.42])
-	by mail-in-08-z2.arcor-online.net (Postfix) with ESMTP id A2A1F2130A7
-	for <git@vger.kernel.org>; Sun, 23 Sep 2007 22:42:09 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-000-085.pools.arcor-ip.net [84.61.0.85])
-	by mail-in-02.arcor-online.net (Postfix) with ESMTP id 730F836E868
-	for <git@vger.kernel.org>; Sun, 23 Sep 2007 22:42:09 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 9D0C71C1F3DC; Sun, 23 Sep 2007 22:42:08 +0200 (CEST)
-X-Face: 2FEFf>]>q>2iw=B6,xrUubRI>pR&Ml9=ao@P@i)L:\urd*t9M~y1^:+Y]'C0~{mAl`oQuAl
- \!3KEIp?*w`|bL5qr,H)LFO6Q=qx~iH4DN;i";/yuIsqbLLCh/!U#X[S~(5eZ41to5f%E@'ELIi$t^
- Vc\LWP@J5p^rst0+('>Er0=^1{]M9!p?&:\z]|;&=NP3AhB!B_bi^]Pfkw
-In-Reply-To: <853ax5mb1j.fsf@lola.goethe.zz>
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1752004AbXIWUzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2007 16:55:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXIWUzp
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 16:55:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51692 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751120AbXIWUzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 16:55:44 -0400
+Received: (qmail invoked by alias); 23 Sep 2007 20:55:42 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp002) with SMTP; 23 Sep 2007 22:55:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sEGFKhXvsBFyHmPWQVxVZwJrSzg/g94XlNcSuIw
+	+WSMTkBiIEvm/N
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58985>
 
-A lot of shell scripts contained stuff starting with
+Good morning git land!
 
-	while case "$#" in 0) break ;; esac
+This lovely afternoon in St Andrews is as good an occasion as any to issue
+a new incarnation of the msysGit Herald, the not-quite-biweekly news letter
+to keep you informed about msysGit, the effort to bring one of the most
+powerful Source Code Management systems to the poor souls stuck with
+Windows.
 
-and similar.  I consider breaking out of the condition instead of the
-body od the loop ugly, and the implied "true" value of the
-non-matching case is not really obvious to humans at first glance.  It
-happens not to be obvious to some BSD shells, either, but that's
-because they are not POSIX-compliant.  In most cases, this has been
-replaced by a straight condition using "test".  "case" has the
-advantage of being faster than "test" on vintage shells where "test"
-is not a builtin.  Since none of them is likely to run the git
-scripts, anyway, the added readability should be worth the change.
+These are the covered topics:
 
-A few loops have had their termination condition expressed
-differently.
+	WinGit 0.2
 
-Signed-off-by: David Kastrup <dak@gnu.org>
----
+	What will be in WinGit 0.3?
 
-Ok, this is not really what we have been talking about except in one
-case, but I think it is actually more of an improvement.
+	We're getting famous in China
 
- contrib/examples/git-gc.sh         |    2 +-
- contrib/examples/git-reset.sh      |    2 +-
- contrib/examples/git-tag.sh        |    2 +-
- contrib/examples/git-verify-tag.sh |    2 +-
- git-am.sh                          |    2 +-
- git-clean.sh                       |    2 +-
- git-commit.sh                      |    2 +-
- git-fetch.sh                       |    2 +-
- git-filter-branch.sh               |    3 ++-
- git-instaweb.sh                    |    2 +-
- git-ls-remote.sh                   |    2 +-
- git-merge.sh                       |    2 +-
- git-mergetool.sh                   |    2 +-
- git-pull.sh                        |    6 +++---
- git-quiltimport.sh                 |    2 +-
- git-rebase--interactive.sh         |    2 +-
- git-rebase.sh                      |    5 ++---
- git-repack.sh                      |    2 +-
- git-submodule.sh                   |    2 +-
- 19 files changed, 23 insertions(+), 23 deletions(-)
+	Compiling Perl from scratch
 
-diff --git a/contrib/examples/git-gc.sh b/contrib/examples/git-gc.sh
-index 2ae235b..1597e9f 100755
---- a/contrib/examples/git-gc.sh
-+++ b/contrib/examples/git-gc.sh
-@@ -9,7 +9,7 @@ SUBDIRECTORY_OK=Yes
- . git-sh-setup
- 
- no_prune=:
--while case $# in 0) break ;; esac
-+while test $# != 0
- do
- 	case "$1" in
- 	--prune)
-diff --git a/contrib/examples/git-reset.sh b/contrib/examples/git-reset.sh
-index 1dc606f..bafeb52 100755
---- a/contrib/examples/git-reset.sh
-+++ b/contrib/examples/git-reset.sh
-@@ -11,7 +11,7 @@ require_work_tree
- update= reset_type=--mixed
- unset rev
- 
--while case $# in 0) break ;; esac
-+while test $# != 0
- do
- 	case "$1" in
- 	--mixed | --soft | --hard)
-diff --git a/contrib/examples/git-tag.sh b/contrib/examples/git-tag.sh
-index 5ee3f50..7bb7486 100755
---- a/contrib/examples/git-tag.sh
-+++ b/contrib/examples/git-tag.sh
-@@ -14,7 +14,7 @@ username=
- list=
- verify=
- LINES=0
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
-     case "$1" in
-     -a)
-diff --git a/contrib/examples/git-verify-tag.sh b/contrib/examples/git-verify-tag.sh
-index 37b0023..0902a5c 100755
---- a/contrib/examples/git-verify-tag.sh
-+++ b/contrib/examples/git-verify-tag.sh
-@@ -5,7 +5,7 @@ SUBDIRECTORY_OK='Yes'
- . git-sh-setup
- 
- verbose=
--while case $# in 0) break;; esac
-+while test $# != 0
- do
- 	case "$1" in
- 	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
-diff --git a/git-am.sh b/git-am.sh
-index 6809aa0..d97b528 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -109,7 +109,7 @@ dotest=.dotest sign= utf8=t keep= skip= interactive= resolved= binary=
- resolvemsg= resume=
- git_apply_opt=
- 
--while case "$#" in 0) break;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-d=*|--d=*|--do=*|--dot=*|--dote=*|--dotes=*|--dotest=*)
-diff --git a/git-clean.sh b/git-clean.sh
-index a5cfd9f..e847ae2 100755
---- a/git-clean.sh
-+++ b/git-clean.sh
-@@ -26,7 +26,7 @@ rmrf="rm -rf --"
- rm_refuse="echo Not removing"
- echo1="echo"
- 
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-d)
-diff --git a/git-commit.sh b/git-commit.sh
-index 3e46dbb..dcdd49b 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -89,7 +89,7 @@ force_author=
- only_include_assumed=
- untracked_files=
- templatefile="`git config commit.template`"
--while case "$#" in 0) break;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-F|--F|-f|--f|--fi|--fil|--file)
-diff --git a/git-fetch.sh b/git-fetch.sh
-index c3a2001..dc6483f 100755
---- a/git-fetch.sh
-+++ b/git-fetch.sh
-@@ -27,7 +27,7 @@ shallow_depth=
- no_progress=
- test -t 1 || no_progress=--no-progress
- quiet=
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-a|--a|--ap|--app|--appe|--appen|--append)
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index a4b6577..b7b2ef7 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -105,8 +105,9 @@ filter_tag_name=
- filter_subdir=
- orig_namespace=refs/original/
- force=
--while case "$#" in 0) usage;; esac
-+while :
- do
-+	test "$#" = 0 && usage
- 	case "$1" in
- 	--)
- 		shift
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index b79c6b6..364cf93 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -61,7 +61,7 @@ stop_httpd () {
- 	test -f "$fqgitdir/pid" && kill `cat "$fqgitdir/pid"`
- }
- 
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	--stop|stop)
-diff --git a/git-ls-remote.sh b/git-ls-remote.sh
-index b7e5d04..e6e9760 100755
---- a/git-ls-remote.sh
-+++ b/git-ls-remote.sh
-@@ -13,7 +13,7 @@ die () {
- }
- 
- exec=
--while case "$#" in 0) break;; esac
-+while test "$#" != 0
- do
-   case "$1" in
-   -h|--h|--he|--hea|--head|--heads)
-diff --git a/git-merge.sh b/git-merge.sh
-index 3a01db0..e4116a8 100755
---- a/git-merge.sh
-+++ b/git-merge.sh
-@@ -122,7 +122,7 @@ merge_name () {
- case "$#" in 0) usage ;; esac
- 
- have_message=
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 47a8055..a0e44f7 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -268,7 +268,7 @@ merge_file () {
-     cleanup_temp_files
- }
- 
--while case $# in 0) break ;; esac
-+while test $# != 0
- do
-     case "$1" in
- 	-t|--tool*)
-diff --git a/git-pull.sh b/git-pull.sh
-index 5e96d1f..c3f05f5 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -16,7 +16,7 @@ test -z "$(git ls-files -u)" ||
- 	die "You are in the middle of a conflicted merge."
- 
- strategy_args= no_summary= no_commit= squash=
--while case "$#,$1" in 0) break ;; *,-*) ;; *) break ;; esac
-+while :
- do
- 	case "$1" in
- 	-n|--n|--no|--no-|--no-s|--no-su|--no-sum|--no-summ|\
-@@ -46,8 +46,8 @@ do
- 	-h|--h|--he|--hel|--help)
- 		usage
- 		;;
--	-*)
--		# Pass thru anything that is meant for fetch.
-+	*)
-+		# Pass thru anything that may be meant for fetch.
- 		break
- 		;;
- 	esac
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index 9de54d1..1ad9291 100755
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -5,7 +5,7 @@ SUBDIRECTORY_ON=Yes
- 
- dry_run=""
- quilt_author=""
--while case "$#" in 0) break;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	--au=*|--aut=*|--auth=*|--autho=*|--author=*)
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index abc2b1c..2fa53fd 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -317,7 +317,7 @@ do_rest () {
- 	done
- }
- 
--while case $# in 0) break ;; esac
-+while test $# != 0
- do
- 	case "$1" in
- 	--continue)
-diff --git a/git-rebase.sh b/git-rebase.sh
-index c9942f2..9779d34 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -122,15 +122,14 @@ finish_rb_merge () {
- 
- is_interactive () {
- 	test -f "$dotest"/interactive ||
--	while case $#,"$1" in 0,|*,-i|*,--interactive) break ;; esac
--	do
-+	while :; do case $#,"$1" in 0,|*,-i|*,--interactive) break ;; esac
- 		shift
- 	done && test -n "$1"
- }
- 
- is_interactive "$@" && exec git-rebase--interactive "$@"
- 
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	--continue)
-diff --git a/git-repack.sh b/git-repack.sh
-index 156c5e8..77126cd 100755
---- a/git-repack.sh
-+++ b/git-repack.sh
-@@ -9,7 +9,7 @@ SUBDIRECTORY_OK='Yes'
- 
- no_update_info= all_into_one= remove_redundant=
- local= quiet= no_reuse= extra=
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	-n)	no_update_info=t ;;
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 3320998..a7180ad 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -251,7 +251,7 @@ modules_list()
- 	done
- }
- 
--while case "$#" in 0) break ;; esac
-+while test "$#" != 0
- do
- 	case "$1" in
- 	add)
--- 
-1.5.3.1.96.g4568
+	Time for a new console?
+
+	Interview with Johannes "Mr mingw.git" Sixt
+
+	Still no concrete mingw/git.git merge plans yet
+
+
+WinGit 0.2
+==========
+
+By mistake, Perl was not properly installed with version 0.1 of WinGit.
+This is the most visible part that was fixed in 0.2.
+
+However, in the meantime we got our "Issue" list (see home page) cut
+almost in half.  Which means that we are mostly stuck with the hard
+problems ;-)
+
+What will be in WinGit 0.3
+=========================
+
+What will be in 0.3?  We have a proper uninstaller now.  Yes, that means
+that "Git" will be in the "Add/Remove Software" list.
+
+Also, curl, termcap, the completions, sh-add, and git-gui are actually
+installed.
+
+Maybe we'll get to the state where a link to git gui is installed in
+addition to the "Git Shell", maybe we'll succeed in merging 1.5.3.2?
+
+Who knows... ;-)
+
+
+We're getting famous in China
+=============================
+
+Apparently, there is a blog talking (amongst other things, like the
+unfamous language flame war) about "Git on Windows" in China:
+
+http://blog.csdn.net/turingbook/archive/2007/09/07/1775488.aspx
+
+I am dyslexic when it comes to Chinese, but we got some hits from
+there...
+
+
+Compiling Perl from scratch
+===========================
+
+We have an open issue called "Install scripts do not install perl modules
+for git-svn" (Issue 42).  Unfortunately, it is not really as easy as
+that...
+
+The Perl version we have does not come with valid MakeMaker information,
+and we are therefore unable to compile modules for Perl (even something
+as dirt-simple as Digest::MD5 does not work).
+
+So we tried to compile Perl from scratch -- which opened another can of
+worms.  It was not a problem at all to compile Perl for _MinGW_.  Which
+means that the resulting binary does not have any clue about the MSys
+environment (think Unix style paths, and (worse!) no shell scripts).
+
+An option would be to not care, and decouple Perl from MSys.  Another
+option would be to get Perl compiled & linked to msys-1.0.dll.
+
+This issue is not resolved yet.
+
+
+Time for a new console?
+=======================
+
+The first publically available version of msysGit recommended Rxvt, until
+I realised that there were strange stderr/stdout issues, which prevented
+-- among other things -- the pager and ssh transport from working.
+
+So we reverted back to cmd as the Terminal, which has its own set of
+shortcomings (does not do ANSI well, has Control-C issues, and the
+multi-line selection being a rectangular box is outright annoying, as
+well as the missing Shift+Insert binding to paste the clipboard).
+
+Now, compiling (and possibly fixing) Rxvt seems to be out of reach for the
+moment, but Marius Storm-Olsen found the "Console" project:
+
+	http://sourceforge.net/projects/console
+
+Unfortunately, this project does not work on Windows 95/98/ME, and I would
+have liked to retain backwards compatibility (some developers, yours
+truly included, do not have Windows boxen to develop, so they have to
+resort to emulated ones -- and 2k is a real hog there, opposed to 95).
+
+However, since we already rely on the NT based family for our installer,
+that reason not to use Console seems to fall on the floor.
+
+We would need to work on it, though: ATM it has problems with selections,
+and recompiling is made difficult by the ATL dependency.
+
+
+Interview with Johannes "Mr mingw.git" Sixt
+===========================================
+
+Hannes announced an initial official version of the MinGW port of git on
+January 19th, 2007:
+
+	http://article.gmane.org/gmane.comp.version-control.git/37202
+
+For quite some time, he was the only one working on this port.  Most of
+the smoothness of the msysGit effort is his fault.
+
+So here, without further ado, the interview:
+
+> 1) How did you get involved with Git?
+
+In our shop, CVS was used for years. I have been working with patch sets 
+because it did not allow the workflow that I wanted - namely to construct
+a series of changes before making them public.
+
+When the news came out that Linus was working on a new VCS, I was
+following its development closely. From the discussions I discovered that
+git would be the tool that allowed my desired workflow.
+
+In order to get acquainted with git, I used it on my Linux projects
+(KDbg, Cinelerra).
+
+> 2) What were the reasons that you started working on Git?
+
+In our shop, which develops software for Windows, the requirement arouse
+to have several different, but related versions of the same product -
+which is  a setup that we would not be able to solve with CVS, but it
+would be a breeze with git.
+
+But we needed git on Windows. And since I dislike cygwin (for no good
+reason actually), I decided to start the native port of git to Windows
+using MSYS ang MinGW.
+
+> 3) What do you like most in Git?
+
+- Easy merging with real merge history
+- Massage a series of changes into proper shape before making it public
+
+> 4) What do you hate most in Git?
+
+You're kiddin'!
+
+> 5) What was the most surprising moment when working with Git?
+
+It merged a change I made in an old branch in a file that was moved in
+the new branch to a new location. IOW, merge across renames. Really, I
+was so surprised - I wanted to start the manual merge when I discovered
+that git had done all the work for me.
+
+> 6) What was the most frustrating moment when working with Git?
+
+Just the other day, I wanted to fetch a set of changes from a public
+repo into my test repo in order to cherry-pick from them - and it
+automatically fetched all the tags. But, the heck, I don't want them tags
+here, just the commits. I just can't figure out how to avoid the automatic
+fetching of tags.
+
+> 7) In what environment do you work?
+
+Linux (SUSE); Windows 2000, XP.
+
+> 8) What other hobbies do you have?
+
+Cuddling the brats and changing nappies - does that count as a hobby?
+
+> 9) What is your favourite movie?
+
+You think I have time to watch movies?
+
+> 10) What are your visions for Git? (I.e. where do you want it to go?)
+
+Seriously, I'm not a visionair.
+
+On *nix, git will be perfect when it is able to seamlessly serve the KDE 
+source.
+
+On Windows, git still has too many problems that we don't need a vision, yet.
+
+-- Hannes
+
+
+Still no concrete mingw/git.git merge plans yet
+===============================================
+
+As mentioned in the first issue of this news letter, I sent a rather long
+list of relatively small and well contained projects, that in total would
+mean a complete merge of the mingw/4msysgit port back into git.git:
+
+	http://article.gmane.org/gmane.comp.version-control.git/57163
+
+Unfortunately, there have not been any takers (just a few "would it not
+be better to have this in git.git" sayers).
+
+In related news, it seems to be awfully more common for Windows users than
+for other people to have the attitude "I am the user.  You _have_ to help
+me."  (Remember that in our case, the users are developers, too, so they
+should be able to help themselves.)
+
+Do not let yourself fool into thinking that _all_ Windows users are like
+that.  Just enough to annoy.
+
+However, nobody stops changing until eaten by the bugs, so all of those who
+think "well, I might be able to do a small thing, just to prove that
+bastard wrong": follow the above link, read the mail (you can even just
+randomly jump around, and only read parts of it), pick a target, and say so
+on the msysGit mailing list (msysgit@googlegroups.com).
