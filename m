@@ -1,52 +1,61 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] git-merge: add support for --commit
-Date: Sat, 22 Sep 2007 17:51:29 -0700
-Message-ID: <7vir62dx0u.fsf@gitster.siamese.dyndns.org>
-References: <1190421186-21784-1-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-2-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-3-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-4-git-send-email-hjemli@gmail.com>
-	<1190421186-21784-5-git-send-email-hjemli@gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [OT] Re: C++ *for Git*
+Date: Sun, 23 Sep 2007 04:09:51 +0200
+Message-ID: <20070923020951.GF24423@planck.djpig.de>
+References: <ABE0ABE82AE84593A2B71B0281F4C814@ntdev.corp.microsoft.com> <46F5318A.4030103@krose.org> <877imishdp.fsf@catnip.gol.com> <46F55E03.2040404@krose.org> <5e4707340709221550o6d0a6062qd51c16a278727c29@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 23 02:51:36 2007
+Cc: Kyle Rose <krose@krose.org>, Miles Bader <miles@gnu.org>,
+	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
+	Git <git@vger.kernel.org>
+To: Alex Unleashed <alex@flawedcode.org>
+X-From: git-owner@vger.kernel.org Sun Sep 23 04:10:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZFh9-0003Ep-OA
-	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 02:51:36 +0200
+	id 1IZGvJ-0007n9-F0
+	for gcvg-git-2@gmane.org; Sun, 23 Sep 2007 04:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbXIWAvb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 22 Sep 2007 20:51:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752150AbXIWAvb
-	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 20:51:31 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:49150 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752109AbXIWAva (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 22 Sep 2007 20:51:30 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070923005130.LKSG24061.fed1rmmtao104.cox.net@fed1rmimpo01.cox.net>;
-          Sat, 22 Sep 2007 20:51:30 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id rcrV1X00A1gtr5g0000000; Sat, 22 Sep 2007 20:51:30 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751658AbXIWCKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 22 Sep 2007 22:10:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751502AbXIWCKI
+	(ORCPT <rfc822;git-outgoing>); Sat, 22 Sep 2007 22:10:08 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4443 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751307AbXIWCKG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 22 Sep 2007 22:10:06 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 660F5880FA;
+	Sun, 23 Sep 2007 04:10:03 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id sRU+Rxmrcvct; Sun, 23 Sep 2007 04:09:52 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 8D6BA88102; Sun, 23 Sep 2007 04:09:51 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <5e4707340709221550o6d0a6062qd51c16a278727c29@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/58949>
 
-Lars Hjemli <hjemli@gmail.com> writes:
+On Sun, Sep 23, 2007 at 12:50:00AM +0200, Alex Unleashed wrote:
+> I'd say being forced to be explicit is a good thing here, so that the
+> programmer at least has some sort of good understanding of what is
+> going on, and chances are that if he doesn't really know, things just
+> won't work out (quite unlike a lot of other languages where this
+> programmer might actually end up with something half-assed that
+> "mostly" works).
+> For some reason it seems to me a lot harder to find bad programmers
+> surviving using C than a lot of the other languages.
 
-> This option can be used to override --no-commit and --squash. The change
-> also introduces slightly different behavior for --no-commit: when specified,
-> it explicitly overrides --squash.
+Idiot-proofness-by-complexity is a myth IMHO. Idiots can be quite
+persistent...
 
-Makes me wonder if --no-squash also make sense to override a --squash.
-Is this really needed?  IOW, does it ever make sense to have --no-commit
-in the configuration?
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
