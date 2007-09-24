@@ -1,64 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: The msysGit Herald, issue 2
-Date: Mon, 24 Sep 2007 09:49:03 -0700
-Message-ID: <7v1wcoau0w.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709232153230.28395@racer.site>
-	<alpine.LFD.0.999.0709240840310.3579@woody.linux-foundation.org>
-	<46F7E2A5.6030202@eudaptics.com>
+From: Guillaume Chazarain <guichaz@yahoo.fr>
+Subject: Problem importing a subversion repository with git-svnimport
+Date: Mon, 24 Sep 2007 18:49:41 +0200
+Message-ID: <20070924184941.0d771306@cheypa.inria.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@eudaptics.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:51:59 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 19:01:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZr9s-0006pj-V7
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 18:51:45 +0200
+	id 1IZrIB-0001bI-Ur
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 19:00:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764063AbXIXQtN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 12:49:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761104AbXIXQtM
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 12:49:12 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:52829 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763732AbXIXQtL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 12:49:11 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8357113B1FD;
-	Mon, 24 Sep 2007 12:49:26 -0400 (EDT)
-In-Reply-To: <46F7E2A5.6030202@eudaptics.com> (Johannes Sixt's message of
-	"Mon, 24 Sep 2007 18:15:33 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759019AbXIXQ7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 12:59:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757561AbXIXQ7j
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 12:59:39 -0400
+Received: from mail1-relais-roc.national.inria.fr ([192.134.164.82]:34893 "EHLO
+	mail1-relais-roc.national.inria.fr" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759383AbXIXQ7i (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2007 12:59:38 -0400
+X-Greylist: delayed 595 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Sep 2007 12:59:38 EDT
+X-IronPort-AV: E=Sophos;i="4.20,292,1186351200"; 
+   d="scan'208";a="1369028"
+Received: from cheypa.inria.fr ([138.96.218.90])
+  by mail1-relais-roc.national.inria.fr with ESMTP; 24 Sep 2007 18:49:42 +0200
+X-Mailer: Claws Mail 3.0.1cvs20 (GTK+ 2.10.14; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59063>
 
-Johannes Sixt <j.sixt@eudaptics.com> writes:
+Hello,
 
-> Linus Torvalds schrieb:
->
->> ...
->> Or maybe you did fetch a tracking branch?
->
-> I don't think I fetched a tracking branch. If I do:
->
->    $ mkdir foo && cd foo && git init
->    $ git fetch ../git master:refs/heads/master
->
-> (where ../git is a clone of git.git with a few local changes), I get
-> all the tags. Good or bad?
+Here is a simple testcase illustrating a conversion problem between
+subversion and git. git-svn handles it fine, but git-svnimport keeps
+stuff in the checkout that shouldn't be there.
 
-That's exactly Linus meant "fetching a tracking branch".  Your
-refspec has non-empty string on the RHS of the colon.
+# git --version => git version 1.5.3.2.99.ge4b2
+# svn --version | head -n 1 => svn, version 1.4.3 (r23084)
 
-	$ git fetch ../git master
+mkdir test-svn
+cd test-svn
+svnadmin create svn-repo
+svn co file://$PWD/svn-repo svn-check-out
+cd svn-check-out
+mkdir trunk branches tags
+svn add *
+svn ci -m 'SVN dirs'
+cd trunk
+mkdir -p a/b/c/d
+echo A > a/A
+echo B > a/b/B
+echo C > a/b/c/C
+echo D > a/b/c/d/D
+svn add a
+svn ci -m 'Add some data'
+svn mv a/b .
+svn rm b/c
+svn ci -m 'Some shuffling around'
+ls -R
+cd ../..
+mkdir git-repo
+cd git-repo
+git-svnimport file://$PWD/../svn-repo
+ls -R
 
-is the form without tracking.  IOW, not storing into your refs
-namespace.
+After the subversion manipulations, the svn checkout only contains the
+directories a/ b/ with their respective files A and B.
+
+The checkout from git-svnimport contains these elements, but also the
+full c/ directory in b/.
+
+Hope the testcase is clear enough ;-)
+
+-- 
+Guillaume
