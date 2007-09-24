@@ -1,94 +1,90 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: behaviour of git diff, GIT_DIR & checked out tree
-Date: Mon, 24 Sep 2007 18:09:20 +0100
-Message-ID: <e1dab3980709241009q71f9a40r1f8b551b417f7475@mail.gmail.com>
-References: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
-	 <Pine.LNX.4.64.0709241400410.28395@racer.site>
-	 <7v6420au43.fsf@gitster.siamese.dyndns.org>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: Re: [PATCH] post-checkout hook, and related docs and tests
+Date: Mon, 24 Sep 2007 11:14:12 -0600
+Message-ID: <1190654052.6078.14.camel@beauty>
+References: <1190406421-15620-1-git-send-email-jjengla@sandia.gov>
+ <7vzlzfh7xd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 19:09:51 2007
+X-From: git-owner@vger.kernel.org Mon Sep 24 19:12:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZrRM-00057p-4M
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 19:09:48 +0200
+	id 1IZrU3-0006FX-Q8
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 19:12:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758926AbXIXRJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 13:09:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758551AbXIXRJX
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 13:09:23 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:4038 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758592AbXIXRJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 13:09:22 -0400
-Received: by py-out-1112.google.com with SMTP id u77so3023712pyb
-        for <git@vger.kernel.org>; Mon, 24 Sep 2007 10:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ldvmwLxCjiq4BzT5skNDAwCfGIfwUZMIUjaaxpQZRsQ=;
-        b=crQkmki7SNnMBBL6xCLq9K9AVqDefRT+0guJ1KEc7RLE37l4uabTktA0TT1JmQbCcj0y/UCyf3TVkJ8PtajKUDdHYRl8BTmFHGL3ShhzZd2agGzRnHunil37HgHqtJ8DPcof/cEVHQ4vc5x7LlypPple485xKBtrfro21ZtLz1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uKW5b2YvpYcQCiWl8NHxxHr5bXshMY7u6vxR8Do93OEZm+SpPI/fjcKyHiDxuQqTzn2b0EcZtAd1LF/hyF4T/XEnqQuTIZe+SKGRlO1TPSbXymvetimjC+QBJ3+uSJVGKtdm2SiLaeDrZA8ifH85xA2ux5P8LWTicPceaRTRklM=
-Received: by 10.65.234.2 with SMTP id l2mr7322806qbr.1190653760687;
-        Mon, 24 Sep 2007 10:09:20 -0700 (PDT)
-Received: by 10.64.181.10 with HTTP; Mon, 24 Sep 2007 10:09:20 -0700 (PDT)
-In-Reply-To: <7v6420au43.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754378AbXIXRMY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 13:12:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754322AbXIXRMX
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 13:12:23 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:4198 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760948AbXIXRMW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 13:12:22 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Mon, 24 Sep 2007 11:12:09 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l8OHC8Pt026388;
+ Mon, 24 Sep 2007 11:12:08 -0600
+In-Reply-To: <7vzlzfh7xd.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.24.95354
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CP_NOT_1 0, __CT
+ 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0,
+ __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070924171209; SEV=2.2.2; DFV=B2007092413;
+ IFV=2.0.4,4.0-9; AIF=B2007092413; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230342E34364637454645382E303039443A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007092413_5.02.0125_4.0-9
+X-WSS-ID: 6AE930633HO3268549-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59065>
 
-On 9/24/07, Junio C Hamano <gitster@pobox.com> wrote:
-> It would be illustrative if David did the following.
->
->         $ cd $HOME
->         $ cp -a V W
->         $ rm -fr W/.git
->         $ cd W
->         $ GIT_DIR=$HOME/V/.git git diff @{midnight}
->
-> Now we are in a random place outside of the work tree
-> (i.e. "W"), and we drive "git diff" with GIT_DIR specified,
-> telling it to pretend that we are at the top level of the work
-> tree.  So ~/W/frotz is compared with "frotz" at the top level of
-> the commit (which usually is compared with ~/V/frotz), etc.  But
-> the directory we happen to be in very much resembles the work
-> tree, so it would give identical results to
->
->         $ cd $HOME/V
->         $ git diff @{midnight}
+On Fri, 2007-09-21 at 17:15 -0700, Junio C Hamano wrote:
+> "root" <root@sandia.gov> writes:
+> 
+> > +post-checkout
+> > +-----------
+> > +
+> > +This hook is invoked when a `git-checkout` is run on a local repository.
+> > +The hook is given two parameters: the ref of the previous HEAD, and the ref of 
+> > +the new HEAD.  This hook cannot affect the outcome of `git-checkout`.
+> > +
+> > +This hook can be used to perform repository validity checks, auto-display
+> > +differences from the previous HEAD, or set working dir metadata properties.
+> > +
+> 
+> People may wonder why this is not run when they do "git checkout
+> otherbranch path.c"; the second sentence from the above
+> description implies why it shouldn't, but the first sentence
+> probably should state it more clearly.
+> 
+> What's the _semantics_ you are trying to achieve?
 
-To separate the two issues, I did all the commands to the diff
-above and then removed one directory from the tree in W.
+I'd like to get a hook that runs whenever the working dir gets
+updated.  The 'git-checkout otherbranch path.c' case should run it also, so I view that as a bug.
 
-GIT_DIR=$HOME/V/.git git diff master~1
-(which ought not need reflogs, right) and it gave a diff between
-the contents of W and master~1. I also tried with commit
-master@{midnight} and that also gave the difference between
-W and the last commit yesterday. So Junio's explanation of what's going on
-is right. I'm just asking if there's a way to say
-"the `working dir' associated with this git dir" explicitly (in the same
-way I can use `HEAD' to refer to the topmost commit on the
-current branch) when you're not somewhere within the 'working dir'.
-If there's not I can alias around it with
-"cd $HOME/V && command && cd -". (As I say, for reasons unrelated
-to git usage I don't actually "do work" within the tracked tree.)
+> Why does the hook run every time git-bisect suggests the next
+> revision to try?
+> Why does the hook run when rebase starts its work?
 
-Many thanks,
+It may be inserted in a ad place or maybe it needs some intelligence in
+there to know when *not* to run.
 
--- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+> When "git pull" or "git merge" results in a fast forward, the
+> situation is no different from checking out a new revision.  Why
+> doesn't the hook run in these cases?
+
+This is actually what I'd like to do.  I submitted the post-merge patch
+some time ago to serve that purpose.  Do you think they should both be
+rolled into a single post-checkout hook?  It would seem to make sense to
+me.
