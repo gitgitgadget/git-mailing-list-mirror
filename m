@@ -1,72 +1,97 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: behaviour of git diff, GIT_DIR & checked out tree
-Date: Mon, 24 Sep 2007 14:03:11 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709241400410.28395@racer.site>
-References: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: David Tweed <david.tweed@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 15:04:21 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: My stash wants to delete all my files
+Date: Mon, 24 Sep 2007 14:12:15 +0100
+Message-ID: <5A9D6E3B-7B0E-4414-9AFB-C1C8B2EE6A9D@steelskies.com>
+Mime-Version: 1.0 (Apple Message framework v901)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 15:13:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZnbp-00069Z-2N
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:04:21 +0200
+	id 1IZnkd-0001AW-TW
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:13:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750913AbXIXNEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 09:04:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750917AbXIXNEP
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:04:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33778 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750909AbXIXNEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 09:04:14 -0400
-Received: (qmail invoked by alias); 24 Sep 2007 13:04:12 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp057) with SMTP; 24 Sep 2007 15:04:12 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19FqkcKG4FFguCKZtfC4YZfE/YfZMfw/O+9Gx4D+o
-	rAB1NZHoEy1hlh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753754AbXIXNNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 09:13:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753033AbXIXNNF
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:13:05 -0400
+Received: from juliet.asmallorange.com ([207.210.105.70]:49372 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752707AbXIXNNE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 09:13:04 -0400
+Received: from host217-35-101-26.in-addr.btopenworld.com ([217.35.101.26]:49991 helo=[192.168.1.2])
+	by juliet.asmallorange.com with esmtpa (Exim 4.68)
+	(envelope-from <maillist@steelskies.com>)
+	id 1IZnk5-0001eP-1Q
+	for git@vger.kernel.org; Mon, 24 Sep 2007 09:12:53 -0400
+X-Mailer: Apple Mail (2.901)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59045>
 
-Hi,
+Heya,
+I've run into a problem with git stash.  I suspect that I've already  
+lost the work that I tried to stash, but would like to know where I  
+went wrong.
 
-On Mon, 24 Sep 2007, David Tweed wrote:
+I had some work in progress, wanted to check something from my last  
+commit, and typed "git stash".  I forgot to "git stash apply"  
+immediately afterward, and carried on doing some more work related to  
+the stashed code.  I realized that I'd got a stash that I wanted to  
+apply, and tried to restore it.
+While trying to restore it, I typed "git stash --apply", which  
+actually created a new stash named "--apply".  Ooops.  Anyway, the  
+real problem is :
 
-> In a git tracked tree rooted at $HOME/V with
-> git-dir of $HOME/V/.git, if I'm in $HOME/V then
-> 
-> git diff master@{midnight}
-> 
-> tells me the difference between the current modified files
-> in the tree being tracked in V and the specified commit. In
-> a different directory, OUTSIDE of $HOME/V, I tried
-> 
-> env GIT_DIR=$HOME/V/.git git diff master@{midnight}
-> 
-> to get the same effect but, whilst I do get a diff output, it
-> looks like a diff of the commit against an empty tree.
+$ git stash list
+stash@{0}: On master: --apply
+stash@{1}: WIP on master: 09e3c30... Better handling of cell sizes in  
+the grid
 
-Yes, this is fully expected.
+$ git stash show stash@{1}
+  .gitignore                            |    3 -
+  AppController.h                       |   10 -
+  AppController.m                       |   30 -
+  English.lproj/InfoPlist.strings       |  Bin 202 -> 0 bytes
+  English.lproj/MainMenu.xib            | 2560  
+---------------------------------
+  GLScene.h                             |   21 -
+  GLScene.m                             |  287 ----
+  Info.plist                            |   28 -
+  LayoutManager.h                       |   19 -
+  LayoutManager.m                       |  118 --
+  OpenGLTests.xcodeproj/project.pbxproj |  323 -----
+  OpenGLTests_Prefix.pch                |   10 -
+  TheWall.h                             |   28 -
+  TheWall.m                             |   99 --
+  UserImage.h                           |   17 -
+  UserImage.m                           |  111 --
+  Utilities.h                           |   38 -
+  Utilities.m                           |   89 --
+  main.m                                |   14 -
+  19 files changed, 0 insertions(+), 3805 deletions(-)
 
-The @{time} notation accesses the _reflogs_, which are purely local 
-beasts.  They are not transmitted when cloning.
 
-The rationale: in a distributed environment, you cannot trust others' 
-timestamps.  Therefore we don't.
+Hmm.  Looks like it's trying to delete all of my versioned files.   
+"git stash apply stash@{1}" confirms this.   Obviously that's not what  
+I tried to stash - my WIP when I stashed was a few additions, a couple  
+of new unversioned files, and moving a few lines of code from one file  
+to another.
 
-We can only (to a certain extent, at least) trust our _own_ timestamp.  
-That is why we have timestamp access to the reflogs (which are purely 
-local, as I mentioned above), but we have no way to reference commits by 
-timestamp otherwise.
+Any ideas what happened there?  I can't seem to reproduce the problem  
+in a test repository.
 
-Hth,
-Dscho
+Cheers,
+Jon
