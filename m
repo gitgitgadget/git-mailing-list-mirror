@@ -1,59 +1,64 @@
-From: figo <rcc_dark@hotmail.com>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Mon, 24 Sep 2007 13:41:17 +0000 (UTC)
-Message-ID: <loom.20070924T134013-959@post.gmane.org>
-References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
+From: Russ Brown <pickscrape@gmail.com>
+Subject: git-svn: Deleting directories
+Date: Mon, 24 Sep 2007 09:04:26 -0500
+Message-ID: <46F7C3EA.2080806@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 15:45:29 2007
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:04:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZoFZ-0004eY-Dq
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:45:25 +0200
+	id 1IZoYH-0003Qp-Pn
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 16:04:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756415AbXIXNpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 09:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756478AbXIXNpP
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:45:15 -0400
-Received: from main.gmane.org ([80.91.229.2]:47095 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756415AbXIXNpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 09:45:13 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IZoFC-0007Pm-FF
-	for git@vger.kernel.org; Mon, 24 Sep 2007 13:45:02 +0000
-Received: from dsl-189-134-63-101.prod-infinitum.com.mx ([dsl-189-134-63-101.prod-infinitum.com.mx])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 24 Sep 2007 13:45:02 +0000
-Received: from rcc_dark by dsl-189-134-63-101.prod-infinitum.com.mx with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 24 Sep 2007 13:45:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 189.134.63.101 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Alexa Toolbar; InfoPath.2; Alexa Toolbar; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506; MEGAUPLOAD 2.0; .NET CLR 3.0.04506.590; .NET CLR 3.5.20706))
+	id S1751464AbXIXOEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 10:04:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbXIXOEk
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 10:04:40 -0400
+Received: from wx-out-0506.google.com ([66.249.82.227]:60331 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984AbXIXOEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 10:04:39 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1214991wxd
+        for <git@vger.kernel.org>; Mon, 24 Sep 2007 07:04:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=jHMP7Ld4/FPXAvfP+TPLOx9wYlFB1th0IABE6d1was8=;
+        b=Dn0AEg2r1rJENHZ/PpSeJCUy0Bu3LM5aCBYgAkYNvIgubW0mslM/IHn7ajGUp7BzYBBHB/NfLrlj5QZzkB+WfPXdbLNNgBtHOj6ingU+SYPy2wtppaHm6ZjPHravc4a2DKSBzz2TBepQetRvsSpZFN8Bltb6kqtPbeGqnSbqjS4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=QjltSmIunSl/rvMb7dbFzN+ijtMD5ROEDeK+MiWZil30fPGTPTDmosngfNBnRFbmmZHMs3M/AhIa0GTPLSm0b1pGdwmbszuVDQ445Dfz77S8x77qis/vjb2uazW7iMjUFi6E7zI+nZpbFmWwQlo/RFz5zLwlSE84Ud/jnVrg1EE=
+Received: by 10.90.92.10 with SMTP id p10mr5595297agb.1190642676683;
+        Mon, 24 Sep 2007 07:04:36 -0700 (PDT)
+Received: from ?192.168.0.100? ( [71.170.181.151])
+        by mx.google.com with ESMTPS id o61sm944301hsc.2007.09.24.07.04.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 24 Sep 2007 07:04:35 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59049>
 
-http://www.research.att.com/~bs/applications.html
+I've just noticed that when deleting entire directory trees in git, when
+the dcommit happens only the files in that trees get deleted, which
+leaves a 'ghost town' of a directory tree with folders but no files,
+which will no doubt have somewhat confused my svn-using colleagues.
 
-just as Bjarne once wrote in his TC++PL, its hard to teach an old dog new 
-tricks. Its even harder to give quality education about how to use something 
-to someone who doesnt want to learn.
+This is obviously an interoperability problem, but I understand that git
+does not track folders and is so tricky to fix.
 
-you hate high level, then continue programming operative systems, please NEVER 
-DO something else. C++ was designed to give programmers high level tools and 
-still being able to take care about performance.
+The question though is how to handle it. Ideally, dcommit will detect
+that an entire directory has gone and send through a changeset which
+deletes just that one directory, instead of the current behaviour of
+explicitly deleting every file in the directory but leaving the
+directories themselves intact.
 
-portability wont be possible after a standard is published and some couple of 
-years given to the compiler developers. C++ had its standard in 1998, and add 
-two or three years for compiler development = 2002. "Quite recently", way more 
-recently that your last use of C++ I can bet.
+-- 
+
+Russ
