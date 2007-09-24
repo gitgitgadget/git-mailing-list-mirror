@@ -1,76 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] post-checkout hook, and related docs and tests
-Date: Mon, 24 Sep 2007 14:07:36 -0700
-Message-ID: <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
-References: <1190406421-15620-1-git-send-email-jjengla@sandia.gov>
-	<7vzlzfh7xd.fsf@gitster.siamese.dyndns.org>
-	<1190654052.6078.14.camel@beauty>
-	<7vsl53ap5x.fsf@gitster.siamese.dyndns.org>
-	<1190662396.6078.63.camel@beauty>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] user-manual: Explain what submodules are good for.
+Date: Mon, 24 Sep 2007 17:33:42 -0400
+Message-ID: <20070924213342.GL26387@fieldses.org>
+References: <20070923172702.GA5916@fieldses.org> <11906036491118-git-send-email-msmith@cbnco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Josh England" <jjengla@sandia.gov>
-X-From: git-owner@vger.kernel.org Mon Sep 24 23:07:50 2007
+Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
+To: Michael Smith <msmith@cbnco.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 23:34:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZv9h-0005ec-P9
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 23:07:50 +0200
+	id 1IZvYx-0006x4-Cx
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 23:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753066AbXIXVHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 17:07:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753101AbXIXVHo
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 17:07:44 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:57926 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751019AbXIXVHn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 17:07:43 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7592213B522;
-	Mon, 24 Sep 2007 17:08:00 -0400 (EDT)
-In-Reply-To: <1190662396.6078.63.camel@beauty> (Josh England's message of
-	"Mon, 24 Sep 2007 13:33:16 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756231AbXIXVds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 17:33:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756121AbXIXVds
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 17:33:48 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:59644 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755992AbXIXVdr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 17:33:47 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IZvYk-0001ky-MF; Mon, 24 Sep 2007 17:33:42 -0400
+Content-Disposition: inline
+In-Reply-To: <11906036491118-git-send-email-msmith@cbnco.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59077>
 
-"Josh England" <jjengla@sandia.gov> writes:
+On Sun, Sep 23, 2007 at 11:14:09PM -0400, Michael Smith wrote:
+> Rework the introduction to the Submodules section to explain why
+> someone would use them, and fix up submodule references from the
+> tree-object and todo sections.
 
-> ...  Granted, the
-> branch (and HEAD) does not change for this operation, but that shouldn't
-> matter.  It is somewhat in line with the principle of 'least-surprise':
-> if the hook runs for 'git checkout otherbranch', but not 'git checkout
-> otherbranch path.c', this could cause confusion and distress to the
-> user.  IMO, it is a 'checkout' so the post-checkout hook should run.
-> Why is that so insane?  
+Thanks!
 
-Because I find it would be surprising if the following commands
-behave differently:
+> +Some large projects are composed of smaller, self-contained parts.  For
+> +example, an embedded Linux distribution's source tree would include every
+> +piece of software in the distribution; a movie player might need to build
+> +against a specific, known-working version of a decompression library;
+> +several independent programs might all share the same build scripts.
+...
+> +Git's submodule support allows a repository to contain, as a subdirectory, a
+> +checkout of an external project.  Submodules maintain their own identity;
+> +the submodule support just stores the submodule repository location and
+> +commit ID, so other developers who clone the superproject can easily clone
+> +all the submodules at the same revision.  The gitlink:git-submodule[1]
+> +command manages submodules.
 
-	$ git cat-file blob otherbranch:path.c >path.c
-        $ git show otherbranch:path.c >path.c
-        $ git diff -R otherbranch path.c | git apply
-        $ git checkout otherbranch path.c
+That looks helpful, thanks, but a little more detail might be nice.
 
-These are all talking about various ways to _edit_ working tree
-files, and not about switching between revisions.
+Imagining myself as a reader trying to decide whether to use submodules
+in a given case, I'm not sure this would tell me everything I need to
+know.  For example, how does this compare to just importing a snapshot
+of the library into your tree?  (Or possibly using the subtree merge
+strategy?)
 
-That's why I said I found that what the second sentence from
-your original description implied ("the hook gets old and new
-commit object name" which means we are talking about switching
-between revisions) was sensible, but it needs to be stressed a
-bit.
+Some issues that pop to mind are scalability (when does a monolithic
+tree get too large to work with?) and backwards compatibility (what
+version does everybody working on your project need to have for it to
+work?  What problems will you see if a few people are stuck with an
+older git?)  I haven't followed submodule development, though, so may
+have missed more important issues.
 
-If you want to spacial case 
-
-        $ git checkout otherbranch path.c
-
-it raises another issue.  Which commit should supply the
-"extended attribute description" for path.c?  Should it be taken
-from the current commit (aka HEAD), otherbranch, or the index?
+--b.
