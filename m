@@ -1,64 +1,74 @@
-From: Russ Brown <pickscrape@gmail.com>
-Subject: git-svn: Deleting directories
-Date: Mon, 24 Sep 2007 09:04:26 -0500
-Message-ID: <46F7C3EA.2080806@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
+Date: Mon, 24 Sep 2007 15:04:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709241502330.28395@racer.site>
+References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
+ <20070924060521.GB10975@glandium.org> <85k5qgk295.fsf@lola.goethe.zz>
+ <ee77f5c20709232330n7b47d9e9v38677678dbf197da@mail.gmail.com>
+ <86ejgowl5g.fsf@lola.quinscape.zz> <20070924080134.GA9112@artemis.corp>
+ <20070924080436.GB9112@artemis.corp> <Pine.LNX.4.64.0709241128460.28395@racer.site>
+ <87ps08s3zt.fsf@catnip.gol.com> <20070924113556.GI8111@void.codelabs.ru>
+ <87k5qgrxcu.fsf@catnip.gol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 16:04:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eygene Ryabinkin <rea-git@codelabs.ru>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 16:06:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZoYH-0003Qp-Pn
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 16:04:46 +0200
+	id 1IZoZC-0003bM-Fx
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 16:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751464AbXIXOEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 10:04:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754746AbXIXOEk
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 10:04:40 -0400
-Received: from wx-out-0506.google.com ([66.249.82.227]:60331 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984AbXIXOEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 10:04:39 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1214991wxd
-        for <git@vger.kernel.org>; Mon, 24 Sep 2007 07:04:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        bh=jHMP7Ld4/FPXAvfP+TPLOx9wYlFB1th0IABE6d1was8=;
-        b=Dn0AEg2r1rJENHZ/PpSeJCUy0Bu3LM5aCBYgAkYNvIgubW0mslM/IHn7ajGUp7BzYBBHB/NfLrlj5QZzkB+WfPXdbLNNgBtHOj6ingU+SYPy2wtppaHm6ZjPHravc4a2DKSBzz2TBepQetRvsSpZFN8Bltb6kqtPbeGqnSbqjS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
-        b=QjltSmIunSl/rvMb7dbFzN+ijtMD5ROEDeK+MiWZil30fPGTPTDmosngfNBnRFbmmZHMs3M/AhIa0GTPLSm0b1pGdwmbszuVDQ445Dfz77S8x77qis/vjb2uazW7iMjUFi6E7zI+nZpbFmWwQlo/RFz5zLwlSE84Ud/jnVrg1EE=
-Received: by 10.90.92.10 with SMTP id p10mr5595297agb.1190642676683;
-        Mon, 24 Sep 2007 07:04:36 -0700 (PDT)
-Received: from ?192.168.0.100? ( [71.170.181.151])
-        by mx.google.com with ESMTPS id o61sm944301hsc.2007.09.24.07.04.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 24 Sep 2007 07:04:35 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
+	id S1755769AbXIXOFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 10:05:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757131AbXIXOFg
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 10:05:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44962 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755769AbXIXOFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 10:05:36 -0400
+Received: (qmail invoked by alias); 24 Sep 2007 14:05:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 24 Sep 2007 16:05:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+5boJtZaS5kiI7hCvzS9p1YCk3XGBjl9hvIpqA3K
+	jiif8yK4a5dFqo
+X-X-Sender: gene099@racer.site
+In-Reply-To: <87k5qgrxcu.fsf@catnip.gol.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59050>
 
-I've just noticed that when deleting entire directory trees in git, when
-the dcommit happens only the files in that trees get deleted, which
-leaves a 'ghost town' of a directory tree with folders but no files,
-which will no doubt have somewhat confused my svn-using colleagues.
+Hi,
 
-This is obviously an interoperability problem, but I understand that git
-does not track folders and is so tricky to fix.
+On Mon, 24 Sep 2007, Miles Bader wrote:
 
-The question though is how to handle it. Ideally, dcommit will detect
-that an entire directory has gone and send through a changeset which
-deletes just that one directory, instead of the current behaviour of
-explicitly deleting every file in the directory but leaving the
-directories themselves intact.
+> Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+> >> The comment "... holds only for a shell where [ is a builtin" doesn't
+> >> make any sense to me
+> >
+> > The 'while case ...' construct does not invoke any external commands.
+> > The 'while test ...' too, but only when 'test' is builtin.  When
+> > 'test' is the external binary you get one additional fork/exec per
+> > each cycle.
+> 
+> In practice that's not an issue though -- every reasonable shell has 
+> test as a builtin these days, so the "works when test is not a builtin" 
+> criteria is really important only for robustness.
 
--- 
+AAAAAAAAAAAAAARRRRRGGGHHHHHHHHHHHH!
 
-Russ
+_Exactly_ the same reasoning can be said about the old code: _every_ 
+reasonable shell can grok the code that used to be there!
+
+<rhetoric-question>
+	So what exactly was your point again?
+</rhetoric-question>
+
+Ciao,
+Dscho
