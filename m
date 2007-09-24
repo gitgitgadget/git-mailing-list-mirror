@@ -1,68 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johannes Sixt <j.sixt@eudaptics.com>
 Subject: Re: The msysGit Herald, issue 2
-Date: Mon, 24 Sep 2007 08:44:49 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0709240840310.3579@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0709232153230.28395@racer.site>
+Date: Mon, 24 Sep 2007 18:15:33 +0200
+Message-ID: <46F7E2A5.6030202@eudaptics.com>
+References: <Pine.LNX.4.64.0709232153230.28395@racer.site> <alpine.LFD.0.999.0709240840310.3579@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 24 17:45:42 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:16:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZq7m-00061B-Jd
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 17:45:31 +0200
+	id 1IZqb6-0000cB-Lc
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 18:15:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758952AbXIXPp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 11:45:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756235AbXIXPp1
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 11:45:27 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55268 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756103AbXIXPp0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2007 11:45:26 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8OFiniU027648
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 24 Sep 2007 08:44:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8OFinoP004445;
-	Mon, 24 Sep 2007 08:44:49 -0700
-In-Reply-To: <Pine.LNX.4.64.0709232153230.28395@racer.site>
-X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.39__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757268AbXIXQPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 12:15:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757504AbXIXQPl
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 12:15:41 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:5373 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756411AbXIXQPk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 12:15:40 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@eudaptics.com>)
+	id 1IZqau-0008Vu-TA; Mon, 24 Sep 2007 18:15:37 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 159644E4; Mon, 24 Sep 2007 18:15:34 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.LFD.0.999.0709240840310.3579@woody.linux-foundation.org>
+X-Spam-Score: 1.3 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, AWL=-0.397, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59057>
 
-
-
-On Sun, 23 Sep 2007, Johannes Schindelin wrote:
->
-> > 6) What was the most frustrating moment when working with Git?
+Linus Torvalds schrieb:
 > 
-> Just the other day, I wanted to fetch a set of changes from a public
-> repo into my test repo in order to cherry-pick from them - and it
-> automatically fetched all the tags. But, the heck, I don't want them tags
-> here, just the commits. I just can't figure out how to avoid the automatic
-> fetching of tags.
+> On Sun, 23 Sep 2007, Johannes Schindelin wrote:
+>>> 6) What was the most frustrating moment when working with Git?
+>> Just the other day, I wanted to fetch a set of changes from a public
+>> repo into my test repo in order to cherry-pick from them - and it
+>> automatically fetched all the tags. But, the heck, I don't want them tags
+>> here, just the commits. I just can't figure out how to avoid the automatic
+>> fetching of tags.
+> 
+> The way this was *supposed* to work is that if you are not fetching a 
+> "tracking branch", it should not fetch any tags.
+> 
+> Maybe this got broken lately?
+> 
+> Or maybe you did fetch a tracking branch?
 
-The way this was *supposed* to work is that if you are not fetching a 
-"tracking branch", it should not fetch any tags.
+I don't think I fetched a tracking branch. If I do:
 
-Maybe this got broken lately?
+    $ mkdir foo && cd foo && git init
+    $ git fetch ../git master:refs/heads/master
 
-Or maybe you did fetch a tracking branch?
+(where ../git is a clone of git.git with a few local changes), I get all the 
+tags. Good or bad?
 
-Anyway, I fetch stuff all the time, and if git were to fetch the tags too, 
-I'd be *really* unhappy. So either the people I work with are just good 
-people, or more likely it still works the way it's supposed to work: if 
-you just fetch into FETCH_HEAD (by explicitly giving the remote repository 
-name, and not using tracking branches), it should not fetch tags for you.
-
-			Linus
+-- Hannes
