@@ -1,74 +1,72 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: behaviour of git diff, GIT_DIR & checked out tree
-Date: Mon, 24 Sep 2007 14:16:14 +0100
-Message-ID: <e1dab3980709240616p5badae12t23ffd323a0d873d@mail.gmail.com>
-References: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
-	 <Pine.LNX.4.64.0709241400410.28395@racer.site>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
+Date: Mon, 24 Sep 2007 22:45:05 +0900
+Message-ID: <87k5qgrxcu.fsf@catnip.gol.com>
+References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
+	<20070924060521.GB10975@glandium.org> <85k5qgk295.fsf@lola.goethe.zz>
+	<ee77f5c20709232330n7b47d9e9v38677678dbf197da@mail.gmail.com>
+	<86ejgowl5g.fsf@lola.quinscape.zz>
+	<20070924080134.GA9112@artemis.corp>
+	<20070924080436.GB9112@artemis.corp>
+	<Pine.LNX.4.64.0709241128460.28395@racer.site>
+	<87ps08s3zt.fsf@catnip.gol.com>
+	<20070924113556.GI8111@void.codelabs.ru>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 24 15:16:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Mon Sep 24 15:45:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZnnU-0002B7-BJ
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:16:24 +0200
+	id 1IZoFL-0004Yb-Gd
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:45:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755881AbXIXNQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 09:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756335AbXIXNQR
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:16:17 -0400
-Received: from py-out-1112.google.com ([64.233.166.177]:7635 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754227AbXIXNQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 09:16:16 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2903296pyb
-        for <git@vger.kernel.org>; Mon, 24 Sep 2007 06:16:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=iJm/WIGk/gxl+1njfY/bcA5BCjkOpZTm/GmYDjSu5p8=;
-        b=fNz6UiWz5oKeoEifQzix3DEyr/QU7sGbcGhrP80zu+HUInzIfCTpFZGr51nclWHd8J2JpGoebgvq1glsvW23Hy5AF3fOHzkMwCeirY6QtapXPJt0IpMISkcIRlthRUodZbAkwU1uPb+7OSsxUCZTKWPn1H0LHO19aVfUpbBhfDE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Dt44u/dG/VNMNmLeqSaIXJyO3mOwWKur8I0qiNX9hnQWag73f2ZrbtU9F9aL6LqWoS3V0sCqPl9qDn2SVYjdFAmut8u7gwj2WlctjYlWq6Zy5dBwHq5bBcBDVnex4mqI6CzZ+EhLtqL6N+AwDIWANIftUWT2qGAp7rY5AGoNnDs=
-Received: by 10.65.119.14 with SMTP id w14mr1660531qbm.1190639774586;
-        Mon, 24 Sep 2007 06:16:14 -0700 (PDT)
-Received: by 10.64.181.10 with HTTP; Mon, 24 Sep 2007 06:16:14 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0709241400410.28395@racer.site>
-Content-Disposition: inline
+	id S1756826AbXIXNpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 09:45:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756415AbXIXNpE
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:45:04 -0400
+Received: from smtp02.dentaku.gol.com ([203.216.5.72]:42070 "EHLO
+	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752612AbXIXNpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 09:45:03 -0400
+Received: from 203-216-103-127.dsl.gol.ne.jp ([203.216.103.127] helo=catnip.gol.com)
+	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
+	id 1IZoF2-0003kh-7m; Mon, 24 Sep 2007 22:44:52 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id C71C82F41; Mon, 24 Sep 2007 22:45:05 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+In-Reply-To: <20070924113556.GI8111@void.codelabs.ru> (Eygene Ryabinkin's message of "Mon\, 24 Sep 2007 15\:35\:56 +0400")
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59047>
 
-On 9/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Yes, this is fully expected.
+Eygene Ryabinkin <rea-git@codelabs.ru> writes:
+>> The comment "... holds only for a shell where [ is a builtin" doesn't
+>> make any sense to me
 >
-> The @{time} notation accesses the _reflogs_, which are purely local
-> beasts.  They are not transmitted when cloning.
+> The 'while case ...' construct does not invoke any external commands.
+> The 'while test ...' too, but only when 'test' is builtin.  When
+> 'test' is the external binary you get one additional fork/exec per
+> each cycle.
 
-Thanks of your reply; however I suspect this isn't the problem
-here since I just tried with just master and I get the same thing.
-To be clear, I'm doing this on the same machine with the same
-user account as the git directory, just from a directory outside
-the git tree, eg, the git tracked tree is in $HOME/V and I'm
-in $HOME/A running
+In practice that's not an issue though -- every reasonable shell has
+test as a builtin these days, so the "works when test is not a builtin"
+criteria is really important only for robustness.
 
-env GIT_DIR=$HOME/V/.git git diff master
+> I believe that this trick comes from the old days where people were
+> generally much more eager to save CPU cycles than now ;))
 
-As a guess without looking at the code, what I imagine
-is happening is that git diff limits showing changes to the directory
-tree below $PWD, and when $PWD isn't actually within the git
-dir that ends up somehow as an empty tree.
+Yes.  I still occasionally find myself using "case" where if+test might
+be more natural, but I think it's basically an anachronism these days,
+and causes more harm by reducing readability than good.
 
+-Miles
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+The car has become... an article of dress without which we feel uncertain,
+unclad, and incomplete.  [Marshall McLuhan, Understanding Media, 1964]
