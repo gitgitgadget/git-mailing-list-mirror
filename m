@@ -1,89 +1,141 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: StGit kha safe branch updated
-Date: Mon, 24 Sep 2007 02:02:44 +0200
-Message-ID: <20070924000244.GA24403@diana.vm.bytemark.co.uk>
+Subject: StGit kha experimental branch updated
+Date: Mon, 24 Sep 2007 02:10:34 +0200
+Message-ID: <20070924001034.GB24403@diana.vm.bytemark.co.uk>
+References: <20070924000244.GA24403@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 02:02:58 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 02:10:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZbPb-0008Hi-Ta
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 02:02:56 +0200
+	id 1IZbX9-00019R-Ju
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 02:10:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755459AbXIXACu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2007 20:02:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755446AbXIXACu
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 20:02:50 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2395 "EHLO
+	id S1755446AbXIXAKh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2007 20:10:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbXIXAKh
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 20:10:37 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3952 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755389AbXIXACt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 20:02:49 -0400
+	with ESMTP id S1755446AbXIXAKg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 20:10:36 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IZbPQ-0006MX-00; Mon, 24 Sep 2007 01:02:44 +0100
+	id 1IZbX0-0006ON-00; Mon, 24 Sep 2007 01:10:34 +0100
 Content-Disposition: inline
+In-Reply-To: <20070924000244.GA24403@diana.vm.bytemark.co.uk>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59008>
 
-These are the first ten patches of David's latest series (including
-the fixup he suggested) -- that is, only the cleanup part -- plus the
-three patches I just mailed out.
+The three last patches of David's top/bottom removal series are here,
+and all the old patches too. Changes:
 
-The following changes since commit ead8e89297dfabf7c290338a86c89f19c5ba=
-7401:
-  Catalin Marinas (1):
-        Print 'updating patch' earlier in 'edit'
+  * Everything's been rebased on top of David's top/bottom removal
+    series, which turned out to be a major undertaking. I'm not 100%
+    sure I've managed to not break anything.
+
+  * I've modified the conflict series to adhere to the new test suite
+    policy; it now passes the test suite at every point, by using
+    test_expect_failure for broken tests.
+
+  * The add/rm/cp removal patches no longer break "stg help".
+
+The following changes since commit 5f594e90e9a0867e1b87ffb8b0a077152246=
+b56c:
+  Karl Hasselstr=F6m (1):
+        New policy: Only use test_expect_failure for broken tests
 
 are available in the git repository at:
 
-  git://repo.or.cz/stgit/kha.git safe
+  git://repo.or.cz/stgit/kha.git experimental
 
-David K=E5gedal (10):
-      Add some more tests of "stg status" output
-      Clear up semantics of tree_status
-      Moved that status function to the status command file
-      Split Series.push_patch in two
-      Remove dead code from push_empty_patch
-      Refactor Series.push_patch
-      Clean up Series.refresh_patch
-      Add a 'bottom' parameter to Series.refresh_patch and use it
-      Clear up the semantics of Series.new_patch
-      Refactor Series.new_patch
+David K=E5gedal (9):
+      Check bottom and invariants
+      Remove the 'bottom' field
+      Remove the 'top' field
+      Split git.merge into two functions
+      Leave working dir and index alone after failed (conflicting) push
+      Added a test case to check what happens when push finds a conflic=
+t
+      Simplify merge_recursive
+      Use the output from merge-recursive to list conflicts
+      Ask git about unmerged files
 
-Karl Hasselstr=F6m (3):
-      New test: make sure tha we can run "stg help"
-      Make sure that the output of "stg status" is sorted
-      New policy: Only use test_expect_failure for broken tests
+Karl Hasselstr=F6m (20):
+      Remove the --force flag to "stg rebase" and "stg pull"
+      Better error message if merge fails
+      Fix "stg resolved" to work with new conflict representation
+      Refactoring: pass more than one file to resolved()
+      We keep the different stages of a conflict in the index now
+      Clean up the logic in "stg resolved"
+      "stg status --reset" is not needed anymore
+      Remove "stg add"
+      Remove "stg rm"
+      Remove "stg cp"
+      Compute patch appliedness from commit DAG
+      Test the new DAG appliedness machinery
+      Fix bash completion after the DAG appliedness patch
+      Speed up the appliedness test
+      Speed up the discovery of uninteresting commits
+      Speed up appliedness check during patch creation
+      Don't traverse the whole DAG when looking for uninteresting commi=
+ts
+      Find uninteresting commits faster for special cases
+      Optimize uninterestingness checks for rebase
+      Merge branch 'conflict' into experimental
 
- stgit/commands/common.py      |    2 +-
- stgit/commands/status.py      |   45 +++++++++++-
- stgit/commands/uncommit.py    |    1 +
- stgit/git.py                  |   61 ++++------------
- stgit/stack.py                |  155 ++++++++++++++++++++++-----------=
--------
- t/README                      |    9 +--
- t/t0001-subdir-branches.sh    |    9 ++-
- t/t0002-status.sh             |   36 ++++++++++
- t/t0100-help.sh               |   15 ++++
- t/t1000-branch-create.sh      |    8 +-
- t/t1001-branch-rename.sh      |    4 +-
- t/t1002-branch-clone.sh       |    4 +-
- t/t1200-push-modified.sh      |    4 +-
+ Documentation/stg-cp.txt      |   63 -----
+ Documentation/tutorial.txt    |   22 +-
+ contrib/stgit-completion.bash |   15 +-
+ stgit/commands/add.py         |   43 ---
+ stgit/commands/commit.py      |    8 +-
+ stgit/commands/common.py      |   34 +--
+ stgit/commands/copy.py        |   44 ---
+ stgit/commands/float.py       |    2 +-
+ stgit/commands/pick.py        |    2 +-
+ stgit/commands/pull.py        |    5 +-
+ stgit/commands/rebase.py      |    5 +-
+ stgit/commands/resolved.py    |   70 ++---
+ stgit/commands/rm.py          |   47 ---
+ stgit/commands/status.py      |   34 +--
+ stgit/commands/sync.py        |    1 -
+ stgit/git.py                  |   72 +++--
+ stgit/gitmergeonefile.py      |   99 ++++---
+ stgit/main.py                 |    6 -
+ stgit/run.py                  |    3 +
+ stgit/stack.py                |  620 ++++++++++++++++++++++++++++++++-=
+--------
+ t/t0002-status.sh             |   11 +-
+ t/t1200-push-modified.sh      |    2 +-
  t/t1202-push-undo.sh          |    4 +-
+ t/t1203-push-conflict.sh      |   70 +++++
+ t/t1300-uncommit.sh           |    4 +-
+ t/t1301-assimilate.sh         |    2 +-
+ t/t1400-patch-history.sh      |    4 +-
+ t/t1500-float.sh              |   14 +-
+ t/t1600-delete-one.sh         |   12 +-
+ t/t1601-delete-many.sh        |    2 +-
+ t/t1700-goto-top.sh           |    2 +-
  t/t2000-sync.sh               |    8 +-
- t/t2100-pull-policy-fetch.sh  |    4 +-
- t/t2102-pull-policy-rebase.sh |   12 ++--
- t/t2200-rebase.sh             |    4 +-
- 18 files changed, 230 insertions(+), 155 deletions(-)
- create mode 100755 t/t0100-help.sh
+ t/t2100-pull-policy-fetch.sh  |   18 +-
+ t/t2101-pull-policy-pull.sh   |    4 +-
+ t/t2102-pull-policy-rebase.sh |   28 +--
+ t/t3000-git-interop.sh        |   60 ++++
+ t/t4000-upgrade.sh            |    6 +
+ 37 files changed, 822 insertions(+), 624 deletions(-)
+ delete mode 100644 Documentation/stg-cp.txt
+ delete mode 100644 stgit/commands/add.py
+ delete mode 100644 stgit/commands/copy.py
+ delete mode 100644 stgit/commands/rm.py
+ create mode 100755 t/t1203-push-conflict.sh
+ create mode 100755 t/t3000-git-interop.sh
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
