@@ -1,99 +1,108 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: The msysGit Herald, issue 2
-Date: Sun, 23 Sep 2007 22:48:28 -0400
-Message-ID: <20070924024828.GE3099@spearce.org>
-References: <Pine.LNX.4.64.0709232153230.28395@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Sep 24 04:48:40 2007
+From: Michael Smith <msmith@cbnco.com>
+Subject: [PATCH] user-manual: Explain what submodules are good for.
+Date: Sun, 23 Sep 2007 23:14:09 -0400
+Message-ID: <11906036491118-git-send-email-msmith@cbnco.com>
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Michael Smith <msmith@cbnco.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 05:21:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZdzz-0002sh-3p
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 04:48:39 +0200
+	id 1IZeVG-0007xC-70
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 05:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754420AbXIXCsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Sep 2007 22:48:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755029AbXIXCsd
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 22:48:33 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:57479 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754849AbXIXCsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 22:48:33 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IZdze-0005ra-Bg; Sun, 23 Sep 2007 22:48:18 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0CF1D20FBAE; Sun, 23 Sep 2007 22:48:29 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709232153230.28395@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1755276AbXIXDUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2007 23:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755052AbXIXDUv
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 23:20:51 -0400
+Received: from smtp107.rog.mail.re2.yahoo.com ([68.142.225.205]:45561 "HELO
+	smtp107.rog.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754115AbXIXDUu (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 23 Sep 2007 23:20:50 -0400
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Sun, 23 Sep 2007 23:20:50 EDT
+Received: (qmail 17114 invoked from network); 24 Sep 2007 03:14:10 -0000
+Received: from unknown (HELO pentagram.it.hurts.ca) (mtsmith@rogers.com@74.122.211.221 with login)
+  by smtp107.rog.mail.re2.yahoo.com with SMTP; 24 Sep 2007 03:14:10 -0000
+X-YMail-OSG: wk0VtsgVM1mFzsXhVKP3g2TP7BYSUIPQXmrSVZBODNZ2GwzxI2eqwPavoaGILGgnXg--
+Received: from localhost.localdomain (thrush.it.hurts.ca [10.42.42.42])
+	by pentagram.it.hurts.ca (Postfix) with ESMTP id 832121AE02D;
+	Sun, 23 Sep 2007 23:14:09 -0400 (EDT)
+X-Mailer: git-send-email 1.5.3
+In-Reply-To: 20070923172702.GA5916@fieldses.org
+References: 20070923172702.GA5916@fieldses.org
+In-Reply-To: <20070923172702.GA5916@fieldses.org>
+References: <20070923172702.GA5916@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59015>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59016>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> 
-> Maybe we'll get to the state where a link to git gui is installed in
-> addition to the "Git Shell"
+Rework the introduction to the Submodules section to explain why
+someone would use them, and fix up submodule references from the
+tree-object and todo sections.
 
-I'm hoping that becomes possible as part of the 0.9.x series of
-git-gui.  My latest master branch in git-gui.git contains a new
-startup wizard that can be used to do one of three common actions:
+Signed-off-by: Michael Smith <msmith@cbnco.com>
+---
+ Documentation/user-manual.txt |   25 ++++++++++++++-----------
+ 1 files changed, 14 insertions(+), 11 deletions(-)
 
-  - Clone a repository
-  - Create a new repository
-  - Open an existing repository
-
-Dscho has already seen this wizard.  Its certainly meant to help
-with linking to git-gui from "Begin" menus on systems that probably
-should have been called "Wide Open Doors" (given their security
-track record).  Currently the only way to get the wizard to launch
-is to run `git gui` from a pwd that isn't contained within a Git
-repository.
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index a085ca1..bd77e62 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -2856,8 +2856,7 @@ between two related tree objects, since it can ignore any entries with
+ identical object names.
  
-> > 5) What was the most surprising moment when working with Git?
-> 
-> It merged a change I made in an old branch in a file that was moved in
-> the new branch to a new location. IOW, merge across renames. Really, I
-> was so surprised - I wanted to start the manual merge when I discovered
-> that git had done all the work for me.
-
-Heh.  That always gets me too.  Especially when applying git-gui
-patches made against git.git, but to my git-gui tree.  `git-am -3`
-Just Does The Right Thing(tm).  I can't ask for more from a source
-code control system.
+ (Note: in the presence of submodules, trees may also have commits as
+-entries.   See gitlink:git-submodule[1] and gitlink:gitmodules.txt[1]
+-for partial documentation.)
++entries.  See <<submodules>> for documentation.)
  
-> > 6) What was the most frustrating moment when working with Git?
-> 
-> Just the other day, I wanted to fetch a set of changes from a public
-> repo into my test repo in order to cherry-pick from them - and it
-> automatically fetched all the tags. But, the heck, I don't want them tags
-> here, just the commits. I just can't figure out how to avoid the automatic
-> fetching of tags.
-
-Its called `git fetch --no-tags`.  You can also setup a config
-option of "remote.$name.tagopt = --no-tags" to tell git-fetch to
-not fetch tags when fetching from that remote.
-
-But yea, I too hate the fact that Git cannot read my mind and realize
-that although I usually do want to fetch tags, right now I don't,
-even though I forgot to tell it that with --no-tags.  :)
-
-So my most frustrating moment when working with Git was realizing
-that Linus didn't supply `git-read-users-mind`.  Sadly it only
-comes with `git-read-tree`.  Ah, well, at least my maple and pine
-are understood.
+ Note that the files all have mode 644 or 755: git actually only pays
+ attention to the executable bit.
+@@ -3163,12 +3162,18 @@ information as long as you have the name of the tree that it described.
+ Submodules
+ ==========
  
+-This tutorial explains how to create and publish a repository with submodules
+-using the gitlink:git-submodule[1] command.
++Some large projects are composed of smaller, self-contained parts.  For
++example, an embedded Linux distribution's source tree would include every
++piece of software in the distribution; a movie player might need to build
++against a specific, known-working version of a decompression library;
++several independent programs might all share the same build scripts.
+ 
+-Submodules maintain their own identity; the submodule support just stores the
+-submodule repository location and commit ID, so other developers who clone the
+-superproject can easily clone all the submodules at the same revision.
++Git's submodule support allows a repository to contain, as a subdirectory, a
++checkout of an external project.  Submodules maintain their own identity;
++the submodule support just stores the submodule repository location and
++commit ID, so other developers who clone the superproject can easily clone
++all the submodules at the same revision.  The gitlink:git-submodule[1]
++command manages submodules.
+ 
+ To see how submodule support works, create (for example) four example
+ repositories that can be used later as a submodule:
+@@ -3213,8 +3218,8 @@ The `git submodule add` command does a couple of things:
+ 
+ - It clones the submodule under the current directory and by default checks out
+   the master branch.
+-- It adds the submodule's clone path to the `.gitmodules` file and adds this
+-  file to the index, ready to be committed.
++- It adds the submodule's clone path to the gitlink:gitmodules[5] file and
++  adds this file to the index, ready to be committed.
+ - It adds the submodule's current commit ID to the index, ready to be
+   committed.
+ 
+@@ -4277,5 +4282,3 @@ Write a chapter on using plumbing and writing scripts.
+ Alternates, clone -reference, etc.
+ 
+ git unpack-objects -r for recovery
+-
+-submodules
 -- 
-Shawn.
+1.5.3
