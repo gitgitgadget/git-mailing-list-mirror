@@ -1,66 +1,94 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: git-svn: Deleting directories
-Date: Mon, 24 Sep 2007 09:37:10 -0700
-Message-ID: <46F7E7B6.7000601@apple.com>
-References: <46F7C3EA.2080806@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: behaviour of git diff, GIT_DIR & checked out tree
+Date: Mon, 24 Sep 2007 09:47:08 -0700
+Message-ID: <7v6420au43.fsf@gitster.siamese.dyndns.org>
+References: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
+	<Pine.LNX.4.64.0709241400410.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Russ Brown <pickscrape@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 18:38:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Tweed <david.tweed@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 24 18:48:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZqwa-0001Gh-4H
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 18:38:00 +0200
+	id 1IZr6n-0005gi-Nm
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 18:48:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761174AbXIXQhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 12:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761874AbXIXQhN
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 12:37:13 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:60626 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762327AbXIXQhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 12:37:11 -0400
-Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
-	by mail-out4.apple.com (Postfix) with ESMTP id 4EAC412B0A63;
-	Mon, 24 Sep 2007 09:37:11 -0700 (PDT)
-Received: from relay13.apple.com (unknown [127.0.0.1])
-	by relay13.apple.com (Symantec Mail Security) with ESMTP id 32A5228088;
-	Mon, 24 Sep 2007 09:37:11 -0700 (PDT)
-X-AuditID: 1180711d-a4361bb000006cd8-c4-46f7e7b71ec9
-Received: from [17.203.12.236] (aroben.apple.com [17.203.12.236])
-	by relay13.apple.com (Apple SCV relay) with ESMTP id 0DBF528057;
-	Mon, 24 Sep 2007 09:37:11 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <46F7C3EA.2080806@gmail.com>
-X-Brightmail-Tracker: AAAAAA==
+	id S1763964AbXIXQrT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 12:47:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763578AbXIXQrS
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 12:47:18 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:52802 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763964AbXIXQrR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 12:47:17 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 2A50C13B357;
+	Mon, 24 Sep 2007 12:47:32 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709241400410.28395@racer.site> (Johannes
+	Schindelin's message of "Mon, 24 Sep 2007 14:03:11 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59061>
 
-Russ Brown wrote:
-> I've just noticed that when deleting entire directory trees in git, when
-> the dcommit happens only the files in that trees get deleted, which
-> leaves a 'ghost town' of a directory tree with folders but no files,
-> which will no doubt have somewhat confused my svn-using colleagues.
->
-> This is obviously an interoperability problem, but I understand that git
-> does not track folders and is so tricky to fix.
->
-> The question though is how to handle it. Ideally, dcommit will detect
-> that an entire directory has gone and send through a changeset which
-> deletes just that one directory, instead of the current behaviour of
-> explicitly deleting every file in the directory but leaving the
-> directories themselves intact.
->   
-There's a similar problem when renaming a directory. dcommit will 
-essentially commit a series of moves of individual files rather than 
-moving the whole directory. Again this is due to git not tracking 
-directories. I should hope that whatever logic is used for detecting a 
-directory removal may also be used for detecting a directory rename.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
--Adam
+> On Mon, 24 Sep 2007, David Tweed wrote:
+>
+>> ... In
+>> a different directory, OUTSIDE of $HOME/V, I tried
+>> 
+>> env GIT_DIR=$HOME/V/.git git diff master@{midnight}
+>> 
+>> to get the same effect but, whilst I do get a diff output, it
+>> looks like a diff of the commit against an empty tree.
+>
+> Yes, this is fully expected.
+>
+> The @{time} notation accesses the _reflogs_, which are purely local 
+> beasts.  They are not transmitted when cloning.
+
+Yeah, but my reading of the problem description suggests the two
+cases refer to the same repository (hence the same reflogs).
+
+The issue is that the second case runs "git diff <one-tree>" in
+a random directory.  This form is about comparing the part of
+work tree you are in with a given tree, and does not make _any_
+sense when outside the work tree.  Usually without GIT_DIR
+environment, the command would give you an error message.
+
+With $GIT_DIR, but without $GIT_WORK_TREE, the user is telling
+the command that it is being run at the top level of the work
+tree and the repository metadata is not in the usual ".git"
+subdirectory of the top level of the work tree (in this case, by
+definition that is "$PWD/.git") but elsewhere where $GIT_DIR
+specifies.  Because it is very likely that the files under the
+random location does not share much resemblance to what are in
+$HOME/V, it is not surprising that the output consisted of many
+deletions.
+
+It would be illustrative if David did the following.
+
+	$ cd $HOME
+        $ cp -a V W
+        $ rm -fr W/.git
+        $ cd W
+        $ GIT_DIR=$HOME/V/.git git diff @{midnight}
+
+Now we are in a random place outside of the work tree
+(i.e. "W"), and we drive "git diff" with GIT_DIR specified,
+telling it to pretend that we are at the top level of the work
+tree.  So ~/W/frotz is compared with "frotz" at the top level of
+the commit (which usually is compared with ~/V/frotz), etc.  But
+the directory we happen to be in very much resembles the work
+tree, so it would give identical results to
+
+	$ cd $HOME/V
+        $ git diff @{midnight}
