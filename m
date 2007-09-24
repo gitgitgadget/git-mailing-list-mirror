@@ -1,142 +1,158 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: StGit kha experimental branch updated
-Date: Mon, 24 Sep 2007 02:10:34 +0200
-Message-ID: <20070924001034.GB24403@diana.vm.bytemark.co.uk>
-References: <20070924000244.GA24403@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase -i: commit when continuing after "edit"
+Date: Mon, 24 Sep 2007 01:29:30 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709240121080.28395@racer.site>
+References: <20070923224502.GB7249@potapov>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 02:10:45 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 02:30:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZbX9-00019R-Ju
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 02:10:44 +0200
+	id 1IZbqR-0004rj-AY
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 02:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755446AbXIXAKh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 23 Sep 2007 20:10:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754490AbXIXAKh
-	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 20:10:37 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3952 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755446AbXIXAKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Sep 2007 20:10:36 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IZbX0-0006ON-00; Mon, 24 Sep 2007 01:10:34 +0100
-Content-Disposition: inline
-In-Reply-To: <20070924000244.GA24403@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753697AbXIXAad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Sep 2007 20:30:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753796AbXIXAac
+	(ORCPT <rfc822;git-outgoing>); Sun, 23 Sep 2007 20:30:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57929 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752950AbXIXAab (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Sep 2007 20:30:31 -0400
+Received: (qmail invoked by alias); 24 Sep 2007 00:30:30 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 24 Sep 2007 02:30:30 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ASylCvbMAvxBXxF4EHL4c3UTzHiCCqAcSGxMXzJ
+	ko8TtHBgmnCYLw
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070923224502.GB7249@potapov>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59009>
 
-The three last patches of David's top/bottom removal series are here,
-and all the old patches too. Changes:
 
-  * Everything's been rebased on top of David's top/bottom removal
-    series, which turned out to be a major undertaking. I'm not 100%
-    sure I've managed to not break anything.
+When doing an "edit" on a commit, editing and git-adding some files,
+"git rebase -i" complained about a missing "author-script".  The idea was 
+that the user would call "git commit --amend" herself.
 
-  * I've modified the conflict series to adhere to the new test suite
-    policy; it now passes the test suite at every point, by using
-    test_expect_failure for broken tests.
+But we can be nice and do that for the user.
 
-  * The add/rm/cp removal patches no longer break "stg help".
+To do this, rebase -i stores the author script and message whenever 
+writing out a patch, and it remembers to do an "amend" by creating the 
+file "amend" in "$DOTEST".
 
-The following changes since commit 5f594e90e9a0867e1b87ffb8b0a077152246=
-b56c:
-  Karl Hasselstr=F6m (1):
-        New policy: Only use test_expect_failure for broken tests
+Noticed by Dmitry Potapov.
 
-are available in the git repository at:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-  git://repo.or.cz/stgit/kha.git experimental
+	On Mon, 24 Sep 2007, Dmitry Potapov wrote:
 
-David K=E5gedal (9):
-      Check bottom and invariants
-      Remove the 'bottom' field
-      Remove the 'top' field
-      Split git.merge into two functions
-      Leave working dir and index alone after failed (conflicting) push
-      Added a test case to check what happens when push finds a conflic=
-t
-      Simplify merge_recursive
-      Use the output from merge-recursive to list conflicts
-      Ask git about unmerged files
+	> I have tried to use git-rebase --interactive today, and run into 
+	> a strange error message saying:
+	> 
+	> /usr/bin/git-rebase--interactive: \
+	>	line 333: $GIT_DIR/.dotest-merge/author-script: \
+	>		No such file or directory
 
-Karl Hasselstr=F6m (20):
-      Remove the --force flag to "stg rebase" and "stg pull"
-      Better error message if merge fails
-      Fix "stg resolved" to work with new conflict representation
-      Refactoring: pass more than one file to resolved()
-      We keep the different stages of a conflict in the index now
-      Clean up the logic in "stg resolved"
-      "stg status --reset" is not needed anymore
-      Remove "stg add"
-      Remove "stg rm"
-      Remove "stg cp"
-      Compute patch appliedness from commit DAG
-      Test the new DAG appliedness machinery
-      Fix bash completion after the DAG appliedness patch
-      Speed up the appliedness test
-      Speed up the discovery of uninteresting commits
-      Speed up appliedness check during patch creation
-      Don't traverse the whole DAG when looking for uninteresting commi=
-ts
-      Find uninteresting commits faster for special cases
-      Optimize uninterestingness checks for rebase
-      Merge branch 'conflict' into experimental
+	Could you please apply this patch and try if the issue is gone?
 
- Documentation/stg-cp.txt      |   63 -----
- Documentation/tutorial.txt    |   22 +-
- contrib/stgit-completion.bash |   15 +-
- stgit/commands/add.py         |   43 ---
- stgit/commands/commit.py      |    8 +-
- stgit/commands/common.py      |   34 +--
- stgit/commands/copy.py        |   44 ---
- stgit/commands/float.py       |    2 +-
- stgit/commands/pick.py        |    2 +-
- stgit/commands/pull.py        |    5 +-
- stgit/commands/rebase.py      |    5 +-
- stgit/commands/resolved.py    |   70 ++---
- stgit/commands/rm.py          |   47 ---
- stgit/commands/status.py      |   34 +--
- stgit/commands/sync.py        |    1 -
- stgit/git.py                  |   72 +++--
- stgit/gitmergeonefile.py      |   99 ++++---
- stgit/main.py                 |    6 -
- stgit/run.py                  |    3 +
- stgit/stack.py                |  620 ++++++++++++++++++++++++++++++++-=
---------
- t/t0002-status.sh             |   11 +-
- t/t1200-push-modified.sh      |    2 +-
- t/t1202-push-undo.sh          |    4 +-
- t/t1203-push-conflict.sh      |   70 +++++
- t/t1300-uncommit.sh           |    4 +-
- t/t1301-assimilate.sh         |    2 +-
- t/t1400-patch-history.sh      |    4 +-
- t/t1500-float.sh              |   14 +-
- t/t1600-delete-one.sh         |   12 +-
- t/t1601-delete-many.sh        |    2 +-
- t/t1700-goto-top.sh           |    2 +-
- t/t2000-sync.sh               |    8 +-
- t/t2100-pull-policy-fetch.sh  |   18 +-
- t/t2101-pull-policy-pull.sh   |    4 +-
- t/t2102-pull-policy-rebase.sh |   28 +--
- t/t3000-git-interop.sh        |   60 ++++
- t/t4000-upgrade.sh            |    6 +
- 37 files changed, 822 insertions(+), 624 deletions(-)
- delete mode 100644 Documentation/stg-cp.txt
- delete mode 100644 stgit/commands/add.py
- delete mode 100644 stgit/commands/copy.py
- delete mode 100644 stgit/commands/rm.py
- create mode 100755 t/t1203-push-conflict.sh
- create mode 100755 t/t3000-git-interop.sh
+	The patch looks a bit strange, because some code moved from 
+	die_with_patch() to make_patch(), and the diff makes it look like 
+	the end of the function moved instead.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+	Funnily enough we discussed human readable diffs briefly on #git
+	today, but I think even the best diff algorithms could not catch 
+	that.
+
+ git-rebase--interactive.sh    |   12 ++++++++----
+ t/t3404-rebase-interactive.sh |   14 +++++++++++++-
+ 2 files changed, 21 insertions(+), 5 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 8258b7a..e4cf282 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -79,13 +79,13 @@ mark_action_done () {
+ make_patch () {
+ 	parent_sha1=$(git rev-parse --verify "$1"^ 2> /dev/null)
+ 	git diff "$parent_sha1".."$1" > "$DOTEST"/patch
+-}
+-
+-die_with_patch () {
+ 	test -f "$DOTEST"/message ||
+ 		git cat-file commit $sha1 | sed "1,/^$/d" > "$DOTEST"/message
+ 	test -f "$DOTEST"/author-script ||
+ 		get_author_ident_from_commit $sha1 > "$DOTEST"/author-script
++}
++
++die_with_patch () {
+ 	make_patch "$1"
+ 	die "$2"
+ }
+@@ -214,6 +214,7 @@ peek_next_command () {
+ do_next () {
+ 	test -f "$DOTEST"/message && rm "$DOTEST"/message
+ 	test -f "$DOTEST"/author-script && rm "$DOTEST"/author-script
++	test -f "$DOTEST"/amend && rm "$DOTEST"/amend
+ 	read command sha1 rest < "$TODO"
+ 	case "$command" in
+ 	\#|'')
+@@ -233,6 +234,7 @@ do_next () {
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		make_patch $sha1
++		: > "$DOTEST"/amend
+ 		warn
+ 		warn "You can amend the commit now, with"
+ 		warn
+@@ -332,7 +334,9 @@ do
+ 		git update-index --refresh &&
+ 		git diff-files --quiet &&
+ 		! git diff-index --cached --quiet HEAD &&
+-		. "$DOTEST"/author-script &&
++		. "$DOTEST"/author-script && {
++			test ! -f "$DOTEST"/amend || git reset --soft HEAD^
++		} &&
+ 		export GIT_AUTHOR_NAME GIT_AUTHOR_NAME GIT_AUTHOR_DATE &&
+ 		git commit -F "$DOTEST"/message -e
+ 
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 718c9c1..1af73a4 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -80,7 +80,7 @@ cat "$1".tmp
+ action=pick
+ for line in $FAKE_LINES; do
+ 	case $line in
+-	squash)
++	squash|edit)
+ 		action="$line";;
+ 	*)
+ 		echo sed -n "${line}s/^pick/$action/p"
+@@ -297,4 +297,16 @@ test_expect_success 'ignore patch if in upstream' '
+ 	test $HEAD = $(git rev-parse HEAD^)
+ '
+ 
++test_expect_success '--continue tries to commit, even for "edit"' '
++	parent=$(git rev-parse HEAD^) &&
++	test_tick &&
++	FAKE_LINES="edit 1" git rebase -i HEAD^ &&
++	echo edited > file7 &&
++	git add file7 &&
++	FAKE_COMMIT_MESSAGE="chouette!" git rebase --continue &&
++	test edited = $(git show HEAD:file7) &&
++	git show HEAD | grep chouette &&
++	test $parent = $(git rev-parse HEAD^)
++'
++
+ test_done
+-- 
+1.5.3.2.1039.g855b8
