@@ -1,155 +1,193 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [OT] Re: C++ *for Git*
-Date: Mon, 24 Sep 2007 14:46:03 +0400
-Message-ID: <20070924104603.GB25435@potapov>
-References: <5e4707340709221550o6d0a6062qd51c16a278727c29@mail.gmail.com> <20070923020951.GF24423@planck.djpig.de> <20070923062527.GA8979@old.davidb.org> <851wcpsv4z.fsf@lola.goethe.zz> <e5bfff550709230229t79004ce2j5ce8c2ae7744a7f2@mail.gmail.com> <20070923104525.GC7118@artemis.corp> <e5bfff550709230642v7fa5e837s7a5b9082b043672d@mail.gmail.com> <alpine.LFD.0.999.0709230911360.16478@woody.linux-foundation.org> <20070923212239.GA7249@potapov> <3f4fd2640709231525q52a9865alc834ca46b85998fe@mail.gmail.com>
+From: Stefan Sperling <stsp@elego.de>
+Subject: [PATCH] resend: really plug memory leaks in git-svnimport
+Date: Mon, 24 Sep 2007 12:57:40 +0200
+Message-ID: <20070924105740.GB8900@ted>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	David Kastrup <dak@gnu.org>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Alex Unleashed <alex@flawedcode.org>,
-	Kyle Rose <krose@krose.org>, Miles Bader <miles@gnu.org>,
-	Dmitry Kakurin <dmitry.kakurin@gmail.com>,
-	Git <git@vger.kernel.org>
-To: Reece Dunn <msclrhd@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 24 12:46:32 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7ZAtKRhVyVSsbBD2"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 12:58:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZlSQ-0006Ws-SS
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 12:46:31 +0200
+	id 1IZldV-00011g-Ab
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 12:57:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753493AbXIXKqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 06:46:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752839AbXIXKqZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 06:46:25 -0400
-Received: from smtp06.mtu.ru ([62.5.255.53]:52322 "EHLO smtp06.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752712AbXIXKqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 06:46:24 -0400
-Received: from potapov.private (ppp85-140-171-48.pppoe.mtu-net.ru [85.140.171.48])
-	by smtp06.mtu.ru (Postfix) with ESMTP id 02AEB7BF474;
-	Mon, 24 Sep 2007 14:46:08 +0400 (MSD)
-Received: from potapov.private (localhost [127.0.0.1])
-	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l8OAk8N2026248;
-	Mon, 24 Sep 2007 14:46:08 +0400
-Received: (from dpotapov@localhost)
-	by potapov.private (8.13.8/8.13.8/Submit) id l8OAk3rv026246;
-	Mon, 24 Sep 2007 14:46:03 +0400
-X-Authentication-Warning: potapov.private: dpotapov set sender to dpotapov@gmail.com using -f
+	id S1754020AbXIXK5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 06:57:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752674AbXIXK5u
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 06:57:50 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50328 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753276AbXIXK5t (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 06:57:49 -0400
+X-Envelope-From: stsp@stsp.name
+Received: from stsp.lan (stsp.in-vpn.de [217.197.85.96])
+	(authenticated bits=128)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id l8OAvgna019946
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 24 Sep 2007 12:57:46 +0200
+Received: from ted.stsp.lan (localhost [127.0.0.1])
+	by stsp.lan (8.13.8/8.13.8/Debian-3) with ESMTP id l8OAvfcr013515
+	for <git@vger.kernel.org>; Mon, 24 Sep 2007 12:57:41 +0200
+Received: (from stsp@localhost)
+	by ted.stsp.lan (8.13.8/8.13.8/Submit) id l8OAvfbK013512
+	for git@vger.kernel.org; Mon, 24 Sep 2007 12:57:41 +0200
 Content-Disposition: inline
-In-Reply-To: <3f4fd2640709231525q52a9865alc834ca46b85998fe@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59036>
-
-On Sun, Sep 23, 2007 at 11:25:01PM +0100, Reece Dunn wrote:
-> The next version of C++ is going to have garbage collection that the
-> user can enable, disable or remain neutral about. However, this is
-> program-wide and has many traps that you could fall into.
-
-Sure. C++ has not been design to be garbage collection friendly, in
-fact, even now, you can use some GC with C++, but it can be painful.
-I don't think that the new standard will change much in this respect.
-
-> > > But other parts of C++ are just nasty. The whole OO layer seems designed
-> > > to do a lot of things implicitly and in the wrong way.
-> >
-> > It could do a lot of things implicitly, but it does not force you,
-> > except calling destructor when the control leaves the scope of
-> > declaration, but I hardly can consider it as implicit.
-> 
-> You have to add the explicit keyword to any constructor to prevent an
-> automatic conversion. Therefore, the constructors that are called are
-> implicit by default.
-
-Yes, I would prefer if it were opposite by default, but it was an
-initial mistake in design, and you cannot change it without breaking
-a lot of people code.
-
-> If you have a conversion operator, this is always
-> implicitly called when there is a match by the compiler.
-
-Conversation operator should be written only if you do want an implicit
-conversation, and that may be useful sometimes, albeit very rarely.
-
-> 
-> I agree with Linus here, there are a lot of things that happen implicily.
-> 
-> > > I also disagree with exception handling,
-> >
-> > Perhaps, you look at it from the kernel point of view. Otherwise, I
-> > would like to hear your arguments against it. In fact, I don't think
-> > it is possible to write generic algorithms without exceptions. Of
-> > course, if you write a program that can print an error to stderr and
-> > exit, there is no much need for them. So, it may depend on the task.
-> 
-> There are many issues with exceptions.
-> 
-> Firstly, there is throwing an exception from a destructor, which is
-> warned against in any good C++ book, but does not prevent you from
-> doing so (even if it is inadvertantly)!
-
-In general, the compiler does not have all information to know whether
-a destructor can or cannot throw an exception, and even less it knows
-about your real intentions. There are many ways to write something
-that will not work. You can create an infinite recursion, but I don't
-think it is a good argument against recursion.
-
-> 
-> More importantly though, is the loss of contextual information.
-
-Do you think that an error code contains much more contextual
-information?
-
-> Consider throwing the same exception on all calls to API that return
-> the same error code type. 
-
-I did not mean that all error codes should be returned as an exception.
-Exception in C++ is something that should not normally happen, like
-failure to allocate memory. So, you usually do not want to handle
-this situation immediate.
-
-> The code that processes this may be anywhere
-> in the system. This makes it impossible to do any sensible recovery
-> (if possible), or error reporting. The exception can be rethrown or
-> translated to another exception, making it impossible to find the
-> originator of the exception. This makes it harder, if not impossible,
-> to track the exception back to the source when you are at a breakpoint
-> in the exception handler.
-
-In gdb, you can catch all exception when thrown using "catch throw".
-And again, I don't see how it is better when a program returns an
-error code, especially if this error code is recoded couple times
-in the process of returning. So the problem is not with exceptions,
-but usually with bad design.
-
-> Then there is dealing with caller boundaries. That is, when a callback
-> or interface function in the application will return to the operating
-> system (e.g. when handling a draw request from X11), or another
-> language such as Python. Also, because different compiler vendors and
-> versions handle exceptions differently, if you want to support
-> different compilers (and you have resolved the name mangling
-> incompatibilities), you need to handle exceptions correctly in these
-> cases, or risk having major problems that would be impossible to
-> trace.
-
-You named some interoperability issues with C++ (and there are many
-of them), but it is not an argument against exceptions per se.
-
-> Not to mention that anywhere new, dynamic_cast and other
-> language features are used may throw exceptions.
-
-dynamic_cast throws an exception only for references, but not for
-pointers, and there is a good reason for that -- references should
-not be NULL; and if you want to avoid bad_alloc exception, you can
-use "T* p = new (std::nothrow) T;" but it is rarely needed.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59037>
 
 
-Dmitry Potapov
+--7ZAtKRhVyVSsbBD2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Junio asked me to resend this patch to the mailing list.
+
+This version of the patch is adjusted to apply cleanly
+to current HEAD.
+
+@Junio: I'm not resending the multiple branch/tag dirs patch
+just yet, because I want to polish it first -- I've got another
+idea how to improve it.
+
+Log message:
+
+Fix pool handling in git-svnimport to avoid memory leaks.
+
+- Create an explicit one-and-only root pool.
+- Closely follow examples in SVN::Core man page.
+  Before calling a subversion function, create a subpool of our
+  root pool and make it the new default pool.=20
+- Create a subpool for looping over svn revisions and clear
+  this subpool (i.e. it mark for reuse, don't decallocate it)
+  at the start of the loop instead of allocating new memory
+  with each iteration.
+
+See http://marc.info/?l=3Dgit&m=3D118554191513822&w=3D2 for a detailed
+explanation of the issue.
+
+Signed-off-by: Stefan Sperling <stsp@elego.de>
+
+diff --git a/git-svnimport.perl b/git-svnimport.perl
+index aa5b3b2..ea8c1b2 100755
+--- a/git-svnimport.perl
++++ b/git-svnimport.perl
+@@ -54,6 +54,7 @@ my $branch_name =3D $opt_b || "branches";
+ my $project_name =3D $opt_P || "";
+ $project_name =3D "/" . $project_name if ($project_name);
+ my $repack_after =3D $opt_R || 1000;
++my $root_pool =3D SVN::Pool->new_default;
+=20
+ @ARGV =3D=3D 1 or @ARGV =3D=3D 2 or usage();
+=20
+@@ -132,7 +133,7 @@ sub conn {
+ 	my $auth =3D SVN::Core::auth_open ([SVN::Client::get_simple_provider,
+ 			  SVN::Client::get_ssl_server_trust_file_provider,
+ 			  SVN::Client::get_username_provider]);
+-	my $s =3D SVN::Ra->new(url =3D> $repo, auth =3D> $auth);
++	my $s =3D SVN::Ra->new(url =3D> $repo, auth =3D> $auth, pool =3D> $root_p=
+ool);
+ 	die "SVN connection to $repo: $!\n" unless defined $s;
+ 	$self->{'svn'} =3D $s;
+ 	$self->{'repo'} =3D $repo;
+@@ -147,11 +148,10 @@ sub file {
+=20
+ 	print "... $rev $path ...\n" if $opt_v;
+ 	my (undef, $properties);
+-	my $pool =3D SVN::Pool->new();
+ 	$path =3D~ s#^/*##;
++	my $subpool =3D SVN::Pool::new_default_sub;
+ 	eval { (undef, $properties)
+-		   =3D $self->{'svn'}->get_file($path,$rev,$fh,$pool); };
+-	$pool->clear;
++		   =3D $self->{'svn'}->get_file($path,$rev,$fh); };
+ 	if($@) {
+ 		return undef if $@ =3D~ /Attempted to get checksum/;
+ 		die $@;
+@@ -185,6 +185,7 @@ sub ignore {
+=20
+ 	print "... $rev $path ...\n" if $opt_v;
+ 	$path =3D~ s#^/*##;
++	my $subpool =3D SVN::Pool::new_default_sub;
+ 	my (undef,undef,$properties)
+ 	    =3D $self->{'svn'}->get_dir($path,$rev,undef);
+ 	if (exists $properties->{'svn:ignore'}) {
+@@ -202,6 +203,7 @@ sub ignore {
+ sub dir_list {
+ 	my($self,$path,$rev) =3D @_;
+ 	$path =3D~ s#^/*##;
++	my $subpool =3D SVN::Pool::new_default_sub;
+ 	my ($dirents,undef,$properties)
+ 	    =3D $self->{'svn'}->get_dir($path,$rev,undef);
+ 	return $dirents;
+@@ -358,10 +360,9 @@ open BRANCHES,">>", "$git_dir/svn2git";
+=20
+ sub node_kind($$) {
+ 	my ($svnpath, $revision) =3D @_;
+-	my $pool=3DSVN::Pool->new;
+ 	$svnpath =3D~ s#^/*##;
+-	my $kind =3D $svn->{'svn'}->check_path($svnpath,$revision,$pool);
+-	$pool->clear;
++	my $subpool =3D SVN::Pool::new_default_sub;
++	my $kind =3D $svn->{'svn'}->check_path($svnpath,$revision);
+ 	return $kind;
+ }
+=20
+@@ -889,7 +890,7 @@ sub commit_all {
+ 	# Recursive use of the SVN connection does not work
+ 	local $svn =3D $svn2;
+=20
+-	my ($changed_paths, $revision, $author, $date, $message, $pool) =3D @_;
++	my ($changed_paths, $revision, $author, $date, $message) =3D @_;
+ 	my %p;
+ 	while(my($path,$action) =3D each %$changed_paths) {
+ 		$p{$path} =3D [ $action->action,$action->copyfrom_path, $action->copyfro=
+m_rev, $path ];
+@@ -925,14 +926,14 @@ print "Processing from $current_rev to $opt_l ...\n" =
+if $opt_v;
+ my $from_rev;
+ my $to_rev =3D $current_rev - 1;
+=20
++my $subpool =3D SVN::Pool::new_default_sub;
+ while ($to_rev < $opt_l) {
++	$subpool->clear;
+ 	$from_rev =3D $to_rev + 1;
+ 	$to_rev =3D $from_rev + $repack_after;
+ 	$to_rev =3D $opt_l if $opt_l < $to_rev;
+ 	print "Fetching from $from_rev to $to_rev ...\n" if $opt_v;
+-	my $pool=3DSVN::Pool->new;
+-	$svn->{'svn'}->get_log("/",$from_rev,$to_rev,0,1,1,\&commit_all,$pool);
+-	$pool->clear;
++	$svn->{'svn'}->get_log("/",$from_rev,$to_rev,0,1,1,\&commit_all);
+ 	my $pid =3D fork();
+ 	die "Fork: $!\n" unless defined $pid;
+ 	unless($pid) {
+
+--=20
+Stefan Sperling <stsp@elego.de>                 Software Developer
+elego Software Solutions GmbH                            HRB 77719
+Gustav-Meyer-Allee 25, Gebaeude 12        Tel:  +49 30 23 45 86 96=20
+13355 Berlin                              Fax:  +49 30 23 45 86 95
+http://www.elego.de                 Geschaeftsfuehrer: Olaf Wagner
+
+--7ZAtKRhVyVSsbBD2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG95gk5dMCc/WdJfARAhUmAKDqoW6PFzTE0Gfm0Z1Ef9mu2jkcOgCeL3eW
+xCNRaHwH00CMdWzzGNC6HGw=
+=dg+7
+-----END PGP SIGNATURE-----
+
+--7ZAtKRhVyVSsbBD2--
