@@ -1,198 +1,51 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-remote rm: add tests and minor fix-ups
-Date: Sun, 23 Sep 2007 22:39:30 -0700
-Message-ID: <7vsl54bp0t.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
+Date: Mon, 24 Sep 2007 08:05:21 +0200
+Organization: glandium.org
+Message-ID: <20070924060521.GB10975@glandium.org>
+References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: James Bowes <jbowes@dangerouslyinc.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 24 07:39:43 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 08:06:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZgfW-00068C-9T
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 07:39:42 +0200
+	id 1IZh5I-0002m9-6P
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 08:06:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751141AbXIXFjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 01:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751287AbXIXFjg
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 01:39:36 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:44243 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976AbXIXFjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 01:39:36 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E4A2A139AF4;
-	Mon, 24 Sep 2007 01:39:53 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754738AbXIXGGN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 02:06:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbXIXGGM
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 02:06:12 -0400
+Received: from vawad.err.no ([85.19.200.177]:53715 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753616AbXIXGGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 02:06:11 -0400
+Received: from aputeaux-153-1-33-201.w82-124.abo.wanadoo.fr ([82.124.3.201] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IZh5B-0000E8-Jr; Mon, 24 Sep 2007 08:06:13 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.67)
+	(envelope-from <mh@glandium.org>)
+	id 1IZh4L-00035L-WB; Mon, 24 Sep 2007 08:05:22 +0200
+Content-Disposition: inline
+In-Reply-To: <85myvdktb3.fsf@lola.goethe.zz>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59019>
 
-This fixes "git remote rm" which always exited with a failure,
-corrects indentation, and adds tests.
+On Sun, Sep 23, 2007 at 10:42:08PM +0200, David Kastrup wrote:
+> -while case $# in 0) break ;; esac
+> +while test $# != 0
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Wouldn't -ne be better ?
 
- * People seemed to have liked "git remote rm"; additional tests
-   were requested to complete the series when the patch was
-   submitted but they never came, so I ended up doing the
-   janitorial work myself, which led to discovery of breakage in
-   the implementation.
-
-   Needless to say, I am not overly amused.
-
- git-remote.perl   |   10 ++---
- t/t5505-remote.sh |  100 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 104 insertions(+), 6 deletions(-)
- create mode 100755 t/t5505-remote.sh
-
-diff --git a/git-remote.perl b/git-remote.perl
-index f513a8a..b7c1e01 100755
---- a/git-remote.perl
-+++ b/git-remote.perl
-@@ -317,7 +317,7 @@ sub update_remote {
- }
- 
- sub rm_remote {
--    my ($name) = @_;
-+	my ($name) = @_;
- 	if (!exists $remote->{$name}) {
- 		print STDERR "No such remote $name\n";
- 		return;
-@@ -336,7 +336,7 @@ sub rm_remote {
- 	};
- 
- 
--    my @refs = $git->command('for-each-ref',
-+	my @refs = $git->command('for-each-ref',
- 		'--format=%(refname) %(objectname)', "refs/remotes/$name");
- 	for (@refs) {
- 		($ref, $object) = split;
-@@ -453,11 +453,9 @@ elsif ($ARGV[0] eq 'add') {
- elsif ($ARGV[0] eq 'rm') {
- 	if (@ARGV <= 1) {
- 		print STDERR "Usage: git remote rm <remote>\n";
-+		exit(1);
- 	}
--    else {
--        rm_remote($ARGV[1]);
--	}
--    exit(1);
-+	rm_remote($ARGV[1]);
- }
- else {
- 	print STDERR "Usage: git remote\n";
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-new file mode 100755
-index 0000000..636aec2
---- /dev/null
-+++ b/t/t5505-remote.sh
-@@ -0,0 +1,100 @@
-+#!/bin/sh
-+
-+test_description='git remote porcelain-ish'
-+
-+. ./test-lib.sh
-+
-+GIT_CONFIG=.git/config
-+export GIT_CONFIG
-+
-+setup_repository () {
-+	mkdir "$1" && (
-+	cd "$1" &&
-+	git init &&
-+	>file &&
-+	git add file &&
-+	git commit -m "Initial" &&
-+	git checkout -b side &&
-+	>elif &&
-+	git add elif &&
-+	git commit -m "Second" &&
-+	git checkout master
-+	)
-+}
-+
-+tokens_match () {
-+	echo "$1" | tr ' ' '\012' | sort | sed -e '/^$/d' >expect &&
-+	echo "$2" | tr ' ' '\012' | sort | sed -e '/^$/d' >actual &&
-+	diff -u expect actual
-+}
-+
-+check_remote_track () {
-+	actual=$(git remote show "$1" | sed -n -e '$p') &&
-+	shift &&
-+	tokens_match "$*" "$actual"
-+}
-+
-+check_tracking_branch () {
-+	f="" &&
-+	r=$(git for-each-ref "--format=%(refname)" |
-+		sed -ne "s|^refs/remotes/$1/||p") &&
-+	shift &&
-+	tokens_match "$*" "$r"
-+}
-+
-+test_expect_success setup '
-+
-+	setup_repository one &&
-+	setup_repository two &&
-+	(
-+		cd two && git branch another
-+	) &&
-+	git clone one test
-+
-+'
-+
-+test_expect_success 'remote information for the origin' '
-+(
-+	cd test &&
-+	tokens_match origin "$(git remote)" &&
-+	check_remote_track origin master side &&
-+	check_tracking_branch origin HEAD master side
-+)
-+'
-+
-+test_expect_success 'add another remote' '
-+(
-+	cd test &&
-+	git remote add -f second ../two &&
-+	tokens_match "origin second" "$(git remote)" &&
-+	check_remote_track origin master side &&
-+	check_remote_track second master side another &&
-+	check_tracking_branch second master side another &&
-+	git for-each-ref "--format=%(refname)" refs/remotes |
-+	sed -e "/^refs\/remotes\/origin\//d" \
-+	    -e "/^refs\/remotes\/second\//d" >actual &&
-+	>expect &&
-+	diff -u expect actual
-+)
-+'
-+
-+test_expect_success 'remove remote' '
-+(
-+	cd test &&
-+	git remote rm second
-+)
-+'
-+
-+test_expect_success 'remove remote' '
-+(
-+	cd test &&
-+	tokens_match origin "$(git remote)" &&
-+	check_remote_track origin master side &&
-+	git for-each-ref "--format=%(refname)" refs/remotes |
-+	sed -e "/^refs\/remotes\/origin\//d" >actual &&
-+	>expect &&
-+	diff -u expect actual
-+)
-+'
-+
-+test_done
--- 
-1.5.3.2.1053.g5065
+Mike
