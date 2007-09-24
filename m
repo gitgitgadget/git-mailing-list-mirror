@@ -1,72 +1,59 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
-Date: Mon, 24 Sep 2007 22:45:05 +0900
-Message-ID: <87k5qgrxcu.fsf@catnip.gol.com>
-References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
-	<20070924060521.GB10975@glandium.org> <85k5qgk295.fsf@lola.goethe.zz>
-	<ee77f5c20709232330n7b47d9e9v38677678dbf197da@mail.gmail.com>
-	<86ejgowl5g.fsf@lola.quinscape.zz>
-	<20070924080134.GA9112@artemis.corp>
-	<20070924080436.GB9112@artemis.corp>
-	<Pine.LNX.4.64.0709241128460.28395@racer.site>
-	<87ps08s3zt.fsf@catnip.gol.com>
-	<20070924113556.GI8111@void.codelabs.ru>
-Reply-To: Miles Bader <miles@gnu.org>
+From: figo <rcc_dark@hotmail.com>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Mon, 24 Sep 2007 13:41:17 +0000 (UTC)
+Message-ID: <loom.20070924T134013-959@post.gmane.org>
+References: <46DDC500.5000606@etek.chalmers.se><1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com> <alpine.LFD.0.999.0709061839510.5626@evo.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Mon Sep 24 15:45:20 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 24 15:45:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZoFL-0004Yb-Gd
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:45:11 +0200
+	id 1IZoFZ-0004eY-Dq
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:45:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756826AbXIXNpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 09:45:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756415AbXIXNpE
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:45:04 -0400
-Received: from smtp02.dentaku.gol.com ([203.216.5.72]:42070 "EHLO
-	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752612AbXIXNpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 09:45:03 -0400
-Received: from 203-216-103-127.dsl.gol.ne.jp ([203.216.103.127] helo=catnip.gol.com)
-	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
-	id 1IZoF2-0003kh-7m; Mon, 24 Sep 2007 22:44:52 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id C71C82F41; Mon, 24 Sep 2007 22:45:05 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-In-Reply-To: <20070924113556.GI8111@void.codelabs.ru> (Eygene Ryabinkin's message of "Mon\, 24 Sep 2007 15\:35\:56 +0400")
-X-Abuse-Complaints: abuse@gol.com
+	id S1756415AbXIXNpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 09:45:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756478AbXIXNpP
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:45:15 -0400
+Received: from main.gmane.org ([80.91.229.2]:47095 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756415AbXIXNpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 09:45:13 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IZoFC-0007Pm-FF
+	for git@vger.kernel.org; Mon, 24 Sep 2007 13:45:02 +0000
+Received: from dsl-189-134-63-101.prod-infinitum.com.mx ([dsl-189-134-63-101.prod-infinitum.com.mx])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 24 Sep 2007 13:45:02 +0000
+Received: from rcc_dark by dsl-189-134-63-101.prod-infinitum.com.mx with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 24 Sep 2007 13:45:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 189.134.63.101 (Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Alexa Toolbar; InfoPath.2; Alexa Toolbar; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.0.04506; MEGAUPLOAD 2.0; .NET CLR 3.0.04506.590; .NET CLR 3.5.20706))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59048>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> writes:
->> The comment "... holds only for a shell where [ is a builtin" doesn't
->> make any sense to me
->
-> The 'while case ...' construct does not invoke any external commands.
-> The 'while test ...' too, but only when 'test' is builtin.  When
-> 'test' is the external binary you get one additional fork/exec per
-> each cycle.
+http://www.research.att.com/~bs/applications.html
 
-In practice that's not an issue though -- every reasonable shell has
-test as a builtin these days, so the "works when test is not a builtin"
-criteria is really important only for robustness.
+just as Bjarne once wrote in his TC++PL, its hard to teach an old dog new 
+tricks. Its even harder to give quality education about how to use something 
+to someone who doesnt want to learn.
 
-> I believe that this trick comes from the old days where people were
-> generally much more eager to save CPU cycles than now ;))
+you hate high level, then continue programming operative systems, please NEVER 
+DO something else. C++ was designed to give programmers high level tools and 
+still being able to take care about performance.
 
-Yes.  I still occasionally find myself using "case" where if+test might
-be more natural, but I think it's basically an anachronism these days,
-and causes more harm by reducing readability than good.
-
--Miles
--- 
-The car has become... an article of dress without which we feel uncertain,
-unclad, and incomplete.  [Marshall McLuhan, Understanding Media, 1964]
+portability wont be possible after a standard is published and some couple of 
+years given to the compiler developers. C++ had its standard in 1998, and add 
+two or three years for compiler development = 2002. "Quite recently", way more 
+recently that your last use of C++ I can bet.
