@@ -1,97 +1,74 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: My stash wants to delete all my files
-Date: Mon, 24 Sep 2007 14:12:15 +0100
-Message-ID: <5A9D6E3B-7B0E-4414-9AFB-C1C8B2EE6A9D@steelskies.com>
-Mime-Version: 1.0 (Apple Message framework v901)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: behaviour of git diff, GIT_DIR & checked out tree
+Date: Mon, 24 Sep 2007 14:16:14 +0100
+Message-ID: <e1dab3980709240616p5badae12t23ffd323a0d873d@mail.gmail.com>
+References: <e1dab3980709240545o32eeefcdkd4bc67abab0e5343@mail.gmail.com>
+	 <Pine.LNX.4.64.0709241400410.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 24 15:13:36 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Sep 24 15:16:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZnkd-0001AW-TW
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:13:28 +0200
+	id 1IZnnU-0002B7-BJ
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 15:16:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753754AbXIXNNF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 09:13:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753033AbXIXNNF
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:13:05 -0400
-Received: from juliet.asmallorange.com ([207.210.105.70]:49372 "EHLO
-	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752707AbXIXNNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 09:13:04 -0400
-Received: from host217-35-101-26.in-addr.btopenworld.com ([217.35.101.26]:49991 helo=[192.168.1.2])
-	by juliet.asmallorange.com with esmtpa (Exim 4.68)
-	(envelope-from <maillist@steelskies.com>)
-	id 1IZnk5-0001eP-1Q
-	for git@vger.kernel.org; Mon, 24 Sep 2007 09:12:53 -0400
-X-Mailer: Apple Mail (2.901)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - steelskies.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755881AbXIXNQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 09:16:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756335AbXIXNQR
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 09:16:17 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:7635 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754227AbXIXNQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 09:16:16 -0400
+Received: by py-out-1112.google.com with SMTP id u77so2903296pyb
+        for <git@vger.kernel.org>; Mon, 24 Sep 2007 06:16:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=iJm/WIGk/gxl+1njfY/bcA5BCjkOpZTm/GmYDjSu5p8=;
+        b=fNz6UiWz5oKeoEifQzix3DEyr/QU7sGbcGhrP80zu+HUInzIfCTpFZGr51nclWHd8J2JpGoebgvq1glsvW23Hy5AF3fOHzkMwCeirY6QtapXPJt0IpMISkcIRlthRUodZbAkwU1uPb+7OSsxUCZTKWPn1H0LHO19aVfUpbBhfDE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Dt44u/dG/VNMNmLeqSaIXJyO3mOwWKur8I0qiNX9hnQWag73f2ZrbtU9F9aL6LqWoS3V0sCqPl9qDn2SVYjdFAmut8u7gwj2WlctjYlWq6Zy5dBwHq5bBcBDVnex4mqI6CzZ+EhLtqL6N+AwDIWANIftUWT2qGAp7rY5AGoNnDs=
+Received: by 10.65.119.14 with SMTP id w14mr1660531qbm.1190639774586;
+        Mon, 24 Sep 2007 06:16:14 -0700 (PDT)
+Received: by 10.64.181.10 with HTTP; Mon, 24 Sep 2007 06:16:14 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0709241400410.28395@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59046>
 
-Heya,
-I've run into a problem with git stash.  I suspect that I've already  
-lost the work that I tried to stash, but would like to know where I  
-went wrong.
+On 9/24/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Yes, this is fully expected.
+>
+> The @{time} notation accesses the _reflogs_, which are purely local
+> beasts.  They are not transmitted when cloning.
 
-I had some work in progress, wanted to check something from my last  
-commit, and typed "git stash".  I forgot to "git stash apply"  
-immediately afterward, and carried on doing some more work related to  
-the stashed code.  I realized that I'd got a stash that I wanted to  
-apply, and tried to restore it.
-While trying to restore it, I typed "git stash --apply", which  
-actually created a new stash named "--apply".  Ooops.  Anyway, the  
-real problem is :
+Thanks of your reply; however I suspect this isn't the problem
+here since I just tried with just master and I get the same thing.
+To be clear, I'm doing this on the same machine with the same
+user account as the git directory, just from a directory outside
+the git tree, eg, the git tracked tree is in $HOME/V and I'm
+in $HOME/A running
 
-$ git stash list
-stash@{0}: On master: --apply
-stash@{1}: WIP on master: 09e3c30... Better handling of cell sizes in  
-the grid
+env GIT_DIR=$HOME/V/.git git diff master
 
-$ git stash show stash@{1}
-  .gitignore                            |    3 -
-  AppController.h                       |   10 -
-  AppController.m                       |   30 -
-  English.lproj/InfoPlist.strings       |  Bin 202 -> 0 bytes
-  English.lproj/MainMenu.xib            | 2560  
----------------------------------
-  GLScene.h                             |   21 -
-  GLScene.m                             |  287 ----
-  Info.plist                            |   28 -
-  LayoutManager.h                       |   19 -
-  LayoutManager.m                       |  118 --
-  OpenGLTests.xcodeproj/project.pbxproj |  323 -----
-  OpenGLTests_Prefix.pch                |   10 -
-  TheWall.h                             |   28 -
-  TheWall.m                             |   99 --
-  UserImage.h                           |   17 -
-  UserImage.m                           |  111 --
-  Utilities.h                           |   38 -
-  Utilities.m                           |   89 --
-  main.m                                |   14 -
-  19 files changed, 0 insertions(+), 3805 deletions(-)
+As a guess without looking at the code, what I imagine
+is happening is that git diff limits showing changes to the directory
+tree below $PWD, and when $PWD isn't actually within the git
+dir that ends up somehow as an empty tree.
 
-
-Hmm.  Looks like it's trying to delete all of my versioned files.   
-"git stash apply stash@{1}" confirms this.   Obviously that's not what  
-I tried to stash - my WIP when I stashed was a few additions, a couple  
-of new unversioned files, and moving a few lines of code from one file  
-to another.
-
-Any ideas what happened there?  I can't seem to reproduce the problem  
-in a test repository.
-
-Cheers,
-Jon
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
