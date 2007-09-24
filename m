@@ -1,64 +1,78 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
-Date: Mon, 24 Sep 2007 16:30:33 +1000
-Message-ID: <ee77f5c20709232330n7b47d9e9v38677678dbf197da@mail.gmail.com>
-References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
-	 <20070924060521.GB10975@glandium.org> <85k5qgk295.fsf@lola.goethe.zz>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+Subject: Re: [rfc] git submodules howto
+Date: Mon, 24 Sep 2007 09:11:35 +0200
+Organization: Universitaet Freiburg, Institut f. Informatik
+Message-ID: <20070924071135.GB3278@informatik.uni-freiburg.de>
+References: <20070918105538.GL19019@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Mike Hommey" <mh@glandium.org>, git@vger.kernel.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Sep 24 08:30:47 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Mon Sep 24 09:11:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZhSq-0007WW-Kg
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 08:30:41 +0200
+	id 1IZi6l-0008CG-8h
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 09:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbXIXGae (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 02:30:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752219AbXIXGae
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 02:30:34 -0400
-Received: from rv-out-0910.google.com ([209.85.198.191]:47372 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752201AbXIXGad (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 02:30:33 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1328677rvb
-        for <git@vger.kernel.org>; Sun, 23 Sep 2007 23:30:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=t1v+ExgnXm1LI27SA9hpImeQewnRUHAjw+IhWI+huCA=;
-        b=ETZ+/tfAYNnr8Idqm5FpIogj5r0wEied65T/kALMSxau6dEeTMj9DmXrgNqGsYXJE4/GsdRUY827hxOcnm3H1J0AlCTkjzC6D9/f/X5olo32udPKMFf8yzfpgO8WwJK30V1R27/DQIbg5kcuoScIPKGFXQCaTkKJ4Ag9BuFeMA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PcJvH5BqoCe1uTEwuQIEwLpFq6SzWvUlivAqaCTXkL13zh9uwiRgBl/rCEXzWDBK95qqLAjnb3ENKCOSFhXXhEB4cUfugLH9E8k86D6zl1syFsqm5e/v+aqIB7Q0vlKoUPezJd3+JCHtH8S/fFodIYBI3t5CQ2G4U20leLOXH3k=
-Received: by 10.141.210.5 with SMTP id m5mr464925rvq.1190615433132;
-        Sun, 23 Sep 2007 23:30:33 -0700 (PDT)
-Received: by 10.141.153.4 with HTTP; Sun, 23 Sep 2007 23:30:33 -0700 (PDT)
-In-Reply-To: <85k5qgk295.fsf@lola.goethe.zz>
+	id S1753018AbXIXHLs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Sep 2007 03:11:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751677AbXIXHLs
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 03:11:48 -0400
+Received: from atlas.informatik.uni-freiburg.de ([132.230.150.3]:34057 "EHLO
+	atlas.informatik.uni-freiburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751123AbXIXHLr convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 03:11:47 -0400
+Received: from login.informatik.uni-freiburg.de ([132.230.151.6])
+	by atlas.informatik.uni-freiburg.de with esmtps (TLSv1:DES-CBC3-SHA:168)
+	(Exim 4.68)
+	(envelope-from <zeisberg@informatik.uni-freiburg.de>)
+	id 1IZi6c-00026T-AM; Mon, 24 Sep 2007 09:11:46 +0200
+Received: from login.informatik.uni-freiburg.de (localhost [127.0.0.1])
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11) with ESMTP id l8O7BjNm004656;
+	Mon, 24 Sep 2007 09:11:45 +0200 (MEST)
+Received: (from zeisberg@localhost)
+	by login.informatik.uni-freiburg.de (8.13.8+Sun/8.12.11/Submit) id l8O7BZPD004655;
+	Mon, 24 Sep 2007 09:11:35 +0200 (MEST)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <ukleinek@informatik.uni-freiburg.de>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <20070918105538.GL19019@genesis.frugalware.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59024>
 
-On 24/09/2007, David Kastrup <dak@gnu.org> wrote:
-> Mike Hommey <mh@glandium.org> writes:
+Hello,
+
+Miklos Vajna wrote:
+> $ mkdir lib
+> $ cd lib
+> $ git init
+> Initialized empty Git repository in .git/
+> $ echo "libmakefile" > Makefile
+> $ dg add Makefile
 >
-> > On Sun, Sep 23, 2007 at 10:42:08PM +0200, David Kastrup wrote:
-> >> -while case $# in 0) break ;; esac
-> >> +while test $# != 0
-> >
-> > Wouldn't -ne be better ?
+> [...]
 >
-> Why?
+> 1) is this correct? :) i use it and it seem to do what i except, but
+> maybe it's not correct
 
-Because -ne does a numeric comparison, != does a string comparison,
-and it's a numeric comparison happening, semantically speaking.
+I get=20
 
+	bash: dg: command not found
 
-Dave.
+:-)  Probably s/dg/git/
+
+Best regards
+Uwe
+
+--=20
+Uwe Kleine-K=F6nig
+
+http://www.google.com/search?q=3Dhalf+a+cup+in+teaspoons
