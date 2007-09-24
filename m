@@ -1,101 +1,104 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: Re: [PATCH] [git-p4] Detect exec bit in more cases.
-Date: Mon, 24 Sep 2007 08:20:41 +0200
-Message-ID: <200709240820.45185.simon@lst.de>
-References: <119022570352-git-send-email-git@davidb.org> <7vfy17iuu9.fsf@gitster.siamese.dyndns.org> <20070921212443.GA14983@old.davidb.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
+Date: Mon, 24 Sep 2007 08:22:40 +0200
+Message-ID: <85ps08k2fj.fsf@lola.goethe.zz>
+References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>
+	<7vhcllc9bz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart5083495.X2xE6nnONL";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Mon Sep 24 08:21:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 24 08:22:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZhJc-0005Vh-Qe
-	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 08:21:09 +0200
+	id 1IZhLI-0005nS-SD
+	for gcvg-git-2@gmane.org; Mon, 24 Sep 2007 08:22:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751400AbXIXGVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 02:21:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751203AbXIXGVB
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 02:21:01 -0400
-Received: from verein.lst.de ([213.95.11.210]:41642 "EHLO mail.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751191AbXIXGVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 02:21:00 -0400
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by mail.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id l8O6KoA5016429
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Mon, 24 Sep 2007 08:20:53 +0200
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-In-Reply-To: <20070921212443.GA14983@old.davidb.org>
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1756325AbXIXGWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 02:22:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756369AbXIXGWn
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 02:22:43 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:56352 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756283AbXIXGWm (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Sep 2007 02:22:42 -0400
+Received: from mail-in-13-z2.arcor-online.net (mail-in-13-z2.arcor-online.net [151.189.8.30])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 54F57176233;
+	Mon, 24 Sep 2007 08:22:41 +0200 (CEST)
+Received: from mail-in-04.arcor-online.net (mail-in-04.arcor-online.net [151.189.21.44])
+	by mail-in-13-z2.arcor-online.net (Postfix) with ESMTP id 447431B8E4F;
+	Mon, 24 Sep 2007 08:22:41 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-020-020.pools.arcor-ip.net [84.61.20.20])
+	by mail-in-04.arcor-online.net (Postfix) with ESMTP id 1D4CF1C7360;
+	Mon, 24 Sep 2007 08:22:41 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 6F6151C1F3DC; Mon, 24 Sep 2007 08:22:40 +0200 (CEST)
+In-Reply-To: <7vhcllc9bz.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 23 Sep 2007 15\:20\:48 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4376/Mon Sep 24 04:15:24 2007 on mail-in-04.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59021>
 
---nextPart5083495.X2xE6nnONL
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Friday 21 September 2007 23:24:43 David Brown wrote:
-> On Fri, Sep 21, 2007 at 02:15:10PM -0700, Junio C Hamano wrote:
-> >Simon Hausmann <simon@lst.de> writes:
-> >> On Friday 21 September 2007 00:53:52 Junio C Hamano wrote:
-> >>> David Brown <git@davidb.org> writes:
-> >>> > On Wed, Sep 19, 2007 at 09:03:50PM +0200, Simon Hausmann wrote:
-> >>> >>On Wednesday 19 September 2007 20:15:03 David Brown wrote:
-> >>> >>> git-p4 was missing the execute bit setting if the file had other
-> >>> >>> attribute bits set.
-> >>> >>> ---
-> >>> >>
-> >>> >>I'm fine with this, so unless you find a better way:
-> >>> >>
-> >>> >>Acked-By: Simon Hausmann <simon@lst.de>
-> >>> >
-> >>> > I sent out an improved version of this patch yesterday
-> >>> > <1190232768445-git-send-email-git@davidb.org> that I'd like to get
-> >>> > approved.  I guess I'm not quite sure what happens at this point with
-> >>> > a patch.
-> >>>
-> >>> I still have that *768445* message as "the last one proposed as
-> >>> better than previous ones" in my mbox.
-> >>>
-> >>> Simon?
-> >>
-> >> Indeed, the new improved version is much better :)
-> >>
-> >> Acked-By: Simon Hausmann <simon@lst.de>
-> >
-> >Thanks.  This should go to 'maint' (part of v1.5.3.3) right?
+> David Kastrup <dak@gnu.org> writes:
 >
-> Sounds good by me.  I've been using it on a few other repos, and haven't
-> had any problems.
+>> Ok, this is not really what we have been talking about except in
+>> one case, but I think it is actually more of an improvement.
+>
+> Gaah, didn't I say I do NOT think it is an improvement?
 
-Agreed.
+Ah, but I am not presuming to speak for you in my commit message and
+postings.
 
+>> I consider breaking out of the condition instead of the
+>> body od the loop ugly,
+>
+> Well, as we all know that we disagree on this point, stating
+> what you consider one-sidedly here is quite inappropriate.
 
-Simon
+Hm.  If I create a patch after you basically said "go ahead, I don't
+mind, but I consider it unimportant", how am I going to put the
+motivation for the patch in the commit message while expressing _your_
+opinion?  I thought that using "I" to make clear that it is my
+personal view would be doing that.
 
---nextPart5083495.X2xE6nnONL
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+So what am I supposed to write instead?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+"There is no good reason for this patch, but we might as well do it."?
 
-iD8DBQBG91c9WXvMThJCpvIRAnHZAJ9mux2ZrIriqIR9zw8QjIw9exppoQCfWUh9
-zeyx/nHuYqFfpS0bJU+OPYI=
-=bXxo
------END PGP SIGNATURE-----
+>> and the implied "true" value of the non-matching case is not really
+>> obvious to humans at first glance.
+>
+> It is more like "if you do not know shell".
 
---nextPart5083495.X2xE6nnONL--
+It is more to take in.  Believe me, I do know shell.
+
+> In other words, I am somewhat disgusted with the first part of
+> your proposed commit log message, although I like what the patch
+> does ;-).
+
+Could you propose a commit message that would be acceptable to you,
+yet not make it appear like a mistake to actually commit the patch?
+
+>> -while case "$#" in 0) break ;; esac
+>> +while test "$#" != 0
+>>  do
+>>      case "$1" in
+>>      -a)
+>
+> And let's not quote "$#".
+
+I kept this as it was originally.  Some authors prefer to quote every
+shell variable as a rule in order to avoid stupid syntactic things
+happening.  Of course, $# never needs quoting, but I did not want to
+change the personal style of the respective authors.  I can make this
+consistent if you want to.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
