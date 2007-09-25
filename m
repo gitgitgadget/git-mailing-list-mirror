@@ -1,60 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diffcore-rename performance mode
-Date: Tue, 25 Sep 2007 15:52:20 -0400
-Message-ID: <20070925195220.GA19549@segfault.peff.net>
-References: <20070918082321.GA9883@coredump.intra.peff.net> <7vsl5cwe6p.fsf@gitster.siamese.dyndns.org> <20070918085413.GA11751@coredump.intra.peff.net> <20070925163843.GA22987@coredump.intra.peff.net> <20070925190640.GA4613@coredump.intra.peff.net> <86641y4k34.fsf@lola.quinscape.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
+Date: Tue, 25 Sep 2007 21:55:31 +0200
+Message-ID: <86wsue34gc.fsf@lola.quinscape.zz>
+References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0709061839510.5?=
+	=?ISO-8859-1?Q?626@evo.linux-fo?= =?ISO-8859-1?Q?undation.or=04g>?= <loom.20070924T134013-959@post.gmane.org> <86odfstbc6.fsf@lola.quinscape.zz> <fdbmve$8lj$1@sea.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Sep 25 21:52:46 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 25 21:56:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaGSb-0005Ak-J9
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 21:52:45 +0200
+	id 1IaGWN-0006m5-IB
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 21:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463AbXIYTwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 15:52:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753777AbXIYTwZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 15:52:25 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2534 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752408AbXIYTwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 15:52:24 -0400
-Received: (qmail 19663 invoked by uid 1000); 25 Sep 2007 19:52:21 -0000
-Content-Disposition: inline
-In-Reply-To: <86641y4k34.fsf@lola.quinscape.zz>
+	id S1754732AbXIYT4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 15:56:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbXIYT4B
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 15:56:01 -0400
+Received: from main.gmane.org ([80.91.229.2]:41730 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752095AbXIYT4A (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 15:56:00 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IaGVT-0006XM-44
+	for git@vger.kernel.org; Tue, 25 Sep 2007 19:55:44 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Sep 2007 19:55:43 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Sep 2007 19:55:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:VR/H7L5p9F1zwn38YOnJmWkC3lY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59165>
 
-On Tue, Sep 25, 2007 at 09:32:31PM +0200, David Kastrup wrote:
+"Steven Burns" <royalstream@hotmail.com> writes:
 
-> >                  | stock | nofree | old somefree | fixed somefree
-> > -----------------|-----------------------------------------------
-> > user time (s)    | 76.78 | 16.96  | 46.26        | 16.99
-> > peak memory (Kb) | 52300 | 66796  | 59156        | 57328
-> >
-> > So now we're at a 4.5x speedup for about 10% extra memory usage. Patch
-> > will follow.
-> 
-> Sounds good except when we happen to just hit the "memory working set
-> exceeds physical memory" sweet spot.  But the odds are much better
-> than for "nofree".
+> The C++ community in general suffers a lot from the NIH Syndrome.
+> Matrixes, Strings, Vectors, everybody creates their own which are always, or 
+> course, superior to what's already available.
+>
+> Again, is not the language's fault, a language is just a language.
+> It's the way it has been driven.
 
-Of course, there is the possibility that it is the 10% that pushes you
-into swap (or kills your ability to cache the entire pack in RAM).
-However, this is probably not a big deal for two reasons:
-  1. this is a 50M process handling the linux-2.6 repository. Other
-     operations such as repacking already consume significantly more
-     memory (git-repack -a allocates 290M on the same repo).
-  2. I specifically turned off rename limiting (-l0) to do rename
-     detection on these large-ish diffs.  If you have a machine which is
-     on the cusp of swapping, then don't do that. Jumping from -l100
-     (the default) to -l0 in my tests is _already_ moving you from 28M
-     to 52M, a much larger jump.
+Having loose wires instead of a brake pedal in a car because the user
+might prefer to brake with his teeth or by wiggling his backside or
+building any other contraption of his own invention is a design
+mistake.  Especially when we are talking about public transportation
+with changing drivers.
 
--Peff
+Making a language huge and bloated in order to be able to use the
+language itself for defining a set of basic data types is just
+masturbation.  C++ has the most complicated set of implicit
+conversions from any language in the world, and what for?  It is
+modeled for being able to create a user-defined "complex" type which
+behaves almost as well as Fortran's.  Too bad that this mostly means
+everybody will define his own type (well, at least we have seen two or
+three different library "standards" by now), and that the implicit
+conversion rules and chains are appallingly wrong for a number of
+other possible user-defined arithmetic types.
+
+-- 
+David Kastrup
