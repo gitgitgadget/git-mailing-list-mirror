@@ -1,54 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH] resend: really plug memory leaks in git-svnimport
-Date: Tue, 25 Sep 2007 10:55:35 -0700
-Message-ID: <7vr6km6354.fsf@gitster.siamese.dyndns.org>
-References: <20070924105740.GB8900@ted>
+Date: Tue, 25 Sep 2007 20:37:52 +0200
+Message-ID: <46F95580.1050907@op5.se>
+References: <20070924105740.GB8900@ted> <7vr6km6354.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stefan Sperling <stsp@elego.de>
-X-From: git-owner@vger.kernel.org Tue Sep 25 19:56:06 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Stefan Sperling <stsp@elego.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 20:38:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaEdZ-0007Ws-Qq
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 19:55:58 +0200
+	id 1IaFIM-0000Go-8P
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 20:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755006AbXIYRzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 13:55:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752657AbXIYRzm
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 13:55:42 -0400
-Received: from fed1rmmtao107.cox.net ([68.230.241.39]:59087 "EHLO
-	fed1rmmtao107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759611AbXIYRzl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 13:55:41 -0400
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao107.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070925175537.NYFJ19928.fed1rmmtao107.cox.net@fed1rmimpo01.cox.net>;
-          Tue, 25 Sep 2007 13:55:37 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id shvb1X00U1gtr5g0000000; Tue, 25 Sep 2007 13:55:36 -0400
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752908AbXIYSh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 14:37:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752391AbXIYSh7
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 14:37:59 -0400
+Received: from mail.op5.se ([193.201.96.20]:43359 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751899AbXIYSh6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 14:37:58 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 9C342194443;
+	Tue, 25 Sep 2007 20:37:53 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Tm8DHpWhAKZ8; Tue, 25 Sep 2007 20:37:53 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 034E3194433;
+	Tue, 25 Sep 2007 20:37:52 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <7vr6km6354.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59150>
 
-Stefan Sperling <stsp@elego.de> writes:
+Junio C Hamano wrote:
+> Stefan Sperling <stsp@elego.de> writes:
+> 
+>> Junio asked me to resend this patch to the mailing list.
+>>
+>> This version of the patch is adjusted to apply cleanly
+>> to current HEAD.
+>>
+>> @Junio: I'm not resending the multiple branch/tag dirs patch
+>> just yet, because I want to polish it first -- I've got another
+>> idea how to improve it.
+> 
+> Ok.
+> 
+> People on the list who still use git-svnimport, could you help
+> with testing this patch?  Will queue for 'pu' in the meantime.
+> 
 
-> Junio asked me to resend this patch to the mailing list.
->
-> This version of the patch is adjusted to apply cleanly
-> to current HEAD.
->
-> @Junio: I'm not resending the multiple branch/tag dirs patch
-> just yet, because I want to polish it first -- I've got another
-> idea how to improve it.
+I used to use it, but I've given up on it in favour of git svn.
+Partly because git-svn seems to get cases right that git-svnimport
+didn't, but mostly because it remembers where I fetched from, which
+is damn handy.
 
-Ok.
-
-People on the list who still use git-svnimport, could you help
-with testing this patch?  Will queue for 'pu' in the meantime.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
