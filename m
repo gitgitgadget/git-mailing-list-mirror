@@ -1,88 +1,67 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Don't use "<unknown>" for unknown values of placeholders
- and suppress printing of empty user formats.
-Date: Tue, 25 Sep 2007 15:47:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709251543561.28395@racer.site>
-References: <20070925143846.GQ22869@mageo.cz>
+Subject: Re: Q: howto rebase
+Date: Tue, 25 Sep 2007 15:49:24 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709251548390.28395@racer.site>
+References: <BAY105-F33DC84FACB8B66BFEB9EC8FFB70@phx.gbl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michal Vitecek <fuf@mageo.cz>
-X-From: git-owner@vger.kernel.org Tue Sep 25 16:48:47 2007
+Cc: git@vger.kernel.org
+To: lode leroy <lode_leroy@hotmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 16:50:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaBiJ-00046u-QV
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 16:48:40 +0200
+	id 1IaBkB-0004u3-Kg
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 16:50:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753862AbXIYOsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 10:48:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXIYOsW
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 10:48:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:49702 "HELO mail.gmx.net"
+	id S1754038AbXIYOua (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 10:50:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753980AbXIYOua
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 10:50:30 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52819 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753630AbXIYOsV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 10:48:21 -0400
-Received: (qmail invoked by alias); 25 Sep 2007 14:48:19 -0000
+	id S1751439AbXIYOu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 10:50:28 -0400
+Received: (qmail invoked by alias); 25 Sep 2007 14:50:26 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp052) with SMTP; 25 Sep 2007 16:48:19 +0200
+  by mail.gmx.net (mp003) with SMTP; 25 Sep 2007 16:50:26 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/WhtlybgXWwimYtH56A+hgzUZBC9kwlKGMqwDUqx
-	5wQaqSrYHC7NYD
+X-Provags-ID: V01U2FsdGVkX182MeQIOaM2gd0pls87AA702Qa9otDuqv5/Zs6U0I
+	NcCiUHmlEq6z7s
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20070925143846.GQ22869@mageo.cz>
+In-Reply-To: <BAY105-F33DC84FACB8B66BFEB9EC8FFB70@phx.gbl>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59131>
 
 Hi,
 
-On Tue, 25 Sep 2007, Michal Vitecek wrote:
+On Tue, 25 Sep 2007, lode leroy wrote:
 
-> ---
+> I'm trying to understand how rebase works, but I need some help to get it.
+> Suppose I do the following workflow... (see below)
 > 
->  Sending the patch again in correct form (hopefully) as instructed by
->  Johannes Schindelin. Sorry for the hassle.
+> In "version B" I introduce the "fix c", but in "version D" I realize it
+> should have
+> been in some other place. (commit D moves the fix to its proper place).
+> A-B-C-D-E
+> 
+> Now I want to 'rewrite history'.
+> I would like to move commit D after B
+> A-B-D'-C'-E
+> 
+> and then fold the commits B and D' into a single commit.
+> A-B'-C'-E
+> 
+> I somehow managed to get this done using "rebase -i"
+> by exchanging the 2 appropriate lines, and then deleting the second one,
+> but I'd like to understand how to do this from the command line...
 
-Thanks.
+Almost.  Your "fold" is called "squash".  So instead of deleting the 
+second one, you probably wanted to squash it.
 
-> diff --git a/commit.c b/commit.c
-> index 99f65ce..c9a1818 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -917,9 +917,6 @@ long format_commit_message(const struct commit *commit, const void *format,
->  	}
->  	if (msg[i])
->  		table[IBODY].value = xstrdup(msg + i);
-> -	for (i = 0; i < ARRAY_SIZE(table); i++)
-> -		if (!table[i].value)
-> -			interp_set_entry(table, i, "<unknown>");
-
-This may have warranted a description in the commit message a la
-
-	Instead of setting unknown entries to "<unknown>" in the 
-	interp_table, we teach interpolate() to replace entries with 
-	NULL values by the empty string.
-
-> diff --git a/log-tree.c b/log-tree.c
-> index a642371..79502f4 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -175,14 +175,15 @@ void show_log(struct rev_info *opt, const char *sep)
->  	 *  - The pretty-printed commit lacks a newline at the end
->  	 *    of the buffer, but we do want to make sure that we
->  	 *    have a newline there. If the separator isn't already
-> -	 *    a newline, add an extra one.
-> +         *    a newline, add an extra one and do the same for the
-> +         *    user format as well.
-
-Here are still spaces instead of tabs.
-
-These are only minor details; I don't know if Junio wants to fix them 
-himself.
-
-Ciao,
+Hth,
 Dscho
