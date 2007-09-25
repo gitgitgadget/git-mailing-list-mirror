@@ -1,50 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add ability to specify SMTP server port when using
- git-send-email.
-Date: Wed, 26 Sep 2007 00:05:02 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709260004090.28395@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add ability to specify SMTP server port when using git-send-email.
+Date: Tue, 25 Sep 2007 16:12:10 -0700
+Message-ID: <7vzlza2vcl.fsf@gitster.siamese.dyndns.org>
 References: <1190759927-19493-1-git-send-email-glenn@rempe.us>
+	<Pine.LNX.4.64.0709260004090.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Glenn Rempe <glenn@rempe.us>
-X-From: git-owner@vger.kernel.org Wed Sep 26 01:06:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Glenn Rempe <glenn@rempe.us>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 26 01:12:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaJTs-0000U5-HW
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 01:06:18 +0200
+	id 1IaJZr-0002Kz-1q
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 01:12:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751205AbXIYXGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 19:06:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXIYXGI
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 19:06:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41204 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750931AbXIYXGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 19:06:07 -0400
-Received: (qmail invoked by alias); 25 Sep 2007 23:06:05 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 26 Sep 2007 01:06:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/XT2EGoFnXD5kF2Q6pS4WsMPdOYHuLzpnh3OpJsW
-	yukNiMUEXA8WtS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1190759927-19493-1-git-send-email-glenn@rempe.us>
-X-Y-GMX-Trusted: 0
+	id S1751499AbXIYXMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 19:12:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXIYXMR
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 19:12:17 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:43266 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751486AbXIYXMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 19:12:17 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C9BB313BBF7;
+	Tue, 25 Sep 2007 19:12:34 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709260004090.28395@racer.site> (Johannes
+	Schindelin's message of "Wed, 26 Sep 2007 00:05:02 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59191>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, 25 Sep 2007, Glenn Rempe wrote:
+> On Tue, 25 Sep 2007, Glenn Rempe wrote:
+>
+>> +if (($smtp_server =~ /:\d+/) && (defined $smtp_server_port)) {
+>
+> Not that I want to be a PITA, but this breaks down with IPv6, right?
 
-> +if (($smtp_server =~ /:\d+/) && (defined $smtp_server_port)) {
-
-Not that I want to be a PITA, but this breaks down with IPv6, right?
-
-Ciao,
-Dscho
+Right.  Do we care about symbolic "server.addre.ss:smtp"
+notation as well, I wonder?
