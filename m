@@ -1,119 +1,88 @@
-From: "lode leroy" <lode_leroy@hotmail.com>
-Subject: Q: howto rebase
-Date: Tue, 25 Sep 2007 16:46:59 +0200
-Message-ID: <BAY105-F33DC84FACB8B66BFEB9EC8FFB70@phx.gbl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Don't use "<unknown>" for unknown values of placeholders
+ and suppress printing of empty user formats.
+Date: Tue, 25 Sep 2007 15:47:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709251543561.28395@racer.site>
+References: <20070925143846.GQ22869@mageo.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 25 16:47:18 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michal Vitecek <fuf@mageo.cz>
+X-From: git-owner@vger.kernel.org Tue Sep 25 16:48:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaBgz-0003XZ-Cj
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 16:47:17 +0200
+	id 1IaBiJ-00046u-QV
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 16:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751346AbXIYOrJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 10:47:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbXIYOrI
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 10:47:08 -0400
-Received: from bay0-omc3-s3.bay0.hotmail.com ([65.54.246.203]:18725 "EHLO
-	bay0-omc3-s3.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751835AbXIYOrH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Sep 2007 10:47:07 -0400
-Received: from hotmail.com ([65.54.224.43]) by bay0-omc3-s3.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 25 Sep 2007 07:47:04 -0700
-Received: from mail pickup service by hotmail.com with Microsoft SMTPSVC;
-	 Tue, 25 Sep 2007 07:47:04 -0700
-Received: from 65.54.224.200 by by105fd.bay105.hotmail.msn.com with HTTP;
-	Tue, 25 Sep 2007 14:46:59 GMT
-X-Originating-IP: [213.246.200.66]
-X-Originating-Email: [lode_leroy@hotmail.com]
-X-Sender: lode_leroy@hotmail.com
-X-OriginalArrivalTime: 25 Sep 2007 14:47:04.0540 (UTC) FILETIME=[F04789C0:01C7FF82]
+	id S1753862AbXIYOsW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 10:48:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753811AbXIYOsW
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 10:48:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49702 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753630AbXIYOsV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 10:48:21 -0400
+Received: (qmail invoked by alias); 25 Sep 2007 14:48:19 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 25 Sep 2007 16:48:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/WhtlybgXWwimYtH56A+hgzUZBC9kwlKGMqwDUqx
+	5wQaqSrYHC7NYD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070925143846.GQ22869@mageo.cz>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59130>
 
-I'm trying to understand how rebase works, but I need some help to get it.
-Suppose I do the following workflow... (see below)
+Hi,
 
-In "version B" I introduce the "fix c", but in "version D" I realize it 
-should have
-been in some other place. (commit D moves the fix to its proper place).
-A-B-C-D-E
+On Tue, 25 Sep 2007, Michal Vitecek wrote:
 
-Now I want to 'rewrite history'.
-I would like to move commit D after B
-A-B-D'-C'-E
+> ---
+> 
+>  Sending the patch again in correct form (hopefully) as instructed by
+>  Johannes Schindelin. Sorry for the hassle.
 
-and then fold the commits B and D' into a single commit.
-A-B'-C'-E
+Thanks.
 
-I somehow managed to get this done using "rebase -i"
-by exchanging the 2 appropriate lines, and then deleting the second one,
-but I'd like to understand how to do this from the command line...
+> diff --git a/commit.c b/commit.c
+> index 99f65ce..c9a1818 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -917,9 +917,6 @@ long format_commit_message(const struct commit *commit, const void *format,
+>  	}
+>  	if (msg[i])
+>  		table[IBODY].value = xstrdup(msg + i);
+> -	for (i = 0; i < ARRAY_SIZE(table); i++)
+> -		if (!table[i].value)
+> -			interp_set_entry(table, i, "<unknown>");
 
-Could anyone enlighten me? I've read git-rebase(1) several times,
-but don't seem to get it right...
+This may have warranted a description in the commit message a la
 
+	Instead of setting unknown entries to "<unknown>" in the 
+	interp_table, we teach interpolate() to replace entries with 
+	NULL values by the empty string.
 
-cat > file <<EOF
-a
-b
-d
-e
-g
-h
-EOF
-git add file
-git commit -m 'A' -a
-cat > file <<EOF
-a
-b
-d
-e
-g
-c
-h
-EOF
-git commit -m 'B' -a
-cat > file <<EOF
-a
-b
-d
-e
-f
-g
-c
-h
-EOF
-git commit -m 'C' -a
-cat > file <<EOF
-a
-b
-c
-d
-e
-f
-g
-h
-EOF
-git commit -m 'D' -a
-cat > file <<EOF
-a
-b
-c
-d
-e
-f
-g
-h
-i
-EOF
-git commit -m 'E' -a
+> diff --git a/log-tree.c b/log-tree.c
+> index a642371..79502f4 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -175,14 +175,15 @@ void show_log(struct rev_info *opt, const char *sep)
+>  	 *  - The pretty-printed commit lacks a newline at the end
+>  	 *    of the buffer, but we do want to make sure that we
+>  	 *    have a newline there. If the separator isn't already
+> -	 *    a newline, add an extra one.
+> +         *    a newline, add an extra one and do the same for the
+> +         *    user format as well.
 
-_________________________________________________________________
-A lot of passions?  Collect all your personal info on one central location , 
-for free! http://get.live.com/live/features
+Here are still spaces instead of tabs.
+
+These are only minor details; I don't know if Junio wants to fix them 
+himself.
+
+Ciao,
+Dscho
