@@ -1,74 +1,82 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC] Convert builin-mailinfo.c to use The Better String Library.
-Date: Tue, 25 Sep 2007 21:55:31 +0200
-Message-ID: <86wsue34gc.fsf@lola.quinscape.zz>
-References: <46DDC500.5000606@etek.chalmers.se> <1189004090.20311.12.camel@hinata.boston.redhat.com> <vpq642pkoln.fsf@bauges.imag.fr> <4AFD7EAD1AAC4E54A416BA3F6E6A9E52@ntdev.corp.microsoft.com>  =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?alpine.LFD.0.999?= =?ISO-8859-1?Q?.0709061839510.5?=
-	=?ISO-8859-1?Q?626@evo.linux-fo?= =?ISO-8859-1?Q?undation.or=04g>?= <loom.20070924T134013-959@post.gmane.org> <86odfstbc6.fsf@lola.quinscape.zz> <fdbmve$8lj$1@sea.gmane.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Remove 'submodules' from the TODO section of the User
+	Manual.
+Date: Tue, 25 Sep 2007 21:57:31 +0200
+Message-ID: <20070925195731.GJ18370@genesis.frugalware.org>
+References: <20070925191159.GG18370@genesis.frugalware.org> <20070925192315.GR30845@fieldses.org> <20070925194745.GI18370@genesis.frugalware.org> <20070925194936.GU30845@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 25 21:56:40 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="EY/WZ/HvNxOox07X"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Tue Sep 25 21:57:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaGWN-0006m5-IB
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 21:56:39 +0200
+	id 1IaGXO-0007E0-MT
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 21:57:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754732AbXIYT4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 15:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbXIYT4B
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 15:56:01 -0400
-Received: from main.gmane.org ([80.91.229.2]:41730 "EHLO ciao.gmane.org"
+	id S1753804AbXIYT5d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 15:57:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXIYT5d
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 15:57:33 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:58062 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752095AbXIYT4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 15:56:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IaGVT-0006XM-44
-	for git@vger.kernel.org; Tue, 25 Sep 2007 19:55:44 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Sep 2007 19:55:43 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 25 Sep 2007 19:55:43 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:VR/H7L5p9F1zwn38YOnJmWkC3lY=
+	id S1751151AbXIYT5c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 15:57:32 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id B702F1B2515;
+	Tue, 25 Sep 2007 21:57:31 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 8D42D6FCE9;
+	Tue, 25 Sep 2007 21:57:31 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 6352113A4129; Tue, 25 Sep 2007 21:57:30 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20070925194936.GU30845@fieldses.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59166>
 
-"Steven Burns" <royalstream@hotmail.com> writes:
 
-> The C++ community in general suffers a lot from the NIH Syndrome.
-> Matrixes, Strings, Vectors, everybody creates their own which are always, or 
-> course, superior to what's already available.
->
-> Again, is not the language's fault, a language is just a language.
-> It's the way it has been driven.
+--EY/WZ/HvNxOox07X
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Having loose wires instead of a brake pedal in a car because the user
-might prefer to brake with his teeth or by wiggling his backside or
-building any other contraption of his own invention is a design
-mistake.  Especially when we are talking about public transportation
-with changing drivers.
+On Tue, Sep 25, 2007 at 03:49:36PM -0400, "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> And there's a ton of other stuff on that todo list if you're looking to
+> make more "noise"--patches always welcomed....
 
-Making a language huge and bloated in order to be able to use the
-language itself for defining a set of basic data types is just
-masturbation.  C++ has the most complicated set of implicit
-conversions from any language in the world, and what for?  It is
-modeled for being able to create a user-defined "complex" type which
-behaves almost as well as Fortran's.  Too bad that this mostly means
-everybody will define his own type (well, at least we have seen two or
-three different library "standards" by now), and that the implicit
-conversion rules and chains are appallingly wrong for a number of
-other possible user-defined arithmetic types.
+i was this in the todo:
 
--- 
-David Kastrup
+"Add a section on working with other version control systems, including
+CVS, Subversion, and just imports of series of release tarballs."
+
+to questions:
+
+1) does this include documentation about git-svn? i mean a howto similar
+to the submodules chapter.
+
+2) does it worth to document a typical usage of tailor? we used it a lot
+when converting from darcs to git and once you figure out the right
+options, it's really easy to use it. but maybe it's unrelated.
+
+thanks,
+- VMiklos
+
+--EY/WZ/HvNxOox07X
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFG+Wgre81tAgORUJYRAqkfAKChn8EcBYfeF6OBah+8UbfRgTOedwCeIJfL
+1GZ/iI1aUjiXwu7UQ6jtD5c=
+=36RW
+-----END PGP SIGNATURE-----
+
+--EY/WZ/HvNxOox07X--
