@@ -1,60 +1,61 @@
-From: Avi Kivity <avi@qumranet.com>
-Subject: Re: [PATCH] Supplant the "while case ... break ;; esac" idiom
-Date: Tue, 25 Sep 2007 12:46:52 +0200
-Message-ID: <46F8E71C.1070409@qumranet.com>
-References: <853ax5mb1j.fsf@lola.goethe.zz> <85myvdktb3.fsf@lola.goethe.zz>	<7vhcllc9bz.fsf@gitster.siamese.dyndns.org>	<85ps08k2fj.fsf@lola.goethe.zz> <86bqbsta3g.fsf@lola.quinscape.zz>	<7vodfr8wts.fsf@gitster.siamese.dyndns.org>	<85hcljgtlr.fsf@lola.goethe.zz> <7v4phj6yxb.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Small cache_tree_write refactor.
+Date: Tue, 25 Sep 2007 11:38:16 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709251135530.28395@racer.site>
+References: <20070925082341.DF412BDBCF@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 12:38:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Sep 25 12:39:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ia7oO-0002vY-A6
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 12:38:40 +0200
+	id 1Ia7pT-0003Ah-66
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 12:39:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751755AbXIYKid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 06:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbXIYKid
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 06:38:33 -0400
-Received: from il.qumranet.com ([82.166.9.18]:38716 "EHLO il.qumranet.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751755AbXIYKid (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 06:38:33 -0400
-Received: from firebolt.argo.co.il (unknown [10.64.7.6])
-	by il.qumranet.com (Postfix) with ESMTP id 1002325028F;
-	Tue, 25 Sep 2007 12:38:40 +0200 (IST)
-Received: from firebolt.argo.co.il (localhost.localdomain [127.0.0.1])
-	by firebolt.argo.co.il (Postfix) with ESMTP id 995AEC01F1;
-	Tue, 25 Sep 2007 12:46:52 +0200 (IST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070719)
-In-Reply-To: <7v4phj6yxb.fsf@gitster.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (firebolt.argo.co.il [0.0.0.0]); Tue, 25 Sep 2007 12:46:52 +0200 (IST)
+	id S1751886AbXIYKjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 06:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751869AbXIYKjW
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 06:39:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37545 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751822AbXIYKjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 06:39:21 -0400
+Received: (qmail invoked by alias); 25 Sep 2007 10:39:19 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 25 Sep 2007 12:39:19 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/l2ENiYjLlGK006d40nHm6RX166vdRLp7eR8ftLq
+	NaUBbyXr+aJg4E
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070925082341.DF412BDBCF@madism.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59111>
 
-Junio C Hamano wrote:
-> David Kastrup <dak@gnu.org> writes:
->
->   
->> As a completely irrelevant side note: the autoconf documentation
->> mentions that "false" is more portable than "true" since calling it
->> returns a non-zero exit status even when it is not installed or
->> built-in.
->>     
->
-> Ah, I like that ;-)  It is obvious when you think about it, and
-> it is so true but in a very twisted way...
->
->   
+Hi,
 
-You mean, it is not false but in a twisted way, don't you?
+On Tue, 25 Sep 2007, Pierre Habouzit wrote:
 
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -369,10 +369,8 @@ int cache_tree_update(struct cache_tree *it,
+>  	return 0;
+>  }
+>  
+> -static void write_one(struct cache_tree *it,
+> -		       char *path,
+> -		       int pathlen,
+> -			   struct strbuf *buffer)
+> +static void write_one(struct strbuf *buffer, struct cache_tree *it,
+> +                      const char *path, int pathlen)
 
--- 
-Do not meddle in the internals of kernels, for they are subtle and quick to panic.
+I don't know... is this really needed?  In some other projects, the coding 
+standard prefers the parameters in "in"..."out" order.
+
+Ciao,
+Dscho
