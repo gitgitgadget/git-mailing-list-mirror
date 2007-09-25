@@ -1,123 +1,92 @@
-From: "lode leroy" <lode.leroy@gmail.com>
-Subject: Re: Q: howto rebase
-Date: Tue, 25 Sep 2007 16:54:33 +0200
-Message-ID: <b41dbf4a0709250754o189d99fcn4767b37b9ebbdf06@mail.gmail.com>
-References: <b41dbf4a0709250748l52b64155k65b6adb16e8dbcd5@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] rebase -i: commit when continuing after "edit"
+Date: Tue, 25 Sep 2007 16:46:53 +0200
+Message-ID: <86ve9y6bvm.fsf@lola.quinscape.zz>
+References: <20070923224502.GB7249@potapov> <Pine.LNX.4.64.0709240121080.28395@racer.site> <7vlkav71bv.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709251249450.28395@racer.site> <46F90C95.5060903@viscovery.net>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?Pine.LNX.4.64.07?= =?ISO-8859-1?Q?09251439070.2839?=
+	=?ISO-8859-1?Q?5@race=04r.site>?= <46F91879.6030301@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 25 16:54:43 2007
+X-From: git-owner@vger.kernel.org Tue Sep 25 17:01:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaBoA-0006i3-7l
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 16:54:42 +0200
+	id 1IaBuW-0000uN-VS
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 17:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753567AbXIYOyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 10:54:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXIYOyg
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 10:54:36 -0400
-Received: from el-out-1112.google.com ([209.85.162.182]:21758 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751203AbXIYOyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 10:54:35 -0400
-Received: by el-out-1112.google.com with SMTP id v27so327879ele
-        for <git@vger.kernel.org>; Tue, 25 Sep 2007 07:54:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=a2bIa3YKMuZ5ZYXTP9WY+BTUqXVxcbPy3YWd8/MqCFI=;
-        b=otBXkF7GkeEiUUZ2uxw/96jyGEKKrIAUForHKum8BFQb+4JbdLWvySE45aM8cdV3Bo3xo+WGR7/pjVChKEPj7UHGewunfKsxCHxbx7Nj5H2zOJds+cXJpBZroqELHnW6yr6pnX+RMs4efATXuLE8Ax7G6Qfzk3pQOkrdTFQurl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=odVgBoXWaOAwuJ6EgFsnqfdfORWNAUEGYOAJhtK4+Fbw0WDb+p5lGkwYVxZ5OHx6HD1tDv+iOMqBkabzqgO5zQmvudsVjm/aTUtnx3QXdw9VwngXnA1B2PeWPF85QemrZUlB35YNxOZ92mU/iAkOvGrhhMPE7QT2xJNeUWXb9Ow=
-Received: by 10.142.177.7 with SMTP id z7mr2236882wfe.1190732073954;
-        Tue, 25 Sep 2007 07:54:33 -0700 (PDT)
-Received: by 10.141.82.5 with HTTP; Tue, 25 Sep 2007 07:54:33 -0700 (PDT)
-In-Reply-To: <b41dbf4a0709250748l52b64155k65b6adb16e8dbcd5@mail.gmail.com>
-Content-Disposition: inline
+	id S1754107AbXIYPBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 11:01:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbXIYPBH
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 11:01:07 -0400
+Received: from main.gmane.org ([80.91.229.2]:37005 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753557AbXIYPBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 11:01:06 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IaBmI-0002MI-8u
+	for git@vger.kernel.org; Tue, 25 Sep 2007 14:52:46 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Sep 2007 14:52:46 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 25 Sep 2007 14:52:46 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:dHN8lj5tnNFoS13bbsIRPPSF+Og=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59133>
 
-I'm trying to understand how rebase works, but I need some help to get it.
-Suppose I do the following workflow... (see below)
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-In "version B" I introduce the "fix c", but in "version D" I realize
-it should have
-been in some other place. (commit D moves the fix to its proper place).
-A-B-C-D-E
+> Johannes Schindelin schrieb:
+>> Hi,
+>>
+>> On Tue, 25 Sep 2007, Johannes Sixt wrote:
+>>> How about:
+>>>
+>>> 	eval "$author_script"
+>>> 	GIT_AUTHOR_NAME="$GIT_AUTHOR_NAME" \
+>>> 	GIT_AUTHOR_EMAIL="$GIT_AUTHOR_EMAIL" \
+>>> 	GIT_AUTHOR_DATE="$GIT_AUTHOR_DATE" \
+>>> 	$USE_OUTPUT git commit -F "$MSG" $EDIT_COMMIT
+>>>
+>>> and if you dislike that, put the two questionable lines in parenthesis.
+>>
+>> That looks ugly.  I'd rather have something like
+>>
+>> 	eval "$USE_OUTPUT $author_script git commit -F \"$MSG\" $EDIT_COMMIT"
+>>
+>> but I'm not quite certain if that is enough, what with the funny
+>> characters people put into path names these days ($MSG points to
+>> "$DOTEST"/message).
+>
+> I, too, find it ugly, but I think it's the most readable way to do
+> it. Your version is certainly underquoted.
 
-Now I want to 'rewrite history'.
-I would like to move commit D after B
-A-B-D'-C'-E
+Proper quoting in my book would be
 
-and then fold the commits B and D' into a single commit.
-A-B'-C'-E
+eval "$USE_OUTPUT $author_script git commit -F" '"$MSG"' "$EDIT_COMMIT"
 
-I somehow managed to get this done using "rebase -i"
-by exchanging the 2 appropriate lines, and then deleting the second one,
-but I'd like to understand how to do this from the command line...
+(I am not sure I am correct about $EDIT_COMMIT, not having looked at
+its definition).
 
-Could anyone enlighten me? I've read git-rebase(1) several times,
-but don't seem to get it right...
+Important is the double quotation of $MSG to keep it as a single argument.
 
+> I poked around a bit, but one major obstacle is that the assignments
+> in $author_script are on separate lines, which you would have to
+> splice into a single line before you can insert them in the eval.
 
-cat > file <<EOF
-a
-b
-d
-e
-g
-h
-EOF
-git add file
-git commit -m 'A' -a
-cat > file <<EOF
-a
-b
-d
-e
-g
-c
-h
-EOF
-git commit -m 'B' -a
-cat > file <<EOF
-a
-b
-d
-e
-f
-g
-c
-h
-EOF
-git commit -m 'C' -a
-cat > file <<EOF
-a
-b
-c
-d
-e
-f
-g
-h
-EOF
-git commit -m 'D' -a
-cat > file <<EOF
-a
-b
-c
-d
-e
-f
-g
-h
-i
-EOF
-git commit -m 'E' -a
+Hm?  Why?  Newlines separate assignments just as reliable as spaces
+do.  They are primarily special to the tty as line separators, not the
+shell as such.
+
+-- 
+David Kastrup
