@@ -1,58 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Missing strptime
-Date: Tue, 25 Sep 2007 02:03:14 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709250202130.28395@racer.site>
-References: <OF8EBEA0A7.5425E9EA-ON88257360.00812AEA-88257360.00819919@beckman.com>
- <Pine.LNX.4.64.0709250127170.28395@racer.site>
- <alpine.LFD.0.999.0709241750510.3579@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [EGIT PATCH] Change to simplified icon.
+Date: Mon, 24 Sep 2007 21:16:36 -0400
+Message-ID: <20070925011636.GH3099@spearce.org>
+References: <20070918222416.GB11990@toast.toronto.redhat.com> <200709192019.13096.robin.rosenberg.lists@dewire.com> <200709192257.39209.robin.rosenberg.lists@dewire.com> <200709192259.10054.robin.rosenberg@dewire.com> <20070924041723.GF3099@spearce.org> <Pine.LNX.4.64.0709241124500.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: mkraai@beckman.com, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Sep 25 03:04:26 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Sep 25 03:16:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZyqe-0004hv-OW
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 03:04:25 +0200
+	id 1IZz2e-0007ym-HU
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 03:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140AbXIYBET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 21:04:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752645AbXIYBET
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 21:04:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55514 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752462AbXIYBES (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 21:04:18 -0400
-Received: (qmail invoked by alias); 25 Sep 2007 01:04:16 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp017) with SMTP; 25 Sep 2007 03:04:16 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19g9g5/r8NgZoGZMw6+PlBgpHgBGddSJAOMDL7Vn7
-	z95mX3ilKKDQkF
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0709241750510.3579@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1754508AbXIYBQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 21:16:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbXIYBQm
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 21:16:42 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:41135 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754490AbXIYBQl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 21:16:41 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IZz2m-0000rT-Ju; Mon, 24 Sep 2007 21:16:56 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7C08B20FBAE; Mon, 24 Sep 2007 21:16:37 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709241124500.28395@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59085>
 
-Hi,
-
-On Mon, 24 Sep 2007, Linus Torvalds wrote:
-
-> On Tue, 25 Sep 2007, Johannes Schindelin wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 24 Sep 2007, Shawn O. Pearce wrote:
 > > 
-> > The only user for strptime is convert-objects, a program that should 
-> > probably move to contrib/ anyway.  It was used once, a long time ago, 
-> > to convert from the old format, which hashed the compressed contents, 
-> > to the current format, which hashes the contents _before_ compression.
+> > [...] Maybe I'll take a stab at creating
+> > a git-gui icon [...]
 > 
-> Actually, it also changes the date format, I think.
+> You might want to look at http://git.or.cz/gitwiki/GitRelatedLogos (I 
+> especially like Henrik Nyh's, we use it in git-gui).  Might be a good 
+> starting point.
 
-Yes, right, that was actually why strptime() was needed.
+What do you mean you "use it in git-gui" ?  Have you patched git-gui
+to set the window icon to Henrik's?  And not tried to contribute
+the patch upstream?  Come on, show the GPL love... :-)
 
-Ciao,
-Dscho
+-- 
+Shawn.
