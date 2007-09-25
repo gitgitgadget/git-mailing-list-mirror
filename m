@@ -1,108 +1,102 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: diffcore-rename performance mode
-Date: Tue, 25 Sep 2007 12:38:43 -0400
-Message-ID: <20070925163843.GA22987@coredump.intra.peff.net>
-References: <20070918082321.GA9883@coredump.intra.peff.net> <7vsl5cwe6p.fsf@gitster.siamese.dyndns.org> <20070918085413.GA11751@coredump.intra.peff.net>
+From: "Josh England" <jjengla@sandia.gov>
+Subject: Re: [PATCH] post-checkout hook, and related docs and tests
+Date: Tue, 25 Sep 2007 10:41:13 -0600
+Message-ID: <1190738473.6078.102.camel@beauty>
+References: <1190406421-15620-1-git-send-email-jjengla@sandia.gov>
+ <7vzlzfh7xd.fsf@gitster.siamese.dyndns.org>
+ <1190654052.6078.14.camel@beauty>
+ <7vsl53ap5x.fsf@gitster.siamese.dyndns.org>
+ <1190662396.6078.63.camel@beauty>
+ <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
+ <1190671558.6078.87.camel@beauty>
+ <7vfy138vql.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 18:38:58 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 18:39:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaDQz-0000ky-Pe
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 18:38:54 +0200
+	id 1IaDRW-0000xh-LW
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 18:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751906AbXIYQir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 12:38:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751849AbXIYQir
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 12:38:47 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4184 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751164AbXIYQiq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 12:38:46 -0400
-Received: (qmail 17858 invoked by uid 111); 25 Sep 2007 16:38:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 25 Sep 2007 12:38:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 25 Sep 2007 12:38:43 -0400
-Content-Disposition: inline
-In-Reply-To: <20070918085413.GA11751@coredump.intra.peff.net>
+	id S1753300AbXIYQjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 12:39:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752818AbXIYQjT
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 12:39:19 -0400
+Received: from mm03snlnto.sandia.gov ([132.175.109.20]:4918 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752261AbXIYQjR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 12:39:17 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 25 Sep 2007 10:39:05 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from [132.175.2.191] (beauty.son.sandia.gov [132.175.2.191])
+ by mailgate.sandia.gov (8.14.0/8.14.0) with ESMTP id l8PGd4H5000703;
+ Tue, 25 Sep 2007 10:39:04 -0600
+In-Reply-To: <7vfy138vql.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.10.1
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940,
+ Antispam-Data: 2007.9.25.91730
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0,
+ __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0,
+ __MIME_VERSION 0, __SANE_MSGID 0'
+X-TMWD-Spam-Summary: TS=20070925163906; SEV=2.2.2; DFV=B2007092511;
+ IFV=2.0.4,4.0-9; AIF=B2007092511; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230312E34364639333941392E303036303A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007092511_5.02.0125_4.0-9
+X-WSS-ID: 6AE7E6233HO3387021-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59147>
 
-On Tue, Sep 18, 2007 at 04:54:13AM -0400, Jeff King wrote:
-
-> > > However, keeping around _just_ the
-> > > cnt_data caused only about 100M of extra memory consumption (and gave
-> > > the same performance boost).
-> > 
-> > That would be an interesting and relatively low-hanging optimization.
+On Mon, 2007-09-24 at 16:54 -0700, Junio C Hamano wrote:
+> "Josh England" <jjengla@sandia.gov> writes:
 > 
-> I can produce memory usage numbers for the kernel, too.
+> > On Mon, 2007-09-24 at 14:07 -0700, Junio C Hamano wrote:
+> > ...
+> >> If you want to spacial case 
+> >> 
+> >>         $ git checkout otherbranch path.c
+> >> 
+> >> it raises another issue.  Which commit should supply the
+> >> "extended attribute description" for path.c?  Should it be taken
+> >> from the current commit (aka HEAD), otherbranch, or the index?
+> >
+> > This already is a special case and your question is valid but not one
+> > that git should necessary care about.  Since extended attributes are not
+> > built into git the only way to handle them is through hooks.  A such, it
+> > is up to the hook to worry about these kinds of issues.
+> 
+> The fear I have is that that kind of thinking would necessitate
+> your hook to be called after the user edits paths.c in any other
+> way not to confuse users.
+> 
+> What I am questioning is where we should stop, in order to keep
+> things simpler to explain, and I happen to think that it is far
+> easier if we can teach that "git checkout other path.c" is
+> equivalent to "git cat-file blob other:path.c >path.c" followed
+> by "git add path.c", than saying "checkout is magical and if you
+> have external hook it can do far more than editing the file
+> yourself to arrive at the same contents".
+> 
+> But I am obviously not the one who is interested in tracking
+> extended attributes attached to git contents, and I do not feel
+> too strongly about one way or the other.  I am Ok with it if you
+> think "checkout is magical" is easier to teach [*1*].
+> 
+> I just wanted to make sure we know what semantics this is
+> bringing in, and get it clearly documented.  That's all.
 
-And here are some kernel numbers. I measured performance of this script
-in the linux-2.6 repository:
+OK.  I'll try to come up with some good wording for the documentation.
 
-#!/bin/sh
+So this leads to my next question:  Should the post-merge patch be
+brought in under this same umbrella to form a single post-checkout hook,
+or should it stay a separate hook?
 
-last=
-git-tag | grep -v -- - | while read tag; do
-  if test -n "$last"; then
-    echo Diffing $last..$tag
-    git-diff --raw -M -l0 $last $tag >/dev/null
-  fi
-  last=$tag
-done
-
-under the assumption that diffing between major revisions would give a
-good medium of diffs that would be large enough to show the n^2 rename
-behavior, but still small enough to be close to "everyday" usage.
-
-I measured three different approaches:
-  1. stock 'next' (stock)
-  2. removing entirely the calls to diff_free_filespec_data (nofree)
-  3. changing those free calls to free everything except cnt_data (somefree)
-
-And I measured two things:
-  1. user CPU time to complete
-  2. peak memory usage
-
-All numbers are warm-cache, and typical cases after multiple runs.
-
-                 | stock | nofree | somefree
------------------|---------------------------
-user time (s)    | 76.78 | 16.96  | 46.26
-peak memory (Kb) | 52300 | 66796  | 59156
-
-The raw 'time' output is below:
-
-stock:
-76.78user 3.35system 1:20.72elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+166733minor)pagefaults 0swaps
-
-nofree:
-16.96user 1.46system 0:18.47elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+185353minor)pagefaults 0swaps
-
-somefree:
-46.26user 1.54system 0:47.94elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-0inputs+0outputs (0major+178819minor)pagefaults 0swaps
-
-So this is definitely worth pursuing, as it yields massive speedups even
-for regular repositories. And even the 'nofree' case only costs us 14M
-of extra memory (although it is a 27% increase, this just isn't that
-memory-hungry an endeavour for the sizes of changes we're talking
-about). And as Linus noted, now that we have a default rename limit,
-you're not likely to hit an explosion of memory usage.
-
-What is most confusing is why the 'somefree' case performs so badly,
-since we should just be using the cnt_data. I'll see if gprof can shed
-any light on that. It would be nice to use it instead, since it will
-have much better memory usage in the face of large blobs (e.g., my
-pathological case that started this whole thread).
-
--Peff
+-JE
