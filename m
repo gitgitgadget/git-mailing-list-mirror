@@ -1,60 +1,103 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [EGIT PATCH] Change to simplified icon.
-Date: Mon, 24 Sep 2007 21:16:36 -0400
-Message-ID: <20070925011636.GH3099@spearce.org>
-References: <20070918222416.GB11990@toast.toronto.redhat.com> <200709192019.13096.robin.rosenberg.lists@dewire.com> <200709192257.39209.robin.rosenberg.lists@dewire.com> <200709192259.10054.robin.rosenberg@dewire.com> <20070924041723.GF3099@spearce.org> <Pine.LNX.4.64.0709241124500.28395@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: My stash wants to delete all my files
+Date: Mon, 24 Sep 2007 18:26:08 -0700
+Message-ID: <7vabrb8rin.fsf@gitster.siamese.dyndns.org>
+References: <5A9D6E3B-7B0E-4414-9AFB-C1C8B2EE6A9D@steelskies.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Sep 25 03:16:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Tue Sep 25 03:26:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IZz2e-0007ym-HU
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 03:16:48 +0200
+	id 1IZzBw-000205-UF
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 03:26:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754508AbXIYBQm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Sep 2007 21:16:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbXIYBQm
-	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 21:16:42 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41135 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754490AbXIYBQl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Sep 2007 21:16:41 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IZz2m-0000rT-Ju; Mon, 24 Sep 2007 21:16:56 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 7C08B20FBAE; Mon, 24 Sep 2007 21:16:37 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709241124500.28395@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754715AbXIYB0Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Sep 2007 21:26:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754696AbXIYB0Q
+	(ORCPT <rfc822;git-outgoing>); Mon, 24 Sep 2007 21:26:16 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:37922 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754687AbXIYB0P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Sep 2007 21:26:15 -0400
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 53A0413B785;
+	Mon, 24 Sep 2007 21:26:32 -0400 (EDT)
+In-Reply-To: <5A9D6E3B-7B0E-4414-9AFB-C1C8B2EE6A9D@steelskies.com> (Jonathan
+	del Strother's message of "Mon, 24 Sep 2007 14:12:15 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59086>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 24 Sep 2007, Shawn O. Pearce wrote:
-> > 
-> > [...] Maybe I'll take a stab at creating
-> > a git-gui icon [...]
-> 
-> You might want to look at http://git.or.cz/gitwiki/GitRelatedLogos (I 
-> especially like Henrik Nyh's, we use it in git-gui).  Might be a good 
-> starting point.
+Jonathan del Strother <maillist@steelskies.com> writes:
 
-What do you mean you "use it in git-gui" ?  Have you patched git-gui
-to set the window icon to Henrik's?  And not tried to contribute
-the patch upstream?  Come on, show the GPL love... :-)
+> $ git stash list
+> stash@{0}: On master: --apply
+> stash@{1}: WIP on master: 09e3c30... Better handling of cell sizes in
+> the grid
+>
+> $ git stash show stash@{1}
+>  ...
+>  19 files changed, 0 insertions(+), 3805 deletions(-)
+>
+> Hmm.  Looks like it's trying to delete all of my versioned files.
+> "git stash apply stash@{1}" confirms this.   Obviously that's not what
+> I tried to stash - my WIP when I stashed was a few additions, a couple
+> of new unversioned files, and moving a few lines of code from one file
+> to another.
+>
+> Any ideas what happened there?  I can't seem to reproduce the problem
+> in a test repository.
 
--- 
-Shawn.
+There are two possibilities that I can think of offhand, neither
+of them is about git-stash but about the state you ran stash
+from.
+
+Whenever anybody wonders where inadvertent reverting changes
+come from, two most likely reasons are incorrect push into the
+current branch's tip initiated from elsewhere, or incorrect
+fetch into the current branch's tip initiated from the
+repository.
+
+If your work repository is foo, and if you are working on
+'master' branch, you could
+
+	$ cd ../bar ; git push ../foo master:master
+
+to push from elsewhere to update the tip of the checked out
+branch.  This makes the index and the work tree that was based
+on the old commit in foo repository totally out of sync with
+respect to the HEAD (which you are replacing), and committing
+that state would revert the change the above push made.
+
+You can do the same by doing something equally silly and
+destructive by:
+
+	$ git fetch --update-head-ok ../bar master:master
+
+After these operations that could make your index and work
+tree state to include reverts, if you "stash", the stash will
+record that the reverting was what you wanted to do.
+
+I am not saying this is the only possible explanation though.
+You can try:
+
+	git ls-tree stash@{1}
+        git rev-parse stash@{1}^1
+        git diff stash@{1}^1 stash@{1}^2
+
+The stash entry itself is the state of the work tree, its first
+parent (i.e. ^1) is the commit your stash was originally based
+on, and its second parent (i.e. ^2) is what was recorded in the
+index.  Is the output from the first one empty?  Does the second
+command show you that you were on the commit you thought you were
+on?  Does the third command show you what you thought you have
+told "git add" to put in the index just before you made the
+stash?
