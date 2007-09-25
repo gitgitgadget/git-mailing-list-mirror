@@ -1,242 +1,65 @@
-From: Michal Vitecek <fuf@mageo.cz>
-Subject: Re: [PATCH] Use "" instead of "<unknown>" for placeholders
-Date: Tue, 25 Sep 2007 11:43:20 +0200
-Message-ID: <20070925094320.GN22869@mageo.cz>
-References: <20070921101420.GD22869@mageo.cz> <Pine.LNX.4.64.0709211146090.28395@racer.site> <20070921110646.GA9072@mageo.cz> <Pine.LNX.4.64.0709211207070.28395@racer.site> <20070921140500.GB9072@mageo.cz> <7vk5qjixqy.fsf@gitster.siamese.dyndns.org> <46F4D815.5050602@mageo.cz>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [EGIT PATCH] Change to simplified icon.
+Date: Tue, 25 Sep 2007 10:53:35 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709251053030.28395@racer.site>
+References: <20070918222416.GB11990@toast.toronto.redhat.com>
+ <200709192019.13096.robin.rosenberg.lists@dewire.com>
+ <200709192257.39209.robin.rosenberg.lists@dewire.com>
+ <200709192259.10054.robin.rosenberg@dewire.com> <20070924041723.GF3099@spearce.org>
+ <Pine.LNX.4.64.0709241124500.28395@racer.site> <20070925011636.GH3099@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 11:43:36 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 25 11:54:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ia6x1-0003ZK-KY
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 11:43:32 +0200
+	id 1Ia77u-00070a-OK
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 11:54:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751322AbXIYJnY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2007 05:43:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbXIYJnY
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 05:43:24 -0400
-Received: from interactive-1.com ([193.85.232.82]:41750 "EHLO
-	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183AbXIYJnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 05:43:23 -0400
-Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
-	by interactive-1.com (Postfix) with ESMTP id BF7C023B414;
-	Tue, 25 Sep 2007 11:43:21 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <46F4D815.5050602@mageo.cz>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751111AbXIYJyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 25 Sep 2007 05:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751245AbXIYJyk
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 05:54:40 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44936 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751071AbXIYJyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 05:54:40 -0400
+Received: (qmail invoked by alias); 25 Sep 2007 09:54:38 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 25 Sep 2007 11:54:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18XTJAF1e4XdKdJc0G7RLIVAJiPHNVBDciKBk+Z3g
+	FWMP52rqkozGES
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070925011636.GH3099@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59104>
 
- Hello again,
+Hi,
 
-Michal Vitecek wrote:
-> Junio C Hamano wrote:
->>>>>>> I made it because I want to use my own pretty format which curr=
-ently=20
->>>>>>> only allows '%s' for subject and '%b' for body. But '%b' is=20
->>>>>>> substituted with <undefined> if the body is "missing" which I=20
->>>>>>> obviously don't like :)
->>>>>> Then you should fix %b not to show "<undefined>".
->>>>>  I'll do it if it is okay. Shall I do the same for the other
->>>>>  placeholders as well?
->>>> Yeah.  Don't know why I did it that way.
->>>  Here comes the big patch :)
->> Now, this breaks t6006 which needs this patch.
->
-> Oops - I'm sorry about that. I ran the test suite (1.5.3.1) but it fa=
-iled=20
-> in 2 tests before the patch and in 2 tests after it so I considered i=
-t=20
-> okay.
->
->> Looking at this patch, I am not sure if your change is really a
->> desirable one --- shouldn't it be removing the line itself, not
->> just <unknown> token?
->
-> This sounds as the best solution. I'll look into it. Thanks for your =
-time.
+On Mon, 24 Sep 2007, Shawn O. Pearce wrote:
 
- Here comes the patch. I hope it will be ok this time :) Thanks.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > On Mon, 24 Sep 2007, Shawn O. Pearce wrote:
+> > > 
+> > > [...] Maybe I'll take a stab at creating
+> > > a git-gui icon [...]
+> > 
+> > You might want to look at http://git.or.cz/gitwiki/GitRelatedLogos (I 
+> > especially like Henrik Nyh's, we use it in git-gui).  Might be a good 
+> > starting point.
+> 
+> What do you mean you "use it in git-gui" ?  Have you patched git-gui to 
+> set the window icon to Henrik's?  And not tried to contribute the patch 
+> upstream?  Come on, show the GPL love... :-)
 
- Don't use "<unknown>" for unknown values of placeholders and suppress
- printing of empty user formats.
+Oops.  I meant to say that we use it in msysGit.
 
----
- builtin-rev-list.c         |    3 ++-
- commit.c                   |    3 ---
- interpolate.c              |    6 +++++-
- log-tree.c                 |   10 ++++++----
- t/t6006-rev-list-format.sh |    8 --------
- t/t7500-commit.sh          |    4 ++--
- 6 files changed, 15 insertions(+), 19 deletions(-)
-
-diff --git a/builtin-rev-list.c b/builtin-rev-list.c
-index 3894633..1de981d 100644
---- a/builtin-rev-list.c
-+++ b/builtin-rev-list.c
-@@ -85,7 +85,8 @@ static void show_commit(struct commit *commit)
- 		pretty_print_commit(revs.commit_format, commit, ~0,
- 				    &buf, &buflen,
- 				    revs.abbrev, NULL, NULL, revs.date_mode);
--		printf("%s%c", buf, hdr_termination);
-+                if (strlen(buf))
-+                    printf("%s%c", buf, hdr_termination);
- 		free(buf);
- 	}
- 	maybe_flush_or_die(stdout, "stdout");
-diff --git a/commit.c b/commit.c
-index 99f65ce..c9a1818 100644
---- a/commit.c
-+++ b/commit.c
-@@ -917,9 +917,6 @@ long format_commit_message(const struct commit *com=
-mit, const void *format,
- 	}
- 	if (msg[i])
- 		table[IBODY].value =3D xstrdup(msg + i);
--	for (i =3D 0; i < ARRAY_SIZE(table); i++)
--		if (!table[i].value)
--			interp_set_entry(table, i, "<unknown>");
-=20
- 	do {
- 		char *buf =3D *buf_p;
-diff --git a/interpolate.c b/interpolate.c
-index 0082677..58fd055 100644
---- a/interpolate.c
-+++ b/interpolate.c
-@@ -76,8 +76,12 @@ unsigned long interpolate(char *result, unsigned lon=
-g reslen,
- 			/* Check for valid interpolation. */
- 			if (i < ninterps) {
- 				value =3D interps[i].value;
--				valuelen =3D strlen(value);
-+                                if (value =3D=3D NULL) {
-+                                    src +=3D namelen;
-+                                    continue;
-+                                }
-=20
-+				valuelen =3D strlen(value);
- 				if (newlen + valuelen + 1 < reslen) {
- 					/* Substitute. */
- 					strncpy(dest, value, valuelen);
-diff --git a/log-tree.c b/log-tree.c
-index a642371..5653332 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -175,14 +175,15 @@ void show_log(struct rev_info *opt, const char *s=
-ep)
- 	 *  - The pretty-printed commit lacks a newline at the end
- 	 *    of the buffer, but we do want to make sure that we
- 	 *    have a newline there. If the separator isn't already
--	 *    a newline, add an extra one.
-+         *    a newline, add an extra one and do the same for the
-+         *    user format as well.
- 	 *  - unlike other log messages, the one-line format does
- 	 *    not have an empty line between entries.
- 	 */
- 	extra =3D "";
--	if (*sep !=3D '\n' && opt->commit_format =3D=3D CMIT_FMT_ONELINE)
-+	if (*sep !=3D '\n' && (opt->commit_format =3D=3D CMIT_FMT_ONELINE || =
-opt->commit_format =3D=3D CMIT_FMT_USERFORMAT))
- 		extra =3D "\n";
--	if (opt->shown_one && opt->commit_format !=3D CMIT_FMT_ONELINE)
-+	if (opt->shown_one && opt->commit_format !=3D CMIT_FMT_ONELINE && opt=
-->commit_format !=3D CMIT_FMT_USERFORMAT)
- 		putchar(opt->diffopt.line_termination);
- 	opt->shown_one =3D 1;
-=20
-@@ -298,7 +299,8 @@ void show_log(struct rev_info *opt, const char *sep=
-)
- 	if (opt->show_log_size)
- 		printf("log size %i\n", len);
-=20
--	printf("%s%s%s", msgbuf, extra, sep);
-+        if (strlen(msgbuf))
-+            printf("%s%s%s", msgbuf, extra, sep);
- 	free(msgbuf);
- }
-=20
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index ad6d0b8..1e4541a 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -79,9 +79,7 @@ EOF
-=20
- test_format encoding %e <<'EOF'
- commit 131a310eb913d107dd3c09a65d1651175898735d
--<unknown>
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
--<unknown>
- EOF
-=20
- test_format subject %s <<'EOF'
-@@ -93,9 +91,7 @@ EOF
-=20
- test_format body %b <<'EOF'
- commit 131a310eb913d107dd3c09a65d1651175898735d
--<unknown>
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
--<unknown>
- EOF
-=20
- test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<'EOF'
-@@ -121,9 +117,7 @@ test_format complex-encoding %e <<'EOF'
- commit f58db70b055c5718631e5c61528b28b12090cdea
- iso8859-1
- commit 131a310eb913d107dd3c09a65d1651175898735d
--<unknown>
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
--<unknown>
- EOF
-=20
- test_format complex-subject %s <<'EOF'
-@@ -142,9 +136,7 @@ and it will be encoded in iso8859-1. We should ther=
-efore
- include an iso8859 character: =C3=82=C4=84bueno!
-=20
- commit 131a310eb913d107dd3c09a65d1651175898735d
--<unknown>
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
--<unknown>
- EOF
-=20
- test_done
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index f11ada8..abbf54b 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -81,7 +81,7 @@ test_expect_success 'explicit commit message should o=
-verride template' '
- 	git add foo &&
- 	GIT_EDITOR=3D../t7500/add-content git commit --template "$TEMPLATE" \
- 		-m "command line msg" &&
--	commit_msg_is "command line msg<unknown>"
-+	commit_msg_is "command line msg"
- '
-=20
- test_expect_success 'commit message from file should override template=
-' '
-@@ -90,7 +90,7 @@ test_expect_success 'commit message from file should =
-override template' '
- 	echo "standard input msg" |
- 		GIT_EDITOR=3D../t7500/add-content git commit \
- 			--template "$TEMPLATE" --file - &&
--	commit_msg_is "standard input msg<unknown>"
-+	commit_msg_is "standard input msg"
- '
-=20
- test_done
---=20
-1.5.3.1
-
-
---=20
-		fuf		(fuf@mageo.cz)
+Sorry,
+Dscho
