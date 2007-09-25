@@ -1,100 +1,242 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: Re: My stash wants to delete all my files
-Date: Tue, 25 Sep 2007 10:27:06 +0100
-Message-ID: <DCBF8566-9B43-4EFA-A8B2-2EAB516C273F@steelskies.com>
-References: <5A9D6E3B-7B0E-4414-9AFB-C1C8B2EE6A9D@steelskies.com> <7vabrb8rin.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v901)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+From: Michal Vitecek <fuf@mageo.cz>
+Subject: Re: [PATCH] Use "" instead of "<unknown>" for placeholders
+Date: Tue, 25 Sep 2007 11:43:20 +0200
+Message-ID: <20070925094320.GN22869@mageo.cz>
+References: <20070921101420.GD22869@mageo.cz> <Pine.LNX.4.64.0709211146090.28395@racer.site> <20070921110646.GA9072@mageo.cz> <Pine.LNX.4.64.0709211207070.28395@racer.site> <20070921140500.GB9072@mageo.cz> <7vk5qjixqy.fsf@gitster.siamese.dyndns.org> <46F4D815.5050602@mageo.cz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 25 11:28:02 2007
+X-From: git-owner@vger.kernel.org Tue Sep 25 11:43:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ia6i1-0006tw-4A
-	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 11:28:01 +0200
+	id 1Ia6x1-0003ZK-KY
+	for gcvg-git-2@gmane.org; Tue, 25 Sep 2007 11:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751293AbXIYJ1z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Sep 2007 05:27:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751303AbXIYJ1y
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 05:27:54 -0400
-Received: from juliet.asmallorange.com ([207.210.105.70]:44375 "EHLO
-	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750864AbXIYJ1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 05:27:53 -0400
-Received: from host217-35-101-26.in-addr.btopenworld.com ([217.35.101.26]:50633 helo=[192.168.1.2])
-	by juliet.asmallorange.com with esmtpa (Exim 4.68)
-	(envelope-from <maillist@steelskies.com>)
-	id 1Ia6hS-00008m-6E; Tue, 25 Sep 2007 05:27:26 -0400
-In-Reply-To: <7vabrb8rin.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.901)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - steelskies.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1751322AbXIYJnY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2007 05:43:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbXIYJnY
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 05:43:24 -0400
+Received: from interactive-1.com ([193.85.232.82]:41750 "EHLO
+	interactive-1.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751183AbXIYJnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 05:43:23 -0400
+Received: from interactive-1.com (localhost.localdomain [127.0.0.1])
+	by interactive-1.com (Postfix) with ESMTP id BF7C023B414;
+	Tue, 25 Sep 2007 11:43:21 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <46F4D815.5050602@mageo.cz>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59103>
 
+ Hello again,
 
-On 25 Sep 2007, at 02:26, Junio C Hamano wrote:
-
-> Jonathan del Strother <maillist@steelskies.com> writes:
+Michal Vitecek wrote:
+> Junio C Hamano wrote:
+>>>>>>> I made it because I want to use my own pretty format which curr=
+ently=20
+>>>>>>> only allows '%s' for subject and '%b' for body. But '%b' is=20
+>>>>>>> substituted with <undefined> if the body is "missing" which I=20
+>>>>>>> obviously don't like :)
+>>>>>> Then you should fix %b not to show "<undefined>".
+>>>>>  I'll do it if it is okay. Shall I do the same for the other
+>>>>>  placeholders as well?
+>>>> Yeah.  Don't know why I did it that way.
+>>>  Here comes the big patch :)
+>> Now, this breaks t6006 which needs this patch.
 >
->> $ git stash list
->> stash@{0}: On master: --apply
->> stash@{1}: WIP on master: 09e3c30... Better handling of cell sizes in
->> the grid
->>
->> $ git stash show stash@{1}
->> ...
->> 19 files changed, 0 insertions(+), 3805 deletions(-)
->>
->> Hmm.  Looks like it's trying to delete all of my versioned files.
->> "git stash apply stash@{1}" confirms this.   Obviously that's not  
->> what
->> I tried to stash - my WIP when I stashed was a few additions, a  
->> couple
->> of new unversioned files, and moving a few lines of code from one  
->> file
->> to another.
->>
->> Any ideas what happened there?  I can't seem to reproduce the problem
->> in a test repository.
+> Oops - I'm sorry about that. I ran the test suite (1.5.3.1) but it fa=
+iled=20
+> in 2 tests before the patch and in 2 tests after it so I considered i=
+t=20
+> okay.
 >
-> ...
-> Whenever anybody wonders where inadvertent reverting changes
-> come from, two most likely reasons are incorrect push into the
-> current branch's tip initiated from elsewhere, or incorrect
-> fetch into the current branch's tip initiated from the
-> repository.
-
-I'm working on a single isolated repository, so haven't pushed,  
-pulled, fetched, or anything.
-
-
-> 	git ls-tree stash@{1}
->        git rev-parse stash@{1}^1
->        git diff stash@{1}^1 stash@{1}^2
+>> Looking at this patch, I am not sure if your change is really a
+>> desirable one --- shouldn't it be removing the line itself, not
+>> just <unknown> token?
 >
+> This sounds as the best solution. I'll look into it. Thanks for your =
+time.
 
-ls-tree is empty.  rev-parse confirms I was on the right revision when  
-I stashed, and the diff shows everything being deleted.
+ Here comes the patch. I hope it will be ok this time :) Thanks.
+
+ Don't use "<unknown>" for unknown values of placeholders and suppress
+ printing of empty user formats.
+
+---
+ builtin-rev-list.c         |    3 ++-
+ commit.c                   |    3 ---
+ interpolate.c              |    6 +++++-
+ log-tree.c                 |   10 ++++++----
+ t/t6006-rev-list-format.sh |    8 --------
+ t/t7500-commit.sh          |    4 ++--
+ 6 files changed, 15 insertions(+), 19 deletions(-)
+
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 3894633..1de981d 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -85,7 +85,8 @@ static void show_commit(struct commit *commit)
+ 		pretty_print_commit(revs.commit_format, commit, ~0,
+ 				    &buf, &buflen,
+ 				    revs.abbrev, NULL, NULL, revs.date_mode);
+-		printf("%s%c", buf, hdr_termination);
++                if (strlen(buf))
++                    printf("%s%c", buf, hdr_termination);
+ 		free(buf);
+ 	}
+ 	maybe_flush_or_die(stdout, "stdout");
+diff --git a/commit.c b/commit.c
+index 99f65ce..c9a1818 100644
+--- a/commit.c
++++ b/commit.c
+@@ -917,9 +917,6 @@ long format_commit_message(const struct commit *com=
+mit, const void *format,
+ 	}
+ 	if (msg[i])
+ 		table[IBODY].value =3D xstrdup(msg + i);
+-	for (i =3D 0; i < ARRAY_SIZE(table); i++)
+-		if (!table[i].value)
+-			interp_set_entry(table, i, "<unknown>");
+=20
+ 	do {
+ 		char *buf =3D *buf_p;
+diff --git a/interpolate.c b/interpolate.c
+index 0082677..58fd055 100644
+--- a/interpolate.c
++++ b/interpolate.c
+@@ -76,8 +76,12 @@ unsigned long interpolate(char *result, unsigned lon=
+g reslen,
+ 			/* Check for valid interpolation. */
+ 			if (i < ninterps) {
+ 				value =3D interps[i].value;
+-				valuelen =3D strlen(value);
++                                if (value =3D=3D NULL) {
++                                    src +=3D namelen;
++                                    continue;
++                                }
+=20
++				valuelen =3D strlen(value);
+ 				if (newlen + valuelen + 1 < reslen) {
+ 					/* Substitute. */
+ 					strncpy(dest, value, valuelen);
+diff --git a/log-tree.c b/log-tree.c
+index a642371..5653332 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -175,14 +175,15 @@ void show_log(struct rev_info *opt, const char *s=
+ep)
+ 	 *  - The pretty-printed commit lacks a newline at the end
+ 	 *    of the buffer, but we do want to make sure that we
+ 	 *    have a newline there. If the separator isn't already
+-	 *    a newline, add an extra one.
++         *    a newline, add an extra one and do the same for the
++         *    user format as well.
+ 	 *  - unlike other log messages, the one-line format does
+ 	 *    not have an empty line between entries.
+ 	 */
+ 	extra =3D "";
+-	if (*sep !=3D '\n' && opt->commit_format =3D=3D CMIT_FMT_ONELINE)
++	if (*sep !=3D '\n' && (opt->commit_format =3D=3D CMIT_FMT_ONELINE || =
+opt->commit_format =3D=3D CMIT_FMT_USERFORMAT))
+ 		extra =3D "\n";
+-	if (opt->shown_one && opt->commit_format !=3D CMIT_FMT_ONELINE)
++	if (opt->shown_one && opt->commit_format !=3D CMIT_FMT_ONELINE && opt=
+->commit_format !=3D CMIT_FMT_USERFORMAT)
+ 		putchar(opt->diffopt.line_termination);
+ 	opt->shown_one =3D 1;
+=20
+@@ -298,7 +299,8 @@ void show_log(struct rev_info *opt, const char *sep=
+)
+ 	if (opt->show_log_size)
+ 		printf("log size %i\n", len);
+=20
+-	printf("%s%s%s", msgbuf, extra, sep);
++        if (strlen(msgbuf))
++            printf("%s%s%s", msgbuf, extra, sep);
+ 	free(msgbuf);
+ }
+=20
+diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
+index ad6d0b8..1e4541a 100755
+--- a/t/t6006-rev-list-format.sh
++++ b/t/t6006-rev-list-format.sh
+@@ -79,9 +79,7 @@ EOF
+=20
+ test_format encoding %e <<'EOF'
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+-<unknown>
+ commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-<unknown>
+ EOF
+=20
+ test_format subject %s <<'EOF'
+@@ -93,9 +91,7 @@ EOF
+=20
+ test_format body %b <<'EOF'
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+-<unknown>
+ commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-<unknown>
+ EOF
+=20
+ test_format colors %Credfoo%Cgreenbar%Cbluebaz%Cresetxyzzy <<'EOF'
+@@ -121,9 +117,7 @@ test_format complex-encoding %e <<'EOF'
+ commit f58db70b055c5718631e5c61528b28b12090cdea
+ iso8859-1
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+-<unknown>
+ commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-<unknown>
+ EOF
+=20
+ test_format complex-subject %s <<'EOF'
+@@ -142,9 +136,7 @@ and it will be encoded in iso8859-1. We should ther=
+efore
+ include an iso8859 character: =C3=82=C4=84bueno!
+=20
+ commit 131a310eb913d107dd3c09a65d1651175898735d
+-<unknown>
+ commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
+-<unknown>
+ EOF
+=20
+ test_done
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index f11ada8..abbf54b 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -81,7 +81,7 @@ test_expect_success 'explicit commit message should o=
+verride template' '
+ 	git add foo &&
+ 	GIT_EDITOR=3D../t7500/add-content git commit --template "$TEMPLATE" \
+ 		-m "command line msg" &&
+-	commit_msg_is "command line msg<unknown>"
++	commit_msg_is "command line msg"
+ '
+=20
+ test_expect_success 'commit message from file should override template=
+' '
+@@ -90,7 +90,7 @@ test_expect_success 'commit message from file should =
+override template' '
+ 	echo "standard input msg" |
+ 		GIT_EDITOR=3D../t7500/add-content git commit \
+ 			--template "$TEMPLATE" --file - &&
+-	commit_msg_is "standard input msg<unknown>"
++	commit_msg_is "standard input msg"
+ '
+=20
+ test_done
+--=20
+1.5.3.1
 
 
-> Does the third command show you what you thought you have
-> told "git add" to put in the index just before you made the
-> stash?
-
-I don't think I git-added anything - just made changes to the working  
-copy.  (It *does* stash those, right??)
-
-
-I'm at a loss to explain what happened here...
+--=20
+		fuf		(fuf@mageo.cz)
