@@ -1,255 +1,179 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 26 Sep 2007 13:05:47 -0700
-Message-ID: <7vhclhyyxw.fsf@gitster.siamese.dyndns.org>
-References: <7v3axsch0d.fsf@gitster.siamese.dyndns.org>
-	<7v3axhd0lr.fsf@gitster.siamese.dyndns.org>
+Subject: What's cooking in git.git (topics)
+Date: Wed, 26 Sep 2007 13:05:59 -0700
+Message-ID: <7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
+	<7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 26 22:06:32 2007
+X-From: git-owner@vger.kernel.org Wed Sep 26 22:06:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iad8z-0007ee-6K
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 22:06:01 +0200
+	id 1Iad9F-0007qm-29
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 22:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425AbXIZUFy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Sep 2007 16:05:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbXIZUFx
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 16:05:53 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46021 "EHLO
+	id S1753480AbXIZUGH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 16:06:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751644AbXIZUGG
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 16:06:06 -0400
+Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:46032 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753361AbXIZUFw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Sep 2007 16:05:52 -0400
+	with ESMTP id S1753376AbXIZUGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 16:06:04 -0400
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A8ED13C915;
-	Wed, 26 Sep 2007 16:06:11 -0400 (EDT)
-X-maint-at: bce92405aebf217a4738bab0df89516910818e68
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9EFFC13C842;
+	Wed, 26 Sep 2007 16:06:22 -0400 (EDT)
 X-master-at: 5166810b1e16b22e342f2181a3535e70c6e7a119
-In-Reply-To: <7v3axhd0lr.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Fri, 14 Sep 2007 03:04:32 -0700")
+X-next-at: 2d916d785de82bda25666788c01747331dfb280f
+In-Reply-To: <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Fri, 14 Sep 2007 03:04:45 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59244>
 
-Nothing earth-shattering in 'maint', except:
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
- - if you are on FreeBSD and use its default shell, git scripts
-   might work better for you;
+* jk/diff-rename (Tue Sep 25 15:29:42 2007 -0400) 1 commit
+ + diffcore-rename: cache file deltas
 
- - comes with updated user-manual;
+Parked in 'next' for now but is 'master' material.
 
- - send-email would not incorrectly issue duplicated message IDs
-   even if you fire many messages within one second;
+* mv/unknown (Tue Sep 25 16:38:46 2007 +0200) 1 commit
+ + Don't use "<unknown>" for placeholders and suppress printing of
+   empty user formats.
 
- - "git rm this-file && git commit this-file" should work
-   better;
+Parked in 'next'; I was already burned by it not passing one of
+the test cases, and I am not absolutely certain what else this
+subtly breaks.  Hopefully minor.
 
-----------------------------------------------------------------
+* jb/remote-rm (Sun Sep 23 22:29:12 2007 -0700) 3 commits
+ + git-remote rm: add tests and minor fix-ups
+ + remote: document the 'rm' subcommand
+ + remote: add 'rm' subcommand
 
-* The 'maint' branch has these fixes since the last announcement.
+Should be Ok to push out to 'master'.
 
-Benoit Sigoure (1):
-  Add test to check recent fix to "git add -u"
+* ml/submodule (Sun Sep 23 22:19:42 2007 -0400) 1 commit
+ + git-submodule - allow a relative path as the subproject url
 
-David Brown (1):
-  Detect exec bit in more cases.
+Should be Ok to push out to 'master'.
 
-David Kastrup (1):
-  Supplant the "while case ... break ;; esac" idiom
+* lh/merge (Mon Sep 24 00:51:45 2007 +0200) 6 commits
+ + git-merge: add --ff and --no-ff options
+ + git-merge: add support for --commit and --no-squash
+ + git-merge: add support for branch.<name>.mergeoptions
+ + git-merge: refactor option parsing
+ + git-merge: fix faulty SQUASH_MSG
+ + Add test-script for git-merge porcelain
 
-Eric Wong (2):
-  Documentation/git-svn: updated design philosophy notes
-  git-svn: don't attempt to spawn pager if we don't want one
+Comments?  I personally never felt need for --no-ff but the
+series is reasonably clean so I do not see strong objection
+against this series either.
 
-Gerrit Pape (1):
-  git-gui: lib/index.tcl: handle files with % in the filename
-      properly
+* sv/svn (Fri Sep 21 15:27:01 2007 +1200) 3 commits
+ + git-svn: handle changed svn command-line syntax
+ + git-svn: fix test for trunk svn (transaction out of date)
+ + git-svn: fix test for trunk svn (commit message not needed)
 
-Glenn Rempe (1):
-  Fixed minor typo in t/t9001-send-email.sh test command line.
+Will merge to 'master' this weekend.
 
-J. Bruce Fields (14):
-  user-manual: adjust section levels in "git internals"
-  user-manual: move object format details to hacking-git chapter
-  user-manual: rename "git internals" to "git concepts"
-  user-manual: create new "low-level git operations" chapter
-  user-manual: rewrite index discussion
-  user-manual: reorder commit, blob, tree discussion
-  user-manual: rewrite object database discussion
-  user-manual: move packfile and dangling object discussion
-  user-manual: fix introduction to packfiles
-  user-manual: todo updates and cleanup
-  documentation: replace Discussion section by link to user-manual
-      chapter
-  core-tutorial: minor cleanup
-  git-apply: fix whitespace stripping
-  user-manual: don't assume refs are stored under .git/refs
+* js/rebase-i (Tue Sep 25 16:43:15 2007 +0100) 1 commit
+ + rebase -i: work on a detached HEAD
 
-Jakub Narebski (2):
-  gitweb: Remove parse_from_to_diffinfo code from git_patchset_body
-  gitweb: No difftree output for trivial merge
+Waiting for autogc change as this textually interacts with it,
+and the additional convenience can wait.
 
-Jari Aalto (1):
-  Documentation/git-archive.txt: a couple of clarifications.
+* jc/autogc (Mon Sep 17 00:55:13 2007 -0700) 10 commits
+ + git-gc --auto: run "repack -A -d -l" as necessary.
+ + git-gc --auto: restructure the way "repack" command line is built.
+ + git-gc --auto: protect ourselves from accumulated cruft
+ + git-gc --auto: add documentation.
+ + git-gc --auto: move threshold check to need_to_gc() function.
+ + repack -A -d: use --keep-unreachable when repacking
+ + pack-objects --keep-unreachable
+ + Export matches_pack_name() and fix its return value
+ + Invoke "git gc --auto" from commit, merge, am and rebase.
+ + Implement git gc --auto
 
-Jeff King (1):
-  git-push: documentation and tests for pushing only branches
+I think the only remaining thing left with this thing is to
+prevent more than one instances of it from running at the same
+time.  Any takers?
 
-Jim Meyering (2):
-  unexpected Make output (e.g. from --debug) causes build failure
-  Do not over-quote the -f envelopesender value.
+* ph/strbuf (Tue Sep 25 10:22:44 2007 +0200) 37 commits
+ + Small cache_tree_write refactor.
+ + Make builtin-rerere use of strbuf nicer and more efficient.
+ + Add strbuf_cmp.
+ + strbuf_setlen(): do not barf on setting length of an empty buffer
+   to 0
+ + sq_quote_argv and add_to_string rework with strbuf's.
+ + Full rework of quote_c_style and write_name_quoted.
+ + ...
 
-Johannes Schindelin (2):
-  revision walker: --cherry-pick is a limited operation
-  apply --index-info: fall back to current index for mode changes
+I had to make a small fix-up to strbuf_setlen() last night to
+this series; this should be ready for 'master'.
 
-Johannes Sixt (2):
-  gitattributes.txt: Remove a duplicated paragraph about 'ident' and
-      'crlf' interaction.
-  gitattributes.txt: Be more to the point in the filter driver
-      description.
+And it is better to push this out early, as the series touches
+everywhere and conflicts with peoples' patches.
 
-Junio C Hamano (11):
-  diff --no-index: do not forget to run diff_setup_done()
-  Documentation/git-config.txt: AsciiDoc tweak to avoid leading dot
-  Split grep arguments in a way that does not requires to add
-      /dev/null.
-  git-sh-setup: typofix in comments
-  send-email: make message-id generation a bit more robust
-  git-commit: Allow partial commit of file removal.
-  git-commit: partial commit of paths only removed from the index
-  Document ls-files --with-tree=3D<tree-ish>
-  t/t4014: test "am -3" with mode-only change.
-  GIT 1.5.3.2
-  Documentation/git-lost-found.txt: drop unnecessarily duplicated
-      name.
+* db/fetch-pack (Tue Sep 25 00:13:25 2007 -0400) 45 commits
+ + Prevent send-pack from segfaulting when a branch doesn't match
+ + Cleanup unnecessary break in remote.c
+ + Cleanup style nit of 'x == NULL' in remote.c
+ + Fix memory leaks when disconnecting transport instances
+ + Ensure builtin-fetch honors {fetch,transfer}.unpackLimit
+ + ...
 
-Linus Torvalds (1):
-  Fix the rename detection limit checking
+Two issues known to me are:
 
-Matt Kraai (2):
-  Move the paragraph specifying where the .idx and .pack files should
-      be
-  Conjugate "search" correctly in the git-prune-packed man page.
+ - "rsync" transport is not supported yet;
 
-Matthias Urlichs (1):
-  git-svnimport: Use separate arguments in the pipe for git-rev-parse
+ - regresses "git pull <name>" using .git/remotes/<name>; does
+   not merge the first refspec when branch.<name>.merge is not
+   set.
 
-Michael Smith (1):
-  user-manual: Explain what submodules are good for.
+There may be others but some people apparently use this in
+production (including me) and I do not expect major breakages in
+the really essential part.
 
-Michele Ballabio (2):
-  git-gui: show unstaged symlinks in diff viewer
-  git-gui: handle "deleted symlink" diff marker
+* ss/svnimport (Mon Sep 24 12:57:40 2007 +0200) 1 commit
+ + Fix pool handling in git-svnimport to avoid memory leaks.
 
-Miklos Vajna (1):
-  User Manual: add a chapter for submodules
+This is meant to eventually go to 'maint' as well but with
+diminishing user base of svnimport it is getting harder to get
+good "tested successfully, seen improvements" reports.
 
-Pierre Habouzit (1):
-  Fix lapsus in builtin-apply.c
+* jc/stash-create (Mon Jul 9 00:51:23 2007 -0700) 2 commits
+ + rebase: allow starting from a dirty tree.
+ + stash: implement "stash create"
 
-Randy Dunlap (1):
-  core-tutorial: correct URL
+I think "stash create" is going in a good direction, but I do
+not think rebase should unstash unconditionally on the resulting
+work tree.  A good compromise might be not to unstash if the
+user asked to switch branches first and to unstash if he didn't.
 
-Shawn Bohrer (1):
-  Fix spelling of overridden in documentation
+* kh/commit (Mon Sep 17 20:06:48 2007 -0400) 7 commits
+ - Implement git commit as a builtin command.
+ - Export rerere() and launch_editor().
+ - Add strbuf_read_file().
+ - Clean up stripspace a bit, use strbuf even more.
+ - Introduce entry point for launching add--interactive.
+ - Enable wt-status to run against non-standard index file.
+ - Enable wt-status output to a given FILE pointer.
 
-Shawn O. Pearce (13):
-  git-gui: Correct starting of git-remote to handle -w option
-  git-gui: Fix detaching current branch during checkout
-  git-gui: Properly set the state of "Stage/Unstage Hunk" action
-  git-gui: Disable Tk send in all git-gui sessions
-  git-gui: Avoid use of libdir in Makefile
-  git-gui: Assume untracked directories are Git submodules
-  git-gui: Trim trailing slashes from untracked submodule names
-  git-gui: Don't delete send on Windows as it doesn't exist
-  git-gui: Make backporting changes from i18n version easier
-  git-gui: Font chooser to handle a large number of font families
-  git-gui: Provide 'uninstall' Makefile target to undo an
-      installation
-  git-gui: Paper bag fix "Commit->Revert" format arguments
-  git-gui: Disable native platform text selection in "lists"
+There were a few updates/replacements to the list I missed;
 
-V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4 (1):
-  Fixed update-hook example allow-users format.
+* gr/smtp (Tue Sep 25 17:27:54 2007 -0700) 2 commits
+ - [TO BE SQUASHED] Fix-up after review
+ - Add ability to specify SMTP server port when using git-send-email.
 
-
-* The 'master' branch has these since the last announcement
-  in addition to the above.
-
-Carlos Rica (3):
-  Add tests for documented features of "git reset".
-  Move make_cache_entry() from merge-recursive.c into read-cache.c
-  Make "git reset" a builtin.
-
-Christian Couder (4):
-  rev-list --bisect: Move finding bisection into do_find_bisection.
-  rev-list --bisect: Move some bisection code into best_bisection.
-  rev-list --bisect: Bisection "distance" clean up.
-  rev-list --bisect: Fix best =3D=3D NULL case.
-
-David Kastrup (3):
-  diff-delta.c: pack the index structure
-  diff-delta.c: Rationalize culling of hash buckets
-  git-commit.sh: Shell script cleanup
-
-Dmitry Potapov (1):
-  preserve executable bits in zip archives
-
-Jeff King (1):
-  contrib/fast-import: add perl version of simple example
-
-Johannes Schindelin (7):
-  Teach "git remote" a mirror mode
-  verify-tag: also grok CR/LFs in the tag signature
-  apply: get rid of --index-info in favor of --build-fake-ancestor
-  rebase -i: commit when continuing after "edit"
-  rebase -i: style fixes and minor cleanups
-  rebase -i: Fix numbers in progress report
-  rebase -i: avoid exporting GIT_AUTHOR_* variables
-
-Josh England (2):
-  Add post-merge hook, related documentation, and tests.
-  Added example hook script to save/restore permissions/ownership.
-
-Junio C Hamano (8):
-  Keep last used delta base in the delta window
-  git-commit: Allow partial commit of file removal.
-  An additional test for "git-reset -- path"
-  Simplify cache API
-  git-commit: partial commit of paths only removed from the index
-  Document ls-files --with-tree=3D<tree-ish>
-  builtin-pack-objects.c: avoid bogus gcc warnings
-  Start RelNotes for 1.5.4
-
-Lars Hjemli (3):
-  git-svn: add support for --first-parent
-  git-svn: always use --first-parent
-  Make merge-recursive honor diff.renamelimit
-
-Matt Kraai (2):
-  Move convert-objects to contrib.
-  rebase -i: create .dotest-merge after validating options.
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  contrib/fast-import: add simple shell example
-
-Nicolas Pitre (10):
-  straighten the list of objects to deltify
-  localize window memory usage accounting
-  rearrange delta search progress reporting
-  basic threaded delta search
-  threaded delta search: refine work allocation
-  threaded delta search: better chunck split point
-  threaded delta search: specify number of threads at run time
-  fix threaded delta search locking
-  threaded delta search: add pack.threads config variable
-  threaded delta search: proper locking for cache accounting
+Will be in 'next'.
