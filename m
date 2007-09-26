@@ -1,75 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add a --dateformat= option to git-for-each-ref
-Date: Wed, 26 Sep 2007 08:58:11 -0400
-Message-ID: <20070926125811.GC13739@coredump.intra.peff.net>
-References: <200709261009.18777.andyparkins@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-commit --amend: respect grafted parents.
+Date: Wed, 26 Sep 2007 15:03:40 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709261501190.28395@racer.site>
+References: <11908086961933-git-send-email-johannes.sixt@telecom.at>
+ <Pine.LNX.4.64.0709261322150.28395@racer.site> <46FA5604.101@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 14:58:50 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Sep 26 16:05:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaWT7-0003rz-7I
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 14:58:21 +0200
+	id 1IaXVX-0007Fa-BD
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 16:04:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751076AbXIZM6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 08:58:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751548AbXIZM6O
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 08:58:14 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1822 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750969AbXIZM6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 08:58:13 -0400
-Received: (qmail 26749 invoked by uid 111); 26 Sep 2007 12:58:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 26 Sep 2007 08:58:12 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Sep 2007 08:58:11 -0400
-Content-Disposition: inline
-In-Reply-To: <200709261009.18777.andyparkins@gmail.com>
+	id S1754066AbXIZOEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 10:04:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753705AbXIZOEr
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 10:04:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59692 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753453AbXIZOEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 10:04:46 -0400
+Received: (qmail invoked by alias); 26 Sep 2007 14:04:44 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp056) with SMTP; 26 Sep 2007 16:04:44 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+87mduCwi8AoKcrcYMW7IjBYEdB0AQgaow5/kwPw
+	BgSRQL8wdUk7n/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46FA5604.101@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59230>
 
-On Wed, Sep 26, 2007 at 10:09:18AM +0100, Andy Parkins wrote:
+Hi,
 
-> For example (I'm in BST, +0100 at present):
+On Wed, 26 Sep 2007, Johannes Sixt wrote:
+
+> Johannes Schindelin schrieb:
 > 
->  $ git-for-each-ref --dateformat=normal --format='%(taggerdate)' refs/tags/v1.5.2
->  Sun May 20 00:30:42 2007 -0700
->  $ git-for-each-ref --dateformat=relative --format='%(taggerdate)' refs/tags/v1.5.2
->  4 months ago
+> > On Wed, 26 Sep 2007, Johannes Sixt wrote:
+> > 
+> > > This allows a poor-mans-filter-branch of the top-most commit.
+> > > 
+> > > Specifically, I had this history:
+> > > 
+> > >    --o--o--A'    <-- amended version of A
+> > >          \
+> > >           A
+> > >            \
+> > >     --o--B--M
+> > > 
+> > > I now wanted to "amend" M to pull in A' instead of A as its second 
+> > > parent. For various reasons I didn't want to redo the merge M again, 
+> > > in particular, it already contained the changes that were amended 
+> > > into A'. So I figured I would just install a graft that lists B and 
+> > > A' as parents of M and then do a simple git commit --amend. Alas, 
+> > > git commit looks at the real parents instead of the grafted ones, so 
+> > > the amended M' would still have A as its second parent. Here is the 
+> > > fix that picks the grafted parents instead.
+> > 
+> > I do not think that this is a "fix".
+> > 
+> > I'd really suggest that you fix it up (before the amend!) by 
+> > installing the graft, and running git-filter-branch -1 <branch>.  
+> > (Note: I did not test this, but it _should_ work.  If it does not, 
+> > please let me know.)
+> 
+> The problem with filter-branch is that it leaves a committer date in M 
+> that is before A', and for this reason is not the right tool for this 
+> task. So I do think that this fix is necessary.
 
-What if you want a format that contains two dates in different formats?
-Something like:
+But that's easily fixed with "--env-filter 'export 
+GIT_COMMITTER_DATE=$(date +%s)'" or something similar.
 
- $ git-for-each-ref --format='%(committerdate:relative) %(authordate:normal)'
+The reason why I insist on not putting this into --amend is that I think 
+this is not really an amend, but actively a rewrite of the merge commit.  
 
-would be more flexible. Although perhaps that is a bit too unlikely to
-be concerned with implementing, giving options to substitutions seems
-like a sane way to implement these sorts of things (e.g.,
-"%(objectsize:human)", "%(parent:1)", etc).
-
-> +		if (!prefixcmp(arg, "--dateformat=")) {
-> +			arg += 13;
-> +			if (!prefixcmp(arg,"relative")) {
-> +				date_mode = DATE_RELATIVE;
-> +			} else if (!prefixcmp(arg,"short")) {
-> +				date_mode = DATE_SHORT;
-> +			} else if (!prefixcmp(arg,"local")) {
-> +				date_mode = DATE_LOCAL;
-> +			} else if (!prefixcmp(arg,"iso8601")) {
-> +				date_mode = DATE_ISO8601;
-> +			} else if (!prefixcmp(arg,"rfc2822")) {
-> +				date_mode = DATE_RFC2822;
-> +			}
-> +			continue;
-> +		}
-
-Surely this same code exists elsewhere, and could be easily factored out
-into a parse_date_type function.
-
--Peff
+Ciao,
+Dscho
