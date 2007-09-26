@@ -1,78 +1,75 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/2] Make builtin-rerere use of strbuf nicer and more efficient.
-Date: Wed, 26 Sep 2007 10:41:16 +0200
-Message-ID: <20070926084116.GA11479@artemis.corp>
-References: <1190625904-22808-1-git-send-email-madcoder@debian.org> <1190625904-22808-2-git-send-email-madcoder@debian.org> <1190625904-22808-3-git-send-email-madcoder@debian.org> <7v3ax22rnw.fsf@gitster.siamese.dyndns.org>
+From: Herbert Xu <herbert@gondor.apana.org.au>
+Subject: Re: [PATCH 4/4] t6000lib: workaround a possible dash bug
+Date: Wed, 26 Sep 2007 16:41:44 +0800
+Message-ID: <20070926084144.GA11582@gondor.apana.org.au>
+References: <11486091793385-git-send-email-normalperson@yhbt.net> <11486091792604-git-send-email-normalperson@yhbt.net> <20070921132808.GB9778@gondor.apana.org.au> <20070921204511.GA10079@muzzle>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ZGiS0Q5IWpPtfppv";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 10:41:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Wed Sep 26 10:42:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaSSW-0004CY-9c
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 10:41:28 +0200
+	id 1IaSTh-0004iy-Ul
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 10:42:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753349AbXIZIlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 04:41:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753259AbXIZIlU
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 04:41:20 -0400
-Received: from pan.madism.org ([88.191.52.104]:58312 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753136AbXIZIlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 04:41:19 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id CB88921A40;
-	Wed, 26 Sep 2007 10:41:17 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A3021433; Wed, 26 Sep 2007 10:41:16 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1753859AbXIZImf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 04:42:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753792AbXIZIme
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 04:42:34 -0400
+Received: from rhun.apana.org.au ([64.62.148.172]:3075 "EHLO
+	arnor.apana.org.au" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751190AbXIZIme (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 04:42:34 -0400
+Received: from gondolin.me.apana.org.au ([192.168.0.6] ident=mail)
+	by arnor.apana.org.au with esmtp (Exim 4.50 #1 (Debian))
+	id 1IaSTJ-0005vM-Vk; Wed, 26 Sep 2007 18:42:18 +1000
+Received: from herbert by gondolin.me.apana.org.au with local (Exim 3.36 #1 (Debian))
+	id 1IaSSm-00031j-00; Wed, 26 Sep 2007 16:41:44 +0800
 Content-Disposition: inline
-In-Reply-To: <7v3ax22rnw.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20070921204511.GA10079@muzzle>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59219>
 
+On Fri, Sep 21, 2007 at 01:45:11PM -0700, Eric Wong wrote:
+>
+> I tried to reproduce it on a quick script using shell functions,
+> multiple arguments, spaces in the $a variable.., but haven't
+> been successful.  However, reverting the below patch still
+> causes errors in the latest git test suite.
 
---ZGiS0Q5IWpPtfppv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Ah I see, it's a function.  Unfortunately POSIX requires
+shell functions to have the variable assignment properties
+of special built-ins.  So
 
-On mer, sep 26, 2007 at 12:31:47 +0000, Junio C Hamano wrote:
-> Signoffs?
+	X=value func
 
-  This is obviously a lapse on my end.  You can add:
+has the same properties as
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+	X=value :
 
-  To any patch I send to this list.
+In other words, the value assigned to X (and any subsequent
+values assigned within the function) persists after the call.
+Also, the variable X is not exported unless it's already been
+exported.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+This is pretty lame but it's how the original Korn shell did
+things and POSIX has adopted that.  Bash's POSIX mode tries
+to balance things by both making the value persist and exporting
+X.  Unfortunately this is buggy too as it causes X to continue
+to be exported after the function returns.
 
---ZGiS0Q5IWpPtfppv
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+So the bottom-line is that your patch is the correct solution
+after all :)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG+hssvGr7W6HudhwRAimwAJ4hMRtdyGG8Vu1SJkhcl+/3cOvS+wCeJcKN
-Y8vU9V/2TiBVSww5JRQ5iy0=
-=vqF8
------END PGP SIGNATURE-----
-
---ZGiS0Q5IWpPtfppv--
+Cheers,
+-- 
+Visit Openswan at http://www.openswan.org/
+Email: Herbert Xu ~{PmV>HI~} <herbert@gondor.apana.org.au>
+Home Page: http://gondor.apana.org.au/~herbert/
+PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
