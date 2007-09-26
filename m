@@ -1,228 +1,198 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH] Add --no-rename to git-apply
-Date: Wed, 26 Sep 2007 23:26:44 +0200
-Message-ID: <11908420041596-git-send-email-robin.rosenberg@dewire.com>
-Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
-To: junkio@cox.net
-X-From: git-owner@vger.kernel.org Wed Sep 26 23:25:08 2007
+From: "Josh England" <jjengla@sandia.gov>
+Subject: [PATCH] post-checkout hook, tests, and docs
+Date: Wed, 26 Sep 2007 15:31:01 -0600
+Message-ID: <1190842261-9750-1-git-send-email-jjengla@sandia.gov>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Josh England" <jjengla@sandia.gov>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 26 23:31:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaeNG-0007HM-Rp
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 23:24:51 +0200
+	id 1IaeTy-0001U6-Hd
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 23:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761206AbXIZVYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 17:24:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760987AbXIZVYk
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 17:24:40 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:8111 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1750958AbXIZVYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 17:24:39 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 63D298028BC;
-	Wed, 26 Sep 2007 23:16:21 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 32760-09; Wed, 26 Sep 2007 23:16:20 +0200 (CEST)
-Received: from lathund.dewire.com (unknown [10.9.0.6])
-	by dewire.com (Postfix) with ESMTP id D577780286A;
-	Wed, 26 Sep 2007 23:16:20 +0200 (CEST)
-Received: by lathund.dewire.com (Postfix, from userid 500)
-	id 8CC5A29985; Wed, 26 Sep 2007 23:26:44 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.1.g80926
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1761374AbXIZVbj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 17:31:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751745AbXIZVbj
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 17:31:39 -0400
+Received: from mm03snlnto.sandia.gov ([132.175.109.20]:1786 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750863AbXIZVbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 17:31:38 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Wed, 26 Sep 2007 15:31:24 -0600
+X-Server-Uuid: AA8306FD-23D1-4E5B-B133-B2D9F10C3631
+Received: from ES23SNLNT.srn.sandia.gov (ec04snlnt.sandia.gov
+ [134.253.164.156] (may be forged)) by mailgate.sandia.gov (
+ 8.14.0/8.14.0) with ESMTP id l8QLVOSJ008533 for <git@vger.kernel.org>;
+ Wed, 26 Sep 2007 15:31:24 -0600
+Received: from ef01snlnt.srn.sandia.gov ([134.253.164.107]) by
+ ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Wed, 26
+ Sep 2007 15:31:25 -0600
+Received: from truth ([134.253.45.6]) by ef01snlnt.srn.sandia.gov with
+ Microsoft SMTPSVC(6.0.3790.3959); Wed, 26 Sep 2007 15:31:23 -0600
+Received: by truth (sSMTP sendmail emulation); Wed, 26 Sep 2007 15:31:01
+ -0600
+X-Mailer: git-send-email 1.5.3.2.90.g6069e-dirty
+X-OriginalArrivalTime: 26 Sep 2007 21:31:24.0013 (UTC)
+ FILETIME=[967719D0:01C80084]
+X-TMWD-Spam-Summary: TS=20070926213127; SEV=2.2.2; DFV=B2007092618;
+ IFV=2.0.4,4.0-9; AIF=B2007092618; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230362E34364641434641462E303036323A53434A535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007092618_5.02.0125_4.0-9
+X-WSS-ID: 6AE410263HO3571590-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59250>
 
-With this option git-apply can apply a patch with a rename
-onto the original file(s).
+Updated post-checkout hook to take a flag specifying whether the checkout is
+a branch checkout or a file checkout (from the index).
 
-Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+Signed-off-by: Josh England <jjengla@sandia.gov>
 ---
- Documentation/git-apply.txt       |    6 ++-
- builtin-apply.c                   |   17 +++++++-
- t/t4123-apply-renames-norename.sh |   85 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 106 insertions(+), 2 deletions(-)
- create mode 100755 t/t4123-apply-renames-norename.sh
+ Documentation/hooks.txt       |   14 ++++++++
+ git-checkout.sh               |   12 +++++++
+ t/t5403-post-checkout-hook.sh |   74 +++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 100 insertions(+), 0 deletions(-)
+ create mode 100755 t/t5403-post-checkout-hook.sh
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 4c7e3a2..b691c55 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git-apply' [--stat] [--numstat] [--summary] [--check] [--index]
--	  [--apply] [--no-add] [--index-info] [-R | --reverse]
-+	  [--apply] [--no-add] [--no-rename] [--index-info] [-R | --reverse]
- 	  [--allow-binary-replacement | --binary] [--reject] [-z]
- 	  [-pNUM] [-CNUM] [--inaccurate-eof] [--cached]
- 	  [--whitespace=<nowarn|warn|error|error-all|strip>]
-@@ -121,6 +121,10 @@ discouraged.
- 	the result with this option, which would apply the
- 	deletion part but not addition part.
+diff --git a/Documentation/hooks.txt b/Documentation/hooks.txt
+index 58b9547..f110162 100644
+--- a/Documentation/hooks.txt
++++ b/Documentation/hooks.txt
+@@ -87,6 +87,20 @@ parameter, and is invoked after a commit is made.
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of `git-commit`.
  
-+--no-rename::
-+	When applying patches with renames, this patch applies
-+	the patch to the original file.
++post-checkout
++-----------
 +
- --allow-binary-replacement, --binary::
- 	Historically we did not allow binary patch applied
- 	without an explicit permission from the user, and this
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 25b1447..73134e8 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -41,11 +41,12 @@ static int apply_in_reverse;
- static int apply_with_reject;
- static int apply_verbosely;
- static int no_add;
-+static int no_rename;
- static int show_index_info;
- static int line_termination = '\n';
- static unsigned long p_context = ULONG_MAX;
- static const char apply_usage[] =
--"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--cached] [--apply] [--no-add] [--index-info] [--allow-binary-replacement] [--reverse] [--reject] [--verbose] [-z] [-pNUM] [-CNUM] [--whitespace=<nowarn|warn|error|error-all|strip>] <patch>...";
-+"git-apply [--stat] [--numstat] [--summary] [--check] [--index] [--cached] [--apply] [--no-add] [--no-rename] [--index-info]   [--allow-binary-replacement] [--reverse [--reject] [--verbose] [-z] [-pNUM] [-CNUM] [--whitespace=<nowarn|warn|error|error-all|strip>]  <patch>...";
- 
- static enum whitespace_eol {
- 	nowarn_whitespace,
-@@ -495,6 +496,8 @@ static int gitdiff_copydst(const char *line, struct patch *patch)
- 
- static int gitdiff_renamesrc(const char *line, struct patch *patch)
- {
-+	if (no_rename)
-+		return 0;
- 	patch->is_rename = 1;
- 	patch->old_name = find_name(line, NULL, 0, 0);
- 	return 0;
-@@ -502,6 +505,8 @@ static int gitdiff_renamesrc(const char *line, struct patch *patch)
- 
- static int gitdiff_renamedst(const char *line, struct patch *patch)
- {
-+	if (no_rename)
-+		return 0;
- 	patch->is_rename = 1;
- 	patch->new_name = find_name(line, NULL, 0, 0);
- 	return 0;
-@@ -2103,6 +2108,11 @@ static int check_patch(struct patch *patch, struct patch *prev_patch)
- 	struct cache_entry *ce = NULL;
- 	int ok_if_exists;
- 
-+	if (no_rename) {
-+		new_name = old_name;
-+		patch->new_name = old_name;
-+	}
++This hook is invoked when a `git-checkout` is run after having updated the
++worktree.  The hook is given three parameters: the ref of the previous HEAD,
++the ref of the new HEAD (which may or may not have changed), and a flag
++indicating whether the checkout was a branch checkout (changing branches,
++flag=1) or a file checkout (retrieving a file from the index, flag=0).
++This hook cannot affect the outcome of `git-checkout`.
 +
- 	patch->rejected = 1; /* we will drop this after we succeed */
- 
- 	/*
-@@ -2843,6 +2853,11 @@ int cmd_apply(int argc, const char **argv, const char *unused_prefix)
- 			no_add = 1;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--no-rename")) {
-+			no_rename = 1;
-+			continue;
-+		}
++This hook can be used to perform repository validity checks, auto-display
++differences from the previous HEAD if different, or set working dir metadata
++properties.
 +
- 		if (!strcmp(arg, "--stat")) {
- 			apply = 0;
- 			diffstat = 1;
-diff --git a/t/t4123-apply-renames-norename.sh b/t/t4123-apply-renames-norename.sh
+ post-merge
+ -----------
+ 
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 17f4392..8993920 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -137,6 +137,13 @@ Did you intend to checkout '$@' which can not be resolved as commit?"
+ 	git ls-files --error-unmatch -- "$@" >/dev/null || exit
+ 	git ls-files -- "$@" |
+ 	git checkout-index -f -u --stdin
++
++        # Run a post-checkout hook -- the HEAD does not change so the
++        # current HEAD is passed in for both args
++	if test -x "$GIT_DIR"/hooks/post-checkout; then
++	    "$GIT_DIR"/hooks/post-checkout $old $old 0
++	fi
++
+ 	exit $?
+ else
+ 	# Make sure we did not fall back on $arg^{tree} codepath
+@@ -284,3 +291,8 @@ if [ "$?" -eq 0 ]; then
+ else
+ 	exit 1
+ fi
++
++# Run a post-checkout hook
++if test -x "$GIT_DIR"/hooks/post-checkout; then
++        "$GIT_DIR"/hooks/post-checkout $old $new 1
++fi
+diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
 new file mode 100755
-index 0000000..8c0d523
+index 0000000..e656aa1
 --- /dev/null
-+++ b/t/t4123-apply-renames-norename.sh
-@@ -0,0 +1,85 @@
++++ b/t/t5403-post-checkout-hook.sh
+@@ -0,0 +1,74 @@
 +#!/bin/sh
 +#
-+# Copyright (c) 2007 Robin Rosenberg
++# Copyright (c) 2006 Josh England
 +#
 +
-+test_description='git apply --no-rename.
-+
-+'
-+
++test_description='Test the post-checkout hook.'
 +. ./test-lib.sh
 +
-+# setup
++test_expect_success setup '
++	 echo Data for commit0. >a &&
++	 echo Data for commit0. >b &&
++	 git update-index --add a &&
++	 git update-index --add b &&
++	 tree0=$(git write-tree) &&
++	 commit0=$(echo setup | git commit-tree $tree0) &&
++        git update-ref refs/heads/master $commit0 &&
++	 git-clone ./. clone1 &&
++	 git-clone ./. clone2 &&
++        GIT_DIR=clone2/.git git branch -a new2 &&
++        echo Data for commit1. >clone2/b &&
++	 GIT_DIR=clone2/.git git add clone2/b &&
++	 GIT_DIR=clone2/.git git commit -m new2
++'
 +
-+mkdir -p klibc/arch/x86_64/include/klibc
-+
-+cat >klibc/arch/x86_64/include/klibc/archsetjmp.h <<\EOF
-+/*
-+ * arch/x86_64/include/klibc/archsetjmp.h
-+ */
-+
-+#ifndef _KLIBC_ARCHSETJMP_H
-+#define _KLIBC_ARCHSETJMP_H
-+
-+struct __jmp_buf {
-+  unsigned long __rbx;
-+  unsigned long __rsp;
-+  unsigned long __rbp;
-+  unsigned long __r12;
-+  unsigned long __r13;
-+  unsigned long __r14;
-+  unsigned long __r15;
-+  unsigned long __rip;
-+};
-+
-+typedef struct __jmp_buf jmp_buf[1];
-+
-+#endif /* _SETJMP_H */
++for clone in 1 2; do
++    cat >clone${clone}/.git/hooks/post-checkout <<'EOF'
++#!/bin/sh
++echo $@ > $GIT_DIR/post-checkout.args
 +EOF
++    chmod u+x clone${clone}/.git/hooks/post-checkout
++done
 +
-+cat >patch <<\EOF
-+diff --git a/klibc/arch/x86_64/include/klibc/archsetjmp.h b/include/arch/m32r/klibc/archsetjmp.h
-+similarity index 66%
-+rename from klibc/arch/x86_64/include/klibc/archsetjmp.h
-+rename to include/arch/m32r/klibc/archsetjmp.h
-+--- a/klibc/arch/x86_64/include/klibc/archsetjmp.h
-++++ b/include/arch/m32r/klibc/archsetjmp.h
-+@@ -1,21 +1,21 @@
-+ /*
-+- * arch/x86_64/include/klibc/archsetjmp.h
-++ * arch/m32r/include/klibc/archsetjmp.h
-+  */
++test_expect_success 'post-checkout runs as expected ' '
++        GIT_DIR=clone1/.git git checkout master &&
++        test -e clone1/.git/post-checkout.args
++'
 +
-+ #ifndef _KLIBC_ARCHSETJMP_H
-+ #define _KLIBC_ARCHSETJMP_H
++test_expect_success 'post-checkout receives the right arguments with HEAD unchanged ' '
++        old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
++        new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
++        flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
++        test $old = $new -a $flag == 1
++'
 +
-+ struct __jmp_buf {
-+-  unsigned long __rbx;
-+-  unsigned long __rsp;
-+-  unsigned long __rbp;
-++  unsigned long __r8;
-++  unsigned long __r9;
-++  unsigned long __r10;
-++  unsigned long __r11;
-+   unsigned long __r12;
-+   unsigned long __r13;
-+   unsigned long __r14;
-+   unsigned long __r15;
-+-  unsigned long __rip;
-+ };
++test_expect_success 'post-checkout runs as expected ' '
++        GIT_DIR=clone1/.git git checkout master &&
++        test -e clone1/.git/post-checkout.args
++'
 +
-+ typedef struct __jmp_buf jmp_buf[1];
++test_expect_success 'post-checkout args are correct with git checkout -b ' '
++        GIT_DIR=clone1/.git git checkout -b new1 &&
++        old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
++        new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
++        flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
++        test $old = $new -a $flag == 1
++'
 +
-+-#endif /* _SETJMP_H */
-++#endif /* _KLIBC_ARCHSETJMP_H */
-+EOF
++test_expect_success 'post-checkout receives the right args with HEAD changed ' '
++        GIT_DIR=clone2/.git git checkout new2 &&
++        old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
++        new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
++        flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
++        test $old != $new -a $flag == 1
++'
 +
-+find klibc -type f -print | xargs git update-index --add --
-+
-+test_expect_success 'apply rename patch, without doing rename' \
-+'git apply --no-rename patch &&
-+git diff --numstat >stat.diff &&
-+test "$(cat stat.diff)" = "6	6	klibc/arch/x86_64/include/klibc/archsetjmp.h"
++test_expect_success 'post-checkout receives the right args when not switching branches ' '
++        GIT_DIR=clone2/.git git checkout master b &&
++        old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
++        new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
++        flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
++        test $old == $new -a $flag == 0
 +'
 +
 +test_done
 -- 
-1.5.3.1.g80926
+1.5.3.2.90.g6069e-dirty
