@@ -1,56 +1,55 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: grafts not appearing in manual pages
-Date: Wed, 26 Sep 2007 22:24:41 +0200
-Organization: glandium.org
-Message-ID: <20070926202441.GA31848@glandium.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] User Manual: document import-tars.perl
+Date: Wed, 26 Sep 2007 16:37:36 -0400
+Message-ID: <20070926203736.GC26099@fieldses.org>
+References: <20070925201306.GW30845@fieldses.org> <1190759824-18896-1-git-send-email-vmiklos@frugalware.org> <20070926181451.GA20976@fieldses.org> <20070926182204.GB14959@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 26 22:25:54 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Wed Sep 26 22:38:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IadRn-0007tP-GS
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 22:25:27 +0200
+	id 1Iaddz-0004hj-UH
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 22:38:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752997AbXIZUZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 16:25:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbXIZUZS
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 16:25:18 -0400
-Received: from vawad.err.no ([85.19.200.177]:46065 "EHLO vawad.err.no"
+	id S1753376AbXIZUh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 16:37:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbXIZUh4
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 16:37:56 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:53484 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752092AbXIZUZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 16:25:17 -0400
-Received: from aputeaux-153-1-12-240.w82-124.abo.wanadoo.fr ([82.124.181.240] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IadRb-0002AJ-QT
-	for git@vger.kernel.org; Wed, 26 Sep 2007 22:25:16 +0200
-Received: from mh by namakemono.glandium.org with local (Exim 4.67)
-	(envelope-from <mh@glandium.org>)
-	id 1IadR3-0008I6-U0
-	for git@vger.kernel.org; Wed, 26 Sep 2007 22:24:42 +0200
+	id S1751190AbXIZUh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 16:37:56 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IaddY-00005z-R1; Wed, 26 Sep 2007 16:37:36 -0400
 Content-Disposition: inline
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+In-Reply-To: <20070926182204.GB14959@genesis.frugalware.org>
 User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59246>
 
-Hi,
+On Wed, Sep 26, 2007 at 08:22:04PM +0200, Miklos Vajna wrote:
+> On Wed, Sep 26, 2007 at 02:14:51PM -0400, "J. Bruce Fields" <bfields@fieldses.org> wrote:
+> > Neat-o, I'd missed (or forgotten about) import-tars.perl.
+> > 
+> > But I'd prefer to keep this first explanation of how to initialize and
+> > commit to a new project pretty streamlined, and I don't think this is
+> > really necessary here.  So let's save this up until we have enough
+> > material for a separate chapter or section on interacting with other
+> > scm's.
+> 
+> okay, now it's saved by gmane :)
 
-The only occurrence of grafts in the manual pages is in the
-git-filter-branch one. I somehow feel this is wrong not to see it
-described more "formally" in the manual pages.
+Also in my git tree--I took yours and Johannes' suggestions, put them in
+a blender, and added a brief skeleton of a new chapter at:
 
-I wouldn't mind writing a small something, except I have no idea what
-would be the most appropriate place to talk about it... Does anyone have
-such an idea ?
+	git://linux-nfs.org/~bfields/git.git docwork-foreign-scms
 
-Cheers,
-
-Mike
+--b.
