@@ -1,50 +1,100 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-commit --amend: respect grafted parents.
-Date: Wed, 26 Sep 2007 16:29:43 +0200
-Message-ID: <46FA6CD7.1020709@viscovery.net>
-References: <11908086961933-git-send-email-johannes.sixt@telecom.at> <Pine.LNX.4.64.0709261322150.28395@racer.site> <46FA5604.101@viscovery.net> <Pine.LNX.4.64.0709261501190.28395@racer.site>
+From: Dmitry Potapov <deaptor@mail.ru>
+Subject: Re: [PATCH] post-checkout hook, and related docs and tests
+Date: Wed, 26 Sep 2007 18:52:29 +0400
+Message-ID: <20070926145229.GA15300@potapov>
+References: <1190406421-15620-1-git-send-email-jjengla@sandia.gov> <7vzlzfh7xd.fsf@gitster.siamese.dyndns.org> <1190654052.6078.14.camel@beauty> <7vsl53ap5x.fsf@gitster.siamese.dyndns.org> <1190662396.6078.63.camel@beauty> <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <johannes.sixt@telecom.at>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 16:33:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Josh England <jjengla@sandia.gov>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 17:14:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaXxE-0003XS-TF
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 16:33:33 +0200
+	id 1IaYae-0005in-EH
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 17:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761970AbXIZO3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 10:29:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761762AbXIZO3t
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 10:29:49 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:65451 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762056AbXIZO3s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 10:29:48 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IaXtY-0007VR-AZ; Wed, 26 Sep 2007 16:29:44 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 124A254D; Wed, 26 Sep 2007 16:29:44 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0709261501190.28395@racer.site>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1758123AbXIZPOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 11:14:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXIZPOG
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 11:14:06 -0400
+Received: from smtp06.mtu.ru ([62.5.255.53]:62676 "EHLO smtp06.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757504AbXIZPOF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 11:14:05 -0400
+X-Greylist: delayed 650 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Sep 2007 11:14:05 EDT
+Received: from potapov.private (ppp85-141-237-255.pppoe.mtu-net.ru [85.141.237.255])
+	by smtp06.mtu.ru (Postfix) with ESMTP id 9F3E47BD9F4;
+	Wed, 26 Sep 2007 19:02:54 +0400 (MSD)
+Received: from potapov.private (localhost [127.0.0.1])
+	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l8QEqVtD016340;
+	Wed, 26 Sep 2007 18:52:31 +0400
+Received: (from dpotapov@localhost)
+	by potapov.private (8.13.8/8.13.8/Submit) id l8QEqTZx016339;
+	Wed, 26 Sep 2007 18:52:29 +0400
+X-Authentication-Warning: potapov.private: dpotapov set sender to deaptor@mail.ru using -f
+Content-Disposition: inline
+In-Reply-To: <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59234>
 
-Johannes Schindelin schrieb:
-> The reason why I insist on not putting this into --amend is that I think 
-> this is not really an amend, but actively a rewrite of the merge commit.  
+On Mon, Sep 24, 2007 at 02:07:36PM -0700, Junio C Hamano wrote:
+> "Josh England" <jjengla@sandia.gov> writes:
+> 
+> > ...  Granted, the
+> > branch (and HEAD) does not change for this operation, but that shouldn't
+> > matter.  It is somewhat in line with the principle of 'least-surprise':
+> > if the hook runs for 'git checkout otherbranch', but not 'git checkout
+> > otherbranch path.c', this could cause confusion and distress to the
+> > user.  IMO, it is a 'checkout' so the post-checkout hook should run.
+> > Why is that so insane?  
+> 
+> Because I find it would be surprising if the following commands
+> behave differently:
+> 
+> 	$ git cat-file blob otherbranch:path.c >path.c
+>         $ git show otherbranch:path.c >path.c
+>         $ git diff -R otherbranch path.c | git apply
+>         $ git checkout otherbranch path.c
 
-You have a point here. I'm convinced. Scrap the patch.
+Actually, they already act differently even without any hook.
+If path.c is a symbol link then 1 and 2 will give a different
+result than commands 3 and 4.
 
--- Hannes
+On the other hand, while the difference in above commands
+understandable (in case 1 and 2, the shell creates path.c; and
+in 3 and 4, git creates it), I really dislike the idea of 
+"checkout is magical." I believe that command 3 and 4 should
+always give the same result or Git is broken.
+
+Another reason, why I dislike the post-checkout hook is that it
+is prone to abuse like as not so smart user trying to put some
+content modification here. Moreover, it appears to be excessive
+to me, because if you want to run something after git-checkout,
+you can write a simple shell script for that that first runs
+git-checkout with the given arguments and then run whatever you
+want. I don't see why we should modify Git for that.
+
+Perhaps, it would be better to have a hook on modification,
+which is invoked every time when Git wants to try to change
+anything in the working directory. The hook could receives on
+the input something that looks like 'git-diff --name-status'
+output and can do any work on creation files, etc. It is much
+more flexible, because you can do additional stuff here like
+creating one directory in the path as a symbol link somewhere
+else or something like that. But what is much more important
+is that everything work _consistently_ and you get the same
+results whether you type:
+git diff -R otherbranch path.c | git apply
+or
+git checkout otherbranch path.c
+
+If you start with one "magical interface" then eventually you
+will end up with everything being so magical that no one can
+make sense of it. Please, stay consistent.
+
+Dmitry Potapov
