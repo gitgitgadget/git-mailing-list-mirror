@@ -1,88 +1,78 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: question about git-send-email
-Date: Wed, 26 Sep 2007 09:51:25 +0200
-Message-ID: <20070926075125.GM18370@genesis.frugalware.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/2] Make builtin-rerere use of strbuf nicer and more efficient.
+Date: Wed, 26 Sep 2007 10:41:16 +0200
+Message-ID: <20070926084116.GA11479@artemis.corp>
+References: <1190625904-22808-1-git-send-email-madcoder@debian.org> <1190625904-22808-2-git-send-email-madcoder@debian.org> <1190625904-22808-3-git-send-email-madcoder@debian.org> <7v3ax22rnw.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="zjcmjzIkjQU2rmur"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 26 09:51:41 2007
+Content-Type: multipart/signed; boundary="ZGiS0Q5IWpPtfppv";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 26 10:41:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaRgH-0004to-Is
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 09:51:37 +0200
+	id 1IaSSW-0004CY-9c
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 10:41:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917AbXIZHv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 03:51:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753724AbXIZHv2
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 03:51:28 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:58892 "EHLO virgo.iok.hu"
+	id S1753349AbXIZIlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 04:41:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753259AbXIZIlU
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 04:41:20 -0400
+Received: from pan.madism.org ([88.191.52.104]:58312 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753503AbXIZHv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 03:51:26 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 8637D1B2525
-	for <git@vger.kernel.org>; Wed, 26 Sep 2007 09:51:25 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 642996FCE9
-	for <git@vger.kernel.org>; Wed, 26 Sep 2007 09:51:25 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 2377413A4129; Wed, 26 Sep 2007 09:51:24 +0200 (CEST)
+	id S1753136AbXIZIlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 04:41:19 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id CB88921A40;
+	Wed, 26 Sep 2007 10:41:17 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id A3021433; Wed, 26 Sep 2007 10:41:16 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+In-Reply-To: <7v3ax22rnw.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59218>
 
 
---zjcmjzIkjQU2rmur
-Content-Type: text/plain; charset=us-ascii
+--ZGiS0Q5IWpPtfppv
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-hi,
+On mer, sep 26, 2007 at 12:31:47 +0000, Junio C Hamano wrote:
+> Signoffs?
 
-maybe i do not use git-send-email as it's expected so here is my
-workflow for a patch:
+  This is obviously a lapse on my end.  You can add:
 
-1) git format-patch
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 
-2) add additional comments between --- and diffstat
+  To any patch I send to this list.
 
-3) add to the patch
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-4) add cc the patch
-
-5) add in-reply-to to the patch
-
-6) invoke git send-email
-
-2), 4) and 5) are read properly from the edited patch, but it asks again
-for 3). it seems it asks for the to field before it parses the mail.
-even worse, then it sends the mail with duplicated 'to' header if one
-was in the mail already.
-
-i tried to fix it but it doesn't seem to be so trivial to me and i'm not
-a perl wizard :)
-
-also i'm not sure if this usage is ok or not. just i think it's a bit
-confusing that 'cc' is read from the patch, but 'to'.
-
-thanks,
-- VMiklos
-
---zjcmjzIkjQU2rmur
+--ZGiS0Q5IWpPtfppv
 Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFG+g99e81tAgORUJYRAq67AJ0YJcLk9d/I7ftqe8MWEqOUQmkEuwCglUuy
-eCzqfOVDmGox68B2qafjBT8=
-=jFm+
+iD8DBQBG+hssvGr7W6HudhwRAimwAJ4hMRtdyGG8Vu1SJkhcl+/3cOvS+wCeJcKN
+Y8vU9V/2TiBVSww5JRQ5iy0=
+=vqF8
 -----END PGP SIGNATURE-----
 
---zjcmjzIkjQU2rmur--
+--ZGiS0Q5IWpPtfppv--
