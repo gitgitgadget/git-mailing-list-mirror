@@ -1,61 +1,87 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH] Make Run available in stack.py
-Date: Wed, 26 Sep 2007 04:08:45 +0200
-Message-ID: <20070926020722.1105.91287.stgit@yoghurt>
+Subject: [StGit PATCH 0/2] "stg assimilate" on steroids
+Date: Wed, 26 Sep 2007 04:15:02 +0200
+Message-ID: <20070926020911.1202.2580.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 04:09:03 2007
+X-From: git-owner@vger.kernel.org Wed Sep 26 04:15:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaMKf-0003M8-Bf
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 04:08:57 +0200
+	id 1IaMQn-00050z-AO
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 04:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753557AbXIZCIu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2007 22:08:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752499AbXIZCIu
-	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 22:08:50 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3825 "EHLO
+	id S1753912AbXIZCPJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Sep 2007 22:15:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753898AbXIZCPJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 25 Sep 2007 22:15:09 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2544 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753557AbXIZCIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Sep 2007 22:08:49 -0400
+	with ESMTP id S1753869AbXIZCPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 25 Sep 2007 22:15:08 -0400
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1IaMKT-0006gv-00; Wed, 26 Sep 2007 03:08:45 +0100
+	id 1IaMQZ-0006iV-00; Wed, 26 Sep 2007 03:15:03 +0100
 User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59209>
 
-Needed by shortlog(). Apparently, we have no test for this.
+This makes "stg assimilate" a whole lot more useful, and replaces my
+DAG appliedness series. (If you have been using that, manually change
+the stack format version back to 2, and create empty "applied" and
+"unapplied" files, and run the new assimilate. That should fix it. I
+hope. I'll be testing it myself tomorrow.)
 
-Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+Here's what assimilate says about itself:
+
+  "assimilate" will repair three kinds of inconsistencies in your
+  StGit stack, all of them caused by using plain git commands on the
+  branch:
+
+    1. If you have made regular git commits on top of your stack of
+       StGit patches, "assimilate" converts them to StGit patches,
+       preserving their contents.
+
+    2. Merge commits cannot become patches; if you have committed a
+       merge on top of your stack, "assimilate" will simply mark all
+       patches below the merge unapplied, since they are no longer
+       reachable. If this is not what you want, use "git reset" to get
+       rid of the merge and run "assimilate" again.
+
+    3. The applied patches are supposed to be precisely those that are
+       reachable from the branch head. If you have used e.g. "git
+       reset" to move the head, some applied patches may no longer be
+       reachable, and some unapplied patches may have become
+       reachable. "assimilate" will correct the appliedness of such
+       patches.
+
+  Note that these are "inconsistencies", not "errors"; furthermore,
+  "assimilate" will repair them reliably. As long as you are satisfied
+  with the way "assimilate" handles them, you have no reason to avoid
+  causing them in the first place if that is convenient for you.
 
 ---
 
-And I have no idea how I could have avoided triggering this for as
-long as I have. I mean, I tested this by sending the patch to the
-list!
-
- stgit/stack.py |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Karl Hasselstr=C3=B6m (2):
+      Test the new powers of "stg assimilate"
+      Teach "stg assimilate" to repair patch reachability
 
 
-diff --git a/stgit/stack.py b/stgit/stack.py
-index 746e59b..bd08b35 100644
---- a/stgit/stack.py
-+++ b/stgit/stack.py
-@@ -23,6 +23,7 @@ from email.Utils import formatdate
-=20
- from stgit.utils import *
- from stgit.out import *
-+from stgit.run import *
- from stgit import git, basedir, templates
- from stgit.config import config
- from shutil import copyfile
+ stgit/commands/assimilate.py  |  190 +++++++++++++++++++++++++++++++--=
+--------
+ stgit/commands/common.py      |    6 +
+ stgit/stack.py                |    6 +
+ t/t1301-assimilate.sh         |   12 +--
+ t/t1302-assimilate-interop.sh |   59 +++++++++++++
+ 5 files changed, 216 insertions(+), 57 deletions(-)
+ create mode 100755 t/t1302-assimilate-interop.sh
+
+--=20
+Karl Hasselstr=C3=B6m, kha@treskal.com
+      www.treskal.com/kalle
