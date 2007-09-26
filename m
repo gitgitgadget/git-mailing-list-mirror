@@ -1,100 +1,114 @@
-From: Dmitry Potapov <deaptor@mail.ru>
-Subject: Re: [PATCH] post-checkout hook, and related docs and tests
-Date: Wed, 26 Sep 2007 18:52:29 +0400
-Message-ID: <20070926145229.GA15300@potapov>
-References: <1190406421-15620-1-git-send-email-jjengla@sandia.gov> <7vzlzfh7xd.fsf@gitster.siamese.dyndns.org> <1190654052.6078.14.camel@beauty> <7vsl53ap5x.fsf@gitster.siamese.dyndns.org> <1190662396.6078.63.camel@beauty> <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: History over-simplification
+Date: Wed, 26 Sep 2007 11:55:29 -0400
+Message-ID: <20070926155529.GM3099@spearce.org>
+References: <20070923044628.GA3099@spearce.org> <7v4phi4b9t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh England <jjengla@sandia.gov>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 17:14:20 2007
+X-From: git-owner@vger.kernel.org Wed Sep 26 17:55:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaYae-0005in-EH
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 17:14:16 +0200
+	id 1IaZEv-0006tf-Ay
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 17:55:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758123AbXIZPOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 11:14:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXIZPOG
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 11:14:06 -0400
-Received: from smtp06.mtu.ru ([62.5.255.53]:62676 "EHLO smtp06.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757504AbXIZPOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 11:14:05 -0400
-X-Greylist: delayed 650 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Sep 2007 11:14:05 EDT
-Received: from potapov.private (ppp85-141-237-255.pppoe.mtu-net.ru [85.141.237.255])
-	by smtp06.mtu.ru (Postfix) with ESMTP id 9F3E47BD9F4;
-	Wed, 26 Sep 2007 19:02:54 +0400 (MSD)
-Received: from potapov.private (localhost [127.0.0.1])
-	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l8QEqVtD016340;
-	Wed, 26 Sep 2007 18:52:31 +0400
-Received: (from dpotapov@localhost)
-	by potapov.private (8.13.8/8.13.8/Submit) id l8QEqTZx016339;
-	Wed, 26 Sep 2007 18:52:29 +0400
-X-Authentication-Warning: potapov.private: dpotapov set sender to deaptor@mail.ru using -f
+	id S1757430AbXIZPzk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 11:55:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756811AbXIZPzk
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 11:55:40 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:55865 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753331AbXIZPzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 11:55:39 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IaZET-0003gm-E0; Wed, 26 Sep 2007 11:55:25 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 69AAA20FBAE; Wed, 26 Sep 2007 11:55:29 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vejgnai1z.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7v4phi4b9t.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59235>
 
-On Mon, Sep 24, 2007 at 02:07:36PM -0700, Junio C Hamano wrote:
-> "Josh England" <jjengla@sandia.gov> writes:
+Junio C Hamano <gitster@pobox.com> wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
-> > ...  Granted, the
-> > branch (and HEAD) does not change for this operation, but that shouldn't
-> > matter.  It is somewhat in line with the principle of 'least-surprise':
-> > if the hook runs for 'git checkout otherbranch', but not 'git checkout
-> > otherbranch path.c', this could cause confusion and distress to the
-> > user.  IMO, it is a 'checkout' so the post-checkout hook should run.
-> > Why is that so insane?  
+> > I don't really like the patch to revision.c because it winds up
+> > showing trivial merges too.  What I really want is to have the
+> > "--full-history" option include a merge if either of the following
+> > is true:
+> >
+> >  a) The resulting path does not match _any_ of the parents.  We
+> >     already handle this case correctly in revision.c and correctly
+> >     show the "evil" merge.
+> >
+> >  b) The resulting path matches one of the parents but not one of
+> >     the others.  In such a case the merge should still be output if
+> >     a 3-way read-tree would not have chosen this result by default.
 > 
-> Because I find it would be surprising if the following commands
-> behave differently:
-> 
-> 	$ git cat-file blob otherbranch:path.c >path.c
->         $ git show otherbranch:path.c >path.c
->         $ git diff -R otherbranch path.c | git apply
->         $ git checkout otherbranch path.c
+> I am not sure (b) is useful in general.  Merging two branches
+> that fix the same issue but in different ways (think: 'maint'
+> and 'master' have different infrastructure and a fix initially
+> made on 'master' was backported to 'maint', and then later
+> 'maint' needed to be merged to 'master' to carry forward other
+> fixes) is a norm, and in such cases taking the version from the
+> merged-to branch is almost always what happens.
 
-Actually, they already act differently even without any hook.
-If path.c is a symbol link then 1 and 2 will give a different
-result than commands 3 and 4.
+(b) is useful, even in the case you just described.  Try doing the
+above backport today.  Run `git log maint -- foo.c` and find the
+backported commit B.  Now try to see if that commit is in master in
+foo.c with `git log master -- foo.c`.  B won't appear as the merge
+of maint into master chose master's revision and maint's history
+is pruned away.
 
-On the other hand, while the difference in above commands
-understandable (in case 1 and 2, the shell creates path.c; and
-in 3 and 4, git creates it), I really dislike the idea of 
-"checkout is magical." I believe that command 3 and 4 should
-always give the same result or Git is broken.
+Now if the backported change was logically the same but was rewritten
+considerably it might take you a while to figure out why a merge
+discarded the change B.  The merge commit might actually describe
+why in its message, but you can't find that particular merge commit
+today, even with --full-history.  Not without my one-line patch.
 
-Another reason, why I dislike the post-checkout hook is that it
-is prone to abuse like as not so smart user trying to put some
-content modification here. Moreover, it appears to be excessive
-to me, because if you want to run something after git-checkout,
-you can write a simple shell script for that that first runs
-git-checkout with the given arguments and then run whatever you
-want. I don't see why we should modify Git for that.
+Unfortunately my one-line patch causes all of the merges that the
+path is involved in to be output.  That can be quite a lot of them.
+ 
+> Also it sounds to me by "if read-tree would not have chosen this
+> result by default" you mean this feature would not just need to
+> run merge-base but also recursive merge-base synthesis, and also
+> recreate the structural merge (aka "rename detection") there as
+> well.  Even if (b) is useful, it sounds like a very expensive
+> option, and the current merge-recursive code is structured in
+> such a way to be easily reused for this purpose.
 
-Perhaps, it would be better to have a hook on modification,
-which is invoked every time when Git wants to try to change
-anything in the working directory. The hook could receives on
-the input something that looks like 'git-diff --name-status'
-output and can do any work on creation files, etc. It is much
-more flexible, because you can do additional stuff here like
-creating one directory in the path as a symbol link somewhere
-else or something like that. But what is much more important
-is that everything work _consistently_ and you get the same
-results whether you type:
-git diff -R otherbranch path.c | git apply
-or
-git checkout otherbranch path.c
+I think you meant here that it is *not* structured in a way to be
+easily reused for this purpose.  That code relies heavily on the
+index to allow it to create that synthetic merge base.  Making it
+callable from within the revision walker would not be a small change.
 
-If you start with one "magical interface" then eventually you
-will end up with everything being so magical that no one can
-make sense of it. Please, stay consistent.
+But as you say, running merge-recursive here would be a very
+expensive option.  Which is why I was saying the 3-way read-tree
+result as that is cheaper to compute.  However the read-tree result
+can be different from the merge-recursive result (think renames)
+and yet both are still "trivial" resolutions that the user was
+never involved in.
 
-Dmitry Potapov
+Of course other kinds of trivial merges (where changes from the
+two branches are in the same file but far enough part it can be
+easily merged as a 3-way file merge) appear to the path limiter
+as though they were an evil merge, and such merges are output.
+
+So maybe having --full-history output all merges that affected
+that path really is the right choice.
+
+-- 
+Shawn.
