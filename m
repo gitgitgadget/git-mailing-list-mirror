@@ -1,92 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Workflow question
-Date: Tue, 25 Sep 2007 22:29:58 -0700
-Message-ID: <7vlkau0zah.fsf@gitster.siamese.dyndns.org>
-References: <46F93A99.5080707@gmail.com> <46F95CCC.4080209@op5.se>
-	<46F96493.8000607@gmail.com>
-	<20070925201717.GB19549@segfault.peff.net>
-	<46F97618.9010207@gmail.com>
-	<20070926004734.GA22617@segfault.peff.net>
-	<46F9CA2A.7000107@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Add ability to specify SMTP server port when using git-send-email.
+Date: Wed, 26 Sep 2007 09:18:17 +0200
+Message-ID: <46FA07B9.4000402@op5.se>
+References: <1190759927-19493-1-git-send-email-glenn@rempe.us> <7vabra2rv3.fsf@gitster.siamese.dyndns.org> <1A0CAB9D-5C99-4FD7-B3AC-9B3161FD8663@rempe.us> <Pine.LNX.4.64.0709260239210.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Russ Brown <pickscrape@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 26 07:30:34 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Glenn Rempe <glenn@rempe.us>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Sep 26 09:18:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaPTk-0002Tb-K6
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 07:30:33 +0200
+	id 1IaRAD-0003XP-MD
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 09:18:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752495AbXIZFaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 01:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbXIZFaI
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 01:30:08 -0400
-Received: from rune.sasl.smtp.pobox.com ([208.210.124.37]:40560 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752038AbXIZFaG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 01:30:06 -0400
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 62C9013BC3D;
-	Wed, 26 Sep 2007 01:30:22 -0400 (EDT)
-In-Reply-To: <46F9CA2A.7000107@gmail.com> (Russ Brown's message of "Tue, 25
-	Sep 2007 21:55:38 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751750AbXIZHSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 03:18:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXIZHSW
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 03:18:22 -0400
+Received: from mail.op5.se ([193.201.96.20]:33324 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751482AbXIZHSV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 03:18:21 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A651E194485;
+	Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KtL1GJbYB81G; Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.178])
+	by mail.op5.se (Postfix) with ESMTP id 0F709194443;
+	Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0709260239210.28395@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59216>
 
-Russ Brown <pickscrape@gmail.com> writes:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 25 Sep 2007, Glenn Rempe wrote:
+> 
+>>> * The indentation was horrible.  Maybe your tabstop is set
+>>>   incorrectly?
+>> Can you be more detailed on the definition of 'horrible'? :-) I am using 
+>> Textmate on OS X with soft tab stops (2 spaces).  What should it be to 
+>> look less horrible on your end?  Or is the issue that I indent fewer 
+>> tabstops than you expect? If so, sorry since perl is not my usual 
+>> language and Ruby 2 space (soft tab) indentation looks right to my eye.
+> 
+> We use soft tabs, with the standard up-to 8 spaces,
 
-> I'm just wondering at this point why git lets you checkout remote
-> tracking branches if it's something you really shouldn't do. Unless it's
-> something you want to be able to do in edge cases to fix screwups maybe?
+Actually, the rest of git's perl-scripts use hard tabs, just as the C-code
+and the shell-code, with tabs for indentation and spaces for alignment.
 
-You actually never checkout "remote tracking branches".
-
-You can be in two states, either you are on a branch (meaning,
-if you create a commit, the new commit will have the current tip
-commit of that branch as its first parent and will become the
-new tip commit of that branch), or you aren't on _any_ branch.
-
-The latter state is often affectionately called "detached HEAD"
-state.
-
-This is primarily useful for sightseeing.  Sometimes people
-would want to check out a commit that is not a tip of any
-branch.  The most typical one is "I want to have a checkout of
-version 2.6.17", and people call that (loosely) as "checking out
-a tag".  In the same way, you can "checkout a remote tracking
-branch" (but if you want to be anal in terminology, you never
-"check out a tag" nor "check out a remote branch"---you are
-detaching your HEAD at the named commit (which could be the one
-pointed at by the tag, or the one at the tip of your remote
-tracking branch).
-
-Detached HEAD state allows you to make further commits and
-merges.  Because git allows you to create a new branch from the
-current commit (i.e. whatever HEAD points at, be it on any
-branch or detached) without losing local changes in the index
-nor the work tree, this is often handy for doing quick fixups and
-experiments --- you first start on detached HEAD and if it turns
-out not to be so "quick" fixup, at that point you can create a
-real branch so that you can continue working on it without
-losing track.
-
-> Thanks for this, it's very useful to read examples of workflows in
-> actual use. In fact, I was thinking the other day that it would be good
-> to have a site that acts as a directory of many different workflows,
-> including descriptions of how they work, how you actually go about
-> setting it up and using it day to day (i.e. lists of commands for each
-> role/task) and the pros/cons that it provides. I reckon that would help
-> newbies out quite a bit (if only for the examples). I've seen a few
-> individual examples of workflow but nothing like a comprehensive set of
-> them.
-
-"Everyday" might be a good starting point for catalogs of
-workflows for people playing various roles.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
