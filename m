@@ -1,70 +1,88 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add ability to specify SMTP server port when using git-send-email.
-Date: Wed, 26 Sep 2007 09:18:17 +0200
-Message-ID: <46FA07B9.4000402@op5.se>
-References: <1190759927-19493-1-git-send-email-glenn@rempe.us> <7vabra2rv3.fsf@gitster.siamese.dyndns.org> <1A0CAB9D-5C99-4FD7-B3AC-9B3161FD8663@rempe.us> <Pine.LNX.4.64.0709260239210.28395@racer.site>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: question about git-send-email
+Date: Wed, 26 Sep 2007 09:51:25 +0200
+Message-ID: <20070926075125.GM18370@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Glenn Rempe <glenn@rempe.us>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Sep 26 09:18:30 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="zjcmjzIkjQU2rmur"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 26 09:51:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaRAD-0003XP-MD
-	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 09:18:30 +0200
+	id 1IaRgH-0004to-Is
+	for gcvg-git-2@gmane.org; Wed, 26 Sep 2007 09:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751750AbXIZHSW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 03:18:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXIZHSW
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 03:18:22 -0400
-Received: from mail.op5.se ([193.201.96.20]:33324 "EHLO mail.op5.se"
+	id S1753917AbXIZHv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 03:51:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753724AbXIZHv2
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 03:51:28 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:58892 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751482AbXIZHSV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 03:18:21 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A651E194485;
-	Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KtL1GJbYB81G; Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.178])
-	by mail.op5.se (Postfix) with ESMTP id 0F709194443;
-	Wed, 26 Sep 2007 09:18:19 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0709260239210.28395@racer.site>
+	id S1753503AbXIZHv0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 03:51:26 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 8637D1B2525
+	for <git@vger.kernel.org>; Wed, 26 Sep 2007 09:51:25 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 642996FCE9
+	for <git@vger.kernel.org>; Wed, 26 Sep 2007 09:51:25 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 2377413A4129; Wed, 26 Sep 2007 09:51:24 +0200 (CEST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59217>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 25 Sep 2007, Glenn Rempe wrote:
-> 
->>> * The indentation was horrible.  Maybe your tabstop is set
->>>   incorrectly?
->> Can you be more detailed on the definition of 'horrible'? :-) I am using 
->> Textmate on OS X with soft tab stops (2 spaces).  What should it be to 
->> look less horrible on your end?  Or is the issue that I indent fewer 
->> tabstops than you expect? If so, sorry since perl is not my usual 
->> language and Ruby 2 space (soft tab) indentation looks right to my eye.
-> 
-> We use soft tabs, with the standard up-to 8 spaces,
 
-Actually, the rest of git's perl-scripts use hard tabs, just as the C-code
-and the shell-code, with tabs for indentation and spaces for alignment.
+--zjcmjzIkjQU2rmur
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+hi,
+
+maybe i do not use git-send-email as it's expected so here is my
+workflow for a patch:
+
+1) git format-patch
+
+2) add additional comments between --- and diffstat
+
+3) add to the patch
+
+4) add cc the patch
+
+5) add in-reply-to to the patch
+
+6) invoke git send-email
+
+2), 4) and 5) are read properly from the edited patch, but it asks again
+for 3). it seems it asks for the to field before it parses the mail.
+even worse, then it sends the mail with duplicated 'to' header if one
+was in the mail already.
+
+i tried to fix it but it doesn't seem to be so trivial to me and i'm not
+a perl wizard :)
+
+also i'm not sure if this usage is ok or not. just i think it's a bit
+confusing that 'cc' is read from the patch, but 'to'.
+
+thanks,
+- VMiklos
+
+--zjcmjzIkjQU2rmur
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFG+g99e81tAgORUJYRAq67AJ0YJcLk9d/I7ftqe8MWEqOUQmkEuwCglUuy
+eCzqfOVDmGox68B2qafjBT8=
+=jFm+
+-----END PGP SIGNATURE-----
+
+--zjcmjzIkjQU2rmur--
