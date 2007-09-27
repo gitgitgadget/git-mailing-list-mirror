@@ -1,85 +1,108 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Thu, 27 Sep 2007 21:16:14 +0200
-Message-ID: <20070927191614.GE12427@artemis.corp>
-References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <20070927191201.GA31807@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push (mis ?)behavior
+Date: Thu, 27 Sep 2007 12:22:24 -0700
+Message-ID: <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+References: <20070927130447.GH10289@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Oiv9uiLrevHtW1RS";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Kelvie Wong <kelvie@ieee.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:16:30 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:22:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IayqW-00042m-BR
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:16:24 +0200
+	id 1IaywZ-0006Js-3k
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755673AbXI0TQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 15:16:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754827AbXI0TQR
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:16:17 -0400
-Received: from pan.madism.org ([88.191.52.104]:39874 "EHLO hermes.madism.org"
+	id S1756237AbXI0TWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 15:22:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755419AbXI0TWc
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:22:32 -0400
+Received: from rune.pobox.com ([208.210.124.79]:54042 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753541AbXI0TQQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 15:16:16 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 3379D2214D;
-	Thu, 27 Sep 2007 21:16:15 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id D1AB232FD8A; Thu, 27 Sep 2007 21:16:14 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jeff King <peff@peff.net>, Kelvie Wong <kelvie@ieee.org>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20070927191201.GA31807@sigill.intra.peff.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755157AbXI0TWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 15:22:31 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 559D913B079;
+	Thu, 27 Sep 2007 15:22:51 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C72D13AD32;
+	Thu, 27 Sep 2007 15:22:48 -0400 (EDT)
+In-Reply-To: <20070927130447.GH10289@artemis.corp> (Pierre Habouzit's message
+	of "Thu, 27 Sep 2007 15:04:47 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59317>
 
+Pierre Habouzit <madcoder@debian.org> writes:
 
---Oiv9uiLrevHtW1RS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The real question is "what does users intend when they `git push`". In
+> a git/kernel/... like model, you don't think the same than in a
+> svn/cvs-like model. I mean, Junio or Linus likely don't push a lot to
+> their public repository. It happens probably a couple of time per day.
+> While I'm at work, it happens up way more frequentely, and I then want
+> to lazily type `git push` and not `git push origin <somebranch>`. it's
+> too long.
+>
+>   I'm not sure what we can do about it, but I'm pretty sure it bites a
+> lot of people out there. For now I use this alias in my .gitconfig:
+>
+>   p=!git-push origin `git-symbolic-ref HEAD`
+>
+> but still, it feels really wrong to me. Not to mention that git-push(1)
+> says that it has a --all option that in fact is the current default
+> behavior, hence sounds pretty useless.
 
-On Thu, Sep 27, 2007 at 07:12:01PM +0000, Jeff King wrote:
-> On Thu, Sep 27, 2007 at 08:57:07PM +0200, Pierre Habouzit wrote:
->=20
-> >   Which tool are you using ? kdiff3 ? I've noticed that it often fails
-> > miserably, or worse, create bad merges silentely with it.
-> >=20
-> >   And as none of the other merge tool that are supported are able to
-> > either do 3way merges, or have a decent UI (that definitely seems to be
-> > exclusive features) I've given up on git-mergetool (and to be fair, it
-> > sucks, because it could be _sooo_ useful sometimes).
->=20
-> Huh? I use xxdiff all the time, and it works fine.
+The default is not --all but "matching branches", iow, what you
+have never published yet never goes out.
 
-  I'm sorry but I find that the UI is terrible.
+Having said that, I would agree that in some workflows "I am on
+this branch and I would want to push only this branch" would be
+the norm, and the norm even be "and this branch 'foo' is called
+identically as 'foo' at the remote site as well".
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+Don't worry about me when discussing to change the default.
+Myself, I also often push only one or two branches.  A typical
+workflow for me while working on git.git is to prepare 'maint'
+(if there are any changes) and 'master', push them (without
+pushing 'next' and 'pu') to a private "build it to make sure"
+repository I have at a k.org machine which runs RH, make sure
+they are Ok, and then continue working on integrating 'next' and
+'pu'.  At the end of the day, I push out all four integration
+branches to a separate "publish" area, but even this one, I rely
+on the explicit configuration (remote.<name>.push) to push out
+only the integration branches and not other branches.
 
---Oiv9uiLrevHtW1RS
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+We would also want to have --mirror option that acts like --all
+but removes the refs from the remote that do not exist anymore,
+so we will be talking about updating "git push" in the near
+future anyway.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+So what's the desired semantics?
 
-iD8DBQBG/AF+vGr7W6HudhwRAqL8AJ9X28/2ra3uV2keoKp0ju4Phj5+kACeIm+W
-JhWhlRlMf5VgtdM6mNMY6lU=
-=lfYF
------END PGP SIGNATURE-----
+The current semantics is:
 
---Oiv9uiLrevHtW1RS--
+   "git push" says "you do not say to which repository?" and
+   consults "branch.<current>.remote" but defaults to 'origin'
+   if unconfigured.  
+
+   "git push <name>" (or using the <name> determined as above)
+   says "you do not say which branches?" and consults
+   "remote.<name>.push" to find branches to push out, but
+   defaults to 'matching branches' if unconfigured.
+
+What you would want to change is the fallback behaviour for
+unconfigured "remote.<name>.push".  I think it is sensible to
+have an option to make it push only the current branch.  I am
+not sure if it is sensible to make that the default (and
+introduce --matching option to get the current behaviour) at
+this point in 1.5.X series, but from the general usability point
+of view, I would not object to demote 'matching' to optional and
+make 'current only' the default in 1.6.X or later.
+
+Thoughts?
