@@ -1,85 +1,55 @@
-From: "Ritwik Ghosh" <ritwik.ghosh@sasken.com>
-Subject: Relating to some syntax error in the gitk script
-Date: Thu, 27 Sep 2007 17:52:10 +0530
-Message-ID: <3CA23C3F3E66D246A478348D6FF3908E06EA45@EXGZ02.sasken.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: [PATCH] git-gui: fix typo in lib/blame.tcl
+Date: Thu, 27 Sep 2007 14:53:25 +0200
+Message-ID: <200709271453.25772.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 27 14:23:05 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 27 14:50:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IasO0-0002uK-1K
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 14:22:32 +0200
+	id 1Iasp3-0006PA-Bb
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 14:50:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbXI0MWQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 08:22:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752867AbXI0MWQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 08:22:16 -0400
-Received: from mta-blr2.sasken.com ([164.164.56.19]:10488 "EHLO
-	mta-blr2.sasken.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752814AbXI0MWO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2007 08:22:14 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAAs9+0YKATAC/2dsb2JhbAAM
-X-IronPort-AV: E=Sophos;i="4.21,203,1188757800"; 
-   d="scan'208";a="22263307"
-Received: from sunrnd2.sasken.com ([10.1.48.2])
-  by mta-blr2.sasken.com with ESMTP; 27 Sep 2007 17:52:10 +0530
-Received: from exgfezb.sasken.com (localhost [127.0.0.1])
-	by sunrnd2.sasken.com (8.13.3/) with ESMTP id l8RCMAlL005408
-	for <git@vger.kernel.org>; Thu, 27 Sep 2007 17:52:10 +0530 (IST)
-Received: from EXGZ02.sasken.com ([10.1.0.122]) by exgfezb.sasken.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 27 Sep 2007 17:52:10 +0530
-X-MS-Has-Attach: 
-Content-class: urn:content-classes:message
-X-MS-TNEF-Correlator: 
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Thread-Topic: Relating to some syntax error in the gitk script
-Thread-Index: AcgAz71+a9oChBgYSYGjHKHMbrzPIQAMSwSA
-X-OriginalArrivalTime: 27 Sep 2007 12:22:10.0245 (UTC) FILETIME=[06E6E750:01C80101]
+	id S1755001AbXI0MuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 08:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754926AbXI0MuV
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 08:50:21 -0400
+Received: from slim-3c.inet.it ([213.92.5.125]:60770 "EHLO slim-3c.inet.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754911AbXI0MuU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 08:50:20 -0400
+Received: from host110-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.110]) by slim-3c.inet.it via I-SMTP-5.4.4-547
+	id ::ffff:80.104.56.110+cUTmcw7jU9G; Thu, 27 Sep 2007 14:50:09 +0200
+User-Agent: KMail/1.9.7
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59294>
 
+Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
+---
+ lib/blame.tcl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/lib/blame.tcl b/lib/blame.tcl
+index a911c3c..00ecf21 100644
+--- a/lib/blame.tcl
++++ b/lib/blame.tcl
+@@ -905,7 +905,7 @@ method _open_tooltip {cur_w} {
+ 		set author_time {}
+ 		catch {set author_name $header($cmit,author)}
+ 		catch {set summary     $header($cmit,summary)}
+-		catch {set author_time [foramt_date $header($cmit,author-time)]}
++		catch {set author_time [format_date $header($cmit,author-time)]}
  
-Hi,
-
-When I am running the gitk command I get the following error message:-
-
-========================================================================
-===========================
-Error in startup script: syntax error in expression "$i >= [llength
-$argv] && $revtreeargs ne {}"
-    while executing
-"if {$i >= [llength $argv] && $revtreeargs ne {}} { 
-    # no -- on command line, but some arguments (other than -d)
-    if {[catch {
-        set f [eval exec..."
-    (file "./gitk" line 7912)
-========================================================================
-============================
-
-Is there a problem with the script or is it a problem with my
-environment...?
-
-
-Regards,
-
-
-Ritwik
-SASKEN BUSINESS DISCLAIMER
--------------------------
-This message may contain confidential, proprietary or legally privileged information. In 
-case you are not the original intended Recipient of the message, you must not, directly or 
-indirectly, use, Disclose, distribute, print, or copy any part of this message and you are 
-requested to delete it and inform the sender. Any views expressed in this message are 
-those of the individual sender unless otherwise stated. Nothing contained in this message 
-shall be construed as an offer or acceptance of any offer by Sasken Communication 
-Technologies Limited ("Sasken") unless sent with that express intent and with due 
-authority of Sasken. Sasken has taken enough precautions to prevent the spread of 
-viruses. However the company accepts no liability for any damage caused by any virus 
-transmitted by this email
+ 		$tooltip_t insert end [strcat [mc "Originally By:"] "\n"] section_header
+ 		$tooltip_t insert end "commit $cmit\n"
+-- 
+1.5.3
