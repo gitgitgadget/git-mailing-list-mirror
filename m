@@ -1,85 +1,59 @@
-From: Denis Cheng <crquan@gmail.com>
-Subject: [PATCH] gitview: revamped to use string.join, stripped a function def
-Date: Fri, 28 Sep 2007 03:55:17 +0800
-Message-ID: <1190922917-5044-1-git-send-email-crquan@gmail.com>
-Cc: git@vger.kernel.org, cr_quan@163.com
-To: "Aneesh Kumar K.V" <aneesh.kumar@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:56:49 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Thu, 27 Sep 2007 12:58:30 -0700
+Message-ID: <7vhclfubh5.fsf@gitster.siamese.dyndns.org>
+References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com>
+	<20070927185707.GC12427@artemis.corp>
+	<94ccbe710709271224rc65b6f4k8b68419629ed5b45@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Pierre Habouzit" <madcoder@debian.org>, git@vger.kernel.org
+To: "Kelvie Wong" <kelvie@ieee.org>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:58:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IazTI-0002nP-61
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:56:28 +0200
+	id 1IazVV-0003fN-Jb
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753179AbXI0T4U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 15:56:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753188AbXI0T4U
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:56:20 -0400
-Received: from qb-out-0506.google.com ([72.14.204.226]:2651 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753020AbXI0T4T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 15:56:19 -0400
-Received: by qb-out-0506.google.com with SMTP id f9so876789qba
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 12:56:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
-        bh=U9ueyaau6nj23+izxHzQjSQoN2ZkZFzLoTqxuuIpZDc=;
-        b=GaLVagzMMBLela6SwmVaUVrec3Km4lYPcT9sU1bVEnCXJBv6YOLLE7DxxHYNClsttzWRahc6t0yrMnTUYJEItK0DSxsYojWg6spOzS1N7ZDbCcDQHo7nOoaeR9+XId560fpZEgBKtz70VITbyBGwb/7gkCriDXyk3TJxefTErv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer;
-        b=YnUFftryBr5tYAuAwDtHEA8jbHDf1H9hK/sqqDtwiGjdmPd+L2Qoq9BmYXNaOIZBkEMES4IaxRTA0Z/E/oSv1iZhY2mMGIy7OEkvL/jZeEXv96U36M4PmvMl8j9HdsjnEwlvG7Ty5mIwVLCJleNtK8mY/me8WLwmZhwgBmwcF8o=
-Received: by 10.141.146.11 with SMTP id y11mr1138743rvn.1190922978525;
-        Thu, 27 Sep 2007 12:56:18 -0700 (PDT)
-Received: from tux ( [116.24.36.195])
-        by mx.google.com with ESMTPS id b21sm5439756rvf.2007.09.27.12.56.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 27 Sep 2007 12:56:14 -0700 (PDT)
-Received: by tux (sSMTP sendmail emulation); Fri, 28 Sep 2007 03:55:17 +0800
-X-Mailer: git-send-email 1.5.3.2
+	id S1753347AbXI0T6i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 15:58:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753339AbXI0T6i
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:58:38 -0400
+Received: from rune.pobox.com ([208.210.124.79]:56124 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753221AbXI0T6i (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 15:58:38 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 93A1B13D34E;
+	Thu, 27 Sep 2007 15:58:58 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id AACFD13D328;
+	Thu, 27 Sep 2007 15:58:54 -0400 (EDT)
+In-Reply-To: <94ccbe710709271224rc65b6f4k8b68419629ed5b45@mail.gmail.com>
+	(Kelvie Wong's message of "Thu, 27 Sep 2007 12:24:38 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59326>
 
-Signed-off-by: Denis Cheng <crquan@gmail.com>
----
- contrib/gitview/gitview |   13 +------------
- 1 files changed, 1 insertions(+), 12 deletions(-)
+"Kelvie Wong" <kelvie@ieee.org> writes:
 
-diff --git a/contrib/gitview/gitview b/contrib/gitview/gitview
-index 5931766..2eb72b1 100755
---- a/contrib/gitview/gitview
-+++ b/contrib/gitview/gitview
-@@ -36,17 +36,6 @@ except ImportError:
- 
- re_ident = re.compile('(author|committer) (?P<ident>.*) (?P<epoch>\d+) (?P<tz>[+-]\d{4})')
- 
--def list_to_string(args, skip):
--	count = len(args)
--	i = skip
--	str_arg=" "
--	while (i < count ):
--		str_arg = str_arg + args[i]
--		str_arg = str_arg + " "
--		i = i+1
--
--	return str_arg
--
- def show_date(epoch, tz):
- 	secs = float(epoch)
- 	tzsecs = float(tz[1:3]) * 3600
-@@ -1115,7 +1104,7 @@ class GitView(object):
- 
- 	def set_branch(self, args):
- 		"""Fill in different windows with info from the reposiroty"""
--		fp = os.popen("git rev-parse --sq --default HEAD " + list_to_string(args, 1))
-+		fp = os.popen("git rev-parse --sq --default HEAD " + " ".join(args[1:]))
- 		git_rev_list_cmd = fp.read()
- 		fp.close()
- 		fp = os.popen("git rev-list  --header --topo-order --parents " + git_rev_list_cmd)
--- 
-1.5.3.2
+> I've tried all of the ones that were supported, the result is the same
+> -- blank files in all three windows.
+>
+> It is because git mergetool fails to generate these files for whatever
+> reason (the filebasename.{REMOTE,LOCAL,BASE}.* files).  I don't know
+> why this happens.
+
+Can you run git-mergetool under "sh -x"?
+
+That is,
+
+	$ sh -x git-mergetool
+
+around ll.160-170 these files are created.
