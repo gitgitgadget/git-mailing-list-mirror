@@ -1,81 +1,86 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: git push (mis ?)behavior
-Date: Thu, 27 Sep 2007 17:28:55 +0200
-Message-ID: <AB062710-F4F6-4B84-BF8A-676154656CCB@lrde.epita.fr>
-References: <20070927130447.GH10289@artemis.corp> <0CAD1C47-A396-46AA-9DC0-96BBD41EE4E4@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-5--1145573"
+From: Adam Roben <aroben@apple.com>
+Subject: Re: Equivalent of `svn switch` for git-svn?
+Date: Thu, 27 Sep 2007 09:39:27 -0700
+Message-ID: <46FBDCBF.7060909@apple.com>
+References: <46FB5086.7070408@apple.com> <20070927100607.GC10289@artemis.corp> <Pine.LNX.4.64.0709271253040.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 17:29:38 2007
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 27 18:39:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IavIt-0003Uv-Fi
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 17:29:27 +0200
+	id 1IawOl-0000KX-DW
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 18:39:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754702AbXI0P3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 11:29:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754354AbXI0P3U
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 11:29:20 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:42820 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753376AbXI0P3T (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 11:29:19 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IavIj-0005QA-Ep; Thu, 27 Sep 2007 17:29:17 +0200
-In-Reply-To: <0CAD1C47-A396-46AA-9DC0-96BBD41EE4E4@wincent.com>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1753749AbXI0Qj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 12:39:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753147AbXI0Qj2
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 12:39:28 -0400
+Received: from mail-out3.apple.com ([17.254.13.22]:51221 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061AbXI0Qj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 12:39:27 -0400
+Received: from relay12.apple.com (relay12.apple.com [17.128.113.53])
+	by mail-out3.apple.com (Postfix) with ESMTP id 49BCF12C97DE;
+	Thu, 27 Sep 2007 09:39:27 -0700 (PDT)
+Received: from relay12.apple.com (unknown [127.0.0.1])
+	by relay12.apple.com (Symantec Mail Security) with ESMTP id 328982807C;
+	Thu, 27 Sep 2007 09:39:27 -0700 (PDT)
+X-AuditID: 11807135-a56febb000006e40-a7-46fbdcbf8c06
+Received: from [17.203.12.236] (aroben.apple.com [17.203.12.236])
+	by relay12.apple.com (Apple SCV relay) with ESMTP id 12DDC2804E;
+	Thu, 27 Sep 2007 09:39:27 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0709271253040.28395@racer.site>
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59303>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-5--1145573
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=ISO-8859-1; delsp=yes; format=flowed
 
-On Sep 27, 2007, at 3:30 PM, Wincent Colaiuta wrote:
-
-> El 27/9/2007, a las 15:04, Pierre Habouzit escribi=F3:
+Johannes Schindelin wrote:
+> Hi,
 >
->>   There is a behavior of git-push that is the most annoying thing =20
->> while
->> working with a central-repository: `git push` without any arguments
->> insists on pushing every local refspec that match one in origin.
+> On Thu, 27 Sep 2007, Pierre Habouzit wrote:
 >
-> I kind of agree. Without reading the git-push man page I would =20
-> intuitively expect "git push" with no arguments to push only the =20
-> branch I currently have checked out, and "git push --all" to push all.
+>   
+>> On Thu, Sep 27, 2007 at 06:41:10AM +0000, Adam Roben wrote:
+>>     
+>>> Hi all-
+>>>   I've recently been informed that the Subversion server I and several 
+>>> others have been tracking with git-svn will be switching from using the 
+>>> svn+ssh scheme to the http scheme. To handle this, users of svn will be 
+>>> running `svn switch` to move their working copies to the new repository 
+>>> URL. Is there some way to do the same for git-svn? I suspect the biggest 
+>>> complication will come from the git-svn-id: lines in the commit logs, 
+>>> since changing that line would require changing the commit hash as well.
+>>>       
+>>   edit your .git/config, in the section [svn-remote "svn"], change url =
+>>     
+>
+> Or use git-config:
+>
+> 	git config svn-remote.svn.url <url>
+>
+> Or make it a global alias:
+>
+> 	git config --global alias svn-switch 'config svn-remote.svn.url'
+>
+> so that you can say
+>
+> 	git svn-switch <url>
+>   
+Will doing this then change all the git-svn-id: lines in the commit logs 
+for those imported revisions? I'm asking because my understanding is 
+that git-svn uses those git-svn-id: lines to determine which branch 
+you're on, and if the URLs are now all out of date won't it then think 
+it can't determine the correct branch?
 
-Same thing here, got bitten the same way.
+Thanks for the suggestions so far.
 
---=20
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-5--1145573
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFG+8w3wwE67wC8PUkRAu5bAJ4v+ZSNBgLTYVx49ortBlbCkJD3tACgolIr
-aLy1zvWUmDy3oqlUj81nmV8=
-=GGz+
------END PGP SIGNATURE-----
-
---Apple-Mail-5--1145573--
+-Adam
