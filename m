@@ -1,74 +1,75 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: ignoring non-submodule subrepositories
-Date: Thu, 27 Sep 2007 12:29:15 -0700
-Message-ID: <7vy7eructw.fsf@gitster.siamese.dyndns.org>
-References: <20070927170700.GA10250@lapse.madduck.net>
+From: Dan Farina <drfarina@gmail.com>
+Subject: backup or mirror a repository
+Date: Thu, 27 Sep 2007 12:35:42 -0700
+Message-ID: <1190921742.2263.17.camel@Tenacity>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:29:34 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:36:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iaz3D-0000QW-1L
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:29:31 +0200
+	id 1Iaz9V-0002t4-Jh
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:36:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757605AbXI0T3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 15:29:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757084AbXI0T3V
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:29:21 -0400
-Received: from rune.pobox.com ([208.210.124.79]:54170 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756693AbXI0T3V (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 15:29:21 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 7A8FE13B12C;
-	Thu, 27 Sep 2007 15:29:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A848113B0B9;
-	Thu, 27 Sep 2007 15:29:39 -0400 (EDT)
-In-Reply-To: <20070927170700.GA10250@lapse.madduck.net> (martin f. krafft's
-	message of "Thu, 27 Sep 2007 18:07:00 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1758075AbXI0Tfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 15:35:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757686AbXI0Tfx
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:35:53 -0400
+Received: from nz-out-0506.google.com ([64.233.162.235]:39911 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758062AbXI0Tfw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 15:35:52 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1833355nze
+        for <git@vger.kernel.org>; Thu, 27 Sep 2007 12:35:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        bh=tC+dpGTBJoUIT92IfJ+I+7bhExlWeEzd5+GLZsimiyI=;
+        b=qDugcAy5p+KCVM2UwapEF3TSCY9PptrAlHEAe9dnsP+R1MA5TMAra5jSjFYohEFCo7CU6MLO/U0VNBjuHjSHJAwHRn6/6Tm+0UJL52lGGVwq1oz3/ozzH4UbCFLfCYq6IUiU9b4LBtcod5HZQ0JKYgB21WJmnul96NZyCPXilsY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:subject:from:to:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=g8T3kxy0WCkDl2x/vd93IFjDgB7OyZKhxx98/89m9Johdv3z0qRKG5+Z8+aoqxB31/RJC5Uju9vwz+WPo/itE6eiiKS5Gde3joQtVsUS1pi0VJccDW9YaOeMjyQa4TdU3dY6s9v+H+I1KrW3rTm65LAMY/MTWOpPSRlJUwFXAAU=
+Received: by 10.141.133.14 with SMTP id k14mr1127434rvn.1190921751306;
+        Thu, 27 Sep 2007 12:35:51 -0700 (PDT)
+Received: from ?192.168.1.101? ( [71.134.240.3])
+        by mx.google.com with ESMTPS id g6sm4593183rvb.2007.09.27.12.35.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 27 Sep 2007 12:35:50 -0700 (PDT)
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59319>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59320>
 
-martin f krafft <madduck@madduck.net> writes:
+Hello list,
 
-> I have a repository inside another, and for several reasons, I do
-> not want to use git-submodule in this case. My issue is that
-> git-status lists the subrepository as untracked.
->
-> Of course, I could add it to .gitignore alright, but instead
-> I wonder whether it would not make sense to ignore subdirectories
-> themselves containing .git/ directories, not explicitly so as to not
-> mess with git-submodule, but implicitly.
->
-> Thoughts?
+I have been poking around on IRC and gmane, but haven't yet seen a
+solution to my problem:
 
-I've had a line "/Meta" in my .git/info/excludes ever since I
-started to maintain the 'todo' branch (which is managed in an
-independent repository situated there, and pushed into the
-'todo' branch of git.git), and having to have that line never
-bothered me.
+What I really want is something semantically identical to a recursive
+copy of my entire git repository on one machine sent to another machine.
+Right now I can't simply use "rsync -ar --delete ..." because the pack
+changes names, thus fooling rsync and sending a bunch of bits over the
+network.
 
-While I do not think of a reason offhand not to ignore anything
-that has .git/ and is not a subproject, other than that ignoring
-might interfere your adding such a separate project as a
-subproject.  I know "git add" would countermand the ignore list,
-but not listing means it lets you forget.
+I saw git-mirror on gmane and asked around in IRC, but the former seems
+to have died sometime last November and the latter told me I'd probably
+have to write some glue to process git show-ref and git ls-remote. This
+seems viable, but suboptimal. Another user chimed in that they also had
+the same use case as myself.
 
-Thinking about it more, such a separate project is not even
-special.  We list untracked files to remind you that you might
-want to add them.  Why should a separate project that is not
-tracked by us (i.e. a potential superproject) be treated any
-differently from other untracked things on the filesystem?
 
-So, my thoughts are moderate "negative" at this point, but
-others may have better arguments..
+fdr
+
+(Justifications: I am super paranoid, so I want to push my local
+branches to another disk to be safe, but then they proliferate over time
+since deleted local branches are not also deleted on the target
+repository. I also want to work on multiple machines seamlessly, and as
+such doing a bunch of "git checkout -r ..." when I need to change
+branches is also suboptimal. As I said, I can get what I want by simply
+using rsync, so this is entirely about efficiency by exploiting git's
+structure)
