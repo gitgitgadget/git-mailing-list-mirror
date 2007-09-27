@@ -1,87 +1,70 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Equivalent of `svn switch` for git-svn?
-Date: Thu, 27 Sep 2007 19:02:05 +0200
-Message-ID: <20070927170205.GA6076@artemis.corp>
-References: <46FB5086.7070408@apple.com> <20070927100607.GC10289@artemis.corp> <Pine.LNX.4.64.0709271253040.28395@racer.site> <46FBDCBF.7060909@apple.com>
+From: Brett Schwarz <brett_schwarz@yahoo.com>
+Subject: Re: Relating to some syntax error in the gitk script
+Date: Thu, 27 Sep 2007 10:00:27 -0700 (PDT)
+Message-ID: <915048.40970.qm@web38908.mail.mud.yahoo.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="WIyZ46R2i8wDzkSu";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 19:03:03 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Ritwik Ghosh <ritwik.ghosh@sasken.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 27 19:08:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iawl3-0001Yh-DP
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 19:02:37 +0200
+	id 1Iawpk-0003GD-UN
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 19:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756453AbXI0RCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 13:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756720AbXI0RCI
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 13:02:08 -0400
-Received: from pan.madism.org ([88.191.52.104]:58210 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756453AbXI0RCH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 13:02:07 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 48B9922096;
-	Thu, 27 Sep 2007 19:02:06 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 706E6BDB9A; Thu, 27 Sep 2007 19:02:05 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Adam Roben <aroben@apple.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <46FBDCBF.7060909@apple.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1757086AbXI0RHM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 13:07:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757029AbXI0RHM
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 13:07:12 -0400
+Received: from web38908.mail.mud.yahoo.com ([209.191.125.114]:47781 "HELO
+	web38908.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754189AbXI0RHK convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 13:07:10 -0400
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Sep 2007 13:07:10 EDT
+Received: (qmail 43601 invoked by uid 60001); 27 Sep 2007 17:00:27 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=fS6MlWJYftAb4L91v7+bwtvG+EEDSsZpK0ocgpUiNRLXPtgmI7BtUHk9z1TnYEbck01nMtDmD5wnwkKcHTatOJw5rqHdBJ4p4p/XG79WAHMevwV5eghlatbj4jJsHL6rU2rpQFWVnBRJXhYng2+ab1lEWxRwK1GjDjJvCIDlU8k=;
+X-YMail-OSG: _reOL18VM1kV_ZvcwiCR5Dpz8PgUHGSMwL3.JPNgP3xNzVPMc8hGzOfz.aaC25OUDaDKTj4XJgPiKB5InDRhwD7l3tmiLl9OaKjtIw0uQqMwnaZ4th_l1qP.k2qn.g--
+Received: from [209.191.119.133] by web38908.mail.mud.yahoo.com via HTTP; Thu, 27 Sep 2007 10:00:27 PDT
+X-Mailer: YahooMailRC/651.50 YahooMailWebService/0.7.134
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59305>
+
+> 
+> When I am running the gitk command I get the following error message:-
+> 
+> ========================================================================
+> ===========================
+> Error in startup script: syntax error in expression "$i >= [llength
+> $argv] && $revtreeargs ne {}"
+>     while executing
+> "if {$i >= [llength $argv] && $revtreeargs ne {}} {
+>     # no -- on command line, but some arguments (other than -d)
+>     if {[catch {
+>         set f [eval exec..."
+>     (file "./gitk" line 7912)
+> ========================================================================
+> ============================
+> 
+> Is there a problem with the script or is it a problem with my
+> environment...?
+> 
+
+What version of Tcl are you running? You should be using >= 8.4
 
 
---WIyZ46R2i8wDzkSu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 27, 2007 at 04:39:27PM +0000, Adam Roben wrote:
-> Will doing this then change all the git-svn-id: lines in the commit logs=
-=20
-> for those imported revisions? I'm asking because my understanding is that=
-=20
-> git-svn uses those git-svn-id: lines to determine which branch you're on,=
-=20
-> and if the URLs are now all out of date won't it then think it can't=20
-> determine the correct branch?
 
-  fwiw If it breaks git-svn, then it's a deep git-svn misconception.
-I've always believed that git-svn should always have done what git
-checkout --track do, meaning set into the configuration which svn remote
-branch you are following.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---WIyZ46R2i8wDzkSu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG++INvGr7W6HudhwRAlN/AJ9tJQrrZcpru/jFCccqbstPQFEEOgCcDQOJ
-g8TE0zzsKeJq3AImphpKDhs=
-=3bVa
------END PGP SIGNATURE-----
-
---WIyZ46R2i8wDzkSu--
+       
+____________________________________________________________________________________
+Yahoo! oneSearch: Finally, mobile search 
+that gives answers, not web links. 
+http://mobile.yahoo.com/mobileweb/onesearch?refer=1ONXIC
