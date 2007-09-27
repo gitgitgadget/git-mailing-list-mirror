@@ -1,109 +1,62 @@
-From: "Dan Nicholson" <dbn.lists@gmail.com>
-Subject: Re: [PATCH] quiltimport: Skip non-existent patches
-Date: Thu, 27 Sep 2007 15:20:46 -0700
-Message-ID: <91705d080709271520r11546361hdbe5e028d415e961@mail.gmail.com>
-References: <Pine.LNX.4.62.0709271154440.10467@pademelon.sonytel.be>
-	 <1190925059-5233-1-git-send-email-dbn.lists@gmail.com>
-	 <loom.20070927T203413-499@post.gmane.org>
-	 <7v1wcju93a.fsf@gitster.siamese.dyndns.org>
-	 <91705d080709271445k62f2867am99114eb0e98fc408@mail.gmail.com>
-	 <7vejgjsr6k.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Thu, 27 Sep 2007 18:23:26 -0400
+Message-ID: <20070927222326.GB8688@thunk.org>
+References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <46FBFDD7.1080300@gmail.com> <20070927191125.GD12427@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 00:21:01 2007
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>,
+	Russ Brown <pickscrape@gmail.com>,
+	Kelvie Wong <kelvie@ieee.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 28 00:23:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib1j5-0003YK-Mt
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 00:20:56 +0200
+	id 1Ib1li-0004JT-N9
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 00:23:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758457AbXI0WUt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 18:20:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758376AbXI0WUt
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 18:20:49 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:54268 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756259AbXI0WUs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 18:20:48 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so1171082wra
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 15:20:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=U0jt2Nvv7xhjZksggYs0PVJD2yWHxpVabnOkHssI8Wg=;
-        b=ffSYaxehKF26oc5YoOKL+RGWnetP/Rua3sLLdeBsCVkYAyu3cLy4jN2Wf7UtWsMow30AKSp+A08CHjEMOSwmZEgNgeWeElahoO9tocDv6hvCJGdeed3bjx/sqVt1kATNr9It6/O/hUZP+Dx8RBn6qoq2vtIsVZT8pkx9bhb54eM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ms5HXBdjZE7rybXMFirw3VZQztUeAxhHzbjGR4+U+l8Ts7WElxnFU2ehzOT9+x+3hdpaYIvzN6dImjR1tGXvsuWWxeXGVzNqC/iAFqLtKKYUEukcYp+BBI/SjWiITPwp3HATp5IzVgwKZsLG+W6R/C5Y7NddMuKkL4H4Xt31n14=
-Received: by 10.141.27.18 with SMTP id e18mr246967rvj.1190931646709;
-        Thu, 27 Sep 2007 15:20:46 -0700 (PDT)
-Received: by 10.143.8.3 with HTTP; Thu, 27 Sep 2007 15:20:46 -0700 (PDT)
-In-Reply-To: <7vejgjsr6k.fsf@gitster.siamese.dyndns.org>
+	id S1757537AbXI0WXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 18:23:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756948AbXI0WXb
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 18:23:31 -0400
+Received: from thunk.org ([69.25.196.29]:47150 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756321AbXI0WXb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 18:23:31 -0400
+Received: from root (helo=candygram.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1Ib1v2-000130-87; Thu, 27 Sep 2007 18:33:16 -0400
+Received: from tytso by candygram.thunk.org with local (Exim 4.63)
+	(envelope-from <tytso@thunk.org>)
+	id 1Ib1lW-0005Vu-Il; Thu, 27 Sep 2007 18:23:26 -0400
 Content-Disposition: inline
+In-Reply-To: <20070927191125.GD12427@artemis.corp>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59343>
 
-On 9/27/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "Dan Nicholson" <dbn.lists@gmail.com> writes:
->
-> > When you run the command `quilt series', it just lists what's in the
-> > series file (minus any comments). And when you run `quilt push' with a
-> > non-existent patch, it says "Patch foo.patch does not exist; applied
-> > empty patch"
-> >
-> > So, I think the consistent thing to do is what's in my patch: just
-> > skip the patch with a message to the user. Maybe the message can be
-> > tailored to match quilt's output. Actually, it would be best to also
-> > skip on empty files since quiltimport will bomb in that case as well.
->
-> Thanks for your helpful explanation.  So perhaps we can do this
-> on top of yours to be safer and more consistent.
->
-> ---
->
->  git-quiltimport.sh |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-> index 880c81d..627e023 100755
-> --- a/git-quiltimport.sh
-> +++ b/git-quiltimport.sh
-> @@ -79,8 +79,8 @@ for patch_name in $(grep -v '^#' < "$QUILT_PATCHES/series" ); do
->         git mailinfo "$tmp_msg" "$tmp_patch" \
->                 <"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
->         test -s "$tmp_patch" || {
-> -               echo "Patch is empty.  Was it split wrong?"
-> -               exit 1
-> +               echo "Patch is empty. Skipping."
-> +               continue
->         }
->
->         # Parse the author information
+On Thu, Sep 27, 2007 at 09:11:25PM +0200, Pierre Habouzit wrote:
+> > >   And as none of the other merge tool that are supported are able to
+> > > either do 3way merges, or have a decent UI (that definitely seems to be
+> > > exclusive features) I've given up on git-mergetool (and to be fair, it
+> > > sucks, because it could be _sooo_ useful sometimes).
+> > > 
+> > 
+> > What about meld? That does 3-way merge, and the UI is fine.
+> 
+>   Indeed, it seems that since the last time I tested it, it now does
+> diff3 merging. I should reevaluate it :)
 
-That's seems fine. IIUC, mailinfo will only create an empty patch if
-there's no actual patch content in the original mail/patch. In that
-case, you probably do want to skip and not bomb. I'd changed my patch
-to do 'if ! [ -s "$patch" ]' to catch an empty file, but this is
-probably better. Hmm, checking `quilt push' on a patch with no actual
-patch bombs. Here's the output:
+Pierre,
 
-$ quilt push
-Applying patch foo.patch
-patch: **** Only garbage was found in the patch input.
-Patch foo.patch does not apply (enforce with -f)
-$ echo $?
-1
-$ cat patches/foo.patch
-Here's info about an empty patch.
+FYI, kdiff3, meld, xxdiff, opendiff (on MacOSX), and emerge all
+support 3-way merge.
 
-So, it might be better to leave the original behavior there to match quilt.
-
---
-Dan
+						- Ted
