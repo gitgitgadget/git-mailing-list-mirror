@@ -1,74 +1,81 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 27 Sep 2007 15:46:03 +0200
-Message-ID: <868x6sgr1g.fsf@lola.quinscape.zz>
-References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org> <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org> <20070927023633.GA28902@coredump.intra.peff.net> <854phgfxn7.fsf@lola.goethe.zz> <20070927133056.GA29674@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 27 16:16:15 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: git push (mis ?)behavior
+Date: Thu, 27 Sep 2007 17:28:55 +0200
+Message-ID: <AB062710-F4F6-4B84-BF8A-676154656CCB@lrde.epita.fr>
+References: <20070927130447.GH10289@artemis.corp> <0CAD1C47-A396-46AA-9DC0-96BBD41EE4E4@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-5--1145573"
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 17:29:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iau9g-000277-5u
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 16:15:52 +0200
+	id 1IavIt-0003Uv-Fi
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 17:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755668AbXI0OPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 10:15:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbXI0OPo
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 10:15:44 -0400
-Received: from main.gmane.org ([80.91.229.2]:37843 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755633AbXI0OPn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 10:15:43 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iatw6-0004jp-8P
-	for git@vger.kernel.org; Thu, 27 Sep 2007 14:01:50 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 14:01:50 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 14:01:50 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:XOQMjdqIx9RL28/O9HLim2uQXz8=
+	id S1754702AbXI0P3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 11:29:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754354AbXI0P3U
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 11:29:20 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:42820 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753376AbXI0P3T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 11:29:19 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IavIj-0005QA-Ep; Thu, 27 Sep 2007 17:29:17 +0200
+In-Reply-To: <0CAD1C47-A396-46AA-9DC0-96BBD41EE4E4@wincent.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59301>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59302>
 
-Jeff King <peff@peff.net> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-5--1145573
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=ISO-8859-1; delsp=yes; format=flowed
 
-> On Thu, Sep 27, 2007 at 08:08:44AM +0200, David Kastrup wrote:
+On Sep 27, 2007, at 3:30 PM, Wincent Colaiuta wrote:
+
+> El 27/9/2007, a las 15:04, Pierre Habouzit escribi=F3:
 >
->> In itself, it does not look like there is all too much room for
->> optimization.  One can remove the temporary pointer "optimization" and
->> see whether this makes strength reduction possible for the compiler.
->> Making this an endless loop wrapped around a loop on bucket might also
->> help the compiler in that effect.
+>>   There is a behavior of git-push that is the most annoying thing =20
+>> while
+>> working with a central-repository: `git push` without any arguments
+>> insists on pushing every local refspec that match one in origin.
 >
-> I am considering reworking the data structure to be a hash table
-> whose buckets never overflow. However, Junio indicated that he tried
-> something similar at one point and was not successful. So we will
-> see. I haven't had time to play with it yet, but I will post numbers
-> when I do.
+> I kind of agree. Without reading the git-push man page I would =20
+> intuitively expect "git push" with no arguments to push only the =20
+> branch I currently have checked out, and "git push --all" to push all.
 
-Linear probing is pretty efficient with regard to keeping memory
-access locality.  With a reasonable table filling ratio (not more than
-something like 75%, for which it is necessary to know the maximum
-number of hashable entries in advance), there is no gain to be
-expected in either speed or even memory usage (the waste of 25% is
-offset by not needing space for link pointers) with escape lists.
-Linear probing hashes are quite hard to resize: if the maximum member
-count is _not_ to be guessed in advance, things might look different.
+Same thing here, got bitten the same way.
 
-I don't have the time to look at the code right now, so I don't know
-whether resizing or unknown maximum size is a relevant factor.
+--=20
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
 
--- 
-David Kastrup
+
+
+--Apple-Mail-5--1145573
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFG+8w3wwE67wC8PUkRAu5bAJ4v+ZSNBgLTYVx49ortBlbCkJD3tACgolIr
+aLy1zvWUmDy3oqlUj81nmV8=
+=GGz+
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-5--1145573--
