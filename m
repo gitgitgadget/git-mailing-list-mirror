@@ -1,53 +1,110 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Equivalent of `svn switch` for git-svn?
-Date: Wed, 26 Sep 2007 23:41:10 -0700
-Message-ID: <46FB5086.7070408@apple.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 27 Sep 2007 08:43:14 +0200
+Message-ID: <85sl50ehh9.fsf@lola.goethe.zz>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
+	<7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
+	<7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
+	<20070927023633.GA28902@coredump.intra.peff.net>
+	<854phgfxn7.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 27 08:41:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Sep 27 08:43:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ian3m-0000QC-Fb
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 08:41:18 +0200
+	id 1Ian5w-0000z9-GB
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 08:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752325AbXI0GlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 02:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752447AbXI0GlL
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 02:41:11 -0400
-Received: from mail-out3.apple.com ([17.254.13.22]:54795 "EHLO
-	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221AbXI0GlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 02:41:10 -0400
-Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
-	by mail-out3.apple.com (Postfix) with ESMTP id 4D44D12B5100
-	for <git@vger.kernel.org>; Wed, 26 Sep 2007 23:41:10 -0700 (PDT)
-Received: from relay11.apple.com (unknown [127.0.0.1])
-	by relay11.apple.com (Symantec Mail Security) with ESMTP id 2E9A028059
-	for <git@vger.kernel.org>; Wed, 26 Sep 2007 23:41:10 -0700 (PDT)
-X-AuditID: 11807130-a2bc0bb000004daf-65-46fb508671d1
-Received: from [17.219.200.50] (Vpn0priv-50.apple.com [17.219.200.50])
-	by relay11.apple.com (Apple SCV relay) with ESMTP id 0804D2804E
-	for <git@vger.kernel.org>; Wed, 26 Sep 2007 23:41:10 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Brightmail-Tracker: AAAAAA==
+	id S1754763AbXI0GnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 02:43:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754694AbXI0GnS
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 02:43:18 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:47275 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754639AbXI0GnR (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2007 02:43:17 -0400
+Received: from mail-in-05-z2.arcor-online.net (mail-in-05-z2.arcor-online.net [151.189.8.17])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id 49DFA15C3ED;
+	Thu, 27 Sep 2007 08:43:15 +0200 (CEST)
+Received: from mail-in-01.arcor-online.net (mail-in-01.arcor-online.net [151.189.21.41])
+	by mail-in-05-z2.arcor-online.net (Postfix) with ESMTP id 35A8F2DAC94;
+	Thu, 27 Sep 2007 08:43:15 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-013-116.pools.arcor-ip.net [84.61.13.116])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id F06A91B3262;
+	Thu, 27 Sep 2007 08:43:14 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 034701C0039C; Thu, 27 Sep 2007 08:43:14 +0200 (CEST)
+In-Reply-To: <854phgfxn7.fsf@lola.goethe.zz> (David Kastrup's message of "Thu\, 27 Sep 2007 08\:08\:44 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4411/Wed Sep 26 23:43:35 2007 on mail-in-01.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59272>
 
-Hi all-
-   I've recently been informed that the Subversion server I and several 
-others have been tracking with git-svn will be switching from using the 
-svn+ssh scheme to the http scheme. To handle this, users of svn will be 
-running `svn switch` to move their working copies to the new repository 
-URL. Is there some way to do the same for git-svn? I suspect the biggest 
-complication will come from the git-svn-id: lines in the commit logs, 
-since changing that line would require changing the commit hash as well.
+David Kastrup <dak@gnu.org> writes:
 
-   Thanks for any advice!
+> Jeff King <peff@peff.net> writes:
+>
+>> On Wed, Sep 26, 2007 at 01:05:59PM -0700, Junio C Hamano wrote:
+>>
+>>> * jk/diff-rename (Tue Sep 25 15:29:42 2007 -0400) 1 commit
+>>>  + diffcore-rename: cache file deltas
+>>> 
+>>> Parked in 'next' for now but is 'master' material.
+>>
+>> My tests after this patch show that spanhash_find is responsible for
+>> a large portion of the processing time in large renames, so I am going
+>> to look into speeding that up.
+>
+> In itself, it does not look like there is all too much room for
+> optimization.  One can remove the temporary pointer "optimization" and
+> see whether this makes strength reduction possible for the compiler.
+> Making this an endless loop wrapped around a loop on bucket might also
+> help the compiler in that effect.
+>
+> But there is really not all too much leeway, and it might be better
+> spent in the caller.  For example, the search will take something like
+> r/(1-r) iterations on average where r is the fill ratio of the hash
+> array.  So one would not want to, say, let r grow above 0.75 or
+> something like that.
 
--Adam
+Ok, here is some suggestion:
+
+Here is the inner loop for this stuff:
+
+	for (i = 0; i < ssz; i++) {
+		struct spanhash *s = &(src_count->data[i]);
+		struct spanhash *d;
+		unsigned dst_cnt, src_cnt;
+		if (!s->cnt)
+			continue;
+		src_cnt = s->cnt;
+		d = spanhash_find(dst_count, s->hashval);
+		dst_cnt = d ? d->cnt : 0;
+		if (src_cnt < dst_cnt) {
+			la += dst_cnt - src_cnt;
+			sc += src_cnt;
+		}
+		else
+			sc += dst_cnt;
+	}
+
+Now here is how one could optimize the data structures: The hash
+structures are with linear probing, and we try to find any hash
+matches from source to destination.  If we sort all hashes indexed to
+a given first hash bucket by their full hash value, then one could
+basically use passes similar to list merges for figuring the 1:1
+relations.  That cuts down the O(l n) cost (where n is the number of
+elements and l their average run length) to O(n).
+
+Of course, making l close to 1 by keeping the hash utilization
+reasonably low is much simpler.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
