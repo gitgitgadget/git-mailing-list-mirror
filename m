@@ -1,108 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git push (mis ?)behavior
-Date: Thu, 27 Sep 2007 12:22:24 -0700
-Message-ID: <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
-References: <20070927130447.GH10289@artemis.corp>
+From: "Kelvie Wong" <kelvie@ieee.org>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Thu, 27 Sep 2007 12:24:38 -0700
+Message-ID: <94ccbe710709271224rc65b6f4k8b68419629ed5b45@mail.gmail.com>
+References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com>
+	 <20070927185707.GC12427@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:22:39 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: "Pierre Habouzit" <madcoder@debian.org>,
+	"Kelvie Wong" <kelvie@ieee.org>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:24:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaywZ-0006Js-3k
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:22:39 +0200
+	id 1Iayyd-000795-Nr
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:24:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756237AbXI0TWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 15:22:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755419AbXI0TWc
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:22:32 -0400
-Received: from rune.pobox.com ([208.210.124.79]:54042 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755157AbXI0TWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 15:22:31 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 559D913B079;
-	Thu, 27 Sep 2007 15:22:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 8C72D13AD32;
-	Thu, 27 Sep 2007 15:22:48 -0400 (EDT)
-In-Reply-To: <20070927130447.GH10289@artemis.corp> (Pierre Habouzit's message
-	of "Thu, 27 Sep 2007 15:04:47 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755419AbXI0TYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Sep 2007 15:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756981AbXI0TYl
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:24:41 -0400
+Received: from an-out-0708.google.com ([209.85.132.240]:8072 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756892AbXI0TYk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2007 15:24:40 -0400
+Received: by an-out-0708.google.com with SMTP id d31so397591and
+        for <git@vger.kernel.org>; Thu, 27 Sep 2007 12:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=8Q1XTDuwGzMBzZNDwJ2A2TeJbJyPIurjbw6EtyoWrwo=;
+        b=FBJMvxcTG5H8zT1Q5+PA0D4fJjs9eA4gEDGAptHpxCB7zNd+vdySNy4iwD2YGGeELpZ8fAtKcv7FjqRMw2udDqQyZdFJNqXv3DEmd4Koq+7scz9MwpPyr9FnpmRWN92ajCWHIir5b7vi3E1YrifeglcQI/TSV9f9BNm9MgjfNcc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=Cr+KJPwWvwuRxL8qqJko5KsoQZmrgXfmVJS+/k4TuKbfSWbbPdTTpv+FMKz1zGmeKq0sWnggztesfQzidUrxG7Hs0lJATvUiqVEF3/k7jXoOP3JTBJiGts76OgbY6XwveJcgGhPliPKAxyppKpNdh1wO0XTJxVRlSawAy+n7O10=
+Received: by 10.114.92.2 with SMTP id p2mr283115wab.1190921078844;
+        Thu, 27 Sep 2007 12:24:38 -0700 (PDT)
+Received: by 10.114.144.17 with HTTP; Thu, 27 Sep 2007 12:24:38 -0700 (PDT)
+In-Reply-To: <20070927185707.GC12427@artemis.corp>
+Content-Disposition: inline
+X-Google-Sender-Auth: 24b89f1e99c5f328
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59318>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+I've tried all of the ones that were supported, the result is the same
+-- blank files in all three windows.
 
-> The real question is "what does users intend when they `git push`". In
-> a git/kernel/... like model, you don't think the same than in a
-> svn/cvs-like model. I mean, Junio or Linus likely don't push a lot to
-> their public repository. It happens probably a couple of time per day.
-> While I'm at work, it happens up way more frequentely, and I then want
-> to lazily type `git push` and not `git push origin <somebranch>`. it's
-> too long.
+It is because git mergetool fails to generate these files for whatever
+reason (the filebasename.{REMOTE,LOCAL,BASE}.* files).  I don't know
+why this happens.
+
+As for merge utilities, all I need is something that looks for the
+first <<<<<, and lets me choose which version I want (either top or
+bottom), plain and simple :/  I don't even need/want a gui.
+
+But oh well, I guess the answer here is to write a script that does it.
+
+Kelvie
+
+On 9/27/07, Pierre Habouzit <madcoder@debian.org> wrote:
+> On Thu, Sep 27, 2007 at 06:31:19PM +0000, Kelvie Wong wrote:
+> > At work, I've been using a git-svn import for my daily workflow (st=
+ill
+> > somewhat of a git newbie, but now has come to the point where it's
+> > tough to work without it), and while rebasing from svn (on a rather
+> > old branch), I found that the mergetool option does not work too we=
+ll
+> > for me.
 >
->   I'm not sure what we can do about it, but I'm pretty sure it bites a
-> lot of people out there. For now I use this alias in my .gitconfig:
+>   Which tool are you using ? kdiff3 ? I've noticed that it often fail=
+s
+> miserably, or worse, create bad merges silentely with it.
 >
->   p=!git-push origin `git-symbolic-ref HEAD`
+>   And as none of the other merge tool that are supported are able to
+> either do 3way merges, or have a decent UI (that definitely seems to =
+be
+> exclusive features) I've given up on git-mergetool (and to be fair, i=
+t
+> sucks, because it could be _sooo_ useful sometimes).
 >
-> but still, it feels really wrong to me. Not to mention that git-push(1)
-> says that it has a --all option that in fact is the current default
-> behavior, hence sounds pretty useless.
+> --
+> =B7O=B7  Pierre Habouzit
+> =B7=B7O                                                madcoder@debia=
+n.org
+> OOO                                                http://www.madism.=
+org
+>
+>
 
-The default is not --all but "matching branches", iow, what you
-have never published yet never goes out.
 
-Having said that, I would agree that in some workflows "I am on
-this branch and I would want to push only this branch" would be
-the norm, and the norm even be "and this branch 'foo' is called
-identically as 'foo' at the remote site as well".
-
-Don't worry about me when discussing to change the default.
-Myself, I also often push only one or two branches.  A typical
-workflow for me while working on git.git is to prepare 'maint'
-(if there are any changes) and 'master', push them (without
-pushing 'next' and 'pu') to a private "build it to make sure"
-repository I have at a k.org machine which runs RH, make sure
-they are Ok, and then continue working on integrating 'next' and
-'pu'.  At the end of the day, I push out all four integration
-branches to a separate "publish" area, but even this one, I rely
-on the explicit configuration (remote.<name>.push) to push out
-only the integration branches and not other branches.
-
-We would also want to have --mirror option that acts like --all
-but removes the refs from the remote that do not exist anymore,
-so we will be talking about updating "git push" in the near
-future anyway.
-
-So what's the desired semantics?
-
-The current semantics is:
-
-   "git push" says "you do not say to which repository?" and
-   consults "branch.<current>.remote" but defaults to 'origin'
-   if unconfigured.  
-
-   "git push <name>" (or using the <name> determined as above)
-   says "you do not say which branches?" and consults
-   "remote.<name>.push" to find branches to push out, but
-   defaults to 'matching branches' if unconfigured.
-
-What you would want to change is the fallback behaviour for
-unconfigured "remote.<name>.push".  I think it is sensible to
-have an option to make it push only the current branch.  I am
-not sure if it is sensible to make that the default (and
-introduce --matching option to get the current behaviour) at
-this point in 1.5.X series, but from the general usability point
-of view, I would not object to demote 'matching' to optional and
-make 'current only' the default in 1.6.X or later.
-
-Thoughts?
+--=20
+Kelvie
