@@ -1,85 +1,95 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-bundle: fix commandline examples in the manpage
-Date: Thu, 27 Sep 2007 01:34:59 +0200
-Message-ID: <1190849699-11265-1-git-send-email-vmiklos@frugalware.org>
-Cc: git@vger.kernel.org, Miklos Vajna <vmiklos@frugalware.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 27 01:36:32 2007
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: git-svn and branches
+Date: Wed, 26 Sep 2007 22:12:52 -0400
+Message-ID: <20070927021252.GA23777@dervierte>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: normalperson@yhbt.net
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 27 04:13:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IagQi-0002Vv-6L
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 01:36:32 +0200
+	id 1IaisM-0004td-RN
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 04:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750869AbXIZXgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Sep 2007 19:36:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752294AbXIZXgM
-	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 19:36:12 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:60050 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750869AbXIZXgL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Sep 2007 19:36:11 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 463021B252C;
-	Thu, 27 Sep 2007 01:36:09 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 25B456FCDD;
-	Thu, 27 Sep 2007 01:36:09 +0200 (CEST)
-Received: from vmobile.example.net (dsl5401CB81.pool.t-online.hu [84.1.203.129])
-	by genesis.frugalware.org (Postfix) with ESMTP id 8E95313A4126;
-	Thu, 27 Sep 2007 01:36:08 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 7B1A58B7E1; Thu, 27 Sep 2007 01:34:59 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.2.80.g077d6f-dirty
+	id S1752474AbXI0CNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Sep 2007 22:13:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752453AbXI0CNF
+	(ORCPT <rfc822;git-outgoing>); Wed, 26 Sep 2007 22:13:05 -0400
+Received: from py-out-1112.google.com ([64.233.166.177]:32252 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751538AbXI0CNC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Sep 2007 22:13:02 -0400
+Received: by py-out-1112.google.com with SMTP id u77so4528592pyb
+        for <git@vger.kernel.org>; Wed, 26 Sep 2007 19:13:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=t+9G/tDVIub7uIqZWsT43oXuycJWPdFueDzHyhDLjiM=;
+        b=B3G0pn9EoiBtodzvXO/RFczVst9hXejeEri/bwGmhr12plfvZWFvD0fG3kAVTLu86OOisv+jscyGkc5rV3ffgfrNH0cUUi6XqGBjPp+HR8vKuXIznGBreQHIClCA1XJggF+YLjYDSXMBjxGFpuBi7GElbL18JPeiLVCECu/nWAI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:mime-version:content-type:content-disposition:user-agent;
+        b=n+lul+an+LCiOFcKmJde67n+b7SYykUjvRf2WH08FnysI4fwYHH65TNpjdUOqmQaCB6jFQjXwvCcofQWJzZB2rz5zrcX+xWvRTNq3gIp3k8h1AzbIs0nddpDxzT1twkfd2CFHz01PEJ5px+0xAwgSJbfPqGeQ/85P4M5lreLINE=
+Received: by 10.64.142.10 with SMTP id p10mr3461329qbd.1190859181355;
+        Wed, 26 Sep 2007 19:13:01 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [76.177.36.23])
+        by mx.google.com with ESMTPS id 18sm2303647nzo.2007.09.26.19.12.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 26 Sep 2007 19:13:00 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 458E3C1CFD7; Wed, 26 Sep 2007 22:12:52 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59256>
 
-Multiple commands were displayed in one line, making the manpage hard to read.
+I'm using git-svn to track a rather large subversion repository with a
+non-standard layout.  In the past, I've only cared about trunk, but now
+I need to occasionally use branches, too.  By adding a second git-svn
+remote with the branch URL, I can fetch the branch, and git-svn is even
+intelligent enough to notice that the branch was copied off of trunk.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- Documentation/git-bundle.txt |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+However, git-svn also does a complete checkout for the first revision of
+the branch.  By this, I mean it goes through shows "A    file" for every
+file in the repository.  This takes quite a while, and seems rather
+unnecessary given that git-svn already noticed that the branch shares a
+history with trunk, which is already fetched.
 
-diff --git a/Documentation/git-bundle.txt b/Documentation/git-bundle.txt
-index 5051e2b..0cc6511 100644
---- a/Documentation/git-bundle.txt
-+++ b/Documentation/git-bundle.txt
-@@ -103,14 +103,20 @@ We set a tag in R1 (lastR2bundle) after the previous such transport,
- and move it afterwards to help build the bundle.
- 
- in R1 on A:
-+
-+------------
- $ git-bundle create mybundle master ^lastR2bundle
- $ git tag -f lastR2bundle master
-+------------
- 
- (move mybundle from A to B by some mechanism)
- 
- in R2 on B:
-+
-+------------
- $ git-bundle verify mybundle
- $ git-fetch mybundle  refspec
-+------------
- 
- where refspec is refInBundle:localRef
- 
-@@ -124,9 +130,11 @@ Also, with something like this in your config:
- You can first sneakernet the bundle file to ~/tmp/file.bdl and
- then these commands:
- 
-+------------
- $ git ls-remote bundle
- $ git fetch bundle
- $ git pull bundle
-+------------
- 
- would treat it as if it is talking with a remote side over the
- network.
+Knowing just enough of what git-svn is doing to be dangerous, I whipped
+up a short little patch.  This patch seems to work for the common case,
+and avoids fetching every file from subversion.  It does break
+sometimes, however, and I don't understand why.
+
+Maybe someone with a better grasps of the code can see what I did wrong,
+or suggest a better means to my end?
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 484b057..1bc92b6 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1848,9 +1848,10 @@ sub find_parent_branch {
+                                              $self->full_url, $ed)
+                          or die "SVN connection failed somewhere...\n";
+                } else {
++                       $self->assert_index_clean($parent);
+                        print STDERR "Following parent with do_update\n";
+                        $ed = SVN::Git::Fetcher->new($self);
+-                       $self->ra->gs_do_update($rev, $rev, $self, $ed)
++                       $self->ra->gs_do_update($rev, $r0, $self, $ed)
+                          or die "SVN connection failed somewhere...\n";
+                }
+                print STDERR "Successfully followed parent\n";
 -- 
-1.5.3.2.80.g077d6f-dirty
+-Steven Walter <stevenrwalter@gmail.com>
+"A human being should be able to change a diaper, plan an invasion,
+butcher a hog, conn a ship, design a building, write a sonnet, balance
+accounts, build a wall, set a bone, comfort the dying, take orders,
+give orders, cooperate, act alone, solve equations, analyze a new
+problem, pitch manure, program a computer, cook a tasty meal, fight
+efficiently, die gallantly. Specialization is for insects."
+   -Robert Heinlein
