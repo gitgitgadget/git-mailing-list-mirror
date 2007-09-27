@@ -1,72 +1,65 @@
-From: Russ Brown <pickscrape@gmail.com>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Thu, 27 Sep 2007 14:00:39 -0500
-Message-ID: <46FBFDD7.1080300@gmail.com>
-References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Add --no-rename to git-apply
+Date: Thu, 27 Sep 2007 21:04:18 +0200
+Message-ID: <200709272104.18510.robin.rosenberg@dewire.com>
+References: <11908420041596-git-send-email-robin.rosenberg@dewire.com> <7vbqbozo7t.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709271107530.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-To: Pierre Habouzit <madcoder@debian.org>,
-	Kelvie Wong <kelvie@ieee.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 27 21:01:07 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Sep 27 21:02:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaybY-0006cy-UH
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:00:57 +0200
+	id 1Iaycu-0007Aj-Cs
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 21:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137AbXI0TAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 15:00:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbXI0TAu
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:00:50 -0400
-Received: from wr-out-0506.google.com ([64.233.184.232]:17773 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754673AbXI0TAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 15:00:49 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so1129122wra
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 12:00:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        bh=5BrtZiDkh99gDhHA8+bj8O+GO2vaonBhr96N4EU7rJQ=;
-        b=Xbw3kmoYv5szoygHrnbD1SvlXYlqTAgVCK+M9HyCqrPoqNyWnuRYfBw2IoSIZn5n5ZZQnkzNkxP7p1WjAM9Fip1KmTcuLaf0Tqcc2MIkOheUzGyPfbh4Ylef6p8HULaafiVz5YnRHWuyB64BW1nz3pcVVQWiAoJyMD0qlzQInSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:references:in-reply-to:content-type:content-transfer-encoding;
-        b=ny8hR/ufJQltBYBQOyBTgb9lqdbYRUINZrs/aZcj7u319TBTVkanCD6aFTPt5Tvmvm2+MoIHMzcX3Fo/Ie7czpvNsshLPT5K1keITzy0lKnRAATHwaf2XBst/lyB3CtT1LAXbqjDLDyj3oN8wxGD/zAsMt6IpW98UDbv84bczMs=
-Received: by 10.90.102.20 with SMTP id z20mr3556536agb.1190919647830;
-        Thu, 27 Sep 2007 12:00:47 -0700 (PDT)
-Received: from ?192.168.0.100? ( [71.252.196.170])
-        by mx.google.com with ESMTPS id s30sm3526493elf.2007.09.27.12.00.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 27 Sep 2007 12:00:46 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070807)
-In-Reply-To: <20070927185707.GC12427@artemis.corp>
+	id S1757065AbXI0TCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 15:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757302AbXI0TCM
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 15:02:12 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:19455 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1752165AbXI0TCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 15:02:11 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id CBDBA802872;
+	Thu, 27 Sep 2007 20:53:52 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 12113-02; Thu, 27 Sep 2007 20:53:52 +0200 (CEST)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 7B01980264D;
+	Thu, 27 Sep 2007 20:53:52 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <Pine.LNX.4.64.0709271107530.28395@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59312>
 
-Pierre Habouzit wrote:
-> On Thu, Sep 27, 2007 at 06:31:19PM +0000, Kelvie Wong wrote:
->> At work, I've been using a git-svn import for my daily workflow (still
->> somewhat of a git newbie, but now has come to the point where it's
->> tough to work without it), and while rebasing from svn (on a rather
->> old branch), I found that the mergetool option does not work too well
->> for me.
+torsdag 27 september 2007 skrev Johannes Schindelin:
+> Robin said in a follow-up mail that he needs it for a payed-for SCM 
+> (let's describe it as TransparentBox here), which insists on explicit 
+> renames.
 > 
->   Which tool are you using ? kdiff3 ? I've noticed that it often fails
-> miserably, or worse, create bad merges silentely with it.
+> But I suggest a simple script here which extracts from the diff the 
+> renames, which outputs a script which renames the file(s) back and then 
+> uses the TransparentBox' mv command:
 > 
->   And as none of the other merge tool that are supported are able to
-> either do 3way merges, or have a decent UI (that definitely seems to be
-> exclusive features) I've given up on git-mergetool (and to be fair, it
-> sucks, because it could be _sooo_ useful sometimes).
+> sed -n -e "/^rename from/N" \
+>   -e "s/^rename from \(.*\)\nrename to \(.*\)/mv \2 \1 \&\& tb mv \1 \2/p" \
+>   < diff.patch
 > 
 
-What about meld? That does 3-way merge, and the UI is fine.
+I tried something like that (integrated in the script), and the bugger noticed 
+it and refused to work as exepected, but now that I think about it should be
+possible to fool it. I have to give it a go again and see what really actually
+went wrong.
 
--- 
-
-Russ
+-- robin
