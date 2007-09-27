@@ -1,72 +1,85 @@
-From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
-Subject: git-quiltimport and non-existent patches
-Date: Thu, 27 Sep 2007 11:59:51 +0200 (CEST)
-Message-ID: <Pine.LNX.4.62.0709271154440.10467@pademelon.sonytel.be>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Equivalent of `svn switch` for git-svn?
+Date: Thu, 27 Sep 2007 12:06:07 +0200
+Message-ID: <20070927100607.GC10289@artemis.corp>
+References: <46FB5086.7070408@apple.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-584337861-1371598280-1190887191=:10467"
-Cc: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>,
-	Geoff Levand <geoffrey.levand@am.sony.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 27 12:00:14 2007
+Content-Type: multipart/signed; boundary="f0KYrhQ4vYSV2aJu";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Thu Sep 27 12:06:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IaqA7-00006Z-82
-	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 12:00:03 +0200
+	id 1IaqGL-0002DO-R7
+	for gcvg-git-2@gmane.org; Thu, 27 Sep 2007 12:06:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753268AbXI0J7z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 05:59:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbXI0J7z
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 05:59:55 -0400
-Received: from vervifontaine.sonytel.be ([80.88.33.193]:60111 "EHLO
-	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753142AbXI0J7y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Sep 2007 05:59:54 -0400
-Received: from pademelon.sonytel.be (piraat.sonytel.be [43.221.60.197])
-	by vervifontaine.sonycom.com (Postfix) with ESMTP id 1525E58ABD;
-	Thu, 27 Sep 2007 11:59:52 +0200 (MEST)
+	id S1755772AbXI0KGO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 06:06:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755764AbXI0KGN
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 06:06:13 -0400
+Received: from pan.madism.org ([88.191.52.104]:58815 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755711AbXI0KGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 06:06:11 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id EAE3421CCC;
+	Thu, 27 Sep 2007 12:06:07 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 564D093EF; Thu, 27 Sep 2007 12:06:07 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Adam Roben <aroben@apple.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <46FB5086.7070408@apple.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59278>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59279>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----584337861-1371598280-1190887191=:10467
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+--f0KYrhQ4vYSV2aJu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	Hi,
+On Thu, Sep 27, 2007 at 06:41:10AM +0000, Adam Roben wrote:
+> Hi all-
+>   I've recently been informed that the Subversion server I and several=20
+> others have been tracking with git-svn will be switching from using the=
+=20
+> svn+ssh scheme to the http scheme. To handle this, users of svn will be=
+=20
+> running `svn switch` to move their working copies to the new repository=
+=20
+> URL. Is there some way to do the same for git-svn? I suspect the biggest=
+=20
+> complication will come from the git-svn-id: lines in the commit logs,=20
+> since changing that line would require changing the commit hash as well.
 
-Unlike quilt itself, git-quiltimport doesn't ignore non-existent patches.
-Instead it bails out badly, leaving a .dotest directory that must be removed
-manually. This is with git 1.5.3.2.
+  edit your .git/config, in the section [svn-remote "svn"], change url =3D
 
-It would be nice if git-quiltimport would just warn about non-existent patches,
-just like quilt.  This will make it work with `markers' we put in our quilt
-series files. Commenting out the markers is no solution as `quilt series'
-doesn't show commented-out patches.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Thanks!
+--f0KYrhQ4vYSV2aJu
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-With kind regards,
- 
-Geert Uytterhoeven
-Software Architect
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Sony Network and Software Technology Center Europe
-The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
- 
-Phone:    +32 (0)2 700 8453	
-Fax:      +32 (0)2 700 8622	
-E-mail:   Geert.Uytterhoeven@sonycom.com	
-Internet: http://www.sony-europe.com/
- 	
-Sony Network and Software Technology Center Europe	
-A division of Sony Service Centre (Europe) N.V.	
-Registered office: Technologielaan 7 · B-1840 Londerzeel · Belgium	
-VAT BE 0413.825.160 · RPR Brussels	
-Fortis Bank Zaventem · Swift GEBABEBB08A · IBAN BE39001382358619
----584337861-1371598280-1190887191=:10467--
+iD8DBQBG+4CPvGr7W6HudhwRAo/HAJ9kxyr44IzQ6uEDw2uBaWRP5+Md6QCePfVB
+u6ew9VpsovRzCssfBruXMos=
+=SUC8
+-----END PGP SIGNATURE-----
+
+--f0KYrhQ4vYSV2aJu--
