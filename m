@@ -1,85 +1,102 @@
-From: Mattias Ulbrich <mulbrich@ira.uka.de>
-Subject: git-mergetool
-Date: Fri, 28 Sep 2007 10:56:15 +0200
-Message-ID: <200709281056.15844.mulbrich@ira.uka.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fetch/push: readd rsync support
+Date: Fri, 28 Sep 2007 02:30:51 -0700
+Message-ID: <7v3awzqgqc.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
+	<Pine.LNX.4.64.0709280606530.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 28 11:24:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 28 11:31:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbC5H-0001QD-Bk
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 11:24:31 +0200
+	id 1IbCBm-0003Uz-Sm
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 11:31:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757670AbXI1JYR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2007 05:24:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbXI1JYR
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 05:24:17 -0400
-Received: from iramx2.ira.uni-karlsruhe.de ([141.3.10.81]:59377 "EHLO
-	iramx2.ira.uni-karlsruhe.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756934AbXI1JYQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 05:24:16 -0400
-X-Greylist: delayed 1673 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Sep 2007 05:24:16 EDT
-Received: from irams2.ira.uni-karlsruhe.de ([141.3.10.82])
-	by iramx2.ira.uni-karlsruhe.de with esmtps 
-	id 1IbBdz-0000ez-7t
-	for <git@vger.kernel.org>; Fri, 28 Sep 2007 10:56:21 +0200
-Received: from irams1.ira.uni-karlsruhe.de ([141.3.10.5])
-	by irams2.ira.uni-karlsruhe.de with esmtps 
-	for <git@vger.kernel.org>
-	id 1IbBdx-0002yF-Q9; Fri, 28 Sep 2007 10:56:18 +0200
-Received: from i12pc3.ilkd.uni-karlsruhe.de ([141.3.27.53])
-	by irams1.ira.uni-karlsruhe.de with esmtp 
-	for <git@vger.kernel.org>
-	id 1IbBdx-0006W0-HH; Fri, 28 Sep 2007 10:56:17 +0200
-User-Agent: KMail/1.9.1
-Content-Disposition: inline
-X-Spam-Status: No
-X-Spam-Score: -1.3 (-)
-X-Spam-Report: -1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
-	0.1 AWL                    AWL: From: address is in the auto white-list
-X-Spam-Host: irams2.ira.uni-karlsruhe.de
-X-ATIS-Checksum: v3zoCAcc32ckk
+	id S1758460AbXI1JbE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 05:31:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757046AbXI1JbB
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 05:31:01 -0400
+Received: from rune.pobox.com ([208.210.124.79]:53056 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758368AbXI1JbA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 05:31:00 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 6FFEC13C29E;
+	Fri, 28 Sep 2007 05:31:21 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A86FE13C06A;
+	Fri, 28 Sep 2007 05:31:17 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709280606530.28395@racer.site> (Johannes
+	Schindelin's message of "Fri, 28 Sep 2007 06:07:19 +0100 (BST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59381>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Hello everybody,
+> +/*
+> + * path is assumed to point to a buffer of PATH_MAX bytes, and
+> + * path + name_offset is expected to point to "refs/".
+> + */
+> +
+> +static int read_loose_refs(char *path, int name_offset, struct ref **tail)
+> +{
+> +	DIR *dir = opendir(path);
+> +	struct dirent *de;
+> +	struct {
+> +		struct dirent *entries;
+> +		int nr, alloc;
+> +	} list;
+> +	int i, pathlen;
+> +
+> +	if (!dir)
+> +		return -1;
+> +
+> +	memset (&list, 0, sizeof(list));
+> +
+> +	while ((de = readdir(dir))) {
+> +		if (de->d_name[0] == '.' && (de->d_name[1] == '\0' ||
+> +				(de->d_name[1] == '.' &&
+> +				 de->d_name[2] == '\0')))
+> +			continue;
+> +		if (list.nr >= list.alloc) {
+> +			list.alloc = alloc_nr(list.nr);
+> +			list.entries = xrealloc(list.entries,
+> +				list.alloc * sizeof(*de));
+> +		}
 
-There might by a tiny typo-bug in the git-mergetool:
+ALLOC_GROW() not applicable here?
 
------------
- case "$merge_tool" in
-	kdiff3)
-	    if base_present ; then
-		(kdiff3 --auto --L1 "$path (Base)" -L2 "$path (Local)" --L3 "$path (R=
-emote)"=20
-\
-		    -o "$path" -- "$BASE" "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-	    else
-		(kdiff3 --auto -L1 "$path (Local)" --L2 "$path (Remote)" \
-		    -o "$path" -- "$LOCAL" "$REMOTE" > /dev/null 2>&1)
-	    fi
------------
+> +		list.entries[list.nr++] = *de;
 
-In the first call to kdiff3 the argument is only -L2 but should be --L2=
- (two=20
-minus signs) like in the second call - where -L1 misses its second "-".
+Are you sure about this?
 
-Thank you for a very mighty set of tool
+The last paragraph in Rationale section, in
 
-Sincerely
+    http://www.opengroup.org/onlinepubs/000095399/basedefs/dirent.h.html
 
-	Mattias
+suggests that the d_name[] member in struct dirent could be
+declared at the very end of the structure as length of 1 (the
+traditional trick to implement a flex-array); your assignment
+from *de into entries[] would not work as expected on such an
+implementation.
 
---=20
-Mattias Ulbrich
-=46orschungsgruppe Prof. Dr. P.H. Schmitt
-Institut f=FCr Theoretische Informatik
-Universit=E4t Karlsruhe
+On Linux with glibc it appears bits/dirent.h defines dirent with
+"char d_name[256]", so you may not see a breakage there, though.
+
+You only use a list of strings (char **), don't you?
+
+> ...
+> +			if (fd < 0)
+> +				continue;
+> +			next = alloc_ref(strlen(path + name_offset));
+
+And as we discussed earlier you would need one more byte here ;-).
