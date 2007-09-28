@@ -1,86 +1,93 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Fri, 28 Sep 2007 07:15:03 +0200
-Message-ID: <20070928051503.GA19815@xp.machine.xx>
-References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <46FBFDD7.1080300@gmail.com> <20070927191125.GD12427@artemis.corp> <20070927222326.GB8688@thunk.org> <20070927222825.GG12427@artemis.corp>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 2/2] fetch/push: readd rsync support
+Date: Fri, 28 Sep 2007 01:20:18 -0400
+Message-ID: <20070928052018.GW3099@spearce.org>
+References: <Pine.LNX.4.64.0709280602580.28395@racer.site> <Pine.LNX.4.64.0709280606530.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Russ Brown <pickscrape@gmail.com>,
-	Kelvie Wong <kelvie@ieee.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Sep 28 07:15:21 2007
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, Daniel Barkalow <barkalow@iabervon.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 28 07:20:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib8C4-00050A-JK
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 07:15:17 +0200
+	id 1Ib8HC-00062X-Jd
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 07:20:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753025AbXI1FPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 01:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751299AbXI1FPI
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 01:15:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54432 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752922AbXI1FPF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 01:15:05 -0400
-Received: (qmail invoked by alias); 28 Sep 2007 05:15:03 -0000
-Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
-  by mail.gmx.net (mp025) with SMTP; 28 Sep 2007 07:15:03 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX1+5TasA4lS5EYTIZI8jDzg2LwvHZAjb+mygE2epHg
-	xgMmuHIEF9pyrx
+	id S1754765AbXI1FUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 01:20:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754698AbXI1FUY
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 01:20:24 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:47396 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754136AbXI1FUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 01:20:24 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ib8Hd-00074L-EY; Fri, 28 Sep 2007 01:21:01 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 20A3620FBAE; Fri, 28 Sep 2007 01:20:18 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20070927222825.GG12427@artemis.corp>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <Pine.LNX.4.64.0709280606530.28395@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59367>
 
-On Fri, Sep 28, 2007 at 12:28:25AM +0200, Pierre Habouzit wrote:
-> On Thu, Sep 27, 2007 at 10:23:26PM +0000, Theodore Tso wrote:
-> > On Thu, Sep 27, 2007 at 09:11:25PM +0200, Pierre Habouzit wrote:
-> > > > >   And as none of the other merge tool that are supported are able to
-> > > > > either do 3way merges, or have a decent UI (that definitely seems to be
-> > > > > exclusive features) I've given up on git-mergetool (and to be fair, it
-> > > > > sucks, because it could be _sooo_ useful sometimes).
-> > > > > 
-> > > > 
-> > > > What about meld? That does 3-way merge, and the UI is fine.
-> > > 
-> > >   Indeed, it seems that since the last time I tested it, it now does
-> > > diff3 merging. I should reevaluate it :)
-> > 
-> > Pierre,
-> > 
-> > FYI, kdiff3, meld, xxdiff, opendiff (on MacOSX), and emerge all
-> > support 3-way merge.
-> 
->   I know, but:
->   * kdiff3 often take decisions behind your back, and results in broken
->     merges, so it's a no-go ;
->   * xxdiff has (IMHO) a very bad and non-intuitive UI, I never get to
->     make it work ;
->   * I don't use macos (opendiff) ;
->   * emerge is emacs right ? :)
-> 
->   Though I gave meld another chance, and it works really better than it
-> used to, so I may give it a try :) Let's hope I won't be disappointed by
-> meld :)
-> 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> +static int disconnect_rsync(struct transport *transport)
+> +{
+> +	return 0;
+> +}
+>  
+>  /* Generic functions for using commit walkers */
+>  
+> @@ -402,7 +730,10 @@ struct transport *transport_get(struct remote *remote, const char *url)
+>  	ret->url = url;
+>  
+>  	if (!prefixcmp(url, "rsync://")) {
+> -		/* not supported; don't populate any ops */
+> +		ret->get_refs_list = get_refs_via_rsync;
+> +		ret->fetch = fetch_objs_via_rsync;
+> +		ret->push = rsync_transport_push;
+> +		ret->disconnect = disconnect_rsync;
+>  
+>  	} else if (!prefixcmp(url, "http://")
+>  	        || !prefixcmp(url, "https://")
 
-FWIW, xxdiff has support to handle halfway merged files, so that if git
-could merge some hunks already for you (e.g. rerere kicked in), you
-don't have to redo the _whole_ merge by hand, just call
+For what it's worth disconnect is an optional operation.  You did
+not need to implement it if you don't allocate a data member in
+the struct transport.  So removing disconnect_rsync() could save
+you 6 lines or so.
 
-	xxdiff -U file/with/mergemarkers/inside
+I see push is now supported again.  Didn't we remove rsync push
+support a long time ago?  Like say in:
 
-and it will do the right thing. Not sure if the other tools could handle
-it, but any pointers appreciated, because it often happens to me that
-only one hunk out of several wasn't merged automatically by git. And
-mergetool wants to always redo the whole merge, which isn't the best it
-can do.
+  commit c485104741ccdf32dd0c96fcb886c38a0b5badbd
+  Author: c.shoemaker@cox.net <c.shoemaker@cox.net>
+  Date:   Sat Oct 29 00:16:33 2005 -0400
 
--Peter
+    Add usage help to git-push.sh
+    
+    Also clarify failure to push to read-only remote.  Especially,
+    state why rsync:// is not used for pushing.
+    
+    [jc: ideally rsync should not be used for anything]
+    
+    Signed-off-by: Chris Shoemaker <c.shoemaker at cox.net>
+    Signed-off-by: Junio C Hamano <junkio@cox.net>
+
+I guess it is nice to see that you can't kill rsync.  Like Windows
+it always finds it way back into your life.
+
+-- 
+Shawn.
