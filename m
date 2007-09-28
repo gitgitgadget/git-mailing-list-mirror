@@ -1,89 +1,115 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH 2/4] Use parse_date_format() in revisions.c to parse the --date parameter
-Date: Fri, 28 Sep 2007 15:17:31 +0100
-Message-ID: <200709281517.32030.andyparkins@gmail.com>
+Subject: [PATCH 1/4] Add parse_date_format() convenience function for converting a format string to an enum date_mode
+Date: Fri, 28 Sep 2007 15:17:26 +0100
+Message-ID: <200709281517.26627.andyparkins@gmail.com>
 References: <200709281516.05438.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 28 16:18:12 2007
+X-From: git-owner@vger.kernel.org Fri Sep 28 16:18:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbGfA-0001MF-Pt
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 16:17:53 +0200
+	id 1IbGfA-0001MF-4z
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 16:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759397AbXI1ORi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 10:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759362AbXI1ORi
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 10:17:38 -0400
+	id S1758590AbXI1ORg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 10:17:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759362AbXI1ORg
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 10:17:36 -0400
 Received: from fk-out-0910.google.com ([209.85.128.185]:3222 "EHLO
 	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759384AbXI1ORh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 10:17:37 -0400
+	with ESMTP id S1758590AbXI1ORe (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 10:17:34 -0400
 Received: by fk-out-0910.google.com with SMTP id z23so3083572fkz
-        for <git@vger.kernel.org>; Fri, 28 Sep 2007 07:17:35 -0700 (PDT)
+        for <git@vger.kernel.org>; Fri, 28 Sep 2007 07:17:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=mFcObTKFnLGWKyArLSmI33KRQiKx3Wn2aSAVVctnS3U=;
-        b=U+TqKtMehMxxu1L2vJ8OYIBegKYH9OejbAJZZ5RwonBMJIH8bbZQVcHz1xZVe9Nv6UIzwdZzzjgWk1LoFf7BIzqDWv2BsHYCtAlQtwSUpi/iIteiFr2454PHQzWi0xpirqBQ0vm/7vctWtJhw5QcA9TqKucfwDsJMRfthPMYzRM=
+        bh=amNCZIXZMg8PiCmt1507VvUCSMMtldUFCDTirAwhTF8=;
+        b=Sh8MhvgStU6X6rnSQgmiW0g0sI8CMiiqaL5My7ejrOU4E4mmmhph+5G+PRwTbYcM/WaVC77UqWnKAA0dIe86jkP4gb3CfWDhBASp7nhST7J+XZ2zaz0eRubz8ei419oY1Z+WHm3/Oge7BrD1bC+JmZZ/RCqKifnqGKs4sXcpWlM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=WmZdws4dcDrYU1J0VicpJWq3/0B6oapYXs/HKU1QDxJJ0kWKEVnaFvPcCw+MYcYfCOyKMqIV7RJvXP6Cjz70Ltt+NOfkyEhhSt5po0G0m6U2+6NO404mrhia3pQZzxWSqmQarJhqiS5tEAsetuadKguN7L5IdLJ9n3qbjnvrpm8=
-Received: by 10.82.181.10 with SMTP id d10mr3620408buf.1190989054335;
-        Fri, 28 Sep 2007 07:17:34 -0700 (PDT)
+        b=EsL6/72uA56nbkLglgmXEf4LfKo0alrpYQE0QCa6zZRFhTCY/CtWgMkCWH8eK2JuYNPStuQDzUItRI+4CuK2TbhOUYBn0TeFG9DEPooKGjdqe+Oc5dlewB9WzSYgGNyHkiiaLF5hLeJ9lwKwbYoRcZgv9wJOXZHt5i/i+JYQhmE=
+Received: by 10.82.175.17 with SMTP id x17mr7721501bue.1190989048710;
+        Fri, 28 Sep 2007 07:17:28 -0700 (PDT)
 Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id k5sm6294012nfh.2007.09.28.07.17.32
+        by mx.google.com with ESMTPS id k5sm3943968nfd.2007.09.28.07.17.27
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 28 Sep 2007 07:17:33 -0700 (PDT)
+        Fri, 28 Sep 2007 07:17:27 -0700 (PDT)
 In-Reply-To: <200709281516.05438.andyparkins@gmail.com>
-X-TUID: 762fbb281504adc2
-X-UID: 333
-X-Length: 1663
+X-TUID: 5d72cd79e5953b97
+X-UID: 332
+X-Length: 2362
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59398>
 
-The --date parameter was previously handled in revisions.c with a list
-of if(strcmp()) calls; now parse_date_format() is called instead.
+parse_date_format() is passed a string that is compared against a
+pre-defined list and converted to an enum date_format.  The table is as
+follows:
+
+ - "relative"         => DATE_RELATIVE
+ - "iso8601" or "iso" => DATE_ISO8601
+ - "rfc2822"          => DATE_RFC2822
+ - "short"            => DATE_SHORT
+ - "local"            => DATE_LOCAL
+ - "default"          => DATE_NORMAL
+
+In the event that none of these strings is found, the function die()s.
 
 Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 ---
- revision.c |   17 +----------------
- 1 files changed, 1 insertions(+), 16 deletions(-)
+ cache.h |    1 +
+ date.c  |   20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index 33d092c..75cd0c6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1134,22 +1134,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
- 				continue;
- 			}
- 			if (!strncmp(arg, "--date=", 7)) {
--				if (!strcmp(arg + 7, "relative"))
--					revs->date_mode = DATE_RELATIVE;
--				else if (!strcmp(arg + 7, "iso8601") ||
--					 !strcmp(arg + 7, "iso"))
--					revs->date_mode = DATE_ISO8601;
--				else if (!strcmp(arg + 7, "rfc2822") ||
--					 !strcmp(arg + 7, "rfc"))
--					revs->date_mode = DATE_RFC2822;
--				else if (!strcmp(arg + 7, "short"))
--					revs->date_mode = DATE_SHORT;
--				else if (!strcmp(arg + 7, "local"))
--					revs->date_mode = DATE_LOCAL;
--				else if (!strcmp(arg + 7, "default"))
--					revs->date_mode = DATE_NORMAL;
--				else
--					die("unknown date format %s", arg);
-+				revs->date_mode = parse_date_format(arg + 7);
- 				continue;
- 			}
- 			if (!strcmp(arg, "--log-size")) {
+diff --git a/cache.h b/cache.h
+index 8246500..5587f7e 100644
+--- a/cache.h
++++ b/cache.h
+@@ -432,6 +432,7 @@ const char *show_date(unsigned long time, int timezone, enum date_mode mode);
+ int parse_date(const char *date, char *buf, int bufsize);
+ void datestamp(char *buf, int bufsize);
+ unsigned long approxidate(const char *);
++enum date_mode parse_date_format(const char *format);
+ 
+ extern const char *git_author_info(int);
+ extern const char *git_committer_info(int);
+diff --git a/date.c b/date.c
+index 93bef6e..8f70500 100644
+--- a/date.c
++++ b/date.c
+@@ -584,6 +584,26 @@ int parse_date(const char *date, char *result, int maxlen)
+ 	return date_string(then, offset, result, maxlen);
+ }
+ 
++enum date_mode parse_date_format(const char *format)
++{
++	if (!strcmp(format, "relative"))
++		return DATE_RELATIVE;
++	else if (!strcmp(format, "iso8601") ||
++		 !strcmp(format, "iso"))
++		return DATE_ISO8601;
++	else if (!strcmp(format, "rfc2822") ||
++		 !strcmp(format, "rfc"))
++		return DATE_RFC2822;
++	else if (!strcmp(format, "short"))
++		return DATE_SHORT;
++	else if (!strcmp(format, "local"))
++		return DATE_LOCAL;
++	else if (!strcmp(format, "default"))
++		return DATE_NORMAL;
++	else
++		die("unknown date format %s", format);
++}
++
+ void datestamp(char *buf, int bufsize)
+ {
+ 	time_t now;
 -- 
 1.5.3.2.105.gf47f2-dirty
