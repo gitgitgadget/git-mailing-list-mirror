@@ -1,79 +1,83 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Fri, 28 Sep 2007 08:19:42 +0200
-Message-ID: <85tzpfb9c1.fsf@lola.goethe.zz>
-References: <94ccbe710709271312k7eac8e35y353180596a0abc9a@mail.gmail.com>
-	<94ccbe710709271338u79ba89beh5a637bf84f8edf44@mail.gmail.com>
-	<7v8x6ru97z.fsf@gitster.siamese.dyndns.org>
-	<7vwsubsuh1.fsf@gitster.siamese.dyndns.org>
-	<94ccbe710709271417h6349c807j6424c25175c26ea2@mail.gmail.com>
-	<94ccbe710709271422x5d1739c2g5da961c88a4336fe@mail.gmail.com>
-	<7vmyv7sshv.fsf@gitster.siamese.dyndns.org>
-	<7vir5vss58.fsf@gitster.siamese.dyndns.org>
-	<94ccbe710709271523s7e4c7a1dh53e34bd460c31d1f@mail.gmail.com>
-	<20070927225218.GD8688@thunk.org>
-	<94ccbe710709272117s6dee1a8jad6edf71dfb13c81@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: backup or mirror a repository
+Date: Thu, 27 Sep 2007 23:27:06 -0700
+Message-ID: <7vsl4zqp8l.fsf@gitster.siamese.dyndns.org>
+References: <1190921742.2263.17.camel@Tenacity>
+	<Pine.LNX.4.64.0709272255360.28395@racer.site>
+	<1190940704.2263.32.camel@Tenacity>
+	<Pine.LNX.4.64.0709280253150.28395@racer.site>
+	<1190947063.2263.46.camel@Tenacity>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Theodore Tso" <tytso@mit.edu>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Kelvie Wong" <kelvie@ieee.org>
-X-From: git-owner@vger.kernel.org Fri Sep 28 08:20:00 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Dan Farina <drfarina@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 08:27:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib9Ch-0002lM-BN
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:19:59 +0200
+	id 1Ib9Jm-0004mk-58
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:27:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758690AbXI1GTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 02:19:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754881AbXI1GTy
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:19:54 -0400
-Received: from mail-in-15.arcor-online.net ([151.189.21.55]:54031 "EHLO
-	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1758679AbXI1GTx (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 02:19:53 -0400
-Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
-	by mail-in-01.arcor-online.net (Postfix) with ESMTP id BB53844E70;
-	Fri, 28 Sep 2007 08:19:50 +0200 (CEST)
-Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
-	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id A24A7345CB6;
-	Fri, 28 Sep 2007 08:19:50 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-013-147.pools.arcor-ip.net [84.61.13.147])
-	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 5464422D167;
-	Fri, 28 Sep 2007 08:19:42 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B1B6A1C0039C; Fri, 28 Sep 2007 08:19:42 +0200 (CEST)
-In-Reply-To: <94ccbe710709272117s6dee1a8jad6edf71dfb13c81@mail.gmail.com> (Kelvie Wong's message of "Thu\, 27 Sep 2007 21\:17\:26 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4417/Fri Sep 28 06:57:11 2007 on mail-in-13.arcor-online.net
-X-Virus-Status: Clean
+	id S1756519AbXI1G1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 02:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756094AbXI1G1I
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:27:08 -0400
+Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52579 "EHLO
+	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755861AbXI1G1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 02:27:07 -0400
+Received: from fed1rmimpo02.cox.net ([70.169.32.72])
+          by fed1rmmtao104.cox.net
+          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
+          id <20070928062706.VESN18773.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
+          Fri, 28 Sep 2007 02:27:06 -0400
+Received: from localhost ([68.225.240.77])
+	by fed1rmimpo02.cox.net with bizsmtp
+	id tiT61X00C1gtr5g0000000; Fri, 28 Sep 2007 02:27:06 -0400
+In-Reply-To: <1190947063.2263.46.camel@Tenacity> (Dan Farina's message of
+	"Thu, 27 Sep 2007 19:37:43 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59370>
 
-"Kelvie Wong" <kelvie@ieee.org> writes:
+Dan Farina <drfarina@gmail.com> writes:
 
-> On 9/27/07, Theodore Tso <tytso@mit.edu> wrote:
->
->> It's not that emacs sets $PWD via its first argument, but the output
->> file is passed from emerge-files*-command to stashed in the per-buffer
->> variable emerge-file-out, which in turn gets passed to the emacs lisp
->> file write-file, which is what gets run when you run C-x C-w --- and
->> write-file interprets a relative pathname based on the containing
->> directory of the existing buffer.
->>                                                 - Ted
->>
->
-> Ah yes, I just started reading up on elisp a little while ago :)
->
-> I'd always assumed that emacs kept an internal "pwd" variable (i.e.
-> what's displayed with M-x pwd), but I guess my way of thinking is
-> archaic and deprecated :(
+> I did look at prune and update, but my problem is the opposite: I want
+> something that will remove branches from the remote repo when they no
+> longer exist locally. As-is over time I will proliferate little local
+> branches unless I occasionally sit down and delete branches by operating
+> directly on the bare backup repository. (and then use prune on the
+> remote nodes)
 
-It does.  For every buffer.
+The "git remote add --mirror" setup is about setting up the
+local repository _AS_ the backup of the remote.  In other words,
+the contents come from the remote by fetching from it and safely
+kept away from disaster on the local side.  And for that,
+"remote prune" is a perfect thing to do.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+I think what you are asking for is an opposite, a backup remote
+site you would push into.  That is not what "remote add --mirror"
+is about.
+
+You can almost do it with
+
+	git push --all $remote
+
+except there is no way to automagically remove the branch you
+removed from the local repository.  For that, we would need a
+new --mirror option to "git-push".
+
+I think it is trivial to do for native transports, as we first
+get the list of all refs from the remote side before starting
+the transfer.  You need to change the last parameter called
+'all' to remote.c::match_refs() into an enum ('push_all' being
+one of choices), introduce another enum 'push_mirror', and teach
+it to "match" the remote (i.e. dst) ref that does not have
+corresponding entry on our side (i.e. src) with an empty object
+name to mark it removed.  Then the part marked as "Finally, tell
+the other end!"  in send-pack.c::send_pack() will take care of
+the actual removal.
