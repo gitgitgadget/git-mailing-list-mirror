@@ -1,81 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Introduce remove_dir_recursively()
-Date: Fri, 28 Sep 2007 02:05:17 -0700
-Message-ID: <7v8x6rqhwy.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
-	<Pine.LNX.4.64.0709280606350.28395@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Daniel Barkalow <barkalow@iabervon.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 28 11:05:59 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: git push (mis ?)behavior
+Date: Fri, 28 Sep 2007 11:11:33 +0200
+Message-ID: <9019207B-77A5-4595-8499-807DA0460EF0@zib.de>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <9D61974D-E08D-49F6-9C88-6BE446D53C74@zib.de> <7vodfnqndc.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 11:20:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbBmx-000390-0n
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 11:05:44 +0200
+	id 1IbC0x-0008PB-UT
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 11:20:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485AbXI1JF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 05:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753630AbXI1JF2
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 05:05:28 -0400
-Received: from rune.pobox.com ([208.210.124.79]:50534 "EHLO rune.pobox.com"
+	id S1757653AbXI1JTl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 05:19:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755242AbXI1JTl
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 05:19:41 -0400
+Received: from mailer.zib.de ([130.73.108.11]:41940 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753179AbXI1JF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 05:05:27 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 71D2813D707;
-	Fri, 28 Sep 2007 05:05:48 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9397B13D3DE;
-	Fri, 28 Sep 2007 05:05:41 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0709280606350.28395@racer.site> (Johannes
-	Schindelin's message of "Fri, 28 Sep 2007 06:06:44 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754485AbXI1JTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 05:19:40 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l8S99wWQ016187;
+	Fri, 28 Sep 2007 11:09:58 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l8S99vwW011659
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 28 Sep 2007 11:09:57 +0200 (MEST)
+In-Reply-To: <7vodfnqndc.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59379>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> +int remove_dir_recursively(char *path, int len, int only_empty)
-> +{
-> ...
-> +		namlen = strlen(e->d_name);
-> +		if (len + namlen > PATH_MAX ||
-> +				!memcpy(path + len, e->d_name, namlen) ||
-> +				(path[len + namlen] = '\0') ||
-> +				lstat(path, &st))
-> +			; /* fall thru */
-> +		else if (S_ISDIR(st.st_mode)) {
-> +			if (!remove_dir_recursively(path, len + namlen,
-> +						only_empty))
-> +				continue; /* happy */
-> +		} else if (!only_empty &&
-> +				len + namlen + 1 < PATH_MAX &&
-> +				!unlink(path))
-> +			continue; /* happy, too */
-> +
-> +		/* path too long, stat fails, or non-directory still exists */
-> +		ret = -1;
-> +		break;
+On Sep 28, 2007, at 9:07 AM, Junio C Hamano wrote:
 
-Is it only me who finds the first if () condition way too
-convoluted and needs to read three times to convince oneself
-that it is doing a sane thing?
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> When "remote.<name>.push" is set I'd expect "git push" to
+>> choose only the 'right' remote.<name>.push lines, that is
+>> the lines that have the current branch as the local ref.
+>
+> That would break the existing setup so it would not fly as a
+> default, although it could be added as an option.
 
-Please, especially...
+Do you mean 'not now' or never, i.e. not in git 1.6?
 
- * For $DEITY's sake, memcpy() returns pointer to dst which you
-   know is not NULL. so !memcpy() is always false here, which
-   might be _convenient_ for you and the compiler but not for
-   a human reader of the code who needs to blink twice wondering
-   if you meant !memcmp().
+What does 'break the existing setup' means? Pushing all branches
+that are configured in "remote.<name>.push" could be done by
+"git push <name>". This would be in the line with the idea that
+"git push" should only operate on the current branch and operations
+involving other local refs should be explicitly stated.
 
- * Same for (path[] = '\0'), wondering if it is misspelled
-   (path[] == '\0').
+	Steffen
