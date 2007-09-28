@@ -1,160 +1,119 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] alloc_ref(): allow for trailing NUL
-Date: Fri, 28 Sep 2007 14:41:02 +0200
-Message-ID: <20070928124102.GA21309@artemis.corp>
-References: <Pine.LNX.4.64.0709280356550.28395@racer.site> <Pine.LNX.4.64.0709280046241.5926@iabervon.org> <7vhclfqisq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0709281259050.28395@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] fetch/push: readd rsync support
+Date: Fri, 28 Sep 2007 13:53:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709281350140.28395@racer.site>
+References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
+ <Pine.LNX.4.64.0709280606530.28395@racer.site> <7v3awzqgqc.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="WIyZ46R2i8wDzkSu";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 28 14:41:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 14:55:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbF9r-0001VC-RA
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 14:41:28 +0200
+	id 1IbFN3-00076t-68
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 14:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904AbXI1MlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 08:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753123AbXI1MlL
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 08:41:11 -0400
-Received: from pan.madism.org ([88.191.52.104]:37100 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752904AbXI1MlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 08:41:09 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 2733122303;
-	Fri, 28 Sep 2007 14:41:03 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id BBB86CFC; Fri, 28 Sep 2007 14:41:02 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709281259050.28395@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752409AbXI1My5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 08:54:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752406AbXI1My5
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 08:54:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39493 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752403AbXI1My4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 08:54:56 -0400
+Received: (qmail invoked by alias); 28 Sep 2007 12:54:55 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp050) with SMTP; 28 Sep 2007 14:54:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/UmeFbSmnUAfAYARqygv865I/C7lHMD64ESYBro1
+	mj1wXwY8Cn7qYC
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v3awzqgqc.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59391>
 
+Hi,
 
---WIyZ46R2i8wDzkSu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 28 Sep 2007, Junio C Hamano wrote:
 
-On Fri, Sep 28, 2007 at 12:01:28PM +0000, Johannes Schindelin wrote:
-> But should the signature of alloc_ref() not be changed, then, to read
->=20
-> 	struct ref *alloc_ref(unsigned name_alloc);
->=20
-> Hm?
->=20
-> Further, I am quite sure that the same mistake will happen again, until w=
-e=20
-> change the function to get the name length, not the number of bytes to=20
-> allocate.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > +/*
+> > + * path is assumed to point to a buffer of PATH_MAX bytes, and
+> > + * path + name_offset is expected to point to "refs/".
+> > + */
+> > +
+> > +static int read_loose_refs(char *path, int name_offset, struct ref **tail)
+> > +{
+> > +	DIR *dir = opendir(path);
+> > +	struct dirent *de;
+> > +	struct {
+> > +		struct dirent *entries;
+> > +		int nr, alloc;
+> > +	} list;
+> > +	int i, pathlen;
+> > +
+> > +	if (!dir)
+> > +		return -1;
+> > +
+> > +	memset (&list, 0, sizeof(list));
+> > +
+> > +	while ((de = readdir(dir))) {
+> > +		if (de->d_name[0] == '.' && (de->d_name[1] == '\0' ||
+> > +				(de->d_name[1] == '.' &&
+> > +				 de->d_name[2] == '\0')))
+> > +			continue;
+> > +		if (list.nr >= list.alloc) {
+> > +			list.alloc = alloc_nr(list.nr);
+> > +			list.entries = xrealloc(list.entries,
+> > +				list.alloc * sizeof(*de));
+> > +		}
+> 
+> ALLOC_GROW() not applicable here?
+> 
+> > +		list.entries[list.nr++] = *de;
+> 
+> Are you sure about this?
+> 
+> The last paragraph in Rationale section, in
+> 
+>     http://www.opengroup.org/onlinepubs/000095399/basedefs/dirent.h.html
+> 
+> suggests that the d_name[] member in struct dirent could be
+> declared at the very end of the structure as length of 1 (the
+> traditional trick to implement a flex-array); your assignment
+> >from *de into entries[] would not work as expected on such an
+> implementation.
+> 
+> On Linux with glibc it appears bits/dirent.h defines dirent with
+> "char d_name[256]", so you may not see a breakage there, though.
 
-<janitor cap on>
+D'oh!  You're completely right.
 
-  While being at it, I noticed that the following code pattern is used
-in many places in git:
+> You only use a list of strings (char **), don't you?
 
-  struct something *ptr =3D xmalloc(sizeof(struct something) + some_string_=
-len + 1);
-  memset(ptr, 0, sizeof(struct something));
-  memcpy(ptr->name, somestring, some_string_len + 1);
+Originally, I wanted to use the d_type, too, but as I mentioned on IRC, it 
+is not reliable enough (shows DT_UNKNOWN _all_ the time here).
 
-  With name being a flex array.
+But yes, I'll redo it, using ALLOC_GROW.
 
-  Maybe we could deal with all of these, and make a generic construction
-that would take care of allocating the proper space
+> > ...
+> > +			if (fd < 0)
+> > +				continue;
+> > +			next = alloc_ref(strlen(path + name_offset));
+> 
+> And as we discussed earlier you would need one more byte here ;-).
 
-  I believe we could have function doing that, that would factorize this
-code, and use a nice api =C3=A0 la xmemdupz for this.
+Well, not after my patch, which I thought of as (1/3), but then decided it 
+is good enough to be (1/1) until you shot it down...
 
-  It would be something like:
+Will fix.
 
-	void *xflexdupz(size_t offset, void *src, size_t len)
-	{
-		char *p =3D xmalloc(offset + len + 1);
-		memset(p, 0, offset);
-		memcpy(p + offset, src, len);
-		p[offset + len] =3D '\0';
-		return p;
-	}
-
-  Then alloc_ref could be a wrapper around:
-  xflexdupz(offsetof(struct ref, name), ..., ...).
-
-  Of course right now alloc_ref doesn't perform any kind of copy, but a
-grep -A1 will convince you that it's not a problem:
-
-	$ grep -A1 alloc_ref **/*.[hc]
-	builtin-fetch.c:			rm =3D alloc_ref(strlen(ref_name) + 1);
-	builtin-fetch.c-			strcpy(rm->name, ref_name);
-	builtin-fetch.c:			rm->peer_ref =3D alloc_ref(strlen(ref_name) + 1);
-	builtin-fetch.c-			strcpy(rm->peer_ref->name, ref_name);
-	--
-	connect.c:		ref =3D alloc_ref(len - 40);
-	connect.c-		hashcpy(ref->old_sha1, old_sha1);
-	--
-	remote.c:struct ref *alloc_ref(unsigned namelen)
-	remote.c-{
-	--
-	remote.c:		ref =3D alloc_ref(20);
-	remote.c-		strcpy(ref->name, "(delete)");
-	--
-	remote.c:	ref =3D alloc_ref(len);
-	remote.c-	memcpy(ref->name, name, len);
-	--
-	remote.c:	ret =3D alloc_ref(len);
-	remote.c-	memcpy(ret->name, name, len);
-	--
-	remote.c:			cpy->peer_ref =3D alloc_ref(local_prefix_len +
-	remote.c-						  strlen(match) + 1);
-	--
-	remote.c:		ret =3D alloc_ref(strlen(name) + 1);
-	remote.c-		strcpy(ret->name, name);
-	--
-	remote.c:		ret =3D alloc_ref(strlen(name) + 6);
-	remote.c-		sprintf(ret->name, "refs/%s", name);
-	--
-	remote.c:	ret =3D alloc_ref(strlen(name) + 12);
-	remote.c-	sprintf(ret->name, "refs/heads/%s", name);
-	--
-	remote.h:struct ref *alloc_ref(unsigned namelen);
-	remote.h-
-	--
-	transport.c:		struct ref *ref =3D alloc_ref(strlen(e->name));
-	transport.c-		hashcpy(ref->old_sha1, e->sha1);
-
-</janitor>
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---WIyZ46R2i8wDzkSu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG/PZevGr7W6HudhwRAsAzAJ9yDzp4qGXSTueM3YRfEDYAcFl30ACfVL93
-uT+49ibgJf1AEJ/6wqq2KIk=
-=9nyG
------END PGP SIGNATURE-----
-
---WIyZ46R2i8wDzkSu--
+Ciao,
+Dscho
