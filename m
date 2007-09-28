@@ -1,93 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Introduce remove_dir_recursively()
-Date: Fri, 28 Sep 2007 13:35:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709281323300.28395@racer.site>
-References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
- <Pine.LNX.4.64.0709280606350.28395@racer.site> <7v8x6rqhwy.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: git push (mis ?)behavior
+Date: Fri, 28 Sep 2007 14:38:51 +0200
+Message-ID: <F00B74F4-7BEA-480C-B84E-A469515717B7@wincent.com>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 14:36:40 2007
+X-From: git-owner@vger.kernel.org Fri Sep 28 14:41:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbF5C-0007xf-Hb
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 14:36:38 +0200
+	id 1IbF9e-0001Oy-A4
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 14:41:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbXI1Mgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 08:36:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753077AbXI1Mgb
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 08:36:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58358 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752383AbXI1Mga (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 08:36:30 -0400
-Received: (qmail invoked by alias); 28 Sep 2007 12:36:29 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 28 Sep 2007 14:36:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+bngcwUCOb4kFzRKxHPBD36NrTtb1OCojTBQae4o
-	cU3mQIw+2zUnic
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v8x6rqhwy.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1752401AbXI1MlH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2007 08:41:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752904AbXI1MlH
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 08:41:07 -0400
+Received: from wincent.com ([72.3.236.74]:48788 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752188AbXI1MlG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 08:41:06 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l8SCcrE3013233;
+	Fri, 28 Sep 2007 07:38:54 -0500
+In-Reply-To: <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59389>
 
-Hi,
+El 27/9/2007, a las 21:22, Junio C Hamano escribi=F3:
 
-On Fri, 28 Sep 2007, Junio C Hamano wrote:
+> What you would want to change is the fallback behaviour for
+> unconfigured "remote.<name>.push".  I think it is sensible to
+> have an option to make it push only the current branch.  I am
+> not sure if it is sensible to make that the default (and
+> introduce --matching option to get the current behaviour) at
+> this point in 1.5.X series, but from the general usability point
+> of view, I would not object to demote 'matching' to optional and
+> make 'current only' the default in 1.6.X or later.
+>
+> Thoughts?
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > +int remove_dir_recursively(char *path, int len, int only_empty)
-> > +{
-> > ...
-> > +		namlen = strlen(e->d_name);
-> > +		if (len + namlen > PATH_MAX ||
-> > +				!memcpy(path + len, e->d_name, namlen) ||
-> > +				(path[len + namlen] = '\0') ||
-> > +				lstat(path, &st))
-> > +			; /* fall thru */
-> > +		else if (S_ISDIR(st.st_mode)) {
-> > +			if (!remove_dir_recursively(path, len + namlen,
-> > +						only_empty))
-> > +				continue; /* happy */
-> > +		} else if (!only_empty &&
-> > +				len + namlen + 1 < PATH_MAX &&
-> > +				!unlink(path))
-> > +			continue; /* happy, too */
-> > +
-> > +		/* path too long, stat fails, or non-directory still exists */
-> > +		ret = -1;
-> > +		break;
-> 
-> Is it only me who finds the first if () condition way too
-> convoluted and needs to read three times to convince oneself
-> that it is doing a sane thing?
-> 
-> Please, especially...
-> 
->  * For $DEITY's sake, memcpy() returns pointer to dst which you
->    know is not NULL. so !memcpy() is always false here, which
->    might be _convenient_ for you and the compiler but not for
->    a human reader of the code who needs to blink twice wondering
->    if you meant !memcmp().
-> 
->  * Same for (path[] = '\0'), wondering if it is misspelled
->    (path[] == '\0').
+I'd certainly welcome this change for two reasons:
 
-Okay, will fix (with an evil goto).
+1. It makes the behaviour more conservative (that is, harder to do =20
+something destructive and irreversible) by using the more limited =20
+scope by default. If you make a mistake and see that you really meant =20
+to push all matching branches then you can just do the push again =20
+with that switch; compare that to the situation now where if you =20
+accidentally push all matching branches when you only wanted to push =20
+the current branch then there's no way for you to "unpush".
 
-BTW it just hit me that this magic reliance on a buffer of size PATH_MAX 
-is not good at all.  It even hit _me_ while developing that series.
+2. Mental baggage from working with SVK (where "push" means merge =20
+changes back to the branch the current branch previously branched =20
+from, and "pull" means merge changes into the current branch from the =20
+branch you previously branched from). At least for me and I suspect =20
+for many others the "current only" default in 1.6 or latter would be =20
+less "surprising" than the current behaviour can be.
 
-So I'll change that to a strbuf, too.  (Which will fix the convoluted 
-logic quite some, incidentally.)
-
-Ciao,
-Dscho
+Cheers,
+Wincent
