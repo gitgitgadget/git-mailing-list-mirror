@@ -1,70 +1,81 @@
-From: Dan Farina <drfarina@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: backup or mirror a repository
-Date: Thu, 27 Sep 2007 17:51:44 -0700
-Message-ID: <1190940704.2263.32.camel@Tenacity>
-References: <1190921742.2263.17.camel@Tenacity>
-	 <Pine.LNX.4.64.0709272255360.28395@racer.site>
+Date: Fri, 28 Sep 2007 02:56:49 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709280253150.28395@racer.site>
+References: <1190921742.2263.17.camel@Tenacity>  <Pine.LNX.4.64.0709272255360.28395@racer.site>
+ <1190940704.2263.32.camel@Tenacity>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 28 02:52:03 2007
+To: Dan Farina <drfarina@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 03:58:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib45K-0000wz-Fq
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 02:52:02 +0200
+	id 1Ib57G-0006eX-O4
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 03:58:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755635AbXI1Avz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Sep 2007 20:51:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756896AbXI1Avz
-	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 20:51:55 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:48102 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752889AbXI1Avy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Sep 2007 20:51:54 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so2461301rvb
-        for <git@vger.kernel.org>; Thu, 27 Sep 2007 17:51:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        bh=UkzxheqbzCfuSlxubuPpE0acIsFM/gBGp4V0zEaRvwk=;
-        b=t1EaxkJPho+gh6afJ30Z+fJ5yxZyOpCFbqDy50p5BzVWCJfiC8AmW5JmiMC9SeI3pU+peuOVKbfGOEXYOT896MJ3leVyvFyOsAUEt5opfZp+AUfVdtgsLUD/D15NVjbXeJvupfAcc2LZq/PYlBXvDgo4YnzGrzVp7UV/xPNubhA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Wm6Io6EC29AUaIegVU94GbvZBJpKNvciHY9HwWh76BIXP2rad9QRr1Jb5P25Hf8PD7SNOa6RW99COQCjzcXZUyvvAfMSantRgnXkuEC8EaId1Y9BlrocAthr9CCDPh+UrtIseyxVnjG7fT62FAXh3dfegwUJS6Kwg7eU27zUX+4=
-Received: by 10.141.50.17 with SMTP id c17mr1290221rvk.1190940713709;
-        Thu, 27 Sep 2007 17:51:53 -0700 (PDT)
-Received: from ?192.168.1.101? ( [71.134.240.3])
-        by mx.google.com with ESMTPS id b39sm5070870rvf.2007.09.27.17.51.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 27 Sep 2007 17:51:52 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0709272255360.28395@racer.site>
-X-Mailer: Evolution 2.10.1 
+	id S1751996AbXI1B56 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Sep 2007 21:57:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751638AbXI1B56
+	(ORCPT <rfc822;git-outgoing>); Thu, 27 Sep 2007 21:57:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44282 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751908AbXI1B55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Sep 2007 21:57:57 -0400
+Received: (qmail invoked by alias); 28 Sep 2007 01:57:55 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp055) with SMTP; 28 Sep 2007 03:57:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19GNKgaHnpGYE62Wc2mQ2764O6XxU2DQml3rTFSLa
+	4ZEfrtV8dYf15a
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1190940704.2263.32.camel@Tenacity>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59350>
 
-On Thu, 2007-09-27 at 22:56 +0100, Johannes Schindelin wrote:
-> I guess you're looking for "git remote add --mirror origin <url>".  AFAIK 
-> this is not in any released version yet, though.
+Hi,
 
-I just tried a bleeding edge git with --mirror.
+On Thu, 27 Sep 2007, Dan Farina wrote:
 
-It's close, except (unless there is some other provision to take care of
-this) remote branch deletes. (Which, after more gmane trolling, seemed
-to be "git remote rm", which doesn't seem present just yet).
+> On Thu, 2007-09-27 at 22:56 +0100, Johannes Schindelin wrote:
+> > I guess you're looking for "git remote add --mirror origin <url>".  
+> > AFAIK this is not in any released version yet, though.
+> 
+> I just tried a bleeding edge git with --mirror.
+> 
+> It's close, except (unless there is some other provision to take care of 
+> this) remote branch deletes. (Which, after more gmane trolling, seemed 
+> to be "git remote rm", which doesn't seem present just yet).
 
-Of course, it is completely possible I'm using it incorrectly. In brief,
-I did "git init" "git remote add --mirror backup <url>" "git
-pull" (perhaps I should have used "git remote update"?) And the behavior
-of this is more or less what I wanted, as far as sending branches.
-Convenient removal of branches and propagating that removal still stumps
-me. Is there a preferred way to do this yet?
+git remote rm is about removing the remote nick, not a remote branch.
 
-Thanks,
-fdr
+> Of course, it is completely possible I'm using it incorrectly. In brief, 
+> I did "git init" "git remote add --mirror backup <url>" "git pull"
+
+"git pull" without further parameters accesses the remote "origin", not 
+"backup", and it merges _one_ branch into the current branch.
+
+What you should have done is "git fetch backup".
+
+Or use "origin" instead of "backup" right from the start, and then use 
+"git fetch".
+
+But no pull.
+
+> (perhaps I should have used "git remote update"?) And the behavior of 
+> this is more or less what I wanted, as far as sending branches. 
+> Convenient removal of branches and propagating that removal still stumps 
+> me. Is there a preferred way to do this yet?
+
+You want to remove branches from the local repo which are no longer there 
+on the remote side?
+
+Then "git remote prune" is for you.  For details, please see the man page.
+
+Ciao,
+Dscho
