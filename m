@@ -1,76 +1,91 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git push (mis ?)behavior
-Date: Fri, 28 Sep 2007 14:31:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0709281429380.28395@racer.site>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
- <9D61974D-E08D-49F6-9C88-6BE446D53C74@zib.de> <7vodfnqndc.fsf@gitster.siamese.dyndns.org>
- <9019207B-77A5-4595-8499-807DA0460EF0@zib.de>
+From: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+Subject: Re: [PATCH] quiltimport: Skip non-existent patches
+Date: Fri, 28 Sep 2007 16:06:55 +0200 (CEST)
+Message-ID: <Pine.LNX.4.62.0709281606430.11943@pademelon.sonytel.be>
+References: <Pine.LNX.4.62.0709271154440.10467@pademelon.sonytel.be>
+ <1190925059-5233-1-git-send-email-dbn.lists@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Sep 28 15:33:30 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="-584337861-401454985-1190988415=:11943"
+Cc: git@vger.kernel.org
+To: Dan Nicholson <dbn.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 16:07:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbFy0-0007jL-Tw
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 15:33:17 +0200
+	id 1IbGUj-000585-U8
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 16:07:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753851AbXI1NdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 09:33:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753884AbXI1NdG
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 09:33:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47152 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752311AbXI1NdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 09:33:05 -0400
-Received: (qmail invoked by alias); 28 Sep 2007 13:33:03 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp010) with SMTP; 28 Sep 2007 15:33:03 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+aqbYh+vqaZcrQSmoeaegUQTwtIpJsAkYC2AhSaP
-	wKbFE76sxxflx0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <9019207B-77A5-4595-8499-807DA0460EF0@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1751145AbXI1OG5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 10:06:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751301AbXI1OG5
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 10:06:57 -0400
+Received: from vervifontaine.sonytel.be ([80.88.33.193]:42561 "EHLO
+	vervifontaine.sonycom.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751071AbXI1OG5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 10:06:57 -0400
+Received: from pademelon.sonytel.be (piraat.sonytel.be [43.221.60.197])
+	by vervifontaine.sonycom.com (Postfix) with ESMTP id 68E8D58ABD;
+	Fri, 28 Sep 2007 16:06:55 +0200 (MEST)
+In-Reply-To: <1190925059-5233-1-git-send-email-dbn.lists@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59394>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 28 Sep 2007, Steffen Prohaska wrote:
+---584337861-401454985-1190988415=:11943
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On Sep 28, 2007, at 9:07 AM, Junio C Hamano wrote:
+On Thu, 27 Sep 2007, Dan Nicholson wrote:
+> When quiltimport encounters a non-existent patch in the series file,
+> just skip to the next patch. This matches the behavior of quilt.
 > 
-> > Steffen Prohaska <prohaska@zib.de> writes:
-> > 
-> > > When "remote.<name>.push" is set I'd expect "git push" to
-> > > choose only the 'right' remote.<name>.push lines, that is
-> > > the lines that have the current branch as the local ref.
-> > 
-> > That would break the existing setup so it would not fly as a
-> > default, although it could be added as an option.
+> Signed-off-by: Dan Nicholson <dbn.lists@gmail.com>
+
+Acked-by: Geert Uytterhoeven <Geert.Uytterhoeven@sonycom.com>
+
+> ---
+>  git-quiltimport.sh |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
 > 
-> Do you mean 'not now' or never, i.e. not in git 1.6?
+> diff --git a/git-quiltimport.sh b/git-quiltimport.sh
+> index 74a54d5..880c81d 100755
+> --- a/git-quiltimport.sh
+> +++ b/git-quiltimport.sh
+> @@ -71,6 +71,10 @@ commit=$(git rev-parse HEAD)
+>  
+>  mkdir $tmp_dir || exit 2
+>  for patch_name in $(grep -v '^#' < "$QUILT_PATCHES/series" ); do
+> +	if ! [ -f "$QUILT_PATCHES/$patch_name" ] ; then
+> +		echo "$patch_name doesn't exist. Skipping."
+> +		continue
+> +	fi
+>  	echo $patch_name
+>  	git mailinfo "$tmp_msg" "$tmp_patch" \
+>  		<"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
+> -- 
+> 1.5.3.2
 
-If it changes behaviour, and there might be people relying on the old 
-behaviour, we have to deprecate the old behaviour first.  With a nice 
-warning so that people have a chance to adapt their setups.  And then, 
-after a decent grace period, we can change it.
+With kind regards,
+ 
+Geert Uytterhoeven
+Software Architect
 
-> What does 'break the existing setup' means? Pushing all branches that 
-> are configured in "remote.<name>.push" could be done by "git push 
-> <name>". This would be in the line with the idea that "git push" should 
-> only operate on the current branch and operations involving other local 
-> refs should be explicitly stated.
-
-People have scripts and aliases to help them go through the day.  If one 
-of those scripts or aliases stop working, that is called "break the 
-existing setup".  ;-)
-
-Ciao,
-Dscho
+Sony Network and Software Technology Center Europe
+The Corporate Village · Da Vincilaan 7-D1 · B-1935 Zaventem · Belgium
+ 
+Phone:    +32 (0)2 700 8453	
+Fax:      +32 (0)2 700 8622	
+E-mail:   Geert.Uytterhoeven@sonycom.com	
+Internet: http://www.sony-europe.com/
+ 	
+Sony Network and Software Technology Center Europe	
+A division of Sony Service Centre (Europe) N.V.	
+Registered office: Technologielaan 7 · B-1840 Londerzeel · Belgium	
+VAT BE 0413.825.160 · RPR Brussels	
+Fortis Bank Zaventem · Swift GEBABEBB08A · IBAN BE39001382358619
+---584337861-401454985-1190988415=:11943--
