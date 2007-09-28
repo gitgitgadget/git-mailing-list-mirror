@@ -1,115 +1,168 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH 1/4] Add parse_date_format() convenience function for converting a format string to an enum date_mode
-Date: Fri, 28 Sep 2007 15:17:26 +0100
-Message-ID: <200709281517.26627.andyparkins@gmail.com>
+Subject: [PATCH 4/4] Make for-each-ref's grab_date() support per-atom formatting
+Date: Fri, 28 Sep 2007 15:17:45 +0100
+Message-ID: <200709281517.45133.andyparkins@gmail.com>
 References: <200709281516.05438.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 28 16:18:20 2007
+X-From: git-owner@vger.kernel.org Fri Sep 28 16:19:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbGfA-0001MF-4z
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 16:17:52 +0200
+	id 1IbGgb-00022u-AS
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 16:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758590AbXI1ORg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 10:17:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759362AbXI1ORg
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 10:17:36 -0400
-Received: from fk-out-0910.google.com ([209.85.128.185]:3222 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758590AbXI1ORe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 10:17:34 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so3083572fkz
-        for <git@vger.kernel.org>; Fri, 28 Sep 2007 07:17:30 -0700 (PDT)
+	id S1756325AbXI1ORv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 10:17:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756245AbXI1ORv
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 10:17:51 -0400
+Received: from mu-out-0910.google.com ([209.85.134.191]:13219 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759362AbXI1ORt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 10:17:49 -0400
+Received: by mu-out-0910.google.com with SMTP id i10so4818999mue
+        for <git@vger.kernel.org>; Fri, 28 Sep 2007 07:17:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=amNCZIXZMg8PiCmt1507VvUCSMMtldUFCDTirAwhTF8=;
-        b=Sh8MhvgStU6X6rnSQgmiW0g0sI8CMiiqaL5My7ejrOU4E4mmmhph+5G+PRwTbYcM/WaVC77UqWnKAA0dIe86jkP4gb3CfWDhBASp7nhST7J+XZ2zaz0eRubz8ei419oY1Z+WHm3/Oge7BrD1bC+JmZZ/RCqKifnqGKs4sXcpWlM=
+        bh=ZJ1VXKY0QUmY1rJWzhBCCUvwEcx72x2OMbBQtQcAlYM=;
+        b=oU/606lO90rS94qKgLFzOezBAa+oC3GyqEwg6JK3y2SAZgg6tvAATR7tcnwBW0KxcGLSR4Xaxymr3w0of/zgD2rIcTQH5R7XL5BOXWG5mKTnmwRHbdh4N47RQVFqh/j3QJj5AfkMk9IVubTuvpxaOSYPffIYPKg16Vyg9DMCdcw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:in-reply-to:references:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=EsL6/72uA56nbkLglgmXEf4LfKo0alrpYQE0QCa6zZRFhTCY/CtWgMkCWH8eK2JuYNPStuQDzUItRI+4CuK2TbhOUYBn0TeFG9DEPooKGjdqe+Oc5dlewB9WzSYgGNyHkiiaLF5hLeJ9lwKwbYoRcZgv9wJOXZHt5i/i+JYQhmE=
-Received: by 10.82.175.17 with SMTP id x17mr7721501bue.1190989048710;
-        Fri, 28 Sep 2007 07:17:28 -0700 (PDT)
+        b=BIlSTrAAt/F0OZ3CHNH/5U0ut1+n8y9zy9UMpz4Lc9LZaVzKsdMRThnez5WNbl8/FyEtwAZoQkuvHXKS8V2XMN3r2stBg9ySA/iXib1iYPNQNyMpGS6f3hNM7C0a+FLcRiW0WgKrxC8+yBnUy26K1+pfV8rhMygqKPNdtafmwa0=
+Received: by 10.82.138.6 with SMTP id l6mr96612bud.1190989067396;
+        Fri, 28 Sep 2007 07:17:47 -0700 (PDT)
 Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id k5sm3943968nfd.2007.09.28.07.17.27
+        by mx.google.com with ESMTPS id 34sm288737nfu.2007.09.28.07.17.46
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 28 Sep 2007 07:17:27 -0700 (PDT)
+        Fri, 28 Sep 2007 07:17:46 -0700 (PDT)
 In-Reply-To: <200709281516.05438.andyparkins@gmail.com>
-X-TUID: 5d72cd79e5953b97
-X-UID: 332
-X-Length: 2362
+X-TUID: 31ba87348c48c28d
+X-UID: 335
+X-Length: 4801
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59399>
 
-parse_date_format() is passed a string that is compared against a
-pre-defined list and converted to an enum date_format.  The table is as
-follows:
+grab_date() gets an extra parameter - atomname; this extra parameter is
+checked to see if it has a ":<format>" extra component in it, and if so
+that "<format>" string is passed to parse_date_format() to produce an
+enum date_mode value which is then further passed to show_date().
 
- - "relative"         => DATE_RELATIVE
- - "iso8601" or "iso" => DATE_ISO8601
- - "rfc2822"          => DATE_RFC2822
- - "short"            => DATE_SHORT
- - "local"            => DATE_LOCAL
- - "default"          => DATE_NORMAL
+In short it allows the user of git-for-each-ref to do things like this:
 
-In the event that none of these strings is found, the function die()s.
+ $ git-for-each-ref --format='%(taggerdate:default)' refs/tags/v1.5.2
+ Sun May 20 00:30:42 2007 -0700
+ $ git-for-each-ref --format='%(taggerdate:relative)' refs/tags/v1.5.2
+ 4 months ago
+ $ git-for-each-ref --format='%(taggerdate:short)' refs/tags/v1.5.2
+ 2007-05-20
+ $ git-for-each-ref --format='%(taggerdate:local)' refs/tags/v1.5.2
+ Sun May 20 08:30:42 2007
+ $ git-for-each-ref --format='%(taggerdate:iso8601)' refs/tags/v1.5.2
+ 2007-05-20 00:30:42 -0700
+ $ git-for-each-ref --format='%(taggerdate:rfc2822)' refs/tags/v1.5.2
+ Sun, 20 May 2007 00:30:42 -0700
+
+The default, when no ":<format>" is specified is ":default", leaving the
+existing behaviour unchanged.
 
 Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 ---
- cache.h |    1 +
- date.c  |   20 ++++++++++++++++++++
- 2 files changed, 21 insertions(+), 0 deletions(-)
+ Documentation/git-for-each-ref.txt |    5 +++++
+ builtin-for-each-ref.c             |   26 +++++++++++++++++++-------
+ 2 files changed, 24 insertions(+), 7 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 8246500..5587f7e 100644
---- a/cache.h
-+++ b/cache.h
-@@ -432,6 +432,7 @@ const char *show_date(unsigned long time, int timezone, enum date_mode mode);
- int parse_date(const char *date, char *buf, int bufsize);
- void datestamp(char *buf, int bufsize);
- unsigned long approxidate(const char *);
-+enum date_mode parse_date_format(const char *format);
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 6df8e85..f1f90cc 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -100,6 +100,11 @@ In any case, a field name that refers to a field inapplicable to
+ the object referred by the ref does not cause an error.  It
+ returns an empty string instead.
  
- extern const char *git_author_info(int);
- extern const char *git_committer_info(int);
-diff --git a/date.c b/date.c
-index 93bef6e..8f70500 100644
---- a/date.c
-+++ b/date.c
-@@ -584,6 +584,26 @@ int parse_date(const char *date, char *result, int maxlen)
- 	return date_string(then, offset, result, maxlen);
++As a special case for the date-type fields, you may specify a format for
++the date by adding one of `:default`, `:relative`, `:short`, `:local`,
++`:iso8601` or `:rfc2822` to the end of the fieldname; e.g.
++`%(taggerdate:relative)`.
++
+ 
+ EXAMPLES
+ --------
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 3280516..2ca4fc6 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -353,12 +353,24 @@ static const char *copy_email(const char *buf)
+ 	return line;
  }
  
-+enum date_mode parse_date_format(const char *format)
-+{
-+	if (!strcmp(format, "relative"))
-+		return DATE_RELATIVE;
-+	else if (!strcmp(format, "iso8601") ||
-+		 !strcmp(format, "iso"))
-+		return DATE_ISO8601;
-+	else if (!strcmp(format, "rfc2822") ||
-+		 !strcmp(format, "rfc"))
-+		return DATE_RFC2822;
-+	else if (!strcmp(format, "short"))
-+		return DATE_SHORT;
-+	else if (!strcmp(format, "local"))
-+		return DATE_LOCAL;
-+	else if (!strcmp(format, "default"))
-+		return DATE_NORMAL;
-+	else
-+		die("unknown date format %s", format);
-+}
-+
- void datestamp(char *buf, int bufsize)
+-static void grab_date(const char *buf, struct atom_value *v)
++static void grab_date(const char *buf, struct atom_value *v, const char *atomname)
  {
- 	time_t now;
+ 	const char *eoemail = strstr(buf, "> ");
+ 	char *zone;
+ 	unsigned long timestamp;
+ 	long tz;
++	enum date_mode date_mode = DATE_NORMAL;
++	const char *formatp;
++
++	/* We got here because atomname ends in "date" or "date<something>",
++	 * it's not possible that <something> is not ":<format>" because
++	 * parse_atom() wouldn't have allowed it, so we can assume that no
++	 * ":" means no format is specified, use the default */
++	formatp = strrchr( atomname, ':' );
++	if (formatp != NULL) {
++		formatp++;
++		date_mode = parse_date_format(formatp);
++	}
+ 
+ 	if (!eoemail)
+ 		goto bad;
+@@ -368,7 +380,7 @@ static void grab_date(const char *buf, struct atom_value *v)
+ 	tz = strtol(zone, NULL, 10);
+ 	if ((tz == LONG_MIN || tz == LONG_MAX) && errno == ERANGE)
+ 		goto bad;
+-	v->s = xstrdup(show_date(timestamp, tz, 0));
++	v->s = xstrdup(show_date(timestamp, tz, date_mode));
+ 	v->ul = timestamp;
+ 	return;
+  bad:
+@@ -395,7 +407,7 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 		if (name[wholen] != 0 &&
+ 		    strcmp(name + wholen, "name") &&
+ 		    strcmp(name + wholen, "email") &&
+-		    strcmp(name + wholen, "date"))
++		    prefixcmp(name + wholen, "date"))
+ 			continue;
+ 		if (!wholine)
+ 			wholine = find_wholine(who, wholen, buf, sz);
+@@ -407,8 +419,8 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 			v->s = copy_name(wholine);
+ 		else if (!strcmp(name + wholen, "email"))
+ 			v->s = copy_email(wholine);
+-		else if (!strcmp(name + wholen, "date"))
+-			grab_date(wholine, v);
++		else if (!prefixcmp(name + wholen, "date"))
++			grab_date(wholine, v, name);
+ 	}
+ 
+ 	/* For a tag or a commit object, if "creator" or "creatordate" is
+@@ -428,8 +440,8 @@ static void grab_person(const char *who, struct atom_value *val, int deref, stru
+ 		if (deref)
+ 			name++;
+ 
+-		if (!strcmp(name, "creatordate"))
+-			grab_date(wholine, v);
++		if (!prefixcmp(name, "creatordate"))
++			grab_date(wholine, v, name);
+ 		else if (!strcmp(name, "creator"))
+ 			v->s = copy_line(wholine);
+ 	}
 -- 
 1.5.3.2.105.gf47f2-dirty
