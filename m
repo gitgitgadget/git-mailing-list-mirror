@@ -1,58 +1,53 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-svn eliminating master
-Date: Fri, 28 Sep 2007 14:43:00 -0700
-Message-ID: <7vlkaqo49n.fsf@gitster.siamese.dyndns.org>
-References: <46FD5DAF.7030204@gmail.com>
+From: Reza Roboubi <reza@earthdetails.com>
+Subject: git-cat-file "Not a valid object name"
+Date: Fri, 28 Sep 2007 15:05:25 -0700
+Organization: Earth Details
+Message-ID: <46FD7AA5.2080007@earthdetails.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Russ Brown <pickscrape@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 23:43:20 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 29 00:06:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbNcE-00073k-B3
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 23:43:18 +0200
+	id 1IbNxU-0005kV-EW
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 00:05:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939AbXI1VnL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 17:43:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXI1VnJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 17:43:09 -0400
-Received: from rune.pobox.com ([208.210.124.79]:43928 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751397AbXI1VnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 17:43:08 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id A1AE413DA00;
-	Fri, 28 Sep 2007 17:43:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 222EA13D9A8;
-	Fri, 28 Sep 2007 17:43:24 -0400 (EDT)
-In-Reply-To: <46FD5DAF.7030204@gmail.com> (Russ Brown's message of "Fri, 28
-	Sep 2007 15:01:51 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754438AbXI1WFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 18:05:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754142AbXI1WFG
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 18:05:06 -0400
+Received: from idcmail-mo1so.shaw.ca ([24.71.223.10]:38667 "EHLO
+	pd4mo1so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753318AbXI1WFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 18:05:04 -0400
+Received: from pd4mr5so.prod.shaw.ca (pd4mr5so-qfe3.prod.shaw.ca [10.0.141.50])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JP300MVHMM7RU10@l-daemon> for git@vger.kernel.org; Fri,
+ 28 Sep 2007 16:03:43 -0600 (MDT)
+Received: from pn2ml1so.prod.shaw.ca ([10.0.121.145])
+ by pd4mr5so.prod.shaw.ca (Sun Java System Messaging Server 6.2-7.05 (built Sep
+ 5 2006)) with ESMTP id <0JP3009A3MM7JY20@pd4mr5so.prod.shaw.ca> for
+ git@vger.kernel.org; Fri, 28 Sep 2007 16:03:43 -0600 (MDT)
+Received: from [192.168.0.46] ([24.80.205.34])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JP300G2UMM3K4L0@l-daemon> for git@vger.kernel.org; Fri,
+ 28 Sep 2007 16:03:40 -0600 (MDT)
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59424>
 
-Russ Brown <pickscrape@gmail.com> writes:
+git-cat-file -t 9b22b50f814b22224d6f838433f1e9cd36bfc2
 
-> So I've been using git-svn for a while, and just decided to try
-> publishing my repo via gitweb so I can experiment with showing others my
-> local branches before I dcommit them to the subversion repository (i.e.
-> allowing code review prior to commit).
->
-> It's working pretty nicely: the only problem I have is the master
-> branch. I don't use master at all, and I'm willing to be that a lot of
-> other git-svn users don't either. I take all of my branches from either
-> trunk or one of the other upstream svn server branches.
->
-> The problem is gitweb appears to show the master branch by default,
-> while I'd rather show trunk by default.
+says: "Not a valid object name".
 
-I think gitweb shows wherever HEAD points at.  Update the file
-on the server and see if it helps.
+So what is this thing in my .git:
+../.git/objects/92/9b22b50f814b22224d6f838433f1e9cd36bfc2
+
+Thanks in advance.
+
+Reza.
