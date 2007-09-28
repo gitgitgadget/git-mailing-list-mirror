@@ -1,89 +1,77 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Fri, 28 Sep 2007 08:35:46 +0200
-Message-ID: <20070928063546.GA19299@artemis.corp>
-References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <46FBFDD7.1080300@gmail.com> <20070927191125.GD12427@artemis.corp> <20070927222326.GB8688@thunk.org> <20070927222825.GG12427@artemis.corp> <20070928051503.GA19815@xp.machine.xx>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="ibTvN161/egqYuK8";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Russ Brown <pickscrape@gmail.com>,
-	Kelvie Wong <kelvie@ieee.org>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Sep 28 08:36:01 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: git push (mis ?)behavior
+Date: Fri, 28 Sep 2007 08:52:47 +0200
+Message-ID: <9D61974D-E08D-49F6-9C88-6BE446D53C74@zib.de>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 28 08:54:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib9S9-0007QR-BQ
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:35:57 +0200
+	id 1Ib9k9-0003xz-2t
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:54:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756801AbXI1Gfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 02:35:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756774AbXI1Gfu
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:35:50 -0400
-Received: from pan.madism.org ([88.191.52.104]:49246 "EHLO hermes.madism.org"
+	id S1756596AbXI1Gy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 02:54:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756797AbXI1Gy0
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:54:26 -0400
+Received: from mailer.zib.de ([130.73.108.11]:61348 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756761AbXI1Gft (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 02:35:49 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id F2D2519476;
-	Fri, 28 Sep 2007 08:35:47 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0B1D3D253; Fri, 28 Sep 2007 08:35:47 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org,
-	Russ Brown <pickscrape@gmail.com>, Kelvie Wong <kelvie@ieee.org>
-Content-Disposition: inline
-In-Reply-To: <20070928051503.GA19815@xp.machine.xx>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755088AbXI1GyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 02:54:25 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l8S6pDwB003993;
+	Fri, 28 Sep 2007 08:51:13 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db106c4.pool.einsundeins.de [77.177.6.196])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l8S6pCpk010071
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 28 Sep 2007 08:51:12 +0200 (MEST)
+In-Reply-To: <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59372>
 
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sep 27, 2007, at 9:22 PM, Junio C Hamano wrote:
 
-On Fri, Sep 28, 2007 at 05:15:03AM +0000, Peter Baumann wrote:
-> FWIW, xxdiff has support to handle halfway merged files, so that if git
-> could merge some hunks already for you (e.g. rerere kicked in), you
-> don't have to redo the _whole_ merge by hand, just call
->=20
-> 	xxdiff -U file/with/mergemarkers/inside
->=20
-> and it will do the right thing. Not sure if the other tools could handle
-> it, but any pointers appreciated, because it often happens to me that
-> only one hunk out of several wasn't merged automatically by git. And
-> mergetool wants to always redo the whole merge, which isn't the best it
-> can do.
+>
+> So what's the desired semantics?
+>
+> The current semantics is:
+>
+>    "git push" says "you do not say to which repository?" and
+>    consults "branch.<current>.remote" but defaults to 'origin'
+>    if unconfigured.
+>
+>    "git push <name>" (or using the <name> determined as above)
+>    says "you do not say which branches?" and consults
+>    "remote.<name>.push" to find branches to push out, but
+>    defaults to 'matching branches' if unconfigured.
+>
+> What you would want to change is the fallback behaviour for
+> unconfigured "remote.<name>.push".  I think it is sensible to
+> have an option to make it push only the current branch.
 
-  For what I've seen, it's how meld works, and I find it nice too. Meld
-is quite slow (python + gnomeish doesn't help) but well, I don't merge
-things that often, so like said I think I'll give it a try for a while
-and see if it has what it takes :)
+I'm not sure that changing the fallback behaviour for unconfigured
+"remote.<name>.push" is sufficient.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+When "remote.<name>.push" is set I'd expect "git push" to
+choose only the 'right' remote.<name>.push lines, that is
+the lines that have the current branch as the local ref.
+"git push" would only push the current branch, which could be pushed
+to 0 or more branches on the remote side. If no "remote.<name>.push"
+contains the current branch as a local ref nothing would happen
+(maybe a warning?). If several "remote.<name>.push" have the current
+branch as the local ref the branch would be pushed to several
+remote branches. But other branches than the current branch
+would _never_ be pushed if no argument is given to 'git push'.
 
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBG/KDCvGr7W6HudhwRAoXNAKCVSm+Qgcldd24brivJCTNqh9UGJwCeMRN+
-1/XmVHlTyB1gJvnj/pErv0Q=
-=wH1C
------END PGP SIGNATURE-----
-
---ibTvN161/egqYuK8--
+	Steffen
