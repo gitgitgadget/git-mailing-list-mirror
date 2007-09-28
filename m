@@ -1,75 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Merge non-first refs that match first refspec
-Date: Fri, 28 Sep 2007 01:25:48 -0400
-Message-ID: <20070928052548.GX3099@spearce.org>
-References: <Pine.LNX.4.64.0709272351010.5926@iabervon.org> <20070928041509.GU3099@spearce.org> <Pine.LNX.4.64.0709280026240.5926@iabervon.org> <20070928044824.GV3099@spearce.org> <Pine.LNX.4.64.0709280108060.5926@iabervon.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Fri, 28 Sep 2007 08:19:42 +0200
+Message-ID: <85tzpfb9c1.fsf@lola.goethe.zz>
+References: <94ccbe710709271312k7eac8e35y353180596a0abc9a@mail.gmail.com>
+	<94ccbe710709271338u79ba89beh5a637bf84f8edf44@mail.gmail.com>
+	<7v8x6ru97z.fsf@gitster.siamese.dyndns.org>
+	<7vwsubsuh1.fsf@gitster.siamese.dyndns.org>
+	<94ccbe710709271417h6349c807j6424c25175c26ea2@mail.gmail.com>
+	<94ccbe710709271422x5d1739c2g5da961c88a4336fe@mail.gmail.com>
+	<7vmyv7sshv.fsf@gitster.siamese.dyndns.org>
+	<7vir5vss58.fsf@gitster.siamese.dyndns.org>
+	<94ccbe710709271523s7e4c7a1dh53e34bd460c31d1f@mail.gmail.com>
+	<20070927225218.GD8688@thunk.org>
+	<94ccbe710709272117s6dee1a8jad6edf71dfb13c81@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Sep 28 07:26:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Theodore Tso" <tytso@mit.edu>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Kelvie Wong" <kelvie@ieee.org>
+X-From: git-owner@vger.kernel.org Fri Sep 28 08:20:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib8MT-00076D-GL
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 07:26:01 +0200
+	id 1Ib9Ch-0002lM-BN
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:19:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755534AbXI1FZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 01:25:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755491AbXI1FZx
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 01:25:53 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47586 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753446AbXI1FZx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 01:25:53 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ib8Mx-0007d3-Rb; Fri, 28 Sep 2007 01:26:31 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CC8D820FBAE; Fri, 28 Sep 2007 01:25:48 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709280108060.5926@iabervon.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1758690AbXI1GTy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 02:19:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754881AbXI1GTy
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:19:54 -0400
+Received: from mail-in-15.arcor-online.net ([151.189.21.55]:54031 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1758679AbXI1GTx (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 02:19:53 -0400
+Received: from mail-in-11-z2.arcor-online.net (mail-in-11-z2.arcor-online.net [151.189.8.28])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id BB53844E70;
+	Fri, 28 Sep 2007 08:19:50 +0200 (CEST)
+Received: from mail-in-13.arcor-online.net (mail-in-13.arcor-online.net [151.189.21.53])
+	by mail-in-11-z2.arcor-online.net (Postfix) with ESMTP id A24A7345CB6;
+	Fri, 28 Sep 2007 08:19:50 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-013-147.pools.arcor-ip.net [84.61.13.147])
+	by mail-in-13.arcor-online.net (Postfix) with ESMTP id 5464422D167;
+	Fri, 28 Sep 2007 08:19:42 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id B1B6A1C0039C; Fri, 28 Sep 2007 08:19:42 +0200 (CEST)
+In-Reply-To: <94ccbe710709272117s6dee1a8jad6edf71dfb13c81@mail.gmail.com> (Kelvie Wong's message of "Thu\, 27 Sep 2007 21\:17\:26 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4417/Fri Sep 28 06:57:11 2007 on mail-in-13.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59369>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> On Fri, 28 Sep 2007, Shawn O. Pearce wrote:
-> 
-> > Daniel Barkalow <barkalow@iabervon.org> wrote:
-> > > Beats me; Junio, what's your test case?
-> > 
-> > If I understood him correctly it is this:
-> > 
-> > 	mkdir foo; cd foo; git init
-> > 	git config remote.origin.url git://repo.or.cz/alt-git.git
-> > 	git config remote.origin.fetch refs/heads/master:refs/remotes/origin/master
-> > 	git config --add remote.origin.fetch refs/heads/maint:refs/remotes/origin/maint
-> > 	git pull
-> > 
-> > We should see "master" listed in .git/FETCH_HEAD as a "for-merge"
-> > and "maint" listed as a "not-for-merge"...
-> > 
-> > But if that remote.origin.fetch was a wildcard spec this shouldn't
-> > happen as the results are unpredictable.  But above the user
-> > explicitly put master first, so it should be defaulted to.
-> 
-> But after that sequence, the right thing does happen. So I'm guessing that 
-> he has some different sequence that triggers a bug.
+"Kelvie Wong" <kelvie@ieee.org> writes:
 
-OK.  Then I don't understand what issue Junio identified.  And it
-makes me feel better knowing that the current code does do the
-right thing in the above case, because that's what I meant for it
-to do when I was last in there...
+> On 9/27/07, Theodore Tso <tytso@mit.edu> wrote:
+>
+>> It's not that emacs sets $PWD via its first argument, but the output
+>> file is passed from emerge-files*-command to stashed in the per-buffer
+>> variable emerge-file-out, which in turn gets passed to the emacs lisp
+>> file write-file, which is what gets run when you run C-x C-w --- and
+>> write-file interprets a relative pathname based on the containing
+>> directory of the existing buffer.
+>>                                                 - Ted
+>>
+>
+> Ah yes, I just started reading up on elisp a little while ago :)
+>
+> I'd always assumed that emacs kept an internal "pwd" variable (i.e.
+> what's displayed with M-x pwd), but I guess my way of thinking is
+> archaic and deprecated :(
+
+It does.  For every buffer.
 
 -- 
-Shawn.
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
