@@ -1,62 +1,88 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git push (mis ?)behavior
-Date: Fri, 28 Sep 2007 12:04:40 +0200
-Message-ID: <B9F497FD-BD16-4D24-8F37-0D6989155FD3@zib.de>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <9D61974D-E08D-49F6-9C88-6BE446D53C74@zib.de> <20070928065823.GB19299@artemis.corp> <09A90525-8B0B-4249-904C-722BCC544B4E@zib.de> <7vr6kjp1jw.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] alloc_ref(): allow for trailing NUL
+Date: Fri, 28 Sep 2007 13:01:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709281259050.28395@racer.site>
+References: <Pine.LNX.4.64.0709280356550.28395@racer.site>
+ <Pine.LNX.4.64.0709280046241.5926@iabervon.org> <7vhclfqisq.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 12:05:02 2007
+X-From: git-owner@vger.kernel.org Fri Sep 28 14:02:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbCiS-0005nl-B6
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 12:05:00 +0200
+	id 1IbEYP-000347-Pl
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 14:02:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755687AbXI1KEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 06:04:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755481AbXI1KEx
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 06:04:53 -0400
-Received: from mailer.zib.de ([130.73.108.11]:45452 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753630AbXI1KEx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 06:04:53 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l8SA34Y7019363;
-	Fri, 28 Sep 2007 12:04:41 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l8SA33dg020976
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 28 Sep 2007 12:03:03 +0200 (MEST)
-In-Reply-To: <7vr6kjp1jw.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752951AbXI1MCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 08:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752994AbXI1MCi
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 08:02:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54266 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752911AbXI1MCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 08:02:37 -0400
+Received: (qmail invoked by alias); 28 Sep 2007 12:02:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp023) with SMTP; 28 Sep 2007 14:02:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+V40cWNs2V+x1NZFCib2vFlauJGWdDsCrh0lNLtF
+	xen0XKc/CGz1Da
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vhclfqisq.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59386>
 
+Hi,
 
-On Sep 28, 2007, at 11:44 AM, Junio C Hamano wrote:
+On Fri, 28 Sep 2007, Junio C Hamano wrote:
 
->> Let me put it as a question: How can I push changes from the current
->> branch to all remote refs it is configured to push to via
->> "remote.<name>.push"
->> without pushing anything else at the same time?
->
-> Sorry, but I do not get you.  Are you talking about pushing your
-> 'frotz' into more than one branches 'nitfol' and 'xyzzy' at the
-> same remote 'origin' without having to say
->
-> 	$ git push origin frotz:nitfol frotz:xyzzy
->
-> ???
+> Daniel Barkalow <barkalow@iabervon.org> writes:
+> 
+> > On Fri, 28 Sep 2007, Johannes Schindelin wrote:
+> >
+> >> The parameter name "namelen" suggests that you pass the equivalent of
+> >> strlen() to the function alloc_ref().  However, this function did not
+> >> allocate enough space to put a NUL after the name.
+> >> 
+> >> Since struct ref does not have any member to describe the length of the
+> >> string, this just does not make sense.
+> >> 
+> >> So make space for the NUL.
+> >
+> > Good point, but shouldn't you then fix call sites that use strlen(name) + 
+> > 1?
+> 
+> Good point.
+> 
+> I audited "git grep -A2 -B4 -e alloc_ref next master" output,
+> and it appears almost everybody knows alloc_ref() wants the
+> caller to count the terminating NUL.
+> 
+> There however are a few gotchas.
+> 
+>  * There is one overallocation in connect.c, which would not
+>    hurt but is wasteful;
+> 
+>  * next:transport.c has alloc_ref(strlen(e->name)) which is a
+>    no-no;
+> 
+> Discarding Johannes's patch, the following would fix it.
 
-Yes. Doesn't sound like a very reasonable workflow. But you can do
-it with "remote.<name>.push". So I think "git push" should somehow
-deal with it in a sensible way.
+But should the signature of alloc_ref() not be changed, then, to read
 
-	Steffen
+	struct ref *alloc_ref(unsigned name_alloc);
+
+Hm?
+
+Further, I am quite sure that the same mistake will happen again, until we 
+change the function to get the name length, not the number of bytes to 
+allocate.
+
+Ciao,
+Dscho
