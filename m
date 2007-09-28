@@ -1,71 +1,110 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: Mergetool generating blank files (1.5.3)
-Date: Fri, 28 Sep 2007 10:43:37 +0200
-Message-ID: <87ejgjrxhi.fsf@morpheus.local>
-References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <94ccbe710709271224rc65b6f4k8b68419629ed5b45@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] alloc_ref(): allow for trailing NUL
+Date: Fri, 28 Sep 2007 01:46:13 -0700
+Message-ID: <7vhclfqisq.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0709280356550.28395@racer.site>
+	<Pine.LNX.4.64.0709280046241.5926@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 28 10:44:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Fri Sep 28 10:46:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbBSB-0004cp-9Z
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 10:44:07 +0200
+	id 1IbBUT-0005PF-O8
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 10:46:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755174AbXI1IoA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Sep 2007 04:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754765AbXI1IoA
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 04:44:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:42534 "EHLO ciao.gmane.org"
+	id S1754599AbXI1IqX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 04:46:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754485AbXI1IqX
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 04:46:23 -0400
+Received: from rune.pobox.com ([208.210.124.79]:49452 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751837AbXI1In7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 04:43:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IbBRs-0000hg-T8
-	for git@vger.kernel.org; Fri, 28 Sep 2007 08:43:48 +0000
-Received: from c83-253-242-75.bredband.comhem.se ([83.253.242.75])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Sep 2007 08:43:48 +0000
-Received: from davidk by c83-253-242-75.bredband.comhem.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 28 Sep 2007 08:43:48 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: c83-253-242-75.bredband.comhem.se
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:JzChRH7ZJanIflrlEmvlyyH5Z8M=
+	id S1753147AbXI1IqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 04:46:22 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id AEEFF13D4B7;
+	Fri, 28 Sep 2007 04:46:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C8EBA13D79C;
+	Fri, 28 Sep 2007 04:46:37 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0709280046241.5926@iabervon.org> (Daniel
+	Barkalow's message of "Fri, 28 Sep 2007 01:03:46 -0400 (EDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59377>
 
-"Kelvie Wong" <kelvie@ieee.org> writes:
+Daniel Barkalow <barkalow@iabervon.org> writes:
 
-> I've tried all of the ones that were supported, the result is the sam=
-e
-> -- blank files in all three windows.
+> On Fri, 28 Sep 2007, Johannes Schindelin wrote:
 >
-> It is because git mergetool fails to generate these files for whateve=
-r
-> reason (the filebasename.{REMOTE,LOCAL,BASE}.* files).  I don't know
-> why this happens.
+>> The parameter name "namelen" suggests that you pass the equivalent of
+>> strlen() to the function alloc_ref().  However, this function did not
+>> allocate enough space to put a NUL after the name.
+>> 
+>> Since struct ref does not have any member to describe the length of the
+>> string, this just does not make sense.
+>> 
+>> So make space for the NUL.
 >
-> As for merge utilities, all I need is something that looks for the
-> first <<<<<, and lets me choose which version I want (either top or
-> bottom), plain and simple :/  I don't even need/want a gui.
+> Good point, but shouldn't you then fix call sites that use strlen(name) + 
+> 1?
 
-Since you are already using Emacs, let me suggest you use smerge
-(together with ediff).
+Good point.
 
-Use M-x smerge-mode and go over the conflicts and select which one you
-want with C-c ^ m (for "mine") or C-c ^ o (for "other") or one of the
-commands.  Or press C-c ^ E to run a three-window merge.
+I audited "git grep -A2 -B4 -e alloc_ref next master" output,
+and it appears almost everybody knows alloc_ref() wants the
+caller to count the terminating NUL.
 
-Or use the last directly by running M-x smerge-ediff.
+There however are a few gotchas.
 
---=20
-David K=C3=A5gedal
+ * There is one overallocation in connect.c, which would not
+   hurt but is wasteful;
+
+ * next:transport.c has alloc_ref(strlen(e->name)) which is a
+   no-no;
+
+Discarding Johannes's patch, the following would fix it.
+
+---
+
+ connect.c   |    4 ++--
+ transport.c |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index 06d279e..3d5c4ab 100644
+--- a/connect.c
++++ b/connect.c
+@@ -72,9 +72,9 @@ struct ref **get_remote_heads(int in, struct ref **list,
+ 			continue;
+ 		if (nr_match && !path_match(name, nr_match, match))
+ 			continue;
+-		ref = alloc_ref(len - 40);
++		ref = alloc_ref(name_len + 1);
+ 		hashcpy(ref->old_sha1, old_sha1);
+-		memcpy(ref->name, buffer + 41, len - 40);
++		memcpy(ref->name, buffer + 41, name_len + 1);
+ 		*list = ref;
+ 		list = &ref->next;
+ 	}
+diff --git a/transport.c b/transport.c
+index 4f9cddc..3475cca 100644
+--- a/transport.c
++++ b/transport.c
+@@ -215,7 +215,7 @@ static struct ref *get_refs_from_bundle(const struct transport *transport)
+ 		die ("Could not read bundle '%s'.", transport->url);
+ 	for (i = 0; i < data->header.references.nr; i++) {
+ 		struct ref_list_entry *e = data->header.references.list + i;
+-		struct ref *ref = alloc_ref(strlen(e->name));
++		struct ref *ref = alloc_ref(strlen(e->name) + 1);
+ 		hashcpy(ref->old_sha1, e->sha1);
+ 		strcpy(ref->name, e->name);
+ 		ref->next = result;
