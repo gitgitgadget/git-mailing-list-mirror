@@ -1,114 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Merge non-first refs that match first refspec
-Date: Fri, 28 Sep 2007 00:15:09 -0400
-Message-ID: <20070928041509.GU3099@spearce.org>
-References: <Pine.LNX.4.64.0709272351010.5926@iabervon.org>
+From: "Kelvie Wong" <kelvie@ieee.org>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Thu, 27 Sep 2007 21:17:26 -0700
+Message-ID: <94ccbe710709272117s6dee1a8jad6edf71dfb13c81@mail.gmail.com>
+References: <94ccbe710709271312k7eac8e35y353180596a0abc9a@mail.gmail.com>
+	 <94ccbe710709271338u79ba89beh5a637bf84f8edf44@mail.gmail.com>
+	 <7v8x6ru97z.fsf@gitster.siamese.dyndns.org>
+	 <7vwsubsuh1.fsf@gitster.siamese.dyndns.org>
+	 <94ccbe710709271417h6349c807j6424c25175c26ea2@mail.gmail.com>
+	 <94ccbe710709271422x5d1739c2g5da961c88a4336fe@mail.gmail.com>
+	 <7vmyv7sshv.fsf@gitster.siamese.dyndns.org>
+	 <7vir5vss58.fsf@gitster.siamese.dyndns.org>
+	 <94ccbe710709271523s7e4c7a1dh53e34bd460c31d1f@mail.gmail.com>
+	 <20070927225218.GD8688@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Fri Sep 28 06:15:27 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Theodore Tso" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 28 06:17:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib7GA-0001p1-F5
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 06:15:26 +0200
+	id 1Ib7IF-0002J5-0G
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 06:17:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752506AbXI1EPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 00:15:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752262AbXI1EPP
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 00:15:15 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45623 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751299AbXI1EPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 00:15:14 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ib7Ga-0003ms-T1; Fri, 28 Sep 2007 00:15:53 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3BC2A20FBAE; Fri, 28 Sep 2007 00:15:09 -0400 (EDT)
+	id S1753039AbXI1ER3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 00:17:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752922AbXI1ER2
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 00:17:28 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:34322 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860AbXI1ER1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 00:17:27 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1945389nze
+        for <git@vger.kernel.org>; Thu, 27 Sep 2007 21:17:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=IDLlP3f/mXArIwutBDFN8U7tttIQekjmMA5PRTkkcmo=;
+        b=HGqn+N+xMDU6VSWu4bAlqqVndCnbivNmHajM98WFegMNJcqcbK1tYYl3Grcni++xqn1J1Fi6Ls4zEBcRYg/MBDIixqMoNZPKTMk3zmxQczUSpTuq/2iraTOrv5jXRBoIQD9pFcjAWeHHDHc5GZrovmcGwQUKw+VaJ9wI8nBscq4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=S1kkYwCrxIcsZUWEdawFFATOwoEvf7FRUl5U3zuqiFInQRC1Ou1D21O0KFor5vBVLOAJq/712VsSKl2wHedN34Hc3rbCmFlMnEktZGw6GqjM/MCN5XRuRsI31FboOjSk5v4yOBpoRdcC9MZzx4D886SH+psaq/nRwaScPbRdBHw=
+Received: by 10.114.158.1 with SMTP id g1mr1554702wae.1190953046348;
+        Thu, 27 Sep 2007 21:17:26 -0700 (PDT)
+Received: by 10.114.144.17 with HTTP; Thu, 27 Sep 2007 21:17:26 -0700 (PDT)
+In-Reply-To: <20070927225218.GD8688@thunk.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709272351010.5926@iabervon.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+X-Google-Sender-Auth: d91f04bee1ac3aac
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59357>
 
-Daniel Barkalow <barkalow@iabervon.org> wrote:
-> The code only looked at the first ref in the map of refs when looking
-> for matches for the first refspec in the case where there is not
-> per-branch configuration of ref to merge. This is often sufficient,
-> but not always. Make the logic clearer and test everything in the map.
-> 
-> Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
-> ---
-> I ran all the usual tests with this, and it seems like it should fix a bug 
-> you saw, but I don't have the test case to make sure.
-> 
->  builtin-fetch.c |    7 ++++---
->  1 files changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/builtin-fetch.c b/builtin-fetch.c
-> index 2f639cc..47811c9 100644
-> --- a/builtin-fetch.c
-> +++ b/builtin-fetch.c
-> @@ -101,12 +101,13 @@ static struct ref *get_ref_map(struct transport *transport,
->  				if (remote->fetch[i].dst &&
->  				    remote->fetch[i].dst[0])
->  					*autotags = 1;
-> -				if (!i && !has_merge && ref_map &&
-> -				    !strcmp(remote->fetch[0].src, ref_map->name))
-> -					ref_map->merge = 1;
->  			}
->  			if (has_merge)
->  				add_merge_config(&ref_map, remote_refs, branch, &tail);
-> +			else
-> +				for (rm = ref_map; rm; rm = rm->next)
-> +					if (!strcmp(remote->fetch[0].src, rm->name))
-> +						rm->merge = 1;
->  		} else {
->  			ref_map = get_remote_ref(remote_refs, "HEAD");
->  			ref_map->merge = 1;
+On 9/27/07, Theodore Tso <tytso@mit.edu> wrote:
 
-Hmmph.  I'm not seeing how this fixes the bug.  But if it fixes it,
-it fixes it.
+> It's not that emacs sets $PWD via its first argument, but the output
+> file is passed from emerge-files*-command to stashed in the per-buffer
+> variable emerge-file-out, which in turn gets passed to the emacs lisp
+> file write-file, which is what gets run when you run C-x C-w --- and
+> write-file interprets a relative pathname based on the containing
+> directory of the existing buffer.
+>                                                 - Ted
+>
 
-My understanding of the old code was that it should do what Junio
-was reporting as broken:
+Ah yes, I just started reading up on elisp a little while ago :)
 
-  - when i == 0 this is the first remote.$foo.fetch;
-  - when has_merge == 0 we have no branch.$name.merge;
-  - when ref_map != NULL we have at least one ref from this fetch spec;
-  - when fetch[0].src == ref_map->name it wasn't a wildcard spec;
-
-The if conditional above was ordered the way it is so we can skip
-the more expensive operation (the strcmp) most of them time through
-the loop iteration.
-
-The only way I can see the old code was failing was if ref_map
-as returned by get_fetch_map() pointed to more than one refspec.
-But for that to be true then fetch[1].src must have been a wildcard,
-in which case the strcmp() would fail.  So we should only ever
-get one entry, it should be the first entry, and dammit it should
-have matched.
-
-How/why are we getting cases where fetch[0].src isn't in the first
-entry in ref_map?  What are those other entries?  Are they possibly
-going to also match fetch[0].src and cause more than one branch
-to merge?
-
-BTW, thanks for looking at this.  I didn't have time to get to it
-this week and now I'm really unlikely to be able to do so until
-after I get back from San Jose.  I have too many things crammed
-into this next week. :-\
+I'd always assumed that emacs kept an internal "pwd" variable (i.e.
+what's displayed with M-x pwd), but I guess my way of thinking is
+archaic and deprecated :(
 
 -- 
-Shawn.
+Kelvie
