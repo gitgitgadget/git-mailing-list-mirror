@@ -1,118 +1,64 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/2] Introduce remove_dir_recursively()
-Date: Sat, 29 Sep 2007 00:14:46 +0200
-Message-ID: <85k5qabfop.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
-	<Pine.LNX.4.64.0709280606350.28395@racer.site>
-	<7v8x6rqhwy.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0709281323300.28395@racer.site>
+From: Sean <seanlkml@sympatico.ca>
+Subject: Re: git-cat-file "Not a valid object name"
+Date: Fri, 28 Sep 2007 18:15:46 -0400
+Message-ID: <BAYC1-PASMTP02FFAE9A97F102AC11A13EAEB20@CEZ.ICE>
+References: <46FD7AA5.2080007@earthdetails.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Sep 29 00:15:02 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Reza Roboubi <reza@earthdetails.com>
+X-From: git-owner@vger.kernel.org Sat Sep 29 00:15:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbO6w-0008Ve-4z
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 00:15:02 +0200
+	id 1IbO7o-0000KN-1j
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 00:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478AbXI1WO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 18:14:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXI1WOz
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 18:14:55 -0400
-Received: from mail-in-11.arcor-online.net ([151.189.21.51]:32789 "EHLO
-	mail-in-11.arcor-online.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753355AbXI1WOz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 18:14:55 -0400
-Received: from mail-in-10-z2.arcor-online.net (mail-in-10-z2.arcor-online.net [151.189.8.27])
-	by mail-in-11.arcor-online.net (Postfix) with ESMTP id 9298B241C54;
-	Sat, 29 Sep 2007 00:14:53 +0200 (CEST)
-Received: from mail-in-05.arcor-online.net (mail-in-05.arcor-online.net [151.189.21.45])
-	by mail-in-10-z2.arcor-online.net (Postfix) with ESMTP id 7B3B423D342;
-	Sat, 29 Sep 2007 00:14:53 +0200 (CEST)
-Received: from lola.goethe.zz (dslb-084-061-010-178.pools.arcor-ip.net [84.61.10.178])
-	by mail-in-05.arcor-online.net (Postfix) with ESMTP id 291151C36C4;
-	Sat, 29 Sep 2007 00:14:49 +0200 (CEST)
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id D46421C06F89; Sat, 29 Sep 2007 00:14:47 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0709281323300.28395@racer.site> (Johannes Schindelin's message of "Fri\, 28 Sep 2007 13\:35\:21 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-Virus-Scanned: ClamAV 0.91.2/4421/Fri Sep 28 23:09:13 2007 on mail-in-05.arcor-online.net
-X-Virus-Status: Clean
+	id S1753613AbXI1WPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 18:15:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXI1WPt
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 18:15:49 -0400
+Received: from bay0-omc2-s37.bay0.hotmail.com ([65.54.246.173]:30387 "EHLO
+	bay0-omc2-s37.bay0.hotmail.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753410AbXI1WPs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 18:15:48 -0400
+Received: from BAYC1-PASMTP02 ([65.54.191.162]) by bay0-omc2-s37.bay0.hotmail.com with Microsoft SMTPSVC(6.0.3790.3959);
+	 Fri, 28 Sep 2007 15:15:48 -0700
+X-Originating-IP: [69.156.110.168]
+X-Originating-Email: [seanlkml@sympatico.ca]
+Received: from linux1.attic.local ([69.156.110.168]) by BAYC1-PASMTP02.bayc1.hotmail.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.2668);
+	 Fri, 28 Sep 2007 15:15:47 -0700
+Received: from guru.attic.local ([10.10.10.28])
+	by linux1.attic.local with smtp (Exim 4.43)
+	id 1IbO7d-00040I-TI; Fri, 28 Sep 2007 18:15:45 -0400
+In-Reply-To: <46FD7AA5.2080007@earthdetails.com>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.12.0; i686-pc-linux-gnu)
+X-OriginalArrivalTime: 28 Sep 2007 22:15:47.0901 (UTC) FILETIME=[1F17A6D0:01C8021D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59427>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Fri, 28 Sep 2007 15:05:25 -0700
+Reza Roboubi <reza@earthdetails.com> wrote:
 
-> On Fri, 28 Sep 2007, Junio C Hamano wrote:
+> git-cat-file -t 9b22b50f814b22224d6f838433f1e9cd36bfc2
 >
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
->> > +int remove_dir_recursively(char *path, int len, int only_empty)
->> > +{
->> > ...
->> > +		namlen = strlen(e->d_name);
->> > +		if (len + namlen > PATH_MAX ||
->> > +				!memcpy(path + len, e->d_name, namlen) ||
->> > +				(path[len + namlen] = '\0') ||
->> > +				lstat(path, &st))
->> > +			; /* fall thru */
->> > +		else if (S_ISDIR(st.st_mode)) {
->> > +			if (!remove_dir_recursively(path, len + namlen,
->> > +						only_empty))
->> > +				continue; /* happy */
->> > +		} else if (!only_empty &&
->> > +				len + namlen + 1 < PATH_MAX &&
->> > +				!unlink(path))
->> > +			continue; /* happy, too */
->> > +
->> > +		/* path too long, stat fails, or non-directory still exists */
->> > +		ret = -1;
->> > +		break;
->> 
->> Is it only me who finds the first if () condition way too
->> convoluted and needs to read three times to convince oneself
->> that it is doing a sane thing?
->> 
->> Please, especially...
->> 
->>  * For $DEITY's sake, memcpy() returns pointer to dst which you
->>    know is not NULL. so !memcpy() is always false here, which
->>    might be _convenient_ for you and the compiler but not for
->>    a human reader of the code who needs to blink twice wondering
->>    if you meant !memcmp().
->> 
->>  * Same for (path[] = '\0'), wondering if it is misspelled
->>    (path[] == '\0').
 >
-> Okay, will fix (with an evil goto).
+> says: "Not a valid object name".
+> 
+> So what is this thing in my .git:
+> ../.git/objects/92/9b22b50f814b22224d6f838433f1e9cd36bfc2
 
-Uh, C has a comma operator.  And inverting the first condition makes
-for a nicer flow, no goto.
+Reza,
 
-		namlen = strlen(e->d_name);
-		if (len + namlen <= PATH_MAX
-			&& (memcpy(path + len, e->d_name, namlen),
-			    path[len + namlen] = '\0',
-			    lstat(path, &st) == 0)
-		if (S_ISDIR(st.st_mode)) {
-			if (!remove_dir_recursively(path, len + namlen,
-						only_empty))
-			continue; /* happy */
-		} else if (!only_empty &&
-				len + namlen + 1 < PATH_MAX &&
-				!unlink(path))
-			continue; /* happy, too */
+The first two digits of the sha1 appear before the final slash (/)..
+Therefore the actual object name in the case you give is
+929b22b50f814b22224d6f838433f1e9cd36bfc2.  So the following command
+should work:
 
-		/* path too long, stat fails, or non-directory still exists */
-		ret = -1;
-		break;
+$ git cat-file -t 929b22b5
 
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Sean
