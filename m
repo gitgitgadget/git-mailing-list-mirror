@@ -1,83 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: backup or mirror a repository
-Date: Thu, 27 Sep 2007 23:27:06 -0700
-Message-ID: <7vsl4zqp8l.fsf@gitster.siamese.dyndns.org>
-References: <1190921742.2263.17.camel@Tenacity>
-	<Pine.LNX.4.64.0709272255360.28395@racer.site>
-	<1190940704.2263.32.camel@Tenacity>
-	<Pine.LNX.4.64.0709280253150.28395@racer.site>
-	<1190947063.2263.46.camel@Tenacity>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: Mergetool generating blank files (1.5.3)
+Date: Fri, 28 Sep 2007 08:35:46 +0200
+Message-ID: <20070928063546.GA19299@artemis.corp>
+References: <94ccbe710709271131o620bf1far8893328ce98f0ba4@mail.gmail.com> <20070927185707.GC12427@artemis.corp> <46FBFDD7.1080300@gmail.com> <20070927191125.GD12427@artemis.corp> <20070927222326.GB8688@thunk.org> <20070927222825.GG12427@artemis.corp> <20070928051503.GA19815@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Dan Farina <drfarina@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 28 08:27:22 2007
+Content-Type: multipart/signed; boundary="ibTvN161/egqYuK8";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, Russ Brown <pickscrape@gmail.com>,
+	Kelvie Wong <kelvie@ieee.org>
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Sep 28 08:36:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ib9Jm-0004mk-58
-	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:27:18 +0200
+	id 1Ib9S9-0007QR-BQ
+	for gcvg-git-2@gmane.org; Fri, 28 Sep 2007 08:35:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756519AbXI1G1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 02:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756094AbXI1G1I
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:27:08 -0400
-Received: from fed1rmmtao104.cox.net ([68.230.241.42]:52579 "EHLO
-	fed1rmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755861AbXI1G1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Sep 2007 02:27:07 -0400
-Received: from fed1rmimpo02.cox.net ([70.169.32.72])
-          by fed1rmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20070928062706.VESN18773.fed1rmmtao104.cox.net@fed1rmimpo02.cox.net>;
-          Fri, 28 Sep 2007 02:27:06 -0400
-Received: from localhost ([68.225.240.77])
-	by fed1rmimpo02.cox.net with bizsmtp
-	id tiT61X00C1gtr5g0000000; Fri, 28 Sep 2007 02:27:06 -0400
-In-Reply-To: <1190947063.2263.46.camel@Tenacity> (Dan Farina's message of
-	"Thu, 27 Sep 2007 19:37:43 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756801AbXI1Gfu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 02:35:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756774AbXI1Gfu
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 02:35:50 -0400
+Received: from pan.madism.org ([88.191.52.104]:49246 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756761AbXI1Gft (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 02:35:49 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id F2D2519476;
+	Fri, 28 Sep 2007 08:35:47 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 0B1D3D253; Fri, 28 Sep 2007 08:35:47 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Peter Baumann <waste.manager@gmx.de>, git@vger.kernel.org,
+	Russ Brown <pickscrape@gmail.com>, Kelvie Wong <kelvie@ieee.org>
+Content-Disposition: inline
+In-Reply-To: <20070928051503.GA19815@xp.machine.xx>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59371>
 
-Dan Farina <drfarina@gmail.com> writes:
 
-> I did look at prune and update, but my problem is the opposite: I want
-> something that will remove branches from the remote repo when they no
-> longer exist locally. As-is over time I will proliferate little local
-> branches unless I occasionally sit down and delete branches by operating
-> directly on the bare backup repository. (and then use prune on the
-> remote nodes)
+--ibTvN161/egqYuK8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The "git remote add --mirror" setup is about setting up the
-local repository _AS_ the backup of the remote.  In other words,
-the contents come from the remote by fetching from it and safely
-kept away from disaster on the local side.  And for that,
-"remote prune" is a perfect thing to do.
+On Fri, Sep 28, 2007 at 05:15:03AM +0000, Peter Baumann wrote:
+> FWIW, xxdiff has support to handle halfway merged files, so that if git
+> could merge some hunks already for you (e.g. rerere kicked in), you
+> don't have to redo the _whole_ merge by hand, just call
+>=20
+> 	xxdiff -U file/with/mergemarkers/inside
+>=20
+> and it will do the right thing. Not sure if the other tools could handle
+> it, but any pointers appreciated, because it often happens to me that
+> only one hunk out of several wasn't merged automatically by git. And
+> mergetool wants to always redo the whole merge, which isn't the best it
+> can do.
 
-I think what you are asking for is an opposite, a backup remote
-site you would push into.  That is not what "remote add --mirror"
-is about.
+  For what I've seen, it's how meld works, and I find it nice too. Meld
+is quite slow (python + gnomeish doesn't help) but well, I don't merge
+things that often, so like said I think I'll give it a try for a while
+and see if it has what it takes :)
 
-You can almost do it with
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-	git push --all $remote
+--ibTvN161/egqYuK8
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-except there is no way to automagically remove the branch you
-removed from the local repository.  For that, we would need a
-new --mirror option to "git-push".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-I think it is trivial to do for native transports, as we first
-get the list of all refs from the remote side before starting
-the transfer.  You need to change the last parameter called
-'all' to remote.c::match_refs() into an enum ('push_all' being
-one of choices), introduce another enum 'push_mirror', and teach
-it to "match" the remote (i.e. dst) ref that does not have
-corresponding entry on our side (i.e. src) with an empty object
-name to mark it removed.  Then the part marked as "Finally, tell
-the other end!"  in send-pack.c::send_pack() will take care of
-the actual removal.
+iD8DBQBG/KDCvGr7W6HudhwRAoXNAKCVSm+Qgcldd24brivJCTNqh9UGJwCeMRN+
+1/XmVHlTyB1gJvnj/pErv0Q=
+=wH1C
+-----END PGP SIGNATURE-----
+
+--ibTvN161/egqYuK8--
