@@ -1,73 +1,56 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] Replace literal STRLEN_ #defines in refs.h with
- compiler evaluated expressions
-Date: Sat, 29 Sep 2007 11:15:21 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0709291103380.3579@woody.linux-foundation.org>
-References: <200709291400.13880.andyparkins@gmail.com>
- <7vd4w1l872.fsf@gitster.siamese.dyndns.org>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: Submodule usability
+Date: Sat, 29 Sep 2007 20:52:38 +0200
+Message-ID: <20070929185238.GB19943@uranus.ravnborg.org>
+References: <Pine.LNX.4.64.0709291302240.5926@iabervon.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 20:15:45 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sat Sep 29 20:51:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibgqo-0002dp-DV
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 20:15:38 +0200
+	id 1IbhPM-0004Rj-OK
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 20:51:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752300AbXI2SPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 14:15:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752832AbXI2SPb
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 14:15:31 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49129 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750863AbXI2SPa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2007 14:15:30 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8TIFMxw005644
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sat, 29 Sep 2007 11:15:23 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8TIFLFv026878;
-	Sat, 29 Sep 2007 11:15:21 -0700
-In-Reply-To: <7vd4w1l872.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-3.246 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.41__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754456AbXI2SvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 14:51:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754213AbXI2SvL
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 14:51:11 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:38693 "EHLO pasmtpA.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752832AbXI2SvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 14:51:10 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpA.tele.dk (Postfix) with ESMTP id B837C801820;
+	Sat, 29 Sep 2007 20:51:09 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id DF432580D2; Sat, 29 Sep 2007 20:52:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0709291302240.5926@iabervon.org>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59484>
 
-
-
-On Sat, 29 Sep 2007, Junio C Hamano wrote:
+Hi Daniel
+On Sat, Sep 29, 2007 at 01:24:53PM -0400, Daniel Barkalow wrote:
 > 
-> I do not think the above is wrong per se, but doesn't a good
-> compiler optimize
-> 
-> 	#define PATH_REMOTES	"remotes/"
-> 	#define STRLEN_PATH_REMOTES strlen(PATH_REMOTES)
+> Also, would it be reasonable to have a gitmodules option for submodules 
+> that the supermodule doesn't make sense without? E.g., multiple projects 
+> are now using kbuild as their build system,
 
-Gcc does, yes.
+Out of couriosity...
+I know of busybox and klibc.
+Are there any others using kbuild these days?
 
-HOWEVER.
+I see that several build system share some ideas with kbuild
+which I btw am glad to see.
+But if there are enough project taking benefit of kbuild I should
+maybe revisit my idea to factor out all the common stuff somehow.
 
-Using "strlen()" may be optimized at compile-time, but it still ends up 
-resulting in illegal C code if the constant needs to be a constant in the 
-semantic sense.
 
-IOW, the "sizeof()" trick can be portably used for things like array 
-declarations etc. But strlen() cannot. Ie
-
-	char array[sizeof("hello")-1];
-
-is legal in non-function scope, but doing the same with "strlen()" is not.
-
-(That said, gcc has been known to accept bad C code, and will in fact 
-accept this one too!)
-
-		Linus
+	Sam
