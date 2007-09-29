@@ -1,84 +1,99 @@
 From: Alexandre Julliard <julliard@winehq.org>
-Subject: [PATCH 3/4] git.el: Update a file status in the git buffer upon save.
-Date: Sat, 29 Sep 2007 11:59:07 +0200
-Message-ID: <873awxpzbo.fsf@wine.dyndns.org>
+Subject: [PATCH 4/4] git.el: Reset the permission flags when changing a file state.
+Date: Sat, 29 Sep 2007 11:59:32 +0200
+Message-ID: <87y7epokqj.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 29 11:59:38 2007
+X-From: git-owner@vger.kernel.org Sat Sep 29 11:59:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbZ6b-0001DL-Lo
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 11:59:26 +0200
+	id 1IbZ70-0001KT-R1
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 11:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555AbXI2J7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 05:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755408AbXI2J7S
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 05:59:18 -0400
-Received: from mail.codeweavers.com ([216.251.189.131]:53781 "EHLO
+	id S1755565AbXI2J7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 05:59:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755564AbXI2J7n
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 05:59:43 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:53794 "EHLO
 	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755393AbXI2J7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 05:59:17 -0400
+	with ESMTP id S1755408AbXI2J7m (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 05:59:42 -0400
 Received: from adsl-84-227-59-51.adslplus.ch ([84.227.59.51] helo=wine.dyndns.org)
 	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.63)
 	(envelope-from <julliard@winehq.org>)
-	id 1IbZ6M-0004ll-3T
-	for git@vger.kernel.org; Sat, 29 Sep 2007 04:59:16 -0500
+	id 1IbZ6l-0004mG-5t
+	for git@vger.kernel.org; Sat, 29 Sep 2007 04:59:41 -0500
 Received: by wine.dyndns.org (Postfix, from userid 1000)
-	id 86FF61E7148; Sat, 29 Sep 2007 11:59:07 +0200 (CEST)
+	id 821221E7148; Sat, 29 Sep 2007 11:59:32 +0200 (CEST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
 X-Spam-Score: -2.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59455>
 
 Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 ---
- contrib/emacs/git.el |   18 ++++++++++++++++--
- 1 files changed, 16 insertions(+), 2 deletions(-)
+ contrib/emacs/git.el |   28 +++++++++++-----------------
+ 1 files changed, 11 insertions(+), 17 deletions(-)
 
 diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
-index ec2e699..c2a1c3d 100644
+index c2a1c3d..4286d16 100644
 --- a/contrib/emacs/git.el
 +++ b/contrib/emacs/git.el
-@@ -36,7 +36,6 @@
- ;; TODO
- ;;  - portability to XEmacs
- ;;  - better handling of subprocess errors
--;;  - hook into file save (after-save-hook)
- ;;  - diff against other branch
- ;;  - renaming files from the status buffer
- ;;  - creating tags
-@@ -1352,9 +1351,24 @@ Commands:
-         (cd dir)
-         (git-status-mode)
-         (git-refresh-status)
--        (goto-char (point-min)))
-+        (goto-char (point-min))
-+        (add-hook 'after-save-hook 'git-update-saved-file))
-     (message "%s is not a git working tree." dir)))
+@@ -484,14 +484,15 @@ and returns the process output as a string."
+   "Remove everything from the status list."
+   (ewoc-filter status (lambda (info) nil)))
  
-+(defun git-update-saved-file ()
-+  "Update the corresponding git-status buffer when a file is saved.
-+Meant to be used in `after-save-hook'."
-+  (let* ((file (expand-file-name buffer-file-name))
-+         (dir (condition-case nil (git-get-top-dir (file-name-directory file))))
-+         (buffer (and dir (git-find-status-buffer dir))))
-+    (when buffer
-+      (with-current-buffer buffer
-+        (let ((filename (file-relative-name file dir)))
-+          ; skip files located inside the .git directory
-+          (unless (string-match "^\\.git/" filename)
-+            (git-call-process-env nil nil "add" "--refresh" "--" filename)
-+            (git-update-status-files (list filename) 'uptodate)))))))
-+
- (defun git-help ()
-   "Display help for Git mode."
-   (interactive)
+-(defun git-set-files-state (files state)
+-  "Set the state of a list of files."
+-  (dolist (info files)
+-    (unless (eq (git-fileinfo->state info) state)
+-      (setf (git-fileinfo->state info) state)
+-      (setf (git-fileinfo->rename-state info) nil)
+-      (setf (git-fileinfo->orig-name info) nil)
+-      (setf (git-fileinfo->needs-refresh info) t))))
++(defun git-set-fileinfo-state (info state)
++  "Set the state of a file info."
++  (unless (eq (git-fileinfo->state info) state)
++    (setf (git-fileinfo->state info) state
++          (git-fileinfo->old-perm info) 0
++          (git-fileinfo->new-perm info) 0
++          (git-fileinfo->rename-state info) nil
++          (git-fileinfo->orig-name info) nil
++          (git-fileinfo->needs-refresh info) t)))
+ 
+ (defun git-status-filenames-map (status func files &rest args)
+   "Apply FUNC to the status files names in the FILES list."
+@@ -510,14 +511,7 @@ and returns the process output as a string."
+ (defun git-set-filenames-state (status files state)
+   "Set the state of a list of named files."
+   (when files
+-    (git-status-filenames-map status
+-                              (lambda (info state)
+-                                (unless (eq (git-fileinfo->state info) state)
+-                                  (setf (git-fileinfo->state info) state)
+-                                  (setf (git-fileinfo->rename-state info) nil)
+-                                  (setf (git-fileinfo->orig-name info) nil)
+-                                  (setf (git-fileinfo->needs-refresh info) t)))
+-                              files state)
++    (git-status-filenames-map status #'git-set-fileinfo-state files state)
+     (unless state  ;; delete files whose state has been set to nil
+       (ewoc-filter status (lambda (info) (git-fileinfo->state info))))))
+ 
+@@ -800,7 +794,7 @@ Return the list of files that haven't been handled."
+                             (condition-case nil (delete-file ".git/MERGE_HEAD") (error nil))
+                             (condition-case nil (delete-file ".git/MERGE_MSG") (error nil))
+                             (with-current-buffer buffer (erase-buffer))
+-                            (git-set-files-state files 'uptodate)
++                            (dolist (info files) (git-set-fileinfo-state info 'uptodate))
+                             (git-call-process-env nil nil "rerere")
+                             (git-refresh-files)
+                             (git-refresh-ewoc-hf git-status)
 -- 
 1.5.3.2.121.gf7223
 
