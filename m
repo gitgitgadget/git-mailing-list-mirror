@@ -1,95 +1,62 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] handle Docbook XSL 1.72 (incompletely)
-Date: Sat, 29 Sep 2007 14:48:01 +0200
-Message-ID: <20070929124801.GI18156@genesis.frugalware.org>
-References: <bb5b640b0709201426u6ab77d07n6039499eb8baf381@mail.gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/1] --color and --no-color git-log options don't need diffs to be computed.
+Date: Sat, 29 Sep 2007 14:52:36 +0200
+Message-ID: <85ve9t8wh7.fsf@lola.goethe.zz>
+References: <e5bfff550709290429n291968f2md8068a945ff7a79e@mail.gmail.com>
+	<20070929123724.01BB045EC@madism.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="64j1qyTOoGvYcHb1"
-Cc: git@vger.kernel.org
-To: Alexey Mahotkin <squadette@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 29 14:48:16 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sat Sep 29 14:52:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibbjz-0006Nh-PF
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 14:48:16 +0200
+	id 1IbboY-0007bG-7R
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 14:52:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756013AbXI2MsH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 08:48:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755952AbXI2MsG
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 08:48:06 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:36286 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755946AbXI2MsF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 08:48:05 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id BDFCC1B24FA;
-	Sat, 29 Sep 2007 14:48:01 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 955C16FCF9;
-	Sat, 29 Sep 2007 14:48:01 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 6159F13A4019; Sat, 29 Sep 2007 14:48:01 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <bb5b640b0709201426u6ab77d07n6039499eb8baf381@mail.gmail.com>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
+	id S1755830AbXI2Mwu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 08:52:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755974AbXI2Mwu
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 08:52:50 -0400
+Received: from mail-in-01.arcor-online.net ([151.189.21.41]:35443 "EHLO
+	mail-in-01.arcor-online.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755802AbXI2Mwt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Sep 2007 08:52:49 -0400
+Received: from mail-in-14-z2.arcor-online.net (mail-in-14-z2.arcor-online.net [151.189.8.31])
+	by mail-in-01.arcor-online.net (Postfix) with ESMTP id B486E15CC60;
+	Sat, 29 Sep 2007 14:52:48 +0200 (CEST)
+Received: from mail-in-03.arcor-online.net (mail-in-03.arcor-online.net [151.189.21.43])
+	by mail-in-14-z2.arcor-online.net (Postfix) with ESMTP id A13B1201004;
+	Sat, 29 Sep 2007 14:52:48 +0200 (CEST)
+Received: from lola.goethe.zz (dslb-084-061-000-036.pools.arcor-ip.net [84.61.0.36])
+	by mail-in-03.arcor-online.net (Postfix) with ESMTP id 49E8F312767;
+	Sat, 29 Sep 2007 14:52:33 +0200 (CEST)
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id A2F501C06F89; Sat, 29 Sep 2007 14:52:36 +0200 (CEST)
+In-Reply-To: <20070929123724.01BB045EC@madism.org> (Pierre Habouzit's message of "Sat\, 29 Sep 2007 14\:35\:56 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+X-Virus-Scanned: ClamAV 0.91.2/4429/Sat Sep 29 08:49:25 2007 on mail-in-03.arcor-online.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59464>
 
+Pierre Habouzit <madcoder@debian.org> writes:
 
---64j1qyTOoGvYcHb1
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 
-On Fri, Sep 21, 2007 at 01:26:21AM +0400, Alexey Mahotkin <squadette@gmail.=
-com> wrote:
-> Fedora Core 7 has docbook-style-xsl-1.72.0-2.fc7
->=20
-> git-diff manpage (and couple of more, using callouts) is broken here:
->=20
-> EXAMPLES
->        Various ways to check your working tree
->=20
->                $ git diff            \fB(1)\fR
->                $ git diff --cached   \fB(2)\fR
->                $ git diff HEAD       \fB(3)\fR
->=20
->            .sp \fB1. \fRChanges in the working tree not yet staged for
-> the next commit.
+> -				if (strcmp(argv[i], "-z"))
+> -					revs->diff = 1;
+> +				revs->diff = strcmp(argv[i], "-z")
+> +					&& strcmp(argv[i], "--color")
+> +					&& strcmp(argv[i], "--no-color");
+>  				i += opts - 1;
+>  				continue;
 
-this is a bug in docbook-xsl. see
-http://article.gmane.org/gmane.comp.version-control.git/54785
+This can clear a previously set value of revs->diff.
 
-by the way, are gitlinks okay at you?
-
-example: in the DESCRIPTION section:
-
-"You can stage these changes by using git1[1]."
-
-while the man branch has:
-
-"You can stage these changes by using git-add(1)."
-
-this is asciidoc 8.2.3 and docbook-xsl 1.73.2
-
-thanks,
-- VMiklos
-
---64j1qyTOoGvYcHb1
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFG/kmBe81tAgORUJYRAjT9AJ4gPOooVn1foT6txTIlf5fTQe9UfwCgn4y3
-8Gfo0cy7bYVLdB7oB6DTd60=
-=F+B8
------END PGP SIGNATURE-----
-
---64j1qyTOoGvYcHb1--
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
