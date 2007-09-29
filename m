@@ -1,57 +1,62 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Submodule usability
-Date: Sat, 29 Sep 2007 13:24:53 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0709291302240.5926@iabervon.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: BUG: git remote show origin => error code 1
+Date: Sat, 29 Sep 2007 21:13:26 +0300
+Organization: Private
+Message-ID: <ps01nxvd.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 29 19:25:04 2007
+X-From: git-owner@vger.kernel.org Sat Sep 29 20:09:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibg3r-0005iN-Et
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 19:25:03 +0200
+	id 1Ibgkj-0000vb-9A
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 20:09:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899AbXI2RY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 13:24:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXI2RY4
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 13:24:56 -0400
-Received: from iabervon.org ([66.92.72.58]:44154 "EHLO iabervon.org"
+	id S1753513AbXI2SJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 14:09:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755081AbXI2SJL
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 14:09:11 -0400
+Received: from main.gmane.org ([80.91.229.2]:60959 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751747AbXI2RYz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 13:24:55 -0400
-Received: (qmail 5935 invoked by uid 1000); 29 Sep 2007 17:24:53 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 29 Sep 2007 17:24:53 -0000
+	id S1750863AbXI2SJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 14:09:10 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IbgkL-0007t8-51
+	for git@vger.kernel.org; Sat, 29 Sep 2007 18:08:57 +0000
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Sep 2007 18:08:57 +0000
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 29 Sep 2007 18:08:57 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:LJmnddwZL7iaqcIA9T5MDskA3kw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59482>
 
-Would it be feasible in general to have "git status" cascade into 
-submodules if they're checked out? As it is now, in a project with 
-submodules, a "git commit -a" at the top can create a commit that lacks 
-changes that are in the working tree and aren't mentioned to the user at 
-all, which is a sure recipe for a stream of "add the change I forgot to 
-add last time" follow-up commits.
 
-While I'm on that topic, I think I want an "includesfile" config option 
-that specifies patterns that should never be present untracked (but only 
-as per-user configuration, since I think that's exclusively a matter of 
-personal taste). I'll probably code this up myself unless I've missed 
-somebody else doing it already. My first guess at effect is -a adds them, 
-and they appear as "not added" in the "modified" section of status output 
-instead of the "untracked" section.
+Consider this:
 
-Also, would it be reasonable to have a gitmodules option for submodules 
-that the supermodule doesn't make sense without? E.g., multiple projects 
-are now using kbuild as their build system, so, in order to share 
-improvements to kbuild between projects, it would be useful to have it as 
-a submodule. But, by default, the kernel wouldn't come with its build 
-system any more, which would be a pain. So have a tracked option for the 
-submodule that says that, when checking out the superproject, this 
-particular subproject should be updated automatically.
+    $ git remote show origin
+    No such remote origin
 
-	-Daniel
-*This .sig left intentionally blank*
+    $ echo $?
+    0
+
+Perhaps the code should return non-zero in this case, so that shell
+scripts could use construct:
+
+    git remote show origin; || <another action>
+
+Jari
+
+-- 
+Welcome to FOSS revolution: we fix and modify until it shines
