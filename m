@@ -1,85 +1,110 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: Stashing untracked files
-Date: Sat, 29 Sep 2007 18:23:21 -0400
-Message-ID: <20070929222320.GB2947@hermes.priv>
-References: <46FE9924.7080006@theory.org> <Pine.LNX.4.64.0709292201400.28395@racer.site> <EEE8F630-AE62-4425-96A0-239D54724DF4@lrde.epita.fr> <Pine.LNX.4.64.0709292248400.28395@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A tour of git: the basics (and notes on some unfriendly messages)
+Date: Sat, 29 Sep 2007 15:25:00 -0700
+Message-ID: <7vlkapjeir.fsf@gitster.siamese.dyndns.org>
+References: <87ir5us82a.wl%cworth@cworth.org>
+	<20070929000056.GZ3099@spearce.org>
+	<E5C688F2-4A8D-402A-9757-5007BE4A8B25@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	Neil Macneale <mac4-git@theory.org>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 30 00:21:26 2007
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Carl Worth <cworth@cworth.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Sep 30 00:26:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibkge-0000eP-Jj
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 00:21:25 +0200
+	id 1Ibkll-0001jJ-Oj
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 00:26:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756370AbXI2WVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 18:21:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752270AbXI2WVS
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 18:21:18 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:34320 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756507AbXI2WVR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 18:21:17 -0400
-Received: by py-out-1112.google.com with SMTP id u77so6086557pyb
-        for <git@vger.kernel.org>; Sat, 29 Sep 2007 15:21:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=K4jRrI7GJubdzB3hKlepH4kUgCrRnRqmjUdTszcvmLc=;
-        b=TbYER3Etz3wAn08FgJTlFNJm6+1XQCmxOFZTBJF2amf6XFepJh4VsREKUETJUQIkKaZIxPbVdo+EHaS5kRSA6wx/hW5zX07bSUb9Fql35YDczosKe89XX3CLMdJuFeGXAtc5PqaCVpOUCsVD3BzGZaY6hLiZlGHDqznCq0TKgN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=GNlJlKxzstB/LviM2sUlZB0nXFAPvE8GDNmnumALqf2isPpVi1MzpJ1YoDn+tvaKIfU3xAqDzrnOK6y6JGONYigQ5aklFyBZ5uLPpTYoHs63a0vFjgGE37iJ9p5u++DhBJrlyxfigqZIotvqXVoVwpvjM8uLIfYe4JIufYX7vVM=
-Received: by 10.35.17.8 with SMTP id u8mr5553129pyi.1191104464502;
-        Sat, 29 Sep 2007 15:21:04 -0700 (PDT)
-Received: from hermes ( [65.95.175.80])
-        by mx.google.com with ESMTPS id f75sm4439339pye.2007.09.29.15.21.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 29 Sep 2007 15:21:03 -0700 (PDT)
-Received: by hermes (nbSMTP-1.00) for uid 500
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	Tom; Sat, 29 Sep 2007 18:23:22 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0709292248400.28395@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1754787AbXI2W0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 18:26:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755146AbXI2W0c
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 18:26:32 -0400
+Received: from rune.pobox.com ([208.210.124.79]:58000 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754321AbXI2W0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 18:26:31 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id F047313E5E8;
+	Sat, 29 Sep 2007 18:26:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id EBE8F13E631;
+	Sat, 29 Sep 2007 18:26:08 -0400 (EDT)
+In-Reply-To: <E5C688F2-4A8D-402A-9757-5007BE4A8B25@zib.de> (Steffen Prohaska's
+	message of "Sat, 29 Sep 2007 23:48:25 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59503>
 
-> > You could stash untracked files that are not ignored (I personally 
-> > ignore *.o, *.a and the like).
-> 
-> And what if you happen to forget to ignore that?  Or if you happen to 
-> have an strace log in some file (which you did not ignore either)?
-> 
-> Thanks, but I think the semantics of git stash is pretty well defined.  
-> And it means that you stash away _tracked_ content that was not yet 
-> committed.
-> 
-> I mean, you can have your desired behaviour with
-> 
-> $ git add .
-> $ git stash
-> 
-> but if we were to fulfil your wish and change the default behaviour, there 
-> is no way back to the current behaviour (which I happen to find pretty 
-> sane).
+Steffen Prohaska <prohaska@zib.de> writes:
 
-But
+> Quite often git prints a lot of very technical information that
+> is not very interesting as long as things succeed without error.
+> Some examples are
+> - git fetch (see above)
 
-git add .
-git stash
-git stash apply
+Probably.
 
-will not be a no-op any more.
+> - git rebase: prints a lot of details that I'm not interested in
+>   unless the rebase fails.
 
-It doesn't need to be a default, but there are certainly times when I would
-find the option to stash untracked files convenient.
+Yes.  Most of the clutter is coming from "am" which also should
+be squelched.
 
-  Tom
+Saying
+
+	Switched to branch <blah>
+
+is good when the branch to rebase is specified.
+
+	"HEAD is now at ..."
+is not useful -- it is a side effect of rewinding the head to
+the --onto commit.
+
+	<blank line>
+        Applying <patch subject>
+	<blank line>
+        Wrote tree <tree object>
+        Committed: <commit object>
+
+are coming from "am" for each patch.  We could squelch these
+into just one "Applying <patch subject>" and nothing else, which
+would also help making "am" quieter.
+
+> - git push: prints updates of remote heads. A message about
+>   failing to update a remote head may get lost.
+
+Please do not remove the report of successful update, as people
+often say "git push" or "git push $there" without explicitly
+saying which refs to push.  When pushing out to publish, I say
+"git push ko" (to mean k.org) and I _want_ my positive feedback.
+
+> - git merge: the fact that a merge is a fast forward merge gets
+>   printed at the very top, followed by (often a lot of) diffstat.
+>   I know diffstat can help to judge if the merge did what you
+>   expected. But even more important is the fact that the merge
+>   was just a fast forward, which may get buried under lots of output.
+
+I do not think fast-forwardness is particularly interesting.  If
+you find fast-forwardness interesting, I suspect you would even
+want to know what _your_ change that were not in the other side
+of the merge, which is something that we do not even report
+right now.
+
+> Maybe git should become more quiet, as other unix tools are, and
+> per default only report problems. Technical details and progress
+> could be requested explicitly by '--verbose' or similar.
+
+I'd agree with this sentiment in principle, and many of the
+things you propose to remove above fall into the "unnecessary
+clutter" category.  But some of the existing output fall into
+the "necessary info" category --- diffstart after merge and
+report of successful remote ref updates are such things, so we
+should be careful not to go overboard.
