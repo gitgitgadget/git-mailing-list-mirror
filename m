@@ -1,72 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] gitk: add check for required tcl version >= 8.4
-Date: Sat, 29 Sep 2007 02:32:54 -0700
-Message-ID: <7vlkaplsu1.fsf@gitster.siamese.dyndns.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH 1/4] git.el: Preserve file marks when doing a full refresh.
+Date: Sat, 29 Sep 2007 11:58:08 +0200
+Message-ID: <87bqblpzdb.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
-To: paulus@samba.org
-X-From: git-owner@vger.kernel.org Sat Sep 29 11:33:16 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 29 11:58:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbYhG-0002CS-Db
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 11:33:14 +0200
+	id 1IbZ5i-0000xS-I0
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 11:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751955AbXI2JdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 05:33:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751241AbXI2JdE
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 05:33:04 -0400
-Received: from rune.pobox.com ([208.210.124.79]:34096 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750996AbXI2JdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 05:33:03 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id C02DA13E0A0;
-	Sat, 29 Sep 2007 05:33:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 1AA7813DEBB;
-	Sat, 29 Sep 2007 05:33:19 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755428AbXI2J6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 05:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755526AbXI2J6V
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 05:58:21 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:57832 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755249AbXI2J6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 05:58:20 -0400
+Received: from adsl-84-227-59-51.adslplus.ch ([84.227.59.51] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1IbZ5P-0004kr-Kc
+	for git@vger.kernel.org; Sat, 29 Sep 2007 04:58:19 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id 130C51E7148; Sat, 29 Sep 2007 11:58:08 +0200 (CEST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+X-Spam-Score: -2.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59452>
 
-From: Steffen Prohaska <prohaska@zib.de>
-Date: Fri, 28 Sep 2007 22:57:22 +0200
-
-gitk requires tcl version >= 8.4 to work flawlessly. So let's
-check the tcl version and quit if it's too low.
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
 ---
+ contrib/emacs/git.el |   40 ++++++++++++++++++++++++++++------------
+ 1 files changed, 28 insertions(+), 12 deletions(-)
 
- * I do not have a ready access to older tcl/tk myself, so I
-   cannot judge if this is sensible or not.  Just forwarding in
-   case you missed it.
-
- gitk |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
-
-diff --git a/gitk b/gitk
-index 300fdce..6ea6489 100755
---- a/gitk
-+++ b/gitk
-@@ -7,6 +7,11 @@ exec wish "$0" -- "$@"
- # and distributed under the terms of the GNU General Public Licence,
- # either version 2, or (at your option) any later version.
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 2d77fd4..7b4a0d3 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -494,24 +494,31 @@ and returns the process output as a string."
+       (setf (git-fileinfo->orig-name info) nil)
+       (setf (git-fileinfo->needs-refresh info) t))))
  
-+if {[info tclversion] < 8.4} {
-+   puts stderr "Sorry, gitk requires tcl version >= 8.4."
-+   exit 1 
-+}
+-(defun git-set-filenames-state (status files state)
+-  "Set the state of a list of named files."
++(defun git-status-filenames-map (status func files &rest args)
++  "Apply FUNC to the status files names in the FILES list."
+   (when files
+     (setq files (sort files #'string-lessp))
+     (let ((file (pop files))
+           (node (ewoc-nth status 0)))
+       (while (and file node)
+         (let ((info (ewoc-data node)))
+-          (cond ((string-lessp (git-fileinfo->name info) file)
+-                 (setq node (ewoc-next status node)))
+-                ((string-equal (git-fileinfo->name info) file)
+-                 (unless (eq (git-fileinfo->state info) state)
+-                   (setf (git-fileinfo->state info) state)
+-                   (setf (git-fileinfo->rename-state info) nil)
+-                   (setf (git-fileinfo->orig-name info) nil)
+-                   (setf (git-fileinfo->needs-refresh info) t))
+-                 (setq file (pop files)))
+-                (t (setq file (pop files)))))))
++          (if (string-lessp (git-fileinfo->name info) file)
++              (setq node (ewoc-next status node))
++            (if (string-equal (git-fileinfo->name info) file)
++                (apply func info args))
++            (setq file (pop files))))))))
 +
- proc gitdir {} {
-     global env
-     if {[info exists env(GIT_DIR)]} {
++(defun git-set-filenames-state (status files state)
++  "Set the state of a list of named files."
++  (when files
++    (git-status-filenames-map status
++                              (lambda (info state)
++                                (unless (eq (git-fileinfo->state info) state)
++                                  (setf (git-fileinfo->state info) state)
++                                  (setf (git-fileinfo->rename-state info) nil)
++                                  (setf (git-fileinfo->orig-name info) nil)
++                                  (setf (git-fileinfo->needs-refresh info) t)))
++                              files state)
+     (unless state  ;; delete files whose state has been set to nil
+       (ewoc-filter status (lambda (info) (git-fileinfo->state info))))))
+ 
+@@ -1197,11 +1204,20 @@ Return the list of files that haven't been handled."
+   (interactive)
+   (let* ((status git-status)
+          (pos (ewoc-locate status))
++         (marked-files (git-get-filenames (ewoc-collect status (lambda (info) (git-fileinfo->marked info)))))
+          (cur-name (and pos (git-fileinfo->name (ewoc-data pos)))))
+     (unless status (error "Not in git-status buffer."))
+     (git-run-command nil nil "update-index" "--refresh")
+     (git-clear-status status)
+     (git-update-status-files nil)
++    ; restore file marks
++    (when marked-files
++      (git-status-filenames-map status
++                                (lambda (info)
++                                        (setf (git-fileinfo->marked info) t)
++                                        (setf (git-fileinfo->needs-refresh info) t))
++                                marked-files)
++      (git-refresh-files))
+     ; move point to the current file name if any
+     (let ((node (and cur-name (git-find-status-file status cur-name))))
+       (when node (ewoc-goto-node status node)))))
 -- 
-1.5.3.2.111.g5166
+1.5.3.2.121.gf7223
+
+-- 
+Alexandre Julliard
+julliard@winehq.org
