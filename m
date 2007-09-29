@@ -1,76 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Use of strbuf.buf when strbuf.len == 0
-Date: Fri, 28 Sep 2007 17:51:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0709281746500.3579@woody.linux-foundation.org>
-References: <7vir5wy6fv.fsf@gitster.siamese.dyndns.org>
- <20070927101300.GD10289@artemis.corp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase -i: support single-letter abbreviations for the
+ actions
+Date: Sat, 29 Sep 2007 02:31:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0709290231300.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Sep 29 02:52:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 29 03:33:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IbQZC-0003si-Cy
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 02:52:22 +0200
+	id 1IbRCa-00039x-IO
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 03:33:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755872AbXI2AwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Sep 2007 20:52:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755862AbXI2AwO
-	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 20:52:14 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:56853 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755840AbXI2AwO (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Sep 2007 20:52:14 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8T0pbnH018124
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 28 Sep 2007 17:51:38 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l8T0panQ025454;
-	Fri, 28 Sep 2007 17:51:36 -0700
-In-Reply-To: <20070927101300.GD10289@artemis.corp>
-X-Spam-Status: No, hits=-2.445 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_63
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.41__
-X-MIMEDefang-Filter: lf$Revision: 1.185 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753401AbXI2Bc6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Sep 2007 21:32:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbXI2Bc6
+	(ORCPT <rfc822;git-outgoing>); Fri, 28 Sep 2007 21:32:58 -0400
+Received: from mail.gmx.net ([213.165.64.20]:58683 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752294AbXI2Bc5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Sep 2007 21:32:57 -0400
+Received: (qmail invoked by alias); 29 Sep 2007 01:32:55 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp031) with SMTP; 29 Sep 2007 03:32:55 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Re79BEmXRQwl3NlP1+AZPoNkJMHA4+WbANqsZWb
+	yYzC6moRlXKZte
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59438>
 
 
+When you do many rebases, you can get annoyed by having to type out
+the actions "edit" or "squash" in total.
 
-On Thu, 27 Sep 2007, Pierre Habouzit wrote:
-> 
->   I can see a way, that would need special proof-reading of the strbuf
-> module, but should not harm its users, that would be to change
-> STRBUF_INIT to work this way:
-> 
->   { .buf = "", .len = 0, .alloc = 0 }
+This commit helps that, by allowing you to enter "e" instead of "edit",
+or "s" instead of "squash", and it also plays nice with "merge" or "amend"
+as synonyms to "squash".
 
-I'd like to pipe up a bit here..
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-rebase--interactive.sh |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-I think the above is a good fix for the current problem of wanting to 
-always be able to use "sb->buf", but I thinkit actually has the potential 
-to fix another issue entirely.
-
-Namely strbuf's that are initialized from various static strings and/or 
-strings not directly allocated with malloc().
-
-That's not necessarily something really unusual. Wanting to initialize a 
-string with a fixed constant value is a common problem.
-
-And wouldn't it be nice if you could actually do that, with
-
-	{ .buf = "static initializer", .len = 18, .alloc = 0 }
-
-and have all the strbuf routines that modify the initializer (including 
-making it shorter!) notice that the allocation is too short, and create a 
-new allocation?
-
-Hmm?
-
-			Linus
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 823291d..0f9483e 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -232,14 +232,14 @@ do_next () {
+ 	'#'*|'')
+ 		mark_action_done
+ 		;;
+-	pick)
++	pick|p)
+ 		comment_for_reflog pick
+ 
+ 		mark_action_done
+ 		pick_one $sha1 ||
+ 			die_with_patch $sha1 "Could not apply $sha1... $rest"
+ 		;;
+-	edit)
++	edit|e)
+ 		comment_for_reflog edit
+ 
+ 		mark_action_done
+@@ -254,7 +254,7 @@ do_next () {
+ 		warn
+ 		exit 0
+ 		;;
+-	squash)
++	squash|s|merge|m|amend|a)
+ 		comment_for_reflog squash
+ 
+ 		has_action "$DONE" ||
+@@ -263,7 +263,7 @@ do_next () {
+ 		mark_action_done
+ 		make_squash_message $sha1 > "$MSG"
+ 		case "$(peek_next_command)" in
+-		squash)
++		squash|s|merge|m|amend|a)
+ 			EDIT_COMMIT=
+ 			USE_OUTPUT=output
+ 			cp "$MSG" "$SQUASH_MSG"
+-- 
+1.5.3.2.1102.g9487
