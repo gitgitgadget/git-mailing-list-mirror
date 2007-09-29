@@ -1,72 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] --color and --no-color git-log options don't need diffs to be computed.
-Date: Sat, 29 Sep 2007 10:02:47 -0700
-Message-ID: <7v4phdl808.fsf@gitster.siamese.dyndns.org>
-References: <e5bfff550709290429n291968f2md8068a945ff7a79e@mail.gmail.com>
-	<20070929123724.01BB045EC@madism.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Submodule usability
+Date: Sat, 29 Sep 2007 13:24:53 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0709291302240.5926@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Sep 29 19:03:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 29 19:25:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibfib-0007vL-R9
-	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 19:03:06 +0200
+	id 1Ibg3r-0005iN-Et
+	for gcvg-git-2@gmane.org; Sat, 29 Sep 2007 19:25:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756297AbXI2RC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Sep 2007 13:02:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756215AbXI2RC6
-	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 13:02:58 -0400
-Received: from rune.pobox.com ([208.210.124.79]:36554 "EHLO rune.pobox.com"
+	id S1751899AbXI2RY4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Sep 2007 13:24:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXI2RY4
+	(ORCPT <rfc822;git-outgoing>); Sat, 29 Sep 2007 13:24:56 -0400
+Received: from iabervon.org ([66.92.72.58]:44154 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754580AbXI2RC6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Sep 2007 13:02:58 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id C5C4B13DDD0;
-	Sat, 29 Sep 2007 13:03:19 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id D9E0313DCB4;
-	Sat, 29 Sep 2007 13:03:16 -0400 (EDT)
-In-Reply-To: <20070929123724.01BB045EC@madism.org> (Pierre Habouzit's message
-	of "Sat, 29 Sep 2007 14:35:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751747AbXI2RYz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Sep 2007 13:24:55 -0400
+Received: (qmail 5935 invoked by uid 1000); 29 Sep 2007 17:24:53 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Sep 2007 17:24:53 -0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59481>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+Would it be feasible in general to have "git status" cascade into 
+submodules if they're checked out? As it is now, in a project with 
+submodules, a "git commit -a" at the top can create a commit that lacks 
+changes that are in the working tree and aren't mentioned to the user at 
+all, which is a sure recipe for a stream of "add the change I forgot to 
+add last time" follow-up commits.
 
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> ---
->
->  revision.c |    5 +++--
->  1 files changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/revision.c b/revision.c
-> index 33d092c..0dee835 100644
-> --- a/revision.c
-> +++ b/revision.c
-> @@ -1209,8 +1209,9 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
->  
->  			opts = diff_opt_parse(&revs->diffopt, argv+i, argc-i);
->  			if (opts > 0) {
-> -				if (strcmp(argv[i], "-z"))
-> -					revs->diff = 1;
-> +				revs->diff = strcmp(argv[i], "-z")
-> +					&& strcmp(argv[i], "--color")
-> +					&& strcmp(argv[i], "--no-color");
->  				i += opts - 1;
->  				continue;
->  			}
+While I'm on that topic, I think I want an "includesfile" config option 
+that specifies patterns that should never be present untracked (but only 
+as per-user configuration, since I think that's exclusively a matter of 
+personal taste). I'll probably code this up myself unless I've missed 
+somebody else doing it already. My first guess at effect is -a adds them, 
+and they appear as "not added" in the "modified" section of status output 
+instead of the "untracked" section.
 
-Aside from the "don't override the option that is already set"
-comment from David, I am somewhat unhappy that this piece
-already knows too much about which option to diff potentially
-changes the output (but not commits us to produce the diff) and
-which option causes us to actually produce output.
+Also, would it be reasonable to have a gitmodules option for submodules 
+that the supermodule doesn't make sense without? E.g., multiple projects 
+are now using kbuild as their build system, so, in order to share 
+improvements to kbuild between projects, it would be useful to have it as 
+a submodule. But, by default, the kernel wouldn't come with its build 
+system any more, which would be a pain. So have a tracked option for the 
+submodule that says that, when checking out the superproject, this 
+particular subproject should be updated automatically.
+
+	-Daniel
+*This .sig left intentionally blank*
