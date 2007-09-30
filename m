@@ -1,57 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] fork/exec removal series
-Date: Sun, 30 Sep 2007 13:20:24 -0700
-Message-ID: <7vbqbjhpmf.fsf@gitster.siamese.dyndns.org>
-References: <1191183001-5368-1-git-send-email-johannes.sixt@telecom.at>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: suggestion for git stash
+Date: Sun, 30 Sep 2007 22:28:16 +0200
+Message-ID: <vpqk5q77va7.fsf@bauges.imag.fr>
+References: <200709302050.41273.bruno@clisp.org>
+	<7vfy0vhqkl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Sep 30 22:20:48 2007
+Cc: Bruno Haible <bruno@clisp.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 30 22:28:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ic5HM-0005KU-El
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:20:40 +0200
+	id 1Ic5P7-0007H0-Gr
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:28:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784AbXI3UUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 16:20:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751799AbXI3UUb
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 16:20:31 -0400
-Received: from rune.pobox.com ([208.210.124.79]:60535 "EHLO rune.pobox.com"
+	id S1751842AbXI3U2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 16:28:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXI3U2d
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 16:28:33 -0400
+Received: from imag.imag.fr ([129.88.30.1]:56710 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751784AbXI3UUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 16:20:31 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 0F13E13F075;
-	Sun, 30 Sep 2007 16:20:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A14613F060;
-	Sun, 30 Sep 2007 16:20:48 -0400 (EDT)
-In-Reply-To: <1191183001-5368-1-git-send-email-johannes.sixt@telecom.at>
-	(Johannes Sixt's message of "Sun, 30 Sep 2007 22:09:56 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751821AbXI3U2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 16:28:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l8UKSGaO000338
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 30 Sep 2007 22:28:17 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Ic5Oi-0004UK-Q4; Sun, 30 Sep 2007 22:28:16 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Ic5Oi-0001mF-Ne; Sun, 30 Sep 2007 22:28:16 +0200
+In-Reply-To: <7vfy0vhqkl.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 30 Sep 2007 12\:59\:54 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 30 Sep 2007 22:28:17 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59560>
 
-Johannes Sixt <johannes.sixt@telecom.at> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Here is a series of patches that removes a number fork/exec pairs.
-> They are replaced by delegating to start_command/finish_command/run_command.
-> You can regard this as the beginning of the MinGW port integration.
+> Isn't "stash apply --index" what you talk about?
 
-Yay!
+It doesn't seem to be documented in Documentation/git-stash.txt, but
+seems to be the answer.
 
-> Patch 2 depends on Patch 1; otherwise, there are no dependencies.
-> The series goes on top of next (it touches str_buf stuff in connect.c).
-
-Thanks for an advance warning.
-
-I'll keep the series in my mailbox (promise) and queue it for
-'pu' for now (but only if I have time), as I intend to merge the
-strbuf stuff to 'master' soon.
+-- 
+Matthieu
