@@ -1,100 +1,51 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: git-svn merge helper
-Date: Sun, 30 Sep 2007 13:05:50 +0200
-Message-ID: <20070930110550.GA4557@atjola.homenet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 30 13:06:20 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Obliterating a commit
+Date: Sun, 30 Sep 2007 13:32:36 +0200
+Message-ID: <D2BD14BD-44F2-4D01-AAEE-6CBC2A2DE85B@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 30 13:33:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibwcd-0006kC-DC
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 13:06:03 +0200
+	id 1Ibx2l-0005e6-8A
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 13:33:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751180AbXI3LFz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Sep 2007 07:05:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbXI3LFz
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 07:05:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:43399 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750946AbXI3LFy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 07:05:54 -0400
-Received: (qmail invoked by alias); 30 Sep 2007 11:05:52 -0000
-Received: from i577B9DEB.versanet.de (EHLO localhost) [87.123.157.235]
-  by mail.gmx.net (mp010) with SMTP; 30 Sep 2007 13:05:52 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+7gJ4xL5K7fItlOZG79Uc5h28qmQW3tAw8P22PUj
-	sRgKuVaMdjph2m
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S1753017AbXI3Lcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 07:32:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbXI3Lcw
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 07:32:52 -0400
+Received: from wincent.com ([72.3.236.74]:37215 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752497AbXI3Lcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 07:32:51 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l8UBWkrv027831
+	for <git@vger.kernel.org>; Sun, 30 Sep 2007 06:32:49 -0500
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59534>
 
-Hi,
+A couple of days ago I mistakenly checked in a file that had some  
+confidential information in it. I immediately realized and amended my  
+commit, and this is a local repository whose contents won't be  
+visible until I push them out.
 
-I recently discovered git-svn and absolutey love it. One thing that I'm
-missing though, is an equivalent of "svn merge" for merging between svn
-remotes, to support the SVN way of using "squashed" merges, where you
-just note the merge meta-data in the commit message. "git merge" didn't
-work for me (and probably isn't expected to work) to merge between two
-svn branches, so I've resorted to cherry-picking the required commits
-one by one into a temporary branch and then squashing them together by
-doing a --squash merge with a second temporary branch (as in [1]).
+So how do I *really* get rid of the that commit before publishing? I  
+couldn't find any porcelain or plumbing to do this. Do I have to  
+manually destroy it? ie. wind back the HEAD, manually remove the  
+commit object, the corresponding tree object, the corresponding file  
+blobs, and probably manually remove the entry from the reflog as well?
 
-Of course that becomes extremely annoying if there are like 200
-commits to merge, so I came up with the following script to help me.
-It does just what I described above, but automated. Usage is like this:
+Is there a "shortcut" wherein I can somehow mark this commit and its  
+related tree and file blobs as unreachable, and then use git-prune to  
+erradicate them?
 
-git-svn-merge trunk 123 543
-
-Which does the same as "svn merge -r123:543 trunk-url", except for bein=
-g
-incremental (ie. no huge one-time patch, eventually causing a massive
-set of conflicts) and often faster.
-
-In case of conflicts, it bails out and let's you fix them. Then you can
-just re-run it with the same parameters again, as it automatically
-determines where to start cherry-picking if you're currently on the
-merge branch.
-
-It's neither complete nor nice to look at, but it more or less gets the
-job done, so I thought I'll just post it here, maybe someone picks it u=
-p
-and brings it into shape.
-
-Thanks,
-Bj=F6rn
-
-[1] http://cheat.errtheblog.com/s/gitsvn/
-
-
-#!/bin/sh
-
-BRANCH=3D$(git branch | grep \* | cut -d ' ' -f2)
-
-START=3D$(git svn find-rev r$2 $1)
-END=3D$(git svn find-rev r$3 $1)
-
-if echo $BRANCH | grep -q svnmerge/
-then
-	START=3D$(git svn find-rev r$(git svn find-rev HEAD) $1)
-else
-	git checkout -b svnmerge/$BRANCH
-fi
-
-for HASH in $(git log --pretty=3Dformat:%H --reverse $START..$END)
-do
-	git cherry-pick $HASH || exit
-done
-
-git checkout $BRANCH
-git checkout -b svnmerge/$BRANCH-squashed
-git merge --squash svnmerge/$BRANCH
-git commit -m "Merged changes from revisions $2-$3 from $1 into $BRANCH=
-=2E"
+Cheers,
+Wincent
