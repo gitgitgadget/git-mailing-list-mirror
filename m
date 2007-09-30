@@ -1,52 +1,71 @@
-From: "Tom Tobin" <korpios@korpios.com>
-Subject: Re: Stashing untracked files
-Date: Sun, 30 Sep 2007 15:44:19 -0500
-Message-ID: <bf0b20a90709301344j1ac8f538u616fb4ba3fc47efe@mail.gmail.com>
-References: <46FE9924.7080006@theory.org>
+From: Bruno Haible <bruno@clisp.org>
+Subject: Re: suggestion for git stash
+Date: Sun, 30 Sep 2007 22:59:11 +0200
+Message-ID: <200709302259.11731.bruno@clisp.org>
+References: <200709302050.41273.bruno@clisp.org> <7vfy0vhqkl.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Neil Macneale" <mac4-git@theory.org>
-X-From: git-owner@vger.kernel.org Sun Sep 30 22:44:32 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 30 22:59:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ic5eQ-0003EV-Tr
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:44:31 +0200
+	id 1Ic5sm-0007Nx-AF
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:59:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013AbXI3UoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 16:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751840AbXI3UoW
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 16:44:22 -0400
-Received: from nf-out-0910.google.com ([64.233.182.187]:52192 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751831AbXI3UoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 16:44:21 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so2792272nfb
-        for <git@vger.kernel.org>; Sun, 30 Sep 2007 13:44:20 -0700 (PDT)
-Received: by 10.78.166.7 with SMTP id o7mr2239070hue.1191185059302;
-        Sun, 30 Sep 2007 13:44:19 -0700 (PDT)
-Received: by 10.78.118.16 with HTTP; Sun, 30 Sep 2007 13:44:19 -0700 (PDT)
-In-Reply-To: <46FE9924.7080006@theory.org>
+	id S1752372AbXI3U7M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 16:59:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752352AbXI3U7L
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 16:59:11 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:27420 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164AbXI3U7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 16:59:11 -0400
+X-Greylist: delayed 7708 seconds by postgrey-1.27 at vger.kernel.org; Sun, 30 Sep 2007 16:59:10 EDT
+Received: from linuix.haible.de ([81.210.217.73])
+	by post.webmailer.de (klopstock mo26) (RZmta 13.2)
+	with ESMTP id t00e60j8UGihKM ; Sun, 30 Sep 2007 22:59:08 +0200 (MEST)
+	(envelope-from: <bruno@clisp.org>)
+User-Agent: KMail/1.5.4
+In-Reply-To: <7vfy0vhqkl.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
+X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY7QaSDm1JE
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59562>
 
-On 9/29/07, Neil Macneale <mac4-git@theory.org> wrote:
-> When using "git stash," in some cases I'd like to stash away files that
-> are currently untracked. It seems to me like there should be a way to
-> stash everything in a working directory so that the end result is a
-> pristine tree. Then applying the stash will reinstate those file as
-> untracked.
+Junio C Hamano wrote:
+> Isn't "stash apply --index" what you talk about?
 
-Since this is an itch of my own, I have a local copy of git-stash that
-does this (stashes away the untracked -- but not ignored -- files, and
-restores them as untracked upon "stash apply"); unfortunately, I'm
-pretty new to git, so I'm certain my code is *quite* unoptimized and
-ugly.  As soon as I feel comfortable with it (which should include
-making the new behavior optional), I'll drop a line here with some
-code.  :-)
+Not really:
+
+$ git status
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#       modified:   README
+#
+# Changed but not updated:
+#   (use "git add <file>..." to update what will be committed)
+#
+#       modified:   NEWS
+#
+$ git stash
+Saved "WIP on master: 61135ee... Use check_PROGRAMS instead of noinst_PROGRAMS."
+HEAD is now at 61135ee... Use check_PROGRAMS instead of noinst_PROGRAMS.
+$ git stash apply --index
+error: No changes
+Conflicts in index. Try without --index.
+
+(This is git version 1.5.3.1.)
+
+I don't know what "git stash apply --index" does, since it's not documented.
+
+Bruno
