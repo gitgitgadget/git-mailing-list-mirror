@@ -1,76 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A tour of git: the basics (and notes on some unfriendly messages)
-Date: Sun, 30 Sep 2007 03:17:25 -0700
-Message-ID: <7vr6kgh2yy.fsf@gitster.siamese.dyndns.org>
-References: <87ir5us82a.wl%cworth@cworth.org>
-	<20070929000056.GZ3099@spearce.org>
-	<E5C688F2-4A8D-402A-9757-5007BE4A8B25@zib.de>
-	<7vlkapjeir.fsf@gitster.siamese.dyndns.org>
-	<E8851B12-AAA5-4B4D-9F28-C5AB5AEF0E57@zib.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: git-svn merge helper
+Date: Sun, 30 Sep 2007 13:05:50 +0200
+Message-ID: <20070930110550.GA4557@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Carl Worth <cworth@cworth.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Sep 30 12:17:42 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 30 13:06:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibvro-00027p-PC
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 12:17:41 +0200
+	id 1Ibwcd-0006kC-DC
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 13:06:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751034AbXI3KRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 06:17:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbXI3KRd
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 06:17:33 -0400
-Received: from rune.pobox.com ([208.210.124.79]:51562 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753190AbXI3KRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 06:17:32 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 8067B13EBC7;
-	Sun, 30 Sep 2007 06:17:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C883413EBC3;
-	Sun, 30 Sep 2007 06:17:48 -0400 (EDT)
-In-Reply-To: <E8851B12-AAA5-4B4D-9F28-C5AB5AEF0E57@zib.de> (Steffen Prohaska's
-	message of "Sun, 30 Sep 2007 10:15:10 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751180AbXI3LFz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Sep 2007 07:05:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752536AbXI3LFz
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 07:05:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43399 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750946AbXI3LFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 07:05:54 -0400
+Received: (qmail invoked by alias); 30 Sep 2007 11:05:52 -0000
+Received: from i577B9DEB.versanet.de (EHLO localhost) [87.123.157.235]
+  by mail.gmx.net (mp010) with SMTP; 30 Sep 2007 13:05:52 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+7gJ4xL5K7fItlOZG79Uc5h28qmQW3tAw8P22PUj
+	sRgKuVaMdjph2m
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59533>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hi,
 
-> ... If everything's ok I do.
->
->    git checkout master
->    git merge for/master
->    git push
->
-> The last merge must be a fast forward.
+I recently discovered git-svn and absolutey love it. One thing that I'm
+missing though, is an equivalent of "svn merge" for merging between svn
+remotes, to support the SVN way of using "squashed" merges, where you
+just note the merge meta-data in the commit message. "git merge" didn't
+work for me (and probably isn't expected to work) to merge between two
+svn branches, so I've resorted to cherry-picking the required commits
+one by one into a temporary branch and then squashing them together by
+doing a --squash merge with a second temporary branch (as in [1]).
 
-Last week I saw somebody (I think it was Shawn) mentioned a
-trick:
+Of course that becomes extremely annoying if there are like 200
+commits to merge, so I came up with the following script to help me.
+It does just what I described above, but automated. Usage is like this:
 
-	git push . thisbranch:thatbranch
+git-svn-merge trunk 123 543
 
-will moves thatbranch to thisbranch iff thisbranch is a
-descendant of thatbranch.  So doing
+Which does the same as "svn merge -r123:543 trunk-url", except for bein=
+g
+incremental (ie. no huge one-time patch, eventually causing a massive
+set of conflicts) and often faster.
 
-	git push . for-master:master
+In case of conflicts, it bails out and let's you fix them. Then you can
+just re-run it with the same parameters again, as it automatically
+determines where to start cherry-picking if you're currently on the
+merge branch.
 
-instead of that checkout + merge command sequence would
-obviously be a good solution for your particular use case.
+It's neither complete nor nice to look at, but it more or less gets the
+job done, so I thought I'll just post it here, maybe someone picks it u=
+p
+and brings it into shape.
 
-Having said that it may make sense to swap the order so that the
-diffstat is shown first and then a single line "Merge made by
-recursive" or "Updatting A..B, Fast Forward" concludes the
-report.  At least, I do not think such a swapping would hurt the
-usability, although people used to the UI may first feel uneasy.
-I would not object to such a patch in principle.
+Thanks,
+Bj=F6rn
+
+[1] http://cheat.errtheblog.com/s/gitsvn/
+
+
+#!/bin/sh
+
+BRANCH=3D$(git branch | grep \* | cut -d ' ' -f2)
+
+START=3D$(git svn find-rev r$2 $1)
+END=3D$(git svn find-rev r$3 $1)
+
+if echo $BRANCH | grep -q svnmerge/
+then
+	START=3D$(git svn find-rev r$(git svn find-rev HEAD) $1)
+else
+	git checkout -b svnmerge/$BRANCH
+fi
+
+for HASH in $(git log --pretty=3Dformat:%H --reverse $START..$END)
+do
+	git cherry-pick $HASH || exit
+done
+
+git checkout $BRANCH
+git checkout -b svnmerge/$BRANCH-squashed
+git merge --squash svnmerge/$BRANCH
+git commit -m "Merged changes from revisions $2-$3 from $1 into $BRANCH=
+=2E"
