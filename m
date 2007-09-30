@@ -1,115 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/2] fetch/push: readd rsync support
-Date: Sat, 29 Sep 2007 23:09:52 -0700
-Message-ID: <7vhclciszz.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0709280602580.28395@racer.site>
-	<Pine.LNX.4.64.0709281629270.28395@racer.site>
-	<7vtzpeo5ar.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0709290134000.28395@racer.site>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] prune, rm, show remote: exit with error code 1 on failure
+Date: Sun, 30 Sep 2007 09:18:48 +0300
+Organization: Private
+Message-ID: <641soeuv.fsf@blue.sea.net>
+References: <ps01nxvd.fsf@blue.sea.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: spearce@spearce.org, Daniel Barkalow <barkalow@iabervon.org>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Sep 30 08:10:15 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 30 08:14:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ibs0M-0002YM-1y
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 08:10:14 +0200
+	id 1Ibs4Z-0003Qd-5q
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 08:14:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751532AbXI3GKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 02:10:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbXI3GKB
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 02:10:01 -0400
-Received: from rune.pobox.com ([208.210.124.79]:47921 "EHLO rune.pobox.com"
+	id S1751815AbXI3GO1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 02:14:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751735AbXI3GO1
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 02:14:27 -0400
+Received: from main.gmane.org ([80.91.229.2]:54746 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751444AbXI3GKA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 02:10:00 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 5691113E9E0;
-	Sun, 30 Sep 2007 02:10:21 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5DCFC13E9DD;
-	Sun, 30 Sep 2007 02:10:16 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0709290134000.28395@racer.site> (Johannes
-	Schindelin's message of "Sat, 29 Sep 2007 01:35:06 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751781AbXI3GO0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 02:14:26 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ibs4M-0000rX-UZ
+	for git@vger.kernel.org; Sun, 30 Sep 2007 06:14:22 +0000
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 30 Sep 2007 06:14:22 +0000
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 30 Sep 2007 06:14:22 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:gU/cPFb4g3O2PJne/ob3Gv2Lc+o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59524>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+- (rm_remote): Return error code 1 on failure.
+- (show_remote): Return error code 1 on failure.
+- (prune_remote): Return error code 1 on failure.
+- (@ARGV eq show):
+  exit in case of 'No such remote'.
+- (@ARGV eq prune):
+- exitin case of 'No such remote'.
+- (@ARGV eq rm):
+- exit in case of 'No such remote'.
 
-> We lost rsync support when transitioning from shell to C.  Support it
-> again (even if the transport is technically deprecated, some people just
-> do not have any chance to use anything else).
+Signed-off-by: Jari Aalto <jari.aalto AT cante.net>
+---
+ git-remote.perl |   19 +++++++++++++------
+ 1 files changed, 13 insertions(+), 6 deletions(-)
 
-s/chance/choice/?
-
-> +test "$TEST_RSYNC" && {
-
-Somehow this feels dirty ... perhaps leave early like:
-
-	if test -z "$TEST_RSYNC"
-        then
-        	test_expect_success 'skipping rsync transport tests' :
-		test_done
-                exit
-	fi
-
-> diff --git a/transport.c b/transport.c
-> index 4f9cddc..a2ee8f3 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -6,6 +6,330 @@
-> ...
-> +{
-> +	struct strbuf buf = STRBUF_INIT, temp_dir = STRBUF_INIT;
-> +	struct ref dummy, *tail = &dummy;
-> +	struct child_process rsync;
-> +	const char *args[5];
-> +	int temp_dir_len;
-> +
-> +	/* copy the refs to the temporary directory */
-> +
-> +	strbuf_addstr(&temp_dir, git_path("rsync-refs-XXXXXX"));
-> +	if (!mkdtemp(temp_dir.buf))
-> +		die ("Could not make temporary directory");
-
-I wonder how portable mkdtemp() is (it does not seem to be POSIX);
-would we need something in compat/ perhaps based on tempnam()?
-
-> +static int fetch_objs_via_rsync(struct transport *transport,
-> +				 int nr_objs, struct ref **to_fetch)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	struct child_process rsync;
-> +	const char *args[8];
-> +	int result;
-> +
-> +	strbuf_addstr(&buf, transport->url);
-> +	strbuf_addstr(&buf, "/objects/");
-> +
-> +	memset(&rsync, 0, sizeof(rsync));
-> +	rsync.argv = args;
-> +	rsync.stdout_to_stderr = 1;
-> +	args[0] = "rsync";
-> +	args[1] = transport->verbose ? "-rv" : "-r";
-> +	args[2] = "--ignore-existing";
-> +	args[3] = "--exclude";
-> +	args[4] = "info";
-> +	args[5] = buf.buf;
-> +	args[6] = get_object_directory();
-> +	args[7] = NULL;
-
-Hmm, we used to do "rsync $remote/objects/ $our/.git/objects/",
-but this omits the trailing "/" from our side.  I suspect the
-reason was to deal with the case where our .git/objects was a
-symlink to elsewhere (which was how you did alternates before
-alternates was invented), which may not matter anymore these
-days.
+diff --git a/git-remote.perl b/git-remote.perl
+index b7c1e01..84a9b5c 100755
+--- a/git-remote.perl
++++ b/git-remote.perl
+@@ -218,7 +218,7 @@ sub prune_remote {
+ 	my ($name, $ls_remote) = @_;
+ 	if (!exists $remote->{$name}) {
+ 		print STDERR "No such remote $name\n";
+-		return;
++		return 1;
+ 	}
+ 	my $info = $remote->{$name};
+ 	update_ls_remote($ls_remote, $info);
+@@ -235,7 +235,7 @@ sub show_remote {
+ 	my ($name, $ls_remote) = @_;
+ 	if (!exists $remote->{$name}) {
+ 		print STDERR "No such remote $name\n";
+-		return;
++		return 1;
+ 	}
+ 	my $info = $remote->{$name};
+ 	update_ls_remote($ls_remote, $info);
+@@ -320,7 +320,7 @@ sub rm_remote {
+ 	my ($name) = @_;
+ 	if (!exists $remote->{$name}) {
+ 		print STDERR "No such remote $name\n";
+-		return;
++		return 1;
+ 	}
+ 
+ 	$git->command('config', '--remove-section', "remote.$name");
+@@ -381,9 +381,12 @@ elsif ($ARGV[0] eq 'show') {
+ 		print STDERR "Usage: git remote show <remote>\n";
+ 		exit(1);
+ 	}
++	my $status = 0;
+ 	for (; $i < @ARGV; $i++) {
+-		show_remote($ARGV[$i], $ls_remote);
++		my $ret = show_remote($ARGV[$i], $ls_remote);
++		$status = $ret if $ret;
+ 	}
++	exit($status);
+ }
+ elsif ($ARGV[0] eq 'update') {
+ 	if (@ARGV <= 1) {
+@@ -409,9 +412,12 @@ elsif ($ARGV[0] eq 'prune') {
+ 		print STDERR "Usage: git remote prune <remote>\n";
+ 		exit(1);
+ 	}
++	my $status = 0;
+ 	for (; $i < @ARGV; $i++) {
+-		prune_remote($ARGV[$i], $ls_remote);
++		my $ret = prune_remote($ARGV[$i], $ls_remote);
++                $status = $ret if $ret;
+ 	}
++        exit($status);
+ }
+ elsif ($ARGV[0] eq 'add') {
+ 	my %opts = ();
+@@ -455,7 +461,8 @@ elsif ($ARGV[0] eq 'rm') {
+ 		print STDERR "Usage: git remote rm <remote>\n";
+ 		exit(1);
+ 	}
+-	rm_remote($ARGV[1]);
++	my $status = rm_remote($ARGV[1]);
++        exit($status) if $status;
+ }
+ else {
+ 	print STDERR "Usage: git remote\n";
+-- 
+1.5.3.2.81.g17ed
