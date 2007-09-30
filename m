@@ -1,42 +1,182 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: suggestion for git stash
-Date: Sun, 30 Sep 2007 12:59:54 -0700
-Message-ID: <7vfy0vhqkl.fsf@gitster.siamese.dyndns.org>
-References: <200709302050.41273.bruno@clisp.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bruno Haible <bruno@clisp.org>
-X-From: git-owner@vger.kernel.org Sun Sep 30 22:00:11 2007
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH 2/5] Use start_command() in git_connect() instead of explicit fork/exec.
+Date: Sun, 30 Sep 2007 22:09:58 +0200
+Message-ID: <1191183001-5368-3-git-send-email-johannes.sixt@telecom.at>
+References: <1191183001-5368-1-git-send-email-johannes.sixt@telecom.at>
+ <1191183001-5368-2-git-send-email-johannes.sixt@telecom.at>
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Sep 30 22:10:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ic4xT-0007f2-NZ
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:00:08 +0200
+	id 1Ic57J-0002Yg-An
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 22:10:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751618AbXI3UAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 16:00:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbXI3T77
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 15:59:59 -0400
-Received: from rune.pobox.com ([208.210.124.79]:60055 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751596AbXI3T77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 15:59:59 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id C552F13F04C;
-	Sun, 30 Sep 2007 16:00:20 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 59B6C13F04B;
-	Sun, 30 Sep 2007 16:00:18 -0400 (EDT)
-In-Reply-To: <200709302050.41273.bruno@clisp.org> (Bruno Haible's message of
-	"Sun, 30 Sep 2007 20:50:41 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751787AbXI3UKM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 16:10:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752069AbXI3UKL
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 16:10:11 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:36904 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018AbXI3UKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 16:10:04 -0400
+Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 11ECE97325;
+	Sun, 30 Sep 2007 22:10:03 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.3.1134.gee562
+In-Reply-To: <1191183001-5368-2-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59553>
 
-Isn't "stash apply --index" what you talk about?
+The child process handling is delegated to start_command() and
+finish_command().
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ connect.c |  104 ++++++++++++++++++++++++++++--------------------------------
+ 1 files changed, 49 insertions(+), 55 deletions(-)
+
+diff --git a/connect.c b/connect.c
+index f6dcab9..29fd431 100644
+--- a/connect.c
++++ b/connect.c
+@@ -482,11 +482,12 @@ struct child_process *git_connect(int fd[2], char *url,
+ 	char *host, *path = url;
+ 	char *end;
+ 	int c;
+-	int pipefd[2][2];
+ 	struct child_process *chld;
+ 	enum protocol protocol = PROTO_LOCAL;
+ 	int free_path = 0;
+ 	char *port = NULL;
++	const char **arg;
++	struct strbuf cmd;
+ 
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -572,72 +573,65 @@ struct child_process *git_connect(int fd[2], char *url,
+ 		return NULL;
+ 	}
+ 
+-	if (pipe(pipefd[0]) < 0 || pipe(pipefd[1]) < 0)
+-		die("unable to create pipe pair for communication");
+ 	chld = xcalloc(1, sizeof(*chld));
+-	chld->pid = fork();
+-	if (chld->pid < 0)
+-		die("unable to fork");
+-	if (!chld->pid) {
+-		struct strbuf cmd;
+-
+-		strbuf_init(&cmd, MAX_CMD_LEN);
+-		strbuf_addstr(&cmd, prog);
+-		strbuf_addch(&cmd, ' ');
+-		sq_quote_buf(&cmd, path);
+-		if (cmd.len >= MAX_CMD_LEN)
+-			die("command line too long");
+-
+-		dup2(pipefd[1][0], 0);
+-		dup2(pipefd[0][1], 1);
+-		close(pipefd[0][0]);
+-		close(pipefd[0][1]);
+-		close(pipefd[1][0]);
+-		close(pipefd[1][1]);
+-		if (protocol == PROTO_SSH) {
+-			const char *ssh, *ssh_basename;
+-			ssh = getenv("GIT_SSH");
+-			if (!ssh) ssh = "ssh";
+-			ssh_basename = strrchr(ssh, '/');
+-			if (!ssh_basename)
+-				ssh_basename = ssh;
+-			else
+-				ssh_basename++;
+ 
+-			if (!port)
+-				execlp(ssh, ssh_basename, host, cmd.buf, NULL);
+-			else
+-				execlp(ssh, ssh_basename, "-p", port, host,
+-				       cmd.buf, NULL);
++	strbuf_init(&cmd, MAX_CMD_LEN);
++	strbuf_addstr(&cmd, prog);
++	strbuf_addch(&cmd, ' ');
++	sq_quote_buf(&cmd, path);
++	if (cmd.len >= MAX_CMD_LEN)
++		die("command line too long");
++
++	chld->in = chld->out = -1;
++	chld->argv = arg = xcalloc(6, sizeof(*arg));
++	if (protocol == PROTO_SSH) {
++		const char *ssh = getenv("GIT_SSH");
++		if (!ssh) ssh = "ssh";
++
++		*arg++ = ssh;
++		if (port) {
++			*arg++ = "-p";
++			*arg++ = port;
+ 		}
+-		else {
+-			unsetenv(ALTERNATE_DB_ENVIRONMENT);
+-			unsetenv(DB_ENVIRONMENT);
+-			unsetenv(GIT_DIR_ENVIRONMENT);
+-			unsetenv(GIT_WORK_TREE_ENVIRONMENT);
+-			unsetenv(GRAFT_ENVIRONMENT);
+-			unsetenv(INDEX_ENVIRONMENT);
+-			execlp("sh", "sh", "-c", cmd.buf, NULL);
+-		}
+-		die("exec failed");
++		*arg++ = host;
++	}
++	else {
++		/* remove these from the environment */
++		const char *env[] = {
++			ALTERNATE_DB_ENVIRONMENT,
++			DB_ENVIRONMENT,
++			GIT_DIR_ENVIRONMENT,
++			GIT_WORK_TREE_ENVIRONMENT,
++			GRAFT_ENVIRONMENT,
++			INDEX_ENVIRONMENT,
++			NULL
++		};
++		chld->env = env;
++		*arg++ = "sh";
++		*arg++ = "-c";
+ 	}
+-	fd[0] = pipefd[0][0];
+-	fd[1] = pipefd[1][1];
+-	close(pipefd[0][1]);
+-	close(pipefd[1][0]);
++	*arg++ = cmd.buf;
++	*arg = NULL;
++
++	if (start_command(chld))
++		die("unable to fork");
++
++	fd[0] = chld->out; /* read from child's stdout */
++	fd[1] = chld->in;  /* write to child's stdin */
+ 	if (free_path)
+ 		free(path);
++	strbuf_release(&cmd);
+ 	return chld;
+ }
+ 
+ int finish_connect(struct child_process *chld)
+ {
++	int code;
+ 	if (chld == NULL)
+ 		return 0;
+ 
+-	while (waitpid(chld->pid, NULL, 0) < 0) {
+-		if (errno != EINTR)
+-			return -1;
+-	}
+-	return 0;
++	code = finish_command(chld);
++	free(chld->argv);
++	free(chld);
++	return code;
+ }
+-- 
+1.5.3.3.1134.gee562
