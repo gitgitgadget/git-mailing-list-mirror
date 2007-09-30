@@ -1,30 +1,30 @@
 From: Bruno Haible <bruno@clisp.org>
-Subject: GIT_EXTERNAL_DIFF invoked with undocumented calling convention after unstashing conflicts
-Date: Sun, 30 Sep 2007 21:17:37 +0200
-Message-ID: <200709302117.37422.bruno@clisp.org>
+Subject: GIT_EXTERNAL_DIFF ignored after unstashing conflicts
+Date: Sun, 30 Sep 2007 21:18:39 +0200
+Message-ID: <200709302118.39406.bruno@clisp.org>
 Mime-Version: 1.0
 Content-Type: Multipart/Mixed;
-  boundary="Boundary-00=_RZ//GN+MjYyGu9V"
+  boundary="Boundary-00=_Pa//GXOS5F1YCnx"
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 30 21:17:46 2007
+X-From: git-owner@vger.kernel.org Sun Sep 30 21:18:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ic4IS-0005Uo-Sc
-	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 21:17:45 +0200
+	id 1Ic4JR-0005lg-El
+	for gcvg-git-2@gmane.org; Sun, 30 Sep 2007 21:18:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751365AbXI3TRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Sep 2007 15:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751364AbXI3TRh
-	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 15:17:37 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:51874 "EHLO
+	id S1752817AbXI3TSk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Sep 2007 15:18:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752539AbXI3TSk
+	(ORCPT <rfc822;git-outgoing>); Sun, 30 Sep 2007 15:18:40 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:49641 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751289AbXI3TRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Sep 2007 15:17:37 -0400
+	with ESMTP id S1751276AbXI3TSj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Sep 2007 15:18:39 -0400
 Received: from linuix.haible.de ([81.210.217.73])
-	by post.webmailer.de (fruni mo5) (RZmta 13.2)
-	with ESMTP id Y06d82j8UGO2Aj ; Sun, 30 Sep 2007 21:17:35 +0200 (MEST)
+	by post.webmailer.de (mrclete mo42) (RZmta 13.2)
+	with ESMTP id J05ba3j8UGwQxg ; Sun, 30 Sep 2007 21:18:37 +0200 (MEST)
 	(envelope-from: <bruno@clisp.org>)
 User-Agent: KMail/1.5.4
 X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY7QaSDm1JE
@@ -32,10 +32,10 @@ X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59550>
 
 
---Boundary-00=_RZ//GN+MjYyGu9V
+--Boundary-00=_Pa//GXOS5F1YCnx
 Content-Type: text/plain;
   charset="us-ascii"
 Content-Transfer-Encoding: 7bit
@@ -43,8 +43,7 @@ Content-Disposition: inline
 
 Hi,
 
-"git diff --uncached" invokes the GIT_EXTERNAL_DIFF variable with just one
-argument (instead of 7 arguments, as documented) in a particular situation:
+"git diff" ignores the GIT_EXTERNAL_DIFF variable in a particular situation:
 when there are conflicts after "git stash apply".
 
 To reproduce:
@@ -57,9 +56,8 @@ To reproduce:
   - $ git stash
   - $ git pull
   - $ git stash apply
-  - $ git-diff --cached | cat
+  - $ git-diff | cat
     yields:
-my-diff-for-git ChangeLog
 diff --cc ChangeLog
 index 443ad76,991c26b..0000000
 --- a/ChangeLog
@@ -77,17 +75,13 @@ index 443ad76,991c26b..0000000
   2007-09-30  Bruno Haible  <bruno@clisp.org>
   
 
-As you can see from the output of the script's line 2, it was called with
-just one argument. This is not enough information for producing output
-in a different way than the built-in way - defeating the purpose of
-GIT_EXTERNAL_DIFF.
+The script has not been called (witness: the echo command at its line 2).
 
-Can the GIT_EXTERNAL_DIFF invocation be done with 7 or more arguments?
-It'd be OK to extend the calling convention.
+Can it be called, like in the case of "git-diff --cached"?
 
 Bruno
 
---Boundary-00=_RZ//GN+MjYyGu9V
+--Boundary-00=_Pa//GXOS5F1YCnx
 Content-Type: application/x-shellscript;
   name="my-diff-for-git"
 Content-Transfer-Encoding: 7bit
@@ -146,4 +140,4 @@ else
 
 fi
 
---Boundary-00=_RZ//GN+MjYyGu9V--
+--Boundary-00=_Pa//GXOS5F1YCnx--
