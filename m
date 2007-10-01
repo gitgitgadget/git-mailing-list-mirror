@@ -1,76 +1,53 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: [PATCH] git-send-email: add a new sendemail.to configuration variable
-Date: Mon,  1 Oct 2007 14:42:42 +0200
-Message-ID: <1191242562-27486-1-git-send-email-vmiklos@frugalware.org>
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 14:44:31 2007
+From: "Tom Clarke" <tom@u2i.com>
+Subject: Re: How to re-use setups in multiple tests?
+Date: Mon, 1 Oct 2007 14:46:46 +0200
+Message-ID: <550f9510710010546q55209759k4770cd3e78121cfc@mail.gmail.com>
+References: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com>
+	 <Pine.LNX.4.64.0710011243230.28395@racer.site>
+	 <550f9510710010516s305c843br53da294f65318862@mail.gmail.com>
+	 <Pine.LNX.4.64.0710011336530.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 01 14:46:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcKdS-0005P1-9q
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:44:30 +0200
+	id 1IcKfo-00068Q-Se
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751628AbXJAMoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 08:44:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXJAMoW
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:44:22 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:40089 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751320AbXJAMoV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 08:44:21 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 99C6D1B250A;
-	Mon,  1 Oct 2007 14:44:20 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7C0976FD02;
-	Mon,  1 Oct 2007 14:44:20 +0200 (CEST)
-Received: from vmobile.example.net (dhcp-114.i.air.bme.hu [152.66.146.114])
-	by genesis.frugalware.org (Postfix) with ESMTP id 06AB713A406A;
-	Mon,  1 Oct 2007 14:44:19 +0200 (CEST)
-Received: by vmobile.example.net (Postfix, from userid 1003)
-	id 80DF38B2F4; Mon,  1 Oct 2007 14:42:42 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.2.111.g5166-dirty
+	id S1751727AbXJAMqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 08:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXJAMqt
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:46:49 -0400
+Received: from el-out-1112.google.com ([209.85.162.178]:28491 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751074AbXJAMqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 08:46:49 -0400
+Received: by el-out-1112.google.com with SMTP id v27so735582ele
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 05:46:48 -0700 (PDT)
+Received: by 10.114.95.1 with SMTP id s1mr663954wab.1191242806944;
+        Mon, 01 Oct 2007 05:46:46 -0700 (PDT)
+Received: by 10.35.86.2 with HTTP; Mon, 1 Oct 2007 05:46:46 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710011336530.28395@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59611>
 
-Several projects prefers to receive patches via a given email address. In these
-cases it's handy to configure that address once.
+On 10/1/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > I suppose I could find the old pre-rebase head and work with that, but
+> > that doesn't seem that clean to me.
+>
+> You can use "git reset --hard master@{1}", and it really escapes me why
+> this should not be clean, and why you want to jump through hoops instead
+> using a much more complicated technique.
 
-Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
----
- Documentation/git-send-email.txt |    3 +++
- git-send-email.perl              |    1 +
- 2 files changed, 4 insertions(+), 0 deletions(-)
+That'll be because my git knowledge isn't good enough to make it
+clean. Thanks for the suggestion :-)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 3727776..e38b702 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -159,6 +159,9 @@ sendemail.aliasfiletype::
- 	Format of the file(s) specified in sendemail.aliasesfile. Must be
- 	one of 'mutt', 'mailrc', 'pine', or 'gnus'.
- 
-+sendemail.to::
-+	Email address (or alias) to always send to.
-+
- sendemail.cccmd::
- 	Command to execute to generate per patch file specific "Cc:"s.
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 62e1429..96051bc 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -191,6 +191,7 @@ my %config_settings = (
-     "smtpserverport" => \$smtp_server_port,
-     "smtpuser" => \$smtp_authuser,
-     "smtppass" => \$smtp_authpass,
-+    "to" => \@to,
-     "cccmd" => \$cc_cmd,
-     "aliasfiletype" => \$aliasfiletype,
-     "bcc" => \@bcclist,
--- 
-1.5.3.2.111.g5166-dirty
+-Tom
