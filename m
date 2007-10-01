@@ -1,80 +1,152 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [PATCH] Don't checkout the full tree if avoidable
-Date: Mon, 1 Oct 2007 09:12:27 -0400
-Message-ID: <20071001131227.GA24494@dervierte>
-References: <1191000259190-git-send-email-stevenrwalter@gmail.com> <7vejgftgef.fsf@gitster.siamese.dyndns.org> <20071001110855.GB10079@muzzle>
+From: Thomas Pasch <thomas.pasch@jentro.com>
+Subject: git-http-push / webDAV
+Date: Mon, 01 Oct 2007 15:31:40 +0200
+Organization: Jentro Technologies GmbH
+Message-ID: <4700F6BC.2070701@jentro.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Oct 01 15:13:36 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 01 15:38:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcL5M-0006CX-7s
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 15:13:20 +0200
+	id 1IcLTc-0006ui-Ih
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 15:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755261AbXJANNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 09:13:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755252AbXJANNG
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 09:13:06 -0400
-Received: from wa-out-1112.google.com ([209.85.146.183]:5340 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754070AbXJANNE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 09:13:04 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so4549194wah
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 06:13:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=q5xCqhBDyAjMd2dKi5g/jEz6mcbR6LXorimXTd9yQCw=;
-        b=tp40hahgGw9RU3UtzNdaemqBWJWuF1bkDxg1JgLObW74ikKoRYJOT7iOzS3HYpKRbXchj85zMLMcHLWNDs4HSKouJ3EXixJTbLAb1q4j1Erm5VDGMismxihtrzrbNvSD58oYlIGAVtcXHgmszy60Dwgip7cjkqawquq7242vp+8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=qFsFpRJKgnhWLDJJ6x0Ga9j9axRbhIypqKcqdcWm3YQUz8bk1QbbdGqGOoRQQqmI4RpUzhLzFr7tHId+w8n08viyU+rN6XbTTfWQiO04BIHq72oF3Y338qtRf6XYZmt1MxnMuO08HiSGzUsyr1bq/liyDKuQbuP2011cOoE98Uk=
-Received: by 10.115.60.1 with SMTP id n1mr707035wak.1191244383342;
-        Mon, 01 Oct 2007 06:13:03 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [76.177.36.23])
-        by mx.google.com with ESMTPS id 36sm7472587nzk.2007.10.01.06.13.01
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 01 Oct 2007 06:13:01 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id 2EDFDD84DB6; Mon,  1 Oct 2007 09:12:27 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071001110855.GB10079@muzzle>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1751917AbXJANiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 09:38:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751691AbXJANiQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 09:38:16 -0400
+Received: from mail2.infra.net ([212.89.96.7]:4193 "EHLO gamma.m.infra.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751566AbXJANiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 09:38:15 -0400
+X-Greylist: delayed 391 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Oct 2007 09:38:15 EDT
+Received: from epsilon.m.infra.net (epsilon.m.infra.net [212.89.96.8])
+	by gamma.m.infra.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l91DVgnA007983
+	for <git@vger.kernel.org>; Mon, 1 Oct 2007 15:31:42 +0200
+Received: from [192.1.1.184] (u19-17.dsl.vianetworks.de [194.231.42.17])
+	(authenticated bits=0)
+	by epsilon.m.infra.net (8.13.4/8.13.4/Debian-3) with ESMTP id l91DVejh028794
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Mon, 1 Oct 2007 15:31:41 +0200
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59614>
 
-On Mon, Oct 01, 2007 at 04:08:55AM -0700, Eric Wong wrote:
-> Steven Walter wrote:
-> > One criticism of the patch: the trees_match function probably needs to
-> > be re-written.  My SVN::Perl-foo is weak.
-> 
-> Yep :)
-> 
-> Steven:
-> 
-> How does the following work for you?  Which version of SVN do you have,
-> by the way?  I just found a bug with the way SVN::Client::diff() is
-> exported for SVN 1.1.4, hence the SVN::Pool->new_default_sub usage.
+Hello,
 
-swalter@sentra:~% svn --version
-svn, version 1.3.2 (r19776)
+trying to set up a webDAV enabled http push
+git server (1.5.3.3) like it is described in
 
-This version works great; seems to have exactly the same behavior as my
-patch.  Verified that it still falls back to the do_update code when
-trees_match fails.
--- 
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
-   -Robert Heinlein
+http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
+
+Tested the apache2 (2.2.6) DAV setup with
+cadaver (and tried the browser as well).
+With cadaver I could lock files, download
+and upload content.
+
+However,
+
+> git push -v upload master
+Pushing to http://test@x.x.x.x/git/DepTrack.git/
+Fetching remote heads...
+  refs/
+  refs/heads/
+  refs/tags/
+updating 'refs/heads/master'
+  from 0000000000000000000000000000000000000000
+  to   d75dce3fe0e9ec5915feda5574f214bd432ccb14
+    sending 89 objects
+    done
+Updating remote server info
+UNLOCK HTTP error 400
+
+Also tried:
+
+> git-http-push --all --verbose http://x.x.x.x/git/DepTrack.git/ master
+Getting pack list
+Fetching remote heads...
+  refs/
+  refs/heads/
+  refs/tags/
+'refs/heads/master': up-to-date
+
+... and then tried to clone:
+
+> git clone http://test@x.x.x.x/git/DepTrack.git
+Initialized empty Git repository in /home/tpasch/tmp/tmp/DepTrack/.git/
+Getting alternates list for http://test@x.x.x.x/git/DepTrack.git
+Getting pack list for http://test@x.x.x.x/git/DepTrack.git
+error: Unable to find d75dce3fe0e9ec5915feda5574f214bd432ccb14 under
+http://test@x.x.x.x/git/DepTrack.git
+Cannot obtain needed object d75dce3fe0e9ec5915feda5574f214bd432ccb14
+
+Finally, tried a *non-empty* repo at the server:
+
+> git clone --bare /home/tpasch/tmp/tmp/trunk DepTrack.git
+Initialized empty Git repository in /data/git/DepTrack.git/
+22911 blocks
+> cd DepTrack.git/
+> git --bare update-server-info
+> chmod a+x hooks/post-update
+> chown -R wwwrun:www /data/git
+
+... cloned:
+
+> git clone http://test@x.x.x.x/git/DepTrack.git
+Initialized empty Git repository in /home/tpasch/tmp/tmp/DepTrack/.git/
+got d75dce3fe0e9ec5915feda5574f214bd432ccb14
+walk d75dce3fe0e9ec5915feda5574f214bd432ccb14
+got 8a459da1fb520cbc2534b87d3c0d8539fa010f45
+got 31c3b20e1d7d7ca414a273fe80f4c49466250709
+walk 31c3b20e1d7d7ca414a273fe80f4c49466250709
+got ca647ac42188a8ed859260503abc41f98fd21be6
+[...]
+got 7e089ccc1819d4e69b228b3359690f685728248b
+Checking 66 files out...
+ 100% (66/66) done
+
+... then modified a file and pushed:
+
+> git add test.txt
+> git commit
+> git push -v
+Pushing to http://test@x.x.x.x/git/DepTrack.git
+
+But this never returns. (Also tried:
+> git-http-push --all --verbose http://x.x.x.x/git/DepTrack.git/ master
+Getting pack list
+Fetching remote heads...
+  refs/
+  refs/heads/
+  refs/tags/
+updating 'refs/heads/master'
+  from d75dce3fe0e9ec5915feda5574f214bd432ccb14
+  to   07002e0423e803096eb07eb5c46651b00ed20725
+    sending 3 objects
+    done
+Updating remote server info
+UNLOCK HTTP error 400
+)
+
+Any suggestions?
+
+Cheers,
+
+Thomas
+
+PS:
+This is how I initialized the repo:
+
+> git --bare init
+Initialized empty Git repository in /data/git/DepTrack.git/
+> git --bare update-server-info
+> chmod a+x hooks/post-update
+> chown -R wwwrun:www /data/git
+> /etc/init.d/apache2 restart
