@@ -1,87 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Adding rebase merge strategy
-Date: Mon, 1 Oct 2007 18:30:50 -0400
-Message-ID: <20071001223050.GE2137@spearce.org>
-References: <Pine.LNX.4.64.0709281751390.28395@racer.site> <11912513203420-git-send-email-tom@u2i.com> <7vr6ker1lf.fsf@gitster.siamese.dyndns.org> <550f9510710011441t1eb50352ofc8db77f79d794d5@mail.gmail.com> <87ejgescnb.wl%cworth@cworth.org> <550f9510710011521s126ca747v956a6f80182444bb@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Problems setting up bare repository (git 1.5.3.3)
+Date: Mon, 01 Oct 2007 15:32:58 -0700
+Message-ID: <7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
+References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Carl Worth <cworth@cworth.org>, Junio C Hamano <gitster@pobox.com>,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Tom Clarke <tom@u2i.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 00:31:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Barry Fishman <barry_fishman@acm.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 00:33:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcTn6-0000lH-SB
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 00:31:05 +0200
+	id 1IcTpC-0001UT-83
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 00:33:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754026AbXJAWa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 18:30:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753876AbXJAWa5
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 18:30:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51475 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753614AbXJAWa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 18:30:56 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IcTmq-00028N-1u; Mon, 01 Oct 2007 18:30:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 671BC20FBAE; Mon,  1 Oct 2007 18:30:50 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <550f9510710011521s126ca747v956a6f80182444bb@mail.gmail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753472AbXJAWdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 18:33:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752126AbXJAWdE
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 18:33:04 -0400
+Received: from rune.pobox.com ([208.210.124.79]:60118 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753430AbXJAWdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 18:33:04 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id B148613FBFD;
+	Mon,  1 Oct 2007 18:33:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 0AE1613FBFC;
+	Mon,  1 Oct 2007 18:33:21 -0400 (EDT)
+In-Reply-To: <m3fy0u7bk3.fsf@barry_fishman.acm.org> (Barry Fishman's message
+	of "Mon, 01 Oct 2007 17:46:36 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59642>
 
-Tom Clarke <tom@u2i.com> wrote:
-> On 10/2/07, Carl Worth <cworth@cworth.org> wrote:
-> > What I think I've always wanted is something like the following
-> > behavior for "git pull":
-> >
-> >   * Fast forward if possible
-> >
-> >   * Otherwise, rebase, but only if there are no conflicts at all
-> >
-> >   * Otherwise, do the merge as normal, (leave conflict markers in
-> >     place allowing the user to fix them up and then commit).
-> >
-> > Would it be straightforward to turn your rebase merge strategy into
-> > something like the above? And if so, would that address the primary
-> > concerns that Junio raised?
-> 
-> Maybe we need a 'pull' strategy' - merge, rebase or <insert name for
-> strategy you describe above>.
+Barry Fishman <barry_fishman@acm.org> writes:
 
-`git pull -s <name>` takes any merge strategy that git-merge will
-accept for its -s option.  There is also the config option of
-pull.twohead that indicates what the default merge/pull strategy
-should be for a two head merge.  Most people don't set this,
-letting the code default to 'recursive'.
+> $ git push --force /pub/git/foo.git master:master
+> error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
+> fatal: The remote end hung up unexpectedly
+> error: failed to push to '/pub/git/foo.git'
 
-But I have to agree with (was it Junio who said this?) doing a rebase
-in a merge strategy doesn't make sense when conflicts come into play.
-It gets confusing fast for the end-user as the conflict resolution
-process is different than for a merge.  A long time ago I wrote a
-git-merge-rebase strategy and gave up on it for basically the same
-reason.  I posted it to the mailing list and I think Linus said
-"Why?!".  That was the end of that thread as I wound up agreeing
-with him.
+Read BOTH OF the error messages.  Especially the first one.
 
-Multiple merge strategies can be given (and attempted).  A rebase
-strategy could be attempted before recursive, and if the rebase
-fails but the recursive succeeds then you get (roughly) what is
-being described above by Carl.  But that still requires a rebase
-merge strategy.  :-\
+This error message is telling you that the dst side of the
+refspec you supplied (that's the second 'master' in
+"master:master") does not exist there, and we do not create it
+unless you give a full refname that begins with refs/ (so that
+push can tell if you want to create a tag or a branch).
 
--- 
-Shawn.
+$ git push /pub/git/foo.git master:refs/heads/master
+
+would have worked, without --force.
