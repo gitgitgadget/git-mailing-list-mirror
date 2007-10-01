@@ -1,55 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Referring a commit-id remote repo.
-Date: Mon, 1 Oct 2007 11:25:13 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710011122500.28395@racer.site>
-References: <20071001041635.GA22102@old.davidb.org>
+From: "Tom Clarke" <tom@u2i.com>
+Subject: How to re-use setups in multiple tests?
+Date: Mon, 1 Oct 2007 12:27:49 +0200
+Message-ID: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git <git@vger.kernel.org>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Mon Oct 01 12:26:39 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 01 12:28:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcITz-0003et-Oj
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 12:26:36 +0200
+	id 1IcIVL-000408-BS
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 12:27:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751332AbXJAK02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 06:26:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbXJAK01
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 06:26:27 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60085 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751238AbXJAK01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 06:26:27 -0400
-Received: (qmail invoked by alias); 01 Oct 2007 10:26:25 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp006) with SMTP; 01 Oct 2007 12:26:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19wAvMuJGRwNuAgtFIFsEYS36PKGyZOdj5lTE+1hl
-	jLTCzQyrdeXmT8
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071001041635.GA22102@old.davidb.org>
-X-Y-GMX-Trusted: 0
+	id S1751501AbXJAK1w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 06:27:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751453AbXJAK1w
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 06:27:52 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:28137 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328AbXJAK1v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 06:27:51 -0400
+Received: by py-out-1112.google.com with SMTP id u77so6941641pyb
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 03:27:49 -0700 (PDT)
+Received: by 10.35.10.13 with SMTP id n13mr7597400pyi.1191234469366;
+        Mon, 01 Oct 2007 03:27:49 -0700 (PDT)
+Received: by 10.35.86.2 with HTTP; Mon, 1 Oct 2007 03:27:49 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59596>
 
-Hi,
+I'm wondering if there's a pattern for re-using setups across several
+tests, similar to how a setUp function is used in xUnit. The problem
+is I need the setup to actually be re-run, for each test to start from
+a clean slate, so using the following doesn't work as the setup is
+just run before the first test.
 
-On Sun, 30 Sep 2007, David Brown wrote:
+test_expect_success setup '
+     # setup repostory to a particular state
+'
+test_expect_success test1 '
+    # some test that expects the state to be as defined in setup, and
+changes state of repository
+'
 
-> The question I have: is there any way I can look at this particular 
-> commit ID on the remote repo?  I couldn't come up with any way to get 
-> git fetch to retrieve it.
+test_expect_success test2 '
+    # another test that expects the state to be as defined in setup
+'
 
-Unless you have push access, no.  And this is very much by design.  For 
-example, when somebody mistakenly pushed a secret (like what lines in the 
-kernel infringe on M$ patents, if any) it should be possible to rebase (in 
-a hurry), force a push, and have the safe feeling that nobody can fetch 
-the secret any longer.
+Is there a convention for doing this that's already used? Perhaps
+pulling the setup code into a function or duplicating the code? Or is
+it better to create a separate test file for tests that need to be
+isolated?
 
-Ciao,
-Dscho
+Thanks,
+
+-Tom
