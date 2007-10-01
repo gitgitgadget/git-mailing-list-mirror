@@ -1,105 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] Add a simple option parser for use by builtin-commit.c.
-Date: Mon, 1 Oct 2007 19:13:27 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710011909291.28395@racer.site>
-References: <1190868632-29287-1-git-send-email-krh@redhat.com> 
- <20070930131133.GA11209@diku.dk> <1191255975.25093.26.camel@hinata.boston.redhat.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] Improve bash prompt to detect various states like an unfinished merge
+Date: Mon, 1 Oct 2007 20:29:37 +0200
+Message-ID: <200710012029.38100.robin.rosenberg@dewire.com>
+References: <20070904071301.GA18160@spearce.org> <1191111645134-git-send-email-robin.rosenberg@dewire.com> <7vabr3tfmq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonas Fonseca <fonseca@diku.dk>, gitster@pobox.com,
-	git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 20:14:55 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, johannes.sixt@telecom.at, spearce@spearce.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 20:27:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcPn8-0007lw-Ve
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 20:14:51 +0200
+	id 1IcPzX-0004r6-9e
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 20:27:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751790AbXJASOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 14:14:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbXJASOm
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 14:14:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51743 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751596AbXJASOl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 14:14:41 -0400
-Received: (qmail invoked by alias); 01 Oct 2007 18:14:39 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp030) with SMTP; 01 Oct 2007 20:14:39 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18btSQ4eoMbHQ21/QKa0V7nlvRzXGu6jLIutbskon
-	eJKqtn05HdWP8I
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1191255975.25093.26.camel@hinata.boston.redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1752130AbXJAS1a convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2007 14:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXJAS1a
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 14:27:30 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:9927 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751941AbXJAS13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 14:27:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 5AE5F8030C6;
+	Mon,  1 Oct 2007 20:19:07 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 30083-09; Mon,  1 Oct 2007 20:19:07 +0200 (CEST)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 00F6780264D;
+	Mon,  1 Oct 2007 20:19:06 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <7vabr3tfmq.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59630>
 
-Hi,
+m=E5ndag 01 oktober 2007 skrev Junio C Hamano:
+> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
+>=20
+> > This patch makes the git prompt (when enabled) show if a merge or a
+> > rebase is unfinished. It also detects if a bisect is being done as
+> > well as detached checkouts.
+>=20
+> Since you show the name of the branch anyway, I have to wonder
+> why you should say BISECT.
 
-On Mon, 1 Oct 2007, Kristian H?gsberg wrote:
+You can wonder around different branches while bisecting. The BISECT
+part is there to remind you that you are already doing bisecting, espec=
+ially
+when being away from the prompt for a while. I did some mistakes withou=
+t it.
 
-> On Sun, 2007-09-30 at 15:11 +0200, Jonas Fonseca wrote:
->
-> > One of the last things I miss from Cogito is the nice abbreviated help 
-> > messages that was available via '-h'. I don't know if it would be 
-> > acceptable (at least for the main porcelain commands) to put this 
-> > functionality into the option parser by adding a "description" member 
-> > to struct option and have parse_options print a nice:
-> > 
-> > 	<error message if any>
-> > 	<usage string>
-> > 	<option summary>
-> > 
-> > on failure, or, if that is regarded as too verbose, simply when -h is 
-> > detected.
-> 
-> Yeah, that might be nice.  We can add it in a follow-on patch, if the 
-> list agrees that it's a good thing, I guess.
+> Also if you know you normally get branch name, lack of branch
+> name would indicate detached HEAD, I would presume.
 
-That's a good idea; I would put the usage string there, too.
+Yes, sure, but I like it better this way.
 
-> > > +
-> > > +/* Parse the given options against the list of known options.  The
-> > > + * order of the option structs matters, in that ambiguous
-> > > + * abbreviations (eg, --in could be short for --include or
-> > > + * --interactive) are matched by the first option that share the
-> > > + * prefix.
-> > > + */
-> > 
-> > This prefix aware option parsing has not been ported over to the other 
-> > builtins when they were lifted from shell code. It might be nice to 
-> > have of course. Is it really needed?
-> 
-> I don't ever use it myself and I think it's more confusing than helpful. 
-> I only added it to avoid introducing behavior changes in the port.  I 
-> don't have strong feelings either way.
+> But other state information may be helpful.
 
-It might be convenient, but I think that it is really more confusing than 
-helpful, especially with options that share a prefix.  Besides, we have 
-good completion for bash now (and I hear that this "zsh" thing also has 
-quite good completion), I recommend <TAB> over prefix DWIMery.
+This is an example script, so I'd say it's better to have a little too =
+much=20
+and let people remve stuff they don't like in their personal copies.
 
-> > > +
-> > > +extern int parse_options(const char ***argv,
-> > > +			 struct option *options, int count,
-> > > +			 const char *usage_string);
-> > 
-> > I think the interface could be improved a bit. For example, it doesn't 
-> > need to count argument since the last entry in the options array is 
-> > OPTION_LAST and thus the size can be detected that way.
-> 
-> Hehe, yeah, that's how I did it first.  I don't have a strong preference 
-> for terminator elements vs. ARRAY_SIZE(), but Junio prefers the 
-> ARRAY_SIZE() approach, I guess.  At this point I'm just trying the get 
-> the patches upstream...
-
-FWIW I like the ARRAY_SIZE() approach better, too, since it is less error 
-prone.
-
-Ciao,
-Dscho
+-- robin
