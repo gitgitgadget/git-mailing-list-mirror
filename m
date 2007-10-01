@@ -1,60 +1,52 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Mon, 01 Oct 2007 16:24:09 -0700
-Message-ID: <7v641qquzq.fsf@gitster.siamese.dyndns.org>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
-	<7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
-	<87bqbisae6.wl%cworth@cworth.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git clone questions relating to cpio
+Date: Tue, 2 Oct 2007 00:23:57 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710020022470.28395@racer.site>
+References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Barry Fishman <barry_fishman@acm.org>, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 01:24:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git <git@vger.kernel.org>
+To: Reece Dunn <msclrhd@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 01:25:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcUcj-0000Rt-NG
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 01:24:26 +0200
+	id 1IcUde-0000hr-47
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 01:25:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751748AbXJAXYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 19:24:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751530AbXJAXYR
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 19:24:17 -0400
-Received: from rune.pobox.com ([208.210.124.79]:32773 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751499AbXJAXYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 19:24:17 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 2CD6313FBC2;
-	Mon,  1 Oct 2007 19:24:38 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 5D7DF13FA81;
-	Mon,  1 Oct 2007 19:24:33 -0400 (EDT)
-In-Reply-To: <87bqbisae6.wl%cworth@cworth.org> (Carl Worth's message of "Mon,
-	01 Oct 2007 16:06:09 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751790AbXJAXZO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 19:25:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751784AbXJAXZO
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 19:25:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38461 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751787AbXJAXZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 19:25:13 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 23:25:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp019) with SMTP; 02 Oct 2007 01:25:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/sB3QrLRzsW0TZTXFhveW0N4nhZaSsSjTUXljbeF
+	TxwJT+x0S5Rp5E
+X-X-Sender: gene099@racer.site
+In-Reply-To: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59649>
 
-Carl Worth <cworth@cworth.org> writes:
+Hi,
 
-> On Mon, 01 Oct 2007 15:32:58 -0700, Junio C Hamano wrote:
->> "master:master") does not exist there, and we do not create it
->> unless you give a full refname that begins with refs/ (so that
->> push can tell if you want to create a tag or a branch).
->
-> And why is that?
+On Mon, 1 Oct 2007, Reece Dunn wrote:
 
-I think Daniel's rewrite of remote ref matching code that has
-been cooking in 'next' changes the match semantics of the remote
-side in subtle way to make it easier to favor branches when
-pushing branches, but I juggle many topics and I have to go back
-to the code to make sure.  Since you are interested, and more
-importantly since I know you are capable to do the digging
-yourself, I won't be doing the digging myself immediately,
-though.
+> I am running a Linux From Scratch 6.2 system that does not have cpio
+> installed on it. This means that I can't clone a local repository
+> unless I install cpio.
+
+You might be interested in the workaround Hannes did in mingw.git; he made 
+a wrapper script called 'cpio' using 'tar'.
+
+Ciao,
+Dscho
