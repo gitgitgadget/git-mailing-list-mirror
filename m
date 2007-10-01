@@ -1,86 +1,59 @@
-From: Barry Fishman <barry_fishman@acm.org>
-Subject: Problems setting up bare repository (git 1.5.3.3)
-Date: Mon, 01 Oct 2007 17:46:36 -0400
-Message-ID: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] Support tags in uncommit - use git_id instead of rev_parse
+Date: Mon, 1 Oct 2007 23:00:52 +0100
+Message-ID: <b0943d9e0710011500o1bd621a4q10dfe0468c8795e2@mail.gmail.com>
+References: <20070930172647.18972.49369.stgit@tt.roinet.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 01 23:55:53 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Pavel Roskin" <proski@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 00:01:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcTEp-00059Y-0M
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 23:55:39 +0200
+	id 1IcTKB-0007EZ-IN
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 00:01:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753170AbXJAVza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 17:55:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754846AbXJAVza
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 17:55:30 -0400
-Received: from main.gmane.org ([80.91.229.2]:38841 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752884AbXJAVz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 17:55:29 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IcTEF-0000iK-Vt
-	for git@vger.kernel.org; Mon, 01 Oct 2007 21:55:04 +0000
-Received: from fl-69-69-5-167.dhcp.embarqhsd.net ([69.69.5.167])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 21:55:03 +0000
-Received: from barry_fishman by fl-69-69-5-167.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 21:55:03 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: fl-69-69-5-167.dhcp.embarqhsd.net
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:ueaG/v31obEEz6U3WOi093anZvA=
+	id S1757499AbXJAWAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 18:00:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757441AbXJAWAz
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 18:00:55 -0400
+Received: from nz-out-0506.google.com ([64.233.162.239]:60697 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757343AbXJAWAx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 18:00:53 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so2719008nze
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 15:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=JrorGj9AeDWRhF+nehFjeHVu+bdTxSxUNisCbqMEKEk=;
+        b=O7f8zKwSaARAkq/y+Z49mjK72F3j4DyP90uMDSLBJpfsEChxLWukShYfrISYCZbxabNP6tfZDhPWXXynkmc10gh+M9HYujSMrvK64+kKa6JIpqrPRCkqywtfKothGYBV+w6FpDr5naYPmkLms6I1ULZB5UGBjjt6qKF/XrtLCRE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZRNfFiFmArDmxRBUk0J+rIBKjh8yGRM8qVYCN2yJXYAJ3HGUvK0DPu4TIVSnM93ktjarY3z/VENbcgfvphDAZ99kHV6a0FrFpFTXi65LFa0myt/kjbRo6vuPHjR2A1VTi3KWbcXSU57Ml1ilpFmKuMJlYrzNetohb1RhsF7f3ns=
+Received: by 10.114.254.1 with SMTP id b1mr1328585wai.1191276052322;
+        Mon, 01 Oct 2007 15:00:52 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 1 Oct 2007 15:00:52 -0700 (PDT)
+In-Reply-To: <20070930172647.18972.49369.stgit@tt.roinet.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59637>
 
-Using the 1.5.3.3 release:
+On 30/09/2007, Pavel Roskin <proski@gnu.org> wrote:
+> Signed-off-by: Pavel Roskin <proski@gnu.org>
 
-$ cd /pub/git
-$ mkdir foo.git
-$ cd foo.git
-$ git --bare init
-Initialized empty Git repository in /pub/git/foo.git/
-$ git --bare branch
+With this patch, uncommit can take patch names (with modifiers) as the
+--to argument. When would this be needed?
 
-Note that there is no master branch.
-
-$ cd /some/git/workdir
-$ git push /pub/git/foo.git master:master
-error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
-fatal: The remote end hung up unexpectedly
-error: failed to push to '/pub/git/foo.git'
-
-$ git push --force /pub/git/foo.git master:master
-error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
-fatal: The remote end hung up unexpectedly
-error: failed to push to '/pub/git/foo.git'
-
-$ git push --all /pub/git/foo.git
-updating 'refs/heads/master'
-  from 0000000000000000000000000000000000000000
-  to   e623fb5ba6fac345eb6af552b40412acdc447b31
-Generating pack...
-Done counting 61 objects.
-Deltifying 61 objects...
- 100% (61/61) done
-Writing 61 objects...
-Unpacking 61 objects...
- 100% (61/61) done
-Total 61 (delta 31), reused 50 (delta 25)
- 100% (61/61) done
-refs/heads/master: 0000000000000000000000000000000000000000 -> e623fb5ba6fac345eb6af552b40412acdc447b31
-
-But what if I have more branches and want to just push the master
-branch?  This worked when I tried it last (probably 1.5.2.2).  This time
-I had to "git push --all" and then delete all the unwanted branches.
+To allow tags, maybe just pass something like
+"git.rev_parse(options.to + '^{commit}')" or just modify git.rev_parse
+to do it (and git_id to avoid it).
 
 -- 
-Barry Fishman
+Catalin
