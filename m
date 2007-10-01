@@ -1,60 +1,89 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] Prevent purely-numeric ref names from breaking Javascript.
-Date: Tue,  2 Oct 2007 01:37:02 +1000
-Message-ID: <11912530222348-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
-To: pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Mon Oct 01 17:42:25 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Adding rebase merge strategy
+Date: Mon, 1 Oct 2007 16:50:03 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710011647030.28395@racer.site>
+References: <Pine.LNX.4.64.0709281751390.28395@racer.site>
+ <11912513203420-git-send-email-tom@u2i.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 17:51:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcNPa-0002Lx-HX
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 17:42:23 +0200
+	id 1IcNYM-0005Sx-5l
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 17:51:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbXJAPmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 11:42:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbXJAPmN
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 11:42:13 -0400
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:21304 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751733AbXJAPmN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Oct 2007 11:42:13 -0400
-X-Greylist: delayed 305 seconds by postgrey-1.27 at vger.kernel.org; Mon, 01 Oct 2007 11:42:12 EDT
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAH6xAEd5LDtG/2dsb2JhbACBWQ
-X-IronPort-AV: E=Sophos;i="4.21,217,1188743400"; 
-   d="scan'208";a="198206847"
-Received: from ppp121-44-59-70.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.59.70])
-  by ipmail02.adl2.internode.on.net with ESMTP; 02 Oct 2007 01:07:06 +0930
-X-Mailer: git-send-email 1.5.3.1
+	id S1752051AbXJAPvS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 11:51:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752049AbXJAPvR
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 11:51:17 -0400
+Received: from mail.gmx.net ([213.165.64.20]:52961 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751935AbXJAPvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 11:51:17 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 15:51:15 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp049) with SMTP; 01 Oct 2007 17:51:15 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18pv+BoLjApm9tqgofl2OsBJ/DAiUDQsBc+KT3JPc
+	O5gyVKm6s/+vSH
+X-X-Sender: gene099@racer.site
+In-Reply-To: <11912513203420-git-send-email-tom@u2i.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59623>
 
-When the server reply carrying JSON data to the client browser to render has
-a string that looks like a decimal number, it doesn't get quoted. The
-client-side Javascript code assumes, however, that all the ref names are
-strings, and so calls string functions on decimal number objects if the ref
-name is purely numeric (e.g. "2.5"). This patch simply forces the objects that
-are escaped for HTML presentation to be coerced into strings, which catches
-this case (and possibly others).
----
- by-commit.html |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Hi,
 
-diff --git a/by-commit.html b/by-commit.html
-index d759c3e..0aa69b9 100644
---- a/by-commit.html
-+++ b/by-commit.html
-@@ -35,6 +35,7 @@ format_log_date=function( date )
- }
- escape_html=function( s )
- {
-+	s=s+"";	// ensure it's a string
- 	s=s.replace( /\&/g, "&amp;" );
- 	s=s.replace( /\</g, "&lt;" );
- 	s=s.replace( /\>/g, "&gt;" );
--- 
-1.5.3.1
+On Mon, 1 Oct 2007, Tom Clarke wrote:
+
+> Incorporated comments from Johannes Schindlen.
+
+Thanks.
+
+> +# Give up if we are given two or more remotes -- not handling octopus.
+> +test $# = 1 || exit 2
+
+I think the user wants to know in this case, too.  How about
+
+test $# = 1 || {
+	echo "Cannot handle octopus." >&2
+	exit 2
+}
+
+> diff --git a/t/t3031-merge-rebase.sh b/t/t3031-merge-rebase.sh
+> new file mode 100755
+> index 0000000..daa03b1
+> --- /dev/null
+> +++ b/t/t3031-merge-rebase.sh
+>
+> [...]
+>
+> +	( git log --pretty=oneline ) >actual &&
+
+Please lose the parentheses here.
+
+> +	(
+> +		echo "4db7a5a013e67aa623d1fd294e8d46e89b3ace8f onbranch"
+> +		echo "893371811dbd13e85c098b72d1ab42bcfd24c2db update"
+> +		echo "0e960b10429bf3f1e168ee2cc7d531ac7c622580 initial"
+> +	) >expected &&
+
+Why not do it as is done elsewhere in the test suit: use a "cat << EOF" 
+before "test_expect_success"?
+
+> +	(
+> +		echo "warning: Message is not used for rebase merge strategy"
+> +	) >expected &&
+
+Same here.
+
+Other than that, I like it.
+
+Ciao,
+Dscho
