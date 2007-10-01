@@ -1,130 +1,51 @@
-From: "Tom Clarke" <tom@u2i.com>
-Subject: Re: How to re-use setups in multiple tests?
-Date: Mon, 1 Oct 2007 14:16:47 +0200
-Message-ID: <550f9510710010516s305c843br53da294f65318862@mail.gmail.com>
-References: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com>
-	 <Pine.LNX.4.64.0710011243230.28395@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 01 14:17:17 2007
+From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
+	<jean_francois_veillette@yahoo.ca>
+Subject: Re: git-browser and branch names
+Date: Mon, 1 Oct 2007 08:34:47 -0400
+Message-ID: <C4186BBD-11BA-4A58-9230-00076FF6F8F7@yahoo.ca>
+References: <ee77f5c20710010424x1f83aa10kcde7033711b02093@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 01 14:38:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcKD6-00057l-3H
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:17:16 +0200
+	id 1IcKXM-0003Qq-1o
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:38:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751762AbXJAMQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 08:16:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751447AbXJAMQu
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:16:50 -0400
-Received: from py-out-1112.google.com ([64.233.166.176]:64189 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751657AbXJAMQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 08:16:49 -0400
-Received: by py-out-1112.google.com with SMTP id u77so6989018pyb
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 05:16:48 -0700 (PDT)
-Received: by 10.35.17.8 with SMTP id u8mr7727955pyi.1191241008034;
-        Mon, 01 Oct 2007 05:16:48 -0700 (PDT)
-Received: by 10.35.86.2 with HTTP; Mon, 1 Oct 2007 05:16:47 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710011243230.28395@racer.site>
-Content-Disposition: inline
+	id S1751727AbXJAMiE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2007 08:38:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbXJAMiB
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:38:01 -0400
+Received: from smtp102.mail.mud.yahoo.com ([209.191.85.212]:23733 "HELO
+	smtp102.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751727AbXJAMiA convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 Oct 2007 08:38:00 -0400
+Received: (qmail 58499 invoked from network); 1 Oct 2007 12:34:51 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.ca;
+  h=Received:X-YMail-OSG:Mime-Version:In-Reply-To:References:Content-Type:Message-Id:Content-Transfer-Encoding:From:Subject:Date:To:X-Mailer;
+  b=EZ0+jfMyGWCM3JEAQIqmxhNruXjikV6WbyIjfUekqxCPDvYIOUmq/gq/35h7UqEoJ+1tNCJFbdDoKWUyZ//lb/JFntUCPgWXNRGZwPWXJM34Fc6rsJiqfIQEWBt0WcjhJz2cz3zaY5bjdtol3iuBjKMTMEq7RMw9lZ7BFoDDQXQ=  ;
+Received: from unknown (HELO ?10.0.1.3?) (jean_francois_veillette@66.130.96.245 with plain)
+  by smtp102.mail.mud.yahoo.com with SMTP; 1 Oct 2007 12:34:50 -0000
+X-YMail-OSG: RfiIlOgVM1kLQSxwd2WKoQQ9vfoXeqc2I0b3GEBby.itAOpicDshbaSw4kfWh3l5nyyRrLpsGkCHYdkcs1L3q7UZU0JzATfU_yh1pyKHbje6..xluXU-
+In-Reply-To: <ee77f5c20710010424x1f83aa10kcde7033711b02093@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59608>
 
-In this case the first test rebases the branch created in setup (it's
-testing the rebase merge strategy), the second test should do the same
-thing, except check there is a warning if a --message option is
-passed.
-
-I suppose I could find the old pre-rebase head and work with that, but
-that doesn't seem that clean to me.
-
-Here's the code (non-working):
-
-#!/bin/sh
-
-test_description='merge-rebase backend test'
-
-. ./test-lib.sh
-
-test_expect_success setup '
-        echo hello >a &&
-        git add a &&
-        test_tick && git commit -m initial &&
-
-        git checkout -b branch &&
-        echo hello >b &&
-        git add b &&
-        test_tick && git commit -m onbranch &&
-
-        git checkout master &&
-        echo update >a &&
-        git add a &&
-        test_tick && git commit -m update
-'
-
-test_expect_success 'merging using rebase does not create merge
-commit' '
-        git checkout branch &&
-        git merge -s rebase master &&
-
-        ( git log --pretty=oneline ) >actual &&
-        (
-                echo "4db7a5a013e67aa623d1fd294e8d46e89b3ace8f
-onbranch"
-                echo "893371811dbd13e85c098b72d1ab42bcfd24c2db update"
-                echo "0e960b10429bf3f1e168ee2cc7d531ac7c622580
-initial"
-        ) >expected &&
-        git diff -w -u expected actual
-'
-
-test_expect_success 'merging using rebase with message gives warning'
-'
-        #doesn't work because the branch has already been rebased and
-is therefore up to date
-        git checkout branch &&
-        git merge -m "a message" -s rebase master 2>&1 expected &&
-        (
-                echo "warning: Message is not used for rebase merge
-strategy"
-        ) >expected &&
-        git diff -w -u expected actual
-'
-
-test_done
-
-
--Tom
-
-On 10/1/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+Le 07-10-01 =E0 07:24, David Symonds a =E9crit :
 >
-> On Mon, 1 Oct 2007, Tom Clarke wrote:
->
-> > I'm wondering if there's a pattern for re-using setups across several
-> > tests, similar to how a setUp function is used in xUnit. The problem is
-> > I need the setup to actually be re-run, for each test to start from a
-> > clean slate, so using the following doesn't work as the setup is just
-> > run before the first test.
->
-> We typically do the clean up phase explicitely.  Or avoid it.
->
-> Example: you want to do something to a branch, but the next step should
-> use the original state of the branch.
->
-> Solution: "git checkout -b new-branch HEAD~5"
->
-> Sorry, unless you are a little less mysterious about the exact use case
-> you have in mind, I cannot help more.
->
-> Ciao,
-> Dscho
->
->
+> Can anyone give me pointers or suggestions as to where to start
+> debugging this? Anyone else encountered this?
+
+To debug html/javascript use  Firefox and Firebug.
+http://www.getfirebug.com/
+
+- jfv
