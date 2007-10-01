@@ -1,72 +1,61 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] Improve bash prompt to detect various states like an unfinished merge
-Date: Mon, 1 Oct 2007 20:29:37 +0200
-Message-ID: <200710012029.38100.robin.rosenberg@dewire.com>
-References: <20070904071301.GA18160@spearce.org> <1191111645134-git-send-email-robin.rosenberg@dewire.com> <7vabr3tfmq.fsf@gitster.siamese.dyndns.org>
+From: "Reece Dunn" <msclrhd@googlemail.com>
+Subject: git clone questions relating to cpio
+Date: Mon, 1 Oct 2007 20:28:38 +0100
+Message-ID: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, johannes.sixt@telecom.at, spearce@spearce.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 01 20:27:44 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 01 21:29:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcPzX-0004r6-9e
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 20:27:39 +0200
+	id 1IcQx7-0003kN-Qk
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 21:29:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbXJAS1a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2007 14:27:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXJAS1a
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 14:27:30 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:9927 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751941AbXJAS13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 14:27:29 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 5AE5F8030C6;
-	Mon,  1 Oct 2007 20:19:07 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 30083-09; Mon,  1 Oct 2007 20:19:07 +0200 (CEST)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id 00F6780264D;
-	Mon,  1 Oct 2007 20:19:06 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <7vabr3tfmq.fsf@gitster.siamese.dyndns.org>
+	id S1752884AbXJAT2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 15:28:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752850AbXJAT2k
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 15:28:40 -0400
+Received: from el-out-1112.google.com ([209.85.162.179]:52227 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752906AbXJAT2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 15:28:40 -0400
+Received: by el-out-1112.google.com with SMTP id v27so806701ele
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 12:28:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=m6VNe2mkrn4Udkf30E5zR9GCrA0OPHJEYjzqbgBKzvw=;
+        b=H5A+cUuoXyBoDA1pG5DyKyQdIfOJ6jZvPLc4cZQXj5zRZqOenOqfg57/FOvaNgkULkxNljspDU5Bd3lj9lbQd9wuJD8Nin0UPGjZLtMGAByHPtrX2YGdh5sm0ylZ9Eb05MxQjmrLs81mIUKHzm8E+XMtoNJHA/DfyEIDsGbKVQM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=PXI8Sw9PffZD4DZgDcOIlJHM0YaF0xWVA7yGVWheQI2k8lTsy1cqDKSLWZdO9a7dQ5tevrGNs4j3XomW6HkhVhzM4Lw0E9NWCtst+jfC6O6ESmGFLR9Cv+67Gl+RNasLuPJqRLvBKKNkyMcsPQLYtlOv9J0mlLYfaNHg/SVWID8=
+Received: by 10.114.196.1 with SMTP id t1mr1024124waf.1191266918053;
+        Mon, 01 Oct 2007 12:28:38 -0700 (PDT)
+Received: by 10.141.23.10 with HTTP; Mon, 1 Oct 2007 12:28:38 -0700 (PDT)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59630>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59631>
 
-m=E5ndag 01 oktober 2007 skrev Junio C Hamano:
-> Robin Rosenberg <robin.rosenberg@dewire.com> writes:
->=20
-> > This patch makes the git prompt (when enabled) show if a merge or a
-> > rebase is unfinished. It also detects if a bisect is being done as
-> > well as detached checkouts.
->=20
-> Since you show the name of the branch anyway, I have to wonder
-> why you should say BISECT.
+Hi,
 
-You can wonder around different branches while bisecting. The BISECT
-part is there to remind you that you are already doing bisecting, espec=
-ially
-when being away from the prompt for a while. I did some mistakes withou=
-t it.
+I am running a Linux From Scratch 6.2 system that does not have cpio
+installed on it. This means that I can't clone a local repository
+unless I install cpio. Is it possible to use a fallback method if cpio
+is not present, as there is no NO_CPIO option on make like there is
+for OpenSSH, cURL and expat?
 
-> Also if you know you normally get branch name, lack of branch
-> name would indicate detached HEAD, I would presume.
+Also, I have an external USB hardrive that is mounted onto the virtual
+filesystem. Will clones from the USB harddrive (or a USB flash drive
+that is mounted) result in a copy being performed, not a hardlink?
 
-Yes, sure, but I like it better this way.
+Ideally, the hard linking for local clones should be optional. What if
+I want to move a repository because, for example, I have imported a
+CVS repository and now want to push it to a new bare repository?
 
-> But other state information may be helpful.
-
-This is an example script, so I'd say it's better to have a little too =
-much=20
-and let people remve stuff they don't like in their personal copies.
-
--- robin
+- Reece
