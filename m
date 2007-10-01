@@ -1,67 +1,50 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/4] Add a simple option parser for use by builtin-commit.c.
-Date: Mon, 1 Oct 2007 12:39:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710011239080.28395@racer.site>
-References: <1190868632-29287-1-git-send-email-krh@redhat.com>
- <20070930131133.GA11209@diku.dk> <Pine.LNX.4.64.0710011114310.28395@racer.site>
- <20071001103148.GC8315@diku.dk>
+Subject: Re: [PATCH] shortlog: remove --help option parsing
+Date: Mon, 1 Oct 2007 12:42:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710011241430.28395@racer.site>
+References: <20071001102020.GA8315@diku.dk>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
-	gitster@pobox.com, git@vger.kernel.org
+Cc: git@vger.kernel.org
 To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Oct 01 13:41:08 2007
+X-From: git-owner@vger.kernel.org Mon Oct 01 13:44:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcJe8-00013b-14
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 13:41:08 +0200
+	id 1IcJhC-00023F-QV
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 13:44:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751501AbXJALk6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 07:40:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbXJALk6
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 07:40:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34883 "HELO mail.gmx.net"
+	id S1751727AbXJALoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 07:44:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751408AbXJALoJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 07:44:09 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56240 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751291AbXJALk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 07:40:56 -0400
-Received: (qmail invoked by alias); 01 Oct 2007 11:40:55 -0000
+	id S1751516AbXJALoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 07:44:08 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 11:44:07 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp018) with SMTP; 01 Oct 2007 13:40:55 +0200
+  by mail.gmx.net (mp033) with SMTP; 01 Oct 2007 13:44:07 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/t0c94kmTtyZuwPehzD3RXPVgfkTapRNF8zHmzvR
-	FxjKe/OiZbjtlO
+X-Provags-ID: V01U2FsdGVkX186oHdEUuw6KAi/rARLwKkwVJoQxPYSpxIyb0CF/p
+	VadtXImbBMjh9Y
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20071001103148.GC8315@diku.dk>
+In-Reply-To: <20071001102020.GA8315@diku.dk>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59603>
 
 Hi,
 
 On Mon, 1 Oct 2007, Jonas Fonseca wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote Mon, Oct 01, 2007:
-> 
-> > On Sun, 30 Sep 2007, Jonas Fonseca wrote:
-> > 
-> > > Also, I think for this to be more usable for other built-in programs 
-> > > it shouldn't modify argv, but instead take both argc and argv (so we 
-> > > don't need to have code like "*++(*argv)" ;), parse _all_ options in 
-> > > one go, and return the index (of argv) for any remaining options.
-> > 
-> > We _have_ to modify argv.  For example, "git log master -p" is 
-> > perfectly valid.
-> 
-> Ah, yes this could be nice to also finally have (more universally) in 
-> git. But for this to be possible I don't see any reason for it to modify 
-> the pointer to argv. Instead, it can just reshuffle entries in argv.
+> -		else if (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help"))
+> +		else if (!strcmp(argv[1], "-h"))
 
-In that case, I misunderstood you.  Indeed, I'd only reshuffle the 
-entries of argv.
+I see that this is my fault.
 
-Ciao,
+Thanks,
 Dscho
