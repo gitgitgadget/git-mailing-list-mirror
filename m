@@ -1,60 +1,61 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: git-svn and hierarchal branches.
-Date: Tue, 02 Oct 2007 00:45:37 +1300
-Message-ID: <4700DDE1.2000906@vilain.net>
-References: <20070930070754.GA10264@old.davidb.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to re-use setups in multiple tests?
+Date: Mon, 1 Oct 2007 12:45:00 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710011243230.28395@racer.site>
+References: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Mon Oct 01 13:45:54 2007
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 13:46:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcJih-0002fF-GH
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 13:45:51 +0200
+	id 1IcJjB-0002pg-Pz
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 13:46:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751752AbXJALpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 07:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751661AbXJALpo
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 07:45:44 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:56489 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751408AbXJALpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 07:45:43 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id C8E3421CFEA; Mon,  1 Oct 2007 23:45:41 +1200 (NZST)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 42AFC21CFE8;
-	Mon,  1 Oct 2007 23:45:36 +1200 (NZST)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <20070930070754.GA10264@old.davidb.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1751808AbXJALqO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 07:46:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXJALqO
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 07:46:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57850 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751785AbXJALqN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 07:46:13 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 11:46:12 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp029) with SMTP; 01 Oct 2007 13:46:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+gNb0hsxCg5RDFbgq29h/pfaCLTvAvvZOw18aKfn
+	Fi4TWeUEsSYsN4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59605>
 
-David Brown wrote:
-> I'm trying to use git-svn to track the 'Tango' SVN repository
-> <http://www.dsource.org/projects/tango/wiki/Download>
->
-> Their layout is mostly standard, except that they have an extra hierarchy
-> in the branch directory (branch/user1, branch/user2, branch/D1_0 for a
-> release).
->
-> Is this something I can easily track with git-svn, or am I best trying to
-> do it manually?
+Hi,
 
-Track each branch with a separate git-svn remote.
+On Mon, 1 Oct 2007, Tom Clarke wrote:
 
-Sam.
+> I'm wondering if there's a pattern for re-using setups across several 
+> tests, similar to how a setUp function is used in xUnit. The problem is 
+> I need the setup to actually be re-run, for each test to start from a 
+> clean slate, so using the following doesn't work as the setup is just 
+> run before the first test.
+
+We typically do the clean up phase explicitely.  Or avoid it.
+
+Example: you want to do something to a branch, but the next step should 
+use the original state of the branch.
+
+Solution: "git checkout -b new-branch HEAD~5"
+
+Sorry, unless you are a little less mysterious about the exact use case 
+you have in mind, I cannot help more.
+
+Ciao,
+Dscho
