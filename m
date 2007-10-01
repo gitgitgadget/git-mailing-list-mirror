@@ -1,80 +1,55 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/5] fork/exec removal series
-Date: Mon, 01 Oct 2007 11:49:39 +0200
-Message-ID: <86odfjb1vw.fsf@lola.quinscape.zz>
-References: <1191183001-5368-1-git-send-email-johannes.sixt@telecom.at>
-	<Pine.LNX.4.64.0709302212160.28395@racer.site>
-	<200709302334.37129.johannes.sixt@telecom.at>
-	<Pine.LNX.4.64.0709302242100.28395@racer.site>
-	<47009CC7.70300@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] Add a simple option parser for use by builtin-commit.c.
+Date: Mon, 1 Oct 2007 11:14:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710011114310.28395@racer.site>
+References: <1190868632-29287-1-git-send-email-krh@redhat.com>
+ <20070930131133.GA11209@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 01 11:50:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Mon Oct 01 12:16:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcHuc-0000dD-0W
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 11:50:02 +0200
+	id 1IcIJx-0000PG-K9
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 12:16:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751200AbXJAJtz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 05:49:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbXJAJty
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 05:49:54 -0400
-Received: from main.gmane.org ([80.91.229.2]:58541 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912AbXJAJty (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 05:49:54 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IcHuL-00046Q-NE
-	for git@vger.kernel.org; Mon, 01 Oct 2007 09:49:45 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 09:49:45 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 01 Oct 2007 09:49:45 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-In-Reply-To: <47009CC7.70300@viscovery.net> (Johannes Sixt's message of "Mon\, 01 Oct 2007 09\:07\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:6ztPGx84bvtBKNDTHugr8c352cg=
+	id S1751299AbXJAKQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 06:16:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbXJAKQE
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 06:16:04 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50694 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751120AbXJAKQD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 06:16:03 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 10:15:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 01 Oct 2007 12:15:59 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/4ijxAivH4Aj9J5gVy0FveaW3Nl5EydPz/YlTkXR
+	VkWy/rTERbeKCK
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20070930131133.GA11209@diku.dk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59593>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hi,
 
-> Johannes Schindelin schrieb:
->> On Sun, 30 Sep 2007, Johannes Sixt wrote:
->>> These cases I hope to be able to treat as "coroutine":
->>>
->>> - sideband demultiplexer in builtin-fetch-pack.c
->>> - internal rev-list in upload-pack
->>> - the two-way pipe handling in convert.c and builtin-upload-archive.c
->>>
->>> There are probably more in daemon.c and imap-send.c.
->>>
->>> BTW, the convert.c case (apply_filter) is most interesting for me,
->>> since I have a real-world use-case for a clean-filter.
->>
->> Calling it coroutine is interesting... But yes, I agree that these
->> three cases cannot be handled otherwise.
->
-> Suggestions for a better name are appreciated!
+On Sun, 30 Sep 2007, Jonas Fonseca wrote:
 
-I think coroutine is commonly used as the name for _synchronous_
-context switches aka message passing.  Basically the same as
-subroutine calls, except that the called subroutine has its own
-dynamic context (instruction pointer, call stack, control flow) that
-gets activated and suspended.
+> Also, I think for this to be more usable for other built-in programs it 
+> shouldn't modify argv, but instead take both argc and argv (so we don't 
+> need to have code like "*++(*argv)" ;), parse _all_ options in one go, 
+> and return the index (of argv) for any remaining options.
 
-If there is parallelism implied, "thread" is the more appropriate
-name.
+We _have_ to modify argv.  For example, "git log master -p" is perfectly 
+valid.
 
--- 
-David Kastrup
+Ciao,
+Dscho
