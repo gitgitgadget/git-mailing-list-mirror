@@ -1,117 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git clone questions relating to cpio
-Date: Mon, 01 Oct 2007 23:42:36 +0200
-Message-ID: <200710012342.37352.johan@herland.net>
-References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
+From: Barry Fishman <barry_fishman@acm.org>
+Subject: Problems setting up bare repository (git 1.5.3.3)
+Date: Mon, 01 Oct 2007 17:46:36 -0400
+Message-ID: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Reece Dunn <msclrhd@googlemail.com>
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 01 23:44:13 2007
+X-From: git-owner@vger.kernel.org Mon Oct 01 23:55:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcT2f-00088f-0y
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 23:43:05 +0200
+	id 1IcTEp-00059Y-0M
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 23:55:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753637AbXJAVm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Oct 2007 17:42:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753253AbXJAVm5
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 17:42:57 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:51833 "EHLO smtp.getmail.no"
+	id S1753170AbXJAVza (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 17:55:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754846AbXJAVza
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 17:55:30 -0400
+Received: from main.gmane.org ([80.91.229.2]:38841 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752457AbXJAVm4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Oct 2007 17:42:56 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JP90065L5NHYT00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 01 Oct 2007 23:42:53 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JP900DXF5N2RM30@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 01 Oct 2007 23:42:38 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JP900CCR5N1GOA0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 01 Oct 2007 23:42:38 +0200 (CEST)
-In-reply-to: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1752884AbXJAVz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 17:55:29 -0400
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1IcTEF-0000iK-Vt
+	for git@vger.kernel.org; Mon, 01 Oct 2007 21:55:04 +0000
+Received: from fl-69-69-5-167.dhcp.embarqhsd.net ([69.69.5.167])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 21:55:03 +0000
+Received: from barry_fishman by fl-69-69-5-167.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 01 Oct 2007 21:55:03 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: fl-69-69-5-167.dhcp.embarqhsd.net
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:ueaG/v31obEEz6U3WOi093anZvA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59636>
 
-On Monday 01 October 2007, Reece Dunn wrote:
-> Hi,
-> 
-> I am running a Linux From Scratch 6.2 system that does not have cpio
-> installed on it. This means that I can't clone a local repository
-> unless I install cpio. Is it possible to use a fallback method if cpio
-> is not present, as there is no NO_CPIO option on make like there is
-> for OpenSSH, cURL and expat?
+Using the 1.5.3.3 release:
 
-Using "file://" when specifying the source repo will force git-clone to use 
-the git protocol, instead of doing a copy/hardlink.
+$ cd /pub/git
+$ mkdir foo.git
+$ cd foo.git
+$ git --bare init
+Initialized empty Git repository in /pub/git/foo.git/
+$ git --bare branch
 
-I.e. change "git clone foo bar" to "git clone file://foo bar" in order to 
-prevent git-clone from calling cpio.
+Note that there is no master branch.
 
-However, grepping for cpio in the git source tree reveals a couple of uses 
-in git-merge, so you might bump into problems there...
+$ cd /some/git/workdir
+$ git push /pub/git/foo.git master:master
+error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
+fatal: The remote end hung up unexpectedly
+error: failed to push to '/pub/git/foo.git'
 
-> Also, I have an external USB hardrive that is mounted onto the virtual
-> filesystem. Will clones from the USB harddrive (or a USB flash drive
-> that is mounted) result in a copy being performed, not a hardlink?
+$ git push --force /pub/git/foo.git master:master
+error: dst refspec master does not match any existing ref on the remote and does not start with refs/.
+fatal: The remote end hung up unexpectedly
+error: failed to push to '/pub/git/foo.git'
 
-Hardlinks are impossible across filesystems. If you're cloning to a 
-different filesystem git will _have_ to make a full copy.
+$ git push --all /pub/git/foo.git
+updating 'refs/heads/master'
+  from 0000000000000000000000000000000000000000
+  to   e623fb5ba6fac345eb6af552b40412acdc447b31
+Generating pack...
+Done counting 61 objects.
+Deltifying 61 objects...
+ 100% (61/61) done
+Writing 61 objects...
+Unpacking 61 objects...
+ 100% (61/61) done
+Total 61 (delta 31), reused 50 (delta 25)
+ 100% (61/61) done
+refs/heads/master: 0000000000000000000000000000000000000000 -> e623fb5ba6fac345eb6af552b40412acdc447b31
 
-> Ideally, the hard linking for local clones should be optional.
-
-<quote src="git-clone(1)">
---local, -l
-
-  When the repository to clone from is on a local machine, this flag 
-bypasses normal "git aware" transport mechanism and clones the repository 
-by making a copy of HEAD and everything under objects and refs directories. 
-The files under .git/objects/ directory are hardlinked to save space when 
-possible. This is now the default when the source repository is specified 
-with /path/to/repo syntax, so it essentially is a no-op option. To force 
-copying instead of hardlinking (which may be desirable if you are trying to 
-make a back-up of your repository), but still avoid the usual "git aware" 
-transport mechanism, --no-hardlinks can be used.
-
---no-hardlinks
-
-  Optimize the cloning process from a repository on a local filesystem by 
-copying files under .git/objects directory.
-</quote>
-
-And as I said above, you can use "file://" to force the "git aware" 
-transport mechanism, which bypasses the whole local copy/hardlink issue 
-entirely.
-
-> What if I want to move a repository because, for example, I have imported
-> a CVS repository and now want to push it to a new bare repository?
-
-Even if you were to use hardlinks, cloning a repo followed by deleting the 
-original will be safe (as long as you don't supply '--shared' to 
-git-clone). That's the beauty of hardlinks.
-
-I also think it's fairly safe to just 'mv' the whole repository to its new 
-location.
-
-
-Have fun! :)
-
-...Johan
+But what if I have more branches and want to just push the master
+branch?  This worked when I tried it last (probably 1.5.2.2).  This time
+I had to "git push --all" and then delete all the unwanted branches.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Barry Fishman
