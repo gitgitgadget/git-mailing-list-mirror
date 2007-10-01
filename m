@@ -1,51 +1,58 @@
-From: =?ISO-8859-1?Q?Jean-Fran=E7ois_Veillette?= 
-	<jean_francois_veillette@yahoo.ca>
-Subject: Re: git-browser and branch names
-Date: Mon, 1 Oct 2007 08:34:47 -0400
-Message-ID: <C4186BBD-11BA-4A58-9230-00076FF6F8F7@yahoo.ca>
-References: <ee77f5c20710010424x1f83aa10kcde7033711b02093@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 01 14:38:13 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to re-use setups in multiple tests?
+Date: Mon, 1 Oct 2007 13:39:03 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710011336530.28395@racer.site>
+References: <550f9510710010327l3e729ff1tbbb9b6c674c1cb11@mail.gmail.com> 
+ <Pine.LNX.4.64.0710011243230.28395@racer.site>
+ <550f9510710010516s305c843br53da294f65318862@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Tom Clarke <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Mon Oct 01 14:40:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcKXM-0003Qq-1o
-	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:38:12 +0200
+	id 1IcKZW-00046u-Cg
+	for gcvg-git-2@gmane.org; Mon, 01 Oct 2007 14:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751727AbXJAMiE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Oct 2007 08:38:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbXJAMiB
-	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:38:01 -0400
-Received: from smtp102.mail.mud.yahoo.com ([209.191.85.212]:23733 "HELO
-	smtp102.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751727AbXJAMiA convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 1 Oct 2007 08:38:00 -0400
-Received: (qmail 58499 invoked from network); 1 Oct 2007 12:34:51 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.ca;
-  h=Received:X-YMail-OSG:Mime-Version:In-Reply-To:References:Content-Type:Message-Id:Content-Transfer-Encoding:From:Subject:Date:To:X-Mailer;
-  b=EZ0+jfMyGWCM3JEAQIqmxhNruXjikV6WbyIjfUekqxCPDvYIOUmq/gq/35h7UqEoJ+1tNCJFbdDoKWUyZ//lb/JFntUCPgWXNRGZwPWXJM34Fc6rsJiqfIQEWBt0WcjhJz2cz3zaY5bjdtol3iuBjKMTMEq7RMw9lZ7BFoDDQXQ=  ;
-Received: from unknown (HELO ?10.0.1.3?) (jean_francois_veillette@66.130.96.245 with plain)
-  by smtp102.mail.mud.yahoo.com with SMTP; 1 Oct 2007 12:34:50 -0000
-X-YMail-OSG: RfiIlOgVM1kLQSxwd2WKoQQ9vfoXeqc2I0b3GEBby.itAOpicDshbaSw4kfWh3l5nyyRrLpsGkCHYdkcs1L3q7UZU0JzATfU_yh1pyKHbje6..xluXU-
-In-Reply-To: <ee77f5c20710010424x1f83aa10kcde7033711b02093@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.2)
+	id S1751790AbXJAMkT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Oct 2007 08:40:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751866AbXJAMkS
+	(ORCPT <rfc822;git-outgoing>); Mon, 1 Oct 2007 08:40:18 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60307 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751678AbXJAMkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Oct 2007 08:40:16 -0400
+Received: (qmail invoked by alias); 01 Oct 2007 12:40:14 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 01 Oct 2007 14:40:14 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3FZo35dz3HRxh9lrx5CIbV6QEGQizWfViHSS8Ik
+	9OZotov28a2Q/4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <550f9510710010516s305c843br53da294f65318862@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59609>
 
-Le 07-10-01 =E0 07:24, David Symonds a =E9crit :
->
-> Can anyone give me pointers or suggestions as to where to start
-> debugging this? Anyone else encountered this?
+Hi,
 
-To debug html/javascript use  Firefox and Firebug.
-http://www.getfirebug.com/
+On Mon, 1 Oct 2007, Tom Clarke wrote:
 
-- jfv
+> In this case the first test rebases the branch created in setup (it's 
+> testing the rebase merge strategy), the second test should do the same 
+> thing, except check there is a warning if a --message option is passed.
+> 
+> I suppose I could find the old pre-rebase head and work with that, but 
+> that doesn't seem that clean to me.
+
+You can use "git reset --hard master@{1}", and it really escapes me why 
+this should not be clean, and why you want to jump through hoops instead 
+using a much more complicated technique.
+
+Ciao,
+Dscho
