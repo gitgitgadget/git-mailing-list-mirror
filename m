@@ -1,98 +1,108 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: git-http-push / webDAV
-Date: Tue, 2 Oct 2007 14:46:46 +0400
-Message-ID: <20071002104646.GY975@void.codelabs.ru>
-References: <4700F6BC.2070701@jentro.com> <20071001155454.GU975@void.codelabs.ru> <47020603.3080000@jentro.com> <20071002085416.GW975@void.codelabs.ru> <470215F6.2060105@jentro.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH] for-each-ref's new per-atom formatting was failing if there were multiple fields per line
+Date: Tue, 2 Oct 2007 12:02:42 +0100
+Message-ID: <200710021202.42452.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: Thomas Pasch <thomas.pasch@jentro.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 12:47:07 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 02 13:02:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcfHP-0006In-0b
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 12:47:07 +0200
+	id 1IcfWi-0002lO-4X
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 13:02:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752049AbXJBKq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 06:46:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbXJBKq6
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 06:46:58 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:64680 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751755AbXJBKq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 06:46:57 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=VXHHQ0nmRXunmug4OOVU6QxJ+UwuHoyhAMsuhDvv3xjejf5EaiRlOvQNKaOvQOULPQ5c29wVPB2s3e6+2mPwloSZdOkSbmUlq0xgOx0l5Hv2fEE9fGGzacd3oKyIistKkeGvEodSeue2JOiO7EkEvV7tVM4iRahNzwjvo/wWTrU=;
-Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1IcfH9-0002At-7R; Tue, 02 Oct 2007 14:46:51 +0400
+	id S1752554AbXJBLCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 07:02:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXJBLCs
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 07:02:48 -0400
+Received: from nz-out-0506.google.com ([64.233.162.237]:5701 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924AbXJBLCr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 07:02:47 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so2877511nze
+        for <git@vger.kernel.org>; Tue, 02 Oct 2007 04:02:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        bh=RE5gFXUiQJzo5c8Syf8wcWfcu5ittgIqtBL0MfEKhms=;
+        b=Rn87s91lLuYGC8SYzbyCOVk2uheSaWN4T7sMBQ68DxmJ4toSGEkYx8wHfsmgabr5a7du2LEPxhm1m5w0b53Woo/kdNFoxhJ+Hwb+p+nQESHvJAtWNMh1U4ulC41L+dZTIqymHNwh80V0ixK8bAbFlbwf4bxLOur42tNeF5CUoOg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=Dae2svOjfznnGq2dn9qWm5VczLr1uBPdeWKwp/McIqeBdffJcC4gBiDyK/FBicoXv7tT1PczHbNAUOL3IQafB0sOXMU5CpFWOQBwXL/FuCGvwQdF5Nevf6z7svoWGINmistsQum7iEKz230Z5Ukqkvj1Nht7ZPHh++lS+cH6c30=
+Received: by 10.65.242.11 with SMTP id u11mr17843148qbr.1191322966730;
+        Tue, 02 Oct 2007 04:02:46 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id 32sm1633512nfu.2007.10.02.04.02.45
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 02 Oct 2007 04:02:46 -0700 (PDT)
+X-TUID: abedc78dd1643908
+X-UID: 344
+X-Length: 2869
 Content-Disposition: inline
-In-Reply-To: <470215F6.2060105@jentro.com>
-X-Spam-Status: No, score=-1.8 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_40,
-	NORMAL_HTTP_TO_IP
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59682>
 
-Thomas,
+builtin-for-each-ref.c was searching backwards for ":" in the atom searches
+performed by parse_atom.  In implementing the format handler I had
+assumed that parse_atom was being handed a single atom pointer.  That
+was not the case.  In fact the "atom" pointer is just a pointer within
+the longer format string, that means that the NUL for the end of the
+string is not at the end of the current atom, but at the end of the
+format string.
 
-Tue, Oct 02, 2007 at 11:57:10AM +0200, Thomas Pasch wrote:
-> well, *somewhat* better with the trailing slash:
-> 
-> > echo "modified" >>grep.c
-> > git commit -a
-> Created commit e147e54: mod
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> > git push -v
-> Pushing to http://test@192.1.1.184/git/git.git/
-> Fetching remote heads...
->   refs/
->   refs/heads/
->   refs/tags/
-> updating 'refs/heads/master'
->   from 34c6dbdef439f7cd93d3fe22493a3c1496ce96f7
->   to   e147e54b14828fa2e88e88907e0ca4dc3d694448
->     sending 3 objects
->     done
-> Updating remote server info
-> 
-> There's no more error message.
+Finding the ":" separating the atom name from the format was done with
+strrchr(), which searches from the end of the string.  That would be
+fine if it was searching a single atom string, but in the case of:
 
-OK, that's fine: the previous error was tied to the fact that
-when you're getting /git/git.git from the Web-server, it notices
-that it is a directory and redirects you to the /git/git.git/.
-But (IIRC) curl does not follow such redirections.
+ --format="%(atom:format) %(atom:format)"
 
-> However, push has still
-> not worked. If I try to check out the new HEAD:
-> 
-> > git clone http://test@192.1.1.184/git/git.git/
-> Initialized empty Git repository in /home/tpasch/tmp/git/.git/
-> Getting alternates list for http://test@192.1.1.184/git/git.git
-> Getting pack list for http://test@192.1.1.184/git/git.git
-> Getting index for pack 563e2090185692c7d765775569a0ce986840fd17
-> Getting pack 563e2090185692c7d765775569a0ce986840fd17
->  which contains 3af9d3e08da868c3a7687ab38d72f4296a99005d
-> [...]
-> walk 24778e335a6450e34257a311d0bf4a12bdb3006c
-> walk 19b2860cba5742ab31fd682b80fefefac19be141
-> walk bf0c6e839c692142784caf07b523cd69442e57a5
-> walk e497ea2a9b6c378f01d092c210af20cbee762475
-> walk 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
-> walk e83c5163316f89bfbde7d9ab23ca2e25604af290
-> Getting alternates list for http://test@192.1.1.184/git/git.git
-> Getting pack list for http://test@192.1.1.184/git/git.git
-> error: Unable to find e147e54b14828fa2e88e88907e0ca4dc3d694448 under
-> http://test@192.1.1.184/git/git.git
-> Cannot obtain needed object e147e54b14828fa2e88e88907e0ca4dc3d694448
+When the first atom is being parsed a backwards search actually finds
+the second colon, making the atom name look like:
 
-OK, I will try to do this on my server with 2.2.6.  How big
-is your repository?  Both size and commit number.
+ "atom:format) %(atom"
 
-Thanks.
+Which obviously doesn't match any valid atom name and so exits with
+"unknown field name".
+
+The fix is to abandon the reverse search (which was only to allow colons
+in atom names, which was redundant as there are no atom names with
+colons) and replace it with a forward search.  The potential presence of
+a second ":" also requires a check to confirm that the found ":" is
+between the start and end pointers, which this patch also adds.
+
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ builtin-for-each-ref.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 2ca4fc6..f06d006 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -109,8 +109,8 @@ static int parse_atom(const char *atom, const char *ep)
+ 		/* If the atom name has a colon, strip it and everything after
+ 		 * it off - it specifies the format for this entry, and
+ 		 * shouldn't be used for checking against the valid_atom table */
+-		const char *formatp = strrchr(sp, ':' );
+-		if (formatp == NULL )
++		const char *formatp = strchr(sp, ':' );
++		if (formatp == NULL || formatp > ep )
+ 			formatp = ep;
+ 		if (len == formatp - sp && !memcmp(valid_atom[i].name, sp, len))
+ 			break;
+@@ -366,7 +366,7 @@ static void grab_date(const char *buf, struct atom_value *v, const char *atomnam
+ 	 * it's not possible that <something> is not ":<format>" because
+ 	 * parse_atom() wouldn't have allowed it, so we can assume that no
+ 	 * ":" means no format is specified, use the default */
+-	formatp = strrchr( atomname, ':' );
++	formatp = strchr( atomname, ':' );
+ 	if (formatp != NULL) {
+ 		formatp++;
+ 		date_mode = parse_date_format(formatp);
 -- 
-Eygene
+1.5.3.2.105.gf47f2-dirty
