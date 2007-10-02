@@ -1,117 +1,78 @@
-From: "Reece Dunn" <msclrhd@googlemail.com>
-Subject: Re: git clone questions relating to cpio
-Date: Tue, 2 Oct 2007 22:09:52 +0100
-Message-ID: <3f4fd2640710021409q104a4204r522391912d5b5c8c@mail.gmail.com>
-References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
-	 <200710012342.37352.johan@herland.net>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn merge helper
+Date: Tue, 2 Oct 2007 23:14:00 +0200
+Message-ID: <20071002211400.GA992@atjola.homenet>
+References: <20070930110550.GA4557@atjola.homenet> <1EF130A4-3CC7-4A42-9166-3539D9A38828@lrde.epita.fr> <20071001025059.GA29323@atjola.homenet> <0D8A7A3C-8F51-482D-9229-29ADC9585760@lrde.epita.fr> <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johan Herland" <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Oct 02 23:10:23 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 23:14:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icp0J-0007y4-Qh
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:10:08 +0200
+	id 1Icp46-00012x-Fx
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331AbXJBVJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 17:09:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755276AbXJBVJ5
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:09:57 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:14048 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755140AbXJBVJz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 17:09:55 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so3412160nfb
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 14:09:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=u6xAI937lNCJO+s43CwA1t+ldaSJx5RJJ3B/8SdMo0M=;
-        b=HFi6Wly1vtEz4Y4t3L/KzmCn/YYdwRC5pPeyYegkPAagPmZ6JLl1qVDGun5TgHx2UxJ4+CwbGPXOaLgVMbeeflJzjVJBotjcLY17/rImIckTGO5D5ZUgqVQ79mtdpozk7pdngCBRj838E8a2lIQ0Y3MQBz7aU+pu0eKhEQCuOJo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZGMfoUUtx9nL4hz0/BNNZlXjjgeiHoHjNPW6/wFm4Gj3D2G8QJZ7q9aK00/s8CKOgg0Xa6kJrYBdUqQfJO55sy1vh5yUqZ+X9RAxXMIIhO6/XkC/qd2MP2e/D2gvaIEhHcy5bMkWu7DEG/2DvPjBOxantbph9czJHsCH6Ceh0Gs=
-Received: by 10.78.204.7 with SMTP id b7mr8440590hug.1191359392554;
-        Tue, 02 Oct 2007 14:09:52 -0700 (PDT)
-Received: by 10.141.23.10 with HTTP; Tue, 2 Oct 2007 14:09:52 -0700 (PDT)
-In-Reply-To: <200710012342.37352.johan@herland.net>
+	id S1755281AbXJBVNl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 17:13:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755266AbXJBVNl
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:13:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:39019 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755157AbXJBVNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 17:13:40 -0400
+Received: (qmail invoked by alias); 02 Oct 2007 21:13:38 -0000
+Received: from i577B85BB.versanet.de (EHLO localhost) [87.123.133.187]
+  by mail.gmx.net (mp029) with SMTP; 02 Oct 2007 23:13:38 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/3SytbyT/3+76KwqKIPU/t31o+ORKjbGxdQ6H+Vl
+	4LO73jROLGMGa7
 Content-Disposition: inline
+In-Reply-To: <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59741>
 
-On 01/10/2007, Johan Herland <johan@herland.net> wrote:
-> On Monday 01 October 2007, Reece Dunn wrote:
-> > Hi,
+On 2007.10.01 10:13:45 +0200, Lars Hjemli wrote:
+> On 10/1/07, Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
+> > On Oct 1, 2007, at 4:50 AM, Bj=F6rn Steinbrink wrote:
+> > > Then how does that work? The manpage explicitly says that I shoul=
+d not
+> > > use git-{pull,merge} on branches I want to dcommit from. And a tr=
+ivial
+> > > test immediately got the expected effect of git-svn trying to
+> > > commit to
+> > > trunk instead of the branch.
 > >
-> > I am running a Linux From Scratch 6.2 system that does not have cpio
-> > installed on it. This means that I can't clone a local repository
-> > unless I install cpio. Is it possible to use a fallback method if cpio
-> > is not present, as there is no NO_CPIO option on make like there is
-> > for OpenSSH, cURL and expat?
->
-> Using "file://" when specifying the source repo will force git-clone to use
-> the git protocol, instead of doing a copy/hardlink.
->
-> I.e. change "git clone foo bar" to "git clone file://foo bar" in order to
-> prevent git-clone from calling cpio.
+> > Ah, yes, you're right.  Well, this will work the day we can pass an
+> > option to git-svn dcommit to tell it where the commit must be sent.
+> >
+>=20
+> This is fixed in the latest version of git-svn (yet to be released).
+> There is no need for an extra option, git-svn dcommit now handles
+> merges between subversion branches correctly.
 
-Thanks for the tip.
+Thanks, but there's still a case that fails.
 
-> However, grepping for cpio in the git source tree reveals a couple of uses
-> in git-merge, so you might bump into problems there...
+One common pattern in SVN is to have the feature branch following the
+trunk. In git terms, that would mean that the feature branch is
+continually rebased onto the HEAD of the HEAD AFAICT (although SVN of
+course cannot represent that). The problem with that is, that git
+doesn't create a merge commit in that case and git-svn gets confused
+again.
 
-Looks like I'll need to install cpio, then (also allowing me to take
-advantage of the fast local clones via hardlinks).
+git checkout mybranch
+git merge master # Creates a merge commit
+git checkout master
+git merge mybranch # Does just fast forward
 
-Do you know if cpio is listed anywhere in required dependencies?
-
-> > Also, I have an external USB hardrive that is mounted onto the virtual
-> > filesystem. Will clones from the USB harddrive (or a USB flash drive
-> > that is mounted) result in a copy being performed, not a hardlink?
->
-> Hardlinks are impossible across filesystems. If you're cloning to a
-> different filesystem git will _have_ to make a full copy.
-
-Exactly. I was asking this to clarify cpio (and therefore git)
-behaviour in this situation.
-
-> > Ideally, the hard linking for local clones should be optional.
->
-> <quote src="git-clone(1)">...</quote>
-
-Indeed, they are. Thanks for the info.
-
-> And as I said above, you can use "file://" to force the "git aware"
-> transport mechanism, which bypasses the whole local copy/hardlink issue
-> entirely.
-
-Sure.
-
-> > What if I want to move a repository because, for example, I have imported
-> > a CVS repository and now want to push it to a new bare repository?
->
-> Even if you were to use hardlinks, cloning a repo followed by deleting the
-> original will be safe (as long as you don't supply '--shared' to
-> git-clone). That's the beauty of hardlinks.
-
-That is good to know.
-
-> I also think it's fairly safe to just 'mv' the whole repository to its new
-> location.
-
-This also works, as long as you are not moving between a bare and
-standard repository.
-
-> Have fun! :)
-
-Will do :)
+Is there anyway to force a merge commit or some other work around?
 
 Thanks,
-- Reece
+Bj=F6rn
