@@ -1,75 +1,124 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Tue, 02 Oct 2007 12:09:10 -0700
-Message-ID: <7vfy0tl4fd.fsf@gitster.siamese.dyndns.org>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
-	<7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
-	<87bqbisae6.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021045430.28395@racer.site>
-	<87641psey8.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021841300.28395@racer.site>
-	<7vwsu5l6j8.fsf@gitster.siamese.dyndns.org>
-	<BAYC1-PASMTP05AB6AE16E90C15710819EAEAE0@CEZ.ICE>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Tue, 2 Oct 2007 15:11:04 -0400
+Message-ID: <20071002191104.GA7901@coredump.intra.peff.net>
+References: <20071002155800.GA6828@coredump.intra.peff.net> <200710021916.44388.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Carl Worth <cworth@cworth.org>,
-	Barry Fishman <barry_fishman@acm.org>, git@vger.kernel.org
-To: Sean <seanlkml@sympatico.ca>
-X-From: git-owner@vger.kernel.org Tue Oct 02 21:09:36 2007
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 21:11:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icn7e-0000uy-R4
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 21:09:35 +0200
+	id 1Icn9J-0001ip-LB
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 21:11:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753701AbXJBTJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 15:09:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753569AbXJBTJ0
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 15:09:26 -0400
-Received: from rune.pobox.com ([208.210.124.79]:53629 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753516AbXJBTJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 15:09:25 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 81C0E13F717;
-	Tue,  2 Oct 2007 15:09:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 0D077140606;
-	Tue,  2 Oct 2007 15:09:33 -0400 (EDT)
-In-Reply-To: <BAYC1-PASMTP05AB6AE16E90C15710819EAEAE0@CEZ.ICE>
-	(seanlkml@sympatico.ca's message of "Tue, 2 Oct 2007 14:55:56 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753569AbXJBTLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 15:11:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753453AbXJBTLI
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 15:11:08 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3910 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753007AbXJBTLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 15:11:07 -0400
+Received: (qmail 5992 invoked by uid 111); 2 Oct 2007 19:11:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Oct 2007 15:11:06 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2007 15:11:04 -0400
+Content-Disposition: inline
+In-Reply-To: <200710021916.44388.andyparkins@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59713>
 
-Sean <seanlkml@sympatico.ca> writes:
+On Tue, Oct 02, 2007 at 07:16:43PM +0100, Andy Parkins wrote:
 
-> On Tue, 02 Oct 2007 11:23:39 -0700
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> If your push were "next~27^2:frotz", it becomes even less clear.
->> It may be that I am pushing out the tip of a topic branch I
->> usually do not push out, so it would be easier for some specific
->> person to build on top of.  Or maybe I am marking that place as
->> a lightweight tag.  They are equally likely.
->
-> But you could pick a reasonable default in assuming that a new
-> branch is desired with the above example.  If someone wants to
-> push a tag, they can create the tag locally, and then push it.
+> Changed repeated use of the same constants for the ref paths to be
+> symbolic constants.  I've defined them in refs.h
 
-I think you are on the same page.
+I've manually inspected the patch. Comments are below.
 
-We can pick _a_ default, and tell people that if they want a
-non-default behaviour, they have to be explicit.  That goes
-without saying.
+> -		if (prefixcmp(head, "refs/heads/"))
+> -			die("HEAD not found below refs/heads!");
+> -		head += 11;
+> +		if (prefixcmp(head, PATH_REFS_HEADS))
+> +			die("HEAD not found below " PATH_REFS_HEADS "!");
+> +		head += STRLEN_PATH_REFS_HEADS;
 
-The discussion between Johannes and I was about picking what
-default is _reasonable_; Johannes made it sound like branches
-are norm and tags are oddball.  I was merely pointing out that
-it won't be so cut-and-dried.
+This slightly changes the message (extra "/"), but I don't think that is
+a big deal...
+
+> -	strcpy(path + len, "refs");
+> +	strcpy(path + len, PATH_REFS);
+>  	safe_create_dir(path, 1);
+> -	strcpy(path + len, "refs/heads");
+> +	strcpy(path + len, PATH_REFS_HEADS);
+>  	safe_create_dir(path, 1);
+> -	strcpy(path + len, "refs/tags");
+> +	strcpy(path + len, PATH_REFS_TAGS);
+>  	safe_create_dir(path, 1);
+
+...but here it's not immediately obvious if the extra trailing "/" is
+OK. Looks like the path just gets handed off to system calls trhough
+safe_create_dir, and they are happy with the trailing slash. But it is a
+behavior change.
+
+> -		strcpy(path + len, "refs");
+> +		strcpy(path + len, PATH_REFS);
+>  		adjust_shared_perm(path);
+> -		strcpy(path + len, "refs/heads");
+> +		strcpy(path + len, PATH_REFS_HEADS);
+>  		adjust_shared_perm(path);
+> -		strcpy(path + len, "refs/tags");
+> +		strcpy(path + len, PATH_REFS_TAGS);
+>  		adjust_shared_perm(path);
+
+And of course ditto here.
+
+> -		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
+> +		if (snprintf(ref, sizeof(ref), PATH_REFS_TAGS"%s", *p)
+
+I find the 'PATH_REFS_TAGS "%s"' (with a space) you used earlier a
+little easier to read.
+
+> -	if (len < 5 || memcmp(name, "refs/", 5))
+> +	if (len < STRLEN_PATH_REFS || memcmp(name, PATH_REFS, STRLEN_PATH_REFS))
+
+I imagine this was one of the times you mentioned before where prefixcmp
+would be more readable. I would agree.
+
+> -	strcpy(posn, "/objects/");
+> +	strcpy(posn, "/" PATH_OBJECTS);
+>  	posn += 9;
+
+should be posn += 1 + STRLEN_PATH_OBJECTS ?
+
+> -	url = xmalloc(strlen(repo->base) + 64);
+> -	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+> +	url = xmalloc(strlen(repo->base) + STRLEN_PATH_OBJECTS + 56);
+> +	sprintf(url, "%s/" PATH_OBJECTS "pack/pack-%s.idx", repo->base, hex);
+
+The '56' is still quite hard to verify as correct ("/" + "pack/pack-" +
+".idx" + "\0"). But I wonder if trying to fix that will just make it
+harder to read (perhaps a comment is in order?).
+
+Or maybe using a strbuf here would be much more obviously correct?
+
+> -	url = xmalloc(strlen(base) + 31);
+> -	sprintf(url, "%s/objects/info/http-alternates", base);
+> +	url = xmalloc(strlen(base) + STRLEN_PATH_OBJECTS + 23);
+> +	sprintf(url, "%s/" PATH_OBJECTS "info/http-alternates", base);
+
+Also a potential strbuf. Ther are more of this same form, but I'm not
+going to bother pointing out each one.
+
+> -- 
+> 1.5.3.rc5.11.g312e
+
+Man that was tedious. But I think every other change is purely
+syntactic, so there shouldn't be any bugs.
+
+-Peff
