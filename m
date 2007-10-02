@@ -1,81 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 2 Oct 2007 16:48:48 -0400
-Message-ID: <20071002204848.GA8284@coredump.intra.peff.net>
-References: <20071002155800.GA6828@coredump.intra.peff.net> <200710021916.44388.andyparkins@gmail.com> <20071002191104.GA7901@coredump.intra.peff.net> <7vsl4tjo28.fsf@gitster.siamese.dyndns.org>
+From: david@lang.hm
+Subject: Re: metastore
+Date: Tue, 2 Oct 2007 13:54:59 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0710021351400.24697@asgard.lang.hm>
+References: <20070915145437.GA12875@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net>
+ <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net>
+ <20071002195816.GA6759@hardeman.nu> <85lkalz3iv.fsf@lola.goethe.zz>
+ <Pine.LNX.4.64.0710021314370.24697@asgard.lang.hm> <20071002202333.GB16010@lapse.madduck.net>
+ <Pine.LNX.4.64.0710021327371.24697@asgard.lang.hm> <20071002203941.GA18008@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 22:49:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: David Kastrup <dak@gnu.org>,
+	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>,
+	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Oct 02 22:54:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icofr-0008Sy-Hp
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:49:00 +0200
+	id 1Icokh-0001yt-9X
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:53:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528AbXJBUsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 16:48:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbXJBUsv
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:48:51 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4014 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753367AbXJBUsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 16:48:50 -0400
-Received: (qmail 7659 invoked by uid 111); 2 Oct 2007 20:48:49 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Oct 2007 16:48:49 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2007 16:48:48 -0400
-Content-Disposition: inline
-In-Reply-To: <7vsl4tjo28.fsf@gitster.siamese.dyndns.org>
+	id S1753920AbXJBUxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 16:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753918AbXJBUxt
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:53:49 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:60713
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753915AbXJBUxt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 16:53:49 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l92KrT2f023544;
+	Tue, 2 Oct 2007 13:53:29 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <20071002203941.GA18008@lapse.madduck.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59732>
 
-On Tue, Oct 02, 2007 at 12:47:59PM -0700, Junio C Hamano wrote:
+On Tue, 2 Oct 2007, martin f krafft wrote:
 
->  - it makes typo harder to make and easier to spot
->    (e.g. "refs/head/");
-> 
->  - it makes miscount harder to make and easier to spot (e.g.
->    what is this magic constant 11? Is it strlen("refs/heads/")?);
-> 
->  - it makes reviewing the resulting code, and more importantly,
->    future patches on the resulting code, easier.
-> [...]
-> It however actively hurts on the third count.  These long
+> also sprach david@lang.hm <david@lang.hm> [2007.10.02.2129 +0100]:
+>> 1. you do want to be able to manipulate them
+>>
+>> 1a. how do you reconcile a conflict during a merge?
+>
+> How could there be a conflict if you can't make local changes
+> because you can't represent the attributes locally/natively?
 
-Yes, I find some of the substitutions more readable, but some are a bit
-less readable. The parts of the patch I found the _most_ improved are
-the ones that get rid of a memcmp in favor of a prefixcmp (i.e.,
-removing the count entirely).
+you merge two uptream branches that disagree about the attributes
 
-Perhaps a better quest would be to eliminate all of those counts
-entirely with code that is obviously correct. I think it is much more
-readable to replace:
+>> 2. git is a series of snapshots, what does it mean to 'stay unchanged'?
+>
+> In simple terms, let (content,A,B) be an object with content
+> "content" and extended attributes A,B, and B cannot be represented
+> locally, but a new object is committed with a change to attribute
+> A (content2,A2), then the result is (content2,A2,B), as B simply
+> comes from the (corresponding object of the) parent.
+>
+> Or am I totally misunderstanding?
 
-  url = xmalloc(strlen(repo->base) + 64);
-  sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+it's very possible that I am misunderstanding, but do we really want to 
+have to go back to the parent to duplicate things when creating a new 
+commit?
 
-with something like:
+and aren't you supposed to be able to have more then one parent? if you 
+do, which one would you use?
 
-  strbuf_init(&url);
-  strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-
-which has the same number of lines, but no magic numbers at all. Or
-since most of the uses of things like PATH_OBJECTS are more or less the
-same, maybe something like:
-
-  mkpath_object(&url, "pack/pack-%s.idx", hex);
-
-i.e., rather than fiddling with string constants, wrap them
-functionally.
-
-> constants in CAPITAL_LETTERS_WITH_UNDERSCORE shout too loudly to
-
-Part of the problem is also that they're long. Perhaps REFS_HEADS, while
-being less unique in the C namespace, would look better?
-
--Peff
+David Lang
