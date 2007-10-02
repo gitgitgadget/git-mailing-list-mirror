@@ -1,95 +1,102 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: metastore
-Date: Tue, 2 Oct 2007 21:39:41 +0100
-Message-ID: <20071002203941.GA18008@lapse.madduck.net>
-References: <20070915145437.GA12875@piper.oerlikon.madduck.net> <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net> <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net> <20071002195816.GA6759@hardeman.nu> <85lkalz3iv.fsf@lola.goethe.zz> <Pine.LNX.4.64.0710021314370.24697@asgard.lang.hm> <20071002202333.GB16010@lapse.madduck.net> <Pine.LNX.4.64.0710021327371.24697@asgard.lang.hm>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: merging .gitignore
+Date: Tue, 02 Oct 2007 22:47:48 +0200
+Message-ID: <20071002204748.GA19710@artemis.corp>
+References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="EVF5PPMfhYS0aIcm"
-To: david@lang.hm, David Kastrup <dak@gnu.org>,
-	David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>,
-	git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <J
-X-From: git-owner@vger.kernel.org Tue Oct 02 22:41:52 2007
+Content-Type: multipart/signed; boundary="ew6BAiZeqk4r7MaW";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 02 22:48:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcoYi-0005PD-OP
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:41:37 +0200
+	id 1Icoew-00088g-HN
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:48:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753841AbXJBUl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 16:41:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbXJBUl3
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:41:29 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:43583 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753828AbXJBUl2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 16:41:28 -0400
-Received: from lapse.madduck.net (213-202-173-105.bas504.dsl.esat.net [213.202.173.105])
+	id S1753260AbXJBUry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 16:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753320AbXJBUry
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:47:54 -0400
+Received: from pan.madism.org ([88.191.52.104]:33416 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753004AbXJBUrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 16:47:53 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 94F83C01B;
-	Tue,  2 Oct 2007 22:40:59 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 0E7C73FDED; Tue,  2 Oct 2007 21:39:41 +0100 (BST)
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id D5DDC21906;
+	Tue,  2 Oct 2007 22:47:48 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 2289C2CB4D2; Tue,  2 Oct 2007 22:47:48 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710021327371.24697@asgard.lang.hm>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4456/Tue Oct  2 17:11:59 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <20071002201318.GD16776@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59730>
 
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=us-ascii
+--ew6BAiZeqk4r7MaW
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-also sprach david@lang.hm <david@lang.hm> [2007.10.02.2129 +0100]:
-> 1. you do want to be able to manipulate them
->
-> 1a. how do you reconcile a conflict during a merge?
+On mar, oct 02, 2007 at 08:13:18 +0000, Pierre Habouzit wrote:
+>   Ancestor: (aa*, aaa, bbb)
+>   Left child: (aa*, bbb)   <-- remove aaa because aa* covers it
+>   Right child: (aaa, aabcd, bbb, cc*) <-- remove aa* and be explicit
+>=20
+>   The proper result is probably: (aaa, aabcd, bbb, cc*) but is in fact a
+> case of conflict, because the "left" child could have used the fact that
+> aa* was present and hide say a aaXXX that the right child did not had,
+> and the merge would be wrong.
 
-How could there be a conflict if you can't make local changes
-because you can't represent the attributes locally/natively?
+  Okay this example blows, I believe this one is better:
 
-> 2. git is a series of snapshots, what does it mean to 'stay unchanged'?
+       (a*)
+      /    \
+  (ab*)    (ac*)
+      \    /
+       ????
 
-In simple terms, let (content,A,B) be an object with content
-"content" and extended attributes A,B, and B cannot be represented
-locally, but a new object is committed with a change to attribute
-A (content2,A2), then the result is (content2,A2,B), as B simply
-comes from the (corresponding object of the) parent.
+  gitignore are subsets of the set of words.  if S is the ancestor set,
+S1 and S2 the left and right sets. let =CE=941 and =CE=942 be S1 \ S and S2=
+ \ S
+respectively.  I think there is a conflict if
+  =CE=941 n =CE=942 !=3D 0 and (=CE=941 is not a subset of =CE=942) and (=
+=CE=942 is not a subset of =CE=941)
 
-Or am I totally misunderstanding?
+  If the condition holds, then I believe that the "merged" .gitignore
+would be: (S1 u S2) \ (=CE=941 u =CE=942)
 
+  Though, don't take my word for it, I've only sketched this on a small
+piece of paper, and have no rigorous proof.
 --=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-when compared to windoze, unix is an operating system.
-=20
-spamtraps: madduck.bogus@madduck.net
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+--ew6BAiZeqk4r7MaW
+Content-Type: application/pgp-signature
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFHAqyNIgvIgzMMSnURAjg6AJ0c7CRg0rrYunrgfI2VqilC+VDdOACgyx9L
-Gwf2hs3rxxukzcY7jEuIY6Q=
-=J7zL
+iD8DBQBHAq50vGr7W6HudhwRAsEQAJ0ci1/qadJoktQkDt1PpsthBC0uzwCfU0RD
+d+x1EFdGN+K9YO8OdjN1vXo=
+=zo/a
 -----END PGP SIGNATURE-----
 
---EVF5PPMfhYS0aIcm--
+--ew6BAiZeqk4r7MaW--
