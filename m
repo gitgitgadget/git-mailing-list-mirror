@@ -1,106 +1,95 @@
-From: David Kastrup <dak@gnu.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 02 Oct 2007 18:31:18 +0200
-Message-ID: <86ve9p32cp.fsf@lola.quinscape.zz>
-References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org> <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org> <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net> <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net> <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz> <20071002161114.GC6828@coredump.intra.peff.net>
+Date: Tue, 2 Oct 2007 13:00:01 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710021212310.9321@iabervon.org>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
+ <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
+ <7v3awunjup.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 18:54:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 19:00:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icl0E-00013d-JE
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 18:53:47 +0200
+	id 1Icl6T-0003uR-RW
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 19:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752847AbXJBQxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 12:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbXJBQxh
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 12:53:37 -0400
-Received: from main.gmane.org ([80.91.229.2]:49094 "EHLO ciao.gmane.org"
+	id S1752517AbXJBRAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 13:00:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753037AbXJBRAF
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 13:00:05 -0400
+Received: from iabervon.org ([66.92.72.58]:51973 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752729AbXJBQxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 12:53:36 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IckpR-0001e9-Ts
-	for git@vger.kernel.org; Tue, 02 Oct 2007 16:42:37 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 16:42:37 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 16:42:37 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:A/q9ld0bhwLZ1r/4U9Qpptycy0c=
+	id S1752557AbXJBRAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 13:00:04 -0400
+Received: (qmail 9735 invoked by uid 1000); 2 Oct 2007 17:00:01 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 2 Oct 2007 17:00:01 -0000
+In-Reply-To: <7v3awunjup.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59699>
 
-Jeff King <peff@peff.net> writes:
+On Mon, 1 Oct 2007, Junio C Hamano wrote:
 
-> On Tue, Oct 02, 2007 at 08:10:28AM +0200, David Kastrup wrote:
+> * db/fetch-pack (Mon Oct 1 00:59:39 2007 +0100) 49 commits
+>  + fetch/push: readd rsync support
+>  + Introduce remove_dir_recursively()
+>  + bundle transport: fix an alloc_ref() call
+>  + Allow abbreviations in the first refspec to be merged
+>  + Prevent send-pack from segfaulting when a branch doesn't match
+>  + Cleanup unnecessary break in remote.c
+>  ...
+> 
+> Has been cooking for quite long time.
+> 
+> There was a regression that made me quite unhappy about the
+> rewrite, but Daniel fixed it, so I should be happy.  There is
+> another usability regression: http transport is now totally
+> silent.
 
-[...]
+I think this is due to passing through equal verbosity levels, when the 
+non-verbose case for the native protocols was a lot less silent than the 
+non-verbose case for http. "git fetch -v -v" does show everything. I think 
+just replacing "transport->verbose" with "1" on line 347 of transport.c 
+would give the old default behavior, but fetch probably needs a more quiet 
+setting than the default, as well as the current more verbose than 
+default. I'll put together a patch for this when I get a chance.
 
-> The algorithm is something like this: We have N files, and we want
-> to find "similar" candidates. So we go through each file and
-> generate a table of fingperint hashes
-> (diffcore-rename.c:hash_chars), and then compare each file with
-> every other file, using the hash tables to do the comparison.
->
-> So the comparison step for two files is currently something like:
->
->   for each hash in file1
->     hash2 = look up hash in file2
->     compare hash and hash2
->
-> and if they were sorted, perhaps we could do something merge-like:
->
->   while hashes are left to compare
->       compare file1.next, file2.next
->       advance file1, file2, or both (depending on comparison)
->
->> When we are talking about buzzword compliance, "keep sorted" with
->> the meaning of "maintain sorted across modifications" has an O(n^2)
->> or at least O(nm) ring to it.  However, if it is possible to sort
->> it just once, and then then only merge with other lists...
->
-> It would be sort once. I.e.,:
->
->   for each file
->      generate file.hashes
->      sort file.hashes
->   for each file1
->     for each file2
->       compare file1.hashes to file2.hashes
->
-> where that 'compare' step is taking most of the CPU time (for the
-> obvious reason that we call it in an O(n^2) loop).
->
-> I will try to implement this as time permits, but if you want to
-> tinker with it in the meantime, feel free.
+> Even when you fetch daily, if the other end frequently
+> repacks everything into one big ball of wax like repo.or.cz
+> does, you will end up transferring quite a large pack every
+> time, and the total lack of progress report is unacceptably
+> unnerving.  At least we should reinstate "Fetching blah from URL
+> using http", and preferrably "walk $object_name" lines.  The
+> latter could be replaced with just series of CR + "walked N
+> commits..." if we do not like many output from the current "walk
+> $object_name" lines scrolling the other information away.
 
-This does not actually require an actual merge _sort_ AFAICS: do the
-"sort file.hashed" step using qsort.  The comparison step does not
-actually need to produce merged output, but merely advances through
-two hash arrays and generates statistics.
+The right thing for now is probably to match the old git-fetch's behavior, 
+once I can remember what it is. (I've been using my C version for my 
+personal use long enough that I can't remember everything the shell 
+version did. My new version should be sufficiently flexible to accomodate 
+most things without too much trouble, but I've lost my ability to notice 
+differences without prompting.)
 
-This should already beat the pants off the current implementation,
-even when the hash array is sparse, simply because our inner loop then
-has perfect hash coherence.
+After the implementation change is in, we can look at improving 
+user-visible things. I think a display like the "counting objects" display 
+(number that counts up in place), plus progress bars for big downloads, would 
+be ideal.
 
-Getting rid of this outer O(n^2) remains an interesting challenge,
-though.  One way would be the following: fill a _single_ array with
-entries containing _both_ hash and file number.  Sort this, and then
-gather the statistics of hash runs by making a single pass through.
-That reduces the O(n^2) behavior to only those parts with actual hash
-collisions.
+> I am not sure the quality of "rsync" transport near the tip,
+> either, but at least the change should not affect other
+> transports.  Nobody should using about rsync transport these
+> days anyway.  Perhaps we should put a deprecation notice in the
+> release notes to 1.5.4, and remove it three months later.
 
--- 
-David Kastrup
+I think that rsync should be kept until we've got sftp in place, which 
+should cover the same cases and be better overall. 
+
+	-Daniel
+*This .sig left intentionally blank*
