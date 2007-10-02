@@ -1,80 +1,93 @@
-From: Federico Mena Quintero <federico@novell.com>
-Subject: [PATCH 4/4] Make git-pull complain and give advice when there is
-	nothing to pull from
-Date: Tue, 02 Oct 2007 18:36:30 -0500
-Message-ID: <1191368190.3776.206.camel@cacharro.xalalinux.org>
-References: <1190077493.22387.54.camel@cacharro.xalalinux.org>
-	 <1190077881.22387.63.camel@cacharro.xalalinux.org>
-	 <7v3axbvbto.fsf@gitster.siamese.dyndns.org>
-	 <1191367817.3776.192.camel@cacharro.xalalinux.org>
+From: Johan Herland <johan@herland.net>
+Subject: [PATCH] Mention 'cpio' dependency in INSTALL
+Date: Wed, 03 Oct 2007 01:42:29 +0200
+Message-ID: <200710030142.30062.johan@herland.net>
+References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com>
+ <200710012342.37352.johan@herland.net>
+ <3f4fd2640710021409q104a4204r522391912d5b5c8c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 01:34:52 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 01:43:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcrGM-0004VD-6p
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 01:34:50 +0200
+	id 1IcrOZ-0006Zs-TT
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 01:43:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755552AbXJBXem (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 19:34:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755412AbXJBXel
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 19:34:41 -0400
-Received: from jericho.provo.novell.com ([137.65.248.124]:13908 "EHLO
-	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755362AbXJBXek (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 19:34:40 -0400
-Received: from [164.99.193.181] ([164.99.193.181])
-	by jericho.provo.novell.com with ESMTP; Tue, 02 Oct 2007 17:34:38 -0600
-In-Reply-To: <1191367817.3776.192.camel@cacharro.xalalinux.org>
-X-Mailer: Evolution 2.11.5 
+	id S1752954AbXJBXnL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 19:43:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752783AbXJBXnJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 19:43:09 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:49030 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752647AbXJBXnI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Oct 2007 19:43:08 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JPB00M135VI5900@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 01:42:55 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPB0008O5UU7N50@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 01:42:30 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPB00HUH5UUB780@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 01:42:30 +0200 (CEST)
+In-reply-to: <3f4fd2640710021409q104a4204r522391912d5b5c8c@mail.gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59758>
 
-
-Signed-off-by: Federico Mena Quintero <federico@gnu.org>
+Signed-off-by: Johan Herland <johan@herland.net>
 ---
- git-pull.sh |   22 ++++++++++++++++++----
- 1 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/git-pull.sh b/git-pull.sh
-index c3f05f5..74bfc16 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -97,10 +97,24 @@ case "$merge_head" in
- 	esac
- 	curr_branch=${curr_branch#refs/heads/}
- 
--	echo >&2 "Warning: No merge candidate found because value of config option
--         \"branch.${curr_branch}.merge\" does not match any remote branch fetched."
--	echo >&2 "No changes."
--	exit 0
-+	echo >&2 "You asked me to pull without telling me which branch you"
-+	echo >&2 "want to merge with, and 'branch.${curr_branch}.merge' in"
-+	echo >&2 "your configuration file does not tell me either.  Please"
-+	echo >&2 "name which branch you want to merge on the command line and"
-+	echo >&2 "try again (e.g. 'git pull <repository> <refspec>')."
-+	echo >&2 "See git-pull(1) for details on the refspec."
-+	echo >&2
-+	echo >&2 "If you often merge with the same branch, you may want to"
-+	echo >&2 "configure the following variables in your configuration"
-+	echo >&2 "file:"
-+	echo >&2
-+	echo >&2 "    branch.${curr_branch}.remote = <nickname>"
-+	echo >&2 "    branch.${curr_branch}.merge = <remote-ref>"
-+	echo >&2 "    remote.<nickname>.url = <url>"
-+	echo >&2 "    remote.<nickname>.fetch = <refspec>"
-+	echo >&2
-+	echo >&2 "See git-config(1) for details."
-+	exit 1
- 	;;
- ?*' '?*)
- 	if test -z "$orig_head"
--- 
-1.5.2.4
+On Tuesday 02 October 2007, Reece Dunn wrote:
+> Do you know if cpio is listed anywhere in required dependencies?
+
+Doing the following in the git repo:
+$ grep -r cpio *
+git-clone.sh:           find objects -depth -print | cpio -pumd$l "$GIT=
+_DIR/" || exit 1
+git-merge.sh:   cpio -0 -o >"$GIT_DIR/MERGE_SAVE"
+git-merge.sh:           cpio -iuv <"$GIT_DIR/MERGE_SAVE"
+
+reveals that cpio is not mentioned anywhere in the documentation,
+nor in the requirements section of the INSTALL file.
+
+
+Have fun!
+
+=2E..Johan
+
+
+=A0INSTALL | =A0 =A03 +++
+=A01 files changed, 3 insertions(+), 0 deletions(-)
+
+diff --git a/INSTALL b/INSTALL
+index 289b046..f1eb404 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -79,6 +79,9 @@ Issues of note:
+=A0	- "perl" and POSIX-compliant shells are needed to use most of
+=A0	 =A0the barebone Porcelainish scripts.
+=A0
++	- "cpio" is used by git-merge for saving and restoring the index,
++	 =A0and by git-clone when doing a local (possibly hardlinked) clone.
++
+=A0 - Some platform specific issues are dealt with Makefile rules,
+=A0 =A0 but depending on your specific installation, you may not
+=A0 =A0 have all the libraries/tools needed, or you may have
+--=20
+1.5.3.3.1144.gf10f2
