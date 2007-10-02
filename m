@@ -1,93 +1,66 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: merging .gitignore
-Date: Tue, 2 Oct 2007 22:49:19 +0100
-Organization: The Debian project
-Message-ID: <20071002214919.GA21260@lapse.madduck.net>
-References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp> <20071002205618.GA19097@lapse.madduck.net> <20071002210748.GC19710@artemis.corp>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Support tags in uncommit - use git_id instead of
+	rev_parse
+Date: Tue, 02 Oct 2007 18:03:11 -0400
+Message-ID: <1191362591.26879.3.camel@dv>
+References: <20070930172647.18972.49369.stgit@tt.roinet.com>
+	 <b0943d9e0710011500o1bd621a4q10dfe0468c8795e2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="NzB8fVQJ5HfG6fxh"
-To: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
-	Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 02 23:51:19 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 00:03:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icpdt-0006wW-CN
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:51:01 +0200
+	id 1Icpq3-0002qv-Iy
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 00:03:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595AbXJBVuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 17:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754381AbXJBVuv
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:50:51 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:49914 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753909AbXJBVuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 17:50:50 -0400
-Received: from lapse.madduck.net (213-202-173-105.bas504.dsl.esat.net [213.202.173.105])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id EFBE7BA2A9;
-	Tue,  2 Oct 2007 23:50:36 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id C73793FDED; Tue,  2 Oct 2007 22:49:19 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20071002210748.GC19710@artemis.corp>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4456/Tue Oct  2 17:11:59 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1753612AbXJBWD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 18:03:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753498AbXJBWD1
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 18:03:27 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60945 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752478AbXJBWD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 18:03:26 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1Icpp5-0008Vu-6p
+	for git@vger.kernel.org; Tue, 02 Oct 2007 18:02:35 -0400
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1Icppg-0007OF-5i; Tue, 02 Oct 2007 18:03:12 -0400
+In-Reply-To: <b0943d9e0710011500o1bd621a4q10dfe0468c8795e2@mail.gmail.com>
+X-Mailer: Evolution 2.10.3 (2.10.3-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59746>
 
+On Mon, 2007-10-01 at 23:00 +0100, Catalin Marinas wrote:
+> On 30/09/2007, Pavel Roskin <proski@gnu.org> wrote:
+> > Signed-off-by: Pavel Roskin <proski@gnu.org>
+> 
+> With this patch, uncommit can take patch names (with modifiers) as the
+> --to argument. When would this be needed?
 
---NzB8fVQJ5HfG6fxh
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Probably never.
 
-also sprach Pierre Habouzit <madcoder@debian.org> [2007.10.02.2207 +0100]:
-> > >        (a*)
-> > >       /    \
-> > >   (ab*)    (ac*)
-> > >       \    /
-> > >        ????
-> >=20
-> > (a*, ab*, ac*)
->=20
->   Definitely not. a* -> ab* is making a?* unignored for any value of ?
-> except b. So adding a* is definitely invalid.
+> To allow tags, maybe just pass something like
+> "git.rev_parse(options.to + '^{commit}')" or just modify git.rev_parse
+> to do it (and git_id to avoid it).
 
-In left, ab* is still ignored, in right ac* is still ignored, and in
-the integration branch, they're all ignored. We don't merge up in
-this model...
+I prefer to work with software that understands what I mean and tells me
+that I cannot do it.  It makes it easier to understand what is possible
+and how the command is working.
 
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-"if there's anything more important than my ego,
- i want it caught and shot now."
-                                                -- zaphod beeblebrox
+Recognizing patch names in some commands but not others would be
+annoying and inconsistent.  Dumbing downs interactive software on
+purpose is probably not worth the trouble.
 
---NzB8fVQJ5HfG6fxh
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHArzfIgvIgzMMSnURAmXpAKDBf1N//1/e8wy+QRaV7EvoiPExxgCdFDun
-qJj2nFTXNoHg+S4Ilc/IAro=
-=QrJo
------END PGP SIGNATURE-----
-
---NzB8fVQJ5HfG6fxh--
+-- 
+Regards,
+Pavel Roskin
