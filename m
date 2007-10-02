@@ -1,87 +1,84 @@
-From: david@lang.hm
-Subject: Re: metastore
-Date: Tue, 2 Oct 2007 13:18:24 -0700 (PDT)
-Message-ID: <Pine.LNX.4.64.0710021314370.24697@asgard.lang.hm>
-References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net>
- <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net>
- <20071002195816.GA6759@hardeman.nu> <85lkalz3iv.fsf@lola.goethe.zz>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: merging .gitignore
+Date: Tue, 2 Oct 2007 21:20:23 +0100
+Message-ID: <20071002202023.GA16010@lapse.madduck.net>
+References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <7vodfhjnpe.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="680960-868213797-1191356304=:24697"
-Cc: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>,
-	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Nicolas Vilz <niv@iaglans.de>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 22:17:56 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FL5UXtIhxfXey3p5"
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 02 22:22:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcoBm-000416-OA
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:17:55 +0200
+	id 1IcoFr-0005eZ-GV
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:22:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753004AbXJBURq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 16:17:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbXJBURq
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:17:46 -0400
-Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:50031
-	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752709AbXJBURp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 16:17:45 -0400
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l92KGt1N023442;
-	Tue, 2 Oct 2007 13:16:55 -0700
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <85lkalz3iv.fsf@lola.goethe.zz>
+	id S1753580AbXJBUWA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 16:22:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753528AbXJBUWA
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:22:00 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:44448 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447AbXJBUV7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 16:21:59 -0400
+Received: from lapse.madduck.net (213-202-173-105.bas504.dsl.esat.net [213.202.173.105])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 7DC9DBA383;
+	Tue,  2 Oct 2007 22:21:41 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 4A9B33FDED; Tue,  2 Oct 2007 21:20:23 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <7vodfhjnpe.fsf@gitster.siamese.dyndns.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4456/Tue Oct  2 17:11:59 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59726>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---680960-868213797-1191356304=:24697
-Content-Type: TEXT/PLAIN; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: 8BIT
+--FL5UXtIhxfXey3p5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2 Oct 2007, David Kastrup wrote:
+also sprach Junio C Hamano <gitster@pobox.com> [2007.10.02.2055 +0100]:
+> Perhaps you can use the existing union merge there.
 
-> David Härdeman <david@hardeman.nu> writes:
->
->> On Tue, Oct 02, 2007 at 08:53:01PM +0100, martin f krafft wrote:
->>> also sprach David Härdeman <david@hardeman.nu> [2007.09.19.2016 +0100]:
->>>> But I agree, if any changes were made to git, I'd advocate adding
->>>> arbitrary attributes to files (much like xattrs) in name=value
->>>> pairs, then any extended metadata could be stored in those
->>>> attributes and external scripts/tools could use them in some way
->>>> that makes sense...and also make sure to only update them when it
->>>> makes sense.
->>>
->>> So where would those metdata be stored in your opinion?
->>
->> I'm not sufficiently versed in the internals of git to have an
->> informed opinion :)
->
-> I think we have something like a length count for file names in index
-> and/or tree.  We could just put the (sorted) attributes after a NUL
-> byte in the file name and include them in the count.  It would also
-> make those artificially longer file names work more or less when
-> sorting them for deltification.
+Many thanks for the pointer, I did not even have time to look at
+gitattributes.txt yet...
 
-the problem with this is dealing with the attributes outside of git 
-(especially when the filesystem can't store the attributes nativly, 
-specificly including things like owners when not running as root)
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"self-denial is the shining sore
+ on the leprous body of christianity."
+                                                        -- oscar wilde
+=20
+spamtraps: madduck.bogus@madduck.net
 
-this is one of the reasons for talking about useing a seperate file for 
-the attributes (the other being the ability to minimize the impact to 
-git-core of tracking attributes)
+--FL5UXtIhxfXey3p5
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-David Lang
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
---680960-868213797-1191356304=:24697--
+iD8DBQFHAqgHIgvIgzMMSnURAtIjAJ4sMSiM1nDWGLjlN910A1RlCSPzlACgk6L+
+RlR7X6WYKSIaRBsQurwP0SE=
+=r8kL
+-----END PGP SIGNATURE-----
+
+--FL5UXtIhxfXey3p5--
