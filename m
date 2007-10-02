@@ -1,118 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Tue, 02 Oct 2007 12:47:59 -0700
-Message-ID: <7vsl4tjo28.fsf@gitster.siamese.dyndns.org>
-References: <20071002155800.GA6828@coredump.intra.peff.net>
-	<200710021916.44388.andyparkins@gmail.com>
-	<20071002191104.GA7901@coredump.intra.peff.net>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: merging .gitignore
+Date: Tue, 2 Oct 2007 20:51:48 +0100
+Message-ID: <20071002195148.GA14171@lapse.madduck.net>
+References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 02 21:48:54 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rwEMma7ioTxnRzrJ"
+Cc: Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 02 21:53:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcnjT-0000ZP-Bk
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 21:48:39 +0200
+	id 1IcnoE-0002is-3w
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 21:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384AbXJBTsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 15:48:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbXJBTsJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 15:48:09 -0400
-Received: from rune.pobox.com ([208.210.124.79]:54604 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753231AbXJBTsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 15:48:08 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 7DF3A14066E;
-	Tue,  2 Oct 2007 15:48:27 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9BEFD13FF6F;
-	Tue,  2 Oct 2007 15:48:23 -0400 (EDT)
-In-Reply-To: <20071002191104.GA7901@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 2 Oct 2007 15:11:04 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753920AbXJBTxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 15:53:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbXJBTxU
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 15:53:20 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:51859 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753791AbXJBTxT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 15:53:19 -0400
+Received: from lapse.madduck.net (213-202-173-105.bas504.dsl.esat.net [213.202.173.105])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id E624DBA383;
+	Tue,  2 Oct 2007 21:53:06 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 0A1BA3FDED; Tue,  2 Oct 2007 20:51:48 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710011457120.28395@racer.site> <200710011448.17701.andyparkins@gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4456/Tue Oct  2 17:11:59 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59717>
 
-Jeff King <peff@peff.net> writes:
 
-> On Tue, Oct 02, 2007 at 07:16:43PM +0100, Andy Parkins wrote:
->
->> Changed repeated use of the same constants for the ref paths to be
->> symbolic constants.  I've defined them in refs.h
->
-> I've manually inspected the patch. Comments are below.
->
->> -		if (prefixcmp(head, "refs/heads/"))
->> -			die("HEAD not found below refs/heads!");
->> -		head += 11;
->> +		if (prefixcmp(head, PATH_REFS_HEADS))
->> +			die("HEAD not found below " PATH_REFS_HEADS "!");
->> +		head += STRLEN_PATH_REFS_HEADS;
->
-> This slightly changes the message (extra "/"), but I don't think that is
-> a big deal...
+--rwEMma7ioTxnRzrJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-        die("HEAD not found below %.*%s!",
-             PATH_REFS_HEADS, STRLEN_PATH_REFS_HEADS-1)
+also sprach Johannes Schindelin <Johannes.Schindelin@gmx.de> [2007.10.01.14=
+57 +0100]:
+> You might be interested in writing a merge driver.  See=20
+> Documentation/gitattributes.txt.
 
->> -		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
->> +		if (snprintf(ref, sizeof(ref), PATH_REFS_TAGS"%s", *p)
->
-> I find the 'PATH_REFS_TAGS "%s"' (with a space) you used earlier a
-> little easier to read.
+This is an excellent idea; thanks.
 
-Even though we all know that PATH_REFS_* do not have any '%' in
-them, it is somewhat unnerving to see such an opaque string in
-the format specifier part of _any_printf() function.  It just
-makes you think twice, disrupting the flow of thoughts.
 
-This applies to die() and friends as well; see my above rewrite.
 
-To me, the valid reasons for this kind of rewrite are if:
+also sprach Andy Parkins <andyparkins@gmail.com> [2007.10.01.1448 +0100]:
+> Then, assuming the conflicts you get now occur for a reason, you
+> will get conflicts within the .gitignore.d/ directory.  Let's say
+> branchCignores adds *.o and branchFignores removes *.o from the
+> ignores.  Who is right?  Who knows, and worse than that you didn't
+> see the conflict when it happened so it wasn't resolved and the
+> master branch was left with conflicts in it.
 
- - it makes typo harder to make and easier to spot
-   (e.g. "refs/head/");
+Well, with gitignore I am ready to say that merges should be
+resolved in an additive way. Remember that I am talking about an
+intergration branch, and if feature branches A and B used to ignore
+=2Eo files, and now B suddenly does not ignore them anymore, the only
+real reason I can think of is that it was rewritten in a languages
+other than C*. So then you *still* want to ignore .o files in the
+integration branch.
 
- - it makes miscount harder to make and easier to spot (e.g.
-   what is this magic constant 11? Is it strlen("refs/heads/")?);
+Basically I am saying that it should be
 
- - it makes reviewing the resulting code, and more importantly,
-   future patches on the resulting code, easier.
+  cat $gitignore_files | sort -u
 
- - it makes it easier for us to later revamp the strings
-   wholesale (e.g. "refs/heads/" => "refs/branches/").
+and obviously, this is something for a specific merge driver, as
+Johannes suggested.
 
- - it saves us repeated instances of the same string constant;
-   using C literal string as values for PATH_REFS_HEADS would
-   not help and you would need (const char []) strings instead,
-   but the compiler may be clever enough to do so.
+Thanks for the feedback,
 
-Unquestionably, this series helps on the first two counts.
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+minchinhampton (n.): the expression on a man's face when he has just
+zipped up his trousers without due care and attention.
+                               -- douglas adams, the meaning of liff
+=20
+spamtraps: madduck.bogus@madduck.net
 
-It however actively hurts on the third count.  These long
-constants in CAPITAL_LETTERS_WITH_UNDERSCORE shout too loudly to
-the eye, overwhelming the surrounding code.  I wonder if we can
-do anything about this point to resurrect the first two
-benefits, which I like very much.
+--rwEMma7ioTxnRzrJ
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
-The forth is a myth we shouldn't care about.  If we later would
-want to change refs/heads to refs/branches, we would want to
-rename PATH_REFS_HEADS to PATH_REFS_BRANCHES at the same time as
-well, so the kind of rewrite this patch does does not buy us
-anything there.  More importantly, such a change would need to
-be made in a backward compatible way (e.g. "if we have heads
-then keep using them but in new repositories we favor
-branches"), so it won't be straight token replacement anyway.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-And the fifth do not apply to us.  This matters only if we were
-an embedded application on memory starved machine and string
-constants are far smaller matter compared to the amount of other
-data we use in-core.
+iD8DBQFHAqFUIgvIgzMMSnURAmWoAKCEkF8bDh3jASVssxwlVkZp/S3UPACcDCth
+pZa868q7904pOVuKKUKo2qY=
+=oy8U
+-----END PGP SIGNATURE-----
+
+--rwEMma7ioTxnRzrJ--
