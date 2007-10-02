@@ -1,104 +1,142 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH 1/2] Change "refs/" references to symbolic constants
-Date: Tue, 2 Oct 2007 09:41:03 +0100
-Message-ID: <200710020941.05288.andyparkins@gmail.com>
-References: <200709291359.59147.andyparkins@gmail.com> <200710012141.44459.andyparkins@gmail.com> <20071002011659.GA7938@coredump.intra.peff.net>
+From: Thomas Pasch <thomas.pasch@jentro.com>
+Subject: Re: git-http-push / webDAV
+Date: Tue, 02 Oct 2007 10:49:07 +0200
+Organization: Jentro Technologies GmbH
+Message-ID: <47020603.3080000@jentro.com>
+References: <4700F6BC.2070701@jentro.com> <20071001155454.GU975@void.codelabs.ru>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=KOI8-R
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 10:41:21 2007
+Cc: git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Tue Oct 02 10:49:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcdJg-00078S-Cj
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 10:41:20 +0200
+	id 1IcdRd-00012S-8k
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 10:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbXJBIlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 04:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752049AbXJBIlM
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 04:41:12 -0400
-Received: from nf-out-0910.google.com ([64.233.182.189]:20291 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751737AbXJBIlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 04:41:10 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so3177369nfb
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 01:41:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=00n5eb54Jdq9u8rAoO36KtS7I9CZef4vlw48R3nUMgc=;
-        b=f/eXL/n4twM7yRYHcEJnL6c8UDFZ3F48sYp09E635+udbiSVIG7sPdlZnRBF8c9NWP5jMxpAAZk84V7MH6jKbOjpK5YsG4FXqQ0vUldKui2kkjIvjhi/tQQT6D1g5o9jB3Lh3NeMvmLW/LGrdyZ+HwNfS/87aECpUSgJ5l5Cx2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GZyyWsdkK0NoX69dvMv32YlkA/2v7h2y8x6CZoZ3ymZ8S4OaR803/43lX7r2B2SR8fltNsaby9HN3ECWm0zPGNOXNqnrnzfVQywz5sdCESrYcdKST2T9YaDe+2WVexDU0xUTF+DLY4LSbIdZBnsUCf99JcDeDKdCWBxKcsMaYpU=
-Received: by 10.78.107.8 with SMTP id f8mr4328142huc.1191314469234;
-        Tue, 02 Oct 2007 01:41:09 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id d2sm1408603nfc.2007.10.02.01.41.08
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Oct 2007 01:41:08 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071002011659.GA7938@coredump.intra.peff.net>
-Content-Disposition: inline
+	id S1753365AbXJBItP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 04:49:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbXJBItP
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 04:49:15 -0400
+Received: from mail2.infra.net ([212.89.96.7]:3407 "EHLO gamma.m.infra.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752396AbXJBItO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 04:49:14 -0400
+Received: from epsilon.m.infra.net (epsilon.m.infra.net [212.89.96.8])
+	by gamma.m.infra.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l928n8th001810;
+	Tue, 2 Oct 2007 10:49:08 +0200
+Received: from [192.1.1.184] (u19-17.dsl.vianetworks.de [194.231.42.17])
+	(authenticated bits=0)
+	by epsilon.m.infra.net (8.13.4/8.13.4/Debian-3) with ESMTP id l928n7qJ018687
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 2 Oct 2007 10:49:08 +0200
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+In-Reply-To: <20071001155454.GU975@void.codelabs.ru>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59674>
 
-On Tuesday 2007 October 02, Jeff King wrote:
+Dear Eygene,
 
-> -		    patlen != namelen - 5 &&
-> -		    prefixcmp(name, "refs/heads/") &&
-> -		    prefixcmp(name, "refs/tags/")) {
-> +		    patlen != namelen - STRLEN_PATH_REFS_HEADS &&
-> +		    prefixcmp(name, PATH_REFS_HEADS) &&
-> +		    prefixcmp(name, PATH_REFS_HEADS)) {
+I've investigated my problem a little further. The nasty
+'UNLOCK HTTP error 400' has come from a proxy that
+doesn't accept webDAV stuff. Thus I unset the 'http_proxy'
+env variable (looks like cadaver hasn't cared...).
+
+However, the main problem still remains. Using a non empty
+remote http repo, modifying and committing, then:
+
+> git push -v
+Pushing to http://test@x.x.x.x/git/git.git
+
+still waits for a long time and finally:
+
+Error: no DAV locking support on remote repo http://test@x.x.x.x/git/git.git
+error: failed to push to 'http://test@x.x.x.x/git/git.git'
+
+Interestingly apache2 access_log is:
+
+[...]
+x.x.x.x - test [02/Oct/2007:10:38:03 +0200] "GET /git/git.git/objects/pack/p
+ack-563e2090185692c7d765775569a0ce986840fd17.pack HTTP/1.1" 200 15038211
+"-" "gi
+t/1.5.3.3"
+x.x.x.x - test [02/Oct/2007:10:38:35 +0200] "GET /git/git.git/HEAD HTTP/1.1"
+ 200 23 "-" "curl/7.15.5 (i686-suse-linux-gnu) libcurl/7.15.5
+OpenSSL/0.9.8d zli
+b/1.2.3 libidn/0.6.8"
+x.x.x.x - test [02/Oct/2007:10:39:27 +0200] "PROPFIND /git/git.git HTTP/1.1"
+ 301 319 "-" "git/1.5.3.3"
+
+Hence a 'Moved Permanently' Error?!?
+
+I'm using a SuSE 10.2 system here. Apache2 git configuration
+is in /etc/apache2/conf.d/git-dav.conf:
+
+--->8--->8--->8--->8--->8--->8--->8--->8--->8
+<IfModule mod_alias.c>
+Alias /git    /data/git
+</IfModule>
+
+DAVLockDB /var/lock/apache2/DAVLock
+
+<Directory /data/git>
+        # http://httpd.apache.org/docs/2.0/mod/mod_dav.html
+        DAV On
+
+        Options +Indexes
+
+        AuthType Basic
+        AuthName "git"
+        AuthBasicProvider file
+        AuthUserFile /etc/apache2/auth/userfile
+
+        Require valid-user
+        Order allow,deny
+        Allow from all
+</Directory>
+--->8--->8--->8--->8--->8--->8--->8--->8--->8
+
+Cheers,
+
+Thomas
+
+Eygene Ryabinkin wrote:
+> Thomas, good day.
 >
-> This is totally bogus. You meant STRLEN_PATH_REFS, and the second path
-> should be PATH_REFS_TAGS. With those changes, t5516 passes.
-
-Excellent!  Well done.  I spent a couple of hours last night going through 
-every changed line and have spotted the TAGS mistake but didn't spot the 
-STRLEN being wrong.  Amazing how easy it is to become blind to these things.  
-There were a couple of errors in "/" placement too, but I don't think they 
-were causing any trouble, just doubled up "/" characters.
-
-> I haven't combed through your patch in detail, so there might be similar
-> problems lurking. I did notice one or two spots where you call
-> strlen(PATH_REFS_*), which should of course also be changed to
-> STRLEN_PATH_REFS_*.
-
-I think I caught a few of them in my review.  I think I had originally left 
-them like that on purpose.  My reasoning was that a patch like that should 
-leave the resultant code identical.  So I did replacements like:
-
-- strlen("refs/heads/");
-+ strlen(PATH_REFS_HEADS);
-
-However, I think it was just pedantry, so I've been correcting them too.
-
-I noticed a couple of places where memcmp() has been used where prefixcmp() 
-would work fine.  I'm tempted to change them too - what do you think?  
-Perhaps a separate patch?
-
-> And as a final comment, your patch doesn't apply to next at all because
-> of the reorganization of the fetching API (e.g., fetch-pack.c doesn't
-> exist at all anymore). You should probably prepare a parallel patch for
-> next.
-
-I'm happy to do prepare a patch against any revision, I was really waiting for 
-feedback from Junio as to how he'd like to manage it.  Last time I submitted 
-this patch he (quite correctly) asked that I delay until after the next point 
-release; of course I promptly found other things to do and never 
-resubmitted :-)
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+> Mon, Oct 01, 2007 at 03:31:40PM +0200, Thomas Pasch wrote:
+>> trying to set up a webDAV enabled http push
+>> git server (1.5.3.3) like it is described in
+>>
+>>
+http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
+>>
+>> Tested the apache2 (2.2.6) DAV setup with
+>> cadaver (and tried the browser as well).
+>> With cadaver I could lock files, download
+>> and upload content.
+>>
+>> However,
+>>
+>>> git push -v upload master
+>> Pushing to http://test@x.x.x.x/git/DepTrack.git/
+>> Fetching remote heads...
+>>   refs/
+>>   refs/heads/
+>>   refs/tags/
+>> updating 'refs/heads/master'
+>>   from 0000000000000000000000000000000000000000
+>>   to   d75dce3fe0e9ec5915feda5574f214bd432ccb14
+>>     sending 89 objects
+>>     done
+>> Updating remote server info
+>> UNLOCK HTTP error 400
+>
+> And how is your Apache configuration looks like?  I used to
+> make 2.2.4 work flawlessly with git.  Perhaps I will get it
+> a shot with the 2.2.6.
