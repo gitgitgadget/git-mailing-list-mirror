@@ -1,65 +1,72 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Tue, 02 Oct 2007 11:23:39 -0700
-Message-ID: <7vwsu5l6j8.fsf@gitster.siamese.dyndns.org>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
-	<7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
-	<87bqbisae6.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021045430.28395@racer.site>
-	<87641psey8.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021841300.28395@racer.site>
+Subject: Re: [PATCH] Adding rebase merge strategy
+Date: Tue, 02 Oct 2007 11:40:16 -0700
+Message-ID: <7vr6kdl5rj.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0709281751390.28395@racer.site>
+	<11912513203420-git-send-email-tom@u2i.com>
+	<7vr6ker1lf.fsf@gitster.siamese.dyndns.org>
+	<550f9510710011441t1eb50352ofc8db77f79d794d5@mail.gmail.com>
+	<87ejgescnb.wl%cworth@cworth.org>
+	<550f9510710011521s126ca747v956a6f80182444bb@mail.gmail.com>
+	<20071001223050.GE2137@spearce.org>
+	<Pine.LNX.4.64.0710021056280.28395@racer.site>
+	<550f9510710020329m7917dc9m2bb6cfc4055fea84@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Carl Worth <cworth@cworth.org>,
-	Barry Fishman <barry_fishman@acm.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 02 20:23:57 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Carl Worth" <cworth@cworth.org>, git@vger.kernel.org
+To: "Tom Clarke" <tom@u2i.com>
+X-From: git-owner@vger.kernel.org Tue Oct 02 20:40:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcmPU-0007zh-VO
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 20:23:57 +0200
+	id 1Icmfa-0006Qy-3F
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 20:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752559AbXJBSXt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 14:23:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753171AbXJBSXs
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 14:23:48 -0400
-Received: from rune.pobox.com ([208.210.124.79]:52567 "EHLO rune.pobox.com"
+	id S1753574AbXJBSkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 14:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752962AbXJBSkZ
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 14:40:25 -0400
+Received: from rune.pobox.com ([208.210.124.79]:52918 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752215AbXJBSXs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 14:23:48 -0400
+	id S1753022AbXJBSkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 14:40:24 -0400
 Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 3115014037A;
-	Tue,  2 Oct 2007 14:24:08 -0400 (EDT)
+	by rune.pobox.com (Postfix) with ESMTP id F3B4A140564;
+	Tue,  2 Oct 2007 14:40:45 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6A88613FFB5;
-	Tue,  2 Oct 2007 14:24:03 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0710021841300.28395@racer.site> (Johannes
-	Schindelin's message of "Tue, 2 Oct 2007 18:45:40 +0100 (BST)")
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 163991405A5;
+	Tue,  2 Oct 2007 14:40:39 -0400 (EDT)
+In-Reply-To: <550f9510710020329m7917dc9m2bb6cfc4055fea84@mail.gmail.com> (Tom
+	Clarke's message of "Tue, 2 Oct 2007 12:29:42 +0200")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59708>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+"Tom Clarke" <tom@u2i.com> writes:
 
-> But then I stepped back a little: What is most likely meant when you say 
-> "master:blub" and there is no tag/branch of name "blub" on the remote 
-> side?  Exactly, you want a branch to be created.
+> So it's perhaps the question is whether rebasing should be treated as
+> a kind of merging, or as an alternative to merging when pulling.
+> Incidentally, are there any other cases other than pulling where using
+> rebase as an alternative merge strategy is useful?
 
-It's not that "exactly" for me.
+Very well put; I like concise summary of the point in a
+discussion thread like this.
 
-If your push were "next~27^2:frotz", it becomes even less clear.
-It may be that I am pushing out the tip of a topic branch I
-usually do not push out, so it would be easier for some specific
-person to build on top of.  Or maybe I am marking that place as
-a lightweight tag.  They are equally likely.
+And the question in your last sentence is not merely incidental,
+but I think is the most crucial one to decide which way we
+should proceed.
 
-On the other hand, what the user wants to do with "git push
-$elsewhere frob" is reasonably clear.  If frob is locally a
-branch, then the branch is pushed out.  If frob is a tag, the
-tag is propagated.
+I do not offhand think of a place other than "git pull" that
+would make sense to sometimes be able to rebase when you
+normally use merge, so I am inclined to say it would be easier
+to teach that "'git pull' is usually a 'git fetch' followed by
+'git merge', but in certain workflow it is handier to 'git
+fetch' and then 'git rebase', and here are the ways to get the
+rebasing behaviour...".
