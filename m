@@ -1,82 +1,118 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: metastore
-Date: Tue, 02 Oct 2007 22:04:56 +0200
-Message-ID: <85lkalz3iv.fsf@lola.goethe.zz>
-References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
-	<Pine.LNX.4.64.0709151507310.28586@racer.site>
-	<20070915145437.GA12875@piper.oerlikon.madduck.net>
-	<Pine.LNX.4.64.0709151430040.5298@iabervon.org>
-	<20070916060859.GB24124@piper.oerlikon.madduck.net>
-	<20070919191607.GE13683@hardeman.nu>
-	<20071002195301.GB14171@lapse.madduck.net>
-	<20071002195816.GA6759@hardeman.nu>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: merging .gitignore
+Date: Tue, 02 Oct 2007 22:13:18 +0200
+Message-ID: <20071002201318.GD16776@artemis.corp>
+References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Nicolas Vilz <niv@iaglans.de>
-To: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
-X-From: git-owner@vger.kernel.org Tue Oct 02 22:05:00 2007
+Content-Type: multipart/signed; boundary="vni90+aGYgRvsTuO";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Oct 02 22:13:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icnz7-0007RZ-4L
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:04:49 +0200
+	id 1Ico7b-0002S5-I5
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 22:13:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752416AbXJBUEk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 16:04:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbXJBUEk
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:04:40 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:58204 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752261AbXJBUEj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Oct 2007 16:04:39 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Icny6-0002Zn-Q5; Tue, 02 Oct 2007 16:03:46 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 43AFE1C4CE11; Tue,  2 Oct 2007 22:04:56 +0200 (CEST)
-In-Reply-To: <20071002195816.GA6759@hardeman.nu> ("David =?iso-8859-1?Q?H?=
- =?iso-8859-1?Q?=E4rdeman=22's?= message of "Tue\, 2 Oct 2007 21\:58\:16
- +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1753901AbXJBUNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 16:13:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753715AbXJBUNV
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 16:13:21 -0400
+Received: from pan.madism.org ([88.191.52.104]:47649 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753358AbXJBUNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 16:13:20 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 0168D22A4C;
+	Tue,  2 Oct 2007 22:13:18 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 8CFAE3437C9; Tue,  2 Oct 2007 22:13:18 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <20071002195148.GA14171@lapse.madduck.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59723>
 
-David H=E4rdeman <david@hardeman.nu> writes:
 
-> On Tue, Oct 02, 2007 at 08:53:01PM +0100, martin f krafft wrote:
->>also sprach David H=E4rdeman <david@hardeman.nu> [2007.09.19.2016 +01=
-00]:
->>> But I agree, if any changes were made to git, I'd advocate adding
->>> arbitrary attributes to files (much like xattrs) in name=3Dvalue
->>> pairs, then any extended metadata could be stored in those
->>> attributes and external scripts/tools could use them in some way
->>> that makes sense...and also make sure to only update them when it
->>> makes sense.
->>
->>So where would those metdata be stored in your opinion?
->
-> I'm not sufficiently versed in the internals of git to have an
-> informed opinion :)
+--vni90+aGYgRvsTuO
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think we have something like a length count for file names in index
-and/or tree.  We could just put the (sorted) attributes after a NUL
-byte in the file name and include them in the count.  It would also
-make those artificially longer file names work more or less when
-sorting them for deltification.
+On Tue, Oct 02, 2007 at 07:51:48PM +0000, martin f krafft wrote:
+> Well, with gitignore I am ready to say that merges should be
+> resolved in an additive way. Remember that I am talking about an
+> intergration branch, and if feature branches A and B used to ignore
+> .o files, and now B suddenly does not ignore them anymore, the only
+> real reason I can think of is that it was rewritten in a languages
+> other than C*. So then you *still* want to ignore .o files in the
+> integration branch.
+>=20
+> Basically I am saying that it should be
+>=20
+>   cat $gitignore_files | sort -u
 
-However, this requires implementing _policies_: it must be possible to
-specify per repository exactly what will and what won't get tracked,
-or one will get conflicts that are not necessary or appropriate.
+  Except that this would not work, just take that example (for the sake
+of conciseness I put lines as members of a set):
+
+
+  Common ancestor content: (bar, foo, quux)
+  Left child: (bar, baz, foo, quux)
+  Right child: (bar, quux)
+
+  This one is a conflict, and if you apply your method, the merge always
+"works" (as in has no cases where it fails) and would yield a result
+like:
+
+  (bar, baz, foo, quux) whereas it's probably (bar, baz, quux) that
+would be the proper one (aka left branch added a new ignore `baz` and
+the right one removed it).
+
+  The proper way for gitignore is probably to work on the sets
+operations, like diff does with lines, but without taking ordering into
+account. What gets harder is when your lists are:
+
+  Ancestor: (aa*, aaa, bbb)
+  Left child: (aa*, bbb)   <-- remove aaa because aa* covers it
+  Right child: (aaa, aabcd, bbb, cc*) <-- remove aa* and be explicit
+
+  The proper result is probably: (aaa, aabcd, bbb, cc*) but is in fact a
+case of conflict, because the "left" child could have used the fact that
+aa* was present and hide say a aaXXX that the right child did not had,
+and the merge would be wrong.
+
+  Of course, .gitignore aren't _that_ important and if you ignore one
+less file, or one too many, git will continue to behave properly, but
+well, merge implementations aren't _that_ trivial.
 
 --=20
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--vni90+aGYgRvsTuO
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHAqZevGr7W6HudhwRAtp4AJ0cJn5MRsQNysEY2umVs/ctp/jHOACeN9Xf
+9bIGzgGGQtMeSQfC/1A4yZw=
+=TgqL
+-----END PGP SIGNATURE-----
+
+--vni90+aGYgRvsTuO--
