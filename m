@@ -1,106 +1,76 @@
-From: Barry Fishman <barry_fishman@acm.org>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Tue, 02 Oct 2007 09:54:46 -0400
-Message-ID: <m34ph9tye1.fsf@barry_fishman.acm.org>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
-	<7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
-	<87bqbisae6.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021045430.28395@racer.site>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] gitk: Do not pick up file names of "copy from" lines
+Date: Tue, 02 Oct 2007 16:21:00 +0200
+Message-ID: <470253CC.8040305@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 15:55:11 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 16:21:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IciDN-0005OW-KH
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 15:55:10 +0200
+	id 1Icicc-0007Cu-2R
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 16:21:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752958AbXJBNzA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 09:55:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbXJBNzA
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 09:55:00 -0400
-Received: from main.gmane.org ([80.91.229.2]:34159 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752082AbXJBNy7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 09:54:59 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IciD7-0006SN-7T
-	for git@vger.kernel.org; Tue, 02 Oct 2007 13:54:53 +0000
-Received: from fl-71-0-147-208.dhcp.embarqhsd.net ([71.0.147.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 13:54:53 +0000
-Received: from barry_fishman by fl-71-0-147-208.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 13:54:53 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: fl-71-0-147-208.dhcp.embarqhsd.net
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:FtmeSnoNFDOPKGQ+mn7GR9NQHbI=
+	id S1752462AbXJBOVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 10:21:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbXJBOVI
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 10:21:08 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:9373 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752405AbXJBOVH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 10:21:07 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IcicP-0001bZ-Oz; Tue, 02 Oct 2007 16:21:02 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E47BE54D; Tue,  2 Oct 2007 16:21:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59692>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Well, if the OP had used "git push <bla> master" instead of 
-> "... master:master", it would have worked.  I am unaware of any tutorial 
-> that suggests the latter, only of tutorials that suggest the former.
+A file copy would be detected only if the original file was modified in the
+same commit. This implies that there will be a patch listed under the
+original file name, and we would expect that clicking the original file
+name in the file list warps the patch window to that file's patch. (If the
+original file was not modified, the copy would not be detected in the first
+place, the copied file would be listed as "new file", and this whole matter
+would not apply.)
 
-I did recheck the tutorials, and did not find the code I was
-using.  So there was nothing incorrect in the documentation.
+However, if the name of the copy is sorted after the original file's patch,
+then the logic introduced by commit d1cb298b0b (which picks up the link
+information from the "copy from" line) would overwrite the link
+information that is already present for the original file name, which was
+parsed earlier. Hence, this patch reverts part of said commit.
 
-As for "master working where "master:master" didn't, this only exposes a
-more complex set of rules.  I was not hoping for a more complex set of
-rules to learn, as GIT tried to figure out what I meant.  I was hoping
-for a simpler command that did what I told it to do, and I was given it
-by Junio Hamano.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+  gitk |    3 +--
+  1 files changed, 1 insertions(+), 2 deletions(-)
 
-What distracted me was that after the "git --bare init", there seemed to
-be a incompletely defined setup.  This sent me down the wrong path.
+diff --git a/gitk b/gitk
+index b3ca704..1306382 100755
+--- a/gitk
++++ b/gitk
+@@ -5216,8 +5216,7 @@ proc getblobdiffline {bdf ids} {
+  	    set diffinhdr 0
 
-Although there was a master branch to which HEAD pointed, there was no
-ref/heads/master file or even a "packed-refs".  This also confuses the
-the "git branch" command, so that when I initial tried "git --bare
-branch" it seemed unaware of any master branch.  I then tried:
-
-$ git --bare branch refs/heads/master
-fatal: Not a valid object name: 'master'.
-
-If there isn't an initial master branch, then shouldn't "git branch" be
-able to create one.  And if there is one, shouldn't the automatic rules
-explained in git-rev-parse man page find it?  The error messages from
-the branch command is what got me on the wrong logical path.
-
-The man page for git-init says:
-
-  This command creates an empty git repository - basically a .git directory
-  with subdirectories for objects, refs/heads, refs/tags, and template
-  files. An initial HEAD file that references the HEAD of the master branch
-  is also created.
-
-Which is true, but although there is a HEAD that references the
-master branch, there isn't really any master branch.  It might
-say something like:
-
-  This command creates an empty git repository - basically a .git directory
-  with subdirectories for objects, refs/heads, refs/tags, and template
-  files. An initial HEAD file references the refs/heads/master branch
-  which is created with the first commit.
-
-This would at least somewhat explain "git branch" results.
-
-The man page for git-push seems clear to me now.  I should have
-more closely read the last example.  The first example might
-be changed to say:
-
-git push origin master
-    Find a ref that matches master in the source repository (most
-    likely, it would find refs/heads/master), and update (or create) the
-    same ref, refs/heads/master, in the origin repository with it.
-
+  	} elseif {$diffinhdr} {
+-	    if {![string compare -length 12 "rename from " $line] ||
+-		![string compare -length 10 "copy from " $line]} {
++	    if {![string compare -length 12 "rename from " $line]} {
+  		set fname [string range $line [expr 6 + [string first " from " $line] ] end]
+  		if {[string index $fname 0] eq "\""} {
+  		    set fname [lindex $fname 0]
 -- 
-Barry Fishman
+1.5.3.716.gb8ce0-dirty
