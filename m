@@ -1,226 +1,123 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH] Add a test script for for-each-ref, including test of date formatting Signed-off-by: Andy Parkins <andyparkins@gmail.com>
-Date: Tue, 2 Oct 2007 12:02:57 +0100
-Message-ID: <200710021202.57134.andyparkins@gmail.com>
+From: Thomas Pasch <thomas.pasch@jentro.com>
+Subject: Re: git-http-push / webDAV
+Date: Tue, 02 Oct 2007 13:15:35 +0200
+Organization: Jentro Technologies GmbH
+Message-ID: <47022857.806@jentro.com>
+References: <4700F6BC.2070701@jentro.com> <20071001155454.GU975@void.codelabs.ru> <47020603.3080000@jentro.com> <20071002085416.GW975@void.codelabs.ru> <470215F6.2060105@jentro.com> <20071002104646.GY975@void.codelabs.ru>
 Mime-Version: 1.0
+Content-Type: text/plain; charset=KOI8-R
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 13:03:19 2007
+Cc: git@vger.kernel.org
+To: Eygene Ryabinkin <rea-git@codelabs.ru>
+X-From: git-owner@vger.kernel.org Tue Oct 02 13:15:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcfX0-0002re-49
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 13:03:14 +0200
+	id 1IcfjC-0006qz-Au
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 13:15:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752557AbXJBLDF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 07:03:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752205AbXJBLDD
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 07:03:03 -0400
-Received: from nf-out-0910.google.com ([64.233.182.185]:62610 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752422AbXJBLDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 07:03:01 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so3203240nfb
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 04:02:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=JQ12meV9Bd6aDfrAR34zYII+ziEAxbJqvTElyFUjbws=;
-        b=HAFzzZjJX0zZn38haWw1E5D/6sM4VyxlFqyvCfF6s/Koe/GpfE9ayVwIp/K3ZivLiK41bKSoxk5ae97Z1vu6RUyU9h4dqxM5ofEZe8vv5Ufb21XU/VG7xO06jxywavxxSCbEOJyBNzgybZZyU3qL5SItp80ovm3ScUAffJ70muY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=HJMneBzir51uQ8zRH5SQivRl4D1x36j1uaISe+pNNI75EtjlZIj4i8ODwnyjnbnfJoEBoGM/bJxySyopAu0UeOSISZMebAO9bYxL9IxCTWLK/xt682LI/ar4pLWQG4K8gkjtkAe6euKiQty0L0olM7qTjZWtuZEXiAiHXhzVT4g=
-Received: by 10.78.123.4 with SMTP id v4mr447625huc.1191322978990;
-        Tue, 02 Oct 2007 04:02:58 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id 32sm1633902nfu.2007.10.02.04.02.57
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Oct 2007 04:02:58 -0700 (PDT)
-X-TUID: 88296ed6f68c74b0
-X-UID: 345
-X-Length: 7560
-Content-Disposition: inline
+	id S1752663AbXJBLPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 07:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752553AbXJBLPm
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 07:15:42 -0400
+Received: from mail2.infra.net ([212.89.96.7]:1972 "EHLO gamma.m.infra.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752532AbXJBLPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 07:15:41 -0400
+Received: from epsilon.m.infra.net (epsilon.m.infra.net [212.89.96.8])
+	by gamma.m.infra.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l92BFb57015757;
+	Tue, 2 Oct 2007 13:15:37 +0200
+Received: from [192.1.1.184] (u19-17.dsl.vianetworks.de [194.231.42.17])
+	(authenticated bits=0)
+	by epsilon.m.infra.net (8.13.4/8.13.4/Debian-3) with ESMTP id l92BFZwj028687
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 2 Oct 2007 13:15:35 +0200
+User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
+In-Reply-To: <20071002104646.GY975@void.codelabs.ru>
+X-Enigmail-Version: 0.95.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59684>
 
----
- t/t6300-for-each-ref.sh |  164 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 164 insertions(+), 0 deletions(-)
- create mode 100644 t/t6300-for-each-ref.sh
+Dear Eygene,
 
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-new file mode 100644
-index 0000000..b07f157
---- /dev/null
-+++ b/t/t6300-for-each-ref.sh
-@@ -0,0 +1,164 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Andy Parkins
-+#
-+
-+test_description='for-each-ref test'
-+
-+. ./test-lib.sh
-+
-+# Mon Jul 3 15:18:43 2006 +0000
-+datestamp=1151939923
-+setdate_and_increment () {
-+    GIT_COMMITTER_DATE="$datestamp +0200"
-+    datestamp=$(expr "$datestamp" + 1)
-+    GIT_AUTHOR_DATE="$datestamp +0200"
-+    datestamp=$(expr "$datestamp" + 1)
-+    export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-+}
-+
-+test_expect_success 'Create sample commit with known timestamp' '
-+	setdate_and_increment &&
-+	echo "Using $datestamp" > one &&
-+	git add one &&
-+	git commit -m "Initial" &&
-+	setdate_and_increment &&
-+	git tag -a -m "Tagging at $datestamp" testtag
-+'
-+
-+test_expect_success 'Check atom names are valid' '
-+	git for-each-ref --format="refname=%(refname)" refs/heads &&
-+	git for-each-ref --format="objecttype=%(objecttype)" refs/heads &&
-+	git for-each-ref --format="objectsize=%(objectsize)" refs/heads &&
-+	git for-each-ref --format="objectname=%(objectname)" refs/heads &&
-+	git for-each-ref --format="tree=%(tree)" refs/heads &&
-+	git for-each-ref --format="parent=%(parent)" refs/heads &&
-+	git for-each-ref --format="numparent=%(numparent)" refs/heads &&
-+	git for-each-ref --format="object=%(object)" refs/heads &&
-+	git for-each-ref --format="type=%(type)" refs/heads &&
-+	git for-each-ref --format="author=%(author)" refs/heads &&
-+	git for-each-ref --format="authorname=%(authorname)" refs/heads &&
-+	git for-each-ref --format="authoremail=%(authoremail)" refs/heads &&
-+	git for-each-ref --format="authordate=%(authordate)" refs/heads &&
-+	git for-each-ref --format="committer=%(committer)" refs/heads &&
-+	git for-each-ref --format="committername=%(committername)" refs/heads &&
-+	git for-each-ref --format="committeremail=%(committeremail)" refs/heads &&
-+	git for-each-ref --format="committerdate=%(committerdate)" refs/heads &&
-+	git for-each-ref --format="tag=%(tag)" refs/tags &&
-+	git for-each-ref --format="tagger=%(tagger)" refs/tags &&
-+	git for-each-ref --format="taggername=%(taggername)" refs/tags &&
-+	git for-each-ref --format="taggeremail=%(taggeremail)" refs/tags &&
-+	git for-each-ref --format="taggerdate=%(taggerdate)" refs/tags &&
-+	git for-each-ref --format="creator=%(creator)" refs/tags &&
-+	git for-each-ref --format="creatordate=%(creatordate)" refs/tags &&
-+	git for-each-ref --format="subject=%(subject)" refs/heads &&
-+	git for-each-ref --format="body=%(body)" refs/heads &&
-+	git for-each-ref --format="contents=%(contents)" refs/heads
-+'
-+
-+test_expect_failure 'Check invalid atoms names are errors' '
-+	git-for-each-ref --format="%(INVALID)" refs/heads
-+'
-+
-+test_expect_success 'Check format specifiers are ignored in naming date atoms' '
-+	git-for-each-ref --format="%(authordate)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:default) %(authordate)" refs/heads &&
-+	git-for-each-ref --format="%(authordate) %(authordate:default)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:default) %(authordate:default)" refs/heads
-+'
-+
-+test_expect_success 'Check valid format specifiers for date fields' '
-+	git-for-each-ref --format="%(authordate:default)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:relative)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:short)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:local)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:iso8601)" refs/heads &&
-+	git-for-each-ref --format="%(authordate:rfc2822)" refs/heads
-+'
-+
-+test_expect_failure 'Check invalid format specifiers are errors' '
-+	git-for-each-ref --format="%(authordate:INVALID)" refs/heads
-+'
-+
-+cat >expected <<\EOF
-+'refs/heads/master' 'Mon Jul 3 17:18:43 2006 +0200' 'Mon Jul 3 17:18:44 2006 +0200'
-+'refs/tags/testtag' 'Mon Jul 3 17:18:45 2006 +0200'
-+EOF
-+
-+test_expect_success 'Check unformatted date fields output' '
-+	(git for-each-ref --shell --format="%(refname) %(committerdate) %(authordate)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+test_expect_success 'Check format "default" formatted date fields output' '
-+	f=default &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+# Don't know how to do relative check because I can't know when this script
-+# is going to be run and can't fake the current time to git, and hence can't
-+# provide expected output.  Instead, I'll just make sure that "relative"
-+# doesn't exit in error
-+#
-+#cat >expected <<\EOF
-+#
-+#EOF
-+#
-+test_expect_success 'Check format "relative" date fields output' '
-+	f=relative &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual
-+'
-+
-+cat >expected <<\EOF
-+'refs/heads/master' '2006-07-03' '2006-07-03'
-+'refs/tags/testtag' '2006-07-03'
-+EOF
-+
-+test_expect_success 'Check format "short" date fields output' '
-+	f=short &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+cat >expected <<\EOF
-+'refs/heads/master' 'Mon Jul 3 15:18:43 2006' 'Mon Jul 3 15:18:44 2006'
-+'refs/tags/testtag' 'Mon Jul 3 15:18:45 2006'
-+EOF
-+
-+test_expect_success 'Check format "local" date fields output' '
-+	f=local &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+cat >expected <<\EOF
-+'refs/heads/master' '2006-07-03 17:18:43 +0200' '2006-07-03 17:18:44 +0200'
-+'refs/tags/testtag' '2006-07-03 17:18:45 +0200'
-+EOF
-+
-+test_expect_success 'Check format "iso8601" date fields output' '
-+	f=iso8601 &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+cat >expected <<\EOF
-+'refs/heads/master' 'Mon, 3 Jul 2006 17:18:43 +0200' 'Mon, 3 Jul 2006 17:18:44 +0200'
-+'refs/tags/testtag' 'Mon, 3 Jul 2006 17:18:45 +0200'
-+EOF
-+
-+test_expect_success 'Check format "rfc2822" date fields output' '
-+	f=rfc2822 &&
-+	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
-+	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual &&
-+	git diff expected actual
-+'
-+
-+test_done
--- 
-1.5.3.2.105.gf47f2-dirty
+I used a rather small test repo with only 2 or 3
+commits.
+
+The last tests I did with the a (current) git repo clone:
+
+> git clone --bare git://git.kernel.org/pub/scm/git/git.git
+
+e147e54b14828fa2e88e88907e0ca4dc3d694448 has indeed *not*
+found its way into the http push repo. For me it looks
+like that the push *first* updates refs/heads/master
+(successfully) but fails to transfer the object itself.
+
+Perhaps it would be more graceful that the object is
+transfered *first* and then the remote tip is updated...
+
+What version of git do you use?
+
+Cheers,
+
+Thomas
+
+Eygene Ryabinkin wrote:
+> Thomas,
+> 
+> Tue, Oct 02, 2007 at 11:57:10AM +0200, Thomas Pasch wrote:
+>> well, *somewhat* better with the trailing slash:
+>>
+>>> echo "modified" >>grep.c
+>>> git commit -a
+>> Created commit e147e54: mod
+>>  1 files changed, 1 insertions(+), 0 deletions(-)
+>>> git push -v
+>> Pushing to http://test@x.x.x.x/git/git.git/
+>> Fetching remote heads...
+>>   refs/
+>>   refs/heads/
+>>   refs/tags/
+>> updating 'refs/heads/master'
+>>   from 34c6dbdef439f7cd93d3fe22493a3c1496ce96f7
+>>   to   e147e54b14828fa2e88e88907e0ca4dc3d694448
+>>     sending 3 objects
+>>     done
+>> Updating remote server info
+>>
+>> There's no more error message.
+> 
+> OK, that's fine: the previous error was tied to the fact that
+> when you're getting /git/git.git from the Web-server, it notices
+> that it is a directory and redirects you to the /git/git.git/.
+> But (IIRC) curl does not follow such redirections.
+> 
+>> However, push has still
+>> not worked. If I try to check out the new HEAD:
+>>
+>>> git clone http://test@x.x.x.x/git/git.git/
+>> Initialized empty Git repository in /home/tpasch/tmp/git/.git/
+>> Getting alternates list for http://test@x.x.x.x/git/git.git
+>> Getting pack list for http://test@x.x.x.x/git/git.git
+>> Getting index for pack 563e2090185692c7d765775569a0ce986840fd17
+>> Getting pack 563e2090185692c7d765775569a0ce986840fd17
+>>  which contains 3af9d3e08da868c3a7687ab38d72f4296a99005d
+>> [...]
+>> walk 24778e335a6450e34257a311d0bf4a12bdb3006c
+>> walk 19b2860cba5742ab31fd682b80fefefac19be141
+>> walk bf0c6e839c692142784caf07b523cd69442e57a5
+>> walk e497ea2a9b6c378f01d092c210af20cbee762475
+>> walk 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
+>> walk e83c5163316f89bfbde7d9ab23ca2e25604af290
+>> Getting alternates list for http://test@x.x.x.x/git/git.git
+>> Getting pack list for http://test@x.x.x.x/git/git.git
+>> error: Unable to find e147e54b14828fa2e88e88907e0ca4dc3d694448 under
+>> http://test@x.x.x.x/git/git.git
+>> Cannot obtain needed object e147e54b14828fa2e88e88907e0ca4dc3d694448
+> 
+> OK, I will try to do this on my server with 2.2.6.  How big
+> is your repository?  Both size and commit number.
+> 
+> Thanks.
