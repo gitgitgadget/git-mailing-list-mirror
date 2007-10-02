@@ -1,140 +1,62 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] git-push: plumb in --mirror mode
-Date: Tue, 2 Oct 2007 13:00:51 +0100
-Message-ID: <20071002120051.GC30636@shadowen.org>
-References: <7vhclalzlq.fsf@gitster.siamese.dyndns.org>
+From: "lode leroy" <lode.leroy@gmail.com>
+Subject: trailing whitespace problem
+Date: Tue, 2 Oct 2007 14:07:51 +0200
+Message-ID: <b41dbf4a0710020507va40ef83u50c88094f8c2823b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 14:01:14 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 02 14:08:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcgQx-0004FR-FU
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 14:01:03 +0200
+	id 1IcgXh-0006e9-4b
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 14:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751781AbXJBMA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 08:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXJBMA4
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 08:00:56 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:1218 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751590AbXJBMA4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 08:00:56 -0400
-Received: from 81-179-148-120.dsl.pipex.com ([81.179.148.120] helo=localhost.localdomain)
-	by hellhawk.shadowen.org with esmtpa (Exim 4.50)
-	id 1IcgQp-0007VK-2s; Tue, 02 Oct 2007 13:00:55 +0100
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by localhost.localdomain with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1IcgQl-0001Kn-KT; Tue, 02 Oct 2007 13:00:51 +0100
+	id S1753822AbXJBMHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 08:07:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753505AbXJBMHx
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 08:07:53 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:40031 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753217AbXJBMHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 08:07:52 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so4957209wah
+        for <git@vger.kernel.org>; Tue, 02 Oct 2007 05:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=ezYcdwIQ53MK/mlHe/bUD0grmkcXg5fX+lOzWsJTNQs=;
+        b=s/c3i4sI5yfIgrdO0xX2e29cC8n6YkASBVxRjcA6XYjo+5fZOkilJ9hUw2FeR0xNNxiuC9VdPRpgcKxRoCkCGf+urz3+1GHREWTx6oOc8VIo4K0gcdfyrAyqLyEaZH9eaKkS218LOgESX6A1Gn0UoRW/dbPLfBRKKOjF+oO4wWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=h2QAK1iR5wDok44HUKoJj5HCwQgqxd+kFFUZsYWfPnDwrh3FgDvK1rJ1+t1R4kRGc3atdIoOyzF7Veo/OGNA+4hPz8k9y3iViBVEokz5swF3I/n8GHTPX37m94wQS/H6HmaEmQJnM+qPHZwwg/NC4wxpDQQXt7bNDWFuwcqt5vg=
+Received: by 10.114.201.1 with SMTP id y1mr4829101waf.1191326871959;
+        Tue, 02 Oct 2007 05:07:51 -0700 (PDT)
+Received: by 10.141.82.5 with HTTP; Tue, 2 Oct 2007 05:07:51 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vhclalzlq.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Received-SPF: none
-X-SPF-Guess: neutral
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59687>
 
-Plumb in the --mirror mode for git-push.
+when I use git commit -a, I get the following message:
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
- builtin-push.c |   14 +++++++++++++-
- transport.c    |    8 ++++++++
- transport.h    |    1 +
- 3 files changed, 22 insertions(+), 1 deletions(-)
-diff --git a/builtin-push.c b/builtin-push.c
-index 4ee36c2..e421e96 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -8,7 +8,7 @@
- #include "remote.h"
- #include "transport.h"
- 
--static const char push_usage[] = "git-push [--all] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
-+static const char push_usage[] = "git-push [--all | --mirror] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
- 
- static int all, thin, verbose;
- static const char *receivepack;
-@@ -85,6 +85,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- {
- 	int i;
- 	int flags = 0;
-+	int modes_specified = 0;
- 	const char *repo = NULL;	/* default repository */
- 
- 	for (i = 1; i < argc; i++) {
-@@ -105,6 +106,12 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		}
- 		if (!strcmp(arg, "--all")) {
- 			flags |= TRANSPORT_PUSH_ALL;
-+			modes_specified++;
-+			continue;
-+		}
-+		if (!strcmp(arg, "--mirror")) {
-+			flags |= TRANSPORT_PUSH_MIRROR;
-+			modes_specified++;
- 			continue;
- 		}
- 		if (!strcmp(arg, "--tags")) {
-@@ -137,5 +144,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	if (all && refspec)
- 		usage(push_usage);
- 
-+	if (modes_specified > 1) {
-+		error("--all and --mirror are incompatible");
-+		usage(push_usage);
-+	}
-+
- 	return do_push(repo, flags);
- }
-diff --git a/transport.c b/transport.c
-index 7266fd3..e45f3c0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -281,6 +281,9 @@ static int rsync_transport_push(struct transport *transport,
- 	struct child_process rsync;
- 	const char *args[8];
- 
-+	if (flags & TRANSPORT_PUSH_MIRROR)
-+		return error("rsync transport does not support mirror mode");
-+
- 	/* first push the objects */
- 
- 	strbuf_addstr(&buf, transport->url);
-@@ -373,6 +376,9 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 	int argc;
- 	int err;
- 
-+	if (flags & TRANSPORT_PUSH_MIRROR)
-+		return error("http transport does not support mirror mode");
-+
- 	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
- 	argv[0] = "http-push";
- 	argc = 1;
-@@ -667,6 +673,8 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 		argv[argc++] = "--all";
- 	if (flags & TRANSPORT_PUSH_FORCE)
- 		argv[argc++] = "--force";
-+	if (flags & TRANSPORT_PUSH_MIRROR)
-+		argv[argc++] = "--mirror";
- 	if (data->receivepack) {
- 		char *rp = xmalloc(strlen(data->receivepack) + 16);
- 		sprintf(rp, "--receive-pack=%s", data->receivepack);
-diff --git a/transport.h b/transport.h
-index 6e318e4..8383774 100644
---- a/transport.h
-+++ b/transport.h
-@@ -29,6 +29,7 @@ struct transport {
- 
- #define TRANSPORT_PUSH_ALL 1
- #define TRANSPORT_PUSH_FORCE 2
-+#define TRANSPORT_PUSH_MIRROR 4
- 
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
+*
+* You have some suspicious patch lines:
+*
+* In src/test.c
+* trailing whitespace (line 60)
+src/test.c:60: }
+
+when I fix the whitespace problem,  and do "git commit -a" again,
+I still get the same message.
+
+Only after adding the file again, with "git add src/test.c",
+I can commit my changes.
+
+git version 1.5.3.2 (on cygwin)
+
+ps: not related to CR/LF...
