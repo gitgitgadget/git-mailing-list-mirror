@@ -1,90 +1,128 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: metastore (was: Track /etc directory using Git)
-Date: Tue, 2 Oct 2007 17:02:48 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710021642090.9321@iabervon.org>
-References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
- <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net>
- <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net>
- <20071002195816.GA6759@hardeman.nu>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: merging .gitignore
+Date: Tue, 02 Oct 2007 23:02:52 +0200
+Message-ID: <20071002210252.GB19710@artemis.corp>
+References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2100497631-1191358968=:9321"
-Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Thomas Harning Jr." <harningt@gmail.com>,
-	Francis Moreau <francis.moro@gmail.com>,
-	Nicolas Vilz <niv@iaglans.de>
-To: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
-X-From: git-owner@vger.kernel.org Tue Oct 02 23:03:06 2007
+Content-Type: multipart/signed; boundary="zx4FCpZtqtKETZ7O";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 02 23:03:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcotO-0005Jg-C1
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:02:58 +0200
+	id 1Icote-0005QI-Gg
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:03:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754259AbXJBVCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 17:02:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbXJBVCu
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:02:50 -0400
-Received: from iabervon.org ([66.92.72.58]:41694 "EHLO iabervon.org"
+	id S1754315AbXJBVCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 17:02:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbXJBVCz
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:02:55 -0400
+Received: from pan.madism.org ([88.191.52.104]:40298 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754097AbXJBVCt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 17:02:49 -0400
-Received: (qmail 16042 invoked by uid 1000); 2 Oct 2007 21:02:48 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Oct 2007 21:02:48 -0000
-In-Reply-To: <20071002195816.GA6759@hardeman.nu>
+	id S1754281AbXJBVCy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 17:02:54 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 1C0F721906;
+	Tue,  2 Oct 2007 23:02:53 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id BFE1128F999; Tue,  2 Oct 2007 23:02:52 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <20071002204748.GA19710@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59736>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59737>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---1547844168-2100497631-1191358968=:9321
-Content-Type: TEXT/PLAIN; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+--zx4FCpZtqtKETZ7O
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 2 Oct 2007, David H=E4rdeman wrote:
-
-> On Tue, Oct 02, 2007 at 08:53:01PM +0100, martin f krafft wrote:
-> >also sprach David H=E4rdeman <david@hardeman.nu> [2007.09.19.2016 +0100]=
-:
-> > > But I agree, if any changes were made to git, I'd advocate adding
-> > > arbitrary attributes to files (much like xattrs) in name=3Dvalue
-> > > pairs, then any extended metadata could be stored in those
-> > > attributes and external scripts/tools could use them in some way
-> > > that makes sense...and also make sure to only update them when it
-> > > makes sense.
-> >
-> >So where would those metdata be stored in your opinion?
+On Tue, Oct 02, 2007 at 08:47:48PM +0000, Pierre Habouzit wrote:
+> On mar, oct 02, 2007 at 08:13:18 +0000, Pierre Habouzit wrote:
+> >   Ancestor: (aa*, aaa, bbb)
+> >   Left child: (aa*, bbb)   <-- remove aaa because aa* covers it
+> >   Right child: (aaa, aabcd, bbb, cc*) <-- remove aa* and be explicit
+> >=20
+> >   The proper result is probably: (aaa, aabcd, bbb, cc*) but is in fact a
+> > case of conflict, because the "left" child could have used the fact that
+> > aa* was present and hide say a aaXXX that the right child did not had,
+> > and the merge would be wrong.
 >=20
-> I'm not sufficiently versed in the internals of git to have an informed
-> opinion :)
+>   Okay this example blows, I believe this one is better:
+>=20
+>        (a*)
+>       /    \
+>   (ab*)    (ac*)
+>       \    /
+>        ????
+>=20
+>   gitignore are subsets of the set of words.  if S is the ancestor set,
+> S1 and S2 the left and right sets. let =CE=941 and =CE=942 be S1 \ S and =
+S2 \ S
+   I meant S \ S1 and S \ S2 in fact here ...
+> respectively.  I think there is a conflict if
+>   =CE=941 n =CE=942 !=3D 0 and (=CE=941 is not a subset of =CE=942) and (=
+=CE=942 is not a subset of =CE=941)
+>=20
+>   If the condition holds, then I believe that the "merged" .gitignore
+> would be: (S1 u S2) \ (=CE=941 u =CE=942)
 
-My theory was that we would provide an API for getting the "current state"=
-=20
-listing with all of the filenames and matching contents, and leave it up=20
-to metastore to put things in the filesystem; in the other direction,=20
-metastore would build up this state, and we'd store it.
+  after some more thoughts, as basically merging the complementary of
+the sets I talk about here should yield the same "conflicts" (as it's
+the dual problem), I suppose that the same restrictions should be
+checked wrt the "added" deltas between S -> S1 (aka S1 \ S for real this
+time) and S -> S2 (aka S2 \ S).
 
-People who are using this in practice would set a config option to=20
-delegate the "working tree" filesystem I/O to metastore, while other=20
-people could interact with the state as files describing the state, and=20
-could therefore specify operations that are impossible or prohibited on=20
-the filesystems that their development is done on.
+  so if =CE=94(0,n) is Sn \ S and =CE=94(n, 0) is S \ Sn, it would mean tha=
+t if:
 
-(This would effectively be like giving people a convenient way of setting=
-=20
-attributes on entries in a tar file, such that they can edit it to=20
-represent a stste that they can't necessarily create in their own=20
-filesystems, and version controlling that; but more convenient, since the=
-=20
-file contents are represented as file contents and the attributes are=20
-plain text in a listing of some sort)
+   { =CE=94(0,1) n =CE=94(0,2) =3D=3D 0 || =E2=88=83 i =E2=88=8B (1,2), =CE=
+=94(0,i) =E2=8A=86 =CE=94(0, 3 - i) }
+&& { =CE=94(1,0) n =CE=94(2,0) =3D=3D 0 || =E2=88=83 i =E2=88=8B (1,2), =CE=
+=94(i,0) =E2=8A=86 =CE=94(3 - i, 0) }
 
-=09-Daniel
-*This .sig left intentionally blank*
---1547844168-2100497631-1191358968=:9321--
+  Then the correct merge (without conflicts) would be:
+
+  (S u =CE=94(1,0) u =CE=94(2,0)) \ (=CE=94(0,1) u =CE=94(0,2)) aka S + wha=
+t was added -
+what was removed.
+
+  in fact, I think that wrt the sets usual operations, there is a
+conflict if the expression I just wrote does not commutes wrt the \ or
+sth very similar.
+
+  Anyway, I'm going pretty off topic here, so I'll shut up now :)
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--zx4FCpZtqtKETZ7O
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHArH8vGr7W6HudhwRAkZ7AJ0aBVKEJBSLOCXdNoeM1gm9zpMUPgCdE39Z
+CdtZ4KzMwj0ksyNGRRQLh0M=
+=wcji
+-----END PGP SIGNATURE-----
+
+--zx4FCpZtqtKETZ7O--
