@@ -1,100 +1,103 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: merging .gitignore
-Date: Wed, 03 Oct 2007 00:07:49 +0200
-Message-ID: <20071002220749.GE19710@artemis.corp>
-References: <20071001130314.GA5932@lapse.madduck.net> <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp> <20071002205618.GA19097@lapse.madduck.net> <20071002210748.GC19710@artemis.corp> <20071002214919.GA21260@lapse.madduck.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] for-each-ref: fix %(numparent) and %(parent)
+Date: Tue, 02 Oct 2007 15:12:55 -0700
+Message-ID: <7v8x6ljhco.fsf@gitster.siamese.dyndns.org>
+References: <200710021202.42452.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="6e7ZaeXHKrTJCxdu";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: martin f krafft <madduck@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 00:08:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andy Parkins <andyparkins@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 00:13:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcpuQ-0004Rz-99
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 00:08:06 +0200
+	id 1Icpzl-0006GW-F7
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 00:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755543AbXJBWH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 18:07:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755541AbXJBWH4
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 18:07:56 -0400
-Received: from pan.madism.org ([88.191.52.104]:39182 "EHLO hermes.madism.org"
+	id S1755281AbXJBWNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 18:13:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755308AbXJBWNI
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 18:13:08 -0400
+Received: from rune.pobox.com ([208.210.124.79]:57540 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756620AbXJBWHz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 18:07:55 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id B04DF23121;
-	Wed,  3 Oct 2007 00:07:50 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id B3091359F85; Wed,  3 Oct 2007 00:07:49 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	martin f krafft <madduck@debian.org>, git@vger.kernel.org,
-	Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Disposition: inline
-In-Reply-To: <20071002214919.GA21260@lapse.madduck.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755505AbXJBWNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 18:13:06 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 31D4D1406E9;
+	Tue,  2 Oct 2007 18:13:24 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 82B561403D9;
+	Tue,  2 Oct 2007 18:13:19 -0400 (EDT)
+In-Reply-To: <200710021202.42452.andyparkins@gmail.com> (Andy Parkins's
+	message of "Tue, 2 Oct 2007 12:02:42 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59749>
 
+The string value of %(numparent) was not returned correctly.
+Also %(parent) misbehaved for the root commits (returned garbage)
+and merge commits (returned first parent, followed by a space).
 
---6e7ZaeXHKrTJCxdu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-On Tue, Oct 02, 2007 at 09:49:19PM +0000, martin f krafft wrote:
-> also sprach Pierre Habouzit <madcoder@debian.org> [2007.10.02.2207 +0100]:
-> > > >        (a*)
-> > > >       /    \
-> > > >   (ab*)    (ac*)
-> > > >       \    /
-> > > >        ????
-> > >=20
-> > > (a*, ab*, ac*)
-> >=20
-> >   Definitely not. a* -> ab* is making a?* unignored for any value of ?
-> > except b. So adding a* is definitely invalid.
->=20
-> In left, ab* is still ignored, in right ac* is still ignored, and in
-> the integration branch, they're all ignored. We don't merge up in
-> this model...
+ * I noticed this while playing with Andy's patch to enhance the
+   date format string we saw recently on the list.
 
-  err maybe you didn't get my little picture
+   Andy does not have anything to do with the breakage; this
+   patch is against 'maint' to fix the bug that has always been
+   there from the very beginning of this code.
 
-     (a*)
-    /    \
-   v      v
-(ab*)    (ac*)
-    \    /
-     v  v
-     ????
+ builtin-for-each-ref.c |   10 ++++++----
+ 1 files changed, 6 insertions(+), 4 deletions(-)
 
-  This is a perfectly sensible history. Or I miss sth on your end.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---6e7ZaeXHKrTJCxdu
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHAsE1vGr7W6HudhwRAvXcAJ93cnVZss8PaAwJLTGttgDKvO1uXgCgia+G
-dUQ2s/Tv8QTda+9OJbXsVfY=
-=+CJ9
------END PGP SIGNATURE-----
-
---6e7ZaeXHKrTJCxdu--
+diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+index 0afa1c5..29f70aa 100644
+--- a/builtin-for-each-ref.c
++++ b/builtin-for-each-ref.c
+@@ -43,7 +43,7 @@ static struct {
+ 	{ "objectsize", FIELD_ULONG },
+ 	{ "objectname" },
+ 	{ "tree" },
+-	{ "parent" }, /* NEEDSWORK: how to address 2nd and later parents? */
++	{ "parent" },
+ 	{ "numparent", FIELD_ULONG },
+ 	{ "object" },
+ 	{ "type" },
+@@ -262,24 +262,26 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
+ 		}
+ 		if (!strcmp(name, "numparent")) {
+ 			char *s = xmalloc(40);
++			v->ul = num_parents(commit);
+ 			sprintf(s, "%lu", v->ul);
+ 			v->s = s;
+-			v->ul = num_parents(commit);
+ 		}
+ 		else if (!strcmp(name, "parent")) {
+ 			int num = num_parents(commit);
+ 			int i;
+ 			struct commit_list *parents;
+-			char *s = xmalloc(42 * num);
++			char *s = xmalloc(41 * num + 1);
+ 			v->s = s;
+ 			for (i = 0, parents = commit->parents;
+ 			     parents;
+-			     parents = parents->next, i = i + 42) {
++			     parents = parents->next, i = i + 41) {
+ 				struct commit *parent = parents->item;
+ 				strcpy(s+i, sha1_to_hex(parent->object.sha1));
+ 				if (parents->next)
+ 					s[i+40] = ' ';
+ 			}
++			if (!i)
++				*s = '\0';
+ 		}
+ 	}
+ }
+-- 
+1.5.3.3.1144.gf10f2
