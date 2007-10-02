@@ -1,80 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Tue, 2 Oct 2007 18:45:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710021841300.28395@racer.site>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org> <7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
- <87bqbisae6.wl%cworth@cworth.org> <Pine.LNX.4.64.0710021045430.28395@racer.site>
- <87641psey8.wl%cworth@cworth.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/5] Change git_connect() to return a struct child_process instead of a pid_t.
+Date: Tue, 02 Oct 2007 10:54:11 -0700
+Message-ID: <7v641pmmgs.fsf@gitster.siamese.dyndns.org>
+References: <1191183001-5368-1-git-send-email-johannes.sixt@telecom.at>
+	<1191183001-5368-2-git-send-email-johannes.sixt@telecom.at>
+	<7vbqbjg9zz.fsf@gitster.siamese.dyndns.org>
+	<4700A067.3010004@viscovery.net>
+	<7vtzpbrzye.fsf@gitster.siamese.dyndns.org>
+	<4700B8FC.70704@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Barry Fishman <barry_fishman@acm.org>, git@vger.kernel.org
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Tue Oct 02 19:47:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 02 19:54:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iclq3-0000Hy-Dr
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 19:47:19 +0200
+	id 1Iclwy-0003SS-C1
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 19:54:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753739AbXJBRq5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 13:46:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753737AbXJBRq5
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 13:46:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46264 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753655AbXJBRq4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 13:46:56 -0400
-Received: (qmail invoked by alias); 02 Oct 2007 17:46:55 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 02 Oct 2007 19:46:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ZTIsueooZsP8It2DNosa/M2SdsKyOyWrhRfReSX
-	e6AlfUcDvrGTxq
-X-X-Sender: gene099@racer.site
-In-Reply-To: <87641psey8.wl%cworth@cworth.org>
-X-Y-GMX-Trusted: 0
+	id S1753094AbXJBRyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 13:54:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753110AbXJBRyS
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 13:54:18 -0400
+Received: from rune.pobox.com ([208.210.124.79]:51885 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753037AbXJBRyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 13:54:18 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id E932D13F6B4;
+	Tue,  2 Oct 2007 13:54:38 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 4116513FBC9;
+	Tue,  2 Oct 2007 13:54:35 -0400 (EDT)
+In-Reply-To: <4700B8FC.70704@viscovery.net> (Johannes Sixt's message of "Mon,
+	01 Oct 2007 11:08:12 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59704>
 
-Hi,
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-On Tue, 2 Oct 2007, Carl Worth wrote:
+> Junio C Hamano schrieb:
+> ...
+>> As to error indication, it somehow does not feel right to return
+>> something called "child _process_" structure when we want to
+>> tell the caller that there is no process to wait for in the
+>> no-error case, although the fact that we can use .in/.out fd in
+>> the structure when we _do_ have child process is attractive.
+>
+> Did you mean: "even if we don't have a child process"?
+>
+> How about a typedef if you dislike the name?
+>
+>> As an alternative, we could keep the "NULL return means there
+>> was no need to fork" semantics of git_connect(), and instead add
+>> "int *status_ret" parameter for the caller to check.
+>
+> Seriously? Add an *out* parameter when we can get rid of one and have
+> a return value, too?
 
-> On Tue, 2 Oct 2007 10:46:56 +0100 (BST), Johannes Schindelin wrote:
-> > On Mon, 1 Oct 2007, Carl Worth wrote:
-> > > And why is that?
-> >
-> > Well, if the OP had used "git push <bla> master" instead of "... 
-> > master:master", it would have worked.  I am unaware of any tutorial 
-> > that suggests the latter, only of tutorials that suggest the former.
-> 
-> OK. I was wrong. Somehow I got stuck thinking that "git push <bla> 
-> master" wouldn't create a new remote master branch if it didn't 
-> previously exist. (It's bizarre that I forgot since I've used that for a 
-> long time).
-> 
-> Sorry about the noise.
+Ah, I somehow got confused and thought that the caller decides
+not to do the waitpid business at the end of the connection, but
+as everybody calls finish_connect() with what it got from
+git_connect(), as long as the fake "child_process" structure
+records something to let finish_connect() know that it should
+not waitpid() on the process, all is well.
 
-Nothing to be sorry about.  It got me thinking.  People propose that "git 
-push <nick> master:blub" should create the branch "refs/heads/blub" on the 
-remote side.
-
-My initial reaction was "then you have to be precise, because we do not 
-know if you want to push it as a branch, or as a lightweight tag".
-
-But then I stepped back a little: What is most likely meant when you say 
-"master:blub" and there is no tag/branch of name "blub" on the remote 
-side?  Exactly, you want a branch to be created.
-
-_Except_ if you had a typo, such as "git push ko master:po" where you want 
-to be warned that that ref is not present on the remote side.
-
-So I am less opposed to making "master:blub" automatically create a branch 
-"blub" if it does not exist yet.  But opposed nevertheless.
-
-Ciao,
-Dscho
+It might make sense to teach finish_command() that a magic value
+of (cmd->pid == 0) means there is no process to wait for and
+this "child_process" structure is only about the in/out stream
+to the other side.
