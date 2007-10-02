@@ -1,103 +1,108 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] for-each-ref: fix %(numparent) and %(parent)
-Date: Tue, 02 Oct 2007 15:12:55 -0700
-Message-ID: <7v8x6ljhco.fsf@gitster.siamese.dyndns.org>
-References: <200710021202.42452.andyparkins@gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn merge helper
+Date: Wed, 3 Oct 2007 00:38:13 +0200
+Message-ID: <20071002223813.GA3152@atjola.homenet>
+References: <20070930110550.GA4557@atjola.homenet> <1EF130A4-3CC7-4A42-9166-3539D9A38828@lrde.epita.fr> <20071001025059.GA29323@atjola.homenet> <0D8A7A3C-8F51-482D-9229-29ADC9585760@lrde.epita.fr> <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com> <20071002211400.GA992@atjola.homenet> <20071002220458.GA21038@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andy Parkins <andyparkins@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 00:13:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 00:38:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icpzl-0006GW-F7
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 00:13:37 +0200
+	id 1IcqNN-0005e8-3v
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 00:38:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755281AbXJBWNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 18:13:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755308AbXJBWNI
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 18:13:08 -0400
-Received: from rune.pobox.com ([208.210.124.79]:57540 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755505AbXJBWNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 18:13:06 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 31D4D1406E9;
-	Tue,  2 Oct 2007 18:13:24 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 82B561403D9;
-	Tue,  2 Oct 2007 18:13:19 -0400 (EDT)
-In-Reply-To: <200710021202.42452.andyparkins@gmail.com> (Andy Parkins's
-	message of "Tue, 2 Oct 2007 12:02:42 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753006AbXJBWhx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 18:37:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbXJBWhx
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 18:37:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50737 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751697AbXJBWhw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 18:37:52 -0400
+Received: (qmail invoked by alias); 02 Oct 2007 22:37:50 -0000
+Received: from i577B85BB.versanet.de (EHLO localhost) [87.123.133.187]
+  by mail.gmx.net (mp048) with SMTP; 03 Oct 2007 00:37:50 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19PxW4ytUNPreIIMFCE+Hosa92YuAXZOX/hQ5Nq5k
+	xohwiOe6vGJ2wd
+Content-Disposition: inline
+In-Reply-To: <20071002220458.GA21038@dervierte>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59750>
 
-The string value of %(numparent) was not returned correctly.
-Also %(parent) misbehaved for the root commits (returned garbage)
-and merge commits (returned first parent, followed by a space).
+On 2007.10.02 18:04:58 -0400, Steven Walter wrote:
+> On Tue, Oct 02, 2007 at 11:14:00PM +0200, Bj=F6rn Steinbrink wrote:
+> > One common pattern in SVN is to have the feature branch following t=
+he
+> > trunk. In git terms, that would mean that the feature branch is
+> > continually rebased onto the HEAD of the HEAD AFAICT (although SVN =
+of
+> > course cannot represent that). The problem with that is, that git
+> > doesn't create a merge commit in that case and git-svn gets confuse=
+d
+> > again.
+> >=20
+> > git checkout mybranch
+> > git merge master # Creates a merge commit
+> > git checkout master
+> > git merge mybranch # Does just fast forward
+> >=20
+> > Is there anyway to force a merge commit or some other work around?
+>=20
+> When I want to do something like this, I go about it one of two ways.
+> The first option is to simply rebase mybranch onto master.  Since my
+> feature branches are not usually published, there is no problem
+> rewinding them.  That may not be an option for you, however.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Unfortunately not, the branch in question is required to be in the SVN
+repository.
 
- * I noticed this while playing with Andy's patch to enhance the
-   date format string we saw recently on the list.
+> The other option is to have a "build" branch.  By example:
+>=20
+> git checkout build
+> git reset --hard master
+> git merge mybranch
+> make
+>=20
+> In that way, I have branch with the latest changes from head and the
+> changes from mybranch together.  The downside to this method is that =
+you
+> may have to repeated resolve merges.  Despite the downsides, I find
+> these two methods to work quite well.
 
-   Andy does not have anything to do with the breakage; this
-   patch is against 'maint' to fix the bug that has always been
-   there from the very beginning of this code.
+Thanks, but it makes no difference here, it stil results in a fast
+forward. This is a small test case which exhibits the behaviour and
+matches my current workflow with git-svn (except for the dcommits):
 
- builtin-for-each-ref.c |   10 ++++++----
- 1 files changed, 6 insertions(+), 4 deletions(-)
+git init
+echo Hi > file1; git add file1; git commit -m file1
+git checkout -b branch
+echo Hi > file2; git add file2; git commit -m file2
+git checkout master
+echo Hi > file3; git add file3; git commit -m file3
+git checkout branch
+git merge master
 
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index 0afa1c5..29f70aa 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -43,7 +43,7 @@ static struct {
- 	{ "objectsize", FIELD_ULONG },
- 	{ "objectname" },
- 	{ "tree" },
--	{ "parent" }, /* NEEDSWORK: how to address 2nd and later parents? */
-+	{ "parent" },
- 	{ "numparent", FIELD_ULONG },
- 	{ "object" },
- 	{ "type" },
-@@ -262,24 +262,26 @@ static void grab_commit_values(struct atom_value *val, int deref, struct object
- 		}
- 		if (!strcmp(name, "numparent")) {
- 			char *s = xmalloc(40);
-+			v->ul = num_parents(commit);
- 			sprintf(s, "%lu", v->ul);
- 			v->s = s;
--			v->ul = num_parents(commit);
- 		}
- 		else if (!strcmp(name, "parent")) {
- 			int num = num_parents(commit);
- 			int i;
- 			struct commit_list *parents;
--			char *s = xmalloc(42 * num);
-+			char *s = xmalloc(41 * num + 1);
- 			v->s = s;
- 			for (i = 0, parents = commit->parents;
- 			     parents;
--			     parents = parents->next, i = i + 42) {
-+			     parents = parents->next, i = i + 41) {
- 				struct commit *parent = parents->item;
- 				strcpy(s+i, sha1_to_hex(parent->object.sha1));
- 				if (parents->next)
- 					s[i+40] = ' ';
- 			}
-+			if (!i)
-+				*s = '\0';
- 		}
- 	}
- }
--- 
-1.5.3.3.1144.gf10f2
+# Then I'd normally do the following which causes a fast forward
+#git checkout master
+#git merge branch
+
+# Now I tried this, which also results in a fast-forward:
+git checkout -b merge
+git reset --hard master
+git merge branch
+
+
+Anything I'm missing?
+
+Thanks,
+Bj=F6rn
