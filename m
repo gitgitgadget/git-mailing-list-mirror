@@ -1,95 +1,65 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
+From: Jeff King <peff@peff.net>
 Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 2 Oct 2007 13:00:01 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710021212310.9321@iabervon.org>
-References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
- <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
- <7v3awunjup.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 2 Oct 2007 13:39:41 -0400
+Message-ID: <20071002173941.GA7187@coredump.intra.peff.net>
+References: <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org> <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net> <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net> <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz> <20071002161114.GC6828@coredump.intra.peff.net> <86ve9p32cp.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 02 19:00:31 2007
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Oct 02 19:40:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icl6T-0003uR-RW
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 19:00:14 +0200
+	id 1IcljB-0005OD-Lj
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 19:40:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752517AbXJBRAF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 13:00:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753037AbXJBRAF
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 13:00:05 -0400
-Received: from iabervon.org ([66.92.72.58]:51973 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752557AbXJBRAE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 13:00:04 -0400
-Received: (qmail 9735 invoked by uid 1000); 2 Oct 2007 17:00:01 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 2 Oct 2007 17:00:01 -0000
-In-Reply-To: <7v3awunjup.fsf@gitster.siamese.dyndns.org>
+	id S1753198AbXJBRjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 13:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753448AbXJBRjp
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 13:39:45 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4584 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753016AbXJBRjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 13:39:44 -0400
+Received: (qmail 29910 invoked by uid 111); 2 Oct 2007 17:39:42 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 02 Oct 2007 13:39:42 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 02 Oct 2007 13:39:41 -0400
+Content-Disposition: inline
+In-Reply-To: <86ve9p32cp.fsf@lola.quinscape.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59700>
 
-On Mon, 1 Oct 2007, Junio C Hamano wrote:
+On Tue, Oct 02, 2007 at 06:31:18PM +0200, David Kastrup wrote:
 
-> * db/fetch-pack (Mon Oct 1 00:59:39 2007 +0100) 49 commits
->  + fetch/push: readd rsync support
->  + Introduce remove_dir_recursively()
->  + bundle transport: fix an alloc_ref() call
->  + Allow abbreviations in the first refspec to be merged
->  + Prevent send-pack from segfaulting when a branch doesn't match
->  + Cleanup unnecessary break in remote.c
->  ...
-> 
-> Has been cooking for quite long time.
-> 
-> There was a regression that made me quite unhappy about the
-> rewrite, but Daniel fixed it, so I should be happy.  There is
-> another usability regression: http transport is now totally
-> silent.
+> This does not actually require an actual merge _sort_ AFAICS: do the
+> "sort file.hashed" step using qsort.  The comparison step does not
+> actually need to produce merged output, but merely advances through
+> two hash arrays and generates statistics.
 
-I think this is due to passing through equal verbosity levels, when the 
-non-verbose case for the native protocols was a lot less silent than the 
-non-verbose case for http. "git fetch -v -v" does show everything. I think 
-just replacing "transport->verbose" with "1" on line 347 of transport.c 
-would give the old default behavior, but fetch probably needs a more quiet 
-setting than the default, as well as the current more verbose than 
-default. I'll put together a patch for this when I get a chance.
+Right, that's why I used "merge" in quotes. The sort used in the O(n)
+step is irrelevant, but we are doing a merge-sort-like behavior in the
+second step (except instead of actually merging into a new list, we are
+summarizing the comparisons in a numeric "difference" variable). But I
+think we are on the same page.
 
-> Even when you fetch daily, if the other end frequently
-> repacks everything into one big ball of wax like repo.or.cz
-> does, you will end up transferring quite a large pack every
-> time, and the total lack of progress report is unacceptably
-> unnerving.  At least we should reinstate "Fetching blah from URL
-> using http", and preferrably "walk $object_name" lines.  The
-> latter could be replaced with just series of CR + "walked N
-> commits..." if we do not like many output from the current "walk
-> $object_name" lines scrolling the other information away.
+> This should already beat the pants off the current implementation,
+> even when the hash array is sparse, simply because our inner loop then
+> has perfect hash coherence.
 
-The right thing for now is probably to match the old git-fetch's behavior, 
-once I can remember what it is. (I've been using my C version for my 
-personal use long enough that I can't remember everything the shell 
-version did. My new version should be sufficiently flexible to accomodate 
-most things without too much trouble, but I've lost my ability to notice 
-differences without prompting.)
+Yes, I hope so. We'll see. :)
 
-After the implementation change is in, we can look at improving 
-user-visible things. I think a display like the "counting objects" display 
-(number that counts up in place), plus progress bars for big downloads, would 
-be ideal.
+> Getting rid of this outer O(n^2) remains an interesting challenge,
+> though.  One way would be the following: fill a _single_ array with
+> entries containing _both_ hash and file number.  Sort this, and then
+> gather the statistics of hash runs by making a single pass through.
+> That reduces the O(n^2) behavior to only those parts with actual hash
+> collisions.
 
-> I am not sure the quality of "rsync" transport near the tip,
-> either, but at least the change should not affect other
-> transports.  Nobody should using about rsync transport these
-> days anyway.  Perhaps we should put a deprecation notice in the
-> release notes to 1.5.4, and remove it three months later.
+Interesting. Care to take a stab at implementing it?
 
-I think that rsync should be kept until we've got sftp in place, which 
-should cover the same cases and be better overall. 
-
-	-Daniel
-*This .sig left intentionally blank*
+-Peff
