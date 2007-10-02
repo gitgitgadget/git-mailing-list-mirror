@@ -1,98 +1,90 @@
-From: Barry Fishman <barry_fishman@acm.org>
-Subject: Re: Problems setting up bare repository (git 1.5.3.3)
-Date: Tue, 02 Oct 2007 15:54:53 -0400
-Message-ID: <m37im5qoky.fsf@barry_fishman.acm.org>
-References: <m3fy0u7bk3.fsf@barry_fishman.acm.org>
-	<7vejgeqxd1.fsf@gitster.siamese.dyndns.org>
-	<87bqbisae6.wl%cworth@cworth.org>
-	<Pine.LNX.4.64.0710021045430.28395@racer.site>
-	<m34ph9tye1.fsf@barry_fishman.acm.org>
-	<Pine.LNX.4.64.0710021834470.28395@racer.site>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: metastore (was: Track /etc directory using Git)
+Date: Tue, 2 Oct 2007 17:02:48 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710021642090.9321@iabervon.org>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net>
+ <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net>
+ <20071002195816.GA6759@hardeman.nu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 02 23:02:51 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-2100497631-1191358968=:9321"
+Cc: martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>
+To: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>
+X-From: git-owner@vger.kernel.org Tue Oct 02 23:03:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icot0-0005AT-GM
-	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:02:34 +0200
+	id 1IcotO-0005Jg-C1
+	for gcvg-git-2@gmane.org; Tue, 02 Oct 2007 23:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964AbXJBVC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 17:02:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753989AbXJBVC0
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:02:26 -0400
-Received: from main.gmane.org ([80.91.229.2]:57774 "EHLO ciao.gmane.org"
+	id S1754259AbXJBVCu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 17:02:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754248AbXJBVCu
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 17:02:50 -0400
+Received: from iabervon.org ([66.92.72.58]:41694 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753964AbXJBVCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 17:02:25 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IcoKN-0000GH-1T
-	for git@vger.kernel.org; Tue, 02 Oct 2007 20:26:47 +0000
-Received: from fl-71-0-147-208.dhcp.embarqhsd.net ([71.0.147.208])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 20:26:47 +0000
-Received: from barry_fishman by fl-71-0-147-208.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 20:26:47 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: fl-71-0-147-208.dhcp.embarqhsd.net
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:VJDhQM3eXys3lekW5lp+CrmylZs=
+	id S1754097AbXJBVCt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 17:02:49 -0400
+Received: (qmail 16042 invoked by uid 1000); 2 Oct 2007 21:02:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 2 Oct 2007 21:02:48 -0000
+In-Reply-To: <20071002195816.GA6759@hardeman.nu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59736>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Tue, 2 Oct 2007, Barry Fishman wrote:
->
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > Well, if the OP had used "git push <bla> master" instead of "... 
->> > master:master", it would have worked.  I am unaware of any tutorial 
->> > that suggests the latter, only of tutorials that suggest the former.
->> 
->> I did recheck the tutorials, and did not find the code I was
->> using.  So there was nothing incorrect in the documentation.
->
-> Good.  Just for my curiousity: where in the documentation did you look for 
-> help?  (We might want to advertise "git push <nick> <branch>" more loudly 
-> there.)
+--1547844168-2100497631-1191358968=:9321
+Content-Type: TEXT/PLAIN; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-I'm not sure, but I think I got the idea from:
-  http://www.kernel.org/pub/software/scm/git/docs/cvs-migration.html
-which does a fetch while in the bare repository rather than a push into
-it:
+On Tue, 2 Oct 2007, David H=E4rdeman wrote:
 
-  $ mkdir /pub/my-repo.git
-  $ cd /pub/my-repo.git
-  $ git --bare init --shared
-  $ git --bare fetch /home/alice/myproject master:master
+> On Tue, Oct 02, 2007 at 08:53:01PM +0100, martin f krafft wrote:
+> >also sprach David H=E4rdeman <david@hardeman.nu> [2007.09.19.2016 +0100]=
+:
+> > > But I agree, if any changes were made to git, I'd advocate adding
+> > > arbitrary attributes to files (much like xattrs) in name=3Dvalue
+> > > pairs, then any extended metadata could be stored in those
+> > > attributes and external scripts/tools could use them in some way
+> > > that makes sense...and also make sure to only update them when it
+> > > makes sense.
+> >
+> >So where would those metdata be stored in your opinion?
+>=20
+> I'm not sufficiently versed in the internals of git to have an informed
+> opinion :)
 
-That series of commands works.
+My theory was that we would provide an API for getting the "current state"=
+=20
+listing with all of the filenames and matching contents, and leave it up=20
+to metastore to put things in the filesystem; in the other direction,=20
+metastore would build up this state, and we'd store it.
 
->> If there isn't an initial master branch, then shouldn't "git branch" be
->> able to create one.
->
-> Why?  I really do not see the point in creating a branch which is named 
-> different than "master", when you have nothing to begin with.
+People who are using this in practice would set a config option to=20
+delegate the "working tree" filesystem I/O to metastore, while other=20
+people could interact with the state as files describing the state, and=20
+could therefore specify operations that are impossible or prohibited on=20
+the filesystems that their development is done on.
 
-You are right, of course.  I was just following a line of thought, not
-implying that creating such a branch was ever reasonable to do.
+(This would effectively be like giving people a convenient way of setting=
+=20
+attributes on entries in a tar file, such that they can edit it to=20
+represent a stste that they can't necessarily create in their own=20
+filesystems, and version controlling that; but more convenient, since the=
+=20
+file contents are represented as file contents and the attributes are=20
+plain text in a listing of some sort)
 
->>   This command creates an empty git repository - basically a .git directory
->>   with subdirectories for objects, refs/heads, refs/tags, and template
->>   files. An initial HEAD file references the refs/heads/master branch
->>   which is created with the first commit.
->
-> How about "Your first commit will create the master branch" instead of the 
-> last sentence?
-
-Yes.  Less wobbly than how I worded it.
-
--- 
-Barry Fishman
+=09-Daniel
+*This .sig left intentionally blank*
+--1547844168-2100497631-1191358968=:9321--
