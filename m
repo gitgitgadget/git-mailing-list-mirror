@@ -1,107 +1,118 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 03 Oct 2007 11:03:32 +0200
-Message-ID: <20071003090332.GC12042@artemis.corp>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: merging .gitignore
+Date: Wed, 03 Oct 2007 11:28:56 +0200
+Message-ID: <200710031128.56472.johan@herland.net>
+References: <20071001130314.GA5932@lapse.madduck.net>
+ <20071002195148.GA14171@lapse.madduck.net>
+ <200710030923.22767.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="B4IIlcmfBL/1gGOG";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 11:03:50 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7BIT
+Cc: Andy Parkins <andyparkins@gmail.com>,
+	martin f krafft <madduck@madduck.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 11:29:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id08t-0005ZN-6X
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 11:03:43 +0200
+	id 1Id0XY-000591-Qw
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 11:29:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852AbXJCJDf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 05:03:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753182AbXJCJDf
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 05:03:35 -0400
-Received: from pan.madism.org ([88.191.52.104]:37588 "EHLO hermes.madism.org"
+	id S1753177AbXJCJ3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 05:29:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbXJCJ3E
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 05:29:04 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:34159 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751123AbXJCJDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 05:03:34 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 1833D2322F;
-	Wed,  3 Oct 2007 11:03:33 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id B3CD9342E30; Wed,  3 Oct 2007 11:03:32 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Miles Bader <miles@gnu.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <buobqbgmv6z.fsf@dhapc248.dev.necel.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753047AbXJCJ3C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 05:29:02 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JPB00M03X0CL800@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 11:29:00 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPB00JMQX09VV00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 11:28:57 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPB00G7YX08VHD0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 03 Oct 2007 11:28:56 +0200 (CEST)
+In-reply-to: <200710030923.22767.andyparkins@gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59815>
+
+On Wednesday 03 October 2007, Andy Parkins wrote:
+> I am still having difficult seeing why you want to hide conflicts 
+> in .gitignore.  It's just as possible to get and resolve conflicts in 
+> gitignore as in any other file.
+
+Agreed. What about the following:
+
+- No special merge rules for .gitignore
+
+- Teach the .gitignore parser to ignore conflict markers (i.e. regard them 
+as comments)
 
 
---B4IIlcmfBL/1gGOG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This way, the user will have to merge .gitignore like any other file, but if 
+for some reason, the user is not able to do so (say, git needs to 
+consult .gitignore before the user has had a chance to resolve the 
+conflict), the fallback result will be similar to a union merge, which 
+shouldn't be extremely harmful in .gitignore's case.
 
-On Wed, Oct 03, 2007 at 08:57:56AM +0000, Miles Bader wrote:
-> Pierre Habouzit <madcoder@debian.org> writes:
-> >   There definitely is a point: with the current behaviour you sometimes
-> > end up pushing more than what you meant, with sometimes WIP that you
-> > intend to rebase, and it hurts. Git porcelains should help you avoid to
-> > shoot yourself in the foot, hence I think that (especially to git
-> > newcomers), the current default _is_ dangerous.
->=20
-> What's "dangerous" for newbies, often ends up being what doesn't
-> correspond with their mental model.  I think the current default
-> behavior without any <refspec> specified corresponds well to the
-> operation of many other git commands (and unix command) in similar
-> circumstances:  If you don't specify something to operate on, it
-> essentially uses a wild card and operates on "every reasonable thing"
-> (e.g., consider "git commit FILE" versus "git commit").
+I do not think we really want to create an auto-merge algorithm 
+for .gitignore, and then depend on this auto-merge algorithm to _always_ 
+succeed with the _correct_ result and _no_ conflicts. These algorithms tend 
+to be extremely tricky to get right, especially for the "always correct" 
+requirement.
 
-  Git commit is hardly a wildcard as it only operates on what you put in
-your index, which is hardly something that happens behind your back.
+<rant>
+Mercurial had a similar problem some months ago. They have their tag 
+definitions stored in a versioned file in the working tree (.hgtags IIRC). 
+But the repo tag state (i.e. Mercurial's opinion at any time as to _which_ 
+tags are defined and _where_ they point) is not deduced from the copy in 
+your current working tree at all. (That would of course limit you to only 
+ba able to refer to tags defined earlier on the particular branch you're 
+currently on.) Instead the repo tag state was found by consulting 
+the "head-most" copy of the .hgtags file (for some definition 
+of "head-most" including non-obvious things like which branch has the most 
+recent commit, etc). The end result was that you could get some _really_ 
+interesting behaviour depending on the order in which you commited totally 
+unrelated changes to two different branches which happened to have 
+different .hgtags files. (E.g.: Given two branches A, B, and  - in .hgtags 
+on branch A - tag Foo is defined to point at rev X, and - in .hgtags on 
+branch B - Foo points at rev Y. Now, whether you got rev X or rev Y when 
+you checked out Foo, depended on which of branch A or branch B had the most 
+recent (totally unrelated, i.e. not even touching .hgtags) commit.)
 
-> To the extent that a command _is_ "dangerous", there's always a tradeoff
-> between convenience and "danger".  Some systems (e.g. those aimed at
-> newbies) might have as a goal to do the absolute minimum with every
-> command and always, always, err on the side of safety.  I don't think git
-> is that system.
+I (and others) pointed out this bug on their ML, and instead of fixing the 
+braindeadness of allowing branched tag definitions in the repo in the first 
+place, they set about trying to create an auto-merge algorithm for deducing 
+the repo tag state from the various versions/branches of .hgtags found in 
+the repo. I didn't stick around for long enough to see how well this 
+auto-merge algorithm works (the misdesign of tags in Mercurial was one of 
+the reasons I started looking at git), but I would be surprised if 
+Mercurial today has a simple and straightforward way of deducing the repo 
+tag state that _always_ gives _correct_ (i.e. unsurprising) results, even 
+in the corner cases.
+</rant>
 
-  I beg to differ then. I believe that "git push" default behavior is
-wrong. I'm not really a newbie, and it often did not do what I meant. So
-it could also be that there isn't a sane default either. I just say the
-current one can lead to gross mistakes.
 
-  I know that some porcelains are risky: if you rebase "under" a point
-that was published you are shooting yourself in the foot e.g.. But
-git-rebase _is_ a command that rewrites history. You're warned from the
-first second you use it. But git-push is supposedly only a transport
-command, not something that messes with remotes history behind your
-back.
+Have fun! :)
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
 
---B4IIlcmfBL/1gGOG
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+...Johan
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHA1rkvGr7W6HudhwRAsy8AJ9+IZgtwC4MIsp9FLvg5UM2T7kcWwCfSTXm
-LOHVLmU1MAx9OaA7HallYSU=
-=I4wN
------END PGP SIGNATURE-----
-
---B4IIlcmfBL/1gGOG--
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
