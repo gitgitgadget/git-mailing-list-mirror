@@ -1,95 +1,102 @@
-From: Clark Williams <clark.williams@gmail.com>
-Subject: Problems using StGit and -rt kernel patchset
-Date: Wed, 03 Oct 2007 09:19:26 -0500
-Message-ID: <4703A4EE.3000002@gmail.com>
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Re: git-cvsserver commit trouble (unexpected end of file in client)
+Date: Wed, 3 Oct 2007 16:57:08 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200710031657.08622.wielemak@science.uva.nl>
+References: <200710031348.50800.wielemak@science.uva.nl> <200710031513.44446.wielemak@science.uva.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 16:20:12 2007
+X-From: git-owner@vger.kernel.org Wed Oct 03 17:03:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id551-0005aH-OH
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 16:20:04 +0200
+	id 1Id5kc-0007xM-Ng
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 17:03:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756700AbXJCOTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 10:19:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756902AbXJCOTg
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 10:19:36 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:10578 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756420AbXJCOTe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 10:19:34 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so131335ugc
-        for <git@vger.kernel.org>; Wed, 03 Oct 2007 07:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:content-type:content-transfer-encoding;
-        bh=27GLSXbnBaYqrKqJY94ZW1d5QmfTZ2Fr68lp/zCjjxo=;
-        b=W1ZuUGTW8UoEB4YL/LISfu/ajw1bEvoa9dZECy2fjdSNmojj0mZYkuAFsG35nHXj5IBqqaryF9acbcu4HOvUu13qEtOtTPcLMF/ZRPHO9hKj/df1O3X4bHJnGyfGV18F5FuL+prZgo7iK14UctUNApAGAVnd97O7SzOG6agtJ64=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:user-agent:mime-version:to:subject:x-enigmail-version:content-type:content-transfer-encoding;
-        b=L9Mp2jzCEVm09VgLdUuXi8SvsJZPVGoxPg823P7eTQ8lrAOjRsplFuR0jI2T0/D+S0l1/mI1prsbq4avJHcpnWkY69jv7BlX1FdU5Uoytbus0sk9mfF4LRSRvsFo/sk8S8mtEBaHFaELm8zArA1RNs2RNIuSChzDuBW19UxY8gM=
-Received: by 10.66.221.5 with SMTP id t5mr554891ugg.1191421172832;
-        Wed, 03 Oct 2007 07:19:32 -0700 (PDT)
-Received: from ?192.168.2.218? ( [72.146.36.176])
-        by mx.google.com with ESMTPS id j4sm1573588ugf.2007.10.03.07.19.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Oct 2007 07:19:31 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070911)
-X-Enigmail-Version: 0.95.3
+	id S1754236AbXJCPCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 11:02:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbXJCPCw
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 11:02:52 -0400
+Received: from imap.science.uva.nl ([146.50.4.51]:47389 "EHLO
+	imap.science.uva.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751951AbXJCPCv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 11:02:51 -0400
+Received: from gollem.science.uva.nl [146.50.26.20]
+          by imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38).
+          id l93F2na8001146; Wed, 3 Oct 2007 17:02:49 +0200
+X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
+X-URL: http://www.science.uva.nl/
+User-Agent: KMail/1.9.5
+In-Reply-To: <200710031513.44446.wielemak@science.uva.nl>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59843>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+On Wednesday 03 October 2007 15:13, Jan Wielemaker wrote:
+> $ mkdir /pub/my-repo.git
+> $ cd /pub/my-repo.git
+> $ git --bare init --shared
+> $ git --bare fetch /home/alice/myproject master:master
+>
+> Checked out freshly using CVS. No problem. But committing a change,
+> nothing changed :-( The log output is exactly the same, showing only
+> refs/heads/master. I'm starting to suspect git-cvsserver afterall, but
+> the docs suggests it is operational for quite a while. Could someone
+> give me a clue on what am I missed?
 
-Hello all,
+More tests ...  As it didn't like the HEAD, and insisted it only knows
+about master, I though what happens on
 
-I've been working on the -rt patch series for the kernel and would like to to use
-StGit to manage the patches. Unfortunately I've had limited success, so I thought I'd
-ask the git/stgit community if what I'm doing is wrong.
+	cvs -d :ext:user@host:/git-repos.git co master
 
-I clone Linus's tree to a common directory, then clone it locally to work:
+<works fine>
+<edit>
+	cvs commit
+Commit failed (unknown reason)
 
-$ git clone -s -l /home/src/linux-2.6.git scratch.git
-$ cd scratch.git
-$ stg init
-$ stg branch --create rt-2.6.23-rc8-rt1 v2.6.23-rc8
-$ stg import --series --ignore --replace ../sources/patch-queue-2.6.23-rc8-rt1/series
-<fix the things quilt lets through and stg barfs on, like malformed email addresses>
-<watch 368 patches be applied and committed>
-<work work work>
-<get a new patch queue>
-$ (cd /home/src/linux-2.6.git && git pull)
-$ stg pull
-$ stg branch --create rt-2.6.23-rc8-rt1 v2.6.23-rc9
-$ stg import --series --ignore --replace ../sources/patch-queue-2.6.23-rc9-rt1/series
-Checking for changes in the working directory ... done
-stg import: env git-commit-tree 520b9d0db6a1142271a68b2b38cca002be40f6cb -p
-da0a81e98c06aa0d1e05b9012c2b2facb1807e12 failed (fatal:
-da0a81e98c06aa0d1e05b9012c2b2facb1807e12 is not a valid 'commit' object)
+:-(  Logfile says:
 
-At this point I'm clueless as to:
+================================================================
+2007-10-03 16:43:37 : INFO  - req_ci : [NULL]
+2007-10-03 16:43:37 : INFO  - Lockless commit start, basing commit 
+on '/tmp/VP2P
+VNHPs0/6t4xncbMoN', index file is '/tmp/VP2PVNHPs0/SO4A6pzpau'
+2007-10-03 16:43:37 : INFO  - Start git show-ref -s refs/heads/master
+2007-10-03 16:43:37 : INFO  - Heads: 0b7b372d525a4fe7f662996fec9cd11b1038a6be 
+re
+fs/heads/master
 
-1. What I've done wrong
-2. How to recover/debug this
+2007-10-03 16:43:37 : INFO  - parenthash = 
+0b7b372d525a4fe7f662996fec9cd11b1038a
+6be
 
-I really like using stgit to manage the patch queue with each patch as a commit, so
-I'd prefer to figure out how to either use stgit properly, or fix whatevers going wrong.
+2007-10-03 16:43:37 : INFO  - Created index '/tmp/VP2PVNHPs0/SO4A6pzpau' with 
+fo
+r head master - exit status 0
+2007-10-03 16:43:37 : INFO  - Committing collections-representation.txt
+2007-10-03 16:43:37 : DEBUG - rename /tmp/VP2PVNHPs0/0SfbkMq6AN 
+collections-repr
+esentation.txt
+2007-10-03 16:43:37 : DEBUG - chmod u+rw-x collections-representation.txt
+2007-10-03 16:43:37 : INFO  - Updating file 'collections-representation.txt'
+2007-10-03 16:43:37 : DEBUG - Treehash : 
+aba0f583177b3b7fca05935452de22612164a7f
+3, Parenthash : 0b7b372d525a4fe7f662996fec9cd11b1038a6be
+2007-10-03 16:43:37 : INFO  - Commit hash :
+2007-10-03 16:43:37 : WARN  - Commit failed (Invalid commit hash)
+================================================================
 
-Thanks,
-Clark
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org
+!? What happens?  Is git-cvsserver completely broken and should I thus
+forget about GIT for now (saying we cannot deal with cvs commit is
+politically unacceptable in this project)?  Any clue?
 
-iD8DBQFHA6TuqA4JVb61b9cRAl12AJ0V3SNg9hO4cnFhefRS/mWdGF696ACeNspM
-a+aLdBeFCHCPeyypUr6AwJQ=
-=Z2eU
------END PGP SIGNATURE-----
+	Please help
+
+		--- Jan
