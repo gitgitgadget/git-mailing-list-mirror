@@ -1,97 +1,100 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 03 Oct 2007 09:35:54 +0200
-Message-ID: <20071003073554.GA8110@artemis.corp>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Wed, 3 Oct 2007 08:37:23 +0100
+Message-ID: <200710030837.25689.andyparkins@gmail.com>
+References: <20071002155800.GA6828@coredump.intra.peff.net> <7vsl4tjo28.fsf@gitster.siamese.dyndns.org> <20071002204848.GA8284@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="OXfL5xGRrasGEqWY";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 09:36:51 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 09:37:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icymn-0001Ye-K9
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:36:50 +0200
+	id 1Icyng-0001ny-9q
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:37:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752024AbXJCHgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 03:36:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbXJCHgE
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:36:04 -0400
-Received: from pan.madism.org ([88.191.52.104]:44466 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751782AbXJCHgB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 03:36:01 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 18F8522E60;
-	Wed,  3 Oct 2007 09:35:54 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 426FA359B4D; Wed,  3 Oct 2007 09:35:54 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Miles Bader <miles@gnu.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
+	id S1752018AbXJCHhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 03:37:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbXJCHhc
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:37:32 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:61134 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628AbXJCHhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 03:37:31 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so71463ugc
+        for <git@vger.kernel.org>; Wed, 03 Oct 2007 00:37:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=q7FNE/xsymUtXkq1wd/k5e0qTBHBqm0KFK65a4JhRH0=;
+        b=FyG6+KgA4uH/o3neDWfW+9mKI9qVxtraWguCk6ZWsZrm3Wx04jfH8RP/asF4u8nLWMbErOGWY+UdMM36hmtppn3e80RRdEwp3ugOTqzP96hU4msAvvBEcxCQ7ymhp5HtlkVyPnxII14H1HpQA0WtZVL8w0cZQuMrNBopkzgTJG0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=TbCKqgrOpMPL0oyOJfZAqpfSOJXmGjMhBhXK09D1rF92b1cNSzgexcaBvpIpl1Zp1u3i1RxxVUiIqXhEHW9SMk/uXXbmbSO66gK4/VGOWViwDHGoVjzXYkUDiRix+CqIKb8zx7vhXQoGd+k41UIoedqiLfZq2or5pp2FlBcVgoY=
+Received: by 10.66.217.2 with SMTP id p2mr138644ugg.1191397049997;
+        Wed, 03 Oct 2007 00:37:29 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id b36sm102985ika.2007.10.03.00.37.28
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 03 Oct 2007 00:37:28 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20071002204848.GA8284@coredump.intra.peff.net>
 Content-Disposition: inline
-In-Reply-To: <buoprzwn5qm.fsf@dhapc248.dev.necel.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59801>
+
+On Tuesday 2007 October 02, Jeff King wrote:
+
+> Perhaps a better quest would be to eliminate all of those counts
+> entirely with code that is obviously correct. I think it is much more
+> readable to replace:
+
+I've got a patch replacing every appropriate memcmp() with prefixcmp(), but it 
+goes on top of this one, so wanted to get this through review to save 
+constantly spamming the list with the same patch slightly modified because of 
+changes in a different patch.
+
+>   url = xmalloc(strlen(repo->base) + 64);
+>   sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+>
+> with something like:
+>
+>   strbuf_init(&url);
+>   strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+
+I've not been following the strbuf() changes, so have missed the appearance of 
+these handy new functions.  They would appear to be an improvement for cases 
+just like this.
+
+> > constants in CAPITAL_LETTERS_WITH_UNDERSCORE shout too loudly to
+>
+> Part of the problem is also that they're long. Perhaps REFS_HEADS, while
+> being less unique in the C namespace, would look better?
+
+I completely agree with the length and loudness concerns, but my worry was 
+polluting the namespace while maintaining some sort of rationality between 
+PATH_REFS_HEADS and STRLEN_PATH_REFS_HEADS.  My reasoning was that
+
+ "refs/heads" -> PATH_REFS_HEADS
+
+is only three extra characters, and
+
+ strlen("refs/heads/") -> STRLEN_PATH_REFS_HEADS
+
+is only one extra character.
+
+However I have no strong feelings about changing them.
 
 
---OXfL5xGRrasGEqWY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 03, 2007 at 05:10:09AM +0000, Miles Bader wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > I think it is sensible to have an option to make it push only the
-> > current branch.  I am not sure if it is sensible to make that the
-> > default.
->=20
-> I really like the current default, it matches my mental model well:  I
-> generally use "push" to mean "synchronize the remote repository with my
-> current one"; if multiple branches have changed, I want those changes
-> propagated too.
-
-  I understand that =E2=80=A6 and I know some people rely on the current
-behavior=E2=80=A6
-
-> I think changing it would be a bad idea, it just seems a pointlessly
-> incompatible change.
-
-  There definitely is a point: with the current behaviour you sometimes
-end up pushing more than what you meant, with sometimes WIP that you
-intend to rebase, and it hurts. Git porcelains should help you avoid to
-shoot yourself in the foot, hence I think that (especially to git
-newcomers), the current default _is_ dangerous.
-
-  Though, OTOH, I believe that git push <remote> could keep the current
-behavior. I'm also okay with the fact that git push could be
-configurable in that regard.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---OXfL5xGRrasGEqWY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHA0ZavGr7W6HudhwRApcUAJ0VYeoDjYKMfYByJsA+v9h2zD+6WQCgpDvf
-zmkF3HQzAEe8lTuCaYrhlpY=
-=qTNZ
------END PGP SIGNATURE-----
-
---OXfL5xGRrasGEqWY--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
