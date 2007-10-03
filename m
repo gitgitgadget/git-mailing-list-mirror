@@ -1,79 +1,63 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: [PATCH] git-init: don't base core.filemode on the ability to chmod.
-Date: Thu, 4 Oct 2007 01:19:41 +0200
-Message-ID: <20071003231941.GA20800@admingilde.org>
-References: <20071003105501.GD7085@admingilde.org> <470388DC.4040504@viscovery.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Don't checkout the full tree if avoidable
+Date: Wed, 3 Oct 2007 16:26:11 -0700
+Message-ID: <20071003232611.GB14972@hand.yhbt.net>
+References: <1191000259190-git-send-email-stevenrwalter@gmail.com> <7vejgftgef.fsf@gitster.siamese.dyndns.org> <20071001110855.GB10079@muzzle> <20071001131227.GA24494@dervierte>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 04 01:19:52 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 01:26:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdDVO-0003Vp-Qb
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 01:19:51 +0200
+	id 1IdDbh-0005VO-MO
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 01:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836AbXJCXTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 19:19:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751842AbXJCXTn
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 19:19:43 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:44710 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748AbXJCXTm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 19:19:42 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.63 #1)
-	id 1IdDVF-0005T0-Bn
-	for git@vger.kernel.org; Thu, 04 Oct 2007 01:19:41 +0200
+	id S1752018AbXJCX0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 19:26:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751968AbXJCX0N
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 19:26:13 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:36332 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751922AbXJCX0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 19:26:13 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 5F9F37DC093;
+	Wed,  3 Oct 2007 16:26:12 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <470388DC.4040504@viscovery.net>
+In-Reply-To: <20071001131227.GA24494@dervierte>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59909>
 
-At least on Linux the vfat file system honors chmod calls but does not
-store them permanently (as there is no on-disk format for it).
-So the filemode test which tries to chmod a file thinks that the file system
-does support file modes which will result in problems later after the
-file system got remounted.
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> On Mon, Oct 01, 2007 at 04:08:55AM -0700, Eric Wong wrote:
+> > Steven Walter wrote:
+> > > One criticism of the patch: the trees_match function probably needs to
+> > > be re-written.  My SVN::Perl-foo is weak.
+> > 
+> > Yep :)
+> > 
+> > Steven:
+> > 
+> > How does the following work for you?  Which version of SVN do you have,
+> > by the way?  I just found a bug with the way SVN::Client::diff() is
+> > exported for SVN 1.1.4, hence the SVN::Pool->new_default_sub usage.
+> 
+> swalter@sentra:~% svn --version
+> svn, version 1.3.2 (r19776)
+> 
+> This version works great; seems to have exactly the same behavior as my
+> patch.  Verified that it still falls back to the do_update code when
+> trees_match fails.
 
-Now we check both that new files are created without the executable bit
-and that we can actually modify it with chmod.
+Thanks Steven.
 
-Signed-off-by: Martin Waitz <tali@admingilde.org>
----  8<  ---
- builtin-init-db.c |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
-
-On Wed, Oct 03, 2007 at 02:19:40PM +0200, Johannes Sixt wrote:
-> On Windows, we don't get an executable bit at all. Better use both 
-> heuristics, i.e. set core.filemode false if either one diagnoses an 
-> unreliable x-bit.
-
-this should work better for Windows.
-Previously I sent it only to Johannes and forgot to Cc the list.
-
-
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 763fa55..1d92916 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -247,7 +247,10 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	filemode = TEST_FILEMODE;
- 	if (TEST_FILEMODE && !lstat(path, &st1)) {
- 		struct stat st2;
--		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
-+		/* test that new files are not created with X bit */
-+		filemode = !(st1.st_mode & S_IXUSR);
-+		/* test that we can modify the X bit */
-+		filemode &= (!chmod(path, st1.st_mode ^ S_IXUSR) &&
- 				!lstat(path, &st2) &&
- 				st1.st_mode != st2.st_mode);
- 	}
--- 
-1.5.3.3.8.g367dc7
+Junio: can you please apply my version of Steven's patch?  Thanks.
 
 -- 
-Martin Waitz
+Eric Wong
