@@ -1,65 +1,92 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: WIP: asciidoc replacement
-Date: Wed, 3 Oct 2007 12:05:29 +0200
-Message-ID: <1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site> <7vprzwhkgd.fsf@gitster.siamese.dyndns.org> <39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com> <85abr0y5ua.fsf@lola.goethe.zz>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
+Date: Wed, 03 Oct 2007 12:25:44 +0200
+Message-ID: <85k5q4v6jb.fsf@lola.goethe.zz>
+References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
+	<7vprzwhkgd.fsf@gitster.siamese.dyndns.org>
+	<39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com>
+	<85abr0y5ua.fsf@lola.goethe.zz>
+	<1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	git@vger.kernel.org, msysgit@googlegroups.com
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 12:06:17 2007
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 12:25:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id17B-0000SX-Ip
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:06:02 +0200
+	id 1Id1Q7-0006t3-5d
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:25:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753116AbXJCKFx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 06:05:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbXJCKFx
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:05:53 -0400
-Received: from wincent.com ([72.3.236.74]:46879 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752026AbXJCKFw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 06:05:52 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l93A5WHa014945;
-	Wed, 3 Oct 2007 05:05:32 -0500
-In-Reply-To: <85abr0y5ua.fsf@lola.goethe.zz>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752679AbXJCKZ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 06:25:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752672AbXJCKZ0
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:25:26 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:56898 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752656AbXJCKZZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 06:25:25 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1Id1P6-0005Tc-Kn; Wed, 03 Oct 2007 06:24:32 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 7114D1C4CE11; Wed,  3 Oct 2007 12:25:44 +0200 (CEST)
+In-Reply-To: <1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com> (Wincent Colaiuta's message of "Wed\, 3 Oct 2007 12\:05\:29 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59817>
 
-El 3/10/2007, a las 10:12, David Kastrup escribi=F3:
+Wincent Colaiuta <win@wincent.com> writes:
 
-> What with output in print, HTML, info?
+> El 3/10/2007, a las 10:12, David Kastrup escribi=F3:
+>
+>> What with output in print, HTML, info?
+>
+> Yes, that's still a problem...
+>
+>> Personally, I think it might make sense to just step away from the
+>> AsciiDoc documentation to Docbook: plain text (without cutified
+>> formatting control like in AsciiDoc) can be generated _from_ Docbook=
+=2E
+>
+> Yes, but editing DocBook (XML) is relatively painful compared to
+> editing plain text.
 
-Yes, that's still a problem...
+The problem is that we are not editing plain text, but Docbook source
+masquerading as plain text.
 
-> Personally, I think it might make sense to just step away from the
-> AsciiDoc documentation to Docbook: plain text (without cutified
-> formatting control like in AsciiDoc) can be generated _from_ Docbook.
+> You either have to rely on a bloated XML- validating editor or
+> instead ask your doc authors to manually write valid XML (and I
+> totally agree with Terrence Parr that, "XML makes a lousy human
+> interface "; see
+> <http://www.ibm.com/developerworks/xml/library/x-sbxml.html> for his
+> full take).
+>
+> I know that Linus has argued for AsciiDoc because the source *is*
+> the plain text documentation and is therefore easily readable, but
+> for me the real benefit lies in the fact that *because* the source
+> is plain text it is easily edited (ie. that the source is easily
+> *writeable*), and things like documentation patches are very neat
+> with AsciiDoc.
 
-Yes, but editing DocBook (XML) is relatively painful compared to =20
-editing plain text. You either have to rely on a bloated XML-=20
-validating editor or instead ask your doc authors to manually write =20
-valid XML (and I totally agree with Terrence Parr that, "XML makes a =20
-lousy human interface
-"; see <http://www.ibm.com/developerworks/xml/library/x-sbxml.html> =20
-for his full take).
+But it is not all _all_ easily writeable the moment you try to do
+something with _structural_ impact.  In fact, it is pretty much
+impossible for anybody except wizards to do that.  And when the
+wizards do it, they can't actually document what they have been doing
+since that would mean cluttering the purported "plain text
+documentation" with formatting comments.
 
-I know that Linus has argued for AsciiDoc because the source *is* the =20
-plain text documentation and is therefore easily readable, but for me =20
-the real benefit lies in the fact that *because* the source is plain =20
-text it is easily edited (ie. that the source is easily *writeable*), =20
-and things like documentation patches are very neat with AsciiDoc.
+Maybe it would help to rename *.txt to *.asciidoc and generate *.txt
+in future.  That would at least make it possible to document stuff in
+the AsciiDoc source, and also would make it possible to add indexing
+info and other stuff without cluttering up the plain text use case.
 
-Cheers,
-Wincent
+--=20
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
