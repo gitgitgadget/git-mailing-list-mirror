@@ -1,62 +1,80 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 3 Oct 2007 13:22:15 +0200
-Message-ID: <3F8729D3-CC5E-478A-80E0-C199C7A1770C@wincent.com>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com> <20071003104943.GA3017@diana.vm.bytemark.co.uk> <7v8x6kfobq.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
-	Miles Bader <miles@gnu.org>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 13:23:11 2007
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Change "refs/" references to symbolic constants
+Date: Wed, 03 Oct 2007 13:30:12 +0200
+Message-ID: <47037D44.8040404@op5.se>
+References: <20071002155800.GA6828@coredump.intra.peff.net> <200710021916.44388.andyparkins@gmail.com> <20071002191104.GA7901@coredump.intra.peff.net> <7vsl4tjo28.fsf@gitster.siamese.dyndns.org> <20071002204848.GA8284@coredump.intra.peff.net> <7vr6kdhwsg.fsf@gitster.siamese.dyndns.org> <20071003025853.GA11440@coredump.intra.peff.net> <Pine.LNX.4.64.0710030503520.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 03 13:40:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id2Jm-0001Je-Cp
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 13:23:06 +0200
+	id 1Id2aY-00078V-V9
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 13:40:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755778AbXJCLWd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 07:22:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755599AbXJCLWc
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 07:22:32 -0400
-Received: from wincent.com ([72.3.236.74]:47056 "EHLO s69819.wincent.com"
+	id S1755531AbXJCLkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 07:40:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755523AbXJCLkU
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 07:40:20 -0400
+Received: from mail.op5.se ([193.201.96.20]:33997 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755605AbXJCLWb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 07:22:31 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l93BMIgR016369;
-	Wed, 3 Oct 2007 06:22:19 -0500
-In-Reply-To: <7v8x6kfobq.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1755492AbXJCLkR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 07:40:17 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 054531946BB;
+	Wed,  3 Oct 2007 13:40:15 +0200 (CEST)
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ursdO7aSwCP1; Wed,  3 Oct 2007 13:40:14 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id C9B031946BA;
+	Wed,  3 Oct 2007 13:40:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0710030503520.28395@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59826>
 
-El 3/10/2007, a las 13:08, Junio C Hamano escribi=F3:
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Tue, 2 Oct 2007, Jeff King wrote:
+> 
+>> On Tue, Oct 02, 2007 at 05:22:23PM -0700, Junio C Hamano wrote:
+>>
+>>>>   strbuf_init(&url);
+>>>>   strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
+>>> Ugh, this typically calls snprintf() twice doesn't it?
+>> Yes, it probably does. However, I think it is considerably easier to
+>> read and more maintainable. Are you "ugh"ing because of the performance
+>> impact (which should be negligible unless this is in a tight loop) or
+>> because of the portability problems associated with va_copy?
+> 
+> I wonder, I wonder, if
+> 
+> 	strbuf_addstr(&url, repo->base);
+> 	strbuf_addstr(&url, "/objects/pack/pack-");
+> 	strbuf_addstr(&url, hex);
+> 	strbuf_addstr(&url, ".idx");
+> 
+> would make anybody else but me happy...
 
-> Also mistakes can cut both ways.  Pushing out what you did not
-> intend to is what you seem to be worried about more.  But not
-> pushing out enough and not noticing is an equally bad mistake.
+strbuf_addstr_many(&url, repo->base, "/objects/pack/pack-", hex, ".idx", NULL);
 
-I don't think they're of the same order. If you mistakenly push out =20
-too little you can easily correct it by pushing again. But what do =20
-you do if you push out too much? How do you fix that?
+is what I'd prefer. It's not overly complicated, requires no *printf(), and doesn't
+introduce any new portability issues (va_arg() is C89).
 
-> You, an expert, will get asked for help by somebody, walk up to
-> his shell prompt, and try to help and teach him by showing you
-> type, and then you suddenly notice the command does not work as
-> you expect because he set the default differently (because he
-> read that configuration option on some web parge).  And we will
-> be in such a cumbersome to diagnose situation _very_ often if we
-> have per-user default on many things.
-
-True, true.
-
-Cheers,
-Wincent
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
