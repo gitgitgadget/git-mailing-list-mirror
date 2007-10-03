@@ -1,80 +1,149 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Wed, 03 Oct 2007 13:30:12 +0200
-Message-ID: <47037D44.8040404@op5.se>
-References: <20071002155800.GA6828@coredump.intra.peff.net> <200710021916.44388.andyparkins@gmail.com> <20071002191104.GA7901@coredump.intra.peff.net> <7vsl4tjo28.fsf@gitster.siamese.dyndns.org> <20071002204848.GA8284@coredump.intra.peff.net> <7vr6kdhwsg.fsf@gitster.siamese.dyndns.org> <20071003025853.GA11440@coredump.intra.peff.net> <Pine.LNX.4.64.0710030503520.28395@racer.site>
+Subject: Re: git-svn merge helper
+Date: Wed, 03 Oct 2007 13:40:05 +0200
+Message-ID: <47037F95.2040605@op5.se>
+References: <20070930110550.GA4557@atjola.homenet> <1EF130A4-3CC7-4A42-9166-3539D9A38828@lrde.epita.fr> <20071001025059.GA29323@atjola.homenet> <0D8A7A3C-8F51-482D-9229-29ADC9585760@lrde.epita.fr> <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com> <20071002211400.GA992@atjola.homenet> <20071002220458.GA21038@dervierte> <20071002223813.GA3152@atjola.homenet> <20071003004252.GA28495@dervierte> <20071003010233.GA8610@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 13:40:30 2007
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 03 13:40:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id2aY-00078V-V9
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 13:40:27 +0200
+	id 1Id2aY-00078V-7n
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 13:40:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755531AbXJCLkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 07:40:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755523AbXJCLkU
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 07:40:20 -0400
-Received: from mail.op5.se ([193.201.96.20]:33997 "EHLO mail.op5.se"
+	id S1755392AbXJCLkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 07:40:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754749AbXJCLkQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 07:40:16 -0400
+Received: from mail.op5.se ([193.201.96.20]:33981 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755492AbXJCLkR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 07:40:17 -0400
+	id S1754190AbXJCLkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 07:40:14 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 054531946BB;
-	Wed,  3 Oct 2007 13:40:15 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 6519D1946BC;
+	Wed,  3 Oct 2007 13:40:12 +0200 (CEST)
 X-Spam-Score: -4.399
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
 	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ursdO7aSwCP1; Wed,  3 Oct 2007 13:40:14 +0200 (CEST)
+	with ESMTP id YBW50bNZgkah; Wed,  3 Oct 2007 13:40:09 +0200 (CEST)
 Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id C9B031946BA;
-	Wed,  3 Oct 2007 13:40:13 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id C838B1946BB;
+	Wed,  3 Oct 2007 13:40:08 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0710030503520.28395@racer.site>
+In-Reply-To: <20071003010233.GA8610@atjola.homenet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59827>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Tue, 2 Oct 2007, Jeff King wrote:
-> 
->> On Tue, Oct 02, 2007 at 05:22:23PM -0700, Junio C Hamano wrote:
->>
->>>>   strbuf_init(&url);
->>>>   strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
->>> Ugh, this typically calls snprintf() twice doesn't it?
->> Yes, it probably does. However, I think it is considerably easier to
->> read and more maintainable. Are you "ugh"ing because of the performance
->> impact (which should be negligible unless this is in a tight loop) or
->> because of the portability problems associated with va_copy?
-> 
-> I wonder, I wonder, if
-> 
-> 	strbuf_addstr(&url, repo->base);
-> 	strbuf_addstr(&url, "/objects/pack/pack-");
-> 	strbuf_addstr(&url, hex);
-> 	strbuf_addstr(&url, ".idx");
-> 
-> would make anybody else but me happy...
+Bj=F6rn Steinbrink wrote:
+> On 2007.10.02 20:42:52 -0400, Steven Walter wrote:
+>> On Wed, Oct 03, 2007 at 12:38:13AM +0200, Bj=F6rn Steinbrink wrote:
+>>>> The other option is to have a "build" branch.  By example:
+>>>>
+>>>> git checkout build
+>>>> git reset --hard master
+>>>> git merge mybranch
+>>>> make
+>>>>
+>>>> In that way, I have branch with the latest changes from head and t=
+he
+>>>> changes from mybranch together.  The downside to this method is th=
+at you
+>>>> may have to repeated resolve merges.  Despite the downsides, I fin=
+d
+>>>> these two methods to work quite well.
+>>> Thanks, but it makes no difference here, it stil results in a fast
+>>> forward. This is a small test case which exhibits the behaviour and
+>>> matches my current workflow with git-svn (except for the dcommits):
+>>>
+>>> git init
+>>> echo Hi > file1; git add file1; git commit -m file1
+>>> git checkout -b branch
+>>> echo Hi > file2; git add file2; git commit -m file2
+>>> git checkout master
+>>> echo Hi > file3; git add file3; git commit -m file3
+>>> git checkout branch
+>>> git merge master
+>>>
+>>> # Then I'd normally do the following which causes a fast forward
+>>> #git checkout master
+>>> #git merge branch
+>>>
+>>> # Now I tried this, which also results in a fast-forward:
+>>> git checkout -b merge
+>>> git reset --hard master
+>>> git merge branch
+>> I believe you misunderstood my suggestion.  In using a "build" branc=
+h,
+>> you would not merge master into branch, as you did above.  Instead, =
+you
+>> would create a third, unpublished branch to hold the merge.
+>=20
+> Almost though so.
+>=20
+>> At the same time, I have a slightly better understanding of what it =
+is
+>> you're trying to do.  If you are trying to keep up an SVN-like workf=
+low
+>> (namely pulling changes from trunk into a branch from time to time),
+>> then my solution probably isn't suitable for you.  However, you migh=
+t
+>> consider why you actually /need/ to do that, outside of SVN conventi=
+on.
+>=20
+> Due to the same reason for which the branch needs to be public at all=
+,
+> there are other people who want to follow it and test it, while there
+> are external dependencies that currently change quite often. So I nee=
+d
+> to get the relevant changes from trunk into my branch anyway, even wi=
+th
+> svn conventions put aside (well, unless I force everyone else to merg=
+e
+> over and over again). And as sometimes others commit to that branch, =
+too
+> (you just have to love that), keeping a separate branch for the final
+> merge isn't so nice either, as I'd need to constantly cherry-pick tho=
+se
+> changes then and probably get even more conflicts along the way.
+>=20
+> That said, Google finally liked some of the search terms that I threw=
+ at
+> it and revealed a thread [1] from march, where Linus was torn on whet=
+her
+> or not a --no-fast-forward option should be introduced. That sounds l=
+ike
+> it would help here, any chance of getting such a thing?
+>=20
 
-strbuf_addstr_many(&url, repo->base, "/objects/pack/pack-", hex, ".idx", NULL);
+Is this what you're looking for? It's in the 'next' branch in git.git.
 
-is what I'd prefer. It's not overly complicated, requires no *printf(), and doesn't
-introduce any new portability issues (va_arg() is C89).
+commit d66424c4ac661c69640765260235452499d80378
+Author: Lars Hjemli <hjemli@gmail.com>
+Date:   Mon Sep 24 00:51:45 2007 +0200
 
--- 
+    git-merge: add --ff and --no-ff options
+   =20
+    These new options can be used to control the policy for fast-forwar=
+d
+    merges: --ff allows it (this is the default) while --no-ff will cre=
+ate
+    a merge commit.
+   =20
+    Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+--=20
 Andreas Ericsson                   andreas.ericsson@op5.se
 OP5 AB                             www.op5.se
 Tel: +46 8-230225                  Fax: +46 8-230231
