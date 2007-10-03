@@ -1,78 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 03 Oct 2007 10:20:49 +0200
-Message-ID: <85641oy5ge.fsf@lola.goethe.zz>
-References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
-	<7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
-	<7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
-	<20070927023633.GA28902@coredump.intra.peff.net>
-	<20071002041652.GA32133@coredump.intra.peff.net>
-	<7vsl4up0tf.fsf@gitster.siamese.dyndns.org>
-	<20071002050820.GA4261@coredump.intra.peff.net>
-	<20071002051332.GA4462@coredump.intra.peff.net>
-	<86ejge6o8b.fsf@lola.quinscape.zz>
-	<20071002161114.GC6828@coredump.intra.peff.net>
-	<86ve9p32cp.fsf@lola.quinscape.zz>
-	<alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
+From: martin f krafft <madduck@debian.org>
+Subject: Re: merging .gitignore
+Date: Wed, 3 Oct 2007 09:42:59 +0100
+Organization: The Debian project
+Message-ID: <20071003084259.GA25838@lapse.madduck.net>
+References: <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp> <20071002205618.GA19097@lapse.madduck.net> <20071002210748.GC19710@artemis.corp> <20071002214919.GA21260@lapse.madduck.net> <20071002220749.GE19710@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 10:42:03 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="bg08WKrSYDhXBjb5"
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 10:42:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icznk-000630-Kl
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:41:53 +0200
+	id 1Iczo4-0006C5-Gf
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936AbXJCIlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 04:41:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbXJCIlo
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:41:44 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:37891 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752936AbXJCIlm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 04:41:42 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Iczmi-0004YF-5d; Wed, 03 Oct 2007 04:40:48 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B88381C4CE13; Wed,  3 Oct 2007 10:20:49 +0200 (CEST)
-In-Reply-To: <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org> (Linus Torvalds's message of "Tue\, 2 Oct 2007 19\:28\:19 -0700 \(PDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1753915AbXJCImB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 04:42:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbXJCImB
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:42:01 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:42960 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753271AbXJCImA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 04:42:00 -0400
+Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 7BF47BF42;
+	Wed,  3 Oct 2007 10:41:46 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 07C3D3FDED; Wed,  3 Oct 2007 09:42:59 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <20071002220749.GE19710@artemis.corp>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4460/Wed Oct  3 08:57:50 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59810>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> [ This is the discussed stupid approach - just sort the dang hash array, 
->   so that we can use a linear scan over the src/dst ]
->
-> On Tue, 2 Oct 2007, David Kastrup wrote:
->> 
->> This does not actually require an actual merge _sort_ AFAICS: do the
->> "sort file.hashed" step using qsort.  The comparison step does not
->> actually need to produce merged output, but merely advances through
->> two hash arrays and generates statistics.
->> 
->> This should already beat the pants off the current implementation,
->> even when the hash array is sparse, simply because our inner loop then
->> has perfect hash coherence.
->
-> Sadly, that's not the case. It *does* seem to beat the current 
-> implementation, but it's not "beat the pants off".
+--bg08WKrSYDhXBjb5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Part of the reason is that it is not actually what I had in mind.  Why
-create the hash array as a hash array?  Filling the hash array in
-basically random order, then sort+compressing it is what is causing
-much of the costs.  My idea was to just fill the "hash array"
-linearly.  It is quite pointless (and certainly very inefficient with
-regard to cache poisoning) to do it in hash order when we are going to
-sort it anyway.
+also sprach Pierre Habouzit <madcoder@debian.org> [2007.10.02.2307 +0100]:
+>      (a*)
+>     /    \
+>    v      v
+> (ab*)    (ac*)
+>     \    /
+>      v  v
+>      ????
+>=20
+>   This is a perfectly sensible history. Or I miss sth on your end.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+So these are revs, not branches?
+
+--=20
+ .''`.   martin f. krafft <madduck@debian.org>
+: :'  :  proud Debian developer, author, administrator, and user
+`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
+  `-  Debian - when you have better things to do than fixing systems
+=20
+seen on an advertising for an elaborate swiss men's watch:
+  "almost as complicated as a woman. except it's on time"
+
+--bg08WKrSYDhXBjb5
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHA1YTIgvIgzMMSnURAqjBAJ9C1uTKNRe0Y9tSDGtLI42Lg7ujjACgyKEv
+1vsHa4n4ZIRjcnFyVUSXlOo=
+=dbvk
+-----END PGP SIGNATURE-----
+
+--bg08WKrSYDhXBjb5--
