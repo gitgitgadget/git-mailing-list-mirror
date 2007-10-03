@@ -1,70 +1,52 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Wed, 3 Oct 2007 05:05:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710030503520.28395@racer.site>
-References: <20071002155800.GA6828@coredump.intra.peff.net>
- <200710021916.44388.andyparkins@gmail.com> <20071002191104.GA7901@coredump.intra.peff.net>
- <7vsl4tjo28.fsf@gitster.siamese.dyndns.org> <20071002204848.GA8284@coredump.intra.peff.net>
- <7vr6kdhwsg.fsf@gitster.siamese.dyndns.org> <20071003025853.GA11440@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] diffcore-rename: cache file deltas
+Date: Tue, 02 Oct 2007 21:10:04 -0700
+Message-ID: <7vbqbgj0tf.fsf@gitster.siamese.dyndns.org>
+References: <20070925192941.GA8564@coredump.intra.peff.net>
+	<7vy7eu4eos.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0710021832520.3579@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 03 06:06:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 06:10:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcvVQ-0004Xi-NH
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 06:06:41 +0200
+	id 1IcvZP-0005Gp-6B
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 06:10:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750973AbXJCEGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 00:06:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750891AbXJCEGd
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 00:06:33 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59659 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750695AbXJCEGc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 00:06:32 -0400
-Received: (qmail invoked by alias); 03 Oct 2007 04:06:30 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 03 Oct 2007 06:06:30 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1//3vRuXZr/gvIufpcvv4Gyg+1tc1NOGVQVhqQUpI
-	Vkoi8Pp8UgvCyj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071003025853.GA11440@coredump.intra.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1751316AbXJCEKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 00:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbXJCEKM
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 00:10:12 -0400
+Received: from rune.pobox.com ([208.210.124.79]:35445 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750997AbXJCEKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 00:10:11 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id CC4A61407FD;
+	Wed,  3 Oct 2007 00:10:31 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3630B140104;
+	Wed,  3 Oct 2007 00:10:28 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.999.0710021832520.3579@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 2 Oct 2007 18:36:50 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59778>
 
-Hi,
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Tue, 2 Oct 2007, Jeff King wrote:
+> Well, that renaming apparently never happened, and it's still called 
+> diff_free_filespec_data_large() now that it's in master.
+>
+> That said, I think this patch should make it into the maintenance branch 
+> too, renamed or not, since it's such a huge performance issue.
 
-> On Tue, Oct 02, 2007 at 05:22:23PM -0700, Junio C Hamano wrote:
-> 
-> > >   strbuf_init(&url);
-> > >   strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-> > 
-> > Ugh, this typically calls snprintf() twice doesn't it?
-> 
-> Yes, it probably does. However, I think it is considerably easier to
-> read and more maintainable. Are you "ugh"ing because of the performance
-> impact (which should be negligible unless this is in a tight loop) or
-> because of the portability problems associated with va_copy?
-
-I wonder, I wonder, if
-
-	strbuf_addstr(&url, repo->base);
-	strbuf_addstr(&url, "/objects/pack/pack-");
-	strbuf_addstr(&url, hex);
-	strbuf_addstr(&url, ".idx");
-
-would make anybody else but me happy...
-
-Ciao,
-Dscho
+Thanks.
