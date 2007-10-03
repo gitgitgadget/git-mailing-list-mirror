@@ -1,84 +1,58 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: git filetypes for vim
-Date: Wed, 3 Oct 2007 18:03:12 +0100
-Message-ID: <20071003170312.GA15632@lapse.madduck.net>
-References: <20071003160745.GA8173@lapse.madduck.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git push (mis ?)behavior
+Date: Wed, 3 Oct 2007 19:02:41 +0200
+Message-ID: <20071003170241.GA7571@diana.vm.bytemark.co.uk>
+References: <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com> <20071003104943.GA3017@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031550490.28395@racer.site> <20071003160731.GA7113@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031718110.28395@racer.site> <20071003162816.GA17403@artemis.corp> <Pine.LNX.4.64.0710031742400.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
-Cc: git@tpope.info
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 19:02:40 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Miles Bader <miles@gnu.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 03 19:06:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id7by-00018W-CI
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 19:02:14 +0200
+	id 1Id7fG-0002XI-84
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 19:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206AbXJCRCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 13:02:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752104AbXJCRCH
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 13:02:07 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:45161 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752171AbXJCRCF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 13:02:05 -0400
-Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 8EE6DBEF4;
-	Wed,  3 Oct 2007 19:01:56 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 58CBA3FE4E; Wed,  3 Oct 2007 18:03:11 +0100 (BST)
+	id S1752104AbXJCRFa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 13:05:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751532AbXJCRF3
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 13:05:29 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2945 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751291AbXJCRF3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 13:05:29 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Id7cP-00023E-00; Wed, 03 Oct 2007 18:02:41 +0100
 Content-Disposition: inline
-In-Reply-To: <20071003160745.GA8173@lapse.madduck.net>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4461/Wed Oct  3 10:50:48 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <Pine.LNX.4.64.0710031742400.28395@racer.site>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59860>
 
+On 2007-10-03 17:44:39 +0100, Johannes Schindelin wrote:
 
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I wonder how hard it would be to teach _everybody_ to specify
+> _exactly_ what they want.
+>
+> Of course, we'd need an "--existing" option to git-push to trigger
+> the behaviour that we have right now.
 
-also sprach martin f krafft <madduck@madduck.net> [2007.10.03.1707 +0100]:
-> My repo is here: http://git.madduck.net/v/misc/vim-git.git
-> Tim's is here: git://git.tpope.net/~tpope/vim-git.git
+I could _definitely_ live with that. If the branch config doesn't say
+what to do when no arguments are given, then demand a specification on
+the command line.
 
-We had to rewrite the repos history because some information slipped
-in that we didn't want archived forever. I am sorry about this.
-Please reclone.
+I'll shut up on this topic now, though, since I'm not exactly helping
+with the patch/opinion ratio.
 
 --=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-kermit: why are there so many songs about rainbows?
-fozzy: that's part of what rainbows do.
-=20
-spamtraps: madduck.bogus@madduck.net
-
---PEIAKu/WMn1b1Hv9
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHA8tQIgvIgzMMSnURAkHoAKCP19fyLIc8sKycixTp9LlmrXNZwACeJr/j
-+0oUYbRDysFJjU2+MkO5vYo=
-=9xB8
------END PGP SIGNATURE-----
-
---PEIAKu/WMn1b1Hv9--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
