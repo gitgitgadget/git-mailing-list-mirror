@@ -1,47 +1,58 @@
-From: Florian Weimer <fw@deneb.enyo.de>
-Subject: Re: size_t vs "unsigned long"
-Date: Wed, 03 Oct 2007 23:36:03 +0200
-Message-ID: <877im3khj0.fsf@mid.deneb.enyo.de>
-References: <7vabr0djqr.fsf@gitster.siamese.dyndns.org>
-	<20071003204801.GC28188@artemis.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: making "git stash" safer to use
+Date: Wed, 03 Oct 2007 14:36:37 -0700
+Message-ID: <7vwsu3dgnu.fsf@gitster.siamese.dyndns.org>
+References: <200709301421.52192.bruno@clisp.org>
+	<200710021350.54625.bruno@clisp.org> <47023699.3080606@byu.net>
+	<200710032331.41385.bruno@clisp.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 23:36:27 2007
+Cc: git@vger.kernel.org, Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	Eric Blake <ebb9@byu.net>
+To: Bruno Haible <bruno@clisp.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 23:37:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdBtK-0003rz-W3
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:36:27 +0200
+	id 1IdBtn-000416-Fc
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:36:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281AbXJCVgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 17:36:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754434AbXJCVgO
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:36:14 -0400
-Received: from mail.enyo.de ([212.9.189.167]:3811 "EHLO mail.enyo.de"
+	id S1753715AbXJCVgs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 17:36:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754958AbXJCVgr
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:36:47 -0400
+Received: from rune.pobox.com ([208.210.124.79]:54696 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752927AbXJCVgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 17:36:13 -0400
-Received: from deneb.vpn.enyo.de ([212.9.189.177] helo=deneb.enyo.de)
-	by mail.enyo.de with esmtp id 1IdBt0-0001q4-QI; Wed, 03 Oct 2007 23:36:06 +0200
-Received: from fw by deneb.enyo.de with local (Exim 4.67)
-	(envelope-from <fw@deneb.enyo.de>)
-	id 1IdBsx-0007Ns-Pu; Wed, 03 Oct 2007 23:36:03 +0200
-In-Reply-To: <20071003204801.GC28188@artemis.corp> (Pierre Habouzit's message
-	of "Wed, 03 Oct 2007 22:48:01 +0200")
+	id S1753077AbXJCVgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 17:36:47 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id D246E141316;
+	Wed,  3 Oct 2007 17:37:07 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DBDA9141309;
+	Wed,  3 Oct 2007 17:37:02 -0400 (EDT)
+In-Reply-To: <200710032331.41385.bruno@clisp.org> (Bruno Haible's message of
+	"Wed, 3 Oct 2007 23:31:41 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59891>
 
-* Pierre Habouzit:
+Bruno Haible <bruno@clisp.org> writes:
 
->   Well, afaict, on every linux archs I know of, unsigned longs and
-> size_t are the same.
+>> While we're at it, I wish 'git stash clear' would take an optional
+>> argument that says which stash(es) to clear, rather than blindly clearing
+>> the entire stash.
+>
+> It would help if git would store which of the stashes were applied since
+> they were created and which were not. A stash that was not yet applied must
+> be considered "precious", whereas a stash that was applied is redundant,
+> right?
 
-IIRC, 64-bit Windows uses 64-bit points (duh) and hence a 64-bit
-size_t, but still has got 32-bit longs.  Documentation is a bit sparse
-on this matter (because you are supposed to use LONG, DWORD and
-friends anyway).
+Wrong.  I would say all stash entries are precious unless you
+explicitly say "I'm done with it".  The problem is that we do
+not have a way to say it explicitly.
