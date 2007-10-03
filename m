@@ -1,108 +1,152 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: git-svn merge helper
-Date: Tue, 2 Oct 2007 20:42:52 -0400
-Message-ID: <20071003004252.GA28495@dervierte>
-References: <20070930110550.GA4557@atjola.homenet> <1EF130A4-3CC7-4A42-9166-3539D9A38828@lrde.epita.fr> <20071001025059.GA29323@atjola.homenet> <0D8A7A3C-8F51-482D-9229-29ADC9585760@lrde.epita.fr> <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com> <20071002211400.GA992@atjola.homenet> <20071002220458.GA21038@dervierte> <20071002223813.GA3152@atjola.homenet>
+From: david@lang.hm
+Subject: Re: metastore
+Date: Tue, 2 Oct 2007 17:52:25 -0700 (PDT)
+Message-ID: <Pine.LNX.4.64.0710021743270.25489@asgard.lang.hm>
+References: <20070915132632.GA31610@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151507310.28586@racer.site> <20070915145437.GA12875@piper.oerlikon.madduck.net>
+ <Pine.LNX.4.64.0709151430040.5298@iabervon.org> <20070916060859.GB24124@piper.oerlikon.madduck.net>
+ <20070919191607.GE13683@hardeman.nu> <20071002195301.GB14171@lapse.madduck.net>
+ <20071002195816.GA6759@hardeman.nu> <85lkalz3iv.fsf@lola.goethe.zz>
+ <20071002211518.GA10445@hardeman.nu> <Pine.LNX.4.64.0710030018240.4087@reaper.quantumfyre.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 02:43:47 2007
+Content-Type: MULTIPART/Mixed; BOUNDARY="-1463811584-1531084491-1191367938=:4087"
+Cc: David =?iso-8859-1?Q?H=E4rdeman?= <david@hardeman.nu>,
+	David Kastrup <dak@gnu.org>,
+	martin f krafft <madduck@madduck.net>, git@vger.kernel.org,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Thomas Harning Jr." <harningt@gmail.com>,
+	Francis Moreau <francis.moro@gmail.com>,
+	Nicolas Vilz <niv@iaglans.de>
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Wed Oct 03 02:51:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcsL3-0004M3-Pf
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 02:43:46 +0200
+	id 1IcsSq-0006TE-0b
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 02:51:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753351AbXJCAnd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 20:43:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753370AbXJCAnd
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 20:43:33 -0400
-Received: from nz-out-0506.google.com ([64.233.162.228]:60210 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752884AbXJCAnc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 20:43:32 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so3103212nze
-        for <git@vger.kernel.org>; Tue, 02 Oct 2007 17:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=8iQd3TAGRAZRwNBJKKYG/azg7MgM/RphwFL2donN3P4=;
-        b=MFUKFN1wCTrR12nD3nDXbACeEQ1eKCxJ7gS0M0WqPZQtFkXO79mf73om8tCUOIc9RNoBzzEmf3AOOFFZWWCDKcp5zVSTPChGYalrpNDmaILhzOCFoM+T6zHnQWT9Pj2665Ldm48AJ6sW5VAWmbCvZ4+bk7HkLzcfSTPSQuLwYT4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=DC4oJlc1j/dKE6HqI7Yy9EjQJ48XT1QTESfggCHB8K/uxf666UAa7NP8187bf4k63TA83bYYlfLQ79QpZI2G5VVbnWYOKzD4t/JiH+ggYWwZSqUbCcohtLtvvitX8OpjKiWHotv/bRkiNxRwu/enwNdAQQ/+ma9d3cwPz0rd/Z8=
-Received: by 10.115.93.16 with SMTP id v16mr6880418wal.1191372210831;
-        Tue, 02 Oct 2007 17:43:30 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [76.177.36.23])
-        by mx.google.com with ESMTPS id 5sm4041924nzk.2007.10.02.17.43.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 02 Oct 2007 17:43:28 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id 818EAD84F84; Tue,  2 Oct 2007 20:42:52 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071002223813.GA3152@atjola.homenet>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+	id S1752869AbXJCAvk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 20:51:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752454AbXJCAvk
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 20:51:40 -0400
+Received: from dsl081-033-126.lax1.dsl.speakeasy.net ([64.81.33.126]:39635
+	"EHLO bifrost.lang.hm" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752732AbXJCAvj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 20:51:39 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id l930orSQ024356;
+	Tue, 2 Oct 2007 17:50:53 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <Pine.LNX.4.64.0710030018240.4087@reaper.quantumfyre.co.uk>
+Content-ID: <Pine.LNX.4.64.0710021743271.25489@asgard.lang.hm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59763>
 
-On Wed, Oct 03, 2007 at 12:38:13AM +0200, Bj=F6rn Steinbrink wrote:
-> > The other option is to have a "build" branch.  By example:
-> >=20
-> > git checkout build
-> > git reset --hard master
-> > git merge mybranch
-> > make
-> >=20
-> > In that way, I have branch with the latest changes from head and th=
-e
-> > changes from mybranch together.  The downside to this method is tha=
-t you
-> > may have to repeated resolve merges.  Despite the downsides, I find
-> > these two methods to work quite well.
->=20
-> Thanks, but it makes no difference here, it stil results in a fast
-> forward. This is a small test case which exhibits the behaviour and
-> matches my current workflow with git-svn (except for the dcommits):
->=20
-> git init
-> echo Hi > file1; git add file1; git commit -m file1
-> git checkout -b branch
-> echo Hi > file2; git add file2; git commit -m file2
-> git checkout master
-> echo Hi > file3; git add file3; git commit -m file3
-> git checkout branch
-> git merge master
->=20
-> # Then I'd normally do the following which causes a fast forward
-> #git checkout master
-> #git merge branch
->=20
-> # Now I tried this, which also results in a fast-forward:
-> git checkout -b merge
-> git reset --hard master
-> git merge branch
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-I believe you misunderstood my suggestion.  In using a "build" branch,
-you would not merge master into branch, as you did above.  Instead, you
-would create a third, unpublished branch to hold the merge.
+---1463811584-1531084491-1191367938=:4087
+Content-Type: TEXT/PLAIN; CHARSET=iso-8859-1; FORMAT=flowed
+Content-Transfer-Encoding: 8BIT
+Content-ID: <Pine.LNX.4.64.0710021743272.25489@asgard.lang.hm>
 
-At the same time, I have a slightly better understanding of what it is
-you're trying to do.  If you are trying to keep up an SVN-like workflow
-(namely pulling changes from trunk into a branch from time to time),
-then my solution probably isn't suitable for you.  However, you might
-consider why you actually /need/ to do that, outside of SVN convention.
---=20
--Steven Walter <stevenrwalter@gmail.com>
-"A human being should be able to change a diaper, plan an invasion,
-butcher a hog, conn a ship, design a building, write a sonnet, balance
-accounts, build a wall, set a bone, comfort the dying, take orders,
-give orders, cooperate, act alone, solve equations, analyze a new
-problem, pitch manure, program a computer, cook a tasty meal, fight
-efficiently, die gallantly. Specialization is for insects."
-   -Robert Heinlein
+On Wed, 3 Oct 2007, Julian Phillips wrote:
+
+> Subject: Re: metastore
+> 
+> On Tue, 2 Oct 2007, David Härdeman wrote:
+>
+>> On Tue, Oct 02, 2007 at 10:04:56PM +0200, David Kastrup wrote:
+>>> David Härdeman <david@hardeman.nu> writes:
+>>> 
+>>> >  On Tue, Oct 02, 2007 at 08:53:01PM +0100, martin f krafft wrote:
+>>> > > also sprach David Härdeman <david@hardeman.nu> [2007.09.19.2016 
+>>> +0100]:
+>>> > > >  But I agree, if any changes were made to git, I'd advocate adding
+>>> > > >  arbitrary attributes to files (much like xattrs) in name=value
+>>> > > >  pairs, then any extended metadata could be stored in those
+>>> > > >  attributes and external scripts/tools could use them in some way
+>>> > > >  that makes sense...and also make sure to only update them when it
+>>> > > >  makes sense.
+>>> > > > > So where would those metdata be stored in your opinion?
+>>> > >  I'm not sufficiently versed in the internals of git to have an
+>>> >  informed opinion :)
+>>> 
+>>> I think we have something like a length count for file names in index
+>>> and/or tree.  We could just put the (sorted) attributes after a NUL
+>>> byte in the file name and include them in the count.  It would also
+>>> make those artificially longer file names work more or less when
+>>> sorting them for deltification.
+>> 
+>> Or perhaps the index format could be extended to include a new field for 
+>> value=name pairs instead of overloading the name field.
+>> 
+>> But as I said, I have no idea how feasible it would be to change git to 
+>> support another arbitrary length field in the index/tree file.
+>> 
+>>> However, this requires implementing _policies_: it must be possible to
+>>> specify per repository exactly what will and what won't get tracked,
+>>> or one will get conflicts that are not necessary or appropriate.
+>> 
+>> I think the opposite approach would be better. Let git provide 
+>> set/get/delete attribute operations and leave it at that. Then external 
+>> programs can do what they want with that data and add/remove/modify tags as 
+>> necessary (and also include the smarts to not, e.g. remove the permissions 
+>> on all files if the git repo is checked out to a FAT fs).
+>
+> You need more than that.  You need to be able to log, blame etc on the 
+> attributes.  One of the big annoyances of Subversion properties is being 
+> unable to find out when or why a property value was changed.
+>
+> I still don't see why the attributes need to be stored in git directly - 
+> particularly if you are going to use an external program to actually apply 
+> any settings - why not store the attributes as normal file (or files) of some 
+> sort tracked by git?  You could use any number of methods - e.g. use an 
+> sqlite database stored in the root of your tree, or a .<name>.props file 
+> alongside each path that you have properties for.  You could even write a 
+> system that uses such a method and was then SCM agnostic, allowing you to 
+> keep your attribute tracking system if/when something better than git comes 
+> along - or simply share it with less-fortunate souls stuck in an inferior 
+> system.
+
+one other big advantage of keeping things in a normal file, it's easier to 
+get the results accepted into git!
+
+don't forget that the core git maintainers don't really see this as a 
+worthwhile effort, so the more intrusive the result is the less likely it 
+is to be accepted. It may end up that storing the attributes inside of git 
+_is_ the best thing to do, but it's gong to be a whole lot easier to get a 
+patch to implement this accepted if it's a migration from an existing, 
+heavily used, implementation then if it's from the 'outside' with people 
+saying "this is a neat thing, we think people would use it if it only had 
+this"
+
+and even if an internal implementation does end up being the right thing, 
+the exact shape of the API is an item that will require a lot of debate 
+(and probably a few false starts) to get right. let's figure out the 
+real-world useage patterns first, and then work from there as appropriate.
+
+shifting back onto implementaion details
+
+in the discussion a few weeks ago I was told that there is a way to look 
+at the contents of a file that hasn't been checked out yet (somehow it 
+exists in a useable form 'in the index') but when I asked for information 
+about how to do this I never got a response.
+
+the reason for needing this is that the routines writing the files need to 
+be able to access this information when they are dong so, but that file 
+may not be checked out.
+
+for that matter, .gitattributes should have a similar problem (if 
+.gitattibutes for a directory hasn't been checked out yet how do you know 
+if you could do the line ending conversions on a file or not?). how is the 
+problem addressed there? (or is it the case that all the use so far has 
+really not used the per-directory files and everything is in the master 
+file, and that doesn't change enough to find these problems?
+
+David Lang
+---1463811584-1531084491-1191367938=:4087--
