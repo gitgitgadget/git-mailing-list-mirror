@@ -1,100 +1,72 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: [PATCH] Change "refs/" references to symbolic constants
-Date: Wed, 3 Oct 2007 08:37:23 +0100
-Message-ID: <200710030837.25689.andyparkins@gmail.com>
-References: <20071002155800.GA6828@coredump.intra.peff.net> <7vsl4tjo28.fsf@gitster.siamese.dyndns.org> <20071002204848.GA8284@coredump.intra.peff.net>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Mention 'cpio' dependency in INSTALL
+Date: Wed, 3 Oct 2007 09:40:07 +0200
+Message-ID: <20071003074007.GA15339@genesis.frugalware.org>
+References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com> <200710012342.37352.johan@herland.net> <3f4fd2640710021409q104a4204r522391912d5b5c8c@mail.gmail.com> <200710030142.30062.johan@herland.net> <7v1wcdjbq6.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 09:37:48 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+HP7ph2BbKc20aGI"
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Reece Dunn <msclrhd@googlemail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 09:40:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icyng-0001ny-9q
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:37:44 +0200
+	id 1IcyqK-0002XH-27
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752018AbXJCHhc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 03:37:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbXJCHhc
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:37:32 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:61134 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751628AbXJCHhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 03:37:31 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so71463ugc
-        for <git@vger.kernel.org>; Wed, 03 Oct 2007 00:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=q7FNE/xsymUtXkq1wd/k5e0qTBHBqm0KFK65a4JhRH0=;
-        b=FyG6+KgA4uH/o3neDWfW+9mKI9qVxtraWguCk6ZWsZrm3Wx04jfH8RP/asF4u8nLWMbErOGWY+UdMM36hmtppn3e80RRdEwp3ugOTqzP96hU4msAvvBEcxCQ7ymhp5HtlkVyPnxII14H1HpQA0WtZVL8w0cZQuMrNBopkzgTJG0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TbCKqgrOpMPL0oyOJfZAqpfSOJXmGjMhBhXK09D1rF92b1cNSzgexcaBvpIpl1Zp1u3i1RxxVUiIqXhEHW9SMk/uXXbmbSO66gK4/VGOWViwDHGoVjzXYkUDiRix+CqIKb8zx7vhXQoGd+k41UIoedqiLfZq2or5pp2FlBcVgoY=
-Received: by 10.66.217.2 with SMTP id p2mr138644ugg.1191397049997;
-        Wed, 03 Oct 2007 00:37:29 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id b36sm102985ika.2007.10.03.00.37.28
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 03 Oct 2007 00:37:28 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071002204848.GA8284@coredump.intra.peff.net>
+	id S1756416AbXJCHkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 03:40:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756320AbXJCHkO
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:40:14 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:43375 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756170AbXJCHkM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 03:40:12 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id CF64D1B2511;
+	Wed,  3 Oct 2007 09:40:10 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 59E856FD40;
+	Wed,  3 Oct 2007 09:40:08 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 87BFC13A4077; Wed,  3 Oct 2007 09:40:07 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <7v1wcdjbq6.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59801>
-
-On Tuesday 2007 October 02, Jeff King wrote:
-
-> Perhaps a better quest would be to eliminate all of those counts
-> entirely with code that is obviously correct. I think it is much more
-> readable to replace:
-
-I've got a patch replacing every appropriate memcmp() with prefixcmp(), but it 
-goes on top of this one, so wanted to get this through review to save 
-constantly spamming the list with the same patch slightly modified because of 
-changes in a different patch.
-
->   url = xmalloc(strlen(repo->base) + 64);
->   sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
->
-> with something like:
->
->   strbuf_init(&url);
->   strbuf_addf(&url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-
-I've not been following the strbuf() changes, so have missed the appearance of 
-these handy new functions.  They would appear to be an improvement for cases 
-just like this.
-
-> > constants in CAPITAL_LETTERS_WITH_UNDERSCORE shout too loudly to
->
-> Part of the problem is also that they're long. Perhaps REFS_HEADS, while
-> being less unique in the C namespace, would look better?
-
-I completely agree with the length and loudness concerns, but my worry was 
-polluting the namespace while maintaining some sort of rationality between 
-PATH_REFS_HEADS and STRLEN_PATH_REFS_HEADS.  My reasoning was that
-
- "refs/heads" -> PATH_REFS_HEADS
-
-is only three extra characters, and
-
- strlen("refs/heads/") -> STRLEN_PATH_REFS_HEADS
-
-is only one extra character.
-
-However I have no strong feelings about changing them.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59802>
 
 
+--+HP7ph2BbKc20aGI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+On Tue, Oct 02, 2007 at 05:14:25PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
+> Are there other commands we rely on that may not be universally
+> installed?  I myself consider "cut" to be in the category, but
+> other than that I do not think of anything offhand.
+
+when using git in a chroot, i obviously had coreutils/sed/grep installed
+and the only "extra" package i needed (besides the curl an openssl libs)
+was cpio
+
+- VMiklos
+
+--+HP7ph2BbKc20aGI
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHA0dXe81tAgORUJYRAiPVAJ0ZO4B3QYM9pqZRMiLr3CfJbzpGAwCfTnYL
+EWCt4kRAEPI1envDRxvwUdA=
+=CIWV
+-----END PGP SIGNATURE-----
+
+--+HP7ph2BbKc20aGI--
