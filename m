@@ -1,505 +1,209 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: WIP: asciidoc replacement
-Date: Wed, 03 Oct 2007 14:56:11 +1300
-Message-ID: <4702F6BB.60908@vilain.net>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Tue, 2 Oct 2007 19:28:19 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
+ <7v1wd1d0le.fsf@gitster.siamese.dyndns.org> <7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
+ <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net>
+ <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net>
+ <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz>
+ <20071002161114.GC6828@coredump.intra.peff.net>
+ <86ve9p32cp.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 03:56:42 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 03 04:29:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IctTX-0004D9-U9
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 03:56:36 +0200
+	id 1IctzB-00039A-Bw
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 04:29:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754247AbXJCB40 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 21:56:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753954AbXJCB4Z
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 21:56:25 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:40361 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753822AbXJCB4W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 21:56:22 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id A91F4205775; Wed,  3 Oct 2007 13:56:19 +1200 (NZST)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id DA7C921CFD8;
-	Wed,  3 Oct 2007 13:56:13 +1200 (NZST)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <Pine.LNX.4.64.0710030133020.28395@racer.site>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1755384AbXJCC3H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Oct 2007 22:29:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755089AbXJCC3G
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 22:29:06 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46865 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754911AbXJCC3E (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Oct 2007 22:29:04 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l932SKa5020475
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 2 Oct 2007 19:28:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l932SJjb001560;
+	Tue, 2 Oct 2007 19:28:19 -0700
+In-Reply-To: <86ve9p32cp.fsf@lola.quinscape.zz>
+X-Spam-Status: No, hits=-2.449 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_33
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.46__
+X-MIMEDefang-Filter: lf$Revision: 1.187 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59770>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> I do not want to depend on more than necessary in msysGit, and therefore I 
-> started to write an asciidoc replacement.
-> 
-> So here it is: a perl script that does a good job on many .txt files in 
-> Documentation/, although for some it deviates from "make man"'s output, 
-> and for others it is outright broken.  It is meant to be run in 
-> Documentation/.
-> 
-> My intention is not to fix the script for all cases, but to make patches 
-> to Documentation/*.txt themselves, so that they are more consistent (and 
-> incidentally nicer to the script).
-> 
-> Now, I hear you already moan: "But Dscho, you know you suck at Perl!"
-> 
-> Yeah, I know, but maybe instead of bashing on me (pun intended), you may 
-> want to enlighten me with tips how to make it nicer to read.  (Yes, there 
-> are no comments; yes, I will gladly add them where appropriate; yes, html 
-> is just a stub.)
-> 
-> So here, without further ado, da script:
 
-It's pretty good, I certainly wouldn't have trouble reading or
-maintaining it, but I'll give you suggestions anyway.
+[ This is the discussed stupid approach - just sort the dang hash array, 
+  so that we can use a linear scan over the src/dst ]
 
-nice work, replacing a massive XML/XSL/etc stack with a small Perl
-script ;-)
+On Tue, 2 Oct 2007, David Kastrup wrote:
+> 
+> This does not actually require an actual merge _sort_ AFAICS: do the
+> "sort file.hashed" step using qsort.  The comparison step does not
+> actually need to produce merged output, but merely advances through
+> two hash arrays and generates statistics.
+> 
+> This should already beat the pants off the current implementation,
+> even when the hash array is sparse, simply because our inner loop then
+> has perfect hash coherence.
 
-Sam.
+Sadly, that's not the case. It *does* seem to beat the current 
+implementation, but it's not "beat the pants off". It looks like an 
+improvement of about 15%, which is nothing to sneeze at, but it's not an 
+order-of-magnitude improvement either.
 
-> 
-> -- snip --
-> #!/usr/bin/perl
+Here's a test-patch. I don't guarantee anything, except that when I did 
+the timings I also did a "wc" on the result, and they matched..
 
-Add -w for warnings, also use strict;
+Before:
+	[torvalds@woody linux]$ time git diff -l0 --stat -C v2.6.22.. | wc
+	   7104   28574  438020
 
-> $conv = new man_page();
-> $conv->{manual} = 'Git Manual';
-> $conv->{git_version} = 'Git ' . `cat ../GIT-VERSION-FILE`;
-> $conv->{git_version} =~ s/GIT_VERSION = //;
-> $conv->{git_version} =~ s/-/\\-/;
-> $conv->{git_version} =~ s/\n//;
-> $conv->{date} = `date +%m/%d/%Y`;
-> $conv->{date} =~ s/\n//;
-> 
-> $par = '';
-> handle_file($ARGV[0]);
-> $conv->finish();
-> 
-> sub handle_text {
+	real    0m10.526s
+	user    0m10.401s
+	sys     0m0.136s
 
-this function acts on globals; make them explicit arguments to the function.
+After:
+	[torvalds@woody linux]$ time ~/git/git diff -l0 --stat -C v2.6.22.. | wc
+	   7104   28574  438020
+	
+	real    0m8.876s
+	user    0m8.761s
+	sys     0m0.128s
 
-> 	if ($par =~ /^\. /s) {
-> 		my @lines = split(/^\. /m, $par);
-> 		shift @lines;
-> 		$conv->enumeration(\@lines);
-> 	} elsif ($par =~ /^\* /s) {
+but the diff is fairly simple, so if somebody will go over it and say 
+whether it's likely to be *correct* too, that 15% may well be worth it.
 
-uncuddle your elsif's; also consider making this a "tabular ternary"
-with the actions in separate functions.
+[ Side note, without rename detection, that diff takes just under three 
+  seconds for me, so in that sense the improvement to the rename detection 
+  itself is larger than the overall 15% - it brings the cost of just 
+  rename detection from 7.5s to 5.9s, which would be on the order of just 
+  over a 20% performance improvement. ]
 
-ie
+Hmm. The patch depends on half-way subtle issues like the fact that the 
+hashtables are guaranteed to not be full => we're guaranteed to have zero 
+counts at the end => we don't need to do any steenking iterator count in 
+the loop. A few comments might in order.
 
-$result = ( $par =~ /^\. /s      ? $conv->do_enum($par)    :
-            $par =~ /^\[verse\]/ ? $conv->do_verse($par)  :
-            ... )
+		Linus
 
-However I have a suspicion that your script is doing line-based parsing
-instead of recursive descent; I don't know whether that's the right
-thing for asciidoc.  It's actually fairly easy to convert a grammar to
-code blocks using tricks from MJD's _Higher Order Perl_.  Is it
-necessary for the asciidoc grammar?
+---
+ diffcore-delta.c |   54 ++++++++++++++++++++++++++++++------------------------
+ 1 files changed, 30 insertions(+), 24 deletions(-)
 
-> 		my @lines = split(/^\* /m, $par);
-> 		shift @lines;
-> 		$conv->enumeration(\@lines, 'unnumbered');
-> 	} elsif ($par =~ /^\[verse\]/) {
-> 		$par =~ s/\[verse\] *\n?//;
-> 		$conv->verse($par);
-> 	} elsif ($par =~ /^(\t|  +)/s) {
-> 		$par =~ s/^$1//mg;
-> 		$par =~ s/^\+$//mg;
-> 		$conv->indent($par);
-> 	} elsif ($par =~ /^([^\n]*)::\n((\t|  +).*)$/s) {
-> 		my ($first, $rest, $indent) = ($1, $2, $3);
-> 		$rest =~ s/^\+$//mg;
-> 		while ($rest =~ /^(.*?\n\n)--+\n(.*?\n)--+\n\n(.*)$/s) {
-> 			my ($pre, $verb, $post) = ($1, $2, $3);
-> 
-> 			$pre =~ s/^(\t|$indent)//mg;
-> 			if ($first ne '') {
-> 				$conv->begin_item($first, $pre);
-> 				$first = '';
-> 			} else {
-> 				$conv->normal($pre);
-> 			}
-> 
-> 			$conv->verbatim($verb);
-> 			$rest = $post;
-> 		}
-> 		$rest =~ s/^(\t|$indent)//mg;
-> 		if ($first ne '') {
-> 			$conv->begin_item($first, $rest);
-> 		} else {
-> 			$conv->normal($rest);
-> 		}
-> 		$conv->end_item();
-> 	} elsif ($par =~ /^-+\n(.*\n)-+\n$/s) {
-> 		$conv->verbatim($1);
-> 	} else {
-> 		$conv->normal($par);
-> 	}
-> 	$par = '';
-> }
-> 
-> sub handle_file {
-> 	my $in;
-> 	open($in, '<' . $_[0]);
-> 	while (<$in>) {
-> 		if (/^=+$/) {
-> 			if ($par ne '' && length($_) >= length($par)) {
-> 				$conv->header($par);
-> 				$par = '';
-> 				next;
-> 			}
-> 		} elsif (/^-+$/) {
-> 			if ($par ne '' && length($_) >= length($par)) {
-> 				$conv->section($par);
-> 				$par = '';
-> 				next;
-> 			}
-> 		} elsif (/^~+$/) {
-> 			if ($par ne '' && length($_) >= length($par)) {
-> 				$conv->subsection($par);
-> 				$par = '';
-> 				next;
-> 			}
-> 		} elsif (/^\[\[(.*)\]\]$/) {
-> 			handle_text();
-> 			$conv->anchor($1);
-> 			next;
-> 		} elsif (/^$/) {
-> 			if ($par =~ /^-+\n.*[^-]\n$/s) {
-> 				# fallthru; is verbatim, but needs more.
-> 			} elsif ($par =~ /::\n$/s) {
-> 				# is item, but needs more.
-> 				next;
-> 			} else {
-> 				handle_text();
-> 				next;
-> 			}
-> 		} elsif (/^include::(.*)\[\]$/) {
-> 			handle_text();
-> 			handle_file($1);
-> 			next;
-> 		}
-> 
-> 		# convert "\--" to "--"
-> 		s/\\--/--/g;
-> 		# convert "\*" to "*"
-> 		s/\\\*/*/g;
-> 
-> 		# handle gitlink:
-> 		s/gitlink:([^\[ ]*)\[(\d+)\]/sprintf "%s",
-> 			$conv->get_link($1, $2)/ge;
-> 		# handle link:
-> 		s/link:([^\[ ]*)\[(.+)\]/sprintf "%s",
-> 			$conv->get_link($1, $2, 'external')/ge;
-
-These REs suffer from LTS (Leaning Toothpick Syndrome).  Consider using
-s{foo}{bar} and adding the 'x' modifier to space out groups.
-
-> 
-> 		$par .= $_;
-> 	}
-> 	close($in);
-> 	handle_text();
-> }
-> 
-> package man_page;
-> 
-> sub new {
-> 	my ($class) = @_;
-> 	my $self = {
-> 		sep => '',
-> 		links => [],
-> #		generator => 'Home grown git txt2man converter'
-> 		generator => 'DocBook XSL Stylesheets v1.71.1 <http://docbook.sf.net/>'
-> 	};
-> 	bless $self, $class;
-> 	return $self;
-> }
-> 
-> sub header {
-> 	my ($self, $text) = @_;
-> 	$text =~ s/-/\\-/g;
-> 
-> 	if ($self->{preamble_shown} == undef) {
-> 		$title = $text;
-> 		$title =~ s/\(\d+\)$//;
-> 		print '.\"     Title: ' . $title
-> 			. '.\"    Author: ' . "\n"
-> 			. '.\" Generator: ' . $self->{generator} . "\n"
-> 			. '.\"      Date: ' . $self->{date} . "\n"
-> 			. '.\"    Manual: ' . $self->{manual} . "\n"
-> 			. '.\"    Source: ' . $self->{git_version} . "\n"
-> 			. '.\"' . "\n";
-> 	}
-
-I'd consider a HERE-doc, or multi-line qq{ } more readable than this.
-
-> 
-> 	$text =~ tr/a-z/A-Z/;
-> 	my $suffix = "\"$self->{date}\" \"$self->{git_version}\""
-> 		. " \"$self->{manual}\"";
-
-Use qq{} when making strings with lots of embedded double quotes and
-interpolation.
-
-> 	$text =~ s/^(.*)\((\d+)\)$/.TH "\1" "\2" $suffix/;
-> 	print $text;
-> 
-> 	if ($self->{preamble_shown} == undef) {
-> 		print '.\" disable hyphenation' . "\n"
-> 			. '.nh' . "\n"
-> 			. '.\" disable justification (adjust text to left'
-> 				. ' margin only)' . "\n"
-> 			. '.ad l' . "\n";
-
-Using commas rather than "." will safe you a concat when printing to
-filehandles, but that's a very small nit to pick :)
-
-> 		$self->{preamble_shown} = 1;
-> 	}
-> 
-> 	$self->{last_op} = 'header';
-> }
-> 
-> sub section {
-> 	my ($self, $text) = @_;
-> 
-> 	$text =~ tr/a-z/A-Z/;
-> 	$text =~ s/^(.*)$/.SH "\1"/;
-> 
-> 	print $text;
-> 
-> 	$self->{last_op} = 'section';
-> }
-> 
-> sub subsection {
-> 	my ($self, $text) = @_;
-> 
-> 	$text =~ s/^(.*)$/.SS "\1"/;
-> 
-> 	print $text;
-> 
-> 	$self->{last_op} = 'subsection';
-> }
-> 
-> sub get_link {
-> 	my ($self, $command, $section, $option) = @_;
-> 
-> 	if ($option eq 'external') {
-> 		my $links = $self->{links};
-> 		push(@$links, $command);
-> 		$command =~ s/\.html$//;
-> 		$command =~ s/-/ /g;
-> 		push(@$links, $command);
-> 		return '\fI' . $command . '\fR\&[1]';
-> 	} else {
-> 		return '\fB' . $command . '\fR(' . $section . ')';
-> 	}
-> }
-> 
-> sub common {
-> 	my ($self, $text, $option) = @_;
-> 
-> 	# escape backslashes, but not in "\n", "\&" or "\fB"
-> 	$text =~ s/\\(?!n|f[A-Z]|&)/\\\\/g;
-> 	# escape "-"
-> 	$text =~ s/-/\\-/g;
-> 	# handle ...
-> 	$text =~ s/(\.\.\.)/\\&\1/g;
-> 	# remove double space after full stop or comma
-> 	$text =~ s/([\.,])  /\1 /g;
-> 
-> 	if ($option ne 'no-markup') {
-> 		# make 'italic'
-> 		$text =~ s/'([^'\n]*)'/\\fI\1\\fR/g;
-> 		# ignore `
-> 		$text =~ s/`//g;
-> 		# make *bold*
-> 		$text =~ s/\*([^\*\n]*)\*/\\fB\1\\fR/g;
-> 		# handle <<sections>
-> 		$text =~ s/<<([^>]*)>>/the section called \\(lq\1\\(rq/g;
-
-Hmm, that regex would not match for <<foo > bar>>, if you care you'd
-need to write something like <<((?:[^>]+|>[^>])*)>>
-
-> 	}
-> 
-> 	return $text;
-> }
-> 
-> sub normal {
-> 	my ($self, $text) = @_;
-> 
-> 	if ($text eq "") {
-> 		return;
-> 	}
-> 
-> 	$text = $self->common($text);
-> 
-> 	$text =~ s/ *\n(.)/ \1/g;
-> 
-> 	if ($self->{last_op} eq 'normal') {
-> 		print "\n";
-> 	}
-> 
-> 	print $text;
-> 
-> 	$self->{last_op} = 'normal';
-> }
-> 
-> sub verse {
-> 	my ($self, $text) = @_;
-> 
-> 	$text = $self->common($text);
-> 	$text =~ s/^\t/        /mg;
-> 
-> 	print ".sp\n.RS 4\n.nf\n" . $text . ".fi\n.RE\n";
-> 
-> 	$self->{last_op} = 'verse';
-> }
-> 
-> sub enumeration {
-> 	my ($self, $text, $option) = @_;
-> 
-> 	my $counter = 0;
-> 	foreach $line (@$text) {
-> 		$counter++;
-> 		print ".TP 4\n"
-> 			. ($option eq 'unnumbered' ? '\(bu' : $counter . '.')
-> 			. "\n"
-> 			. $self->common($line);
-> 	}
-> 
-> 	$self->{last_op} = 'enumeration';
-> }
-> 
-> sub begin_item {
-> 	my ($self, $item, $text) = @_;
-> 
-> 	$item = $self->common($item);
-> 	$text = $self->common($text);
-> 
-> 	$text =~ s/([^\n]) *\n([^\n])/\1 \2/g;
-
-"." is the same as [^\n] (without the 's' modifier).
-
-> 
-> 	print ".PP\n" . $item . "\n.RS 4\n" . $text;
-> 
-> 	$self->{last_op} = 'item'; 
-> }
-> 
-> sub end_item {
-> 	my ($self) = @_;
-> 
-> 	print ".RE\n";
-> 
-> 	$self->{last_op} = 'end_item';
-> }
-> 
-> sub indent {
-> 	my ($self, $text) = @_;
-> 
-> 	$text = $self->common($text, 'no-markup');
-> 	$text =~ s/^\t/        /mg;
-> 
-> 	if ($self->{last_op} eq 'normal') {
-> 		print "\n";
-> 	}
-> 
-> 	print ".sp\n.RS 4\n.nf\n" . $text . ".fi\n.RE\n";
-> 
-> 	$self->{last_op} = 'indent';
-> }
-> 
-> sub verbatim {
-> 	my ($self, $text) = @_;
-> 
-> 	$text = $self->common($text, 'no-markup');
-> 
-> 	# convert tabs to spaces
-> 	$text =~ s/^\t/        /mg;
-> 	# remove trailing empty lines
-> 	$text =~ s/\n\n*$/\n/;
-> 
-> 	if ($self->{last_op} eq 'normal') {
-> 		print "\n";
-> 	}
-> 
-> 	print ".sp\n.RS 4\n.nf\n.ft C\n" . $text . ".ft\n\n.fi\n.RE\n";
-> 
-> 	$self->{last_op} = 'verbatim';
-> }
-> 
-> sub anchor {
-> 	my ($self, $text) = @_;
-> 
-> 	$self->{last_op} = 'anchor';
-> }
-> 
-> sub finish {
-> 	my ($self) = @_;
-> 	my $links = $self->{links};
-> 
-> 	if ($#$links >= 0) {
-> 		print '.SH "REFERENCES"' . "\n";
-> 		my $i = 1;
-> 		while ($#$links >= 0) {
-
-just use if (@$links) and while (@$links)
-
-> 			my $ref = shift(@$links);
-> 			$ref =~ s/-/\\-/g;
-> 			my $label = shift(@$links);
-> 			printf (".IP \"% 2d.\" 4\n%s\n.RS 4\n\\%%%s\n.RE\n",
-> 				$i++, $label, $ref);
-> 		}
-> 	} else {
-> 		print "\n";
-> 	}
-> }
-> 
-> package html_page;
-> 
-> sub new {
-> 	my ($class) = @_;
-> 	my $self = {};
-> 	bless $self, $class;
-> 	return $self;
-> }
-> 
-> -- snap --
-> 
-> Ciao,
-> Dscho
-> 
-> P.S.: I need to catch some Zs, and do some real work, so do not be 
-> surprised if I do not respond within the next 24 hours.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/diffcore-delta.c b/diffcore-delta.c
+index d9729e5..6d65697 100644
+--- a/diffcore-delta.c
++++ b/diffcore-delta.c
+@@ -46,22 +46,6 @@ struct spanhash_top {
+ 	struct spanhash data[FLEX_ARRAY];
+ };
+ 
+-static struct spanhash *spanhash_find(struct spanhash_top *top,
+-				      unsigned int hashval)
+-{
+-	int sz = 1 << top->alloc_log2;
+-	int bucket = hashval & (sz - 1);
+-	while (1) {
+-		struct spanhash *h = &(top->data[bucket++]);
+-		if (!h->cnt)
+-			return NULL;
+-		if (h->hashval == hashval)
+-			return h;
+-		if (sz <= bucket)
+-			bucket = 0;
+-	}
+-}
+-
+ static struct spanhash_top *spanhash_rehash(struct spanhash_top *orig)
+ {
+ 	struct spanhash_top *new;
+@@ -122,6 +106,20 @@ static struct spanhash_top *add_spanhash(struct spanhash_top *top,
+ 	}
+ }
+ 
++static int spanhash_cmp(const void *_a, const void *_b)
++{
++	const struct spanhash *a = _a;
++	const struct spanhash *b = _b;
++
++	/* A count of zero compares at the end.. */
++	if (!a->cnt)
++		return !b->cnt ? 0 : 1;
++	if (!b->cnt)
++		return -1;
++	return a->hashval < b->hashval ? -1 :
++		a->hashval > b->hashval ? 1 : 0;
++}
++
+ static struct spanhash_top *hash_chars(struct diff_filespec *one)
+ {
+ 	int i, n;
+@@ -158,6 +156,10 @@ static struct spanhash_top *hash_chars(struct diff_filespec *one)
+ 		n = 0;
+ 		accum1 = accum2 = 0;
+ 	}
++	qsort(hash->data,
++		1ul << hash->alloc_log2,
++		sizeof(hash->data[0]),
++		spanhash_cmp);
+ 	return hash;
+ }
+ 
+@@ -169,7 +171,7 @@ int diffcore_count_changes(struct diff_filespec *src,
+ 			   unsigned long *src_copied,
+ 			   unsigned long *literal_added)
+ {
+-	int i, ssz;
++	struct spanhash *s, *d;
+ 	struct spanhash_top *src_count, *dst_count;
+ 	unsigned long sc, la;
+ 
+@@ -190,22 +192,26 @@ int diffcore_count_changes(struct diff_filespec *src,
+ 	}
+ 	sc = la = 0;
+ 
+-	ssz = 1 << src_count->alloc_log2;
+-	for (i = 0; i < ssz; i++) {
+-		struct spanhash *s = &(src_count->data[i]);
+-		struct spanhash *d;
++	s = src_count->data;
++	d = dst_count->data;
++	for (;;) {
+ 		unsigned dst_cnt, src_cnt;
+ 		if (!s->cnt)
+-			continue;
++			break;
++		while (d->cnt) {
++			if (d->hashval >= s->hashval)
++				break;
++			d++;
++		}
+ 		src_cnt = s->cnt;
+-		d = spanhash_find(dst_count, s->hashval);
+-		dst_cnt = d ? d->cnt : 0;
++		dst_cnt = d->hashval == s->hashval ? d->cnt : 0;
+ 		if (src_cnt < dst_cnt) {
+ 			la += dst_cnt - src_cnt;
+ 			sc += src_cnt;
+ 		}
+ 		else
+ 			sc += dst_cnt;
++		s++;
+ 	}
+ 
+ 	if (!src_count_p)
