@@ -1,118 +1,65 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: merging .gitignore
-Date: Wed, 03 Oct 2007 11:28:56 +0200
-Message-ID: <200710031128.56472.johan@herland.net>
-References: <20071001130314.GA5932@lapse.madduck.net>
- <20071002195148.GA14171@lapse.madduck.net>
- <200710030923.22767.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: 7BIT
-Cc: Andy Parkins <andyparkins@gmail.com>,
-	martin f krafft <madduck@madduck.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 11:29:17 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: WIP: asciidoc replacement
+Date: Wed, 3 Oct 2007 12:05:29 +0200
+Message-ID: <1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com>
+References: <Pine.LNX.4.64.0710030133020.28395@racer.site> <7vprzwhkgd.fsf@gitster.siamese.dyndns.org> <39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com> <85abr0y5ua.fsf@lola.goethe.zz>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, msysgit@googlegroups.com
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 12:06:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id0XY-000591-Qw
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 11:29:13 +0200
+	id 1Id17B-0000SX-Ip
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753177AbXJCJ3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 05:29:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753130AbXJCJ3E
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 05:29:04 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:34159 "EHLO smtp.getmail.no"
+	id S1753116AbXJCKFx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 06:05:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbXJCKFx
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:05:53 -0400
+Received: from wincent.com ([72.3.236.74]:46879 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753047AbXJCJ3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 05:29:02 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JPB00M03X0CL800@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 03 Oct 2007 11:29:00 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPB00JMQX09VV00@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 03 Oct 2007 11:28:57 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPB00G7YX08VHD0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 03 Oct 2007 11:28:56 +0200 (CEST)
-In-reply-to: <200710030923.22767.andyparkins@gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1752026AbXJCKFw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 06:05:52 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l93A5WHa014945;
+	Wed, 3 Oct 2007 05:05:32 -0500
+In-Reply-To: <85abr0y5ua.fsf@lola.goethe.zz>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59815>
 
-On Wednesday 03 October 2007, Andy Parkins wrote:
-> I am still having difficult seeing why you want to hide conflicts 
-> in .gitignore.  It's just as possible to get and resolve conflicts in 
-> gitignore as in any other file.
+El 3/10/2007, a las 10:12, David Kastrup escribi=F3:
 
-Agreed. What about the following:
+> What with output in print, HTML, info?
 
-- No special merge rules for .gitignore
+Yes, that's still a problem...
 
-- Teach the .gitignore parser to ignore conflict markers (i.e. regard them 
-as comments)
+> Personally, I think it might make sense to just step away from the
+> AsciiDoc documentation to Docbook: plain text (without cutified
+> formatting control like in AsciiDoc) can be generated _from_ Docbook.
 
+Yes, but editing DocBook (XML) is relatively painful compared to =20
+editing plain text. You either have to rely on a bloated XML-=20
+validating editor or instead ask your doc authors to manually write =20
+valid XML (and I totally agree with Terrence Parr that, "XML makes a =20
+lousy human interface
+"; see <http://www.ibm.com/developerworks/xml/library/x-sbxml.html> =20
+for his full take).
 
-This way, the user will have to merge .gitignore like any other file, but if 
-for some reason, the user is not able to do so (say, git needs to 
-consult .gitignore before the user has had a chance to resolve the 
-conflict), the fallback result will be similar to a union merge, which 
-shouldn't be extremely harmful in .gitignore's case.
+I know that Linus has argued for AsciiDoc because the source *is* the =20
+plain text documentation and is therefore easily readable, but for me =20
+the real benefit lies in the fact that *because* the source is plain =20
+text it is easily edited (ie. that the source is easily *writeable*), =20
+and things like documentation patches are very neat with AsciiDoc.
 
-I do not think we really want to create an auto-merge algorithm 
-for .gitignore, and then depend on this auto-merge algorithm to _always_ 
-succeed with the _correct_ result and _no_ conflicts. These algorithms tend 
-to be extremely tricky to get right, especially for the "always correct" 
-requirement.
-
-<rant>
-Mercurial had a similar problem some months ago. They have their tag 
-definitions stored in a versioned file in the working tree (.hgtags IIRC). 
-But the repo tag state (i.e. Mercurial's opinion at any time as to _which_ 
-tags are defined and _where_ they point) is not deduced from the copy in 
-your current working tree at all. (That would of course limit you to only 
-ba able to refer to tags defined earlier on the particular branch you're 
-currently on.) Instead the repo tag state was found by consulting 
-the "head-most" copy of the .hgtags file (for some definition 
-of "head-most" including non-obvious things like which branch has the most 
-recent commit, etc). The end result was that you could get some _really_ 
-interesting behaviour depending on the order in which you commited totally 
-unrelated changes to two different branches which happened to have 
-different .hgtags files. (E.g.: Given two branches A, B, and  - in .hgtags 
-on branch A - tag Foo is defined to point at rev X, and - in .hgtags on 
-branch B - Foo points at rev Y. Now, whether you got rev X or rev Y when 
-you checked out Foo, depended on which of branch A or branch B had the most 
-recent (totally unrelated, i.e. not even touching .hgtags) commit.)
-
-I (and others) pointed out this bug on their ML, and instead of fixing the 
-braindeadness of allowing branched tag definitions in the repo in the first 
-place, they set about trying to create an auto-merge algorithm for deducing 
-the repo tag state from the various versions/branches of .hgtags found in 
-the repo. I didn't stick around for long enough to see how well this 
-auto-merge algorithm works (the misdesign of tags in Mercurial was one of 
-the reasons I started looking at git), but I would be surprised if 
-Mercurial today has a simple and straightforward way of deducing the repo 
-tag state that _always_ gives _correct_ (i.e. unsurprising) results, even 
-in the corner cases.
-</rant>
-
-
-Have fun! :)
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Cheers,
+Wincent
