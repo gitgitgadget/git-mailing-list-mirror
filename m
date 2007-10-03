@@ -1,76 +1,69 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: WIP: asciidoc replacement
-Date: Wed, 3 Oct 2007 12:52:21 +0200
-Message-ID: <20071003105221.GA11409@uranus.ravnborg.org>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site> <7vprzwhkgd.fsf@gitster.siamese.dyndns.org> <39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com> <85abr0y5ua.fsf@lola.goethe.zz> <1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com> <85k5q4v6jb.fsf@lola.goethe.zz>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git push (mis ?)behavior
+Date: Wed, 3 Oct 2007 12:49:43 +0200
+Message-ID: <20071003104943.GA3017@diana.vm.bytemark.co.uk>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 12:51:22 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Miles Bader <miles@gnu.org>, Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 12:51:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id1oy-0007HQ-Qh
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:51:17 +0200
+	id 1Id1oy-0007HQ-3O
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754451AbXJCKux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 06:50:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754452AbXJCKux
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:50:53 -0400
-Received: from pasmtpa.tele.dk ([80.160.77.114]:56234 "EHLO pasmtpA.tele.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754423AbXJCKuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 06:50:52 -0400
-Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
-	by pasmtpA.tele.dk (Postfix) with ESMTP id 48451801E4C;
-	Wed,  3 Oct 2007 12:50:51 +0200 (CEST)
-Received: by ravnborg.org (Postfix, from userid 500)
-	id 9B99C580D2; Wed,  3 Oct 2007 12:52:21 +0200 (CEST)
+	id S1754359AbXJCKuv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 06:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbXJCKuv
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:50:51 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1613 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754267AbXJCKuu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 06:50:50 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Id1nT-0000ni-00; Wed, 03 Oct 2007 11:49:43 +0100
 Content-Disposition: inline
-In-Reply-To: <85k5q4v6jb.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59820>
 
-Hi David.
-> 
-> But it is not all _all_ easily writeable the moment you try to do
-> something with _structural_ impact.  In fact, it is pretty much
-> impossible for anybody except wizards to do that.  And when the
-> wizards do it, they can't actually document what they have been doing
-> since that would mean cluttering the purported "plain text
-> documentation" with formatting comments.
-When I converted part of the kbuild documentation to ascii doc
-is was a strightforward excercise.
-The txt file was equally readable before and after,
-and the generated HTML looks OK.
+On 2007-10-03 12:25:22 +0200, Wincent Colaiuta wrote:
 
-Up until 3.6 in following link were properly converted:
-http://www.ravnborg.org/kbuild/makefiles.html
+> In any case I think more people need to speak up on the topic so
+> that we can find out what most people really think about changing
+> the default.
 
-But I did not convince asciidoc to generate an index - is it this
-you refer to as magic?
+My vote is for changing it.
 
-Using the kbuild doc as my background I would say that with
-or without asciidoc there were a requirment for a consistent
-style used throughout the file.
-And that style was and are simple to use just by copying
-relevant examples.
+Both "push the current branch" and "push all branches" have their
+uses, and both can be specified explicitly, so no problem there. The
+problem arises when a user expects one default but get another. There
+are two cases:
 
-What asciidoc gave me was a simple syntax chack of what I did.
-I found wrong references when playing with asciidoc as
-one example.
+  1. "push the current branch" is the default, but the user intended
+     to push all branches. She ends up pushing only a subset of what
+     she wanted, which is easily fixed once she notices what's
+     happened.
 
-If the asciidoc replacement prove a success for git I would
-consider suggesting it for the kernel too.
-It would be good to generate some nicer loking online documentation
-and here an asii tool like thing would be a help.
+  2. "push all branches" is the default, but the user intended to push
+     only the current branch. She ends up pushing a superset of what
+     she wanted, which is not easily fixed if she can't be sure that
+     no one else has pulled from the public repo before she notices
+     what's happened.
 
-	Sam
+So it all comes down to case (2) mistakes being much harder to fix
+than case (1) mistakes. Therefore, we should change the default, since
+doing so makes it safer.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
