@@ -1,90 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-diff: complain about >=8 consecutive spaces in initial indent
-Date: Tue, 02 Oct 2007 18:00:27 -0700
-Message-ID: <7vfy0thv10.fsf_-_@gitster.siamese.dyndns.org>
-References: <11899829424040-git-send-email-bfields@citi.umich.edu>
-	<11899829424173-git-send-email-bfields@citi.umich.edu>
-	<1189982942187-git-send-email-bfields@citi.umich.edu>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git-svn merge helper
+Date: Wed, 3 Oct 2007 03:02:33 +0200
+Message-ID: <20071003010233.GA8610@atjola.homenet>
+References: <20070930110550.GA4557@atjola.homenet> <1EF130A4-3CC7-4A42-9166-3539D9A38828@lrde.epita.fr> <20071001025059.GA29323@atjola.homenet> <0D8A7A3C-8F51-482D-9229-29ADC9585760@lrde.epita.fr> <8c5c35580710010113v7d4ad14bt129b7cb12d8f4fb8@mail.gmail.com> <20071002211400.GA992@atjola.homenet> <20071002220458.GA21038@dervierte> <20071002223813.GA3152@atjola.homenet> <20071003004252.GA28495@dervierte>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "J. Bruce Fields" <bfields@citi.umich.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 03:00:45 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 03:02:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcsbR-0008Ok-F8
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 03:00:41 +0200
+	id 1Icsd2-0000KH-Hy
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 03:02:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752413AbXJCBAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Oct 2007 21:00:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752869AbXJCBAd
-	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 21:00:33 -0400
-Received: from rune.pobox.com ([208.210.124.79]:60561 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752357AbXJCBAd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Oct 2007 21:00:33 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id D8A0B14091E;
-	Tue,  2 Oct 2007 21:00:53 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 3FBCE140764;
-	Tue,  2 Oct 2007 21:00:51 -0400 (EDT)
-In-Reply-To: <1189982942187-git-send-email-bfields@citi.umich.edu> (J. Bruce
-	Fields's message of "Sun, 16 Sep 2007 18:49:01 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753038AbXJCBCM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Oct 2007 21:02:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753106AbXJCBCM
+	(ORCPT <rfc822;git-outgoing>); Tue, 2 Oct 2007 21:02:12 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54587 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752929AbXJCBCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Oct 2007 21:02:11 -0400
+Received: (qmail invoked by alias); 03 Oct 2007 01:02:10 -0000
+Received: from i577B85BB.versanet.de (EHLO localhost) [87.123.133.187]
+  by mail.gmx.net (mp031) with SMTP; 03 Oct 2007 03:02:10 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/CArE3md7CSuavZ16pl3wwsnZfA5oEKxxhciv8xM
+	djuMtJDf3uhnbS
+Content-Disposition: inline
+In-Reply-To: <20071003004252.GA28495@dervierte>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59766>
 
-This teaches coloring code in "diff" to detect indent of 8 or
-more places using SP, which can and should (in some projects
-including the kernel and git itself) use HT instead.
+On 2007.10.02 20:42:52 -0400, Steven Walter wrote:
+> On Wed, Oct 03, 2007 at 12:38:13AM +0200, Bj=F6rn Steinbrink wrote:
+> > > The other option is to have a "build" branch.  By example:
+> > >=20
+> > > git checkout build
+> > > git reset --hard master
+> > > git merge mybranch
+> > > make
+> > >=20
+> > > In that way, I have branch with the latest changes from head and =
+the
+> > > changes from mybranch together.  The downside to this method is t=
+hat you
+> > > may have to repeated resolve merges.  Despite the downsides, I fi=
+nd
+> > > these two methods to work quite well.
+> >=20
+> > Thanks, but it makes no difference here, it stil results in a fast
+> > forward. This is a small test case which exhibits the behaviour and
+> > matches my current workflow with git-svn (except for the dcommits):
+> >=20
+> > git init
+> > echo Hi > file1; git add file1; git commit -m file1
+> > git checkout -b branch
+> > echo Hi > file2; git add file2; git commit -m file2
+> > git checkout master
+> > echo Hi > file3; git add file3; git commit -m file3
+> > git checkout branch
+> > git merge master
+> >=20
+> > # Then I'd normally do the following which causes a fast forward
+> > #git checkout master
+> > #git merge branch
+> >=20
+> > # Now I tried this, which also results in a fast-forward:
+> > git checkout -b merge
+> > git reset --hard master
+> > git merge branch
+>=20
+> I believe you misunderstood my suggestion.  In using a "build" branch=
+,
+> you would not merge master into branch, as you did above.  Instead, y=
+ou
+> would create a third, unpublished branch to hold the merge.
 
----
+Almost though so.
 
- * This is primarily meant as a "reminder" patch, and not for
-   inclusion.  We earlier saw a patch to "git-apply" to rewrite
-   them to HT but rejected it, because some projects use "no HT,
-   all SP" policy (e.g. Python).
+> At the same time, I have a slightly better understanding of what it i=
+s
+> you're trying to do.  If you are trying to keep up an SVN-like workfl=
+ow
+> (namely pulling changes from trunk into a branch from time to time),
+> then my solution probably isn't suitable for you.  However, you might
+> consider why you actually /need/ to do that, outside of SVN conventio=
+n.
 
-   We probably should resurrect the earlier "git-apply" patch,
-   and teach it and this patch to selectively enable/disable
-   detection of different kinds of whitespace breakages.
+Due to the same reason for which the branch needs to be public at all,
+there are other people who want to follow it and test it, while there
+are external dependencies that currently change quite often. So I need
+to get the relevant changes from trunk into my branch anyway, even with
+svn conventions put aside (well, unless I force everyone else to merge
+over and over again). And as sometimes others commit to that branch, to=
+o
+(you just have to love that), keeping a separate branch for the final
+merge isn't so nice either, as I'd need to constantly cherry-pick those
+changes then and probably get even more conflicts along the way.
 
- diff.c |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
+That said, Google finally liked some of the search terms that I threw a=
+t
+it and revealed a thread [1] from march, where Linus was torn on whethe=
+r
+or not a --no-fast-forward option should be introduced. That sounds lik=
+e
+it would help here, any chance of getting such a thing?
 
-diff --git a/diff.c b/diff.c
-index 0ee9ea1..647377b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -531,8 +531,10 @@ static void emit_line_with_ws(int nparents,
- 	int i;
- 	int tail = len;
- 	int need_highlight_leading_space = 0;
--	/* The line is a newly added line.  Does it have funny leading
--	 * whitespaces?  In indent, SP should never precede a TAB.
-+	/*
-+	 * The line is a newly added line.  Does it have funny leading
-+	 * whitespaces?  In indent, SP should never precede a TAB, and
-+	 * there shouldn't be more than 8 consecutive spaces.
- 	 */
- 	for (i = col0; i < len; i++) {
- 		if (line[i] == '\t') {
-@@ -545,6 +547,11 @@ static void emit_line_with_ws(int nparents,
- 		else
- 			break;
- 	}
-+	if (0 <= last_space_in_indent && last_tab_in_indent < 0 &&
-+	    8 <= (i - col0)) {
-+		last_tab_in_indent = i;
-+		need_highlight_leading_space = 1;
-+	}
- 	fputs(set, stdout);
- 	fwrite(line, col0, 1, stdout);
- 	fputs(reset, stdout);
+Thanks,
+Bj=F6rn
+
+[1]
+http://lists-archives.org/git/419374-git-merge-and-merge-message.html
