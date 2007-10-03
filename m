@@ -1,12 +1,11 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 4/5] Use run_command() to spawn external diff programs instead of fork/exec.
-Date: Wed,  3 Oct 2007 22:09:39 +0200
-Message-ID: <1191442180-15905-5-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 3/5] Use start_command() to run the filter instead of explicit fork/exec.
+Date: Wed,  3 Oct 2007 22:09:38 +0200
+Message-ID: <1191442180-15905-4-git-send-email-johannes.sixt@telecom.at>
 References: <200709302340.17644.johannes.sixt@telecom.at>
  <1191442180-15905-1-git-send-email-johannes.sixt@telecom.at>
  <1191442180-15905-2-git-send-email-johannes.sixt@telecom.at>
  <1191442180-15905-3-git-send-email-johannes.sixt@telecom.at>
- <1191442180-15905-4-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: gitster@pobox.com
 X-From: git-owner@vger.kernel.org Wed Oct 03 22:09:59 2007
@@ -14,94 +13,77 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdAXc-0003Ig-Dw
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:09:56 +0200
+	id 1IdAXa-0003Ig-6v
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753843AbXJCUJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 16:09:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753700AbXJCUJt
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:09:49 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:33604 "EHLO
+	id S1753384AbXJCUJp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 16:09:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752958AbXJCUJo
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:09:44 -0400
+Received: from smtp3.srv.eunet.at ([193.154.160.89]:33601 "EHLO
 	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752447AbXJCUJm (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1752387AbXJCUJm (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 3 Oct 2007 16:09:42 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 58E9110B4FC;
+	by smtp3.srv.eunet.at (Postfix) with ESMTP id 2F0E210AEF2;
 	Wed,  3 Oct 2007 22:09:41 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.3.1134.gee562
-In-Reply-To: <1191442180-15905-4-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1191442180-15905-3-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59876>
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- diff.c |   38 +++-----------------------------------
- 1 files changed, 3 insertions(+), 35 deletions(-)
+ convert.c |   30 +++++++-----------------------
+ 1 files changed, 7 insertions(+), 23 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 6648e01..30b7544 100644
---- a/diff.c
-+++ b/diff.c
-@@ -9,6 +9,7 @@
- #include "xdiff-interface.h"
- #include "color.h"
- #include "attr.h"
-+#include "run-command.h"
+diff --git a/convert.c b/convert.c
+index 0d5e909..6a8c806 100644
+--- a/convert.c
++++ b/convert.c
+@@ -197,34 +197,18 @@ static int filter_buffer(const char *path, const char *src,
+ 	 * Spawn cmd and feed the buffer contents through its stdin.
+ 	 */
+ 	struct child_process child_process;
+-	int pipe_feed[2];
+ 	int write_err, status;
++	const char *argv[] = { "sh", "-c", cmd, NULL };
  
- #ifdef NO_FAST_WORKING_DIRECTORY
- #define FAST_WORKING_DIRECTORY 0
-@@ -1748,40 +1749,6 @@ static void remove_tempfile_on_signal(int signo)
- 	raise(signo);
- }
+ 	memset(&child_process, 0, sizeof(child_process));
++	child_process.argv = argv;
++	child_process.in = -1;
  
--static int spawn_prog(const char *pgm, const char **arg)
--{
--	pid_t pid;
--	int status;
--
--	fflush(NULL);
--	pid = fork();
--	if (pid < 0)
--		die("unable to fork");
--	if (!pid) {
--		execvp(pgm, (char *const*) arg);
--		exit(255);
+-	if (pipe(pipe_feed) < 0) {
+-		error("cannot create pipe to run external filter %s", cmd);
+-		return 1;
 -	}
 -
--	while (waitpid(pid, &status, 0) < 0) {
--		if (errno == EINTR)
--			continue;
--		return -1;
+-	child_process.pid = fork();
+-	if (child_process.pid < 0) {
+-		error("cannot fork to run external filter %s", cmd);
+-		close(pipe_feed[0]);
+-		close(pipe_feed[1]);
+-		return 1;
 -	}
--
--	/* Earlier we did not check the exit status because
--	 * diff exits non-zero if files are different, and
--	 * we are not interested in knowing that.  It was a
--	 * mistake which made it harder to quit a diff-*
--	 * session that uses the git-apply-patch-script as
--	 * the GIT_EXTERNAL_DIFF.  A custom GIT_EXTERNAL_DIFF
--	 * should also exit non-zero only when it wants to
--	 * abort the entire diff-* session.
--	 */
--	if (WIFEXITED(status) && !WEXITSTATUS(status))
--		return 0;
--	return -1;
--}
--
- /* An external diff command takes:
-  *
-  * diff-cmd name infile1 infile1-sha1 infile1-mode \
-@@ -1834,7 +1801,8 @@ static void run_external_diff(const char *pgm,
- 		*arg++ = name;
- 	}
- 	*arg = NULL;
--	retval = spawn_prog(pgm, spawn_arg);
-+	fflush(NULL);
-+	retval = run_command_v_opt(spawn_arg, 0);
- 	remove_tempfile();
- 	if (retval) {
- 		fprintf(stderr, "external diff died, stopping at %s.\n", name);
+-	if (!child_process.pid) {
+-		dup2(pipe_feed[0], 0);
+-		close(pipe_feed[0]);
+-		close(pipe_feed[1]);
+-		execlp("sh", "sh", "-c", cmd, NULL);
+-		return 1;
+-	}
+-	close(pipe_feed[0]);
++	if (start_command(&child_process))
++		return error("cannot fork to run external filter %s", cmd);
+ 
+-	write_err = (write_in_full(pipe_feed[1], src, size) < 0);
+-	if (close(pipe_feed[1]))
++	write_err = (write_in_full(child_process.in, src, size) < 0);
++	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+ 		error("cannot feed the input to external filter %s", cmd);
 -- 
 1.5.3.3.1134.gee562
