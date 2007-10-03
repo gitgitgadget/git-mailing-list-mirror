@@ -1,72 +1,76 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Mention 'cpio' dependency in INSTALL
-Date: Wed, 3 Oct 2007 09:40:07 +0200
-Message-ID: <20071003074007.GA15339@genesis.frugalware.org>
-References: <3f4fd2640710011228w61ce34b5ve47ea529eed384fd@mail.gmail.com> <200710012342.37352.johan@herland.net> <3f4fd2640710021409q104a4204r522391912d5b5c8c@mail.gmail.com> <200710030142.30062.johan@herland.net> <7v1wcdjbq6.fsf@gitster.siamese.dyndns.org>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: Re: [PATCH 1/2] Change "refs/" references to symbolic constants
+Date: Wed, 3 Oct 2007 08:40:30 +0100
+Message-ID: <200710030840.31405.andyparkins@gmail.com>
+References: <200709291359.59147.andyparkins@gmail.com> <200710020941.05288.andyparkins@gmail.com> <7v1wcdmm7p.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+HP7ph2BbKc20aGI"
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Reece Dunn <msclrhd@googlemail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 09:40:30 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 03 09:41:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcyqK-0002XH-27
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:40:28 +0200
+	id 1Icyqy-0002l6-An
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 09:41:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756416AbXJCHkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 03:40:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756320AbXJCHkO
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:40:14 -0400
-Received: from virgo.iok.hu ([193.202.89.103]:43375 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756170AbXJCHkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 03:40:12 -0400
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id CF64D1B2511;
-	Wed,  3 Oct 2007 09:40:10 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 59E856FD40;
-	Wed,  3 Oct 2007 09:40:08 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 87BFC13A4077; Wed,  3 Oct 2007 09:40:07 +0200 (CEST)
+	id S1752869AbXJCHkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 03:40:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753029AbXJCHkh
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 03:40:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:65023 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752428AbXJCHkg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 03:40:36 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so71765ugc
+        for <git@vger.kernel.org>; Wed, 03 Oct 2007 00:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=mdaakN82b6uY8EecDMDOE+9hLIdvl4/RzZ+mqfGVR6o=;
+        b=E2lo46jCJNnvNpNlhPVfBwjq30IcLLnWY+fmRbtCJVkE/xfGTsAJ6VJmuZhfbpiR8ZcCX3VVV/x7slUcrIbPhY88B3USXIAN3MNI19mWmfMd+pDCrclZiBlya42ffJzgMuNEUAVEDNIC4r2ZAnIq8AwtdHBWqDZX8+rC6/mSTGE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=tSRlbjzEr5p4+6ON9smsiEvrcL2NWUcUurYakifKGxL7F0PJmS9ivX3zpDfiBfJFZQMgsbRHbjdm28yx146OL0Hpl9GXdVCMqgwUmHMfvBUn+awFTTuHtGuL/lTgdMwVqPbAnDmbCOWrykIz5qHNJ2lRwHGef5PLgggNB9atGTY=
+Received: by 10.66.219.16 with SMTP id r16mr142993ugg.1191397234709;
+        Wed, 03 Oct 2007 00:40:34 -0700 (PDT)
+Received: from dvr.360vision.com ( [194.70.53.227])
+        by mx.google.com with ESMTPS id b33sm108664ika.2007.10.03.00.40.32
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 03 Oct 2007 00:40:33 -0700 (PDT)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7v1wcdmm7p.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7v1wcdjbq6.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59803>
+
+On Tuesday 2007 October 02, Junio C Hamano wrote:
+> Andy Parkins <andyparkins@gmail.com> writes:
+> > I noticed a couple of places where memcmp() has been used where
+> > prefixcmp() would work fine.  I'm tempted to change them too - what do
+> > you think? Perhaps a separate patch?
+>
+> In general, probably it is preferable to have a separate
+> "preliminary patch" to normalize the existing code without using
+> the new infrastructure (i.e. REF_* macros), and then to have the
+> main patch.  That way would make the main patch more about
+> mechanical conversion, which would be easier to verify
+> independently.
+
+I only noticed them memcmp() use while I was reviewing the PATH_REFS patch :-)  
+So making it preliminary would have meant travelling backwards in time.
+
+I imagine I can do a bit of rebase-interactive to rearrange should that be the 
+route you'd like me to go.  Your call.
 
 
---+HP7ph2BbKc20aGI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Tue, Oct 02, 2007 at 05:14:25PM -0700, Junio C Hamano <gitster@pobox.com> wrote:
-> Are there other commands we rely on that may not be universally
-> installed?  I myself consider "cut" to be in the category, but
-> other than that I do not think of anything offhand.
-
-when using git in a chroot, i obviously had coreutils/sed/grep installed
-and the only "extra" package i needed (besides the curl an openssl libs)
-was cpio
-
-- VMiklos
-
---+HP7ph2BbKc20aGI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHA0dXe81tAgORUJYRAiPVAJ0ZO4B3QYM9pqZRMiLr3CfJbzpGAwCfTnYL
-EWCt4kRAEPI1envDRxvwUdA=
-=CIWV
------END PGP SIGNATURE-----
-
---+HP7ph2BbKc20aGI--
+Andy
+-- 
+Dr Andy Parkins, M Eng (hons), MIET
+andyparkins@gmail.com
