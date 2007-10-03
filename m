@@ -1,161 +1,64 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH] Port builtin-add.c to use the new option parser.
-Date: Wed,  3 Oct 2007 17:45:02 -0400
-Message-ID: <1191447902-27326-2-git-send-email-krh@redhat.com>
-References: <1191447902-27326-1-git-send-email-krh@redhat.com>
+From: Pavel Roskin <proski@gnu.org>
+Subject: Re: [PATCH] Support tags in uncommit - use git_id instead of
+	rev_parse
+Date: Wed, 03 Oct 2007 17:44:52 -0400
+Message-ID: <1191447892.31052.5.camel@dv>
+References: <20070930172647.18972.49369.stgit@tt.roinet.com>
+	 <b0943d9e0710011500o1bd621a4q10dfe0468c8795e2@mail.gmail.com>
+	 <1191362591.26879.3.camel@dv>
+	 <b0943d9e0710031335o1c7f3a10i6f2055b76376bfd4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com,
-	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 23:45:58 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 23:46:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdC2C-0007DZ-Ee
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:45:36 +0200
+	id 1IdC2R-0007LH-2v
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:45:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449AbXJCVp2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 17:45:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754661AbXJCVp2
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:45:28 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:48601 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754449AbXJCVp1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 17:45:27 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id l93Lj9u2018634;
-	Wed, 3 Oct 2007 17:45:09 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l93Lj9v2025623;
-	Wed, 3 Oct 2007 17:45:09 -0400
-Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l93Lj7tV000495;
-	Wed, 3 Oct 2007 17:45:08 -0400
-X-Mailer: git-send-email 1.5.3.4.1152.geb85a-dirty
-In-Reply-To: <1191447902-27326-1-git-send-email-krh@redhat.com>
+	id S1753835AbXJCVpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 17:45:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755242AbXJCVpi
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:45:38 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:45403 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754661AbXJCVph (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 17:45:37 -0400
+Received: from proski by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <proski@gnu.org>)
+	id 1IdC1M-0006sS-VY
+	for git@vger.kernel.org; Wed, 03 Oct 2007 17:44:45 -0400
+Received: from proski by gnu.org with local (Exim 4.66)
+	(envelope-from <proski@gnu.org>)
+	id 1IdC1V-00089S-30; Wed, 03 Oct 2007 17:44:53 -0400
+In-Reply-To: <b0943d9e0710031335o1c7f3a10i6f2055b76376bfd4@mail.gmail.com>
+X-Mailer: Evolution 2.10.3 (2.10.3-4.fc7) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59895>
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
----
- builtin-add.c |   64 ++++++++++++++++++-------------------------------=
--------
- 1 files changed, 21 insertions(+), 43 deletions(-)
+On Wed, 2007-10-03 at 21:35 +0100, Catalin Marinas wrote:
 
-diff --git a/builtin-add.c b/builtin-add.c
-index 966e145..66fd99d 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -13,6 +13,7 @@
- #include "commit.h"
- #include "revision.h"
- #include "run-command.h"
-+#include "parse-options.h"
-=20
- static const char builtin_add_usage[] =3D
- "git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--refresh] [--] <fi=
-lepattern>...";
-@@ -160,21 +161,30 @@ static struct lock_file lock_file;
- static const char ignore_error[] =3D
- "The following paths are ignored by one of your .gitignore files:\n";
-=20
-+static int verbose =3D 0, show_only =3D 0, ignored_too =3D 0, refresh_=
-only =3D 0;
-+static int add_interactive =3D 0;
-+
-+static struct option builtin_add_options[] =3D {
-+	{ OPTION_BOOLEAN, "interactive", 'i', &add_interactive },
-+	{ OPTION_BOOLEAN, NULL, 'n', &show_only },
-+	{ OPTION_BOOLEAN, NULL, 'f', &ignored_too },
-+	{ OPTION_BOOLEAN, NULL, 'v',&verbose },
-+	{ OPTION_BOOLEAN, NULL, 'u',&take_worktree_changes },
-+	{ OPTION_BOOLEAN, "refresh", 0, &refresh_only }
-+};
-+
- int cmd_add(int argc, const char **argv, const char *prefix)
- {
- 	int i, newfd;
--	int verbose =3D 0, show_only =3D 0, ignored_too =3D 0, refresh_only =3D=
- 0;
- 	const char **pathspec;
- 	struct dir_struct dir;
--	int add_interactive =3D 0;
-=20
--	for (i =3D 1; i < argc; i++) {
--		if (!strcmp("--interactive", argv[i]) ||
--		    !strcmp("-i", argv[i]))
--			add_interactive++;
--	}
-+	i =3D parse_options(argc, argv, builtin_add_options,
-+			  ARRAY_SIZE(builtin_add_options),
-+			  builtin_add_usage);
-+
- 	if (add_interactive) {
--		if (argc !=3D 2)
-+		if (i > 0)
- 			die("add --interactive does not take any parameters");
- 		exit(interactive_add());
- 	}
-@@ -183,51 +193,19 @@ int cmd_add(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 	newfd =3D hold_locked_index(&lock_file, 1);
-=20
--	for (i =3D 1; i < argc; i++) {
--		const char *arg =3D argv[i];
--
--		if (arg[0] !=3D '-')
--			break;
--		if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--		if (!strcmp(arg, "-n")) {
--			show_only =3D 1;
--			continue;
--		}
--		if (!strcmp(arg, "-f")) {
--			ignored_too =3D 1;
--			continue;
--		}
--		if (!strcmp(arg, "-v")) {
--			verbose =3D 1;
--			continue;
--		}
--		if (!strcmp(arg, "-u")) {
--			take_worktree_changes =3D 1;
--			continue;
--		}
--		if (!strcmp(arg, "--refresh")) {
--			refresh_only =3D 1;
--			continue;
--		}
--		usage(builtin_add_usage);
--	}
--
- 	if (take_worktree_changes) {
- 		if (read_cache() < 0)
- 			die("index file corrupt");
--		add_files_to_cache(verbose, prefix, argv + i);
-+		add_files_to_cache(verbose, prefix, argv);
- 		goto finish;
- 	}
-=20
--	if (argc <=3D i) {
-+	if (i =3D=3D 0) {
- 		fprintf(stderr, "Nothing specified, nothing added.\n");
- 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
- 		return 0;
- 	}
--	pathspec =3D get_pathspec(prefix, argv + i);
-+	pathspec =3D get_pathspec(prefix, argv);
-=20
- 	if (refresh_only) {
- 		refresh(verbose, pathspec);
---=20
-1.5.2.5
+> Without this patch, the 'stg uncommit -t patch' fails with 'Unknown
+> revision: patch'. With the patch applied, it still fails but with
+> 'Commit ... does not have exactly one parent'. I don't say that the
+> first one is good but I don't think the latter is clearer. The 'stg
+> uncommit --help' states that the '--to' option takes a commit argument
+> but if one passes a patch name the error message gets pretty
+> confusing.
+
+Actually, 'Commit ... does not have exactly one parent' means that stg
+misinterpreted the patch name as some non-existing hash and started
+iterating back until it hit the first merge.
+
+Perhaps stgit should make sure that the hash is valid before walking the
+commit tree.  If it's not, stgit could provide a better message.
+
+-- 
+Regards,
+Pavel Roskin
