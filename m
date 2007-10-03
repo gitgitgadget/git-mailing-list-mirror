@@ -1,76 +1,92 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 03 Oct 2007 17:57:56 +0900
-Message-ID: <buobqbgmv6z.fsf@dhapc248.dev.necel.com>
-References: <20070927130447.GH10289@artemis.corp>
-	<7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
-	<buoprzwn5qm.fsf@dhapc248.dev.necel.com>
-	<20071003073554.GA8110@artemis.corp>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: merging .gitignore
+Date: Wed, 03 Oct 2007 10:58:45 +0200
+Message-ID: <20071003085845.GB12042@artemis.corp>
+References: <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp> <20071002205618.GA19097@lapse.madduck.net> <20071002210748.GC19710@artemis.corp> <20071002214919.GA21260@lapse.madduck.net> <20071002220749.GE19710@artemis.corp> <20071003084259.GA25838@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 10:58:40 2007
+Content-Type: multipart/signed; boundary="p4qYPpj5QlsIQJ0K";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: martin f krafft <madduck@debian.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 10:58:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id03y-0003gk-MN
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:58:39 +0200
+	id 1Id04F-0003mw-Qc
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:58:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574AbXJCI6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 04:58:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbXJCI6b
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:58:31 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:43491 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753109AbXJCI6a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 04:58:30 -0400
-Received: from relay11.aps.necel.com ([10.29.19.46])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l938vmiB026201;
-	Wed, 3 Oct 2007 17:57:56 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay11.aps.necel.com with ESMTP; Wed, 3 Oct 2007 17:57:56 +0900
-Received: from dhapc248.dev.necel.com ([10.114.98.116] [10.114.98.116]) by relay31.aps.necel.com with ESMTP; Wed, 3 Oct 2007 17:57:56 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 0A524458; Wed,  3 Oct 2007 17:57:56 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <20071003073554.GA8110@artemis.corp> (Pierre Habouzit's message of "Wed\, 03 Oct 2007 09\:35\:54 +0200")
+	id S1755570AbXJCI6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 04:58:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755590AbXJCI6r
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:58:47 -0400
+Received: from pan.madism.org ([88.191.52.104]:45141 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755058AbXJCI6q (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 04:58:46 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id B55AE2323C;
+	Wed,  3 Oct 2007 10:58:45 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 6C308342E59; Wed,  3 Oct 2007 10:58:45 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	martin f krafft <madduck@debian.org>, git@vger.kernel.org,
+	Andy Parkins <andyparkins@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Disposition: inline
+In-Reply-To: <20071003084259.GA25838@lapse.madduck.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59812>
 
-Pierre Habouzit <madcoder@debian.org> writes:
->   There definitely is a point: with the current behaviour you sometimes
-> end up pushing more than what you meant, with sometimes WIP that you
-> intend to rebase, and it hurts. Git porcelains should help you avoid to
-> shoot yourself in the foot, hence I think that (especially to git
-> newcomers), the current default _is_ dangerous.
 
-What's "dangerous" for newbies, often ends up being what doesn't
-correspond with their mental model.  I think the current default
-behavior without any <refspec> specified corresponds well to the
-operation of many other git commands (and unix command) in similar
-circumstances:  If you don't specify something to operate on, it
-essentially uses a wild card and operates on "every reasonable thing"
-(e.g., consider "git commit FILE" versus "git commit").
+--p4qYPpj5QlsIQJ0K
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Even if the default were changed, it could very well end up causing many
-problems because it _didn't_ push as many heads as the user thought it
-would (I don't think I'm the only one that might expect the default
-action to be "push everything").  When I was a git newbie, I sometimes
-got into situations where I screwed something up because heads I thought
-had been pushed to another system actually hadn't been.
+On Wed, Oct 03, 2007 at 08:42:59AM +0000, martin f krafft wrote:
+> also sprach Pierre Habouzit <madcoder@debian.org> [2007.10.02.2307 +0100]:
+> >      (a*)
+> >     /    \
+> >    v      v
+> > (ab*)    (ac*)
+> >     \    /
+> >      v  v
+> >      ????
+> >=20
+> >   This is a perfectly sensible history. Or I miss sth on your end.
+>=20
+> So these are revs, not branches?
 
-To the extent that a command _is_ "dangerous", there's always a tradeoff
-between convenience and "danger".  Some systems (e.g. those aimed at
-newbies) might have as a goal to do the absolute minimum with every
-command and always, always, err on the side of safety.  I don't think git
-is that system.
+  Yes, those are the contents of the .gitignores on refs, on top is the
+common ancestor, and you have two branches that you want to merge into
+one. I pretend that if in one branch the content of the .gitignore was
+a* and becomes ab* and than on the other it was a* and became ac*, then
+you cannot know how to merge.
 
--Miles
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
--- 
-Yo mama's so fat when she gets on an elevator it HAS to go down.
+--p4qYPpj5QlsIQJ0K
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHA1nFvGr7W6HudhwRAiZHAJ9niNrvpERbT8hVXQVXRN+8/SD2xQCeJqz5
+7SBhzUHQcS1V9cxX4uzDOIw=
+=rqzr
+-----END PGP SIGNATURE-----
+
+--p4qYPpj5QlsIQJ0K--
