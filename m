@@ -1,99 +1,62 @@
-From: Keith Packard <keithp@keithp.com>
-Subject: [PATCH] Must not modify the_index.cache as it may be passed to
-	realloc at some point.
-Date: Tue, 02 Oct 2007 22:44:15 -0700
-Message-ID: <1191390255.16292.2.camel@koto.keithp.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-OdHA507jmKX1EnStEeqK"
-Cc: keithp@keithp.com
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 07:45:30 2007
+From: Perry Wagle <wagle@cs.indiana.edu>
+Subject: Re: Clone corruption to G4 MacOSX
+Date: Tue, 2 Oct 2007 22:50:23 -0700
+Message-ID: <AF1E5F5F-84BF-47DC-B893-23B459B75193@cs.indiana.edu>
+References: <82638874-6766-4DCD-BF5B-3893F9B5046F@cs.indiana.edu> <20071003052834.GC13738@fattire.cabal.ca>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Kyle McMartin <kyle@mcmartin.ca>
+X-From: git-owner@vger.kernel.org Wed Oct 03 07:50:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icx2w-0006wF-NG
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 07:45:23 +0200
+	id 1Icx83-00085N-4A
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 07:50:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826AbXJCFpP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 01:45:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751857AbXJCFpO
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 01:45:14 -0400
-Received: from home.keithp.com ([63.227.221.253]:3434 "EHLO keithp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751705AbXJCFpN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 01:45:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 996BA114205
-	for <git@vger.kernel.org>; Tue,  2 Oct 2007 22:45:11 -0700 (PDT)
-X-Virus-Scanned: Debian amavisd-new at keithp.com
-Received: from keithp.com ([127.0.0.1])
-	by localhost (keithp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 2E03B83aSIuA; Tue,  2 Oct 2007 22:45:08 -0700 (PDT)
-Received: by keithp.com (Postfix, from userid 1033)
-	id 80A5C114204; Tue,  2 Oct 2007 22:45:08 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	by keithp.com (Postfix) with ESMTP id 6D6051141F7;
-	Tue,  2 Oct 2007 22:45:08 -0700 (PDT)
-X-Mailer: Evolution 2.12.0 
+	id S1751851AbXJCFub (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 01:50:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751016AbXJCFub
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 01:50:31 -0400
+Received: from newman.cs.indiana.edu ([129.79.247.4]:45344 "EHLO
+	newman.cs.indiana.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259AbXJCFua (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 01:50:30 -0400
+Received: from smtp.cs.indiana.edu (smtp.cs.indiana.edu [129.79.247.7])
+	by newman.cs.indiana.edu (8.13.1/8.13.1/IUCS_2.80) with ESMTP id l935oSQZ010990;
+	Wed, 3 Oct 2007 01:50:29 -0400
+Received: from [192.168.1.65] (pool-71-111-64-33.ptldor.dsl-w.verizon.net [71.111.64.33])
+	(authenticated bits=0)
+	by rage.cs.indiana.edu (8.13.1/8.13.1/IUCS_SMTP_Alternate_Port_1.4) with ESMTP id l935oOx8005302
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 3 Oct 2007 01:50:28 -0400
+In-Reply-To: <20071003052834.GC13738@fattire.cabal.ca>
+X-Mailer: Apple Mail (2.752.2)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59792>
+
+Yeah, that'd be it.  Thanks!
+
+-- Perry
 
 
---=-OdHA507jmKX1EnStEeqK
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Oct 2, 2007, at 10:28 PM, Kyle McMartin wrote:
 
-The index cache is not static, growing as new entries are added. If entries
-are added after prune_cache is called, cache will no longer point at the
-base of the allocation, and realloc will not be happy.
-
-I verified that this was the only place in the current source which modifie=
-d
-any index_state.cache elements aside from the alloc/realloc calls in read-c=
-ache by
-changing the type of the element to 'struct cache_entry ** const cache' and
-recompiling.
-
-A more efficient patch would create a separate 'cache_base' value to track
-the allocation and then fix things up when reallocation was necessary,
-instead of the brute-force memmove used here.
----
- builtin-ls-files.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin-ls-files.c b/builtin-ls-files.c
-index 6c1db86..0028b8a 100644
---- a/builtin-ls-files.c
-+++ b/builtin-ls-files.c
-@@ -280,7 +280,7 @@ static void prune_cache(const char *prefix)
-=20
-        if (pos < 0)
-                pos =3D -pos-1;
--       active_cache +=3D pos;
-+       memmove (active_cache, active_cache + pos, (active_nr - pos) * size=
-of (struct cache_entry *));
-        active_nr -=3D pos;
-        first =3D 0;
-        last =3D active_nr;
---=20
-1.5.3.3.131.g34c6d-dirty
-
---=20
-keith.packard@intel.com
-
---=-OdHA507jmKX1EnStEeqK
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHAywuQp8BWwlsTdMRAvswAKDPCUlgA0otRI49sDtGN0S/a+dZdgCfTPJ2
-9uleBKhvPG9pR6xBb1OU574=
-=ZW8n
------END PGP SIGNATURE-----
-
---=-OdHA507jmKX1EnStEeqK--
+> On Tue, Oct 02, 2007 at 09:29:07PM -0700, Perry Wagle wrote:
+>> If I clone Linus's repository to a x86 machine, I get no corruption.
+>>
+>> My wild ass guess is that being big-endian is causing trouble.
+>>
+>
+> The problem is MacOSX uses a case-insensitive filesystem by default...
+>
+> Cheers,
+> 	Kyle
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
