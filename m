@@ -1,73 +1,78 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 3 Oct 2007 08:47:40 +0200
-Message-ID: <0F838789-B02F-4081-8C75-ED06B551D4C0@wincent.com>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 08:48:02 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 3 Oct 2007 02:54:15 -0400
+Message-ID: <20071003065414.GA13737@coredump.intra.peff.net>
+References: <7vfy11yyxk.fsf@gitster.siamese.dyndns.org> <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net> <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net> <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz> <20071002161114.GC6828@coredump.intra.peff.net> <86ve9p32cp.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 08:54:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icy1V-0005UX-9n
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 08:47:57 +0200
+	id 1Icy7m-0007Fd-Je
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 08:54:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbXJCGrt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 02:47:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751539AbXJCGrt
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 02:47:49 -0400
-Received: from wincent.com ([72.3.236.74]:46293 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751162AbXJCGrt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 02:47:49 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l936lgfU010155;
-	Wed, 3 Oct 2007 01:47:43 -0500
-In-Reply-To: <buoprzwn5qm.fsf@dhapc248.dev.necel.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751790AbXJCGyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 02:54:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751851AbXJCGyS
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 02:54:18 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3698 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751739AbXJCGyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 02:54:17 -0400
+Received: (qmail 12547 invoked by uid 111); 3 Oct 2007 06:54:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 02:54:16 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 02:54:15 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59797>
 
-El 3/10/2007, a las 7:10, Miles Bader escribi=F3:
+On Tue, Oct 02, 2007 at 07:28:19PM -0700, Linus Torvalds wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> I think it is sensible to have an option to make it push only the
->> current branch.  I am not sure if it is sensible to make that the
->> default.
->
-> I really like the current default, it matches my mental model well:  =
-I
-> generally use "push" to mean "synchronize the remote repository =20
-> with my
-> current one"; if multiple branches have changed, I want those changes
-> propagated too.
->
-> I think changing it would be a bad idea, it just seems a pointlessly
-> incompatible change.  The reasons I've seen offered on this thread fo=
-r
-> changing the default seem pretty weak, e.g., "it's more conservative"
-> (but more annoying)
+> Sadly, that's not the case. It *does* seem to beat the current 
+> implementation, but it's not "beat the pants off". It looks like an 
+> improvement of about 15%, which is nothing to sneeze at, but it's not an 
+> order-of-magnitude improvement either.
+> 
+> Here's a test-patch. I don't guarantee anything, except that when I did 
+> the timings I also did a "wc" on the result, and they matched..
 
-It could be more annoying for some, yet a life saver for others. So =20
-before changing the default obviously we would need to get a clear =20
-idea of whether or not the majority would approve of such a move. =20
-Such differences of opinion would be easily accommodated if the =20
-default behaviour were made configurable. That way everyone can have =20
-the behaviour they want.
+I get slightly better speedups with my pathological case (around 30%):
 
-Cheers,
-Wincent
+Before:
+  $ /usr/bin/time git-diff --raw -M -l0 06d288^ 06d288 >/dev/null
+  105.38user 3.65system 2:14.90elapsed 80%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (15432major+542627minor)pagefaults 0swaps
 
-PS. I'm the one who mentioned SVK, but I didn't offer it as a reason =20
-to justify the change (I agree, more than "weak" it's not really any =20
-reason at all); I  just mentioned to indicate why it is that the =20
-current behaviour caught me off guard.
+After:
+  $ /usr/bin/time git-diff --raw -M -l0 06d288^ 06d288 >/dev/null
+  71.70user 3.47system 1:40.43elapsed 74%CPU (0avgtext+0avgdata 0maxresident)k
+  0inputs+0outputs (15065major+551778minor)pagefaults 0swaps
+
+But yes, it's not the order of magnitude we were looking for.
+
+> 	[torvalds@woody linux]$ time git diff -l0 --stat -C v2.6.22.. | wc
+
+I found less noise in the timing by using --raw, since the patch
+computation takes an appreciable amount of time.
+
+> but the diff is fairly simple, so if somebody will go over it and say 
+> whether it's likely to be *correct* too, that 15% may well be worth it.
+
+Patch looks correct, and it produces correct results on my (admittedly
+limited) test data.
+
+I think it's worth applying (though I agree that a comment on the
+assumption of a zero "cnt" at the end is worth adding) unless some
+drastically different solution comes along (e.g., David's idea to try
+avoiding the outer O(n^2) loop). But I don't think there is much more to
+be gained from a different approach to comparing the two hash tables.
+
+-Peff
