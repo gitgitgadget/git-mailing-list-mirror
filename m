@@ -1,99 +1,63 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: WIP: asciidoc replacement
-Date: Wed, 03 Oct 2007 16:01:44 +0200
-Message-ID: <85bqbgthyv.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
-	<7vprzwhkgd.fsf@gitster.siamese.dyndns.org>
-	<39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com>
-	<85abr0y5ua.fsf@lola.goethe.zz>
-	<1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com>
-	<85k5q4v6jb.fsf@lola.goethe.zz> <20071003134741.GQ21675@fieldses.org>
+From: "Tom Clarke" <tom@u2i.com>
+Subject: Re: [PATCH] Adding rebase merge strategy
+Date: Wed, 3 Oct 2007 16:11:14 +0200
+Message-ID: <550f9510710030711p195378c5t2739292d31a12de@mail.gmail.com>
+References: <Pine.LNX.4.64.0709281751390.28395@racer.site>
+	 <11912513203420-git-send-email-tom@u2i.com>
+	 <7vr6ker1lf.fsf@gitster.siamese.dyndns.org>
+	 <550f9510710011441t1eb50352ofc8db77f79d794d5@mail.gmail.com>
+	 <87ejgescnb.wl%cworth@cworth.org>
+	 <550f9510710011521s126ca747v956a6f80182444bb@mail.gmail.com>
+	 <20071001223050.GE2137@spearce.org>
+	 <Pine.LNX.4.64.0710021056280.28395@racer.site>
+	 <550f9510710020329m7917dc9m2bb6cfc4055fea84@mail.gmail.com>
+	 <7vr6kdl5rj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 16:01:35 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Carl Worth" <cworth@cworth.org>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 16:11:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id4n7-0006BB-2y
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 16:01:33 +0200
+	id 1Id4wh-0001zd-9C
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 16:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754761AbXJCOBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 10:01:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753616AbXJCOBY
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 10:01:24 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:51268 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232AbXJCOBX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 10:01:23 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Id4m6-0002co-TS; Wed, 03 Oct 2007 10:00:31 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B7BDA1C4CE11; Wed,  3 Oct 2007 16:01:44 +0200 (CEST)
-In-Reply-To: <20071003134741.GQ21675@fieldses.org> (J. Bruce Fields's message of "Wed\, 3 Oct 2007 09\:47\:41 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1754156AbXJCOLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 10:11:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753936AbXJCOLS
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 10:11:18 -0400
+Received: from py-out-1112.google.com ([64.233.166.182]:59465 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922AbXJCOLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 10:11:17 -0400
+Received: by py-out-1112.google.com with SMTP id u77so8505328pyb
+        for <git@vger.kernel.org>; Wed, 03 Oct 2007 07:11:15 -0700 (PDT)
+Received: by 10.35.63.2 with SMTP id q2mr11211655pyk.1191420674369;
+        Wed, 03 Oct 2007 07:11:14 -0700 (PDT)
+Received: by 10.35.86.2 with HTTP; Wed, 3 Oct 2007 07:11:14 -0700 (PDT)
+In-Reply-To: <7vr6kdl5rj.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59841>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+On 10/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+> I do not offhand think of a place other than "git pull" that
+> would make sense to sometimes be able to rebase when you
+> normally use merge, so I am inclined to say it would be easier
+> to teach that "'git pull' is usually a 'git fetch' followed by
+> 'git merge', but in certain workflow it is handier to 'git
+> fetch' and then 'git rebase', and here are the ways to get the
+> rebasing behaviour...".
 
-> On Wed, Oct 03, 2007 at 12:25:44PM +0200, David Kastrup wrote:
->
->> The problem is that we are not editing plain text, but Docbook
->> source masquerading as plain text.
->
-> I do a fair amount of editing of the asciidoc source, but 99% of it
-> is done by just blind imitation of what's already there.
+I agree. I'll revisit teaching pull to be able to use rebase.
 
-But not everything is already there, and when something surprising
-happens, there is little chance to see how it came about.
+Thanks,
 
-> Maybe my experience would be the same with Docbook--I have no idea,
-> never having worked with it--but if you're suggesting that knowledge
-> of Docbook is a prerequisite for working with asciidoc, that
-> certainly hasn't been my experience.
-
-"making use of" and "working with" are two different things.
-
->> But it is not all _all_ easily writeable the moment you try to do
->> something with _structural_ impact.  In fact, it is pretty much
->> impossible for anybody except wizards to do that.  And when the
->> wizards do it, they can't actually document what they have been
->> doing since that would mean cluttering the purported "plain text
->> documentation" with formatting comments.
->
-> I'm not sure what you're talking about here.  Example?
-
-Try including the manual pages as a (properly linked when man pages
-are referenced) appendix in the user manual, so that the printed form
-(or PDF) of the user manual is a single coherent document with all
-information inside.  That's what I tried for about a week, digging
-into the various available (and unavailable) documentation and then
-postponing the project indefinitely because it both exceeded my
-current capability as well as demonstrating that there was no
-reasonably outlined path for acquiring the necessary skills.
-
-In Texinfo, this takes few commands, all of which are well-documented
-and in a reasonable place in the Texinfo manual (which is all you need
-to consult in order to write Texinfo documents).
-
-But with git's AsciiDoc information, not only is the required
-information scattered through half a dozen of different manuals all
-describing completely different systems, but the necessary other
-documentation is, at best, only mentioned in passing in every single
-relevant document.  So while you may know where you want to start and
-end your journey, there is nothing which would tell you how to get
-from start to end.  You have to randomly pick your road until you may
-or may not find something closer to the end.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+-Tom
