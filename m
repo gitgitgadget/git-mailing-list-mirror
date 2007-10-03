@@ -1,90 +1,76 @@
-From: martin f krafft <madduck@debian.org>
-Subject: Re: merging .gitignore
-Date: Wed, 3 Oct 2007 09:42:59 +0100
-Organization: The Debian project
-Message-ID: <20071003084259.GA25838@lapse.madduck.net>
-References: <Pine.LNX.4.64.0710011457120.28395@racer.site> <20071001130314.GA5932@lapse.madduck.net> <200710011448.17701.andyparkins@gmail.com> <20071002195148.GA14171@lapse.madduck.net> <20071002201318.GD16776@artemis.corp> <20071002204748.GA19710@artemis.corp> <20071002205618.GA19097@lapse.madduck.net> <20071002210748.GC19710@artemis.corp> <20071002214919.GA21260@lapse.madduck.net> <20071002220749.GE19710@artemis.corp>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: git push (mis ?)behavior
+Date: Wed, 03 Oct 2007 17:57:56 +0900
+Message-ID: <buobqbgmv6z.fsf@dhapc248.dev.necel.com>
+References: <20070927130447.GH10289@artemis.corp>
+	<7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+	<buoprzwn5qm.fsf@dhapc248.dev.necel.com>
+	<20071003073554.GA8110@artemis.corp>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="bg08WKrSYDhXBjb5"
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Andy Parkins <andyparkins@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 10:42:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 10:58:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iczo4-0006C5-Gf
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:42:12 +0200
+	id 1Id03y-0003gk-MN
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:58:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915AbXJCImB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 04:42:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753878AbXJCImB
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:42:01 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:42960 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753271AbXJCImA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 04:42:00 -0400
-Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 7BF47BF42;
-	Wed,  3 Oct 2007 10:41:46 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 07C3D3FDED; Wed,  3 Oct 2007 09:42:59 +0100 (BST)
-Content-Disposition: inline
-In-Reply-To: <20071002220749.GE19710@artemis.corp>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4460/Wed Oct  3 08:57:50 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1755574AbXJCI6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 04:58:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbXJCI6b
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:58:31 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:43491 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753109AbXJCI6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 04:58:30 -0400
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l938vmiB026201;
+	Wed, 3 Oct 2007 17:57:56 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay11.aps.necel.com with ESMTP; Wed, 3 Oct 2007 17:57:56 +0900
+Received: from dhapc248.dev.necel.com ([10.114.98.116] [10.114.98.116]) by relay31.aps.necel.com with ESMTP; Wed, 3 Oct 2007 17:57:56 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 0A524458; Wed,  3 Oct 2007 17:57:56 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <20071003073554.GA8110@artemis.corp> (Pierre Habouzit's message of "Wed\, 03 Oct 2007 09\:35\:54 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59811>
 
+Pierre Habouzit <madcoder@debian.org> writes:
+>   There definitely is a point: with the current behaviour you sometimes
+> end up pushing more than what you meant, with sometimes WIP that you
+> intend to rebase, and it hurts. Git porcelains should help you avoid to
+> shoot yourself in the foot, hence I think that (especially to git
+> newcomers), the current default _is_ dangerous.
 
---bg08WKrSYDhXBjb5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What's "dangerous" for newbies, often ends up being what doesn't
+correspond with their mental model.  I think the current default
+behavior without any <refspec> specified corresponds well to the
+operation of many other git commands (and unix command) in similar
+circumstances:  If you don't specify something to operate on, it
+essentially uses a wild card and operates on "every reasonable thing"
+(e.g., consider "git commit FILE" versus "git commit").
 
-also sprach Pierre Habouzit <madcoder@debian.org> [2007.10.02.2307 +0100]:
->      (a*)
->     /    \
->    v      v
-> (ab*)    (ac*)
->     \    /
->      v  v
->      ????
->=20
->   This is a perfectly sensible history. Or I miss sth on your end.
+Even if the default were changed, it could very well end up causing many
+problems because it _didn't_ push as many heads as the user thought it
+would (I don't think I'm the only one that might expect the default
+action to be "push everything").  When I was a git newbie, I sometimes
+got into situations where I screwed something up because heads I thought
+had been pushed to another system actually hadn't been.
 
-So these are revs, not branches?
+To the extent that a command _is_ "dangerous", there's always a tradeoff
+between convenience and "danger".  Some systems (e.g. those aimed at
+newbies) might have as a goal to do the absolute minimum with every
+command and always, always, err on the side of safety.  I don't think git
+is that system.
 
---=20
- .''`.   martin f. krafft <madduck@debian.org>
-: :'  :  proud Debian developer, author, administrator, and user
-`. `'`   http://people.debian.org/~madduck - http://debiansystem.info
-  `-  Debian - when you have better things to do than fixing systems
-=20
-seen on an advertising for an elaborate swiss men's watch:
-  "almost as complicated as a woman. except it's on time"
+-Miles
 
---bg08WKrSYDhXBjb5
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHA1YTIgvIgzMMSnURAqjBAJ9C1uTKNRe0Y9tSDGtLI42Lg7ujjACgyKEv
-1vsHa4n4ZIRjcnFyVUSXlOo=
-=dbvk
------END PGP SIGNATURE-----
-
---bg08WKrSYDhXBjb5--
+-- 
+Yo mama's so fat when she gets on an elevator it HAS to go down.
