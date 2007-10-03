@@ -1,79 +1,78 @@
 From: David Kastrup <dak@gnu.org>
-Subject: Re: WIP: asciidoc replacement
-Date: Wed, 03 Oct 2007 10:12:29 +0200
-Message-ID: <85abr0y5ua.fsf@lola.goethe.zz>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
-	<7vprzwhkgd.fsf@gitster.siamese.dyndns.org>
-	<39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 03 Oct 2007 10:20:49 +0200
+Message-ID: <85641oy5ge.fsf@lola.goethe.zz>
+References: <7v1wdcch06.fsf@gitster.siamese.dyndns.org>
+	<7v1wd1d0le.fsf@gitster.siamese.dyndns.org>
+	<7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
+	<20070927023633.GA28902@coredump.intra.peff.net>
+	<20071002041652.GA32133@coredump.intra.peff.net>
+	<7vsl4up0tf.fsf@gitster.siamese.dyndns.org>
+	<20071002050820.GA4261@coredump.intra.peff.net>
+	<20071002051332.GA4462@coredump.intra.peff.net>
+	<86ejge6o8b.fsf@lola.quinscape.zz>
+	<20071002161114.GC6828@coredump.intra.peff.net>
+	<86ve9p32cp.fsf@lola.quinscape.zz>
+	<alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, msysgit@googlegroups.com
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 10:41:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 10:42:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Icznj-000630-TV
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:41:52 +0200
+	id 1Icznk-000630-Kl
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 10:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999AbXJCIlm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 04:41:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752210AbXJCIlm
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:41:42 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:37887 "EHLO
+	id S1752936AbXJCIlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 04:41:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753013AbXJCIlo
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 04:41:44 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:37891 "EHLO
 	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752065AbXJCIll convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 04:41:41 -0400
+	with ESMTP id S1752936AbXJCIlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 04:41:42 -0400
 Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
 	by fencepost.gnu.org with esmtp (Exim 4.60)
 	(envelope-from <dak@gnu.org>)
-	id 1Iczmi-0004YE-2h; Wed, 03 Oct 2007 04:40:48 -0400
+	id 1Iczmi-0004YF-5d; Wed, 03 Oct 2007 04:40:48 -0400
 Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 381BA1C4CE11; Wed,  3 Oct 2007 10:12:29 +0200 (CEST)
-In-Reply-To: <39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com> (Wincent Colaiuta's message of "Wed\, 3 Oct 2007 08\:34\:25 +0200")
+	id B88381C4CE13; Wed,  3 Oct 2007 10:20:49 +0200 (CEST)
+In-Reply-To: <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org> (Linus Torvalds's message of "Tue\, 2 Oct 2007 19\:28\:19 -0700 \(PDT\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59809>
 
-Wincent Colaiuta <win@wincent.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> El 3/10/2007, a las 6:48, Junio C Hamano escribi=F3:
+> [ This is the discussed stupid approach - just sort the dang hash array, 
+>   so that we can use a linear scan over the src/dst ]
 >
->>  - Does it make sense in the longer term for us to maintain
->>    in-house documentation tools?  Can we afford it?
->>
->> It appears that we heard about breakages for every minor docbook
->> updates, and it is really appealing if we do not have to rely on
->> xsl toolchain for manpage generation.
+> On Tue, 2 Oct 2007, David Kastrup wrote:
+>> 
+>> This does not actually require an actual merge _sort_ AFAICS: do the
+>> "sort file.hashed" step using qsort.  The comparison step does not
+>> actually need to produce merged output, but merely advances through
+>> two hash arrays and generates statistics.
+>> 
+>> This should already beat the pants off the current implementation,
+>> even when the hash array is sparse, simply because our inner loop then
+>> has perfect hash coherence.
 >
-> Indeed, especially seeing as asciidoc and the xsl toolchain are the =20
-> trickiest build dependencies to install. If all that could be =20
-> replaced by a single simple script like this one then that would be =20
-> awesome, and probably more maintainable in the long run seeing as it =
-=20
-> would eliminate those intermittent breakages caused by changes in =20
-> third-party tools.
+> Sadly, that's not the case. It *does* seem to beat the current 
+> implementation, but it's not "beat the pants off".
 
-What with output in print, HTML, info?  The advantage of a toolchain
-in that it is flexible.  I am the first to admit that getting the
-AsciiDoc/Docbook/Docbook2X toolchain to get it to do what one wants to
-is like baking cake in a lightless kitchen.  But it is not like we go
-through that pain without any reason.
+Part of the reason is that it is not actually what I had in mind.  Why
+create the hash array as a hash array?  Filling the hash array in
+basically random order, then sort+compressing it is what is causing
+much of the costs.  My idea was to just fill the "hash array"
+linearly.  It is quite pointless (and certainly very inefficient with
+regard to cache poisoning) to do it in hash order when we are going to
+sort it anyway.
 
-Personally, I think it might make sense to just step away from the
-AsciiDoc documentation to Docbook: plain text (without cutified
-formatting control like in AsciiDoc) can be generated _from_ Docbook.
-
-And AsciiDoc keeps us from documenting the formatting: Docbook, which
-is a source format and looks it, can easily admit comments that won't
-get through to the formatted versions.  Sure, the first version would
-likely be generated with AsciiDoc and thus basically uncommented.
-
---=20
+-- 
 David Kastrup, Kriemhildstr. 15, 44793 Bochum
