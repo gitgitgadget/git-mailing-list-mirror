@@ -1,138 +1,54 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: git-cvsserver commit trouble (unexpected end of file in client)
-Date: Wed, 3 Oct 2007 13:48:50 +0200
-Organization: HCS, University of Amsterdam
-Message-ID: <200710031348.50800.wielemak@science.uva.nl>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: merging .gitignore
+Date: Wed, 3 Oct 2007 13:41:23 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710031314530.28395@racer.site>
+References: <20071001130314.GA5932@lapse.madduck.net> <20071002195148.GA14171@lapse.madduck.net>
+ <200710030923.22767.andyparkins@gmail.com> <200710031128.56472.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 14:33:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Andy Parkins <andyparkins@gmail.com>,
+	martin f krafft <madduck@madduck.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Oct 03 14:42:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id3Ph-0002MQ-8M
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 14:33:17 +0200
+	id 1Id3Yz-0005xs-HQ
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 14:42:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755847AbXJCMdH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 08:33:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755570AbXJCMdH
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 08:33:07 -0400
-Received: from imap.science.uva.nl ([146.50.4.51]:37616 "EHLO
-	imap.science.uva.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754867AbXJCMdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 08:33:05 -0400
-X-Greylist: delayed 2312 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Oct 2007 08:33:05 EDT
-Received: from gollem.science.uva.nl [146.50.26.20]
-          by imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38).
-          id l93BsU0D009592; Wed, 3 Oct 2007 13:54:31 +0200
-X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
-X-URL: http://www.science.uva.nl/
-User-Agent: KMail/1.9.5
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new
+	id S1754784AbXJCMmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 08:42:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbXJCMml
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 08:42:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42949 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752648AbXJCMml (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 08:42:41 -0400
+Received: (qmail invoked by alias); 03 Oct 2007 12:42:39 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp027) with SMTP; 03 Oct 2007 14:42:39 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/ABUdZav7Aba4DZLh7NDSXT3oFlKykTChQmXHqOZ
+	yt9JA8YP4b61X/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200710031128.56472.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59834>
 
 Hi,
 
-I'm pretty new to GIT. I quickly convinced our project to move to GIT,
-except for one guy that wants to do Windows and CVS :-( I setup a test
-and the checkout works just fine, but commit from cvs doesn't work. The
-details:
+On Wed, 3 Oct 2007, Johan Herland wrote:
 
-	* Server: git version 1.5.3.1 compiled on SuSE 10.2, 64-bits
-	* Client, both SuSE CVS 1.12.12 and the current WinCVS cvs.exe,
-	so it appears irrelevant.
+> - Teach the .gitignore parser to ignore conflict markers (i.e. regard them 
+> as comments)
 
-I created a test repository from a papers directory using the sequence
-beloe. (P.s. isn't there a more elegant way to get to a bare shared repo
-from a set of files? I tried (mkdir papers.git && cd papers.git && git
---bare init --shared=all), but I can't clone an empty bare repository
-(doesn't create anything), so I can't add to it).
+You might be delighted to know that in practice, it works already (because 
+you usually do not have a file named "<<<<<< blablub" or "======" or 
+">>>>>> blablub"...
 
-	% cd ~/tmp/papers
-	% git-init
-	% git-add .
-	% git-commit
-	% cd /home/git
-	% git-clone --bare --no-hardlinks ~/tmp/papers/ papers.git
-	% cd papers.git
-	% git-config core.sharedrepository all
-	% chmod g+ws `find . -type d`
-	% chmod g+w `find . -type f`
-
-Anyway, appears to work fine with GIT to clone, pull and push.  Using
-CVS over SSH, I can checkout this just fine, creating HEAD.  Now I change
-a file and run "cvs commit" to get:
-
-gollem (2006) 11_> cvs commit -m "test"
-cvs [commit aborted]: end of file from server (consult above messages if any)
-
-I enabled logging and added a few statements to git-cvsserver (line 1203)
-
-    $log->info("Start git show-ref -s refs/heads/$state->{module}");
-    # Remember where the head was at the beginning.
-    my $parenthash = `git show-ref -s refs/heads/$state->{module}`;
-    $log->info("parenthash = $parenthash");
-    chomp $parenthash;
-    if ($parenthash !~ /^[0-9a-f]{40}$/) {
-            $log->warn("error 1 pserver cannot find the current HEAD of 
-module");
-            exit;
-    }
-
-Then I get this log output:
-
-================================================================
-2007-10-03 12:25:16 : DEBUG - Temporary directory is '/tmp/XwYVFFqjyd'
-2007-10-03 12:25:16 : DEBUG - req_Root : /home/git/papers.git
-2007-10-03 12:25:16 : DEBUG - req_Validresponses : ok error Valid-requests 
-Referrer Redirect Checked-in New-entry Checksum Co
-py-file Updated Created Update-existing Merged Patched Rcs-diff Mode Mod-time 
-Removed Remove-entry Set-static-directory Clear
--static-directory Set-sticky Clear-sticky Edit-file Template Clear-template 
-Notified Module-expansion Wrapper-rcsOption M Mbi
-nary E F MT
-2007-10-03 12:25:16 : DEBUG - req_validrequests
-2007-10-03 12:25:16 : DEBUG - SEND : Valid-requests remove add status Entry 
-watchers ci tag log co Modified Questionable admi
-n Root history valid-requests Global_option Argumentx annotate Valid-responses 
-Unchanged Directory rlog Argument expand-modul
-es diff editors update
-2007-10-03 12:25:16 : DEBUG - SEND : ok
-2007-10-03 12:25:16 : DEBUG - req_Globaloption : -q
-2007-10-03 12:25:16 : DEBUG - Argument : -m
-2007-10-03 12:25:16 : DEBUG - Argument : test
-2007-10-03 12:25:16 : DEBUG - Argument : --
-2007-10-03 12:25:16 : INFO  - Setting prepend to '2006/'
-2007-10-03 12:25:16 : DEBUG - Prepending '2006/' to state|directory
-2007-10-03 12:25:16 : DEBUG - req_Directory : localdir=. 
-repository=/home/git/papers.git/HEAD/2006 path=2006/ directory=2006/
- module=HEAD
-2007-10-03 12:25:16 : INFO  - Received entry line '/README.txt/1.1///' 
-=> '2006/README.txt'
-2007-10-03 12:25:16 : DEBUG - Argument : README.txt
-2007-10-03 12:25:16 : INFO  - req_ci : [NULL]
-2007-10-03 12:25:16 : INFO  - Lockless commit start, basing commit 
-on '/tmp/XwYVFFqjyd/ud4uGbbUJg', index file is '/tmp/XwYVF
-Fqjyd/3FeXMladmb'
-2007-10-03 12:25:16 : INFO  - Start git show-ref -s refs/heads/HEAD
-2007-10-03 12:25:16 : INFO  - parenthash =
-2007-10-03 12:25:16 : WARN  - error 1 pserver cannot find the current HEAD of 
-module
-================================================================
-
-I don't like the req_ci : [NULL] very much, and the last 3 lines clearly shows 
-a problem.  I checked
-the latest git repository of git. There is no change to git-cvsserver.perl.
-
-I'm still a bit too newbie to (and not much of a Perl programmer).  Does 
-anyone has a clue?  Do I have
-the wrong version for something?  Did I setup the repository wrongly?
-
-	Thanks --- Jan
+Ciao,
+Dscho
