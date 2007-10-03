@@ -1,76 +1,75 @@
-From: Bruno Haible <bruno@clisp.org>
-Subject: making "git stash" safer to use
-Date: Wed, 3 Oct 2007 23:31:41 +0200
-Message-ID: <200710032331.41385.bruno@clisp.org>
-References: <200709301421.52192.bruno@clisp.org> <200710021350.54625.bruno@clisp.org> <47023699.3080606@byu.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Linking with -R (rpath) not supported on Darwin
+Date: Wed, 3 Oct 2007 23:34:41 +0200
+Message-ID: <4D954ADB-E66E-43CA-87EE-7522FFA87370@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-76-539200052"
 Content-Transfer-Encoding: 7bit
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>, Eric Blake <ebb9@byu.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 03 23:32:51 2007
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 23:35:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdBpi-0002XP-N0
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:32:43 +0200
+	id 1IdBsF-0003PS-TY
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 23:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758777AbXJCVcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 17:32:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752927AbXJCVcA
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:32:00 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:53413 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754281AbXJCVb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 17:31:58 -0400
-Received: from linuix.haible.de ([81.210.217.73])
-	by post.webmailer.de (fruni mo21) (RZmta 13.4)
-	with ESMTP id 602d76j93JoNNu ; Wed, 3 Oct 2007 23:31:48 +0200 (MEST)
-	(envelope-from: <bruno@clisp.org>)
-User-Agent: KMail/1.5.4
-In-Reply-To: <47023699.3080606@byu.net>
-Content-Disposition: inline
-X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY7QaSDm1JE
-X-RZG-CLASS-ID: mo07
+	id S1753567AbXJCVfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 17:35:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752927AbXJCVfL
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 17:35:11 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:47378 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbXJCVfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 17:35:09 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IdBs4-0000Qn-Gm
+	for git@vger.kernel.org; Wed, 03 Oct 2007 23:35:08 +0200
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59888>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-76-539200052
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Through a simple typo I lost modifications to 20 files:
+Hello,
+I've just compiled HEAD (1.5.3.4.209.g9e417) and saw a:
+     LINK git-http-fetch
+i686-apple-darwin8-gcc-4.0.1: unrecognized option '-R/opt/local/lib'
 
-> >>>     $ git stash
-> >>>     $ git pull
-> >>>     $ git stash apply
-> >>>     $ git stash clean              # typo!
-> >>>     $ git stash clear              # fatal correction to typo!
+It didn't harm but the build process should be more careful to not  
+use options that are not supported by the compiler.  And it's not a  
+matter of using -Wl,-rpath instead.
 
-It is just too easy to lose your modifications by using "git stash".
+Cheers,
 
-Eric Blake further says:
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
 
-> While we're at it, I wish 'git stash clear' would take an optional
-> argument that says which stash(es) to clear, rather than blindly clearing
-> the entire stash.
 
-It would help if git would store which of the stashes were applied since
-they were created and which were not. A stash that was not yet applied must
-be considered "precious", whereas a stash that was applied is redundant,
-right?
 
-According these lines, how about
-  1) changing "git stash clear" to remove only the redundant stashes,
-     (or alternatively: let it fail if there is at least one precious stash),
-  2) adding an option -f, so that "git stash -f clear" clears all stashes,
-     including the precious ones.
+--Apple-Mail-76-539200052
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
 
-The rationale is that humans are bad at remembering the state of something.
-Therefore instead of having a command that is commonly used in one state
-and dangerous in the other state, better have two different commands - one
-for the common case, and one for the dangerous one. Like "rm" and "rm -f".
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
 
-Bruno
+iD8DBQFHBArxwwE67wC8PUkRAlaZAJ9KtANgHBhkQ1wqjkSsHcSu1Xov5wCcDgyJ
+7vogJXKAme/AjcdGw9EhswU=
+=Rypd
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-76-539200052--
