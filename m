@@ -1,87 +1,50 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 2/4] This exports the update() function from
-	builtin-add.c as
-Date: Wed, 03 Oct 2007 18:03:54 -0400
-Message-ID: <1191449034.7134.19.camel@hinata.boston.redhat.com>
-References: <1190868632-29287-1-git-send-email-krh@redhat.com>
-	 <1190868632-29287-2-git-send-email-krh@redhat.com>
-	 <7v7imcv5op.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add test case for ls-files --with-head
+Date: Wed, 3 Oct 2007 18:11:55 -0400
+Message-ID: <20071003221155.GA28491@coredump.intra.peff.net>
+References: <1191390255.16292.2.camel@koto.keithp.com> <7vtzp8g2s2.fsf@gitster.siamese.dyndns.org> <87y7ekr86e.wl%cworth@cworth.org> <47038669.30302@viscovery.net> <Pine.LNX.4.64.0710031634300.28395@racer.site> <87myv0qj2u.wl%cworth@cworth.org> <85ejgcrx6r.fsf@lola.goethe.zz> <20071003202157.GA28043@coredump.intra.peff.net> <Pine.LNX.4.64.0710032238080.28395@racer.site> <7vodffdg6i.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Carl Worth <cworth@cworth.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Keith Packard <keithp@keithp.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 00:09:39 2007
+X-From: git-owner@vger.kernel.org Thu Oct 04 00:12:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdCPS-0007uB-33
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 00:09:38 +0200
+	id 1IdCRr-0000L3-3x
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 00:12:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755523AbXJCWJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 18:09:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755486AbXJCWJa
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 18:09:30 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:41927 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755398AbXJCWJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 18:09:29 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id l93M49Y9024651;
-	Wed, 3 Oct 2007 18:04:09 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l93M48os002612;
-	Wed, 3 Oct 2007 18:04:08 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l93M483S007196;
-	Wed, 3 Oct 2007 18:04:08 -0400
-In-Reply-To: <7v7imcv5op.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1753819AbXJCWL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 18:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753719AbXJCWL6
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 18:11:58 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2058 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753516AbXJCWL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 18:11:58 -0400
+Received: (qmail 21195 invoked by uid 111); 3 Oct 2007 22:11:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 18:11:56 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 18:11:55 -0400
+Content-Disposition: inline
+In-Reply-To: <7vodffdg6i.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59900>
 
-On Thu, 2007-09-27 at 02:05 -0700, Junio C Hamano wrote:
-...
-> I think the right organization for the "builtin-commit" series
-> should be:
-> 
->  * merge strbuf topic in kh/commit topic, in order to get the
->    stripspace updates and strbuf_read_file();
-> 
->  * add--interactive entry point change (respin the one from the
->    old series);
-> 
->  * rename update() to add_files_to_cache() and export (respin
->    this [2/4] with a better commit message);
-> 
->  * create a separate rerere() function and export (respin part
->    of old series, with proper refactoring);
-> 
->    I am not happy with builtin-foo.c calling into something from
->    builtin-bar.c, though.  We probably would want to move
->    rerere() and add_files_to_cache() somewhere else.
-> 
->  * move launch_editor() and stripspace() to create editor.c (new
->    [4/4]);
-> 
->  * add option parser in parse-options.[ch] (new [1/4]);
-> 
->  * finally, create builtin-commit that uses the groundwork laid
->    out above (new [3/4]).
-> 
-> I ended up doing the above up to the rerere() one myself, but
-> haven't done the rest.
+On Wed, Oct 03, 2007 at 02:47:01PM -0700, Junio C Hamano wrote:
 
->From what I see in next today, it looks like we're just missing the
-parse-options patch and builtin-commit patches.  I resent a better
-version of parse-options and a patch that ports builtin-add.c to the
-option parser.  To use the option parser in more places, we'll probably
-have to extend it a bit, but the patch is a good start.  Let's get that
-in shape and into next and then I'll send an updated builtin-commit
-patch.
+> AFAIK, you are wrong ;-)
+> 
+> {1,2,3,4,5} expands regardless of what's on the filesystem but I
+> do not think it is POSIX.
 
-thanks,
-Kristian
+Yes, I think that is right.
+
+-Peff
