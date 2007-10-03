@@ -1,66 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: WIP: asciidoc replacement
-Date: Tue, 02 Oct 2007 21:48:50 -0700
-Message-ID: <7vprzwhkgd.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
+Date: Wed, 3 Oct 2007 00:51:48 -0400
+Message-ID: <20071003045148.GD11905@coredump.intra.peff.net>
+References: <Pine.LNX.4.64.0710030133020.28395@racer.site> <4702F6BB.60908@vilain.net> <Pine.LNX.4.64.0710030506360.28395@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
+Cc: Sam Vilain <sam@vilain.net>, git@vger.kernel.org,
+	msysgit@googlegroups.com
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 06:49:07 2007
+X-From: git-owner@vger.kernel.org Wed Oct 03 06:51:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IcwAU-00041C-1Y
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 06:49:06 +0200
+	id 1IcwDG-0004Z3-TG
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 06:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751150AbXJCEs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 00:48:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbXJCEs5
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 00:48:57 -0400
-Received: from rune.pobox.com ([208.210.124.79]:36095 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751050AbXJCEs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 00:48:57 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 285901409DE;
-	Wed,  3 Oct 2007 00:49:18 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6301F1409DC;
-	Wed,  3 Oct 2007 00:49:14 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0710030133020.28395@racer.site> (Johannes
-	Schindelin's message of "Wed, 3 Oct 2007 01:42:00 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751235AbXJCEvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 00:51:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbXJCEvv
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 00:51:51 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2224 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751108AbXJCEvu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 00:51:50 -0400
+Received: (qmail 11955 invoked by uid 111); 3 Oct 2007 04:51:49 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 00:51:49 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 00:51:48 -0400
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710030506360.28395@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59783>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Wed, Oct 03, 2007 at 05:23:35AM +0100, Johannes Schindelin wrote:
 
-> So here it is: a perl script that does a good job on many .txt files in 
-> Documentation/, although for some it deviates from "make man"'s output, 
-> and for others it is outright broken.  It is meant to be run in 
-> Documentation/.
->
-> My intention is not to fix the script for all cases, but to make patches 
-> to Documentation/*.txt themselves, so that they are more consistent (and 
-> incidentally nicer to the script).
+> > > #!/usr/bin/perl
+> > 
+> > Add -w for warnings, also use strict;
+> 
+> <dumb>What does "use strict;" imply?</dumb>
 
-How you spend your time is up to you, but I need to wonder...
+Try "perldoc strict" for details.
 
- - Is "man" format important for msysGit aka Windows
-   environment?  I had an impression that their helpfile format
-   were closer to "html" output.
+> > > 	if ($par =~ /^\. /s) {
+> > > 		my @lines = split(/^\. /m, $par);
+> > > 		shift @lines;
+> > > 		$conv->enumeration(\@lines);
+> > > 	} elsif ($par =~ /^\* /s) {
+> > 
+> > uncuddle your elsif's;
+> 
+> I'm sorry... What do you mean?
 
- - Does it make sense in the longer term for us to maintain
-   in-house documentation tools?  Can we afford it?
+I think he means reformatting to
 
-It appears that we heard about breakages for every minor docbook
-updates, and it is really appealing if we do not have to rely on
-xsl toolchain for manpage generation.  But if patching the text
-means making it compatible with the in-house script _and_
-incompatible with AsciiDoc, hmmm...
+  if (condition) {
+  }
+  elsif (condition) {
+  }
+
+> > $result = ( $par =~ /^\. /s      ? $conv->do_enum($par)    :
+> >             $par =~ /^\[verse\]/ ? $conv->do_verse($par)  :
+> >             ... )
+> 
+> I do not like that way... is it Perl standard to code like that?
+
+It's quite common if you have a dispatch function, but obviously not
+required.
+
+> > > 		$title =~ s/\(\d+\)$//;
+> > > 		print '.\"     Title: ' . $title
+> > > 			. '.\"    Author: ' . "\n"
+> > > 			. '.\" Generator: ' . $self->{generator} . "\n"
+> > > 			. '.\"      Date: ' . $self->{date} . "\n"
+> > > 			. '.\"    Manual: ' . $self->{manual} . "\n"
+> > > 			. '.\"    Source: ' . $self->{git_version} . "\n"
+> > > 			. '.\"' . "\n";
+> > > 	}
+> > 
+> > I'd consider a HERE-doc, or multi-line qq{ } more readable than this.
+> 
+> Can you give me an example of a HERE-doc?  (What I tried to avoid is 
+> having ugly indentation-breaking tlobs.)
+
+print <<EOF;
+foo
+EOF
+
+HERE-docs necessarily break indentation unless you strip it out manually
+(which is inefficient and ugly).
+
+But two things that might make that look better are using qq// (to avoid
+having to escape quotes) and interpolating the variables:
+
+  . qq/." Generator: $self->{generator}\n/
+
+> I'll try to find something about qq{} in the docs.
+
+It's in perlop, but it's basically a fancy way of double-quoting, except
+that you get to choose the delimiter.
+
+> > > 	$text =~ s/([^\n]) *\n([^\n])/\1 \2/g;
+> > 
+> > "." is the same as [^\n] (without the 's' modifier).
+> 
+> But I need the (implicit) 's' modifier, otherwise the "\n" in the middle 
+> is not interpreted correctly.  This regsub is meant to unwrap the 
+> paragraph and put it into a very long line (but leaving \n\n alone).
+
+I think you might be confused about how the 's' modifier works. You are
+not using it, so '.' is the same as '[^\n]'. Perl will always match a
+newline if it's in your regex. If you specify 'm', then it will also
+allow '^' and '$' to match at line boundaries (instead of just at the
+beginning and end of the string).
+
+-Peff
