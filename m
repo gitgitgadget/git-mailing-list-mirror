@@ -1,110 +1,79 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 5/5] Use start_comand() in builtin-fetch-pack.c instead of explicit fork/exec.
-Date: Wed,  3 Oct 2007 22:09:40 +0200
-Message-ID: <1191442180-15905-6-git-send-email-johannes.sixt@telecom.at>
-References: <200709302340.17644.johannes.sixt@telecom.at>
- <1191442180-15905-1-git-send-email-johannes.sixt@telecom.at>
- <1191442180-15905-2-git-send-email-johannes.sixt@telecom.at>
- <1191442180-15905-3-git-send-email-johannes.sixt@telecom.at>
- <1191442180-15905-4-git-send-email-johannes.sixt@telecom.at>
- <1191442180-15905-5-git-send-email-johannes.sixt@telecom.at>
-Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 03 22:10:38 2007
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH 1/4] Add a simple option parser for use by builtin-commit.c.
+Date: Wed, 3 Oct 2007 22:11:29 +0200
+Message-ID: <20071003201129.GB25856@diku.dk>
+References: <1190868632-29287-1-git-send-email-krh@redhat.com> <20070930131133.GA11209@diku.dk> <1191255975.25093.26.camel@hinata.boston.redhat.com> <Pine.LNX.4.64.0710011909291.28395@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 03 22:13:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdAY6-0003WL-2w
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:10:26 +0200
+	id 1IdAbM-0004ta-P1
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:13:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752447AbXJCUJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 16:09:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754130AbXJCUJv
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:09:51 -0400
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:33609 "EHLO
-	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751593AbXJCUJn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 16:09:43 -0400
-Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 84FC510B536;
-	Wed,  3 Oct 2007 22:09:41 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.3.1134.gee562
-In-Reply-To: <1191442180-15905-5-git-send-email-johannes.sixt@telecom.at>
+	id S1753993AbXJCUNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 16:13:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753700AbXJCUNl
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:13:41 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:58394 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753603AbXJCUNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 16:13:40 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id E0A4C52C408;
+	Wed,  3 Oct 2007 22:13:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ue5j53lrGQh0; Wed,  3 Oct 2007 22:13:36 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 6BA6A52C520;
+	Wed,  3 Oct 2007 22:11:29 +0200 (CEST)
+Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id A3EFE6DF8B9; Wed,  3 Oct 2007 22:06:14 +0200 (CEST)
+Received: by ask.diku.dk (Postfix, from userid 3873)
+	id 4A46F632F1; Wed,  3 Oct 2007 22:11:29 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710011909291.28395@racer.site>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59879>
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- fetch-pack.c |   35 ++++++++++-------------------------
- 1 files changed, 10 insertions(+), 25 deletions(-)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote Mon, Oct 01, 2007:
+> On Mon, 1 Oct 2007, Kristian H?gsberg wrote:
+> > On Sun, 2007-09-30 at 15:11 +0200, Jonas Fonseca wrote:
+> > > > +
+> > > > +extern int parse_options(const char ***argv,
+> > > > +			 struct option *options, int count,
+> > > > +			 const char *usage_string);
+> > > 
+> > > I think the interface could be improved a bit. For example, it doesn't 
+> > > need to count argument since the last entry in the options array is 
+> > > OPTION_LAST and thus the size can be detected that way.
+> > 
+> > Hehe, yeah, that's how I did it first.  I don't have a strong preference 
+> > for terminator elements vs. ARRAY_SIZE(), but Junio prefers the 
+> > ARRAY_SIZE() approach, I guess.  At this point I'm just trying the get 
+> > the patches upstream...
+> 
+> FWIW I like the ARRAY_SIZE() approach better, too, since it is less error 
+> prone.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index d06b5ec..80268e1 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -6,6 +6,7 @@
- #include "exec_cmd.h"
- #include "pack.h"
- #include "sideband.h"
-+#include "run-command.h"
- 
- static int keep_pack;
- static int transfer_unpack_limit = -1;
-@@ -502,9 +503,12 @@ static int get_pack(int xd[2])
- 	char hdr_arg[256];
- 	const char **av;
- 	int do_keep = keep_pack;
-+	struct child_process cmd;
- 
- 	side_pid = setup_sideband(fd, xd);
- 
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.argv = argv;
- 	av = argv;
- 	*hdr_arg = 0;
- 	if (unpack_limit) {
-@@ -544,33 +548,14 @@ static int get_pack(int xd[2])
- 		*av++ = hdr_arg;
- 	*av++ = NULL;
- 
--	pid = fork();
--	if (pid < 0)
-+	cmd.in = fd[0];
-+	cmd.git_cmd = 1;
-+	if (start_command(&cmd))
- 		die("fetch-pack: unable to fork off %s", argv[0]);
--	if (!pid) {
--		dup2(fd[0], 0);
--		close(fd[0]);
--		close(fd[1]);
--		execv_git_cmd(argv);
--		die("%s exec failed", argv[0]);
--	}
--	close(fd[0]);
- 	close(fd[1]);
--	while (waitpid(pid, &status, 0) < 0) {
--		if (errno != EINTR)
--			die("waiting for %s: %s", argv[0], strerror(errno));
--	}
--	if (WIFEXITED(status)) {
--		int code = WEXITSTATUS(status);
--		if (code)
--			die("%s died with error code %d", argv[0], code);
--		return 0;
--	}
--	if (WIFSIGNALED(status)) {
--		int sig = WTERMSIG(status);
--		die("%s died of signal %d", argv[0], sig);
--	}
--	die("%s died of unnatural causes %d", argv[0], status);
-+	if (finish_command(&cmd))
-+		die("%s failed", argv[0]);
-+	return 0;
- }
- 
- static int fetch_pack(int fd[2], int nr_match, char **match)
+OK, I must have missed that comment. Good point.
+
+Thanks for the comments both of you. It's great to have something to
+work from. However, I also fear it will also require that some extra
+flags or information is added to the option information to make it more
+generally usable. But I guess that is easier to discuss in the context
+of a patch.
+
 -- 
-1.5.3.3.1134.gee562
+Jonas Fonseca
