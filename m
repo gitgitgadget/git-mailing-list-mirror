@@ -1,60 +1,79 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Wed, 3 Oct 2007 09:13:49 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710030912410.3579@woody.linux-foundation.org>
-References: <7vfy11yyxk.fsf@gitster.siamese.dyndns.org>
- <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net>
- <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net>
- <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz>
- <20071002161114.GC6828@coredump.intra.peff.net> <86ve9p32cp.fsf@lola.quinscape.zz>
- <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org>
- <20071003065414.GA13737@coredump.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git push (mis ?)behavior
+Date: Wed, 3 Oct 2007 17:18:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710031718110.28395@racer.site>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
+ <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp>
+ <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
+ <20071003104943.GA3017@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031550490.28395@racer.site>
+ <20071003160731.GA7113@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 03 18:14:33 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Wincent Colaiuta <win@wincent.com>, Miles Bader <miles@gnu.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Wed Oct 03 18:20:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id6ri-0004uX-Ct
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 18:14:26 +0200
+	id 1Id6xS-0007n5-Nv
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 18:20:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753085AbXJCQOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 12:14:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753061AbXJCQOS
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 12:14:18 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47326 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752727AbXJCQOS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Oct 2007 12:14:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l93GDoPJ024133
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 3 Oct 2007 09:13:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l93GDn7L029640;
-	Wed, 3 Oct 2007 09:13:50 -0700
-In-Reply-To: <20071003065414.GA13737@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.448 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_33
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.46__
-X-MIMEDefang-Filter: lf$Revision: 1.187 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754254AbXJCQUP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 12:20:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbXJCQUP
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 12:20:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33291 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752588AbXJCQUN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 12:20:13 -0400
+Received: (qmail invoked by alias); 03 Oct 2007 16:20:11 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp017) with SMTP; 03 Oct 2007 18:20:11 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19i5L8BlhpieI28c6rR0wxbsyab3PzglcSp3VgxL1
+	1lcjcpFH2PmQvV
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071003160731.GA7113@diana.vm.bytemark.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59854>
 
+Hi,
 
+On Wed, 3 Oct 2007, Karl Hasselstr?m wrote:
 
-On Wed, 3 Oct 2007, Jeff King wrote:
+> On 2007-10-03 16:27:49 +0100, Johannes Schindelin wrote:
 > 
-> I get slightly better speedups with my pathological case (around 30%):
+> > On Wed, 3 Oct 2007, Karl Hasselstr?m wrote:
+> >
+> > >   2. "push all branches" is the default, but the user intended to
+> > >      push only the current branch. She ends up pushing a superset
+> > >      of what she wanted, which is not easily fixed if she can't be
+> > >      sure that no one else has pulled from the public repo before
+> > >      she notices what's happened.
+> >
+> > But that is not the default. Not at all.
+> >
+> > The default is to push the refs which the remote and the local side
+> > have _in common_.
+> 
+> I know, and that's what I meant by "all branches". Sorry for the
+> sloppy language.
+> 
+> > Maybe we should initialise the "remote.origin.push" variable to
+> > "completely-bogus-branchname" when you "git init --im-a-newbie"?
+> 
+> I'd rather have a suboptimal default than different defaults depending
+> on user settings. (See also Junio's comment on that elsewhere in this
+> thread.)
 
-Ok, 30% is definitely "worth doing". Even if your performance still sucks, 
-and 71 seconds is just way out of line for anything like this (of course, 
-these days you need that "-l0" to ever trigger that case, but it would be 
-nice if we could speed things up so much that we no longer care).
+This thread is getting painful.  Lot's of "I want"s, but nobody to date 
+came up with a solution that makes both oldtimers and newtimers happy.
 
-		Linus
+Ciao,
+Dscho
