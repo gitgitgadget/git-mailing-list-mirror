@@ -1,50 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add test case for ls-files --with-head
-Date: Wed, 3 Oct 2007 18:11:55 -0400
-Message-ID: <20071003221155.GA28491@coredump.intra.peff.net>
-References: <1191390255.16292.2.camel@koto.keithp.com> <7vtzp8g2s2.fsf@gitster.siamese.dyndns.org> <87y7ekr86e.wl%cworth@cworth.org> <47038669.30302@viscovery.net> <Pine.LNX.4.64.0710031634300.28395@racer.site> <87myv0qj2u.wl%cworth@cworth.org> <85ejgcrx6r.fsf@lola.goethe.zz> <20071003202157.GA28043@coredump.intra.peff.net> <Pine.LNX.4.64.0710032238080.28395@racer.site> <7vodffdg6i.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Carl Worth <cworth@cworth.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Keith Packard <keithp@keithp.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 00:12:25 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Linking with -R (rpath) not supported on Darwin
+Date: Wed, 3 Oct 2007 18:39:19 -0400
+Message-ID: <ECAD7CED-FFA0-46F2-8094-2FDE47CB5D54@silverinsanity.com>
+References: <4D954ADB-E66E-43CA-87EE-7522FFA87370@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 04 00:39:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdCRr-0000L3-3x
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 00:12:07 +0200
+	id 1IdCs8-0000OI-My
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 00:39:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753819AbXJCWL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 18:11:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753719AbXJCWL6
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 18:11:58 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2058 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753516AbXJCWL6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 18:11:58 -0400
-Received: (qmail 21195 invoked by uid 111); 3 Oct 2007 22:11:56 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 18:11:56 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 18:11:55 -0400
-Content-Disposition: inline
-In-Reply-To: <7vodffdg6i.fsf@gitster.siamese.dyndns.org>
+	id S1752252AbXJCWjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 18:39:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbXJCWjH
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 18:39:07 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:56246 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751282AbXJCWjH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 18:39:07 -0400
+Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 23EC31FFC013;
+	Wed,  3 Oct 2007 22:39:05 +0000 (UTC)
+In-Reply-To: <4D954ADB-E66E-43CA-87EE-7522FFA87370@lrde.epita.fr>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59901>
 
-On Wed, Oct 03, 2007 at 02:47:01PM -0700, Junio C Hamano wrote:
 
-> AFAIK, you are wrong ;-)
-> 
-> {1,2,3,4,5} expands regardless of what's on the filesystem but I
-> do not think it is POSIX.
+On Oct 3, 2007, at 5:34 PM, Benoit SIGOURE wrote:
 
-Yes, I think that is right.
+> Hello,
+> I've just compiled HEAD (1.5.3.4.209.g9e417) and saw a:
+>     LINK git-http-fetch
+> i686-apple-darwin8-gcc-4.0.1: unrecognized option '-R/opt/local/lib'
+>
+> It didn't harm but the build process should be more careful to not  
+> use options that are not supported by the compiler.  And it's not a  
+> matter of using -Wl,-rpath instead.
 
--Peff
+I compile git very regularly on my MacBook Pro and have never seen  
+this error.  Do you have the most recent copy of Xcode?  I've seen  
+odd errors on one of the not very old versions of the developer's  
+tools.  For me, `gcc -v` reports "gcc version 4.0.1 (Apple Computer,  
+Inc. build 5367)".
+
+~~ Brian
