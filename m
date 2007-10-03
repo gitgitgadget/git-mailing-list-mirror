@@ -1,79 +1,54 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH 1/4] Add a simple option parser for use by builtin-commit.c.
-Date: Wed, 3 Oct 2007 22:11:29 +0200
-Message-ID: <20071003201129.GB25856@diku.dk>
-References: <1190868632-29287-1-git-send-email-krh@redhat.com> <20070930131133.GA11209@diku.dk> <1191255975.25093.26.camel@hinata.boston.redhat.com> <Pine.LNX.4.64.0710011909291.28395@racer.site>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add test case for ls-files --with-head
+Date: Wed, 3 Oct 2007 16:21:58 -0400
+Message-ID: <20071003202157.GA28043@coredump.intra.peff.net>
+References: <1191390255.16292.2.camel@koto.keithp.com> <7vtzp8g2s2.fsf@gitster.siamese.dyndns.org> <87y7ekr86e.wl%cworth@cworth.org> <47038669.30302@viscovery.net> <Pine.LNX.4.64.0710031634300.28395@racer.site> <87myv0qj2u.wl%cworth@cworth.org> <85ejgcrx6r.fsf@lola.goethe.zz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
-	gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 03 22:13:49 2007
+Cc: Carl Worth <cworth@cworth.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Keith Packard <keithp@keithp.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 22:22:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdAbM-0004ta-P1
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:13:49 +0200
+	id 1IdAjk-000883-5p
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 22:22:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753993AbXJCUNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 16:13:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753700AbXJCUNl
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:13:41 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:58394 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753603AbXJCUNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 16:13:40 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id E0A4C52C408;
-	Wed,  3 Oct 2007 22:13:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ue5j53lrGQh0; Wed,  3 Oct 2007 22:13:36 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 6BA6A52C520;
-	Wed,  3 Oct 2007 22:11:29 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id A3EFE6DF8B9; Wed,  3 Oct 2007 22:06:14 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 4A46F632F1; Wed,  3 Oct 2007 22:11:29 +0200 (CEST)
+	id S1754957AbXJCUWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 16:22:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754879AbXJCUWB
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 16:22:01 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1993 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754711AbXJCUWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 16:22:00 -0400
+Received: (qmail 20340 invoked by uid 111); 3 Oct 2007 20:21:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 16:21:59 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 16:21:58 -0400
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710011909291.28395@racer.site>
-User-Agent: Mutt/1.5.6i
+In-Reply-To: <85ejgcrx6r.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59880>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote Mon, Oct 01, 2007:
-> On Mon, 1 Oct 2007, Kristian H?gsberg wrote:
-> > On Sun, 2007-09-30 at 15:11 +0200, Jonas Fonseca wrote:
-> > > > +
-> > > > +extern int parse_options(const char ***argv,
-> > > > +			 struct option *options, int count,
-> > > > +			 const char *usage_string);
-> > > 
-> > > I think the interface could be improved a bit. For example, it doesn't 
-> > > need to count argument since the last entry in the options array is 
-> > > OPTION_LAST and thus the size can be detected that way.
-> > 
-> > Hehe, yeah, that's how I did it first.  I don't have a strong preference 
-> > for terminator elements vs. ARRAY_SIZE(), but Junio prefers the 
-> > ARRAY_SIZE() approach, I guess.  At this point I'm just trying the get 
-> > the patches upstream...
-> 
-> FWIW I like the ARRAY_SIZE() approach better, too, since it is less error 
-> prone.
+On Wed, Oct 03, 2007 at 06:15:56PM +0200, David Kastrup wrote:
 
-OK, I must have missed that comment. Good point.
+> for i in {1,2,3,4,5}{0,1,2,3,4,5,6,7,8,9}
+> do
+>   ...
+> done
 
-Thanks for the comments both of you. It's great to have something to
-work from. However, I also fear it will also require that some extra
-flags or information is added to the option information to make it more
-generally usable. But I guess that is easier to discuss in the context
-of a patch.
+$ dash
+$ for i in {1,2,3,4,5}{0,1,2,3,4,5,6,7,8,9}; do echo $i; done
+{1,2,3,4,5}{0,1,2,3,4,5,6,7,8,9}
+$
 
--- 
-Jonas Fonseca
+-Peff
