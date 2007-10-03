@@ -1,85 +1,53 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 3 Oct 2007 17:44:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710031742400.28395@racer.site>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org>
- <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp>
- <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
- <20071003104943.GA3017@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031550490.28395@racer.site>
- <20071003160731.GA7113@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031718110.28395@racer.site>
- <20071003162816.GA17403@artemis.corp>
+From: Jeff King <peff@peff.net>
+Subject: Re: What's cooking in git.git (topics)
+Date: Wed, 3 Oct 2007 12:59:27 -0400
+Message-ID: <20071003165927.GA25055@coredump.intra.peff.net>
+References: <20070927023633.GA28902@coredump.intra.peff.net> <20071002041652.GA32133@coredump.intra.peff.net> <7vsl4up0tf.fsf@gitster.siamese.dyndns.org> <20071002050820.GA4261@coredump.intra.peff.net> <20071002051332.GA4462@coredump.intra.peff.net> <86ejge6o8b.fsf@lola.quinscape.zz> <20071002161114.GC6828@coredump.intra.peff.net> <86ve9p32cp.fsf@lola.quinscape.zz> <alpine.LFD.0.999.0710021916080.3579@woody.linux-foundation.org> <85641oy5ge.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 18:46:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 18:59:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id7ML-0002Up-AJ
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 18:46:05 +0200
+	id 1Id7ZT-0008Tf-BG
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 18:59:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779AbXJCQp5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 12:45:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751534AbXJCQp5
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 12:45:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56103 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751227AbXJCQp4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 12:45:56 -0400
-Received: (qmail invoked by alias); 03 Oct 2007 16:45:55 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp001) with SMTP; 03 Oct 2007 18:45:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+8tkJCPj68bn4l16DSGCCE6LyKdZq2HVC904yeJT
-	f3Zu9ya1AJyvlT
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071003162816.GA17403@artemis.corp>
-X-Y-GMX-Trusted: 0
+	id S1751071AbXJCQ7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 12:59:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751180AbXJCQ7a
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 12:59:30 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3906 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751035AbXJCQ7a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 12:59:30 -0400
+Received: (qmail 18136 invoked by uid 111); 3 Oct 2007 16:59:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 03 Oct 2007 12:59:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Oct 2007 12:59:27 -0400
+Content-Disposition: inline
+In-Reply-To: <85641oy5ge.fsf@lola.goethe.zz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59858>
 
-Hi,
+On Wed, Oct 03, 2007 at 10:20:49AM +0200, David Kastrup wrote:
 
-On Wed, 3 Oct 2007, Pierre Habouzit wrote:
+> Part of the reason is that it is not actually what I had in mind.  Why
+> create the hash array as a hash array?  Filling the hash array in
+> basically random order, then sort+compressing it is what is causing
+> much of the costs.  My idea was to just fill the "hash array"
+> linearly.  It is quite pointless (and certainly very inefficient with
+> regard to cache poisoning) to do it in hash order when we are going to
+> sort it anyway.
 
-> On Wed, Oct 03, 2007 at 04:18:56PM +0000, Johannes Schindelin wrote:
-> > This thread is getting painful.  Lot's of "I want"s, but nobody to date 
-> > came up with a solution that makes both oldtimers and newtimers happy.
-> 
-> I think I made a proposal that tries to reach some kind of consensus:
-> 
-> `git push`::
->     no arguments given just pushes the current branch you're on, into
->     origin, if a refspec matches.
+Try profiling the code, and you will see that the creation of the hashes
+is totally dwarfed by the comparisons. So yes, you might be able to
+speed up the creation code, but it's going to have a minimal impact on
+the overall run time.
 
-I use that sometimes, and I do not want only the current branch to be 
-pushed.
-
-> `git push <remote>`::
->     works like now (aka pushes all branches that match a remote branch
->     in the given remote).
-
-That would make things inconsistent, and inconsistent things are always 
-hard to explain.
-
-> This way, you can have current "git push" using "git push origin", but 
-> you also have a convenient way to push only the current branch into your 
-> default remote repository without needing to spell out:
-> 
->   $ git push origin `git symbolic-ref HEAD`
-
-I wonder how hard it would be to teach _everybody_ to specify _exactly_ 
-what they want.
-
-Of course, we'd need an "--existing" option to git-push to trigger the 
-behaviour that we have right now.
-
-Ciao,
-Dscho
+-Peff
