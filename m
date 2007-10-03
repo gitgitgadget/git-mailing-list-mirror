@@ -1,69 +1,107 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git push (mis ?)behavior
-Date: Wed, 3 Oct 2007 12:49:43 +0200
-Message-ID: <20071003104943.GA3017@diana.vm.bytemark.co.uk>
-References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: WIP: asciidoc replacement
+Date: Wed, 03 Oct 2007 03:57:02 -0700
+Message-ID: <7vd4vwfou9.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0710030133020.28395@racer.site>
+	<7vprzwhkgd.fsf@gitster.siamese.dyndns.org>
+	<39F3EE1B-7BD4-4927-AB90-2EB4BBAF05D0@wincent.com>
+	<85abr0y5ua.fsf@lola.goethe.zz>
+	<1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miles Bader <miles@gnu.org>, Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, msysgit@googlegroups.com
 To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Oct 03 12:51:23 2007
+X-From: git-owner@vger.kernel.org Wed Oct 03 12:57:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id1oy-0007HQ-3O
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:51:16 +0200
+	id 1Id1uu-0000nM-1w
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 12:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754359AbXJCKuv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Oct 2007 06:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754349AbXJCKuv
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:50:51 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1613 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754267AbXJCKuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 06:50:50 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Id1nT-0000ni-00; Wed, 03 Oct 2007 11:49:43 +0100
-Content-Disposition: inline
-In-Reply-To: <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756407AbXJCK5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 06:57:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756225AbXJCK5O
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 06:57:14 -0400
+Received: from rune.pobox.com ([208.210.124.79]:41146 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755916AbXJCK5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 06:57:12 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id E96DE140D7F;
+	Wed,  3 Oct 2007 06:57:32 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id C216F140D7E;
+	Wed,  3 Oct 2007 06:57:26 -0400 (EDT)
+In-Reply-To: <1D18C52E-BB96-49EC-97A9-F802D56CAFF5@wincent.com> (Wincent
+	Colaiuta's message of "Wed, 3 Oct 2007 12:05:29 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59821>
 
-On 2007-10-03 12:25:22 +0200, Wincent Colaiuta wrote:
+Wincent Colaiuta <win@wincent.com> writes:
 
-> In any case I think more people need to speak up on the topic so
-> that we can find out what most people really think about changing
-> the default.
+> Yes, but editing DocBook (XML) is relatively painful compared to  
+> editing plain text. You either have to rely on a bloated XML- 
+> validating editor or instead ask your doc authors to manually write  
+> valid XML (and I totally agree with Terrence Parr that, "XML makes a  
+> lousy human interface
+> "; see <http://www.ibm.com/developerworks/xml/library/x-sbxml.html>  
+> for his full take).
+>
+> I know that Linus has argued for AsciiDoc because the source *is* the  
+> plain text documentation and is therefore easily readable, but for me  
+> the real benefit lies in the fact that *because* the source is plain  
+> text it is easily edited (ie. that the source is easily *writeable*),  
+> and things like documentation patches are very neat with AsciiDoc.
 
-My vote is for changing it.
+To give credits to where they are due, most of the structure of
+the initial documentation was done during the first week of May
+2005 by David Greaves while Linus was vacationing, and the first
+person who brought up AsciiDoc was Bert Hubert.
 
-Both "push the current branch" and "push all branches" have their
-uses, and both can be specified explicitly, so no problem there. The
-problem arises when a user expects one default but get another. There
-are two cases:
+    http://article.gmane.org/gmane.comp.version-control.git/2323
 
-  1. "push the current branch" is the default, but the user intended
-     to push all branches. She ends up pushing only a subset of what
-     she wanted, which is easily fixed once she notices what's
-     happened.
+One thing Linus had to say about the issue from early on, and I
+still agree with, is the last paragraph in:
 
-  2. "push all branches" is the default, but the user intended to push
-     only the current branch. She ends up pushing a superset of what
-     she wanted, which is not easily fixed if she can't be sure that
-     no one else has pulled from the public repo before she notices
-     what's happened.
+    http://article.gmane.org/gmane.comp.version-control.git/2298
 
-So it all comes down to case (2) mistakes being much harder to fix
-than case (1) mistakes. Therefore, we should change the default, since
-doing so makes it safer.
+There was another thread in the recent past
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+    http://article.gmane.org/gmane.comp.version-control.git/55059
+
+I've seen markdown used elsewhere, and I regularly read pod.
+These are both used by other people (I _care_ about good
+external support and user community), are readable as straight
+text (I personally care more about this than prettyprinted
+output), and can be alternative candidates if we consider
+switching.
+
+How good are HTML and manpage output support from these (or
+other candidates) formats these days?  Output to help page
+format Windows folks use (I am assuming Mac people are happy as
+long as man is available) would be a definite plus.
+
+Another alternative could be to build on AsciiDoc to get manpage
+and html output without relying too heavily on docbook
+toolchain, and considering the fact that we still seem to be one
+of the most important customers listed on its home page, we
+might be able to get help from Stuart himself to improve the
+situation (I am assuming that mingwgit folks do not have problem
+with Python, but I may be mistaken).
+
+In short, although I do appreciate Johannes's and Sam's attempt,
+I would really prefer to see us pick some externally maintained
+alternative, instead of inventing a homebrew system that we need
+to maintain ourselves.  It is rumored that git has much higher
+developer count vs loc count ratio than many other open source
+projects, doing the documentation format is not part of our
+project, and I'd rather see them spend time working on git, not
+building and maintaining AsciiDoc lookalike.
