@@ -1,60 +1,59 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Add test case for ls-files --with-head
-Date: Wed, 03 Oct 2007 14:09:13 +0200
-Message-ID: <47038669.30302@viscovery.net>
-References: <1191390255.16292.2.camel@koto.keithp.com>	<7vtzp8g2s2.fsf@gitster.siamese.dyndns.org> <87y7ekr86e.wl%cworth@cworth.org>
+Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to
+ chmod.
+Date: Wed, 03 Oct 2007 14:19:40 +0200
+Message-ID: <470388DC.4040504@viscovery.net>
+References: <20071003105501.GD7085@admingilde.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Keith Packard <keithp@keithp.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Carl Worth <cworth@cworth.org>
-X-From: git-owner@vger.kernel.org Wed Oct 03 14:09:31 2007
+Cc: git@vger.kernel.org
+To: Martin Waitz <tali@admingilde.org>
+X-From: git-owner@vger.kernel.org Wed Oct 03 14:20:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Id32g-0001h1-0C
-	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 14:09:30 +0200
+	id 1Id3DA-0005er-0G
+	for gcvg-git-2@gmane.org; Wed, 03 Oct 2007 14:20:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754867AbXJCMJV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Oct 2007 08:09:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754870AbXJCMJU
-	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 08:09:20 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:55163 "EHLO
+	id S1758539AbXJCMTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Oct 2007 08:19:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758540AbXJCMTn
+	(ORCPT <rfc822;git-outgoing>); Wed, 3 Oct 2007 08:19:43 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:55595 "EHLO
 	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754267AbXJCMJU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Oct 2007 08:09:20 -0400
+	with ESMTP id S1755499AbXJCMTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Oct 2007 08:19:42 -0400
 Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
 	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1Id32N-0000wy-DA; Wed, 03 Oct 2007 14:09:11 +0200
+	id 1Id3CU-0001B5-KP; Wed, 03 Oct 2007 14:19:38 +0200
 Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
 	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3CCE269F; Wed,  3 Oct 2007 14:09:13 +0200 (CEST)
+	id 6257F69F; Wed,  3 Oct 2007 14:19:40 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <87y7ekr86e.wl%cworth@cworth.org>
+In-Reply-To: <20071003105501.GD7085@admingilde.org>
 X-Spam-Score: 1.7 (+)
 X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59832>
 
-Carl Worth schrieb:
-> +for num in $(seq -f%04g 1 50); do
-> +	touch sub/file-$num
-> +	echo file-$num >> expected
-> +done
+Martin Waitz schrieb:
+> At least on Linux the vfat file system honors chmod calls but does not
+> store them permanently (as there is no on-disk format for it).
+> So the filemode test which tries to chmod a file thinks that the file
+> system does support file modes.  This will result in problems when the
+> file system gets mounted for the next time and all the executable bits
+> are back.
+> 
+> A more reliable test for file systems without filemode support is to
+> simply check if new files are created with the executable bit set.
 
-seq is not universally available. Can we have that as
-
-for i in 0 1 2 3 4; do
-	for j in 0 1 2 3 4 5 6 7 8 9; do
-		> sub/file-$i$j
-		echo file-$i$j >> expected
-	done
-done
+On Windows, we don't get an executable bit at all. Better use both 
+heuristics, i.e. set core.filemode false if either one diagnoses an 
+unreliable x-bit.
 
 -- Hannes
