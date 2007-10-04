@@ -1,1162 +1,813 @@
 From: Andy Parkins <andyparkins@gmail.com>
-Subject: [PATCH 1/3] Change "refs/" references to symbolic constants
-Date: Thu, 4 Oct 2007 22:10:13 +0100
-Message-ID: <200710042210.13877.andyparkins@gmail.com>
+Subject: [PATCH 3/3] Change all instances of memcmp(buffer, CONSTANT, strlen(CONSTANT) for prefixcmp()
+Date: Thu, 4 Oct 2007 22:10:55 +0100
+Message-ID: <200710042210.55895.andyparkins@gmail.com>
 Mime-Version: 1.0
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:10:58 2007
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:12:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdXxy-0000zg-6J
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 23:10:43 +0200
+	id 1IdXzP-0001dd-22
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 23:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761015AbXJDVKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 17:10:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760693AbXJDVKc
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:10:32 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:13731 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759294AbXJDVK3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 17:10:29 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so407331nfb
-        for <git@vger.kernel.org>; Thu, 04 Oct 2007 14:10:26 -0700 (PDT)
+	id S1760880AbXJDVLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 17:11:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760648AbXJDVLN
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:11:13 -0400
+Received: from fk-out-0910.google.com ([209.85.128.185]:53182 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760880AbXJDVLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 17:11:10 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so284413fkz
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 14:11:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        bh=FwF/dvQZzRbcbU5fOgdnKM7dhEOioEiB/PP/bTGXDOM=;
-        b=B/N9kbN9GZ7kpnzhjA7TjISfaAaZBoYjCaXbdZH1yMBW5x5T+lhH7kCp2yUvo7mCduVIZ1hlwTYBxJ7OEPlD9IqUGttPnUBi02ZNw4X4X/VZBKLhri+z86OLgc57pByYYwTF43YE/GMcKZoA6Frj/nrrhgkw5oFMmBYjNy0Z7+0=
+        bh=zaU1EJx3QQNhLCRwSun7mnimRgrwAOLbn46gBoiRIJY=;
+        b=b7IF21Z1h2MgEMvlH1E4ti9d2QtgFvqU7MWZizt/T1BYJIcHkhELf0YinAzVd47omS9JPyE+qSLiTZNDNZhrn0h7LEZvJDgJNf1FuuPxYP+bl/6nr+8BFZL1WdXDrpr/0uOtxjA+8mJGFbMz/5RbSLWuW+6FtQ0W0g9jQcL+NIs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
-        b=EdT4y2vj5hj7isfDclD6wPmxXvhbS1MUpAqNc7TpWhfj0yKd7apN1y5CWGcgsHiJYsIwoJOFNzs2UZHyA0NwYIi+/4WsHAf9L5h5IODBk045Bkv8NXA7PaIbPZLaE9qWdSXDNNUg0mkZa+EcIEVjAFq+Wphq3GGct0vPpAFl4cQ=
-Received: by 10.82.172.10 with SMTP id u10mr216177bue.1191532225926;
-        Thu, 04 Oct 2007 14:10:25 -0700 (PDT)
+        b=CS6ioJCkFodhOZZD1IPhkitD7ZDX+lYKSOwr0R4xm5m2+MCsOh4Q+8zYVCDqp/BS8jaBB3PQBFeVaVJlfrJ8FylZ7kJOlKNYYmZVFTkmDsqQdS8TJJF0wR7dt2pncIrzgCh3vKv3VIeThpdZWh2BWanMkq0+08ZUOf31NwLA1KE=
+Received: by 10.82.154.12 with SMTP id b12mr18289684bue.1191532267463;
+        Thu, 04 Oct 2007 14:11:07 -0700 (PDT)
 Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTPS id i7sm1578716nfh.2007.10.04.14.10.22
+        by mx.google.com with ESMTPS id 34sm3084611nfu.2007.10.04.14.11.05
         (version=SSLv3 cipher=OTHER);
-        Thu, 04 Oct 2007 14:10:24 -0700 (PDT)
-X-TUID: 8ed703c2e2601630
-X-UID: 349
-X-Length: 40119
+        Thu, 04 Oct 2007 14:11:06 -0700 (PDT)
+X-TUID: ee3545810302cfa0
+X-UID: 351
+X-Length: 27985
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60005>
 
-Changed repeated use of the same constants for the ref paths to be
-symbolic constants.  I've defined them in refs.h
+Revision cc44c7655 changed most strncmp() instances for prefixcmp().
+That patch missed the functionally equivalent memcmp() calls, that were
+candidates for the same change.
 
-  refs/ is now PATH_REFS
-  refs/heads/ is now PATH_REFS_HEADS
-  refs/tags/ is now PATH_REFS_TAGS
-  refs/remotes/ is now PATH_REFS_REMOTES
-
-I've changed all references to them and made constants for the string
-lengths as well.  This has clarified the code in some places; for
-example:
-
- - len = strlen(refs[i]) + 11;
- + len = strlen(refs[i]) + STRLEN_PATH_REFS_TAGS + 1;
-
-In this case 11 isn't STRLEN_PATH_REFS_HEADS, as it is in most other
-cases, it's TAGS + 1.  With the change to symbolic constants it's much
-clearer what is happening.
+This patch changes every memcmp() call where one of the compared strings
+is a constant for an appropriate call to prefixcmp().
 
 Signed-off-by: Andy Parkins <andyparkins@gmail.com>
 ---
- builtin-branch.c        |   28 ++++++++++++++--------------
- builtin-describe.c      |    2 +-
- builtin-fetch--tool.c   |   10 +++++-----
- builtin-fmt-merge-msg.c |    5 +++--
- builtin-fsck.c          |    4 ++--
- builtin-init-db.c       |   15 ++++++++-------
- builtin-name-rev.c      |   14 +++++++-------
- builtin-pack-refs.c     |    2 +-
- builtin-push.c          |    6 +++---
- builtin-show-branch.c   |   34 +++++++++++++++++-----------------
- builtin-show-ref.c      |    6 +++---
- builtin-tag.c           |    4 ++--
- connect.c               |   10 +++++-----
- fetch-pack.c            |    6 +++---
- http-fetch.c            |   33 +++++++++++++++++----------------
- http-push.c             |   42 +++++++++++++++++++++---------------------
- local-fetch.c           |   13 +++++++------
- path.c                  |    5 +++--
- receive-pack.c          |    4 ++--
- reflog-walk.c           |    6 +++---
- refs.c                  |   18 +++++++++---------
- refs.h                  |   17 +++++++++++++++++
- remote.c                |   14 +++++++-------
- setup.c                 |    5 +++--
- sha1_name.c             |   10 +++++-----
- wt-status.c             |    5 +++--
- 26 files changed, 171 insertions(+), 147 deletions(-)
+ builtin-apply.c                           |   20 ++++++++++----------
+ builtin-cat-file.c                        |    2 +-
+ builtin-fetch--tool.c                     |    2 +-
+ builtin-fsck.c                            |    6 +++---
+ builtin-mailinfo.c                        |   22 +++++++++++-----------
+ builtin-mailsplit.c                       |    2 +-
+ builtin-tar-tree.c                        |    2 +-
+ combine-diff.c                            |    2 +-
+ commit.c                                  |   14 +++++++-------
+ connect.c                                 |    8 ++++----
+ contrib/convert-objects/convert-objects.c |    6 +++---
+ convert.c                                 |    4 ++--
+ fast-import.c                             |    2 +-
+ fetch-pack.c                              |    2 +-
+ http-fetch.c                              |    4 ++--
+ imap-send.c                               |   10 +++++-----
+ mktag.c                                   |    8 ++++----
+ patch-id.c                                |   10 +++++-----
+ path.c                                    |    8 ++++----
+ receive-pack.c                            |    2 +-
+ refs.c                                    |    4 ++--
+ send-pack.c                               |    8 ++++----
+ tag.c                                     |    6 +++---
+ xdiff-interface.c                         |    2 +-
+ 24 files changed, 78 insertions(+), 78 deletions(-)
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 3da8b55..3cb8aee 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -92,12 +92,12 @@ static int delete_branches(int argc, const char **argv, int force, int kinds)
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 05c6bc3..cac5d65 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -205,7 +205,7 @@ static unsigned long linelen(const char *buffer, unsigned long size)
  
- 	switch (kinds) {
- 	case REF_REMOTE_BRANCH:
--		fmt = "refs/remotes/%s";
-+		fmt = PATH_REFS_REMOTES "%s";
- 		remote = "remote ";
- 		force = 1;
- 		break;
- 	case REF_LOCAL_BRANCH:
--		fmt = "refs/heads/%s";
-+		fmt = PATH_REFS_HEADS "%s";
- 		remote = "";
- 		break;
- 	default:
-@@ -189,15 +189,15 @@ static int append_ref(const char *refname, const unsigned char *sha1, int flags,
- 	int len;
+ static int is_dev_null(const char *str)
+ {
+-	return !memcmp("/dev/null", str, 9) && isspace(str[9]);
++	return !prefixcmp(str, "/dev/null") && isspace(str[9]);
+ }
  
- 	/* Detect kind */
--	if (!prefixcmp(refname, "refs/heads/")) {
-+	if (!prefixcmp(refname, PATH_REFS_HEADS)) {
- 		kind = REF_LOCAL_BRANCH;
--		refname += 11;
--	} else if (!prefixcmp(refname, "refs/remotes/")) {
-+		refname += STRLEN_PATH_REFS_HEADS;
-+	} else if (!prefixcmp(refname, PATH_REFS_REMOTES)) {
- 		kind = REF_REMOTE_BRANCH;
--		refname += 13;
--	} else if (!prefixcmp(refname, "refs/tags/")) {
-+		refname += STRLEN_PATH_REFS_REMOTES;
-+	} else if (!prefixcmp(refname, PATH_REFS_TAGS)) {
- 		kind = REF_TAG;
--		refname += 10;
-+		refname += STRLEN_PATH_REFS_TAGS;
- 	}
- 
- 	/* Don't add types the caller doesn't want */
-@@ -399,7 +399,7 @@ static void create_branch(const char *name, const char *start_name,
- 	char *real_ref, ref[PATH_MAX], msg[PATH_MAX + 20];
- 	int forcing = 0;
- 
--	snprintf(ref, sizeof ref, "refs/heads/%s", name);
-+	snprintf(ref, sizeof ref, PATH_REFS_HEADS "%s", name);
- 	if (check_ref_format(ref))
- 		die("'%s' is not a valid branch name.", name);
- 
-@@ -468,13 +468,13 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 	if (!oldname)
- 		die("cannot rename the current branch while not on any.");
- 
--	if (snprintf(oldref, sizeof(oldref), "refs/heads/%s", oldname) > sizeof(oldref))
-+	if (snprintf(oldref, sizeof(oldref), PATH_REFS_HEADS "%s", oldname) > sizeof(oldref))
- 		die("Old branchname too long");
- 
- 	if (check_ref_format(oldref))
- 		die("Invalid branch name: %s", oldref);
- 
--	if (snprintf(newref, sizeof(newref), "refs/heads/%s", newname) > sizeof(newref))
-+	if (snprintf(newref, sizeof(newref), PATH_REFS_HEADS "%s", newname) > sizeof(newref))
- 		die("New branchname too long");
- 
- 	if (check_ref_format(newref))
-@@ -601,9 +601,9 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 		detached = 1;
+ #define TERM_SPACE	1
+@@ -411,7 +411,7 @@ static char *gitdiff_verify_name(const char *line, int isnull, char *orig_name,
  	}
  	else {
--		if (prefixcmp(head, "refs/heads/"))
--			die("HEAD not found below refs/heads!");
--		head += 11;
-+		if (prefixcmp(head, PATH_REFS_HEADS))
-+			die("HEAD not found below " PATH_REFS_HEADS "!");
-+		head += STRLEN_PATH_REFS_HEADS;
+ 		/* expect "/dev/null" */
+-		if (memcmp("/dev/null", line, 9) || line[9] != '\n')
++		if (prefixcmp(line, "/dev/null") || line[9] != '\n')
+ 			die("git-apply: bad git-diff - expected /dev/null on line %d", linenr);
+ 		return NULL;
  	}
+@@ -839,7 +839,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 		 * That's a sign that we didn't find a header, and that a
+ 		 * patch has become corrupted/broken up.
+ 		 */
+-		if (!memcmp("@@ -", line, 4)) {
++		if (!prefixcmp(line, "@@ -")) {
+ 			struct fragment dummy;
+ 			if (parse_fragment_header(line, len, &dummy) < 0)
+ 				continue;
+@@ -854,7 +854,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 		 * Git patch? It might not have a real patch, just a rename
+ 		 * or mode change, so we handle that specially
+ 		 */
+-		if (!memcmp("diff --git ", line, 11)) {
++		if (!prefixcmp(line, "diff --git ")) {
+ 			int git_hdr_len = parse_git_header(line, len, size, patch);
+ 			if (git_hdr_len <= len)
+ 				continue;
+@@ -869,7 +869,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 		}
  
- 	if (delete)
-diff --git a/builtin-describe.c b/builtin-describe.c
-index 669110c..b6f5b45 100644
---- a/builtin-describe.c
-+++ b/builtin-describe.c
-@@ -53,7 +53,7 @@ static int get_name(const char *path, const unsigned char *sha1, int flag, void
- 	 * If --tags, then any tags are used.
- 	 * Otherwise only annotated tags are used.
+ 		/** --- followed by +++ ? */
+-		if (memcmp("--- ", line,  4) || memcmp("+++ ", line + len, 4))
++		if (prefixcmp(line, "--- ") || prefixcmp(line + len, "+++ "))
+ 			continue;
+ 
+ 		/*
+@@ -878,7 +878,7 @@ static int find_header(char *line, unsigned long size, int *hdrsize, struct patc
+ 		 * minimum
+ 		 */
+ 		nextlen = linelen(line + len, size - len);
+-		if (size < nextlen + 14 || memcmp("@@ -", line + len + nextlen, 4))
++		if (size < nextlen + 14 || prefixcmp(line + len + nextlen, "@@ -"))
+ 			continue;
+ 
+ 		/* Ok, we'll consider it a patch */
+@@ -1003,7 +1003,7 @@ static int parse_fragment(char *line, unsigned long size, struct patch *patch, s
+ 		 * l10n of "\ No newline..." is at least that long.
+ 		 */
+ 		case '\\':
+-			if (len < 12 || memcmp(line, "\\ ", 2))
++			if (len < 12 || prefixcmp(line, "\\ "))
+ 				return -1;
+ 			break;
+ 		}
+@@ -1017,7 +1017,7 @@ static int parse_fragment(char *line, unsigned long size, struct patch *patch, s
+ 	 * it in the above loop because we hit oldlines == newlines == 0
+ 	 * before seeing it.
  	 */
--	if (!prefixcmp(path, "refs/tags/")) {
-+	if (!prefixcmp(path, PATH_REFS_TAGS)) {
- 		if (object->type == OBJ_TAG)
- 			prio = 2;
- 		else
+-	if (12 < size && !memcmp(line, "\\ ", 2))
++	if (12 < size && !prefixcmp(line, "\\ "))
+ 		offset += linelen(line, size);
+ 
+ 	patch->lines_added += added;
+@@ -1036,7 +1036,7 @@ static int parse_single_patch(char *line, unsigned long size, struct patch *patc
+ 	unsigned long oldlines = 0, newlines = 0, context = 0;
+ 	struct fragment **fragp = &patch->fragments;
+ 
+-	while (size > 4 && !memcmp(line, "@@ -", 4)) {
++	while (size > 4 && !prefixcmp(line, "@@ -")) {
+ 		struct fragment *fragment;
+ 		int len;
+ 
+@@ -1316,7 +1316,7 @@ static int parse_chunk(char *buffer, unsigned long size, struct patch *patch)
+ 			else
+ 				patchsize = 0;
+ 		}
+-		else if (!memcmp(" differ\n", buffer + hd + llen - 8, 8)) {
++		else if (!prefixcmp(buffer + hd + llen - 8, " differ\n")) {
+ 			for (i = 0; binhdr[i]; i++) {
+ 				int len = strlen(binhdr[i]);
+ 				if (len < size - hd &&
+diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+index f132d58..4f91c31 100644
+--- a/builtin-cat-file.c
++++ b/builtin-cat-file.c
+@@ -19,7 +19,7 @@ static void pprint_tag(const unsigned char *sha1, const char *buf, unsigned long
+ 		char c = *cp++;
+ 		if (c != '\n')
+ 			continue;
+-		if (7 <= endp - cp && !memcmp("tagger ", cp, 7)) {
++		if (7 <= endp - cp && !prefixcmp(cp, "tagger ")) {
+ 			const char *tagger = cp;
+ 
+ 			/* Found the tagger line.  Copy out the contents
 diff --git a/builtin-fetch--tool.c b/builtin-fetch--tool.c
-index 1e43d79..cdb64cc 100644
+index cdb64cc..3362618 100644
 --- a/builtin-fetch--tool.c
 +++ b/builtin-fetch--tool.c
-@@ -64,7 +64,7 @@ static int update_local_ref(const char *name,
- 		char *msg;
- 	just_store:
- 		/* new ref */
--		if (!strncmp(name, "refs/tags/", 10))
-+		if (!prefixcmp(name, PATH_REFS_TAGS))
- 			msg = "storing tag";
- 		else
- 			msg = "storing head";
-@@ -82,7 +82,7 @@ static int update_local_ref(const char *name,
- 		return 0;
- 	}
- 
--	if (!strncmp(name, "refs/tags/", 10)) {
-+	if (!prefixcmp(name, PATH_REFS_TAGS)) {
- 		fprintf(stderr, "* %s: updating with %s\n", name, note);
- 		show_new(type, sha1_new);
- 		return update_ref_env("updating tag", name, sha1_new, NULL);
-@@ -139,15 +139,15 @@ static int append_fetch_head(FILE *fp,
- 		kind = "";
- 		what = "";
- 	}
--	else if (!strncmp(remote_name, "refs/heads/", 11)) {
-+	else if (!prefixcmp(remote_name, PATH_REFS_HEADS)) {
- 		kind = "branch";
- 		what = remote_name + 11;
- 	}
--	else if (!strncmp(remote_name, "refs/tags/", 10)) {
-+	else if (!prefixcmp(remote_name, PATH_REFS_TAGS)) {
- 		kind = "tag";
- 		what = remote_name + 10;
- 	}
--	else if (!strncmp(remote_name, "refs/remotes/", 13)) {
-+	else if (!prefixcmp(remote_name, PATH_REFS_REMOTES)) {
- 		kind = "remote branch";
- 		what = remote_name + 13;
- 	}
-diff --git a/builtin-fmt-merge-msg.c b/builtin-fmt-merge-msg.c
-index 8a3c962..98a1fab 100644
---- a/builtin-fmt-merge-msg.c
-+++ b/builtin-fmt-merge-msg.c
-@@ -4,6 +4,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "tag.h"
-+#include "refs.h"
- 
- static const char *fmt_merge_msg_usage =
- 	"git-fmt-merge-msg [--summary] [--no-summary] [--file <file>]";
-@@ -277,8 +278,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 	current_branch = resolve_ref("HEAD", head_sha1, 1, NULL);
- 	if (!current_branch)
- 		die("No current branch");
--	if (!prefixcmp(current_branch, "refs/heads/"))
--		current_branch += 11;
-+	if (!prefixcmp(current_branch, PATH_REFS_HEADS))
-+		current_branch += STRLEN_PATH_REFS_HEADS;
- 
- 	while (fgets(line, sizeof(line), in)) {
- 		i++;
+@@ -384,7 +384,7 @@ static int expand_refs_wildcard(const char *ls_remote_result, int numrefs,
+ 				ls++;
+ 			next = strchr(ls, '\n');
+ 			eol = !next ? (ls + strlen(ls)) : next;
+-			if (!memcmp("^{}", eol-3, 3))
++			if (!prefixcmp(eol-3, "^{}"))
+ 				continue;
+ 			if (eol - ls < 40)
+ 				continue;
 diff --git a/builtin-fsck.c b/builtin-fsck.c
-index 8d12287..83a2d0c 100644
+index 83a2d0c..2229ea9 100644
 --- a/builtin-fsck.c
 +++ b/builtin-fsck.c
-@@ -629,14 +629,14 @@ static int fsck_head_link(void)
- 	if (!strcmp(head_points_at, "HEAD"))
- 		/* detached HEAD */
- 		null_is_error = 1;
--	else if (prefixcmp(head_points_at, "refs/heads/"))
-+	else if (prefixcmp(head_points_at, PATH_REFS_HEADS))
- 		return error("HEAD points to something strange (%s)",
- 			     head_points_at);
- 	if (is_null_sha1(sha1)) {
- 		if (null_is_error)
- 			return error("HEAD: detached HEAD points at nothing");
- 		fprintf(stderr, "notice: HEAD points to an unborn branch (%s)\n",
--			head_points_at + 11);
-+			head_points_at + STRLEN_PATH_REFS_HEADS);
- 	}
- 	return 0;
- }
-diff --git a/builtin-init-db.c b/builtin-init-db.c
-index 763fa55..1f3c0dd 100644
---- a/builtin-init-db.c
-+++ b/builtin-init-db.c
-@@ -5,6 +5,7 @@
-  */
- #include "cache.h"
- #include "builtin.h"
-+#include "refs.h"
+@@ -359,17 +359,17 @@ static int fsck_commit(struct commit *commit)
+ 		fprintf(stderr, "Checking commit %s\n",
+ 			sha1_to_hex(commit->object.sha1));
  
- #ifndef DEFAULT_GIT_TEMPLATE_DIR
- #define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-@@ -194,11 +195,11 @@ static int create_default_files(const char *git_dir, const char *template_path)
+-	if (memcmp(buffer, "tree ", 5))
++	if (prefixcmp(buffer, "tree "))
+ 		return objerror(&commit->object, "invalid format - expected 'tree' line");
+ 	if (get_sha1_hex(buffer+5, tree_sha1) || buffer[45] != '\n')
+ 		return objerror(&commit->object, "invalid 'tree' line format - bad sha1");
+ 	buffer += 46;
+-	while (!memcmp(buffer, "parent ", 7)) {
++	while (!prefixcmp(buffer, "parent ")) {
+ 		if (get_sha1_hex(buffer+7, sha1) || buffer[47] != '\n')
+ 			return objerror(&commit->object, "invalid 'parent' line format - bad sha1");
+ 		buffer += 48;
+ 	}
+-	if (memcmp(buffer, "author ", 7))
++	if (prefixcmp(buffer, "author "))
+ 		return objerror(&commit->object, "invalid format - expected 'author' line");
+ 	free(commit->buffer);
+ 	commit->buffer = NULL;
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index d7cb11d..d2d25f8 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -242,7 +242,7 @@ static char *cleanup_subject(char *subject)
+ 		int len, remove;
+ 		switch (*subject) {
+ 		case 'r': case 'R':
+-			if (!memcmp("e:", subject+1, 2)) {
++			if (!prefixcmp(subject+1, "e:")) {
+ 				subject += 3;
+ 				continue;
+ 			}
+@@ -330,11 +330,11 @@ static int check_header(char *line, unsigned linesize, char **hdr_data, int over
+ 	}
+ 
+ 	/* for inbody stuff */
+-	if (!memcmp(">From", line, 5) && isspace(line[5]))
++	if (!prefixcmp(line, ">From") && isspace(line[5]))
+ 		return 1;
+-	if (!memcmp("[PATCH]", line, 7) && isspace(line[7])) {
++	if (!prefixcmp(line, "[PATCH]") && isspace(line[7])) {
+ 		for (i = 0; header[i]; i++) {
+-			if (!memcmp("Subject: ", header[i], 9)) {
++			if (!prefixcmp(header[i], "Subject: ")) {
+ 				if (! handle_header(line, hdr_data[i], 0)) {
+ 					return 1;
+ 				}
+@@ -360,7 +360,7 @@ static int is_rfc2822_header(char *line)
+ 	char *cp = line;
+ 
+ 	/* Count mbox From headers as headers */
+-	if (!memcmp(line, "From ", 5) || !memcmp(line, ">From ", 6))
++	if (!prefixcmp(line, "From ") || !prefixcmp(line, ">From "))
+ 		return 1;
+ 
+ 	while ((ch = *cp++)) {
+@@ -656,7 +656,7 @@ static int handle_boundary(void)
+ {
+ 	char newline[]="\n";
+ again:
+-	if (!memcmp(line+content_top->boundary_len, "--", 2)) {
++	if (!prefixcmp(line+content_top->boundary_len, "--")) {
+ 		/* we hit an end boundary */
+ 		/* pop the current boundary off the stack */
+ 		free(content_top->boundary);
+@@ -693,18 +693,18 @@ again:
+ static inline int patchbreak(const char *line)
+ {
+ 	/* Beginning of a "diff -" header? */
+-	if (!memcmp("diff -", line, 6))
++	if (!prefixcmp(line, "diff -"))
+ 		return 1;
+ 
+ 	/* CVS "Index: " line? */
+-	if (!memcmp("Index: ", line, 7))
++	if (!prefixcmp(line, "Index: "))
+ 		return 1;
+ 
  	/*
- 	 * Create .git/refs/{heads,tags}
+ 	 * "--- <filename>" starts patches without headers
+ 	 * "---<sp>*" is a manual separator
  	 */
--	strcpy(path + len, "refs");
-+	strcpy(path + len, PATH_REFS);
- 	safe_create_dir(path, 1);
--	strcpy(path + len, "refs/heads");
-+	strcpy(path + len, PATH_REFS_HEADS);
- 	safe_create_dir(path, 1);
--	strcpy(path + len, "refs/tags");
-+	strcpy(path + len, PATH_REFS_TAGS);
- 	safe_create_dir(path, 1);
+-	if (!memcmp("---", line, 3)) {
++	if (!prefixcmp(line, "---")) {
+ 		line += 3;
+ 		/* space followed by a filename? */
+ 		if (line[0] == ' ' && !isspace(line[1]))
+@@ -892,7 +892,7 @@ static void handle_info(void)
+ 		else
+ 			continue;
  
- 	/* First copy the templates -- we might have the default
-@@ -217,11 +218,11 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	if (shared_repository) {
- 		path[len] = 0;
- 		adjust_shared_perm(path);
--		strcpy(path + len, "refs");
-+		strcpy(path + len, PATH_REFS);
- 		adjust_shared_perm(path);
--		strcpy(path + len, "refs/heads");
-+		strcpy(path + len, PATH_REFS_HEADS);
- 		adjust_shared_perm(path);
--		strcpy(path + len, "refs/tags");
-+		strcpy(path + len, PATH_REFS_TAGS);
- 		adjust_shared_perm(path);
- 	}
+-		if (!memcmp(header[i], "Subject", 7)) {
++		if (!prefixcmp(header[i], "Subject")) {
+ 			if (keep_subject)
+ 				sub = hdr;
+ 			else {
+@@ -900,7 +900,7 @@ static void handle_info(void)
+ 				cleanup_space(sub);
+ 			}
+ 			output_header_lines(fout, "Subject", sub);
+-		} else if (!memcmp(header[i], "From", 4)) {
++		} else if (!prefixcmp(header[i], "From")) {
+ 			handle_from(hdr);
+ 			fprintf(fout, "Author: %s\n", name);
+ 			fprintf(fout, "Email: %s\n", email);
+diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
+index 43fc373..0d10798 100644
+--- a/builtin-mailsplit.c
++++ b/builtin-mailsplit.c
+@@ -15,7 +15,7 @@ static int is_from_line(const char *line, int len)
+ {
+ 	const char *colon;
  
-@@ -232,7 +233,7 @@ static int create_default_files(const char *git_dir, const char *template_path)
- 	strcpy(path + len, "HEAD");
- 	reinit = !read_ref("HEAD", sha1);
- 	if (!reinit) {
--		if (create_symref("HEAD", "refs/heads/master", NULL) < 0)
-+		if (create_symref("HEAD", PATH_REFS_HEADS "master", NULL) < 0)
- 			exit(1);
- 	}
- 
-diff --git a/builtin-name-rev.c b/builtin-name-rev.c
-index 03083e9..56c13d0 100644
---- a/builtin-name-rev.c
-+++ b/builtin-name-rev.c
-@@ -96,7 +96,7 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- 	struct name_ref_data *data = cb_data;
- 	int deref = 0;
- 
--	if (data->tags_only && prefixcmp(path, "refs/tags/"))
-+	if (data->tags_only && prefixcmp(path, PATH_REFS_TAGS))
+-	if (len < 20 || memcmp("From ", line, 5))
++	if (len < 20 || prefixcmp(line, "From "))
  		return 0;
  
- 	if (data->ref_filter && fnmatch(data->ref_filter, path, 0))
-@@ -112,14 +112,14 @@ static int name_ref(const char *path, const unsigned char *sha1, int flags, void
- 	if (o && o->type == OBJ_COMMIT) {
- 		struct commit *commit = (struct commit *)o;
+ 	colon = line + len - 2;
+diff --git a/builtin-tar-tree.c b/builtin-tar-tree.c
+index b04719e..0f9f03c 100644
+--- a/builtin-tar-tree.c
++++ b/builtin-tar-tree.c
+@@ -79,7 +79,7 @@ int cmd_get_tar_commit_id(int argc, const char **argv, const char *prefix)
+ 		die("git-get-tar-commit-id: read error");
+ 	if (header->typeflag[0] != 'g')
+ 		return 1;
+-	if (memcmp(content, "52 comment=", 11))
++	if (prefixcmp(content, "52 comment="))
+ 		return 1;
  
--		if (!prefixcmp(path, "refs/heads/"))
--			path = path + 11;
-+		if (!prefixcmp(path, PATH_REFS_HEADS))
-+			path = path + STRLEN_PATH_REFS_HEADS;
- 		else if (data->tags_only
- 		    && data->name_only
--		    && !prefixcmp(path, "refs/tags/"))
--			path = path + 10;
--		else if (!prefixcmp(path, "refs/"))
--			path = path + 5;
-+		    && !prefixcmp(path, PATH_REFS_TAGS))
-+			path = path + STRLEN_PATH_REFS_TAGS;
-+		else if (!prefixcmp(path, PATH_REFS))
-+			path = path + STRLEN_PATH_REFS;
+ 	n = write_in_full(1, content + 11, 41);
+diff --git a/combine-diff.c b/combine-diff.c
+index fe5a2a1..bdfb033 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -156,7 +156,7 @@ struct combine_diff_state {
+ static void consume_line(void *state_, char *line, unsigned long len)
+ {
+ 	struct combine_diff_state *state = state_;
+-	if (5 < len && !memcmp("@@ -", line, 4)) {
++	if (5 < len && !prefixcmp(line, "@@ -")) {
+ 		if (parse_hunk_header(line, len,
+ 				      &state->ob, &state->on,
+ 				      &state->nb, &state->nn))
+diff --git a/commit.c b/commit.c
+index 20fb220..6de2e3b 100644
+--- a/commit.c
++++ b/commit.c
+@@ -109,11 +109,11 @@ static unsigned long parse_commit_date(const char *buf)
+ {
+ 	unsigned long date;
  
- 		name_rev(commit, xstrdup(path), 0, 0, deref);
- 	}
-diff --git a/builtin-pack-refs.c b/builtin-pack-refs.c
-index 09df4e1..23b4c4e 100644
---- a/builtin-pack-refs.c
-+++ b/builtin-pack-refs.c
-@@ -39,7 +39,7 @@ static int handle_one_ref(const char *path, const unsigned char *sha1,
- 	/* Do not pack the symbolic refs */
- 	if ((flags & REF_ISSYMREF))
+-	if (memcmp(buf, "author", 6))
++	if (prefixcmp(buf, "author"))
  		return 0;
--	is_tag_ref = !prefixcmp(path, "refs/tags/");
-+	is_tag_ref = !prefixcmp(path, PATH_REFS_TAGS);
+ 	while (*buf++ != '\n')
+ 		/* nada */;
+-	if (memcmp(buf, "committer", 9))
++	if (prefixcmp(buf, "committer"))
+ 		return 0;
+ 	while (*buf++ != '>')
+ 		/* nada */;
+@@ -293,7 +293,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 		return 0;
+ 	item->object.parsed = 1;
+ 	tail += size;
+-	if (tail <= bufptr + 5 || memcmp(bufptr, "tree ", 5))
++	if (tail <= bufptr + 5 || prefixcmp(bufptr, "tree "))
+ 		return error("bogus commit object %s", sha1_to_hex(item->object.sha1));
+ 	if (tail <= bufptr + 45 || get_sha1_hex(bufptr + 5, parent) < 0)
+ 		return error("bad tree pointer in commit %s",
+@@ -305,7 +305,7 @@ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size)
+ 	pptr = &item->parents;
  
- 	/* ALWAYS pack refs that were already packed or are tags */
- 	if (!(cb->flags & PACK_REFS_ALL) && !is_tag_ref && !(flags & REF_ISPACKED))
-diff --git a/builtin-push.c b/builtin-push.c
-index 88c5024..2fdae7a 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -33,9 +33,9 @@ static void set_refspecs(const char **refs, int nr)
- 			int len;
- 			if (nr <= ++i)
- 				die("tag shorthand without <tag>");
--			len = strlen(refs[i]) + 11;
-+			len = strlen(refs[i]) + STRLEN_PATH_REFS_TAGS + 1;
- 			tag = xmalloc(len);
--			strcpy(tag, "refs/tags/");
-+			strcpy(tag, PATH_REFS_TAGS);
- 			strcat(tag, refs[i]);
- 			ref = tag;
- 		}
-@@ -148,7 +148,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 	graft = lookup_commit_graft(item->object.sha1);
+-	while (bufptr + 48 < tail && !memcmp(bufptr, "parent ", 7)) {
++	while (bufptr + 48 < tail && !prefixcmp(bufptr, "parent ")) {
+ 		struct commit *new_parent;
+ 
+ 		if (tail <= bufptr + 48 ||
+@@ -915,7 +915,7 @@ static void pp_header(enum cmit_fmt fmt,
  			continue;
  		}
- 		if (!strcmp(arg, "--tags")) {
--			add_refspec("refs/tags/*");
-+			add_refspec(PATH_REFS_TAGS "*");
+ 
+-		if (!memcmp(line, "parent ", 7)) {
++		if (!prefixcmp(line, "parent ")) {
+ 			if (linelen != 48)
+ 				die("bad parent line in commit");
  			continue;
+@@ -939,11 +939,11 @@ static void pp_header(enum cmit_fmt fmt,
+ 		 * FULL shows both authors but not dates.
+ 		 * FULLER shows both authors and dates.
+ 		 */
+-		if (!memcmp(line, "author ", 7)) {
++		if (!prefixcmp(line, "author ")) {
+ 			strbuf_grow(sb, linelen + 80);
+ 			add_user_info("Author", fmt, sb, line + 7, dmode, encoding);
  		}
- 		if (!strcmp(arg, "--force") || !strcmp(arg, "-f")) {
-diff --git a/builtin-show-branch.c b/builtin-show-branch.c
-index 07a0c23..c01acdb 100644
---- a/builtin-show-branch.c
-+++ b/builtin-show-branch.c
-@@ -379,36 +379,36 @@ static int append_ref(const char *refname, const unsigned char *sha1,
- static int append_head_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
- 	unsigned char tmp[20];
--	int ofs = 11;
--	if (prefixcmp(refname, "refs/heads/"))
-+	int ofs = STRLEN_PATH_REFS_HEADS;
-+	if (prefixcmp(refname, PATH_REFS_HEADS))
- 		return 0;
- 	/* If both heads/foo and tags/foo exists, get_sha1 would
- 	 * get confused.
- 	 */
- 	if (get_sha1(refname + ofs, tmp) || hashcmp(tmp, sha1))
--		ofs = 5;
-+		ofs = STRLEN_PATH_REFS;
- 	return append_ref(refname + ofs, sha1, 0);
- }
- 
- static int append_remote_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
- 	unsigned char tmp[20];
--	int ofs = 13;
--	if (prefixcmp(refname, "refs/remotes/"))
-+	int ofs = STRLEN_PATH_REFS_REMOTES;
-+	if (prefixcmp(refname, PATH_REFS_REMOTES))
- 		return 0;
- 	/* If both heads/foo and tags/foo exists, get_sha1 would
- 	 * get confused.
- 	 */
- 	if (get_sha1(refname + ofs, tmp) || hashcmp(tmp, sha1))
--		ofs = 5;
-+		ofs = STRLEN_PATH_REFS;
- 	return append_ref(refname + ofs, sha1, 0);
- }
- 
- static int append_tag_ref(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
--	if (prefixcmp(refname, "refs/tags/"))
-+	if (prefixcmp(refname, PATH_REFS_TAGS))
- 		return 0;
--	return append_ref(refname + 5, sha1, 0);
-+	return append_ref(refname + STRLEN_PATH_REFS, sha1, 0);
- }
- 
- static const char *match_ref_pattern = NULL;
-@@ -437,9 +437,9 @@ static int append_matching_ref(const char *refname, const unsigned char *sha1, i
- 		return 0;
- 	if (fnmatch(match_ref_pattern, tail, 0))
- 		return 0;
--	if (!prefixcmp(refname, "refs/heads/"))
-+	if (!prefixcmp(refname, PATH_REFS_HEADS))
- 		return append_head_ref(refname, sha1, flag, cb_data);
--	if (!prefixcmp(refname, "refs/tags/"))
-+	if (!prefixcmp(refname, PATH_REFS_TAGS))
- 		return append_tag_ref(refname, sha1, flag, cb_data);
- 	return append_ref(refname, sha1, 0);
- }
-@@ -464,12 +464,12 @@ static int rev_is_head(char *head, int headlen, char *name,
- 	if ((!head[0]) ||
- 	    (head_sha1 && sha1 && hashcmp(head_sha1, sha1)))
- 		return 0;
--	if (!prefixcmp(head, "refs/heads/"))
--		head += 11;
--	if (!prefixcmp(name, "refs/heads/"))
--		name += 11;
--	else if (!prefixcmp(name, "heads/"))
--		name += 6;
-+	if (!prefixcmp(head, PATH_REFS_HEADS))
-+		head += STRLEN_PATH_REFS_HEADS;
-+	if (!prefixcmp(name, PATH_REFS_HEADS))
-+		name += STRLEN_PATH_REFS_HEADS;
-+	else if (!prefixcmp(name, PATH_HEADS))
-+		name += STRLEN_PATH_HEADS;
- 	return !strcmp(head, name);
- }
- 
-@@ -780,7 +780,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
- 				has_head++;
- 		}
- 		if (!has_head) {
--			int pfxlen = strlen("refs/heads/");
-+			int pfxlen = STRLEN_PATH_REFS_HEADS;
- 			append_one_rev(head + pfxlen);
- 		}
- 	}
-diff --git a/builtin-show-ref.c b/builtin-show-ref.c
-index 65051d1..d463d80 100644
---- a/builtin-show-ref.c
-+++ b/builtin-show-ref.c
-@@ -29,8 +29,8 @@ static int show_ref(const char *refname, const unsigned char *sha1, int flag, vo
- 	if (tags_only || heads_only) {
- 		int match;
- 
--		match = heads_only && !prefixcmp(refname, "refs/heads/");
--		match |= tags_only && !prefixcmp(refname, "refs/tags/");
-+		match = heads_only && !prefixcmp(refname, PATH_REFS_HEADS);
-+		match |= tags_only && !prefixcmp(refname, PATH_REFS_TAGS);
- 		if (!match)
- 			return 0;
- 	}
-@@ -227,7 +227,7 @@ int cmd_show_ref(int argc, const char **argv, const char *prefix)
- 		while (*pattern) {
- 			unsigned char sha1[20];
- 
--			if (!prefixcmp(*pattern, "refs/") &&
-+			if (!prefixcmp(*pattern, PATH_REFS) &&
- 			    resolve_ref(*pattern, sha1, 1, NULL)) {
- 				if (!quiet)
- 					show_one(*pattern, sha1);
-diff --git a/builtin-tag.c b/builtin-tag.c
-index 66e5a58..7cf7e02 100644
---- a/builtin-tag.c
-+++ b/builtin-tag.c
-@@ -139,7 +139,7 @@ static int for_each_tag_name(const char **argv, each_tag_name_fn fn)
- 	unsigned char sha1[20];
- 
- 	for (p = argv; *p; p++) {
--		if (snprintf(ref, sizeof(ref), "refs/tags/%s", *p)
-+		if (snprintf(ref, sizeof(ref), PATH_REFS_TAGS "%s", *p)
- 					>= sizeof(ref)) {
- 			error("tag name too long: %.*s...", 50, *p);
- 			had_error = 1;
-@@ -408,7 +408,7 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
- 	if (get_sha1(object_ref, object))
- 		die("Failed to resolve '%s' as a valid ref.", object_ref);
- 
--	if (snprintf(ref, sizeof(ref), "refs/tags/%s", tag) > sizeof(ref) - 1)
-+	if (snprintf(ref, sizeof(ref), PATH_REFS_TAGS "%s", tag) > sizeof(ref) - 1)
- 		die("tag name too long: %.*s...", 50, tag);
- 	if (check_ref_format(ref))
- 		die("'%s' is not a valid tag name.", tag);
+-		if (!memcmp(line, "committer ", 10) &&
++		if (!prefixcmp(line, "committer ") &&
+ 		    (fmt == CMIT_FMT_FULL || fmt == CMIT_FMT_FULLER)) {
+ 			strbuf_grow(sb, linelen + 80);
+ 			add_user_info("Commit", fmt, sb, line + 10, dmode, encoding);
 diff --git a/connect.c b/connect.c
-index 06d279e..94c2d60 100644
+index 94c2d60..7c24711 100644
 --- a/connect.c
 +++ b/connect.c
-@@ -13,23 +13,23 @@ static int check_ref(const char *name, int len, unsigned int flags)
+@@ -13,7 +13,7 @@ static int check_ref(const char *name, int len, unsigned int flags)
  	if (!flags)
  		return 1;
  
--	if (len < 5 || memcmp(name, "refs/", 5))
-+	if (len < STRLEN_PATH_REFS || memcmp(name, PATH_REFS, STRLEN_PATH_REFS))
+-	if (len < STRLEN_PATH_REFS || memcmp(name, PATH_REFS, STRLEN_PATH_REFS))
++	if (len < STRLEN_PATH_REFS || prefixcmp(name, PATH_REFS))
  		return 0;
  
  	/* Skip the "refs/" part */
--	name += 5;
--	len -= 5;
-+	name += STRLEN_PATH_REFS;
-+	len -= STRLEN_PATH_REFS;
- 
- 	/* REF_NORMAL means that we don't want the magic fake tag refs */
- 	if ((flags & REF_NORMAL) && check_ref_format(name) < 0)
+@@ -25,11 +25,11 @@ static int check_ref(const char *name, int len, unsigned int flags)
  		return 0;
  
  	/* REF_HEADS means that we want regular branch heads */
--	if ((flags & REF_HEADS) && !memcmp(name, "heads/", 6))
-+	if ((flags & REF_HEADS) && !memcmp(name, PATH_HEADS, STRLEN_PATH_HEADS))
+-	if ((flags & REF_HEADS) && !memcmp(name, PATH_HEADS, STRLEN_PATH_HEADS))
++	if ((flags & REF_HEADS) && !prefixcmp(name, PATH_HEADS))
  		return 1;
  
  	/* REF_TAGS means that we want tags */
--	if ((flags & REF_TAGS) && !memcmp(name, "tags/", 5))
-+	if ((flags & REF_TAGS) && !memcmp(name, PATH_TAGS, STRLEN_PATH_TAGS))
+-	if ((flags & REF_TAGS) && !memcmp(name, PATH_TAGS, STRLEN_PATH_TAGS))
++	if ((flags & REF_TAGS) && !prefixcmp(name, PATH_TAGS))
  		return 1;
  
  	/* All type bits clear means that we are ok with anything */
+@@ -391,7 +391,7 @@ static int git_proxy_command_options(const char *var, const char *value)
+ 		if (0 <= matchlen) {
+ 			/* core.gitproxy = none for kernel.org */
+ 			if (matchlen == 4 &&
+-			    !memcmp(value, "none", 4))
++			    !prefixcmp(value, "none"))
+ 				matchlen = 0;
+ 			git_proxy_command = xmemdupz(value, matchlen);
+ 		}
+diff --git a/contrib/convert-objects/convert-objects.c b/contrib/convert-objects/convert-objects.c
+index 90e7900..08c1961 100644
+--- a/contrib/convert-objects/convert-objects.c
++++ b/contrib/convert-objects/convert-objects.c
+@@ -245,7 +245,7 @@ static void convert_date(void *buffer, unsigned long size, unsigned char *result
+ 	size -= 46;
+ 
+ 	/* "parent <sha1>\n" */
+-	while (!memcmp(buffer, "parent ", 7)) {
++	while (!prefixcmp(buffer, "parent ")) {
+ 		memcpy(new + newlen, buffer, 48);
+ 		newlen += 48;
+ 		buffer = (char *) buffer + 48;
+@@ -270,11 +270,11 @@ static void convert_commit(void *buffer, unsigned long size, unsigned char *resu
+ 	void *orig_buffer = buffer;
+ 	unsigned long orig_size = size;
+ 
+-	if (memcmp(buffer, "tree ", 5))
++	if (prefixcmp(buffer, "tree "))
+ 		die("Bad commit '%s'", (char*) buffer);
+ 	convert_ascii_sha1((char *) buffer + 5);
+ 	buffer = (char *) buffer + 46;    /* "tree " + "hex sha1" + "\n" */
+-	while (!memcmp(buffer, "parent ", 7)) {
++	while (!prefixcmp(buffer, "parent ")) {
+ 		convert_ascii_sha1((char *) buffer + 7);
+ 		buffer = (char *) buffer + 48;
+ 	}
+diff --git a/convert.c b/convert.c
+index 0d5e909..cf11235 100644
+--- a/convert.c
++++ b/convert.c
+@@ -389,7 +389,7 @@ static int count_ident(const char *cp, unsigned long size)
+ 			continue;
+ 		if (size < 3)
+ 			break;
+-		if (memcmp("Id", cp, 2))
++		if (prefixcmp(cp, "Id"))
+ 			continue;
+ 		ch = cp[2];
+ 		cp += 3;
+@@ -433,7 +433,7 @@ static int ident_to_git(const char *path, const char *src, size_t len,
+ 		len -= dollar + 1 - src;
+ 		src  = dollar + 1;
+ 
+-		if (len > 3 && !memcmp(src, "Id:", 3)) {
++		if (len > 3 && !prefixcmp(src, "Id:")) {
+ 			dollar = memchr(src + 3, '$', len - 3);
+ 			if (!dollar)
+ 				break;
+diff --git a/fast-import.c b/fast-import.c
+index e9c80be..ead3392 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1903,7 +1903,7 @@ static void cmd_from_commit(struct branch *b, char *buf, unsigned long size)
+ {
+ 	if (!buf || size < 46)
+ 		die("Not a valid commit: %s", sha1_to_hex(b->sha1));
+-	if (memcmp("tree ", buf, 5)
++	if (prefixcmp(buf, "tree ")
+ 		|| get_sha1_hex(buf + 5, b->branch_tree.versions[1].sha1))
+ 		die("The commit %s is corrupt", sha1_to_hex(b->sha1));
+ 	hashcpy(b->branch_tree.versions[0].sha1,
 diff --git a/fetch-pack.c b/fetch-pack.c
-index 9c81305..c3b7ef6 100644
+index c3b7ef6..bf5e84d 100644
 --- a/fetch-pack.c
 +++ b/fetch-pack.c
-@@ -344,11 +344,11 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
+@@ -344,7 +344,7 @@ static void filter_refs(struct ref **refs, int nr_match, char **match)
  
  	for (ref = *refs; ref; ref = next) {
  		next = ref->next;
--		if (!memcmp(ref->name, "refs/", 5) &&
--		    check_ref_format(ref->name + 5))
-+		if (!memcmp(ref->name, PATH_REFS, STRLEN_PATH_REFS) &&
-+		    check_ref_format(ref->name + STRLEN_PATH_REFS))
+-		if (!memcmp(ref->name, PATH_REFS, STRLEN_PATH_REFS) &&
++		if (!prefixcmp(ref->name, PATH_REFS) &&
+ 		    check_ref_format(ref->name + STRLEN_PATH_REFS))
  			; /* trash */
  		else if (fetch_all &&
--			 (!depth || prefixcmp(ref->name, "refs/tags/") )) {
-+			 (!depth || prefixcmp(ref->name, PATH_REFS_TAGS) )) {
- 			*newtail = ref;
- 			ref->next = NULL;
- 			newtail = &ref->next;
 diff --git a/http-fetch.c b/http-fetch.c
-index 202fae0..2680fbd 100644
+index 2680fbd..9583579 100644
 --- a/http-fetch.c
 +++ b/http-fetch.c
-@@ -3,6 +3,7 @@
- #include "pack.h"
- #include "fetch.h"
- #include "http.h"
-+#include "refs.h"
+@@ -528,7 +528,7 @@ static void process_alternates_response(void *callback_data)
+ 						     - base);
+ 					okay = 1;
+ 				}
+-			} else if (!memcmp(data + i, "../", 3)) {
++			} else if (!prefixcmp(data + i, "../")) {
+ 				/* Relative URL; chop the corresponding
+ 				 * number of subpath from base (and ../
+ 				 * from data), and concatenate the result.
+@@ -549,7 +549,7 @@ static void process_alternates_response(void *callback_data)
+ 				i += 3;
+ 				serverlen = strlen(base);
+ 				while (i + 2 < posn &&
+-				       !memcmp(data + i, "../", 3)) {
++				       !prefixcmp(data + i, "../")) {
+ 					do {
+ 						serverlen--;
+ 					} while (serverlen &&
+diff --git a/imap-send.c b/imap-send.c
+index a429a76..6d924fc 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -464,7 +464,7 @@ v_issue_imap_cmd( imap_store_t *ctx, struct imap_cmd_cb *cb,
+ 	if (Verbose) {
+ 		if (imap->num_in_progress)
+ 			printf( "(%d in progress) ", imap->num_in_progress );
+-		if (memcmp( cmd->cmd, "LOGIN", 5 ))
++		if (prefixcmp( cmd->cmd, "LOGIN" ))
+ 			printf( ">>> %s", buf );
+ 		else
+ 			printf( ">>> %d LOGIN <user> <pass>\n", cmd->tag );
+@@ -644,7 +644,7 @@ parse_imap_list_l( imap_t *imap, char **sp, list_t **curp, int level )
+ 				if (level && *s == ')')
+ 					break;
+ 			cur->len = s - p;
+-			if (cur->len == 3 && !memcmp ("NIL", p, 3)) {
++			if (cur->len == 3 && !prefixcmp(p, "NIL")) {
+ 				cur->val = NIL;
+ 			} else {
+ 				cur->val = xmemdupz(p, cur->len);
+@@ -824,7 +824,7 @@ get_cmd_result( imap_store_t *ctx, struct imap_cmd *tcmd )
+ 				resp = DRV_OK;
+ 			else {
+ 				if (!strcmp( "NO", arg )) {
+-					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || !memcmp( cmd, "[TRYCREATE]", 11 ))) { /* SELECT, APPEND or UID COPY */
++					if (cmdp->cb.create && cmd && (cmdp->cb.trycreate || !prefixcmp( cmd, "[TRYCREATE]" ))) { /* SELECT, APPEND or UID COPY */
+ 						p = strchr( cmdp->cmd, '"' );
+ 						if (!issue_imap_cmd( ctx, NULL, "CREATE \"%.*s\"", strchr( p + 1, '"' ) - p + 1, p )) {
+ 							resp = RESP_BAD;
+@@ -849,7 +849,7 @@ get_cmd_result( imap_store_t *ctx, struct imap_cmd *tcmd )
+ 				} else /*if (!strcmp( "BAD", arg ))*/
+ 					resp = RESP_BAD;
+ 				fprintf( stderr, "IMAP command '%s' returned response (%s) - %s\n",
+-					 memcmp (cmdp->cmd, "LOGIN", 5) ?
++					 prefixcmp(cmdp->cmd, "LOGIN") ?
+ 							cmdp->cmd : "LOGIN <user> <pass>",
+ 							arg, cmd ? cmd : "");
+ 			}
+@@ -1079,7 +1079,7 @@ imap_store_msg( store_t *gctx, msg_data_t *data, int *uid )
+ 					sbreak = ebreak = i - 2 + nocr;
+ 					goto mktid;
+ 				}
+-				if (!memcmp( fmap + start, "X-TUID: ", 8 )) {
++				if (!prefixcmp( fmap + start, "X-TUID: " )) {
+ 					extra -= (ebreak = i) - (sbreak = start) + nocr;
+ 					goto mktid;
+ 				}
+diff --git a/mktag.c b/mktag.c
+index b05260c..7a19110 100644
+--- a/mktag.c
++++ b/mktag.c
+@@ -52,7 +52,7 @@ static int verify_tag(char *buffer, unsigned long size)
  
- #define PREV_BUF_SIZE 4096
- #define RANGE_HEADER_SIZE 30
-@@ -157,12 +158,12 @@ static void start_object_request(struct object_request *obj_req)
+ 	/* Verify object line */
+ 	object = buffer;
+-	if (memcmp(object, "object ", 7))
++	if (prefixcmp(object, "object "))
+ 		return error("char%d: does not start with \"object \"", 0);
  
- 	SHA1_Init(&obj_req->c);
+ 	if (get_sha1_hex(object + 7, sha1))
+@@ -60,7 +60,7 @@ static int verify_tag(char *buffer, unsigned long size)
  
--	url = xmalloc(strlen(obj_req->repo->base) + 51);
--	obj_req->url = xmalloc(strlen(obj_req->repo->base) + 51);
-+	url = xmalloc(strlen(obj_req->repo->base) + STRLEN_PATH_OBJECTS + 43);
-+	obj_req->url = xmalloc(strlen(obj_req->repo->base) + STRLEN_PATH_OBJECTS + 43);
- 	strcpy(url, obj_req->repo->base);
- 	posn = url + strlen(obj_req->repo->base);
--	strcpy(posn, "/objects/");
--	posn += 9;
-+	strcpy(posn, "/" PATH_OBJECTS);
-+	posn += 1 + STRLEN_PATH_OBJECTS;
- 	memcpy(posn, hex, 2);
- 	posn += 2;
- 	*(posn++) = '/';
-@@ -398,8 +399,8 @@ static int fetch_index(struct alt_base *repo, unsigned char *sha1)
- 	if (get_verbosely)
- 		fprintf(stderr, "Getting index for pack %s\n", hex);
+ 	/* Verify type line */
+ 	type_line = object + 48;
+-	if (memcmp(type_line - 1, "\ntype ", 6))
++	if (prefixcmp(type_line - 1, "\ntype "))
+ 		return error("char%d: could not find \"\\ntype \"", 47);
  
--	url = xmalloc(strlen(repo->base) + 64);
--	sprintf(url, "%s/objects/pack/pack-%s.idx", repo->base, hex);
-+	url = xmalloc(strlen(repo->base) + STRLEN_PATH_OBJECTS + 56);
-+	sprintf(url, "%s/" PATH_OBJECTS "pack/pack-%s.idx", repo->base, hex);
+ 	/* Verify tag-line */
+@@ -68,7 +68,7 @@ static int verify_tag(char *buffer, unsigned long size)
+ 	if (!tag_line)
+ 		return error("char" PD_FMT ": could not find next \"\\n\"", type_line - buffer);
+ 	tag_line++;
+-	if (memcmp(tag_line, "tag ", 4) || tag_line[4] == '\n')
++	if (prefixcmp(tag_line, "tag ") || tag_line[4] == '\n')
+ 		return error("char" PD_FMT ": no \"tag \" found", tag_line - buffer);
  
- 	filename = sha1_pack_index_name(sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-@@ -478,7 +479,7 @@ static void process_alternates_response(void *callback_data)
+ 	/* Get the actual type */
+@@ -97,7 +97,7 @@ static int verify_tag(char *buffer, unsigned long size)
+ 	/* Verify the tagger line */
+ 	tagger_line = tag_line;
  
- 			/* Try reusing the slot to get non-http alternates */
- 			alt_req->http_specific = 0;
--			sprintf(alt_req->url, "%s/objects/info/alternates",
-+			sprintf(alt_req->url, "%s/" PATH_OBJECTS "info/alternates",
- 				base);
- 			curl_easy_setopt(slot->curl, CURLOPT_URL,
- 					 alt_req->url);
-@@ -625,8 +626,8 @@ static void fetch_alternates(const char *base)
- 	if (get_verbosely)
- 		fprintf(stderr, "Getting alternates list for %s\n", base);
+-	if (memcmp(tagger_line, "tagger", 6) || (tagger_line[6] == '\n'))
++	if (prefixcmp(tagger_line, "tagger") || (tagger_line[6] == '\n'))
+ 		return error("char" PD_FMT ": could not find \"tagger\"", tagger_line - buffer);
  
--	url = xmalloc(strlen(base) + 31);
--	sprintf(url, "%s/objects/info/http-alternates", base);
-+	url = xmalloc(strlen(base) + STRLEN_PATH_OBJECTS + 23);
-+	sprintf(url, "%s/" PATH_OBJECTS "info/http-alternates", base);
+ 	/* TODO: check for committer info + blank line? */
+diff --git a/patch-id.c b/patch-id.c
+index 9349bc5..390f7a7 100644
+--- a/patch-id.c
++++ b/patch-id.c
+@@ -40,9 +40,9 @@ static void generate_id_list(void)
+ 		char *p = line;
+ 		int len;
  
- 	/* Use a callback to process the result, since another request
- 	   may fail and need to have alternates loaded before continuing */
-@@ -675,8 +676,8 @@ static int fetch_indices(struct alt_base *repo)
- 	if (get_verbosely)
- 		fprintf(stderr, "Getting pack list for %s\n", repo->base);
+-		if (!memcmp(line, "diff-tree ", 10))
++		if (!prefixcmp(line, "diff-tree "))
+ 			p += 10;
+-		else if (!memcmp(line, "commit ", 7))
++		else if (!prefixcmp(line, "commit "))
+ 			p += 7;
  
--	url = xmalloc(strlen(repo->base) + 21);
--	sprintf(url, "%s/objects/info/packs", repo->base);
-+	url = xmalloc(strlen(repo->base) + STRLEN_PATH_OBJECTS + 13);
-+	sprintf(url, "%s/" PATH_OBJECTS "info/packs", repo->base);
+ 		if (!get_sha1_hex(p, n)) {
+@@ -53,15 +53,15 @@ static void generate_id_list(void)
+ 		}
  
- 	slot = get_active_slot();
- 	slot->results = &results;
-@@ -757,8 +758,8 @@ static int fetch_pack(struct alt_base *repo, unsigned char *sha1)
- 			sha1_to_hex(sha1));
- 	}
+ 		/* Ignore commit comments */
+-		if (!patchlen && memcmp(line, "diff ", 5))
++		if (!patchlen && prefixcmp(line, "diff "))
+ 			continue;
  
--	url = xmalloc(strlen(repo->base) + 65);
--	sprintf(url, "%s/objects/pack/pack-%s.pack",
-+	url = xmalloc(strlen(repo->base) + STRLEN_PATH_OBJECTS + 57);
-+	sprintf(url, "%s/" PATH_OBJECTS "pack/pack-%s.pack",
- 		repo->base, sha1_to_hex(target->sha1));
+ 		/* Ignore git-diff index header */
+-		if (!memcmp(line, "index ", 6))
++		if (!prefixcmp(line, "index "))
+ 			continue;
  
- 	filename = sha1_pack_name(target->sha1);
-@@ -930,14 +931,14 @@ static char *quote_ref_url(const char *base, const char *ref)
- 	int len, baselen, ch;
+ 		/* Ignore line numbers when computing the SHA1 of the patch */
+-		if (!memcmp(line, "@@ -", 4))
++		if (!prefixcmp(line, "@@ -"))
+ 			continue;
  
- 	baselen = strlen(base);
--	len = baselen + 7; /* "/refs/" + NUL */
-+	len = baselen + STRLEN_PATH_REFS + 2; /* "/" + "refs/" + NUL */
- 	for (cp = ref; (ch = *cp) != 0; cp++, len++)
- 		if (needs_quote(ch))
- 			len += 2; /* extra two hex plus replacement % */
- 	qref = xmalloc(len);
- 	memcpy(qref, base, baselen);
--	memcpy(qref + baselen, "/refs/", 6);
--	for (cp = ref, dp = qref + baselen + 6; (ch = *cp) != 0; cp++) {
-+	memcpy(qref + baselen, "/" PATH_REFS, STRLEN_PATH_REFS + 1);
-+	for (cp = ref, dp = qref + baselen + STRLEN_PATH_REFS + 1; (ch = *cp) != 0; cp++) {
- 		if (needs_quote(ch)) {
- 			*dp++ = '%';
- 			*dp++ = hex((ch >> 4) & 0xF);
-diff --git a/http-push.c b/http-push.c
-index 276e1eb..e70c4ea 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -272,12 +272,12 @@ static void start_fetch_loose(struct transfer_request *request)
- 
- 	SHA1_Init(&request->c);
- 
--	url = xmalloc(strlen(remote->url) + 50);
--	request->url = xmalloc(strlen(remote->url) + 50);
-+	url = xmalloc(strlen(remote->url) + 42 + STRLEN_PATH_OBJECTS);
-+	request->url = xmalloc(strlen(remote->url) + 42 + STRLEN_PATH_OBJECTS);
- 	strcpy(url, remote->url);
- 	posn = url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
-+	strcpy(posn, PATH_OBJECTS);
-+	posn += STRLEN_PATH_OBJECTS;
- 	memcpy(posn, hex, 2);
- 	posn += 2;
- 	*(posn++) = '/';
-@@ -357,11 +357,11 @@ static void start_mkcol(struct transfer_request *request)
- 	struct active_request_slot *slot;
- 	char *posn;
- 
--	request->url = xmalloc(strlen(remote->url) + 13);
-+	request->url = xmalloc(strlen(remote->url) + STRLEN_PATH_OBJECTS + 5);
- 	strcpy(request->url, remote->url);
- 	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
-+	strcpy(posn, PATH_OBJECTS);
-+	posn += STRLEN_PATH_OBJECTS;
- 	memcpy(posn, hex, 2);
- 	posn += 2;
- 	strcpy(posn, "/");
-@@ -415,8 +415,8 @@ static void start_fetch_packed(struct transfer_request *request)
- 	snprintf(request->tmpfile, sizeof(request->tmpfile),
- 		 "%s.temp", filename);
- 
--	url = xmalloc(strlen(remote->url) + 64);
--	sprintf(url, "%sobjects/pack/pack-%s.pack",
-+	url = xmalloc(strlen(remote->url) + STRLEN_PATH_OBJECTS + 56);
-+	sprintf(url, "%s" PATH_OBJECTS "pack/pack-%s.pack",
- 		remote->url, sha1_to_hex(target->sha1));
- 
- 	/* Make sure there isn't another open request for this pack */
-@@ -519,11 +519,11 @@ static void start_put(struct transfer_request *request)
- 	request->buffer.posn = 0;
- 
- 	request->url = xmalloc(strlen(remote->url) +
--			       strlen(request->lock->token) + 51);
-+			       strlen(request->lock->token) + STRLEN_PATH_OBJECTS + 43);
- 	strcpy(request->url, remote->url);
- 	posn = request->url + strlen(remote->url);
--	strcpy(posn, "objects/");
--	posn += 8;
-+	strcpy(posn, PATH_OBJECTS);
-+	posn += STRLEN_PATH_OBJECTS;
- 	memcpy(posn, hex, 2);
- 	posn += 2;
- 	*(posn++) = '/';
-@@ -922,8 +922,8 @@ static int fetch_index(unsigned char *sha1)
- 	struct slot_results results;
- 
- 	/* Don't use the index if the pack isn't there */
--	url = xmalloc(strlen(remote->url) + 64);
--	sprintf(url, "%sobjects/pack/pack-%s.pack", remote->url, hex);
-+	url = xmalloc(strlen(remote->url) + STRLEN_PATH_OBJECTS + 56);
-+	sprintf(url, "%s" PATH_OBJECTS "pack/pack-%s.pack", remote->url, hex);
- 	slot = get_active_slot();
- 	slot->results = &results;
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, url);
-@@ -945,7 +945,7 @@ static int fetch_index(unsigned char *sha1)
- 	if (push_verbosely)
- 		fprintf(stderr, "Getting index for pack %s\n", hex);
- 
--	sprintf(url, "%sobjects/pack/pack-%s.idx", remote->url, hex);
-+	sprintf(url, "%s" PATH_OBJECTS "pack/pack-%s.idx", remote->url, hex);
- 
- 	filename = sha1_pack_index_name(sha1);
- 	snprintf(tmpfile, sizeof(tmpfile), "%s.temp", filename);
-@@ -1029,8 +1029,8 @@ static int fetch_indices(void)
- 	if (push_verbosely)
- 		fprintf(stderr, "Getting pack list\n");
- 
--	url = xmalloc(strlen(remote->url) + 20);
--	sprintf(url, "%sobjects/info/packs", remote->url);
-+	url = xmalloc(strlen(remote->url) + STRLEN_PATH_OBJECTS + 12);
-+	sprintf(url, "%s" PATH_OBJECTS "info/packs", remote->url);
- 
- 	slot = get_active_slot();
- 	slot->results = &results;
-@@ -1612,7 +1612,7 @@ static void remote_ls(const char *path, int flags,
- 
- static void get_remote_object_list(unsigned char parent)
- {
--	char path[] = "objects/XX/";
-+	char path[] = PATH_OBJECTS "XX/";
- 	static const char hex[] = "0123456789abcdef";
- 	unsigned int val = parent;
- 
-@@ -1922,7 +1922,7 @@ static void get_local_heads(void)
- static void get_dav_remote_heads(void)
- {
- 	remote_tail = &remote_refs;
--	remote_ls("refs/", (PROCESS_FILES | PROCESS_DIRS | RECURSIVE), process_ls_ref, NULL);
-+	remote_ls(PATH_REFS, (PROCESS_FILES | PROCESS_DIRS | RECURSIVE), process_ls_ref, NULL);
- }
- 
- static int is_zero_sha1(const unsigned char *sha1)
-@@ -2066,7 +2066,7 @@ static void update_remote_info_refs(struct remote_lock *lock)
- 	buffer.buffer = xcalloc(1, 4096);
- 	buffer.size = 4096;
- 	buffer.posn = 0;
--	remote_ls("refs/", (PROCESS_FILES | RECURSIVE),
-+	remote_ls(PATH_REFS, (PROCESS_FILES | RECURSIVE),
- 		  add_remote_info_ref, &buffer);
- 	if (!aborted) {
- 		if_header = xmalloc(strlen(lock->token) + 25);
-@@ -2370,7 +2370,7 @@ int main(int argc, char **argv)
- 	/* Check whether the remote has server info files */
- 	remote->can_update_info_refs = 0;
- 	remote->has_info_refs = remote_exists("info/refs");
--	remote->has_info_packs = remote_exists("objects/info/packs");
-+	remote->has_info_packs = remote_exists(PATH_OBJECTS "info/packs");
- 	if (remote->has_info_refs) {
- 		info_ref_lock = lock_remote("info/refs", LOCK_TIME);
- 		if (info_ref_lock)
-diff --git a/local-fetch.c b/local-fetch.c
-index bf7ec6c..67dc065 100644
---- a/local-fetch.c
-+++ b/local-fetch.c
-@@ -4,6 +4,7 @@
- #include "cache.h"
- #include "commit.h"
- #include "fetch.h"
-+#include "refs.h"
- 
- static int use_link;
- static int use_symlink;
-@@ -23,7 +24,7 @@ static void setup_index(unsigned char *sha1)
- 	struct packed_git *new_pack;
- 	char filename[PATH_MAX];
- 	strcpy(filename, path);
--	strcat(filename, "/objects/pack/pack-");
-+	strcat(filename, "/" PATH_OBJECTS "pack/pack-");
- 	strcat(filename, sha1_to_hex(sha1));
- 	strcat(filename, ".idx");
- 	new_pack = parse_pack_index_file(sha1, filename);
-@@ -37,7 +38,7 @@ static int setup_indices(void)
- 	struct dirent *de;
- 	char filename[PATH_MAX];
- 	unsigned char sha1[20];
--	sprintf(filename, "%s/objects/pack/", path);
-+	sprintf(filename, "%s/" PATH_OBJECTS "pack/", path);
- 	dir = opendir(filename);
- 	if (!dir)
- 		return -1;
-@@ -122,11 +123,11 @@ static int fetch_pack(const unsigned char *sha1)
- 		fprintf(stderr, " which contains %s\n",
- 			sha1_to_hex(sha1));
- 	}
--	sprintf(filename, "%s/objects/pack/pack-%s.pack",
-+	sprintf(filename, "%s/" PATH_OBJECTS "pack/pack-%s.pack",
- 		path, sha1_to_hex(target->sha1));
- 	copy_file(filename, sha1_pack_name(target->sha1),
- 		  sha1_to_hex(target->sha1), 1);
--	sprintf(filename, "%s/objects/pack/pack-%s.idx",
-+	sprintf(filename, "%s/" PATH_OBJECTS "pack/pack-%s.idx",
- 		path, sha1_to_hex(target->sha1));
- 	copy_file(filename, sha1_pack_index_name(target->sha1),
- 		  sha1_to_hex(target->sha1), 1);
-@@ -143,7 +144,7 @@ static int fetch_file(const unsigned char *sha1)
- 
- 	if (object_name_start < 0) {
- 		strcpy(filename, path); /* e.g. git.git */
--		strcat(filename, "/objects/");
-+		strcat(filename, "/" PATH_OBJECTS);
- 		object_name_start = strlen(filename);
- 	}
- 	filename[object_name_start+0] = hex[0];
-@@ -169,7 +170,7 @@ int fetch_ref(char *ref, unsigned char *sha1)
- 	int ifd;
- 
- 	if (ref_name_start < 0) {
--		sprintf(filename, "%s/refs/", path);
-+		sprintf(filename, "%s/" PATH_REFS, path);
- 		ref_name_start = strlen(filename);
- 	}
- 	strcpy(filename + ref_name_start, ref);
+ 		/* Compute the sha without whitespace */
 diff --git a/path.c b/path.c
-index 4260952..d330bbc 100644
+index d330bbc..037f2ef 100644
 --- a/path.c
 +++ b/path.c
-@@ -11,6 +11,7 @@
-  * which is what it's designed for.
-  */
- #include "cache.h"
-+#include "refs.h"
- 
- static char bad_path[] = "/bad-path/";
- 
-@@ -99,7 +100,7 @@ int validate_headref(const char *path)
+@@ -25,7 +25,7 @@ static char *get_pathname(void)
+ static char *cleanup_path(char *path)
+ {
+ 	/* Clean it up */
+-	if (!memcmp(path, "./", 2)) {
++	if (!prefixcmp(path, "./")) {
+ 		path += 2;
+ 		while (*path == '/')
+ 			path++;
+@@ -100,7 +100,7 @@ int validate_headref(const char *path)
  	/* Make sure it is a "refs/.." symlink */
  	if (S_ISLNK(st.st_mode)) {
  		len = readlink(path, buffer, sizeof(buffer)-1);
--		if (len >= 5 && !memcmp("refs/", buffer, 5))
-+		if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buffer, STRLEN_PATH_REFS))
+-		if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buffer, STRLEN_PATH_REFS))
++		if (len >= STRLEN_PATH_REFS && !prefixcmp(PATH_REFS, buffer))
  			return 0;
  		return -1;
  	}
-@@ -123,7 +124,7 @@ int validate_headref(const char *path)
+@@ -119,12 +119,12 @@ int validate_headref(const char *path)
+ 	 */
+ 	if (len < 4)
+ 		return -1;
+-	if (!memcmp("ref:", buffer, 4)) {
++	if (!prefixcmp(buffer, "ref:")) {
+ 		buf = buffer + 4;
  		len -= 4;
  		while (len && isspace(*buf))
  			buf++, len--;
--		if (len >= 5 && !memcmp("refs/", buf, 5))
-+		if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buf, STRLEN_PATH_REFS))
+-		if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buf, STRLEN_PATH_REFS))
++		if (len >= STRLEN_PATH_REFS && !prefixcmp(PATH_REFS, buf))
  			return 0;
  	}
  
 diff --git a/receive-pack.c b/receive-pack.c
-index d3c422b..114ea38 100644
+index 114ea38..c8e94b6 100644
 --- a/receive-pack.c
 +++ b/receive-pack.c
-@@ -165,7 +165,7 @@ static const char *update(struct command *cmd)
- 	unsigned char *new_sha1 = cmd->new_sha1;
- 	struct ref_lock *lock;
- 
--	if (!prefixcmp(name, "refs/") && check_ref_format(name + 5)) {
-+	if (!prefixcmp(name, PATH_REFS) && check_ref_format(name + STRLEN_PATH_REFS)) {
- 		error("refusing to create funny ref '%s' locally", name);
- 		return "funny refname";
- 	}
-@@ -177,7 +177,7 @@ static const char *update(struct command *cmd)
- 	}
- 	if (deny_non_fast_forwards && !is_null_sha1(new_sha1) &&
- 	    !is_null_sha1(old_sha1) &&
--	    !prefixcmp(name, "refs/heads/")) {
-+	    !prefixcmp(name, PATH_REFS_HEADS)) {
- 		struct commit *old_commit, *new_commit;
- 		struct commit_list *bases, *ent;
- 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index ee1456b..98cf8ef 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -55,11 +55,11 @@ static struct complete_reflogs *read_complete_reflog(const char *ref)
- 	}
- 	if (reflogs->nr == 0) {
- 		int len = strlen(ref);
--		char *refname = xmalloc(len + 12);
--		sprintf(refname, "refs/%s", ref);
-+		char *refname = xmalloc(len + STRLEN_PATH_REFS_HEADS + 1);
-+		sprintf(refname, PATH_REFS "%s", ref);
- 		for_each_reflog_ent(refname, read_one_reflog, reflogs);
- 		if (reflogs->nr == 0) {
--			sprintf(refname, "refs/heads/%s", ref);
-+			sprintf(refname, PATH_REFS_HEADS "%s", ref);
- 			for_each_reflog_ent(refname, read_one_reflog, reflogs);
- 		}
- 		free(refname);
+@@ -415,7 +415,7 @@ static const char *unpack(void)
+ 		     len < 46 && (s = xread(ip.out, packname+len, 46-len)) > 0;
+ 		     len += s);
+ 		if (len == 46 && packname[45] == '\n' &&
+-		    memcmp(packname, "keep\t", 5) == 0) {
++		    prefixcmp(packname, "keep\t") == 0) {
+ 			char path[PATH_MAX];
+ 			packname[45] = 0;
+ 			snprintf(path, sizeof(path), "%s/pack/pack-%s.keep",
 diff --git a/refs.c b/refs.c
-index 07e260c..5891609 100644
+index 5891609..ba3b5c8 100644
 --- a/refs.c
 +++ b/refs.c
 @@ -409,7 +409,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
  		/* Follow "normalized" - ie "refs/.." symlinks by hand */
  		if (S_ISLNK(st.st_mode)) {
  			len = readlink(path, buffer, sizeof(buffer)-1);
--			if (len >= 5 && !memcmp("refs/", buffer, 5)) {
-+			if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buffer, STRLEN_PATH_REFS)) {
+-			if (len >= STRLEN_PATH_REFS && !memcmp(PATH_REFS, buffer, STRLEN_PATH_REFS)) {
++			if (len >= STRLEN_PATH_REFS && !prefixcmp(buffer, PATH_REFS)) {
  				buffer[len] = 0;
  				strcpy(ref_buffer, buffer);
  				ref = ref_buffer;
-@@ -561,22 +561,22 @@ int head_ref(each_ref_fn fn, void *cb_data)
- 
- int for_each_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/", fn, 0, cb_data);
-+	return do_for_each_ref(PATH_REFS, fn, 0, cb_data);
- }
- 
- int for_each_tag_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/tags/", fn, 10, cb_data);
-+	return do_for_each_ref(PATH_REFS_TAGS, fn, STRLEN_PATH_REFS_TAGS, cb_data);
- }
- 
- int for_each_branch_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/heads/", fn, 11, cb_data);
-+	return do_for_each_ref(PATH_REFS_HEADS, fn, STRLEN_PATH_REFS_HEADS, cb_data);
- }
- 
- int for_each_remote_ref(each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref("refs/remotes/", fn, 13, cb_data);
-+	return do_for_each_ref(PATH_REFS_REMOTES, fn, STRLEN_PATH_REFS_REMOTES, cb_data);
- }
- 
- /* NEEDSWORK: This is only used by ssh-upload and it should go; the
-@@ -588,7 +588,7 @@ int get_ref_sha1(const char *ref, unsigned char *sha1)
- {
- 	if (check_ref_format(ref))
- 		return -1;
--	return read_ref(mkpath("refs/%s", ref), sha1);
-+	return read_ref(mkpath(PATH_REFS "%s", ref), sha1);
- }
- 
- /*
-@@ -824,7 +824,7 @@ struct ref_lock *lock_ref_sha1(const char *ref, const unsigned char *old_sha1)
- 	char refpath[PATH_MAX];
- 	if (check_ref_format(ref))
- 		return NULL;
--	strcpy(refpath, mkpath("refs/%s", ref));
-+	strcpy(refpath, mkpath(PATH_REFS "%s", ref));
- 	return lock_ref_sha1_basic(refpath, old_sha1, 0, NULL);
- }
- 
-@@ -1078,8 +1078,8 @@ static int log_ref_write(const char *ref_name, const unsigned char *old_sha1,
- 	log_file = git_path("logs/%s", ref_name);
- 
- 	if (log_all_ref_updates &&
--	    (!prefixcmp(ref_name, "refs/heads/") ||
--	     !prefixcmp(ref_name, "refs/remotes/") ||
-+	    (!prefixcmp(ref_name,  PATH_REFS_HEADS) ||
-+	     !prefixcmp(ref_name, PATH_REFS_REMOTES) ||
- 	     !strcmp(ref_name, "HEAD"))) {
- 		if (safe_create_leading_directories(log_file) < 0)
- 			return error("unable to create directory for %s",
-diff --git a/refs.h b/refs.h
-index 6eb98a4..1025d04 100644
---- a/refs.h
-+++ b/refs.h
-@@ -13,6 +13,23 @@ struct ref_lock {
- #define REF_ISSYMREF 01
- #define REF_ISPACKED 02
- 
-+#define PATH_OBJECTS             "objects/"
-+#define STRLEN_PATH_OBJECTS      8
-+#define PATH_REFS                "refs/"
-+#define STRLEN_PATH_REFS         5
-+#define PATH_HEADS               "heads/"
-+#define STRLEN_PATH_HEADS        6
-+#define PATH_TAGS                "tags/"
-+#define STRLEN_PATH_TAGS         5
-+#define PATH_REMOTES             "remotes/"
-+#define STRLEN_PATH_REMOTES      8
-+#define PATH_REFS_HEADS          PATH_REFS PATH_HEADS
-+#define STRLEN_PATH_REFS_HEADS   (STRLEN_PATH_REFS+STRLEN_PATH_HEADS)
-+#define PATH_REFS_TAGS           PATH_REFS PATH_TAGS
-+#define STRLEN_PATH_REFS_TAGS    (STRLEN_PATH_REFS+STRLEN_PATH_TAGS)
-+#define PATH_REFS_REMOTES        PATH_REFS PATH_REMOTES
-+#define STRLEN_PATH_REFS_REMOTES (STRLEN_PATH_REFS+STRLEN_PATH_REMOTES)
-+
- /*
-  * Calls the specified function for each ref file until it returns nonzero,
-  * and returns the value
-diff --git a/remote.c b/remote.c
-index bb774d0..b8922c7 100644
---- a/remote.c
-+++ b/remote.c
-@@ -211,8 +211,8 @@ static void read_config(void)
- 	current_branch = NULL;
- 	head_ref = resolve_ref("HEAD", sha1, 0, &flag);
- 	if (head_ref && (flag & REF_ISSYMREF) &&
--	    !prefixcmp(head_ref, "refs/heads/")) {
--		current_branch = head_ref + strlen("refs/heads/");
-+	    !prefixcmp(head_ref, PATH_REFS_HEADS)) {
-+		current_branch = head_ref + STRLEN_PATH_REFS_HEADS;
- 		current_branch_len = strlen(current_branch);
- 	}
- 	git_config(handle_config);
-@@ -398,9 +398,9 @@ static int count_refspec_match(const char *pattern,
- 		 * at the remote site.
+@@ -438,7 +438,7 @@ const char *resolve_ref(const char *ref, unsigned char *sha1, int reading, int *
+ 		/*
+ 		 * Is it a symbolic ref?
  		 */
- 		if (namelen != patlen &&
--		    patlen != namelen - 5 &&
--		    prefixcmp(name, "refs/heads/") &&
--		    prefixcmp(name, "refs/tags/")) {
-+		    patlen != namelen - STRLEN_PATH_REFS &&
-+		    prefixcmp(name, PATH_REFS_HEADS) &&
-+		    prefixcmp(name, PATH_REFS_TAGS)) {
- 			/* We want to catch the case where only weak
- 			 * matches are found and there are multiple
- 			 * matches, and where more than one strong
-@@ -511,7 +511,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 	case 1:
- 		break;
- 	case 0:
--		if (!memcmp(dst_value, "refs/", 5))
-+		if (!prefixcmp(dst_value, PATH_REFS))
- 			matched_dst = make_linked_ref(dst_value, dst_tail);
- 		else
- 			error("dst refspec %s does not match any "
-@@ -594,7 +594,7 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 			if (!pat)
- 				continue;
+-		if (len < 4 || memcmp("ref:", buffer, 4))
++		if (len < 4 || prefixcmp(buffer, "ref:"))
+ 			break;
+ 		buf = buffer + 4;
+ 		len -= 4;
+diff --git a/send-pack.c b/send-pack.c
+index f74e66a..efafab1 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -151,11 +151,11 @@ static int receive_status(int in)
+ 	char line[1000];
+ 	int ret = 0;
+ 	int len = packet_read_line(in, line, sizeof(line));
+-	if (len < 10 || memcmp(line, "unpack ", 7)) {
++	if (len < 10 || prefixcmp(line, "unpack ")) {
+ 		fprintf(stderr, "did not receive status back\n");
+ 		return -1;
+ 	}
+-	if (memcmp(line, "unpack ok\n", 10)) {
++	if (prefixcmp(line, "unpack ok\n")) {
+ 		fputs(line, stderr);
+ 		ret = -1;
+ 	}
+@@ -164,12 +164,12 @@ static int receive_status(int in)
+ 		if (!len)
+ 			break;
+ 		if (len < 3 ||
+-		    (memcmp(line, "ok", 2) && memcmp(line, "ng", 2))) {
++		    (prefixcmp(line, "ok") && prefixcmp(line, "ng"))) {
+ 			fprintf(stderr, "protocol error: %s\n", line);
+ 			ret = -1;
+ 			break;
  		}
--		else if (prefixcmp(src->name, "refs/heads/"))
-+		else if (prefixcmp(src->name, PATH_REFS_HEADS))
- 			/*
- 			 * "matching refs"; traditionally we pushed everything
- 			 * including refs outside refs/heads/ hierarchy, but
-diff --git a/setup.c b/setup.c
-index 06004f1..c8912d2 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1,5 +1,6 @@
- #include "cache.h"
- #include "dir.h"
-+#include "refs.h"
+-		if (!memcmp(line, "ok", 2))
++		if (!prefixcmp(line, "ok"))
+ 			continue;
+ 		fputs(line, stderr);
+ 		ret = -1;
+diff --git a/tag.c b/tag.c
+index f62bcdd..305529b 100644
+--- a/tag.c
++++ b/tag.c
+@@ -46,15 +46,15 @@ int parse_tag_buffer(struct tag *item, void *data, unsigned long size)
  
- static int inside_git_dir = -1;
- static int inside_work_tree = -1;
-@@ -158,12 +159,12 @@ static int is_git_directory(const char *suspect)
- 			return 0;
+ 	if (size < 64)
+ 		return -1;
+-	if (memcmp("object ", data, 7) || get_sha1_hex((char *) data + 7, sha1))
++	if (prefixcmp(data, "object ") || get_sha1_hex((char *) data + 7, sha1))
+ 		return -1;
+ 
+ 	type_line = (char *) data + 48;
+-	if (memcmp("\ntype ", type_line-1, 6))
++	if (prefixcmp(type_line-1, "\ntype "))
+ 		return -1;
+ 
+ 	tag_line = strchr(type_line, '\n');
+-	if (!tag_line || memcmp("tag ", ++tag_line, 4))
++	if (!tag_line || prefixcmp(++tag_line, "tag "))
+ 		return -1;
+ 
+ 	sig_line = strchr(tag_line, '\n');
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index be866d1..06d4f8b 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -44,7 +44,7 @@ int parse_hunk_header(char *line, int len,
  	}
- 	else {
--		strcpy(path + len, "/objects");
-+		strcpy(path + len, "/" PATH_OBJECTS);
- 		if (access(path, X_OK))
- 			return 0;
- 	}
+ 	else
+ 		*nn = 1;
+-	return -!!memcmp(cp, " @@", 3);
++	return -!!prefixcmp(cp, " @@");
+ }
  
--	strcpy(path + len, "/refs");
-+	strcpy(path + len, "/" PATH_REFS);
- 	if (access(path, X_OK))
- 		return 0;
- 
-diff --git a/sha1_name.c b/sha1_name.c
-index 2d727d5..649e438 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -241,11 +241,11 @@ static int ambiguous_path(const char *path, int len)
- 
- static const char *ref_fmt[] = {
- 	"%.*s",
--	"refs/%.*s",
--	"refs/tags/%.*s",
--	"refs/heads/%.*s",
--	"refs/remotes/%.*s",
--	"refs/remotes/%.*s/HEAD",
-+	PATH_REFS "%.*s",
-+	PATH_REFS_TAGS "%.*s",
-+	PATH_REFS_HEADS "%.*s",
-+	PATH_REFS_REMOTES "%.*s",
-+	PATH_REFS_REMOTES "%.*s/HEAD",
- 	NULL
- };
- 
-diff --git a/wt-status.c b/wt-status.c
-index 10ce6ee..93dee72 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -7,6 +7,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "diffcore.h"
-+#include "refs.h"
- 
- int wt_status_use_color = 0;
- static char wt_status_colors[][COLOR_MAXLEN] = {
-@@ -311,8 +312,8 @@ void wt_status_print(struct wt_status *s)
- 	if (s->branch) {
- 		const char *on_what = "On branch ";
- 		const char *branch_name = s->branch;
--		if (!prefixcmp(branch_name, "refs/heads/"))
--			branch_name += 11;
-+		if (!prefixcmp(branch_name, PATH_REFS_HEADS))
-+			branch_name += STRLEN_PATH_REFS_HEADS;
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_name = "";
- 			on_what = "Not currently on any branch.";
+ static void consume_one(void *priv_, char *s, unsigned long size)
 -- 
 1.5.3.rc5.11.g312e
