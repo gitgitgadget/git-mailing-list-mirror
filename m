@@ -1,64 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Question about "git commit -a"
-Date: Thu, 4 Oct 2007 22:10:50 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710042209410.4174@racer.site>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> 
- <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
- <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
+From: Andy Parkins <andyparkins@gmail.com>
+Subject: [PATCH 2/3] Replace literal STRLEN_ #defines in refs.h with compiler evaluated expressions
+Date: Thu, 4 Oct 2007 21:10:44 +0000
+Message-ID: <200710042210.44940.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:12:23 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:12:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdXzN-0001dd-Im
+	id 1IdXzO-0001dd-9p
 	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 23:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761991AbXJDVK4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 17:10:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760701AbXJDVKz
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:10:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40877 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1760582AbXJDVKy (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1760643AbXJDVK5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 17:10:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761993AbXJDVK4
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:10:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:56414 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760283AbXJDVKy (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 4 Oct 2007 17:10:54 -0400
-Received: (qmail invoked by alias); 04 Oct 2007 21:10:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 04 Oct 2007 23:10:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18AF1p+ayEAM2h2ud+aa6FFiaTxcktOEutx9w4UfT
-	ib6H6Rtu+4C8dh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+Received: by ug-out-1314.google.com with SMTP id z38so415038ugc
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 14:10:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        bh=4a2yIW04FXszF78A4w7VMQzuHfIPVzabXmE9DvHtTso=;
+        b=dxM5+IMM7MqK0H7QaKPzjqZxHAjtsFS2lhNSHXCrv0/Edpd5S1RXdUbQhQ8DQyCx5CFNblCmZDmdIUXN+Fd8cbbMZzwJtQzHTHF2lZ/eZxrWLJS9HUtrpartR8GflSddDKlCy+Dwg2kl/CJrWbnI8GNdcixn2Wj9f4xzLIS2tB0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:date:subject:to:x-tuid:x-uid:x-length:mime-version:content-transfer-encoding:content-disposition:message-id;
+        b=i24Gz5TFTfDQHkPEGEPfrJpbFlaNFliSgJwi3njo0+lcOg0hGm4rnwju3MJoQHlWH2lupFlyGYRE6Db9RFazo5LIMWnacxKLGBVkt9sG0ROWB87AJsoDRuJtVh9FyvnG0+XkBxb0mQNH2a+dLBhO52+i/nO7wcHOPN4bzcK72KA=
+Received: by 10.66.221.17 with SMTP id t17mr2475190ugg.1191532252955;
+        Thu, 04 Oct 2007 14:10:52 -0700 (PDT)
+Received: from grissom.local ( [84.201.153.164])
+        by mx.google.com with ESMTPS id 5sm2814414nfv.2007.10.04.14.10.51
+        (version=SSLv3 cipher=OTHER);
+        Thu, 04 Oct 2007 14:10:51 -0700 (PDT)
+X-TUID: 15ca94534f87af54
+X-UID: 350
+X-Length: 1893
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60007>
 
-Hi,
+Bill Lear pointed out that the following:
 
-On Fri, 5 Oct 2007, Nguyen Thai Ngoc Duy wrote:
+ #define PATH_REMOTES             "remotes/"
+ #define STRLEN_PATH_REMOTES      8
 
-> On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
-> > > Am I wrong?
-> >
-> > About it being a majority, yes, I suspect so.
-> >
-> 
-> Maybe in the next survey we should include question "do you usually do 
-> 'git commit' or 'git commit -a'" :-)
+Could be replaced by the less error-prone
 
-Not meaning to discourage you, but it is a known fact that Linus does "git 
-commit" without "-a" quite often.
+ #define PATH_REMOTES "remotes/"
+ #define LIT_STRLEN(S) ((sizeof(S) / sizeof(S[0])) -1)
+ #define STRLEN_PATH_REMOTES LIT_STRLEN(PATH_REMOTES)
 
-And if that were not bad enough for your plan, I myself omit "-a" 
-regularly.  So you would get a veto from me, too.
+which is what this patch does.
 
-Ciao,
-Dscho
+Signed-off-by: Andy Parkins <andyparkins@gmail.com>
+---
+ refs.h |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/refs.h b/refs.h
+index 1025d04..fb58889 100644
+--- a/refs.h
++++ b/refs.h
+@@ -13,16 +13,17 @@ struct ref_lock {
+ #define REF_ISSYMREF 01
+ #define REF_ISPACKED 02
+ 
++#define LIT_STRLEN(S)            ((sizeof(S) / sizeof(S[0])) -1)
+ #define PATH_OBJECTS             "objects/"
+-#define STRLEN_PATH_OBJECTS      8
++#define STRLEN_PATH_OBJECTS      LIT_STRLEN(PATH_OBJECTS)
+ #define PATH_REFS                "refs/"
+-#define STRLEN_PATH_REFS         5
++#define STRLEN_PATH_REFS         LIT_STRLEN(PATH_REFS)
+ #define PATH_HEADS               "heads/"
+-#define STRLEN_PATH_HEADS        6
++#define STRLEN_PATH_HEADS        LIT_STRLEN(PATH_HEADS)
+ #define PATH_TAGS                "tags/"
+-#define STRLEN_PATH_TAGS         5
++#define STRLEN_PATH_TAGS         LIT_STRLEN(PATH_TAGS)
+ #define PATH_REMOTES             "remotes/"
+-#define STRLEN_PATH_REMOTES      8
++#define STRLEN_PATH_REMOTES      LIT_STRLEN(PATH_REMOTES)
+ #define PATH_REFS_HEADS          PATH_REFS PATH_HEADS
+ #define STRLEN_PATH_REFS_HEADS   (STRLEN_PATH_REFS+STRLEN_PATH_HEADS)
+ #define PATH_REFS_TAGS           PATH_REFS PATH_TAGS
+-- 
+1.5.3.rc5.11.g312e
