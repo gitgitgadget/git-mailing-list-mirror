@@ -1,52 +1,60 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH] fix t5403-post-checkout-hook.sh: built-in test in dash
- does not have "=="
-Date: Thu, 04 Oct 2007 18:47:55 +0200
-Message-ID: <4705193B.30400@lsrfire.ath.cx>
-References: <1190842261-9750-1-git-send-email-jjengla@sandia.gov> <20071004133253.GA30393@steel.home>
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Re: [PATCH/RFT] cvsserver: only allow checkout of branches
+Date: Thu, 4 Oct 2007 19:06:20 +0200
+Message-ID: <200710041906.21004.wielemak@science.uva.nl>
+References: <200710031348.50800.wielemak@science.uva.nl> <200710041506.13154.wielemak@science.uva.nl> <Pine.LNX.4.64.0710041622070.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>, Josh England <jjengla@sandia.gov>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Frank Lichtenheld <frank@lichtenheld.de>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
 	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 18:48:22 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 19:07:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdTs1-000801-EX
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:48:17 +0200
+	id 1IdU9o-0007De-AT
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 19:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757900AbXJDQsI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 12:48:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756179AbXJDQsH
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:48:07 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:53228
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756129AbXJDQsG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 12:48:06 -0400
-Received: from [10.0.1.201] (p57B7DDE5.dip.t-dialin.net [87.183.221.229])
-	by neapel230.server4you.de (Postfix) with ESMTP id 2E336873B7;
-	Thu,  4 Oct 2007 18:48:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071004133253.GA30393@steel.home>
+	id S1757089AbXJDRGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 13:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756516AbXJDRGa
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 13:06:30 -0400
+Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:2758 "EHLO
+	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756161AbXJDRG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 13:06:29 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id l94H6LBC008103;
+	Thu, 4 Oct 2007 19:06:21 +0200 (CEST)
+	(envelope-from wielemak@science.uva.nl)
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0710041622070.4174@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59986>
 
-Alex Riesen schrieb:
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
-> Josh England, Wed, Sep 26, 2007 23:31:01 +0200:
->>  t/t5403-post-checkout-hook.sh |   74 ++++++++++++++++++++++++++++++=
-+++++++++++
->=20
-> on Ubuntu, /bin/sh is dash.
+On Thursday 04 October 2007 17:29, Johannes Schindelin wrote:
+> It does not make sense to check out tags or "HEAD".
+>
+> Noticed by Jan Wielemaker.
 
-Ah, so YOU are the other Ubuntu user around here, Alex! ;-)  I've just
-sent out the exact same patch.  Sorry for the duplication, please ignor=
-e me.
+Thanks (though it won't bite me a second time :-)
 
-Ren=E9
+> ) +    {
+> +	$log->warn("Checkout failed: $module is not a branch");
+> +	print "error 1 Checkout failed: $module is not a branch\n";
+
+There are various places where it says print "...", one that even
+started some suggestion on what might be wrong, but these things don't
+end up at a visible place when using ssh as transport. Its a good idea
+this one is at least in the logfile as well. Not sure, but might
+printing to stderr work better?
+
+	Cheers --- Jan
