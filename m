@@ -1,72 +1,60 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to chmod.
-Date: Thu, 04 Oct 2007 01:21:02 -0700
-Message-ID: <7vir5nb89d.fsf@gitster.siamese.dyndns.org>
-References: <20071003105501.GD7085@admingilde.org>
-	<470388DC.4040504@viscovery.net>
-	<20071003231941.GA20800@admingilde.org>
-	<Pine.LNX.4.64.0710040053380.28395@racer.site>
-	<470482A2.3080907@op5.se> <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>
-	<20071004071751.GD20800@admingilde.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: stgit: editing description of patch
+Date: Thu, 4 Oct 2007 10:26:24 +0200
+Message-ID: <20071004082624.GA17778@diana.vm.bytemark.co.uk>
+References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com> <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Martin Waitz <tali@admingilde.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 10:21:24 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 10:26:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdLxR-0000kf-63
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:21:21 +0200
+	id 1IdM2i-0002V5-Uy
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:26:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752966AbXJDIVN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 04:21:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752164AbXJDIVM
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:21:12 -0400
-Received: from rune.pobox.com ([208.210.124.79]:37015 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752530AbXJDIVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 04:21:11 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id C61B4141323;
-	Thu,  4 Oct 2007 04:21:30 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id F131614182A;
-	Thu,  4 Oct 2007 04:21:25 -0400 (EDT)
-In-Reply-To: <20071004071751.GD20800@admingilde.org> (Martin Waitz's message
-	of "Thu, 4 Oct 2007 09:17:51 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753265AbXJDI0l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 04:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbXJDI0l
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:26:41 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3040 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbXJDI0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 04:26:40 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IdM2K-0004eB-00; Thu, 04 Oct 2007 09:26:24 +0100
+Content-Disposition: inline
+In-Reply-To: <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59929>
 
-Martin Waitz <tali@admingilde.org> writes:
+On 2007-10-03 22:14:20 -0400, Jon Smirl wrote:
 
-> hoi :)
+> On 10/3/07, Jon Smirl <jonsmirl@gmail.com> wrote:
 >
-> On Wed, Oct 03, 2007 at 11:23:22PM -0700, Junio C Hamano wrote:
->> filemode = !( (st1.st_mode & S_IXUSR)
->>         	/* we did not ask for x-bit -- bogus FS */
->> 	    || chmod(path, st1.st_mode & S_IXUSR)
->>         	/* it does not let us flip x-bit -- bogus FS */
->> 	    || lstat(path, &st2)
->>         	/* it does not let us read back -- bogus FS */
->> 	    || (st1.st_mode == st2.st_mode)
->> 	        /* it forgets we flipped -- bogus FS */
->> 	    );
+> > What is the right procedure for editing the various attributes of
+> > a stgit patch? patch name, description, etc.... I just emailed a
+> > series to myself and the titles/comments are all messed up.
 >
-> that looks good.
+> Editing these is done with the stg refresh command.
 
-FWIW, I did not mean it to be an example for preferred
-indentation nor code layout, but as a better way to explain what
-the logic is computing.
+This is "stg edit" in really new StGits.
 
-I do not think git on Cygwin nor WinGit creates $GIT_DIR/config
-with executable bit set.  Is this pretty much a workaround only
-for vfat-on-Linux ?
+> > On my box all of the patches have names -- stg series shows them.
+> > But when I emailed them half of the patch didn't have the right
+> > subjects.
+>
+> this is controled in the template files
+
+Anything here you'd characterize as a bug?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
