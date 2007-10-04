@@ -1,59 +1,60 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 5/5] Use start_comand() in builtin-fetch-pack.c instead of explicit fork/exec.
-Date: Thu, 4 Oct 2007 22:11:58 +0200
-Message-ID: <200710042211.58363.johannes.sixt@telecom.at>
-References: <200709302340.17644.johannes.sixt@telecom.at> <7v8x6jb6of.fsf@gitster.siamese.dyndns.org> <4704B0EF.3040207@viscovery.net>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 5 Oct 2007 03:33:52 +0700
+Message-ID: <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
+	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 04 22:13:01 2007
+Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 22:34:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdX3j-0003ca-Vu
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 22:12:36 +0200
+	id 1IdXOV-0003Zz-7V
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 22:34:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755796AbXJDUMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 16:12:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755484AbXJDUME
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 16:12:04 -0400
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:50011 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242AbXJDUMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 16:12:01 -0400
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 87BBF36059;
-	Thu,  4 Oct 2007 22:11:59 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 1E16159D4F;
-	Thu,  4 Oct 2007 22:11:59 +0200 (CEST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4704B0EF.3040207@viscovery.net>
+	id S1755713AbXJDUdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 16:33:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbXJDUdy
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 16:33:54 -0400
+Received: from nz-out-0506.google.com ([64.233.162.239]:15379 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751281AbXJDUdy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 16:33:54 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so275196nze
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 13:33:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Qwp6soAW3BzvXPQ+FIcJBCdyL0hvfsqZuWR7bFhEpwY=;
+        b=fveKFyrJl7K75oXNYUPOaq8R+l/wSTqyRMSaIoMEuydpCvkIAcxbVmyDDr+0NuxYl7KJfb3rkvshkevM+HX2iNRvYaF/i7cWLjfvVnSJXJlvulVNdK5WhWARJGHUFS8tNmT0vxYUhBa59fxB/4CUbfLY9FwDn9P1dqyt+HvbsuA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qtI24cXsAUlN0MsQ5lPjMZnD4/sbsNS1oa/hnlClsJCReoR9o8AvKK+XWLw5X9PgLymmhniKF2Z6QX+7W9/8RccK/Y6ALabWA8Z2p+l+0pCGlr6bg7vZ0kFsGEbh9C1RIKtDAXZXkdSgn2A7XiapB71jnwTfjvBlJ+x8Lw3E74E=
+Received: by 10.65.135.19 with SMTP id m19mr14188978qbn.1191530032823;
+        Thu, 04 Oct 2007 13:33:52 -0700 (PDT)
+Received: by 10.64.24.18 with HTTP; Thu, 4 Oct 2007 13:33:52 -0700 (PDT)
+In-Reply-To: <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59999>
 
-On Thursday 04 October 2007 11:22, Johannes Sixt wrote:
-> Junio C Hamano schrieb:
-> > I think Daniel and Shawn's git-fetch-in-C should graduate
-> > 'master' before this series.  If you can re-send the series
-> > rebased on 2b5a06edca8f7237aad6464b349b79772024d2a2 (Restore
-> > default verbosity for http fetches.), it would be much
-> > appreciated.
+On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
+> > Am I wrong?
 >
-> Sure, will do this evening.
+> About it being a majority, yes, I suspect so.
+>
 
-I've difficulties with this rebase: 2b5a06 does not compile for me due to 
-7155b727c9 (Introduce remove_dir_recursively()), which needs strbuf, but that 
-is not merged into this branch. I can rebase on its parent (bundle transport: 
-fix an alloc_ref() call) or 17df81ff (Merge branch 'db/fetch-pack' into 
-next). I'd prefer the latter since it also has strbuf.
+Maybe in the next survey we should include question "do you usually do
+'git commit' or 'git commit -a'" :-)
 
--- Hannes
+-- 
+Duy
