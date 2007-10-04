@@ -1,63 +1,67 @@
-From: David Brown <git@davidb.org>
-Subject: Re: stgit: lost all my patches again
-Date: Thu, 4 Oct 2007 08:45:08 -0700
-Message-ID: <20071004154508.GA15424@old.davidb.org>
-References: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com> <20071004083304.GB17778@diana.vm.bytemark.co.uk>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: Question about "git commit -a"
+Date: Thu, 4 Oct 2007 17:48:12 +0200
+Message-ID: <4d8e3fd30710040848l594d714vbd6a62e69b71f7d9@mail.gmail.com>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
+	 <vpqk5q2x4ud.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 17:45:46 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Matthieu Moy" <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 04 17:48:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdStA-0003hm-K3
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 17:45:25 +0200
+	id 1IdSw2-00057n-R7
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 17:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755585AbXJDPpM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 11:45:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756129AbXJDPpM
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 11:45:12 -0400
-Received: from mail.davidb.org ([66.93.32.219]:33904 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755100AbXJDPpL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 11:45:11 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IdSsu-0004JB-AS; Thu, 04 Oct 2007 08:45:08 -0700
-Mail-Followup-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	id S1756517AbXJDPsP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 11:48:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756464AbXJDPsP
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 11:48:15 -0400
+Received: from an-out-0708.google.com ([209.85.132.246]:20198 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753843AbXJDPsO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 11:48:14 -0400
+Received: by an-out-0708.google.com with SMTP id d31so41414and
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 08:48:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=fnZWpMDLL1bBRpLr3zADeucqmpnj9Jced0m7Z9zyUCY=;
+        b=JK3fjLiI7utoX5Mc5h26YwymKsqE1Hx2hqT6Q2+2bSMmpDjEDJCYNuDaMpzUra4wu3nZSWNKDJlsQZPUoWc/YzjUP8Dzj6My/EDa/qyfkMi+1eH1mpyXbq1ghHZ87wERKggfuKNGYOQfAyiWK2zYkDbgy04CFSSjsiQWwmZBJ30=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=klEWAbaPVkWKxRWIXmLnF+yPDK/v09n+Lj1DadhRGM0RU9G77EGVqwwrEn3KmNPiK0ysRyAHybZ0183TmPg249j4xS6592kdfAdiYUDECnkNBnW//L+JmE4whXgdbr+q5hCAlKS/Rl4FY11wfk5lkkCHo4YXAS/DCZMQ3ajHL0U=
+Received: by 10.142.48.14 with SMTP id v14mr1826433wfv.1191512892695;
+        Thu, 04 Oct 2007 08:48:12 -0700 (PDT)
+Received: by 10.143.43.21 with HTTP; Thu, 4 Oct 2007 08:48:12 -0700 (PDT)
+In-Reply-To: <vpqk5q2x4ud.fsf@bauges.imag.fr>
 Content-Disposition: inline
-In-Reply-To: <20071004083304.GB17778@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59968>
 
-On Thu, Oct 04, 2007 at 10:33:04AM +0200, Karl Hasselstr=F6m wrote:
-
->> I did the 'stg refresh' from a directory that was not being tracked
->> by git. It is in the .gitignore list. This appears to be the root of
->> the problem.
+On 10/4/07, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com> writes:
 >
->Mmmph. This is not the only StGit command that's apparently not safe
->to run from a subdirectory. See e.g. https://gna.org/bugs/?9986.
+> > Hi all,
+> > I was just wondering why git commit doesn't default to "-a" (yes, it's
+> > another question that came up during a chat with a mercurial user) and
+> > I didn't find an answer to that.
+>
+> http://git.or.cz/gitwiki/GitFaq#head-3aa45c7d75d40068e07231a5bf8a1a0db9a8b717
 
-I get an "Error: This item is private" from that page, so I'm not sure =
-what
-that is.
+Ooops... I'm really that bad in googling for an information ;-(
 
-Just yesterday, I had 'stg push' empty out my patches when I ran it fro=
-m a
-subdirectory.  Fortunately, in this case, the old versions were in the =
-log,
-but I can imagine someone less familiar with what git and stgit are doi=
-ng
-not knowing how to recover this.
+Thanks and sorry for the noise.
 
-David
+Regads,
+-- 
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
+http://ubuntista.blogspot.com
