@@ -1,60 +1,69 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: lost all my patches again
-Date: Thu, 4 Oct 2007 10:33:04 +0200
-Message-ID: <20071004083304.GB17778@diana.vm.bytemark.co.uk>
-References: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to
+ chmod.
+Date: Thu, 04 Oct 2007 10:36:15 +0200
+Message-ID: <4704A5FF.6070105@viscovery.net>
+References: <20071003105501.GD7085@admingilde.org>	<470388DC.4040504@viscovery.net>	<20071003231941.GA20800@admingilde.org>	<Pine.LNX.4.64.0710040053380.28395@racer.site>	<470482A2.3080907@op5.se> <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>	<20071004071751.GD20800@admingilde.org> <7vir5nb89d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 10:33:49 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Martin Waitz <tali@admingilde.org>, Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 10:36:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdM9T-0004io-6J
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:33:47 +0200
+	id 1IdMC5-0005hA-0v
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:36:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753360AbXJDIdj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 04:33:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbXJDIdi
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:33:38 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3935 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752890AbXJDIdh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 04:33:37 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IdM8m-0004f1-00; Thu, 04 Oct 2007 09:33:04 +0100
-Content-Disposition: inline
-In-Reply-To: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753731AbXJDIgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 04:36:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753939AbXJDIgV
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:36:21 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:9984 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753654AbXJDIgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 04:36:20 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IdMBo-000541-Ps; Thu, 04 Oct 2007 10:36:13 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 3FE7D6B7; Thu,  4 Oct 2007 10:36:15 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vir5nb89d.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59931>
 
-On 2007-10-04 01:29:17 -0400, Jon Smirl wrote:
+Junio C Hamano schrieb:
+> Martin Waitz <tali@admingilde.org> writes:
+>> On Wed, Oct 03, 2007 at 11:23:22PM -0700, Junio C Hamano wrote:
+>>> filemode = !( (st1.st_mode & S_IXUSR)
+>>>         	/* we did not ask for x-bit -- bogus FS */
+>>> 	    || chmod(path, st1.st_mode & S_IXUSR)
+>>>         	/* it does not let us flip x-bit -- bogus FS */
+>>> 	    || lstat(path, &st2)
+>>>         	/* it does not let us read back -- bogus FS */
+>>> 	    || (st1.st_mode == st2.st_mode)
+>>> 	        /* it forgets we flipped -- bogus FS */
+>>> 	    );
+>> that looks good.
+> 
+> I do not think git on Cygwin nor WinGit creates $GIT_DIR/config
+> with executable bit set.  Is this pretty much a workaround only
+> for vfat-on-Linux ?
 
-> for some reason the refresh from that command didn't close. Then stg
-> pushed all the patches back after the edit and they got included
-> into that patch.
+I think so. Here on Windows, 'ls -l' after 'git init' tells that .git/config 
+is not executable (both FAT and NTFS). But, anyway, as far as the MinGW port 
+is concerned, at least the last condition in the sequence above triggers and 
+causes filemode=false, which is good.
 
-That's really weird. As far as I know there isn't a concept of
-"closed" patches in StGit -- there's no need, because they're always
-closed!
-
-> I did the 'stg refresh' from a directory that was not being tracked
-> by git. It is in the .gitignore list. This appears to be the root of
-> the problem.
-
-Mmmph. This is not the only StGit command that's apparently not safe
-to run from a subdirectory. See e.g. https://gna.org/bugs/?9986.
-
-I plan to do some StGit hacking this weekend. I guess subdirectory
-safeness ought to be at the top of my list ...
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- Hannes
