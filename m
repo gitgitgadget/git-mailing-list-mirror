@@ -1,77 +1,106 @@
-From: Martin Waitz <tali@admingilde.org>
-Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to chmod.
-Date: Thu, 4 Oct 2007 09:17:51 +0200
-Message-ID: <20071004071751.GD20800@admingilde.org>
-References: <20071003105501.GD7085@admingilde.org> <470388DC.4040504@viscovery.net> <20071003231941.GA20800@admingilde.org> <Pine.LNX.4.64.0710040053380.28395@racer.site> <470482A2.3080907@op5.se> <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Re: git-cvsserver commit trouble (unexpected end of file in client)
+Date: Thu, 4 Oct 2007 09:27:03 +0200
+Message-ID: <200710040927.03977.wielemak@science.uva.nl>
+References: <200710031348.50800.wielemak@science.uva.nl> <200710032325.55128.wielemak@science.uva.nl> <Pine.LNX.4.64.0710032311480.28395@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="5/uDoXvLw7AC5HRs"
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 09:18:04 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 09:27:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdKyC-0006v9-G5
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 09:18:04 +0200
+	id 1IdL7A-00016d-LR
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 09:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753279AbXJDHR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 03:17:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbXJDHR4
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 03:17:56 -0400
-Received: from mail.admingilde.org ([213.95.32.147]:50437 "EHLO
-	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753266AbXJDHR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 03:17:56 -0400
-Received: from martin by mail.admingilde.org with local  (Exim 4.63 #1)
-	id 1IdKxz-0000gr-S2; Thu, 04 Oct 2007 09:17:51 +0200
+	id S1755734AbXJDH1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 03:27:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755508AbXJDH1J
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 03:27:09 -0400
+Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:4917 "EHLO
+	smtp-vbr6.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754550AbXJDH1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 03:27:07 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id l947R4na059794;
+	Thu, 4 Oct 2007 09:27:04 +0200 (CEST)
+	(envelope-from wielemak@science.uva.nl)
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0710032311480.28395@racer.site>
 Content-Disposition: inline
-In-Reply-To: <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>
-X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59927>
 
+Hi Dscho,
 
---5/uDoXvLw7AC5HRs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for the comments.  I'll keep in on the list, just in case there is
+someone else with a brilliant idea.
 
-hoi :)
+On Thursday 04 October 2007 00:14, you wrote:
+> Hi,
+>
+> On Wed, 3 Oct 2007, Jan Wielemaker wrote:
+> > On Wednesday 03 October 2007 20:55, you wrote:
+> > > On Wed, 3 Oct 2007, Jan Wielemaker wrote:
+> > > > On Wednesday 03 October 2007 18:11, Johannes Schindelin wrote:
+> > > > > Hi,
+> > > > >
+> > > > > On Wed, 3 Oct 2007, Jan Wielemaker wrote:
+> > > > > > 2007-10-03 12:25:16 : WARN - error 1 pserver cannot find the
+> > > > > > current HEAD of module
+> > > > >
+> > > > > AFAIR we do not allow committing via pserver protocol.  Might that
+> > > > > be your problem?
+> > > >
+> > > > Thanks, but no. I'm using CVS over SSH. I've been looking around in
+> > > > git-cvsserver source a bit and it aborts quite quickly if you try a
+> > > > commit through pserver. I get a bit further, but it cannot find the
+> > > > HEAD revision for some reason and (from later message), if I try to
+> > > > checkout master instead of HEAD it finds the revision but I get a
+> > > > hash mismatch.
+> > >
+> > > Okay, another stab: is your HEAD detached?
+> >
+> > I'm a humble git beginner, though I think *my* head is still attached
+> > :-) In any case, we are talking a fresh repository and I can perfectly
+> > well clone it as well as pull and push from the clone using GIT
+> > commands. How do I tell whether the HEAD is detached?
+>
+> You can tell by looking into .git/HEAD (on the side that runs the server).
+> If it is a 40-character hex string, the HEAD is detached.  Otherwise, it
+> should contain something like "refs/heads/master".
 
-On Wed, Oct 03, 2007 at 11:23:22PM -0700, Junio C Hamano wrote:
-> filemode =3D !( (st1.st_mode & S_IXUSR)
->         	/* we did not ask for x-bit -- bogus FS */
-> 	    || chmod(path, st1.st_mode & S_IXUSR)
->         	/* it does not let us flip x-bit -- bogus FS */
-> 	    || lstat(path, &st2)
->         	/* it does not let us read back -- bogus FS */
-> 	    || (st1.st_mode =3D=3D st2.st_mode)
-> 	        /* it forgets we flipped -- bogus FS */
-> 	    );
+Its the latter, so my HEAD is still attached. I hope I understand this
+correctly, but browsing the docs suggests a detached head is not really
+a normal situation, so I'm fine.  Right?
 
-that looks good.
+> Other reasons for the failure could be:
+>
+> 	- your user does not have write access
 
---=20
-Martin Waitz
+Definitely ok (also put an strace -o logfile git-cvsserver "$@" script
+around it.  No alarming permission or non-existence errors).
 
---5/uDoXvLw7AC5HRs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> 	- the uid under which git-cvsserver runs has no write access
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+See above
 
-iD8DBQFHBJOfj/Eaxd/oD7IRAuPUAJ9b6pedKvZtPSZRJWcXxKdjArTFtACggbEQ
-LpzovCD2RFiL0RNOqlfA3DQ=
-=6GoY
------END PGP SIGNATURE-----
+> 	- you found an error that only triggers with your repo
 
---5/uDoXvLw7AC5HRs--
+Great!  Its so damn simple and and tried with three repos created
+in three different ways, that I'm either extremely unlucky or many
+more should be faced with this or nobody uses git-cvsserver.
+
+I'm hoping for a command-by-command sequence that gets me a definitely
+fine repository, so at least I can see it running correctly once.  Then
+maybe I can analyse traces in detail to see where they differ and what
+is wrong.  Somebody?
+
+	Thanks --- Jan
