@@ -1,59 +1,59 @@
 From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: editing description of patch
-Date: Thu, 4 Oct 2007 10:26:24 +0200
-Message-ID: <20071004082624.GA17778@diana.vm.bytemark.co.uk>
-References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com> <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
+Subject: Re: stgit: lost all my patches again
+Date: Thu, 4 Oct 2007 10:33:04 +0200
+Message-ID: <20071004083304.GB17778@diana.vm.bytemark.co.uk>
+References: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 10:26:50 2007
+X-From: git-owner@vger.kernel.org Thu Oct 04 10:33:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdM2i-0002V5-Uy
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:26:49 +0200
+	id 1IdM9T-0004io-6J
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753265AbXJDI0l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 04:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751942AbXJDI0l
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:26:41 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3040 "EHLO
+	id S1753360AbXJDIdj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 04:33:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbXJDIdi
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:33:38 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3935 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbXJDI0k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 04:26:40 -0400
+	with ESMTP id S1752890AbXJDIdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 04:33:37 -0400
 Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IdM2K-0004eB-00; Thu, 04 Oct 2007 09:26:24 +0100
+	id 1IdM8m-0004f1-00; Thu, 04 Oct 2007 09:33:04 +0100
 Content-Disposition: inline
-In-Reply-To: <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
+In-Reply-To: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com>
 X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59930>
 
-On 2007-10-03 22:14:20 -0400, Jon Smirl wrote:
+On 2007-10-04 01:29:17 -0400, Jon Smirl wrote:
 
-> On 10/3/07, Jon Smirl <jonsmirl@gmail.com> wrote:
->
-> > What is the right procedure for editing the various attributes of
-> > a stgit patch? patch name, description, etc.... I just emailed a
-> > series to myself and the titles/comments are all messed up.
->
-> Editing these is done with the stg refresh command.
+> for some reason the refresh from that command didn't close. Then stg
+> pushed all the patches back after the edit and they got included
+> into that patch.
 
-This is "stg edit" in really new StGits.
+That's really weird. As far as I know there isn't a concept of
+"closed" patches in StGit -- there's no need, because they're always
+closed!
 
-> > On my box all of the patches have names -- stg series shows them.
-> > But when I emailed them half of the patch didn't have the right
-> > subjects.
->
-> this is controled in the template files
+> I did the 'stg refresh' from a directory that was not being tracked
+> by git. It is in the .gitignore list. This appears to be the root of
+> the problem.
 
-Anything here you'd characterize as a bug?
+Mmmph. This is not the only StGit command that's apparently not safe
+to run from a subdirectory. See e.g. https://gna.org/bugs/?9986.
+
+I plan to do some StGit hacking this weekend. I guess subdirectory
+safeness ought to be at the top of my list ...
 
 --=20
 Karl Hasselstr=F6m, kha@treskal.com
