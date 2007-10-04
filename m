@@ -1,75 +1,60 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: [PATCH/RFT] cvsserver: only allow checkout of branches
-Date: Thu, 4 Oct 2007 18:18:12 +0200
-Message-ID: <20071004161812.GA31659@planck.djpig.de>
-References: <200710031348.50800.wielemak@science.uva.nl> <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl> <Pine.LNX.4.64.0710041352480.4174@racer.site> <200710041506.13154.wielemak@science.uva.nl> <Pine.LNX.4.64.0710041622070.4174@racer.site>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: A few usability question about git diff --cached
+Date: Thu, 4 Oct 2007 12:19:35 -0400
+Message-ID: <20071004161935.GC17487@fieldses.org>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com> <20071004125641.GE15339@genesis.frugalware.org> <7vy7ej9g38.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710041534000.4174@racer.site> <vpqtzp7ndn3.fsf@bauges.imag.fr> <20071004155147.GA17487@fieldses.org> <vpq8x6ix3zm.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan Wielemaker <wielemak@science.uva.nl>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 04 18:19:09 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 04 18:20:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdTPj-0002tW-Bs
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:19:03 +0200
+	id 1IdTQe-0003HP-Jf
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760157AbXJDQSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 12:18:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760259AbXJDQSY
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:18:24 -0400
-Received: from planck.djpig.de ([85.10.192.180]:1463 "EHLO planck.djpig.de"
+	id S1759763AbXJDQTv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 12:19:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757661AbXJDQTv
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:19:51 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:40312 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760065AbXJDQSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 12:18:22 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id 2864F88231;
-	Thu,  4 Oct 2007 18:18:21 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HTL9v07I7u+S; Thu,  4 Oct 2007 18:18:12 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id 8E09388232; Thu,  4 Oct 2007 18:18:12 +0200 (CEST)
+	id S1756545AbXJDQTu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 12:19:50 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IdTQF-0005Nh-OS; Thu, 04 Oct 2007 12:19:35 -0400
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710041622070.4174@racer.site>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <vpq8x6ix3zm.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59978>
 
-On Thu, Oct 04, 2007 at 04:29:04PM +0100, Johannes Schindelin wrote:
-> 	Cc'ed Frank, who is de-facto maintainer (according to shortlog) 
-> 	and Martin, who started it all IIRC.
+On Thu, Oct 04, 2007 at 06:02:21PM +0200, Matthieu Moy wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
 > 
-> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-> index 13dbd27..869690c 100755
-> --- a/git-cvsserver.perl
-> +++ b/git-cvsserver.perl
-> @@ -770,6 +770,14 @@ sub req_co
->  
->      $log->debug("req_co : " . ( defined($data) ? $data : "[NULL]" ) );
->  
-> +    if( system("git", "rev-parse", "--verify", "refs/heads/$module" ) != 0 )
-> +    {
-> +	$log->warn("Checkout failed: $module is not a branch");
-> +	print "error 1 Checkout failed: $module is not a branch\n";
-> +	chdir "/";
-> +	exit;
-> +    }
-> +
->      $log->info("Checking out module '$module' ($state->{CVSROOT}) to '$checkout_path'");
->  
->      $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
+> > Yes, the index differs from the work tree or HEAD temporarily, 
+> 
+> Temporarily, yes, but the _point_ of having it is to have it differ
+> from HEAD (otherwise, you can't create a new revision), and from the
+> tree (otherwise, index-related commands are useless).
 
-Looks good, haven't tested it yet, though. Care to add a testcase
-or should I take care of that?
+Getting a nearly-instantaneous "git diff" would be sufficiently
+important to justify its existance on its own, so I think you're
+overstating the case.
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+> The stat-information, and sha1sum are actually a cache, but they don't
+> have to be user-visible, except for speed.
+
+That's a big exception.--b.
+
+> "diff --cached" has nothing to do with the stat information for the
+> user.
