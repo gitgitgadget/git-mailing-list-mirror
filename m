@@ -1,75 +1,59 @@
-From: Mathias Megyei <mathias@mnet-mail.de>
-Subject: [PATCH] Do not remove distributed configure script
-Date: Thu, 4 Oct 2007 23:49:19 +0200
-Message-ID: <18181.24543.548090.990543@gargle.gargle.HOWL>
-Reply-To: mathias@mnet-mail.de
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH/RFT] cvsserver: only allow checkout of branches
+Date: Thu, 4 Oct 2007 17:55:02 -0400
+Message-ID: <20071004215502.GO2137@spearce.org>
+References: <200710031348.50800.wielemak@science.uva.nl> <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl> <Pine.LNX.4.64.0710041352480.4174@racer.site> <200710041506.13154.wielemak@science.uva.nl> <Pine.LNX.4.64.0710041622070.4174@racer.site> <20071004211555.GG31659@planck.djpig.de> <Pine.LNX.4.64.0710042248330.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 04 23:49:36 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 23:55:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdYZY-0005xZ-Nh
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 23:49:33 +0200
+	id 1IdYfU-000833-QM
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 23:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757930AbXJDVtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 17:49:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757694AbXJDVtX
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:49:23 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:33436 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756545AbXJDVtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 17:49:22 -0400
-Received: from mail01.m-online.net (mail.m-online.net [192.168.3.149])
-	by mail-out.m-online.net (Postfix) with ESMTP id 909FE22500C;
-	Thu,  4 Oct 2007 23:49:20 +0200 (CEST)
-Received: from champfer (ppp-82-135-81-218.dynamic.mnet-online.de [82.135.81.218])
-	by mail.mnet-online.de (Postfix) with ESMTP id 2B8E890543;
-	Thu,  4 Oct 2007 23:49:20 +0200 (CEST)
-X-Mailer: VM 8.0.2-487 under Emacs 22.1.2 (i686-pc-linux-gnu)
+	id S1761393AbXJDVzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 17:55:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760513AbXJDVzH
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 17:55:07 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59391 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760847AbXJDVzG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 17:55:06 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IdYel-0000Y5-F1; Thu, 04 Oct 2007 17:54:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BA51C20FBCB; Thu,  4 Oct 2007 17:55:02 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710042248330.4174@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60014>
 
-Before this patch the clean target has removed the
-configure script that comes with Git tar file.
-That made compiling Git for different architectures
-inconvenient.
-This patch excludes configure from the files to be
-deleted by 'make clean' and adds new target 'distclean'
-to preserve old functionality.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Thu, 4 Oct 2007, Frank Lichtenheld wrote:
+> > 
+> > Should I sent a patch on top of this one or as a replacement?
+> 
+> Better a replacement.  Otherwise I have to fly to California with a brown 
+> paper bag over my HEAD.
 
-Signed-off-by: Mathias Megyei <mathias@mnet-mail.de>
----
- Makefile |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+That may be the safer way to travel.  If your head is in a bag you
+have no idea what sort of wait in the security line you are about
+to face.  Or what horrible movie they are showing you on the flight
+both over *and* back.
 
-diff --git a/Makefile b/Makefile
-index 8db4dbe..dbe68bc 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1088,6 +1088,9 @@ dist-doc:
- 
- ### Cleaning rules
- 
-+distclean: clean
-+	$(RM) configure
-+
- clean:
- 	$(RM) *.o mozilla-sha1/*.o arm/*.o ppc/*.o compat/*.o xdiff/*.o \
- 		$(LIB_FILE) $(XDIFF_LIB)
-@@ -1095,7 +1098,7 @@ clean:
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
- 	$(RM) -r autom4te.cache
--	$(RM) configure config.log config.mak.autogen config.mak.append config.status config.cache
-+	$(RM) config.log config.mak.autogen config.mak.append config.status config.cache
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
- 	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
- 	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
 -- 
-1.5.3.4.203.gcc61a-dirty
+Shawn.
