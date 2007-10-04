@@ -1,83 +1,68 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: Git User's Survey 2007 unfinished summary (long)
-Date: Thu, 4 Oct 2007 16:59:26 +0200
-Message-ID: <8fe92b430710040759r5777264aj5ecb09e0252fef9a@mail.gmail.com>
-References: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
-	 <CDD8E66B-44E0-4258-A3CC-4E48BC58FD2F@lrde.epita.fr>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: A few usability question about git diff --cached
+Date: Thu, 04 Oct 2007 16:47:10 +0200
+Message-ID: <86hcl70wep.fsf@lola.quinscape.zz>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com> <20071004125641.GE15339@genesis.frugalware.org> <7vy7ej9g38.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710041534000.4174@racer.site> <7vhcl79c4l.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Benoit SIGOURE" <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 04 16:59:49 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 04 17:08:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdSAq-0006C7-9f
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 16:59:36 +0200
+	id 1IdSIQ-0001QB-LA
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 17:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756464AbXJDO72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 10:59:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756516AbXJDO72
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 10:59:28 -0400
-Received: from nz-out-0506.google.com ([64.233.162.230]:51793 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756427AbXJDO72 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 10:59:28 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so180552nze
-        for <git@vger.kernel.org>; Thu, 04 Oct 2007 07:59:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=p8g+3sWy33bq/P5guO2rRFsO3uBjX5vrGJ2LUvf4Dyg=;
-        b=AcZ9fVCNQEp8gDWyY2A0Wfs77tw3K7AM7h7WB49HBXBoD9JoZRgopTnAr4R2Ik+tAG+LYsn014dA52+5Jt3uyN2Iht0GcP/BYCGL7f3Npoqe1Owyve2Ib75fWvMev65k9CBAGXYfi0f7zCCC5uzIyKylYta3GuqyW4FIzlNEHb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=oWbEbPFt7COSoUjgZu4HsPKstrctH2W5ODvvOVLHjzSPEG+R6RWWW93thduHND93/XQeGiiGYiIlpridT8U7d2/ENUd9gvZX7AaSFrnZoK3Nv5HLT7ba8/s+n7Jlw7+dm1sxTl9vLo0dsEpSa41oBMiekaSb/G4iv3VhB/yKt7w=
-Received: by 10.114.123.1 with SMTP id v1mr1611445wac.1191509966720;
-        Thu, 04 Oct 2007 07:59:26 -0700 (PDT)
-Received: by 10.114.202.19 with HTTP; Thu, 4 Oct 2007 07:59:26 -0700 (PDT)
-In-Reply-To: <CDD8E66B-44E0-4258-A3CC-4E48BC58FD2F@lrde.epita.fr>
-Content-Disposition: inline
+	id S1756746AbXJDPHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 11:07:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756740AbXJDPHR
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 11:07:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:34917 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756684AbXJDPHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 11:07:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IdS2v-00055T-Gn
+	for git@vger.kernel.org; Thu, 04 Oct 2007 14:51:25 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 14:51:25 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 14:51:25 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:ZP6pYPS47aFeTfazdF+WqkehJ/0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59961>
 
-On 10/4/07, Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Hi Jakub,
-> nice work you've done there.  Well done!
-
-Half done. But thanks.
-
-By the way, I'd put final data from the survey as an attachement at
-   http://git.or.cz/gitwiki/GitSurvey2007
-Currently there is data I used to generate this summary, in CSV format.
-I have used horrible Perl script to tabularize free-form questions, removing
-comments etc., and to generate tables in this summary.
-
-> On Oct 4, 2007, at 11:12 AM, Jakub Narebski wrote:
+>  * --index means work work tree through the index.  Once you get
+>    git, this is natural as you would not interact with files in
+>    the work tree that is not known to the index.
 >
+>  * --cached means work only on the cached information in index.
 
-> > Note that Git is GPLv2, and it will probably stay that forever, so you
-> > are _free_ to start a commercial support scheme for Git, but others
-> > are free not to choose it. This question is to get to know if there is
-> > sufficient demand for commercial Git support for it to be viable.
->
-> Once again (AFAIR this was already raised during one of the previous
-> summary) what's the link between GPLv2 and commercial support?  You
-> seem to imply that because Git won't move to GPLv3, it's a good thing
-> for potential paid support, or something.  I don't quite see how
-> GPLvX comes into play with commercial support.  I'm not a license
-> expert though.
+That is a rather shaky relation.
 
-The only link between GPL and commercial support is that GPL does not
-prohibit commercial support (like noncommercial-free licenses for example),
-and that having commercial support doesn't mean that license would change
-to proprietary (it cannot).
+> Giving them synonyms without deprecation is a viable option, if
+> necessary.  I do not however see the need yet.  A few people who
+> haven't learned the lingo of the land yet can worry about possible
+> confusion, but I do not think that "worry" itself does not count as
+> real need.
+
+The "lingo of the land" as documented in the manuals no longer uses
+the term "cache" or "cached" as something with an official meaning.
+
+So the current state of affairs does not really look overly convincing
+with regard to consistency.
 
 -- 
-Jakub Narebski
+David Kastrup
