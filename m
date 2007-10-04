@@ -1,97 +1,97 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] fix t5403-post-checkout-hook.sh: built-in test in dash does not have "=="
-Date: Thu, 4 Oct 2007 15:32:53 +0200
-Message-ID: <20071004133253.GA30393@steel.home>
-References: <1190842261-9750-1-git-send-email-jjengla@sandia.gov>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+Subject: Re: A few usability question about git diff --cached
+Date: Thu, 4 Oct 2007 15:39:01 +0200
+Message-ID: <4d8e3fd30710040639x62d7b9cbr688aca141849212c@mail.gmail.com>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
+	 <20071004125641.GE15339@genesis.frugalware.org>
+	 <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Josh England <jjengla@sandia.gov>, git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Oct 04 15:33:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Miklos Vajna" <vmiklos@frugalware.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 15:39:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdQp8-00011q-6q
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:33:06 +0200
+	id 1IdQv7-0003fC-Q7
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755499AbXJDNc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 09:32:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755355AbXJDNc5
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:32:57 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:19006 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755306AbXJDNc4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 09:32:56 -0400
-Received: from tigra.home (Fc941.f.strato-dslnet.de [195.4.201.65])
-	by post.webmailer.de (klopstock mo33) (RZmta 13.4)
-	with ESMTP id c03382j94DAUcI ; Thu, 4 Oct 2007 15:32:54 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 4843E277AE;
-	Thu,  4 Oct 2007 15:32:54 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id B412DC772; Thu,  4 Oct 2007 15:32:53 +0200 (CEST)
+	id S1755875AbXJDNjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 09:39:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755855AbXJDNjG
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:39:06 -0400
+Received: from nz-out-0506.google.com ([64.233.162.228]:60594 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754760AbXJDNjD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 09:39:03 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so156053nze
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 06:39:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=V7xlnYWoHxEgnXkNAp/CYJ65xz5AmipzNf/9sD5ISmQ=;
+        b=ai96vmiyiRLDaMuIuUos/N0qP5AeAIyvxPRM2NF5NIzmp4JeaExXZ/0rGZhz8dfn1QE/hFBys9Q/MmHt/t8Zckn0KBJtzSnGZn1ybpdQP9tcg05HNgHG7p5iywKEKjXGpFlkhAD/4Lu/ZdAfAVUdhEMoOBq48xZxgCx5+31paa4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WwzUtsGlohUuzY49pKAsWg6fkfb1HjesJq2NhMqVwlSemTXvJ3vOgWz2gs+c2Ufp8WYGCgt0i7Ix4dx6qgwa4+jqI8btctLHYEIYo67sv/3n8Ir6wspjOj+v8YTI9aB0vJZqIW+CvIdd1VilHXNvubWVNuB0MvftK482WWZ7w34=
+Received: by 10.142.178.13 with SMTP id a13mr681199wff.1191505141930;
+        Thu, 04 Oct 2007 06:39:01 -0700 (PDT)
+Received: by 10.143.43.21 with HTTP; Thu, 4 Oct 2007 06:39:01 -0700 (PDT)
+In-Reply-To: <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <1190842261-9750-1-git-send-email-jjengla@sandia.gov>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPn7A==
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59953>
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-Josh England, Wed, Sep 26, 2007 23:31:01 +0200:
->  t/t5403-post-checkout-hook.sh |   74 +++++++++++++++++++++++++++++++++++++++++
+On 10/4/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Miklos Vajna <vmiklos@frugalware.org> writes:
+>
+> > On Thu, Oct 04, 2007 at 02:27:41PM +0200, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+> >> Why do we have the option "--cached" and not "--index"?
+> >
+> > according to glossary.txt, 'cache' is an obsolete for 'index'. probably
+> > this is the reason
+> >
+> > probably cache.h will be never renamed to index.h, i don't know if diff
+> > --cached will be ever renamed to diff --index
+>
+> Probably never.
 
-on Ubuntu, /bin/sh is dash.
+Ouch!
 
- t/t5403-post-checkout-hook.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+> Some commands support both --index and --cached and have
+> different meanings.  For them,
+>
+>  * --index means work on both index and work tree;
+>  * --cached means work only on index and ignore work tree.
+>
+> In the case of "diff --cached", the latter is exactly what's
+> happening.  We do not say "git diff-index --index $commit"
+> because "git diff-index" (and by extension, when you give only
+> one commit to "git diff" as parameter) is all about a commit vs
+> your uncommitted changes, so having you say "--index" is just
+> silly.  "git diff --cached" is just a shorthand for "git diff
+> --cached HEAD".  Because --cached would make sense to no other
+> form of diff, its presense by definition means you are talking
+> about the one-tree form of diff i.e. compare a commit with your
+> uncommitted changes.
 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index 487abf3..823239a 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -39,7 +39,7 @@ test_expect_success 'post-checkout receives the right arguments with HEAD unchan
-         old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
-         new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
-         flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
--        test $old = $new -a $flag == 1
-+        test $old = $new -a $flag = 1
- '
- 
- test_expect_success 'post-checkout runs as expected ' '
-@@ -52,7 +52,7 @@ test_expect_success 'post-checkout args are correct with git checkout -b ' '
-         old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
-         new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
-         flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
--        test $old = $new -a $flag == 1
-+        test $old = $new -a $flag = 1
- '
- 
- test_expect_success 'post-checkout receives the right args with HEAD changed ' '
-@@ -60,7 +60,7 @@ test_expect_success 'post-checkout receives the right args with HEAD changed ' '
-         old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
-         new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
-         flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
--        test $old != $new -a $flag == 1
-+        test $old != $new -a $flag = 1
- '
- 
- test_expect_success 'post-checkout receives the right args when not switching branches ' '
-@@ -68,7 +68,7 @@ test_expect_success 'post-checkout receives the right args when not switching br
-         old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
-         new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
-         flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
--        test $old == $new -a $flag == 0
-+        test $old = $new -a $flag = 0
- '
- 
- test_done
+I see. But the problem is real. If we cannot solve the problem
+changing the code of git we'll need to avoid this kind of
+misunderstanding having "better" documentation.
+
+As soon as I'll find some spare time I'll propose a patch to "A
+tutorial introduction to git (for version 1.5.1 or newer)".
+
+Thanks!
+
+Regards,
 -- 
-1.5.3.3.147.g2054
+Paolo
+http://paolo.ciarrocchi.googlepages.com/
+http://ubuntista.blogspot.com
