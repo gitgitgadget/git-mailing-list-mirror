@@ -1,81 +1,77 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: Re: size_t vs "unsigned long"
-Date: Thu, 4 Oct 2007 09:16:55 +0200
-Message-ID: <200710040916.55998.wielemak@science.uva.nl>
-References: <7vabr0djqr.fsf@gitster.siamese.dyndns.org> <200710032320.00263.wielemak@science.uva.nl> <20071003213601.GD28188@artemis.corp>
+From: Martin Waitz <tali@admingilde.org>
+Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to chmod.
+Date: Thu, 4 Oct 2007 09:17:51 +0200
+Message-ID: <20071004071751.GD20800@admingilde.org>
+References: <20071003105501.GD7085@admingilde.org> <470388DC.4040504@viscovery.net> <20071003231941.GA20800@admingilde.org> <Pine.LNX.4.64.0710040053380.28395@racer.site> <470482A2.3080907@op5.se> <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 04 09:17:12 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5/uDoXvLw7AC5HRs"
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 09:18:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdKxH-0006hB-BC
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 09:17:07 +0200
+	id 1IdKyC-0006v9-G5
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 09:18:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752976AbXJDHQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 03:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbXJDHQ7
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 03:16:59 -0400
-Received: from smtp-vbr8.xs4all.nl ([194.109.24.28]:2265 "EHLO
-	smtp-vbr8.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752741AbXJDHQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 03:16:58 -0400
-Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
-	by smtp-vbr8.xs4all.nl (8.13.8/8.13.8) with ESMTP id l947GuJJ030557
-	for <git@vger.kernel.org>; Thu, 4 Oct 2007 09:16:57 +0200 (CEST)
-	(envelope-from wielemak@science.uva.nl)
-User-Agent: KMail/1.9.5
-In-Reply-To: <20071003213601.GD28188@artemis.corp>
+	id S1753279AbXJDHR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 03:17:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751572AbXJDHR4
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 03:17:56 -0400
+Received: from mail.admingilde.org ([213.95.32.147]:50437 "EHLO
+	mail.admingilde.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753266AbXJDHR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 03:17:56 -0400
+Received: from martin by mail.admingilde.org with local  (Exim 4.63 #1)
+	id 1IdKxz-0000gr-S2; Thu, 04 Oct 2007 09:17:51 +0200
 Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
+In-Reply-To: <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>
+X-PGP-Fingerprint: B21B 5755 9684 5489 7577  001A 8FF1 1AC5 DFE8 0FB2
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59926>
 
-On Wednesday 03 October 2007 23:36, Pierre Habouzit wrote:
-> On Wed, Oct 03, 2007 at 09:19:59PM +0000, Jan Wielemaker wrote:
-> > On Wednesday 03 October 2007 22:48, Pierre Habouzit wrote:
-> > > On Wed, Oct 03, 2007 at 08:30:04PM +0000, Junio C Hamano wrote:
-> > > > Traditionally, inside git, we have used the length of things
-> > > > with "unsigned long" for pretty much anything, except where we
-> > > > wanted the length exactly sized we used int32_t, uint64_t and
-> > > > friends.
-> > > >
-> > > > A few places pass pointer to unsigned long as the second
-> > > > parameter to strbuf_detach(), triggering type mismatch warnings.
-> > > > An easy way out is to change strbuf_detach() to take a pointer
-> > > > to ulong but I think it is going backwards.  Most places that
-> > > > use "unsigned long" can safely be converted (and made more
-> > > > correct) to use size_t.
-> > >
-> > >   Well, afaict, on every linux archs I know of, unsigned longs and
-> > > size_t are the same. Though, I don't know if that holds for the msys
-> > > port, and if that does not holds, then a s/unsigned long/size_t/ would
-> > > help them. Else, for consistency sake, I believe the change is a good
-> > > one.
-> >
-> > Surely on the Microsoft 64-bit compilers size_t is 64-bits and long is
-> > 32-bits.  Don't blame me, I'm just the messenger that learned the hard
-> > way ...
->
->   Yeah, I've been wondering, and it's the information I had. well, the
-> information I had is that sizeof(size_t) is 4 on win32, and 8 on win64,
-> OTOH (and this one I'm sure), on windows, longs are 32bits on both (32
-> and 64 bits ABIs).
->
->   So replacing unsigned long with size_t's will help the msys port,
-> hence I had some insight that this could prove useful, now I'm sure :)
 
-The other types that are useful are intptr_t and uintptr_t, integers
-that are guaranteed to be able to hold a pointer. They are defined by
-recent versions of the Microsoft compilers and are in <inttypes.h> in
-most POSIX systems (at least I didn't have complaints since I started
-using them).  I use them for integers holding mangled pointers.  Of
-course most clean C programs should not need that.
+--5/uDoXvLw7AC5HRs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-	--- Jan
+hoi :)
+
+On Wed, Oct 03, 2007 at 11:23:22PM -0700, Junio C Hamano wrote:
+> filemode =3D !( (st1.st_mode & S_IXUSR)
+>         	/* we did not ask for x-bit -- bogus FS */
+> 	    || chmod(path, st1.st_mode & S_IXUSR)
+>         	/* it does not let us flip x-bit -- bogus FS */
+> 	    || lstat(path, &st2)
+>         	/* it does not let us read back -- bogus FS */
+> 	    || (st1.st_mode =3D=3D st2.st_mode)
+> 	        /* it forgets we flipped -- bogus FS */
+> 	    );
+
+that looks good.
+
+--=20
+Martin Waitz
+
+--5/uDoXvLw7AC5HRs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHBJOfj/Eaxd/oD7IRAuPUAJ9b6pedKvZtPSZRJWcXxKdjArTFtACggbEQ
+LpzovCD2RFiL0RNOqlfA3DQ=
+=6GoY
+-----END PGP SIGNATURE-----
+
+--5/uDoXvLw7AC5HRs--
