@@ -1,71 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: editing description of patch
-Date: Thu, 4 Oct 2007 17:48:36 +0200
-Message-ID: <20071004154836.GB21717@diana.vm.bytemark.co.uk>
-References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com> <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com> <20071004082624.GA17778@diana.vm.bytemark.co.uk> <9e4733910710040616l5358099dj1b65b47cf94cf031@mail.gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: A few usability question about git diff --cached
+Date: Thu, 4 Oct 2007 11:51:47 -0400
+Message-ID: <20071004155147.GA17487@fieldses.org>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com> <20071004125641.GE15339@genesis.frugalware.org> <7vy7ej9g38.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0710041534000.4174@racer.site> <vpqtzp7ndn3.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 17:48:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 04 17:52:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdSwT-0005Hc-Ma
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 17:48:50 +0200
+	id 1IdT08-0006yi-OJ
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 17:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756545AbXJDPsl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 11:48:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756464AbXJDPsl
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 11:48:41 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2827 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756516AbXJDPsk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 11:48:40 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IdSwG-0005wb-00; Thu, 04 Oct 2007 16:48:36 +0100
+	id S1757205AbXJDPwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 11:52:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757089AbXJDPwY
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 11:52:24 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:58462 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757195AbXJDPwX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 11:52:23 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IdSzL-0004uc-CN; Thu, 04 Oct 2007 11:51:47 -0400
 Content-Disposition: inline
-In-Reply-To: <9e4733910710040616l5358099dj1b65b47cf94cf031@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <vpqtzp7ndn3.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59970>
 
-On 2007-10-04 09:16:46 -0400, Jon Smirl wrote:
+On Thu, Oct 04, 2007 at 04:44:00PM +0200, Matthieu Moy wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > Hi,
+> >
+> > On Thu, 4 Oct 2007, Junio C Hamano wrote:
+> >
+> >>  * --cached means work only on index and ignore work tree.
+> >
+> > I guess I could live with "--staged" as a synonym for "--cached" (and 
+> > maybe deprecating "--cached").
+> 
+> It makes more sense to me.
+> 
+> For me, a "cache" is a fast-access copy of something, that I can
+> rebuild at any time. Cache should be only a matter of performance, if
+> the "cache" for an application changes its functionality, it means the
+> cache has been too optimistic. Git's index is not that, "git add"
+> means "add this to the index", which itself means "put that in the
+> list of things to commit", and not "get a copy of that to work faster
+> with it".
 
-> Why is mailing a patch series so slow?
+Yes, the index differs from the work tree or HEAD temporarily, but most
+of it's life it's just a fast-access copy of something that you can
+rebuild at any time.
 
-Because the default per-patch delay is 5 seconds. You can change it by
-setting stgit.smtpdelay in your config, or passing --sleep on the
-command line.
+So it's partly a "cache", partly a "staging area", and "index" is as
+good a term for it as any.
 
-> There also seems to be a disconnect when mailing patches. Locally
-> the patches have a name, when you email them it uses the short
-> description for the name by default instead of the local name. This
-> may cause confusion because the emailed name does not default to the
-> local name. A parallel issue happens on import.
->
-> Now that I am aware of the naming scheme I can deal with it, but
-> this may be a problem for new users. It might be better to force the
-> short description and local name to always match.
-
-I've never thought of the patch names as anything that would make
-sense to export from a repository (like reflogs), so using the first
-line of the commit message for mail subject (like git does) always
-seemed like a no-brainer. But then I don't have any experience using
-quilt or any related tool.
-
-The default when creating a new patch is to make up a name from its
-commit message (the user is free to give a name explicitly, however);
-the same goes when you import a patch mbox. But when importing a patch
-series (with "stg import --series"), I see the names are taken from
-the series file you import. Maybe that should change, at least
-optionally.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+--b.
