@@ -1,83 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git User's Survey 2007 unfinished summary (long)
-Date: Thu, 4 Oct 2007 17:16:34 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710041712120.4174@racer.site>
-References: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH/RFT] cvsserver: only allow checkout of branches
+Date: Thu, 4 Oct 2007 18:18:12 +0200
+Message-ID: <20071004161812.GA31659@planck.djpig.de>
+References: <200710031348.50800.wielemak@science.uva.nl> <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl> <Pine.LNX.4.64.0710041352480.4174@racer.site> <200710041506.13154.wielemak@science.uva.nl> <Pine.LNX.4.64.0710041622070.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 18:10:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jan Wielemaker <wielemak@science.uva.nl>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 18:19:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdTHb-0007Yo-3w
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:10:39 +0200
+	id 1IdTPj-0002tW-Bs
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759529AbXJDQGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 12:06:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762189AbXJDQG3
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:06:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56640 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1762180AbXJDQG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 12:06:28 -0400
-Received: (qmail invoked by alias); 04 Oct 2007 16:06:26 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 04 Oct 2007 18:06:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191H9IGyZZ1Jzn5en+hO3D+DV1jUwOf6z86+plNPJ
-	sPafxlbBwNSc8f
-X-X-Sender: gene099@racer.site
-In-Reply-To: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1760157AbXJDQSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 12:18:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760259AbXJDQSY
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:18:24 -0400
+Received: from planck.djpig.de ([85.10.192.180]:1463 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760065AbXJDQSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 12:18:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 2864F88231;
+	Thu,  4 Oct 2007 18:18:21 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HTL9v07I7u+S; Thu,  4 Oct 2007 18:18:12 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 8E09388232; Thu,  4 Oct 2007 18:18:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710041622070.4174@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59977>
 
-Hi,
-
-On Thu, 4 Oct 2007, Jakub Narebski wrote:
-
-> This is partial summary of Git User's Survey 2007,
-> ending at state from 28 September 2007.
-
-Thanks.
-
-> 26. Which porcelains do you use?
+On Thu, Oct 04, 2007 at 04:29:04PM +0100, Johannes Schindelin wrote:
+> 	Cc'ed Frank, who is de-facto maintainer (according to shortlog) 
+> 	and Martin, who started it all IIRC.
 > 
-> Multiple answers (one can use more than one porcelain).
-> 
->   Answer (multiple choice)       | Count
->   ------------------------------------------
->   core-git                       | 558
->   cogito (deprecated)            | 56
-> 
->   Patch management interface:    : 57
->   ...........................................
->   StGIT                          | 41
->   Guilt (formerly gq)            | 13
->   pg (deprecated)                | 3
-> 
->   own scripts                    | 95
->   other                          | 14
->   ------------------------------------------
->   Base                           | 593 / 683
->   Total (sum)                    | 780
-> 
-> Those 14 "other" answers make me wish to have provided "if other,
-> what it was?" (sub)question; actually not only for this question.
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index 13dbd27..869690c 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -770,6 +770,14 @@ sub req_co
+>  
+>      $log->debug("req_co : " . ( defined($data) ? $data : "[NULL]" ) );
+>  
+> +    if( system("git", "rev-parse", "--verify", "refs/heads/$module" ) != 0 )
+> +    {
+> +	$log->warn("Checkout failed: $module is not a branch");
+> +	print "error 1 Checkout failed: $module is not a branch\n";
+> +	chdir "/";
+> +	exit;
+> +    }
+> +
+>      $log->info("Checking out module '$module' ($state->{CVSROOT}) to '$checkout_path'");
+>  
+>      $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
 
-git-gui, of course.  I consider it porcelain, because it uses core-git as 
-backend.
+Looks good, haven't tested it yet, though. Care to add a testcase
+or should I take care of that?
 
-In the same vein, I should consider gitk porcelain now, since it has 
-rebase capabilities.  I will not, and I am not very happy that this viewer 
-got a non-view-only capability, instead of git-gui, where that feature 
-should have belonged (as suggested by at least one answer to a later 
-question in the survey -- not by me).
-
-Ciao,
-Dscho
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
