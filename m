@@ -1,80 +1,76 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: A few usability question about git diff --cached
-Date: Thu, 4 Oct 2007 15:10:45 +0200
-Message-ID: <4d8e3fd30710040610m49521fb7ld8f95043c945bf94@mail.gmail.com>
-References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
-	 <20071004125641.GE15339@genesis.frugalware.org>
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Re: git-cvsserver commit trouble BUG+Work-around
+Date: Thu, 4 Oct 2007 15:06:12 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200710041506.13154.wielemak@science.uva.nl>
+References: <200710031348.50800.wielemak@science.uva.nl> <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl> <Pine.LNX.4.64.0710041352480.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Miklos Vajna" <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 15:10:57 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 15:12:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdQTg-0008Ka-52
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:10:56 +0200
+	id 1IdQUp-0000Mx-Ps
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:12:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755090AbXJDNKs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 09:10:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754289AbXJDNKs
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:10:48 -0400
-Received: from wr-out-0506.google.com ([64.233.184.225]:40479 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754252AbXJDNKr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 09:10:47 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so131673wra
-        for <git@vger.kernel.org>; Thu, 04 Oct 2007 06:10:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=dpgMXGOZksoHB23s42ireHAI/I8vpSbi4pt7lzEqKe4=;
-        b=BmAGuVzMeh7FrL/IHbgYwnHWPm3+RHvFOPteMTzf5H1G2QDj54w4mp9Z0pD5Cu6C33L3xHykhpg4H9gY9nFsudqWs9B4KCLh9qoR9/oDjyWy4fm33zThA25KHogi999k/KSM2NQHIQjq/1POt0YgqZkaJ8CRKb1i8erl/zp0koQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kP1piIXKphkG92a0fpM4tnKilzRUe/wqSbE4TFswqQHheJjoM548y1CuPaQfm/ymlLroi0sWq6lUwciGH5reEHsguTjbi0oAqmyAZVV1HY0bHRhJQLZzCaH+Pv96GR8Dy/8hpnv7/e57IC5yuEIbD14T+7h9Yjyrm0HaDrgIWuY=
-Received: by 10.142.212.19 with SMTP id k19mr1659251wfg.1191503445867;
-        Thu, 04 Oct 2007 06:10:45 -0700 (PDT)
-Received: by 10.143.43.21 with HTTP; Thu, 4 Oct 2007 06:10:45 -0700 (PDT)
-In-Reply-To: <20071004125641.GE15339@genesis.frugalware.org>
+	id S1755244AbXJDNL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 09:11:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755306AbXJDNL7
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:11:59 -0400
+Received: from imap.science.uva.nl ([146.50.4.51]:34616 "EHLO
+	imap.science.uva.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755105AbXJDNL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 09:11:59 -0400
+Received: from gollem.science.uva.nl [146.50.26.20]
+          by imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38).
+          id l94DBtD8022988; Thu, 4 Oct 2007 15:11:56 +0200
+X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
+X-URL: http://www.science.uva.nl/
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0710041352480.4174@racer.site>
 Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59949>
 
-On 10/4/07, Miklos Vajna <vmiklos@frugalware.org> wrote:
-> On Thu, Oct 04, 2007 at 02:27:41PM +0200, Paolo Ciarrocchi <paolo.cia=
-rrocchi@gmail.com> wrote:
-> > Why do we have the option "--cached" and not "--index"?
+Hi Dscho,
+
+On Thursday 04 October 2007 14:56, Johannes Schindelin wrote:
+> On Thu, 4 Oct 2007, Jan Wielemaker wrote:
+> > Indeed, the trouble is here: git-cvsserver, near line 1203:
+> >
+> >     my $parenthash = `git show-ref -s refs/heads/$state->{module}`;
+> >
+> > $state->{module} is -of course- HEAD. git show-ref -s refs/heads/HEAD
+> > indeed gives no output. git show-ref -s refs/heads/master works just
+> > fine.
 >
-> according to glossary.txt, 'cache' is an obsolete for 'index'. probab=
-ly
-> this is the reason
+> Ah!  Did you do "CVSROOT=:ext:blablub cvs co HEAD"?
+
+Yip ...
+
+> You should "co master".  The branches in git are the modules in cvs.
 >
-> probably cache.h will be never renamed to index.h, i don't know if di=
-ff
-> --cached will be ever renamed to diff --index
+> HEAD is too volatile, you cannot make a proper module from it (imagine for
+> example "git checkout next" where "next" is a branch, followed by "git
+> checkout html", where "html" is another branch).
 
-Believe me, for a GIT newbie git --cached is confusing.
+Ok.  Pretty sure I got literal HEAD from one of the examples somewhere ...
+Or, I've been blind all along.  Anyway, the maintainer may consider giving
+an error when trying to access HEAD as a module.  Would have saved about
+2 days work and its unlikely I'm the last victim :-(
 
-That user started reading "A tutorial introduction to git (for version
-1.5.1 or newer)",
-after a cuple of minutes of reading he reached "Making changes" saw:
+Part of the two days is that during all the things I tried somehow
+messed up with master too, so the one time I tried that it failed as
+well :-(
 
-" You are now ready to commit. You can see what is about to be
-committed using git-diff(1) with the =97cached option:
+Anyway, case closed.  On with the testing ...
 
-$ git diff --cached "
-
-$ git diff --index sound a lof more consistent with the general documen=
-tation.
-
-Regards,
---=20
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
-http://ubuntista.blogspot.com
+	Thanks --- Jan
