@@ -1,84 +1,80 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git push (mis ?)behavior
-Date: Thu, 4 Oct 2007 18:24:23 +0200
-Message-ID: <04A74C2E-272B-4F5C-9254-11C9244091AF@zib.de>
-References: <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com> <20071003104943.GA3017@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031550490.28395@racer.site> <20071003160731.GA7113@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031718110.28395@racer.site> <20071003162816.GA17403@artemis.corp> <Pine.LNX.4.64.0710031742400.28395@racer.site> <20071003170241.GA7571@diana.vm.bytemark.co.uk> <717D7260-CE23-4397-8B13-264309094423@zib.de> <204B0DD6-54B0-4436-AFC6-ABDA4510E5D5@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 18:23:45 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH/RFT] cvsserver: only allow checkout of branches
+Date: Thu, 4 Oct 2007 17:32:19 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710041731550.4174@racer.site>
+References: <200710031348.50800.wielemak@science.uva.nl>
+ <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl>
+ <Pine.LNX.4.64.0710041352480.4174@racer.site> <200710041506.13154.wielemak@science.uva.nl>
+ <Pine.LNX.4.64.0710041622070.4174@racer.site> <20071004161812.GA31659@planck.djpig.de>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Wielemaker <wielemak@science.uva.nl>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 18:32:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdTU1-0004xY-PG
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:23:30 +0200
+	id 1IdTcq-0000j9-5M
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:32:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757912AbXJDQXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 12:23:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758568AbXJDQXV
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:23:21 -0400
-Received: from mailer.zib.de ([130.73.108.11]:57297 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757801AbXJDQXU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 12:23:20 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l94GMp1r025649;
-	Thu, 4 Oct 2007 18:22:51 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l94GMohT027235
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 4 Oct 2007 18:22:50 +0200 (MEST)
-In-Reply-To: <204B0DD6-54B0-4436-AFC6-ABDA4510E5D5@wincent.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757934AbXJDQcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 12:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758055AbXJDQcX
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:32:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37416 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757501AbXJDQcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 12:32:22 -0400
+Received: (qmail invoked by alias); 04 Oct 2007 16:32:20 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp026) with SMTP; 04 Oct 2007 18:32:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+5Ul5jgxm5Ig7+Lv2afj48b6/XZMi5KG8GoOtbzf
+	qD5xKUS5iuz3ZN
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071004161812.GA31659@planck.djpig.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59980>
 
+Hi,
 
-On Oct 4, 2007, at 5:54 PM, Wincent Colaiuta wrote:
+On Thu, 4 Oct 2007, Frank Lichtenheld wrote:
 
->> I do not find it very intuitive to mangle the push behaviour into the
->> naming of the local branch. I think it would be a good idea if the
->> two commands above would either both setup a pull/push relation
->> or both would setup a pull-only relation. If pull-only would be the
->> default another switch could be provided to establish a pull/push
->> relation, like
->>
->>    git checkout --track --push -b mynext origin/next
->>
->> Comments?
->
-> Interesting. To me that doesn't seem to be intuitive at all. I  
-> actually think it makes a lot of sense for the relationship to be  
-> "one way" in the absence of matching ref names.
->
-> Basically, the distributed model works because you know that if you  
-> have the same commit hash in two repositories you're talking about  
-> the same thing. Same thing goes for branches; if you expect to be  
-> able to push back upstream then it's natural to expect that that  
-> should only work if you have the same ref name to identify the  
-> "what" that you're actually pushing to.
+> On Thu, Oct 04, 2007 at 04:29:04PM +0100, Johannes Schindelin wrote:
+> > 	Cc'ed Frank, who is de-facto maintainer (according to shortlog) 
+> > 	and Martin, who started it all IIRC.
+> > 
+> > diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> > index 13dbd27..869690c 100755
+> > --- a/git-cvsserver.perl
+> > +++ b/git-cvsserver.perl
+> > @@ -770,6 +770,14 @@ sub req_co
+> >  
+> >      $log->debug("req_co : " . ( defined($data) ? $data : "[NULL]" ) );
+> >  
+> > +    if( system("git", "rev-parse", "--verify", "refs/heads/$module" ) != 0 )
+> > +    {
+> > +	$log->warn("Checkout failed: $module is not a branch");
+> > +	print "error 1 Checkout failed: $module is not a branch\n";
+> > +	chdir "/";
+> > +	exit;
+> > +    }
+> > +
+> >      $log->info("Checking out module '$module' ($state->{CVSROOT}) to '$checkout_path'");
+> >  
+> >      $ENV{GIT_DIR} = $state->{CVSROOT} . "/";
+> 
+> Looks good, haven't tested it yet, though. Care to add a testcase
+> or should I take care of that?
 
-But how do multiple remotes fit into your model? Maybe my example
-above was a bit to simple. How about this one:
+I would be eternally thankful if you could add the test case, since I am 
+really short on time.
 
-    git checkout --track --push -b masterA remoteA/master
-    git checkout --track --push -b masterB remoteB/master
-
-I understand what it means because I devised my local naming model.
-The model could look totally wrong to you, but it's in my repository.
-You'd never see it. But if it fits my mental model, why should git
-enforce its master-means-always-master-and-must-not-be-named-differently
-model?
-
-	Steffen
+Ciao,
+Dscho
