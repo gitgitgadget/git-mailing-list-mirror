@@ -1,76 +1,79 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: Re: git-cvsserver commit trouble BUG+Work-around
-Date: Thu, 4 Oct 2007 15:06:12 +0200
-Organization: HCS, University of Amsterdam
-Message-ID: <200710041506.13154.wielemak@science.uva.nl>
-References: <200710031348.50800.wielemak@science.uva.nl> <46823.146.50.26.20.1191496739.squirrel@webmail.science.uva.nl> <Pine.LNX.4.64.0710041352480.4174@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: A few usability question about git diff --cached
+Date: Thu, 04 Oct 2007 06:14:51 -0700
+Message-ID: <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
+	<20071004125641.GE15339@genesis.frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 04 15:12:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Oct 04 15:15:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdQUp-0000Mx-Ps
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:12:08 +0200
+	id 1IdQXt-0001iL-Gm
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755244AbXJDNL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 09:11:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755306AbXJDNL7
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:11:59 -0400
-Received: from imap.science.uva.nl ([146.50.4.51]:34616 "EHLO
-	imap.science.uva.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755105AbXJDNL7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 09:11:59 -0400
-Received: from gollem.science.uva.nl [146.50.26.20]
-          by imap.science.uva.nl with ESMTP (sendmail 8.13.8/config 11.38).
-          id l94DBtD8022988; Thu, 4 Oct 2007 15:11:56 +0200
-X-Organisation: Faculty of Science, University of Amsterdam, The Netherlands
-X-URL: http://www.science.uva.nl/
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0710041352480.4174@racer.site>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new
+	id S1753932AbXJDNPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 09:15:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753603AbXJDNPJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:15:09 -0400
+Received: from rune.pobox.com ([208.210.124.79]:41345 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753234AbXJDNPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 09:15:08 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 69DEC1411A4;
+	Thu,  4 Oct 2007 09:15:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id AD0BC14103D;
+	Thu,  4 Oct 2007 09:15:19 -0400 (EDT)
+In-Reply-To: <20071004125641.GE15339@genesis.frugalware.org> (Miklos Vajna's
+	message of "Thu, 4 Oct 2007 14:56:41 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59950>
 
-Hi Dscho,
+Miklos Vajna <vmiklos@frugalware.org> writes:
 
-On Thursday 04 October 2007 14:56, Johannes Schindelin wrote:
-> On Thu, 4 Oct 2007, Jan Wielemaker wrote:
-> > Indeed, the trouble is here: git-cvsserver, near line 1203:
-> >
-> >     my $parenthash = `git show-ref -s refs/heads/$state->{module}`;
-> >
-> > $state->{module} is -of course- HEAD. git show-ref -s refs/heads/HEAD
-> > indeed gives no output. git show-ref -s refs/heads/master works just
-> > fine.
+> On Thu, Oct 04, 2007 at 02:27:41PM +0200, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+>> Why do we have the option "--cached" and not "--index"?
 >
-> Ah!  Did you do "CVSROOT=:ext:blablub cvs co HEAD"?
-
-Yip ...
-
-> You should "co master".  The branches in git are the modules in cvs.
+> according to glossary.txt, 'cache' is an obsolete for 'index'. probably
+> this is the reason
 >
-> HEAD is too volatile, you cannot make a proper module from it (imagine for
-> example "git checkout next" where "next" is a branch, followed by "git
-> checkout html", where "html" is another branch).
+> probably cache.h will be never renamed to index.h, i don't know if diff
+> --cached will be ever renamed to diff --index
 
-Ok.  Pretty sure I got literal HEAD from one of the examples somewhere ...
-Or, I've been blind all along.  Anyway, the maintainer may consider giving
-an error when trying to access HEAD as a module.  Would have saved about
-2 days work and its unlikely I'm the last victim :-(
+Probably never.
 
-Part of the two days is that during all the things I tried somehow
-messed up with master too, so the one time I tried that it failed as
-well :-(
+Some commands support both --index and --cached and have
+different meanings.  For them,
 
-Anyway, case closed.  On with the testing ...
+ * --index means work on both index and work tree;
+ * --cached means work only on index and ignore work tree.
 
-	Thanks --- Jan
+In the case of "diff --cached", the latter is exactly what's
+happening.  We do not say "git diff-index --index $commit"
+because "git diff-index" (and by extension, when you give only
+one commit to "git diff" as parameter) is all about a commit vs
+your uncommitted changes, so having you say "--index" is just
+silly.  "git diff --cached" is just a shorthand for "git diff
+--cached HEAD".  Because --cached would make sense to no other
+form of diff, its presense by definition means you are talking
+about the one-tree form of diff i.e. compare a commit with your
+uncommitted changes.
+
+An example of a command that supports both is "git apply".
+Actually it is an extreme case in that it allows "no index" form
+of operation, so it has "git apply", "git apply --cached", and
+"git apply --index".  The --cached would only apply to index
+without touching work tree, the --index would apply to both
+index and work tree.
