@@ -3,81 +3,79 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.176.0/21
 X-Spam-Status: No, score=-3.4 required=3.0 tests=BAYES_00,DKIM_ADSP_CUSTOM_MED,
 	DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
-From: "Dan Nicholson" <dbn.lists@gmail.com>
-Subject: Re: Can git be tweaked to work cross-platform, on FAT32?
-Date: Tue, 19 Dec 2006 15:55:03 -0800
-Message-ID: <91705d080612191555k3dc6a473n4b1e4df2d22880bf@mail.gmail.com>
-References: <0MKwpI-1GuWVF2znk-0006fC@mrelayeu.kundenserver.de>
-	 <46a038f90612132155rc987a9cs6a4fa33dd4c882c6@mail.gmail.com>
-	 <0ML25U-1GvWC81sjR-0001UB@mrelayeu.kundenserver.de>
-	 <Pine.LNX.4.63.0612161227510.3635@wbgn013.biozentrum.uni-wuerzburg.de>
-	 <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+	HEADER_FROM_DIFFERENT_DOMAINS,MSGID_FROM_MTA_HEADER,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=ham autolearn_force=no version=3.4.0
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: [PATCH] cvsserver: Fix req_update to handle packed refs
+Date: Fri, 5 Oct 2007 09:43:55 +1300
+Message-ID: <46a038f90710041343g5b6a5a30gcd0c9f18d265fa28@mail.gmail.com>
+References: <1191525680-10481-1-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-NNTP-Posting-Date: Tue, 19 Dec 2006 23:55:15 +0000 (UTC)
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Florian v. Savigny" <lorian@fsavigny.de>, git@vger.kernel.org
+NNTP-Posting-Date: Thu, 4 Oct 2007 20:44:27 +0000 (UTC)
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Junio C Hamano" <junkio@cox.net>
+To: "Frank Lichtenheld" <frank@lichtenheld.de>
 Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git@gmane.org
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-        s=beta; d=gmail.com;
+Envelope-to: gcvg-git-2@gmane.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Tcr9c94AT+0hYcQyDQ9yan36O5I1CC6+JIjvLouPwAk=;
+        b=Tv6Lae4WaLN6QJBn1+DbwrvDMRf2yxFaSZ2K8YdPbOr0aCnzs5FYqmwfIIWXXcXugaCjkmyX8yKcs0SKrnoq6ofzk5j2QDI/ecFqX4Xk8p0hI3M3oZlQaNujxVKg1PWxGJS4k7duxdTKnv7ORrbyhZAETVZF8xCbaNHf4K5n//0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=LMBeTcEfn9OttKry8SuV36cM9ul4Sw03041XKA7BCUs9Ki5SJVuHNGOgf/nGAaWnAJcGuylCZQ7nXwGxmIZnVPiHKVT/L0cwP5rmcZ0o5NMo+XIOK1IhatK21xqxhIEAICgPCY4jDgJ2BiRpP0G60MnOb8Dn7my2tWqN29I9P1Y=
-In-Reply-To: <46a038f90612170221u4c3b5c2asef378d3d4e159ba7@mail.gmail.com>
+        b=mn67kAU65Hm1BUktZ0wF9qp874F3CzS7WYpQEpILsLWUcYb7JRofMYWr0pad87BSy0xhxfGfCUb2gv9uuUb6YL7btbj68ncfgn2YrkVJ4imAuCuu+7CvJ/aPiL7MSoTBY5Q4HKT1lacdLva7CUtT/TlXpoUJeVL73K/VtIoX0ps=
+In-Reply-To: <1191525680-10481-1-git-send-email-frank@lichtenheld.de>
 Content-Disposition: inline
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/34865>
-Received: from vger.kernel.org ([209.132.176.167]) by dough.gmane.org with
- esmtp (Exim 4.50) id 1Gwonf-00054Y-2Q for gcvg-git@gmane.org; Wed, 20 Dec
- 2006 00:55:11 +0100
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60000>
+Received: from vger.kernel.org ([209.132.176.167]) by lo.gmane.org with esmtp
+ (Exim 4.50) id 1IdXYF-0007s6-Kz for gcvg-git-2@gmane.org; Thu, 04 Oct 2007
+ 22:44:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand id
- S1752420AbWLSXzG (ORCPT <rfc822;gcvg-git@m.gmane.org>); Tue, 19 Dec 2006
- 18:55:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752874AbWLSXzF
- (ORCPT <rfc822;git-outgoing>); Tue, 19 Dec 2006 18:55:05 -0500
-Received: from an-out-0708.google.com ([209.85.132.251]:8192 "EHLO
- an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
- ESMTP id S1752420AbWLSXzD (ORCPT <rfc822;git@vger.kernel.org>); Tue, 19 Dec
- 2006 18:55:03 -0500
-Received: by an-out-0708.google.com with SMTP id b33so621215ana for
- <git@vger.kernel.org>; Tue, 19 Dec 2006 15:55:03 -0800 (PST)
-Received: by 10.100.125.5 with SMTP id x5mr5017877anc.1166572503106; Tue, 19
- Dec 2006 15:55:03 -0800 (PST)
-Received: by 10.100.96.18 with HTTP; Tue, 19 Dec 2006 15:55:03 -0800 (PST)
-To: "Martin Langhoff" <martin.langhoff@gmail.com>
+ S1757579AbXJDUn6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007
+ 16:43:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757571AbXJDUn6
+ (ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 16:43:58 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:17157 "EHLO
+ ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with
+ ESMTP id S1757557AbXJDUn5 (ORCPT <rfc822;git@vger.kernel.org>); Thu, 4 Oct
+ 2007 16:43:57 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so410489ugc for
+ <git@vger.kernel.org>; Thu, 04 Oct 2007 13:43:55 -0700 (PDT)
+Received: by 10.67.19.17 with SMTP id w17mr2466534ugi.1191530635381; Thu, 04
+ Oct 2007 13:43:55 -0700 (PDT)
+Received: by 10.67.23.15 with HTTP; Thu, 4 Oct 2007 13:43:55 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 
-On 12/17/06, Martin Langhoff <martin.langhoff@gmail.com> wrote:
+On 10/5/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> cvsserver returns a list of existing modules on command
+> 'update' without a module specified (apparently this is
+> used by some clients to get a list of available modules,
+> the CVS cli client doesn't support it).
 >
-> Note that under windows you can use ext2 -- haven't used it, and don't
-> know how cygwin behaves with it, but it may be *just* what you need to
-> avoid case sensitivity problems and have symlink support.
->
->     http://sourceforge.net/projects/ext2fsd
->
->     http://www.fs-driver.org/
+> Fix this code to work correctly in presence of packed refs.
+> (Use git-branch instead of reading refs/heads/)
 
-I've used both of these guys, but not the most recent versions. Both
-were previously read-only, but now it appears both have write support
-from looking at the release notes. Both were a bit heavy handed to get
-setup, but a decently computer literate person could probably handle
-it. Ext2IFS in particular looks dramatically improved from when I last
-used it.
+ACK - good stuff - thanks!
 
-Both worked fine through Cygwin for simple usage. I never did anything
-with serious disk usage on either of them, so I can't say how it
-stacks up to FAT32 on Linux in terms of really hammering the disk.
+There is one minor issue around this I suspect - refs with slashes in
+them. Without this patch, only refs that literally sit in refs/heads
+will be returned. With git branches, you could see oldbranches/foo
+being returned to the client.
 
-A little more reading says ext2ifs can't handle permissions or symbolic links.
+IIRC - the behaviour cvsserver supports here is completely
+unspecified, and clients will probably error out in weird and wacky
+ways. I'd perhaps filter out any headref with a slash.
 
-http://www.fs-driver.org/faq.html
+cheers,
 
-I don't recall the details of ext2fsd, but I think symbolic links
-worked. I'd like to look at this again, but I spend all my time in
-Linux at home.
 
---
+martin
+
+
+
