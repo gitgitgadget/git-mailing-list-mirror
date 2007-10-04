@@ -1,87 +1,53 @@
-From: Wincent Colaiuta <win@wincent.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: A few usability question about git diff --cached
-Date: Thu, 4 Oct 2007 16:09:20 +0200
-Message-ID: <5159468E-C263-4F7B-AEBA-8392C4742C47@wincent.com>
-References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com> <20071004125641.GE15339@genesis.frugalware.org> <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Date: Thu, 4 Oct 2007 15:34:45 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710041534000.4174@racer.site>
+References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
+ <20071004125641.GE15339@genesis.frugalware.org> <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Miklos Vajna <vmiklos@frugalware.org>,
 	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 16:10:39 2007
+X-From: git-owner@vger.kernel.org Thu Oct 04 16:25:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdRPB-0008OU-G3
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 16:10:21 +0200
+	id 1IdRdK-0006bw-L3
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 16:24:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755966AbXJDOKL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 10:10:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756023AbXJDOKK
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 10:10:10 -0400
-Received: from wincent.com ([72.3.236.74]:50947 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754803AbXJDOKJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 10:10:09 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l94E9R7r017442;
-	Thu, 4 Oct 2007 09:09:28 -0500
+	id S1756479AbXJDOYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 10:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756378AbXJDOYl
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 10:24:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41314 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756165AbXJDOYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 10:24:40 -0400
+Received: (qmail invoked by alias); 04 Oct 2007 14:24:38 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp031) with SMTP; 04 Oct 2007 16:24:38 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19zr2MPPShzb/Ag5VFBjDgf72QX2uBAwKvOnBzEf1
+	0pnlTq96v0OTfH
+X-X-Sender: gene099@racer.site
 In-Reply-To: <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59955>
 
-El 4/10/2007, a las 15:14, Junio C Hamano escribi=F3:
+Hi,
 
-> Miklos Vajna <vmiklos@frugalware.org> writes:
->
->> On Thu, Oct 04, 2007 at 02:27:41PM +0200, Paolo Ciarrocchi =20
->> <paolo.ciarrocchi@gmail.com> wrote:
->>> Why do we have the option "--cached" and not "--index"?
->>
->> according to glossary.txt, 'cache' is an obsolete for 'index'. =20
->> probably
->> this is the reason
->>
->> probably cache.h will be never renamed to index.h, i don't know if =20
->> diff
->> --cached will be ever renamed to diff --index
->
-> Probably never.
->
-> Some commands support both --index and --cached and have
-> different meanings.  For them,
->
->  * --index means work on both index and work tree;
+On Thu, 4 Oct 2007, Junio C Hamano wrote:
+
 >  * --cached means work only on index and ignore work tree.
 
-Look at that with fresh eyes and you can see how it makes very little =20
-sense.
+I guess I could live with "--staged" as a synonym for "--cached" (and 
+maybe deprecating "--cached").
 
-The option named "--index" works on more than the index and the =20
-option named "--cached" works only on the index. This sounds back-to-=20
-front.
-
-IMO, better names would be:
-
---index : means work only on the index (and ignore the work tree); =20
-ie. it means what it says
-
---index-and-worktree : it also means what it says
-
-The latter is more keystrokes but it's clearer.
-
-Having said all this, I recognize that the likelihood of these option =20
-names ever being changed is close to zero. Like Paolo says in his =20
-other email, the documentation could be made clearer to avoid =20
-possible confusion.
-
-Cheers,
-Wincent
+Ciao,
+Dscho
