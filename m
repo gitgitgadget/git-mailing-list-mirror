@@ -1,99 +1,86 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: git push (mis ?)behavior
-Date: Thu, 4 Oct 2007 16:47:32 +0200
-Message-ID: <717D7260-CE23-4397-8B13-264309094423@zib.de>
-References: <buoprzwn5qm.fsf@dhapc248.dev.necel.com> <20071003073554.GA8110@artemis.corp> <buobqbgmv6z.fsf@dhapc248.dev.necel.com> <83C5420A-528A-43F0-AF8C-699B85B7AD95@wincent.com> <20071003104943.GA3017@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031550490.28395@racer.site> <20071003160731.GA7113@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710031718110.28395@racer.site> <20071003162816.GA17403@artemis.corp> <Pine.LNX.4.64.0710031742400.28395@racer.site> <20071003170241.GA7571@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH] Add a simple option parser.
+Date: Thu, 04 Oct 2007 10:57:58 -0400
+Message-ID: <1191509878.29379.2.camel@hinata.boston.redhat.com>
+References: <1191447902-27326-1-git-send-email-krh@redhat.com>
+	 <20071003231145.GF28188@artemis.corp>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 16:55:03 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Oct 04 16:58:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdS5P-0002yY-Mw
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 16:54:00 +0200
+	id 1IdS9l-0005f4-Kr
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 16:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756378AbXJDOxv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 10:53:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756306AbXJDOxu
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 10:53:50 -0400
-Received: from mailer.zib.de ([130.73.108.11]:48319 "EHLO mailer.zib.de"
+	id S1756378AbXJDO6V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 10:58:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756464AbXJDO6V
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 10:58:21 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:60790 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756218AbXJDOxu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 10:53:50 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l94Ejxsc015954;
-	Thu, 4 Oct 2007 16:45:59 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l94EjxuF002483
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 4 Oct 2007 16:45:59 +0200 (MEST)
-In-Reply-To: <20071003170241.GA7571@diana.vm.bytemark.co.uk>
-X-Mailer: Apple Mail (2.752.3)
+	id S1756378AbXJDO6U (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 10:58:20 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id l94Ew41F031043;
+	Thu, 4 Oct 2007 10:58:04 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l94Ew4wZ005398;
+	Thu, 4 Oct 2007 10:58:04 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l94Ew38G001557;
+	Thu, 4 Oct 2007 10:58:03 -0400
+In-Reply-To: <20071003231145.GF28188@artemis.corp>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59959>
 
 
-On Oct 3, 2007, at 7:02 PM, Karl Hasselstr=F6m wrote:
+On Thu, 2007-10-04 at 01:11 +0200, Pierre Habouzit wrote:
+> On Wed, Oct 03, 2007 at 09:45:01PM +0000, Kristian H=C3=B8gsberg wrot=
+e:
+> > The option parser takes argc, argv, an array of struct option
+> > and a usage string.  Each of the struct option elements in the arra=
+y
+> > describes a valid option, its type and a pointer to the location wh=
+ere the
+> > value is written.  The entry point is parse_options(), which scans =
+through
+> > the given argv, and matches each option there against the list of v=
+alid
+> > options.  During the scan, argv is rewritten to only contain the
+> > non-option command line arguments and the number of these is return=
+ed.
+>=20
+>   if we are going in that direction (and I believe it's a good one), =
+we
+> should be sure that the model fits with other commands as well. And a=
+s I
+> said on IRC, I believe the most "horrible" (as in complex) option par=
+ser
+> in git is the one from git-grep.
+>=20
+>   A migration of git-grep on that API should be tried first. If this
+> works well enough, I believe that the rest of the git commands will b=
+e
+> migrated easily enough. (with maybe small addition to parse-option.[h=
+c]
+> but the hardcore things should have been met with git-grep already I
+> think).
 
-> On 2007-10-03 17:44:39 +0100, Johannes Schindelin wrote:
->
->> I wonder how hard it would be to teach _everybody_ to specify
->> _exactly_ what they want.
->>
->> Of course, we'd need an "--existing" option to git-push to trigger
->> the behaviour that we have right now.
->
-> I could _definitely_ live with that. If the branch config doesn't say
-> what to do when no arguments are given, then demand a specification o=
-n
-> the command line.
->
-> I'll shut up on this topic now, though, since I'm not exactly helping
-> with the patch/opinion ratio.
+I'm not sure - we can go with the current proposal and add new options
+types and probably the callback option type I suggested as we go.  I
+don't want to block builtin-commit on figuring out what the perfect
+option parser should look like and what I sent out earlier work for
+commit.  I think the way you handled the strbuf rewrites worked pretty
+well; extending and rewriting the API as you put it to use in more and
+more places.  We can do the same thing with parse_options().
 
-Here is an interesting related pitfall where my expectations about
-the behaviour of git push in relation with tracking branches were
-wrong. I should have know better, but I somehow forgot the details.
-I expected that the following would establish a two-way link, not
-only a one way link:
-
-    git checkout --track -b mynext origin/next
-
-sets up a tracking branch and "git pull" fetches and merges changes
-from origin/next as expected.
-
-I somehow expected that "git push" would push changes from mynext to
-origin/next. But it doesn't. It would only do so if I had chosen
-the same name for the local branch, that is
-
-    git checkout --track -b next origin/next
-
-would have set up a two-way link -- but maybe only as long as I don't
-have other push lines in my config file. I'm not sure about the last
-point.
-
-I do not find it very intuitive to mangle the push behaviour into the
-naming of the local branch. I think it would be a good idea if the
-two commands above would either both setup a pull/push relation
-or both would setup a pull-only relation. If pull-only would be the
-default another switch could be provided to establish a pull/push
-relation, like
-
-    git checkout --track --push -b mynext origin/next
-
-Comments?
-
-	Steffen
+cheers,
+Kristian
