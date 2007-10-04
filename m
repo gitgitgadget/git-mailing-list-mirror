@@ -1,79 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: A few usability question about git diff --cached
-Date: Thu, 04 Oct 2007 06:14:51 -0700
-Message-ID: <7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
-References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
-	<20071004125641.GE15339@genesis.frugalware.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: stgit: editing description of patch
+Date: Thu, 4 Oct 2007 09:16:46 -0400
+Message-ID: <9e4733910710040616l5358099dj1b65b47cf94cf031@mail.gmail.com>
+References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com>
+	 <9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
+	 <20071004082624.GA17778@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Miklos Vajna <vmiklos@frugalware.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 15:15:19 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 15:16:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdQXt-0001iL-Gm
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:15:17 +0200
+	id 1IdQZU-0002SB-QY
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 15:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753932AbXJDNPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 09:15:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753603AbXJDNPJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:15:09 -0400
-Received: from rune.pobox.com ([208.210.124.79]:41345 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753234AbXJDNPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 09:15:08 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 69DEC1411A4;
-	Thu,  4 Oct 2007 09:15:23 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id AD0BC14103D;
-	Thu,  4 Oct 2007 09:15:19 -0400 (EDT)
-In-Reply-To: <20071004125641.GE15339@genesis.frugalware.org> (Miklos Vajna's
-	message of "Thu, 4 Oct 2007 14:56:41 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753667AbXJDNQt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 09:16:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753817AbXJDNQt
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 09:16:49 -0400
+Received: from an-out-0708.google.com ([209.85.132.249]:16165 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753603AbXJDNQs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 09:16:48 -0400
+Received: by an-out-0708.google.com with SMTP id d31so29021and
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 06:16:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=PhT2VKpssS9gV5vgDDv+fxkk64BumTq5HLMBzmZVSn8=;
+        b=fdD2YT+AALmvS8dM3ulTRviiIgqFD5A288TDB3IjbZgEXtgAngcd4zxenpVryadKWmKBtwVVvVSiSs9wZPibEzR9KIc2UQDTxR20po+3GuWUKt5RwfKcn9jj8sR1aSQHmKuVMbzr73/n5GpzUUVFcvr7LAi9z+yreJ+rMsGo38M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Wbdm/bSa0XGCj4gFNxv+9LLgDFeEpetzcko1YTTIIk7VmmP5YoWNwudeStJuHHF1MJjg99/Ejb25xLjHjsB0V0ANgLCaEtIt1zlR5oC1Z/QiDPf9R0taagrbJ/3KHykpSKvohfn0unxkTAYnnGoDMRRtegyWIj/izXkpGO3aquE=
+Received: by 10.142.47.6 with SMTP id u6mr680887wfu.1191503806547;
+        Thu, 04 Oct 2007 06:16:46 -0700 (PDT)
+Received: by 10.141.70.4 with HTTP; Thu, 4 Oct 2007 06:16:46 -0700 (PDT)
+In-Reply-To: <20071004082624.GA17778@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59951>
 
-Miklos Vajna <vmiklos@frugalware.org> writes:
-
-> On Thu, Oct 04, 2007 at 02:27:41PM +0200, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
->> Why do we have the option "--cached" and not "--index"?
+On 10/4/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> > > On my box all of the patches have names -- stg series shows them.
+> > > But when I emailed them half of the patch didn't have the right
+> > > subjects.
+> >
+> > this is controled in the template files
 >
-> according to glossary.txt, 'cache' is an obsolete for 'index'. probably
-> this is the reason
->
-> probably cache.h will be never renamed to index.h, i don't know if diff
-> --cached will be ever renamed to diff --index
+> Anything here you'd characterize as a bug?
 
-Probably never.
+No, not after I have learned more about stg. The missing subjects were
+from other patches I had imported from emails. They has all of the
+email headers on them. Once I edited those out the subjects appeared
+ok. 'stg edit' should help with this, it was non-obvious to use 'stg
+refresh' to edit the patch descriptions.
 
-Some commands support both --index and --cached and have
-different meanings.  For them,
+Why is mailing a patch series so slow?
 
- * --index means work on both index and work tree;
- * --cached means work only on index and ignore work tree.
+There also seems to be a disconnect when mailing patches. Locally the
+patches have a name, when you email them it uses the short description
+for the name by default instead of the local name. This may cause
+confusion because the emailed name does not default to the local name.
+A parallel issue happens on import.
 
-In the case of "diff --cached", the latter is exactly what's
-happening.  We do not say "git diff-index --index $commit"
-because "git diff-index" (and by extension, when you give only
-one commit to "git diff" as parameter) is all about a commit vs
-your uncommitted changes, so having you say "--index" is just
-silly.  "git diff --cached" is just a shorthand for "git diff
---cached HEAD".  Because --cached would make sense to no other
-form of diff, its presense by definition means you are talking
-about the one-tree form of diff i.e. compare a commit with your
-uncommitted changes.
+Now that I am aware of the naming scheme I can deal with it, but this
+may be a problem for new users. It might be better to force the short
+description and local name to always match.
 
-An example of a command that supports both is "git apply".
-Actually it is an extreme case in that it allows "no index" form
-of operation, so it has "git apply", "git apply --cached", and
-"git apply --index".  The --cached would only apply to index
-without touching work tree, the --index would apply to both
-index and work tree.
+--=20
+Jon Smirl
+jonsmirl@gmail.com
