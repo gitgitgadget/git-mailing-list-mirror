@@ -1,60 +1,71 @@
-From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
-Subject: Re: Question about "git commit -a"
-Date: Fri, 5 Oct 2007 03:33:52 +0700
-Message-ID: <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
-	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: [PATCH] cvsserver: Fix req_update to handle packed refs
+Date: Thu, 4 Oct 2007 22:58:32 +0200
+Message-ID: <20071004205832.GF31659@planck.djpig.de>
+References: <1191525680-10481-1-git-send-email-frank@lichtenheld.de> <46a038f90710041343g5b6a5a30gcd0c9f18d265fa28@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 22:34:07 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 22:59:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdXOV-0003Zz-7V
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 22:34:03 +0200
+	id 1IdXmq-000584-5N
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 22:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755713AbXJDUdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 16:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752018AbXJDUdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 16:33:54 -0400
-Received: from nz-out-0506.google.com ([64.233.162.239]:15379 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281AbXJDUdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 16:33:54 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so275196nze
-        for <git@vger.kernel.org>; Thu, 04 Oct 2007 13:33:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Qwp6soAW3BzvXPQ+FIcJBCdyL0hvfsqZuWR7bFhEpwY=;
-        b=fveKFyrJl7K75oXNYUPOaq8R+l/wSTqyRMSaIoMEuydpCvkIAcxbVmyDDr+0NuxYl7KJfb3rkvshkevM+HX2iNRvYaF/i7cWLjfvVnSJXJlvulVNdK5WhWARJGHUFS8tNmT0vxYUhBa59fxB/4CUbfLY9FwDn9P1dqyt+HvbsuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=qtI24cXsAUlN0MsQ5lPjMZnD4/sbsNS1oa/hnlClsJCReoR9o8AvKK+XWLw5X9PgLymmhniKF2Z6QX+7W9/8RccK/Y6ALabWA8Z2p+l+0pCGlr6bg7vZ0kFsGEbh9C1RIKtDAXZXkdSgn2A7XiapB71jnwTfjvBlJ+x8Lw3E74E=
-Received: by 10.65.135.19 with SMTP id m19mr14188978qbn.1191530032823;
-        Thu, 04 Oct 2007 13:33:52 -0700 (PDT)
-Received: by 10.64.24.18 with HTTP; Thu, 4 Oct 2007 13:33:52 -0700 (PDT)
-In-Reply-To: <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
+	id S1759543AbXJDU6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 16:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759468AbXJDU6o
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 16:58:44 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4346 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757920AbXJDU6m (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 16:58:42 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 79F1D88231;
+	Thu,  4 Oct 2007 22:58:41 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id PYiAsZGEhbMe; Thu,  4 Oct 2007 22:58:32 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id D3D4188232; Thu,  4 Oct 2007 22:58:32 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <46a038f90710041343g5b6a5a30gcd0c9f18d265fa28@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60001>
 
-On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
-> > Am I wrong?
->
-> About it being a majority, yes, I suspect so.
->
+On Fri, Oct 05, 2007 at 09:43:55AM +1300, Martin Langhoff wrote:
+> On 10/5/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> > cvsserver returns a list of existing modules on command
+> > 'update' without a module specified (apparently this is
+> > used by some clients to get a list of available modules,
+> > the CVS cli client doesn't support it).
+> >
+> > Fix this code to work correctly in presence of packed refs.
+> > (Use git-branch instead of reading refs/heads/)
+> 
+> ACK - good stuff - thanks!
+> 
+> There is one minor issue around this I suspect - refs with slashes in
+> them. Without this patch, only refs that literally sit in refs/heads
+> will be returned. With git branches, you could see oldbranches/foo
+> being returned to the client.
+> 
+> IIRC - the behaviour cvsserver supports here is completely
+> unspecified, and clients will probably error out in weird and wacky
+> ways. I'd perhaps filter out any headref with a slash.
 
-Maybe in the next survey we should include question "do you usually do
-'git commit' or 'git commit -a'" :-)
+cvsserver also horribly breaks for module names with slashs in them.
+Something that might be good to be fixed, too.
 
+Gruesse,
 -- 
-Duy
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
