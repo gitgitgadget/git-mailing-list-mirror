@@ -1,69 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-init: don't base core.filemode on the ability to
- chmod.
-Date: Thu, 04 Oct 2007 10:36:15 +0200
-Message-ID: <4704A5FF.6070105@viscovery.net>
-References: <20071003105501.GD7085@admingilde.org>	<470388DC.4040504@viscovery.net>	<20071003231941.GA20800@admingilde.org>	<Pine.LNX.4.64.0710040053380.28395@racer.site>	<470482A2.3080907@op5.se> <7vr6kbbdph.fsf@gitster.siamese.dyndns.org>	<20071004071751.GD20800@admingilde.org> <7vir5nb89d.fsf@gitster.siamese.dyndns.org>
+From: Joachim B Haga <cjhaga@fys.uio.no>
+Subject: Re: making "git stash" safer to use
+Date: Thu, 04 Oct 2007 10:40:08 +0200
+Message-ID: <858x6jff2v.fsf@lupus.ig3.net>
+References: <200709301421.52192.bruno@clisp.org> <200710021350.54625.bruno@clisp.org> <47023699.3080606@byu.net> <200710032331.41385.bruno@clisp.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Martin Waitz <tali@admingilde.org>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 10:36:34 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 04 10:41:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdMC5-0005hA-0v
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:36:29 +0200
+	id 1IdMGf-00078B-At
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 10:41:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753731AbXJDIgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 04:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753939AbXJDIgV
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:36:21 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:9984 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753654AbXJDIgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 04:36:20 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IdMBo-000541-Ps; Thu, 04 Oct 2007 10:36:13 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 3FE7D6B7; Thu,  4 Oct 2007 10:36:15 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vir5nb89d.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752362AbXJDIlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 04:41:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754003AbXJDIlE
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 04:41:04 -0400
+Received: from main.gmane.org ([80.91.229.2]:59568 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752251AbXJDIlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 04:41:03 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IdMG5-0004ko-PI
+	for git@vger.kernel.org; Thu, 04 Oct 2007 08:40:37 +0000
+Received: from 22.80-203-45.nextgentel.com ([80.203.45.22])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 08:40:37 +0000
+Received: from cjhaga by 22.80-203-45.nextgentel.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 08:40:37 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: 22.80-203-45.nextgentel.com
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:g/fpKvZGqQcrAxnaL7X1nTg97J4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59932>
 
-Junio C Hamano schrieb:
-> Martin Waitz <tali@admingilde.org> writes:
->> On Wed, Oct 03, 2007 at 11:23:22PM -0700, Junio C Hamano wrote:
->>> filemode = !( (st1.st_mode & S_IXUSR)
->>>         	/* we did not ask for x-bit -- bogus FS */
->>> 	    || chmod(path, st1.st_mode & S_IXUSR)
->>>         	/* it does not let us flip x-bit -- bogus FS */
->>> 	    || lstat(path, &st2)
->>>         	/* it does not let us read back -- bogus FS */
->>> 	    || (st1.st_mode == st2.st_mode)
->>> 	        /* it forgets we flipped -- bogus FS */
->>> 	    );
->> that looks good.
-> 
-> I do not think git on Cygwin nor WinGit creates $GIT_DIR/config
-> with executable bit set.  Is this pretty much a workaround only
-> for vfat-on-Linux ?
+> Through a simple typo I lost modifications to 20 files:
+>
+>> >>>     $ git stash
+>> >>>     $ git pull
+>> >>>     $ git stash apply
+>> >>>     $ git stash clean              # typo!
+>> >>>     $ git stash clear              # fatal correction to typo!
+>
+> It is just too easy to lose your modifications by using "git stash".
 
-I think so. Here on Windows, 'ls -l' after 'git init' tells that .git/config 
-is not executable (both FAT and NTFS). But, anyway, as far as the MinGW port 
-is concerned, at least the last condition in the sequence above triggers and 
-causes filemode=false, which is good.
+What makes it most dangerous is that there is no differentiation
+between a name and a command in the same position. I'd argue that 
+either the command should be mandatory:
 
--- Hannes
+git stash save mywork
+git stash apply mywork
+git stash clear mywork
+git stash mywork       # error
+
+(we can still keep today's shortcuts "git stash" and "git stash apply", 
+but only for the un-named case),
+
+or that the command should be of the option type:
+
+git stash mywork
+git stash --apply mywork
+git stash --clear mywork
+
+
+-j.
