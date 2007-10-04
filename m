@@ -1,104 +1,84 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Git User's Survey 2007 unfinished summary (long)
-Date: Thu, 4 Oct 2007 14:04:10 +0200
-Message-ID: <CDD8E66B-44E0-4258-A3CC-4E48BC58FD2F@lrde.epita.fr>
-References: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-88-591369053"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 04 14:04:49 2007
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: stgit: lost all my patches again
+Date: Thu, 4 Oct 2007 08:10:12 -0400
+Message-ID: <9e4733910710040510v53cd390el35cf5b4251e6d@mail.gmail.com>
+References: <9e4733910710032229m38fb4e47k5aa0b2b2e0eb2251@mail.gmail.com>
+	 <20071004083304.GB17778@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 14:10:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdPRg-0007qE-9o
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 14:04:48 +0200
+	id 1IdPX6-0001Nd-9s
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 14:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757443AbXJDMEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 08:04:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756503AbXJDMEk
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 08:04:40 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:40839 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756800AbXJDMEj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 08:04:39 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IdPRU-0003gY-GV; Thu, 04 Oct 2007 14:04:36 +0200
-In-Reply-To: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1754797AbXJDMKQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Oct 2007 08:10:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751699AbXJDMKQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 08:10:16 -0400
+Received: from nz-out-0506.google.com ([64.233.162.225]:5732 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751324AbXJDMKO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Oct 2007 08:10:14 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so133266nze
+        for <git@vger.kernel.org>; Thu, 04 Oct 2007 05:10:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=CdHPAPaBaYwyrLAK8Q5JksTI6wgJKeA7V6F9zdVIWWI=;
+        b=DSa3KfAR9E77QNg/aSaJfQ+s0e5WTcS7PKS0DZaB+8GCQUcMfRGvJkqa1blqd9wpXWaRxj0z24zcLRqTgsNeU3o92Bw/oIIOScEC1zmg66DXHik+eDhzPlM/9mU7ydamWKTQJfckhNKFx24/X2cVV9e4EWYY//U+qYPIl5Y9BHQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=k5ZESNqwiOxYRYmaBwqUS2K99CHqhoIZhQW0WIIX3N0d4UzaYKca1ugQM5sMDovpJF2bEhYvVPGzd8gosZXjiX/NaEI9gakgL3wQW+cgO4cNTg9Tn39cL5MKTYKj37HujRwHL1iOXWiOVVEOmERC8iVLslKQL8s3mVTSX+9xTN0=
+Received: by 10.114.56.1 with SMTP id e1mr7014905waa.1191499812892;
+        Thu, 04 Oct 2007 05:10:12 -0700 (PDT)
+Received: by 10.114.195.11 with HTTP; Thu, 4 Oct 2007 05:10:12 -0700 (PDT)
+In-Reply-To: <20071004083304.GB17778@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59940>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-88-591369053
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-Hi Jakub,
-nice work you've done there.  Well done!
-
-On Oct 4, 2007, at 11:12 AM, Jakub Narebski wrote:
-
-> 55. Would commerical (paid) support from a support vendor
->     be of interest to you/your organization?
+On 10/4/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-10-04 01:29:17 -0400, Jon Smirl wrote:
 >
->   Answer                         | Count
->   ------------------------------------------
->   Not Applicable                 | 203
->   Yes                            | 69
->   No                             | 322
+> > for some reason the refresh from that command didn't close. Then st=
+g
+> > pushed all the patches back after the edit and they got included
+> > into that patch.
 >
->   Yes + No                       | 391
->   ------------------------------------------
->   Base                           | 594 / 683
->   Total (sum)                    | 594
+> That's really weird. As far as I know there isn't a concept of
+> "closed" patches in StGit -- there's no need, because they're always
+> closed!
+
+Must be the other way around then, the next nine patches didn't get
+opened right. Their descriptions ended up in the right place but the
+deltas all ended up in the first patch.
+
+> > I did the 'stg refresh' from a directory that was not being tracked
+> > by git. It is in the .gitignore list. This appears to be the root o=
+f
+> > the problem.
 >
-> Only 69 (12%) answers yes, 322 no, 203 not applicable (which meant
-> to encompass people who do not use git at and for work).
+> Mmmph. This is not the only StGit command that's apparently not safe
+> to run from a subdirectory. See e.g. https://gna.org/bugs/?9986.
 >
-> 433 = 56 + 377 people participating in this survey use git for work,
-> or for both work and unpaid projects (as compared to 391 who answered
-> this question not with N/A).
+> I plan to do some StGit hacking this weekend. I guess subdirectory
+> safeness ought to be at the top of my list ...
 >
-> Note that Git is GPLv2, and it will probably stay that forever, so you
-> are _free_ to start a commercial support scheme for Git, but others
-> are free not to choose it. This question is to get to know if there is
-> sufficient demand for commercial Git support for it to be viable.
-
-Once again (AFAIR this was already raised during one of the previous  
-summary) what's the link between GPLv2 and commercial support?  You  
-seem to imply that because Git won't move to GPLv3, it's a good thing  
-for potential paid support, or something.  I don't quite see how  
-GPLvX comes into play with commercial support.  I'm not a license  
-expert though.
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+> --
+> Karl Hasselstr=F6m, kha@treskal.com
+>       www.treskal.com/kalle
+>
 
 
-
---Apple-Mail-88-591369053
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHBNa6wwE67wC8PUkRArmtAJ9DOeeiinwhSNFzrWggJqzoxcSZcgCgzXUi
-HLVFvlz08SYmFGWmLAWrPpc=
-=ebM0
------END PGP SIGNATURE-----
-
---Apple-Mail-88-591369053--
+--=20
+Jon Smirl
+jonsmirl@gmail.com
