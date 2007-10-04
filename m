@@ -1,124 +1,94 @@
 From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: [PATCH] t9400: Add some tests for checkout
-Date: Thu,  4 Oct 2007 20:13:45 +0200
-Message-ID: <1191521625-2597-1-git-send-email-frank@lichtenheld.de>
-Cc: Junio C Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 20:39:00 2007
+Subject: Re: [PATCH] t9400: Add some tests for checkout
+Date: Thu, 4 Oct 2007 21:12:17 +0200
+Message-ID: <20071004191217.GC31659@planck.djpig.de>
+References: <1191521625-2597-1-git-send-email-frank@lichtenheld.de> <Pine.LNX.4.64.0710041921490.4174@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 04 21:12:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdVb1-00047A-F4
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 20:38:51 +0200
+	id 1IdW7h-0003jy-Pt
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 21:12:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758919AbXJDSid (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 14:38:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759230AbXJDSid
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 14:38:33 -0400
-Received: from v32413.1blu.de ([88.84.155.73]:59700 "EHLO mail.lenk.info"
+	id S1755990AbXJDTMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 15:12:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755894AbXJDTMa
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 15:12:30 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4236 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758883AbXJDSia (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 14:38:30 -0400
-X-Greylist: delayed 1172 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Oct 2007 14:38:30 EDT
-Received: from herkules.lenk.info
-	([213.239.194.154] helo=smtp.lenk.info ident=Debian-exim)
-	by mail.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1IdVCl-0003Xn-K8; Thu, 04 Oct 2007 20:13:48 +0200
-Received: from p57b249f5.dip.t-dialin.net ([87.178.73.245] helo=dirac.djpig.de)
-	by smtp.lenk.info with esmtpsa 
-	(Cipher TLS-1.0:RSA_AES_256_CBC_SHA1:32) (Exim 4.63 1)
-	id 1IdVCg-00084w-KM; Thu, 04 Oct 2007 20:13:42 +0200
-Received: from djpig by dirac.djpig.de with local (Exim 4.67)
-	(envelope-from <frank@lichtenheld.de>)
-	id 1IdVCj-0000g7-QE; Thu, 04 Oct 2007 20:13:45 +0200
-X-Mailer: git-send-email 1.5.3.3
-In-Reply-To: Pine.LNX.4.64.0710041731550.4174@racer.site
-References: Pine.LNX.4.64.0710041731550.4174@racer.site
+	id S1755344AbXJDTM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 15:12:29 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id C463988231;
+	Thu,  4 Oct 2007 21:12:27 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id bzRaQqMI61HX; Thu,  4 Oct 2007 21:12:17 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id A21EB88232; Thu,  4 Oct 2007 21:12:17 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710041921490.4174@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59994>
 
-Test the behaviour for non-branches (e.g. head) and
-non-existant branches. Also make a test checkout with
-packed refs.
+On Thu, Oct 04, 2007 at 07:24:05PM +0100, Johannes Schindelin wrote:
+> On Thu, 4 Oct 2007, Frank Lichtenheld wrote:
+> 
+> > +# clean up
+> > +rm -fr cvswork2
+> > +rm -fr "$SERVERDIR"
+> > +cd "$WORKDIR" &&
+> > +git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
+> > +GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
+> > +GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
+> > +exit 1
+> 
+> Should this not be in a test_expect_success, too?
 
-Signed-off-by: Frank Lichtenheld <frank@lichtenheld.de>
----
- t/t9400-git-cvsserver-server.sh |   48 ++++++++++++++++++++++++++++++++++++--
- 1 files changed, 45 insertions(+), 3 deletions(-)
+Since I do this several times and since it is easier to see what tests
+it belongs to if it isn't buried in one of them, I would say "no".
 
-diff --git a/t/t9400-git-cvsserver-server.sh b/t/t9400-git-cvsserver-server.sh
-index 641303e..11def84 100755
---- a/t/t9400-git-cvsserver-server.sh
-+++ b/t/t9400-git-cvsserver-server.sh
-@@ -246,11 +246,50 @@ test_expect_success 'gitcvs.ext.dbname' \
-    test ! -f "$SERVERDIR/gitcvs2.ext.master.sqlite" &&
-    cmp "$SERVERDIR/gitcvs.master.sqlite" "$SERVERDIR/gitcvs1.ext.master.sqlite"'
- 
-+# clean up
-+rm -fr cvswork2
-+rm -fr "$SERVERDIR"
-+cd "$WORKDIR" &&
-+git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-+GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
-+GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
-+exit 1
- 
--#------------
--# CVS UPDATE
--#------------
-+#--------------
-+# CVS CHECKOUT
-+#--------------
-+test_expect_success 'cvs checkout failure (HEAD)' \
-+  'if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 HEAD >cvs.log 2>&1
-+   then
-+     echo unexpected cvs success
-+     false
-+   else
-+     true
-+   fi &&
-+   cat cvs.log | grep -q "not a branch" &&
-+   test ! -d cvswork2'
-+rm -fr cvswork2
- 
-+test_expect_success 'cvs checkout failure (foobar)' \
-+  'if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 foobar >cvs.log 2>&1
-+   then
-+     echo unexpected cvs success
-+     false
-+   else
-+     true
-+   fi &&
-+   cat cvs.log | grep -q "not a branch" &&
-+   test ! -d cvswork2'
-+rm -fr cvswork2
-+
-+test_expect_success 'cvs checkout (packed ref)' \
-+  'GIT_DIR="$SERVERDIR" git-gc &&
-+   test ! -f "$SERVERDIR/refs/heads/master" &&
-+   GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 master >cvs.log 2>&1 &&
-+   diff -qr cvswork cvswork2'
-+
-+# clean up
-+rm -fr cvswork2
- rm -fr "$SERVERDIR"
- cd "$WORKDIR" &&
- git clone -q --local --bare "$WORKDIR/.git" "$SERVERDIR" >/dev/null 2>&1 &&
-@@ -258,6 +297,9 @@ GIT_DIR="$SERVERDIR" git config --bool gitcvs.enabled true &&
- GIT_DIR="$SERVERDIR" git config gitcvs.logfile "$SERVERDIR/gitcvs.log" ||
- exit 1
- 
-+#------------
-+# CVS UPDATE
-+#------------
- test_expect_success 'cvs update (create new file)' \
-   'echo testfile1 >testfile1 &&
-    git add testfile1 &&
+> > -#------------
+> > -# CVS UPDATE
+> > -#------------
+> > +#--------------
+> > +# CVS CHECKOUT
+> > +#--------------
+> > +test_expect_success 'cvs checkout failure (HEAD)' \
+> > +  'if GIT_CONFIG="$git_config" cvs -Q co -d cvswork2 HEAD >cvs.log 2>&1
+> > +   then
+> > +     echo unexpected cvs success
+> > +     false
+> > +   else
+> > +     true
+> > +   fi &&
+> 
+> How about "! GIT_CONFIG..." instead of the "if..then..else..fi" ?
+
+I don't really care. IIRC I took the idiom from another testfile.
+Several other tests in this file already use it, too. So unless
+Junio prefers I change all occourences, I will not.
+
+> > +   cat cvs.log | grep -q "not a branch" &&
+> > +   test ! -d cvswork2'
+> > +rm -fr cvswork2
+> 
+> Again, for consistency, I'd include this in the test case.
+
+Again, I don't really care. But for consistency with the rest of the
+file I will only change it if I'm asked to change all occourences.
+
+Gruesse,
 -- 
-1.5.3.3
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
