@@ -1,70 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: A few usability question about git diff --cached
-Date: Thu, 04 Oct 2007 18:02:21 +0200
-Message-ID: <vpq8x6ix3zm.fsf@bauges.imag.fr>
-References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
-	<20071004125641.GE15339@genesis.frugalware.org>
-	<7vy7ej9g38.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0710041534000.4174@racer.site>
-	<vpqtzp7ndn3.fsf@bauges.imag.fr> <20071004155147.GA17487@fieldses.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Git User's Survey 2007 unfinished summary (long)
+Date: Thu, 4 Oct 2007 17:16:34 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710041712120.4174@racer.site>
+References: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Miklos Vajna <vmiklos@frugalware.org>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Thu Oct 04 18:06:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 04 18:10:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdTCx-0005AP-Dc
-	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:05:51 +0200
+	id 1IdTHb-0007Yo-3w
+	for gcvg-git-2@gmane.org; Thu, 04 Oct 2007 18:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761581AbXJDQDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 12:03:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761370AbXJDQDi
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:03:38 -0400
-Received: from imag.imag.fr ([129.88.30.1]:53166 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761562AbXJDQDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 12:03:37 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l94G2RwV016669
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 4 Oct 2007 18:02:27 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IdT9Z-0007WW-IY; Thu, 04 Oct 2007 18:02:21 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IdT9Z-0006Q0-G6; Thu, 04 Oct 2007 18:02:21 +0200
-In-Reply-To: <20071004155147.GA17487@fieldses.org> (J. Bruce Fields's message of "Thu\, 4 Oct 2007 11\:51\:47 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 04 Oct 2007 18:02:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1759529AbXJDQGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 12:06:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762189AbXJDQG3
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 12:06:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56640 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762180AbXJDQG2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 12:06:28 -0400
+Received: (qmail invoked by alias); 04 Oct 2007 16:06:26 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 04 Oct 2007 18:06:26 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX191H9IGyZZ1Jzn5en+hO3D+DV1jUwOf6z86+plNPJ
+	sPafxlbBwNSc8f
+X-X-Sender: gene099@racer.site
+In-Reply-To: <8fe92b430710040212u332bb4e5yfa6c10b8236c6301@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/59976>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Hi,
 
-> Yes, the index differs from the work tree or HEAD temporarily, 
+On Thu, 4 Oct 2007, Jakub Narebski wrote:
 
-Temporarily, yes, but the _point_ of having it is to have it differ
-from HEAD (otherwise, you can't create a new revision), and from the
-tree (otherwise, index-related commands are useless).
+> This is partial summary of Git User's Survey 2007,
+> ending at state from 28 September 2007.
 
-The stat-information, and sha1sum are actually a cache, but they don't
-have to be user-visible, except for speed. "diff --cached" has nothing
-to do with the stat information for the user.
+Thanks.
 
--- 
-Matthieu
+> 26. Which porcelains do you use?
+> 
+> Multiple answers (one can use more than one porcelain).
+> 
+>   Answer (multiple choice)       | Count
+>   ------------------------------------------
+>   core-git                       | 558
+>   cogito (deprecated)            | 56
+> 
+>   Patch management interface:    : 57
+>   ...........................................
+>   StGIT                          | 41
+>   Guilt (formerly gq)            | 13
+>   pg (deprecated)                | 3
+> 
+>   own scripts                    | 95
+>   other                          | 14
+>   ------------------------------------------
+>   Base                           | 593 / 683
+>   Total (sum)                    | 780
+> 
+> Those 14 "other" answers make me wish to have provided "if other,
+> what it was?" (sub)question; actually not only for this question.
+
+git-gui, of course.  I consider it porcelain, because it uses core-git as 
+backend.
+
+In the same vein, I should consider gitk porcelain now, since it has 
+rebase capabilities.  I will not, and I am not very happy that this viewer 
+got a non-view-only capability, instead of git-gui, where that feature 
+should have belonged (as suggested by at least one answer to a later 
+question in the survey -- not by me).
+
+Ciao,
+Dscho
