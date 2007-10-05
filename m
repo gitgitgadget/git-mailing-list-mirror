@@ -1,64 +1,109 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Question about "git commit -a"
-Date: Sat, 6 Oct 2007 01:10:11 +0400
-Message-ID: <20071005211011.GB25125@potapov>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com> <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com> <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com> <4705FB52.3030208@op5.se> <1191599763.7117.18.camel@hinata.boston.redhat.com>
+From: Kristof Provost <Kristof@provost-engineering.be>
+Subject: [PATCH] makefile: Add a cscope target
+Date: Sat, 6 Oct 2007 00:33:36 +0200
+Message-ID: <20071005223336.GA4556@luggage>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 23:10:36 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="azLHFNyN32YCQGCU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 06 00:40:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IduRG-0001ul-RO
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 23:10:27 +0200
+	id 1Idvqh-0002LM-ME
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 00:40:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762914AbXJEVKS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 17:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761765AbXJEVKR
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 17:10:17 -0400
-Received: from smtp05.mtu.ru ([62.5.255.52]:64573 "EHLO smtp05.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756521AbXJEVKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 17:10:16 -0400
-Received: from potapov.private (ppp85-140-169-127.pppoe.mtu-net.ru [85.140.169.127])
-	by smtp05.mtu.ru (Postfix) with ESMTP id 8571A9798AB;
-	Sat,  6 Oct 2007 01:10:13 +0400 (MSD)
-Received: from potapov.private (localhost [127.0.0.1])
-	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l95LADlB028252;
-	Sat, 6 Oct 2007 01:10:13 +0400
-Received: (from dpotapov@localhost)
-	by potapov.private (8.13.8/8.13.8/Submit) id l95LABi0028251;
-	Sat, 6 Oct 2007 01:10:11 +0400
-X-Authentication-Warning: potapov.private: dpotapov set sender to dpotapov@gmail.com using -f
+	id S1761792AbXJEWkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 18:40:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762921AbXJEWkY
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 18:40:24 -0400
+Received: from rhineheart.priorweb.be ([213.193.229.215]:44460 "HELO
+	rhineheart.priorweb.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1761792AbXJEWkX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 18:40:23 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2007 18:40:23 EDT
+Received: (qmail 26884 invoked by uid 1010); 5 Oct 2007 22:33:40 -0000
+Received: from unknown (HELO rhineheart.priorweb.be) (127.0.0.1)
+  by rhineheart.priorweb.be with SMTP; 5 Oct 2007 22:33:40 -0000
+Received: from luggage (dD5767E05.access.telenet.be [213.118.126.5])
+	by rhineheart.priorweb.be (Postfix) with SMTP
+	for <git@vger.kernel.org>; Sat,  6 Oct 2007 00:33:37 +0200 (CEST)
+Received: by luggage (sSMTP sendmail emulation); Sat, 06 Oct 2007 00:33:36 +0200
 Content-Disposition: inline
-In-Reply-To: <1191599763.7117.18.camel@hinata.boston.redhat.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+X-PGP-Fingerprint: 6B6E 5EED 8ECF FAE7 1F61  7458 5046 7D0E 11B0 0EE8
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Virus-Scanned: Passed
+X-Spam-Scanned: 2.0
+X-Spam-Status: NO
+X-Scanned-By: PriorWeb mailfilter
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60135>
 
-On Fri, Oct 05, 2007 at 11:56:03AM -0400, Kristian H=F8gsberg wrote:
-> I understand why people like staging and commit without -a, seeing ho=
-w
-> it's faster and all, but I have a serious problem with this practice
-> that I haven't seen brought up on the list.  How do you know what you
-> commit actually works or even compiles?
 
-You don't. Even with 'commit -a' there is no guarantee that the
-result will compile, because you can forget to add a new file.
-IMHO, the best practice is to recompile everything step-wise in=20
-a clean directory before you are going to publish your changes.
-It can be done automatically by script, while you do something
-useful, like reading this mailing-list :)
+--azLHFNyN32YCQGCU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Dmitry
+The current makefile supports ctags but not cscope. Some people prefer
+cscope (I do), so this patch adds a cscope target.
+
+Signed-off-by: Kristof Provost <Kristof@provost-engineering.be>
+
+---
+diff --git a/Makefile b/Makefile
+index 8db4dbe..42c9e94 100644
+--- a/Makefile
++++ b/Makefile
+@@ -947,6 +947,10 @@ tags:
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+=20
++cscope:
++	$(RM) cscope*
++	$(FIND) . -name '*.hcS]' -print | xargs cscope -b
++
+ ### Detect prefix changes
+ TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
+              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
+@@ -1093,7 +1097,7 @@ clean:
+ 		$(LIB_FILE) $(XDIFF_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+-	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
++	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+ 	$(RM) -r autom4te.cache
+ 	$(RM) configure config.log config.mak.autogen config.mak.append config.st=
+atus config.cache
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+@@ -1111,7 +1115,7 @@ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS
+=20
+ .PHONY: all install clean strip
+-.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags .FORCE-GIT-CFLAGS
++.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS=20
+=20
+ ### Check documentation
+ #
+
+
+--
+Kristof
+
+--azLHFNyN32YCQGCU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHBrvAUEZ9DhGwDugRAt6mAJ4go3urIiIvRR1FgMjptbKiBsJTngCfXpM9
+VTIcfx5J0novBVrqCaFQq3Q=
+=4VWy
+-----END PGP SIGNATURE-----
+
+--azLHFNyN32YCQGCU--
