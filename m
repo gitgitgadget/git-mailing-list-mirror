@@ -1,74 +1,113 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Correction for post-receive-email
-Date: Fri, 05 Oct 2007 10:54:02 +0200
-Message-ID: <4705FBAA.50302@op5.se>
-References: <449c8cfc0710050014j9bbf057ka108ee27dea49a89@mail.gmail.com> <200710050913.58835.andyparkins@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Eric Mertens <emertens@gmail.com>
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 10:54:27 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
+Date: Fri, 5 Oct 2007 10:11:59 +0200
+Message-ID: <20071005085522.32EFF1E16E@madism.org>
+References: <20071005082026.GE19879@artemis.corp>
+Cc: git@vger.kernel.org, Bernt Hansen <bernt@alumni.uwaterloo.ca>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 10:55:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idiws-0001OM-2z
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:54:18 +0200
+	id 1Idiy4-0001sb-M8
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:55:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754047AbXJEIyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 04:54:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754002AbXJEIyI
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:54:08 -0400
-Received: from mail.op5.se ([193.201.96.20]:58391 "EHLO mail.op5.se"
+	id S1754048AbXJEIzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 04:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754025AbXJEIzY
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:55:24 -0400
+Received: from pan.madism.org ([88.191.52.104]:60321 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753932AbXJEIyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 04:54:07 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2A01D194454;
-	Fri,  5 Oct 2007 10:54:06 +0200 (CEST)
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7iMQCmsVeNgQ; Fri,  5 Oct 2007 10:54:03 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 91B6A194412;
-	Fri,  5 Oct 2007 10:54:03 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <200710050913.58835.andyparkins@gmail.com>
+	id S1754002AbXJEIzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 04:55:23 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A92B022CEF;
+	Fri,  5 Oct 2007 10:55:22 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 32EFF1E16E; Fri,  5 Oct 2007 10:55:22 +0200 (CEST)
+In-Reply-To: <20071005082026.GE19879@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60056>
 
-Andy Parkins wrote:
-> On Friday 2007 October 05, Eric Mertens wrote:
-> 
->> I noticed that my mutt wasn't correctly detecting the signature block
->> on the end of the automated emails I was receiving from the script in
->> contrib. I've made this trivial change in my local copy of the script,
->> but I figured that if I was going to be modifying the source code I
->> should share my changes.
-> 
-> That change has been in my pending queue for a while.  It's technically 
-> correct, but I've never submitted it.  The reason I haven't is that it adds 
-> trailing whitespace.
-> 
-> Perhaps one of the shell gurus can offer a nicer way of having a trailing 
-> space be output in a heredoc that doesn't add a trailing space in the source 
-> script?
-> 
+* crlf_to_git and ident_to_git:
 
-space=' '
+  Don't grow the buffer if there is enough space in the first place.
+  As a side effect, when the editing is done "in place", we don't grow, so
+  the buffer pointer doesn't changes, and `src' isn't invalidated anymore.
 
-cat << EOF
---$space
-EOF
+  Thanks to Bernt Hansen for the bug report.
 
+* apply_filter:
+
+  Fix memory leak due to fake in-place editing that didn't collected the
+  old buffer when the filter succeeds. Also a cosmetic fix.
+
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+---
+
+This patch is on top of master, and supersedes both patch I sent before.
+Following dscho's remark, I only grow the buffer if they aren't big enough
+in the first place, which ensures that buffers are not touched if edited in
+place.
+
+ convert.c |   17 ++++++++++-------
+ 1 files changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index 0d5e909..aa95834 100644
+--- a/convert.c
++++ b/convert.c
+@@ -110,7 +110,9 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
+ 			return 0;
+ 	}
+ 
+-	strbuf_grow(buf, len);
++	/* only grow if not in place */
++	if (strbuf_avail(buf) + buf->len < len)
++		strbuf_grow(buf, len - buf->len);
+ 	dst = buf->buf;
+ 	if (action == CRLF_GUESS) {
+ 		/*
+@@ -281,20 +283,19 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 		ret = 0;
+ 	}
+ 	if (close(pipe_feed[0])) {
+-		ret = error("read from external filter %s failed", cmd);
++		error("read from external filter %s failed", cmd);
+ 		ret = 0;
+ 	}
+ 	status = finish_command(&child_process);
+ 	if (status) {
+-		ret = error("external filter %s failed %d", cmd, -status);
++		error("external filter %s failed %d", cmd, -status);
+ 		ret = 0;
+ 	}
+ 
+ 	if (ret) {
+-		*dst = nbuf;
+-	} else {
+-		strbuf_release(&nbuf);
++		strbuf_swap(dst, &nbuf);
+ 	}
++	strbuf_release(&nbuf);
+ 	return ret;
+ }
+ 
+@@ -422,7 +423,9 @@ static int ident_to_git(const char *path, const char *src, size_t len,
+ 	if (!ident || !count_ident(src, len))
+ 		return 0;
+ 
+-	strbuf_grow(buf, len);
++	/* only grow if not in place */
++	if (strbuf_avail(buf) + buf->len < len)
++		strbuf_grow(buf, len - buf->len);
+ 	dst = buf->buf;
+ 	for (;;) {
+ 		dollar = memchr(src, '$', len);
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.3.4.207.gb504-dirty
