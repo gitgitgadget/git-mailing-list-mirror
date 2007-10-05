@@ -1,64 +1,95 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
-Date: Fri, 05 Oct 2007 11:24:01 +0200
-Message-ID: <470602B1.8090706@viscovery.net>
-References: <20071005082026.GE19879@artemis.corp> <20071005085522.32EFF1E16E@madism.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: stgit: editing description of patch
+Date: Fri, 5 Oct 2007 09:16:17 +0000 (UTC)
+Message-ID: <fe4vd1$4s2$1@sea.gmane.org>
+References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com>
+	<9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
+	<20071004082624.GA17778@diana.vm.bytemark.co.uk>
+	<9e4733910710040616l5358099dj1b65b47cf94cf031@mail.gmail.com>
+	<20071004154836.GB21717@diana.vm.bytemark.co.uk>
+	<9e4733910710040945l2335f3d7le6f45510640d3a6e@mail.gmail.com>
+	<20071004173929.GD21717@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 11:24:36 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 05 11:26:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdjQ4-0003AT-U0
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 11:24:29 +0200
+	id 1IdjRv-0003uD-M5
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 11:26:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045AbXJEJYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 05:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754095AbXJEJYG
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 05:24:06 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:4086 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756045AbXJEJYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 05:24:05 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IdjPa-0001Vv-EB; Fri, 05 Oct 2007 11:23:58 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 73DEDB662; Fri,  5 Oct 2007 11:24:01 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071005085522.32EFF1E16E@madism.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755686AbXJEJ0N convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 05:26:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755003AbXJEJ0N
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 05:26:13 -0400
+Received: from main.gmane.org ([80.91.229.2]:38938 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754864AbXJEJ0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 05:26:12 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IdjJc-00085z-QD
+	for git@vger.kernel.org; Fri, 05 Oct 2007 09:17:48 +0000
+Received: from fw-nat.cambridge.arm.com ([193.131.176.54])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Oct 2007 09:17:48 +0000
+Received: from catalin.marinas by fw-nat.cambridge.arm.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 05 Oct 2007 09:17:48 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: fw-nat.cambridge.arm.com
+User-Agent: pan 0.120 (Plate of Shrimp)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60060>
 
-Pierre Habouzit schrieb:
-> @@ -281,20 +283,19 @@ static int apply_filter(const char *path, const char *src, size_t len,
->  		ret = 0;
->  	}
->  	if (close(pipe_feed[0])) {
-> -		ret = error("read from external filter %s failed", cmd);
-> +		error("read from external filter %s failed", cmd);
->  		ret = 0;
->  	}
->  	status = finish_command(&child_process);
->  	if (status) {
-> -		ret = error("external filter %s failed %d", cmd, -status);
-> +		error("external filter %s failed %d", cmd, -status);
->  		ret = 0;
->  	}
+(for whatever reason, gnus decided that it no longer likes the
+authenticated SMTP server, so I'm trying to post via gmane).
 
-If you want to, you can leave away these cosmetical corrections since I'm 
-working on a patch that replaces this entire passus. (Will be needed for the 
-MinGW port).
+On Thu, 04 Oct 2007 19:39:29 +0200, Karl Hasselstr=C3=B6m wrote:
 
--- Hannes
+> On 2007-10-04 12:45:17 -0400, Jon Smirl wrote:
+>=20
+>> Why are the patch name and the short description independent
+>> variables? Wouldn't it make more sense to treat these as a single
+>> unified item? If I rename the patch it would automatically edit the
+>> first line of the description, etc...
+>=20
+> I guess Catalin would have to answer that -- it's "always" been like
+> that. But one obvious problem are patches with identical messages --
+> just today I created a series of seven patches that all had "debug"
+> for a message. Another is that you usually want descriptive commit
+> messages, but may want short and easy-to-type patch names.
+
+That's pretty much the case. There are also the historical reasons (qui=
+lt
+does the same) plus the fact the exporting should really generate short=
+er
+and simpler file names rather than name with capitals and spaces. I've
+also seen people writing a single paragraph over several lines without =
+a
+short description. You wouldn't really want a patch name that long.
+
+Anyway, 'stg series -d' would show the patch name together with the sho=
+rt
+description.
+
+>> When importing a patch from a saved email, stg should strip all the
+>> email headers out of the description. I have to manually fix that
+>> up.
+>=20
+> Do you do "stg import -M"? That's for importing one or more patches
+> contained in an mbox. Without the -M, I think the default is to expec=
+t
+> plain diff input.
+
+There is also 'stg import -m' for single e-mails rather than mbox. StGI=
+T
+should be able to cope with attachments as well.
+
+Catalin
