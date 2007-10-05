@@ -1,94 +1,91 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] Fix memory leak in apply_filter.
-Date: Fri, 05 Oct 2007 10:27:11 +0200
-Message-ID: <20071005082711.GF19879@artemis.corp>
-References: <87wsu2sad0.fsf@gollum.intra.norang.ca> <20071005082026.GE19879@artemis.corp>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Run garbage collection with loose object pruning
+ after svn dcommit
+Date: Fri, 5 Oct 2007 09:27:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710050926160.4174@racer.site>
+References: <20071005001528.GA13029@midwinter.com> <4705EFF2.9090506@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="a1QUDc0q7S3U7/Jg";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
-X-From: git-owner@vger.kernel.org Fri Oct 05 10:27:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Oct 05 10:27:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdiWo-00015i-Af
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:27:22 +0200
+	id 1IdiX3-0001BD-Ts
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753176AbXJEI1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 04:27:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbXJEI1O
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:27:14 -0400
-Received: from pan.madism.org ([88.191.52.104]:40399 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752570AbXJEI1N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 04:27:13 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 4DE2315E;
-	Fri,  5 Oct 2007 10:27:12 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id E3E3F3D84; Fri,  5 Oct 2007 10:27:11 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071005082026.GE19879@artemis.corp>
-User-Agent: Madmutt/devel (Linux)
+	id S1753493AbXJEI11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 04:27:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753492AbXJEI11
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:27:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43173 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752828AbXJEI10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 04:27:26 -0400
+Received: (qmail invoked by alias); 05 Oct 2007 08:27:25 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 05 Oct 2007 10:27:25 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+vrO9Z8LmvlHjJB7L/wPok8f2xM2j+vpuuIQtb7l
+	4VTIPVpnkxhGA4
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4705EFF2.9090506@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60049>
 
+Hi,
 
---a1QUDc0q7S3U7/Jg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Fri, 5 Oct 2007, Andreas Ericsson wrote:
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
+> Steven Grimm wrote:
+> > git-svn dcommit, by virtue of rewriting history to insert svn revision IDs,
+> > leaves old commits dangling.  Since dcommit is already unsafe to run
+> > concurrently with other git commands, no additional risk is introduced
+> > by making it prune those old objects as needed.
+> > 
+> > Signed-off-by: Steven Grimm <koreth@midwinter.com>
+> > ---
+> > 
+> > This is in response to a colleague who complained that, after I
+> > installed the latest git release, he was getting lots of "too many
+> > unreachable loose objects" errors from the new "git gc --auto" run.
+> > Those objects turned out to be dangling commits from a year's worth of
+> > git-svn usage, since every git-svn commit will abandon at least one
+> > existing commit in order to rewrite it with the svn version data.
+> > 
+> >  git-svn.perl |    6 ++++++
+> >  1 files changed, 6 insertions(+), 0 deletions(-)
+> > 
+> > diff --git a/git-svn.perl b/git-svn.perl
+> > index 777e436..be62ee1 100755
+> > --- a/git-svn.perl
+> > +++ b/git-svn.perl
+> > @@ -441,6 +441,12 @@ sub cmd_dcommit {
+> >  			}
+> >  			command_noisy(@finish, $gs->refname);
+> >  			$last_rev = $cmt_rev;
+> > +
+> > +			# rebase will have made the just-committed revisions
+> > +			# unreachable; over time that can build up lots of
+> > +			# loose objects in the repo. prune is unsafe to run
+> > +			# concurrently but so is dcommit.
+> > +			command_noisy(qw/gc --auto --prune/);
+> >  		}
+> >  	}
+> >  }
+> 
+> I'd be surprised if this would ever prune anything, as git doesn't throw 
+> out objects reachable by reflog (or, I assume, any of the objects 
+> reachable from objects reachable from reflog).
 
-While we're at it... Here is a stupid memory leak in apply_filter.
-On top of the previous commit.
+It will so, in due time.  Reflogs have an expiry date, and will be culled 
+by git gc --auto.  So if you dcommit often (which I do), the objects will 
+be pruned, eventually.
 
- convert.c |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 4664197..d5c197f 100644
---- a/convert.c
-+++ b/convert.c
-@@ -293,10 +293,9 @@ static int apply_filter(const char *path, const char *=
-src, size_t len,
- 	}
-=20
- 	if (ret) {
--		*dst =3D nbuf;
--	} else {
--		strbuf_release(&nbuf);
-+		strbuf_swap(dst, &nbuf);
- 	}
-+	strbuf_release(&nbuf);
- 	return ret;
- }
-=20
---=20
-1.5.3.4.208.gdcc67-dirty
-
---a1QUDc0q7S3U7/Jg
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHBfVfvGr7W6HudhwRAryJAKCiUWlGYFv1jP3hYrg5GUpJZ7XMngCfZ9IU
-dSUivW/FwNmF5DWtSVlfeH4=
-=5uzj
------END PGP SIGNATURE-----
-
---a1QUDc0q7S3U7/Jg--
+Ciao,
+Dscho
