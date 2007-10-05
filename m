@@ -1,78 +1,76 @@
-From: "Geoffrey Ferrari" <geoffrey.ferrari@googlemail.com>
-Subject: Post-update hook problems
-Date: Fri, 5 Oct 2007 12:27:22 +0100
-Message-ID: <930d91430710050427o79395023nffe3bd842a87cddb@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 05 Oct 2007 13:35:32 +0200
+Message-ID: <vpqsl4piykb.fsf@bauges.imag.fr>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
+	<545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
+	<fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
+	<Pine.LNX.4.64.0710042209410.4174@racer.site>
+	<4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
+	<4705FB52.3030208@op5.se>
+	<4d8e3fd30710050206h7a177472x7c92f91204b15aa4@mail.gmail.com>
+	<47060BB3.3030208@op5.se> <vpqy7ehj2g8.fsf@bauges.imag.fr>
+	<47060E98.2090601@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 13:27:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Oct 05 13:36:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdlLF-0008Ct-3p
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 13:27:37 +0200
+	id 1IdlTf-0002tA-U3
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 13:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752011AbXJEL1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 07:27:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752027AbXJEL1Z
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 07:27:25 -0400
-Received: from nf-out-0910.google.com ([64.233.182.188]:14566 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751973AbXJEL1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 07:27:24 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so621053nfb
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 04:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=epwSLeCLN7Yw9EE5Dop6QUxP1y9uMPPOl29PGFwznHE=;
-        b=H8YjKRGGNhZILD1NRBJq1K6GTkLSZDaRwV1WJcyXeIeqUlV+nzPq1I1x/LWeDB5p1AGuKT74jTuA1Q3H8tOQ4bhUKRQR6+c24n6NPnizBmevJhaZp+t7ePScCEe8uMFtjqf2S8CUi8++1PCckynI4aHy4l4nr6PIak8UyFO08PI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=igTYz8M2SkgkeubTrr1d7X3op6acwrG7/gzb+pieLvP7bCvD9FjNCiGJKSK5Nno742W7pD8g19MAKZexTIbMXy6UXGtPM50g67cBeO4KkrXi4LqsQLNXXsoSIRUE7tgvnZWj1Rr0bx2p5Cv0lWC27co75KGSR4IbJ/aE4s6Wvfg=
-Received: by 10.78.159.7 with SMTP id h7mr5598306hue.1191583642461;
-        Fri, 05 Oct 2007 04:27:22 -0700 (PDT)
-Received: by 10.78.131.5 with HTTP; Fri, 5 Oct 2007 04:27:22 -0700 (PDT)
-Content-Disposition: inline
+	id S1752135AbXJELgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 07:36:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752011AbXJELgE
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 07:36:04 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64171 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752107AbXJELgD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 07:36:03 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l95BZWmm005458
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 5 Oct 2007 13:35:32 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IdlSu-0001oQ-Eg; Fri, 05 Oct 2007 13:35:32 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IdlSu-0002Of-CJ; Fri, 05 Oct 2007 13:35:32 +0200
+In-Reply-To: <47060E98.2090601@op5.se> (Andreas Ericsson's message of "Fri\, 05 Oct 2007 12\:14\:48 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 05 Oct 2007 13:35:33 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60070>
 
-I have a public and a private git repository on the same machine, in
-the same user's home directory. I want to ensure that when the public
-repos is updated, the private repos automatically receives those
-updates. Let's just assume that this is a good idea.
+Andreas Ericsson <ae@op5.se> writes:
 
-So, I've created a post-update hook script and made it executable. The
-script is very simple. It 'cd's to the private repos and then does a
-git pull. It looks, in essence, like this:
+>>> or check which merge- conflicts you've already resolved,
+>>
+>> At least bzr and baz have this kind of conflict management. It's just
+>> a separate file, containing the list of unresolved conflicts.
+>
+> Can you check them against any revision you want? If so, I'm
+> impressed :)
 
---
-#!/bin/sh
+If you mean s/check/diff/, not in a simple way, no. Otherwise, I don't
+understand what you mean by "check merge-conflicts you've already
+resolved against any revision".
 
-cd /user/home/private/repos
-git pull
-
-exit 0
---
-
-When I run this script directly, it works fine. (It also works fine
-when I run it directly over ssh). However, when I do a git push to the
-public repos, (either locally or remotely over ssh) the script is
-called but reports back the following error:
-
---
-fatal: Not a git repository: '.'
-Failed to find a valid git directory.
---
-
-Can anyone explain why this happens? And how can I make the script
-work properly?
-
-With sincere thanks for your help,
-
-Geoffrey Ferrari
+-- 
+Matthieu
