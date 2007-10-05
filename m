@@ -1,64 +1,64 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [ALTERNATE PATCH] Add a simple option parser.
-Date: Fri, 5 Oct 2007 16:30:14 +0200
-Organization: glandium.org
-Message-ID: <20071005143014.GA18176@glandium.org>
-References: <1191447902-27326-1-git-send-email-krh@redhat.com> <20071005142140.GK19879@artemis.corp> <20071005142507.GL19879@artemis.corp>
+From: "Dmitry Potapov" <dpotapov@gmail.com>
+Subject: Re: Many gits are offline this week
+Date: Fri, 5 Oct 2007 18:41:43 +0400
+Message-ID: <37fcd2780710050741x1760a585yeaa9023a8d8cdccf@mail.gmail.com>
+References: <20071005010448.GQ2137@spearce.org>
+	 <863awq5p1y.fsf@blue.stonehenge.com>
+	 <4d8e3fd30710050214j135260cn842ee7396a3d63c7@mail.gmail.com>
+	 <86tzp54sez.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>,
-	Kristian =?iso-8859-15?Q?H=F8gsberg?= <krh@redhat.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 16:33:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Randal L. Schwartz" <merlyn@stonehenge.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 16:42:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdoE2-0004gz-9h
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 16:32:22 +0200
+	id 1IdoNO-0000ZW-T9
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 16:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754615AbXJEOcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 10:32:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbXJEOcN
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 10:32:13 -0400
-Received: from vawad.err.no ([85.19.200.177]:37249 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751945AbXJEOcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 10:32:12 -0400
-Received: from aputeaux-153-1-40-157.w82-124.abo.wanadoo.fr ([82.124.132.157] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IdoDS-00054l-6A; Fri, 05 Oct 2007 16:31:46 +0200
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1IdoBy-0004lM-ED; Fri, 05 Oct 2007 16:30:14 +0200
+	id S1762533AbXJEOlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 10:41:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762373AbXJEOlr
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 10:41:47 -0400
+Received: from wr-out-0506.google.com ([64.233.184.227]:17173 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761723AbXJEOlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 10:41:46 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so389978wra
+        for <git@vger.kernel.org>; Fri, 05 Oct 2007 07:41:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=2nhUjhuYyHgxDAtyiB8zE79y6zW81uYLGGSfoiShYFw=;
+        b=oXEEtw6L6Gh30mGvwpngX39+jDWdDH4N8z0QUqk8Tg/KNDbi3Ffqh7iK3j6l1h8Gd6tRA82n6ePJ8N5W8DF1eOEws2ht/95da0eIgqW+b4HOLJYbjApKmikqlBg/nEPQeNySu8wZDu5z8B3o6OUkHpb0PeE0Z+izvOeXrQBculU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=PCjsDANI2psRaBM744vgiyZ1fyZp9afpgBxfcYg9QvGxGCyK+Ig8IB9/ziT+FjjfmL8UMMKpnxli5umu+TYUsNpX+prAcBU+srSgwaUBocw4d/RL/lKsGPZ6ZhYxVeVsTSYJG9fHA75tR2vo0Lio+vKfR5gqnEAPKc2zIwlm9go=
+Received: by 10.143.17.13 with SMTP id u13mr1748919wfi.1191595304299;
+        Fri, 05 Oct 2007 07:41:44 -0700 (PDT)
+Received: by 10.143.37.15 with HTTP; Fri, 5 Oct 2007 07:41:43 -0700 (PDT)
+In-Reply-To: <86tzp54sez.fsf@blue.stonehenge.com>
 Content-Disposition: inline
-In-Reply-To: <20071005142507.GL19879@artemis.corp>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60088>
 
-On Fri, Oct 05, 2007 at 04:25:07PM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
-> The option parser takes argc, argv, an array of struct option
-> and a usage string.  Each of the struct option elements in the array
-> describes a valid option, its type and a pointer to the location where the
-> value is written.  The entry point is parse_options(), which scans through
-> the given argv, and matches each option there against the list of valid
-> options.  During the scan, argv is rewritten to only contain the
-> non-option command line arguments and the number of these is returned.
-> 
-> Aggregation of single switches is allowed:
->   -rC0 is the same as -r -C 0 (supposing that -C wants an arg).
+Hi Randal,
 
-I like options aggregation, but I'm not sure aggregating option arguments
-is a good idea... I can't even think of an application that does it.
+> I've had the slides reviewed by Smarter People Than Me on #git already, so
+> hopefully most of it is accurate. :)  They're temporarily at
+>
+>   http://www.stonehenge.com/pic/Git-2.0.3-to-be.pdf
 
-Mike
+I believe I have found one mistake in your slides. Slide 18 reads:
+"git-commit -a" is like "git-add .; git-commit"
+
+But it is incorrect, because "git-commit -a" does not add new files, so
+it works like "git-add -u .; git-commit".
+
+Dmitry
