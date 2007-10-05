@@ -1,99 +1,90 @@
-From: Catalin Marinas <catalin.marinas@arm.com>
-Subject: Re: Problems using StGit and -rt kernel patchset
-Date: Fri, 05 Oct 2007 14:45:21 +0100
-Message-ID: <1191591921.7321.63.camel@pc1117.cambridge.arm.com>
-References: <4703A4EE.3000002@gmail.com>
-Reply-To: catalin.marinas@gmail.com
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Add a simple option parser.
+Date: Fri, 05 Oct 2007 16:21:40 +0200
+Message-ID: <20071005142140.GK19879@artemis.corp>
+References: <1191447902-27326-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Clark Williams <clark.williams@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 15:45:44 2007
+Content-Type: multipart/signed; boundary="KrHCbChajFcK0yQE";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 16:22:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdnUl-00019h-EP
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 15:45:35 +0200
+	id 1Ido40-0000Q4-GS
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 16:22:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754154AbXJENp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 09:45:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755553AbXJENp0
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 09:45:26 -0400
-Received: from cam-admin0.cambridge.arm.com ([193.131.176.58]:45177 "EHLO
-	cam-admin0.cambridge.arm.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753593AbXJENpZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2007 09:45:25 -0400
-Received: from cam-owa2.Emea.Arm.com (cam-owa2.emea.arm.com [10.1.105.18])
-	by cam-admin0.cambridge.arm.com (8.12.6/8.12.6) with ESMTP id l95DjMhX002562;
-	Fri, 5 Oct 2007 14:45:22 +0100 (BST)
-Received: from [10.1.79.3] ([10.1.255.211]) by cam-owa2.Emea.Arm.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Fri, 5 Oct 2007 14:45:22 +0100
-In-Reply-To: <4703A4EE.3000002@gmail.com>
-X-Mailer: Evolution 2.10.1 
-X-OriginalArrivalTime: 05 Oct 2007 13:45:22.0060 (UTC) FILETIME=[F98F6CC0:01C80755]
+	id S1755344AbXJEOVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 10:21:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755347AbXJEOVv
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 10:21:51 -0400
+Received: from pan.madism.org ([88.191.52.104]:55071 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755062AbXJEOVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 10:21:50 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 20685238A7;
+	Fri,  5 Oct 2007 16:21:41 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 09F866C63; Fri,  5 Oct 2007 16:21:40 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org, gitster@pobox.com
+Content-Disposition: inline
+In-Reply-To: <1191447902-27326-1-git-send-email-krh@redhat.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60083>
 
-Clark,
 
-What version of StGIT are you using? You might use a too new GIT with an
-older StGIT or maybe there are just some bugs in StGIT.
+--KrHCbChajFcK0yQE
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2007-10-03 at 09:19 -0500, Clark Williams wrote:
-> I've been working on the -rt patch series for the kernel and would like to to use
-> StGit to manage the patches. Unfortunately I've had limited success, so I thought I'd
-> ask the git/stgit community if what I'm doing is wrong.
-> 
-> I clone Linus's tree to a common directory, then clone it locally to work:
-> 
-> $ git clone -s -l /home/src/linux-2.6.git scratch.git
-> $ cd scratch.git
-> $ stg init
-> $ stg branch --create rt-2.6.23-rc8-rt1 v2.6.23-rc8
-> $ stg import --series --ignore --replace ../sources/patch-queue-2.6.23-rc8-rt1/series
-> <fix the things quilt lets through and stg barfs on, like malformed email addresses>
+> +/* Parse the given options against the list of known options.  The
+> + * order of the option structs matters, in that ambiguous
+> + * abbreviations (eg, --in could be short for --include or
+> + * --interactive) are matched by the first option that share the
+> + * prefix.
 
-If git-quiltimport behaves better with malformed patches, use it and run
-'stg uncommit -n 368' afterwards (the 'uncommit' takes some other useful
-options as well, see --help).
+  Do we really want that ?
 
-> <watch 368 patches be applied and committed>
-> <work work work>
+  I do believe that it's a very bad idea, as it silently breaks. Most of
+the command line switches people need to use have a short form, or their
+shell will complete it properly.
 
-Do you modify any of the -rt patches or you create new ones?
+  A very interesting feature though, would be to finally be able to
+parse aggregated switches (`git rm -rf` anyone ?).
 
-> <get a new patch queue>
-> $ (cd /home/src/linux-2.6.git && git pull)
-> $ stg pull
-> $ stg branch --create rt-2.6.23-rc8-rt1 v2.6.23-rc9
-> $ stg import --series --ignore --replace ../sources/patch-queue-2.6.23-rc9-rt1/series
-> Checking for changes in the working directory ... done
-> stg import: env git-commit-tree 520b9d0db6a1142271a68b2b38cca002be40f6cb -p
-> da0a81e98c06aa0d1e05b9012c2b2facb1807e12 failed (fatal:
-> da0a81e98c06aa0d1e05b9012c2b2facb1807e12 is not a valid 'commit' object)
+  I also believe that it's a pity that parse_options isn't able to
+generate the usage by itself. But we can add that later.
 
-I'm not sure why the first import worked. It seems that StGIT uses the
-tag id (da0a81e9) rather than the corresponding commit id (3146b39c). I
-remember having this problem in the past when creating branches and I
-fixed StGIT to always get the corresponding commit id. Using
-'v2.6.23-rc9^{commit}' as the 'branch' argument rather than just the tag
-should fix the problem.
+  I've though an alternate proposal, based on your work, for the first
+patch.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-> At this point I'm clueless as to:
-> 
-> 1. What I've done wrong
+--KrHCbChajFcK0yQE
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Probably nothing (just hidden features of StGIT :-))
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-> 2. How to recover/debug this
+iD8DBQBHBkh0vGr7W6HudhwRAmuMAJ9iV1gTf71Ydot4cpdvGro3m4Po8ACgmvW+
+lkN+yH9yETPTwnk4GkjBdwQ=
+=yqmx
+-----END PGP SIGNATURE-----
 
-You can recreate the branch with the commit rather than tag id. With a
-sufficiently new StGIT, you could use 'stg rebase <id>' on the branch. I
-assume that no patch was pushed because import failed (though the first
-imported patch might be in an undefined state and can be removed).
-
-Catalin
+--KrHCbChajFcK0yQE--
