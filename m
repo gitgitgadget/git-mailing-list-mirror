@@ -1,68 +1,123 @@
-From: "Miles Bader" <miles@gnu.org>
-Subject: Re: A few usability question about git diff --cached
-Date: Fri, 5 Oct 2007 19:41:37 +0900
-Message-ID: <fc339e4a0710050341v11a7f9f7j3cf24403d2231886@mail.gmail.com>
-References: <4d8e3fd30710040527j61152b2dh1b073504ba19d490@mail.gmail.com>
-	 <5ACC5CA7-8314-4035-94EC-190138A25EBD@wincent.com>
-	 <buoejga14qg.fsf@dhapc248.dev.necel.com>
-	 <0A7AA9C3-6D9E-4B14-822D-05232F0EAF99@wincent.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 5 Oct 2007 12:48:11 +0200
+Message-ID: <227149BF-1220-43F2-8B0B-B7E9FCA002B1@wincent.com>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com> <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com> <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
 	"Git Mailing List" <git@vger.kernel.org>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 12:41:52 2007
+To: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 12:48:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idkcw-0001qM-8F
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 12:41:50 +0200
+	id 1IdkjQ-0003vc-CB
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 12:48:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753603AbXJEKlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 06:41:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753864AbXJEKlj
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 06:41:39 -0400
-Received: from wr-out-0506.google.com ([64.233.184.228]:36707 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753603AbXJEKli (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 06:41:38 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so349786wra
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 03:41:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=n5rJnU08WlD/3ZE8TRag4Tu0H6rmnCHnZJUfOVMcG5I=;
-        b=jQi+B3gTOjTouQ1qm2HmikhwS2a2d5sMOFm1Et2IsZ0nzPAHmgF6WQpjOHIkoSmsD14RrPLNudfIiX0/89QNf8B/I6056KS7ZtZK2RxqJxTmAbHhWhgRjZQwK9P31XptuhDdu2KTBDLsvDHp3Px4MZDCE8D5uPRL2VnGktdNPA0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=Q1x8JWje7xcA5SisY7JVkyYmYPTszOFWLvGF4RVZ077NKveEONLk6O7iV63Xaf1SWXZvclnXToMRadlJXvj7/VTWv5C3cZW0Y53FNi3g8Zpy4GgSX1QR1dvRuqdBcM7brFiZrYF134XiOx+mBwHp99PtPs8HSepQuY7+7+9VvXA=
-Received: by 10.151.10.7 with SMTP id n7mr479084ybi.1191580897653;
-        Fri, 05 Oct 2007 03:41:37 -0700 (PDT)
-Received: by 10.90.105.17 with HTTP; Fri, 5 Oct 2007 03:41:37 -0700 (PDT)
-In-Reply-To: <0A7AA9C3-6D9E-4B14-822D-05232F0EAF99@wincent.com>
-Content-Disposition: inline
-X-Google-Sender-Auth: dd7235df3be626e7
+	id S1752252AbXJEKsY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 06:48:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbXJEKsY
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 06:48:24 -0400
+Received: from wincent.com ([72.3.236.74]:53331 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752081AbXJEKsX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2007 06:48:23 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l95AmIKS008026;
+	Fri, 5 Oct 2007 05:48:19 -0500
+In-Reply-To: <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60068>
 
-On 10/5/07, Wincent Colaiuta <win@wincent.com> wrote:
-> > Personally all I want is a short-option alias for --cached!
-> >
-> > Hopefully something easily type-able (not uppercase)...
+El 5/10/2007, a las 10:39, Paolo Ciarrocchi escribi=F3:
+
+> So you are used to do something like (please correct me if I'm wrong)=
+:
+> - modify A
+> - modify B
+> - modify C
+> - modify D
+> - modify E
 >
-> Did you see the aliases I posted earlier in the thread? I can't think
-> of anything shorter or semantically clearer than "staged" and
-> "unstaged".
+> $ git A B E
+> $ git add A B E (A, B and E are now in the staging area)
+> $ git commit -m "I just modified A,B and E"
+> $ git C D
+> $ git add C D (C and D are now in the staging area)
+> $ git commit -m "I just modified C and D"
 
-The words are ok, I guess, but aliases are not a replacement for short
-options.... really all frequently used, non-dangerous, options should
-have a short variant (and diff --cached meets both criteria handily)!
+The conceptual shift is that in Git your index and not your working =20
+directory is your staging area, unlike (most/all?) other SCMs. If you =20
+fire up gitk and look at the development history of Git itself you'll =20
+see that it's one of the "cleanest" out there, and as you learn Git =20
+you learn about the various tools and tricks that it provides that =20
+makes it easier for a developer community to produce such a clean =20
+history; the index as a staging area is one of the key factors.
 
--Miles
--- 
-Do not taunt Happy Fun Ball.
+The basic workflow is:
+
+   # work on a single change
+   edit A
+   git add A
+   edit B
+   git add B
+
+   # see unrelated thing that needs to be fixed, but don't add =20
+(stage) it yet
+   edit C
+
+   # commit first change, then second one
+   git commit -s
+   git commit -s C
+
+This is just one example of how having a staging area that you can =20
+control independently of your working tree can help you. There are =20
+other possible workflows and you discover them through use, but they =20
+all share the basic idea that you use the staging area to provide you =20
+with better control.
+
+Sometimes you're trying to work on a single thing and you see a =20
+change within a single file that isn't related. In that case you have =20
+an even finer level of granularity available and can use "git add --=20
+interactive" to add only specific hunks.
+
+=46inally, closely related to this idea of maintaining a clean history =
+=20
+is the newly-added and wonderful "git stash". If you have a =20
+relatively complicated work in progress already half-staged in the =20
+index and you see something else relatively complicated that you want =20
+to attend to straight away then you can easily switch to the second =20
+task, commit it, and go back to the first task, thus keeping your =20
+development history nice and clean. This is a beautiful example of =20
+your SCM facilitating your work and making it easy rather than =20
+forcing you to jump through hoops. See the git-stash man page for =20
+more details.
+
+I think all of this is incredibly powerful useful stuff, and all of =20
+it comes at a very low cost; it's easy to learn and doesn't require =20
+you to do any magical and complex history rewriting in order to get a =20
+nice clean history.
+
+And on the subject of staging areas, thanks to "git commit --amend" =20
+you can even use the last commit as a kind of secondary, addditional =20
+staging area, providing you haven't published that commit yet. In =20
+other words, I frequently do:
+
+   git show HEAD
+
+Immediately after committing and if I don't like what I see I make =20
+modifications as necessary and do:
+
+   git commit --amend
+
+Cheers,
+Wincent
