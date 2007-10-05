@@ -1,92 +1,64 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [StGIT PATCH] Better diagnostic for wrong branch configuration.
-Date: Fri, 05 Oct 2007 22:44:52 +0200
-Message-ID: <20071005204452.30902.60246.stgit@gandelf.nowhere.earth>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Question about "git commit -a"
+Date: Sat, 6 Oct 2007 01:10:11 +0400
+Message-ID: <20071005211011.GB25125@potapov>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com> <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com> <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com> <4705FB52.3030208@op5.se> <1191599763.7117.18.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 22:48:05 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 23:10:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idu5U-0003Fm-8p
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:47:56 +0200
+	id 1IduRG-0001ul-RO
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 23:10:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761008AbXJEUrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 16:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbXJEUrm
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:47:42 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:54959 "EHLO smtp3-g19.free.fr"
+	id S1762914AbXJEVKS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 17:10:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761765AbXJEVKR
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 17:10:17 -0400
+Received: from smtp05.mtu.ru ([62.5.255.52]:64573 "EHLO smtp05.mtu.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752359AbXJEUrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 16:47:41 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id A01E717B573;
-	Fri,  5 Oct 2007 22:47:39 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id 84EE017B56D;
-	Fri,  5 Oct 2007 22:47:39 +0200 (CEST)
-Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
-	by gandelf.nowhere.earth (Postfix) with ESMTP id 779711F044;
-	Fri,  5 Oct 2007 22:44:53 +0200 (CEST)
-User-Agent: StGIT/0.13
+	id S1756521AbXJEVKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 17:10:16 -0400
+Received: from potapov.private (ppp85-140-169-127.pppoe.mtu-net.ru [85.140.169.127])
+	by smtp05.mtu.ru (Postfix) with ESMTP id 8571A9798AB;
+	Sat,  6 Oct 2007 01:10:13 +0400 (MSD)
+Received: from potapov.private (localhost [127.0.0.1])
+	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l95LADlB028252;
+	Sat, 6 Oct 2007 01:10:13 +0400
+Received: (from dpotapov@localhost)
+	by potapov.private (8.13.8/8.13.8/Submit) id l95LABi0028251;
+	Sat, 6 Oct 2007 01:10:11 +0400
+X-Authentication-Warning: potapov.private: dpotapov set sender to dpotapov@gmail.com using -f
+Content-Disposition: inline
+In-Reply-To: <1191599763.7117.18.camel@hinata.boston.redhat.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60134>
 
-If the branch.*.merge parameter does not name a valid remote head,
-stgit would not rebase after a fetch, and would write instead
-'Rebasing to "None" ... done'.
+On Fri, Oct 05, 2007 at 11:56:03AM -0400, Kristian H=F8gsberg wrote:
+> I understand why people like staging and commit without -a, seeing ho=
+w
+> it's faster and all, but I have a serious problem with this practice
+> that I haven't seen brought up on the list.  How do you know what you
+> commit actually works or even compiles?
 
-This patch makes this situation an error and tells the user what
-to fix in his repo configuration.
----
+You don't. Even with 'commit -a' there is no guarantee that the
+result will compile, because you can forget to add a new file.
+IMHO, the best practice is to recompile everything step-wise in=20
+a clean directory before you are going to publish your changes.
+It can be done automatically by script, while you do something
+useful, like reading this mailing-list :)
 
- stgit/commands/pull.py |    9 ++++++++-
- stgit/git.py           |    5 ++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
-index 052ea2b..070db99 100644
---- a/stgit/commands/pull.py
-+++ b/stgit/commands/pull.py
-@@ -90,7 +90,14 @@ def func(parser, options, args):
-     elif policy == 'fetch-rebase':
-         out.info('Fetching from "%s"' % repository)
-         git.fetch(repository)
--        rebase(git.fetch_head())
-+        try:
-+            target = git.fetch_head()
-+        except git.GitException:
-+            out.error('Could not find the remote head to rebase onto, pushing any patches back...')
-+            post_rebase(applied, False, False)
-+            raise CmdException, 'Could not find the remote head to rebase onto - fix branch.%s.merge in .git/config' % crt_series.get_name()
-+
-+        rebase(target)
-     elif policy == 'rebase':
-         rebase(crt_series.get_parent_branch())
- 
-diff --git a/stgit/git.py b/stgit/git.py
-index 9e0f771..a0493bc 100644
---- a/stgit/git.py
-+++ b/stgit/git.py
-@@ -1003,11 +1003,14 @@ def fetch_head():
-         m = re.match('^([^\t]*)\t\t', line)
-         if m:
-             if fetch_head:
--                raise GitException, "StGit does not support multiple FETCH_HEAD"
-+                raise GitException, 'StGit does not support multiple FETCH_HEAD'
-             else:
-                 fetch_head=m.group(1)
-     stream.close()
- 
-+    if not fetch_head:
-+        raise GitException, 'No for-merge remote head found in FETCH_HEAD'
-+
-     # here we are sure to have a single fetch_head
-     return fetch_head
- 
+Dmitry
