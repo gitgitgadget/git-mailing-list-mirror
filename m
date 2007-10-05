@@ -1,311 +1,167 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [ALTERNATE PATCH] Add a simple option parser.
-Date: Fri, 05 Oct 2007 11:33:44 -0400
-Message-ID: <1191598424.7117.10.camel@hinata.boston.redhat.com>
-References: <1191447902-27326-1-git-send-email-krh@redhat.com>
-	 <20071005142140.GK19879@artemis.corp> <20071005142507.GL19879@artemis.corp>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
+Date: Fri, 05 Oct 2007 17:50:23 +0200
+Message-ID: <20071005155023.GA20305@artemis.corp>
+References: <20071005082026.GE19879@artemis.corp> <20071005085522.32EFF1E16E@madism.org> <alpine.LFD.0.999.0710050819540.23684@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 17:49:14 2007
+Content-Type: multipart/signed; boundary="pf9I7BMVVzbSWLtt";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 17:50:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdpQA-0006hP-MI
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:48:59 +0200
+	id 1IdpRs-0007WK-B0
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762586AbXJEPsS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 11:48:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757929AbXJEPsS
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:48:18 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:47277 "EHLO mx1.redhat.com"
+	id S1756576AbXJEPuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 11:50:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757205AbXJEPuc
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:50:32 -0400
+Received: from pan.madism.org ([88.191.52.104]:46331 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762869AbXJEPsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 11:48:17 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id l95FXoGH021667;
-	Fri, 5 Oct 2007 11:33:50 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l95FXnLm009818;
-	Fri, 5 Oct 2007 11:33:49 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l95FXnHD004694;
-	Fri, 5 Oct 2007 11:33:49 -0400
-In-Reply-To: <20071005142507.GL19879@artemis.corp>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1751560AbXJEPub (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 11:50:31 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 90AC2238E4;
+	Fri,  5 Oct 2007 17:50:23 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 3E095C379; Fri,  5 Oct 2007 17:50:23 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710050819540.23684@woody.linux-foundation.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60096>
 
-On Fri, 2007-10-05 at 16:25 +0200, Pierre Habouzit wrote:
-> The option parser takes argc, argv, an array of struct option
-> and a usage string.  Each of the struct option elements in the array
-> describes a valid option, its type and a pointer to the location wher=
-e the
-> value is written.  The entry point is parse_options(), which scans th=
-rough
-> the given argv, and matches each option there against the list of val=
-id
-> options.  During the scan, argv is rewritten to only contain the
-> non-option command line arguments and the number of these is returned=
-=2E
+
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Oct 05, 2007 at 03:26:44PM +0000, Linus Torvalds wrote:
 >=20
-> Aggregation of single switches is allowed:
->   -rC0 is the same as -r -C 0 (supposing that -C wants an arg).
 >=20
-> Boolean switches automatically support the option with the same name,
-> prefixed with 'no-' to disable the switch:
->   --no-color / --color only need to have an entry for "color".
+> On Fri, 5 Oct 2007, Pierre Habouzit wrote:
+> > =20
+> > -	strbuf_grow(buf, len);
+> > +	/* only grow if not in place */
+> > +	if (strbuf_avail(buf) + buf->len < len)
+> > +		strbuf_grow(buf, len - buf->len);
 >=20
-> Long options are supported either with '=3D' or without:
->   --some-option=3Dfoo is the same as --some-option foo
+> Umm. This is really ugly.
 
-That looks great, works for me.  One comment, though: it looks like
-you're not sure whether to call these things "options" or "switches".
-We should choose one and stick with it.
+  I agree.
 
-Acked-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+> The whole point of strbuf's was that you shouldn't be doing your own=20
+> allocation decisions etc. So why do it?
 
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> ---
->=20
-> I'm sorry about the "From" I don't intend to "steal" the patch in any
-> sense, it's just an alternate proposal.
+  the point here is that it's in a "filter" that is called like this:
 
-No worries, I'm glad to see this move forward.
+some_filter(buf->buf, buf->len, buf);
+            src       len       dst
 
-> oh and I don't grok what OPTION_LAST is for, so I left it apart, but
-> it seems unused ?
+  You can call the filter with src/len being data from anywere,
+including the current content of the destination buffer.
 
-Oh, kill that.  I used that as the option array terminator before we
-switched to ARRAY_SIZE().
+  Then there is two cases, either the filter is known to be done in
+place, either we can't know or we know it wont.
 
->=20
->  Makefile        |    2 +-
->  parse-options.c |  154 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++++
->  parse-options.h |   29 ++++++++++
->  3 files changed, 184 insertions(+), 1 deletions(-)
->  create mode 100644 parse-options.c
->  create mode 100644 parse-options.h
->=20
-> diff --git a/Makefile b/Makefile
-> index 62bdac6..d90e959 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -310,7 +310,7 @@ LIB_OBJS =3D \
->  	alloc.o merge-file.o path-list.o help.o unpack-trees.o $(DIFF_OBJS)=
- \
->  	color.o wt-status.o archive-zip.o archive-tar.o shallow.o utf8.o \
->  	convert.o attr.o decorate.o progress.o mailmap.o symlinks.o remote.=
-o \
-> -	transport.o bundle.o
-> +	transport.o bundle.o parse-options.o
-> =20
->  BUILTIN_OBJS =3D \
->  	builtin-add.o \
-> diff --git a/parse-options.c b/parse-options.c
-> new file mode 100644
-> index 0000000..eb3ff40
-> --- /dev/null
-> +++ b/parse-options.c
-> @@ -0,0 +1,154 @@
-> +#include "git-compat-util.h"
-> +#include "parse-options.h"
-> +
-> +struct optparse_t {
-> +	const char **argv;
-> +	int argc;
-> +	const char *opt;
-> +};
-> +
-> +static inline const char *skippfx(const char *str, const char *prefi=
-x)
-> +{
-> +	size_t len =3D strlen(prefix);
-> +	return strncmp(str, prefix, len) ? NULL : str + len;
-> +}
-> +
-> +static int opterror(struct option *opt, const char *reason, int shor=
-terr)
-> +{
-> +	if (shorterr) {
-> +		return error("switch `%c' %s", opt->short_name, reason);
-> +	} else {
-> +		return error("option `%s' %s", opt->long_name, reason);
-> +	}
-> +}
+  In the latter case, we have a bit of code like that:
 
-option/switch?
+      char *to_free =3D NULL;
 
-> +static int get_value(struct optparse_t *p, struct option *opt,
-> +					 int boolean, int shorterr)
-> +{
-> +	switch (opt->type) {
-> +		const char *s;
-> +		int v;
-> +
-> +	  case OPTION_BOOLEAN:
-> +		*(int *)opt->value =3D boolean;
-> +		return 0;
-> +
-> +	  case OPTION_STRING:
-> +		if (p->opt && *p->opt) {
-> +			*(const char **)opt->value =3D p->opt;
-> +			p->opt =3D NULL;
-> +		} else {
-> +			if (p->argc < 1)
-> +				return opterror(opt, "requires a value", shorterr);
-> +			*(const char **)opt->value =3D *++p->argv;
-> +			p->argc--;
-> +		}
-> +		return 0;
-> +
-> +	  case OPTION_INTEGER:
-> +		if (p->opt && *p->opt) {
-> +			v =3D strtol(p->opt, (char **)&s, 10);
-> +			p->opt =3D NULL;
-> +		} else {
-> +			if (p->argc < 1)
-> +				return opterror(opt, "requires a value", shorterr);
-> +			v =3D strtol(*++p->argv, (char **)&s, 10);
-> +			p->argc--;
-> +		}
-> +		if (*s)
-> +			return opterror(opt, "expects a numerical value", shorterr);
-> +		*(int *)opt->value =3D v;
-> +		return 0;
-> +	}
-> +
-> +	abort();
-> +}
-> +
-> +static int parse_short_opt(struct optparse_t *p, struct option *opti=
-ons, int count)
-> +{
-> +	int i;
-> +
-> +	for (i =3D 0; i < count; i++) {
-> +		if (options[i].short_name =3D=3D *p->opt) {
-> +			p->opt++;
-> +			return get_value(p, options + i, 1, 1);
-> +		}
-> +	}
-> +	return error("unknown switch `%c'", *p->opt);
-> +}
-> +
-> +static int parse_long_opt(struct optparse_t *p, const char *arg,
-> +                          struct option *options, int count)
-> +{
-> +	int boolean =3D 1;
-> +	int i;
-> +
-> +	for (i =3D 0; i < count; i++) {
-> +		const char *rest;
-> +	=09
-> +		if (!options[i].long_name)
-> +			continue;
-> +
-> +		rest =3D skippfx(arg, options[i].long_name);
-> +		if (!rest && options[i].type =3D=3D OPTION_BOOLEAN) {
-> +			if (!rest && skippfx(arg, "no-")) {
-> +				rest =3D skippfx(arg + 3, options[i].long_name);
-> +				boolean =3D 0;
-> +			}
-> +			if (rest && *rest =3D=3D '=3D')
-> +				return opterror(options + i, "takes no value", 0);
-> +		}
-> +		if (!rest || (*rest && *rest !=3D '=3D'))
-> +			continue;
-> +		if (*rest) {
-> +			p->opt =3D rest;
-> +		}
-> +		return get_value(p, options + i, boolean, 0);
-> +	}
-> +	return error("unknown option `%s'", arg);
-> +}
-> +
-> +int parse_options(int argc, const char **argv,
-> +		  struct option *options, int count,
-> +		  const char *usage_string)
-> +{
-> +	struct optparse_t optp =3D { argv + 1, argc - 1, NULL };
-> +	int j =3D 0;
-> +
-> +	while (optp.argc) {
-> +		const char *arg =3D optp.argv[0];
-> +
-> +		if (*arg !=3D '-' || !arg[1]) {
-> +			argv[j++] =3D *optp.argv++;
-> +			optp.argc--;
-> +			continue;
-> +		}
-> +
-> +		if (arg[1] !=3D '-') {
-> +			optp.opt =3D arg + 1;
-> +			while (*optp.opt) {
-> +				if (parse_short_opt(&optp, options, count) < 0) {
-> +					usage(usage_string);
-> +					return -1;
-> +				}
-> +			}
-> +			optp.argc--;
-> +			optp.argv++;
-> +			continue;
-> +		}
-> +
-> +		if (!arg[2]) /* "--" */
-> +			break;
-> +
-> +		if (parse_long_opt(&optp, arg + 2, options, count)) {
-> +			usage(usage_string);
-> +			return -1;
-> +		}
-> +		optp.argc--;
-> +		optp.argv++;
-> +	}
-> +
-> +	memmove(argv + j, optp.argv, optp.argc * sizeof(argv));
-> +	argv[j + optp.argc] =3D NULL;
-> +	return j + optp.argc;
-> +}
-> diff --git a/parse-options.h b/parse-options.h
-> new file mode 100644
-> index 0000000..e4749d0
-> --- /dev/null
-> +++ b/parse-options.h
-> @@ -0,0 +1,29 @@
-> +#ifndef PARSE_OPTIONS_H
-> +#define PARSE_OPTIONS_H
-> +
-> +enum option_type {
-> +	OPTION_BOOLEAN,
-> +	OPTION_STRING,
-> +	OPTION_INTEGER,
-> +#if 0
-> +	OPTION_LAST,
-> +#endif
-> +};
-> +
-> +struct option {
-> +	enum option_type type;
-> +	const char *long_name;
-> +	char short_name;
-> +	void *value;
-> +};
-> +
-> +/* parse_options() will filter out the processed options and leave t=
-he
-> + * non-option argments in argv[].  The return value is the number of
-> + * arguments left in argv[].
-> + */
-> +
-> +extern int parse_options(int argc, const char **argv,
-> +			 struct option *options, int count,
-> +			 const char *usage_string);
-> +
-> +#endif
+      if (buf->buf =3D=3D src)
+	  to_free =3D strbuf_detach(&buf);
+
+      .. hack ..
+      free(to_free);
+
+
+  In the former case, then there is a small glitch, being that if we are
+doing in place editing, we should not touch buffer at all (or it would
+invalidate "src"). If we are not in the in-place editing code though,
+then we have to make the resulting buffer be big enough...
+
+> Wouldn't it be much better to have a strbuf_make_room() interface that=20
+> just guarantees that there is enough room fo "len"?=20
+
+  Right, that would do the same btw ;)
+
+> Otherwise, code like the above would seem to make the whole point of a=20
+> safer string interface rather pointless. The above code only makes sense=
+=20
+> if you know how the strbuf's are internally done, so it should not exists=
+=20
+> except as internal strbuf code. No?
+
+  Well, the above code is used in filters to spare reallocations. So if
+we want to "blackbox" such a think, strbuf_make_room isn't the proper
+API. We should rather use
+  void *strbuf_begin_filter(struct strbuf *sb, const char *src, size_t resl=
+en);
+  strbuf_end_filter(void *);
+
+  `strbuf_begin_filter` would decide upon the hint `reslen` argument if
+we know if we can work in place or not (has a meaning iff src points
+into the strbuf buffer). If not, it could stash the strbuf buffer in the
+returned void * to be freed at the end of the filter. It seems like a
+better alternative than a strbuf_make_room.
+
+  Of course, strbuf_begin_filter() would really be simple and basically
+be:
+
+    char *tmp;
+    if (src points into sb->buf && reslen > sb->alloc - 1) {
+        // in place editing is OK
+        return NULL;
+    }
+    tmp =3D strbuf_release(&sb);
+    strbuf_grow(&sb, len);
+    return tmp;
+
+
+  and strbuf_end_filter would just be "free" :)
+
+
+  We could even make "reslen" be a ssize_t so that -1 would mean "I've
+absolutely no idea how much space I'll need (or just in place editing is
+not supported). This way, both hacks I described in this mail could be
+hidden in the strbuf module, and be properly documented _and_ safe _and_
+efficient.
+
+What do you think ?
+
+[Though if we do that, I still think it's more important to fix the
+bug in master, and have a new patch implementing this approach]
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--pf9I7BMVVzbSWLtt
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHBl0/vGr7W6HudhwRAigZAJ0ah9QHzqLApzYiY03VonzKxxwbVACfS/Zp
+c0zamPcGiyDZ1zY69fVsXUM=
+=dsao
+-----END PGP SIGNATURE-----
+
+--pf9I7BMVVzbSWLtt--
