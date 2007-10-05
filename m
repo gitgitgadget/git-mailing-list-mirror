@@ -1,104 +1,98 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH] Fix in-place editing in crlf_to_git and ident_to_git.
-Date: Fri, 05 Oct 2007 10:20:26 +0200
-Message-ID: <20071005082026.GE19879@artemis.corp>
-References: <87wsu2sad0.fsf@gollum.intra.norang.ca>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH 2/2] Run garbage collection with loose object pruning
+	after svn dcommit
+Date: Fri, 5 Oct 2007 10:21:10 +0200
+Message-ID: <20071005082110.GA4797@xp.machine.xx>
+References: <20071005001528.GA13029@midwinter.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Bernt Hansen <bernt@alumni.uwaterloo.ca>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 10:21:01 2007
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 10:21:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdiQY-0007en-3y
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:20:54 +0200
+	id 1IdiRA-0007rl-QS
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752804AbXJEIUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 04:20:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752616AbXJEIUa
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:20:30 -0400
-Received: from pan.madism.org ([88.191.52.104]:49143 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752609AbXJEIU2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 04:20:28 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 5D01923805;
-	Fri,  5 Oct 2007 10:20:27 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id EC8A73D84; Fri,  5 Oct 2007 10:20:26 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+	id S1753111AbXJEIVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 04:21:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752828AbXJEIVP
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:21:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49367 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752616AbXJEIVN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 04:21:13 -0400
+Received: (qmail invoked by alias); 05 Oct 2007 08:21:11 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp001) with SMTP; 05 Oct 2007 10:21:11 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/+dIleggn+3Aebp3BZvZZTK2eHrjxHfo+vvcgM5h
+	Bz5/Edu3bGr7Pm
 Content-Disposition: inline
-In-Reply-To: <87wsu2sad0.fsf@gollum.intra.norang.ca>
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20071005001528.GA13029@midwinter.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60047>
 
-When crlf_to_git or ident_to_git are called "in place", the buffer already
-is big enough and should not be resized (as it could make the buffer address
-change, hence invalidate the `src' pointers !).
+On Thu, Oct 04, 2007 at 05:15:28PM -0700, Steven Grimm wrote:
+> git-svn dcommit, by virtue of rewriting history to insert svn revision IDs,
+> leaves old commits dangling.  Since dcommit is already unsafe to run
+> concurrently with other git commands, no additional risk is introduced
+> by making it prune those old objects as needed.
+> 
+> Signed-off-by: Steven Grimm <koreth@midwinter.com>
+> ---
+> 
+> This is in response to a colleague who complained that, after I
+> installed the latest git release, he was getting lots of "too many
+> unreachable loose objects" errors from the new "git gc --auto" run.
+> Those objects turned out to be dangling commits from a year's worth of
+> git-svn usage, since every git-svn commit will abandon at least one
+> existing commit in order to rewrite it with the svn version data.
+> 
 
-Also fix the growth length at the same time: we want to replace the buffer
-content (not append) in those functions as they are filters.
+I don't like the automatic prune. What if someone has other objects in
+there which shouldn't be pruned? Making git svn dcommit doing the prune
+would be at least suprising, because how is one supposed to know that
+doing a commit into svn will prune all your precious objects?
 
-Thanks to Bernt Hansen for the bug report.
+Sure, I can unterstand from where you are coming from, but I'd prefere
+if this could be specified on a case by case basis, e.g. from the
+cmdline or as a config option.
 
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
+-Peter
 
-  This patch is done on top of master, as strbuf's have been merged.
-This is a major issue.
 
- convert.c |   12 ++++++++----
- 1 files changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/convert.c b/convert.c
-index 0d5e909..4664197 100644
---- a/convert.c
-+++ b/convert.c
-@@ -110,7 +110,9 @@ static int crlf_to_git(const char *path, const char *src, size_t len,
- 			return 0;
- 	}
- 
--	strbuf_grow(buf, len);
-+	/* only grow if not in place */
-+	if (src != buf->buf)
-+		strbuf_grow(buf, len - buf->len);
- 	dst = buf->buf;
- 	if (action == CRLF_GUESS) {
- 		/*
-@@ -281,12 +283,12 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 		ret = 0;
- 	}
- 	if (close(pipe_feed[0])) {
--		ret = error("read from external filter %s failed", cmd);
-+		error("read from external filter %s failed", cmd);
- 		ret = 0;
- 	}
- 	status = finish_command(&child_process);
- 	if (status) {
--		ret = error("external filter %s failed %d", cmd, -status);
-+		error("external filter %s failed %d", cmd, -status);
- 		ret = 0;
- 	}
- 
-@@ -422,7 +424,9 @@ static int ident_to_git(const char *path, const char *src, size_t len,
- 	if (!ident || !count_ident(src, len))
- 		return 0;
- 
--	strbuf_grow(buf, len);
-+	/* only grow if not in place */
-+	if (src != buf->buf)
-+		strbuf_grow(buf, len - buf->len);
- 	dst = buf->buf;
- 	for (;;) {
- 		dollar = memchr(src, '$', len);
--- 
-1.5.3.4.207.gc79d4-dirty
+>  git-svn.perl |    6 ++++++
+>  1 files changed, 6 insertions(+), 0 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index 777e436..be62ee1 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -441,6 +441,12 @@ sub cmd_dcommit {
+>  			}
+>  			command_noisy(@finish, $gs->refname);
+>  			$last_rev = $cmt_rev;
+> +
+> +			# rebase will have made the just-committed revisions
+> +			# unreachable; over time that can build up lots of
+> +			# loose objects in the repo. prune is unsafe to run
+> +			# concurrently but so is dcommit.
+> +			command_noisy(qw/gc --auto --prune/);
+>  		}
+>  	}
+>  }
+> -- 
+> 1.5.3.4.203.gcc61a
+> 
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
