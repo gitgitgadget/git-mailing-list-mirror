@@ -1,95 +1,142 @@
-From: Catalin Marinas <catalin.marinas@gmail.com>
-Subject: Re: stgit: editing description of patch
-Date: Fri, 5 Oct 2007 09:16:17 +0000 (UTC)
-Message-ID: <fe4vd1$4s2$1@sea.gmane.org>
-References: <9e4733910710031626kff59666y77ba9001c0fef907@mail.gmail.com>
-	<9e4733910710031914r766efa88pad9f55f9495d127e@mail.gmail.com>
-	<20071004082624.GA17778@diana.vm.bytemark.co.uk>
-	<9e4733910710040616l5358099dj1b65b47cf94cf031@mail.gmail.com>
-	<20071004154836.GB21717@diana.vm.bytemark.co.uk>
-	<9e4733910710040945l2335f3d7le6f45510640d3a6e@mail.gmail.com>
-	<20071004173929.GD21717@diana.vm.bytemark.co.uk>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 05 Oct 2007 12:02:27 +0200
+Message-ID: <47060BB3.3030208@op5.se>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>	 <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>	 <Pine.LNX.4.64.0710042209410.4174@racer.site>	 <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>	 <4705FB52.3030208@op5.se> <4d8e3fd30710050206h7a177472x7c92f91204b15aa4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 11:26:35 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 12:02:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdjRv-0003uD-M5
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 11:26:24 +0200
+	id 1Idk1D-0006m8-T0
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 12:02:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755686AbXJEJ0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 05:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755003AbXJEJ0N
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 05:26:13 -0400
-Received: from main.gmane.org ([80.91.229.2]:38938 "EHLO ciao.gmane.org"
+	id S1751211AbXJEKCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 06:02:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbXJEKCl
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 06:02:41 -0400
+Received: from mail.op5.se ([193.201.96.20]:32973 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754864AbXJEJ0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 05:26:12 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IdjJc-00085z-QD
-	for git@vger.kernel.org; Fri, 05 Oct 2007 09:17:48 +0000
-Received: from fw-nat.cambridge.arm.com ([193.131.176.54])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 09:17:48 +0000
-Received: from catalin.marinas by fw-nat.cambridge.arm.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 09:17:48 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: fw-nat.cambridge.arm.com
-User-Agent: pan 0.120 (Plate of Shrimp)
+	id S1751113AbXJEKCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 06:02:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 9CEAE194447;
+	Fri,  5 Oct 2007 12:02:38 +0200 (CEST)
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id chgEvLP5n026; Fri,  5 Oct 2007 12:02:30 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id D8B1119439E;
+	Fri,  5 Oct 2007 12:02:27 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <4d8e3fd30710050206h7a177472x7c92f91204b15aa4@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60061>
 
-(for whatever reason, gnus decided that it no longer likes the
-authenticated SMTP server, so I'm trying to post via gmane).
+Paolo Ciarrocchi wrote:
+> On 10/5/07, Andreas Ericsson <ae@op5.se> wrote:
+>> Paolo Ciarrocchi wrote:
+>>> On 10/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>>> Hi,
+>>>>
+>>>> On Fri, 5 Oct 2007, Nguyen Thai Ngoc Duy wrote:
+>>>>
+>>>>> On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
+>>>>>>> Am I wrong?
+>>>>>> About it being a majority, yes, I suspect so.
+>>>>>>
+>>>>> Maybe in the next survey we should include question "do you usually do
+>>>>> 'git commit' or 'git commit -a'" :-)
+>>>> Not meaning to discourage you, but it is a known fact that Linus does "git
+>>>> commit" without "-a" quite often.
+>>>>
+>>>> And if that were not bad enough for your plan, I myself omit "-a"
+>>>> regularly.  So you would get a veto from me, too.
+>>> So you are used to do something like (please correct me if I'm wrong):
+>>> - modify A
+>>> - modify B
+>>> - modify C
+>>> - modify D
+>>> - modify E
+>>>
+> 
+>>> $ git add A B E (A, B and E are now in the staging area)
+>>> $ git commit -m "I just modified A,B and E"
+>> I do something like that, except that for full-file commits I'd rather
+>> say
+>>
+>>         git commit -s A B E
+>>
+>> I never pass -m to git commit. It's too easy to get into habit of being
+>> sloppy with historic documentation that way.
+> 
+> Right.
+> But in the scenario you described isn't enough to type "git commit -s".
+> Why did you write "git commit -s A B E".
+> 
 
-On Thu, 04 Oct 2007 19:39:29 +0200, Karl Hasselstr=C3=B6m wrote:
+Because that way I don't have to do "git add A B E" first.
 
-> On 2007-10-04 12:45:17 -0400, Jon Smirl wrote:
->=20
->> Why are the patch name and the short description independent
->> variables? Wouldn't it make more sense to treat these as a single
->> unified item? If I rename the patch it would automatically edit the
->> first line of the description, etc...
->=20
-> I guess Catalin would have to answer that -- it's "always" been like
-> that. But one obvious problem are patches with identical messages --
-> just today I created a series of seven patches that all had "debug"
-> for a message. Another is that you usually want descriptive commit
-> messages, but may want short and easy-to-type patch names.
+> 
+>>> $ git add C D (C and D are now in the staging area)
+>>> $ git commit -m "I just modified C and D"
+>>>
+>> See above :)
+>>
+>> There's also the times when I hack on some feature and find some small
+>> bug/easy-to-write-feature, so I make the change for that other thing,
+>> swap to a different branch and do 'git commit -s --interactive' to
+>> just break out that small fix.
+>>
+>> Or if I have to add some logic to some other function in a file I've
+>> modified for other purposes and want it to be two separate commits,
+>> I just make the change and then run 'git commit --interactive' to
+>> make it two separate commits.
+> 
+> Very interesting!
+> 
+>> I just don't do 'git commit -a' for the same reason I don't do
+>> 'git commit -m', really. It tends to be habit-forming, and bisect
+>> has saved my arse enough times for me to *want* my changes to be
+>> small and isolated. Debugging a 5-line patch is so much more pleasant
+>> than debugging a 30k-lines one that spans over several different files.
+> 
+> Yeah, I see.
+> Thanks for your comments Andreas, very appreciated.
+> 
+> Just to clarify my goal, since I had that interesting discussion with
+> an hg user I started looking for simple examples of the usage of the
+> "staging area" to be added to the introduction to git documentation.
+> The role of the index/staging area seems to be something complex for a
+> git newbie.
+> 
 
-That's pretty much the case. There are also the historical reasons (qui=
-lt
-does the same) plus the fact the exporting should really generate short=
-er
-and simpler file names rather than name with capitals and spaces. I've
-also seen people writing a single paragraph over several lines without =
-a
-short description. You wouldn't really want a patch name that long.
+Yes, but it's so enormously powerful once you get a grip on it that I can't
+for the life of me imagine an scm system without it. You just can't do
+"scm commit --interactive" without it in a sane way, or check which merge-
+conflicts you've already resolved, or compare working tree with what the
+next commit *will* look like, or... The list goes on. Like I said, it's so
+immensely powerful that all the things you can do when you have one is, all
+by itself, reason enough to switch from any other scm to git.
 
-Anyway, 'stg series -d' would show the patch name together with the sho=
-rt
-description.
+As for the "git commit should default to -a" discussion, I think it's pretty
+clear where I stand ;-)
 
->> When importing a patch from a saved email, stg should strip all the
->> email headers out of the description. I have to manually fix that
->> up.
->=20
-> Do you do "stg import -M"? That's for importing one or more patches
-> contained in an mbox. Without the -M, I think the default is to expec=
-t
-> plain diff input.
-
-There is also 'stg import -m' for single e-mails rather than mbox. StGI=
-T
-should be able to cope with attachments as well.
-
-Catalin
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
