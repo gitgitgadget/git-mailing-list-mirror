@@ -1,109 +1,53 @@
-From: Kristof Provost <Kristof@provost-engineering.be>
-Subject: [PATCH] makefile: Add a cscope target
-Date: Sat, 6 Oct 2007 00:33:36 +0200
-Message-ID: <20071005223336.GA4556@luggage>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn, svn:externals, git-submodules?
+Date: Fri, 5 Oct 2007 16:14:59 -0700
+Message-ID: <20071005231459.GA16849@untitled>
+References: <DEC49034-D594-4F4E-89E6-B98A3D4A8825@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="azLHFNyN32YCQGCU"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 06 00:40:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 06 01:15:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idvqh-0002LM-ME
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 00:40:48 +0200
+	id 1IdwO5-0002PS-9z
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 01:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761792AbXJEWkY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 18:40:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762921AbXJEWkY
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 18:40:24 -0400
-Received: from rhineheart.priorweb.be ([213.193.229.215]:44460 "HELO
-	rhineheart.priorweb.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1761792AbXJEWkX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 18:40:23 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Oct 2007 18:40:23 EDT
-Received: (qmail 26884 invoked by uid 1010); 5 Oct 2007 22:33:40 -0000
-Received: from unknown (HELO rhineheart.priorweb.be) (127.0.0.1)
-  by rhineheart.priorweb.be with SMTP; 5 Oct 2007 22:33:40 -0000
-Received: from luggage (dD5767E05.access.telenet.be [213.118.126.5])
-	by rhineheart.priorweb.be (Postfix) with SMTP
-	for <git@vger.kernel.org>; Sat,  6 Oct 2007 00:33:37 +0200 (CEST)
-Received: by luggage (sSMTP sendmail emulation); Sat, 06 Oct 2007 00:33:36 +0200
+	id S1751058AbXJEXPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 19:15:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750822AbXJEXPB
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 19:15:01 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:38047 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750796AbXJEXPA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 19:15:00 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id C52CB2DC032;
+	Fri,  5 Oct 2007 16:14:59 -0700 (PDT)
 Content-Disposition: inline
-X-PGP-Fingerprint: 6B6E 5EED 8ECF FAE7 1F61  7458 5046 7D0E 11B0 0EE8
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Virus-Scanned: Passed
-X-Spam-Scanned: 2.0
-X-Spam-Status: NO
-X-Scanned-By: PriorWeb mailfilter
+In-Reply-To: <DEC49034-D594-4F4E-89E6-B98A3D4A8825@lrde.epita.fr>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60136>
 
+Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
+> Hello,
+> is there any plan to support svn:externals in git-svn with git- 
+> submodules?  If yes, where can we see the on-going work?  If no, is  
+> anyone already planning to implement this?  If no, has anyone  
+> anything to say about the idea?  I could give it a try as I really  
+> need this feature to properly interoperate with SVN repositories.   
+> Many of my friends and co-workers also need it.
 
---azLHFNyN32YCQGCU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I hope to support it at some point, but some point could be anywhere
+from days to months away depending on other things I'm working on...
 
-The current makefile supports ctags but not cscope. Some people prefer
-cscope (I do), so this patch adds a cscope target.
+I've barely looked at git-submodules myself.  To my knowledge there's no
+on-going work for it.
 
-Signed-off-by: Kristof Provost <Kristof@provost-engineering.be>
-
----
-diff --git a/Makefile b/Makefile
-index 8db4dbe..42c9e94 100644
---- a/Makefile
-+++ b/Makefile
-@@ -947,6 +947,10 @@ tags:
- 	$(RM) tags
- 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
-=20
-+cscope:
-+	$(RM) cscope*
-+	$(FIND) . -name '*.hcS]' -print | xargs cscope -b
-+
- ### Detect prefix changes
- TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
-              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
-@@ -1093,7 +1097,7 @@ clean:
- 		$(LIB_FILE) $(XDIFF_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
--	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
-+	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
- 	$(RM) -r autom4te.cache
- 	$(RM) configure config.log config.mak.autogen config.mak.append config.st=
-atus config.cache
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
-@@ -1111,7 +1115,7 @@ endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS
-=20
- .PHONY: all install clean strip
--.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags .FORCE-GIT-CFLAGS
-+.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS=20
-=20
- ### Check documentation
- #
-
-
---
-Kristof
-
---azLHFNyN32YCQGCU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHBrvAUEZ9DhGwDugRAt6mAJ4go3urIiIvRR1FgMjptbKiBsJTngCfXpM9
-VTIcfx5J0novBVrqCaFQq3Q=
-=4VWy
------END PGP SIGNATURE-----
-
---azLHFNyN32YCQGCU--
+-- 
+Eric Wong
