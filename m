@@ -1,74 +1,92 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: git-svn, svn:externals, git-submodules?
-Date: Fri, 5 Oct 2007 22:37:41 +0200
-Message-ID: <DEC49034-D594-4F4E-89E6-B98A3D4A8825@lrde.epita.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-2-708580040"
+From: Yann Dirson <ydirson@altern.org>
+Subject: [StGIT PATCH] Better diagnostic for wrong branch configuration.
+Date: Fri, 05 Oct 2007 22:44:52 +0200
+Message-ID: <20071005204452.30902.60246.stgit@gandelf.nowhere.earth>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 22:38:59 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 22:48:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idtwm-0008Pl-D1
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:38:56 +0200
+	id 1Idu5U-0003Fm-8p
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:47:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763555AbXJEUiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 16:38:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764219AbXJEUiN
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:38:13 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:55200 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763513AbXJEUiL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 16:38:11 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1Idtw1-0000Es-Hb
-	for git@vger.kernel.org; Fri, 05 Oct 2007 22:38:09 +0200
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1761008AbXJEUrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 16:47:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752320AbXJEUrm
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:47:42 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:54959 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752359AbXJEUrl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 16:47:41 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A01E717B573;
+	Fri,  5 Oct 2007 22:47:39 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 84EE017B56D;
+	Fri,  5 Oct 2007 22:47:39 +0200 (CEST)
+Received: from gandelf.nowhere.earth (localhost [127.0.0.1])
+	by gandelf.nowhere.earth (Postfix) with ESMTP id 779711F044;
+	Fri,  5 Oct 2007 22:44:53 +0200 (CEST)
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60133>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-2-708580040
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+If the branch.*.merge parameter does not name a valid remote head,
+stgit would not rebase after a fetch, and would write instead
+'Rebasing to "None" ... done'.
 
-Hello,
-is there any plan to support svn:externals in git-svn with git- 
-submodules?  If yes, where can we see the on-going work?  If no, is  
-anyone already planning to implement this?  If no, has anyone  
-anything to say about the idea?  I could give it a try as I really  
-need this feature to properly interoperate with SVN repositories.   
-Many of my friends and co-workers also need it.
+This patch makes this situation an error and tells the user what
+to fix in his repo configuration.
+---
 
-Cheers,
+ stgit/commands/pull.py |    9 ++++++++-
+ stgit/git.py           |    5 ++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-2-708580040
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHBqCVwwE67wC8PUkRAlqzAKDXS6SYHEiwNjU6BW/qVMKMR5yUDQCcCRmD
-GkBioaZJR5qQbpIAI0ywDDw=
-=QiAH
------END PGP SIGNATURE-----
-
---Apple-Mail-2-708580040--
+diff --git a/stgit/commands/pull.py b/stgit/commands/pull.py
+index 052ea2b..070db99 100644
+--- a/stgit/commands/pull.py
++++ b/stgit/commands/pull.py
+@@ -90,7 +90,14 @@ def func(parser, options, args):
+     elif policy == 'fetch-rebase':
+         out.info('Fetching from "%s"' % repository)
+         git.fetch(repository)
+-        rebase(git.fetch_head())
++        try:
++            target = git.fetch_head()
++        except git.GitException:
++            out.error('Could not find the remote head to rebase onto, pushing any patches back...')
++            post_rebase(applied, False, False)
++            raise CmdException, 'Could not find the remote head to rebase onto - fix branch.%s.merge in .git/config' % crt_series.get_name()
++
++        rebase(target)
+     elif policy == 'rebase':
+         rebase(crt_series.get_parent_branch())
+ 
+diff --git a/stgit/git.py b/stgit/git.py
+index 9e0f771..a0493bc 100644
+--- a/stgit/git.py
++++ b/stgit/git.py
+@@ -1003,11 +1003,14 @@ def fetch_head():
+         m = re.match('^([^\t]*)\t\t', line)
+         if m:
+             if fetch_head:
+-                raise GitException, "StGit does not support multiple FETCH_HEAD"
++                raise GitException, 'StGit does not support multiple FETCH_HEAD'
+             else:
+                 fetch_head=m.group(1)
+     stream.close()
+ 
++    if not fetch_head:
++        raise GitException, 'No for-merge remote head found in FETCH_HEAD'
++
+     # here we are sure to have a single fetch_head
+     return fetch_head
+ 
