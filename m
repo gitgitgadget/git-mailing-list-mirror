@@ -1,79 +1,86 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: strbuf `filter' API
-Date: Fri,  5 Oct 2007 22:19:29 +0200
-Message-ID: <1191615571-15946-1-git-send-email-madcoder@debian.org>
+Subject: Re: Many gits are offline this week
+Date: Fri, 05 Oct 2007 22:26:01 +0200
+Message-ID: <20071005202601.GD31646@artemis.corp>
+References: <20071005010448.GQ2137@spearce.org> <20071005151355.GO31659@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 22:20:00 2007
+Content-Type: multipart/signed; boundary="J5MfuwkIyy7RmF4Q";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Fri Oct 05 22:26:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdteI-0002Dq-6B
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:19:50 +0200
+	id 1IdtkX-0004Ry-3V
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:26:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763966AbXJEUTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 16:19:34 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763952AbXJEUTd
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:19:33 -0400
-Received: from pan.madism.org ([88.191.52.104]:46246 "EHLO hermes.madism.org"
+	id S1763301AbXJEU0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 16:26:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763271AbXJEU0G
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:26:06 -0400
+Received: from pan.madism.org ([88.191.52.104]:33280 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763900AbXJEUTc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 16:19:32 -0400
+	id S1763224AbXJEU0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 16:26:03 -0400
 Received: from madism.org (olympe.madism.org [82.243.245.108])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 71D8D237F4;
-	Fri,  5 Oct 2007 22:19:31 +0200 (CEST)
+	by hermes.madism.org (Postfix) with ESMTP id F280E22590;
+	Fri,  5 Oct 2007 22:26:01 +0200 (CEST)
 Received: by madism.org (Postfix, from userid 1000)
-	id 1A2A235766E; Fri,  5 Oct 2007 22:19:31 +0200 (CEST)
-X-Mailer: git-send-email 1.5.3.4.208.gc1d91-dirty
-In-Reply-To: 20071005155023.GA20305@artemis.corp
-References: 20071005155023.GA20305@artemis.corp
+	id 6C637357840; Fri,  5 Oct 2007 22:26:01 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20071005151355.GO31659@planck.djpig.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60131>
 
-  Ooookay,
 
-  I wasn't more thrilled about the previous patch than linus is. Here i=
-s
-a possible API to hide the muck in the strbuf.c module, and have a way
-nicer to read code in convert.c.
+--J5MfuwkIyy7RmF4Q
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-  It remais as efficient as the previous code, tries to reuse the buffe=
-r
-as much as possible to avoid reallocations, and deal with even more
-cases (it's possible to have the "source" buffer be inside the
-destination strbuf now, which could sometimes help a lot).
+On Fri, Oct 05, 2007 at 03:13:55PM +0000, Frank Lichtenheld wrote:
+> On Thu, Oct 04, 2007 at 09:04:48PM -0400, Shawn O. Pearce wrote:
+> > With three gits offline for at least the next few days perhaps
+> > someone would be willing to step up and collect patches so that Junio
+> > has a reasonable place to pick up from when he can get back online?
+>=20
+> While I have neither the time nor the abilities to do this I
+> will at least accumulate the various cvsserver patches floating
+> around the last few days so that I can submit them to Junio in one
+> batch.
 
-  I based this on top of master (because it's where my previous patch
-was) but it should apply on next properly. It depends upon the previous
-patch though.
+  I won't have the time either, though even if I keep posting patches on
+the list, I'll resubmit a digest of mines when Junio will be back
+online. (or share a public git repository so that he can directly fetch
+=66rom there).
 
-  I'd say that the previous patch should go in master ASAP, and that
-those two could be considered for next (having merged master in it firs=
-t
-btw).
-
-Cheers,
 --=20
 =C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--J5MfuwkIyy7RmF4Q
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHBp3ZvGr7W6HudhwRAk+EAJ9v633b8kWLqRvLDB2J1kO0goC6XQCfQ4Qt
+hLnksK/0Ru4MfqGhSQUDBoY=
+=JvGZ
+-----END PGP SIGNATURE-----
+
+--J5MfuwkIyy7RmF4Q--
