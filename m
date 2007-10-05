@@ -1,64 +1,100 @@
-From: "Dmitry Potapov" <dpotapov@gmail.com>
-Subject: Re: Many gits are offline this week
-Date: Fri, 5 Oct 2007 18:41:43 +0400
-Message-ID: <37fcd2780710050741x1760a585yeaa9023a8d8cdccf@mail.gmail.com>
-References: <20071005010448.GQ2137@spearce.org>
-	 <863awq5p1y.fsf@blue.stonehenge.com>
-	 <4d8e3fd30710050214j135260cn842ee7396a3d63c7@mail.gmail.com>
-	 <86tzp54sez.fsf@blue.stonehenge.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [ALTERNATE PATCH] Add a simple option parser.
+Date: Fri, 05 Oct 2007 16:45:40 +0200
+Message-ID: <20071005144540.GM19879@artemis.corp>
+References: <1191447902-27326-1-git-send-email-krh@redhat.com> <20071005142140.GK19879@artemis.corp> <20071005142507.GL19879@artemis.corp> <20071005143014.GA18176@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 16:42:52 2007
+Content-Type: multipart/signed; boundary="Ucgz5Oc/kKURWzXs";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 16:46:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdoNO-0000ZW-T9
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 16:42:03 +0200
+	id 1IdoR6-0002Yn-Rk
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 16:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762533AbXJEOlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 10:41:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762373AbXJEOlr
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 10:41:47 -0400
-Received: from wr-out-0506.google.com ([64.233.184.227]:17173 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761723AbXJEOlq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 10:41:46 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so389978wra
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 07:41:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=2nhUjhuYyHgxDAtyiB8zE79y6zW81uYLGGSfoiShYFw=;
-        b=oXEEtw6L6Gh30mGvwpngX39+jDWdDH4N8z0QUqk8Tg/KNDbi3Ffqh7iK3j6l1h8Gd6tRA82n6ePJ8N5W8DF1eOEws2ht/95da0eIgqW+b4HOLJYbjApKmikqlBg/nEPQeNySu8wZDu5z8B3o6OUkHpb0PeE0Z+izvOeXrQBculU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PCjsDANI2psRaBM744vgiyZ1fyZp9afpgBxfcYg9QvGxGCyK+Ig8IB9/ziT+FjjfmL8UMMKpnxli5umu+TYUsNpX+prAcBU+srSgwaUBocw4d/RL/lKsGPZ6ZhYxVeVsTSYJG9fHA75tR2vo0Lio+vKfR5gqnEAPKc2zIwlm9go=
-Received: by 10.143.17.13 with SMTP id u13mr1748919wfi.1191595304299;
-        Fri, 05 Oct 2007 07:41:44 -0700 (PDT)
-Received: by 10.143.37.15 with HTTP; Fri, 5 Oct 2007 07:41:43 -0700 (PDT)
-In-Reply-To: <86tzp54sez.fsf@blue.stonehenge.com>
+	id S1756471AbXJEOpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 10:45:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756672AbXJEOpn
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 10:45:43 -0400
+Received: from pan.madism.org ([88.191.52.104]:48406 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756307AbXJEOpm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 10:45:42 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A0A37237F4;
+	Fri,  5 Oct 2007 16:45:40 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 512899580; Fri,  5 Oct 2007 16:45:40 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Mike Hommey <mh@glandium.org>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Disposition: inline
+In-Reply-To: <20071005143014.GA18176@glandium.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60089>
 
-Hi Randal,
 
-> I've had the slides reviewed by Smarter People Than Me on #git already, so
-> hopefully most of it is accurate. :)  They're temporarily at
->
->   http://www.stonehenge.com/pic/Git-2.0.3-to-be.pdf
+--Ucgz5Oc/kKURWzXs
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I believe I have found one mistake in your slides. Slide 18 reads:
-"git-commit -a" is like "git-add .; git-commit"
+On Fri, Oct 05, 2007 at 02:30:14PM +0000, Mike Hommey wrote:
+> On Fri, Oct 05, 2007 at 04:25:07PM +0200, Pierre Habouzit <madcoder@debia=
+n.org> wrote:
+> > The option parser takes argc, argv, an array of struct option
+> > and a usage string.  Each of the struct option elements in the array
+> > describes a valid option, its type and a pointer to the location where =
+the
+> > value is written.  The entry point is parse_options(), which scans thro=
+ugh
+> > the given argv, and matches each option there against the list of valid
+> > options.  During the scan, argv is rewritten to only contain the
+> > non-option command line arguments and the number of these is returned.
+> >=20
+> > Aggregation of single switches is allowed:
+> >   -rC0 is the same as -r -C 0 (supposing that -C wants an arg).
+>=20
+> I like options aggregation, but I'm not sure aggregating option arguments
+> is a good idea... I can't even think of an application that does it.
 
-But it is incorrect, because "git-commit -a" does not add new files, so
-it works like "git-add -u .; git-commit".
+  You mean like `grep -A1` or `diff -u3` or `ls -w10` ?
 
-Dmitry
+getopt does that by default as well, so you may not have aware of it,
+but it's how things work in your system already.
+
+  btw `ls -rw10` works, though `ls -w10r` drops the 'r' silently. FWIW I
+don't, in that case, the alternate patch I propose complains about "10r"
+not being a valid integer, and that's because unlike getopt, the patch
+krh proposed knows what an integer is ;)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Ucgz5Oc/kKURWzXs
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHBk4UvGr7W6HudhwRAgLFAKCWFOuQ0MjUbPMRfRxmsM48ljefEACfZPLb
+X8oIuspTOMOkBqRk6zGagXY=
+=nkg8
+-----END PGP SIGNATURE-----
+
+--Ucgz5Oc/kKURWzXs--
