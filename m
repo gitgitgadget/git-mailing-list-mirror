@@ -1,85 +1,67 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [ALTERNATE PATCH] Add a simple option parser.
-Date: Fri, 05 Oct 2007 16:59:24 +0200
-Message-ID: <86lkahwqsz.fsf@lola.quinscape.zz>
-References: <1191447902-27326-1-git-send-email-krh@redhat.com>
-	<20071005142140.GK19879@artemis.corp>
-	<20071005142507.GL19879@artemis.corp>
-	<20071005143014.GA18176@glandium.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
+Date: Fri, 5 Oct 2007 08:26:44 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710050819540.23684@woody.linux-foundation.org>
+References: <20071005082026.GE19879@artemis.corp>
+ <20071005085522.32EFF1E16E@madism.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 17:19:20 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 17:28:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdoxN-0001Dm-1j
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:19:13 +0200
+	id 1Idp5q-0005NR-73
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755739AbXJEPTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 11:19:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbXJEPTD
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:19:03 -0400
-Received: from main.gmane.org ([80.91.229.2]:40397 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751421AbXJEPTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 11:19:00 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Idoks-0001AO-DH
-	for git@vger.kernel.org; Fri, 05 Oct 2007 15:06:18 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 15:06:18 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 05 Oct 2007 15:06:18 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:ck7rgjSPd77m8UfK/7p+nsJsg7I=
+	id S1755687AbXJEP1u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 11:27:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755316AbXJEP1t
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:27:49 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:44646 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754074AbXJEP1t (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2007 11:27:49 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l95FQnCm013037
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 5 Oct 2007 08:26:55 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l95FQiTj003866;
+	Fri, 5 Oct 2007 08:26:44 -0700
+In-Reply-To: <20071005085522.32EFF1E16E@madism.org>
+X-Spam-Status: No, hits=-3.241 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.46__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60092>
-
-Mike Hommey <mh@glandium.org> writes:
-
-> On Fri, Oct 05, 2007 at 04:25:07PM +0200, Pierre Habouzit <madcoder@debian.org> wrote:
->> The option parser takes argc, argv, an array of struct option
->> and a usage string.  Each of the struct option elements in the array
->> describes a valid option, its type and a pointer to the location where the
->> value is written.  The entry point is parse_options(), which scans through
->> the given argv, and matches each option there against the list of valid
->> options.  During the scan, argv is rewritten to only contain the
->> non-option command line arguments and the number of these is returned.
->> 
->> Aggregation of single switches is allowed:
->>   -rC0 is the same as -r -C 0 (supposing that -C wants an arg).
->
-> I like options aggregation, but I'm not sure aggregating option arguments
-> is a good idea... I can't even think of an application that does it.
-
-I think most allow this for the last option in a row.  Tar is somewhat
-more perverse with its non-option command string:
-
-tar xfzbv filename.tgz 40
-
-uses filename.tgz as the option argument for "f" and 40 for "b".
-
-Note that while tar accepts options instead of the initial command
-string,
-
-tar -xfzbv filename.tgz 40
-
-will _not_ work, while
-
-tar -xffilename.tgz -z -b40 -v
-
-presumably would (have no time to test this right now).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60093>
 
 
--- 
-David Kastrup
+
+On Fri, 5 Oct 2007, Pierre Habouzit wrote:
+>  
+> -	strbuf_grow(buf, len);
+> +	/* only grow if not in place */
+> +	if (strbuf_avail(buf) + buf->len < len)
+> +		strbuf_grow(buf, len - buf->len);
+
+Umm. This is really ugly.
+
+The whole point of strbuf's was that you shouldn't be doing your own 
+allocation decisions etc. So why do it?
+
+Wouldn't it be much better to have a strbuf_make_room() interface that 
+just guarantees that there is enough room fo "len"? 
+
+Otherwise, code like the above would seem to make the whole point of a 
+safer string interface rather pointless. The above code only makes sense 
+if you know how the strbuf's are internally done, so it should not exists 
+except as internal strbuf code. No?
+
+		Linus
