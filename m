@@ -1,109 +1,73 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [ALTERNATE PATCH] Add a simple option parser.
-Date: Fri, 05 Oct 2007 17:54:53 +0200
-Message-ID: <20071005155453.GB20305@artemis.corp>
-References: <1191447902-27326-1-git-send-email-krh@redhat.com> <20071005142140.GK19879@artemis.corp> <20071005142507.GL19879@artemis.corp> <1191598424.7117.10.camel@hinata.boston.redhat.com>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 05 Oct 2007 11:56:03 -0400
+Message-ID: <1191599763.7117.18.camel@hinata.boston.redhat.com>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
+	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
+	 <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
+	 <Pine.LNX.4.64.0710042209410.4174@racer.site>
+	 <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
+	 <4705FB52.3030208@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="+g7M9IMkV8truYOl";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 17:55:15 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Oct 05 17:56:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdpW5-0000uP-Fw
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:55:05 +0200
+	id 1IdpXM-0001Xr-Ir
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 17:56:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757912AbXJEPy5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 11:54:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757443AbXJEPy5
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:54:57 -0400
-Received: from pan.madism.org ([88.191.52.104]:45966 "EHLO hermes.madism.org"
+	id S1759340AbXJEP4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 11:56:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759443AbXJEP4P
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 11:56:15 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:37563 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755316AbXJEPy4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 11:54:56 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D9208238E6;
-	Fri,  5 Oct 2007 17:54:53 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 879321E170; Fri,  5 Oct 2007 17:54:53 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <1191598424.7117.10.camel@hinata.boston.redhat.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1759340AbXJEP4O (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 11:56:14 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id l95Fu9Fm003467;
+	Fri, 5 Oct 2007 11:56:10 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l95Fu9i8022516;
+	Fri, 5 Oct 2007 11:56:09 -0400
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id l95Fu8A4012160;
+	Fri, 5 Oct 2007 11:56:08 -0400
+In-Reply-To: <4705FB52.3030208@op5.se>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60098>
 
+> I just don't do 'git commit -a' for the same reason I don't do
+> 'git commit -m', really. It tends to be habit-forming, and bisect
+> has saved my arse enough times for me to *want* my changes to be
+> small and isolated. Debugging a 5-line patch is so much more pleasant
+> than debugging a 30k-lines one that spans over several different files.
 
---+g7M9IMkV8truYOl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I understand why people like staging and commit without -a, seeing how
+it's faster and all, but I have a serious problem with this practice
+that I haven't seen brought up on the list.  How do you know what you
+commit actually works or even compiles?  The reason that I almost
+exclusively use -a with commit is that I want to know that what I just
+compiled and tested is what I will be committing.  I don't want to just
+commit half the files in my working copy, I want to make sure that the
+exact state of my project that I just compiled and tested is what gets
+into version controlled history.
 
-On Fri, Oct 05, 2007 at 03:33:44PM +0000, Kristian H=C3=B8gsberg wrote:
-> On Fri, 2007-10-05 at 16:25 +0200, Pierre Habouzit wrote:
-> > The option parser takes argc, argv, an array of struct option
-> > and a usage string.  Each of the struct option elements in the array
-> > describes a valid option, its type and a pointer to the location where =
-the
-> > value is written.  The entry point is parse_options(), which scans thro=
-ugh
-> > the given argv, and matches each option there against the list of valid
-> > options.  During the scan, argv is rewritten to only contain the
-> > non-option command line arguments and the number of these is returned.
-> >=20
-> > Aggregation of single switches is allowed:
-> >   -rC0 is the same as -r -C 0 (supposing that -C wants an arg).
-> >=20
-> > Boolean switches automatically support the option with the same name,
-> > prefixed with 'no-' to disable the switch:
-> >   --no-color / --color only need to have an entry for "color".
-> >=20
-> > Long options are supported either with '=3D' or without:
-> >   --some-option=3Dfoo is the same as --some-option foo
->=20
-> That looks great, works for me.  One comment, though: it looks like
-> you're not sure whether to call these things "options" or "switches".
-> We should choose one and stick with it.
+git commit -a isn't sloppy to me - eye balling some subset of your
+working copy and committing that under the assumption that you don't
+make mistakes and don't need to compile what you commit... that is
+sloppy.
 
-  I use the word "switch" when it's a short_option, and "option" when
-it's a long one. But maybe the distinction doesn't make sense, and it's
-a non-native speaker glitch. I don't care that much btw.
-
-> > oh and I don't grok what OPTION_LAST is for, so I left it apart, but
-> > it seems unused ?
->
-> Oh, kill that.  I used that as the option array terminator before we
-> switched to ARRAY_SIZE().
-
-  Okay :)
-
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---+g7M9IMkV8truYOl
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHBl5NvGr7W6HudhwRAjiRAJ0dbCTraDPJ7n/J516ewZWVg3wACQCfeH2o
-Tdq4CS8PboJMDjA4Zz9UHaY=
-=opZI
------END PGP SIGNATURE-----
-
---+g7M9IMkV8truYOl--
+Kristian
