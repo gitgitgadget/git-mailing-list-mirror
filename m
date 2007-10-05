@@ -1,68 +1,57 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH 2/2] Run garbage collection with loose object pruning after svn dcommit
-Date: Thu, 4 Oct 2007 17:15:28 -0700
-Message-ID: <20071005001528.GA13029@midwinter.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Many gits are offline this week
+Date: Thu, 4 Oct 2007 21:04:48 -0400
+Message-ID: <20071005010448.GQ2137@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 05 02:15:39 2007
+X-From: git-owner@vger.kernel.org Fri Oct 05 03:05:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idaqw-0004Gq-8K
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 02:15:38 +0200
+	id 1Idbck-00073v-Kl
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 03:05:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760263AbXJEAPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Oct 2007 20:15:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760197AbXJEAP3
-	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 20:15:29 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:58102 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759553AbXJEAP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Oct 2007 20:15:29 -0400
-Received: (qmail 13210 invoked by uid 1001); 5 Oct 2007 00:15:28 -0000
+	id S1759655AbXJEBEx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Oct 2007 21:04:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759870AbXJEBEx
+	(ORCPT <rfc822;git-outgoing>); Thu, 4 Oct 2007 21:04:53 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38349 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759655AbXJEBEw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Oct 2007 21:04:52 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IdbcO-0004gS-Bw
+	for git@vger.kernel.org; Thu, 04 Oct 2007 21:04:40 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 39B2220FBAE; Thu,  4 Oct 2007 21:04:49 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60023>
 
-git-svn dcommit, by virtue of rewriting history to insert svn revision IDs,
-leaves old commits dangling.  Since dcommit is already unsafe to run
-concurrently with other git commands, no additional risk is introduced
-by making it prune those old objects as needed.
+Dscho and I will be (at least mostly) offline for the next four
+days as we travel to San Jose for the 2007 Google Summer of Code
+Mentor Summit.
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
+We also just received word from Junio that he is also likely to be
+offline this next week.  Junio has some business that needs his
+immediate attention, so he won't be his usual attentive self on
+the mailing list.
 
-This is in response to a colleague who complained that, after I
-installed the latest git release, he was getting lots of "too many
-unreachable loose objects" errors from the new "git gc --auto" run.
-Those objects turned out to be dangling commits from a year's worth of
-git-svn usage, since every git-svn commit will abandon at least one
-existing commit in order to rewrite it with the svn version data.
+With three gits offline for at least the next few days perhaps
+someone would be willing to step up and collect patches so that Junio
+has a reasonable place to pick up from when he can get back online?
 
- git-svn.perl |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-diff --git a/git-svn.perl b/git-svn.perl
-index 777e436..be62ee1 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -441,6 +441,12 @@ sub cmd_dcommit {
- 			}
- 			command_noisy(@finish, $gs->refname);
- 			$last_rev = $cmt_rev;
-+
-+			# rebase will have made the just-committed revisions
-+			# unreachable; over time that can build up lots of
-+			# loose objects in the repo. prune is unsafe to run
-+			# concurrently but so is dcommit.
-+			command_noisy(qw/gc --auto --prune/);
- 		}
- 	}
- }
 -- 
-1.5.3.4.203.gcc61a
+Shawn.
