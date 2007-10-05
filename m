@@ -1,88 +1,58 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
-Date: Fri, 5 Oct 2007 09:43:19 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710050933330.23684@woody.linux-foundation.org>
-References: <20071005082026.GE19879@artemis.corp> <20071005085522.32EFF1E16E@madism.org>
- <alpine.LFD.0.999.0710050819540.23684@woody.linux-foundation.org>
- <20071005162139.GC31413@uranus.ravnborg.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH 2/2] Run garbage collection with loose object pruning
+	after svn dcommit
+Date: Fri, 5 Oct 2007 18:49:12 +0200
+Message-ID: <20071005164912.GE4797@xp.machine.xx>
+References: <20071005001528.GA13029@midwinter.com> <20071005082110.GA4797@xp.machine.xx> <47066255.6080500@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
-To: Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Fri Oct 05 18:45:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 18:49:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdqIN-0005LX-KM
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 18:45:00 +0200
+	id 1IdqMh-0007DJ-M4
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 18:49:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757449AbXJEQot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 12:44:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757015AbXJEQos
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 12:44:48 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50231 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755242AbXJEQos (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2007 12:44:48 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l95GhKgu022911
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 5 Oct 2007 09:43:24 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l95GhJ2B008911;
-	Fri, 5 Oct 2007 09:43:20 -0700
-In-Reply-To: <20071005162139.GC31413@uranus.ravnborg.org>
-X-Spam-Status: No, hits=-3.045 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,SARE_MILLIONSOF,TW_VN
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.46__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754572AbXJEQtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 12:49:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754157AbXJEQtQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 12:49:16 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:38740 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754215AbXJEQtP (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Oct 2007 12:49:15 -0400
+Received: (qmail 26249 invoked by uid 0); 5 Oct 2007 16:49:11 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 5 Oct 2007 16:49:11 -0000
+Content-Disposition: inline
+In-Reply-To: <47066255.6080500@midwinter.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60112>
 
+On Fri, Oct 05, 2007 at 09:12:05AM -0700, Steven Grimm wrote:
+> Peter Baumann wrote:
+>> I don't like the automatic prune. What if someone has other objects in
+>> there which shouldn't be pruned? Making git svn dcommit doing the prune
+>> would be at least suprising, because how is one supposed to know that
+>> doing a commit into svn will prune all your precious objects?
+>>   
+>
+> "git commit" already does garbage collection, so we've already set a 
+> precedent for a commit operation also doing some cleanup at the end. 
+> However, you're correct that this cleanup behavior (and the way to turn it 
+> off) should be documented so that there's some way to know about it. Doc 
+> patch forthcoming.
+>
 
+That's new to me. Glancing over git-commit.sh, I could only find a
+'git-gc --auto', but no prune. I am not against doing a 'git gc --auto',
+but I am against the --prune, because this could make shared
+repositories unfunctional.
 
-On Fri, 5 Oct 2007, Sam Ravnborg wrote:
-> 
-> Took a short look at strbuf.h after seeing the above code.
-> And I was suprised to see that all strbuf users were exposed to
-> the strbuf structure.
-
-Well, they *have* to. We want people to declare their strbufs as automatic 
-or static structures, and using a opaque struct pointer is *not* an option 
-(like "FILE" is doing in stdio.h).
-
-> Following patch would at least make sure noone fiddle with strbuf internals.
-
-No, following patch is fundamentally broken - it's not even a good 
-starting point. It's bad, bad, bad.
-
-It's also broken in another way: we want it to be really easy to use 
-strbuf's as normal C strings.
-
-Yes, many (totally idiotic and broken) interfaces think it's so important 
-to "protect" their internal data structures that you have a 
-"string_to_c()" helper function for that. That may be "good abstraction", 
-but it's totally idiotic, because it results in horrible source code!
-
-Tell me which is more readable:
-
-	printf("Hello %s\n", sb->buf);
-
-or
-
-	printf("Hello %s\n", strbuf_to_c(sb));
-
-and I claim that anybody who claims that the latter is "more readable" is 
-full of shit, and has an agenda to push, so it's "more agenda-friendly" 
-rather than readable!
-
-So having "sb->buf" and "sb->len" be visible to users is a *good* thing. 
-Otherwise you end up having to create millions of idiotic small helper 
-functions, rather than just use the standard ones.
-
-			Linus
+-Peter
