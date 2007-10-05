@@ -1,90 +1,120 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Fix in-place editing in crlf_to_git and ident_to_git.
-Date: Fri, 05 Oct 2007 10:40:54 +0200
-Message-ID: <20071005084054.GH19879@artemis.corp>
-References: <87wsu2sad0.fsf@gollum.intra.norang.ca> <20071005082026.GE19879@artemis.corp> <Pine.LNX.4.64.0710050930030.4174@racer.site>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Question about "git commit -a"
+Date: Fri, 05 Oct 2007 10:52:34 +0200
+Message-ID: <4705FB52.3030208@op5.se>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>	 <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>	 <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="+ts6NCQ4mrNQIV8p";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 05 10:41:07 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 10:53:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idik5-0005fi-Aw
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:41:05 +0200
+	id 1IdivV-0000od-5v
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 10:52:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753864AbXJEIk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 04:40:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753856AbXJEIk5
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:40:57 -0400
-Received: from pan.madism.org ([88.191.52.104]:59250 "EHLO hermes.madism.org"
+	id S1753928AbXJEIwn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 04:52:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753856AbXJEIwn
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 04:52:43 -0400
+Received: from mail.op5.se ([193.201.96.20]:58322 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753314AbXJEIk4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 04:40:56 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 2800222CEF;
-	Fri,  5 Oct 2007 10:40:55 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id C82821E165; Fri,  5 Oct 2007 10:40:54 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Bernt Hansen <bernt@alumni.uwaterloo.ca>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710050930030.4174@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753787AbXJEIwm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 04:52:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 7E004194014;
+	Fri,  5 Oct 2007 10:52:40 +0200 (CEST)
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3VniTBQ88ojh; Fri,  5 Oct 2007 10:52:35 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 6078A194357;
+	Fri,  5 Oct 2007 10:52:35 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60054>
+
+Paolo Ciarrocchi wrote:
+> On 10/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>> Hi,
+>>
+>> On Fri, 5 Oct 2007, Nguyen Thai Ngoc Duy wrote:
+>>
+>>> On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
+>>>>> Am I wrong?
+>>>> About it being a majority, yes, I suspect so.
+>>>>
+>>> Maybe in the next survey we should include question "do you usually do
+>>> 'git commit' or 'git commit -a'" :-)
+>> Not meaning to discourage you, but it is a known fact that Linus does "git
+>> commit" without "-a" quite often.
+>>
+>> And if that were not bad enough for your plan, I myself omit "-a"
+>> regularly.  So you would get a veto from me, too.
+> 
+> So you are used to do something like (please correct me if I'm wrong):
+> - modify A
+> - modify B
+> - modify C
+> - modify D
+> - modify E
+> 
+> $ git A B E
 
 
---+ts6NCQ4mrNQIV8p
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This isn't really a valid command. I'm not sure where you got it from.
 
-On Fri, Oct 05, 2007 at 08:30:45AM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 5 Oct 2007, Pierre Habouzit wrote:
->=20
-> > When crlf_to_git or ident_to_git are called "in place", the buffer=20
-> > already is big enough and should not be resized (as it could make the=
-=20
-> > buffer address change, hence invalidate the `src' pointers !).
->=20
-> I wonder why we resize at all if the buffer is big enough to begin with.
+> $ git add A B E (A, B and E are now in the staging area)
+> $ git commit -m "I just modified A,B and E"
 
-  strbuf_grow takes care of that itself but indeed you make me see that
-my patch is wrong. if buf->len > len then len - buf->len is err a bit
-big.
+I do something like that, except that for full-file commits I'd rather
+say
 
-  I'll roll better ones.
+	git commit -s A B E
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+I never pass -m to git commit. It's too easy to get into habit of being
+sloppy with historic documentation that way.
 
---+ts6NCQ4mrNQIV8p
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> $ git C D
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Again not a valid command, but...
 
-iD8DBQBHBfiWvGr7W6HudhwRAg+dAJ9pKpsjoXiTi/tL/KncgDU3P4nzXACfdl0c
-vttJ14pnDEvh8MpjV1HaeD4=
-=kImr
------END PGP SIGNATURE-----
+> $ git add C D (C and D are now in the staging area)
+> $ git commit -m "I just modified C and D"
+> 
 
---+ts6NCQ4mrNQIV8p--
+See above :)
+
+There's also the times when I hack on some feature and find some small
+bug/easy-to-write-feature, so I make the change for that other thing,
+swap to a different branch and do 'git commit -s --interactive' to
+just break out that small fix.
+
+Or if I have to add some logic to some other function in a file I've
+modified for other purposes and want it to be two separate commits,
+I just make the change and then run 'git commit --interactive' to
+make it two separate commits.
+
+I just don't do 'git commit -a' for the same reason I don't do
+'git commit -m', really. It tends to be habit-forming, and bisect
+has saved my arse enough times for me to *want* my changes to be
+small and isolated. Debugging a 5-line patch is so much more pleasant
+than debugging a 30k-lines one that spans over several different files.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
