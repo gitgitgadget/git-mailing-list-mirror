@@ -1,142 +1,89 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Question about "git commit -a"
-Date: Fri, 05 Oct 2007 12:02:27 +0200
-Message-ID: <47060BB3.3030208@op5.se>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>	 <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>	 <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>	 <Pine.LNX.4.64.0710042209410.4174@racer.site>	 <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>	 <4705FB52.3030208@op5.se> <4d8e3fd30710050206h7a177472x7c92f91204b15aa4@mail.gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Add a simple option parser.
+Date: Fri, 05 Oct 2007 12:08:40 +0200
+Message-ID: <20071005100840.GI19879@artemis.corp>
+References: <1191447902-27326-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 12:02:56 2007
+Content-Type: multipart/signed; boundary="eVzOFob/8UvintSX";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Oct 05 12:09:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idk1D-0006m8-T0
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 12:02:52 +0200
+	id 1Idk73-00009J-Px
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 12:08:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211AbXJEKCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 06:02:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbXJEKCl
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 06:02:41 -0400
-Received: from mail.op5.se ([193.201.96.20]:32973 "EHLO mail.op5.se"
+	id S1751103AbXJEKIn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 06:08:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751144AbXJEKIn
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 06:08:43 -0400
+Received: from pan.madism.org ([88.191.52.104]:35005 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751113AbXJEKCk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 06:02:40 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 9CEAE194447;
-	Fri,  5 Oct 2007 12:02:38 +0200 (CEST)
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id chgEvLP5n026; Fri,  5 Oct 2007 12:02:30 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id D8B1119439E;
-	Fri,  5 Oct 2007 12:02:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <4d8e3fd30710050206h7a177472x7c92f91204b15aa4@mail.gmail.com>
+	id S1750893AbXJEKIn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 06:08:43 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id E2AC72382E;
+	Fri,  5 Oct 2007 12:08:41 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id DA4B43575D4; Fri,  5 Oct 2007 12:08:40 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	git@vger.kernel.org, gitster@pobox.com
+Content-Disposition: inline
+In-Reply-To: <1191447902-27326-1-git-send-email-krh@redhat.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60062>
 
-Paolo Ciarrocchi wrote:
-> On 10/5/07, Andreas Ericsson <ae@op5.se> wrote:
->> Paolo Ciarrocchi wrote:
->>> On 10/4/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>>> Hi,
->>>>
->>>> On Fri, 5 Oct 2007, Nguyen Thai Ngoc Duy wrote:
->>>>
->>>>> On 10/4/07, Wincent Colaiuta <win@wincent.com> wrote:
->>>>>>> Am I wrong?
->>>>>> About it being a majority, yes, I suspect so.
->>>>>>
->>>>> Maybe in the next survey we should include question "do you usually do
->>>>> 'git commit' or 'git commit -a'" :-)
->>>> Not meaning to discourage you, but it is a known fact that Linus does "git
->>>> commit" without "-a" quite often.
->>>>
->>>> And if that were not bad enough for your plan, I myself omit "-a"
->>>> regularly.  So you would get a veto from me, too.
->>> So you are used to do something like (please correct me if I'm wrong):
->>> - modify A
->>> - modify B
->>> - modify C
->>> - modify D
->>> - modify E
->>>
-> 
->>> $ git add A B E (A, B and E are now in the staging area)
->>> $ git commit -m "I just modified A,B and E"
->> I do something like that, except that for full-file commits I'd rather
->> say
->>
->>         git commit -s A B E
->>
->> I never pass -m to git commit. It's too easy to get into habit of being
->> sloppy with historic documentation that way.
-> 
-> Right.
-> But in the scenario you described isn't enough to type "git commit -s".
-> Why did you write "git commit -s A B E".
-> 
 
-Because that way I don't have to do "git add A B E" first.
+--eVzOFob/8UvintSX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->>> $ git add C D (C and D are now in the staging area)
->>> $ git commit -m "I just modified C and D"
->>>
->> See above :)
->>
->> There's also the times when I hack on some feature and find some small
->> bug/easy-to-write-feature, so I make the change for that other thing,
->> swap to a different branch and do 'git commit -s --interactive' to
->> just break out that small fix.
->>
->> Or if I have to add some logic to some other function in a file I've
->> modified for other purposes and want it to be two separate commits,
->> I just make the change and then run 'git commit --interactive' to
->> make it two separate commits.
-> 
-> Very interesting!
-> 
->> I just don't do 'git commit -a' for the same reason I don't do
->> 'git commit -m', really. It tends to be habit-forming, and bisect
->> has saved my arse enough times for me to *want* my changes to be
->> small and isolated. Debugging a 5-line patch is so much more pleasant
->> than debugging a 30k-lines one that spans over several different files.
-> 
-> Yeah, I see.
-> Thanks for your comments Andreas, very appreciated.
-> 
-> Just to clarify my goal, since I had that interesting discussion with
-> an hg user I started looking for simple examples of the usage of the
-> "staging area" to be added to the introduction to git documentation.
-> The role of the index/staging area seems to be something complex for a
-> git newbie.
-> 
+On Wed, Oct 03, 2007 at 09:45:01PM +0000, Kristian H=C3=B8gsberg wrote:
+> +static int parse_one(const char **argv,
+> +		     struct option *options, int count,
+> +		     const char *usage_string)
+> +{
+> +	const char *eq, *arg, *value;
+> +	int i, processed;
 
-Yes, but it's so enormously powerful once you get a grip on it that I can't
-for the life of me imagine an scm system without it. You just can't do
-"scm commit --interactive" without it in a sane way, or check which merge-
-conflicts you've already resolved, or compare working tree with what the
-next commit *will* look like, or... The list goes on. Like I said, it's so
-immensely powerful that all the things you can do when you have one is, all
-by itself, reason enough to switch from any other scm to git.
+  gcc complains processed could be returned without being initialized
+first, so should be processed =3D 0; Even if it cannot occurs, it avoid
+raising eyebrows.
 
-As for the "git commit should default to -a" discussion, I think it's pretty
-clear where I stand ;-)
+> +	case OPTION_INTEGER:
+> +		if (value =3D=3D NULL) {
+> +			error("option %s requires a value.", argv);
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+                                                             ^^^
+                                           should probably be arg.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--eVzOFob/8UvintSX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHBg0ovGr7W6HudhwRAjJeAKCoImEHubmHxRCSuy8HYzhSTr2OigCeP3LS
+K25F62DQG1Ykhbgho/6ZhWU=
+=csBM
+-----END PGP SIGNATURE-----
+
+--eVzOFob/8UvintSX--
