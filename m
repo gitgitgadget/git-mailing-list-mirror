@@ -1,105 +1,120 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Question about "git commit -a"
-Date: Fri, 05 Oct 2007 18:33:38 +0200
-Message-ID: <vpq641led25.fsf@bauges.imag.fr>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com>
-	<545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com>
-	<fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com>
-	<Pine.LNX.4.64.0710042209410.4174@racer.site>
-	<4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com>
-	<4705FB52.3030208@op5.se>
-	<1191599763.7117.18.camel@hinata.boston.redhat.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [AGGREGATED PATCH] Fix in-place editing functions in convert.c
+Date: Fri, 05 Oct 2007 18:35:17 +0200
+Message-ID: <20071005163517.GD20305@artemis.corp>
+References: <20071005082026.GE19879@artemis.corp> <20071005085522.32EFF1E16E@madism.org> <alpine.LFD.0.999.0710050819540.23684@woody.linux-foundation.org> <20071005162139.GC31413@uranus.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Oct 05 18:34:35 2007
+Content-Type: multipart/signed; boundary="WChQLJJJfbwij+9x";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+To: Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 18:35:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Idq8H-0000sw-PW
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 18:34:34 +0200
+	id 1Idq9E-0001EW-Qh
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 18:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753699AbXJEQeZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Oct 2007 12:34:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753197AbXJEQeY
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 12:34:24 -0400
-Received: from imag.imag.fr ([129.88.30.1]:34777 "EHLO imag.imag.fr"
+	id S1758618AbXJEQfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 12:35:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758441AbXJEQfV
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 12:35:21 -0400
+Received: from pan.madism.org ([88.191.52.104]:41916 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752666AbXJEQeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 12:34:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l95GXcAp020316
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 5 Oct 2007 18:33:38 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Idq7O-0002l3-Ht; Fri, 05 Oct 2007 18:33:38 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Idq7O-0003Vj-FS; Fri, 05 Oct 2007 18:33:38 +0200
-In-Reply-To: <1191599763.7117.18.camel@hinata.boston.redhat.com> ("Kristian
- =?iso-8859-1?Q?H=F8gsberg=22's?= message of "Fri\, 05 Oct 2007 11\:56\:03
- -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 05 Oct 2007 18:33:39 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757533AbXJEQfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 12:35:19 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id EC56B23902;
+	Fri,  5 Oct 2007 18:35:17 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 2FA8F1E16F; Fri,  5 Oct 2007 18:35:17 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bernt Hansen <bernt@alumni.uwaterloo.ca>
+Content-Disposition: inline
+In-Reply-To: <20071005162139.GC31413@uranus.ravnborg.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60108>
 
-Kristian H=F8gsberg <krh@redhat.com> writes:
 
-> I understand why people like staging and commit without -a, seeing ho=
-w
-> it's faster and all,
+--WChQLJJJfbwij+9x
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Actually, commit without -a is not much faster, since it runs "status"
-internally, to show it to the user when launching the editor. So, it
-still checks for changes in the working tree.
+On Fri, Oct 05, 2007 at 04:21:39PM +0000, Sam Ravnborg wrote:
+> On Fri, Oct 05, 2007 at 08:26:44AM -0700, Linus Torvalds wrote:
+> >=20
+> >=20
+> > On Fri, 5 Oct 2007, Pierre Habouzit wrote:
+> > > =20
+> > > -	strbuf_grow(buf, len);
+> > > +	/* only grow if not in place */
+> > > +	if (strbuf_avail(buf) + buf->len < len)
+> > > +		strbuf_grow(buf, len - buf->len);
+> >=20
+> > Umm. This is really ugly.
+> >=20
+> > The whole point of strbuf's was that you shouldn't be doing your own=20
+> > allocation decisions etc. So why do it?
+> >=20
+> > Wouldn't it be much better to have a strbuf_make_room() interface that=
+=20
+> > just guarantees that there is enough room fo "len"?=20
+> >=20
+> > Otherwise, code like the above would seem to make the whole point of a=
+=20
+> > safer string interface rather pointless. The above code only makes sens=
+e=20
+> > if you know how the strbuf's are internally done, so it should not exis=
+ts=20
+> > except as internal strbuf code. No?
+>=20
+> Took a short look at strbuf.h after seeing the above code.
+> And I was suprised to see that all strbuf users were exposed to
+> the strbuf structure.
+> Following patch would at least make sure noone fiddle with strbuf interna=
+ls.
+> Cut'n'paste - only for the example of it.
+> It simply moves strbuf declaration to the .c file where it rightfully bel=
+ongs.
 
-> but I have a serious problem with this practice that I haven't seen
-> brought up on the list. How do you know what you commit actually
-> works or even compiles?
+  you're looking at an antiquated version, please look at the one in
+current master on current next. In this one, what you can do or not do
+with the struct is explained
 
-That's a general problem with partial commits, and that's why I
-personnaly don't like partial commits in general ($scm commit file1
-file2 has the same problem, \forall $scm).
+> git did not build with this change....
 
-To me, the right approach to partial commit is to stash the unwanted
-changes, test, commit, and unstash.
-
-(side note: it would be cool to have a "git stash --unstaged" command,
-to put the unstaged changes aside, and match the tree to the index. A
-good approximation for that is:
-
-$ git stash                  # put all aside
-$ git reset --mixed stash^2  # get back what the index used to be
-$ git add -u                 # and put it back into the index.
-)
-
-*But*, the cool thing with git is that you can view rather easily not
-only what you're about to commit (git diff --cached), but also what
-you're about _not_ to commit (git diff). So, if the unstaged changes
-are trivial enough, it can be OK (for example, Linus changes the linux
-version in a Makefile a few commits before the release, and doesn't
-add it to the index, to keep it as a reminder).
-
-But I agree with your that splitting a huge patch into smaller ones
-using just the index is bad practice, except if you intend to come
-back to each commit and test it later.
+  Of course it doesn't! people want to have direct access to ->buf and
+->len, and it's definitely OK.
 
 --=20
-Matthieu
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--WChQLJJJfbwij+9x
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHBmfFvGr7W6HudhwRAmoDAKCe4FfLl0bI/2fYXaK2tJ7f+z16CACfeTtR
+axpBCVzTUqePR7h3SbMzVIk=
+=YN3/
+-----END PGP SIGNATURE-----
+
+--WChQLJJJfbwij+9x--
