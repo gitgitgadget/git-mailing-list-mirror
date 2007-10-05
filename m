@@ -1,86 +1,74 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Many gits are offline this week
-Date: Fri, 05 Oct 2007 22:26:01 +0200
-Message-ID: <20071005202601.GD31646@artemis.corp>
-References: <20071005010448.GQ2137@spearce.org> <20071005151355.GO31659@planck.djpig.de>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="J5MfuwkIyy7RmF4Q";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Fri Oct 05 22:26:19 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: git-svn, svn:externals, git-submodules?
+Date: Fri, 5 Oct 2007 22:37:41 +0200
+Message-ID: <DEC49034-D594-4F4E-89E6-B98A3D4A8825@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-2-708580040"
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 05 22:38:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IdtkX-0004Ry-3V
-	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:26:17 +0200
+	id 1Idtwm-0008Pl-D1
+	for gcvg-git-2@gmane.org; Fri, 05 Oct 2007 22:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763301AbXJEU0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Oct 2007 16:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763271AbXJEU0G
-	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:26:06 -0400
-Received: from pan.madism.org ([88.191.52.104]:33280 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763224AbXJEU0D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Oct 2007 16:26:03 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id F280E22590;
-	Fri,  5 Oct 2007 22:26:01 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 6C637357840; Fri,  5 Oct 2007 22:26:01 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071005151355.GO31659@planck.djpig.de>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1763555AbXJEUiN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Oct 2007 16:38:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764219AbXJEUiN
+	(ORCPT <rfc822;git-outgoing>); Fri, 5 Oct 2007 16:38:13 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:55200 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763513AbXJEUiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Oct 2007 16:38:11 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1Idtw1-0000Es-Hb
+	for git@vger.kernel.org; Fri, 05 Oct 2007 22:38:09 +0200
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60132>
+
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-2-708580040
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+
+Hello,
+is there any plan to support svn:externals in git-svn with git- 
+submodules?  If yes, where can we see the on-going work?  If no, is  
+anyone already planning to implement this?  If no, has anyone  
+anything to say about the idea?  I could give it a try as I really  
+need this feature to properly interoperate with SVN repositories.   
+Many of my friends and co-workers also need it.
+
+Cheers,
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
 
 
---J5MfuwkIyy7RmF4Q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 05, 2007 at 03:13:55PM +0000, Frank Lichtenheld wrote:
-> On Thu, Oct 04, 2007 at 09:04:48PM -0400, Shawn O. Pearce wrote:
-> > With three gits offline for at least the next few days perhaps
-> > someone would be willing to step up and collect patches so that Junio
-> > has a reasonable place to pick up from when he can get back online?
->=20
-> While I have neither the time nor the abilities to do this I
-> will at least accumulate the various cvsserver patches floating
-> around the last few days so that I can submit them to Junio in one
-> batch.
-
-  I won't have the time either, though even if I keep posting patches on
-the list, I'll resubmit a digest of mines when Junio will be back
-online. (or share a public git repository so that he can directly fetch
-=66rom there).
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---J5MfuwkIyy7RmF4Q
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+--Apple-Mail-2-708580040
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
 
 -----BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Version: GnuPG v1.4.7 (Darwin)
 
-iD8DBQBHBp3ZvGr7W6HudhwRAk+EAJ9v633b8kWLqRvLDB2J1kO0goC6XQCfQ4Qt
-hLnksK/0Ru4MfqGhSQUDBoY=
-=JvGZ
+iD8DBQFHBqCVwwE67wC8PUkRAlqzAKDXS6SYHEiwNjU6BW/qVMKMR5yUDQCcCRmD
+GkBioaZJR5qQbpIAI0ywDDw=
+=QiAH
 -----END PGP SIGNATURE-----
 
---J5MfuwkIyy7RmF4Q--
+--Apple-Mail-2-708580040--
