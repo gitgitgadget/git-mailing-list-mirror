@@ -1,124 +1,65 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [msysGit] Re: Git Inno Setup based installer
-Date: Sun, 7 Oct 2007 00:15:19 +0200
-Message-ID: <461A17DA-91D5-4F17-BD61-0C2840CE0E32@zib.de>
-References: <898798EC-8486-4B18-B4FE-52015035BC2F@zib.de> <1191682524.589150.297160@22g2000hsm.googlegroups.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: kirillathome@gmail.com
-X-From: git-owner@vger.kernel.org Sun Oct 07 00:14:14 2007
+From: Sam Vilain <sam.vilain@catalyst.net.nz>
+Subject: Re: [PATCH] setup/rev-parse: allow HEAD to be spelled 'head'
+Date: Sun, 07 Oct 2007 11:23:00 +1300
+Message-ID: <47080AC4.3040902@catalyst.net.nz>
+References: <1191553750-25562-1-git-send-email-sam.vilain@catalyst.net.nz> <20071005065139.GA2623@steel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 07 00:54:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeHuX-0003aG-Ed
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 00:14:13 +0200
+	id 1IeIXM-0005Mt-RU
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 00:54:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207AbXJFWOA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 6 Oct 2007 18:14:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbXJFWOA
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 18:14:00 -0400
-Received: from mailer.zib.de ([130.73.108.11]:36741 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751342AbXJFWN7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2007 18:13:59 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l96MDlFL017007;
-	Sun, 7 Oct 2007 00:13:47 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1ac3b.pool.einsundeins.de [77.177.172.59])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l96MDjgH017665
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 7 Oct 2007 00:13:46 +0200 (MEST)
-In-Reply-To: <1191682524.589150.297160@22g2000hsm.googlegroups.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1763655AbXJFWyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 18:54:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763552AbXJFWyM
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 18:54:12 -0400
+Received: from godel.catalyst.net.nz ([202.78.240.40]:34210 "EHLO
+	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762915AbXJFWyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 18:54:12 -0400
+X-Greylist: delayed 1864 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Oct 2007 18:54:11 EDT
+Received: from 203-97-235-49.cable.telstraclear.net ([203.97.235.49] helo=[192.168.69.104])
+	by mail1.catalyst.net.nz with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <sam.vilain@catalyst.net.nz>)
+	id 1IeI33-0000lg-SJ; Sun, 07 Oct 2007 11:23:01 +1300
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+In-Reply-To: <20071005065139.GA2623@steel.home>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60161>
 
-Dear Kirill,
-Thanks for your feedback. I very much appreciate any comments on the
-installer. They all help to improve our work.
-
-
-On Oct 6, 2007, at 4:55 PM, Kirill wrote:
-> Great! Thanks to you I finally got git-1.5.3 that works on Windows (a=
-t
-> least locally)! Appreciated!
-
-good to hear.
-
-
-> Now, didn't you ask for a feedback? :)
->
-> I. Each time I start git-gui it tells me that:
-> Git version cannot be determined.
-> C:/wingit/bin/git.exe claims it is version '1.5.3.mingw.1.99.ga821'.
-> Git Gui requires at least Git 1.5.0 or later.
-> Assume '1.5.3.mingw.1.99.ga821' is version 1.5.0?
->
-> Before I try to hunt it down, is it an easy fix?
-
-It is easy to fixed and I already have a patch in the pipeline.
-I know it's a bit annoying but it's not really a critical issue.
-Therefore I'll not create a new installer right away.
-
-
-> II. I noticed that in the latest version of Git Gui then Branch menu
-> does not have items to quickly switch to another branch (basically
-> items, named after branches). Is it very hard to get them back?
->
-> I did not report it earlier because all my previous attempts to get
-> fully working version failed.
-
-Note, I'm currently focusing on the Windows installer, while git-gui
-is a project of it's own. Git gui is not specific to Windows but a
-cross platform tool that runs on Unix as well. git-gui is part of the
-official git repository. I just take what git-gui offers and pack it
-into the installer. Most of the real work was done by Shawn O. Pearce.
-
-The right platform for discussing git-gui specific issues is the
-official git mailing list (not the msysgit list). I added the list
-in CC. I can't comment on this issue in detail because I'm not using
-Git Gui that frequently. Maybe someone else from the git mailing list
-has a comment?
-
-
-
-> III. Also, I was pleasantly surprised that git-gui is localized to
-> Russian (probably among many other languages). However, the above
-> message is missing from localization. So on Russian system I got an
-> empty message, asking Yes or No. Is it easy to fix too? If you want
-> real Russian there, here you are:
-> =D0=9D=D0=B5 =D0=BC=D0=BE=D0=B3=D1=83 =D0=BE=D0=BF=D1=80=D0=B5=D0=B4=D0=
-=B5=D0=BB=D0=B8=D1=82=D1=8C =D0=B2=D0=B5=D1=80=D1=81=D0=B8=D1=8E Git.
-> =D0=92=D0=B5=D1=80=D1=81=D0=B8=D1=8F C:/wingit/bin/git.exe: '1.5.3.mi=
-ngw.1.99.ga821'.
-> Git Gui =D1=82=D1=80=D0=B5=D0=B1=D1=83=D0=B5=D1=82 =D0=BA=D0=B0=D0=BA=
- =D0=BC=D0=B8=D0=BD=D0=B8=D0=BC=D1=83=D0=BC Git 1.5.0.
-> =D0=A1=D1=87=D0=B8=D1=82=D0=B0=D1=82=D1=8C '1.5.3.mingw.1.99.ga821' =D0=
-=B2=D0=B5=D1=80=D1=81=D0=B8=D0=B5=D0=B9 1.5.0?
-
-I know about the localization efforts but I did not closely follow
-them. All the cedits go to people on the git mailing list who worked
-on the localization.
-
-Maybe someone could pick up your suggestion and prepare a patch for
-git-gui? Personally, I don't know how to do this.
-
-	Steffen
-
-> On Oct 5, 3:30 pm, Steffen wrote:
->
->> I also created an installer, which you can find at
+Alex Riesen wrote:
+> Sam Vilain, Fri, Oct 05, 2007 05:09:10 +0200:
+>> If the repository got mangled by FAT capitalization rules, then a ref
+>> such as "HEAD" will become "head" once it is back on a non-FAT FS.
+>> Check for this condition in resolve_refs and in the setup code.
 >>
->> http://www.zib.de/prohaska/2007/git/Git-1.5.3-preview20071005.exe
->>
->> The installer contains the branches devel merged with
->> steffen/shawn-git-gui.
+>> Suggested-by: Francois Marier <francois@debian.org>
+>> Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
+>> ---
+>>   This should probably help people putting their git repos on
+>>   FAT USB sticks.
+> 
+> Can the people just mount FAT partitions with shortname=mixed?
+
+Of course, that is probably a solution to the problem, whereas my patch
+is a workaround.
+
+Now, I realise that this might open a can of worms ... would we also
+want to go looking for files called "pack-ab~1.pac" ?  Almost certainly
+not - but this solves the most immediate problem experienced by people
+putting their git repositories onto FAT filesystems mounted with the
+default options, which will say "FATAL: not a git repository" otherwise.
+
+Sam.
