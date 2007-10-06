@@ -1,63 +1,135 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] git-gui: accept versions containing text annotations, like 1.5.3.mingw.1
-Date: Sat,  6 Oct 2007 15:27:22 +0200
-Message-ID: <11916772423623-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
-To: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Oct 06 15:27:55 2007
+From: Kristof Provost <Kristof@provost-engineering.be>
+Subject: Re: [PATCH] makefile: Add a cscope target
+Date: Sat, 6 Oct 2007 16:24:42 +0200
+Message-ID: <20071006142442.GA4635@luggage>
+References: <20071005223336.GA4556@luggage> <20071006010437.GS31659@planck.djpig.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="82I3+IH0IqGh5yIs"
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sat Oct 06 16:25:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ie9hB-0001HR-7u
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 15:27:53 +0200
+	id 1IeAaU-0002Mu-Ap
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 16:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755242AbXJFN1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 09:27:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbXJFN1i
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 09:27:38 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55704 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751199AbXJFN1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 09:27:37 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l96DRN45002831;
-	Sat, 6 Oct 2007 15:27:23 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l96DRMG3029603;
-	Sat, 6 Oct 2007 15:27:23 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
+	id S1754885AbXJFOYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 10:24:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753932AbXJFOYu
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 10:24:50 -0400
+Received: from rhineheart.priorweb.be ([213.193.229.215]:38872 "HELO
+	rhineheart.priorweb.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1753699AbXJFOYt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 10:24:49 -0400
+Received: (qmail 30970 invoked by uid 1010); 6 Oct 2007 14:24:45 -0000
+Received: from unknown (HELO rhineheart.priorweb.be) (127.0.0.1)
+  by rhineheart.priorweb.be with SMTP; 6 Oct 2007 14:24:45 -0000
+Received: from luggage (dD5767E05.access.telenet.be [213.118.126.5])
+	by rhineheart.priorweb.be (Postfix) with SMTP;
+	Sat,  6 Oct 2007 16:24:42 +0200 (CEST)
+Received: by luggage (sSMTP sendmail emulation); Sat, 06 Oct 2007 16:24:43 +0200
+Content-Disposition: inline
+In-Reply-To: <20071006010437.GS31659@planck.djpig.de>
+X-PGP-Fingerprint: 6B6E 5EED 8ECF FAE7 1F61  7458 5046 7D0E 11B0 0EE8
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Virus-Scanned: Passed
+X-Spam-Scanned: 2.0
+X-Spam-Status: NO
+X-Scanned-By: PriorWeb mailfilter
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60147>
 
-This commit teaches git-gui to accept versions with annotations
-that start with text and optionally end with a dot followed by
-a number.
 
-This is needed by the current versioning scheme of msysgit,
-which uses versions like 1.5.3.mingw.1. However, the changes
-is not limited to this use case. Any version of the form
-<numeric version>.<anytext>.<number> would be parsed and only
-the starting <numeric version> used for validation.
+--82I3+IH0IqGh5yIs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+On 2007-10-06 03:04:37 (+0200), Frank Lichtenheld <frank@lichtenheld.de> wr=
+ote:
+> On Sat, Oct 06, 2007 at 12:33:36AM +0200, Kristof Provost wrote:
+> > +cscope:
+> > +	$(RM) cscope*
+> > +	$(FIND) . -name '*.hcS]' -print | xargs cscope -b
+>=20
+>=20
+> missing [
+Well, that will teach me to post patches after midnight.
+
+Here's a fixed version. I've also added cscope* to the .gitignore file.
+For some reason tags and TAGS weren't in there either so I've added them
+too.
+
+Signed-off-by: Kristof Provost <Kristof@provost-engineering.be>
+
 ---
- git-gui/git-gui.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+diff --git a/.gitignore b/.gitignore
+index e0b91be..62afef2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -171,3 +171,6 @@ config.status
+ config.mak.autogen
+ config.mak.append
+ configure
++tags
++TAGS
++cscope*
+diff --git a/Makefile b/Makefile
+index 8db4dbe..e2790c8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -947,6 +947,10 @@ tags:
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+=20
++cscope:
++	$(RM) cscope*
++	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
++
+ ### Detect prefix changes
+ TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
+              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
+@@ -1093,7 +1097,7 @@ clean:
+ 		$(LIB_FILE) $(XDIFF_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+-	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
++	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+ 	$(RM) -r autom4te.cache
+ 	$(RM) configure config.log config.mak.autogen config.mak.append config.st=
+atus config.cache
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+@@ -1111,7 +1115,7 @@ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS
+=20
+ .PHONY: all install clean strip
+-.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags .FORCE-GIT-CFLAGS
++.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS=20
+=20
+ ### Check documentation
+ #
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index bb1e7f3..f671eea 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -666,6 +666,7 @@ regsub -- {-dirty$} $_git_version {} _git_version
- regsub {\.[0-9]+\.g[0-9a-f]+$} $_git_version {} _git_version
- regsub {\.rc[0-9]+$} $_git_version {} _git_version
- regsub {\.GIT$} $_git_version {} _git_version
-+regsub {\.[a-zA-Z]+(\.[0-9]+)$} $_git_version {} _git_version
- 
- if {![regexp {^[1-9]+(\.[0-9]+)+$} $_git_version]} {
- 	catch {wm withdraw .}
--- 
-1.5.3.mingw.1.106.g1610f-dirty
+
+--
+Kristof
+=20
+
+--82I3+IH0IqGh5yIs
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHB5qqUEZ9DhGwDugRAut/AKCWhmwyJ348YcARJsZo6nLT6+1cyQCeM53W
+ihfQqnRUS1KfXyW7p8xbbbo=
+=Rxvv
+-----END PGP SIGNATURE-----
+
+--82I3+IH0IqGh5yIs--
