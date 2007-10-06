@@ -1,73 +1,50 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH 2/2] Run garbage collection with loose object pruning
-	after svn dcommit
-Date: Sat, 6 Oct 2007 10:15:52 +0200
-Message-ID: <20071006081552.GF4797@xp.machine.xx>
-References: <20071005001528.GA13029@midwinter.com> <20071005082110.GA4797@xp.machine.xx> <47066255.6080500@midwinter.com> <20071005164912.GE4797@xp.machine.xx> <470678ED.8050407@midwinter.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] makefile: Add a cscope target
+Date: Sat, 6 Oct 2007 10:23:58 +0200
+Message-ID: <20071006082358.GA2711@steel.home>
+References: <20071005223336.GA4556@luggage>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Sat Oct 06 10:16:03 2007
+Cc: git@vger.kernel.org
+To: Kristof Provost <Kristof@provost-engineering.be>
+X-From: git-owner@vger.kernel.org Sat Oct 06 10:25:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ie4pO-000094-Ke
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 10:16:03 +0200
+	id 1Ie4y4-0002Eo-Vd
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 10:25:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752236AbXJFIPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 04:15:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbXJFIPu
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 04:15:50 -0400
-Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:38780 "HELO
-	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752642AbXJFIPt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2007 04:15:49 -0400
-Received: (qmail 29617 invoked by uid 0); 6 Oct 2007 08:15:47 -0000
-Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
-  by mail.hofmann.stw.uni-erlangen.de with SMTP; 6 Oct 2007 08:15:47 -0000
+	id S1752120AbXJFIYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 04:24:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751915AbXJFIYD
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 04:24:03 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:34021 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751656AbXJFIYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 04:24:01 -0400
+Received: from tigra.home (Fae62.f.strato-dslnet.de [195.4.174.98])
+	by post.webmailer.de (fruni mo54) (RZmta 13.4)
+	with ESMTP id N02e2cj967JsDx ; Sat, 6 Oct 2007 10:23:58 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id B2656277AE;
+	Sat,  6 Oct 2007 10:23:58 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 30E00C776; Sat,  6 Oct 2007 10:23:58 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <470678ED.8050407@midwinter.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+In-Reply-To: <20071005223336.GA4556@luggage>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3BTaA==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60141>
 
-On Fri, Oct 05, 2007 at 10:48:29AM -0700, Steven Grimm wrote:
-> Peter Baumann wrote:
->> That's new to me. Glancing over git-commit.sh, I could only find a
->> 'git-gc --auto', but no prune. I am not against doing a 'git gc --auto',
->> but I am against the --prune, because this could make shared
->> repositories unfunctional.
->>   
->
-> Does anyone run "git svn dcommit" from a shared repository? That is the 
-> only command that will trigger this code path.
->
-> Given that you lose all the svn metadata if you do "git clone" (or "git 
-> clone -s") on a git-svn-managed repository, it's not clear to me that 
-> anyone would ever be bitten by this. Counterexamples welcome, of course.
->
-> How would you feel about a separate config option to specifically enable 
-> auto-pruning, and having "git svn clone" set that option by default? 
-> Presumably anyone who is setting up a shared git-svn repository will be up 
-> to the task of disabling the option.
->
+Kristof Provost, Sat, Oct 06, 2007 00:33:36 +0200:
+> +cscope:
+> +	$(RM) cscope*
 
-Sorry, I looked at 'git commit' (as you said in your mail) and not
-'git-svn dcommit'. Looking now at git-svn, I could see the there is only
-done a git-repack if the user *explicitly* asked for it on the cmdline
-specifying --repack. For this repack run, the default parameter includes
--d and no --prune, so I do not think that we are doing a --prune run if
-we where not _explicitly_ asked for it. As I said, I am totaly fine with
-doing a 'git-gc --auto', but I am a little worried about the --prune.
-
-We advertise everywhere that GIT adds only new content/objects/data to the
-repository and *never* deletes anything itself in the repo and now you
-want to do a --prune, wich obviously *does* delete data behind the users
-back in a dcommit/fetch operation, which no one would think of that these
-commands do have anything in common with deleting data. And this worries me.
-
--Peter
+You may want to add the cscope* to .gitignore
