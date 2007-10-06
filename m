@@ -1,135 +1,95 @@
-From: Kristof Provost <Kristof@provost-engineering.be>
-Subject: Re: [PATCH] makefile: Add a cscope target
-Date: Sat, 6 Oct 2007 16:24:42 +0200
-Message-ID: <20071006142442.GA4635@luggage>
-References: <20071005223336.GA4556@luggage> <20071006010437.GS31659@planck.djpig.de>
+From: martin f krafft <madduck@madduck.net>
+Subject: git-push [--all] and tags
+Date: Sat, 6 Oct 2007 17:05:06 +0100
+Message-ID: <20071006160506.GA28238@lapse.madduck.net>
 Mime-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="82I3+IH0IqGh5yIs"
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Sat Oct 06 16:25:03 2007
+	protocol="application/pgp-signature"; boundary="17pEHd4RhPHOinZp"
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 06 18:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeAaU-0002Mu-Ap
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 16:25:02 +0200
+	id 1IeCA1-00015O-Vo
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 18:05:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885AbXJFOYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 10:24:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753932AbXJFOYu
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 10:24:50 -0400
-Received: from rhineheart.priorweb.be ([213.193.229.215]:38872 "HELO
-	rhineheart.priorweb.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753699AbXJFOYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 10:24:49 -0400
-Received: (qmail 30970 invoked by uid 1010); 6 Oct 2007 14:24:45 -0000
-Received: from unknown (HELO rhineheart.priorweb.be) (127.0.0.1)
-  by rhineheart.priorweb.be with SMTP; 6 Oct 2007 14:24:45 -0000
-Received: from luggage (dD5767E05.access.telenet.be [213.118.126.5])
-	by rhineheart.priorweb.be (Postfix) with SMTP;
-	Sat,  6 Oct 2007 16:24:42 +0200 (CEST)
-Received: by luggage (sSMTP sendmail emulation); Sat, 06 Oct 2007 16:24:43 +0200
+	id S1762590AbXJFQFP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 12:05:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761633AbXJFQFN
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 12:05:13 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:32776 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761288AbXJFQFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 12:05:11 -0400
+Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id B4882BEAB
+	for <git@vger.kernel.org>; Sat,  6 Oct 2007 18:05:06 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 426BC3FEFB; Sat,  6 Oct 2007 17:05:05 +0100 (BST)
 Content-Disposition: inline
-In-Reply-To: <20071006010437.GS31659@planck.djpig.de>
-X-PGP-Fingerprint: 6B6E 5EED 8ECF FAE7 1F61  7458 5046 7D0E 11B0 0EE8
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-Virus-Scanned: Passed
-X-Spam-Scanned: 2.0
-X-Spam-Status: NO
-X-Scanned-By: PriorWeb mailfilter
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4482/Sat Oct  6 00:43:49 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60147>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60148>
 
 
---82I3+IH0IqGh5yIs
+--17pEHd4RhPHOinZp
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2007-10-06 03:04:37 (+0200), Frank Lichtenheld <frank@lichtenheld.de> wr=
-ote:
-> On Sat, Oct 06, 2007 at 12:33:36AM +0200, Kristof Provost wrote:
-> > +cscope:
-> > +	$(RM) cscope*
-> > +	$(FIND) . -name '*.hcS]' -print | xargs cscope -b
->=20
->=20
-> missing [
-Well, that will teach me to post patches after midnight.
+Hello people,
 
-Here's a fixed version. I've also added cscope* to the .gitignore file.
-For some reason tags and TAGS weren't in there either so I've added them
-too.
+`git-push --all --tags` does not work because git-push ends up
+calling git-send-pack --all refs/tags/*, which the latter does not
+deal with.
 
-Signed-off-by: Kristof Provost <Kristof@provost-engineering.be>
+Looking at the code, it seems that previously, --all would push
+everything, not just refs/heads/*. What's the reason that this was
+changed? Why aren't tags considered part of --all?
 
----
-diff --git a/.gitignore b/.gitignore
-index e0b91be..62afef2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -171,3 +171,6 @@ config.status
- config.mak.autogen
- config.mak.append
- configure
-+tags
-+TAGS
-+cscope*
-diff --git a/Makefile b/Makefile
-index 8db4dbe..e2790c8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -947,6 +947,10 @@ tags:
- 	$(RM) tags
- 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+If I wanted to fix this, so that --all pushes heads and --all --tags
+pushes heads and tags, I could do so in two ways:
+
+  1. instead of --all, pass refs/heads/* to git-send-pack
+  2. add --tags to git-send-pack
+
+which of these two would you prefer and why?
+
+Thanks,
+
+--=20
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
 =20
-+cscope:
-+	$(RM) cscope*
-+	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
-+
- ### Detect prefix changes
- TRACK_CFLAGS =3D $(subst ','\'',$(ALL_CFLAGS)):\
-              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
-@@ -1093,7 +1097,7 @@ clean:
- 		$(LIB_FILE) $(XDIFF_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
--	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
-+	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
- 	$(RM) -r autom4te.cache
- 	$(RM) configure config.log config.mak.autogen config.mak.append config.st=
-atus config.cache
- 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
-@@ -1111,7 +1115,7 @@ endif
- 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS
+"imagine if every thursday your shoes exploded if you
+ tied them the usual way. this happens to us all the time
+ with computers, and nobody thinks of complaining."
+                                                        -- jeff raskin
 =20
- .PHONY: all install clean strip
--.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags .FORCE-GIT-CFLAGS
-+.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS=20
-=20
- ### Check documentation
- #
+spamtraps: madduck.bogus@madduck.net
 
-
---
-Kristof
-=20
-
---82I3+IH0IqGh5yIs
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+--17pEHd4RhPHOinZp
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
 Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQFHB5qqUEZ9DhGwDugRAut/AKCWhmwyJ348YcARJsZo6nLT6+1cyQCeM53W
-ihfQqnRUS1KfXyW7p8xbbbo=
-=Rxvv
+iD8DBQFHB7IyIgvIgzMMSnURAluCAKCCf7iS/449DNvyFYHHq+fMSNJx5ACgvLAa
+miYjRBXHQDlZx1QuYBq5qvM=
+=ycu0
 -----END PGP SIGNATURE-----
 
---82I3+IH0IqGh5yIs--
+--17pEHd4RhPHOinZp--
