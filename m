@@ -1,69 +1,54 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: git fetch -- double fetch
-Date: Sat, 6 Oct 2007 19:57:59 +0100
-Message-ID: <20071006185759.GE28610@shadowen.org>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: A message from the human patch-queue
+Date: Sat, 6 Oct 2007 22:04:16 +0200
+Message-ID: <20071006200416.GU31659@planck.djpig.de>
+References: <8c5c35580710061018m43f8ceaag9341ee95d39500f5@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 06 20:58:20 2007
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 22:04:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeEqx-0001Eo-02
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 20:58:19 +0200
+	id 1IeFt7-0001Q5-Fb
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 22:04:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765031AbXJFS6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 14:58:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762883AbXJFS6F
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 14:58:05 -0400
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3116 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765033AbXJFS6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 14:58:04 -0400
-Received: from 85-210-7-254.dsl.pipex.com ([85.210.7.254] helo=localhost.localdomain)
-	by hellhawk.shadowen.org with esmtpa (Exim 4.50)
-	id 1IeEqf-0002K9-0P
-	for git@vger.kernel.org; Sat, 06 Oct 2007 19:58:01 +0100
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by localhost.localdomain with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1IeEqd-0000if-BO
-	for git@vger.kernel.org; Sat, 06 Oct 2007 19:57:59 +0100
+	id S1762576AbXJFUE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 16:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764160AbXJFUE2
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 16:04:28 -0400
+Received: from planck.djpig.de ([85.10.192.180]:1089 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751537AbXJFUE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 16:04:27 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id A9B6B88231;
+	Sat,  6 Oct 2007 22:04:25 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id JbxDTfR9ERa8; Sat,  6 Oct 2007 22:04:16 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 679C388232; Sat,  6 Oct 2007 22:04:16 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <8c5c35580710061018m43f8ceaag9341ee95d39500f5@mail.gmail.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-Received-SPF: none
-X-SPF-Guess: neutral
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60155>
 
-I have recently been seeing repeated fetching of some branches.  I feel
-this has happened in at least three of my repos on three distinct
-projects:
+On Sat, Oct 06, 2007 at 07:18:34PM +0200, Lars Hjemli wrote:
+> Please let me know if I've your patches are missing, and I'll swiftly add them.
 
-apw@pinky$ git fetch origin
-remote: Generating pack...
-remote: Done counting 5 objects.
-remote: Deltifying 5 objects...
-remote:  100% (5/5) done
-Unpacking 5 objects...
-remote: Total 5 (delta 0), reused 0 (delta 0)
- 100% (5/5) done
-* refs/remotes/origin/master: fast forward to branch 'master' of ssh://git@abat-dev/var/www/git/abat
-  old..new: ce046f0..41c9dde
-* refs/remotes/origin/master: fast forward to branch 'master' of ssh://git@abat-dev/var/www/git/abat
-  old..new: ce046f0..41c9dde
-error: Ref refs/remotes/origin/master is at 41c9dde2e63f35cd7c64b0a52c3650f246999ffd but expected ce046f04172a2a216092936302ab2cb4da64b69e
-apw@pinky$
+You can remove my q/fl/t9400-checkout and q/fl/cvsserver-packed-refs. I
+will resubmit them in altered form.
+(My current cvsserver queue can be found at
+http://source.djpig.de/git/?p=git-cvsserver.git;a=shortlog;h=cvsserver)
 
-This is with a 'next' a couple of days old:
-
-apw@pinky$ git --version
-git version 1.5.3.3.1145.g46930-dirty
-apw@pinky$
-
-Will be upgrading to the latest next, will let you know if I see it again.
-
--apw
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
