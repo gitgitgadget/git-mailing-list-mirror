@@ -1,86 +1,73 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Question about "git commit -a"
-Date: Sat, 6 Oct 2007 08:43:36 +0100
-Message-ID: <200710060843.38567.andyparkins@gmail.com>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <1191599763.7117.18.camel@hinata.boston.redhat.com> <47067F68.2080709@gmx.net>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH 2/2] Run garbage collection with loose object pruning
+	after svn dcommit
+Date: Sat, 6 Oct 2007 10:15:52 +0200
+Message-ID: <20071006081552.GF4797@xp.machine.xx>
+References: <20071005001528.GA13029@midwinter.com> <20071005082110.GA4797@xp.machine.xx> <47066255.6080500@midwinter.com> <20071005164912.GE4797@xp.machine.xx> <470678ED.8050407@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Marko Macek <Marko.Macek@gmx.net>,
-	Kristian =?iso-8859-1?q?H=F8gsberg?= <krh@redhat.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 06 09:44:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sat Oct 06 10:16:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ie4KR-0001Nd-S6
-	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 09:44:04 +0200
+	id 1Ie4pO-000094-Ke
+	for gcvg-git-2@gmane.org; Sat, 06 Oct 2007 10:16:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752118AbXJFHny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 03:43:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752155AbXJFHny
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 03:43:54 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:49292 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbXJFHnx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 03:43:53 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so593488ugc
-        for <git@vger.kernel.org>; Sat, 06 Oct 2007 00:43:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=fEg1r20vdDznwf9n+4YHFirdwGj9iFTbTXiPte0+Avk=;
-        b=gGrnXeukMkwAyf1wQoy6SW3+YJ4Q52YIYkJ7lqEkXiFocOYGlBYx0VShK+8jnDN55/iblfQkRkw3iVd98s8eP/nxeXoF8Iw3inB2jIbcnoY5JCCREoJNnUorU6mEpzhQy1tkSJ/aGo5T8ob5BKwh164uKzdNkmOHpRODvO8sYIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iF59TZR9m2zfcELa6RGpYo2clJ+g9u25xehBoRtGg+T1KjAO6RNL19MD3aISa+EWIfQZAeO0BlMu8wscSzj5ish4OjMCuImO3vhooDIsARPmNrR5Eh3nL+UxDIYccTIeIXmmVZYIasKFXMGJUt5igeUaZswBJwByU4L/f5z7TLw=
-Received: by 10.66.224.3 with SMTP id w3mr4216832ugg.1191656632192;
-        Sat, 06 Oct 2007 00:43:52 -0700 (PDT)
-Received: from grissom.local ( [84.201.153.164])
-        by mx.google.com with ESMTPS id k30sm10517755ugc.2007.10.06.00.43.50
-        (version=SSLv3 cipher=OTHER);
-        Sat, 06 Oct 2007 00:43:51 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <47067F68.2080709@gmx.net>
+	id S1752236AbXJFIPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 04:15:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752252AbXJFIPu
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 04:15:50 -0400
+Received: from matlock.hofmann.stw.uni-erlangen.de ([131.188.24.35]:38780 "HELO
+	mail.hofmann.stw.uni-erlangen.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752642AbXJFIPt (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2007 04:15:49 -0400
+Received: (qmail 29617 invoked by uid 0); 6 Oct 2007 08:15:47 -0000
+Received: from ho135.hofmann.stw.uni-erlangen.de (HELO localhost) (p.b@hofmann.stw.uni-erlangen.de@172.17.27.135)
+  by mail.hofmann.stw.uni-erlangen.de with SMTP; 6 Oct 2007 08:15:47 -0000
 Content-Disposition: inline
+In-Reply-To: <470678ED.8050407@midwinter.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60140>
 
-On Friday 2007, October 05, Marko Macek wrote:
-
-> In CVS and subversion (which has nicer working-copy command line
-> interface IMHO), I simply make a copy of the working copy, revert the
-> non-commitable parts, build, commit the minor changes, and then update
-> the first copy. For larger projects, where this can be slow, I use
-> diff/revert/patch.
+On Fri, Oct 05, 2007 at 10:48:29AM -0700, Steven Grimm wrote:
+> Peter Baumann wrote:
+>> That's new to me. Glancing over git-commit.sh, I could only find a
+>> 'git-gc --auto', but no prune. I am not against doing a 'git gc --auto',
+>> but I am against the --prune, because this could make shared
+>> repositories unfunctional.
+>>   
 >
-> Small checkins are nice for git-bisect, but if they don't build...
+> Does anyone run "git svn dcommit" from a shared repository? That is the 
+> only command that will trigger this code path.
+>
+> Given that you lose all the svn metadata if you do "git clone" (or "git 
+> clone -s") on a git-svn-managed repository, it's not clear to me that 
+> anyone would ever be bitten by this. Counterexamples welcome, of course.
+>
+> How would you feel about a separate config option to specifically enable 
+> auto-pruning, and having "git svn clone" set that option by default? 
+> Presumably anyone who is setting up a shared git-svn repository will be up 
+> to the task of disabling the option.
+>
 
-Who cares?  Commits that build isn't the only reason for small commits.
+Sorry, I looked at 'git commit' (as you said in your mail) and not
+'git-svn dcommit'. Looking now at git-svn, I could see the there is only
+done a git-repack if the user *explicitly* asked for it on the cmdline
+specifying --repack. For this repack run, the default parameter includes
+-d and no --prune, so I do not think that we are doing a --prune run if
+we where not _explicitly_ asked for it. As I said, I am totaly fine with
+doing a 'git-gc --auto', but I am a little worried about the --prune.
 
-git-bisect is nice and small buildable commits is something to aim for.  
-However, there is more to software history that buildable commits.
+We advertise everywhere that GIT adds only new content/objects/data to the
+repository and *never* deletes anything itself in the repo and now you
+want to do a --prune, wich obviously *does* delete data behind the users
+back in a dcommit/fetch operation, which no one would think of that these
+commands do have anything in common with deleting data. And this worries me.
 
-I hardly ever git-bisect, and I hardly ever checkout old revisions, however 
-I read the log _all the time_.  The smaller the commit and the better the 
-log message the more quickly I'll understand what was going on.  In the end 
-even if the commit doesn't build as long as the log message is a good 
-description of what the commit does and that thing is an isolated change 
-then the revision has achieved its goal for me.
-
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-Peter
