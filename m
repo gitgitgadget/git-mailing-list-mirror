@@ -1,60 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/4] git-gui i18n: Add more words to glossary.
-Date: Sun, 7 Oct 2007 19:39:37 -0400
-Message-ID: <20071007233937.GG2137@spearce.org>
-References: <200710052239.02492.stimming@tuhh.de> <20071007180559.GA2137@spearce.org> <200710072242.26288.stimming@tuhh.de> <20071007231231.GD2137@spearce.org> <Pine.LNX.4.64.0710080029430.4174@racer.site>
+From: David Brown <git@davidb.org>
+Subject: Re: [StGit PATCH 4/8] Don't split long and short description in
+	"stg edit"
+Date: Sun, 7 Oct 2007 16:40:10 -0700
+Message-ID: <20071007234009.GA19073@old.davidb.org>
+References: <20071007231446.12626.14259.stgit@yoghurt> <20071007231735.12626.81744.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 08 01:39:58 2007
+Content-Type: text/plain; charset=iso-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 01:40:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iefiz-0006W0-QO
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:39:54 +0200
+	id 1IefjX-0006e3-Qs
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:40:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756607AbXJGXjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 19:39:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756381AbXJGXjm
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:39:42 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59109 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756086AbXJGXjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 19:39:41 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iefia-0006Ze-MT; Sun, 07 Oct 2007 19:39:28 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 2498920FBAE; Sun,  7 Oct 2007 19:39:37 -0400 (EDT)
+	id S1756262AbXJGXkP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 19:40:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756191AbXJGXkO
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:40:14 -0400
+Received: from mail.davidb.org ([66.93.32.219]:52332 "EHLO mail.davidb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756086AbXJGXkN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 19:40:13 -0400
+Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
+	id 1IefjG-00052D-1x; Sun, 07 Oct 2007 16:40:10 -0700
+Mail-Followup-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710080029430.4174@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20071007231735.12626.81744.stgit@yoghurt>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60264>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Sun, 7 Oct 2007, Shawn O. Pearce wrote:
-> 
-> > If you are sending a series like that and its all po translation stuff 
-> > that is unlikely to need commenting on feel free to just dump it all out 
-> > as a single mbox (`git format-patch --stdout`) and attach it to the 
-> > email.  Less chance of the MUA mangling the message.
-> 
-> In this case, I suggest just pushing it to git-gui-i18n.git, maybe as a 
-> temporary branch "for-shawn", and send a pull request.  That's the best 
-> way to ensure that nothing gets mangled.
+On Mon, Oct 08, 2007 at 01:17:35AM +0200, Karl Hasselstr=F6m wrote:
+>"stg edit" used to present the patch information like this:
+>
+>  Short description
+>
+>  From: ...
+>  Date: ...
+>
+>  Long description
+>
+>If the project follows the git convention with a single-line short
+>description and follwed by a blank line and the rest of the
+>description, this merely looks a little odd. However, for projects
+>that don't follow that convention, presenting the first line
+>separately is actively inconvenient; for example, it breaks emacs's
+>fill-paragraph command.
 
-Yea, that's an even better option.  :-)
- 
--- 
-Shawn.
+I think this fix is better to begin with.  I found it especially confus=
+ing
+when there was only a single line commit message.  Now the header looks
+like a header :-)
+
+David
