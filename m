@@ -1,68 +1,72 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: Re: [StGIT PATCH] Better diagnostic for wrong branch configuration.
-Date: Sun, 7 Oct 2007 16:17:44 +0200
-Message-ID: <20071007141744.GY26436@nan92-1-81-57-214-146.fbx.proxad.net>
-References: <20071005204452.30902.60246.stgit@gandelf.nowhere.earth> <20071007131417.GA28492@diana.vm.bytemark.co.uk>
+From: Timo Hirvonen <tihirvon@gmail.com>
+Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and
+ optimize it a bit
+Date: Sun, 7 Oct 2007 17:24:25 +0300
+Message-ID: <20071007172425.bb691da9.tihirvon@gmail.com>
+References: <1190625904-22808-1-git-send-email-madcoder@debian.org>
+	<1190625904-22808-2-git-send-email-madcoder@debian.org>
+	<20071007140052.GA3260@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sun Oct 07 16:20:55 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 07 16:24:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeX02-0000SA-K7
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 16:20:55 +0200
+	id 1IeX3q-0001E8-DD
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 16:24:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752735AbXJGOUp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 10:20:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752734AbXJGOUp
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 10:20:45 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:60662 "EHLO smtp3-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752652AbXJGOUo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 10:20:44 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id D659C17B53E;
-	Sun,  7 Oct 2007 16:20:42 +0200 (CEST)
-Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id AD9A517B531;
-	Sun,  7 Oct 2007 16:20:42 +0200 (CEST)
-Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
-	id 3E12E1F051; Sun,  7 Oct 2007 16:17:44 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071007131417.GA28492@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1752751AbXJGOYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 10:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbXJGOYl
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 10:24:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.188]:3011 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752347AbXJGOYk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 10:24:40 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1041157nfb
+        for <git@vger.kernel.org>; Sun, 07 Oct 2007 07:24:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=53L+zohzvQbPCwsZV0bbjxiSQPAFCaLkT55kjLK0Gws=;
+        b=hi4ME+ahMW2Roij7XffbTmq4up5gf+eeVz5T1c7LQE11q8sZZdjWwJXcPcC2blmxw1RQw+XU8lLsZbwqdqNVo85ehEWYqQ0P2z+6bGFufv4kbIXJGyRZh3CoRtAs0LAxW6gTT0FasppTc4w1fJMFsacdcTKITo1TIQaqGiexoPw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=mywDyJZpAtYsArTzAGxJxUMzKCmbCmnyjIr8GdQkdGRxlKdNKbyuyT3RrZedck9C5/OJ8Y7xjSqHfWxqE+Qc40Vy0m6jyXan7HiwBd0zLpiKLBVaSWy7zhBphCTt46oM9z3+kTQ4/VHoS3M96VQgflmESTGYvIQSL25zL335mdA=
+Received: by 10.86.28.5 with SMTP id b5mr4274885fgb.1191767079319;
+        Sun, 07 Oct 2007 07:24:39 -0700 (PDT)
+Received: from garlic.home.net ( [85.23.19.170])
+        by mx.google.com with ESMTPS id k29sm4442855fkk.2007.10.07.07.24.34
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 07 Oct 2007 07:24:35 -0700 (PDT)
+In-Reply-To: <20071007140052.GA3260@steel.home>
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.14; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60179>
 
-On Sun, Oct 07, 2007 at 03:14:17PM +0200, Karl Hasselstr=F6m wrote:
-> On 2007-10-05 22:44:52 +0200, Yann Dirson wrote:
->=20
-> > If the branch.*.merge parameter does not name a valid remote head,
-> > stgit would not rebase after a fetch, and would write instead
-> > 'Rebasing to "None" ... done'.
-> >
-> > This patch makes this situation an error and tells the user what to
-> > fix in his repo configuration.
->=20
-> Good. Sign-off?
+Alex Riesen <raa.lkml@gmail.com> wrote:
 
-Oops, sorry - "Signed-off-by: Yann Dirson <ydirson@altern.org>"
+> +static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
+> +{
+> +	int len = a->len < b->len ? a->len: b->len;
+> +	int cmp = memcmp(a->buf, b->buf, len);
+> +	if (cmp)
+> +		return cmp;
+> +	return a->len < b->len ? -1: a->len != b->len;
+> +}
 
-> > -                raise GitException, "StGit does not support multip=
-le FETCH_HEAD"
-> > +                raise GitException, 'StGit does not support multip=
-le FETCH_HEAD'
->=20
-> Unrelated quote fixup. No big deal, though.
+strbuf->buf is always non-NULL and NUL-terminated so you could just do
 
-Right - did not seem to warrant a patch of its own :)
-
-Best regards,
---=20
-Yann
+static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
+{
+	int len = a->len < b->len ? a->len : b->len;
+	return memcmp(a->buf, b->buf, len + 1);
+}
