@@ -1,182 +1,276 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-shell and git-cvsserver
-Date: Mon, 8 Oct 2007 05:51:19 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710080534270.4174@racer.site>
-References: <200710051453.47622.wielemak@science.uva.nl>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jan Wielemaker <wielemak@science.uva.nl>
-X-From: git-owner@vger.kernel.org Mon Oct 08 06:51:50 2007
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: [PATCH] Make git-clean a builtin
+Date: Sun,  7 Oct 2007 18:57:46 -0500
+Message-ID: <11918014664038-git-send-email-shawn.bohrer@gmail.com>
+Cc: Johannes.Schindelin@gmx.de, frank@lichtenheld.de,
+	gitster@pobox.com, Shawn Bohrer <shawn.bohrer@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 07:02:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iekar-0001Nm-Vd
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 06:51:50 +0200
+	id 1IeklC-0002cd-OL
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 07:02:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751056AbXJHEvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 00:51:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbXJHEvh
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 00:51:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35580 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750719AbXJHEvg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 00:51:36 -0400
-Received: (qmail invoked by alias); 08 Oct 2007 04:51:34 -0000
-Received: from unknown (EHLO [172.17.38.182]) [38.99.84.33]
-  by mail.gmx.net (mp036) with SMTP; 08 Oct 2007 06:51:34 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+DOD54re+DiKJgovEhYkFfYoxzX5bhOUhNi1otbo
-	Ffi7L0RDAuzZEu
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710051453.47622.wielemak@science.uva.nl>
-X-Y-GMX-Trusted: 0
+	id S1751383AbXJHFCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 01:02:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbXJHFCI
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 01:02:08 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:50052 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751337AbXJHFCG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 01:02:06 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1204166wxd
+        for <git@vger.kernel.org>; Sun, 07 Oct 2007 22:02:06 -0700 (PDT)
+Received: by 10.90.69.8 with SMTP id r8mr2794522aga.1191801399810;
+        Sun, 07 Oct 2007 16:56:39 -0700 (PDT)
+Received: from mediacenter ( [70.112.123.114])
+        by mx.google.com with ESMTPS id 34sm6825395wra.2007.10.07.16.56.37
+        (version=SSLv3 cipher=OTHER);
+        Sun, 07 Oct 2007 16:56:38 -0700 (PDT)
+Received: by mediacenter (sSMTP sendmail emulation); Sun,  7 Oct 2007 18:57:46 -0500
+X-Mailer: git-send-email 1.5.3.GIT
+In-Reply-To: Pine.LNX.4.64.0710071737500.4174@racer.site
+References: Pine.LNX.4.64.0710071737500.4174@racer.site
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60288>
 
-Hi,
+This replaces git-clean.sh with builtin-clean.c, and moves git-clean.sh to the
+examples.
 
-On Fri, 5 Oct 2007, Jan Wielemaker wrote:
+Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
+---
 
-> Hi,
-> 
-> I know, I shouldn't be using git-cvsserver :-( Anyway, I patched
-> git-shell to start git-cvsserver if it is started interactively and the
-> one and only line given to it is "cvs server".
-> 
-> The patch to shell.c is below. The trick with the EXEC_PATH is needed
-> because git-cvsserver doesn't appear to be working if you do not include
-> the git bindir in $PATH. I think that should be fixed in git-cvsserver
-> and otherwise we should at least make the value come from the prefix
-> make variable.  With this patch I was able to use both Unix and Windows
-> cvs clients using git-shell as login shell.
-> 
-> Note that you must provide ~/.gitconfig with user and email in the
-> restricted environment.
-> 
-> 	Enjoy --- Jan
+Rewritten to use remove_directory_recursively() per Dscho's suggestion.  Patch
+is now based ontop of 'next'. 
 
-I think this is a valuable contribution.  That's why I comment...
+ Makefile                                      |    3 +-
+ builtin-clean.c                               |  161 +++++++++++++++++++++++++
+ builtin.h                                     |    1 +
+ git-clean.sh => contrib/examples/git-clean.sh |    0 
+ git.c                                         |    1 +
+ 5 files changed, 165 insertions(+), 1 deletions(-)
+ create mode 100644 builtin-clean.c
+ rename git-clean.sh => contrib/examples/git-clean.sh (100%)
 
-Please put a useful commit message (less like an email, more like 
-something you want to read in git-log) at the beginning of the email, then 
-a line containing _just_ "---", and after that some comments that are not 
-meant to be stored in the history, like (I know this does not belong 
-to...)
-
-After that, there should be a diffstat, and then the patch.
-
-The easiest to have this layout is to do a proper commit in git, use "git 
-format-patch" to produce the patch, and then insert what you want to say 
-in addition to the commit message between the "---" marker and the 
-diffstat.
-
-I strongly disagree (as you yourself, probably) with the notion that this 
-does not belong into git-shell.
-
-
-> +#define EXEC_PATH "/usr/local/bin"
-
-This is definitely wrong.  Use git_exec_path() instead.
-
-> +static int do_cvs_cmd(const char *me, char *arg)
-> +{
-> +	const char *my_argv[4];
-
-Maybe rename this to cvsserver_args?
-
-> +	const char *oldpath;
-> +
-> +	if ( !arg )
-> +		die("no argument");
-> +	if ( strcmp(arg, "server") )
-> +		die("only allows git-cvsserver server: %s", arg);
-> +
-> +	my_argv[0] = "cvsserver";
-> +	my_argv[1] = "server";
-> +	my_argv[2] = NULL;
-> +
-> +	if ( (oldpath=getenv("PATH")) ) {
-
-Please lose the spaces after the opening and before the closing brackets.  
-And put spaces around the "=" sign.
-
-It is really distracting to read different styles of code in the same 
-project, and that's why we're pretty anal about coding styles.  Just have 
-a look (in the same file) how we write things, and imitate it as closely 
-as possible.
-
-> +		char *newpath = malloc(strlen(oldpath)+strlen(EXEC_PATH)+5+1+1); > +		
-> +		sprintf(newpath, "PATH=%s:%s", EXEC_PATH, oldpath);
-> +		putenv(newpath);
-> +	} else {
-> +		char *newpath = malloc(strlen(EXEC_PATH)+5+1);
-> +		
-> +		sprintf(newpath, "PATH=%s", EXEC_PATH);
-> +		putenv(newpath);
-> +	}
-
-You have redundant "putenv(newpath);" in both clauses.  AFAICT putenv() is 
-deprecated, too, and we use setenv() elsewhere.
-
-In addition, I strongly suggest using strbuf:
-
-	struct strbuf newpath = STRBUF_INIT;
-
-	strbuf_addstr(&newpath, git_exec_path());
-	if ((oldpath = getenv("PATH"))) {
-		strbuf_addch(&newpath, ':');
-		strbuf_addstr(&newpath, oldpath);
-	}
-
-	setenv("PATH", strbuf_detach(&newpath, NULL), 1);
-
-> +	return execv_git_cmd(my_argv);
-
-... and then you call execv_git_cmd(), which already does all the details 
-of setting up the exec dir correctly AFAIR.
-
->  int main(int argc, char **argv)
->  {
->  	char *prog;
-> +	char buf[256];
->  	struct commands *cmd;
->  
->  	/* We want to see "-c cmd args", and nothing else */
-> -	if (argc != 3 || strcmp(argv[1], "-c"))
-> -		die("What do you think I am? A shell?");
-> +	if (argc == 1) {
-> +		if (fgets(buf, sizeof(buf)-1, stdin)) {
-> +			char *end;
-> +
-> +			if ( (end=strchr(buf, '\n')) )
-> +			{	while(end>buf && end[-1] <= ' ')
-> +					end--;
-> +				*end = '\0';
-> +			} else {
-> +				die("Bad command");
-> +			}
-> +
-> +			prog = buf;
-> +		} else {
-> +			die("No command");
-> +		}
-> +	} else {
-> +		if (argc != 3 || strcmp(argv[1], "-c"))
-> +			die("What do you think I am? A shell?");
-> +
-> +		prog = argv[2];
-> +		argv += 2;
-> +		argc -= 2;
-> +	}
-
-And this is ugly.  If you want to support "cvs server", then just check 
-for that string, and if it matches, return execl_git_cmd("cvsserver");
-
-Otherwise proceed as in the original code.
-
-Ciao,
-Dscho
+diff --git a/Makefile b/Makefile
+index 62bdac6..bed4c78 100644
+--- a/Makefile
++++ b/Makefile
+@@ -206,7 +206,7 @@ BASIC_LDFLAGS =
+ 
+ SCRIPT_SH = \
+ 	git-bisect.sh git-checkout.sh \
+-	git-clean.sh git-clone.sh git-commit.sh \
++	git-clone.sh git-commit.sh \
+ 	git-ls-remote.sh \
+ 	git-merge-one-file.sh git-mergetool.sh git-parse-remote.sh \
+ 	git-pull.sh git-rebase.sh git-rebase--interactive.sh \
+@@ -324,6 +324,7 @@ BUILTIN_OBJS = \
+ 	builtin-check-attr.o \
+ 	builtin-checkout-index.o \
+ 	builtin-check-ref-format.o \
++	builtin-clean.o \
+ 	builtin-commit-tree.o \
+ 	builtin-count-objects.o \
+ 	builtin-describe.o \
+diff --git a/builtin-clean.c b/builtin-clean.c
+new file mode 100644
+index 0000000..af61de0
+--- /dev/null
++++ b/builtin-clean.c
+@@ -0,0 +1,161 @@
++/*
++ * "git clean" builtin command
++ *
++ * Copyright (C) 2007 Shawn Bohrer
++ *
++ * Based on git-clean.sh by Pavel Roskin
++ */
++
++#include "builtin.h"
++#include "cache.h"
++#include "run-command.h"
++#include "dir.h"
++
++static int disabled = 0;
++static int show_only = 0;
++static int remove_directories = 0;
++static int quiet = 0;
++static int ignored = 0;
++static int ignored_only = 0;
++
++static const char builtin_clean_usage[] =
++"git-clean [-d] [-f] [-n] [-q] [-x | -X] [--] <paths>...";
++
++static int git_clean_config(const char *var, const char *value)
++{
++	if (!strcmp(var, "clean.requireforce")) {
++		disabled = git_config_bool(var, value);
++	}
++	return 0;
++}
++
++int cmd_clean(int argc, const char **argv, const char *prefix)
++{
++	int i;
++	int j;
++	struct child_process cmd;
++	const char **argv_ls_files;
++	char *buf = NULL;
++	char path[1024];
++	FILE *cmd_fout;
++	struct strbuf dir;
++
++	git_config(git_clean_config);
++
++	for (i = 1; i < argc; i++) {
++		const char *arg = argv[i];
++
++		if (arg[0] != '-')
++			break;
++		if (!strcmp(arg, "--")) {
++			i++;
++			break;
++		}
++		if (!strcmp(arg, "-n")) {
++			show_only = 1;
++			disabled = 0;
++			continue;
++		}
++		if (!strcmp(arg, "-f")) {
++			disabled = 0;
++			continue;
++		}
++		if (!strcmp(arg, "-d")) {
++			remove_directories = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-q")) {
++			quiet = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-x")) {
++			ignored = 1;
++			continue;
++		}
++		if (!strcmp(arg, "-X")) {
++			ignored_only = 1;
++			continue;
++		}
++		usage(builtin_clean_usage);
++	}
++
++	if (ignored && ignored_only)
++		usage(builtin_clean_usage);
++
++	if (disabled) {
++		die("clean.requireForce set and -n or -f not given; refusing to clean");
++	}
++
++	/* Paths (argc - i) + 8 (Possible arguments)*/
++	argv_ls_files = xmalloc((argc - i + 8) * sizeof(const char *));
++	argv_ls_files[0] = "ls-files";
++	argv_ls_files[1] = "--others";
++	argv_ls_files[2] = "--directory";
++	j = 3;
++	if (!ignored) {
++		argv_ls_files[j++] = "--exclude-per-directory=.gitignore";
++		if (ignored_only)
++			argv_ls_files[j++] = "--ignored";
++		if (!access(git_path("info/exclude"), F_OK)) {
++			char *exclude_path = git_path("info/exclude");
++			int len = strlen(exclude_path);
++			buf = (char*)malloc(len+16);
++			sprintf(buf, "--exclude-from=%s", exclude_path);
++			argv_ls_files[j++] = buf;
++		}
++	}
++	argv_ls_files[j++] = "--";
++	/* Add remaining paths passed in as arguments */
++	if (argc - i)
++		memcpy(argv_ls_files + j++, argv + i, (argc - i) * sizeof(const char *));
++	argv_ls_files[j + argc - i] = NULL;
++
++	memset(&cmd, 0, sizeof(cmd));
++	cmd.argv = argv_ls_files;
++	cmd.git_cmd = 1;
++	cmd.out = -1;
++	if (start_command(&cmd))
++		die("Could not run sub-command: git ls-files");
++
++	strbuf_init(&dir, 0);
++	cmd_fout = fdopen(cmd.out, "r");
++	while (fgets(path, sizeof(path), cmd_fout) != NULL) {
++		struct stat st;
++		char *p;
++		p = strrchr(path, '\n');
++		if ( p != NULL )
++			*p = '\0';
++		if (!lstat(path, &st) && (S_ISDIR(st.st_mode))) {
++			strbuf_addstr(&dir, path);
++			if (show_only && remove_directories) {
++				printf("Would remove %s\n", dir.buf);
++			} else if (quiet && remove_directories) {
++				remove_dir_recursively(&dir, 0);
++			} else if (remove_directories) {
++				printf("Removing %s\n", path);
++				remove_dir_recursively(&dir, 0);
++			} else if (show_only) {
++				printf("Would not remove %s\n", dir.buf);
++			} else {
++				printf("Not removing %s\n", dir.buf);
++			}
++			strbuf_reset(&dir);
++		} else {
++			if (show_only) {
++				printf("Would remove %s\n", path);
++				continue;
++			} else if (!quiet) {
++				printf("Removing %s\n", path);
++			}
++			unlink(path);
++		}
++	}
++
++	strbuf_release(&dir);
++	fclose(cmd_fout);
++	finish_command(&cmd);
++	if (buf != NULL)
++		free(buf);
++	free(argv_ls_files);
++	return 0;
++}
+diff --git a/builtin.h b/builtin.h
+index 65cc0fb..cdefdc0 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -23,6 +23,7 @@ extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
+ extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
+ extern int cmd_cherry(int argc, const char **argv, const char *prefix);
+ extern int cmd_cherry_pick(int argc, const char **argv, const char *prefix);
++extern int cmd_clean(int argc, const char **argv, const char *prefix);
+ extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
+ extern int cmd_describe(int argc, const char **argv, const char *prefix);
+diff --git a/git-clean.sh b/contrib/examples/git-clean.sh
+similarity index 100%
+rename from git-clean.sh
+rename to contrib/examples/git-clean.sh
+diff --git a/git.c b/git.c
+index d7c6bca..4e39169 100644
+--- a/git.c
++++ b/git.c
+@@ -320,6 +320,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "cherry", cmd_cherry, RUN_SETUP },
+ 		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
++		{ "clean", cmd_clean, RUN_SETUP },
+ 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
+ 		{ "config", cmd_config },
+ 		{ "count-objects", cmd_count_objects, RUN_SETUP },
+-- 
+1.5.3.GIT
