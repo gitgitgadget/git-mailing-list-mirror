@@ -1,59 +1,73 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and  optimize it a bit
-Date: Mon, 8 Oct 2007 00:12:17 +0200
-Message-ID: <EF81F7DD-73C7-4B6F-92D2-4A143CA05365@wincent.com>
-References: <1190625904-22808-1-git-send-email-madcoder@debian.org> <1190625904-22808-2-git-send-email-madcoder@debian.org> <20071007140052.GA3260@steel.home> <20071007172425.bb691da9.tihirvon@gmail.com> <20071007143912.GB10024@artemis.corp> <87sl4nlyg0.fsf@catnip.gol.com> <857ilylxhm.fsf@lola.goethe.zz> <20071007215432.GC2765@steel.home>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Kastrup <dak@gnu.org>, Miles Bader <miles@gnu.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 00:12:54 2007
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
+Date: Mon, 8 Oct 2007 00:19:20 +0200
+Message-ID: <20071007221920.GF2765@steel.home>
+References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 00:19:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeeMn-0002wh-Fj
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 00:12:53 +0200
+	id 1IeeTQ-0003mH-DO
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 00:19:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755848AbXJGWMk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 18:12:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755978AbXJGWMk
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 18:12:40 -0400
-Received: from wincent.com ([72.3.236.74]:60157 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755971AbXJGWMj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2007 18:12:39 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l97MCUZX017301;
-	Sun, 7 Oct 2007 17:12:31 -0500
-In-Reply-To: <20071007215432.GC2765@steel.home>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754952AbXJGWTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 18:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756098AbXJGWTX
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 18:19:23 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:53346 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754952AbXJGWTX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 18:19:23 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (fruni mo11) (RZmta 13.4)
+	with ESMTP id 002d48j97HVAEJ ; Mon, 8 Oct 2007 00:19:21 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id D989B277AE;
+	Mon,  8 Oct 2007 00:19:20 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id B2AFEC502; Mon,  8 Oct 2007 00:19:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60231>
 
-El 7/10/2007, a las 23:54, Alex Riesen escribi=F3:
+Elijah Newren, Mon, Oct 08, 2007 00:00:51 +0200:
+> On 10/7/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> > On Sun, Oct 07, 2007 at 03:23:59PM -0600, Elijah Newren wrote:
+> > > The following set of instructions will duplicate my problem with a
+> > > smaller repo; why is the local git repository bigger after running
+> > > git-filter-branch rather than smaller as I'd expect?  I'm probably
+> > > missing something obvious, but I have no idea what it is.
+> >
+> > The usual suspect would be the reflog.
+> 
+> The git-filter-branch documentation mentions creating refs/original
+> under .git.  Unfortunately, it doesn't contain any links or
+> documentation on how I'd clean those out and I haven't been able to
+> figure it out.  I asked on #git how to clean these out and got some
+> answers that didn't work (git branch -d and something else I don't
+> remember).
 
->> ... All the rest pretty much
->> was worse than what we started from in that it needed to reevaluate
->> more conditions and turned out more complicated and obfuscate even t=
-o
->> the human reader.
->
-> it _is_ smaller. And it is _measurably_ faster on that thing I have a=
-t
-> home (and old p4).
+rm -rf .git/refs/original/refs/heads/<the branch where HEAD pointed to>
+(assuming you haven't repacked yet)
 
-Can we see the numbers and the steps used to obtain them? I'm also a =20
-little bit confused about how an inlined function can lead to a =20
-smaller executable... or did you just mean lines-of-code?
+or just edit .git/packed-refs and remove everything "refs/original"
+which fits the criteria
 
-Cheers,
-Wincent
+> So...how do I fix the reflog, and then repack to have a
+> pack under 11MB in size?
+
+git reflog expire --all (it is a bit to much. You can just edit
+.git/logs/* in any text editor)
