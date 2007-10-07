@@ -1,300 +1,110 @@
 From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: [PATCH] Make git-clean a builtin
-Date: Sat,  6 Oct 2007 20:17:21 -0500
-Message-ID: <1191719841666-git-send-email-shawn.bohrer@gmail.com>
-Cc: frank@lichtenheld.de, gitster@pobox.com,
-	Shawn Bohrer <shawn.bohrer@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 07 06:55:14 2007
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Sat, 6 Oct 2007 20:13:31 -0500
+Message-ID: <20071007011331.GC5642@mediacenter.austin.rr.com>
+References: <11917040461528-git-send-email-shawn.bohrer@gmail.com> <20071006215253.GX31659@planck.djpig.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun Oct 07 06:55:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeKkw-0000dg-3V
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 03:16:30 +0200
+	id 1IeKhT-0000c7-IW
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 03:12:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752090AbXJGBQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 21:16:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751996AbXJGBQU
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 21:16:20 -0400
-Received: from wx-out-0506.google.com ([66.249.82.238]:49341 "EHLO
+	id S1752102AbXJGBM3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 21:12:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752090AbXJGBM3
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 21:12:29 -0400
+Received: from wx-out-0506.google.com ([66.249.82.228]:47768 "EHLO
 	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751866AbXJGBQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 21:16:19 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so893801wxd
-        for <git@vger.kernel.org>; Sat, 06 Oct 2007 18:16:18 -0700 (PDT)
+	with ESMTP id S1752049AbXJGBM2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 6 Oct 2007 21:12:28 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so893166wxd
+        for <git@vger.kernel.org>; Sat, 06 Oct 2007 18:12:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=+xM41eWFz7BiNijTo5NJc337UeziUQUIsLlSvdDnbfA=;
-        b=RWDGH6chQ+lVeR+cIpmoAn20H52aF0HZbOK7W3kOq7tmQ4j4FG59AmwLYRwoZMBMe2QuPa18XPu3kgf4U47bKkF7rWbYy4/kTiGprgRQepXC6FirOqi3FwvZNr1B5kIgn6+Lqx615cGXrsNqJJAV87a3NDIFRuqA3E2qvimLaRA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=QHMmfcebatp/OfmwXVeKFQzAIVhROiJXn3+tDv+y1GA=;
+        b=JTiCHOgV7P/JgCD4UryTxlHSWUKBLHh6m6Wr1LUyeE8B8/R26+Btnfm4fH7ZwsoP3vIH2cbHA3qdnXnaZ8xgUaSqs5GxIASWOR9Slb6rsqh81jvBDucnFc3Gx8q0TAQIcXgvIVvHPvvvTz0kjD+c41g/n4Md5VjqdDn0ewfV1kY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nnjytHGT7U6XmRvrhcpWlW7CCgaydv4QzlhetahuxYXKtqXZn6HTppQSkcLueeoqlwEp/fEm8DdI3StPH2n026DRdvpgGRbxuLuws2lJgBeCzz7RACtP/KeJBnCAqyzAEWOZxpuwZVvzLv/lxr59VsB4qceVlJTjXIe1QMKmDgM=
-Received: by 10.70.52.1 with SMTP id z1mr145707wxz.1191719778135;
-        Sat, 06 Oct 2007 18:16:18 -0700 (PDT)
-Received: from mediacenter ( [70.112.123.114])
-        by mx.google.com with ESMTPS id g7sm1640435wra.2007.10.06.18.16.14
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=Vs8VHRSrAgZL3BfOUd3sPu87Bv08t0bBD5reo4WxwKq/YF2R2zEXlVTaSiyzhAtBNq9WBcbSzhxRifpS1h02Eoki7Mh7CDkLgBNMydvyWX7APR00wZLRDljx4M6i9/I9Pif/ywA4brvJxtSwDWPvSI2k6zIT6fx0yguGSsZVrFU=
+Received: by 10.70.6.8 with SMTP id 8mr3835915wxf.1191719547731;
+        Sat, 06 Oct 2007 18:12:27 -0700 (PDT)
+Received: from mediacenter.austin.rr.com ( [70.112.123.114])
+        by mx.google.com with ESMTPS id 26sm5700797wra.2007.10.06.18.12.25
         (version=SSLv3 cipher=OTHER);
-        Sat, 06 Oct 2007 18:16:15 -0700 (PDT)
-Received: by mediacenter (sSMTP sendmail emulation); Sat,  6 Oct 2007 20:17:21 -0500
-X-Mailer: git-send-email 1.5.3.GIT
-In-Reply-To: 20071007011331.GC5642@mediacenter.austin.rr.com
-References: 20071007011331.GC5642@mediacenter.austin.rr.com
+        Sat, 06 Oct 2007 18:12:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20071006215253.GX31659@planck.djpig.de>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60168>
 
-This replaces git-clean.sh with builtin-clean.c, and moves git-clean.sh to the
-examples.
+On Sat, Oct 06, 2007 at 11:52:53PM +0200, Frank Lichtenheld wrote:
+> On Sat, Oct 06, 2007 at 03:54:06PM -0500, Shawn Bohrer wrote:
+> > +static int remove_directory(const char *path)
+> > +{
+> > +	DIR *d;
+> > +	struct dirent *dir;
+> > +	d = opendir(path);
+> > +	if (d) {
+> > +		chdir(path);
+> > +		while ((dir = readdir(d)) != NULL) {
+> > +			if(strcmp( dir->d_name, ".") == 0 ||
+> > +			   strcmp( dir->d_name, ".." ) == 0 )
+> > +				continue;
+> > +			if (dir->d_type == DT_DIR)
+> > +				remove_directory(dir->d_name);
+> > +			else
+> > +				unlink(dir->d_name);
+> > +		}
+> > +	}
+> > +	closedir(d);
+> > +	chdir("..");
+> > +	return rmdir(path);
+> > +}
+> 
+> The unconditional chdir(..) after the conditional chdir(path) seems like
+> asking for trouble to me...
 
-Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
----
+Agreed, I'm not sure what I was thinking there.
 
-Reworked patch with fixes to Frank's suggestions.
+> > +	while (fgets(path, sizeof(path), cmd_fout) != NULL) {
+> > +		struct stat st;
+> > +		char *p;
+> > +		p = strrchr(path, '\n');
+> > +		if ( p != NULL )
+> > +			*p = '\0';
+> 
+> What happens in case p == NULL? It simply tries to remove the partial
+> path?
 
- Makefile                                      |    3 +-
- builtin-clean.c                               |  177 +++++++++++++++++++++++++
- builtin.h                                     |    1 +
- git-clean.sh => contrib/examples/git-clean.sh |    0 
- git.c                                         |    1 +
- 5 files changed, 181 insertions(+), 1 deletions(-)
- create mode 100644 builtin-clean.c
- rename git-clean.sh => contrib/examples/git-clean.sh (100%)
+If p == NULL then the path didn't have a EOL character.  This shouldn't
+ever really happen since fgets() leaves the EOL character as part of the
+string, and it is processing the output of git-ls-files which will
+provide one path per line.  If it does happen for some reason then
+either we will happily remove the file/directory, or if the path is
+garbage then we will simply fail to remove anything.
 
-diff --git a/Makefile b/Makefile
-index 8db4dbe..2b3b8fb 100644
---- a/Makefile
-+++ b/Makefile
-@@ -206,7 +206,7 @@ BASIC_LDFLAGS =
- 
- SCRIPT_SH = \
- 	git-bisect.sh git-checkout.sh \
--	git-clean.sh git-clone.sh git-commit.sh \
-+	git-clone.sh git-commit.sh \
- 	git-fetch.sh \
- 	git-ls-remote.sh \
- 	git-merge-one-file.sh git-mergetool.sh git-parse-remote.sh \
-@@ -327,6 +327,7 @@ BUILTIN_OBJS = \
- 	builtin-check-attr.o \
- 	builtin-checkout-index.o \
- 	builtin-check-ref-format.o \
-+	builtin-clean.o \
- 	builtin-commit-tree.o \
- 	builtin-count-objects.o \
- 	builtin-describe.o \
-diff --git a/builtin-clean.c b/builtin-clean.c
-new file mode 100644
-index 0000000..4890c2d
---- /dev/null
-+++ b/builtin-clean.c
-@@ -0,0 +1,177 @@
-+/*
-+ * "git clean" builtin command
-+ *
-+ * Copyright (C) 2007 Shawn Bohrer
-+ *
-+ * Based on git-clean.sh by Pavel Roskin
-+ */
-+
-+#include "builtin.h"
-+#include "cache.h"
-+#include "run-command.h"
-+
-+static int disabled = 0;
-+static int show_only = 0;
-+static int remove_directories = 0;
-+static int quiet = 0;
-+static int ignored = 0;
-+static int ignored_only = 0;
-+
-+static const char builtin_clean_usage[] =
-+"git-clean [-d] [-f] [-n] [-q] [-x | -X] [--] <paths>...";
-+
-+static int git_clean_config(const char *var, const char *value)
-+{
-+	if (!strcmp(var, "clean.requireforce")) {
-+		disabled = git_config_bool(var, value);
-+	}
-+	return 0;
-+}
-+
-+static int remove_directory(const char *path)
-+{
-+	DIR *d;
-+	struct dirent *dir;
-+	d = opendir(path);
-+	if (d) {
-+		chdir(path);
-+		while ((dir = readdir(d)) != NULL) {
-+			if(strcmp( dir->d_name, ".") == 0 ||
-+			   strcmp( dir->d_name, ".." ) == 0 )
-+				continue;
-+			if (dir->d_type == DT_DIR)
-+				remove_directory(dir->d_name);
-+			else
-+				unlink(dir->d_name);
-+		}
-+		chdir("..");
-+	}
-+	closedir(d);
-+	return rmdir(path);
-+}
-+
-+int cmd_clean(int argc, const char **argv, const char *prefix)
-+{
-+	int i;
-+	int j;
-+	struct child_process cmd;
-+	const char **argv_ls_files;
-+	char *buf = NULL;
-+	char path[1024];
-+	FILE *cmd_fout;
-+
-+	git_config(git_clean_config);
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+
-+		if (arg[0] != '-')
-+			break;
-+		if (!strcmp(arg, "--")) {
-+			i++;
-+			break;
-+		}
-+		if (!strcmp(arg, "-n")) {
-+			show_only = 1;
-+			disabled = 0;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-f")) {
-+			disabled = 0;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-d")) {
-+			remove_directories = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-q")) {
-+			quiet = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-x")) {
-+			ignored = 1;
-+			continue;
-+		}
-+		if (!strcmp(arg, "-X")) {
-+			ignored_only = 1;
-+			continue;
-+		}
-+		usage(builtin_clean_usage);
-+	}
-+
-+	if (ignored && ignored_only)
-+		usage(builtin_clean_usage);
-+
-+	if (disabled) {
-+		die("clean.requireForce set and -n or -f not given; refusing to clean");
-+	}
-+
-+	/* Paths (argc - i) + 8 (Possible arguments)*/
-+	argv_ls_files = xmalloc((argc - i + 8) * sizeof(const char *));
-+	argv_ls_files[0] = "ls-files";
-+	argv_ls_files[1] = "--others";
-+	argv_ls_files[2] = "--directory";
-+	j = 3;
-+	if (!ignored) {
-+		argv_ls_files[j++] = "--exclude-per-directory=.gitignore";
-+		if (ignored_only)
-+			argv_ls_files[j++] = "--ignored";
-+		if (!access(git_path("info/exclude"), F_OK)) {
-+			char *exclude_path = git_path("info/exclude");
-+			int len = strlen(exclude_path);
-+			buf = (char*)malloc(len+16);
-+			sprintf(buf, "--exclude-from=%s", exclude_path);
-+			argv_ls_files[j++] = buf;
-+		}
-+	}
-+	argv_ls_files[j++] = "--";
-+	/* Add remaining paths passed in as arguments */
-+	if (argc - i)
-+		memcpy(argv_ls_files + j++, argv + i, (argc - i) * sizeof(const char *));
-+	argv_ls_files[j + argc - i] = NULL;
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.argv = argv_ls_files;
-+	cmd.git_cmd = 1;
-+	cmd.out = -1;
-+	if (start_command(&cmd))
-+		die("Could not run sub-command: git ls-files");
-+
-+	cmd_fout = fdopen(cmd.out, "r");
-+	while (fgets(path, sizeof(path), cmd_fout) != NULL) {
-+		struct stat st;
-+		char *p;
-+		p = strrchr(path, '\n');
-+		if ( p != NULL )
-+			*p = '\0';
-+		if (!lstat(path, &st) && (S_ISDIR(st.st_mode))) {
-+			if (show_only && remove_directories) {
-+				printf("Would remove %s\n", path);
-+			} else if (quiet && remove_directories) {
-+				remove_directory(path);
-+			} else if (remove_directories) {
-+				printf("Removing %s\n", path);
-+				remove_directory(path);
-+			} else if (show_only) {
-+				printf("Would not remove %s\n", path);
-+			} else {
-+				printf("Not removing %s\n", path);
-+			}
-+		} else {
-+			if (show_only) {
-+				printf("Would remove %s\n", path);
-+				continue;
-+			} else if (!quiet) {
-+				printf("Removing %s\n", path);
-+			}
-+			unlink(path);
-+		}
-+	}
-+
-+	fclose(cmd_fout);
-+	finish_command(&cmd);
-+	if (buf != NULL)
-+		free(buf);
-+	free(argv_ls_files);
-+	return 0;
-+}
-diff --git a/builtin.h b/builtin.h
-index d6f2c76..8c112f3 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -23,6 +23,7 @@ extern int cmd_check_attr(int argc, const char **argv, const char *prefix);
- extern int cmd_check_ref_format(int argc, const char **argv, const char *prefix);
- extern int cmd_cherry(int argc, const char **argv, const char *prefix);
- extern int cmd_cherry_pick(int argc, const char **argv, const char *prefix);
-+extern int cmd_clean(int argc, const char **argv, const char *prefix);
- extern int cmd_commit_tree(int argc, const char **argv, const char *prefix);
- extern int cmd_count_objects(int argc, const char **argv, const char *prefix);
- extern int cmd_describe(int argc, const char **argv, const char *prefix);
-diff --git a/git-clean.sh b/contrib/examples/git-clean.sh
-similarity index 100%
-rename from git-clean.sh
-rename to contrib/examples/git-clean.sh
-diff --git a/git.c b/git.c
-index 9eaca1d..cda6344 100644
---- a/git.c
-+++ b/git.c
-@@ -320,6 +320,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "check-attr", cmd_check_attr, RUN_SETUP | NEED_WORK_TREE },
- 		{ "cherry", cmd_cherry, RUN_SETUP },
- 		{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
-+		{ "clean", cmd_clean, RUN_SETUP },
- 		{ "commit-tree", cmd_commit_tree, RUN_SETUP },
- 		{ "config", cmd_config },
- 		{ "count-objects", cmd_count_objects, RUN_SETUP },
--- 
-1.5.3.GIT
+> > +	fclose(cmd_fout);
+> > +	finish_command(&cmd);
+> > +	if (!ignored && !access(git_path("info/exclude"), F_OK))
+> > +		free(buf);
+> 
+> There is a race condition here of the value of access() changes between
+> the two calls. Not one likely to trigger but it should be easy to avoid
+> alltogether.
+
+Yes, though unlikely I agree this wasn't very smart in the first place
+so I fixed it and will send reworked patch soon.
+
+--
+Shawn
