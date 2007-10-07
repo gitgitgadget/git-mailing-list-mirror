@@ -1,89 +1,62 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: respect Subversion's [auth] section configuration values
-Date: Sat, 6 Oct 2007 20:22:41 -0700
-Message-ID: <20071007032241.GG14972@hand.yhbt.net>
-References: <20071006185719.GA3943@void.codelabs.ru>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Sat, 6 Oct 2007 18:31:36 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710061827010.23684@woody.linux-foundation.org>
+References: 20071007011331.GC5642@mediacenter.austin.rr.com
+ <1191719841666-git-send-email-shawn.bohrer@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Sun Oct 07 06:38:04 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, frank@lichtenheld.de, gitster@pobox.com
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 07 06:52:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeMjK-0001jo-Mj
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 05:22:59 +0200
+	id 1IeL04-0000lW-1T
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 03:32:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425AbXJGDWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 23:22:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751347AbXJGDWn
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 23:22:43 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:38911 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750796AbXJGDWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 23:22:43 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 152067DC093;
-	Sat,  6 Oct 2007 20:22:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20071006185719.GA3943@void.codelabs.ru>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752313AbXJGBb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Oct 2007 21:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752325AbXJGBb7
+	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 21:31:59 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:44780 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752311AbXJGBb7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Oct 2007 21:31:59 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l971Vcd9030171
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 6 Oct 2007 18:31:39 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l971Vasa018277;
+	Sat, 6 Oct 2007 18:31:36 -0700
+In-Reply-To: <1191719841666-git-send-email-shawn.bohrer@gmail.com>
+X-Spam-Status: No, hits=-4.439 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_43,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60164>
 
-Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
-> Parameters 'store-passwords' and 'store-auth-creds' from Subversion's
-> configuration (~/.subversion/config) were not respected.  This was
-> fixed: the default values for these parameters are set to 'yes' to
-> follow Subversion behaviour.
 
-Thanks.
 
-> Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
+On Sat, 6 Oct 2007, Shawn Bohrer wrote:
+>
+> This replaces git-clean.sh with builtin-clean.c, and moves git-clean.sh to the
+> examples.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+This looks better, but I think you'd be even better off actually using the 
+"read_directory()" interface directly, instead of exec'ing off "git 
+ls-files" and parsing the line output.
 
-> ---
->  git-svn.perl |   23 +++++++++++++++++++++++
->  1 files changed, 23 insertions(+), 0 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 484b057..f7ef421 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -3051,6 +3051,29 @@ sub new {
->  	  ]);
->  	my $config = SVN::Core::config_get_config($config_dir);
->  	$RA = undef;
-> +	my $dont_store_passwords = 1;
-> +	my $conf_t = ${$config}{'config'};
-> +	{
-> +		# The usage of $SVN::_Core::SVN_CONFIG_* variables
-> +		# produces warnings that variables are used only once.
-> +		# I had not found the better way to shut them up, so
-> +		# warnings are disabled in this block.
-> +		no warnings;
-> +		if (SVN::_Core::svn_config_get_bool($conf_t,
-> +		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-> +		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
-> +		    1) == 0) {
-> +			SVN::_Core::svn_auth_set_parameter($baton,
-> +			    $SVN::_Core::SVN_AUTH_PARAM_DONT_STORE_PASSWORDS,
-> +			    bless (\$dont_store_passwords, "_p_void"));
-> +		}
-> +		if (SVN::_Core::svn_config_get_bool($conf_t,
-> +		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
-> +		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_AUTH_CREDS,
-> +		    1) == 0) {
-> +			$Git::SVN::Prompt::_no_auth_cache = 1;
-> +		}
-> +	}
->  	my $self = SVN::Ra->new(url => $url, auth => $baton,
->  	                      config => $config,
->  			      pool => SVN::Pool->new,
+I also would still worry a bit about 'chdir(x)' and 'chdir("..")', because 
+quite frankly, they are *not* mirrors of each other (think symlinks, but 
+also error behaviour due to directories that might be non-executable). 
+Now, admittedly, if a directory isn't executable, I can imagine other git 
+things having problems (anybody want to test?), but that whole pattern is 
+just very fragile and not very reliable.
 
--- 
-Eric Wong
+		Linus
