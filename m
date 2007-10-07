@@ -1,93 +1,104 @@
 From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
-Subject: [StGit PATCH 2/8] New test: "stg pop --keep"
-Date: Mon, 08 Oct 2007 01:17:24 +0200
-Message-ID: <20071007231724.12626.57217.stgit@yoghurt>
+Subject: [StGit PATCH 4/8] Don't split long and short description in "stg edit"
+Date: Mon, 08 Oct 2007 01:17:35 +0200
+Message-ID: <20071007231735.12626.81744.stgit@yoghurt>
 References: <20071007231446.12626.14259.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 01:18:41 2007
+X-From: git-owner@vger.kernel.org Mon Oct 08 01:18:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IefOT-0003Sh-1l
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:18:41 +0200
+	id 1IefOU-0003Sh-HL
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756609AbXJGXR3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 19:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755980AbXJGXR2
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:17:28 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1363 "EHLO
+	id S1756645AbXJGXRk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 19:17:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755979AbXJGXRk
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:17:40 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1369 "EHLO
 	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755842AbXJGXR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 19:17:28 -0400
+	with ESMTP id S1756214AbXJGXRj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 19:17:39 -0400
 Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
 	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
-	id 1IefNE-0000Ks-00; Mon, 08 Oct 2007 00:17:24 +0100
+	id 1IefNQ-0000LI-00; Mon, 08 Oct 2007 00:17:36 +0100
 In-Reply-To: <20071007231446.12626.14259.stgit@yoghurt>
 User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60242>
+
+"stg edit" used to present the patch information like this:
+
+  Short description
+
+  From: ...
+  Date: ...
+
+  Long description
+
+If the project follows the git convention with a single-line short
+description and follwed by a blank line and the rest of the
+description, this merely looks a little odd. However, for projects
+that don't follow that convention, presenting the first line
+separately is actively inconvenient; for example, it breaks emacs's
+fill-paragraph command.
 
 Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
 
 ---
 
- t/t1204-pop-keep.sh |   42 ++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 42 insertions(+), 0 deletions(-)
- create mode 100755 t/t1204-pop-keep.sh
+ stgit/commands/edit.py |   17 ++++-------------
+ 1 files changed, 4 insertions(+), 13 deletions(-)
 
 
-diff --git a/t/t1204-pop-keep.sh b/t/t1204-pop-keep.sh
-new file mode 100755
-index 0000000..40cd2a2
---- /dev/null
-+++ b/t/t1204-pop-keep.sh
-@@ -0,0 +1,42 @@
-+#!/bin/sh
-+
-+test_description=3D'Test "stg pop -keep"'
-+. ./test-lib.sh
-+stg init
-+
-+test_expect_success 'Create a few patches' '
-+    for i in 0 1 2; do
-+        stg new p$i -m p$i &&
-+        echo "patch$i" >> patch$i.txt &&
-+        stg add patch$i.txt &&
-+        stg refresh
-+    done &&
-+    [ "$(echo $(stg applied))" =3D "p0 p1 p2" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "" ]
-+'
-+
-+test_expect_success 'Make some non-conflicting local changes' '
-+    echo "local" >> patch0.txt
-+'
-+
-+test_expect_success 'Pop two patches, keeping local changes' '
-+    stg pop -n 2 --keep &&
-+    [ "$(echo $(stg applied))" =3D "p0" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "p1 p2" ] &&
-+    [ "$(echo $(ls patch?.txt))" =3D "patch0.txt" ] &&
-+    [ "$(echo $(cat patch0.txt))" =3D "patch0 local" ]
-+'
-+
-+test_expect_success 'Reset and push patches again' '
-+    git reset --hard &&
-+    stg push -a
-+'
-+
-+test_expect_success 'Pop a patch without local changes' '
-+    stg pop --keep &&
-+    [ "$(echo $(stg applied))" =3D "p0 p1" ] &&
-+    [ "$(echo $(stg unapplied))" =3D "p2" ] &&
-+    [ "$(echo $(ls patch?.txt))" =3D "patch0.txt patch1.txt" ]
-+'
-+
-+test_done
+diff --git a/stgit/commands/edit.py b/stgit/commands/edit.py
+index e968e25..223c628 100644
+--- a/stgit/commands/edit.py
++++ b/stgit/commands/edit.py
+@@ -36,12 +36,10 @@ diff.
+=20
+ The editor is invoked with the following contents:
+=20
+-  Patch short description
+-
+   From: A U Thor <author@example.com>
+   Date: creation date
+=20
+-  Patch long description
++  Patch description
+=20
+ If --diff was specified, the diff appears at the bottom, after a
+ separator:
+@@ -135,22 +133,15 @@ def __edit_update_patch(pname, options):
+=20
+     # generate the file to be edited
+     descr =3D patch.get_description().strip()
+-    descr_lines =3D descr.split('\n')
+     authdate =3D patch.get_authdate()
+=20
+-    short_descr =3D descr_lines[0].rstrip()
+-    long_descr =3D reduce(lambda x, y: x + '\n' + y,
+-                        descr_lines[1:], '').strip()
+-
+-    tmpl =3D '%(shortdescr)s\n\n' \
+-           'From: %(authname)s <%(authemail)s>\n'
++    tmpl =3D 'From: %(authname)s <%(authemail)s>\n'
+     if authdate:
+         tmpl +=3D 'Date: %(authdate)s\n'
+-    tmpl +=3D '\n%(longdescr)s\n'
++    tmpl +=3D '\n%(descr)s\n'
+=20
+     tmpl_dict =3D {
+-        'shortdescr': short_descr,
+-        'longdescr': long_descr,
++        'descr': descr,
+         'authname': patch.get_authname(),
+         'authemail': patch.get_authemail(),
+         'authdate': patch.get_authdate()
