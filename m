@@ -1,73 +1,66 @@
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Subject: Re: [PATCH] git-svn: respect Subversion's [auth] section configuration values
-Date: Sun, 7 Oct 2007 14:14:37 +0400
-Message-ID: <20071007101437.GB3943@void.codelabs.ru>
-References: <20071006185719.GA3943@void.codelabs.ru> <4708355B.4090403@vilain.net> <20071006185719.GA3943@void.codelabs.ru> <20071007032241.GG14972@hand.yhbt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>, Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Sun Oct 07 12:14:55 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Question about "git commit -a"
+Date: Sun, 7 Oct 2007 14:26:39 +0200
+Message-ID: <E0245DA3-1B32-47C3-88F9-BF2B4AAB084F@wincent.com>
+References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com> <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com> <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com> <4705FB52.3030208@op5.se> <1191599763.7117.18.camel@hinata.boston.redhat.com> <47067F68.2080709@gmx.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Marko Macek <Marko.Macek@gmx.net>
+X-From: git-owner@vger.kernel.org Sun Oct 07 14:27:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeT9z-0000ba-1S
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 12:14:55 +0200
+	id 1IeVEF-0001hA-4T
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 14:27:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752307AbXJGKOq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 06:14:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752283AbXJGKOq
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 06:14:46 -0400
-Received: from pobox.codelabs.ru ([144.206.177.45]:60364 "EHLO
-	pobox.codelabs.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259AbXJGKOp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 06:14:45 -0400
-DomainKey-Signature: a=rsa-sha1; q=dns; c=simple; s=one; d=codelabs.ru;
-	h=Received:Date:From:To:Cc:Message-ID:References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To:Sender:X-Spam-Status:Subject;
-	b=iPtXMELaJZ0P6xn4Z+U6xepdMXojtnt8FDNI5OESr3Bpd6HDCxDmEkrzXQeCkTrBEFCT8Wrp1+OeSz/1Q/3rKaEmsIhZT4wWJk03iGDiwn6aFgtF6JiK8q5Pby4ADtKPu4/eFLdOo0sasXwRrDySAl29ShU8RFXhcoo5QFpqVI0=;
-Received: from void.codelabs.ru (void.codelabs.ru [144.206.177.25])
-	by pobox.codelabs.ru with esmtpsa (TLSv1:AES256-SHA:256)
-	id 1IeT9m-000CUK-IH; Sun, 07 Oct 2007 14:14:42 +0400
-Content-Disposition: inline
-In-Reply-To: <4708355B.4090403@vilain.net> <20071007032241.GG14972@hand.yhbt.net>
-X-Spam-Status: No, score=-1.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_50
+	id S1752568AbXJGM1Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 08:27:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752552AbXJGM1Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 08:27:16 -0400
+Received: from wincent.com ([72.3.236.74]:59131 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142AbXJGM1P convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2007 08:27:15 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l97CQpfG006663;
+	Sun, 7 Oct 2007 07:26:53 -0500
+In-Reply-To: <47067F68.2080709@gmx.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60175>
 
-Eric, Sam, good day.
+El 5/10/2007, a las 20:16, Marko Macek escribi=F3:
 
-Sat, Oct 06, 2007 at 08:22:41PM -0700, Eric Wong wrote:
-> Eygene Ryabinkin <rea-git@codelabs.ru> wrote:
-> > Parameters 'store-passwords' and 'store-auth-creds' from Subversion's
-> > configuration (~/.subversion/config) were not respected.  This was
-> > fixed: the default values for these parameters are set to 'yes' to
-> > follow Subversion behaviour.
-> 
-> Thanks.
+> In CVS and subversion (which has nicer working-copy command line =20
+> interface IMHO),
+> I simply make a copy of the working copy, revert the non-commitable =20
+> parts, build,
+> commit the minor changes, and then update the first copy. For =20
+> larger projects,
+> where this can be slow, I use diff/revert/patch.
 
-You're welcome ;))
+This sounds painful compared to Dmitry's method (pasted below) if you =20
+care about all published changes being buildable and passing all the =20
+tests...
 
-Sun, Oct 07, 2007 at 02:24:43PM +1300, Sam Vilain wrote:
-> Eygene Ryabinkin wrote:
-> > Parameters 'store-passwords' and 'store-auth-creds' from Subversion's
-> > configuration (~/.subversion/config) were not respected.  This was
-> > fixed: the default values for these parameters are set to 'yes' to
-> > follow Subversion behaviour.
-> >   
-> 
-> I saw this in the svn api before.  It really is a strange API, requiring
-> the user to get things like this right.
+El 5/10/2007, a las 23:10, Dmitry Potapov escribi=F3:
 
-Yes, the need to parse the configuration and set some flags is
-rather strange.  Looks like nobody cared to stuff the code like
-I had added to the configuration file parsing routines.
+> IMHO, the best practice is to recompile everything step-wise in
+> a clean directory before you are going to publish your changes.
+> It can be done automatically by script, while you do something
+> useful, like reading this mailing-list :)
 
-> You can use no warnings 'once';
-
-Great, thanks for the pointer!  Eric, do you want me to produce
-another patch or you'll correct mine?
--- 
-Eygene
+Cheers,
+Wincent
