@@ -1,61 +1,56 @@
-From: Marko Macek <Marko.Macek@gmx.net>
-Subject: Re: Question about "git commit -a"
-Date: Sun, 07 Oct 2007 08:12:27 +0200
-Message-ID: <470878CB.2010609@gmx.net>
-References: <4d8e3fd30710040838t48bb590erbd90a8c4a1c6e932@mail.gmail.com> <545CB3B2-96B3-4853-9397-B42F4F268A15@wincent.com> <fcaeb9bf0710041333l636b2c1fn4d8f3298000127c7@mail.gmail.com> <Pine.LNX.4.64.0710042209410.4174@racer.site> <4d8e3fd30710050139j45a5a924t5c048994e3457c5f@mail.gmail.com> <4705FB52.3030208@op5.se> <1191599763.7117.18.camel@hinata.boston.redhat.com> <20071005211011.GB25125@potapov>
+From: Pekka Riikonen <priikone@iki.fi>
+Subject: Repository specific config file
+Date: Sun, 7 Oct 2007 10:37:07 +0200 (CEST)
+Message-ID: <Pine.NEB.4.64.0710070956340.12867@otaku.Xtrmntr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Kristian_H=F8gsberg?= <krh@redhat.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	andyparkins@gmail.com, torvalds@linux-foundation.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 07 08:14:48 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 07 10:56:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IePPc-0005hq-8w
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 08:14:48 +0200
+	id 1IeRwO-000715-A9
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 10:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399AbXJGGOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 02:14:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751371AbXJGGOk
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 02:14:40 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60979 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751121AbXJGGOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 02:14:39 -0400
-Received: (qmail invoked by alias); 07 Oct 2007 06:14:37 -0000
-Received: from BSN-210-250-102.dial-up.dsl.siol.net (EHLO [192.168.2.7]) [195.210.250.102]
-  by mail.gmx.net (mp050) with SMTP; 07 Oct 2007 08:14:37 +0200
-X-Authenticated: #420190
-X-Provags-ID: V01U2FsdGVkX1+vI/AhUHev0+2CMpctWHPrLE/QVFZJwXlHY+Sx/C
-	hNwyEyRkKXXMb3
-User-Agent: Thunderbird 2.0.0.5 (X11/20070716)
-In-Reply-To: <20071005211011.GB25125@potapov>
-X-Y-GMX-Trusted: 0
+	id S1752142AbXJGI4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 04:56:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752130AbXJGI4h
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 04:56:37 -0400
+Received: from sauna.silcnet.org ([147.175.66.205]:49529 "EHLO
+	otaku.Xtrmntr.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752111AbXJGI4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 04:56:36 -0400
+X-Greylist: delayed 1166 seconds by postgrey-1.27 at vger.kernel.org; Sun, 07 Oct 2007 04:56:36 EDT
+Received: by otaku.Xtrmntr.org (Postfix, from userid 201)
+	id 2BD0B48E3; Sun,  7 Oct 2007 10:37:08 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by otaku.Xtrmntr.org (Postfix) with ESMTP id 2AB8C48B9
+	for <git@vger.kernel.org>; Sun,  7 Oct 2007 10:37:08 +0200 (CEST)
+X-X-Sender: priikone@otaku.Xtrmntr.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60172>
 
-Dmitry Potapov wrote:
-> You don't. Even with 'commit -a' there is no guarantee that the
-> result will compile, because you can forget to add a new file.
+Hello,
 
-Actually, it would be a good idea for commit to report an error if there
-are any new files that have not been 'added' or 'ignored' (or even 
-if there are missing files that have not been 'deleted'.
+Has there been any discussion or considerations adding a repository 
+specific config file that would be delivered to all cloned repositories 
+automatically?  This would allow the publisher of the repository to set up 
+some default settings to all developers cloning the repository.  This 
+could be useful to set up things like default aliases to ease up the work, 
+to set that all remote branches are tracked, to list the configurations of 
+submodules (so that people don't have to run submodule init), etc.
 
-Perhaps I'll add this to my git wrapper scripts.
+User should still be able to add configurations that overlap with the 
+remote configuration and user should be able to ignore everything that 
+came from the parent.  Using ~/.gitconfig and /etc/gitconfig doesn't 
+always work well when the developers don't have access to the remote 
+machine (other than to clone the repository).  Maybe the simplest solution 
+would be to just add .gitconfig to the repository itself.
 
-Even for normal git-commit it might be nice to report an error if there are any
-unstaged files unless -a or -i option is specified.
-
-Mark
+ 	Pekka
+________________________________________________________________________
+  Pekka Riikonen                                 priikone at silcnet.org
+  Secure Internet Live Conferencing (SILC)       http://silcnet.org/
