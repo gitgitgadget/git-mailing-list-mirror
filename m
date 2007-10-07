@@ -1,72 +1,59 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: git-push [--all] and tags
-Date: Sun, 07 Oct 2007 14:02:45 +1300
-Message-ID: <47083035.7070904@vilain.net>
-References: <20071006160506.GA28238@lapse.madduck.net>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Many gits are offline this week
+Date: Sat, 06 Oct 2007 21:59:40 -0700
+Message-ID: <470867BC.8040909@midwinter.com>
+References: <20071005010448.GQ2137@spearce.org> <Pine.LNX.4.64.0710050240460.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git discussion list <git@vger.kernel.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Sun Oct 07 06:56:31 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 07 07:06:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeKXu-0000TB-Uv
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 03:03:03 +0200
+	id 1IeOF8-0007Si-RT
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 06:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751730AbXJGBCw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Oct 2007 21:02:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbXJGBCv
-	(ORCPT <rfc822;git-outgoing>); Sat, 6 Oct 2007 21:02:51 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:60049 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671AbXJGBCv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Oct 2007 21:02:51 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id C3C5421CFEE; Sun,  7 Oct 2007 14:02:48 +1300 (NZDT)
-Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 414FB21CFC5;
-	Sun,  7 Oct 2007 14:02:45 +1300 (NZDT)
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-In-Reply-To: <20071006160506.GA28238@lapse.madduck.net>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
-	version=3.0.2
+	id S1750965AbXJGE7o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 00:59:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750940AbXJGE7o
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 00:59:44 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:41160 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750801AbXJGE7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 00:59:43 -0400
+Received: (qmail 20943 invoked from network); 7 Oct 2007 04:59:43 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=gy616Y7FCF9i5px7QWwliYlPAThCT6TMtLr7S1X6sDzPXBf4J4Qm9neJAUTatn67  ;
+Received: from localhost (HELO sgrimm-mbp.lan) (koreth@127.0.0.1)
+  by localhost with SMTP; 7 Oct 2007 04:59:42 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <Pine.LNX.4.64.0710050240460.4174@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60170>
 
-martin f krafft wrote:
-> Hello people,
->
-> `git-push --all --tags` does not work because git-push ends up
-> calling git-send-pack --all refs/tags/*, which the latter does not
-> deal with.
->
-> Looking at the code, it seems that previously, --all would push
-> everything, not just refs/heads/*. What's the reason that this was
-> changed? Why aren't tags considered part of --all?
->
-> If I wanted to fix this, so that --all pushes heads and --all --tags
-> pushes heads and tags, I could do so in two ways:
->
->   1. instead of --all, pass refs/heads/* to git-send-pack
->   2. add --tags to git-send-pack
->
-> which of these two would you prefer and why?
+Johannes Schindelin wrote:
+> While at it, we thought that we'd have a little git-together on Sunday, a 
+> few hours before we're (or at least I'm) sober again from Saturday night.  
+> So everybody who is in the area of San Jose: Sunday is Talk Like A Git 
+> Day.
 >   
 
-Think is, pushing tags is considered to be something that needs to be
-done very explicitly; the convention, after all, is that published tags
-are forever.  Whereas branches change all the time.  So, pushing tags
-should require an extra flag.
+Here are the details for anyone who can show up:
 
-Sam.
+Time: 12 noon
+Place: Gordon Biersch Brewery, 640 Emerson St., Palo Alto
+Web: 
+http://www.gordonbiersch.com/restaurants/index.php?pg=location&sub=loc&location_id=15
+Facebook event page: http://www.facebook.com/event.php?eid=5037248613 
+(obviously not required, but it might give other people some idea who to 
+expect)
+
+Hope to see some folks there!
+
+-Steve
