@@ -1,89 +1,75 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Sun, 7 Oct 2007 10:41:26 -0500
-Message-ID: <20071007154126.GD5642@mediacenter.austin.rr.com>
-References: <1191719841666-git-send-email-shawn.bohrer@gmail.com> <alpine.LFD.0.999.0710061827010.23684@woody.linux-foundation.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and  optimize it a bit
+Date: Mon, 08 Oct 2007 00:46:39 +0900
+Message-ID: <87sl4nlyg0.fsf@catnip.gol.com>
+References: <1190625904-22808-1-git-send-email-madcoder@debian.org>
+	<1190625904-22808-2-git-send-email-madcoder@debian.org>
+	<20071007140052.GA3260@steel.home>
+	<20071007172425.bb691da9.tihirvon@gmail.com>
+	<20071007143912.GB10024@artemis.corp>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, frank@lichtenheld.de, gitster@pobox.com
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Oct 07 17:40:38 2007
+Cc: Timo Hirvonen <tihirvon@gmail.com>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Oct 07 17:47:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeYFA-0004aW-E7
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 17:40:36 +0200
+	id 1IeYLN-0005YX-SA
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 17:47:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751232AbXJGPkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 11:40:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751026AbXJGPkZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 11:40:25 -0400
-Received: from wr-out-0506.google.com ([64.233.184.226]:62852 "EHLO
-	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892AbXJGPkY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 11:40:24 -0400
-Received: by wr-out-0506.google.com with SMTP id 36so519135wra
-        for <git@vger.kernel.org>; Sun, 07 Oct 2007 08:40:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=Wfym/V4vlsUFx3IZjBWaXgWM18YxF08xX7XRnIiT1Hk=;
-        b=b1Fji6PCK9enl4MDzlTzZAODvcPmSoYDMa1Xofd/lujE37kfFxvTt64hRP7LoxyjuW1ugCo77NBmvop2ztQHo9hn+wD9/NVMr3DTAsEKp6bbY2P/p5DOzXBulKm5GmKKdX+B9beyObp5lo0Sa2DDuSdJRXOhdz83A6XQzoMUA9A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=lyIz3+6lxteiPO1Z93tAwdosIPrlY+uNjGcCMpITkZwkiwkx7IQPX84TsDRzEuxj80bhDmqHFVVnm8tCPsJWhl+Ymth4odbwWTuaaH2Ri92vkBf54HH6gODRifZZNT9ye3ksHlT2/I6frwsxZ1+A9D3L5k2oDL1oMkR0G9myvx0=
-Received: by 10.150.153.19 with SMTP id a19mr747059ybe.1191771622203;
-        Sun, 07 Oct 2007 08:40:22 -0700 (PDT)
-Received: from mediacenter.austin.rr.com ( [70.112.123.114])
-        by mx.google.com with ESMTPS id 61sm6405022wry.2007.10.07.08.40.19
-        (version=SSLv3 cipher=OTHER);
-        Sun, 07 Oct 2007 08:40:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710061827010.23684@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1751581AbXJGPqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 11:46:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbXJGPqu
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 11:46:50 -0400
+Received: from smtp02.dentaku.gol.com ([203.216.5.72]:59893 "EHLO
+	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751536AbXJGPqt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 11:46:49 -0400
+Received: from 203-216-97-240.dsl.gol.ne.jp ([203.216.97.240] helo=catnip.gol.com)
+	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
+	id 1IeYL5-0006Sm-TO; Mon, 08 Oct 2007 00:46:44 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 7EE6F2F5D; Mon,  8 Oct 2007 00:46:40 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+In-Reply-To: <20071007143912.GB10024@artemis.corp> (Pierre Habouzit's message of "Sun\, 07 Oct 2007 16\:39\:12 +0200")
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60186>
 
-Thanks for the input.
+Pierre Habouzit <madcoder@debian.org> writes:
+>> strbuf->buf is always non-NULL and NUL-terminated so you could just do
+>> 
+>> static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
+>> {
+>> 	int len = a->len < b->len ? a->len : b->len;
+>> 	return memcmp(a->buf, b->buf, len + 1);
+>> }
+>
+>   doesn't work, because a buffer can have (in some very specific cases)
+> an embeded NUL.
 
-On Sat, Oct 06, 2007 at 06:31:36PM -0700, Linus Torvalds wrote:
-> This looks better, but I think you'd be even better off actually using the 
-> "read_directory()" interface directly, instead of exec'ing off "git 
-> ls-files" and parsing the line output.
+Couldn't you then just do:
 
-Perhaps, I'll take a look at how git-ls-files does it and see if I can
-do that directly.  Since I'm new to git (and C) it will probably take me
-a while to re-implement though.
+   int len = a->len < b->len ? a->len : b->len;
+   int cmp = memcmp(a->buf, b->buf, len);
+   if (cmp == 0)
+      cmp = b->len - a->len;
+   return cmp;
 
-> I also would still worry a bit about 'chdir(x)' and 'chdir("..")', because 
-> quite frankly, they are *not* mirrors of each other (think symlinks, but 
-> also error behaviour due to directories that might be non-executable). 
-> Now, admittedly, if a directory isn't executable, I can imagine other git 
-> things having problems (anybody want to test?), but that whole pattern is 
-> just very fragile and not very reliable.
+[In the case where one string is a prefix of the other, then the longer
+one is "greater".]
 
-Yes it does seem fragile, but 'chdir("-")' doesn't work in C and I
-couldn't find any equivalents.  I actually did think about symlinks, and
-my code does do the right thing since I test if it is a directory before
-doing the 'chdir(x)'. Symlinks are therefore treated as normal files and
-removed.
+?
 
-I did not think about non-executable directories, and you are correct
-that my code will fail to remove a directory if it is non-executable. I
-also tested a git-ls-files with non-executable directories, and it will
-fail to show you any files that are more than one level deep for
-example:
+-Miles
 
-|-- docs
-|   |-- contributing
-|   |   `-- patches.txt
-|   `-- manual.txt
-
-If docs is non-executable it will only return 'docs/manual.txt'
-
---
-Shawn
+-- 
+"Suppose He doesn't give a shit?  Suppose there is a God but He
+just doesn't give a shit?"  [George Carlin]
