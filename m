@@ -1,75 +1,59 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and  optimize it a bit
-Date: Mon, 08 Oct 2007 00:46:39 +0900
-Message-ID: <87sl4nlyg0.fsf@catnip.gol.com>
-References: <1190625904-22808-1-git-send-email-madcoder@debian.org>
-	<1190625904-22808-2-git-send-email-madcoder@debian.org>
-	<20071007140052.GA3260@steel.home>
-	<20071007172425.bb691da9.tihirvon@gmail.com>
-	<20071007143912.GB10024@artemis.corp>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Repository specific config file
+Date: Sun, 7 Oct 2007 17:06:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710071704550.4174@racer.site>
+References: <Pine.NEB.4.64.0710070956340.12867@otaku.Xtrmntr.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Timo Hirvonen <tihirvon@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <junkio@cox.net>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Oct 07 17:47:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Pekka Riikonen <priikone@iki.fi>
+X-From: git-owner@vger.kernel.org Sun Oct 07 18:07:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeYLN-0005YX-SA
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 17:47:02 +0200
+	id 1IeYet-0000Ll-7f
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 18:07:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751581AbXJGPqu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 11:46:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753075AbXJGPqu
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 11:46:50 -0400
-Received: from smtp02.dentaku.gol.com ([203.216.5.72]:59893 "EHLO
-	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536AbXJGPqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 11:46:49 -0400
-Received: from 203-216-97-240.dsl.gol.ne.jp ([203.216.97.240] helo=catnip.gol.com)
-	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
-	id 1IeYL5-0006Sm-TO; Mon, 08 Oct 2007 00:46:44 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id 7EE6F2F5D; Mon,  8 Oct 2007 00:46:40 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-In-Reply-To: <20071007143912.GB10024@artemis.corp> (Pierre Habouzit's message of "Sun\, 07 Oct 2007 16\:39\:12 +0200")
-X-Abuse-Complaints: abuse@gol.com
+	id S1751560AbXJGQG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 12:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751495AbXJGQG7
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 12:06:59 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57191 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751425AbXJGQG6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 12:06:58 -0400
+Received: (qmail invoked by alias); 07 Oct 2007 16:06:54 -0000
+Received: from unknown (EHLO [172.17.38.182]) [38.99.84.33]
+  by mail.gmx.net (mp014) with SMTP; 07 Oct 2007 18:06:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18QEsg0FRkQgtgrgnLQ956udTIgk7gkXngV2KJrL5
+	+uDkwgT5wCvAu+
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.NEB.4.64.0710070956340.12867@otaku.Xtrmntr.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60187>
 
-Pierre Habouzit <madcoder@debian.org> writes:
->> strbuf->buf is always non-NULL and NUL-terminated so you could just do
->> 
->> static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
->> {
->> 	int len = a->len < b->len ? a->len : b->len;
->> 	return memcmp(a->buf, b->buf, len + 1);
->> }
->
->   doesn't work, because a buffer can have (in some very specific cases)
-> an embeded NUL.
+Hi,
 
-Couldn't you then just do:
+On Sun, 7 Oct 2007, Pekka Riikonen wrote:
 
-   int len = a->len < b->len ? a->len : b->len;
-   int cmp = memcmp(a->buf, b->buf, len);
-   if (cmp == 0)
-      cmp = b->len - a->len;
-   return cmp;
+> Has there been any discussion or considerations adding a repository 
+> specific config file that would be delivered to all cloned repositories 
+> automatically? This would allow the publisher of the repository to set 
+> up some default settings to all developers cloning the repository.
 
-[In the case where one string is a prefix of the other, then the longer
-one is "greater".]
+Sure!  Just check in the file "gitconfig" and tell the good users that 
+they can append it to their config with "cat gitconfig >> .git/config".
 
-?
+Or have a script "gitconfig.sh" containing calls to "git config" which the 
+users can execute.
 
--Miles
+But you should not _force_ people to have a certain config.  It's their 
+choice.
 
--- 
-"Suppose He doesn't give a shit?  Suppose there is a God but He
-just doesn't give a shit?"  [George Carlin]
+Ciao,
+Dscho
