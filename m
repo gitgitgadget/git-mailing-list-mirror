@@ -1,63 +1,76 @@
-From: David Brown <git@davidb.org>
-Subject: Re: [StGit PATCH 4/8] Don't split long and short description in
-	"stg edit"
-Date: Sun, 7 Oct 2007 16:40:10 -0700
-Message-ID: <20071007234009.GA19073@old.davidb.org>
-References: <20071007231446.12626.14259.stgit@yoghurt> <20071007231735.12626.81744.stgit@yoghurt>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
+Date: Mon, 8 Oct 2007 01:40:39 +0200
+Message-ID: <20071007234039.GH2765@steel.home>
+References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com> <20071007221920.GF2765@steel.home> <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 01:40:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 01:40:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IefjX-0006e3-Qs
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:40:28 +0200
+	id 1Iefjz-0006lT-16
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756262AbXJGXkP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 19:40:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756191AbXJGXkO
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:40:14 -0400
-Received: from mail.davidb.org ([66.93.32.219]:52332 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756086AbXJGXkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 19:40:13 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IefjG-00052D-1x; Sun, 07 Oct 2007 16:40:10 -0700
-Mail-Followup-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+	id S1756802AbXJGXkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 19:40:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756413AbXJGXkm
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:40:42 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:27775 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756191AbXJGXkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 19:40:42 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (fruni mo57) (RZmta 13.4)
+	with ESMTP id w02e32j97KAW7T ; Mon, 8 Oct 2007 01:40:40 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 28820277AE;
+	Mon,  8 Oct 2007 01:40:40 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id D89BCC502; Mon,  8 Oct 2007 01:40:39 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <20071007231735.12626.81744.stgit@yoghurt>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60265>
 
-On Mon, Oct 08, 2007 at 01:17:35AM +0200, Karl Hasselstr=F6m wrote:
->"stg edit" used to present the patch information like this:
->
->  Short description
->
->  From: ...
->  Date: ...
->
->  Long description
->
->If the project follows the git convention with a single-line short
->description and follwed by a blank line and the rest of the
->description, this merely looks a little odd. However, for projects
->that don't follow that convention, presenting the first line
->separately is actively inconvenient; for example, it breaks emacs's
->fill-paragraph command.
+Elijah Newren, Mon, Oct 08, 2007 00:24:49 +0200:
+> On 10/7/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > rm -rf .git/refs/original/refs/heads/<the branch where HEAD pointed to>
+> > (assuming you haven't repacked yet)
+> >
+> > or just edit .git/packed-refs and remove everything "refs/original"
+> > which fits the criteria
+> >
+> > > So...how do I fix the reflog, and then repack to have a
+> > > pack under 11MB in size?
+> >
+> > git reflog expire --all (it is a bit to much. You can just edit
+> > .git/logs/* in any text editor)
+> 
+> So...
+> 
+> $ du -hs .
+> 11M     .
+> $ rm -rf .git/refs/original/
+> $ vi .git/packed-refs
+> # Remove the line referring to refs/original...
+> $ git reflog expire --all
+> $ git gc --aggressive --prune
+> $ du -hs .
+> 11M     .
+> 
+> It's still 11MB.
+> 
+> Any other ideas?
 
-I think this fix is better to begin with.  I found it especially confus=
-ing
-when there was only a single line commit message.  Now the header looks
-like a header :-)
-
-David
+you missed something. Your example compresses to about 124k.
