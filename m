@@ -1,125 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: StGit kha experimental branch updated
-Date: Mon, 8 Oct 2007 01:39:02 +0200
-Message-ID: <20071007233902.GB1262@diana.vm.bytemark.co.uk>
-References: <20071007232943.GA1262@diana.vm.bytemark.co.uk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 1/4] git-gui i18n: Add more words to glossary.
+Date: Sun, 7 Oct 2007 19:39:37 -0400
+Message-ID: <20071007233937.GG2137@spearce.org>
+References: <200710052239.02492.stimming@tuhh.de> <20071007180559.GA2137@spearce.org> <200710072242.26288.stimming@tuhh.de> <20071007231231.GD2137@spearce.org> <Pine.LNX.4.64.0710080029430.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 01:39:40 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Christian Stimming <stimming@tuhh.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 08 01:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iefih-0006S5-Ci
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:39:35 +0200
+	id 1Iefiz-0006W0-QO
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 01:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756534AbXJGXjJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Oct 2007 19:39:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756086AbXJGXjI
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:39:08 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4492 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755962AbXJGXjH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 19:39:07 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IefiA-0000Wt-00; Mon, 08 Oct 2007 00:39:02 +0100
+	id S1756607AbXJGXjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 19:39:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756381AbXJGXjm
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 19:39:42 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59109 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756086AbXJGXjl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 19:39:41 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Iefia-0006Ze-MT; Sun, 07 Oct 2007 19:39:28 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 2498920FBAE; Sun,  7 Oct 2007 19:39:37 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071007232943.GA1262@diana.vm.bytemark.co.uk>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <Pine.LNX.4.64.0710080029430.4174@racer.site>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60263>
 
-There's nothing new here; it's all just rebased on top of the updated
-safe branch. In order, we have
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> On Sun, 7 Oct 2007, Shawn O. Pearce wrote:
+> 
+> > If you are sending a series like that and its all po translation stuff 
+> > that is unlikely to need commenting on feel free to just dump it all out 
+> > as a single mbox (`git format-patch --stdout`) and attach it to the 
+> > email.  Less chance of the MUA mangling the message.
+> 
+> In this case, I suggest just pushing it to git-gui-i18n.git, maybe as a 
+> temporary branch "for-shawn", and send a pull request.  That's the best 
+> way to ensure that nothing gets mangled.
 
-  * David's patches that remove the "top" and "bottom" patch fields.
-    These need a format version upgrade function (trivial), but are
-    otherwise ready, I think.
-
-  * David's conflict refactoring series, with some fixes by me, and
-    removal of some commands that become superfluous. Almost ready,
-    but it makes ugly conflict markers, and "stg resolved" should
-    probably be removed.
-
-The following changes since commit 2299c463794f214b750ecc33e24779243ddc=
-5aff:
-  Karl Hasselstr=F6m (1):
-        Make "stg refresh" subdirectory safe
-
-are available in the git repository at:
-
-  git://repo.or.cz/stgit/kha.git experimental
-
-David K=E5gedal (9):
-      Check bottom and invariants
-      Remove the 'bottom' field
-      Remove the 'top' field
-      Split git.merge into two functions
-      Leave working dir and index alone after failed (conflicting) push
-      Added a test case to check what happens when push finds a conflic=
-t
-      Simplify merge_recursive
-      Use the output from merge-recursive to list conflicts
-      Ask git about unmerged files
-
-Karl Hasselstr=F6m (9):
-      Better error message if merge fails
-      Fix "stg resolved" to work with new conflict representation
-      Refactoring: pass more than one file to resolved()
-      We keep the different stages of a conflict in the index now
-      Clean up the logic in "stg resolved"
-      "stg status --reset" is not needed anymore
-      Remove "stg add"
-      Remove "stg rm"
-      Remove "stg cp"
-
- Documentation/stg-cp.txt      |   63 --------------------------
- Documentation/tutorial.txt    |   22 +++++----
- stgit/commands/add.py         |   44 ------------------
- stgit/commands/common.py      |   25 +++-------
- stgit/commands/copy.py        |   45 ------------------
- stgit/commands/pick.py        |    2 +-
- stgit/commands/resolved.py    |   70 ++++++++++-------------------
- stgit/commands/rm.py          |   48 --------------------
- stgit/commands/status.py      |   34 +++++---------
- stgit/commands/sync.py        |    1 -
- stgit/git.py                  |   72 +++++++++++++++++------------
- stgit/gitmergeonefile.py      |   99 ++++++++++++++++++++++-----------=
--------
- stgit/main.py                 |    6 ---
- stgit/run.py                  |    3 +
- stgit/stack.py                |   65 +++++++++++----------------
- t/t0002-status.sh             |   11 +++--
- t/t1200-push-modified.sh      |    2 +-
- t/t1202-push-undo.sh          |    4 +-
- t/t1203-push-conflict.sh      |   70 +++++++++++++++++++++++++++++
- t/t1204-pop-keep.sh           |    2 +-
- t/t1205-push-subdir.sh        |    4 +-
- t/t1300-uncommit.sh           |    4 +-
- t/t1301-assimilate.sh         |    2 +-
- t/t1400-patch-history.sh      |    4 +-
- t/t1500-float.sh              |   14 +++---
- t/t1600-delete-one.sh         |   12 +++---
- t/t1601-delete-many.sh        |    2 +-
- t/t1700-goto-top.sh           |    2 +-
- t/t2000-sync.sh               |    8 ++--
- t/t2100-pull-policy-fetch.sh  |    4 +-
- t/t2101-pull-policy-pull.sh   |    4 +-
- t/t2102-pull-policy-rebase.sh |    4 +-
- t/t2300-refresh-subdir.sh     |    2 +-
- 33 files changed, 295 insertions(+), 459 deletions(-)
- delete mode 100644 Documentation/stg-cp.txt
- delete mode 100644 stgit/commands/add.py
- delete mode 100644 stgit/commands/copy.py
- delete mode 100644 stgit/commands/rm.py
- create mode 100755 t/t1203-push-conflict.sh
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Yea, that's an even better option.  :-)
+ 
+-- 
+Shawn.
