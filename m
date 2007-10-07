@@ -1,67 +1,108 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: How to pick a commit from another git tree?
-Date: Sun, 7 Oct 2007 22:10:48 +0200
-Message-ID: <20071007201048.GA2765@steel.home>
-References: <000101c80907$d461a810$04ac10ac@Jocke>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Kristof Provost <Kristof@provost-engineering.be>
+Subject: [PATCH] makefile: Add a cscope target
+Date: Sun, 7 Oct 2007 22:45:43 +0200
+Message-ID: <20071007204543.GC4635@luggage>
+References: <20071005223336.GA4556@luggage> <20071006010437.GS31659@planck.djpig.de> <20071006142442.GA4635@luggage>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Sun Oct 07 22:11:19 2007
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Sun Oct 07 22:46:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IecT7-00089H-VR
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 22:11:18 +0200
+	id 1Ied0n-0005lu-Bf
+	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 22:46:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756255AbXJGUKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 16:10:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756063AbXJGUKz
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 16:10:55 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:44525 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755641AbXJGUKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 16:10:54 -0400
-Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
-	by post.webmailer.de (mrclete mo6) (RZmta 13.4)
-	with ESMTP id z00c66j97HmqRZ ; Sun, 7 Oct 2007 22:10:50 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 698CB277AE;
-	Sun,  7 Oct 2007 22:10:50 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 6020EC502; Sun,  7 Oct 2007 22:10:48 +0200 (CEST)
+	id S1751409AbXJGUpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 16:45:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751001AbXJGUpw
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 16:45:52 -0400
+Received: from rhineheart.priorweb.be ([213.193.229.215]:60862 "HELO
+	rhineheart.priorweb.be" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750779AbXJGUpv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 16:45:51 -0400
+Received: (qmail 7101 invoked by uid 1010); 7 Oct 2007 20:45:46 -0000
+Received: from unknown (HELO rhineheart.priorweb.be) (127.0.0.1)
+  by rhineheart.priorweb.be with SMTP; 7 Oct 2007 20:45:46 -0000
+Received: from luggage (dD5767E05.access.telenet.be [213.118.126.5])
+	by rhineheart.priorweb.be (Postfix) with SMTP;
+	Sun,  7 Oct 2007 22:45:43 +0200 (CEST)
+Received: by luggage (sSMTP sendmail emulation); Sun, 07 Oct 2007 22:45:44 +0200
 Content-Disposition: inline
-In-Reply-To: <000101c80907$d461a810$04ac10ac@Jocke>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <20071006142442.GA4635@luggage>
+X-PGP-Fingerprint: 6B6E 5EED 8ECF FAE7 1F61  7458 5046 7D0E 11B0 0EE8
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-Virus-Scanned: Passed
+X-Spam-Scanned: 2.0
+X-Spam-Status: NO
+X-Scanned-By: PriorWeb mailfilter
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60215>
 
-Joakim Tjernlund, Sun, Oct 07, 2007 19:31:00 +0200:
-> This is probably a somewhat stupid question but I havn't had a need until now so here goes:
-> There is a commit in David Millers tree:
-> http://git.kernel.org/?p=linux/kernel/git/davem/bak-net-2.6.24.git;a=commit;h=bbb4c0c35a4c2aed5e025b668c8dfc99c5b74cff
-> that hasn't made it into 2.6.23, but will go into 2.6.24. 
-> I need this fix on top of 2.6.23(once it is released).
+The current makefile supports ctags but not cscope. Some people prefer
+cscope (I do), so this patch adds a cscope target.
 
-$ git fetch git://git.kernel.org/pub/scm/linux/kernel/git/davem/bak-net-2.6.24.git
-$ git cherry-pick bbb4c0c35a4c2aed5e025b668c8dfc99c5b74cff
+Signed-off-by: Kristof Provost <Kristof@provost-engineering.be>
 
-> Now I wonder how to best add this fix to my tree. Once this fix hits linus tree and I pull
-> linus tree, I don't wan't a conflict as I already have this fix in my tree.
+---
+This version of the patch includes the fix for the missing [ Frank spotted,
+and adds 'cscope*' to the .gitignore list as Alex suggested. 
+While I did that I noticed that 'tags' and 'TAGS' were also missing.
 
-Depending on the state the Davids tree ends up when it is merge into
-Linus' tree you may or may not get a conflict. It is not in your hands
-either way.
+It's also in the (hopefully) right format. Thank to Johannes Schindelin
+for pointing out my mistakes.
 
-> Should I just pull Davids tree? Or should I cherry-pick this one commit?
-> Or something else?
+ .gitignore |    3 +++
+ Makefile   |    8 ++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-I would just cherry-pick it, and revert it (or hard-reset my tree to
-Linus' tree) if it conflicts later.
+diff --git a/.gitignore b/.gitignore
+index e0b91be..62afef2 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -171,3 +171,6 @@ config.status
+ config.mak.autogen
+ config.mak.append
+ configure
++tags
++TAGS
++cscope*
+diff --git a/Makefile b/Makefile
+index 8db4dbe..e2790c8 100644
+--- a/Makefile
++++ b/Makefile
+@@ -947,6 +947,10 @@ tags:
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+ 
++cscope:
++	$(RM) cscope*
++	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
++
+ ### Detect prefix changes
+ TRACK_CFLAGS = $(subst ','\'',$(ALL_CFLAGS)):\
+              $(bindir_SQ):$(gitexecdir_SQ):$(template_dir_SQ):$(prefix_SQ)
+@@ -1093,7 +1097,7 @@ clean:
+ 		$(LIB_FILE) $(XDIFF_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+-	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags
++	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
+ 	$(RM) -r autom4te.cache
+ 	$(RM) configure config.log config.mak.autogen config.mak.append config.status config.cache
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+@@ -1111,7 +1115,7 @@ endif
+ 	$(RM) GIT-VERSION-FILE GIT-CFLAGS GIT-GUI-VARS
+ 
+ .PHONY: all install clean strip
+-.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags .FORCE-GIT-CFLAGS
++.PHONY: .FORCE-GIT-VERSION-FILE TAGS tags cscope .FORCE-GIT-CFLAGS 
+ 
+ ### Check documentation
+ #
+-- 
+1.5.3.4.207.g1aae
