@@ -1,66 +1,67 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and optimize it a bit
-Date: Sun, 7 Oct 2007 23:57:49 +0200
-Message-ID: <20071007215749.GD2765@steel.home>
-References: <1190625904-22808-1-git-send-email-madcoder@debian.org> <1190625904-22808-2-git-send-email-madcoder@debian.org> <20071007140052.GA3260@steel.home> <85fy0nknnq.fsf@lola.goethe.zz> <20071007161012.GB3270@steel.home> <851wc6lwkc.fsf@lola.goethe.zz>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
+Date: Sun, 7 Oct 2007 16:00:51 -0600
+Message-ID: <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com>
+References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com>
+	 <20071007213817.GJ31659@planck.djpig.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Oct 07 23:58:12 2007
+To: "Frank Lichtenheld" <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Mon Oct 08 00:01:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iee8S-0000pY-K1
-	for gcvg-git-2@gmane.org; Sun, 07 Oct 2007 23:58:05 +0200
+	id 1IeeBL-0001JI-KN
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 00:01:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378AbXJGV5w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 17:57:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXJGV5w
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 17:57:52 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:37372 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341AbXJGV5w (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 17:57:52 -0400
-Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
-	by post.webmailer.de (mrclete mo20) (RZmta 13.4)
-	with ESMTP id z00b9cj97IhBxC ; Sun, 7 Oct 2007 23:57:50 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 029DE277AE;
-	Sun,  7 Oct 2007 23:57:49 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id D1A0EC502; Sun,  7 Oct 2007 23:57:49 +0200 (CEST)
+	id S1753474AbXJGWAx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 18:00:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbXJGWAx
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 18:00:53 -0400
+Received: from wa-out-1112.google.com ([209.85.146.179]:16439 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751788AbXJGWAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 18:00:52 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1438940wah
+        for <git@vger.kernel.org>; Sun, 07 Oct 2007 15:00:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=O1A7ARufOI9NGyqLDcJ+Zq6dkIYXPyhZg+rGJ1nF5KI=;
+        b=lNQxRm7fX7NL3UtUGzcRjTASQSYDPB1Cai2y/KZg0PjEg2mPsACht55nC/xs9OoL9AMO5zc1HHnfmkThNMT+pZteIxsN9bwaTp2N1zZOb0/ZYFzexESn4uErBs5/4c++Y2DopCQZucb08qx376L+KopC6tVHQIFOWPVoO0GJ5+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=t6HOx/gHpNy4Ac6Q8/nscQsHXA3ECXhtvBEPyy3eAUoE0lNmtGZqgUWBU8iyb6eFP3XP6xebMdFCh0o4P0nhuDFdQJKEk6ZT97vqr4K+kagwVlH8Dy1S34PuM69lPQFdGtbMwH1EHbY6j6Cj7a8etK7t/JD7uXGyyThT4xbIsLs=
+Received: by 10.114.175.16 with SMTP id x16mr2314579wae.1191794451958;
+        Sun, 07 Oct 2007 15:00:51 -0700 (PDT)
+Received: by 10.114.211.8 with HTTP; Sun, 7 Oct 2007 15:00:51 -0700 (PDT)
+In-Reply-To: <20071007213817.GJ31659@planck.djpig.de>
 Content-Disposition: inline
-In-Reply-To: <851wc6lwkc.fsf@lola.goethe.zz>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60228>
 
-David Kastrup, Sun, Oct 07, 2007 18:27:15 +0200:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> >> > +static inline int strbuf_cmp(const struct strbuf *a, const struct strbuf *b)
-> >> > +{
-> >> > +	int len = a->len < b->len ? a->len: b->len;
-> >> > +	int cmp = memcmp(a->buf, b->buf, len);
-> >> > +	if (cmp)
-> >> > +		return cmp;
-> >> > +	return a->len < b->len ? -1: a->len != b->len;
-> >> > +}
-> >> 
-> >> My guess is that you are conflating two issues about speed here: the
-> >> inlining will like speed the stuff up.  But having to evaluate the
-> >> (a->len < b->len) comparison twice will likely slow it down.
-> >
-> > Can't the result of the expression be reused in compiled?
-> > Isn't it a common expression?
-> 
-> No, since the call to memcmp might change a->len or b->len.  A
+On 10/7/07, Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> On Sun, Oct 07, 2007 at 03:23:59PM -0600, Elijah Newren wrote:
+> > The following set of instructions will duplicate my problem with a
+> > smaller repo; why is the local git repository bigger after running
+> > git-filter-branch rather than smaller as I'd expect?  I'm probably
+> > missing something obvious, but I have no idea what it is.
+>
+> The usual suspect would be the reflog.
 
-Huh?! How's that? It is not even given them!
+The git-filter-branch documentation mentions creating refs/original
+under .git.  Unfortunately, it doesn't contain any links or
+documentation on how I'd clean those out and I haven't been able to
+figure it out.  I asked on #git how to clean these out and got some
+answers that didn't work (git branch -d and something else I don't
+remember).  So...how do I fix the reflog, and then repack to have a
+pack under 11MB in size?
+
+Thanks,
+Elijah
