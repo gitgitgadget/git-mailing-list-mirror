@@ -1,74 +1,70 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
-Date: Mon, 8 Oct 2007 15:01:06 +0200
-Message-ID: <20071008130106.GA10784@diana.vm.bytemark.co.uk>
-References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com> <20071007221920.GF2765@steel.home> <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com> <20071007234346.GA29433@potapov> <51419b2c0710071722k576c06d9i2f4dce730eae2059@mail.gmail.com> <20071008010648.GB29433@potapov> <4709F805.8050704@op5.se> <20071008124017.GA22129@potapov>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Merge problems with git-mingw
+Date: Mon, 8 Oct 2007 15:10:20 +0200
+Message-ID: <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>
+References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>
+	 <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com>
+	 <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Ericsson <ae@op5.se>, Elijah Newren <newren@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 15:01:34 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Peter Karlsson" <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Oct 08 15:10:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IesEn-0005qW-Na
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 15:01:34 +0200
+	id 1IesNT-0007Xn-Mc
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 15:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755206AbXJHNBP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 09:01:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753919AbXJHNBP
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 09:01:15 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1150 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754421AbXJHNBO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 09:01:14 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IesEM-0002qQ-00; Mon, 08 Oct 2007 14:01:06 +0100
+	id S1753790AbXJHNKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 09:10:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbXJHNKW
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 09:10:22 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:26765 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753295AbXJHNKU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 09:10:20 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so750343rvb
+        for <git@vger.kernel.org>; Mon, 08 Oct 2007 06:10:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=np8Cm8LXmwGNxw18uT/nuR67hnofyJ31dvH5YT22qXc=;
+        b=aGRKmKHUCG2dy5F/owPDFoOlTO/qUmRmB1PA5dt9Jv3pfRg6cIJc/VbsACr1YRZx8bB3ReyeBlXibqa0B80I+FKE9jOLzJC/4D6DwiOKuQ1r/XKXuSm3ek2SV6ZR/IDKAv20wW4LedCusZXMXlOrJU8u5b4G/MW5wtjn377JF84=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ghz58RSvHzRKdU6FBqec5q1YtmeUp9zUFXpc1xvUR4JfzoykaTADm3bMXBv87d4NS0Ew/xcXOZ7NsOeqN9u+49aABcFPL2+rKpOoNZ+56mEbOr4zZSMi2HCGgojACLhuUb8pCpK9sw5du+nNOk5QnXovFsmdB/4OW0k3k/x9hgs=
+Received: by 10.114.177.1 with SMTP id z1mr4426774wae.1191849020306;
+        Mon, 08 Oct 2007 06:10:20 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Mon, 8 Oct 2007 06:10:20 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
 Content-Disposition: inline
-In-Reply-To: <20071008124017.GA22129@potapov>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60318>
 
-On 2007-10-08 16:40:17 +0400, Dmitry Potapov wrote:
-
-> On Mon, Oct 08, 2007 at 11:27:33AM +0200, Andreas Ericsson wrote:
+On 10/8/07, Peter Karlsson <peter@softwolves.pp.se> wrote:
+> > What does this command return?
+> >
+> >   $ git var GIT_COMMITTER_IDENT
 >
-> > A clone only fetches revs reachable from a ref, so pruning
-> > immediately after a clone is completely pointless.
+> Doesn't seem to work:
 >
-> Not true. git-clone copies the whole pack, so it can contain
-> unreachable objects.
-[...]
-> git-clone -l test/.git test2
+>   $ git var GIT_COMMITTER_IDENT
+>   usage: git-var [-l | <variable>]
 
-Try without the -l option and with a file:// URL:
+Something is weird with your setup and/or the mingw port, but you can
+probably work around the issue by doing this:
 
-  git clone file:///path/to/test/.git test2
+$ git config user.name "your name"
+$ git config user.email "your email"
 
-=46rom the git-clone man page:
+Optionally, you can add the --global flag to both commands to make the
+config visible in all of your repos.
 
---local::
--l::
-        When the repository to clone from is on a local machine, this
-        flag bypasses normal "git aware" transport mechanism and
-        clones the repository by making a copy of HEAD and everything
-        under objects and refs directories. The files under
-        `.git/objects/` directory are hardlinked to save space when
-        possible. This is now the default when the source repository
-        is specified with `/path/to/repo` syntax, so it essentially is
-        a no-op option. To force copying instead of hardlinking (which
-        may be desirable if you are trying to make a back-up of your
-        repository), but still avoid the usual "git aware" transport
-        mechanism, `--no-hardlinks` can be used.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+--
+larsh
