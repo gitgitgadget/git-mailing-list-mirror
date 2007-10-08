@@ -1,117 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] Bisect: implement "bisect dunno" to mark untestable
- revisions.
-Date: Mon, 8 Oct 2007 06:36:52 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710080632510.4174@racer.site>
-References: <20071008053450.a52d7c5e.chriscool@tuxfamily.org>
- <Pine.LNX.4.64.0710080444290.4174@racer.site> <200710080734.23878.chriscool@tuxfamily.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
+Date: Mon, 8 Oct 2007 08:15:11 +0200
+Message-ID: <20071008061511.GA2859@steel.home>
+References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com> <20071007221920.GF2765@steel.home> <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com> <20071007234039.GH2765@steel.home> <51419b2c0710071709s2f797df0u986447f5455f306d@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Oct 08 07:37:23 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 08:15:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IelIv-0007JJ-VI
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 07:37:22 +0200
+	id 1Ielto-0003uH-TF
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 08:15:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366AbXJHFhK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 01:37:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbXJHFhK
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 01:37:10 -0400
-Received: from mail.gmx.net ([213.165.64.20]:57981 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751210AbXJHFhJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 01:37:09 -0400
-Received: (qmail invoked by alias); 08 Oct 2007 05:37:07 -0000
-Received: from unknown (EHLO [172.17.38.182]) [38.99.84.33]
-  by mail.gmx.net (mp019) with SMTP; 08 Oct 2007 07:37:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/b4mUZ/ofbRr+CtfJK9riueMsOZVe7eMJ10hunfG
-	gi1psSGmDQRmZd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710080734.23878.chriscool@tuxfamily.org>
-X-Y-GMX-Trusted: 0
+	id S1751268AbXJHGPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 02:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbXJHGPQ
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 02:15:16 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:38791 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751056AbXJHGPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 02:15:14 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (fruni mo46) (RZmta 13.4)
+	with ESMTP id D02e03j985RKhn ; Mon, 8 Oct 2007 08:15:12 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 0DD9F277AE;
+	Mon,  8 Oct 2007 08:15:12 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 05370C502; Mon,  8 Oct 2007 08:15:12 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <51419b2c0710071709s2f797df0u986447f5455f306d@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60293>
 
-Hi,
-
-On Mon, 8 Oct 2007, Christian Couder wrote:
-
-> Le lundi 8 octobre 2007, Johannes Schindelin a ?crit :
->
-> > On Mon, 8 Oct 2007, Christian Couder wrote:
-> > > diff --git a/git-bisect.sh b/git-bisect.sh
-> > > index 388887a..c556318 100755
-> > > --- a/git-bisect.sh
-> > > +++ b/git-bisect.sh
-> > > @@ -143,7 +145,7 @@ bisect_write_bad() {
-> > >
-> > >  bisect_good() {
-> > >  	bisect_autostart
-> > > -        case "$#" in
-> > > +	case "$#" in
-> >
-> > White space breakage.
+Elijah Newren, Mon, Oct 08, 2007 02:09:50 +0200:
+> On 10/7/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> > you missed something. Your example compresses to about 124k.
 > 
-> The patch tries to fix some white space breakages.
-> 
-> > > @@ -153,7 +155,6 @@ bisect_good() {
-> > >  		rev=$(git rev-parse --verify "$rev^{commit}") || exit
-> > >  		bisect_write_good "$rev"
-> > >  		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
-> > > -
-> >
-> > ?
-> 
-> It also removes this unneeded blank line.
+> What version of git are you running?  I reran all the steps to which
 
-Both laudable changes; alas, they distracted me.
+git version 1.5.3.4.225.g31b973 (irrelevant custom modifications)
 
-> > > @@ -164,6 +165,28 @@ bisect_write_good() {
-> > >  	echo "# good: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-> > >  }
-> > >
-> > > +bisect_dunno() {
-> > > +	bisect_autostart
-> > > +	case "$#" in
-> > > +	0)    revs=$(git rev-parse --verify HEAD) || exit ;;
-> > > +	*)    revs=$(git rev-parse --revs-only --no-flags "$@") &&
-> > > +		test '' != "$revs" || die "Bad rev input: $@" ;;
-> > > +	esac
-> > > +	for rev in $revs
-> > > +	do
-> > > +		rev=$(git rev-parse --verify "$rev^{commit}") || exit
-> > > +		bisect_write_dunno "$rev"
-> > > +		echo "git-bisect dunno $rev" >>"$GIT_DIR/BISECT_LOG"
-> >
-> > Should the last line not be put into bisect_write_dunno?  OTOH this is
-> > the only call site of that function, so I strongly doubt that the
-> > function (consisting of 3 lines, where the first is 'rev="$1"') is
-> > necessary at all.
-> 
-> Well, there are "bisect_write_bad" and "bisect_write_good" that already 
-> do the same thing as "bisect_write_dunno". In fact I thought that it was 
-> better to just copy "bisect_dunno" from "bisect_good" and 
-> "bisect_write_dunno" from "bisect_write_good".
+> you responded (repeated below for clarity) with git-1.5.3.3 and still
+> get 11MB.  Also, you must have different filesystem extents than me
+> since an empty git repo takes 196k here[1], so I don't think any repo
+> is going to get down to 124k.
 
-If they also are called by just one site, and also do not do the complete 
-printing to the log in the function (but also in the caller), I think they 
-are not really worth it, either.
+it is ext3. I do not install the hooks (~8k apparent, ~32k fs blocks)
+and never activate logs by default.
 
-> If needed I can send another patch to factorise these functions.
+> # Use vi to remove the line referring to refs/original...
+> git reflog expire --all
 
-That's not up to me to decide.  I'm just saying what I dislike.
-
-Please do not take my criticism as a sign of a personal attack; if I did 
-not find your patch worthwhile, I would not bother to respond.  So in a 
-way, it is my way to show my appreciation for your work that I review and 
-criticize it; for efficiency, I do not mention what I like ;-)
-
-Ciao,
-Dscho
+another part of the suggestion re reflogs was to look into the logs,
+to check if expire actually removed anything. It seems to have been
+the culprit.
