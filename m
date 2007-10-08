@@ -1,60 +1,65 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
-Date: Mon, 8 Oct 2007 12:05:59 +0200
-Message-ID: <20071008100559.GA9221@diana.vm.bytemark.co.uk>
-References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com> <20071007221920.GF2765@steel.home> <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com> <20071007234346.GA29433@potapov> <51419b2c0710071722k576c06d9i2f4dce730eae2059@mail.gmail.com> <20071008010648.GB29433@potapov> <4709F805.8050704@op5.se>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Merge problems with git-mingw
+Date: Mon, 8 Oct 2007 12:06:42 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 08 12:06:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 13:19:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IepVO-0007Q2-Nq
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 12:06:31 +0200
+	id 1IeqeH-0003Fr-LO
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 13:19:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752389AbXJHKGV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 06:06:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXJHKGV
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 06:06:21 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4471 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378AbXJHKGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 06:06:20 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IepUt-0002PT-00; Mon, 08 Oct 2007 11:05:59 +0100
-Content-Disposition: inline
-In-Reply-To: <4709F805.8050704@op5.se>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753617AbXJHLTd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 07:19:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbXJHLTc
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 07:19:32 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:54741 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753617AbXJHLTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 07:19:31 -0400
+X-Greylist: delayed 767 seconds by postgrey-1.27 at vger.kernel.org; Mon, 08 Oct 2007 07:19:31 EDT
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l98B6hnQ001197
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Mon, 8 Oct 2007 13:06:43 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l98B6gvs001189;
+	Mon, 8 Oct 2007 13:06:42 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 08 Oct 2007 13:06:43 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60311>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60312>
 
-On 2007-10-08 11:27:33 +0200, Andreas Ericsson wrote:
+Hi!
 
-> Dmitry Potapov wrote:
->
-> > On Sun, Oct 07, 2007 at 06:22:28PM -0600, Elijah Newren wrote:
-> >
-> > > What other scenarios could lead to unreachable references?
-> >
-> > Any re-writing of history leads to that.
->
-> git-rebase being the most common culprit, right alongside 'git
-> commit --amend'.
+I am running the mingw port of Git from a Cygwin environment, because I
+had problems with the Cygwin version (not sure what the problem was,
+probably a CRLF issue). Everything works fine, except for merging:
 
-StGit (and presumably guilt, and any other similar tool) are just
-glorified rebase wrappers, so they'll generate tons of unreachable
-objects too.
+  $ git merge master
+  usage: git-var [-l | <variable>]
+  $
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Does anyone have any idea on what could cause that? (I've checked that
+git-var is indeed the mingw version and not the Cygwin version).
+
+  $ git --version
+  git version 1.5.3.mingw.1
+
+I'm running on top of another version control system, so I need to
+switch back to master and update the sources from upstream using that
+system's tools, and then merge it back into my branch. Without "git
+merge" working, that is a bit problematic, to say the least... :-)
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
