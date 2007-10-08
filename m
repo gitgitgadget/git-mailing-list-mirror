@@ -1,73 +1,284 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Trying to use git-filter-branch to compress history by removing
- large, obsolete binary files
-Date: Mon, 08 Oct 2007 15:28:23 +1300
-Message-ID: <470995C7.40606@vilain.net>
-References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com>	 <20071007213817.GJ31659@planck.djpig.de>	 <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com>	 <Pine.LNX.4.64.0710080018270.4174@racer.site>	 <51419b2c0710071624v79dc02d2g35a265add50dd46d@mail.gmail.com>	 <Pine.LNX.4.64.0710080028301.4174@racer.site>	 <51419b2c0710071638p6dcc0c7cm2a813c22758e6f32@mail.gmail.com>	 <Pine.LNX.4.64.0710080129480.4174@racer.site> <51419b2c0710071747w14d0c265x2de42fca50552394@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/2] rev-list: implement --bisect-all
+Date: Mon, 8 Oct 2007 05:34:38 +0200
+Message-ID: <20071008053438.6a829b91.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 04:28:47 2007
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Oct 08 05:27:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeiMQ-00026z-Tf
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 04:28:47 +0200
+	id 1IejHV-0000hn-IV
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 05:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752667AbXJHC2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 22:28:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbXJHC2d
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 22:28:33 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:58840 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752462AbXJHC2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Oct 2007 22:28:33 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id B200C205A74; Mon,  8 Oct 2007 15:28:30 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 0F571205487;
-	Mon,  8 Oct 2007 15:28:26 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <51419b2c0710071747w14d0c265x2de42fca50552394@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1753018AbXJHD1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 23:27:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753070AbXJHD1a
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 23:27:30 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:47383 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752988AbXJHD13 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 23:27:29 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id ECF7A1AB2BB;
+	Mon,  8 Oct 2007 05:27:26 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id A883B1AB2B8;
+	Mon,  8 Oct 2007 05:27:26 +0200 (CEST)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60281>
 
-Elijah Newren wrote:
-> On 10/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->> It should be as easy as git filter-branch and git clone.
-> 
-> Yes, a git filter-branch, git clone, AND git gc in the clone avoids
-> all those funny ref editing commands.  However, cloning a 5.6GB repo
-> (the size of one of the real repos I'm dealing with) will likely take
-> a long time (and may push me past the limits of disk space), so using
-> other steps to avoid the need to clone actually seems nicer.
+This is Junio's patch with some stuff to make --bisect-all
+compatible with --bisect-vars.
 
-You can just delete the logs and references that you don't want and run
-git gc --prune.
+This option makes it possible to see all the potential
+bisection points. The best ones are displayed first.
 
-However.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin-rev-list.c |   98 +++++++++++++++++++++++++++++++++++++++++++++-------
+ log-tree.c         |    2 +-
+ log-tree.h         |    1 +
+ 3 files changed, 87 insertions(+), 14 deletions(-)
 
-git gc creates a new pack before deleting the old one.  Garbage
-collection usually does this; make a copy of everything to a new place
-and then free all of the old space.  If *that* is a problem, ie you
-don't have enough space for two copies of the repository and the junk,
-you'll have to do a partial import, leave the junk you don't want
-unpacked, cleanup and prune, then finish the import.  Which sounds like
-a lot of hassle when you should really just find a place with more space
-to work with!
-
-Sam.
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 33726b8..0943b76 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -9,6 +9,7 @@
+ #include "revision.h"
+ #include "list-objects.h"
+ #include "builtin.h"
++#include "log-tree.h"
+ 
+ /* bits #0-15 in revision.h */
+ 
+@@ -39,6 +40,7 @@ static const char rev_list_usage[] =
+ "  special purpose:\n"
+ "    --bisect\n"
+ "    --bisect-vars"
++"    --bisect-all"
+ ;
+ 
+ static struct rev_info revs;
+@@ -74,6 +76,7 @@ static void show_commit(struct commit *commit)
+ 			parents = parents->next;
+ 		}
+ 	}
++	show_decorations(commit);
+ 	if (revs.commit_format == CMIT_FMT_ONELINE)
+ 		putchar(' ');
+ 	else
+@@ -278,6 +281,57 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
+ 	return best;
+ }
+ 
++struct commit_dist {
++	struct commit *commit;
++	int distance;
++};
++
++static int compare_commit_dist(const void *a_, const void *b_)
++{
++	struct commit_dist *a, *b;
++
++	a = (struct commit_dist *)a_;
++	b = (struct commit_dist *)b_;
++	if (a->distance != b->distance)
++		return b->distance - a->distance; /* desc sort */
++	return hashcmp(a->commit->object.sha1, b->commit->object.sha1);
++}
++
++static struct commit_list *best_bisection_sorted(struct commit_list *list, int nr)
++{
++	struct commit_list *p;
++	struct commit_dist *array = xcalloc(nr, sizeof(*array));
++	int cnt, i;
++
++	for (p = list, cnt = 0; p; p = p->next) {
++		int distance;
++		unsigned flags = p->item->object.flags;
++
++		if (revs.prune_fn && !(flags & TREECHANGE))
++			continue;
++		distance = weight(p);
++		if (nr - distance < distance)
++			distance = nr - distance;
++		array[cnt].commit = p->item;
++		array[cnt].distance = distance;
++		cnt++;
++	}
++	qsort(array, cnt, sizeof(*array), compare_commit_dist);
++	for (p = list, i = 0; i < cnt; i++) {
++		struct name_decoration *r = xmalloc(sizeof(*r) + 100);
++		struct object *obj = &(array[i].commit->object);
++
++		sprintf(r->name, "dist=%d", array[i].distance);
++		r->next = add_decoration(&name_decoration, obj, r);
++		p->item = array[i].commit;
++		p = p->next;
++	}
++	if (p)
++		p->next = NULL;
++	free(array);
++	return list;
++}
++
+ /*
+  * zero or positive weight is the number of interesting commits it can
+  * reach, including itself.  Especially, weight = 0 means it does not
+@@ -292,7 +346,8 @@ static struct commit_list *best_bisection(struct commit_list *list, int nr)
+  * or positive distance.
+  */
+ static struct commit_list *do_find_bisection(struct commit_list *list,
+-					     int nr, int *weights)
++					     int nr, int *weights,
++					     int find_all)
+ {
+ 	int n, counted;
+ 	struct commit_list *p;
+@@ -351,7 +406,7 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 		clear_distance(list);
+ 
+ 		/* Does it happen to be at exactly half-way? */
+-		if (halfway(p, nr))
++		if (!find_all && halfway(p, nr))
+ 			return p;
+ 		counted++;
+ 	}
+@@ -389,19 +444,22 @@ static struct commit_list *do_find_bisection(struct commit_list *list,
+ 				weight_set(p, weight(q));
+ 
+ 			/* Does it happen to be at exactly half-way? */
+-			if (halfway(p, nr))
++			if (!find_all && halfway(p, nr))
+ 				return p;
+ 		}
+ 	}
+ 
+ 	show_list("bisection 2 counted all", counted, nr, list);
+ 
+-	/* Then find the best one */
+-	return best_bisection(list, nr);
++	if (!find_all)
++		return best_bisection(list, nr);
++	else
++		return best_bisection_sorted(list, nr);
+ }
+ 
+ static struct commit_list *find_bisection(struct commit_list *list,
+-					  int *reaches, int *all)
++					  int *reaches, int *all,
++					  int find_all)
+ {
+ 	int nr, on_list;
+ 	struct commit_list *p, *best, *next, *last;
+@@ -434,14 +492,13 @@ static struct commit_list *find_bisection(struct commit_list *list,
+ 	weights = xcalloc(on_list, sizeof(*weights));
+ 
+ 	/* Do the real work of finding bisection commit. */
+-	best = do_find_bisection(list, nr, weights);
+-
++	best = do_find_bisection(list, nr, weights, find_all);
+ 	if (best) {
+-		best->next = NULL;
++		if (!find_all)
++			best->next = NULL;
+ 		*reaches = weight(best);
+ 	}
+ 	free(weights);
+-
+ 	return best;
+ }
+ 
+@@ -468,6 +525,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	int i;
+ 	int read_from_stdin = 0;
+ 	int bisect_show_vars = 0;
++	int bisect_find_all = 0;
+ 
+ 	git_config(git_default_config);
+ 	init_revisions(&revs, prefix);
+@@ -490,6 +548,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			bisect_list = 1;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--bisect-all")) {
++			bisect_list = 1;
++			bisect_find_all = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--bisect-vars")) {
+ 			bisect_list = 1;
+ 			bisect_show_vars = 1;
+@@ -536,9 +599,11 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (bisect_list) {
+ 		int reaches = reaches, all = all;
+ 
+-		revs.commits = find_bisection(revs.commits, &reaches, &all);
++		revs.commits = find_bisection(revs.commits, &reaches, &all,
++					      bisect_find_all);
+ 		if (bisect_show_vars) {
+ 			int cnt;
++			char hex[41];
+ 			if (!revs.commits)
+ 				return 1;
+ 			/*
+@@ -550,15 +615,22 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 			 * A bisect set of size N has (N-1) commits further
+ 			 * to test, as we already know one bad one.
+ 			 */
+-			cnt = all-reaches;
++			cnt = all - reaches;
+ 			if (cnt < reaches)
+ 				cnt = reaches;
++			strcpy(hex, sha1_to_hex(revs.commits->item->object.sha1));
++
++			if (bisect_find_all) {
++				traverse_commit_list(&revs, show_commit, show_object);
++				printf("------\n");
++			}
++
+ 			printf("bisect_rev=%s\n"
+ 			       "bisect_nr=%d\n"
+ 			       "bisect_good=%d\n"
+ 			       "bisect_bad=%d\n"
+ 			       "bisect_all=%d\n",
+-			       sha1_to_hex(revs.commits->item->object.sha1),
++			       hex,
+ 			       cnt - 1,
+ 			       all - reaches - 1,
+ 			       reaches - 1,
+diff --git a/log-tree.c b/log-tree.c
+index 2319154..f766758 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -15,7 +15,7 @@ static void show_parents(struct commit *commit, int abbrev)
+ 	}
+ }
+ 
+-static void show_decorations(struct commit *commit)
++void show_decorations(struct commit *commit)
+ {
+ 	const char *prefix;
+ 	struct name_decoration *decoration;
+diff --git a/log-tree.h b/log-tree.h
+index e82b56a..b33f7cd 100644
+--- a/log-tree.h
++++ b/log-tree.h
+@@ -12,5 +12,6 @@ int log_tree_diff_flush(struct rev_info *);
+ int log_tree_commit(struct rev_info *, struct commit *);
+ int log_tree_opt_parse(struct rev_info *, const char **, int);
+ void show_log(struct rev_info *opt, const char *sep);
++void show_decorations(struct commit *commit);
+ 
+ #endif
+-- 
+1.5.3.4.208.g996ad
