@@ -1,70 +1,87 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Merge problems with git-mingw
-Date: Mon, 8 Oct 2007 15:10:20 +0200
-Message-ID: <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>
-References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>
-	 <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com>
-	 <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 09/13] Clear up the semantics of Series.new_patch
+Date: Mon, 8 Oct 2007 14:16:10 +0100
+Message-ID: <b0943d9e0710080616r36142946m3e24d2f6893287c9@mail.gmail.com>
+References: <20070914222819.7001.55921.stgit@morpheus.local>
+	 <20070914223154.7001.12254.stgit@morpheus.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Oct 08 15:10:54 2007
+To: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Mon Oct 08 15:16:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IesNT-0007Xn-Mc
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 15:10:32 +0200
+	id 1IesT7-0000Rk-3U
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 15:16:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753790AbXJHNKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 09:10:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbXJHNKW
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 09:10:22 -0400
-Received: from rv-out-0910.google.com ([209.85.198.189]:26765 "EHLO
+	id S1753149AbXJHNQM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 09:16:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752916AbXJHNQM
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 09:16:12 -0400
+Received: from rv-out-0910.google.com ([209.85.198.185]:36265 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753295AbXJHNKU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 09:10:20 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so750343rvb
-        for <git@vger.kernel.org>; Mon, 08 Oct 2007 06:10:20 -0700 (PDT)
+	with ESMTP id S1752744AbXJHNQL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2007 09:16:11 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so751529rvb
+        for <git@vger.kernel.org>; Mon, 08 Oct 2007 06:16:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=np8Cm8LXmwGNxw18uT/nuR67hnofyJ31dvH5YT22qXc=;
-        b=aGRKmKHUCG2dy5F/owPDFoOlTO/qUmRmB1PA5dt9Jv3pfRg6cIJc/VbsACr1YRZx8bB3ReyeBlXibqa0B80I+FKE9jOLzJC/4D6DwiOKuQ1r/XKXuSm3ek2SV6ZR/IDKAv20wW4LedCusZXMXlOrJU8u5b4G/MW5wtjn377JF84=
+        bh=tk0+UFa2OkmF1C7x64WF0E4F7M7JKuQhM26BkfMVl2A=;
+        b=e+aRwTvZ8HfqAKdojjhAQo8mcpU8NCYQcHLk9dj3MUhZzqcFmTEgUZYix4ccLHqEPlN/IDHEiCKhrmPJGOhJ2vescxGj4UD6A12viCmdy/N4Lj+XIv4Z2wCHz/soaEOU18nLCjF51wqFxEjSrBJi2DHHp577GSSbSuyASvmLVus=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ghz58RSvHzRKdU6FBqec5q1YtmeUp9zUFXpc1xvUR4JfzoykaTADm3bMXBv87d4NS0Ew/xcXOZ7NsOeqN9u+49aABcFPL2+rKpOoNZ+56mEbOr4zZSMi2HCGgojACLhuUb8pCpK9sw5du+nNOk5QnXovFsmdB/4OW0k3k/x9hgs=
-Received: by 10.114.177.1 with SMTP id z1mr4426774wae.1191849020306;
-        Mon, 08 Oct 2007 06:10:20 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Mon, 8 Oct 2007 06:10:20 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
+        b=TxM2SHgKdUCJtIEc0iTh2dirWhgq+0/5FsyN0z3uETPXE8I5B50QpwkVU85mPDkhnDp/rM4jU4XYMrPie7YN1IFuoi8WT0NqDqNFSXMzun3lGjpTY1t7AWHrJycIU1FKZbmKtSOIMcLxJ6h4ZuvjGbpj5tyq1/+//Q1FKVKu34Y=
+Received: by 10.140.250.14 with SMTP id x14mr2856318rvh.1191849370639;
+        Mon, 08 Oct 2007 06:16:10 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 8 Oct 2007 06:16:10 -0700 (PDT)
+In-Reply-To: <20070914223154.7001.12254.stgit@morpheus.local>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60319>
 
-On 10/8/07, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> > What does this command return?
-> >
-> >   $ git var GIT_COMMITTER_IDENT
+On 14/09/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> This patch adds a number of assertions to document and verify the
+> complex restrictions of the input parameters to the Series.new_patch
+> function. It also adds the requirement that 'before_existing' and
+> 'commit' cannot be true at the same time when calling it, instead of
+> updating 'commit' inside the function.
+[...]
+> --- a/stgit/stack.py
+> +++ b/stgit/stack.py
+> @@ -833,9 +833,16 @@ class Series(PatchSet):
+>                    author_name =3D None, author_email =3D None, autho=
+r_date =3D None,
+>                    committer_name =3D None, committer_email =3D None,
+>                    before_existing =3D False):
+> -        """Creates a new patch
+> +        """Creates a new patch, either pointing to an existing commi=
+t object,
+> +        or by creating a new commit object.
+>          """
 >
-> Doesn't seem to work:
->
->   $ git var GIT_COMMITTER_IDENT
->   usage: git-var [-l | <variable>]
+> +        assert commit or (top and bottom)
+> +        assert not before_existing or (top and bottom)
+> +        assert not (commit and before_existing)
+> +        assert (top and bottom) or (not top and not bottom)
+> +        assert not top or (bottom =3D=3D git.get_commit(top).get_par=
+ent())
 
-Something is weird with your setup and/or the mingw port, but you can
-probably work around the issue by doing this:
+The last assertion here prevents the use of 'stg pick --reverse'. This
+command creates an unapplied patch with top and bottom reversed and
+pushes it to force a three-way merge.
 
-$ git config user.name "your name"
-$ git config user.email "your email"
+It seems to work OK if I comment it out but I wonder whether it will
+break in the future with the planned removal of the top and bottom
+files.
 
-Optionally, you can add the --global flag to both commands to make the
-config visible in all of your repos.
+Thanks.
 
---
-larsh
+--=20
+Catalin
