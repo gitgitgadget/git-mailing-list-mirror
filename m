@@ -1,102 +1,70 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 1/2] Have a filter_start/filter_end API.
-Date: Mon, 08 Oct 2007 09:29:47 +0200
-Message-ID: <20071008072947.GB22552@artemis.corp>
-References: <1191615571-15946-1-git-send-email-madcoder@debian.org> <1191615571-15946-2-git-send-email-madcoder@debian.org> <20071006090621.GB2711@steel.home> <20071007145355.GC10024@artemis.corp> <20071007160707.GA3270@steel.home> <20071007165218.GE10024@artemis.corp> <20071007215041.GB2765@steel.home>
+From: Florian Weimer <fweimer@bfk.de>
+Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and  optimize it a bit
+Date: Mon, 08 Oct 2007 10:54:32 +0200
+Message-ID: <82k5py6l6f.fsf@mid.bfk.de>
+References: <1190625904-22808-2-git-send-email-madcoder@debian.org>
+	<20071007140052.GA3260@steel.home>
+	<20071007172425.bb691da9.tihirvon@gmail.com>
+	<20071007143912.GB10024@artemis.corp> <87sl4nlyg0.fsf@catnip.gol.com>
+	<857ilylxhm.fsf@lola.goethe.zz> <20071007215432.GC2765@steel.home>
+	<EF81F7DD-73C7-4B6F-92D2-4A143CA05365@wincent.com>
+	<20071007223140.GG2765@steel.home> <87odfapefc.fsf@catnip.gol.com>
+	<20071008072312.GA22552@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="/WwmFnJnmDyWGHa4";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 08 09:30:01 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Miles Bader <miles@gnu.org>, Alex Riesen <raa.lkml@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	David Kastrup <dak@gnu.org>,
+	Timo Hirvonen <tihirvon@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Oct 08 10:55:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ien3v-0006K0-CU
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 09:29:59 +0200
+	id 1IeoOD-00038U-Ah
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 10:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbXJHH3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 03:29:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbXJHH3t
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 03:29:49 -0400
-Received: from pan.madism.org ([88.191.52.104]:52215 "EHLO hermes.madism.org"
+	id S1752769AbXJHIyt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 04:54:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752735AbXJHIyt
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 04:54:49 -0400
+Received: from mx01.bfk.de ([193.227.124.2]:38278 "EHLO mx01.bfk.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750737AbXJHH3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 03:29:49 -0400
-Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id BD5AE17A45;
-	Mon,  8 Oct 2007 09:29:47 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 429B54B5C; Mon,  8 Oct 2007 09:29:47 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071007215041.GB2765@steel.home>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752708AbXJHIys convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2007 04:54:48 -0400
+Received: from mx00.int.bfk.de ([10.119.110.2])
+	by mx01.bfk.de with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	id 1IeoNk-0000iE-VY; Mon, 08 Oct 2007 10:54:33 +0200
+Received: from fweimer by bfk.de with local id 1IeoNk-0006d2-Ro; Mon, 08 Oct 2007 10:54:32 +0200
+In-Reply-To: <20071008072312.GA22552@artemis.corp> (Pierre Habouzit's message of "Mon, 08 Oct 2007 09:23:12 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60299>
 
+* Pierre Habouzit:
 
---/WwmFnJnmDyWGHa4
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Oct 07, 2007 at 09:50:41PM +0000, Alex Riesen wrote:
-> Pierre Habouzit, Sun, Oct 07, 2007 18:52:18 +0200:
-> > Though, those are both things that I find ugly to "know" in convert.c.
-> > How things are allocated in strbufs is one of the few things we don't
-> > want to assume anywhere outside of the strbuf module.
+>> So I think the last line can just be:
+>>=20
+>>    return a->len - b->len;
 >
-> src is outside of strbuf scope. It is not internal to struct strbuf.
-> The caller must already know if it is inside of the given strbuf
-> instance.
->
-> need_realloc is covered by make_room, isn't it?
+>   Won't work because ->len are size_t and return value is int, so on =
+64
+> bits platform, this has chances to overflow.
 
-  Internally yes, but make_room may move the buffer, if that happens,
-there is nothing we can do, in the case where we point inside (or at the
-begining of - fwiw it's the same here) the buffer
+Nit: It can overflow on 32-bit, too.
 
-> I'd suggest just fix the caller, it is simple in convert.c: just use
-> ret, which contains exactly this information. If you insist on editing
-> in-place, which makes your routines really need the in-placeability
-> informaion. Just give it to them, better explicitely. All of this
-> makes the routines very convert.c specific, which is the reason why I
-> argument to have them just there and nowhere else.
->=20
-> Alternatively, one can memdup ->buf (as it is the input for next
-> filter) every time a filter modifies it (which is safe, but simple,
-> slow, requires memory, and may fragment heap):
+And "int len" in the first line of the function body should be
+"size_t len".
 
-  This is exactly what we are trying to avoid with the current form.
-Given how you try to micro-optimize strbuf_cmp I'm a bit lost here=E2=80=A6
+Moving that to a compare_int/compare_size_t function should help;
+AFAIK there's no short idiom which does the job.
 
 --=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---/WwmFnJnmDyWGHa4
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHCdxrvGr7W6HudhwRArhdAKCqK1UltJqB/WcuuZzHivYdSk+FMgCgkTjY
-uz66CInEr9Yk7YjvDmJm6s0=
-=UuIX
------END PGP SIGNATURE-----
-
---/WwmFnJnmDyWGHa4--
+=46lorian Weimer                <fweimer@bfk.de>
+BFK edv-consulting GmbH       http://www.bfk.de/
+Kriegsstra=DFe 100              tel: +49-721-96201-1
+D-76133 Karlsruhe             fax: +49-721-96201-99
