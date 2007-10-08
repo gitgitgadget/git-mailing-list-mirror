@@ -1,107 +1,78 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Trying to use git-filter-branch to compress history by removing large, obsolete binary files
-Date: Mon, 8 Oct 2007 16:40:17 +0400
-Message-ID: <20071008124017.GA22129@potapov>
-References: <51419b2c0710071423y1b194f22gb6ccaa57303029d1@mail.gmail.com> <20071007213817.GJ31659@planck.djpig.de> <51419b2c0710071500x318ee734n9db6ca9e6daa3196@mail.gmail.com> <20071007221920.GF2765@steel.home> <51419b2c0710071524q16e9c593s2722dffc826e560d@mail.gmail.com> <20071007234346.GA29433@potapov> <51419b2c0710071722k576c06d9i2f4dce730eae2059@mail.gmail.com> <20071008010648.GB29433@potapov> <4709F805.8050704@op5.se>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGIT PATCH] Better diagnostic for wrong branch configuration.
+Date: Mon, 8 Oct 2007 14:00:48 +0100
+Message-ID: <b0943d9e0710080600y55aeeeeei8dbd27d069c681e@mail.gmail.com>
+References: <20071005204452.30902.60246.stgit@gandelf.nowhere.earth>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, Alex Riesen <raa.lkml@gmail.com>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 08 14:46:33 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yann Dirson" <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Mon Oct 08 15:01:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ies0E-0002er-7J
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 14:46:30 +0200
+	id 1IesEW-0005mI-1l
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 15:01:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755577AbXJHMqT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 08:46:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755113AbXJHMqS
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 08:46:18 -0400
-Received: from smtp01.mtu.ru ([62.5.255.48]:58025 "EHLO smtp01.mtu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755577AbXJHMqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 08:46:18 -0400
-Received: from potapov.private (ppp85-140-171-99.pppoe.mtu-net.ru [85.140.171.99])
-	by smtp01.mtu.ru (Postfix) with ESMTP id 12BF6A5D1B1;
-	Mon,  8 Oct 2007 16:46:08 +0400 (MSD)
-Received: from potapov.private (localhost [127.0.0.1])
-	by potapov.private (8.13.8/8.13.8/Debian-3) with ESMTP id l98CeHh9023089;
-	Mon, 8 Oct 2007 16:40:17 +0400
-Received: (from dpotapov@localhost)
-	by potapov.private (8.13.8/8.13.8/Submit) id l98CeHYL023088;
-	Mon, 8 Oct 2007 16:40:17 +0400
-X-Authentication-Warning: potapov.private: dpotapov set sender to dpotapov@gmail.com using -f
+	id S1755106AbXJHNAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 09:00:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755063AbXJHNAu
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 09:00:50 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:11279 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753919AbXJHNAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 09:00:49 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so748064rvb
+        for <git@vger.kernel.org>; Mon, 08 Oct 2007 06:00:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=2R33ccJVf/nGTqUugeCjUngUUfjclHPaM5WKnRA8KxU=;
+        b=e641w8PY15IdxtFzoruJZSUVuiS4zFpC99jLvRzmof8r+hwCrJ1InKF+BatFmBhtgHRMZGb5Zvr9eyt1VvBFz+V4Nt5c7kCSWeqmsizni41rhAXx795AYRmahUeFr7zjPzoNDyvmmDC+/PjFQA++eWPcQgBZANtLAgW+wmVTyHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=JX8eayAWRH1HrfOPfYyemf2vRhDPy5RhXynAYgK7AWnEuMF6P0FwAWW3JEN27qvFqtzd+j/T4px8VlXjuwLBj2Gs8heyNuU71T4UyY8a2TLLhoycxxDNAPBejOdNQkUi2Hz888iqCw/VSYcG7LKbWjULkVz8dtwZLQcfY+/oMpU=
+Received: by 10.141.62.9 with SMTP id p9mr1456331rvk.1191848448825;
+        Mon, 08 Oct 2007 06:00:48 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Mon, 8 Oct 2007 06:00:48 -0700 (PDT)
+In-Reply-To: <20071005204452.30902.60246.stgit@gandelf.nowhere.earth>
 Content-Disposition: inline
-In-Reply-To: <4709F805.8050704@op5.se>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60316>
 
-On Mon, Oct 08, 2007 at 11:27:33AM +0200, Andreas Ericsson wrote:
-> Dmitry Potapov wrote:
-> >OTOH, if you want to have a clean repository immediately, I believe
-> >'git clone' is a better option. After you made a local clone using
-> >it, 'git gc' should remove old garbage.
-> >
-> 
-> A clone only fetches revs reachable from a ref, so pruning immediately
-> after a clone is completely pointless.
+On 05/10/2007, Yann Dirson <ydirson@altern.org> wrote:
+> --- a/stgit/git.py
+> +++ b/stgit/git.py
+> @@ -1003,11 +1003,14 @@ def fetch_head():
+>          m = re.match('^([^\t]*)\t\t', line)
+>          if m:
+>              if fetch_head:
+> -                raise GitException, "StGit does not support multiple FETCH_HEAD"
+> +                raise GitException, 'StGit does not support multiple FETCH_HEAD'
+>              else:
+>                  fetch_head=m.group(1)
+>      stream.close()
+>
+> +    if not fetch_head:
+> +        raise GitException, 'No for-merge remote head found in FETCH_HEAD'
 
-Not true. git-clone copies the whole pack, so it can contain unreachable
-objects. Here is a simple script that demonstrates that without garbage
-collection the size of the cloned repository will be the same as the
-original one.
+OK, I tried and it doesn't work with my StGIT over SVN configuration.
 
-===========================================
-# Make a small repo
-mkdir test
-cd test
-git init
-echo hi > there
-git add there
-git commit -m 'Small repo'
+What I did is defining 'pull-policy' as 'fetch-rebase', 'fetchcmd' as
+'git svn fetch' which doesn't create any FETCH_HEAD. The 'pullcmd' is
+defined as 'git svn rebase' and it doesn't use any argument if
+git.fetch_head() return None.
 
-# Add a random 10M binary file
-dd if=/dev/urandom of=testme.txt count=10 bs=1M
-git add testme.txt
-git commit -m 'Add big binary file'
+I also think it is better for the pull command to re-raise the
+git.fetch_head exception as this one contains more detailed
+information about the error (after the out.error call). It currently
+shows that the remote head couldn't be found but there is the multiple
+heads case raised by git.fetch_head.
 
-# Remove the 10M binary file
-git rm testme.txt
-git commit -m 'Remove big binary file'
-
-# Compress the repo, see how big the repo is
-git gc --aggressive --prune
-du -ks .                       # 10348
-du -ks .git                    # 10344
-
-git-whatchanged
-
-# Try to rewrite history to remove the binary file
-git-filter-branch --tree-filter 'rm -f testme.txt' HEAD
-git reset --hard
-
-# Remove original refs
-rm .git/refs/original/refs/heads/master
-
-# Remove back
-cd ..
-
-# Clone repository
-git-clone -l test/.git test2
-
-cd test2
-du -ks .git # 10360
-
-# Now run garbage collection
-git gc
-du -ks .git # 96
-
-===========================================
-
-Dmitry
+-- 
+Catalin
