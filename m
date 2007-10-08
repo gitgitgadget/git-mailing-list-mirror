@@ -1,61 +1,62 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Merge problems with git-mingw
-Date: Mon, 8 Oct 2007 15:56:26 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se>
-References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se> 
- <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com> 
- <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
- <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 6/6] Let some commands work with detached HEAD
+Date: Mon, 8 Oct 2007 17:34:50 +0200
+Message-ID: <20071008153450.GA12247@diana.vm.bytemark.co.uk>
+References: <20071008085430.9734.75797.stgit@yoghurt> <20071008085540.9734.60137.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Oct 08 16:56:50 2007
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 17:35:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ieu2A-0006fP-NJ
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 16:56:39 +0200
+	id 1IeudQ-00076N-Ut
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 17:35:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582AbXJHO43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 10:56:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbXJHO43
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 10:56:29 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:58579 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751347AbXJHO43 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 10:56:29 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l98EuQnQ029830
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Mon, 8 Oct 2007 16:56:27 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l98EuQEI029825;
-	Mon, 8 Oct 2007 16:56:26 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Mon, 08 Oct 2007 16:56:27 +0200 (CEST)
+	id S1752054AbXJHPe5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 11:34:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752198AbXJHPe5
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 11:34:57 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1616 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751589AbXJHPe5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 11:34:57 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ieud8-0003VQ-00; Mon, 08 Oct 2007 16:34:50 +0100
+Content-Disposition: inline
+In-Reply-To: <20071008085540.9734.60137.stgit@yoghurt>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60327>
 
-Hi!
+On 2007-10-08 10:55:41 +0200, Karl Hasselstr=F6m wrote:
 
-> Something is weird with your setup and/or the mingw port, but you can
-> probably work around the issue by doing this:
-> 
-> $ git config user.name "your name"
-> $ git config user.email "your email"
+> --- a/stgit/commands/diff.py
+> +++ b/stgit/commands/diff.py
+> @@ -42,7 +42,7 @@ rev =3D '([patch][//[bottom | top]]) | <tree-ish> |=
+ base'
+>  If neither bottom nor top are given but a '//' is present, the comma=
+nd
+>  shows the specified patch (defaulting to the current one)."""
+> =20
+> -directory =3D DirectoryHasRepository()
+> +directory =3D DirectoryHasRepository(needs_current_series =3D False)
+>  options =3D [make_option('-r', '--range',
+>                         metavar =3D 'rev1[..[rev2]]', dest =3D 'revs'=
+,
+>                         help =3D 'show the diff between revisions'),
 
-Both of those are configured properly, but even after configuring them
-locally for the repository only, I get the same error with "git var".
-Weird.
+This hunk shouldn't be here, since diff does use crt_series. (The
+commit message also has to be modified accordingly.)
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+So, we don't have a single test that tries to run "stg diff". Duh.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
