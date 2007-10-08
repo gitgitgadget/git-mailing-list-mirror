@@ -1,56 +1,51 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Mon, 08 Oct 2007 08:37:27 +0200
-Message-ID: <4709D027.3090003@viscovery.net>
-References: <11917040461528-git-send-email-shawn.bohrer@gmail.com> <20071008020435.GA20050@coredump.intra.peff.net> <alpine.LFD.0.999.0710071916510.23684@woody.linux-foundation.org> <20071008022205.GA21277@coredump.intra.peff.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH 4/8] Don't split long and short description in "stg edit"
+Date: Mon, 8 Oct 2007 08:41:42 +0200
+Message-ID: <20071008064142.GA6170@diana.vm.bytemark.co.uk>
+References: <20071007231446.12626.14259.stgit@yoghurt> <20071007231735.12626.81744.stgit@yoghurt> <20071007234009.GA19073@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 08 08:37:45 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 08 08:42:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IemFL-0006xC-1V
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 08:37:43 +0200
+	id 1IemK1-0007cl-Vm
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 08:42:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752378AbXJHGhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 02:37:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752467AbXJHGhd
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 02:37:33 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:51344 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752378AbXJHGhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 02:37:33 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IemEz-0007ei-V4; Mon, 08 Oct 2007 08:37:22 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 39B7454D; Mon,  8 Oct 2007 08:37:27 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071008022205.GA21277@coredump.intra.peff.net>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1752789AbXJHGmZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Oct 2007 02:42:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbXJHGmY
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 02:42:24 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2200 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753058AbXJHGmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 02:42:24 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IemJC-0001d3-00; Mon, 08 Oct 2007 07:41:42 +0100
+Content-Disposition: inline
+In-Reply-To: <20071007234009.GA19073@old.davidb.org>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60296>
 
-Jeff King schrieb:
-> On Sun, Oct 07, 2007 at 07:17:50PM -0700, Linus Torvalds wrote:
-> 
->> fchdir() is not portable.
-> 
-> I was using the "even Solaris has it!" test, but yes, it's not POSIX. I
-> don't know how common it actually is (for curiosity's sake, do you know
-> of a common platform that lacks it?).
+On 2007-10-07 16:40:10 -0700, David Brown wrote:
 
-Windows. ;)
+> On Mon, Oct 08, 2007 at 01:17:35AM +0200, Karl Hasselstr=F6m wrote:
+>
+> > "stg edit" used to present the patch information like this:
+>
+> I think this fix is better to begin with. I found it especially
+> confusing when there was only a single line commit message. Now the
+> header looks like a header :-)
 
--- Hannes
+Yes, that case was confusing too.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
