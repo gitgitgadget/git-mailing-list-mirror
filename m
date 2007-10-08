@@ -1,60 +1,56 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Sun, 7 Oct 2007 19:17:50 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710071916510.23684@woody.linux-foundation.org>
-References: <11917040461528-git-send-email-shawn.bohrer@gmail.com>
- <20071008020435.GA20050@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Make strbuf_cmp inline, constify its arguments and
+	optimize it a bit
+Date: Sun, 7 Oct 2007 22:19:45 -0400
+Message-ID: <20071008021945.GC20050@coredump.intra.peff.net>
+References: <1190625904-22808-1-git-send-email-madcoder@debian.org> <1190625904-22808-2-git-send-email-madcoder@debian.org> <20071007140052.GA3260@steel.home> <85fy0nknnq.fsf@lola.goethe.zz> <20071007161012.GB3270@steel.home> <851wc6lwkc.fsf@lola.goethe.zz> <20071007215749.GD2765@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 08 04:18:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 08 04:20:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IeiCP-0000vv-CM
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 04:18:25 +0200
+	id 1IeiDx-000179-0L
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 04:20:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888AbXJHCSM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Oct 2007 22:18:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752626AbXJHCSM
-	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 22:18:12 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:34406 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752119AbXJHCSL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Oct 2007 22:18:11 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l982HpLG027433
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 7 Oct 2007 19:17:57 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l982HoRK001541;
-	Sun, 7 Oct 2007 19:17:50 -0700
-In-Reply-To: <20071008020435.GA20050@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-4.738 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752844AbXJHCTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Oct 2007 22:19:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbXJHCTs
+	(ORCPT <rfc822;git-outgoing>); Sun, 7 Oct 2007 22:19:48 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4495 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752691AbXJHCTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Oct 2007 22:19:47 -0400
+Received: (qmail 9154 invoked by uid 111); 8 Oct 2007 02:19:46 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 07 Oct 2007 22:19:46 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 07 Oct 2007 22:19:45 -0400
+Content-Disposition: inline
+In-Reply-To: <20071007215749.GD2765@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60278>
 
+On Sun, Oct 07, 2007 at 11:57:49PM +0200, Alex Riesen wrote:
 
-
-On Sun, 7 Oct 2007, Jeff King wrote:
+> > > Can't the result of the expression be reused in compiled?
+> > > Isn't it a common expression?
+> > 
+> > No, since the call to memcmp might change a->len or b->len.  A
 > 
->   fd = open(".", O_RDONLY);
->   chdir(path);
->   ...
->   fchdir(fd);
+> Huh?! How's that? It is not even given them!
 
-fchdir() is not portable.
+But they are non-local variables (they are part of structs passed in as
+pointers), so that translation unit has no idea how they are allocated.
+They could be globals that memcmp mucks with as a side effect.
 
-I think it would be better to not chdir() at all. Yes, that means having 
-to prepend the prefix to the names, but that is what git generally does 
-(for that - and other - reasons).
+That being said, standards-conforming compilers _can_ realize that
+memcmp is a special, standards-defined function with no side effects and
+act accordingly. gcc provides the 'pure' function attribute for this
+purpose, which is used by glibc.
 
-		Linus
+-Peff
