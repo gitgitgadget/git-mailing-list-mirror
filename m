@@ -1,67 +1,80 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Merge problems with git-mingw
-Date: Mon, 8 Oct 2007 21:59:56 +0200
-Message-ID: <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com>
-References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>
-	 <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com>
-	 <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>
-	 <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>
-	 <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Fix embarrassing "git log --follow" bug
+Date: Mon, 8 Oct 2007 13:42:41 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710081337490.4964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Johannes Sixt" <j.sixt@viscovery.net>
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Oct 08 22:00:13 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 08 22:43:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ieylv-0003tM-JK
-	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 22:00:12 +0200
+	id 1IezRK-0005Bz-Ve
+	for gcvg-git-2@gmane.org; Mon, 08 Oct 2007 22:42:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751244AbXJHT77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 15:59:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbXJHT77
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 15:59:59 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:2149 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751039AbXJHT76 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 15:59:58 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1777208wah
-        for <git@vger.kernel.org>; Mon, 08 Oct 2007 12:59:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=WJyyIxQd6YDLMaIoMP/jJUbbN/MjA/rVWB+MC9msyws=;
-        b=aP0utR03Hmk62nZAOJ6E6BHVpux97gMc8zjvIVAuRQrfwQpVAStkvqGzuVvgf4fAUMsTwHl3AhjH/rUfPWfAvyWWITkGWLLtLNQyabDTZgzUp2yuI6+XJqNIYhngNfWofSDjZbtb4ovA4CppNyoTB/P4b4HHQ2PG1ivYuyfFEFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Shd46ng5E/sq2ZglCcny8agaqpxtNtuV9GpySGAkUm1Krtv/36zM2x1yhIfttP5NEyB9++i0TcpY8+59MFbVRXfTEqUS3T3pBpcJCXP7BDxJ7bkP2c2n91F4r4K5ZJdwYhHzbASMyWm88YINU42YwDQ+IsdFQ7SQ5ZpCw8buoDY=
-Received: by 10.115.92.2 with SMTP id u2mr11190348wal.1191873596764;
-        Mon, 08 Oct 2007 12:59:56 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Mon, 8 Oct 2007 12:59:56 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se>
-Content-Disposition: inline
+	id S1752595AbXJHUmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 16:42:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbXJHUms
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 16:42:48 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:42978 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752158AbXJHUms (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Oct 2007 16:42:48 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l98KggJN002051
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 8 Oct 2007 13:42:43 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l98Kgf0U018622;
+	Mon, 8 Oct 2007 13:42:41 -0700
+X-Spam-Status: No, hits=-2.738 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60336>
 
-[Johannes CC'ed as the mingw.git maintainer]
 
-On 10/8/07, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> $ git var GIT_COMMITTER_IDENT
-> usage: git-var [-l | <variable>]
+It turns out that I completely broke "git log --follow" with my recent 
+patch to revision.c ("Fix revision log diff setup, avoid unnecessary diff 
+generation", commit b7bb760d5ed4881422673d32f869d140221d3564).
 
-Does 'git var -l' work as expected? Also, could you try the latest
-git-package provided by the cygwin installer? If CRLF-handling was
-your problem, take a look at the description of core.autocrlf with
-'git help config'.
+Why? Because --follow obviously requires the diff machinery to function, 
+exactly the same way pickaxe does.
 
-[This does look like an issue with running mingw.git under Cygwin.
-Johannes, is this even supposed to work?]
+So everybody is away right now, but considering that nobody even noticed 
+this bug, I don't think it matters. But for the record, here's the trivial 
+one-liner fix (well, two, since I also fixed the comment).
 
---
-larsh
+Because of the nature of the bug, if you ask for patches when following 
+(which is one of the things I normally do), the bug is hidden, because 
+then the request for diff output will automatically also enable the diffs 
+themselves.
+
+So while "git log --follow <filename>" didn't work, adding a "-p" 
+magically made it work again even without this fix.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+ revision.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 5d294be..e76da0d 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1241,8 +1241,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, const ch
+ 	if (revs->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT)
+ 		revs->diff = 1;
+ 
+-	/* Pickaxe needs diffs */
+-	if (revs->diffopt.pickaxe)
++	/* Pickaxe and rename following needs diffs */
++	if (revs->diffopt.pickaxe || revs->diffopt.follow_renames)
+ 		revs->diff = 1;
+ 
+ 	if (revs->topo_order)
