@@ -1,142 +1,69 @@
-From: Bruno Haible <bruno@clisp.org>
-Subject: Re: GNU-style ChangeLog merge driver for Git
-Date: Tue, 9 Oct 2007 21:38:46 +0200
-Message-ID: <200710092138.47147.bruno@clisp.org>
-References: <200709301421.52192.bruno@clisp.org>
-	<200710091403.26047.bruno@clisp.org>
-	<BC06CC09-FD81-4153-AA54-A1A74250946B@lrde.epita.fr>
+From: Sven Herzberg <sven@imendio.com>
+Subject: Proposed command: git-sync
+Date: Tue, 09 Oct 2007 21:26:07 +0200
+Message-ID: <470BD5CF.9050201@imendio.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: bug-gnulib@gnu.org, git list <git@vger.kernel.org>
-To: Benoit SIGOURE <tsuna@lrde.epita.fr>
-X-From: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org Tue Oct 09 21:39:18 2007
-Return-path: <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>
-Envelope-to: gnu-bug-gnulib@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: multipart/mixed;
+ boundary="------------030505090204060100060407"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 21:45:38 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfKv7-0008Iv-Fg
-	for gnu-bug-gnulib@m.gmane.org; Tue, 09 Oct 2007 21:39:09 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1IfKv1-0005wR-Tr
-	for gnu-bug-gnulib@m.gmane.org; Tue, 09 Oct 2007 15:39:03 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1IfKuv-0005wM-R9
-	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:57 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1IfKut-0005w2-Jv
-	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:56 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1IfKut-0005vz-ET
-	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:55 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <bruno@clisp.org>) id 1IfKus-0006Xq-Vt
-	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:55 -0400
-Received: from linuix.haible.de ([81.210.217.73])
-	by post.webmailer.de (klopstock mo28) (RZmta 13.4)
-	with ESMTP id 303369j99GUG9S ; Tue, 9 Oct 2007 21:38:50 +0200 (MEST)
-	(envelope-from: <bruno@clisp.org>)
-User-Agent: KMail/1.5.4
-In-Reply-To: <BC06CC09-FD81-4153-AA54-A1A74250946B@lrde.epita.fr>
-Content-Disposition: inline
-X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY7QaSDm1JE
-X-RZG-CLASS-ID: mo07
-X-Detected-Kernel: Solaris 10 (beta)
-X-BeenThere: bug-gnulib@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Gnulib discussion list <bug-gnulib.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
-	<mailto:bug-gnulib-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/bug-gnulib>
-List-Post: <mailto:bug-gnulib@gnu.org>
-List-Help: <mailto:bug-gnulib-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
-	<mailto:bug-gnulib-request@gnu.org?subject=subscribe>
-Sender: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
-Errors-To: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60431>
+	id 1IfL1F-0001LM-RR
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 21:45:30 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753922AbXJITpO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 15:45:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752551AbXJITpM
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 15:45:12 -0400
+Received: from holken.mikan.net ([83.145.56.183]:32769 "EHLO holken.mikan.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753073AbXJITpL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 15:45:11 -0400
+X-Greylist: delayed 1135 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2007 15:45:11 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by holken.mikan.net (Postfix) with ESMTP id 67BE414571
+	for <git@vger.kernel.org>; Tue,  9 Oct 2007 21:26:12 +0200 (CEST)
+Received: from holken.mikan.net ([127.0.0.1])
+	by localhost (holken.mikan.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 26889-04 for <git@vger.kernel.org>;
+	Tue, 9 Oct 2007 21:26:09 +0200 (CEST)
+Received: from [192.168.2.102] (p548FBD7B.dip.t-dialin.net [84.143.189.123])
+	by holken.mikan.net (Postfix) with ESMTP id 8D41D11E9C
+	for <git@vger.kernel.org>; Tue,  9 Oct 2007 21:26:09 +0200 (CEST)
+User-Agent: Thunderbird 1.5.0.13 (X11/20070824)
+X-Virus-Scanned: Debian amavisd-new at holken.mikan.net
+X-Spam-Status: No, score=-97.466 tagged_above=-999 required=4
+	tests=[AWL=0.446, RCVD_IN_SORBS_DUL=2.088, USER_IN_WHITELIST=-100]
+X-Spam-Score: -97.466
+X-Spam-Level: 
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60432>
 
-Hello Benoit,
+This is a multi-part message in MIME format.
+--------------030505090204060100060407
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-> Akim Demaille would also like it to squash the commits added by the  
-> merge (the new commits in OTHERS):
-> 
-> YYYY-MM-DD  Author  <who@where.com>
-> 
-> 	Merge whatever:
-> 
-> 	YYYY-MM-DD  Someone Else  <foo@bar.com>
-> 	Some change.
-> 	* FileChanged.c: Whatever.
-> 
-> 	YYYY-MM-DD  Who Cares  <who@cares.com>
-> 	Some other change.
-> 	* OtherFile.c: Do it.
-> 
-> I thought this was mandated by the GNU Coding Standards but I  
-> checked, it doesn't say anything about merges.  Would this sort of  
-> strategy be useful to you?  Should it be default (or enabled by some  
-> --squash option)?
+I really regularly find myself typing git pull directly after git push.
+That's why I write a small shell script that might be added to the stock
+git distribution.
 
-This merge is occurring in a different situation:
+Regards,
+  Sven
 
-The situation where we need ChangeLog merging most often is when a developer
-has made changes on his own and pulls in the changes from the remote repository
-(via "git stash; git pull; git stash apply").
+PS: Please add me to the CC of your replies, I don't read this list.
 
-The situation that Akim is describing is that he pulls changes from the
-repository of Someone Else and Who Cares, and then pushes them into the
-central repository, under his responsibility.
+--------------030505090204060100060407
+Content-Type: text/plain;
+ name="git-sync"
+Content-Transfer-Encoding: base64
+Content-Disposition: inline;
+ filename="git-sync"
 
-For the first situation, the non-remote ChangeLog entries should be moved
-to the top, without modification or indentation.
-
-For the second situation, three different styles are in use at GNU
-(because they don't use "Signed-off" lines):
-
-1) unmodified copying of the ChangeLog entries:
-
-YYYY-MM-DD  Someone Else  <foo@bar.com>
-	Some change.
-	* FileChanged.c: Whatever.
-
-YYYY-MM-DD  Who Cares  <who@cares.com>
-	Some other change.
-	* OtherFile.c: Do it.
-
-2) copying with lieutenant's email address, like Akim described it:
-
-YYYY-MM-DD  Lieu Tenant  <who@where.com>
-
-	YYYY-MM-DD  Someone Else  <foo@bar.com>
-	Some change.
-	* FileChanged.c: Whatever.
-
-	YYYY-MM-DD  Who Cares  <who@cares.com>
-	Some other change.
-	* OtherFile.c: Do it.
-
-3) similar, but with indentation of the entire copied-in ChangeLog entries:
-
-YYYY-MM-DD  Lieu Tenant  <who@where.com>
-
-	YYYY-MM-DD  Someone Else  <foo@bar.com>
-		Some change.
-		* FileChanged.c: Whatever.
-
-	YYYY-MM-DD  Who Cares  <who@cares.com>
-		Some other change.
-		* OtherFile.c: Do it.
-
-First of all, your merge driver could try to guess whether we're in the
-first or second situation (maybe by testing whether the names in the
-ChangeLog entry match the [user]name from the git config).
-
-Then, for the second situation, there can be some flag in the driver or in
-the git config that describes which of the 3 styles to apply.
-
-Bruno
+IyEvYmluL2Jhc2gKCmdpdCBwdXNoICYmIGdpdCBwdWxsCg==
+--------------030505090204060100060407--
