@@ -1,98 +1,103 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Recording merges after repo conversion
-Date: Tue, 9 Oct 2007 09:19:28 +0200
-Message-ID: <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: git push (mis ?)behavior
+Date: Tue, 9 Oct 2007 09:23:42 +0200
+Message-ID: <5C3443FD-DEC3-4EDC-B10B-0C4307EF9492@zib.de>
+References: <20070927130447.GH10289@artemis.corp> <7v3awzvrpr.fsf@gitster.siamese.dyndns.org> <9D61974D-E08D-49F6-9C88-6BE446D53C74@zib.de> <7vodfnqndc.fsf@gitster.siamese.dyndns.org> <20071009050533.GA2968@efreet.light.src>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-1-1006287934"
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Oct 09 09:20:31 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Oct 09 09:23:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1If9O9-0000g6-1W
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 09:20:21 +0200
+	id 1If9RD-0001CI-LG
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 09:23:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752510AbXJIHUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 03:20:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752475AbXJIHUJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 03:20:09 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:46223 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752469AbXJIHUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 03:20:07 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1If9Np-0001z2-4b; Tue, 09 Oct 2007 09:20:01 +0200
-In-Reply-To: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+	id S1752699AbXJIHXX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 03:23:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752566AbXJIHXX
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 03:23:23 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49402 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752089AbXJIHXW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 03:23:22 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l997MBfh016055;
+	Tue, 9 Oct 2007 09:22:11 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db1f6fc.pool.einsundeins.de [77.177.246.252])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l997M9YO011612
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 9 Oct 2007 09:22:10 +0200 (MEST)
+In-Reply-To: <20071009050533.GA2968@efreet.light.src>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60367>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-1-1006287934
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Oct 9, 2007, at 9:09 AM, Peter Karlsson wrote:
+On Oct 9, 2007, at 7:05 AM, Jan Hudec wrote:
 
-> Hi!
+> On Fri, Sep 28, 2007 at 00:07:27 -0700, Junio C Hamano wrote:
+>> Steffen Prohaska <prohaska@zib.de> writes:
+>>
+>>> When "remote.<name>.push" is set I'd expect "git push" to
+>>> choose only the 'right' remote.<name>.push lines, that is
+>>> the lines that have the current branch as the local ref.
 >
-> I have a couple of repositories converted from CVS to Git using
-> parsecvs. Some are just converted, some I've continued to develop  
-> after
-> the conversion (and cloned a couple of times).
+> I would like this for another reason and maybe in slightly  
+> different way.
+> Basically I would have configured something along the lines:
+>     [remote "origin"]
+>     push = refs/heads/*:refs/heads/jahu/*
+> and would want to choose, via option, whether I want to push all  
+> the branches
+> or just the current one, but in any case with the renaming specified.
 >
-> Since parsecvs gave me all the CVS branches, I would like to record  
-> the
-> merge points in the Git history, if possible. I have commited merges
-> with comments like "merged <branchname>", so I can probably find them
-> quite easily, and I do have the imported CVS branches available. Can I
-> record the merge information so git knows about them?
+> The idea behind this is to have a shared repository, but not shared  
+> branches.
+> Everybody would have a subdirectory in refs/heads where he could push
+> anything that the others should see and than somebody else (either  
+> designated
+> integrator, or just anybody different) would do a quick review and  
+> merge it
+> into master.
 >
-> Is it safe to do so on a repository that has already been cloned (i.e,
-> will a later push/pull work)?
+> Now I could of course push out everything, but usually I'd want to  
+> push
+> exactly the current branch, renaming it by the rule given, whether  
+> it already
+> existed in origin or not. Than there can be eg. a post-receive hook  
+> notifying
+> the integrator that there is something for review.
 
-I think you can use grafts do achieve this.
+I had a similar scenario in mind. So a more general question is the  
+following:
 
- From Documentation/repository-layout.txt:
-info/grafts::
-         This file records fake commit ancestry information, to
-         pretend the set of parents a commit has is different
-         from how the commit was actually created.  One record
-         per line describes a commit and its fake parents by
-         listing their 40-byte hexadecimal object names separated
-         by a space and terminated by a newline.
+Git well supports the clone from read-only and push to private repo  
+scheme.
+In this case all repositories you're pushing to are by definition _your_
+repositories. The only question left is, which subset of your  
+branches are
+pushed. But there's no need for renaming during push.
 
-Cheers,
+Now the question is, what is a sensible workflow on a shared repository?
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+One option is to use some kind of private 'namespace' scheme. For  
+example
+developers should push their topics to a branch prefixed with their  
+name,
+or to a 'subdirectory' ref/heads/needsreview/*.
 
+This workflow may require to 'rename' branches during push. So how  
+can this
+be supported by git?  Supporting only renames that add a prefix, as  
+suggested
+by Jan, may be reasonable restriction.
 
-
---Apple-Mail-1-1006287934
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHCyuBwwE67wC8PUkRAkoFAKCmP4Lr3X5GQco6o6UwENdGNWUE8QCfdtFZ
-h+787+UVKr/Gh1nAU6c9MSU=
-=CY0Y
------END PGP SIGNATURE-----
-
---Apple-Mail-1-1006287934--
+	Steffen
