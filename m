@@ -1,82 +1,95 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: Re: Problem with git-cvsimport
-Date: Tue, 9 Oct 2007 14:47:49 +0200
-Organization: HCS, University of Amsterdam
-Message-ID: <200710091447.50501.wielemak@science.uva.nl>
-References: <470B491F.9020306@jentro.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase -i: use diff plumbing instead of porcelain
+Date: Tue, 9 Oct 2007 13:59:43 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710091353140.4174@racer.site>
+References: <470B410F.1040506@viscovery.net> <Pine.LNX.4.64.0710091319400.4174@racer.site>
+ <470B7581.3030301@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Thomas Pasch <thomas.pasch@jentro.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 14:54:03 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:00:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfEb2-0004UG-G2
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 14:54:00 +0200
+	id 1IfEh4-0005g0-FT
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:00:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752864AbXJIMxu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 08:53:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752801AbXJIMxu
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 08:53:50 -0400
-Received: from smtp-vbr4.xs4all.nl ([194.109.24.24]:1312 "EHLO
-	smtp-vbr4.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752854AbXJIMxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 08:53:49 -0400
-Received: from gollem.science.uva.nl (gollem.science.uva.nl [146.50.26.20])
-	(authenticated bits=0)
-	by smtp-vbr4.xs4all.nl (8.13.8/8.13.8) with ESMTP id l99CrgMW041591;
-	Tue, 9 Oct 2007 14:53:43 +0200 (CEST)
-	(envelope-from wielemak@science.uva.nl)
-User-Agent: KMail/1.9.5
-In-Reply-To: <470B491F.9020306@jentro.com>
-Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1752848AbXJINAC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:00:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbXJINAB
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:00:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44783 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752848AbXJINAA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:00:00 -0400
+Received: (qmail invoked by alias); 09 Oct 2007 12:59:58 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 09 Oct 2007 14:59:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/FaZw8BZ7FhS6YpmXaEQZKD2qCrNNMAumVMH/m8B
+	LJIClsCCxOqsbg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <470B7581.3030301@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60401>
 
-On Tuesday 09 October 2007 11:25, Thomas Pasch wrote:
-> Hello,
->
-> using git-cvsimport (1.5.3.4), it dies with
->
-> Update
-> guidance-common/src/java/com/jentro/manager/guidance/common/servlet/IconSer
->vlet.java: 2104 bytes
-> Tree ID 01cb84cbee2e70a712459be6601b993603eed5bd
-> Parent ID dcd8dc76f4638d1994165070c9813202992d546a
-> Committed patch 3775 (bmw +0000 2004-10-14 11:10:43)
-> Commit ID 53c68066f71651b057884e1101cda3967070724d
-> Fetching
-> guidance-common/src/java/com/jentro/manager/guidance/common/serverapi/Guida
->nceException.java v 1.14.4.2
-> Update
-> guidance-common/src/java/com/jentro/manager/guidance/common/serverapi/Guida
->nceException.java: 3718 bytes
-> Tree ID 886268190ac2cb28b5f1e6cdb309054bcb8fa38e
-> Parent ID 53c68066f71651b057884e1101cda3967070724d
-> Merge parent branch: master
-> fatal: Not a valid object name master
-> Use of uninitialized value in chomp at /usr/bin/git-cvsimport line 766.
-> Use of uninitialized value in pattern match (m//) at
-> /usr/bin/git-cvsimport line 527.
-> Use of uninitialized value in concatenation (.) or string at
-> /usr/bin/git-cvsimport line 767.
-> Cannot get commit id ():
->
-> What can I do to avoid this problem?
 
-I've had some similar problem.  I've converted two big old repositories by
-first converting to SVN using:
+When diff drivers are installed, calling "git diff <tree1>..<tree2>"
+calls those drivers.  This borks the patch generation of rebase -i.
+So use "git diff-tree -p" instead, which does not call diff drivers.
 
-	cvs2svn -s myrepo-svn /path/to/cvsmodule
-	git-svnimport -i -u -C /path/to-git file://myrepo-svn
+Noticed by Johannes Sixt.
 
-Worked like a charm
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-	Cheers --- Jan
+	On Tue, 9 Oct 2007, Johannes Sixt wrote:
+
+	> Johannes Schindelin schrieb:
+	> > On Tue, 9 Oct 2007, Johannes Sixt wrote:
+	> > 
+	> > > I wonder for what reason rebase--interactive generates a 
+	> > > patch using 'git diff' in the make_patch function. Is this 
+	> > > an artefact?
+	> > 
+	> > It was an explicit request by people who use git-rebase 
+	> > regularly, and missed being able to see the patch in 
+	> > --interactive.
+	> 
+	> Can we generate the patch with plumbing, 
+	> diff-{files,index,tree}? They by-pass any diff drivers.
+
+	Here you are.
+
+ git-rebase--interactive.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 050140d..df4cedb 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -80,7 +80,7 @@ mark_action_done () {
+ make_patch () {
+ 	parent_sha1=$(git rev-parse --verify "$1"^) ||
+ 		die "Cannot get patch for $1^"
+-	git diff "$parent_sha1".."$1" > "$DOTEST"/patch
++	git diff-tree -p "$parent_sha1".."$1" > "$DOTEST"/patch
+ 	test -f "$DOTEST"/message ||
+ 		git cat-file commit "$1" | sed "1,/^$/d" > "$DOTEST"/message
+ 	test -f "$DOTEST"/author-script ||
+@@ -325,7 +325,7 @@ do_next () {
+ 		;;
+ 	esac && {
+ 		test ! -f "$DOTEST"/verbose ||
+-			git diff --stat $(cat "$DOTEST"/head)..HEAD
++			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
+ 	} &&
+ 	rm -rf "$DOTEST" &&
+ 	git gc --auto &&
+-- 
+1.5.3.4.1169.g5fb8d
