@@ -1,66 +1,82 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Adding color to git-add--interactive
-Date: Tue, 9 Oct 2007 16:44:51 +0200
-Message-ID: <4D8B16C8-C543-4E67-B0D1-F737A4D14B25@wincent.com>
-References: <91EBB71E-BB4E-4089-8C33-6B0C4A61223A@steelskies.com> <A59A0321-9E29-4857-AF03-E6226C45E87C@wincent.com> <Pine.LNX.4.64.0710091503460.4174@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 16:46:42 2007
+From: "Josh England" <jjengla@sandia.gov>
+Subject: [PATCH] Minor usage update in setgitperms.perl
+Date: Tue,  9 Oct 2007 10:04:42 -0600
+Message-ID: <1191945882-21878-1-git-send-email-jjengla@sandia.gov>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Josh England" <jjengla@sandia.gov>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 18:06:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfGL2-0000LB-9V
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 16:45:36 +0200
+	id 1IfHag-0001Dc-QS
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 18:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219AbXJIOp0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 10:45:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbXJIOpZ
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 10:45:25 -0400
-Received: from wincent.com ([72.3.236.74]:36888 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752751AbXJIOpZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 10:45:25 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l99Ej8t3032313;
-	Tue, 9 Oct 2007 09:45:09 -0500
-In-Reply-To: <Pine.LNX.4.64.0710091503460.4174@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753145AbXJIQFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 12:05:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754290AbXJIQFh
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 12:05:37 -0400
+Received: from mm04snlnto.sandia.gov ([132.175.109.21]:2045 "EHLO
+	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753073AbXJIQFg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 12:05:36 -0400
+Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.1)); Tue, 09 Oct 2007 10:05:24 -0600
+X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
+Received: from ES23SNLNT.srn.sandia.gov (ec04snlnt.sandia.gov
+ [134.253.164.156] (may be forged)) by mailgate.sandia.gov (
+ 8.14.1/8.14.1) with ESMTP id l99G5OdD025563 for <git@vger.kernel.org>;
+ Tue, 9 Oct 2007 10:05:24 -0600
+Received: from ef02snlnt.srn.sandia.gov ([134.253.164.132]) by
+ ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Tue, 9
+ Oct 2007 10:05:24 -0600
+Received: from truth ([134.253.45.6]) by ef02snlnt.srn.sandia.gov with
+ Microsoft SMTPSVC(6.0.3790.3959); Tue, 9 Oct 2007 10:05:22 -0600
+Received: by truth (sSMTP sendmail emulation); Tue, 9 Oct 2007 10:04:42
+ -0600
+X-Mailer: git-send-email 1.5.3.2.111.g5166-dirty
+X-OriginalArrivalTime: 09 Oct 2007 16:05:23.0020 (UTC)
+ FILETIME=[329330C0:01C80A8E]
+X-TMWD-Spam-Summary: TS=20071009160527; SEV=2.2.2; DFV=B2007100913;
+ IFV=2.0.4,4.0-9; AIF=B2007100913; RPD=5.02.0125; ENG=IBF;
+ RPDID=7374723D303030312E30413031303230342E34373042413643372E303038313A534346535441543838363133332C73733D312C6667733D30;
+ CAT=NONE; CON=NONE
+X-MMS-Spam-Filter-ID: B2007100913_5.02.0125_4.0-9
+X-WSS-ID: 6B15794E2A0295893-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60420>
 
-El 9/10/2007, a las 16:04, Johannes Schindelin escribi=F3:
+Signed-off-by: Josh England <jjengla@sandia.gov>
+---
+ contrib/hooks/setgitperms.perl |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-> On Tue, 9 Oct 2007, Wincent Colaiuta wrote:
->
->> El 9/10/2007, a las 15:06, Jonathan del Strother escribi=F3:
->>
->>> Or am I alone in finding interactive mode basically unreadable?
->>
->> I don't think you're alone. Compared with the nice colorized =20
->> output from
->> things like git-status, git-log, git-diff and friends, the output of
->> "git-add --interactive" is decidedly hard to read.
->
-> And since git-add--interactive is still a script, there is no excuse:
-> providing a patch should take the same time and amount of work as
-> complaining about the lack of colour.
-
-Why so combative, Johannes? I merely answered one of Jonathan's =20
-questions. Nobody has proffered any "excuses".
-
-And in any case, you're exaggerating. Jonathan said that he's already =20
-invested time in trying to get it working, most certainly more time =20
-than it has taken he, you or I, to write the emails in this thread, =20
-and he's gotten as far as his Perl knowledge permits him.
-
-Cheers,
-Wincent
+diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
+index 5e3b89d..bd48e27 100644
+--- a/contrib/hooks/setgitperms.perl
++++ b/contrib/hooks/setgitperms.perl
+@@ -8,13 +8,14 @@
+ # To save permissions/ownership data, place this script in your .git/hooks
+ # directory and enable a `pre-commit` hook with the following lines:
+ #      #!/bin/sh
+-#     . git-sh-setup
++#     SUBDIRECTORY_OK=1 . git-sh-setup
+ #     $GIT_DIR/hooks/setgitperms.perl -r
+ #
+ # To restore permissions/ownership data, place this script in your .git/hooks
+-# directory and enable a `post-merge` hook with the following lines:
++# directory and enable a `post-merge` and `post-checkout` hook with the
++# following lines:
+ #      #!/bin/sh
+-#     . git-sh-setup
++#     SUBDIRECTORY_OK=1 . git-sh-setup
+ #     $GIT_DIR/hooks/setgitperms.perl -w
+ #
+ use strict;
+-- 
+1.5.3.2.111.g5166-dirty
