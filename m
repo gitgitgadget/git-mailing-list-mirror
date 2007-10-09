@@ -1,57 +1,61 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] t5403-post-checkout-hook.sh: make test operands posix
-Date: Tue, 9 Oct 2007 15:05:26 +0200
-Message-ID: <8c5c35580710090605w12442ff9hc86e547053cda242@mail.gmail.com>
-References: <20071009125130.1343.qmail@bcafc83cd51c05.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Adding color to git-add--interactive
+Date: Tue, 9 Oct 2007 14:06:31 +0100
+Message-ID: <91EBB71E-BB4E-4089-8C33-6B0C4A61223A@steelskies.com>
+Mime-Version: 1.0 (Apple Message framework v907)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Gerrit Pape" <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Oct 09 15:06:36 2007
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:07:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfEmH-0006Xf-VY
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:05:49 +0200
+	id 1IfEnX-0006lq-KZ
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:06:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbXJINF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 09:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752619AbXJINF2
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:05:28 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:13740 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542AbXJINF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 09:05:27 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2025304wah
-        for <git@vger.kernel.org>; Tue, 09 Oct 2007 06:05:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=xCg5RgHRglL+Tt5uDVqCZe+lqvu+2hC7r0RdbsHlPMU=;
-        b=KsoCYoJfiJpj5Ury6hNnxbTuxBd/M3nnhwoTea++42C3iNzMx9b8LQWTinD6/H5D97gmrQO9D1/bjDExWEFBlxjao0qMVAlPyNENBin8qbcKQ7lNLBtQ8kP2UEiK1N0wy/4cJAnePkY6U7cJpDSqt57v9CUQ/MQRZzSxMHiaw0c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kdnS7vXq3ZBTSGSPomaPSyG5AFS6cTIj5copd2KqCqpLvxGqmD/C1ydK1bQqvTTbGPmoUJVb2SEaYJEoVsVMBpxyuk2lFgbhtEE8oW1wvWo16WSVlR3EJux6wcI6Bo+X+4stG9fR7w8aEGDzjrb4IPJjXXwzzWURRXpLuFjvBcY=
-Received: by 10.114.53.1 with SMTP id b1mr4557325waa.1191935126507;
-        Tue, 09 Oct 2007 06:05:26 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Tue, 9 Oct 2007 06:05:26 -0700 (PDT)
-In-Reply-To: <20071009125130.1343.qmail@bcafc83cd51c05.315fe32.mid.smarden.org>
-Content-Disposition: inline
+	id S1752734AbXJINGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752654AbXJINGq
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:06:46 -0400
+Received: from juliet.asmallorange.com ([207.210.105.70]:49883 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752643AbXJINGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:06:45 -0400
+Received: from host217-35-101-26.in-addr.btopenworld.com ([217.35.101.26]:50997 helo=[192.168.1.59])
+	by juliet.asmallorange.com with esmtpa (Exim 4.68)
+	(envelope-from <maillist@steelskies.com>)
+	id 1IfEnN-0007t9-5A
+	for git@vger.kernel.org; Tue, 09 Oct 2007 09:06:45 -0400
+X-Mailer: Apple Mail (2.907)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60405>
 
-On 10/9/07, Gerrit Pape <pape@smarden.org> wrote:
->  t/t5403-post-checkout-hook.sh |    8 ++++----
->  1 files changed, 4 insertions(+), 4 deletions(-)
+I find git-add--interactive incredibly awkward to use, mostly due to  
+the lack of visual differentiation as you type in a sequence of  
+commands.  For example, when stepping through hunks to patch, every  
+time it shows a new hunk I have to carefully scan up the screen to  
+find where the hunk starts, before I can actually start reading what's  
+contained in that hunk.
 
-An identical patch has already been posted:
+For me at least, adding color would make the interactive mode far more  
+readable.   I hacked in basic color support (just coloring PROMPT &  
+HEADER in list_and_choose, and the "Stage this hunk?" prompt) - which  
+helped a lot - but then reached the limits of my perl knowledge.  For  
+instance, I can't see a sensible way of reusing git-svn's  
+log_use_color function without importing the entire file, and I can't  
+figure out how you'd go about diff-coloring the hunks.  Is anyone with  
+more perl knowledge than me interested in taking this on?
 
-  http://article.gmane.org/gmane.comp.version-control.git/59952
-
---
-larsh
+Or am I alone in finding interactive mode basically unreadable?
+Jon
