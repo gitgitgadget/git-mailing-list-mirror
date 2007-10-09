@@ -1,119 +1,142 @@
-From: Jean-Luc Herren <jlh@gmx.ch>
-Subject: [PATCH 2/2] git add -i: Remove unused variables
-Date: Tue, 09 Oct 2007 21:34:17 +0200
-Message-ID: <470BD7B9.4080206@gmx.ch>
+From: Bruno Haible <bruno@clisp.org>
+Subject: Re: GNU-style ChangeLog merge driver for Git
+Date: Tue, 9 Oct 2007 21:38:46 +0200
+Message-ID: <200710092138.47147.bruno@clisp.org>
+References: <200709301421.52192.bruno@clisp.org>
+	<200710091403.26047.bruno@clisp.org>
+	<BC06CC09-FD81-4153-AA54-A1A74250946B@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 21:35:11 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: bug-gnulib@gnu.org, git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org Tue Oct 09 21:39:18 2007
+Return-path: <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>
+Envelope-to: gnu-bug-gnulib@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfKr2-0007De-MR
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 21:34:57 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751851AbXJITen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 15:34:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbXJITem
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 15:34:42 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50399 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751851AbXJITek (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 15:34:40 -0400
-Received: (qmail invoked by alias); 09 Oct 2007 19:34:39 -0000
-Received: from 217-8.79-83.cust.bluewin.ch (EHLO [192.168.123.202]) [83.79.8.217]
-  by mail.gmx.net (mp035) with SMTP; 09 Oct 2007 21:34:39 +0200
-X-Authenticated: #14737133
-X-Provags-ID: V01U2FsdGVkX1/yIGpOOsHydGY+Tr6rZnq5dzpFtEtnqOI1kNhcb0
-	jztEsPiD3lKWzg
-User-Agent: Thunderbird 2.0.0.6 (X11/20070805)
-X-Enigmail-Version: 0.95.3
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60430>
+	id 1IfKv7-0008Iv-Fg
+	for gnu-bug-gnulib@m.gmane.org; Tue, 09 Oct 2007 21:39:09 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IfKv1-0005wR-Tr
+	for gnu-bug-gnulib@m.gmane.org; Tue, 09 Oct 2007 15:39:03 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IfKuv-0005wM-R9
+	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:57 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IfKut-0005w2-Jv
+	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:56 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IfKut-0005vz-ET
+	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:55 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188])
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <bruno@clisp.org>) id 1IfKus-0006Xq-Vt
+	for bug-gnulib@gnu.org; Tue, 09 Oct 2007 15:38:55 -0400
+Received: from linuix.haible.de ([81.210.217.73])
+	by post.webmailer.de (klopstock mo28) (RZmta 13.4)
+	with ESMTP id 303369j99GUG9S ; Tue, 9 Oct 2007 21:38:50 +0200 (MEST)
+	(envelope-from: <bruno@clisp.org>)
+User-Agent: KMail/1.5.4
+In-Reply-To: <BC06CC09-FD81-4153-AA54-A1A74250946B@lrde.epita.fr>
+Content-Disposition: inline
+X-RZG-AUTH: gMysVb8JT2gB+rFDu0PuvnPihAP8oFdePhw95HsN8T+WAEY7QaSDm1JE
+X-RZG-CLASS-ID: mo07
+X-Detected-Kernel: Solaris 10 (beta)
+X-BeenThere: bug-gnulib@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Gnulib discussion list <bug-gnulib.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/bug-gnulib>
+List-Post: <mailto:bug-gnulib@gnu.org>
+List-Help: <mailto:bug-gnulib-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=subscribe>
+Sender: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Errors-To: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60431>
 
+Hello Benoit,
 
-Signed-off-by: Jean-Luc Herren <jlh@gmx.ch>
----
+> Akim Demaille would also like it to squash the commits added by the  
+> merge (the new commits in OTHERS):
+> 
+> YYYY-MM-DD  Author  <who@where.com>
+> 
+> 	Merge whatever:
+> 
+> 	YYYY-MM-DD  Someone Else  <foo@bar.com>
+> 	Some change.
+> 	* FileChanged.c: Whatever.
+> 
+> 	YYYY-MM-DD  Who Cares  <who@cares.com>
+> 	Some other change.
+> 	* OtherFile.c: Do it.
+> 
+> I thought this was mandated by the GNU Coding Standards but I  
+> checked, it doesn't say anything about merges.  Would this sort of  
+> strategy be useful to you?  Should it be default (or enabled by some  
+> --squash option)?
 
-Maybe it's a matter of opinion which of the following is better.
-The later makes it clearer that some return values are being
-thrown away, but some people might consider it noise.  I chose the
-first one for now.
+This merge is occurring in a different situation:
 
-my ($a, $b) = function(...)
-my ($a, $b, undef, undef) = function(...)
+The situation where we need ChangeLog merging most often is when a developer
+has made changes on his own and pulls in the changes from the remote repository
+(via "git stash; git pull; git stash apply").
 
- git-add--interactive.perl |   16 ++++++----------
- 1 files changed, 6 insertions(+), 10 deletions(-)
+The situation that Akim is describing is that he pulls changes from the
+repository of Someone Else and Who Cares, and then pushes them into the
+central repository, under his responsibility.
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 15b3f5b..ac598f8 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -374,9 +374,8 @@ sub split_hunk {
- 	# it can be split, but we would need to take care of
- 	# overlaps later.
- 
--	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) = parse_hunk_header($text->[0]);
-+	my ($o_ofs, undef, $n_ofs) = parse_hunk_header($text->[0]);
- 	my $hunk_start = 1;
--	my $next_hunk_start;
- 
-       OUTER:
- 	while (1) {
-@@ -443,8 +442,8 @@ sub split_hunk {
- 	for my $hunk (@split) {
- 		$o_ofs = $hunk->{OLD};
- 		$n_ofs = $hunk->{NEW};
--		$o_cnt = $hunk->{OCNT};
--		$n_cnt = $hunk->{NCNT};
-+		my $o_cnt = $hunk->{OCNT};
-+		my $n_cnt = $hunk->{NCNT};
- 
- 		my $head = ("@@ -$o_ofs" .
- 			    (($o_cnt != 1) ? ",$o_cnt" : '') .
-@@ -459,7 +458,7 @@ sub split_hunk {
- sub find_last_o_ctx {
- 	my ($it) = @_;
- 	my $text = $it->{TEXT};
--	my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) = parse_hunk_header($text->[0]);
-+	my ($o_ofs, $o_cnt) = parse_hunk_header($text->[0]);
- 	my $i = @{$text};
- 	my $last_o_ctx = $o_ofs + $o_cnt;
- 	while (0 < --$i) {
-@@ -531,8 +530,7 @@ sub coalesce_overlapping_hunks {
- 
- 	for (grep { $_->{USE} } @in) {
- 		my $text = $_->{TEXT};
--		my ($o_ofs, $o_cnt, $n_ofs, $n_cnt) =
--		    parse_hunk_header($text->[0]);
-+		my ($o_ofs) = parse_hunk_header($text->[0]);
- 		if (defined $last_o_ctx &&
- 		    $o_ofs <= $last_o_ctx) {
- 			merge_hunk($out[-1], $_);
-@@ -699,7 +697,7 @@ sub patch_update_cmd {
- 
- 	@hunk = coalesce_overlapping_hunks(@hunk);
- 
--	my ($o_lofs, $n_lofs) = (0, 0);
-+	my $n_lofs = 0;
- 	my @result = ();
- 	for (@hunk) {
- 		my $text = $_->{TEXT};
-@@ -806,8 +804,6 @@ sub main_loop {
- 	}
- }
- 
--my @z;
--
- refresh();
- status_cmd();
- main_loop();
--- 
-1.5.3.4
+For the first situation, the non-remote ChangeLog entries should be moved
+to the top, without modification or indentation.
+
+For the second situation, three different styles are in use at GNU
+(because they don't use "Signed-off" lines):
+
+1) unmodified copying of the ChangeLog entries:
+
+YYYY-MM-DD  Someone Else  <foo@bar.com>
+	Some change.
+	* FileChanged.c: Whatever.
+
+YYYY-MM-DD  Who Cares  <who@cares.com>
+	Some other change.
+	* OtherFile.c: Do it.
+
+2) copying with lieutenant's email address, like Akim described it:
+
+YYYY-MM-DD  Lieu Tenant  <who@where.com>
+
+	YYYY-MM-DD  Someone Else  <foo@bar.com>
+	Some change.
+	* FileChanged.c: Whatever.
+
+	YYYY-MM-DD  Who Cares  <who@cares.com>
+	Some other change.
+	* OtherFile.c: Do it.
+
+3) similar, but with indentation of the entire copied-in ChangeLog entries:
+
+YYYY-MM-DD  Lieu Tenant  <who@where.com>
+
+	YYYY-MM-DD  Someone Else  <foo@bar.com>
+		Some change.
+		* FileChanged.c: Whatever.
+
+	YYYY-MM-DD  Who Cares  <who@cares.com>
+		Some other change.
+		* OtherFile.c: Do it.
+
+First of all, your merge driver could try to guess whether we're in the
+first or second situation (maybe by testing whether the names in the
+ChangeLog entry match the [user]name from the git config).
+
+Then, for the second situation, there can be some flag in the driver or in
+the git config that describes which of the 3 styles to apply.
+
+Bruno
