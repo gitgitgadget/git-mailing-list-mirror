@@ -1,91 +1,94 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: removing content from git history
-Date: Tue, 9 Oct 2007 15:58:57 -0500
-Message-ID: <18187.60305.613904.547916@lisa.zopyra.com>
-References: <20070221164527.GA8513@ginosko.local>
-	<20070221165636.GH25559@spearce.org>
-	<20070221171738.GA9112@fieldses.org>
-	<Pine.LNX.4.64.0702210934470.4043@woody.linux-foundation.org>
-	<20070221210045.GB26525@spearce.org>
-	<Pine.LNX.4.64.0702211306520.4043@woody.linux-foundation.org>
-	<20070221212129.GD26525@spearce.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 09/13] Clear up the semantics of Series.new_patch
+Date: Tue, 9 Oct 2007 22:01:44 +0100
+Message-ID: <b0943d9e0710091401s280b3a12md9e700fb3ae007bf@mail.gmail.com>
+References: <20070914222819.7001.55921.stgit@morpheus.local>
+	 <20070914223154.7001.12254.stgit@morpheus.local>
+	 <b0943d9e0710080616r36142946m3e24d2f6893287c9@mail.gmail.com>
+	 <20071008132524.GA11253@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 09 22:59:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
+	git@vger.kernel.org
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 23:01:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfMAc-0002Aq-2H
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 22:59:14 +0200
+	id 1IfMDC-0002m7-BT
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 23:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271AbXJIU7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 16:59:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754603AbXJIU7G
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 16:59:06 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61579 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754179AbXJIU7F (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 16:59:05 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l99KwwZ17229;
-	Tue, 9 Oct 2007 14:58:58 -0600
-In-Reply-To: <20070221212129.GD26525@spearce.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1754176AbXJIVBp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 17:01:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbXJIVBp
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 17:01:45 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:43694 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806AbXJIVBo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 17:01:44 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1173605rvb
+        for <git@vger.kernel.org>; Tue, 09 Oct 2007 14:01:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=npbYGqfR/kCvRI8tJDoH0R7iSEslUdUowMjLfUaekME=;
+        b=RaMVGksF6K0mcnJo70XlQauatcOu4pgpbhTmeNSRN/mUC46nDffA493EOo6cS0cwIlI3gmFcx99NeHyEux60rUU0CQ4iMsdpr8oM6f9IMDiCtI/GbCmHS6Z14jvChx0mUvv5Z41ZpnhJCG36SMA+wNBJ9OEkJ+PgYgwdfRkM2WM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gAEyJS+FzgaCbcYydWvhr8AbGg+c5yysZZ5U7o8Hn/BESWADd9pQ/hJo7YGRh/4kQYYOkig8jLM7PpDh+W0IfXKwPzut8FuUTDClmEHXsuaF7xDFAeQArsXxIRF860zuyEapZV/hbvn8/wuoc4vO6Nksy2Bztf4QGRnJyUsTPKQ=
+Received: by 10.141.129.14 with SMTP id g14mr1783377rvn.1191963704164;
+        Tue, 09 Oct 2007 14:01:44 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Tue, 9 Oct 2007 14:01:44 -0700 (PDT)
+In-Reply-To: <20071008132524.GA11253@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60437>
 
-I'm resurrecting this old thread, as we have come across a similar need and
-I could not tell if this has been settled.  More below...
-
-On Wednesday, February 21, 2007 at 16:21:30 (-0500) Shawn O. Pearce writes:
->Linus Torvalds <torvalds@linux-foundation.org> wrote:
->> The probnlem there is that most conversion scripts that use 
->> "write_sha1_file()" will want to *read* that file later. If 
->> git-fast-import hasn't generated the pack yet (because it's still waiting 
->> for more data), that will not work at all.
+On 08/10/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-10-08 14:16:10 +0100, Catalin Marinas wrote:
 >
->Yes, indeed...
-> 
->> So then you basically force the conversion script to keep remembering all 
->> the old object data (using something like pretend_sha1_file), or you limit 
->> it to things that just always re-write the whole object and never need any 
->> old object references that they might have written.
->> 
->> A lot of conversions tend to be incremental, ie they will depend on the 
->> data they converted previously.
+> > On 14/09/2007, David K=E5gedal <davidk@lysator.liu.se> wrote:
+> >
+> > > +        assert commit or (top and bottom)
+> > > +        assert not before_existing or (top and bottom)
+> > > +        assert not (commit and before_existing)
+> > > +        assert (top and bottom) or (not top and not bottom)
+> > > +        assert not top or (bottom =3D=3D git.get_commit(top).get=
+_parent())
+> >
+> > The last assertion here prevents the use of 'stg pick --reverse'.
+> > This command creates an unapplied patch with top and bottom reverse=
+d
+> > and pushes it to force a three-way merge.
+> >
+> > It seems to work OK if I comment it out but I wonder whether it wil=
+l
+> > break in the future with the planned removal of the top and bottom
+> > files.
 >
->Which is why I was actually thinking of flipping this on its head.
->Libify git-apply and embed that into fast-import, then one of the
->native input formats might just be an mbox, or something close enough
->that a simple C/perl/sed prefilter could make an mbox into the input.
+> I think the assert represents a real constraint, namely that there ha=
+s
+> to be a 1:1 correspondance between patches and commits.
 >
->fast-import can (and does if necessary) go back to access the
->packfile it is writing.  It has the index data held in memory and
->uses only OBJ_OFS_REF so that sha1_file.c can unpack deltas just
->fine, even though we lack an index file and have not completely
->checksummed the pack itself.
->
->So although no other Git process can use the packfile, it is usuable
->from within fast-import...
+> Couldn't "stg pick --reverse" create a new commit and use that? That
+> is, given that we want to revert commit C, create a new commit C* wit=
+h
 
-As I understand this thread, it does not appear that a resolution
-was reached.  Our company has content in our central git repository
-that we need to remove per a contractual obligation.  I believe the
-content in question is limited to one sub-directory, that has existed
-since (or near to) the beginning of the repo, if that matters.  We
-obviously would just like to issue a "git nuke" operation and be done
-with it, if that is available.  Barring that, we could probably follow
-reasonably simple steps to purge the content and rebuild the repo.
+Series.new_patch already creates a commit, why should we move the
+functionality to 'pick'? The only call to new_patch with commit=3DFalse
+seems to be from 'uncommit' (and it makes sense indeed).
 
-So, what options do we have at present?
+> And shouldn't there be a test for this? :-)
 
+Yes :-). I think there are many other tests needed. It would be useful
+to do a code coverage with the existing tests to see what we are
+missing. Unit testing might be useful as well but we all have limited
+spare time.
 
-Bill
+--=20
+Catalin
