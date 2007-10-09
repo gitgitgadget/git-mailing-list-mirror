@@ -1,72 +1,72 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [TIG PATCH] Add missing = for comparison in obsolete actions check.
-Date: Tue, 9 Oct 2007 02:53:36 +0200
-Message-ID: <20071009005336.GA30818@diku.dk>
-References: <20071008173034.GA27292@crux.toronto.redhat.com>
+From: Mark Levedahl <mlevedahl@gmail.com>
+Subject: bug? - git-checkout treeish paths  ignores deleted files
+Date: Mon, 08 Oct 2007 20:58:06 -0400
+Message-ID: <470AD21E.6070906@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: James Bowes <jbowes@dangerouslyinc.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 02:56:25 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 02:58:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1If3OY-0002Wk-PS
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 02:56:23 +0200
+	id 1If3QT-0002pa-0d
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 02:58:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751854AbXJIA4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Oct 2007 20:56:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbXJIA4N
-	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 20:56:13 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:46770 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751632AbXJIA4N (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Oct 2007 20:56:13 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 6F4E352C37A;
-	Tue,  9 Oct 2007 02:56:11 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id zLUyjBJc5rZf; Tue,  9 Oct 2007 02:56:09 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 7CE8852C37B;
-	Tue,  9 Oct 2007 02:53:36 +0200 (CEST)
-Received: from ask.diku.dk (ask.diku.dk [130.225.96.225])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id F3B826DFC31; Tue,  9 Oct 2007 02:48:13 +0200 (CEST)
-Received: by ask.diku.dk (Postfix, from userid 3873)
-	id 5293A6336E; Tue,  9 Oct 2007 02:53:36 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071008173034.GA27292@crux.toronto.redhat.com>
-User-Agent: Mutt/1.5.6i
+	id S1752080AbXJIA6M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Oct 2007 20:58:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751424AbXJIA6L
+	(ORCPT <rfc822;git-outgoing>); Mon, 8 Oct 2007 20:58:11 -0400
+Received: from wr-out-0506.google.com ([64.233.184.232]:34239 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751873AbXJIA6K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Oct 2007 20:58:10 -0400
+Received: by wr-out-0506.google.com with SMTP id 36so739899wra
+        for <git@vger.kernel.org>; Mon, 08 Oct 2007 17:58:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        bh=Yy6M7AJBxx0wxUvuvQ6BU0GvYxQqQGRlk+vxy6/g7k0=;
+        b=a0vHMsTcGRsH9SuRql7q3EaCn8EksFlmaYvBIaNBo5pO3YRSEIRU3CUQd1tGeM+QQEFVlv47+IdGBEN+gBYp4dSWfSwHrShpmJZrBnPiTU1BgyaA5TvTWZ5Mz5yF2nnjVtjn59lhwma8IDQLMS4ERNDaxwRGJ6C1t12p7r3ZZaU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:subject:content-type:content-transfer-encoding;
+        b=l0Vl0UWqjbyyIkhqIK3/Pm7i85SSZ7GgMKSq8/OvUthhC/tjgiz2PAcSIjFgAD4XYSviFtUNtUJxZd7oBPz8dn+paVeGA3Iv2Omr1RA8xJq8OK+IWUIhWmHa1i/rf7Os8FvGejwMu04NmUeHcNnRs/9XA3vGquvyQxTQCnS0xkY=
+Received: by 10.90.83.14 with SMTP id g14mr4597732agb.1191891489356;
+        Mon, 08 Oct 2007 17:58:09 -0700 (PDT)
+Received: from ?192.168.1.117? ( [71.246.225.127])
+        by mx.google.com with ESMTPS id 33sm8341296wra.2007.10.08.17.58.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Oct 2007 17:58:08 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60348>
 
-James Bowes <jbowes@dangerouslyinc.com> wrote Mon, Oct 08, 2007:
-> Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
-> ---
->  tig.c |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/tig.c b/tig.c
-> index 933d083..30c505b 100644
-> --- a/tig.c
-> +++ b/tig.c
-> @@ -1184,7 +1184,7 @@ option_bind_command(int argc, char *argv[])
->  	}
->  
->  	request = get_request(argv[2]);
-> -	if (request = REQ_NONE) {
-> +	if (request == REQ_NONE) {
->  		const char *obsolete[] = { "cherry-pick" };
->  		size_t namelen = strlen(argv[2]);
->  		int i;
+Shouldn't   "git checkout topic path"  make the directory tree rooted at 
+path identical to what is on branch topic? It doesn't.
 
-Oops, thanks. I should readd -Wall to CFLAGS in my config.make file.
+Try this:
 
--- 
-Jonas Fonseca
+mkdir test
+cd test
+git init
+touch a b
+git add a b
+git commit -m 'base'
+git checkout -b topic
+git rm a
+git commit -m 'removed a'
+git checkout master
+git checkout topic .
+
+...and the result is...
+ls
+a   b
+
+instead of
+b
+
+Mark
