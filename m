@@ -1,184 +1,182 @@
-From: Thomas Pasch <thomas.pasch@jentro.com>
-Subject: Re: git-http-push / webDAV
-Date: Tue, 09 Oct 2007 11:37:27 +0200
-Organization: Jentro Technologies GmbH
-Message-ID: <470B4BD7.8090603@jentro.com>
-References: <4700F6BC.2070701@jentro.com> <20071001155454.GU975@void.codelabs.ru> <47020603.3080000@jentro.com> <20071002085416.GW975@void.codelabs.ru> <470215F6.2060105@jentro.com> <20071002104646.GY975@void.codelabs.ru> <47022857.806@jentro.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: confused about a conflict during octopus merging
+Date: Tue, 9 Oct 2007 10:47:48 +0100
+Message-ID: <20071009094748.GA1158@lapse.madduck.net>
+References: <20071009003156.GA30498@lapse.madduck.net> <alpine.LFD.0.999.0710081812200.4964@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Tue Oct 09 11:37:46 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qDbXVdCdHGoSgWSk"
+Cc: Linus Torvalds <torvalds@linux-foundation.org>
+To: git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 11:48:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfBX6-0001vH-BZ
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 11:37:44 +0200
+	id 1IfBhB-0003j2-3R
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 11:48:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752385AbXJIJhf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 05:37:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753681AbXJIJhf
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 05:37:35 -0400
-Received: from mail2.infra.net ([212.89.96.7]:4523 "EHLO gamma.m.infra.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752385AbXJIJhe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 05:37:34 -0400
-Received: from epsilon.m.infra.net (epsilon.m.infra.net [212.89.96.8])
-	by gamma.m.infra.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l999bTGi027014;
-	Tue, 9 Oct 2007 11:37:29 +0200
-Received: from [192.1.1.184] (u19-17.dsl.vianetworks.de [194.231.42.17])
-	(authenticated bits=0)
-	by epsilon.m.infra.net (8.13.4/8.13.4/Debian-3) with ESMTP id l999bSkx023330
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 9 Oct 2007 11:37:29 +0200
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-In-Reply-To: <47022857.806@jentro.com>
-X-Enigmail-Version: 0.95.3
+	id S1753276AbXJIJr7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 05:47:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753243AbXJIJr7
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 05:47:59 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:35839 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753018AbXJIJr5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 05:47:57 -0400
+Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 07DB1BE70;
+	Tue,  9 Oct 2007 11:47:49 +0200 (CEST)
+Received: by lapse.madduck.net (Postfix, from userid 1000)
+	id 67D6C53CAC; Tue,  9 Oct 2007 10:47:47 +0100 (BST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710081812200.4964@woody.linux-foundation.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4513/Tue Oct  9 05:22:11 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60377>
 
-Dear Eygene,
 
-I tried all this on a Gentoo x86_64 machine. No problems!
-Git on http/webDAV is just working fine.
+--qDbXVdCdHGoSgWSk
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I also retried all this on a SuSE 10.3 system. Same
-problems as before. Thus it could have to do with
-the (general) configuration of the SuSE system.
+Thanks, Linus, for taking your time to answer me. I truly appreciate
+it.
 
-I still feel that the behaviour of git-push /
-git-http-push is *not* approbiate. It should
-indicate a problem if it was not able to upload
-a new object to the remote server. Just saying
+also sprach Linus Torvalds <torvalds@linux-foundation.org> [2007.10.09.0221=
+ +0100]:
+> So when the octopus merge starts merging in "master" into the
+> "merger" branch, it will *not* just fast-forward the branch to
+> "master". Instead, if will generate a new tree that is basically
+> the merged state: but that new tree is *not* the same as the
+> master commit, it's literally a merge of the two branches - which
+> in practice means that it has the same *content* as master, but
+> it's not at that commit.
 
->>>     sending 3 objects
->>>     done
+Okay, this makes perfect sense.
 
-instead of indicating a problem is not what a
-user expects. This particulary true if the
-objects are not created on the server as it
-seems to be in my case.
-
-Cheers,
-
-Thomas
-
-Thomas Pasch wrote:
-> Dear Eygene,
+> And so now we have a half-way done octopus merge, with the first
+> branch added. Now it merges in the second branch ("second"), and
+> it *still* has the merge base being the original merge base,
+> namely "merger".
 >=20
-> I used a rather small test repo with only 2 or 3
-> commits.
->=20
-> The last tests I did with the a (current) git repo clone:
->=20
->> git clone --bare git://git.kernel.org/pub/scm/git/git.git
->=20
-> e147e54b14828fa2e88e88907e0ca4dc3d694448 has indeed *not*
-> found its way into the http push repo. For me it looks
-> like that the push *first* updates refs/heads/master
-> (successfully) but fails to transfer the object itself.
->=20
-> Perhaps it would be more graceful that the object is
-> transfered *first* and then the remote tip is updated...
->=20
-> What version of git do you use?
->=20
-> Cheers,
->=20
-> Thomas
->=20
-> Eygene Ryabinkin wrote:
->> Thomas,
->>
->> Tue, Oct 02, 2007 at 11:57:10AM +0200, Thomas Pasch wrote:
->>> well, *somewhat* better with the trailing slash:
->>>
->>>> echo "modified" >>grep.c
->>>> git commit -a
->>> Created commit e147e54: mod
->>>  1 files changed, 1 insertions(+), 0 deletions(-)
->>>> git push -v
->>> Pushing to http://test@x.x.x.x/git/git.git/
->>> Fetching remote heads...
->>>   refs/
->>>   refs/heads/
->>>   refs/tags/
->>> updating 'refs/heads/master'
->>>   from 34c6dbdef439f7cd93d3fe22493a3c1496ce96f7
->>>   to   e147e54b14828fa2e88e88907e0ca4dc3d694448
->>>     sending 3 objects
->>>     done
->>> Updating remote server info
->>>
->>> There's no more error message.
->> OK, that's fine: the previous error was tied to the fact that
->> when you're getting /git/git.git from the Web-server, it notices
->> that it is a directory and redirects you to the /git/git.git/.
->> But (IIRC) curl does not follow such redirections.
->>
->>> However, push has still
->>> not worked. If I try to check out the new HEAD:
->>>
->>>> git clone http://test@x.x.x.x/git/git.git/
->>> Initialized empty Git repository in /home/tpasch/tmp/git/.git/
->>> Getting alternates list for http://test@x.x.x.x/git/git.git
->>> Getting pack list for http://test@x.x.x.x/git/git.git
->>> Getting index for pack 563e2090185692c7d765775569a0ce986840fd17
->>> Getting pack 563e2090185692c7d765775569a0ce986840fd17
->>>  which contains 3af9d3e08da868c3a7687ab38d72f4296a99005d
->>> [...]
->>> walk 24778e335a6450e34257a311d0bf4a12bdb3006c
->>> walk 19b2860cba5742ab31fd682b80fefefac19be141
->>> walk bf0c6e839c692142784caf07b523cd69442e57a5
->>> walk e497ea2a9b6c378f01d092c210af20cbee762475
->>> walk 8bc9a0c769ac1df7820f2dbf8f7b7d64835e3c68
->>> walk e83c5163316f89bfbde7d9ab23ca2e25604af290
->>> Getting alternates list for http://test@x.x.x.x/git/git.git
->>> Getting pack list for http://test@x.x.x.x/git/git.git
->>> error: Unable to find e147e54b14828fa2e88e88907e0ca4dc3d694448 unde=
-r
->>> http://test@x.x.x.x/git/git.git
->>> Cannot obtain needed object e147e54b14828fa2e88e88907e0ca4dc3d69444=
-8
->> OK, I will try to do this on my server with 2.2.6.  How big
->> is your repository?  Both size and commit number.
->>
->> Thanks.
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> And from that standpoint, it really *is* a conflict.=20
 
+I would have to agree with you: this is pretty exactly what's going
+on.
+
+Now, I think Git could do better though. Fast-forwarding
+octopus merges, as you suggest, is one possible enhancement, but is
+that the solution to my problem? Yes, but could we do better?
+
+Couldn't Git just ignore any commit it has already seen in this
+octopus merge? I think this is perfectly okay in terms of the
+resulting ancestry, it's really all about applying a commit to the
+worktree or not.
+
+Recall the original tree:
+
+  x -- master: d2
+  | x -- second: b
+  |/
+  x  d1
+  |
+  x -- merger: a
+
+Now after merging master, the tree is at the same state as it is at
+the tip of master. The asterisk denotes that the commit is half-way
+done:
+
+  x  c* (a+d1+d2)
+  |\
+  | x -- master: d2
+  | | x -- second: b
+  | |/
+  | x  d1
+  |/
+  x  a
+
+Next, we merge second to create c2
+
+  x_ c2*  ((a+d1+d2)+(d1+b))
+  |\ \
+  | | |
+  | x-|- master: d2
+  | | |
+  | | x -- second: b
+  | |/
+  | x  d1
+  |/
+  x  a
+
+(yay ASCII art!)
+
+At this point, the conflict happens, when Git tries to re-apply d1
+to the work tree. But since d1 is already in the ancestry of the
+node into which we are merging, couldn't it just skip applying the
+commit to the worktree?
+
+  x_ c  (a+d1+d2+b)
+  |\ \
+  | | |
+  | x-|- master: d2
+  | | |
+  | | x -- second: b
+  | |/
+  | x  d1
+  |/
+  x  a
+
+If it does, then I think ordering of merges for an octopus becomes
+relevant, but I'd say that's already the case.
+
+And I guess this is identical to fast-forwarding the branches...
+just seems like approaching it from another angle to me.
+
+> If you think of octopus merges as a really stupid thing where git
+> will mindlessly do a three-way merge based on the *current* state
+> with all the branches you name, then you get the current octopus
+> merge. You just expected it to be smarter than it is, probably
+> because you compare it to the *real* merge.
+
+No, Git just raised the bar for expectations half-way up to the
+moon In other words: you spoiled me so far; now I won't settle for
+less than perfection. :)
 
 --=20
-Mit freundlichen Gr=C3=BC=C3=9Fen / Kind regards
-Thomas Pasch
+martin;              (greetings from the heart of the sun.)
+  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
+=20
+"however jewel-like the good will may be in its own right, there is
+ a morally significant difference between rescuing someone from
+ a burning building and dropping him from a twelfth-storey window
+ while trying to rescue him."
+                                                       -- thomas nagel
+=20
+spamtraps: madduck.bogus@madduck.net
 
---------------------------------------------------------------------
-Jentro Technologies GmbH
-Thomas Pasch
-Entwicklung
---------------------------------------------------------------------
-Rosenheimer Strasse 145e, D-81671 Munich, Germany
-N 48=C2=B007'19", E 11=C2=B036'18"
-http://www.jentro.com
-Managing Directors: Dr. Hans-Hendrik Puvogel, Erno Hempel
-Trade register Munich HRB 148653
---------------------------------------------------------------------
-Tel. +49 89 189 169 80
-=46ax +49 89 189 169 99
-thomas.pasch@jentro.com
---------------------------------------------------------------------
-NOTICE: The information contained in this e-mail is confidential or
-may otherwise be legally privileged. It is intended for the named
-recipient only. If you have received it in error, please notify us
-immediately by reply or by calling the telephone number above and
-delete this message and all its attachments without any use or
-further distribution of its contents. Please note that any
-unauthorised review, copying, disclosing or otherwise making use of
-the information is strictly prohibited. Thank you.
---------------------------------------------------------------------
+--qDbXVdCdHGoSgWSk
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHC05EIgvIgzMMSnURApS6AJwPnBlG2Xt8xgEm0dwDu9HUL56HIwCfcnx2
+U5Ebfj0RhO6mhq/OHgnBLbo=
+=e7OF
+-----END PGP SIGNATURE-----
+
+--qDbXVdCdHGoSgWSk--
