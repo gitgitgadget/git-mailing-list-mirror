@@ -1,83 +1,70 @@
-From: "Thomas Adam" <thomas.adam22@gmail.com>
-Subject: Re: [PATCH 0/6] manual: Fix or remove em dashes.
-Date: Tue, 9 Oct 2007 23:02:01 +0100
-Message-ID: <18071eea0710091502y3b70231dnd4270a3155af91a8@mail.gmail.com>
-References: <20071009205755.GB31317@ins.uni-bonn.de>
-	 <20071009210530.GH31317@ins.uni-bonn.de>
-	 <18071eea0710091441n717c0a99p58a9b585d15cc778@mail.gmail.com>
-	 <20071009215255.GB3146@ins.uni-bonn.de>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: removing content from git history
+Date: Tue, 9 Oct 2007 17:25:23 -0500
+Message-ID: <18187.65491.551693.644510@lisa.zopyra.com>
+References: <20070221164527.GA8513@ginosko.local>
+	<20070221165636.GH25559@spearce.org>
+	<20070221171738.GA9112@fieldses.org>
+	<Pine.LNX.4.64.0702210934470.4043@woody.linux-foundation.org>
+	<20070221210045.GB26525@spearce.org>
+	<Pine.LNX.4.64.0702211306520.4043@woody.linux-foundation.org>
+	<20070221212129.GD26525@spearce.org>
+	<18187.60305.613904.547916@lisa.zopyra.com>
+	<20071009210235.GB9633@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 00:02:20 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Michael Hendricks <michael@ndrix.org>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 00:25:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfN9f-0007Lp-17
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 00:02:19 +0200
+	id 1IfNWJ-0003Ds-N0
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 00:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753406AbXJIWCJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 18:02:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752833AbXJIWCH
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 18:02:07 -0400
-Received: from fk-out-0910.google.com ([209.85.128.184]:47560 "EHLO
-	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751105AbXJIWCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 18:02:04 -0400
-Received: by fk-out-0910.google.com with SMTP id z23so6375fkz
-        for <git@vger.kernel.org>; Tue, 09 Oct 2007 15:02:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=BPR8mci/L/DCqS8Y0f9KLb6xr9mT5gpglsQnurWuDBQ=;
-        b=HiHhUydbN1T7Dzg0EvZ5EYDV67OBlKiBthAepo9wXeenfYJIXxUkYBJUZ1A59p/I+IMcaUWkkdgUv6joR3HLlK/jUlzzNZ1aLV6B455Nk1dMy5PG3SIar0t+JSQZ/hFXCncUZmo4leb9aa2kUaOWI3sp99DV7JOFwUeClN8wgPs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Df9CLlUqyuyvg2AtvkgKc8Hu3DECDnoRnJoYhBK1LOFNGOsLbPo9SLVRPUjCkxjW5ldygNzFzFlS234BiEA8ofDbW3ei3mfYZlITK1cyOD0bU30YHcazK7GScLwakmYtBJLmz0FMpxVaUCgQ+PIiF6zGdMSyVac5Ar/touqasfE=
-Received: by 10.82.171.16 with SMTP id t16mr19968439bue.1191967321745;
-        Tue, 09 Oct 2007 15:02:01 -0700 (PDT)
-Received: by 10.82.177.16 with HTTP; Tue, 9 Oct 2007 15:02:01 -0700 (PDT)
-In-Reply-To: <20071009215255.GB3146@ins.uni-bonn.de>
-Content-Disposition: inline
+	id S1752939AbXJIWZe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 18:25:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752034AbXJIWZe
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 18:25:34 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:61744 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751770AbXJIWZd (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 18:25:33 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id l99MPNC26936;
+	Tue, 9 Oct 2007 16:25:23 -0600
+In-Reply-To: <20071009210235.GB9633@fieldses.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60453>
 
-On 09/10/2007, Ralf Wildenhues <Ralf.Wildenhues@gmx.de> wrote:
-> Hello, and sorry, this patch should be number 6/6 of course.
+On Tuesday, October 9, 2007 at 17:02:35 (-0400) J. Bruce Fields writes:
+>On Tue, Oct 09, 2007 at 03:58:57PM -0500, Bill Lear wrote:
+>> As I understand this thread, it does not appear that a resolution
+>> was reached.  Our company has content in our central git repository
+>> that we need to remove per a contractual obligation.  I believe the
+>> content in question is limited to one sub-directory, that has existed
+>> since (or near to) the beginning of the repo, if that matters.  We
+>> obviously would just like to issue a "git nuke" operation and be done
+>> with it, if that is available.  Barring that, we could probably follow
+>> reasonably simple steps to purge the content and rebuild the repo.
+>> 
+>> So, what options do we have at present?
 >
-> * Thomas Adam wrote on Tue, Oct 09, 2007 at 11:41:41PM CEST:
-> > On 09/10/2007, Ralf Wildenhues <Ralf.Wildenhues@gmx.de> wrote:
-> > > em dashes were used inconsistently in the manual.
-> > > This changes them to the way they are used in US English.
-> >
-> > I find this particular patch to be rather odd; there is nothing
-> > invalid in the way the em-dashes are used.
->
-> No, not invalid, just inconsistent usage in the manual.
->
-> > Why is it US English is somehow de facto over, say, proper English?
-> > :)
->
-> Oh, that was written quoting from memory and experience.  But here's a
-> quote to back it up, from <http://en.wikipedia.org/wiki/Dash> as of now:
->
-> | According to most American sources (e.g., The Chicago Manual of Style)
-> | and to some British sources (e.g., The Oxford Guide to Style), an em
-> | dash should always be set closed (not surrounded by spaces). But the
-> | practice in many parts of the English-speaking world[...] sets it
-> | open [...]
->
-> No, I did not write that!  ;-)
+>Have you looked at git-filter-branch in a recent version of git?  The
+>man page has some good examples.
 
-Well, I don't see why it needs to change, to be honest.  I use
-em-dashes all the time surrounded by spaces, as do many academics.
-The fact that may here in the UK do not use the letter z in place of s
-to satisfy the OSD is also of equal testament to this.
+Ah, no, though I will do so.  It is apparently not in the version
+I have (1.5.2.4), but it is in 1.5.3.1.  We'll give this a shot
+and complain if we can't handle it.
 
--- Thomas Adam
+Thank you.
+
+
+Bill
