@@ -1,101 +1,58 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] exec_git_cmd: fix executing commands if path contains spaces
-Date: Tue,  9 Oct 2007 23:39:37 +0200
-Message-ID: <11919659771056-git-send-email-prohaska@zib.de>
-References: <470BB44B.3030500@viscovery.net>
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>
-To: j.sixt@viscovery.net
-X-From: git-owner@vger.kernel.org Tue Oct 09 23:40:00 2007
+From: "Thomas Adam" <thomas.adam22@gmail.com>
+Subject: Re: [PATCH 0/6] manual: Fix or remove em dashes.
+Date: Tue, 9 Oct 2007 22:41:41 +0100
+Message-ID: <18071eea0710091441n717c0a99p58a9b585d15cc778@mail.gmail.com>
+References: <20071009205755.GB31317@ins.uni-bonn.de>
+	 <20071009210530.GH31317@ins.uni-bonn.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 23:41:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfMnt-0002fn-7q
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 23:39:49 +0200
+	id 1IfMpv-00035m-Vr
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 23:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754915AbXJIVjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 17:39:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754786AbXJIVjk
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 17:39:40 -0400
-Received: from mailer.zib.de ([130.73.108.11]:59453 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754678AbXJIVjj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 17:39:39 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l99Ldbv9027982;
-	Tue, 9 Oct 2007 23:39:37 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l99LdbKt016093;
-	Tue, 9 Oct 2007 23:39:37 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <470BB44B.3030500@viscovery.net>
+	id S1755401AbXJIVlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 17:41:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755286AbXJIVlp
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 17:41:45 -0400
+Received: from fk-out-0910.google.com ([209.85.128.184]:33631 "EHLO
+	fk-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754445AbXJIVlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 17:41:44 -0400
+Received: by fk-out-0910.google.com with SMTP id z23so2300fkz
+        for <git@vger.kernel.org>; Tue, 09 Oct 2007 14:41:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=TGhz7HpQfvCxAzBKDY3XZT2odAkc4sk3RZpN2xEkUfM=;
+        b=DKm4CZJQiPug0O2w8jqOAC13bK6jhs6pbJNwVCnuT90NmDZl1IZjceLhkI6M1wANpFmenqfBS94C+NaZBp1TD4zhKnpFjMDO3uzrdhXLZVB4JvG2oHLyonumHkPDANjHfM1fx+8YrE4h1A/Bzk3RR5LdBdKCEnpLgGFUIHAZaG8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b3mB/UvWj0F0hwUhkKex5GdC4WTlBL7hgrRdwgn0BLyhPaZcFgw79zWysdhIE59KBR+zr2xWrR5YfzNQulWYpzYu1sLcDbwZnm0f09SgLTsmTs2cgM6jq8o9pvkFhCfskQNXrDIyBHm+oCxsZCA/ozpWbwiMhKf9T8cEdhBCKmQ=
+Received: by 10.82.165.13 with SMTP id n13mr28974501bue.1191966101993;
+        Tue, 09 Oct 2007 14:41:41 -0700 (PDT)
+Received: by 10.82.177.16 with HTTP; Tue, 9 Oct 2007 14:41:41 -0700 (PDT)
+In-Reply-To: <20071009210530.GH31317@ins.uni-bonn.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60449>
 
-This patch fixed executing of non-builtins if installation
-dir contains spaces. That is 'git var' works now.
+Hello --
 
-The original patch is by Johannes Sixt <j.sixt@viscovery.net>.
+On 09/10/2007, Ralf Wildenhues <Ralf.Wildenhues@gmx.de> wrote:
+> em dashes were used inconsistently in the manual.
+> This changes them to the way they are used in US English.
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- compat/mingw.c    |    2 +-
- exec_cmd.c        |    2 +-
- git-compat-util.h |    1 +
- 3 files changed, 3 insertions(+), 2 deletions(-)
+I find this particular patch to be rather odd; there is nothing
+invalid in the way the em-dashes are used.  Why is it US English is
+somehow de facto over, say, proper English?  :)
 
-Ok, this is what I created from the quick-fix. It works for
-me in msysgit. 
-
-Should the patch be polished that it can be applied to git.git
-or will we only apply it to 4msysgit?
-
-If it should be polished, what would be the right way?
-ifdef in exec_cmd.c?
-
-	Steffen
-
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 6632192..0dd0cb0 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -196,7 +196,7 @@ void openlog(const char *ident, int option, int facility)
- {
- }
- 
--static const char *quote_arg(const char *arg)
-+const char *quote_arg(const char *arg)
- {
- 	/* count chars to quote */
- 	int len = 0, n = 0;
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 2a8e48b..4c7c7ca 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -132,7 +132,7 @@ int execv_git_cmd(const char **argv)
- 		 */
- 
- 		tmp = argv[0];
--		argv[0] = git_command;
-+		argv[0] = quote_arg(git_command);
- 
- 		trace_argv_printf(argv, -1, "trace: exec:");
- 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ba5a1a1..5276221 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -482,6 +482,7 @@ int mingw_socket(int domain, int type, int protocol);
- #define fsync(x) 0
- 
- extern void quote_argv(const char **dst, const char **src);
-+extern const char *quote_arg(const char *arg);
- extern const char *parse_interpreter(const char *cmd);
- 
- extern __attribute__((noreturn)) int git_exit(int code);
--- 
-1.5.3.mingw.1.13.g70ed-dirty
+-- Thomas Adam
