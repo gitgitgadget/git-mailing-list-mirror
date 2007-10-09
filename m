@@ -1,78 +1,110 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] mergetool: add support for ECMerge
-Date: Tue, 9 Oct 2007 08:14:24 +0200
-Message-ID: <1C50C046-3D61-4D55-8D38-B2D563C1FF2A@zib.de>
-References: <11918785613855-git-send-email-prohaska@zib.de> <11918785611059-git-send-email-prohaska@zib.de> <20071008214451.GB31713@thunk.org>
+Subject: Re: [PATCH] mergetool: support absolute paths to tools by git config merge.<tool>path
+Date: Tue, 9 Oct 2007 08:30:39 +0200
+Message-ID: <C52FC9BE-13EE-4CB7-A5E9-164A2AC0E2E7@zib.de>
+References: <11918785613855-git-send-email-prohaska@zib.de> <20071008215729.GC31713@thunk.org>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 09 08:13:08 2007
+X-From: git-owner@vger.kernel.org Tue Oct 09 08:29:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1If8L3-00076B-Hh
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 08:13:06 +0200
+	id 1If8ap-0000vB-Tm
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 08:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754861AbXJIGM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 02:12:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbXJIGM6
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 02:12:58 -0400
-Received: from mailer.zib.de ([130.73.108.11]:44599 "EHLO mailer.zib.de"
+	id S1752400AbXJIG3N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 02:29:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752439AbXJIG3M
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 02:29:12 -0400
+Received: from mailer.zib.de ([130.73.108.11]:45660 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755241AbXJIGM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 02:12:57 -0400
+	id S1752400AbXJIG3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 02:29:10 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l996Cr8q011947;
-	Tue, 9 Oct 2007 08:12:53 +0200 (CEST)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l996T7G9012852;
+	Tue, 9 Oct 2007 08:29:07 +0200 (CEST)
 Received: from [192.168.178.21] (brln-4db1f6fc.pool.einsundeins.de [77.177.246.252])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l996CqWM029399
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l996T67h002008
 	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 9 Oct 2007 08:12:52 +0200 (MEST)
-In-Reply-To: <20071008214451.GB31713@thunk.org>
+	Tue, 9 Oct 2007 08:29:06 +0200 (MEST)
+In-Reply-To: <20071008215729.GC31713@thunk.org>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60361>
 
 
-On Oct 8, 2007, at 11:44 PM, Theodore Tso wrote:
+On Oct 8, 2007, at 11:57 PM, Theodore Tso wrote:
 
-> On Mon, Oct 08, 2007 at 11:22:41PM +0200, Steffen Prohaska wrote:
->> Add support for ECMerge available from
->> http://www.elliecomputing.com/Products/merge_overview.asp
+> On Mon, Oct 08, 2007 at 11:22:40PM +0200, Steffen Prohaska wrote:
+>> This commit adds a mechanism to provide absolute paths to the
+>> commands called by 'git mergetool'. A path can be specified
+>> in the configuation variable merge.<toolname>path.
 >
-> Hmm.  A propietary merge tool.  It's not that much code, so I  
-> guess....
+> This patch doesn't work if the config file doesn't specify an explicit
+> mergetool via merge.tool.   The reason for that is this loop:
 >
-> I note though that it claims on the web page that they are integrated
-> with "most famous SCM's", but they don't include git.  If we add this
-> support, are they going to change their web page?  :-)
+>     for i in $merge_tool_candidates; do
+>         if test $i = emerge ; then
+>             cmd=emacs
+>         else
+>             cmd=$i
+>         fi
+>         if type $cmd > /dev/null 2>&1; then
+>             merge_tool=$i
+>             break
+>         fi
+>     done
+>
+> is only checking to see if $cmd is in the path; it's not looking up
+> the merge.<toolname>path variable in this loop.
 
-You may even apply for a free (as beer) license if you contribute
-to open source projects:
+I didn't change the automatic detection. It should work as before.
+That is it continues to assume that merge tools are in PATH.
 
-http://www.elliecomputing.com/Community/opensource.asp
+Is you expectation that git-mergetool should also consider the
+absolute paths provided in merge.<toolname>path?
 
-I didn't try this, so I can't say how this works in practice.
+When I wrote the patch I had in mind that people will set the
+merge.tool explicitly if they provide an absolute path. Automatic
+detection would only be used if nothing is configured. In this
+case a tool must be in PATH or would not be found.
 
-> Also, ECmerge is supported on Linux, Solaris, MacOS X, and Windows.
-> Which platforms have you tested on?
 
-Windows. Haven't tested Unix systems yet.
+> I guess the other question is whether we would be better off simply
+> telling the user to specify an absolute pathname in merge.tool, and
+> then having git-mergetool strip off the directory path via basename,
+> and then on window systems, stripping off the .EXE or .COM suffix, and
+> then downcasing the name so that something like "C:\Program
+> Files\ECMerge\ECMerge.exe" gets translated to "ecmerge".  Would I be
+> right in guessing that the reason why you used merge.<toolname>path
+> approach was to avoid this messy headache?
 
-> My guess is that if it works on
-> Linux, it'll probably work on Solaris and MacOS, but is it a fair
-> guess you haven't tested under Windows?  Not that most Windows systems
-> are going to be able to use git-mergetool since it's a bash script,
-> unless they are using Cygwin or some such.
+Yes. The program to start ECMerge on Windows is called 'guimerge.exe'.
+Hard to derive a sensible short name from this.
 
-I work on the msysgit project and I'd like to have mergetool
-available before I advertise git on Windows. It makes merging
-so much easier ;)
+So I don't think that an automatic translation is an option. I prefer
+to provide the absolute paths.
+
+Absolute paths have another advantage. You can set several of them
+and choose a tool on the command line. Maybe you have several tools
+you want to try. Or you hacking with someone else who preferes a
+different tool. Or you just want to give a demo. I see
+merge.<toolname>path more as a database associating absolute paths
+with the shortnames.
+
+My mental model is as follows:
+1) merge.tool selects the mechanism needed to call the tool, that is
+command line arguments, how merge result is passed, ...
+2) merge.<toolname>path provides additional information how to locate
+the selected tool in the filesystem.
+
+The two points are somewhat orthogonal. I'd not fuse them into one.
 
 	Steffen
