@@ -1,66 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-config: handle --file option with relative pathname
- properly
-Date: Tue, 09 Oct 2007 15:20:36 +0200
-Message-ID: <470B8024.2050106@viscovery.net>
-References: <20071009124932.1184.qmail@395d4a80f3eafd.315fe32.mid.smarden.org>
+From: "Gerald (Jerry) Carter" <jerry@samba.org>
+Subject: Re: Problem with git-cvsimport
+Date: Tue, 09 Oct 2007 08:21:13 -0500
+Message-ID: <470B8049.1090308@samba.org>
+References: <470B491F.9020306@jentro.com> <200710091447.50501.wielemak@science.uva.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Oct 09 15:21:16 2007
+Cc: Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Thomas Pasch <thomas.pasch@jentro.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:21:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfF10-00016O-7n
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:20:50 +0200
+	id 1IfF1i-0001GM-Oi
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123AbXJINUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 09:20:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752053AbXJINUk
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:20:40 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23857 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751969AbXJINUk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 09:20:40 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IfF0g-0006ho-2I; Tue, 09 Oct 2007 15:20:30 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4DF0569F; Tue,  9 Oct 2007 15:20:36 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071009124932.1184.qmail@395d4a80f3eafd.315fe32.mid.smarden.org>
-X-Spam-Score: 1.2 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
+	id S1752731AbXJINVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:21:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbXJINVY
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:21:24 -0400
+Received: from mail.samba.org ([66.70.73.150]:49463 "EHLO lists.samba.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094AbXJINVY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:21:24 -0400
+Received: from kayak.plainjoe.org (68-184-60-223.dhcp.mtgm.al.charter.com [68.184.60.223])
+	by lists.samba.org (Postfix) with ESMTP id 656F71638C1;
+	Tue,  9 Oct 2007 13:21:21 +0000 (GMT)
+Received: from [127.0.0.1] (phzzbt.plainjoe.org [192.168.1.1])
+	by kayak.plainjoe.org (Postfix) with ESMTP id 614E711703F;
+	Tue,  9 Oct 2007 08:21:22 -0500 (CDT)
+User-Agent: Thunderbird 1.5.0.13 (X11/20070824)
+In-Reply-To: <200710091447.50501.wielemak@science.uva.nl>
+X-Enigmail-Version: 0.94.2.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60411>
 
-Gerrit Pape schrieb:
-> @@ -189,7 +189,11 @@ int cmd_config(int argc, const char **argv, const char *prefix)
->  		else if (!strcmp(argv[1], "--file") || !strcmp(argv[1], "-f")) {
->  			if (argc < 3)
->  				usage(git_config_set_usage);
-> -			setenv(CONFIG_ENVIRONMENT, argv[2], 1);
-> +			if (argv[2][0] == '/')
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Please use is_absolute_path() here.
+Jan Wielemaker wrote:
 
-> +				name = argv[2];
-> +			else
-> +				name = name ? prefix_filename(name, strlen(name), argv[2]) : argv[2];
+> I've had some similar problem.  I've converted two big old 
+> repositories by first converting to SVN using:
+> 
+> 	cvs2svn -s myrepo-svn /path/to/cvsmodule
+> 	git-svnimport -i -u -C /path/to-git file://myrepo-svn
 
-Can't you avoid this ternary here? There's already an 'if' with the same 
-'else' branch.
+I would actually plug using cvs2svn to convert directly to git.
+See this thread for Michael's original announcement.
 
-> +			setenv(CONFIG_ENVIRONMENT, name, 1);
->  			argc--;
->  			argv++;
->  		}
+   http://marc.info/?l=git&m=118592701426175&w=2
 
--- Hannes
+I'm in the process of drafting Samba's own git repos from
+the CVS and SVN history (http://gitweb.samba.org/).
+
+
+
+
+cheers, jerry
+=====================================================================
+Samba                                    ------- http://www.samba.org
+Centeris                         -----------  http://www.centeris.com
+"What man is a man who does not make the world better?"      --Balian
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHC4BJIR7qMdg1EfYRAlQ4AKDctlXFv0kcT51sA6P99qjVrPJ+MgCfWkCB
+wPSf6l06UIlz0HERasHbryg=
+=zSSf
+-----END PGP SIGNATURE-----
