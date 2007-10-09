@@ -1,95 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] rebase -i: use diff plumbing instead of porcelain
-Date: Tue, 9 Oct 2007 13:59:43 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710091353140.4174@racer.site>
-References: <470B410F.1040506@viscovery.net> <Pine.LNX.4.64.0710091319400.4174@racer.site>
- <470B7581.3030301@viscovery.net>
+From: "Alan Hadsell" <ahadsell@gmail.com>
+Subject: Re: [PATCH] mergetool: add support for ECMerge
+Date: Tue, 9 Oct 2007 09:03:40 -0400
+Message-ID: <2b3a6fcd0710090603l3c3578caq3bfa6a1b8ec583f@mail.gmail.com>
+References: <11918785613855-git-send-email-prohaska@zib.de>
+	 <11918785611059-git-send-email-prohaska@zib.de>
+	 <20071008214451.GB31713@thunk.org>
+	 <1C50C046-3D61-4D55-8D38-B2D563C1FF2A@zib.de>
+	 <Pine.LNX.4.64.0710091335580.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 15:00:35 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Steffen Prohaska" <prohaska@zib.de>,
+	"Theodore Tso" <tytso@mit.edu>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:04:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfEh4-0005g0-FT
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:00:14 +0200
+	id 1IfEkk-0006Ju-Qt
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:04:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbXJINAC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 09:00:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752776AbXJINAB
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:00:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44783 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752848AbXJINAA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 09:00:00 -0400
-Received: (qmail invoked by alias); 09 Oct 2007 12:59:58 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp043) with SMTP; 09 Oct 2007 14:59:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/FaZw8BZ7FhS6YpmXaEQZKD2qCrNNMAumVMH/m8B
-	LJIClsCCxOqsbg
-X-X-Sender: gene099@racer.site
-In-Reply-To: <470B7581.3030301@viscovery.net>
-X-Y-GMX-Trusted: 0
+	id S1755084AbXJINDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:03:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755069AbXJINDo
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:03:44 -0400
+Received: from wx-out-0506.google.com ([66.249.82.230]:25233 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754956AbXJINDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:03:41 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so1651768wxd
+        for <git@vger.kernel.org>; Tue, 09 Oct 2007 06:03:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=MrAZq468acg6ycQ7y5JgHxOSlhF4NMS1uXYJOgCkMSo=;
+        b=qbQHAAPofGCXjNJA9L9t5ZIkgE8L5BH06fyV3TfSTMhNhvINuocSpvY69ry9T1o0fjR/rZioFZn4i0idMt3AMWGFYRz7+5ZqyhdPNIWr6YW/GX+9THe5VOdQnjaAKJLl7SXJJomdrHE/PdOwluGYBCQ8VdoJZNcrX1wXgFBD144=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=S+woHyodJnuQBA2TiUxIADzNW3LAdCD4e3u1EC5J7GfvPlnzZLpwtlQXIcShu7uF33v0uduycllnRwzrq2kTbwpIgmjuWII2n4o8NRPXaDK6yiEAvDQuB7QsD0WU2Rc2x7ZXFIPfUKKjAAErMKuSPUV20b1KX2AZynL2AcYZGu4=
+Received: by 10.90.71.3 with SMTP id t3mr5535572aga.1191935020289;
+        Tue, 09 Oct 2007 06:03:40 -0700 (PDT)
+Received: by 10.90.101.15 with HTTP; Tue, 9 Oct 2007 06:03:40 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710091335580.4174@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60402>
 
+On 10/9/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-When diff drivers are installed, calling "git diff <tree1>..<tree2>"
-calls those drivers.  This borks the patch generation of rebase -i.
-So use "git diff-tree -p" instead, which does not call diff drivers.
+> What does TortoiseCVS use?
 
-Noticed by Johannes Sixt.
+They don't actually include it in the package, but they recommend
+WinMerge http://winmerge.org/, which is free (GPL).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-
-	On Tue, 9 Oct 2007, Johannes Sixt wrote:
-
-	> Johannes Schindelin schrieb:
-	> > On Tue, 9 Oct 2007, Johannes Sixt wrote:
-	> > 
-	> > > I wonder for what reason rebase--interactive generates a 
-	> > > patch using 'git diff' in the make_patch function. Is this 
-	> > > an artefact?
-	> > 
-	> > It was an explicit request by people who use git-rebase 
-	> > regularly, and missed being able to see the patch in 
-	> > --interactive.
-	> 
-	> Can we generate the patch with plumbing, 
-	> diff-{files,index,tree}? They by-pass any diff drivers.
-
-	Here you are.
-
- git-rebase--interactive.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 050140d..df4cedb 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -80,7 +80,7 @@ mark_action_done () {
- make_patch () {
- 	parent_sha1=$(git rev-parse --verify "$1"^) ||
- 		die "Cannot get patch for $1^"
--	git diff "$parent_sha1".."$1" > "$DOTEST"/patch
-+	git diff-tree -p "$parent_sha1".."$1" > "$DOTEST"/patch
- 	test -f "$DOTEST"/message ||
- 		git cat-file commit "$1" | sed "1,/^$/d" > "$DOTEST"/message
- 	test -f "$DOTEST"/author-script ||
-@@ -325,7 +325,7 @@ do_next () {
- 		;;
- 	esac && {
- 		test ! -f "$DOTEST"/verbose ||
--			git diff --stat $(cat "$DOTEST"/head)..HEAD
-+			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
- 	} &&
- 	rm -rf "$DOTEST" &&
- 	git gc --auto &&
 -- 
-1.5.3.4.1169.g5fb8d
+Alan Hadsell
