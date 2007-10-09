@@ -1,92 +1,94 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: blog post collection on the wiki
-Date: Tue, 9 Oct 2007 11:44:24 +0100
-Message-ID: <20071009104424.GA2600@lapse.madduck.net>
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: Re: [PATCH] Fixed crash in fetching remote tags when there is not tags.
+Date: Tue, 09 Oct 2007 13:52:01 +0300
+Message-ID: <81553116-3A4F-4526-A772-9A43C53D3E22@pp.inet.fi>
+References: <1191919868-4963-1-git-send-email-v@pp.inet.fi>
+ <1191919868-4963-2-git-send-email-v@pp.inet.fi>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="FL5UXtIhxfXey3p5"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 09 12:44:42 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 12:53:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfCZs-0005Oc-3M
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 12:44:40 +0200
+	id 1IfCig-00075V-4D
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 12:53:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728AbXJIKob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 06:44:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXJIKob
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 06:44:31 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:42034 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643AbXJIKoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 06:44:30 -0400
-Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 61718BE7D
-	for <git@vger.kernel.org>; Tue,  9 Oct 2007 12:44:26 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id 0D36F57D21; Tue,  9 Oct 2007 11:44:24 +0100 (BST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4513/Tue Oct  9 05:22:11 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1752346AbXJIKxh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 06:53:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbXJIKxh
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 06:53:37 -0400
+Received: from astana.suomi.net ([82.128.152.18]:57092 "EHLO astana.suomi.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752094AbXJIKxf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 06:53:35 -0400
+Received: from tiku.suomi.net ([82.128.154.67])
+ by astana.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JPN005Y84V6NV60@astana.suomi.net> for
+ git@vger.kernel.org; Tue, 09 Oct 2007 13:52:18 +0300 (EEST)
+Received: from spam3.suomi.net (spam3.suomi.net [212.50.131.167])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
+ with ESMTP id <0JPN00CZ54X9Y9C0@mailstore.suomi.net> for git@vger.kernel.org;
+ Tue, 09 Oct 2007 13:53:33 +0300 (EEST)
+Received: from [192.168.0.138]
+ (addr-213-139-166-27.baananet.fi [213.139.166.27])
+	by spam3.suomi.net (Postfix) with ESMTP id B9D681FED5F; Tue,
+ 09 Oct 2007 13:52:30 +0300 (EEST)
+In-reply-to: <1191919868-4963-2-git-send-email-v@pp.inet.fi>
+X-Mailer: Apple Mail (2.752.3)
+X-DNA-MailScanner-Information: Please contact the ISP for more information
+X-DNA-MailScanner: Found to be clean
+X-DNA-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.667,
+ required 5, AWL 0.23, BAYES_00 -1.00,	RDNS_DYNAMIC 0.10)
+X-DNA-MailScanner-From: v@pp.inet.fi
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60384>
 
+Hi,
 
---FL5UXtIhxfXey3p5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+These patches should have been numbered, sorry, The test patch was =20
+supposed be number 1 of 2.
 
-Dear list,
+The patches were done on top of next. The fix should be checked, as =20
+it's mostly a quick fix to get it to work, probably not the correct =20
+way to fix that bug, or is it?
 
-Since Git's birth, a lot of useful blog posts have been published on
-using Git and solving specific problems. Our wiki has the GitLinks
-page, which has a number of blogs by Git people, but what I was
-missing was a collection of links to specific blog posts.
+--
+V=E4in=F6
 
-Thus I created BlogPosts [http://git.or.cz/gitwiki/BlogPosts] with
-the intention to assemble links to *single* and *useful* blog posts
-related to *specific* Git usage. Posts linked from there should be
-contained enough to be useful reference to people solving a specific
-problem, and the link description should should adequately describe
-the problem.
+On Oct 9, 2007, at 11:51, V=E4in=F6 J=E4rvel=E4 wrote:
 
-I am looking forward to your comments and contributions.
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"if confronted with a choice between all the truth in god's right hand
- and the ever live struggle for truth, coupled with eternal error, in
- god's left, i would choose the left."
-                                                   -- gotthold lessing
-=20
-spamtraps: madduck.bogus@madduck.net
-
---FL5UXtIhxfXey3p5
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHC1uIIgvIgzMMSnURArm9AJ95sGUceHJXhlW3s+xcSvaWILfG+QCfXeY+
-llg7sbb2sbLd1vptdGE18nM=
-=6/tU
------END PGP SIGNATURE-----
-
---FL5UXtIhxfXey3p5--
+> Signed-off-by: V=E4in=F6 J=E4rvel=E4 <v@pp.inet.fi>
+> ---
+>  remote.c |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
+>
+> diff --git a/remote.c b/remote.c
+> index e7d735b..5e92378 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -537,6 +537,8 @@ static int count_refspec_match(const char =20
+> *pattern,
+>
+>  static void tail_link_ref(struct ref *ref, struct ref ***tail)
+>  {
+> +	if (!ref) return;
+> +=09
+>  	**tail =3D ref;
+>  	while (ref->next)
+>  		ref =3D ref->next;
+> --=20
+> 1.5.3.4.1156.g5407-dirty
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
