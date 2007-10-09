@@ -1,94 +1,65 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: git: avoiding merges, rebasing
-Date: Tue, 9 Oct 2007 20:06:59 +0200
-Message-ID: <AAC50815-7438-4934-81EC-02EE08B38854@lrde.epita.fr>
-References: <200709301421.52192.bruno@clisp.org> <46FF99E2.8050605@byu.net> <200709302141.25597.bruno@clisp.org> <C64152A3-A5A6-4320-864C-E78E3A60C8E6@lrde.epita.fr> <07BCEF3E-90DE-4BB7-8A8C-F03D12293B5F@lrde.epita.fr> <Pine.LNX.4.64.0710091141440.4174@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-6-1045138515"
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 20:07:46 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Merge problems with git-mingw
+Date: Tue, 9 Oct 2007 11:09:35 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710091108480.5039@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se> 
+ <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com> 
+ <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se> 
+ <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com> 
+ <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se>
+ <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com>
+ <Pine.LNX.4.64.0710090800220.26773@ds9.cixit.se> <470B2F7E.4080308@viscovery.net>
+ <Pine.LNX.4.64.0710090953240.26773@ds9.cixit.se> <470B43D2.6090307@viscovery.net>
+ <BA71DD45-9226-4661-9C92-60EEEA8638D0@zib.de>
+ <470BB44B.3030500@viscovery.net>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 09 20:11:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfJUf-0003uQ-6O
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 20:07:45 +0200
+	id 1IfJY1-0004ix-DF
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 20:11:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753484AbXJISHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 14:07:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753327AbXJISHf
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 14:07:35 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:35994 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753235AbXJISHe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 14:07:34 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IfJUS-0002Fw-KJ; Tue, 09 Oct 2007 20:07:32 +0200
-In-Reply-To: <Pine.LNX.4.64.0710091141440.4174@racer.site>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1756800AbXJISJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 14:09:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752699AbXJISJ6
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 14:09:58 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:54994 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756781AbXJISJ4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 14:09:56 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l99I9acx029030
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 9 Oct 2007 11:09:37 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l99I9akH030834;
+	Tue, 9 Oct 2007 11:09:36 -0700
+In-Reply-To: <470BB44B.3030500@viscovery.net>
+X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60425>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-6-1045138515
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Oct 9, 2007, at 12:43 PM, Johannes Schindelin wrote:
 
-> Hi,
+On Tue, 9 Oct 2007, Johannes Sixt wrote:
 >
-> On Mon, 8 Oct 2007, Benoit SIGOURE wrote:
->
->> [as usual, I forgot the attachment...]
->
-> Two comments:
->
-> - by not inlining you made it hard to review your script.  Therefore I
->   will not do it.
+> +		extern const char *quote_arg(const char *arg);
+> +		argv[0] = quote_arg(git_command);
 
-:|
+Extern declarations inside a local scope will not work on more modern gcc 
+versions. Don't do it. Do proper prototyping in proper scope.
 
->
-> - Try to avoid naming the script git-merge-*; these scripts/ 
-> programs are
->   merge _strategies_, not merge _drivers_ (and yes, we already have  
-> two
->   programs violating this rule -- merge-base and merge-file -- but  
-> that
->   does not mean that you are free to add to the pile).
-
-I'm open to better suggestions.
-
-Cheers,
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-6-1045138515
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHC8NDwwE67wC8PUkRAl1IAKDMXu1aYkRlfxY6oG0TjmvFjQVKXgCfduGd
-juuusepKCCAfAfM5bCSni0k=
-=GY73
------END PGP SIGNATURE-----
-
---Apple-Mail-6-1045138515--
+		Linus
