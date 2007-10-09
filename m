@@ -1,94 +1,70 @@
-From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-Subject: Re: [PATCH] Fixed crash in fetching remote tags when there is not tags.
-Date: Tue, 09 Oct 2007 13:52:01 +0300
-Message-ID: <81553116-3A4F-4526-A772-9A43C53D3E22@pp.inet.fi>
-References: <1191919868-4963-1-git-send-email-v@pp.inet.fi>
- <1191919868-4963-2-git-send-email-v@pp.inet.fi>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: possible bug in using local branches
+Date: Tue, 9 Oct 2007 12:56:20 +0200
+Message-ID: <20071009105620.GD31659@planck.djpig.de>
+References: <1191924707.10822.94.camel@nc.nor.wtbts.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 12:53:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Natanael Copa <natanael.copa@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 09 12:56:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfCig-00075V-4D
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 12:53:46 +0200
+	id 1IfClV-0007cc-4c
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 12:56:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752346AbXJIKxh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 06:53:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbXJIKxh
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 06:53:37 -0400
-Received: from astana.suomi.net ([82.128.152.18]:57092 "EHLO astana.suomi.net"
+	id S1752247AbXJIK4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 06:56:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752216AbXJIK4c
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 06:56:32 -0400
+Received: from planck.djpig.de ([85.10.192.180]:3430 "EHLO planck.djpig.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752094AbXJIKxf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 06:53:35 -0400
-Received: from tiku.suomi.net ([82.128.154.67])
- by astana.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
- 2005)) with ESMTP id <0JPN005Y84V6NV60@astana.suomi.net> for
- git@vger.kernel.org; Tue, 09 Oct 2007 13:52:18 +0300 (EEST)
-Received: from spam3.suomi.net (spam3.suomi.net [212.50.131.167])
- by mailstore.suomi.net
- (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
- with ESMTP id <0JPN00CZ54X9Y9C0@mailstore.suomi.net> for git@vger.kernel.org;
- Tue, 09 Oct 2007 13:53:33 +0300 (EEST)
-Received: from [192.168.0.138]
- (addr-213-139-166-27.baananet.fi [213.139.166.27])
-	by spam3.suomi.net (Postfix) with ESMTP id B9D681FED5F; Tue,
- 09 Oct 2007 13:52:30 +0300 (EEST)
-In-reply-to: <1191919868-4963-2-git-send-email-v@pp.inet.fi>
-X-Mailer: Apple Mail (2.752.3)
-X-DNA-MailScanner-Information: Please contact the ISP for more information
-X-DNA-MailScanner: Found to be clean
-X-DNA-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.667,
- required 5, AWL 0.23, BAYES_00 -1.00,	RDNS_DYNAMIC 0.10)
-X-DNA-MailScanner-From: v@pp.inet.fi
-X-Spam-Status: No
+	id S1752045AbXJIK4b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 06:56:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 4E9AD88231;
+	Tue,  9 Oct 2007 12:56:30 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fjJkMopC9non; Tue,  9 Oct 2007 12:56:20 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 69CF988232; Tue,  9 Oct 2007 12:56:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1191924707.10822.94.camel@nc.nor.wtbts.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60385>
 
-Hi,
+On Tue, Oct 09, 2007 at 12:11:47PM +0200, Natanael Copa wrote:
+> 
+> http://distfiles.gentoo.org/distfiles/linux-2.6.22.tar.bz2
+> http://distfiles.gentoo.org/distfiles/genpatches-2.6.22-9.base.tar.bz2
+> http://people.linux-vserver.org/~harry/patch-2.6.22.6-vs2.2.0.3-grsec2.1.11-20070905.diff
+> 
+> First unpack the linux-2.6.22.tar.bz2 archive, genpatches archive and
+> add linux kernel to a local repository.
+> 
+> $ tar -jxf linux-2.6.22.tar.bz2
+> $ tar -jxf genpatches-2.6.22-9.base.tar.bz2
+> $ cd linux-2.6.22
+> $ git-init
+> Initialized empty Git repository in .git/
+> $ git-add .
+> $ git commit -m 'vanilla 2.6.22'
+> ...
+>  create mode 100644 usr/Makefile
+>  create mode 100644 usr/gen_init_cpio.c
+>  create mode 100644 usr/initramfs_data.S
 
-These patches should have been numbered, sorry, The test patch was =20
-supposed be number 1 of 2.
+It already goes wrong here. The top-level .gitignore contains a
+vmlinux*, so the file you later test is never actually committed...
 
-The patches were done on top of next. The fix should be checked, as =20
-it's mostly a quick fix to get it to work, probably not the correct =20
-way to fix that bug, or is it?
-
---
-V=E4in=F6
-
-On Oct 9, 2007, at 11:51, V=E4in=F6 J=E4rvel=E4 wrote:
-
-> Signed-off-by: V=E4in=F6 J=E4rvel=E4 <v@pp.inet.fi>
-> ---
->  remote.c |    2 ++
->  1 files changed, 2 insertions(+), 0 deletions(-)
->
-> diff --git a/remote.c b/remote.c
-> index e7d735b..5e92378 100644
-> --- a/remote.c
-> +++ b/remote.c
-> @@ -537,6 +537,8 @@ static int count_refspec_match(const char =20
-> *pattern,
->
->  static void tail_link_ref(struct ref *ref, struct ref ***tail)
->  {
-> +	if (!ref) return;
-> +=09
->  	**tail =3D ref;
->  	while (ref->next)
->  		ref =3D ref->next;
-> --=20
-> 1.5.3.4.1156.g5407-dirty
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
