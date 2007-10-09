@@ -1,66 +1,76 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] mergetool: support absolute paths to tools by git config merge.<tool>path
-Date: Tue, 9 Oct 2007 08:42:17 +0200
-Message-ID: <9505CF7F-2024-48A8-88B0-0410DB2572B6@zib.de>
-References: <11918785613855-git-send-email-prohaska@zib.de> <20071008220025.GZ31659@planck.djpig.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Theodore Ts'o" <tytso@mit.edu>, git@vger.kernel.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 08:41:28 2007
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Merge problems with git-mingw
+Date: Tue, 9 Oct 2007 08:06:17 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0710090800220.26773@ds9.cixit.se>
+References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se> 
+ <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com> 
+ <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se> 
+ <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com> 
+ <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se>
+ <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 09 09:06:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1If8mV-0003Bi-Pd
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 08:41:28 +0200
+	id 1If9Ap-0007BJ-0b
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 09:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753355AbXJIGlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 02:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753042AbXJIGlD
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 02:41:03 -0400
-Received: from mailer.zib.de ([130.73.108.11]:46531 "EHLO mailer.zib.de"
+	id S1751759AbXJIHGV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 03:06:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750934AbXJIHGV
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 03:06:21 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:51824 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752551AbXJIGlA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 02:41:00 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l996eopa013663;
-	Tue, 9 Oct 2007 08:40:50 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1f6fc.pool.einsundeins.de [77.177.246.252])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l996eiU8004602
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 9 Oct 2007 08:40:44 +0200 (MEST)
-In-Reply-To: <20071008220025.GZ31659@planck.djpig.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751358AbXJIHGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 03:06:20 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9976InQ028372
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 9 Oct 2007 09:06:18 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9976I4K028366;
+	Tue, 9 Oct 2007 09:06:18 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 09 Oct 2007 09:06:18 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60364>
 
+HI!
 
-On Oct 9, 2007, at 12:00 AM, Frank Lichtenheld wrote:
+> Does 'git var -l' work as expected?
 
-> On Mon, Oct 08, 2007 at 11:22:40PM +0200, Steffen Prohaska wrote:
->> This commit adds a mechanism to provide absolute paths to the
->> commands called by 'git mergetool'. A path can be specified
->> in the configuation variable merge.<toolname>path.
->
-> Why not merge.<toolname>.path?
->
-> This would it make easy to introduce new variables of the form
-> merge.<toolname>.<var> later if needed. I also think it is more
-> consistent with names of existing configuration variables.
-> (think branch.<name>.<var> or remote.<name>.<var>)
+Hmm, it also gives an error message:
 
-Looks more beautiful on the command line but a bit more complex
-in the config file. But I like the idea.
+$ git var -l
+usage: git-var [-l | <variable>]
 
-Maybe mergetool.<tool>.path is even a better choice? It clearly
-indicate the relationship with mergetool. We could explain:
+> Also, could you try the latest git-package provided by the cygwin
+> installer? If CRLF-handling was your problem, take a look at the
+> description of core.autocrlf with 'git help config'.
 
-'The variable merge.tool = <tool> refers to a tool that can
-be further specified in mergetool.<tool>.path.'
+I tried it with Git 1.5.3.2 from Cygwin, and the problem I'm having is
+not with the CRLF handling in the checked out files, but rather in the
+repository database itself. Cloning a repository with Cygwin-Git
+produced various errors about the object database being corrupt.
+Mingw-Git does not produce those errors.
 
-	Steffen
+> [This does look like an issue with running mingw.git under Cygwin.
+> Johannes, is this even supposed to work?]
+
+I get the same error running mingw-git from a regular cmd.exe prompt,
+so it doesn't seem to be related to Cygwin at all.
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
