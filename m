@@ -1,82 +1,89 @@
-From: "Josh England" <jjengla@sandia.gov>
-Subject: [PATCH] Minor usage update in setgitperms.perl
-Date: Tue,  9 Oct 2007 10:04:42 -0600
-Message-ID: <1191945882-21878-1-git-send-email-jjengla@sandia.gov>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Merge problems with git-mingw
+Date: Tue, 9 Oct 2007 18:33:37 +0200
+Message-ID: <BA71DD45-9226-4661-9C92-60EEEA8638D0@zib.de>
+References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>  <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com>  <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>  <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>  <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se> <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com> <Pine.LNX.4.64.0710090800220.26773@ds9.cixit.se> <470B2F7E.4080308@viscovery.net> <Pine.LNX.4.64.0710090953240.26773@ds9.cixit.se> <470B43D2.6090307@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Josh England" <jjengla@sandia.gov>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 18:06:17 2007
+Cc: Peter Karlsson <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 09 18:35:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfHag-0001Dc-QS
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 18:05:51 +0200
+	id 1IfI2w-0007K0-WD
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 18:35:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753145AbXJIQFh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 12:05:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754290AbXJIQFh
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 12:05:37 -0400
-Received: from mm04snlnto.sandia.gov ([132.175.109.21]:2045 "EHLO
-	sentry.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753073AbXJIQFg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 12:05:36 -0400
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.1)); Tue, 09 Oct 2007 10:05:24 -0600
-X-Server-Uuid: 6CEB1540-FE13-491B-9872-FD67060ED864
-Received: from ES23SNLNT.srn.sandia.gov (ec04snlnt.sandia.gov
- [134.253.164.156] (may be forged)) by mailgate.sandia.gov (
- 8.14.1/8.14.1) with ESMTP id l99G5OdD025563 for <git@vger.kernel.org>;
- Tue, 9 Oct 2007 10:05:24 -0600
-Received: from ef02snlnt.srn.sandia.gov ([134.253.164.132]) by
- ES23SNLNT.srn.sandia.gov with Microsoft SMTPSVC(6.0.3790.3959); Tue, 9
- Oct 2007 10:05:24 -0600
-Received: from truth ([134.253.45.6]) by ef02snlnt.srn.sandia.gov with
- Microsoft SMTPSVC(6.0.3790.3959); Tue, 9 Oct 2007 10:05:22 -0600
-Received: by truth (sSMTP sendmail emulation); Tue, 9 Oct 2007 10:04:42
- -0600
-X-Mailer: git-send-email 1.5.3.2.111.g5166-dirty
-X-OriginalArrivalTime: 09 Oct 2007 16:05:23.0020 (UTC)
- FILETIME=[329330C0:01C80A8E]
-X-TMWD-Spam-Summary: TS=20071009160527; SEV=2.2.2; DFV=B2007100913;
- IFV=2.0.4,4.0-9; AIF=B2007100913; RPD=5.02.0125; ENG=IBF;
- RPDID=7374723D303030312E30413031303230342E34373042413643372E303038313A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE
-X-MMS-Spam-Filter-ID: B2007100913_5.02.0125_4.0-9
-X-WSS-ID: 6B15794E2A0295893-01-01
+	id S1753612AbXJIQeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 12:34:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbXJIQeq
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 12:34:46 -0400
+Received: from mailer.zib.de ([130.73.108.11]:33089 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752535AbXJIQep (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 12:34:45 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l99GW4o2002602;
+	Tue, 9 Oct 2007 18:34:42 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l99GW4Dn012367
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 9 Oct 2007 18:32:04 +0200 (MEST)
+In-Reply-To: <470B43D2.6090307@viscovery.net>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60421>
 
-Signed-off-by: Josh England <jjengla@sandia.gov>
----
- contrib/hooks/setgitperms.perl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-index 5e3b89d..bd48e27 100644
---- a/contrib/hooks/setgitperms.perl
-+++ b/contrib/hooks/setgitperms.perl
-@@ -8,13 +8,14 @@
- # To save permissions/ownership data, place this script in your .git/hooks
- # directory and enable a `pre-commit` hook with the following lines:
- #      #!/bin/sh
--#     . git-sh-setup
-+#     SUBDIRECTORY_OK=1 . git-sh-setup
- #     $GIT_DIR/hooks/setgitperms.perl -r
- #
- # To restore permissions/ownership data, place this script in your .git/hooks
--# directory and enable a `post-merge` hook with the following lines:
-+# directory and enable a `post-merge` and `post-checkout` hook with the
-+# following lines:
- #      #!/bin/sh
--#     . git-sh-setup
-+#     SUBDIRECTORY_OK=1 . git-sh-setup
- #     $GIT_DIR/hooks/setgitperms.perl -w
- #
- use strict;
--- 
-1.5.3.2.111.g5166-dirty
+On Oct 9, 2007, at 11:03 AM, Johannes Sixt wrote:
+
+> Peter Karlsson schrieb:
+>> C:\Program Files\Git\bin>git var -l
+>> usage: git-var [-l | <variable>]
+>> C:\Program Files\Git\bin>git-var -l
+>> fatal: Not a git repository
+>> C:\Program Files\Git\bin>git --version
+>> git version 1.5.3.mingw.1
+>
+> For the time being, install this beast in a path without blanks.
+>
+> This needs fixing, appearently. :(
+
+I have the printf 'callstack' below from the v1.5.3.mingw.1 version  
+(9c792c5)
+Apparently spawnve, which is called in compat/mingw.c, corrupts argv.
+
+I have no idea how to continue debugging. Maybe some one else can  
+take over.
+
+	Steffen
+
+
+$ git var GIT_COMMITTER_IDENT
+
+argv at git.c:429
+3
+C:\Program Files (x86)\Git\bin\git.exe
+var
+C:/Program Files (x86)/Git/bin/git-var
+GIT_COMMITTER_IDENT
+
+argv at compat/mingw.c:301
+C:/Program Files (x86)/Git/bin/git-var
+GIT_COMMITTER_IDENT
+(null)
+
+argv at var.c:54
+4
+C:/Program
+Files
+(x86)/Git/bin/git-var
+GIT_COMMITTER_IDENT
+usage: git-var [-l | <variable>]
