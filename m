@@ -1,61 +1,82 @@
-From: "Alan Hadsell" <ahadsell@gmail.com>
-Subject: Re: [PATCH] mergetool: add support for ECMerge
-Date: Tue, 9 Oct 2007 09:03:40 -0400
-Message-ID: <2b3a6fcd0710090603l3c3578caq3bfa6a1b8ec583f@mail.gmail.com>
-References: <11918785613855-git-send-email-prohaska@zib.de>
-	 <11918785611059-git-send-email-prohaska@zib.de>
-	 <20071008214451.GB31713@thunk.org>
-	 <1C50C046-3D61-4D55-8D38-B2D563C1FF2A@zib.de>
-	 <Pine.LNX.4.64.0710091335580.4174@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: public repository
+Date: Tue, 09 Oct 2007 15:04:00 +0200
+Message-ID: <20071009130400.GA27301@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Steffen Prohaska" <prohaska@zib.de>,
-	"Theodore Tso" <tytso@mit.edu>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 15:04:20 2007
+Content-Type: multipart/signed; boundary="PNTmBPCT7hxwcZjr";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:05:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfEkk-0006Ju-Qt
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:04:03 +0200
+	id 1IfElU-0006SG-Bq
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:04:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755084AbXJINDo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 09:03:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755069AbXJINDo
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:03:44 -0400
-Received: from wx-out-0506.google.com ([66.249.82.230]:25233 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754956AbXJINDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 09:03:41 -0400
-Received: by wx-out-0506.google.com with SMTP id h31so1651768wxd
-        for <git@vger.kernel.org>; Tue, 09 Oct 2007 06:03:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=MrAZq468acg6ycQ7y5JgHxOSlhF4NMS1uXYJOgCkMSo=;
-        b=qbQHAAPofGCXjNJA9L9t5ZIkgE8L5BH06fyV3TfSTMhNhvINuocSpvY69ry9T1o0fjR/rZioFZn4i0idMt3AMWGFYRz7+5ZqyhdPNIWr6YW/GX+9THe5VOdQnjaAKJLl7SXJJomdrHE/PdOwluGYBCQ8VdoJZNcrX1wXgFBD144=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=S+woHyodJnuQBA2TiUxIADzNW3LAdCD4e3u1EC5J7GfvPlnzZLpwtlQXIcShu7uF33v0uduycllnRwzrq2kTbwpIgmjuWII2n4o8NRPXaDK6yiEAvDQuB7QsD0WU2Rc2x7ZXFIPfUKKjAAErMKuSPUV20b1KX2AZynL2AcYZGu4=
-Received: by 10.90.71.3 with SMTP id t3mr5535572aga.1191935020289;
-        Tue, 09 Oct 2007 06:03:40 -0700 (PDT)
-Received: by 10.90.101.15 with HTTP; Tue, 9 Oct 2007 06:03:40 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710091335580.4174@racer.site>
+	id S1753011AbXJINEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752978AbXJINEJ
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:04:09 -0400
+Received: from pan.madism.org ([88.191.52.104]:38518 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752939AbXJINEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:04:07 -0400
+Received: from madism.org (beacon-free1.intersec.com [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 817F424258
+	for <git@vger.kernel.org>; Tue,  9 Oct 2007 15:04:06 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 9249F543; Tue,  9 Oct 2007 15:04:00 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Git ML <git@vger.kernel.org>
 Content-Disposition: inline
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60403>
 
-On 10/9/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-> What does TortoiseCVS use?
+--PNTmBPCT7hxwcZjr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-They don't actually include it in the package, but they recommend
-WinMerge http://winmerge.org/, which is free (GPL).
+  Under popular demand^W^W^Wbecause Jonas asked for my parse_options
+work, I've put my git topic branches on a public repository on
+git://git.madism.org/git.git.
 
--- 
-Alan Hadsell
+  master/next are my known positions of master and next at the time I
+pushed last. ph/* are topic branches I work on, they should be either
+bsaed on master or next (hence are rebased until merged into git.git or
+dropped).
+
+  Right now, there is ph/strbuf with the 1+2 series that generated this
+heated discussion before. There is also ph/parseopt: a 10+ series
+featuring krh parse_options, with some rework on my end to support more
+features, and I migrate a dozen of builtins to use them (in this topic
+branch, `git rm -rf ...` works !)
+
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--PNTmBPCT7hxwcZjr
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHC3xAvGr7W6HudhwRAoPbAJ4nhpvMVLVPfWhaD70/WBgZFFyvOQCaAhOQ
+LmmwEaHaDdIIXricMCAc6K0=
+=fODC
+-----END PGP SIGNATURE-----
+
+--PNTmBPCT7hxwcZjr--
