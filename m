@@ -1,75 +1,64 @@
-From: "Gerald (Jerry) Carter" <jerry@samba.org>
-Subject: Re: Problem with git-cvsimport
-Date: Tue, 09 Oct 2007 08:21:13 -0500
-Message-ID: <470B8049.1090308@samba.org>
-References: <470B491F.9020306@jentro.com> <200710091447.50501.wielemak@science.uva.nl>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-config: print error message if the config file cannot
+ be read
+Date: Tue, 09 Oct 2007 15:30:46 +0200
+Message-ID: <470B8286.5060006@viscovery.net>
+References: <20071009125102.1305.qmail@054bd0fc8effa5.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Thomas Pasch <thomas.pasch@jentro.com>
-X-From: git-owner@vger.kernel.org Tue Oct 09 15:21:47 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 15:31:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfF1i-0001GM-Oi
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:21:35 +0200
+	id 1IfFAq-000375-QB
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 15:31:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731AbXJINVZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 09:21:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752722AbXJINVY
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:21:24 -0400
-Received: from mail.samba.org ([66.70.73.150]:49463 "EHLO lists.samba.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752094AbXJINVY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 09:21:24 -0400
-Received: from kayak.plainjoe.org (68-184-60-223.dhcp.mtgm.al.charter.com [68.184.60.223])
-	by lists.samba.org (Postfix) with ESMTP id 656F71638C1;
-	Tue,  9 Oct 2007 13:21:21 +0000 (GMT)
-Received: from [127.0.0.1] (phzzbt.plainjoe.org [192.168.1.1])
-	by kayak.plainjoe.org (Postfix) with ESMTP id 614E711703F;
-	Tue,  9 Oct 2007 08:21:22 -0500 (CDT)
-User-Agent: Thunderbird 1.5.0.13 (X11/20070824)
-In-Reply-To: <200710091447.50501.wielemak@science.uva.nl>
-X-Enigmail-Version: 0.94.2.0
+	id S1752864AbXJINav (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 09:30:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752841AbXJINau
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 09:30:50 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:40912 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752848AbXJINau (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 09:30:50 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IfFAW-0001Ai-Ne; Tue, 09 Oct 2007 15:30:41 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id F261F69F; Tue,  9 Oct 2007 15:30:46 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071009125102.1305.qmail@054bd0fc8effa5.315fe32.mid.smarden.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60412>
 
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA1
+Gerrit Pape schrieb:
+> @@ -235,8 +235,12 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+>  		argv++;
+>  	}
+>  
+> -	if (show_all)
+> -		return git_config(show_all_config);
+> +	if (show_all) {
+> +		if (git_config(show_all_config) == -1)
+> +			die("unable to read config file %s: %s",
+> +			    getenv(CONFIG_ENVIRONMENT), strerror(errno));
 
-Jan Wielemaker wrote:
+I don't think that this works well: If there are no config files at all, 
+then we don't want to see an error - just as if the config file were empty.
 
-> I've had some similar problem.  I've converted two big old 
-> repositories by first converting to SVN using:
-> 
-> 	cvs2svn -s myrepo-svn /path/to/cvsmodule
-> 	git-svnimport -i -u -C /path/to-git file://myrepo-svn
+Also, I don't think that errno is reliable at this point.
 
-I would actually plug using cvs2svn to convert directly to git.
-See this thread for Michael's original announcement.
+You probably want to see an error message *only* if you have supplied a file 
+name with --file.
 
-   http://marc.info/?l=git&m=118592701426175&w=2
-
-I'm in the process of drafting Samba's own git repos from
-the CVS and SVN history (http://gitweb.samba.org/).
-
-
-
-
-cheers, jerry
-=====================================================================
-Samba                                    ------- http://www.samba.org
-Centeris                         -----------  http://www.centeris.com
-"What man is a man who does not make the world better?"      --Balian
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHC4BJIR7qMdg1EfYRAlQ4AKDctlXFv0kcT51sA6P99qjVrPJ+MgCfWkCB
-wPSf6l06UIlz0HERasHbryg=
-=zSSf
------END PGP SIGNATURE-----
+-- Hannes
