@@ -1,57 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] mergetool: add support for ECMerge
-Date: Tue, 9 Oct 2007 13:37:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710091335580.4174@racer.site>
-References: <11918785613855-git-send-email-prohaska@zib.de>
- <11918785611059-git-send-email-prohaska@zib.de> <20071008214451.GB31713@thunk.org>
- <1C50C046-3D61-4D55-8D38-B2D563C1FF2A@zib.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Tue Oct 09 14:38:11 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [msysGit] Re: [PATCH] git-gui: offer a list of recent repositories on startup
+Date: Tue, 9 Oct 2007 14:42:05 +0200
+Message-ID: <4A4F8FC7-E0AB-4C07-B4C8-AFE2EBD9C3DD@zib.de>
+References: <11917925011987-git-send-email-prohaska@zib.de> <20071007233023.GE2137@spearce.org> <BE872860-40AD-4BBA-BDD5-0EC8CB9AC4B5@zib.de> <Pine.LNX.4.64.0710091240540.4174@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 14:41:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfELf-0001Rz-Tz
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 14:38:08 +0200
+	id 1IfEOE-0001w7-HD
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 14:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752543AbXJIMh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 08:37:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXJIMh6
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 08:37:58 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51338 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752217AbXJIMh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 08:37:57 -0400
-Received: (qmail invoked by alias); 09 Oct 2007 12:37:55 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 09 Oct 2007 14:37:55 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/3GyN/nmL3e+23I3lx38o54btWzc21gGBa7XNldK
-	2t7lz/vtFl9m4v
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1C50C046-3D61-4D55-8D38-B2D563C1FF2A@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1752094AbXJIMki (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 08:40:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752523AbXJIMki
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 08:40:38 -0400
+Received: from mailer.zib.de ([130.73.108.11]:46304 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751759AbXJIMkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 08:40:37 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l99CeWNr014434;
+	Tue, 9 Oct 2007 14:40:33 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l99CeWe8022615
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 9 Oct 2007 14:40:32 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0710091240540.4174@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60394>
 
-Hi,
 
-On Tue, 9 Oct 2007, Steffen Prohaska wrote:
+On Oct 9, 2007, at 1:43 PM, Johannes Schindelin wrote:
 
-> I work on the msysgit project and I'd like to have mergetool available 
-> before I advertise git on Windows. It makes merging so much easier ;)
+> On Mon, 8 Oct 2007, Steffen Prohaska wrote:
+>
+>> commit a483fdd562d6c44d68a998224e0bbb17933b624a
+>> Author: Steffen Prohaska <prohaska@zib.de>
+>> Date:   Mon Oct 8 08:25:47 2007 +0200
+>>
+>>    git-gui: offer a list of recent repositories on startup
+>
+> May I suggest not putting this list into ~/.gitconfig, but rather
+> ~/.gitguirc?  It is not really a user-specific git configuration...
 
-I would _hate_ to rely on a closed source program (in addition to Windows 
-itself) in msysGit.
+git-gui already stores other options as global variables gui.*.
+(see git-gui/lib/option.tcl). I just added gui.recentrepo. The
+list of recent repos should go to wherever git-gui stores its options.
 
-And it seems that you cannot even get ECMerge for free in general.
+Right now this is in ~/.gitconfig, if I understand correctly. Shawn?
 
-What does TortoiseCVS use?
-
-Ciao,
-Dscho
+	Steffen
