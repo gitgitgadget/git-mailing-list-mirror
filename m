@@ -1,89 +1,112 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Merge problems with git-mingw
-Date: Tue, 9 Oct 2007 18:33:37 +0200
-Message-ID: <BA71DD45-9226-4661-9C92-60EEEA8638D0@zib.de>
-References: <Pine.LNX.4.64.0710081203020.29715@ds9.cixit.se>  <8c5c35580710080500n78259210v1b087e1ef506c0ee@mail.gmail.com>  <Pine.LNX.4.64.0710081333350.29715@ds9.cixit.se>  <8c5c35580710080610y739fb51aga82964e212c7917f@mail.gmail.com>  <Pine.LNX.4.64.0710081555480.29570@ds9.cixit.se> <8c5c35580710081259j6d7e8587r546d4c35d42a67a6@mail.gmail.com> <Pine.LNX.4.64.0710090800220.26773@ds9.cixit.se> <470B2F7E.4080308@viscovery.net> <Pine.LNX.4.64.0710090953240.26773@ds9.cixit.se> <470B43D2.6090307@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Peter Karlsson <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 09 18:35:03 2007
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [take 2] Clean up "git log" format with DIFF_FORMAT_NO_OUTPUT
+Date: Tue, 9 Oct 2007 09:35:22 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710090932560.5039@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0710081337490.4964@woody.linux-foundation.org
+ > <alpine.LFD.0.999.0710081342530.4964@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0710081353290.4964@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 09 18:36:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfI2w-0007K0-WD
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 18:35:03 +0200
+	id 1IfI3v-0007ZW-HH
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 18:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753612AbXJIQeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 12:34:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751671AbXJIQeq
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 12:34:46 -0400
-Received: from mailer.zib.de ([130.73.108.11]:33089 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752535AbXJIQep (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 12:34:45 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l99GW4o2002602;
-	Tue, 9 Oct 2007 18:34:42 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l99GW4Dn012367
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 9 Oct 2007 18:32:04 +0200 (MEST)
-In-Reply-To: <470B43D2.6090307@viscovery.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753904AbXJIQfi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 12:35:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753872AbXJIQfh
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 12:35:37 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:39515 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753258AbXJIQfh (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 12:35:37 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l99GZMkq024664
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 9 Oct 2007 09:35:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l99GZMX1027332;
+	Tue, 9 Oct 2007 09:35:22 -0700
+In-Reply-To: <alpine.LFD.0.999.0710081353290.4964@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-3.234 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60422>
 
 
-On Oct 9, 2007, at 11:03 AM, Johannes Sixt wrote:
+Clean up "git log" format with DIFF_FORMAT_NO_OUTPUT
 
-> Peter Karlsson schrieb:
->> C:\Program Files\Git\bin>git var -l
->> usage: git-var [-l | <variable>]
->> C:\Program Files\Git\bin>git-var -l
->> fatal: Not a git repository
->> C:\Program Files\Git\bin>git --version
->> git version 1.5.3.mingw.1
->
-> For the time being, install this beast in a path without blanks.
->
-> This needs fixing, appearently. :(
+This fixes an unnecessary empty line that we add to the log message when
+we generate diffs, but don't actually end up printing any due to having
+DIFF_FORMAT_NO_OUTPUT set.
 
-I have the printf 'callstack' below from the v1.5.3.mingw.1 version  
-(9c792c5)
-Apparently spawnve, which is called in compat/mingw.c, corrupts argv.
+This can happen with pickaxe or with rename following. The reason is that
+we normally add an empty line between the commit and the diff, but we do
+that even for the case where we've then suppressed the actual printing of
+the diff.
 
-I have no idea how to continue debugging. Maybe some one else can  
-take over.
+This also updates a couple of tests that assumed the extraneous empty
+line would exist at the end of output.
 
-	Steffen
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This is a resend of the original patch, with just the changes to the tests 
+added to make it pass them all. Both of the tests actually got cleaner, I 
+think (ie one had the sed script blindly just delete the last line in 
+order to match it up with the known input, for example).
+
+			Linus
 
 
-$ git var GIT_COMMITTER_IDENT
+ log-tree.c                  |    3 ++-
+ t/t3900-i18n-commit.sh      |    2 +-
+ t/t4013/diff.log_-SF_master |    1 -
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-argv at git.c:429
-3
-C:\Program Files (x86)\Git\bin\git.exe
-var
-C:/Program Files (x86)/Git/bin/git-var
-GIT_COMMITTER_IDENT
-
-argv at compat/mingw.c:301
-C:/Program Files (x86)/Git/bin/git-var
-GIT_COMMITTER_IDENT
-(null)
-
-argv at var.c:54
-4
-C:/Program
-Files
-(x86)/Git/bin/git-var
-GIT_COMMITTER_IDENT
-usage: git-var [-l | <variable>]
+diff --git a/log-tree.c b/log-tree.c
+index 2319154..62edd34 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -304,7 +304,8 @@ int log_tree_diff_flush(struct rev_info *opt)
+ 		 * output for readability.
+ 		 */
+ 		show_log(opt, opt->diffopt.msg_sep);
+-		if (opt->verbose_header &&
++		if ((opt->diffopt.output_format & ~DIFF_FORMAT_NO_OUTPUT) &&
++		    opt->verbose_header &&
+ 		    opt->commit_format != CMIT_FMT_ONELINE) {
+ 			int pch = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_PATCH;
+ 			if ((pch & opt->diffopt.output_format) == pch)
+diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
+index fcbabe8..94b1c24 100755
+--- a/t/t3900-i18n-commit.sh
++++ b/t/t3900-i18n-commit.sh
+@@ -8,7 +8,7 @@ test_description='commit and log output encodings'
+ . ./test-lib.sh
+ 
+ compare_with () {
+-	git show -s $1 | sed -e '1,/^$/d' -e 's/^    //' -e '$d' >current &&
++	git show -s $1 | sed -e '1,/^$/d' -e 's/^    //' >current &&
+ 	git diff current "$2"
+ }
+ 
+diff --git a/t/t4013/diff.log_-SF_master b/t/t4013/diff.log_-SF_master
+index 6162ed2..c1599f2 100644
+--- a/t/t4013/diff.log_-SF_master
++++ b/t/t4013/diff.log_-SF_master
+@@ -4,5 +4,4 @@ Author: A U Thor <author@example.com>
+ Date:   Mon Jun 26 00:02:00 2006 +0000
+ 
+     Third
+-
+ $
