@@ -1,73 +1,74 @@
-From: Thomas Pasch <thomas.pasch@jentro.com>
-Subject: Problem with git-cvsimport
-Date: Tue, 09 Oct 2007 11:25:51 +0200
-Organization: Jentro Technologies GmbH
-Message-ID: <470B491F.9020306@jentro.com>
+From: =?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
+Subject: [PATCH] Fixed crash in fetching remote tags when there is not tags.
+Date: Tue, 09 Oct 2007 11:51:08 +0300
+Message-ID: <1191919868-4963-2-git-send-email-v@pp.inet.fi>
+References: <1191919868-4963-1-git-send-email-v@pp.inet.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?utf-8?q?V=C3=A4in=C3=B6=20J=C3=A4rvel=C3=A4?= <v@pp.inet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 09 11:26:07 2007
+X-From: git-owner@vger.kernel.org Tue Oct 09 11:31:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfBLq-0007zl-GJ
-	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 11:26:06 +0200
+	id 1IfBQU-0000TK-1m
+	for gcvg-git-2@gmane.org; Tue, 09 Oct 2007 11:30:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752217AbXJIJZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 05:25:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbXJIJZ4
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 05:25:56 -0400
-Received: from mail2.infra.net ([212.89.96.7]:4218 "EHLO gamma.m.infra.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751589AbXJIJZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 05:25:55 -0400
-Received: from epsilon.m.infra.net (epsilon.m.infra.net [212.89.96.8])
-	by gamma.m.infra.net (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l999Pq8F026352
-	for <git@vger.kernel.org>; Tue, 9 Oct 2007 11:25:52 +0200
-Received: from [192.1.1.184] (u19-17.dsl.vianetworks.de [194.231.42.17])
-	(authenticated bits=0)
-	by epsilon.m.infra.net (8.13.4/8.13.4/Debian-3) with ESMTP id l999Ppt3022618
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 9 Oct 2007 11:25:52 +0200
-User-Agent: Thunderbird 2.0.0.6 (X11/20070801)
-X-Enigmail-Version: 0.95.3
+	id S1754292AbXJIJaZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Oct 2007 05:30:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbXJIJaY
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 05:30:24 -0400
+Received: from astana.suomi.net ([82.128.152.18]:54367 "EHLO astana.suomi.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754126AbXJIJaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Oct 2007 05:30:21 -0400
+X-Greylist: delayed 1801 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Oct 2007 05:30:21 EDT
+Received: from tiku.suomi.net ([82.128.154.67])
+ by astana.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JPM005KPZ9ANU40@astana.suomi.net> for
+ git@vger.kernel.org; Tue, 09 Oct 2007 11:51:10 +0300 (EEST)
+Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-1.04 (built May  9 2007; 32bit))
+ with ESMTP id <0JPM009TUZBERGB0@mailstore.suomi.net> for git@vger.kernel.org;
+ Tue, 09 Oct 2007 11:52:26 +0300 (EEST)
+Received: from localhost.localdomain
+ (addr-213-139-166-27.baananet.fi [213.139.166.27])
+	by spam2.suomi.net (Postfix) with ESMTP id A45CC19CB0F; Tue,
+ 09 Oct 2007 11:51:37 +0300 (EEST)
+In-reply-to: <1191919868-4963-1-git-send-email-v@pp.inet.fi>
+X-Mailer: git-send-email 1.5.3.4.1156.g5407-dirty
+X-OPOY-MailScanner-Information: Please contact the OPOY for more information
+X-OPOY-MailScanner: Found to be clean
+X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.768,
+ required 5, autolearn=not spam, AWL 0.10,	BAYES_00 -1.00,
+ FORGED_RCVD_HELO 0.14)
+X-OPOY-MailScanner-From: v@pp.inet.fi
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60374>
 
-Hello,
+Signed-off-by: V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4 <v@pp.inet.fi>
+---
+ remote.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-using git-cvsimport (1.5.3.4), it dies with
-
-Update
-guidance-common/src/java/com/jentro/manager/guidance/common/servlet/IconServlet.java:
-2104 bytes
-Tree ID 01cb84cbee2e70a712459be6601b993603eed5bd
-Parent ID dcd8dc76f4638d1994165070c9813202992d546a
-Committed patch 3775 (bmw +0000 2004-10-14 11:10:43)
-Commit ID 53c68066f71651b057884e1101cda3967070724d
-Fetching
-guidance-common/src/java/com/jentro/manager/guidance/common/serverapi/GuidanceException.java
-  v 1.14.4.2
-Update
-guidance-common/src/java/com/jentro/manager/guidance/common/serverapi/GuidanceException.java:
-3718 bytes
-Tree ID 886268190ac2cb28b5f1e6cdb309054bcb8fa38e
-Parent ID 53c68066f71651b057884e1101cda3967070724d
-Merge parent branch: master
-fatal: Not a valid object name master
-Use of uninitialized value in chomp at /usr/bin/git-cvsimport line 766.
-Use of uninitialized value in pattern match (m//) at
-/usr/bin/git-cvsimport line 527.
-Use of uninitialized value in concatenation (.) or string at
-/usr/bin/git-cvsimport line 767.
-Cannot get commit id ():
-
-What can I do to avoid this problem?
-
-Cheers,
-
-Thomas
+diff --git a/remote.c b/remote.c
+index e7d735b..5e92378 100644
+--- a/remote.c
++++ b/remote.c
+@@ -537,6 +537,8 @@ static int count_refspec_match(const char *pattern,
+=20
+ static void tail_link_ref(struct ref *ref, struct ref ***tail)
+ {
++	if (!ref) return;
++=09
+ 	**tail =3D ref;
+ 	while (ref->next)
+ 		ref =3D ref->next;
+--=20
+1.5.3.4.1156.g5407-dirty
