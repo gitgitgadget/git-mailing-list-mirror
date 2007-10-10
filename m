@@ -1,58 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [FEATURE REQUEST] git clone, just clone selected branches?
-Date: Wed, 10 Oct 2007 12:38:04 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710101236350.20690@woody.linux-foundation.org>
-References: <011401c80b6f$1a11d1f0$04ac10ac@Jocke>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Lots of loose objects
+Date: Wed, 10 Oct 2007 20:37:48 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710102035420.4174@racer.site>
+References: <87myuqwzp3.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Wed Oct 10 21:38:21 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-501862940-1192045068=:4174"
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Wed Oct 10 21:38:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfhNs-0001qu-F2
+	id 1IfhNr-0001qu-N6
 	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 21:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755202AbXJJTiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 15:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbXJJTiN
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 15:38:13 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:53933 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755186AbXJJTiM (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2007 15:38:12 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9AJc5TR016310
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 10 Oct 2007 12:38:06 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9AJc4dX022413;
-	Wed, 10 Oct 2007 12:38:05 -0700
-In-Reply-To: <011401c80b6f$1a11d1f0$04ac10ac@Jocke>
-X-Spam-Status: No, hits=-3.229 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754802AbXJJTiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 15:38:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbXJJTiI
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 15:38:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38749 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754788AbXJJTiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 15:38:07 -0400
+Received: (qmail invoked by alias); 10 Oct 2007 19:38:05 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp037) with SMTP; 10 Oct 2007 21:38:05 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19pxt8tYDppnsMtrmcN5DzyzLnbdcjcX/+3DprjT+
+	68JCiV3pXW+ZCG
+X-X-Sender: gene099@racer.site
+In-Reply-To: <87myuqwzp3.fsf@lysator.liu.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60534>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
+--8323584-501862940-1192045068=:4174
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-On Wed, 10 Oct 2007, Joakim Tjernlund wrote:
+Hi,
+
+On Wed, 10 Oct 2007, David Kågedal wrote:
+
+> I hade a tree that made git-gui complain that I had too many loose
+> objects every time I started it (3072 to be precise).  Letting git-gui
+> compress it for me didn't help.  Neither did git-gc, even with the
+> --aggressive flag.
 > 
-> I know I can use git remote to do this, but it is a bit clumsy 
-> when starting a new repo.
+> I noticed that I had a lot of loose files in .git/objects, and
+> suddenly I remembered that there was a command called "git
+> prune". Finally I was able to get rid of those loose objects.
 
-How about just
+Probably git-gui should check again, after the compacting stage, how many 
+loose objects there are, and suggest to run git prune after a sufficiently 
+terrifying warning message ("Should I prune unreferenced objects?  (DON'T 
+do this if you share objects between repositories!) Yes / No").
 
-	git init
-	.. set up remote tracking info in .git/config ..
-	git fetch remote
+Ciao,
+Dscho
 
-which should do what you want.
-
-		Linus
+--8323584-501862940-1192045068=:4174--
