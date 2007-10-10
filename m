@@ -1,87 +1,97 @@
-From: "Philippe Ombredanne" <philippe@easyeclipse.org>
-Subject: hello git world!
-Date: Wed, 10 Oct 2007 01:01:41 -0700
-Message-ID: <01e901c80b13$d3e937a0$6400a8c0@computer>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 10:04:29 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [msysGit] Re: [PATCH] git-gui: offer a list of recent repositories on startup
+Date: Wed, 10 Oct 2007 10:13:27 +0200
+Message-ID: <B1EFFED4-1DF7-4A0A-93E2-F21812E7AF6B@zib.de>
+References: <11917925011987-git-send-email-prohaska@zib.de> <20071007233023.GE2137@spearce.org> <BE872860-40AD-4BBA-BDD5-0EC8CB9AC4B5@zib.de> <20071010073053.GQ2137@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:14:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfWYN-0005HL-0n
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:04:27 +0200
+	id 1IfWi9-0006rK-Jb
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:14:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752505AbXJJIES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 04:04:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXJJIES
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:04:18 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:43128 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752414AbXJJIER convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2007 04:04:17 -0400
-Received: from randymail-a9.g.dreamhost.com (balanced.mail.policyd.dreamhost.com [208.97.132.119])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id BEDCD2779A7
-	for <git@vger.kernel.org>; Wed, 10 Oct 2007 01:04:04 -0700 (PDT)
-Received: from computer (c-71-204-153-28.hsd1.ca.comcast.net [71.204.153.28])
-	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id EA94FEF22C
-	for <git@vger.kernel.org>; Wed, 10 Oct 2007 01:01:47 -0700 (PDT)
-X-Priority: 3 (Normal)
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook, Build 10.0.6626
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1807
-Importance: Normal
+	id S1752461AbXJJIMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 04:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752180AbXJJIMA
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:12:00 -0400
+Received: from mailer.zib.de ([130.73.108.11]:40526 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752123AbXJJIL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 04:11:59 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9A8BsoQ018574;
+	Wed, 10 Oct 2007 10:11:54 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9A8Bswp022075
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 10 Oct 2007 10:11:54 +0200 (MEST)
+In-Reply-To: <20071010073053.GQ2137@spearce.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60479>
 
-Hello:
-I am a committer on Eclipse and several Eclipse-related projects, as
-well as the admin (and a mentor too) for the Eclipse summer of code
-program.
-My day job is about the same: Eclipse and tools for paying customers :-)
-I met Shawn Pearce and  Johannes Schindelin this week-end at Google for
-the Summer of Code mentor summit.
-Incidentally a week before I had tried git for the 1st time, out of need
-trying to build an eclipse plugin available only through git
-(http://robrohan.com/projects/afae/ )
-After a few minutes I was checking out and building more git stuffs
-including egit of course.
+Shawn,
 
-I basically fell in love with Git, just like that. I am frightened --
-like when you fall in love-- about the power and implications of a
-distributed version control system :-P
+On Oct 10, 2007, at 9:30 AM, Shawn O. Pearce wrote:
 
-Being an Eclipse and tools guy, I'll try to help on the egit and java
-git side (for non eclipse based java tools) . I have played a little
-experience with team support in Eclipse, and high expectations for egit
-from using things such as the CVS, Subclipse and Subversive plugins for
-Eclipse.
+>
+> Steffen Prohaska <prohaska@zib.de> wrote:
+>> Shawn,
+>> I attached two patches. They should eventually be both squashed into
+>> one.
+>
+> Thanks.  I'm applying the patch below over both of yours, and
+> then squashing them all together and keeping you as the author.
+>
+> I did not like how the listbox looked (or worked!) on Mac OS X.
+> Clicking on the item was at first a very non-obvious action, and
+> then when I did do it I was very shocked to see the repository open
+> immediately.  My brain knew the action was wired to the selection
+> event (I obviously read the two patches before applying them),
+> but it didn't expect that behavior.  Clearly the wrong UI model.
+>
+> The patch below uses a text widget instead and renders each of
+> the repositories as a blue underlined link.  Users will generally
+> assume that clicking on such links will take them immediately to
+> that repository (much as it would take them to another webpage if
+> this was a web browser)
 
-One of the ideas Shawn and I floated was that we could work towards
-making egit an official Eclipse project. 
-Being somewhat plugged at Eclipse, I can help broker that, if it makes
-sense for the git community.
-I look forward to the discussion there.
-
-I think this would go a long way to attract more committers on egit, and
-make git a very accessible tool to millions of Eclipse users.
-I will also make egit installers available through the easyeclipse
-distro I maintain.
-
-Git rulez!
--- 
-Cheers
-Philippe
+This is similar to what I had in mind, but was lacking tk knowledge
+to implement it.
 
 
-http://easyeclipse.org - http://phpeclipse.net - http://eclipse.org/atf
-- 
-http://eclipse.org/vep - http://labs.jboss.org/drools/ -
-http://developer.mozilla.org/en/docs/XULRunner
-philippe ombredanne | 1 650 799 0949 | pombredanne at nexb.com 
-nexB - Open by Design (tm) - http://www.nexb.com 
+> The "Open Recent Repositories" is not even shown in the UI if there
+> aren't any to offer to the user.  Showing them this area just looks
+> silly if they haven't opened or cloned anything yet.
+>
+> We now add freshly created or cloned repositories to the list of
+> recently opened repositories.  These are just as fair game for
+> being recently accessed as any others.  Perhaps even more so as
+> users may wonder where they cloned that repository to the last time
+> they started git-gui.
+>
+> We always store the absolute path of a repository into the config.
+> This avoids the mess of opening a repository twice using say a
+> relative path entered into the text entry field and then opening
+> it later via a file browser, only to find out you now have the same
+> repository in the recent list twice.
+>
+> I fixed the --unset-all bug and also avoided the --unset-all/--add
+> loop you were using.  We convert the value into a "safe" expression
+> and then try to match on it.
+
+That all sound very reasonable to me.
+
+I haven't applied your patch but only read through it. Looks good to me.
+
+Thanks,
+Steffen
