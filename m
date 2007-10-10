@@ -1,147 +1,87 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH v2] git-gui: add mingw specific startup wrapper
-Date: Wed, 10 Oct 2007 08:58:59 +0200
-Message-ID: <11919995392881-git-send-email-prohaska@zib.de>
-References: <8F81028C-9924-4AA2-A58D-961AD10F5315@zib.de>
- <11919995392158-git-send-email-prohaska@zib.de>
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-	Steffen Prohaska <prohaska@zib.de>
-To: spearce@spearce.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 08:59:29 2007
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] Fix invocation of external git commands with arguments with
+ spaces.
+Date: Wed, 10 Oct 2007 09:00:12 +0200
+Message-ID: <470C787C.6090900@viscovery.net>
+References: <470BB44B.3030500@viscovery.net> <11919659771056-git-send-email-prohaska@zib.de> <470C6E58.3080208@viscovery.net>
+Reply-To: Steffen Prohaska <prohaska@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Wed Oct 10 09:00:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfVXR-0002OL-Je
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 08:59:26 +0200
+	id 1IfVYP-0002Uy-Bz
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 09:00:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbXJJG7I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 02:59:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752461AbXJJG7H
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 02:59:07 -0400
-Received: from mailer.zib.de ([130.73.108.11]:34343 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752368AbXJJG7E (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 02:59:04 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9A6wxs1012435;
-	Wed, 10 Oct 2007 08:58:59 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9A6wxWp006293;
-	Wed, 10 Oct 2007 08:58:59 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11919995392158-git-send-email-prohaska@zib.de>
+	id S1752480AbXJJHAQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 03:00:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752413AbXJJHAQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 03:00:16 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:46005 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752089AbXJJHAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 03:00:14 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IfVY6-0003hN-17; Wed, 10 Oct 2007 09:00:06 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D06A36B7; Wed, 10 Oct 2007 09:00:12 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <470C6E58.3080208@viscovery.net>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60471>
 
-The wrapper adds the directory it is installed in to PATH.
-This is required for the git commands implemented in shell.
-git-gui fails to launch them if PATH is not modified.
+If an external git command (not a shell script) was invoked with arguments
+that contain spaces, these arguments would be split into separate
+arguments. They must be quoted. This also affected installations where
+$prefix contained a space, as in "C:\Program Files\GIT". Both errors can
+be triggered by invoking
 
-The wrapper script also accepts an optional command line
-switch '--working-dir <dir>' and changes to <dir> before
-launching the actual git-gui. This is required to implement
-the "Git Gui Here" Explorer shell extension.
+     git hash-object "a b"
 
-As a last step the original git-gui script is launched,
-which is expected to be located in the same directory
-under the name git-gui.tcl.
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+where "a b" is an existing file.
 ---
- git-gui/Makefile           |   20 ++++++++++++++++++++
- git-gui/windows/git-gui.sh |   16 ++++++++++++++++
- 2 files changed, 36 insertions(+), 0 deletions(-)
- create mode 100644 git-gui/windows/git-gui.sh
+Johannes Sixt schrieb:
+> BTW, I think the fix is incomplete anyway: We quote only argv[0], but 
+> actually all of argv should be quoted. Will test.
 
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index c805450..2ad8846 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -128,6 +128,7 @@ ifeq ($(uname_S),Darwin)
- endif
- ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_MSGFMT=1
-+	GITGUI_WINDOWS_WRAPPER := YesPlease
- endif
- 
- ifdef GITGUI_MACOSXAPP
-@@ -168,6 +169,13 @@ Git\ Gui.app: GIT-VERSION-FILE GIT-GUI-VARS \
- 	mv '$@'+ '$@'
- endif
- 
-+ifdef GITGUI_WINDOWS_WRAPPER
-+GITGUI_MAIN := git-gui.tcl
-+
-+git-gui: windows/git-gui.sh
-+	cp $< $@
-+endif
-+
- $(GITGUI_MAIN): git-gui.sh GIT-VERSION-FILE GIT-GUI-VARS
- 	$(QUIET_GEN)rm -f $@ $@+ && \
- 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-@@ -233,12 +241,18 @@ GIT-GUI-VARS: .FORCE-GIT-GUI-VARS
- ifdef GITGUI_MACOSXAPP
- all:: git-gui Git\ Gui.app
- endif
-+ifdef GITGUI_WINDOWS_WRAPPER
-+all:: git-gui
-+endif
- all:: $(GITGUI_MAIN) lib/tclIndex $(ALL_MSGFILES)
- 
- install: all
- 	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(gitexecdir_SQ)' $(INSTALL_D1)
- 	$(QUIET)$(INSTALL_X0)git-gui $(INSTALL_X1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
- 	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(INSTALL_L0)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L1)'$(DESTDIR_SQ)$(gitexecdir_SQ)/git-gui' $(INSTALL_L2)'$(DESTDIR_SQ)$(gitexecdir_SQ)/$p' $(INSTALL_L3) &&) true
-+ifdef GITGUI_WINDOWS_WRAPPER
-+	$(QUIET)$(INSTALL_R0)git-gui.tcl $(INSTALL_R1) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
-+endif
- 	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(libdir_SQ)' $(INSTALL_D1)
- 	$(QUIET)$(INSTALL_R0)lib/tclIndex $(INSTALL_R1) '$(DESTDIR_SQ)$(libdir_SQ)'
- 	$(QUIET)$(INSTALL_R0)lib/git-gui.ico $(INSTALL_R1) '$(DESTDIR_SQ)$(libdir_SQ)'
-@@ -254,6 +268,9 @@ uninstall:
- 	$(QUIET)$(CLEAN_DST) '$(DESTDIR_SQ)$(gitexecdir_SQ)'
- 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui $(REMOVE_F1)
- 	$(QUIET)$(foreach p,$(GITGUI_BUILT_INS), $(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/$p $(REMOVE_F1) &&) true
-+ifdef GITGUI_WINDOWS_WRAPPER
-+	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(gitexecdir_SQ)'/git-gui.tcl $(REMOVE_F1)
-+endif
- 	$(QUIET)$(CLEAN_DST) '$(DESTDIR_SQ)$(libdir_SQ)'
- 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(libdir_SQ)'/tclIndex $(REMOVE_F1)
- 	$(QUIET)$(REMOVE_F0)'$(DESTDIR_SQ)$(libdir_SQ)'/git-gui.ico $(REMOVE_F1)
-@@ -279,6 +296,9 @@ clean::
- ifdef GITGUI_MACOSXAPP
- 	$(RM_RF) 'Git Gui.app'* git-gui
- endif
-+ifdef GITGUI_WINDOWS_WRAPPER
-+	$(RM_RF) git-gui
-+endif
- 
- .PHONY: all install uninstall dist-version clean
- .PHONY: .FORCE-GIT-VERSION-FILE
-diff --git a/git-gui/windows/git-gui.sh b/git-gui/windows/git-gui.sh
-new file mode 100644
-index 0000000..98f32c0
---- /dev/null
-+++ b/git-gui/windows/git-gui.sh
-@@ -0,0 +1,16 @@
-+#!/bin/sh
-+# Tcl ignores the next line -*- tcl -*- \
-+exec wish "$0" -- "$@"
-+
-+if { $argc >=2 && [lindex $argv 0] == "--working-dir" } {
-+	cd [lindex $argv 1]
-+	set argv [lrange $argv 2 end]
-+	incr argc -2
-+}
-+
-+set gitguidir [file dirname [info script]]
-+regsub -all ";" $gitguidir "\\;" gitguidir
-+set env(PATH) "$gitguidir;$env(PATH)"
-+unset gitguidir
-+
-+source [file join [file dirname [info script]] git-gui.tcl]
+Here is the proper fix.
+
+Yes, this leaks memory on the error path. We can clean that up later...
+
+-- Hannes
+
+  compat/mingw.c |    7 ++++++-
+  1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 8bb0dba..2554f19 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -405,7 +405,12 @@ void mingw_execve()
+  {
+  	/* check if git_command is a shell script */
+  	if (!try_shell_exec(cmd, argv, env)) {
+-		int ret = spawnve(_P_WAIT, cmd, argv, env);
++		const char **qargv;
++		int n;
++		for (n = 0; argv[n];) n++;
++		qargv = xmalloc((n+1)*sizeof(char*));
++		quote_argv(qargv, argv);
++		int ret = spawnve(_P_WAIT, cmd, qargv, env);
+  		if (ret != -1)
+  			exit(ret);
+  	}
 -- 
-1.5.3.mingw.1.105.gf0c04
+1.5.3.717.g01fc-dirty
