@@ -1,77 +1,124 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Two minor glitches in git-gui
-Date: Wed, 10 Oct 2007 01:50:24 -0400
-Message-ID: <20071010055024.GN2137@spearce.org>
-References: <200710091121.59422.barra_cuda@katamail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 07:50:42 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] git-gui: add mingw specific startup wrapper
+Date: Wed, 10 Oct 2007 07:56:47 +0200
+Message-ID: <11919958073204-git-send-email-prohaska@zib.de>
+References: <20071010053728.GM2137@spearce.org>
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+	Steffen Prohaska <prohaska@zib.de>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Oct 10 07:57:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfUSv-0000uI-Ad
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 07:50:41 +0200
+	id 1IfUZ2-0001sS-HD
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 07:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbXJJFu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 01:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751820AbXJJFu3
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 01:50:29 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:34588 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751621AbXJJFu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 01:50:28 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IfUSg-0004PW-8t; Wed, 10 Oct 2007 01:50:26 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E9ED720FBAE; Wed, 10 Oct 2007 01:50:24 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200710091121.59422.barra_cuda@katamail.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751173AbXJJF4v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 01:56:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbXJJF4v
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 01:56:51 -0400
+Received: from mailer.zib.de ([130.73.108.11]:62424 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751030AbXJJF4u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 01:56:50 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9A5uloY007932;
+	Wed, 10 Oct 2007 07:56:47 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9A5uli0023602;
+	Wed, 10 Oct 2007 07:56:47 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <20071010053728.GM2137@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60464>
 
-Michele Ballabio <barra_cuda@katamail.com> wrote:
-> On Linux:
->   1. run git-gui
->   2. open edit->options dialog box
->   3. click on "select font". It will open the "choose font" box.
->   4. click on "options" box to give it focus.
->   5. return to the "choose font" box and try to choose a font.
-> 
-> At this point, the "choose font" box won't react to my actions.
-> 
-> The workaround is to iconify the "select font" dialog box and
-> then restore it. Can someone reproduce this?
-> 
-> I think I've seen a similar behaviour before, on git-gui's
-> about window, but I'm not sure (it doesn't trigger anymore).
-> 
-> The other problem is that it is possible to open the same
-> "choose font" box many times (one is enough :).
+The wrapper adds the directory it is installed in to PATH.
+This is required for the git commands implemented in shell.
+git-gui fails to launch them if PATH is not modified.
 
-I've actually seen this once before on X11.  I thought that I had
-it fixed.  Apparently not.  Its got to do with the fact that I have
-a grab on the options dialog, and then I set another one on the
-font dialog.  Switching focus into the options dialog causes all
-window to no longer go to the font dialog, but the option dialog
-is the one with the focus.
+The wrapper script also accepts an optional command line
+switch '--working-dir <dir>' and changes to <dir> before
+launching the actual git-gui. This is required to implement
+the "Git Gui Here" Explorer shell extension.
 
-I'll try to poke at it more and see if I can figure it out.  But
-I already thought I had.  :-\
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ git-gui/Makefile           |   14 ++++++++++++++
+ git-gui/windows/git-gui.sh |   16 ++++++++++++++++
+ 2 files changed, 30 insertions(+), 0 deletions(-)
+ create mode 100644 git-gui/windows/git-gui.sh
 
-Thanks for the bug report.
 
+diff --git a/git-gui/Makefile b/git-gui/Makefile
+index c805450..8cf04d0 100644
+--- a/git-gui/Makefile
++++ b/git-gui/Makefile
+@@ -128,6 +128,7 @@ ifeq ($(uname_S),Darwin)
+ endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_MSGFMT=1
++	GITGUI_WINDOWS_WRAPPER := YesPlease
+ endif
+ 
+ ifdef GITGUI_MACOSXAPP
+@@ -168,6 +169,13 @@ Git\ Gui.app: GIT-VERSION-FILE GIT-GUI-VARS \
+ 	mv '$@'+ '$@'
+ endif
+ 
++ifdef GITGUI_WINDOWS_WRAPPER
++GITGUI_MAIN := git-gui.tcl
++
++git-gui: windows/git-gui.sh
++	cp $< $@
++endif
++
+ $(GITGUI_MAIN): git-gui.sh GIT-VERSION-FILE GIT-GUI-VARS
+ 	$(QUIET_GEN)rm -f $@ $@+ && \
+ 	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+@@ -233,6 +241,9 @@ GIT-GUI-VARS: .FORCE-GIT-GUI-VARS
+ ifdef GITGUI_MACOSXAPP
+ all:: git-gui Git\ Gui.app
+ endif
++ifdef GITGUI_WINDOWS_WRAPPER
++all:: git-gui
++endif
+ all:: $(GITGUI_MAIN) lib/tclIndex $(ALL_MSGFILES)
+ 
+ install: all
+@@ -246,6 +257,9 @@ ifdef GITGUI_MACOSXAPP
+ 	$(QUIET)$(INSTALL_A0)'Git Gui.app' $(INSTALL_A1) '$(DESTDIR_SQ)$(libdir_SQ)'
+ 	$(QUIET)$(INSTALL_X0)git-gui.tcl $(INSTALL_X1) '$(DESTDIR_SQ)$(libdir_SQ)'
+ endif
++ifdef GITGUI_WINDOWS_WRAPPER
++	$(QUIET)$(INSTALL_X0)git-gui.tcl $(INSTALL_X1) '$(DESTDIR_SQ)$(libdir_SQ)'
++endif
+ 	$(QUIET)$(foreach p,$(ALL_LIBFILES), $(INSTALL_R0)$p $(INSTALL_R1) '$(DESTDIR_SQ)$(libdir_SQ)' &&) true
+ 	$(QUIET)$(INSTALL_D0)'$(DESTDIR_SQ)$(msgsdir_SQ)' $(INSTALL_D1)
+ 	$(QUIET)$(foreach p,$(ALL_MSGFILES), $(INSTALL_R0)$p $(INSTALL_R1) '$(DESTDIR_SQ)$(msgsdir_SQ)' &&) true
+diff --git a/git-gui/windows/git-gui.sh b/git-gui/windows/git-gui.sh
+new file mode 100644
+index 0000000..98f32c0
+--- /dev/null
++++ b/git-gui/windows/git-gui.sh
+@@ -0,0 +1,16 @@
++#!/bin/sh
++# Tcl ignores the next line -*- tcl -*- \
++exec wish "$0" -- "$@"
++
++if { $argc >=2 && [lindex $argv 0] == "--working-dir" } {
++	cd [lindex $argv 1]
++	set argv [lrange $argv 2 end]
++	incr argc -2
++}
++
++set gitguidir [file dirname [info script]]
++regsub -all ";" $gitguidir "\\;" gitguidir
++set env(PATH) "$gitguidir;$env(PATH)"
++unset gitguidir
++
++source [file join [file dirname [info script]] git-gui.tcl]
 -- 
-Shawn.
+1.5.3.mingw.1.105.gf0c04
