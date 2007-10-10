@@ -1,83 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/4] git-gui i18n: Add more words to glossary.
-Date: Wed, 10 Oct 2007 02:03:28 -0400
-Message-ID: <20071010060328.GO2137@spearce.org>
-References: <200710052239.02492.stimming@tuhh.de> <Pine.LNX.4.64.0710080029430.4174@racer.site> <20071007233937.GG2137@spearce.org> <200710082143.13750.stimming@tuhh.de>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] exec_git_cmd: fix executing commands if path contains
+ spaces
+Date: Wed, 10 Oct 2007 08:16:56 +0200
+Message-ID: <470C6E58.3080208@viscovery.net>
+References: <470BB44B.3030500@viscovery.net> <11919659771056-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 08:03:45 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 10 08:17:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfUfY-0002yT-K6
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 08:03:45 +0200
+	id 1IfUsr-0004tI-Mc
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 08:17:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751714AbXJJGDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 02:03:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751232AbXJJGDe
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 02:03:34 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35071 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbXJJGDd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 02:03:33 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IfUfJ-00050z-Gn; Wed, 10 Oct 2007 02:03:29 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 56FBC20FBAE; Wed, 10 Oct 2007 02:03:28 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <200710082143.13750.stimming@tuhh.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752318AbXJJGQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 02:16:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752313AbXJJGQ7
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 02:16:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:17745 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752274AbXJJGQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 02:16:58 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IfUsD-0004fx-HP; Wed, 10 Oct 2007 08:16:49 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 4EB1B6B7; Wed, 10 Oct 2007 08:16:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <11919659771056-git-send-email-prohaska@zib.de>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60466>
 
-Christian Stimming <stimming@tuhh.de> wrote:
-> All pushed to git-gui-i18n.git mob branch now.  I hope you can easily merge 
-> them over.
+Steffen Prohaska schrieb:
+> Ok, this is what I created from the quick-fix. It works for
+> me in msysgit. 
+> 
+> Should the patch be polished that it can be applied to git.git
+> or will we only apply it to 4msysgit?
 
-I basically had to cherry-pick your 4 patches out of the mob branch
-from the i18n fork.  The issue is the mob branch is based on an old
-lineage that Dscho hand picked patches out of and squashed when he
-created the initial i18n series for me to merge.
+I'll apply it to mingw.git, and as long as you don't rebase or pull from 
+there, you'd also have to apply it to 4msysgit.
 
-The i18n fork as it currently stands is pretty far away from my
-own tree; it probably should be reset to my tree in the near future.
- 
-> Maybe po/git-gui.pot should be updated by you on git-gui.git and (by Dscho?) 
-> on git-gui-i18n.git as well. 
+git.git is a no-go at this time - compat/mingw.c doesn't exist, yet.
 
-Yea, I'll run it before I push out my newest master tonight.
- 
-> http://wiki.gnucash.org/wiki/index.php?title=String_Freeze&oldid=2022 is an 
-> example on how the gnucash project tried to communicate to its translators 
-> how the special "string freeze" period (i.e. a few weeks before the release) 
-> will be handled in order to get a finalized translation for the actual 
-> release. I don't know how formal you want to put this, but at least *some* 
-> period of string freeze would be very good. As for the German translation, 
-> I'd prefer any period length greater than 10 days in order to verify a 
-> complete translation...
+> If it should be polished, what would be the right way?
+> ifdef in exec_cmd.c?
 
-I agree on the need for the string freeze period and will plan
-to include a 14+ day window near the end of the 0.9.0 release to
-update the translations.  I want to get the major functionality
-written and then we can work on debugging/testing/translation.
+This area needs more polishing, and it will be among the *last* mingw 
+patches that flow upstream.
 
-Schedule wise I'm probably looking at middle of next month or the
-month after (so Nov 15th-ish or Dec 15th-ish) for the 0.9.0 string
-freeze period starting.  That means there is a good chance we won't
-be seeing 0.9.0 final in 2007; probably it will be in early 2008.
+BTW, I think the fix is incomplete anyway: We quote only argv[0], but 
+actually all of argv should be quoted. Will test.
 
--- 
-Shawn.
+-- Hannes
