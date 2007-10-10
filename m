@@ -1,135 +1,126 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: inexplicable failure to merge recursively across cherry-picks
-Date: Wed, 10 Oct 2007 02:55:45 +0100
-Message-ID: <20071010015545.GA17336@lapse.madduck.net>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Problem with git-cvsimport
+Date: Wed, 10 Oct 2007 04:34:34 +0200
+Message-ID: <470C3A3A.2070809@alum.mit.edu>
+References: <470B491F.9020306@jentro.com> <200710091447.50501.wielemak@science.uva.nl> <470B8049.1090308@samba.org> <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="fdj2RfSjLxBAspz7"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 03:56:05 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfQns-0003Dn-SU
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 03:56:05 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753922AbXJJBzy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 21:55:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753423AbXJJBzy
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 21:55:54 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:46104 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422AbXJJBzx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 21:55:53 -0400
-Received: from lapse.madduck.net (absinthe.ifi.unizh.ch [130.60.75.58])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "lapse.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 81A6ABE8C
-	for <git@vger.kernel.org>; Wed, 10 Oct 2007 03:55:48 +0200 (CEST)
-Received: by lapse.madduck.net (Postfix, from userid 1000)
-	id A82C257DDA; Wed, 10 Oct 2007 02:55:45 +0100 (BST)
-Mail-Followup-To: git discussion list <git@vger.kernel.org>
-Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-686 i686
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4516/Tue Oct  9 19:31:18 2007 on clegg.madduck.net
-X-Virus-Status: Clean
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Pasch <thomas.pasch@jentro.com>, git@vger.kernel.org,
+        Jan Wielemaker <wielemak@science.uva.nl>,
+        "Gerald (Jerry) Carter" <jerry@samba.org>,
+        dev <dev@cvs2svn.tigris.org>
+To: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>
+X-From: dev-return-2100-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Wed Oct 10 04:34:57 2007
+Return-path: <dev-return-2100-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1IfRPU-0000Ox-CL
+	for gcvscd-dev@gmane.org; Wed, 10 Oct 2007 04:34:56 +0200
+Received: (qmail 12896 invoked by uid 5000); 10 Oct 2007 02:34:49 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60457>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 12883 invoked from network); 10 Oct 2007 02:34:49 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ao8CADLXC0fAbSoIh2dsb2JhbACDJYskAgEICik
+X-IronPort-AV: E=Sophos;i="4.21,251,1188802800"; 
+   d="scan'208";a="86272564"
+X-IRONPORT: SCANNED
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13) Gecko/20070824 Thunderbird/1.5.0.13 Mnenhy/0.7.5.666
+In-Reply-To: <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>
+X-Enigmail-Version: 0.94.2.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60458>
 
+Eyvind Bernhardsen wrote:
+> On 9. okt.. 2007, at 15.21, Gerald (Jerry) Carter wrote:
+>> I would actually plug using cvs2svn to convert directly to git.
+>> See this thread for Michael's original announcement.
+>>
+>>   http://marc.info/?l=git&m=118592701426175&w=2
+> 
+> Seconded!  I've tried git-cvsimport, parsecvs, fromcvs, and cvs2svn on
+> my employer's many large CVS modules, and cvs2svn is the only one that
+> has never mangled an import.
 
---fdj2RfSjLxBAspz7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm glad this worked.
 
-Hi folks,
+> That said, it is a work in progress, so there are some caveats:
+> 
+> [...]
+> 
+> * Tags each get a branch with a single commit, with the actual tag
+> pointing to that commit.  This makes it harder than necessary to figure
+> out what the history looks like; gitk's default view won't show any
+> tags, for example, since it only shows the master branch and not the
+> single-commit tag branches.
 
-I hope this is not a daily series of mine, being confused about Git
-merging, but I've run my head against a wall again and before
-I crush my skull, I'd prefer to reach out to you to help me regain
-an understanding.
+I just fixed this in cvs2svn trunk r4213.  Now it reuses a single branch
+called 'refs/heads/TAG.FIXUP' whenever it needs to make a tag fixup
+branch, and it resets that branch when done.  (Resetting the tag fixup
+branch changes it to 0000000000000000000000000000000000000000 but
+doesn't really delete it; I don't know the ramifications of that but at
+least it doesn't appear in gitk output any more.)
 
-This is about the new mdadm for Debian packaging effort. You can
-clone from git://git.debian.org/git/pkg-mdadm/mdadm-new.git and see
-the repo at
-http://git.debian.org/?p=3Dpkg-mdadm/mdadm-new.git;a=3Dsummary. Do not
-track as this repo is subject to change.
+> * Branches all get a useless commit at their branch point.  All branches
+> from the main branch appear to be merged from the vendor branch (ie, the
+> useless commit has the vendor branch as an extra parent), which might
+> make sense to someone who knows what the vendor branch is for, but makes
+> no sense to me.  This combined with the previous point makes "gitk
+> --all" look needlessly spaghetti-like if you have a slightly complicated
+> CVS history.
 
-My master branch was last merged with upstream's mdadm-2.6.2 tag
-(commit 263a535). Since then, I've committed a couple of changes to
-master including three cherry-picks from upstream since mdadm-2.6.2.
+I assume that the "useless commit" that you are referring to is the one
+with log message "This commit was manufactured by cvs2svn to create
+branch 'BRANCH'."  Is that correct?
 
-I tagged upstream at the point which I want to merge into master:
-mdadm-2.6.3+200709292116+4450e59. When I merge that tag into master,
-I get a merge conflict on Monitor.c:
+I'm not a git expert, so I don't know whether these commits are in fact
+useless.  But let me explain the reason I put them in and you can tell
+me whether it is nonsense.
 
-  <<<<<<< HEAD:Monitor.c
-                                  if (mse->devnum !=3D MAXINT &&
-  =3D=3D=3D=3D=3D=3D=3D
-                                  if (mse->devnum !=3D INT_MAX &&
-  >>>>>>> upstream:Monitor.c
+When you branch a file in CVS, CVS notes that the branch exists in the
+file but doesn't record an author, log message, or timestamp.  The
+contents of a file just after it is branched are exactly the same as the
+contents on the parent branch.  Moreover, different files can be added
+to a branch from different parent branches.
 
-There are five commits between mdadm-2.6.2 and
-mdadm-2.6.3+200709292116+4450e59 that affect Monitor.c:
+The intended purpose of the "useless commit" in the git output of
+cvs2svn is to record the fact that a branch was created, to record
+exactly which files exist on the branch at the time it was created, and
+to record the source branches of the file on the branch.
 
-  01d9299
-  e4dc510
-* 66f8bbb
-  98127a6
-  4450e59
+I imagine that *if* a branch is created with a single parent branch, and
+*if* each and every file from the parent branch is added to the new
+branch, then it is possible that the "useless commit" could be omitted.
+ But this decision would require information that cvs2svn doesn't
+currently have at that stage of the conversion, and keeping the
+necessary records would be quite expensive.
 
-The third commit, the one with the asterisk is the one that
-I cherry-picked (as 845eef9); the other two cherries I picked do not
-touch Monitor.c.
+But in the general case, it doesn't seem to me that the commits are
+really useless.  Am I wrong?  If so, please tell me what should be
+changed in the git-fast-import data that is output when a branch is
+created (e.g., for the main-cvsrepos in the cvs2svn test suite).
 
-The fifth/last commit (4450e59) is the one responsible for the
-change which seems to cause the conflict. It is the *only* commit
-since the common ancestor of *both* branches that touches the
-conflicting lines.
+Regarding the superfluous vendorbranch parent: vendor branches are an
+obscure CVS feature for tracking upstream sources.  The file contents on
+the vendorbranch are typically exactly the same as that on trunk, and if
+a branch is created while the vendorbranch is active, CVS doesn't record
+whether the branch's parent was trunk or the vendorbranch.  Haven't yet
+built the heuristics into cvs2svn to make this decision more
+intelligently, so sometimes "vendorbranch" is listed as a branch parent
+when it could be omitted.
 
-The fourth commit (98127a6) inserts a single line at the top of the
-file, so that's nothing that would cause a conflict.
+> To sum up, cvs2svn gets the important stuff right, but has some sharp
+> corners you need to watch so you don't put an eye out.
 
-To be honest, I can't explain it. But I didn't give up.
+Thanks for the feedback!
 
-I branched master2 off 845eef9b~1, cherry-picked the first two
-commits that touch Monitor.c, cherry-picked all the commits
-845eef9b..master into master2 and merge upstream...
+Michael
 
-=2E.. to get exactly the same conflict in exactly the same line in
-exactly the same file.
-
-What is going on. Am I seriously overestimating Git's merging
-capacities, or do I have a bug in my brain?
-
---=20
-martin;              (greetings from the heart of the sun.)
-  \____ echo mailto: !#^."<*>"|tr "<*> mailto:" net@madduck
-=20
-"the only difference between shakespeare and you
- was the size of his idiom list -- not the size of his vocabulary."
-                                                      -- alan perlis
-=20
-spamtraps: madduck.bogus@madduck.net
-
---fdj2RfSjLxBAspz7
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHDDEhIgvIgzMMSnURAnqjAKDSD3vBj2gyX5IiCM9nLLmIzKNdNwCfbGub
-kNC8GYAol5XE04nfcz8xYKg=
-=u//n
------END PGP SIGNATURE-----
-
---fdj2RfSjLxBAspz7--
+[1] http://www.kernel.org/pub/software/scm/git/docs/git-fast-import.html
