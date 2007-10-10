@@ -1,74 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [msysGit] Re: [PATCH] git-gui: offer a list of recent repositories on startup
-Date: Wed, 10 Oct 2007 04:19:54 -0400
-Message-ID: <20071010081954.GT2137@spearce.org>
-References: <11917925011987-git-send-email-prohaska@zib.de> <20071007233023.GE2137@spearce.org> <BE872860-40AD-4BBA-BDD5-0EC8CB9AC4B5@zib.de> <20071010073053.GQ2137@spearce.org> <B1EFFED4-1DF7-4A0A-93E2-F21812E7AF6B@zib.de>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Status of kha/experimental
+Date: Wed, 10 Oct 2007 10:26:02 +0200
+Message-ID: <20071010082602.GF12970@diana.vm.bytemark.co.uk>
+References: <b0943d9e0710071418o6a664981i9d31db980c04bc50@mail.gmail.com> <20071007213307.GA32210@diana.vm.bytemark.co.uk> <b0943d9e0710091410w1559f1a0yb5055182fd289646@mail.gmail.com> <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 10:20:19 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Catalin Marinas <catalin.marinas@gmail.com>,
+	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:26:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfWng-0007vt-Pl
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:20:17 +0200
+	id 1IfWtX-0000St-Ds
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:26:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752844AbXJJIUA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 04:20:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752848AbXJJIUA
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:20:00 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38852 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752552AbXJJIT7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 04:19:59 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IfWnK-0001W8-Uf; Wed, 10 Oct 2007 04:19:55 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 081CF20FBAE; Wed, 10 Oct 2007 04:19:54 -0400 (EDT)
+	id S1752848AbXJJI0J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2007 04:26:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXJJI0J
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:26:09 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3854 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752831AbXJJI0I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 04:26:08 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IfWtG-0003bH-00; Wed, 10 Oct 2007 09:26:02 +0100
 Content-Disposition: inline
-In-Reply-To: <B1EFFED4-1DF7-4A0A-93E2-F21812E7AF6B@zib.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60483>
 
-Steffen Prohaska <prohaska@zib.de> wrote:
-> On Oct 10, 2007, at 9:30 AM, Shawn O. Pearce wrote:
-> >
-> >The patch below uses a text widget instead and renders each of
-> >the repositories as a blue underlined link.
-> 
-> This is similar to what I had in mind, but was lacking tk knowledge
-> to implement it.
+On 2007-10-09 23:46:13 +0200, Yann Dirson wrote:
 
-Heh.  Tk makes some things easy, assuming you know what you are
-doing.  It makes some other things damn near impossible, even if
-you do know all of Tk and its internals too.  Anyway, your patches
-were a really good start on this and it saved me a lot of time to
-just tweak what you already had.  So I really appreciate you taking
-the time to work on the first two iterations of this feature.
+> That would require that I update them, but I'm not sure Karl would
+> want them in kha/experimental, since virtually any other patch
+> causes a conflict...
 
-> I haven't applied your patch but only read through it. Looks good
-> to me.
+Right. If it's likely to be many conflicts, I wouldn't mind if you
+were the one who resolved them.
 
-The combined result is now in my `pu` branch on repo.or.cz.
-Remember that I freely rebase that branch and any topic in it,
-so I might wind up rebasing this topic before I finally merge it
-to master.
+> The best situation would be that there would be a code freeze at
+> some time, during which I could update those patches without too
+> much perturbations, but that may be asking a lot :)
 
-I have given the change some light testing tonight but want to
-beat on it more and also fix the radio button issue you pointed
-out before I merge this series of improvements into master.
+There aren't that many of us working on StGit. If you can give a
+reasonably accurate start date and duration of the freeze, I don't
+think it would be a problem. Others would simply have to be aware that
+any patches not merged before the freeze would have to be rebased on
+top of your work once the freeze is over.
 
--- 
-Shawn.
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
