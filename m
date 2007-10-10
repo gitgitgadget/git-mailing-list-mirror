@@ -1,56 +1,79 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: stg branch command failures.
-Date: Wed, 10 Oct 2007 09:01:22 +0530
-Message-ID: <cc723f590710092031w87511dfl6ee3b728375f0815@mail.gmail.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [msysGit] Re: [PATCH] git-gui: offer a list of recent repositories on startup
+Date: Wed, 10 Oct 2007 00:40:30 -0400
+Message-ID: <20071010044030.GJ2137@spearce.org>
+References: <11917925011987-git-send-email-prohaska@zib.de> <20071007233023.GE2137@spearce.org> <BE872860-40AD-4BBA-BDD5-0EC8CB9AC4B5@zib.de> <Pine.LNX.4.64.0710091240540.4174@racer.site> <4A4F8FC7-E0AB-4C07-B4C8-AFE2EBD9C3DD@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>,
-	catalin.marinas@gmail.com, kha@treskal.com
-X-From: git-owner@vger.kernel.org Wed Oct 10 05:31:34 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 10 06:40:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfSIH-0007VV-Or
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 05:31:34 +0200
+	id 1IfTNF-0008KF-IC
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 06:40:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750993AbXJJDbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Oct 2007 23:31:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751009AbXJJDbY
-	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 23:31:24 -0400
-Received: from rv-out-0910.google.com ([209.85.198.191]:38492 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750983AbXJJDbX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Oct 2007 23:31:23 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so67449rvb
-        for <git@vger.kernel.org>; Tue, 09 Oct 2007 20:31:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=0PK47SepH4QiYNoG5VfvnR2yE5M6EYN9tmah2BeV0OE=;
-        b=j0Ykp655agVJmvB3E1JijqIPU6k3yPMi2JRXEvzmVaoyZUgGljDPQJKRCO0RULU6fujQ+2MDZ/y9Rkjvopx3hPDxugK0+GZ2B67+ZPGMaCq2Bq75Nt/a3oskqaI+NYx2U5baEF5VKcwY3GxMxoaqJ3j50L89gJRYVXkLVscexYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=hLT3h8HbXiPNPYMbqdNc0+sUi1Ao/0vQoJMQbwk9vQFr4hgHXc05hh1jUqXdGOrvPyhKQLZhrHFDtSbcehEczm7QRH/VW/Hrqz6ox6vJni7U3+Kt+NbxgigmvL5NW9IhACd586bA6sL4EqZ0RAdziyvziACaIBVy5dz9HzchU4A=
-Received: by 10.114.52.1 with SMTP id z1mr236460waz.1191987082756;
-        Tue, 09 Oct 2007 20:31:22 -0700 (PDT)
-Received: by 10.114.240.11 with HTTP; Tue, 9 Oct 2007 20:31:22 -0700 (PDT)
+	id S1750942AbXJJEkf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 00:40:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750809AbXJJEkf
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 00:40:35 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:60868 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750705AbXJJEkf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 00:40:35 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IfTN2-0001wi-Ng; Wed, 10 Oct 2007 00:40:32 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id DB52520FBAE; Wed, 10 Oct 2007 00:40:30 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <4A4F8FC7-E0AB-4C07-B4C8-AFE2EBD9C3DD@zib.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60461>
 
-Hi,
+Steffen Prohaska <prohaska@zib.de> wrote:
+> On Oct 9, 2007, at 1:43 PM, Johannes Schindelin wrote:
+> >On Mon, 8 Oct 2007, Steffen Prohaska wrote:
+> >
+> >>commit a483fdd562d6c44d68a998224e0bbb17933b624a
+> >>Author: Steffen Prohaska <prohaska@zib.de>
+> >>Date:   Mon Oct 8 08:25:47 2007 +0200
+> >>
+> >>   git-gui: offer a list of recent repositories on startup
+> >
+> >May I suggest not putting this list into ~/.gitconfig, but rather
+> >~/.gitguirc?  It is not really a user-specific git configuration...
+> 
+> git-gui already stores other options as global variables gui.*.
+> (see git-gui/lib/option.tcl). I just added gui.recentrepo. The
+> list of recent repos should go to wherever git-gui stores its options.
+> 
+> Right now this is in ~/.gitconfig, if I understand correctly. Shawn?
 
-Both the below commands doesn't work
+Yes, that's correct.
 
-stg branch --rename review test-large-file
-stg branch -c review v2.6.23-rc9
+An item on my todo list (see todo branch in git-gui.git) is to move
+this into a ~/.gitguiconfig or something like that, but I was going
+to keep it as a git-config style file so git-config can be used to
+process its contents.
 
-It throws error
-fatal: Needed a single revision
+Until that task is complete I'd rather keep all of the "gui" options
+in ~/.gitconfig (global) or .git/config (per-repository).  When I
+split stuff out to git-gui specific files I'll have to migrate the
+entire "gui" section at once.
 
--aneesh
+-- 
+Shawn.
