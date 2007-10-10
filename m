@@ -1,35 +1,32 @@
-From: maillist@steelskies.com
+From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 Subject: [PATCH] Fixing path quoting issues
-Date: Wed, 10 Oct 2007 22:22:34 +0100
-Message-ID: <11920513543478-git-send-email-maillist@steelskies.com>
+Date: Wed, 10 Oct 2007 22:13:37 +0100
+Message-ID: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv>
 Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:22:54 2007
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:24:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifj0x-0007cf-Qs
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:22:48 +0200
+	id 1Ifj2T-0007tz-DN
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:24:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631AbXJJVWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 17:22:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756628AbXJJVWh
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:22:37 -0400
-Received: from gir.office.bestbefore.tv ([89.105.122.147]:59963 "EHLO
+	id S1756128AbXJJVYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 17:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXJJVYK
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:24:10 -0400
+Received: from gir.office.bestbefore.tv ([89.105.122.147]:59964 "EHLO
 	gir.office.bestbefore.tv" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756609AbXJJVWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 17:22:36 -0400
-X-Greylist: delayed 536 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Oct 2007 17:22:35 EDT
+	with ESMTP id S1755906AbXJJVYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 17:24:09 -0400
 Received: by gir.office.bestbefore.tv (Postfix, from userid 501)
-	id 45204261D6D; Wed, 10 Oct 2007 22:22:34 +0100 (BST)
+	id 75C07261C97; Wed, 10 Oct 2007 22:13:37 +0100 (BST)
 X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60543>
-
-From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60544>
 
 git-rebase and a number of tests didn't properly quote paths, leading to problems when run from a path with a space in.
 
