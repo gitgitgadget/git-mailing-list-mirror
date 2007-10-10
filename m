@@ -1,51 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Adding color to git-add--interactive
-Date: Wed, 10 Oct 2007 13:06:21 -0400
-Message-ID: <20071010170621.GA5444@coredump.intra.peff.net>
-References: <91EBB71E-BB4E-4089-8C33-6B0C4A61223A@steelskies.com> <20071009234020.GA20952@coredump.intra.peff.net> <Pine.LNX.4.64.0710101604350.4174@racer.site>
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Re: [PATCH] git-cvsserver: added support for update -p
+Date: Wed, 10 Oct 2007 19:27:38 +0200
+Message-ID: <200710101927.38949.wielemak@science.uva.nl>
+References: <200710101316.03633.jan@swi-prolog.org> <200710101626.53303.jan@swi-prolog.org> <Pine.LNX.4.64.0710101740400.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan del Strother <maillist@steelskies.com>,
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jan Wielemaker <jan@swi-prolog.org>,
 	Git Mailing List <git@vger.kernel.org>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 19:07:07 2007
+X-From: git-owner@vger.kernel.org Wed Oct 10 19:28:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iff11-0001sf-LT
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 19:06:36 +0200
+	id 1IffLk-0006nO-Ps
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 19:28:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755096AbXJJRGZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 13:06:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755301AbXJJRGY
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 13:06:24 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1601 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754647AbXJJRGY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 13:06:24 -0400
-Received: (qmail 13427 invoked by uid 111); 10 Oct 2007 17:06:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 10 Oct 2007 13:06:23 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 10 Oct 2007 13:06:21 -0400
+	id S1753874AbXJJR1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 13:27:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754164AbXJJR1v
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 13:27:51 -0400
+Received: from smtp-vbr5.xs4all.nl ([194.109.24.25]:3692 "EHLO
+	smtp-vbr5.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753746AbXJJR1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 13:27:50 -0400
+Received: from ct.xs4all.nl (ct.xs4all.nl [82.92.39.12])
+	by smtp-vbr5.xs4all.nl (8.13.8/8.13.8) with ESMTP id l9AHRdr0036826;
+	Wed, 10 Oct 2007 19:27:39 +0200 (CEST)
+	(envelope-from wielemak@science.uva.nl)
+User-Agent: KMail/1.9.5
+In-Reply-To: <Pine.LNX.4.64.0710101740400.4174@racer.site>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710101604350.4174@racer.site>
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60522>
 
-On Wed, Oct 10, 2007 at 04:06:09PM +0100, Johannes Schindelin wrote:
+> On Wed, 10 Oct 2007, Jan Wielemaker wrote:
+> > Is there a test suite for git-cvsserver?
+>
+> Yes: t/t9400-git-cvsserver-server.sh
 
-> I think the reason git-add--interactive does not use it is that some 
-> people (me included) experienced heavy problems with perl modules.  
-> However, I do not recall to which extent they have been solved.  I guess 
-> when git-add--interactive goes Git.pm and stops working for me, I'll do my 
-> famous "aargh, I'll just make it a builtin" song.
+Thanks.  B.t.w. from the main directory:
 
-I had thought this was the case, too (and in fact, I started to write
-"we don't have a good solution for sharing perl code"), but it looks
-like git-remote, git-svn, and git-send-email are all using Git.pm these
-days.
+gollem (git) 21_> make check
+for i in *.c; do 
+sparse -g -O2 -Wall  -DSHA1_HEADER='<openssl/sha.h>' -DETC_GITCONFIG='"/home/jan/etc/gitconfig"' -DNO_STRLCPY -D__BIG_ENDIAN__ -D__powerpc__ 
+$i || exit; done
+/bin/sh: sparse: command not found
+make: *** [check] Error 127
 
--Peff
+Dunno, but maybe something like this is more appropriate:
+
+	echo "See t/README for testing GIT"
+
+	Cheers --- Jan
+
+P.s.	My modified version passes all tests.
