@@ -1,64 +1,75 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Adding color to git-add--interactive
-Date: Wed, 10 Oct 2007 23:09:58 +0200
-Message-ID: <20071010210958.GA16635@steel.home>
-References: <91EBB71E-BB4E-4089-8C33-6B0C4A61223A@steelskies.com> <20071009234020.GA20952@coredump.intra.peff.net> <Pine.LNX.4.64.0710101604350.4174@racer.site> <20071010170621.GA5444@coredump.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: Re: git branch performance problem?
+Date: Wed, 10 Oct 2007 18:17:06 -0300
+Message-ID: <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>
+References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com>
+	 <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:10:22 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Lars Hjemli" <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:17:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifiou-0005HZ-DT
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:10:20 +0200
+	id 1Ifivg-0006cP-F2
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252AbXJJVKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 17:10:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbXJJVKE
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:10:04 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:13776 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756228AbXJJVKB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 17:10:01 -0400
-Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
-	by post.webmailer.de (fruni mo28) (RZmta 13.4)
-	with ESMTP id 302d9fj9AIfoyi ; Wed, 10 Oct 2007 23:09:59 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 2200A277AE;
-	Wed, 10 Oct 2007 23:09:59 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id A2B94C502; Wed, 10 Oct 2007 23:09:58 +0200 (CEST)
+	id S1754769AbXJJVRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 17:17:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754046AbXJJVRI
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:17:08 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:14166 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753282AbXJJVRH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 17:17:07 -0400
+Received: by py-out-1112.google.com with SMTP id u77so628480pyb
+        for <git@vger.kernel.org>; Wed, 10 Oct 2007 14:17:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=b+vE2mmX1MNVVV94e0eV/VihUSvyxgVipHyZbnD9Ezg=;
+        b=op1PJ82O0sLY17L8EdGCLGxxCI9mfcdvXDHOPSLRGdwfZwlIrRqwltdi6RiuBx37dxzyEIBNC/ftwj7gxMFu0uJiK/Fjt/pxZqkKhJHmvLzkdJwo4yAn3Xyn8VKeVBM3eT7fcV1qPR1h8R2dP16X8IKdZ14nFBGfm+X7gJ3uDRg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tayisZDhAIApljT+NCp5nVexHTLdjTj6c59NKwC5zZePjykHghGTmNrBaURrvx3UMr6BXnP92++HZogDllTCf6VaDGikndU8G7+pAbOfrfY6Q4k6mZKMbDccWbEc3IeUh5QtRfY6ZzE6EUaoht1zTCQKormbrl+FoZMzJ6FnMOw=
+Received: by 10.65.180.9 with SMTP id h9mr2448882qbp.1192051026574;
+        Wed, 10 Oct 2007 14:17:06 -0700 (PDT)
+Received: by 10.65.157.11 with HTTP; Wed, 10 Oct 2007 14:17:06 -0700 (PDT)
+In-Reply-To: <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20071010170621.GA5444@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60542>
 
-Jeff King, Wed, Oct 10, 2007 19:06:21 +0200:
-> On Wed, Oct 10, 2007 at 04:06:09PM +0100, Johannes Schindelin wrote:
-> 
-> > I think the reason git-add--interactive does not use it is that some 
-> > people (me included) experienced heavy problems with perl modules.  
-> > However, I do not recall to which extent they have been solved.  I guess 
-> > when git-add--interactive goes Git.pm and stops working for me, I'll do my 
-> > famous "aargh, I'll just make it a builtin" song.
-> 
-> I had thought this was the case, too (and in fact, I started to write
-> "we don't have a good solution for sharing perl code"), but it looks
-> like git-remote, git-svn, and git-send-email are all using Git.pm these
-> days.
-> 
+2007/10/10, Lars Hjemli <hjemli@gmail.com>:
+> On 10/10/07, Han-Wen Nienhuys <hanwenn@gmail.com> wrote:
+> > I'm seeing very slow performance with 'git-branch'.  Is this the
+> > canonical way to find out the current branch?
+>
+> You could also try 'git symbolic-ref HEAD', but see below...
+>
+> > hanwen@lilypond:/tmp/z$ find .git/refs/remotes | wc -l
+> > 1856
+>
+> You probably want to run 'git gc' (which will run 'git pack-refs',
+> i.e. put all files currently under .git/refs into a single file). This
+> should speed up 'git branch' (and quite possibly other commands too).
 
-And strangely enough, git-remote is even usable on cygwin.
-Can't say for others though.
+This seems rather unuseful. After running gc pack-refs --all, I lost my HEAD,
+
+hanwen@lilypond:~/vc/git5$ git show HEAD
+fatal: ambiguous argument 'HEAD': unknown revision or path not in the
+working tree.
+Use '--' to separate paths from revisions
+
+Is there a way to only pack refs under a certain subdirectory of .git/refs ?
+(I'm thinking of .git/refs/remotes )
+
+-- 
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
