@@ -1,60 +1,63 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Lots of loose objects
-Date: Wed, 10 Oct 2007 21:13:12 +0200
-Message-ID: <87myuqwzp3.fsf@lysator.liu.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-cvsserver: added support for update -p
+Date: Wed, 10 Oct 2007 20:27:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710102025390.4174@racer.site>
+References: <200710101316.03633.jan@swi-prolog.org> <200710101626.53303.jan@swi-prolog.org>
+ <Pine.LNX.4.64.0710101740400.4174@racer.site> <200710101927.38949.wielemak@science.uva.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 21:13:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Wielemaker <jan@swi-prolog.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jan Wielemaker <wielemak@science.uva.nl>
+X-From: git-owner@vger.kernel.org Wed Oct 10 21:27:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifgzl-00052X-T1
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 21:13:26 +0200
+	id 1IfhDf-00081b-L3
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 21:27:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820AbXJJTNR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2007 15:13:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751478AbXJJTNR
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 15:13:17 -0400
-Received: from mail.lysator.liu.se ([130.236.254.3]:37846 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751173AbXJJTNQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2007 15:13:16 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 44C43200A230
-	for <git@vger.kernel.org>; Wed, 10 Oct 2007 21:13:15 +0200 (CEST)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 31972-01-51; Wed, 10 Oct 2007 21:13:14 +0200 (CEST)
-Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id CB377200A233;
-	Wed, 10 Oct 2007 21:13:11 +0200 (CEST)
-Received: by krank (Postfix, from userid 1000)
-	id 665197B4080; Wed, 10 Oct 2007 21:13:12 +0200 (CEST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1755128AbXJJT1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 15:27:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755122AbXJJT1f
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 15:27:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:40880 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755046AbXJJT1e (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 15:27:34 -0400
+Received: (qmail invoked by alias); 10 Oct 2007 19:27:32 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp035) with SMTP; 10 Oct 2007 21:27:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Bi294056B51LjpUYEET1UFi7tPIbhOt3dDzOxX6
+	0Ze9UHt4tpMHvo
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200710101927.38949.wielemak@science.uva.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60530>
 
-I hade a tree that made git-gui complain that I had too many loose
-objects every time I started it (3072 to be precise).  Letting git-gui
-compress it for me didn't help.  Neither did git-gc, even with the
---aggressive flag.
+Hi,
 
-I noticed that I had a lot of loose files in .git/objects, and
-suddenly I remembered that there was a command called "git
-prune". Finally I was able to get rid of those loose objects.
+On Wed, 10 Oct 2007, Jan Wielemaker wrote:
 
-The problem here is probably mostly that I couldn't get any help from
-git-gui or git-gc.  git-gui claimed it would fix the problem for me,
-but failed.  git-gc didn't mention that it left a bunch of files
-untouched.
+> > On Wed, 10 Oct 2007, Jan Wielemaker wrote:
+> > > Is there a test suite for git-cvsserver?
+> >
+> > Yes: t/t9400-git-cvsserver-server.sh
+> 
+> Thanks.  B.t.w. from the main directory:
+> 
+> gollem (git) 21_> make check
 
---=20
-David K=C3=A5gedal
+make check is to check with the static code analyzer "sparse".
+
+To test, try "make test".  Since this is so commonly used to test 
+packages (for example, the vast majority of Perl packages have it), I do 
+not see the need to put a message pointing to "make test" in the "check" 
+target.
+
+Ciao,
+Dscho
