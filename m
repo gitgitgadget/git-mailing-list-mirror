@@ -1,85 +1,82 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: [FEATURE REQUEST] git clone, just clone selected branches?
-Date: Wed, 10 Oct 2007 23:25:51 +0200
-Message-ID: <011b01c80b84$222d1e70$04ac10ac@Jocke>
-References: <Pine.LNX.4.64.0710102032330.4174@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fixed crash in fetching remote tags when there is not tags.
+Date: Wed, 10 Oct 2007 23:27:35 +0200
+Message-ID: <20071010212735.GB16635@steel.home>
+References: <1191919868-4963-1-git-send-email-v@pp.inet.fi> <1191919868-4963-2-git-send-email-v@pp.inet.fi> <81553116-3A4F-4526-A772-9A43C53D3E22@pp.inet.fi> <20071009182043.GA2997@steel.home> <20071010051034.GA30834@coredump.intra.peff.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:26:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-15?B?VuRpbvYgSuRydmVs5A==?= <v@pp.inet.fi>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:27:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifj47-0008Ie-FY
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:26:03 +0200
+	id 1Ifj5n-00008A-K8
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:27:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756660AbXJJVZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 17:25:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756546AbXJJVZz
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:25:55 -0400
-Received: from mail.transmode.se ([83.241.175.147]:60942 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756028AbXJJVZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 17:25:54 -0400
-Received: from Jocke ([84.217.95.61]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Wed, 10 Oct 2007 23:25:52 +0200
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <Pine.LNX.4.64.0710102032330.4174@racer.site>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-Thread-Index: AcgLdLMp+cV//cODQBaJ/3dmJZYyvwADEynw
-X-OriginalArrivalTime: 10 Oct 2007 21:25:52.0249 (UTC) FILETIME=[22806E90:01C80B84]
+	id S1756546AbXJJV1j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 17:27:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756541AbXJJV1i
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:27:38 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:23093 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755975AbXJJV1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 17:27:38 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (fruni mo1) (RZmta 13.4)
+	with ESMTP id e02d43j9AIX539 ; Wed, 10 Oct 2007 23:27:36 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id DBEF7277AE;
+	Wed, 10 Oct 2007 23:27:35 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id BAE86C502; Wed, 10 Oct 2007 23:27:35 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20071010051034.GA30834@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60547>
 
-> -----Original Message-----
-> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-> Sent: den 10 oktober 2007 21:35
-> To: Joakim Tjernlund
-> Cc: git@vger.kernel.org
-> Subject: Re: [FEATURE REQUEST] git clone, just clone selected 
-> branches?
+Jeff King, Wed, Oct 10, 2007 07:10:35 +0200:
+> On Tue, Oct 09, 2007 at 08:20:43PM +0200, Alex Riesen wrote:
 > 
-> Hi,
+> > Your test does not crash on my system and your fix is obviously bogus.
+> > Just take a look at the only call site of the tail_link_ref: ret
+> > cannot be NULL. alloc_ref will crash in memset, if this were the case.
 > 
-> On Wed, 10 Oct 2007, Joakim Tjernlund wrote:
-> 
-> > To my knowlede a git clone always clones all branches from 
-> the remote 
-> > repo. I would like the possibly to clone selected branches, like
-> >  git clone <repo URL> -b master -b upstream
-> > which will only fetch the master and upstream branch.
-> > 
-> > I know I can use git remote to do this, but it is a bit clumsy when 
-> > starting a new repo.
-> 
-> This is why I suggest: since it is an itch of yours, just fix 
-> it.  You are 
-> in the prime position to know when you're satisfied.
-> 
-> As a hint how to start: Junio dreamt of a git-clone which is a tiny 
-> wrapper around git-fetch and git-remote.
-> 
-> So you could start by writing a script which would be a 
-> replacement for 
-> git-clone.sh, and there you can also include the support for 
-> -b that you 
-> would like so much.
-> 
-> It would be nice, though, to keep this in separate patches, 
-> which you then 
-> submit to this list.
-> 
-> Thank you,
-> Dscho
+> His work is almost certainly on top of next, which crashes reliably with
+> the test and has an additional call site for tail_link_ref. Aside from
+> some trailing whitespace in the patch, I think his fix is reasonable.
 
-Thank you for these words of visdom, I should know better
-than to throw out ideas like this. Next time I have an suggestion
-I will think long and hard about it before posting again. 
+Ach, I see.
 
- Jocke 
+Still, I'd suggest move the test into the caller, firstly because it
+is the only place that special. Also, I can't think of a proper reason
+to add a NULL ref to a reflist, and so the crashing tail_link_ref will
+help us find the callers which use tail_link_ref incorrectly
+(illogically too).
+
+As the result of patter expansion can be NULL (empty pattern, as it
+seems), lets just check for it. I parked the patch below locally.
+
+diff --git a/remote.c b/remote.c
+index 5e92378..58d63ed 100644
+--- a/remote.c
++++ b/remote.c
+@@ -884,7 +884,8 @@ int get_fetch_map(struct ref *remote_refs,
+ 			    rm->peer_ref->name);
+ 	}
+ 
+-	tail_link_ref(ref_map, tail);
++	if (ref_map)
++		tail_link_ref(ref_map, tail);
+ 
+ 	return 0;
+ }
