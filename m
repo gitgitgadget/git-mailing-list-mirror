@@ -1,64 +1,87 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH v2] git-gui: add mingw specific startup wrapper
-Date: Wed, 10 Oct 2007 04:02:56 -0400
-Message-ID: <20071010080256.GR2137@spearce.org>
-References: <8F81028C-9924-4AA2-A58D-961AD10F5315@zib.de> <11919995392158-git-send-email-prohaska@zib.de> <11919995392881-git-send-email-prohaska@zib.de>
+From: "Philippe Ombredanne" <philippe@easyeclipse.org>
+Subject: hello git world!
+Date: Wed, 10 Oct 2007 01:01:41 -0700
+Message-ID: <01e901c80b13$d3e937a0$6400a8c0@computer>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Oct 10 10:03:16 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:04:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfWXE-00053h-13
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:03:16 +0200
+	id 1IfWYN-0005HL-0n
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:04:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbXJJIDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 04:03:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXJJIDD
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:03:03 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38316 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752187AbXJJIDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 04:03:01 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IfWWv-00010P-7Y; Wed, 10 Oct 2007 04:02:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 08F2520FBAE; Wed, 10 Oct 2007 04:02:56 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <11919995392881-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752505AbXJJIES (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 04:04:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752643AbXJJIES
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:04:18 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:43128 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752414AbXJJIER convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Oct 2007 04:04:17 -0400
+Received: from randymail-a9.g.dreamhost.com (balanced.mail.policyd.dreamhost.com [208.97.132.119])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id BEDCD2779A7
+	for <git@vger.kernel.org>; Wed, 10 Oct 2007 01:04:04 -0700 (PDT)
+Received: from computer (c-71-204-153-28.hsd1.ca.comcast.net [71.204.153.28])
+	by randymail-a9.g.dreamhost.com (Postfix) with ESMTP id EA94FEF22C
+	for <git@vger.kernel.org>; Wed, 10 Oct 2007 01:01:47 -0700 (PDT)
+X-Priority: 3 (Normal)
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook, Build 10.0.6626
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1807
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60478>
 
-Steffen Prohaska <prohaska@zib.de> wrote:
-> The wrapper adds the directory it is installed in to PATH.
-> This is required for the git commands implemented in shell.
-> git-gui fails to launch them if PATH is not modified.
+Hello:
+I am a committer on Eclipse and several Eclipse-related projects, as
+well as the admin (and a mentor too) for the Eclipse summer of code
+program.
+My day job is about the same: Eclipse and tools for paying customers :-)
+I met Shawn Pearce and  Johannes Schindelin this week-end at Google for
+the Summer of Code mentor summit.
+Incidentally a week before I had tried git for the 1st time, out of need
+trying to build an eclipse plugin available only through git
+(http://robrohan.com/projects/afae/ )
+After a few minutes I was checking out and building more git stuffs
+including egit of course.
 
-Thanks, I have both of these applied now to master and will push
-it out shortly, along with the mingw version fix you had sent
-me much earlier.
- 
-> +if { $argc >=2 && [lindex $argv 0] == "--working-dir" } {
-> +	cd [lindex $argv 1]
-> +	set argv [lrange $argv 2 end]
-> +	incr argc -2
-> +}
+I basically fell in love with Git, just like that. I am frightened --
+like when you fall in love-- about the power and implications of a
+distributed version control system :-P
 
-Perhaps someday in the future we'll put this into git-gui.sh so
-all platforms can use it.  Today, its Windows only.  ;-)
+Being an Eclipse and tools guy, I'll try to help on the egit and java
+git side (for non eclipse based java tools) . I have played a little
+experience with team support in Eclipse, and high expectations for egit
+from using things such as the CVS, Subclipse and Subversive plugins for
+Eclipse.
 
+One of the ideas Shawn and I floated was that we could work towards
+making egit an official Eclipse project. 
+Being somewhat plugged at Eclipse, I can help broker that, if it makes
+sense for the git community.
+I look forward to the discussion there.
+
+I think this would go a long way to attract more committers on egit, and
+make git a very accessible tool to millions of Eclipse users.
+I will also make egit installers available through the easyeclipse
+distro I maintain.
+
+Git rulez!
 -- 
-Shawn.
+Cheers
+Philippe
+
+
+http://easyeclipse.org - http://phpeclipse.net - http://eclipse.org/atf
+- 
+http://eclipse.org/vep - http://labs.jboss.org/drools/ -
+http://developer.mozilla.org/en/docs/XULRunner
+philippe ombredanne | 1 650 799 0949 | pombredanne at nexb.com 
+nexB - Open by Design (tm) - http://www.nexb.com 
