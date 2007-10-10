@@ -1,49 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Fixed crash in fetching remote tags when there is not
-	tags.
-Date: Wed, 10 Oct 2007 17:33:06 -0400
-Message-ID: <20071010213305.GB8518@sigill.intra.peff.net>
-References: <1191919868-4963-1-git-send-email-v@pp.inet.fi> <1191919868-4963-2-git-send-email-v@pp.inet.fi> <81553116-3A4F-4526-A772-9A43C53D3E22@pp.inet.fi> <20071009182043.GA2997@steel.home> <20071010051034.GA30834@coredump.intra.peff.net> <20071010212735.GB16635@steel.home>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: git branch performance problem?
+Date: Wed, 10 Oct 2007 23:34:49 +0200
+Message-ID: <8c5c35580710101434n3a4f77edm50d205d53fbc9200@mail.gmail.com>
+References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com>
+	 <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>
+	 <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>
+	 <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-1?B?VuRpbvYgSuRydmVs5A==?= <v@pp.inet.fi>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:33:22 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:35:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfjBB-00015b-12
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:33:21 +0200
+	id 1IfjCl-0001Kt-Su
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:35:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756762AbXJJVdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 17:33:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756748AbXJJVdJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:33:09 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1819 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756354AbXJJVdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 17:33:08 -0400
-Received: (qmail 15084 invoked by uid 111); 10 Oct 2007 21:33:05 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 10 Oct 2007 17:33:05 -0400
-Received: (qmail 8542 invoked by uid 1000); 10 Oct 2007 21:33:06 -0000
+	id S1756093AbXJJVev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 17:34:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755466AbXJJVev
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:34:51 -0400
+Received: from nz-out-0506.google.com ([64.233.162.238]:59092 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755606AbXJJVeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 17:34:50 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so272334nze
+        for <git@vger.kernel.org>; Wed, 10 Oct 2007 14:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=2Gywj1tzn3LULxnf9pePOTzeFqVjhHinrD1dBN0NxtQ=;
+        b=cvp+TZxyVNgj01yYEnoSuUGWBwSIHK85PiUbmlliwXrLubi4sW8JqUVVfgeuSp5jkJpFoOsqbsnDUZ7YjIxKBSEXGxGRynT0NzijOHmT9wySkrv1gYEWzv3qKPGVYiJWsLXMEQiQK9EUCQo15g0tuMk7Zff3smsTfPVeamZPrxc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Zqp//TvUkRSiRdDtwOViBJHQ+DVIMezd3LRUCymKTXwC2VwWLvKomdFngpIqznwtOCnPIqsCFtmTRcs5+sORPnygXA7hajANv9e+BdEnZc6V6C/Pn81bP4UvnjuXCyzcAwN7oXKqvQVw5u1R2XioZeslWcvwOuDHO0+NJIUk8V0=
+Received: by 10.115.22.1 with SMTP id z1mr1311680wai.1192052089082;
+        Wed, 10 Oct 2007 14:34:49 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Wed, 10 Oct 2007 14:34:49 -0700 (PDT)
+In-Reply-To: <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20071010212735.GB16635@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60550>
 
-On Wed, Oct 10, 2007 at 11:27:35PM +0200, Alex Riesen wrote:
+On 10/10/07, Han-Wen Nienhuys <hanwenn@gmail.com> wrote:
+> 2007/10/10, Han-Wen Nienhuys <hanwenn@gmail.com>:
+> > > You probably want to run 'git gc' (which will run 'git pack-refs',
+> > > i.e. put all files currently under .git/refs into a single file). This
+> > > should speed up 'git branch' (and quite possibly other commands too).
+> >
+> > This seems rather unuseful. After running gc pack-refs --all, I lost my HEAD,
+> >
+> > hanwen@lilypond:~/vc/git5$ git show HEAD
+> > fatal: ambiguous argument 'HEAD': unknown revision or path not in the
+> > working tree.
+>
+> More to the point, I seemed to have lost my entire repository. This is
+> the type of surprise  I don't enjoy.
 
-> Still, I'd suggest move the test into the caller, firstly because it
-> is the only place that special. Also, I can't think of a proper reason
+Yeah, this is bad, I'm sorry to have caused you trouble. But I fail to
+see how 'git pack-refs --all' could possibly trash your repository. A
+few questions:
 
-Yes, I agree with that. I came very close to suggesting it in my other
-mail, but then realized I had never even looked at the surrounding code,
-and I ought not to be making assessments of how that data structure
-should be used.  But now there are two of us. :)
+What version of git are you using?
+What's the output from these commands:
+$ cat .git/packed-refs
+$ cat .git/HEAD
+$ find .git/refs -type f | wc -l
 
--Peff
+> Now, can someone explain why 'git branch' takes forever if there are
+> only two non-remote branches ?
+
+That's because git-branch always traverses the complete directory tree
+below .git/refs, even if you only want to see the 'local' branches (I
+have a patch cooking to fix this).
+
+--
+larsh
