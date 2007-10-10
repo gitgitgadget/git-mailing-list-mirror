@@ -1,126 +1,156 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Problem with git-cvsimport
-Date: Wed, 10 Oct 2007 04:34:34 +0200
-Message-ID: <470C3A3A.2070809@alum.mit.edu>
-References: <470B491F.9020306@jentro.com> <200710091447.50501.wielemak@science.uva.nl> <470B8049.1090308@samba.org> <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: inexplicable failure to merge recursively across cherry-picks
+Date: Tue, 9 Oct 2007 19:54:21 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710091926560.3838@woody.linux-foundation.org>
+References: <20071010015545.GA17336@lapse.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Pasch <thomas.pasch@jentro.com>, git@vger.kernel.org,
-        Jan Wielemaker <wielemak@science.uva.nl>,
-        "Gerald (Jerry) Carter" <jerry@samba.org>,
-        dev <dev@cvs2svn.tigris.org>
-To: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>
-X-From: dev-return-2100-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Wed Oct 10 04:34:57 2007
-Return-path: <dev-return-2100-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1IfRPU-0000Ox-CL
-	for gcvscd-dev@gmane.org; Wed, 10 Oct 2007 04:34:56 +0200
-Received: (qmail 12896 invoked by uid 5000); 10 Oct 2007 02:34:49 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Wed Oct 10 04:54:50 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IfRif-00039I-Ln
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 04:54:46 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752466AbXJJCyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Oct 2007 22:54:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752520AbXJJCyf
+	(ORCPT <rfc822;git-outgoing>); Tue, 9 Oct 2007 22:54:35 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:58760 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752249AbXJJCye (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Oct 2007 22:54:34 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9A2sMNM023386
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 9 Oct 2007 19:54:23 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9A2sLjt020278;
+	Tue, 9 Oct 2007 19:54:22 -0700
+In-Reply-To: <20071010015545.GA17336@lapse.madduck.net>
+X-Spam-Status: No, hits=-2.432 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 12883 invoked from network); 10 Oct 2007 02:34:49 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ao8CADLXC0fAbSoIh2dsb2JhbACDJYskAgEICik
-X-IronPort-AV: E=Sophos;i="4.21,251,1188802800"; 
-   d="scan'208";a="86272564"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13) Gecko/20070824 Thunderbird/1.5.0.13 Mnenhy/0.7.5.666
-In-Reply-To: <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>
-X-Enigmail-Version: 0.94.2.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60458>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60459>
 
-Eyvind Bernhardsen wrote:
-> On 9. okt.. 2007, at 15.21, Gerald (Jerry) Carter wrote:
->> I would actually plug using cvs2svn to convert directly to git.
->> See this thread for Michael's original announcement.
->>
->>   http://marc.info/?l=git&m=118592701426175&w=2
+
+
+On Wed, 10 Oct 2007, martin f krafft wrote:
 > 
-> Seconded!  I've tried git-cvsimport, parsecvs, fromcvs, and cvs2svn on
-> my employer's many large CVS modules, and cvs2svn is the only one that
-> has never mangled an import.
-
-I'm glad this worked.
-
-> That said, it is a work in progress, so there are some caveats:
+> There are five commits between mdadm-2.6.2 and
+> mdadm-2.6.3+200709292116+4450e59 that affect Monitor.c:
 > 
-> [...]
+>   01d9299
+>   e4dc510
+> * 66f8bbb
+>   98127a6
+>   4450e59
 > 
-> * Tags each get a branch with a single commit, with the actual tag
-> pointing to that commit.  This makes it harder than necessary to figure
-> out what the history looks like; gitk's default view won't show any
-> tags, for example, since it only shows the master branch and not the
-> single-commit tag branches.
+> The third commit, the one with the asterisk is the one that
+> I cherry-picked (as 845eef9); the other two cherries I picked do not
+> touch Monitor.c.
 
-I just fixed this in cvs2svn trunk r4213.  Now it reuses a single branch
-called 'refs/heads/TAG.FIXUP' whenever it needs to make a tag fixup
-branch, and it resets that branch when done.  (Resetting the tag fixup
-branch changes it to 0000000000000000000000000000000000000000 but
-doesn't really delete it; I don't know the ramifications of that but at
-least it doesn't appear in gitk output any more.)
+Side note - run
 
-> * Branches all get a useless commit at their branch point.  All branches
-> from the main branch appear to be merged from the vendor branch (ie, the
-> useless commit has the vendor branch as an extra parent), which might
-> make sense to someone who knows what the vendor branch is for, but makes
-> no sense to me.  This combined with the previous point makes "gitk
-> --all" look needlessly spaghetti-like if you have a slightly complicated
-> CVS history.
+	gitk --merge
 
-I assume that the "useless commit" that you are referring to is the one
-with log message "This commit was manufactured by cvs2svn to create
-branch 'BRANCH'."  Is that correct?
+when you have a merge conflict, and it will basically show you the thing 
+graphically (ie history as it is relevant to the merge, and only to the 
+files that get conflicts).
 
-I'm not a git expert, so I don't know whether these commits are in fact
-useless.  But let me explain the reason I put them in and you can tell
-me whether it is nonsense.
+But basically, both sides have modified the code *around* that line, and 
+they have modified it differently.
 
-When you branch a file in CVS, CVS notes that the branch exists in the
-file but doesn't record an author, log message, or timestamp.  The
-contents of a file just after it is branched are exactly the same as the
-contents on the parent branch.  Moreover, different files can be added
-to a branch from different parent branches.
+Do this in your partial merge tree on 'master':
 
-The intended purpose of the "useless commit" in the git output of
-cvs2svn is to record the fact that a branch was created, to record
-exactly which files exist on the branch at the time it was created, and
-to record the source branches of the file on the branch.
+	git diff ...mdadm-2.6.3+200709292116+4450e59 Monitor.c
+	git diff mdadm-2.6.3+200709292116+4450e59... Monitor.c
 
-I imagine that *if* a branch is created with a single parent branch, and
-*if* each and every file from the parent branch is added to the new
-branch, then it is possible that the "useless commit" could be omitted.
- But this decision would require information that cvs2svn doesn't
-currently have at that stage of the conversion, and keeping the
-necessary records would be quite expensive.
+which will show you the diff from the common base ancestor. And in 
+particular, it will show how one branch did this:
 
-But in the general case, it doesn't seem to me that the commits are
-really useless.  Am I wrong?  If so, please tell me what should be
-changed in the git-fast-import data that is output when a branch is
-created (e.g., for the main-cvsrepos in the cvs2svn test suite).
+	@@ -399,9 +401,8 @@ int Monitor(mddev_dev_t devlist,
+	                        struct mdstat_ent *mse;
+	                        for (mse=mdstat; mse; mse=mse->next)
+	                                if (mse->devnum != MAXINT &&
+	-                                   (strcmp(mse->level, "raid1")==0 ||
+	-                                    strcmp(mse->level, "raid5")==0 ||
+	-                                    strcmp(mse->level, "multipath")==0)
+	+                                   (strcmp(mse->level, "raid0")!=0 &&
+	+                                    strcmp(mse->level, "linear")!=0)
+	                                        ) {
+	                                        struct state *st = malloc(sizeof *st);
+	                                        mdu_array_info_t array;
 
-Regarding the superfluous vendorbranch parent: vendor branches are an
-obscure CVS feature for tracking upstream sources.  The file contents on
-the vendorbranch are typically exactly the same as that on trunk, and if
-a branch is created while the vendorbranch is active, CVS doesn't record
-whether the branch's parent was trunk or the vendorbranch.  Haven't yet
-built the heuristics into cvs2svn to make this decision more
-intelligently, so sometimes "vendorbranch" is listed as a branch parent
-when it could be omitted.
+and the other one did
 
-> To sum up, cvs2svn gets the important stuff right, but has some sharp
-> corners you need to watch so you don't put an eye out.
+	@@ -398,10 +402,9 @@ int Monitor(mddev_dev_t devlist,
+	                if (scan) {
+	                        struct mdstat_ent *mse;
+	                        for (mse=mdstat; mse; mse=mse->next)
+	-                               if (mse->devnum != MAXINT &&
+	-                                   (strcmp(mse->level, "raid1")==0 ||
+	-                                    strcmp(mse->level, "raid5")==0 ||
+	-                                    strcmp(mse->level, "multipath")==0)
+	+                               if (mse->devnum != INT_MAX &&
+	+                                   (strcmp(mse->level, "raid0")!=0 &&
+	+                                    strcmp(mse->level, "linear")!=0)
+	                                        ) {
+	                                        struct state *st = malloc(sizeof *st);
+	                                        mdu_array_info_t array;
 
-Thanks for the feedback!
+And now maybe git's behaviour makes more sense. See? You basically had two 
+different branches that made *almost* the same changes to the same area, 
+but not quite. So how is git to know which one was the *right* one to 
+pick? The one that changed the "if (mse->devnum != MAXINT &&" line, or the 
+one that left it alone?
 
-Michael
+> I branched master2 off 845eef9b~1, cherry-picked the first two
+> commits that touch Monitor.c, cherry-picked all the commits
+> 845eef9b..master into master2 and merge upstream...
 
-[1] http://www.kernel.org/pub/software/scm/git/docs/git-fast-import.html
+Cherry-picking is immaterial. It doesn't matter how the changes come into 
+the tree. It doesn't matter what the history is. The only thing git cares 
+about is the content, and the end result.
+
+Git knows that the two branches got to two different end results. They 
+were identical except for that one line, and it asks you to say which 
+branch was "right" wrt that one line.
+
+In other words, git never looks at individual commits when trying to 
+merge. It doesn't try to figure out what the "meaning" of the changes are, 
+it purely looks at the content.
+
+And btw, it *has* to work that way, because if you don't work that way, 
+then you get different results depending on which path the development 
+took (eg you might get different results if something was considered a 
+"revert", for example, or if something was split up into two patches on 
+one side but not the other etc etc).
+
+But in this case it's pretty obvious: the commit from one side (the one 
+that changes MAXINT->INT_MAX: "Monitor.c s/MAXINT/INT_MAX/g") merged fine 
+into the result *except* for that one section that had touched the same 
+general area for other reasons. And that one area was seen as a conflict 
+because of those other reasons being in the same hunk.
+
+And yes, in this case the "other reasons" happened to be cherry-picked and 
+thus "the same" on both sides, but that doesn't mean that they should have 
+been considered in any way special: the result of cherry-picking is 
+context-dependent and is a part of the history of the target, and does not 
+equate any kind of "identity" with the source. Cherry-picking is 100% 
+equivalent to re-doing the commit entirely, and for all git knows, there 
+was a reason why it wasn't done together with that s/MAXINT/INT_MAX/g 
+change.
+
+(Not that git even thinks in those terms - git literally just says: "I 
+cannot resolve the _content_ independently and without understanding the 
+history and thinking behind the differences, so you'd better help me")
+
+			Linus
