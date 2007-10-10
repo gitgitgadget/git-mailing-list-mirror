@@ -1,69 +1,85 @@
-From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
-Subject: Re: git branch performance problem?
-Date: Wed, 10 Oct 2007 18:24:57 -0300
-Message-ID: <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com>
-References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com>
-	 <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>
-	 <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>
-Reply-To: hanwen@xs4all.nl
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: [FEATURE REQUEST] git clone, just clone selected branches?
+Date: Wed, 10 Oct 2007 23:25:51 +0200
+Message-ID: <011b01c80b84$222d1e70$04ac10ac@Jocke>
+References: <Pine.LNX.4.64.0710102032330.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Lars Hjemli" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 10 23:25:16 2007
+Cc: <git@vger.kernel.org>
+To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 10 23:26:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifj3F-00085j-Gi
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:25:09 +0200
+	id 1Ifj47-0008Ie-FY
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 23:26:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756602AbXJJVZA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 17:25:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756546AbXJJVZA
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:25:00 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:21733 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751788AbXJJVY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 17:24:59 -0400
-Received: by py-out-1112.google.com with SMTP id u77so631902pyb
-        for <git@vger.kernel.org>; Wed, 10 Oct 2007 14:24:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=yFf89iS3eWfMaRpKDQlzBivVBrLjL0B9kzptqBMyPhk=;
-        b=sAo/5hYRAT/fcgtHKKeowZFo832NCIvZamZsb6d8QjjKdlaJgGhB4IlV+bMnOEf1tVM8TfzD2RNOyV87cavV02fOlHdqqsfIvsqYy07hX94lKTKy0cJc4kyyofUhjew9uLlcYyZ6598aPkLr5BQr2TVQjc2nCpK/+yaSUeFLWEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=VIp25x8OoPsdt/xAnY3TcA+SgFQ8MnKSIQo0cPnhaXMnSyOzVfrtlRcGG78ULfSUA9eX34UFVLE+jlaIoj8HnwlBtrP/2qPqvSb6a8wrZpQgD8+b3gUPHKtlGdavoC7zC81MXXh2ARQFk65dlZ4rFY4hViKhpEmZN1JtUBLQ1JQ=
-Received: by 10.65.95.12 with SMTP id x12mr2459026qbl.1192051497918;
-        Wed, 10 Oct 2007 14:24:57 -0700 (PDT)
-Received: by 10.65.157.11 with HTTP; Wed, 10 Oct 2007 14:24:57 -0700 (PDT)
-In-Reply-To: <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>
-Content-Disposition: inline
+	id S1756660AbXJJVZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 17:25:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756546AbXJJVZz
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 17:25:55 -0400
+Received: from mail.transmode.se ([83.241.175.147]:60942 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1756028AbXJJVZy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 17:25:54 -0400
+Received: from Jocke ([84.217.95.61]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Wed, 10 Oct 2007 23:25:52 +0200
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <Pine.LNX.4.64.0710102032330.4174@racer.site>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+Thread-Index: AcgLdLMp+cV//cODQBaJ/3dmJZYyvwADEynw
+X-OriginalArrivalTime: 10 Oct 2007 21:25:52.0249 (UTC) FILETIME=[22806E90:01C80B84]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60546>
 
-2007/10/10, Han-Wen Nienhuys <hanwenn@gmail.com>:
-> > You probably want to run 'git gc' (which will run 'git pack-refs',
-> > i.e. put all files currently under .git/refs into a single file). This
-> > should speed up 'git branch' (and quite possibly other commands too).
->
-> This seems rather unuseful. After running gc pack-refs --all, I lost my HEAD,
->
-> hanwen@lilypond:~/vc/git5$ git show HEAD
-> fatal: ambiguous argument 'HEAD': unknown revision or path not in the
-> working tree.
+> -----Original Message-----
+> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+> Sent: den 10 oktober 2007 21:35
+> To: Joakim Tjernlund
+> Cc: git@vger.kernel.org
+> Subject: Re: [FEATURE REQUEST] git clone, just clone selected 
+> branches?
+> 
+> Hi,
+> 
+> On Wed, 10 Oct 2007, Joakim Tjernlund wrote:
+> 
+> > To my knowlede a git clone always clones all branches from 
+> the remote 
+> > repo. I would like the possibly to clone selected branches, like
+> >  git clone <repo URL> -b master -b upstream
+> > which will only fetch the master and upstream branch.
+> > 
+> > I know I can use git remote to do this, but it is a bit clumsy when 
+> > starting a new repo.
+> 
+> This is why I suggest: since it is an itch of yours, just fix 
+> it.  You are 
+> in the prime position to know when you're satisfied.
+> 
+> As a hint how to start: Junio dreamt of a git-clone which is a tiny 
+> wrapper around git-fetch and git-remote.
+> 
+> So you could start by writing a script which would be a 
+> replacement for 
+> git-clone.sh, and there you can also include the support for 
+> -b that you 
+> would like so much.
+> 
+> It would be nice, though, to keep this in separate patches, 
+> which you then 
+> submit to this list.
+> 
+> Thank you,
+> Dscho
 
-More to the point, I seemed to have lost my entire repository. This is
-the type of surprise  I don't enjoy.
+Thank you for these words of visdom, I should know better
+than to throw out ideas like this. Next time I have an suggestion
+I will think long and hard about it before posting again. 
 
-Now, can someone explain why 'git branch' takes forever if there are
-only two non-remote branches ?
-
--- 
-Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+ Jocke 
