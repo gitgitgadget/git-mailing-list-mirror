@@ -1,61 +1,63 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Status of kha/experimental
-Date: Wed, 10 Oct 2007 10:26:02 +0200
-Message-ID: <20071010082602.GF12970@diana.vm.bytemark.co.uk>
-References: <b0943d9e0710071418o6a664981i9d31db980c04bc50@mail.gmail.com> <20071007213307.GA32210@diana.vm.bytemark.co.uk> <b0943d9e0710091410w1559f1a0yb5055182fd289646@mail.gmail.com> <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stg branch command failures.
+Date: Wed, 10 Oct 2007 09:47:15 +0100
+Message-ID: <b0943d9e0710100147n5bcd52d4waa8b52efb41b4270@mail.gmail.com>
+References: <cc723f590710092031w87511dfl6ee3b728375f0815@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 10:26:20 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>, kha@treskal.com
+To: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:47:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfWtX-0000St-Ds
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:26:19 +0200
+	id 1IfXDx-0004H8-IS
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:47:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752848AbXJJI0J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Oct 2007 04:26:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752842AbXJJI0J
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:26:09 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3854 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752831AbXJJI0I (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 04:26:08 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IfWtG-0003bH-00; Wed, 10 Oct 2007 09:26:02 +0100
+	id S1753398AbXJJIrQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 04:47:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752751AbXJJIrQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:47:16 -0400
+Received: from rv-out-0910.google.com ([209.85.198.185]:10866 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753398AbXJJIrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 04:47:15 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so128715rvb
+        for <git@vger.kernel.org>; Wed, 10 Oct 2007 01:47:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=FdlRjLyoVbV59ssnISvPiPy/vQZvW4N5ZN9Zu1Qbwug=;
+        b=mcfYE0M8LeLW/UlkHz2J5uBNn5wPJ8UjDXWAR+47QsVXhu9UeS6KEIwMt2d6YRcQHhGX9ttEdY2KVY3CF0VLbRW9yGJjb4iQVik0rN25spF7JJVIjW15aFnLFG0hSBQggf8d5/CCUNJ8bJwyi93qznMS8GlvKS82vycGL/nxiNY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gumACgWkA3ZBDt482uQELmUnG2fMCAt5RWh7BMaQx07RCEMQrH2ozg5MnJYsSrHtlVsTyeNGoK0eBBUeGi5LoKY+AlDXsjTVckoe62WY5HHNGIT3L3AWx6P528JjkrIyqP4pFurGGRI4HHo1WOg4+bNtgscOeEOZdWkfmuLcKd0=
+Received: by 10.141.23.7 with SMTP id a7mr168669rvj.1192006035082;
+        Wed, 10 Oct 2007 01:47:15 -0700 (PDT)
+Received: by 10.140.187.15 with HTTP; Wed, 10 Oct 2007 01:47:15 -0700 (PDT)
+In-Reply-To: <cc723f590710092031w87511dfl6ee3b728375f0815@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60484>
 
-On 2007-10-09 23:46:13 +0200, Yann Dirson wrote:
+On 10/10/2007, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
+> Both the below commands doesn't work
+>
+> stg branch --rename review test-large-file
+> stg branch -c review v2.6.23-rc9
+>
+> It throws error
+> fatal: Needed a single revision
 
-> That would require that I update them, but I'm not sure Karl would
-> want them in kha/experimental, since virtually any other patch
-> causes a conflict...
+What version of GIT are you using? I started getting this message
+recently as well but only noticed it when renaming patches. However,
+the operation completes successfully (the message is displayed by GIT,
+not StGIT). I'll have to investigate.
 
-Right. If it's likely to be many conflicts, I wouldn't mind if you
-were the one who resolved them.
-
-> The best situation would be that there would be a code freeze at
-> some time, during which I could update those patches without too
-> much perturbations, but that may be asking a lot :)
-
-There aren't that many of us working on StGit. If you can give a
-reasonably accurate start date and duration of the freeze, I don't
-think it would be a problem. Others would simply have to be aware that
-any patches not merged before the freeze would have to be rebased on
-top of your work once the freeze is over.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Catalin
