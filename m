@@ -1,63 +1,59 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH] gitk: use git log --no-color vs. "diff.color = true"
-Date: Wed, 10 Oct 2007 10:58:30 +0200
-Message-ID: <200710101058.30911.barra_cuda@katamail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Colored diffs in thunderbird
+Date: Wed, 10 Oct 2007 10:56:51 +0200
+Message-ID: <470C93D3.60307@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Wed Oct 10 10:54:52 2007
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 10:57:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfXLA-0005VO-10
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:54:52 +0200
+	id 1IfXNT-0005uA-LH
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 10:57:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753120AbXJJIym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 04:54:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbXJJIym
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:54:42 -0400
-Received: from slim-3c.inet.it ([213.92.5.125]:43454 "EHLO slim-3c.inet.it"
+	id S1752002AbXJJI5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 04:57:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751977AbXJJI5F
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 04:57:05 -0400
+Received: from mail.op5.se ([193.201.96.20]:55079 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752993AbXJJIym (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 04:54:42 -0400
-Received: from host72-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.72]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.56.72+2XYcYy2orPKV; Wed, 10 Oct 2007 10:54:38 +0200
-User-Agent: KMail/1.9.7
-Content-Disposition: inline
+	id S1751681AbXJJI5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 04:57:04 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id BB8F21730665
+	for <git@vger.kernel.org>; Wed, 10 Oct 2007 10:56:18 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 51Yaipb1Lpvt for <git@vger.kernel.org>;
+	Wed, 10 Oct 2007 10:56:15 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 47D7C1730575
+	for <git@vger.kernel.org>; Wed, 10 Oct 2007 10:56:13 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60486>
 
-Setting "diff.color = true" in the configuration makes "git log"
-output use color codes. These aren't parsed by gitk, so use
-"git log --no-color" instead.
+Hello all.
 
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
+Just stumbled on this thunderbird addon and thought I'd share the love.
+It makes patch review on mailing lists even more pleasant. It seems to
+work splendidly, apart from showing the options bar in replies to mail
+with inline patches.
 
-Yes, this is the same fix that commit eeebd8d8c5ab63494abe200b30a840aa99ee7412
-applied on git-svn.
+https://addons.mozilla.org/en-US/thunderbird/addon/4268
 
- gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitk b/gitk
-index 300fdce..999e3c2 100755
---- a/gitk
-+++ b/gitk
-@@ -92,7 +92,7 @@ proc start_rev_list {view} {
- 	set order "--date-order"
-     }
-     if {[catch {
--	set fd [open [concat | git log -z --pretty=raw $order --parents \
-+	set fd [open [concat | git log --no-color -z --pretty=raw $order --parents \
- 			 --boundary $viewargs($view) "--" $viewfiles($view)] r]
-     } err]} {
- 	error_popup "Error executing git rev-list: $err"
 -- 
-1.5.3.4
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
