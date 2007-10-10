@@ -1,63 +1,84 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: inexplicable failure to merge recursively across cherry-picks
-Date: Wed, 10 Oct 2007 12:33:18 +0200
-Message-ID: <858x6bw975.fsf@lola.goethe.zz>
-References: <20071010015545.GA17336@lapse.madduck.net>
-	<alpine.LFD.0.999.0710091926560.3838@woody.linux-foundation.org>
-	<20071010102528.GB20390@lapse.madduck.net>
+From: Jan Wielemaker <jan@swi-prolog.org>
+Subject: [PATCH] git-cvsserver: added support for update -p
+Date: Wed, 10 Oct 2007 13:16:03 +0200
+Organization: SWI-Prolog
+Message-ID: <200710101316.03633.jan@swi-prolog.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git discussion list <git@vger.kernel.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: martin f krafft <madduck@madduck.net>
-X-From: git-owner@vger.kernel.org Wed Oct 10 12:32:51 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 10 13:35:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfYry-0007Dn-BE
-	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 12:32:50 +0200
+	id 1IfZqN-0001OY-VK
+	for gcvg-git-2@gmane.org; Wed, 10 Oct 2007 13:35:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752346AbXJJKci (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Oct 2007 06:32:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752328AbXJJKci
-	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 06:32:38 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:58805 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751925AbXJJKch (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Oct 2007 06:32:37 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IfYqk-0002ms-CK; Wed, 10 Oct 2007 06:31:34 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 941211C1F3DC; Wed, 10 Oct 2007 12:33:18 +0200 (CEST)
-In-Reply-To: <20071010102528.GB20390@lapse.madduck.net> (martin f. krafft's message of "Wed\, 10 Oct 2007 11\:25\:28 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1752049AbXJJLfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Oct 2007 07:35:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751469AbXJJLfF
+	(ORCPT <rfc822;git-outgoing>); Wed, 10 Oct 2007 07:35:05 -0400
+Received: from smtp-vbr3.xs4all.nl ([194.109.24.23]:1542 "EHLO
+	smtp-vbr3.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751925AbXJJLfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Oct 2007 07:35:04 -0400
+X-Greylist: delayed 784 seconds by postgrey-1.27 at vger.kernel.org; Wed, 10 Oct 2007 07:35:03 EDT
+Received: from gollem.science.uva.nl (gollem.science.uva.nl [146.50.26.20])
+	(authenticated bits=0)
+	by smtp-vbr3.xs4all.nl (8.13.8/8.13.8) with ESMTP id l9ABLvPn090965
+	for <git@vger.kernel.org>; Wed, 10 Oct 2007 13:21:57 +0200 (CEST)
+	(envelope-from jan@swi-prolog.org)
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60491>
 
-martin f krafft <madduck@madduck.net> writes:
+[PATCH] git-cvsserver: added support for update -p
+---
+Hi,
 
-> also sprach Linus Torvalds <torvalds@linux-foundation.org> [2007.10.10.0354 +0100]:
->> Cherry-picking is immaterial. It doesn't matter how the changes
->> come into the tree. It doesn't matter what the history is. The
->> only thing git cares about is the content, and the end result.
->
-> This is the part I over-estimated. I thought that Git would figure
-> out that commits 1-3 had been merged into the target and thus apply,
-> in sequence, only the commits from the source which had not been
-> merged.
->
-> Many thanks (again), Linus! Looking forward to your next content
-> manager; you know, the one with artificial intelligence built in!
-> You could call it "wit" :)
+Someone in our team uses "cvs update -p [-r rev] file" (somehow invoked
+through TortoiseCVS). The patch below provides that. I think it is fine,
+except that I don't know with wich other flags -p can be combined and
+therefore when exactly this should be tested. Figured out that normal
+CVS sends the file line-by-line preceeded by "M " using strace on the
+client to a real CVS server.
 
-Well, there is also an obvious name choice when the distinguishing
-innovation is a well-rounded feature set, but it would cause a name
-collision for the equivalent of "tig".
+	Enjoy --- Jan
 
+ git-cvsserver.perl |   15 +++++++++++++++
+ 1 files changed, 15 insertions(+), 0 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 13dbd27..987f4d6 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -956,6 +956,21 @@ sub req_update
+             $meta = $updater->getmeta($filename);
+         }
+ 
++	# if we have a -p we should just send the file
++        if ( exists ( $state->{opt}{p} ) )
++	{
++	    if ( open my $fh, '-|', "git-cat-file", "blob", $meta->{filehash} )
++	    {   while ( <$fh> )
++		{ print "M " . $_;
++		}
++		close $fh or die ("Couldn't close filehandle for transmitfile(): $!");
++	    } else
++	    { die("Couldn't execute git-cat-file");
++	    }
++
++	    next;
++	}
++
+ 	if ( ! defined $meta )
+ 	{
+ 	    $meta = {
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+1.5.3.4
