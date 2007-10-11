@@ -1,72 +1,69 @@
-From: Bill Priest <priestwilliaml@yahoo.com>
-Subject: How to have multiple working copy directories use the same repository?
-Date: Thu, 11 Oct 2007 11:10:50 -0700 (PDT)
-Message-ID: <744844.82514.qm@web55015.mail.re4.yahoo.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: RCS keyword expansion
+Date: Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.62.0710111953460.7441@perkele.intern.softwolves.pp.se>
+References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+ <86fy0hvgbh.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 20:17:46 2007
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Oct 11 20:55:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig2bQ-0007Sy-Hc
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 20:17:44 +0200
+	id 1Ig3C9-0007a1-17
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 20:55:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543AbXJKSRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 14:17:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756323AbXJKSRd
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 14:17:33 -0400
-Received: from web55015.mail.re4.yahoo.com ([206.190.58.149]:38074 "HELO
-	web55015.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756057AbXJKSRc (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2007 14:17:32 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Oct 2007 14:17:32 EDT
-Received: (qmail 83185 invoked by uid 60001); 11 Oct 2007 18:10:50 -0000
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
-  b=vcfZJ8XwSjsNt6hk/t9lU40qItNqllI0f+ihEIKHe4sYpTPEPPUhTFzqoNrMj/qYVFjU/VzLHspOK1hCaP5rMrwKrqc47uW8koQNtzExpFlFvv5FA5dR2eatTZBnN+kLKazqnMJSWT84Hokd9ED1Nq7alIVaFirHBd3kwg0RpC4=;
-X-YMail-OSG: 2bO9BxEVM1ma8COQ66tOleiGBoGyDBxaKB1_A5aMaorjI6r57yjC1UZTkcvSMvEoChTqQw77ioMe8ipLnk6ffVkwXiJ8Tx_JKY3Ih9Aeflrz2w.mIlPXW7L3650HJ5JuapwQncSZ9sirdyXYKYk9xUajIw--
-Received: from [12.44.137.148] by web55015.mail.re4.yahoo.com via HTTP; Thu, 11 Oct 2007 11:10:50 PDT
+	id S1755027AbXJKSzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 14:55:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbXJKSzb
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 14:55:31 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:54592 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754284AbXJKSz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 14:55:29 -0400
+X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Oct 2007 14:55:29 EDT
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JPR00F5ADS1E800@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 11 Oct 2007 19:55:13 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPR006ZHDRT7D80@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
+Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPR0020VDRS6F00@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
+Received: by perkele (Postfix, from userid 501)	id 04A2A2FC18; Thu,
+ 11 Oct 2007 19:55:06 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 02A652FC0C	for <git@vger.kernel.org>; Thu,
+ 11 Oct 2007 19:55:06 +0200 (CEST)
+In-reply-to: <86fy0hvgbh.fsf@blue.stonehenge.com>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60623>
 
-All,
-  My current business requirements make it
-advantageous to have two concurrent working
-directories (that have similar file structure; but not
-exactly the same); I need to maintain two separate
-builds that are always up to date.  Each working
-directory would be associated with a particular
-branch/line of branches (think of two different
-hardware platforms that have considerable overlap).  A
-complication to this is that I need to use git-svn as
-the remainder of the team uses svn (I just changed
-from cvs to svn last Jan so it is a hard sell to
-management to change again).  I'm using git for the
-merge capabilities.
-  I've looked at the "git for CVS users" section in
-the docs and this appears to create two repositories. 
-Is there a way to have two working directories that
-utilize the same repository?
-  I'm betting that I'm just trying to push my workflow
-style onto git instead of adapting to the git way of
-doing things; but thought I would ask.
+Randal L. Schwartz:
 
-TIA,
+> That's not a job for a source code manager to do.  It's a job for your 
+> build/install tool.
 
-Bill
-PS.  I'm trying to avoid the push in the commit, push,
-merge, dcommit cycle.
+Since there is no build step involved (my web site is just a CVS checkout at 
+the moment), it's a job for the checkout step. I'd really want to avoid 
+having a separate copy of the web site just so that I can do a "make 
+install". That would sort of negate the savings in disk space I hope seeing 
+by moving from CVS to Git.
 
-
-
-       
-____________________________________________________________________________________
-Yahoo! oneSearch: Finally, mobile search 
-that gives answers, not web links. 
-http://mobile.yahoo.com/mobileweb/onesearch?refer=1ONXIC
+-- 
+\\// Peter - http://www.softwolves.pp.se/
