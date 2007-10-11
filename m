@@ -1,91 +1,61 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: yet another workflow question...
-Date: Thu, 11 Oct 2007 16:44:34 +0200
-Message-ID: <E16F512D-21F4-4E01-888C-967603F63AD8@zib.de>
-References: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com> <86lka9spjq.fsf@lola.quinscape.zz>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Oct 11 16:43:21 2007
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: RCS keyword expansion
+Date: Thu, 11 Oct 2007 15:47:29 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 11 16:47:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfzFw-0000aF-2j
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:43:20 +0200
+	id 1IfzKA-0001Vr-Sz
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:47:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753250AbXJKOnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 10:43:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752924AbXJKOnJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:43:09 -0400
-Received: from mailer.zib.de ([130.73.108.11]:62837 "EHLO mailer.zib.de"
+	id S1752835AbXJKOrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 10:47:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754665AbXJKOrd
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:47:33 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:55803 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753118AbXJKOnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 10:43:07 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9BEh3RU019983;
-	Thu, 11 Oct 2007 16:43:03 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9BEh3jW000626
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 11 Oct 2007 16:43:03 +0200 (MEST)
-In-Reply-To: <86lka9spjq.fsf@lola.quinscape.zz>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752338AbXJKOrc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 10:47:32 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9BElTnQ024160
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Thu, 11 Oct 2007 16:47:30 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9BElThf024155;
+	Thu, 11 Oct 2007 16:47:29 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Thu, 11 Oct 2007 16:47:30 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60604>
 
+Hi!
 
-On Oct 11, 2007, at 4:18 PM, David Kastrup wrote:
+I've looked and looked, but cannot figure out how to do RCS/CVS style
+keyword expansion with Git. The FAQ on the Wiki is quite cryptic on the
+subject, and my googling skills fail short.
 
-> "Patrick Doyle" <wpdster@gmail.com> writes:
->
->> Sorry for cluttering up the list with yet another very basic workflow
->> question, but I'm still struggling with finding an answer to the
->> burning question, "What can git do for me?"  (So far, I have come to
->> the conclusion that, for my simple, single developer, branchless,
->> linear projects, there's not much that git can do for me that any
->> other SCM could do for me.  It appears to have been designed to solve
->> problems for which I have absolutely no appreciation whatsoever. :-))
->>
->> Anyway, on to basic newbie quesion #107...
->>
->> I've been working on my project and I realize that I have 3-4 files
->> modified with two orthogonal sets of changes.  (I didn't realize this
->> until I said to myself -- "Self, I should really check in these files
->> before I go too much further down this path".)  So I start "git
->> diff"-ing the files and I find that most files have differences
->> related to only one change or the other, but one file has differences
->> related to both changes.
->>
->> What do others do in this situation?
->> a) Not allow themselves to get into this situation in the first place
->> by careful planning?
->>
->> b) Copy the file to "file.bothchanges", edit out one set of changes,
->> commit that with one log message, edit back in the other set of
->> changes, edit in the other set of changes, commit that with another
->> log message?
->>
->> c) Use some sort of automation to do option (b) for them?
->>
->> d) Something else?
->
-> git-add -i
+I mainly want to have $Date$ expand in RCS/CVS manner, i.e to when the
+file was last changed. Possibly even have an $Id$ that gives me
+something useful (name and commit hash, perhaps?). Is it possible to do
+this? Can it be done through git-cvsserver?
 
-git-gui, right click on change.
+I currently have my personal website in CVS and am using $Date$ to
+include a datestamp on the pages. I am considering converting the
+repository to Git, but only after I can get $Date$ expansion to work.
+I am considering having the website host believe it still is a cvs
+repository by using git-cvsserver, thus my question about expanding
+$Date$ through it.
 
- From the user manual:
-
-"""
-You can also use git-gui(1) to create commits, view changes in the  
-index and the working tree files, and individually select diff hunks  
-for inclusion in the index (by right-clicking on the diff hunk and  
-choosing "Stage Hunk For Commit").
-"""
-
-	Steffen
+-- 
+\\// Peter - http://www.softwolves.pp.se/
