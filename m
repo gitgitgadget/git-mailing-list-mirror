@@ -1,65 +1,57 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Split a subversion repo into several git repos
-Date: Thu, 11 Oct 2007 16:50:19 +0200
-Message-ID: <20071011145019.GA5315@diana.vm.bytemark.co.uk>
-References: <op.tz09zaizjwclfx@ichi> <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com> <e2a1d0aa0710110702o359d6cd9yaa213be6a43924e4@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: RCS keyword expansion
+Date: Thu, 11 Oct 2007 17:02:56 +0200
+Message-ID: <470E3B20.3050904@viscovery.net>
+References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	Eivind LM <eivliste@online.no>, git@vger.kernel.org
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 16:51:42 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Oct 11 17:03:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfzNi-0002IX-BJ
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:51:22 +0200
+	id 1IfzZ7-000510-Uu
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 17:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758098AbXJKOuv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Oct 2007 10:50:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754294AbXJKOuu
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:50:50 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4341 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754416AbXJKOut (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 10:50:49 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IfzMi-0001Ph-00; Thu, 11 Oct 2007 15:50:20 +0100
-Content-Disposition: inline
-In-Reply-To: <e2a1d0aa0710110702o359d6cd9yaa213be6a43924e4@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1753176AbXJKPC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 11:02:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753422AbXJKPC7
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 11:02:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:15648 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752924AbXJKPC6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 11:02:58 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IfzYm-0002O9-Pw; Thu, 11 Oct 2007 17:02:49 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 61093A33B; Thu, 11 Oct 2007 17:02:56 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60606>
 
-On 2007-10-11 10:02:21 -0400, Patrick Doyle wrote:
+Peter Karlsson schrieb:
+> I've looked and looked, but cannot figure out how to do RCS/CVS style
+> keyword expansion with Git. The FAQ on the Wiki is quite cryptic on the
+> subject, and my googling skills fail short.
 
-> Just be aware that, if you follow this approach, the commit logs
-> created by git-svn will be rewritten (relative to the original SVN
-> logs) with the SVN repository revision and ID information. I believe
-> you can disable this behavior by passing the --no-metadata option to
-> "git-svn init", but I haven't tried this yet.
+Cryptic?
 
-Just to clarify: this is true for all git-svn use, and has nothing to
-do with this particular case.
+Q: Does git have keyword expansion?
+A: No.
 
-> I also believe that this approach will leave your git repository in
-> such as state as to recognize that there is a remote repository from
-> which this repository was fetched. I have no idea what implications
-> and long term repercussions (if any) this has. It just dawned on me
-> as I was rereading the git-svn man page to look for the --no-metdata
-> option and read that it will "Set the noMetadata option in the
-> [svn-remote] config". Most of that is still Greek to me.
+To me this is crystal clear.
 
-Apart from the metadata appended to the commit messages (which you can
-turn off with --no-metadata), all the extra data saved by git-svn is
-purely local. Meaning that you can always get rid of it by cloning the
-repository, if you can't think of a cleverer way to do it.
+:-)
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- Hannes
