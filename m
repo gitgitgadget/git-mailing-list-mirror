@@ -1,70 +1,90 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Fixing path quoting issues
-Date: Thu, 11 Oct 2007 23:40:39 +0200
-Message-ID: <85tzoxqqi0.fsf@lola.goethe.zz>
-References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv>
-	<470DC05A.8020209@viscovery.net> <854pgytafi.fsf@lola.goethe.zz>
-	<470DCC76.7070809@viscovery.net>
-	<81156EED-7AC0-4C8B-98B1-8338262459A6@bestbefore.tv>
-	<470DD3B8.1080809@viscovery.net> <85k5pts796.fsf@lola.goethe.zz>
-	<63D5CE5B-51DD-4017-B2E2-2ADC5DCBE849@steelskies.com>
-	<Pine.LNX.4.64.0710112227000.4174@racer.site>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Split a subversion repo into several git repos
+Date: Fri, 12 Oct 2007 10:40:40 +1300
+Message-ID: <470E9858.5050904@vilain.net>
+References: <op.tz09zaizjwclfx@ichi> <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 11 23:40:23 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Eivind LM <eivliste@online.no>, git@vger.kernel.org
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 23:41:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig5lW-0007yY-AY
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 23:40:22 +0200
+	id 1Ig5mc-0008Bu-4U
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 23:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756553AbXJKVjx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 17:39:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756342AbXJKVjx
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 17:39:53 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:36629 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755856AbXJKVjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 17:39:52 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Ig5l1-0002Dh-4g; Thu, 11 Oct 2007 17:39:51 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 97EAA1C1F3DC; Thu, 11 Oct 2007 23:40:39 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0710112227000.4174@racer.site> (Johannes Schindelin's message of "Thu\, 11 Oct 2007 22\:31\:05 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1756342AbXJKVks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 17:40:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755915AbXJKVks
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 17:40:48 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:58593 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756212AbXJKVkr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 17:40:47 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 7B9E227C0FB; Fri, 12 Oct 2007 10:40:46 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id CEE5921CFF4;
+	Fri, 12 Oct 2007 10:40:40 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60643>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Jonathan del Strother wrote:
+>> For example, I want to convert one subversion repository which  
+>> contains the folders:
+>> trunk/projectA
+>> trunk/projectB
+>>
+>> into two git repositories:
+>> projectA.git
+>> projectB.git
+> 
+> I have a slightly different layout to you -
+> 
+> projectA/trunk
+> projectA/branches
+> projectA/tags
+> projectB/trunk
+> projectB/branches
+> projectB/tags
+> etc
+> 
+> - but I've been creating separate git repos from that with (for  
+> example) :
+> 
+> git-svn init -t tags -b branches -T trunk http://svn.host.com/projectA
+> git-svn fetch
+> 
+> 
+> Or will git-svn not work with your sort of layout?
 
-> On Thu, 11 Oct 2007, Jonathan del Strother wrote:
->
->> On 11 Oct 2007, at 21:53, David Kastrup wrote:
->> 
->> > Johannes Sixt <j.sixt@viscovery.net> writes:
->> > 
->> > > Jonathan del Strother schrieb:
->> > > > How are you going to test that git works on paths with spaces if the
->> > > > test suite doesn't run there?
->> > > 
->> > > By writing a specific test?
->> > 
->> > This is going to be much less thorough.  And it does no harm if the 
->> > test scripts demonstrate defensive programming.
->
-> We do not have _extensive_ tests.  We want to do some coding in
-> addition to waiting for our machines to finish the test.  D'oh.
+It does work.  Use:
 
-A good reason for not requiring special tests just for spaces.
+git-svn init -t projectA/tags -b projectA/branches \
+   -T trunk/projectA http://svn.host.com/
+git fetch
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Also you can expect the import results of each branch to be the same
+regardless of whether you import all at once using a command like the
+above, or import a single path without passing -t / -b / -T to git svn init.
+
+If you have a lot of projects to mine from a single repository, use
+svnsync or SVN::Mirror/svk and then import from the local repository
+with --use-svm-props.
+
+Sam.
