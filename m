@@ -1,61 +1,65 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: RCS keyword expansion
-Date: Thu, 11 Oct 2007 15:47:29 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Split a subversion repo into several git repos
+Date: Thu, 11 Oct 2007 16:50:19 +0200
+Message-ID: <20071011145019.GA5315@diana.vm.bytemark.co.uk>
+References: <op.tz09zaizjwclfx@ichi> <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com> <e2a1d0aa0710110702o359d6cd9yaa213be6a43924e4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 16:47:45 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan del Strother <maillist@steelskies.com>,
+	Eivind LM <eivliste@online.no>, git@vger.kernel.org
+To: Patrick Doyle <wpdster@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 16:51:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfzKA-0001Vr-Sz
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:47:43 +0200
+	id 1IfzNi-0002IX-BJ
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:51:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835AbXJKOrd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 10:47:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754665AbXJKOrd
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:47:33 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:55803 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752338AbXJKOrc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 10:47:32 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9BElTnQ024160
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Thu, 11 Oct 2007 16:47:30 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9BElThf024155;
-	Thu, 11 Oct 2007 16:47:29 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Thu, 11 Oct 2007 16:47:30 +0200 (CEST)
+	id S1758098AbXJKOuv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Oct 2007 10:50:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754294AbXJKOuu
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:50:50 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4341 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754416AbXJKOut (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 10:50:49 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IfzMi-0001Ph-00; Thu, 11 Oct 2007 15:50:20 +0100
+Content-Disposition: inline
+In-Reply-To: <e2a1d0aa0710110702o359d6cd9yaa213be6a43924e4@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60605>
 
-Hi!
+On 2007-10-11 10:02:21 -0400, Patrick Doyle wrote:
 
-I've looked and looked, but cannot figure out how to do RCS/CVS style
-keyword expansion with Git. The FAQ on the Wiki is quite cryptic on the
-subject, and my googling skills fail short.
+> Just be aware that, if you follow this approach, the commit logs
+> created by git-svn will be rewritten (relative to the original SVN
+> logs) with the SVN repository revision and ID information. I believe
+> you can disable this behavior by passing the --no-metadata option to
+> "git-svn init", but I haven't tried this yet.
 
-I mainly want to have $Date$ expand in RCS/CVS manner, i.e to when the
-file was last changed. Possibly even have an $Id$ that gives me
-something useful (name and commit hash, perhaps?). Is it possible to do
-this? Can it be done through git-cvsserver?
+Just to clarify: this is true for all git-svn use, and has nothing to
+do with this particular case.
 
-I currently have my personal website in CVS and am using $Date$ to
-include a datestamp on the pages. I am considering converting the
-repository to Git, but only after I can get $Date$ expansion to work.
-I am considering having the website host believe it still is a cvs
-repository by using git-cvsserver, thus my question about expanding
-$Date$ through it.
+> I also believe that this approach will leave your git repository in
+> such as state as to recognize that there is a remote repository from
+> which this repository was fetched. I have no idea what implications
+> and long term repercussions (if any) this has. It just dawned on me
+> as I was rereading the git-svn man page to look for the --no-metdata
+> option and read that it will "Set the noMetadata option in the
+> [svn-remote] config". Most of that is still Greek to me.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Apart from the metadata appended to the commit messages (which you can
+turn off with --no-metadata), all the extra data saved by git-svn is
+purely local. Meaning that you can always get rid of it by cloning the
+repository, if you can't think of a cleverer way to do it.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
