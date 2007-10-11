@@ -1,57 +1,53 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] fetch: if not fetching from default remote, ignore default
-   merge
-Date: Thu, 11 Oct 2007 08:39:54 +0200
-Message-ID: <470DC53A.4050707@viscovery.net>
-References: <Pine.LNX.4.64.0710110146200.4174@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git branch performance problem?
+Date: Thu, 11 Oct 2007 08:41:26 +0200
+Message-ID: <20071011064126.GA3649@steel.home>
+References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com> <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com> <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com> <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com> <f329bf540710101430i63926b25q7d55976af96b891d@mail.gmail.com> <alpine.LFD.0.999.0710101610230.20690@woody.linux-foundation.org> <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, hjemli@gmail.com, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 11 08:40:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Thu Oct 11 08:41:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfriJ-0003Wy-Gl
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 08:40:07 +0200
+	id 1Ifrjo-0003lL-OP
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 08:41:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753871AbXJKGj6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 02:39:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbXJKGj6
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 02:39:58 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:13521 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752952AbXJKGj5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 02:39:57 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Ifrhz-0006Rg-5N; Thu, 11 Oct 2007 08:39:47 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id A41A9A33B; Thu, 11 Oct 2007 08:39:54 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0710110146200.4174@racer.site>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S1754385AbXJKGlb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 02:41:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753729AbXJKGlb
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 02:41:31 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:46842 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754037AbXJKGla (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 02:41:30 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (klopstock mo13) (RZmta 13.4)
+	with ESMTP id y0331dj9B3wj1v ; Thu, 11 Oct 2007 08:41:26 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 53F88277AE;
+	Thu, 11 Oct 2007 08:41:26 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 33DD8C50A; Thu, 11 Oct 2007 08:41:25 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60581>
 
-Johannes Schindelin schrieb:
-> +test_expect_success 'fetch with a non-applying branch.<name>.merge' '
-> +	git config branch.master.remote yeti &&
-> +	git config branch.master.merge refs/heads/bigfoot &&
-> +	git config remote.blub.url one &&
-> +	git config remote.blub.fetch 'refs/heads/*:refs/remotes/one/*' &&
+Han-Wen Nienhuys, Thu, Oct 11, 2007 04:26:24 +0200:
+> > So the rule really is: never *ever* do anything but fast-forward in a repo
+> >[..]
+> 
+> Methinks this is all too difficult. I will use clone -l henceforth.
 
-Better use double-quotes around the refspecs.
-
-> +	git fetch blub
-> +'
-> +
-
--- Hannes
+It is current default for local clones
