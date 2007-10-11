@@ -1,119 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH v2] fetch: if not fetching from default remote, ignore default
- merge
-Date: Thu, 11 Oct 2007 12:35:59 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710111235440.4174@racer.site>
-References: <Pine.LNX.4.64.0710110146200.4174@racer.site> <470DC53A.4050707@viscovery.net>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: Re: git branch performance problem?
+Date: Thu, 11 Oct 2007 10:11:41 -0300
+Message-ID: <f329bf540710110611j7ea39cfdx416b43b902fcc9e4@mail.gmail.com>
+References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com>
+	 <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>
+	 <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>
+	 <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com>
+	 <f329bf540710101430i63926b25q7d55976af96b891d@mail.gmail.com>
+	 <alpine.LFD.0.999.0710101610230.20690@woody.linux-foundation.org>
+	 <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+	 <Pine.LNX.4.64.0710111145090.4174@racer.site>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, hjemli@gmail.com, gitster@pobox.com
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 11 13:36:30 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Lars Hjemli" <hjemli@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 11 15:12:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IfwL8-0007tQ-3t
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 13:36:30 +0200
+	id 1IfxpW-0003aP-Hs
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 15:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753515AbXJKLgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 07:36:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753454AbXJKLgV
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 07:36:21 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44483 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753199AbXJKLgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 07:36:20 -0400
-Received: (qmail invoked by alias); 11 Oct 2007 11:36:18 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp040) with SMTP; 11 Oct 2007 13:36:18 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+2xI5+uW+2bDe3gPyVfUv6EUovfE2nxdH0Vkra7X
-	Hn2jaRREgQnwiZ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <470DC53A.4050707@viscovery.net>
-X-Y-GMX-Trusted: 0
+	id S1751820AbXJKNLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 09:11:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751632AbXJKNLo
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 09:11:44 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:55545 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751431AbXJKNLn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 09:11:43 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so440862ugc
+        for <git@vger.kernel.org>; Thu, 11 Oct 2007 06:11:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=8Qxs51vYnoK7wRxGydbGEgRlQbUD+DPVupysP1UY/+o=;
+        b=EoIAfT3zEtr9Igs90j+EnqJatm61G0k2nXmSXW4yFUxg5p4WnVOaZqA7mglt1hdb4zot9ruAoMQTa6eqw+bwrFvpYTpPuJcirN2+/FIzznPI+zn2/3+IZSEnJXyAJnfhf1+TshL5Y4T59pQ4TlDbXZZ8TL/B5DBee21g6IHDimY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=eqNw6tDa8rJtt9Tjr0sQoZZBtCy5dz6gSv3CbUGqtFocHxMCEVzdqWU0sa2fMmk2ap16D/K4itw9MhV0Pcyq9KczNvJpo9pX2XC3r4bWAi2QYxYfglyr9j7L/8AO+F3aoQbdB6RTe7PoPUhT1tG28nlzY98UBrKpHR72p46Bqrk=
+Received: by 10.78.175.14 with SMTP id x14mr1419802hue.1192108301757;
+        Thu, 11 Oct 2007 06:11:41 -0700 (PDT)
+Received: by 10.78.41.4 with HTTP; Thu, 11 Oct 2007 06:11:41 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710111145090.4174@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60594>
 
+2007/10/11, Johannes Schindelin <Johannes.Schindelin@gmx.de>:
+> > For cherrypicking convenience, I would still appreciate it if there was
+> > a mechanism similar to alternates that would allow me to view objects
+> > from an alternate repo; objects found through this mechanism should
+> > never be assumed to be present in the database, of course.
+>
+> Silly question: why don't you just
+>
+>         git remote add -f other <url>
+>
+> and then review the changes with "git log", "git diff" and "git show"?
 
-When doing "git fetch <remote>" on a remote that does not have the
-branch referenced in branch.<current-branch>.merge, git fetch failed.
-It failed because it tried to add the "merge" ref to the refs to be
-fetched.
+Thank for the tip; I'll look into it.
 
-Fix that.  And add a test case.
-
-Incidentally, this unconvered a bug in our own test suite, where
-"git pull <some-path>" was expected to merge the ref given in the
-defaults, even if not pulling from the default remote.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin-fetch.c            |    8 +++++++-
- t/t5510-fetch.sh           |    8 ++++++++
- t/t5700-clone-reference.sh |    4 ++--
- 3 files changed, 17 insertions(+), 3 deletions(-)
-
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index cf7498b..ca4de9f 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -105,7 +105,13 @@ static struct ref *get_ref_map(struct transport *transport,
- 				    !remote->fetch[0].pattern)
- 					ref_map->merge = 1;
- 			}
--			if (has_merge)
-+			/*
-+			 * if the remote we're fetching from is the same
-+			 * as given in branch.<name>.remote, we add the
-+			 * ref given in branch.<name>.merge, too.
-+			 */
-+			if (has_merge && !strcmp(branch->remote_name,
-+						remote->name))
- 				add_merge_config(&ref_map, remote_refs, branch, &tail);
- 		} else {
- 			ref_map = get_remote_ref(remote_refs, "HEAD");
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 73a4e3c..1f398bc 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -188,4 +188,12 @@ test_expect_success 'push via rsync' '
- '
- }
- 
-+test_expect_success 'fetch with a non-applying branch.<name>.merge' '
-+	git config branch.master.remote yeti &&
-+	git config branch.master.merge refs/heads/bigfoot &&
-+	git config remote.blub.url one &&
-+	git config remote.blub.fetch "refs/heads/*:refs/remotes/one/*" &&
-+	git fetch blub
-+'
-+
- test_done
-diff --git a/t/t5700-clone-reference.sh b/t/t5700-clone-reference.sh
-index 4e93aaa..b6a5486 100755
---- a/t/t5700-clone-reference.sh
-+++ b/t/t5700-clone-reference.sh
-@@ -38,7 +38,7 @@ cd "$base_dir"
- 
- test_expect_success 'pulling from reference' \
- 'cd C &&
--git pull ../B'
-+git pull ../B master'
- 
- cd "$base_dir"
- 
-@@ -61,7 +61,7 @@ test_expect_success 'existence of info/alternates' \
- cd "$base_dir"
- 
- test_expect_success 'pulling from reference' \
--'cd D && git pull ../B'
-+'cd D && git pull ../B master'
- 
- cd "$base_dir"
- 
 -- 
-1.5.3.4.1174.gcd0d6-dirty
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
