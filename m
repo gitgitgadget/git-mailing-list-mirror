@@ -1,56 +1,53 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] Fixing path quoting issues
-Date: Thu, 11 Oct 2007 22:53:25 +0200
-Message-ID: <85k5pts796.fsf@lola.goethe.zz>
-References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv>
-	<470DC05A.8020209@viscovery.net> <854pgytafi.fsf@lola.goethe.zz>
-	<470DCC76.7070809@viscovery.net>
-	<81156EED-7AC0-4C8B-98B1-8338262459A6@bestbefore.tv>
-	<470DD3B8.1080809@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] cvsserver: added support for update -p
+Date: Thu, 11 Oct 2007 21:59:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710112158330.4174@racer.site>
+References: <200710101316.03633.jan@swi-prolog.org>
+ <1192120573-16765-1-git-send-email-frank@lichtenheld.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Oct 11 22:53:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	Jan Wielemaker <jan@swi-prolog.org>
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Thu Oct 11 23:00:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig51X-0006Sl-Kf
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 22:52:52 +0200
+	id 1Ig58V-0007vK-Fx
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 23:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373AbXJKUwk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 16:52:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755231AbXJKUwk
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 16:52:40 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:34293 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754662AbXJKUwj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 16:52:39 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Ig51J-0007LN-Hy; Thu, 11 Oct 2007 16:52:37 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id A3C441C1F3DC; Thu, 11 Oct 2007 22:53:25 +0200 (CEST)
-In-Reply-To: <470DD3B8.1080809@viscovery.net> (Johannes Sixt's message of "Thu\, 11 Oct 2007 09\:41\:44 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1755601AbXJKU7x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 16:59:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755534AbXJKU7x
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 16:59:53 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44164 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755231AbXJKU7x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 16:59:53 -0400
+Received: (qmail invoked by alias); 11 Oct 2007 20:59:49 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 11 Oct 2007 22:59:49 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19YhxUhKMVYy/E/zzjjP5ppIpSFMNDHrJrg6gejXF
+	tYnbtRB3OY4+f3
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1192120573-16765-1-git-send-email-frank@lichtenheld.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60636>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hi,
 
-> Jonathan del Strother schrieb:
->> How are you going to test that git works on paths with spaces if the
->> test suite doesn't run there?
->
-> By writing a specific test?
+On Thu, 11 Oct 2007, Frank Lichtenheld wrote:
 
-This is going to be much less thorough.  And it does no harm if the
-test scripts demonstrate defensive programming.
+> +	if ( exists ( $state->{opt}{p} ) )
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+I see you kept the coding style, which is not in agreement with the rest 
+of git...  Intention or oversight?
+
+Ciao,
+Dscho
