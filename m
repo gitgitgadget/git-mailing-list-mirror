@@ -1,69 +1,60 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: RCS keyword expansion
-Date: Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.62.0710111953460.7441@perkele.intern.softwolves.pp.se>
-References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
- <86fy0hvgbh.fsf@blue.stonehenge.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: How to have multiple working copy directories use the same repository?
+Date: Thu, 11 Oct 2007 21:00:25 +0200
+Message-ID: <20071011190025.GC2804@steel.home>
+References: <744844.82514.qm@web55015.mail.re4.yahoo.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Oct 11 20:55:51 2007
+To: Bill Priest <priestwilliaml@yahoo.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 21:00:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig3C9-0007a1-17
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 20:55:41 +0200
+	id 1Ig3Gy-0000CT-6g
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 21:00:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755027AbXJKSzb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 14:55:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754628AbXJKSzb
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 14:55:31 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:54592 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754284AbXJKSz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 14:55:29 -0400
-X-Greylist: delayed 3600 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Oct 2007 14:55:29 EDT
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JPR00F5ADS1E800@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 11 Oct 2007 19:55:13 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPR006ZHDRT7D80@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
-Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPR0020VDRS6F00@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Thu, 11 Oct 2007 19:55:05 +0200 (CEST)
-Received: by perkele (Postfix, from userid 501)	id 04A2A2FC18; Thu,
- 11 Oct 2007 19:55:06 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id 02A652FC0C	for <git@vger.kernel.org>; Thu,
- 11 Oct 2007 19:55:06 +0200 (CEST)
-In-reply-to: <86fy0hvgbh.fsf@blue.stonehenge.com>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1754379AbXJKTAb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 15:00:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753807AbXJKTAa
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 15:00:30 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:33487 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716AbXJKTAa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 15:00:30 -0400
+Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
+	by post.webmailer.de (fruni mo40) (RZmta 13.4)
+	with ESMTP id L02dedj9BIwhSh ; Thu, 11 Oct 2007 21:00:25 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 44C4B277AE;
+	Thu, 11 Oct 2007 21:00:25 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 1B3C6C50A; Thu, 11 Oct 2007 21:00:25 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <744844.82514.qm@web55015.mail.re4.yahoo.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60624>
 
-Randal L. Schwartz:
+Bill Priest, Thu, Oct 11, 2007 20:10:50 +0200:
+>   I've looked at the "git for CVS users" section in
+> the docs and this appears to create two repositories. 
+> Is there a way to have two working directories that
+> utilize the same repository?
 
-> That's not a job for a source code manager to do.  It's a job for your 
-> build/install tool.
+Look for "alternates" in git's documentation. But read all the
+warnings regarding git-gc and git-prune. Make a note of ".keep" files.
 
-Since there is no build step involved (my web site is just a CVS checkout at 
-the moment), it's a job for the checkout step. I'd really want to avoid 
-having a separate copy of the web site just so that I can do a "make 
-install". That would sort of negate the savings in disk space I hope seeing 
-by moving from CVS to Git.
+>   I'm betting that I'm just trying to push my workflow
+> style onto git instead of adapting to the git way of
+> doing things; but thought I would ask.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+Git is flexible enough to accomodate almost any existing workflow.
+Just some of them work better.
