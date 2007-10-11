@@ -1,56 +1,72 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Is it possible for git to support binary differencing for binary files?
-Date: Thu, 11 Oct 2007 20:15:18 +0200
-Message-ID: <20071011181518.GB2804@steel.home>
-References: <20071011163746.DEB147E6F@mail.kooxoo.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Bill Priest <priestwilliaml@yahoo.com>
+Subject: How to have multiple working copy directories use the same repository?
+Date: Thu, 11 Oct 2007 11:10:50 -0700 (PDT)
+Message-ID: <744844.82514.qm@web55015.mail.re4.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?6ZO25bmz?= <yinping@kooxoo.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 20:15:47 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 11 20:17:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig2ZK-0006zw-Cw
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 20:15:34 +0200
+	id 1Ig2bQ-0007Sy-Hc
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 20:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755474AbXJKSPX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Oct 2007 14:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755413AbXJKSPX
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 14:15:23 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49089 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753400AbXJKSPX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 14:15:23 -0400
-Received: from tigra.home (Fc872.f.strato-dslnet.de [195.4.200.114])
-	by post.webmailer.de (mrclete mo56) (RZmta 13.4)
-	with ESMTP id 500c4bj9BF3CoK ; Thu, 11 Oct 2007 20:15:20 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 485FF277AE;
-	Thu, 11 Oct 2007 20:15:18 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 283B3C50A; Thu, 11 Oct 2007 20:15:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071011163746.DEB147E6F@mail.kooxoo.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+ecrQ=
-X-RZG-CLASS-ID: mo07
+	id S1756543AbXJKSRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 14:17:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756323AbXJKSRd
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 14:17:33 -0400
+Received: from web55015.mail.re4.yahoo.com ([206.190.58.149]:38074 "HELO
+	web55015.mail.re4.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756057AbXJKSRc (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2007 14:17:32 -0400
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Oct 2007 14:17:32 EDT
+Received: (qmail 83185 invoked by uid 60001); 11 Oct 2007 18:10:50 -0000
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=X-YMail-OSG:Received:Date:From:Subject:To:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-ID;
+  b=vcfZJ8XwSjsNt6hk/t9lU40qItNqllI0f+ihEIKHe4sYpTPEPPUhTFzqoNrMj/qYVFjU/VzLHspOK1hCaP5rMrwKrqc47uW8koQNtzExpFlFvv5FA5dR2eatTZBnN+kLKazqnMJSWT84Hokd9ED1Nq7alIVaFirHBd3kwg0RpC4=;
+X-YMail-OSG: 2bO9BxEVM1ma8COQ66tOleiGBoGyDBxaKB1_A5aMaorjI6r57yjC1UZTkcvSMvEoChTqQw77ioMe8ipLnk6ffVkwXiJ8Tx_JKY3Ih9Aeflrz2w.mIlPXW7L3650HJ5JuapwQncSZ9sirdyXYKYk9xUajIw--
+Received: from [12.44.137.148] by web55015.mail.re4.yahoo.com via HTTP; Thu, 11 Oct 2007 11:10:50 PDT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60622>
 
-=E9=93=B6=E5=B9=B3, Thu, Oct 11, 2007 18:37:43 +0200:
-> Hi.=20
-> Storing binary files as deltas is helpful to keep source and binary f=
-iles
-> together and in sync  So is it possible for git to do that as svn. Th=
-is is
-> my only pain when using git.
+All,
+  My current business requirements make it
+advantageous to have two concurrent working
+directories (that have similar file structure; but not
+exactly the same); I need to maintain two separate
+builds that are always up to date.  Each working
+directory would be associated with a particular
+branch/line of branches (think of two different
+hardware platforms that have considerable overlap).  A
+complication to this is that I need to use git-svn as
+the remainder of the team uses svn (I just changed
+from cvs to svn last Jan so it is a hard sell to
+management to change again).  I'm using git for the
+merge capabilities.
+  I've looked at the "git for CVS users" section in
+the docs and this appears to create two repositories. 
+Is there a way to have two working directories that
+utilize the same repository?
+  I'm betting that I'm just trying to push my workflow
+style onto git instead of adapting to the git way of
+doing things; but thought I would ask.
 
-Why? Git works perfectly with binary files. In fact, some of my repos
-have more binaries than text.
+TIA,
+
+Bill
+PS.  I'm trying to avoid the push in the commit, push,
+merge, dcommit cycle.
+
+
+
+       
+____________________________________________________________________________________
+Yahoo! oneSearch: Finally, mobile search 
+that gives answers, not web links. 
+http://mobile.yahoo.com/mobileweb/onesearch?refer=1ONXIC
