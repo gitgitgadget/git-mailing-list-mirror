@@ -1,80 +1,76 @@
 From: "Patrick Doyle" <wpdster@gmail.com>
-Subject: Re: Split a subversion repo into several git repos
-Date: Thu, 11 Oct 2007 10:02:21 -0400
-Message-ID: <e2a1d0aa0710110702o359d6cd9yaa213be6a43924e4@mail.gmail.com>
-References: <op.tz09zaizjwclfx@ichi>
-	 <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com>
+Subject: yet another workflow question...
+Date: Thu, 11 Oct 2007 10:11:58 -0400
+Message-ID: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Eivind LM" <eivliste@online.no>, git@vger.kernel.org
-To: "Jonathan del Strother" <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 16:04:00 2007
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 11 16:12:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifyct-0007bp-CN
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:02:59 +0200
+	id 1Ifylo-0001dk-4w
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 16:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757717AbXJKOC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 10:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757451AbXJKOC1
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:02:27 -0400
-Received: from nf-out-0910.google.com ([64.233.182.186]:7130 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756226AbXJKOCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 10:02:25 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so475805nfb
-        for <git@vger.kernel.org>; Thu, 11 Oct 2007 07:02:23 -0700 (PDT)
+	id S1752684AbXJKOMB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 10:12:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbXJKOMB
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 10:12:01 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:19399 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752111AbXJKOMA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 10:12:00 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so453186ugc
+        for <git@vger.kernel.org>; Thu, 11 Oct 2007 07:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=jeicsC6mecNRAsBq5yKZD7VvRQ/hL2PW7OJDEZZTCfE=;
-        b=ZA1lT0afQogQEIpbW914f2KXQXmiOKeUTrVZA4OuL0EbfeLy178EXjpGJ07ovc/OWL30NGWsCohQyxat+KDAezCD4yZnaBu+tJwmQHoflj8gfUo9sPLtp61ktpQUaiodR6Su44VTOMHlftTW3bsbelbolagLfgqr80tRA5nD3uE=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=E9xKRo/5mCxITI/pzCK3XsIfXc2dWRBtF6TE0YZfygk=;
+        b=UcJQscihABm+JreYm5HOuqNHXL1KWtc0Wik+AOmx6jVuyCkTwNWq4Cb7KMpRQDZ4EU8eteQhBUXneHFqwhWk55PQUSVDkb44WldIFHMgMLP8JHVsE/h67R8MDlkN9ldj6fysAza/aH0hfIetXNpJ0TtUe46bZFowd+0c4Lfv+QA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=OiOejh0zXDX824mI4c+OdjwleMy5/GyWOlBJiXF1lk6hQVMTp/04idsTDdDzYdckSuSCFgjQl7umZagF3eQJEyE/9JbAc9IHuh9b0RlOOHgzXm9fS6c8A5VuC0IyrjXavUSvfqZYg6lO9W7Ih5KlvttGeRiPweadcySs5KF5PUY=
-Received: by 10.78.180.18 with SMTP id c18mr1464349huf.1192111341508;
-        Thu, 11 Oct 2007 07:02:21 -0700 (PDT)
-Received: by 10.78.193.15 with HTTP; Thu, 11 Oct 2007 07:02:21 -0700 (PDT)
-In-Reply-To: <27DDC599-C7A0-4660-B5C6-7DFCEB137C14@steelskies.com>
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=qNUcMGIiMcv73Xu4ns8MPr2nxTfToo08oWx9bnBw1xnsne2dMDglmE5v2VrERIh4AhrrjJAPkPB16yEaYnutmZKlhYGp21VraiXxMpw1R9VzCqsaZu5CVTPF+WzLEAdS52sIlMusYSp79AoS/GUuJk8+YG2oBB0VUXURccEz5LE=
+Received: by 10.78.201.15 with SMTP id y15mr1471215huf.1192111918597;
+        Thu, 11 Oct 2007 07:11:58 -0700 (PDT)
+Received: by 10.78.193.15 with HTTP; Thu, 11 Oct 2007 07:11:58 -0700 (PDT)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60599>
 
-On 10/11/07, Jonathan del Strother <maillist@steelskies.com> wrote:
-> I have a slightly different layout to you -
->
-> projectA/trunk
-> projectA/branches
-> projectA/tags
-> projectB/trunk
-> projectB/branches
-> projectB/tags
-> etc
->
-> - but I've been creating separate git repos from that with (for
-> example) :
->
-> git-svn init -t tags -b branches -T trunk http://svn.host.com/projectA
-> git-svn fetch
->
-Just be aware that, if you follow this approach, the commit logs
-created by git-svn will be rewritten (relative to the original SVN
-logs) with the SVN repository revision and ID information.  I believe
-you can disable this behavior by passing the --no-metadata option to
-"git-svn init", but I haven't tried this yet.
+Sorry for cluttering up the list with yet another very basic workflow
+question, but I'm still struggling with finding an answer to the
+burning question, "What can git do for me?"  (So far, I have come to
+the conclusion that, for my simple, single developer, branchless,
+linear projects, there's not much that git can do for me that any
+other SCM could do for me.  It appears to have been designed to solve
+problems for which I have absolutely no appreciation whatsoever. :-))
 
-I also believe that this approach will leave your git repository in
-such as state as to recognize that there is a remote repository from
-which this repository was fetched.  I have no idea what implications
-and long term repercussions (if any) this has.  It just dawned on me
-as I was rereading the git-svn man page to look for the --no-metdata
-option and read that it will "Set the noMetadata option in the
-[svn-remote] config".  Most of that is still Greek to me.
+Anyway, on to basic newbie quesion #107...
+
+I've been working on my project and I realize that I have 3-4 files
+modified with two orthogonal sets of changes.  (I didn't realize this
+until I said to myself -- "Self, I should really check in these files
+before I go too much further down this path".)  So I start "git
+diff"-ing the files and I find that most files have differences
+related to only one change or the other, but one file has differences
+related to both changes.
+
+What do others do in this situation?
+a) Not allow themselves to get into this situation in the first place
+by careful planning?
+
+b) Copy the file to "file.bothchanges", edit out one set of changes,
+commit that with one log message, edit back in the other set of
+changes, edit in the other set of changes, commit that with another
+log message?
+
+c) Use some sort of automation to do option (b) for them?
+
+d) Something else?
 
 --wpd
