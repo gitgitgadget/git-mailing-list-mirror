@@ -1,75 +1,72 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Status of kha/experimental
-Date: Thu, 11 Oct 2007 21:38:12 +0100
-Message-ID: <b0943d9e0710111338u109aa304o6ba9c886a42c2e24@mail.gmail.com>
-References: <b0943d9e0710071418o6a664981i9d31db980c04bc50@mail.gmail.com>
-	 <20071007213307.GA32210@diana.vm.bytemark.co.uk>
-	 <b0943d9e0710091410w1559f1a0yb5055182fd289646@mail.gmail.com>
-	 <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20071010082602.GF12970@diana.vm.bytemark.co.uk>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: yet another workflow question...
+Date: Thu, 11 Oct 2007 16:40:19 -0400
+Message-ID: <20071011164019.3n4l3rayckck8c4w@intranet.digizenstudio.com>
+References: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com>
+	<200710111610.55364.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Yann Dirson" <ydirson@altern.org>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Oct 11 22:38:26 2007
+Content-Type: text/plain;
+	charset=UTF-8;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Patrick Doyle <wpdster@gmail.com>
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 11 22:40:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ig4nY-0003Dv-6y
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 22:38:24 +0200
+	id 1Ig4pb-0003kB-66
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 22:40:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753579AbXJKUiO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Oct 2007 16:38:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753944AbXJKUiO
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 16:38:14 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:25185 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751632AbXJKUiN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2007 16:38:13 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so613321rvb
-        for <git@vger.kernel.org>; Thu, 11 Oct 2007 13:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=BNdGDNyhY/5RgPlL5DE8WHONDNIqaxvdeYcMaTYRkQ4=;
-        b=Mw/nYrSy5veGgOKkq2AuxmetPFEqt5aYfi2LGyP4i34nn2IrBaMbL2KL/MG6JKwcC2IejNVoPyliolwHUSxdiAWIKO6M8ZvfTWDAwSvtzW/q0FcSfaCtrJostqIoN7UmRRSWzQm64+VNthp3Fp7aK8XhdS8a3EENBEEm44UDkhs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=e2fE1XQxB68TxXXG1DB5kpY8uLF2aGFOtjzRGcQ6+2e49p/mX98ryiwQhkbbNxlrTalEUfpKy5pVMJflQQWlI7cCA+fn+r/NQDf8vW8Tt7hfWnQej4hfkABgi0p5mUV8yQeOwUWuE8VXV2EJmEgryqIN0aztvuxFWyW1FK2+T1o=
-Received: by 10.141.160.9 with SMTP id m9mr1173618rvo.1192135092174;
-        Thu, 11 Oct 2007 13:38:12 -0700 (PDT)
-Received: by 10.140.187.15 with HTTP; Thu, 11 Oct 2007 13:38:12 -0700 (PDT)
-In-Reply-To: <20071010082602.GF12970@diana.vm.bytemark.co.uk>
+	id S1754438AbXJKUkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 16:40:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754520AbXJKUkW
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 16:40:22 -0400
+Received: from k2smtpout01-02.prod.mesa1.secureserver.net ([64.202.189.89]:56006
+	"HELO k2smtpout01-01.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754329AbXJKUkV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Oct 2007 16:40:21 -0400
+Received: (qmail 11343 invoked from network); 11 Oct 2007 20:40:20 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout01-01.prod.mesa1.secureserver.net (64.202.189.88) with ESMTP; 11 Oct 2007 20:40:20 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 8297E100079;
+	Thu, 11 Oct 2007 20:40:20 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id h5CziCPceNdP; Thu, 11 Oct 2007 16:40:19 -0400 (EDT)
+Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
+	id DD21E10007A; Thu, 11 Oct 2007 16:40:19 -0400 (EDT)
+Received: from mailrelay3.private.geico.com (mailrelay3.private.geico.com
+	[205.143.204.110]) by intranet.digizenstudio.com (Horde MIME library) with
+	HTTP; Thu, 11 Oct 2007 16:40:19 -0400
+In-Reply-To: <200710111610.55364.andyparkins@gmail.com>
 Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60632>
 
-On 10/10/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-10-09 23:46:13 +0200, Yann Dirson wrote:
-> > The best situation would be that there would be a code freeze at
-> > some time, during which I could update those patches without too
-> > much perturbations, but that may be asking a lot :)
->
-> There aren't that many of us working on StGit. If you can give a
-> reasonably accurate start date and duration of the freeze,
 
-This would mean that I have to be more organised :-).
+Quoting Andy Parkins <andyparkins@gmail.com>:
 
-> I don't
-> think it would be a problem.Others would simply have to be aware that
-> any patches not merged before the freeze would have to be rebased on
-> top of your work once the freeze is over.
+>  - Mobility.  This one is a bit distributed, but I hope you'll let   
+> me have it.
+>    I often do work on my desktop at home, my desktop at work and my laptop.
+>    By setting my remotes up correctly in git it's really easy to walk to
+>    another system and pick up exactly where I left off from the other
+>    computer.  More importantly though, when you accidentally make changes in
+>    two places, there is no danger of data loss.
 
-I'll try - let's say we freeze it starting with the coming Monday
-(what's currently in kha/safe will be merged anyway) and aim to
-release 0.14 in about 3 weeks (or as soon as we fix the major bugs).
+To extend on this point, after picking up the randomly checked-in save  
+point on another computer, the save point itself can be easily  
+git-reset'ed.  So there won't be commits like "it's utter broken but i  
+got to go home" polluting the history.  I find that extremely handy.
 
---=20
-Catalin
+Cheers.
+-- 
+Jing Xue
