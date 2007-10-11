@@ -1,110 +1,112 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: yet another workflow question...
-Date: Thu, 11 Oct 2007 16:10:54 +0100
-Message-ID: <200710111610.55364.andyparkins@gmail.com>
-References: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git branch performance problem?
+Date: Thu, 11 Oct 2007 08:16:47 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710110807170.20690@woody.linux-foundation.org>
+References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com> 
+ <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com> 
+ <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com> 
+ <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com> 
+ <f329bf540710101430i63926b25q7d55976af96b891d@mail.gmail.com> 
+ <alpine.LFD.0.999.0710101610230.20690@woody.linux-foundation.org>
+ <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "Patrick Doyle" <wpdster@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 11 17:11:16 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Thu Oct 11 17:17:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ifzgx-0006ua-3y
-	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 17:11:15 +0200
+	id 1IfzmX-0008Fi-5G
+	for gcvg-git-2@gmane.org; Thu, 11 Oct 2007 17:17:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213AbXJKPLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Oct 2007 11:11:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753127AbXJKPLD
-	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 11:11:03 -0400
-Received: from nf-out-0910.google.com ([64.233.182.191]:57394 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751983AbXJKPLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Oct 2007 11:11:01 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so494351nfb
-        for <git@vger.kernel.org>; Thu, 11 Oct 2007 08:10:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=IzO9bhkCKP9sNEiBE81tkld5jwX6DFw7msdRf+p6ESU=;
-        b=IDtHbceUCcCyznOt4DVzMea0Y1bSS/R/UnEcyxft/x5gSuL/daf/PYUlpnKO8MaewoVIw35lBDWwAXcgp698EGqSA7S40xcPqC+lh/5x7I8FC2ZWKlvRWGsktTd038tPRb8ZGSLCyXawebyQ/am7THz5WqMdAKROqnxjn9g5eS4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=llQsktYuWgGvCllHw2WQPvpipcBETzsWTW+4sFNwq4BSWQUYkjulkwj73b1bv52pFEIHxOwSCuc9vZPpqnQUFcz/xIjjoWoh9iFEHRdRmHhWUzcGYhenQqADA8a8RrsBUa1o0sCbLlHOUD0T1wsFmuJuDgp3ZTqvWLDAsHPoWPM=
-Received: by 10.86.26.11 with SMTP id 11mr1527464fgz.1192115458557;
-        Thu, 11 Oct 2007 08:10:58 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id z34sm12518777ikz.2007.10.11.08.10.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 11 Oct 2007 08:10:57 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com>
-Content-Disposition: inline
+	id S1753948AbXJKPQv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Oct 2007 11:16:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753515AbXJKPQv
+	(ORCPT <rfc822;git-outgoing>); Thu, 11 Oct 2007 11:16:51 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:50575 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752835AbXJKPQu (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Oct 2007 11:16:50 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9BFGmYu023022
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 11 Oct 2007 08:16:49 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9BFGlpM002823;
+	Thu, 11 Oct 2007 08:16:47 -0700
+In-Reply-To: <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+X-Spam-Status: No, hits=-2.728 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60608>
-
-On Thursday 2007 October 11, Patrick Doyle wrote:
-
-> burning question, "What can git do for me?"  (So far, I have come to
-> the conclusion that, for my simple, single developer, branchless,
-> linear projects, there's not much that git can do for me that any
-> other SCM could do for me.  It appears to have been designed to solve
-
-Here's a few things that are relevant to a simple, single, branchless, linear 
-developer:
-
- - Fast.  Git wipes the floor with everything else, so much so that the SCM
-   becomes a tool in itself, not just a recorder of history.  I keep my own
-   simple projects in git just as much as my complicated, branchy, team-based
-   projects just to get the following tools fast:
-    git-diff
-    git-status
-    git-commit
-    git-log
-
- - Small.  In every project I've converted from SVN to git, the diskspace
-   usage has gone down.  SVN peppers the working tree with .svn directories,
-   each of which contains a pristine copy of the last checked in version of
-   all the working files.  On top of that is the repository disk space itself.
-
-   Git on the other hand keeps one .git directory at the top of the tree and
-   that stores the _entire_ repository.  It is, in my experience, smaller than
-   the working tree.  That means that git uses less diskspace than svn does
-   for a single checkout to store everything it needs.
-
- - Useful.  The following are so good, that even if you weren't doing any 
-   revision tracking you'd still want to use them:
-    git-grep
-    git-diff
-
- - Backup.  Backing up subversion repositories requires that you write
-   yourself a script that uses svnadmin dump.  With git I just write a couple
-   of lines in my .git/config and then git-push produces a highly compact
-   backup whenever I want.  Even better, if a disaster happens it's easy to
-   pull stuff out of that backup without any additional operations.
-
- - Mobility.  This one is a bit distributed, but I hope you'll let me have it. 
-   I often do work on my desktop at home, my desktop at work and my laptop. 
-   By setting my remotes up correctly in git it's really easy to walk to
-   another system and pick up exactly where I left off from the other
-   computer.  More importantly though, when you accidentally make changes in
-   two places, there is no danger of data loss.
-
-Even if you aren't doing complicated stuff, git is the way to go.  I can't 
-count the number of ways it's made me more productive and enhanced the code I 
-write and the documentation of its development.  If I never worked on another 
-group project again I would still use git all day every day.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60609>
 
 
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+On Wed, 10 Oct 2007, Han-Wen Nienhuys wrote:
+> 
+> I recall reading a few months ago that it was "clone -l" that gave you
+> the jeebies, rather than "clone -s".
+
+Yes, "clone -l" gives me the jeebies, because I'm a totally anal person 
+when it comes to disk corruption and a worry-wart. I've just had it happen 
+too many times (usually because a disk simply goes bad), and "git clone 
+-l" basically means that if one repository gets corrupted, then so does 
+the other one.
+
+But clone -s gives me even *more* jeebies, although I think it's in some 
+respect also more useful. The alternates thing is really useful for 
+servers in particular, where you basically want to have multiple 
+"branches" maintained by lots of people, but all based on some expected 
+base version.
+
+So if you think of alternates as a "kernel.org" or "repo.or.cz" thing, 
+where you might have a hundred different repositories all based on the 
+same "standard" version, then I think you basically have the right model. 
+In that situation, "git clone -l" doesn't work that well, since the 
+repositories just start out sharing data, but don't do it long term.
+
+So "git clone -l" (which is the default now - my jeebies really are my 
+personal psychological problem) is really useful for latency reasons for a 
+local clone, and has basically no real downsides. It's not useful for 
+*backups*, but it's useful for development.
+
+> > So the rule really is: never *ever* do anything but fast-forward in a repo
+> >[..]
+> 
+> Methinks this is all too difficult. I will use clone -l henceforth. Is
+> there any reason to prefer -s over -l?
+
+Good. And no, for actual *development* there is no reason to prefer -s 
+over -l (and as mentioned, '-l' is the default in modern versions).
+
+For a git *server* setup, -s is better, since it's more long-term. But in 
+that situation, it also requires that the server maintainer have some 
+rules (ie only use "-s" for stable base trees and/or use extra care when 
+repacking the base).
+
+> Given your lengthy exposition on the dangers of alternates, I would say 
+> this is a features that deserves to be buried or at least deemphasized 
+> in the documentation.
+
+I do agree. We should make the dangers very clear.
+
+> For cherrypicking convenience, I would still appreciate it if there
+> was a mechanism similar to alternates that would allow me to view
+> objects from an alternate repo; objects found through this mechanism
+> should never be assumed to be present in the database, of course.
+
+Well, the way that really should work is that you "git fetch remote" and 
+work on the end result in a "remote branch".
+
+That *will* make the objects present in the database, but not in your 
+actual branches (until you cherry-pick), but there really are no real 
+downsides. If the remote is truly related to your local tree, it all 
+delta's so well that the disk space issues should basically be none.
+
+		Linus
