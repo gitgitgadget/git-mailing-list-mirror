@@ -1,72 +1,112 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: Status of kha/experimental
-Date: Fri, 12 Oct 2007 09:56:28 +0100
-Message-ID: <b0943d9e0710120156x1ebea377od11e1175fabec4cf@mail.gmail.com>
-References: <b0943d9e0710071418o6a664981i9d31db980c04bc50@mail.gmail.com>
-	 <20071007213307.GA32210@diana.vm.bytemark.co.uk>
-	 <b0943d9e0710091410w1559f1a0yb5055182fd289646@mail.gmail.com>
-	 <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net>
-	 <20071010082602.GF12970@diana.vm.bytemark.co.uk>
-	 <b0943d9e0710111338u109aa304o6ba9c886a42c2e24@mail.gmail.com>
-	 <20071012074323.GB17403@diana.vm.bytemark.co.uk>
+From: Adam Piatyszek <ediap@users.sourceforge.net>
+Subject: [RFC] git-gui window layout
+Date: Fri, 12 Oct 2007 10:49:26 +0200
+Message-ID: <470F3516.7020606@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Yann Dirson" <ydirson@altern.org>,
-	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 10:56:57 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 12 11:01:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgGK0-0007b5-6G
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 10:56:40 +0200
+	id 1IgGNp-0008IN-S3
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 11:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910AbXJLI4a convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2007 04:56:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753090AbXJLI4a
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 04:56:30 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:48608 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750731AbXJLI43 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2007 04:56:29 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so750331rvb
-        for <git@vger.kernel.org>; Fri, 12 Oct 2007 01:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Ga3iQDYxpFAaxHMIkjmumTUEAxt1WiZRZ7B2scFNrPI=;
-        b=RbvQ6iWYIWaVNeyryjOAtQEOrgHiG98U9+x7E30azYBqUPNoJOLRUp8zSIj2V2EioWReBI430D3s/NCnNvC3YAzKVC4FxG+NCifAgO5humt8pRPgGUFwMohYPNyqgle5wZmGZTN8tdSYTn+k/+MmyZ/u1mofG3xWtfUYKPWTQTE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=NNV/k+XFPw3uBIMtJiSsbkCWpms4YUW6NmNLOxU4E12rfH3J4pgfROR6KtQlatREGs7FdRQuJst4WYBHJs8cRDqbt7NsnETUVIvrwpDArAVlAdeACh7v9uRARlzCpYbbW7TRbwK8UylrZGZOQvwYrtRGHyfy41lWh2CqTt3yzwU=
-Received: by 10.141.169.9 with SMTP id w9mr1377780rvo.1192179388804;
-        Fri, 12 Oct 2007 01:56:28 -0700 (PDT)
-Received: by 10.140.187.15 with HTTP; Fri, 12 Oct 2007 01:56:28 -0700 (PDT)
-In-Reply-To: <20071012074323.GB17403@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1754386AbXJLJA2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 05:00:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754080AbXJLJA2
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 05:00:28 -0400
+Received: from pisces.et.put.poznan.pl ([150.254.29.122]:53396 "EHLO
+	pisces.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752175AbXJLJA1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 05:00:27 -0400
+X-Greylist: delayed 304 seconds by postgrey-1.27 at vger.kernel.org; Fri, 12 Oct 2007 05:00:26 EDT
+Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
+	by pisces.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id l9C8o5sh026904
+	for <git@vger.kernel.org>; Fri, 12 Oct 2007 10:51:00 +0200 (CEST)
+	(envelope-from ediap@users.sourceforge.net)
+Received: from [150.254.11.67] (pc1067.et.put.poznan.pl [150.254.11.67])
+	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id l9C8nPS19403
+	for <git@vger.kernel.org>; Fri, 12 Oct 2007 10:49:27 +0200 (MET DST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20070917)
+X-Enigmail-Version: 0.95.3
+OpenPGP: id=1F115CCB
+X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2007.10.12.11853
+X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='__CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __STOCK_PHRASE_24 0, __USER_AGENT 0'
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60665>
 
-On 12/10/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-10-11 21:38:12 +0100, Catalin Marinas wrote:
->
-> > I'll try - let's say we freeze it starting with the coming Monday
-> > (what's currently in kha/safe will be merged anyway) and aim to
-> > release 0.14 in about 3 weeks (or as soon as we fix the major bugs)=
-=2E
->
-> Do you have a list of the bugs you'd like to see fixed before the
-> release? (I don't, I'm not organized. :-) )
+Dear Giters,
 
-https://gna.org/bugs/?group=3Dstgit. All of them, if possible :-). If
-you happen to work on any of them, change the "assigned to" filed so
-that we don't duplicate the effort.
+I would like you to comment on my idea to change, or at least add a
+possibility to change, the current layout of git-gui window.
 
---=20
-Catalin
+Nowadays there is a tendency to produce wide screens for laptops and
+even standalone LCD monitors. One can safely assume that the minimum
+reasonable horizontal resolution of a screen is at least 1024 pixels (I
+do not expect anyone using git-gui with 800x600 resolution).
+Moreover, most popular window managers decreases the vertical dimension
+of a desktop by using horizontally-oriented panels (e.g. KDE, Gnome,
+XFCE4, etc.)
+
+The current layout of git-gui window covering the whole desktop area on
+a typical WXGA (1280x800) laptop LCD display is thus:
+
++----------+-----------------------------------+
+|          |                                   |
+|  staged  |          unstaged                 |
+|          |                                   |
++----------+----------------+------------------+
+|###     commit log         |      EMPTY       |
+|###                        |                  |
++---------------------------+------------------+
+|                                              |
+|    diff output                               |
+|                                              |
++----------------------------------------------+
+
+In my opinion, the staged, unstaged and diff areas are usually used for
+displaying things that are taller than wider (e.g. a list of files,
+patches of well structured code, which is usually < 80 columns). The
+commit log window is also designed for text narrower than < 80 cols.
+
+Therefore in my opinion it might be more useful to restructure this
+layout to something like this:
+
++-------------+----------------------------+---+
+|             |                            |###|
+|             |       commit log           |###|
+|   staged    +----------------------------+---+
+|             |                                |
+|             |                                |
++----- 1 -----+                                |
+|             |       diff output              |
+|             2                                |
+|  unstaged   |                                |
+|             |                                |
+|             |                                |
++-------------+--------------------------------+
+
+Buttons (rescan, push, commit, etc.) are denoted here as ###. Besides
+the walls denoted as 1 and 2 should be movable so one could adjust the
+size of staged/unstaged and diff areas.
+The minimum width of diff window would be limited by the commit log
+window width (I propose 80 colums) plus the size of the buttons.
+
+Unfortunately, I do not nothing about TCL/TK programming, so I even did
+not tried to analyse the code of git-gui. Therefore I am not sure if
+such a restructure is easy to implement.
+
+Anyway I hope for your comments to this idea.
+
+BR,
+/Adam
+
+
+-- 
+.:.  Adam Piatyszek - "ediap"       .:.  JID: ediap(at)jabber.org .:.
+.:.  ediap(at)users.sourceforge.net .:.  PGP key ID: 0x1F115CCB   .:.
