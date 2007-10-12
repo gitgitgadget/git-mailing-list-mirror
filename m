@@ -1,66 +1,82 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: Re: Workflow: split repository?
-Date: Fri, 12 Oct 2007 16:57:01 +0200
-Organization: HCS, University of Amsterdam
-Message-ID: <200710121657.01256.wielemak@science.uva.nl>
-References: <200710121421.39159.wielemak@science.uva.nl> <20071012143043.GD7865@efreet.light.src>
+From: Barry Fishman <barry_fishman@acm.org>
+Subject: Re: RCS keyword expansion
+Date: Fri, 12 Oct 2007 13:05:01 -0400
+Message-ID: <m3y7e8jmbm.fsf@barry_fishman.acm.org>
+References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+	<86fy0hvgbh.fsf@blue.stonehenge.com>
+	<Pine.LNX.4.62.0710111953460.7441@perkele.intern.softwolves.pp.se>
+	<20071011192103.GD2804@steel.home>
+	<Pine.LNX.4.62.0710120726470.11771@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Oct 12 17:17:39 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 12 19:38:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgM2w-0005kz-R1
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 17:03:27 +0200
+	id 1IgOMb-0002WR-Oy
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 19:31:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381AbXJLPDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 11:03:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754370AbXJLPDQ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 11:03:16 -0400
-Received: from smtp-vbr10.xs4all.nl ([194.109.24.30]:4190 "EHLO
-	smtp-vbr10.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753676AbXJLPDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 11:03:15 -0400
-Received: from gollem.science.uva.nl (gollem.science.uva.nl [146.50.26.20])
-	(authenticated bits=0)
-	by smtp-vbr10.xs4all.nl (8.13.8/8.13.8) with ESMTP id l9CF2wFI045844;
-	Fri, 12 Oct 2007 17:02:59 +0200 (CEST)
-	(envelope-from wielemak@science.uva.nl)
-User-Agent: KMail/1.9.5
-In-Reply-To: <20071012143043.GD7865@efreet.light.src>
-Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1755032AbXJLRbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 13:31:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755162AbXJLRbn
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 13:31:43 -0400
+Received: from main.gmane.org ([80.91.229.2]:40536 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754905AbXJLRbm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 13:31:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IgO89-0003Uv-Ft
+	for git@vger.kernel.org; Fri, 12 Oct 2007 17:16:57 +0000
+Received: from fl-71-0-147-208.dhcp.embarqhsd.net ([71.0.147.208])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Oct 2007 17:16:57 +0000
+Received: from barry_fishman by fl-71-0-147-208.dhcp.embarqhsd.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Oct 2007 17:16:57 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@sea.gmane.org
+X-Gmane-NNTP-Posting-Host: fl-71-0-147-208.dhcp.embarqhsd.net
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:jqLVqqc4PimOoCUaJS/vxvdwgoo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60697>
 
-Hi Jan,
-
-On Friday 12 October 2007 16:30, Jan Hudec wrote:
-> On Fri, Oct 12, 2007 at 14:21:39 +0200, Jan Wielemaker wrote:
-> > Does this make sense?
+Peter Karlsson <peter@softwolves.pp.se> writes:
+> Yes, but not embedded in the page in a format that is visible to the
+> visitor. For CVS I use something like this:
 >
-> It might make more sense to convert bit by bit, to separate git
-> repositories. Would save you some git-filter-branch work.
-
-> > Is the only way to create a GIT repositiory right away from a subset of
-> > the CVS for which we want to preserve the history?
+> <p class="date">$Date$</p>
 >
-> No, it's not. It will save you work if you can do as much splitting as
-> possible during the conversion, ie. convert the bits you know will be
-> separate separately (and combine them using submodules as appropriate).
+> to embed the last update time into the page.
 >
-> But if you have bits that will take a lot of work to factor out, you can
-> convert to git, make the other code ready to use a submodule and than use
-> git-filter-branch to extract the right bits of history for the submodule.
 
-Thanks!  git-filter-branch looks a bit overwhelming, but I think I can
-manage :-)  I'll do the simple things in separate conversions.
+I guess everyone moving from CVS/SVN to Git faces rethinking of
+what the RCS markers really mean in the context of their project.
 
-	Cheers --- Jan
+In my case the identifier was just a away of seeing when the file was
+last changed, and who did it.  I decided this fit better as an editor
+function, rather than a checkin function.
+
+I changed my editor (Emacs) to convert RCS Ids to timestamps when I
+opened a file for reading.  This would fix old files.  When i wrote out
+files I would update the timestamp before writing them (via emacs's
+timestamp package).  I didn't have to think about it as my RCS Id
+stamped files slowly evolve into my editor stamped ones.  I'm sure I
+could do something similar in VIM, or with a script encapsulating
+another editor.
+
+This actually worked out better for me.  Now the timestamps were updated
+even when I hadn't yet checked in the file.  Since I test things before
+checking them in, I did not have my file changed after testing by the
+checkin process.
+
+I could find the the commit assocated with the file fairly quickly using
+"git log" and finding the commit for the file just after its timestamp.
+
+-- 
+Barry Fishman
