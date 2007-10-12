@@ -1,91 +1,71 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] Fixing path quoting issues
-Date: Fri, 12 Oct 2007 08:43:29 +0200
-Message-ID: <470F1791.9010601@viscovery.net>
-References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv> <470DC05A.8020209@viscovery.net> <854pgytafi.fsf@lola.goethe.zz> <470DCC76.7070809@viscovery.net> <81156EED-7AC0-4C8B-98B1-8338262459A6@bestbefore.tv> <470DD3B8.1080809@viscovery.net> <85k5pts796.fsf@lola.goethe.zz> <63D5CE5B-51DD-4017-B2E2-2ADC5DCBE849@steelskies.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: David Kastrup <dak@gnu.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan del Strother <maillist@steelskies.com>
-X-From: git-owner@vger.kernel.org Fri Oct 12 08:44:07 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: push fails with unexpected 'matches more than one'
+Date: Fri, 12 Oct 2007 08:59:39 +0200
+Message-ID: <11921723791817-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 12 09:00:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgEFO-0004Xr-7q
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 08:43:46 +0200
+	id 1IgEUy-0006y7-9l
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 08:59:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756978AbXJLGng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 02:43:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754968AbXJLGng
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 02:43:36 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:53582 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849AbXJLGnf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 02:43:35 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IgEEz-0003yN-IN; Fri, 12 Oct 2007 08:43:21 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id C02954E4; Fri, 12 Oct 2007 08:43:29 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <63D5CE5B-51DD-4017-B2E2-2ADC5DCBE849@steelskies.com>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S932380AbXJLG7m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 02:59:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932374AbXJLG7m
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 02:59:42 -0400
+Received: from mailer.zib.de ([130.73.108.11]:41597 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757583AbXJLG7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 02:59:41 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9C6xd7w012050
+	for <git@vger.kernel.org>; Fri, 12 Oct 2007 08:59:39 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9C6xdOM020538;
+	Fri, 12 Oct 2007 08:59:39 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60659>
 
-Jonathan del Strother schrieb:
-> 
-> On 11 Oct 2007, at 21:53, David Kastrup wrote:
-> 
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->>
->>> Jonathan del Strother schrieb:
->>>> How are you going to test that git works on paths with spaces if the
->>>> test suite doesn't run there?
->>>
->>> By writing a specific test?
->>
->> This is going to be much less thorough.  And it does no harm if the
->> test scripts demonstrate defensive programming.
-> 
-> I would also point out that most tests have already been written to 
-> handle this case - ones that don't quote their paths are in the minority.
+This adds a test case for unambigous local match but multiple remote
+matches. To me, it is unexpected that a ref that is perfectly defined
+on the local side fails with 'matches more than one'.
 
-Actually, reconsidering your proposed patch, there are only a handful of 
-problematic cases, namely those where the test script is quoted with 
-double-quotes, like this:
+The following rule could solve this:
+A ref shall first be unambigously resolved on the local side, and its
+full name should be used for matching on the remote side.
+For example 'frotz' resolves locally to 'heads/refs/frotz'.
+Therefore pretend the user had typed 'heads/refs/frotz'.
 
-  test_expect_success 'load repository with strange names' "
--	svnadmin load -q $rawsvnrepo < ../t9115/funky-names.dump &&
-+	svnadmin load -q '$rawsvnrepo' < ../t9115/funky-names.dump &&
-  	start_httpd
-  	"
+But maybe there is some hidden secret about the current rules that
+I do not see.
 
-The problem is that here $rawsvnrepo will be expanded before the entire test 
-script is passed as argument to test_expect_success. Consider the case where 
-$rawsvnrepo contains a single-quote (say, a directory named "Joe's git"): 
-then the 'eval' inside test_expect_success sees a syntax error. The proper 
-change is:
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ t/t5516-fetch-push.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-  test_expect_success 'load repository with strange names' "
--	svnadmin load -q $rawsvnrepo < ../t9115/funky-names.dump &&
-+	svnadmin load -q \"\$rawsvnrepo\" < ../t9115/funky-names.dump &&
-  	start_httpd
-  	"
-
-So, what I think you should do is:
-
-1. Submit the change to git-rebase.sh in a separate patch.
-2. Fix the patch for the double-quoted test scriptlets.
-
-That should remove all my concerns.
-
--- Hannes
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index ca46aaf..f249216 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -244,4 +244,12 @@ test_expect_success 'push with colon-less refspec (4)' '
+ 
+ '
+ 
++test_expect_success 'push with colon-less refspec (locally unambigous)' '
++
++	mk_test heads/frotz heads/t/frotz &&
++	git branch -f frotz master &&
++	git push testrepo frotz
++
++'
++
+ test_done
+-- 
+1.5.3.4.219.gd0b2
