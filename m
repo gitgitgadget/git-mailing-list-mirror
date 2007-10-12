@@ -1,83 +1,54 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: yet another workflow question...
-Date: Fri, 12 Oct 2007 08:25:57 +0100
-Message-ID: <200710120825.58235.andyparkins@gmail.com>
-References: <e2a1d0aa0710110711m77ca967bmd1d5ffd5d3099aab@mail.gmail.com> <200710111610.55364.andyparkins@gmail.com> <20071011164019.3n4l3rayckck8c4w@intranet.digizenstudio.com>
+From: "Simon Sasburg" <simon.sasburg@gmail.com>
+Subject: Re: Suggestion for mailing lists... split [PATCH]-es into own list
+Date: Fri, 12 Oct 2007 09:27:42 +0200
+Message-ID: <981e6de60710120027j5f390a9tbe2a4c76db9ed06d@mail.gmail.com>
+References: <e47324780710110857s472bf099u3e350d17a2c29f78@mail.gmail.com>
+	 <Pine.LNX.4.64.0710111704570.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jing Xue <jingxue@digizenstudio.com>,
-	Patrick Doyle <wpdster@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 12 09:26:18 2007
+Cc: "Thomas Harning Jr." <harningt@gmail.com>, git@vger.kernel.org
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 12 09:27:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgEuX-0002N8-KY
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 09:26:18 +0200
+	id 1IgEw4-0002bm-Df
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 09:27:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757073AbXJLH0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 03:26:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757055AbXJLH0G
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 03:26:06 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:65297 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757073AbXJLH0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 03:26:05 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so691462nfb
-        for <git@vger.kernel.org>; Fri, 12 Oct 2007 00:26:02 -0700 (PDT)
+	id S1753288AbXJLH1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 03:27:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbXJLH1n
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 03:27:43 -0400
+Received: from wa-out-1112.google.com ([209.85.146.178]:59743 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751776AbXJLH1m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 03:27:42 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so903190wah
+        for <git@vger.kernel.org>; Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=uv6Tr01LYz18u08A2120fH4xScrl08iNRFgrF2M2sGQ=;
-        b=ktxVtEL9q49Y8IVdPhYRLbQD+21l9MC7XjfikGZic1j+v46j/G8dvrz5c1H6IyRaMjCRhtEXP6ZXgRlSMPwT6BXJBSsGr5BC00ft3WA5otCq4yLYBmBptUdLHcCFhJ8LmiOl4qPdCG66yyZN1wnm5CqLLSYTnxzJbKu4KV7q9sQ=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ZzLfHmOJJDc3w/gmzwj5O9TjCa/yBSba3MCB0aBampA=;
+        b=brXpnytE9hRgn4DD2G35a8s/6LhAGsezbeMWRHMPMokOPzI1q+iwvn//1YZEOa4bo5DioA+cuXLXEOOLB2HU4+zOPPGB8pLS59OWsFLlqM2zPm0WFC3lEM53AovmMM+YTP6fwWJETEbMFOKVs5zX+1yDobVum0WPPa45oLlxiZg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WJ9lPBU77lmL3SGzXWR/G7G6NBMymTHqDwMzFKazxiNwEWl9Hhi+vI2amX2rlWEscBAxIGx4NNq24Sfa5ujqhju9Zxk/0drgTZzPKhtu6HnHRjMmvVLB5pa2ekjAhGhP6Vm26ylGXIN5rpa2bWevBVbkjKpwF0TxIx3cgpq37e8=
-Received: by 10.78.170.6 with SMTP id s6mr2007988hue.1192173961793;
-        Fri, 12 Oct 2007 00:26:01 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id k5sm366667nfd.2007.10.12.00.26.00
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 12 Oct 2007 00:26:00 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071011164019.3n4l3rayckck8c4w@intranet.digizenstudio.com>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gnFju9CqTiggwIQ36axKFGHTH4MKqVE9lhJxYppFHqXS26+2+0L144Ga/7CJmO3/Xam8agTHzl7gY7w4dLoXGkEFgywJz3WSzYv4BEXXzOaOFbVSsRJdPW+qrAPqpCbb6QjAsD4OiXj3NkqY17uGc/xKR7lp0LNsTgdzTgfPaMo=
+Received: by 10.115.94.1 with SMTP id w1mr3172477wal.1192174062153;
+        Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
+Received: by 10.114.124.3 with HTTP; Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710111704570.4174@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60661>
 
-On Thursday 2007 October 11, Jing Xue wrote:
-> Quoting Andy Parkins <andyparkins@gmail.com>:
-> >  - Mobility.  This one is a bit distributed, but I hope you'll let
-> > me have it.
-> >    I often do work on my desktop at home, my desktop at work and my
-> > laptop. By setting my remotes up correctly in git it's really easy to
-> > walk to another system and pick up exactly where I left off from the
-> > other computer.  More importantly though, when you accidentally make
-> > changes in two places, there is no danger of data loss.
->
-> To extend on this point, after picking up the randomly checked-in save
-> point on another computer, the save point itself can be easily
-> git-reset'ed.  So there won't be commits like "it's utter broken but i
-> got to go home" polluting the history.  I find that extremely handy.
+On 10/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> We did not even find a way to post patches via gmail's web interface, not
+> without severely damaging the patches.
 
-Absolutely; in fact I've had times when I've done things like this:
-
- git merge laptop-branch
- git merge home-branch
- git reset HEAD^^
-
-That is to say, I'm not interested in documenting the merges, I just want to 
-bring a set of changes from different places together ready for some proper 
-commits, which of course can be done really easily with git add -i.
-
-
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+Oh? Turning off Rich formatting and copy/pasting the patch from my
+editor worked for me.
