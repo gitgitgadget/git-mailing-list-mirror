@@ -1,54 +1,51 @@
-From: "Simon Sasburg" <simon.sasburg@gmail.com>
-Subject: Re: Suggestion for mailing lists... split [PATCH]-es into own list
-Date: Fri, 12 Oct 2007 09:27:42 +0200
-Message-ID: <981e6de60710120027j5f390a9tbe2a4c76db9ed06d@mail.gmail.com>
-References: <e47324780710110857s472bf099u3e350d17a2c29f78@mail.gmail.com>
-	 <Pine.LNX.4.64.0710111704570.4174@racer.site>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: Status of kha/experimental
+Date: Fri, 12 Oct 2007 09:43:23 +0200
+Message-ID: <20071012074323.GB17403@diana.vm.bytemark.co.uk>
+References: <b0943d9e0710071418o6a664981i9d31db980c04bc50@mail.gmail.com> <20071007213307.GA32210@diana.vm.bytemark.co.uk> <b0943d9e0710091410w1559f1a0yb5055182fd289646@mail.gmail.com> <20071009214613.GC26436@nan92-1-81-57-214-146.fbx.proxad.net> <20071010082602.GF12970@diana.vm.bytemark.co.uk> <b0943d9e0710111338u109aa304o6ba9c886a42c2e24@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Thomas Harning Jr." <harningt@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 12 09:27:58 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yann Dirson <ydirson@altern.org>,
+	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 12 09:43:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgEw4-0002bm-Df
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 09:27:52 +0200
+	id 1IgFBK-0004l3-4A
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 09:43:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753288AbXJLH1n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 03:27:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752872AbXJLH1n
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 03:27:43 -0400
-Received: from wa-out-1112.google.com ([209.85.146.178]:59743 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751776AbXJLH1m (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 03:27:42 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so903190wah
-        for <git@vger.kernel.org>; Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ZzLfHmOJJDc3w/gmzwj5O9TjCa/yBSba3MCB0aBampA=;
-        b=brXpnytE9hRgn4DD2G35a8s/6LhAGsezbeMWRHMPMokOPzI1q+iwvn//1YZEOa4bo5DioA+cuXLXEOOLB2HU4+zOPPGB8pLS59OWsFLlqM2zPm0WFC3lEM53AovmMM+YTP6fwWJETEbMFOKVs5zX+1yDobVum0WPPa45oLlxiZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gnFju9CqTiggwIQ36axKFGHTH4MKqVE9lhJxYppFHqXS26+2+0L144Ga/7CJmO3/Xam8agTHzl7gY7w4dLoXGkEFgywJz3WSzYv4BEXXzOaOFbVSsRJdPW+qrAPqpCbb6QjAsD4OiXj3NkqY17uGc/xKR7lp0LNsTgdzTgfPaMo=
-Received: by 10.115.94.1 with SMTP id w1mr3172477wal.1192174062153;
-        Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
-Received: by 10.114.124.3 with HTTP; Fri, 12 Oct 2007 00:27:42 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710111704570.4174@racer.site>
+	id S1756525AbXJLHn2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2007 03:43:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755818AbXJLHn2
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 03:43:28 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2002 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753522AbXJLHn1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 03:43:27 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IgFB5-0004YL-00; Fri, 12 Oct 2007 08:43:23 +0100
 Content-Disposition: inline
+In-Reply-To: <b0943d9e0710111338u109aa304o6ba9c886a42c2e24@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60662>
 
-On 10/11/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> We did not even find a way to post patches via gmail's web interface, not
-> without severely damaging the patches.
+On 2007-10-11 21:38:12 +0100, Catalin Marinas wrote:
 
-Oh? Turning off Rich formatting and copy/pasting the patch from my
-editor worked for me.
+> I'll try - let's say we freeze it starting with the coming Monday
+> (what's currently in kha/safe will be merged anyway) and aim to
+> release 0.14 in about 3 weeks (or as soon as we fix the major bugs).
+
+Do you have a list of the bugs you'd like to see fixed before the
+release? (I don't, I'm not organized. :-) )
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
