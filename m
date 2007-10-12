@@ -1,56 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH amend] git-config: handle --file option with relative
- pathname properly
-Date: Fri, 12 Oct 2007 13:08:57 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710121308040.25221@racer.site>
-References: <20071009124932.1184.qmail@395d4a80f3eafd.315fe32.mid.smarden.org>
- <470B8024.2050106@viscovery.net> <20071012113251.29941.qmail@7584201f340355.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Fixing path quoting issues
+Date: Fri, 12 Oct 2007 14:20:36 +0200
+Message-ID: <A7970E82-92E0-4267-AF79-D4ABDB21F0D0@wincent.com>
+References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv> <470DC05A.8020209@viscovery.net> <854pgytafi.fsf@lola.goethe.zz> <470DCC76.7070809@viscovery.net> <81156EED-7AC0-4C8B-98B1-8338262459A6@bestbefore.tv> <470DD3B8.1080809@viscovery.net> <85k5pts796.fsf@lola.goethe.zz> <E43846E3-4F42-4B3A-BA5F-1A21FE70C3FB@wincent.com> <Pine.LNX.4.64.0710121235230.25221@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Fri Oct 12 14:10:05 2007
+	Jonathan del Strother <jon.delStrother@bestbefore.tv>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 12 14:21:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgJL5-0004wK-2u
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:09:59 +0200
+	id 1IgJW5-0006zD-RV
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:21:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846AbXJLMJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 08:09:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbXJLMJT
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:09:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44607 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751920AbXJLMJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 08:09:18 -0400
-Received: (qmail invoked by alias); 12 Oct 2007 12:09:17 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp053) with SMTP; 12 Oct 2007 14:09:17 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ACdUEcNoAfWzB20Q9rL52GxQdDn2uAyH1AnV12g
-	5Ls4qZhB4HqygL
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071012113251.29941.qmail@7584201f340355.315fe32.mid.smarden.org>
-X-Y-GMX-Trusted: 0
+	id S1753423AbXJLMVK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2007 08:21:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752400AbXJLMVJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:21:09 -0400
+Received: from wincent.com ([72.3.236.74]:44161 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751601AbXJLMVI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2007 08:21:08 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9CCKxYu019108;
+	Fri, 12 Oct 2007 07:21:00 -0500
+In-Reply-To: <Pine.LNX.4.64.0710121235230.25221@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60684>
 
-Hi,
+El 12/10/2007, a las 13:37, Johannes Schindelin escribi=F3:
 
-On Fri, 12 Oct 2007, Gerrit Pape wrote:
+> On Fri, 12 Oct 2007, Wincent Colaiuta wrote:
+>
+>> El 11/10/2007, a las 22:53, David Kastrup escribi=F3:
+>>
+>>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>>
+>>>> Jonathan del Strother schrieb:
+>>>>> How are you going to test that git works on paths with spaces =20
+>>>>> if the
+>>>>> test suite doesn't run there?
+>>>>
+>>>> By writing a specific test?
+>>>
+>>> This is going to be much less thorough.  And it does no harm if the
+>>> test scripts demonstrate defensive programming.
+>>
+>> +1: especially in this case, where it really is "defensive" and not
+>> "paranoiac".
+>
+> I am all for it, _iff_ the guilty parties (and by that, I mean =20
+> _you_) do
+> it and keep maintaining it.  See?  Discussion closed already.
 
-> -	setup_git_directory_gently(&nongit);
-> +	const char *file = setup_git_directory_gently(&nongit);
+How am *I* the guilty party? I'm merely endorsing David's comment =20
+that a modicum of defensive programming isn't a bad thing; an =20
+eminently reasonable position which is somewhat difficult to argue =20
+against.
 
-One last nit (because I did not see it earlier): please call the variable 
-"prefix", not "file".
-
-Other than that, I think your patch is obviously correct.
-
-Thanks,
-Dscho
+Cheers,
+Wincent
