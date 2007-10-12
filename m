@@ -1,77 +1,56 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: push fails with unexpected 'matches more than one'
-Date: Fri, 12 Oct 2007 14:06:24 +0200
-Message-ID: <91A04390-89B2-47B8-9B61-7C7E652670AE@zib.de>
-References: <11921723791817-git-send-email-prohaska@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 12 14:06:09 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH amend] git-config: handle --file option with relative
+ pathname properly
+Date: Fri, 12 Oct 2007 13:08:57 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710121308040.25221@racer.site>
+References: <20071009124932.1184.qmail@395d4a80f3eafd.315fe32.mid.smarden.org>
+ <470B8024.2050106@viscovery.net> <20071012113251.29941.qmail@7584201f340355.315fe32.mid.smarden.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Fri Oct 12 14:10:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgJGL-0004FO-C1
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:05:23 +0200
+	id 1IgJL5-0004wK-2u
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:09:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753426AbXJLME4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 08:04:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753559AbXJLME4
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:04:56 -0400
-Received: from mailer.zib.de ([130.73.108.11]:35636 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750990AbXJLMEz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 08:04:55 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9CC4r2b009540
-	for <git@vger.kernel.org>; Fri, 12 Oct 2007 14:04:53 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9CC4rYY027410
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 12 Oct 2007 14:04:53 +0200 (MEST)
-In-Reply-To: <11921723791817-git-send-email-prohaska@zib.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751846AbXJLMJU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 08:09:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751057AbXJLMJT
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:09:19 -0400
+Received: from mail.gmx.net ([213.165.64.20]:44607 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751920AbXJLMJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 08:09:18 -0400
+Received: (qmail invoked by alias); 12 Oct 2007 12:09:17 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp053) with SMTP; 12 Oct 2007 14:09:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ACdUEcNoAfWzB20Q9rL52GxQdDn2uAyH1AnV12g
+	5Ls4qZhB4HqygL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071012113251.29941.qmail@7584201f340355.315fe32.mid.smarden.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60683>
 
+Hi,
 
-On Oct 12, 2007, at 8:59 AM, Steffen Prohaska wrote:
+On Fri, 12 Oct 2007, Gerrit Pape wrote:
 
-> This adds a test case for unambigous local match but multiple remote
-> matches. To me, it is unexpected that a ref that is perfectly defined
-> on the local side fails with 'matches more than one'.
->
-> The following rule could solve this:
-> A ref shall first be unambigously resolved on the local side, and its
-> full name should be used for matching on the remote side.
-> For example 'frotz' resolves locally to 'heads/refs/frotz'.
-> Therefore pretend the user had typed 'heads/refs/frotz'.
->
-> But maybe there is some hidden secret about the current rules that
-> I do not see.
+> -	setup_git_directory_gently(&nongit);
+> +	const char *file = setup_git_directory_gently(&nongit);
 
-Here is a related question:
+One last nit (because I did not see it earlier): please call the variable 
+"prefix", not "file".
 
-I read carefully through the documentation of git-send-pack and
-git-rev-parse. The current implementation of git-send-pack is in line
-with the documented behaviour, as is the implementation of git-rev- 
-parse.
+Other than that, I think your patch is obviously correct.
 
-So formally everything is correct.
-
-But it is completely against my expectation that git-push <remote>  
-<head>
-can successfully resolve a <head> that git-rev-parse fails to parse. I
-understand that refs are not revs ;). But nonetheless, I'd expect that a
-local ref that cannot be parsed by git-rev-parse should also fail to be
-pushed by git-send-pack. I didn't expect that git-send-pack would locate
-<head> as someprefix/<head>.
-
-Why is my expectation wrong?
-Or is the current specification of git-send-pack's ref parsing wrong?
-
-	Steffen
+Thanks,
+Dscho
