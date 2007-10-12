@@ -1,64 +1,85 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: Suggestion for mailing lists... split [PATCH]-es into own list
-Date: Fri, 12 Oct 2007 17:50:41 +1300
-Message-ID: <46a038f90710112150r16b566c6q8f2a58250d803347@mail.gmail.com>
-References: <e47324780710110857s472bf099u3e350d17a2c29f78@mail.gmail.com>
-	 <Pine.LNX.4.64.0710111704570.4174@racer.site>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: RCS keyword expansion
+Date: Fri, 12 Oct 2007 07:26:21 +0200 (CEST)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.62.0710120723480.11771@perkele.intern.softwolves.pp.se>
+References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+ <86fy0hvgbh.fsf@blue.stonehenge.com>
+ <20071011155956.GC11693@cs-wsok.swansea.ac.uk>
+ <Pine.LNX.4.64.0710112144380.4174@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Thomas Harning Jr." <harningt@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 12 06:50:57 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Oct 12 07:26:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgCUB-0006NT-3D
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 06:50:55 +0200
+	id 1IgD2c-0002VK-HQ
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 07:26:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385AbXJLEuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 00:50:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754128AbXJLEuo
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 00:50:44 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:35810 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752339AbXJLEun (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 00:50:43 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so566426ugc
-        for <git@vger.kernel.org>; Thu, 11 Oct 2007 21:50:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=cbONasUgGfDojvQZ51Bpva9CZ7hlliH4m0VnMh+k1JA=;
-        b=hzLi3iT1lHyw1DTzrydhOXR4s6u5fZuVulBbwqw0X+RstLaWZ+EXSxlEgGhmrjkBS3GBdRfcceSPLSoHZQFeWVazuqgamudRozzwYKazR4lq4MS1Qyd/rXf9Ky5P/Yi6xND8oecjYj+AdOEJ4UPyWcGiRx3D4/sNPHoE4kCsCPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=eXr1vcG/VbEVlzt5i8/W3IBCRrwrbkrf3ty1oRdhAStBYsxVZoUySDNRJboJjo5Xb8oPZhg+Oywyu5FQcDlRlJDqvtrSPzRqSJ1uRGWp2/NkElTZCzCq5BJDx3wapMSxF7z7jQT2ukpDSfOcjH8Dqp7Z6XyzwB9p+IvIlElkmzA=
-Received: by 10.66.249.16 with SMTP id w16mr3943835ugh.1192164641176;
-        Thu, 11 Oct 2007 21:50:41 -0700 (PDT)
-Received: by 10.67.22.19 with HTTP; Thu, 11 Oct 2007 21:50:41 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710111704570.4174@racer.site>
-Content-Disposition: inline
+	id S1753247AbXJLF0U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 01:26:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754085AbXJLF0T
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 01:26:19 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:47757 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753060AbXJLF0T (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 01:26:19 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JPS00F019RT5D00@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 12 Oct 2007 07:26:17 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPS0041B9RT5NB0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Fri, 12 Oct 2007 07:26:17 +0200 (CEST)
+Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPS002729RT79F0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Fri, 12 Oct 2007 07:26:17 +0200 (CEST)
+Received: by perkele (Postfix, from userid 501)	id 7AB282FC18; Fri,
+ 12 Oct 2007 07:26:21 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 76BAE2FC0C	for <git@vger.kernel.org>; Fri,
+ 12 Oct 2007 07:26:21 +0200 (CEST)
+In-reply-to: <Pine.LNX.4.64.0710112144380.4174@racer.site>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60656>
 
-On 10/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> I, for one, am totally opposed to this split.  All too often valuable
-> _user_ discussions turn into _technical_ discussions, and thence into a
-> throwing back and forth patches.
+Johannes Schindelin:
 
-<aol>mee too! - I think it's the kind of development culture that
-Linus tries to foster, and I suspect Junio likes too: "talk in
-patches" which is a lot more productive than "talk like a pirate",
-bikeshedding and other maladies that can fester in mailing lists.
+> The problem is this: for efficiency, git does not change files which have 
+> not changes between the last version checked out (whatever that is) and 
+> the current version.
+>
+> This seems counterintuitive to people coming from SVN/CVS: they expect
+> _every_ file to be touched when checking out.
 
-So no split for me ;-) We have the additional alibi that git users are
-supposed to be programmers.
+No? That would just be strange. Only the files that are actually changed 
+should be updated, no others. A $Date$ or $Id$ will show the last 
+time/commit that specific file was changed, not the latest global state (I 
+guess the fact that most modern VCSs have global state makes this a bit more 
+difficult to achieve, in RCS/CVS/PVCS and others the change history is local 
+to a file and thus it is trivial to find the large change for that 
+particular file).
 
+> As Randal already suggested: if you need something like this, you better 
+> have a build procedure which replaced $Date$ _at a given time_ (make 
+> install) with the current date.
 
+But that's not what I want. Then my build procedure would need to do a "git 
+status", or whatever you use to get the last commit information about a 
+file, on each file that is changed and is to be installed. It would be a lot 
+easier if that was done already on checkout through some kind of hook.
 
-m
+-- 
+\\// Peter - http://www.softwolves.pp.se/
