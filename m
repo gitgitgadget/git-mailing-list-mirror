@@ -1,72 +1,72 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Fixing path quoting issues
-Date: Fri, 12 Oct 2007 14:20:36 +0200
-Message-ID: <A7970E82-92E0-4267-AF79-D4ABDB21F0D0@wincent.com>
-References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv> <470DC05A.8020209@viscovery.net> <854pgytafi.fsf@lola.goethe.zz> <470DCC76.7070809@viscovery.net> <81156EED-7AC0-4C8B-98B1-8338262459A6@bestbefore.tv> <470DD3B8.1080809@viscovery.net> <85k5pts796.fsf@lola.goethe.zz> <E43846E3-4F42-4B3A-BA5F-1A21FE70C3FB@wincent.com> <Pine.LNX.4.64.0710121235230.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan del Strother <jon.delStrother@bestbefore.tv>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 12 14:21:22 2007
+From: Jan Wielemaker <wielemak@science.uva.nl>
+Subject: Workflow: split repository?
+Date: Fri, 12 Oct 2007 14:21:39 +0200
+Organization: HCS, University of Amsterdam
+Message-ID: <200710121421.39159.wielemak@science.uva.nl>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 12 14:28:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgJW5-0006zD-RV
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:21:22 +0200
+	id 1IgJcb-000876-Va
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 14:28:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423AbXJLMVK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 12 Oct 2007 08:21:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752400AbXJLMVJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:21:09 -0400
-Received: from wincent.com ([72.3.236.74]:44161 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751601AbXJLMVI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2007 08:21:08 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
+	id S1757326AbXJLM1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 08:27:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757369AbXJLM1j
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 08:27:39 -0400
+Received: from smtp-vbr16.xs4all.nl ([194.109.24.36]:4112 "EHLO
+	smtp-vbr16.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755029AbXJLM1i (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 08:27:38 -0400
+Received: from gollem.science.uva.nl (gollem.science.uva.nl [146.50.26.20])
 	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9CCKxYu019108;
-	Fri, 12 Oct 2007 07:21:00 -0500
-In-Reply-To: <Pine.LNX.4.64.0710121235230.25221@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	by smtp-vbr16.xs4all.nl (8.13.8/8.13.8) with ESMTP id l9CCRavU095863
+	for <git@vger.kernel.org>; Fri, 12 Oct 2007 14:27:36 +0200 (CEST)
+	(envelope-from wielemak@science.uva.nl)
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60685>
 
-El 12/10/2007, a las 13:37, Johannes Schindelin escribi=F3:
+Hi,
 
-> On Fri, 12 Oct 2007, Wincent Colaiuta wrote:
->
->> El 11/10/2007, a las 22:53, David Kastrup escribi=F3:
->>
->>> Johannes Sixt <j.sixt@viscovery.net> writes:
->>>
->>>> Jonathan del Strother schrieb:
->>>>> How are you going to test that git works on paths with spaces =20
->>>>> if the
->>>>> test suite doesn't run there?
->>>>
->>>> By writing a specific test?
->>>
->>> This is going to be much less thorough.  And it does no harm if the
->>> test scripts demonstrate defensive programming.
->>
->> +1: especially in this case, where it really is "defensive" and not
->> "paranoiac".
->
-> I am all for it, _iff_ the guilty parties (and by that, I mean =20
-> _you_) do
-> it and keep maintaining it.  See?  Discussion closed already.
+I've got a big active project, until yesterday managed using CVS. As
+with any distributed academic research project the repository has become
+a nice mess where most files are in the wrong place and there are
+several almost independent sub-projects living in directories.
 
-How am *I* the guilty party? I'm merely endorsing David's comment =20
-that a modicum of defensive programming isn't a bad thing; an =20
-eminently reasonable position which is somewhat difficult to argue =20
-against.
+The plan is/was to
 
-Cheers,
-Wincent
+	* Convert everything to GIT (done, through cvs2svn)
+	* Everyone keeps hacking on their bits, while one is starting
+	to reorganise the structure by moving files and directories
+	and changing import headers, and other file references in
+	a GIT branch.
+	* Now we merge the continued work and the reorganisation to
+	end up with a nice clean hierarchy :-)
+	* Split the big project into multiple projects.  One of the
+	reasons is that we want to make part of them public.  Others
+	we cannot publish as they contain copyrighted data.  I understand
+	we can reunite them using GIT sub modules.
+
+Does this make sense?
+
+While splitting we want to *loose* history information for some of the
+projects.  That is easy: simply create a new repository from the current
+files.  For some however we would like to *preserve* the history.  This
+means we would like to pick a hierarchy with its history.  After quite
+a bit of reading, I get the impression this cannot be done.  Am I right?
+
+Is the only way to create a GIT repositiory right away from a subset of
+the CVS for which we want to preserve the history?
+
+	Thanks --- Jan
