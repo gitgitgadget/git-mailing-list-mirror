@@ -1,61 +1,75 @@
-From: Salikh Zakirov <salikh@gmail.com>
-Subject: Re: git branch performance problem?
-Date: Sat, 13 Oct 2007 02:19:19 +0900
-Message-ID: <470FAC97.5070904@gmail.com>
-References: <f329bf540710101322xdea6210x5576779f2efd89b7@mail.gmail.com>	 <8c5c35580710101344t3aed4214h4f999072483c4cb5@mail.gmail.com>	 <f329bf540710101417w640b2421v73279cc8e34449b8@mail.gmail.com>	 <f329bf540710101424q22309489sada99907e94b2cd0@mail.gmail.com>	 <f329bf540710101430i63926b25q7d55976af96b891d@mail.gmail.com>	 <alpine.LFD.0.999.0710101610230.20690@woody.linux-foundation.org> <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: RCS keyword expansion
+Date: Fri, 12 Oct 2007 10:44:37 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710121041220.6887@woody.linux-foundation.org>
+References: <Pine.LNX.4.64.0710111542420.23849@ds9.cixit.se>
+ <86fy0hvgbh.fsf@blue.stonehenge.com> <Pine.LNX.4.62.0710111953460.7441@perkele.intern.softwolves.pp.se>
+ <20071011192103.GD2804@steel.home> <Pine.LNX.4.62.0710120726470.11771@perkele.intern.softwolves.pp.se>
+ <m3y7e8jmbm.fsf@barry_fishman.acm.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Lars Hjemli <hjemli@gmail.com>, git@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 12 19:41:54 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Barry Fishman <barry_fishman@acm.org>
+X-From: git-owner@vger.kernel.org Fri Oct 12 19:49:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgOR5-0003Ou-Tl
-	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 19:36:32 +0200
+	id 1IgOZf-0005CL-W1
+	for gcvg-git-2@gmane.org; Fri, 12 Oct 2007 19:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755549AbXJLRgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 13:36:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751449AbXJLRgW
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 13:36:22 -0400
-Received: from main.gmane.org ([80.91.229.2]:52258 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755386AbXJLRgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 13:36:21 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IgOKH-0005mA-68
-	for git@vger.kernel.org; Fri, 12 Oct 2007 17:29:29 +0000
-Received: from 221x115x75x108.ap221.ftth.ucom.ne.jp ([221.115.75.108])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Oct 2007 17:29:29 +0000
-Received: from salikh by 221x115x75x108.ap221.ftth.ucom.ne.jp with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 12 Oct 2007 17:29:29 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@sea.gmane.org
-X-Gmane-NNTP-Posting-Host: 221x115x75x108.ap221.ftth.ucom.ne.jp
-User-Agent: Thunderbird 2.0.0.6 (X11/20070819)
-In-Reply-To: <f329bf540710101926vedf8b19p52e3eeb193203d03@mail.gmail.com>
+	id S1753426AbXJLRpN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 13:45:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755592AbXJLRpM
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 13:45:12 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:57438 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750845AbXJLRpK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Oct 2007 13:45:10 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9CHibKj023483
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 12 Oct 2007 10:44:38 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9CHibIg028823;
+	Fri, 12 Oct 2007 10:44:37 -0700
+In-Reply-To: <m3y7e8jmbm.fsf@barry_fishman.acm.org>
+X-Spam-Status: No, hits=-2.723 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60700>
 
-Han-Wen Nienhuys wrote:
-> For cherrypicking convenience, I would still appreciate it if there
-> was a mechanism similar to alternates that would allow me to view
-> objects from an alternate repo; objects found through this mechanism
-> should never be assumed to be present in the database, of course.
 
-There exist a script contrib/workdir/git-new-workdir,
-which creates a new working copy that literally shares the same object store.
-It will share both object store and branches, so some care must be taken:
-branch which checkout out in one shared working directory must never be updated
-(committed or pulled into) from the other shared working directory.
 
-Said that, I personally find this trick very useful for browsing alternate
-branch code and quick bug fixing.
+On Fri, 12 Oct 2007, Barry Fishman wrote:
+> 
+> I changed my editor (Emacs) to convert RCS Ids to timestamps when I
+> opened a file for reading.  This would fix old files.  When i wrote out
+> files I would update the timestamp before writing them (via emacs's
+> timestamp package).  I didn't have to think about it as my RCS Id
+> stamped files slowly evolve into my editor stamped ones.  I'm sure I
+> could do something similar in VIM, or with a script encapsulating
+> another editor.
+
+I think it might also be potentially interesting to make this just be a 
+pre-commit hook - although your point that doing it in the editor is to 
+some degree even nicer, because it also means that it shows up in diffs 
+even *before* you commit.
+
+But if you want to explore the pre-commit hook approach, what it would 
+basically boild down to is that at that point you have a list of all files 
+that have changed, and then you could run some script on them to change 
+them even further.
+
+I'm sure you'd find some problems with the approach, and I think it 
+absolutely sucks for merging (ie trivially you'll have all the merge 
+problems people *always* have with RCS Id's, and now you need to teach the 
+auto-merger to hide them from you), but it's probably better than trying 
+to do it at some "core level" (which screws up things like switching 
+branches etc).
+
+			Linus
