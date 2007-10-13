@@ -1,37 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Fri, 12 Oct 2007 23:04:40 -0400
-Message-ID: <20071013030439.GJ27899@spearce.org>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+Subject: Re: push fails with unexpected 'matches more than one'
+Date: Fri, 12 Oct 2007 23:21:00 -0400
+Message-ID: <20071013032100.GK27899@spearce.org>
+References: <11921723791817-git-send-email-prohaska@zib.de> <91A04390-89B2-47B8-9B61-7C7E652670AE@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 13 05:04:59 2007
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sat Oct 13 05:26:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgXJC-0005IG-In
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 05:04:59 +0200
+	id 1IgXdl-0007kp-7U
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 05:26:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916AbXJMDEq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 23:04:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754737AbXJMDEq
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 23:04:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:47611 "EHLO
+	id S1752937AbXJMDVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Oct 2007 23:21:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbXJMDVF
+	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 23:21:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48181 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752158AbXJMDEp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 23:04:45 -0400
+	with ESMTP id S1751236AbXJMDVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Oct 2007 23:21:03 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IgXIj-00076C-Mi; Fri, 12 Oct 2007 23:04:29 -0400
+	id 1IgXYX-0007ol-2n; Fri, 12 Oct 2007 23:20:49 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 94AAA20FBAE; Fri, 12 Oct 2007 23:04:40 -0400 (EDT)
+	id 4877420FBAE; Fri, 12 Oct 2007 23:21:00 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+In-Reply-To: <91A04390-89B2-47B8-9B61-7C7E652670AE@zib.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -41,48 +40,56 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60716>
 
-Jakub Narebski <jnareb@gmail.com> wrote:
-> Other
->  * SourceForge / Gna! / Google Projects support
->    (free) hosting with git facilities
->    FOSS hosting sites supporting git
+Steffen Prohaska <prohaska@zib.de> wrote:
+> I read carefully through the documentation of git-send-pack and
+> git-rev-parse. The current implementation of git-send-pack is in line
+> with the documented behaviour, as is the implementation of git-rev- 
+> parse.
+> 
+> So formally everything is correct.
+> 
+> But it is completely against my expectation that git-push <remote>  
+> <head>
+> can successfully resolve a <head> that git-rev-parse fails to parse. I
+> understand that refs are not revs ;). But nonetheless, I'd expect that a
+> local ref that cannot be parsed by git-rev-parse should also fail to be
+> pushed by git-send-pack. I didn't expect that git-send-pack would locate
+> <head> as someprefix/<head>.
+> 
+> Why is my expectation wrong?
+> Or is the current specification of git-send-pack's ref parsing wrong?
 
-We may find support for Git on SourceForge in the future, but not
-on Google Projects anytime soon, if ever.
+I think its a bug.  But I didn't write the original code.
 
-At the Google Summer of Code Mentor Summit last Saturday Dscho had a
-short chat with someone from the Google Code group.  Apparently they
-did at least look at Git briefly but concluded that they cannot
-implement it on their site as our backend storage database is just
-plain files on the local filesystem.
+Meaning I think what happened here was someone wanted to enable
+git-send-pack to match "master" here with "refs/heads/master" on
+the remote side.  One easy way to do that was to see if any ref
+ended with "/master", as that was what the ref here was called.
 
-One of the reasons (probably among many but whatever) that I think
-Google hired the "SVN guys" as employees is to develop a Google
-specific backend for SVN (replaces fsfs and bdb) that stores the
-SVN revision data in a Google BigTable cell rather than on the
-local filesystem.  This allows Google to efficently manage the
-entire site, including distributed replication, hot failover, etc...
-BigTable is one of their key technologies at this point.
+Way back when that code was written most Git repositories probably
+only ever had that one branch anyway, or maybe two (refs/heads/master
+and refs/heads/origin) so matching the trailing suffix never came
+up as a bug.  Nobody ever had two refs that could possibly match.
 
-If you don't know about BigTable but want to know more you can
-search for details about it via this awesome search engine I have
-heard about: http://www.google.com/ :-)
-
-I've managed to glean enough details on BigTable to know that the
-Git backend is *not* easily layered on top of it.  But the SVN
-fsfs backend is actually fairly easy to translate into BigTable,
-so I imagine it didn't take the "SVN guys" very long to develop
-the new backend, test it, and thus deploy SVN onto Google Projects.
+Then the documentation got expanded to actually document the behavior
+that git-send-pack implemented.  Unfortunately that codified the
+bug as documented behavior.
 
 
-Funny aside: If you really want to know about BigTable apparently
-you also need to visit (one of?) the men's room in building 43
-on the second floor.  There were tutorial posters hanging on the
-wall describing how to use BigTable and Sawzall to summerize a
-large dataset.  Most pubs hang sports pages from the local paper;
-Google hangs BigTable documentation.  Nerds.  All of 'em.
+So I agree with you Steffen, this is a bug in send-pack, and I run
+up against it every once in a while.  I've specifically told my
+coworkers "NEVER, EVER, EVER, create a branch called 'master' that
+isn't exactly refs/heads/master OR ELSE I WILL COME BEAT YOU WITH A
+CLUE STICK".  They still create "refs/heads/experiments/master".
+*sigh*.
+
+I think we should fix it.  Anyone that is relying on "git push
+$url master" to resolve to "refs/heads/experimental/master" on the
+remote side is already playing with fire.  But Junio is (rightfully
+so) very conservative and doesn't like to break a user's scripts.
+We may not be able to fix this until Git 1.6.
 
 -- 
 Shawn.
