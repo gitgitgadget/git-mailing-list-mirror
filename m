@@ -1,69 +1,92 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: Imports without Tariffs
-Date: Sat, 13 Oct 2007 00:44:54 -0400
-Message-ID: <C30A314A-C258-4585-86FD-C1158ACA85C2@mit.edu>
-References: <1C0D32ED-59F7-43D4-88B1-D7A9E754D639@mit.edu> <3B7796D6-5901-40B0-B3FC-70642AC50B08@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 13 06:45:18 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-fast-import crashes
+Date: Sat, 13 Oct 2007 09:36:40 +0200
+Message-ID: <20071013073640.GC7110@artemis.corp>
+References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com> <20071013032916.GL27899@spearce.org> <20071013033407.GM27899@spearce.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="gE7i1rD7pdK0Ng3j";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Oct 13 09:37:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgYsI-0008QS-9X
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 06:45:18 +0200
+	id 1IgbYK-0002Wd-QV
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 09:36:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750AbXJMEo7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 00:44:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755223AbXJMEo6
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 00:44:58 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:49381 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754297AbXJMEo5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Oct 2007 00:44:57 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9D4iuF5020404
-	for <git@vger.kernel.org>; Sat, 13 Oct 2007 00:44:56 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9D4itM3013597
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 13 Oct 2007 00:44:55 -0400 (EDT)
-In-Reply-To: <3B7796D6-5901-40B0-B3FC-70642AC50B08@mit.edu>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1762126AbXJMHgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 03:36:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761704AbXJMHgo
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 03:36:44 -0400
+Received: from pan.madism.org ([88.191.52.104]:56815 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752537AbXJMHgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 03:36:43 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id F379B24BB1;
+	Sat, 13 Oct 2007 09:36:40 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 971183A0B19; Sat, 13 Oct 2007 09:36:40 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20071013033407.GM27899@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60723>
-
-On 12 Oct 2007, at 4:36:29 PM, mfwitten@MIT.EDU wrote:
-
-> To make things simple, I think all of the necessary machinery
-> should be put into git-cvsimport.
->
-> The user should first git-cvsexportcommit as necessary.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60724>
 
 
-Now that I have considered, it makes more sense to put the
-machinery in git-cvsexportcommit.
+--gE7i1rD7pdK0Ng3j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The user could use a -b flag to specify the git branch to push
-into after the cvs commit occurs, and git-cvsexportcommit would
-update the .git/SCM_IMPORT file (changed from CVS_IMPORT).
+On Sat, Oct 13, 2007 at 03:34:07AM +0000, Shawn O. Pearce wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> wrote:
+> > Shun Kei Leung <kevinlsk@gmail.com> wrote:
+> > > I am using git 1.5.3.4.206.g58ba4-dirty on Mac OS X 10.4.
+> ....
+> > > Program received signal EXC_BAD_ACCESS, Could not access memory.
+> > > Reason: KERN_INVALID_ADDRESS at address: 0x64617469
+> ....
+> > This looks like it is
+> > memory corruption (e.g. someone overwriting a free'd segment),
+> > but that sort of memory corruption is very hard to track down.
+>=20
+> OK, so the version you have (58ba4) is the latest fast-import after
+> the strbuf.c series went in.  The one immediately before that series
+> was 4bf538 and is probably actually stable.
+>=20
+> So I wonder, can you test 4bf538 and then if it is good bisect
+> between those two commits?  There must be a memory corruption
+> introduced by one of the strbuf changes...
 
-Of course, this introduces other troubles.
+  Gasp, if you get the offending sha1 commit, don't forget to Cc: me.
 
-Sometimes I run cvsexportcommit using a git repo on another server.
-So perhaps one should also be able to use cvsexportcommit for just
-pushing and editing the .git/SCM_IMPORT file.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-That way it's possible to update CVS and then notify any other git
-repo by hand.
+--gE7i1rD7pdK0Ng3j
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Michael
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHEHWIvGr7W6HudhwRAvU6AJ48Da/A3CtAouQedf6zW4NyMOyCbQCeINe9
+RE/uP/rMSWWuBCpXMT53nU0=
+=jez9
+-----END PGP SIGNATURE-----
+
+--gE7i1rD7pdK0Ng3j--
