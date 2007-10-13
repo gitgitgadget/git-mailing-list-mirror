@@ -1,64 +1,82 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Port builtin-add.c to use the new option parser.
-Date: Sat, 13 Oct 2007 21:22:13 +0200
-Message-ID: <20071013192213.GB2875@steel.home>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <1192282153-26684-3-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0710131544030.25221@racer.site> <20071013150306.GH7110@artemis.corp>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sat, 13 Oct 2007 21:59:41 +0200
+Message-ID: <853awepyz6.fsf@lola.goethe.zz>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	<8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+	<Pine.LNX.4.64.0710130130380.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kristian =?iso-8859-15?Q?H=F8gsberg?=
-X-From: git-owner@vger.kernel.org Sat Oct 13 21:22:36 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 13 21:59:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgmZE-00029a-W6
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 21:22:33 +0200
+	id 1Ign8f-0007Ml-Hx
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 21:59:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757571AbXJMTWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 15:22:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757459AbXJMTWV
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 15:22:21 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:32568 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753790AbXJMTWU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 15:22:20 -0400
-Received: from tigra.home (Fc8ce.f.strato-dslnet.de [195.4.200.206])
-	by post.webmailer.de (fruni mo9) (RZmta 13.4)
-	with ESMTP id m02e4fj9DHjbrX ; Sat, 13 Oct 2007 21:22:13 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A106D277AE;
-	Sat, 13 Oct 2007 21:22:13 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 81F1256D22; Sat, 13 Oct 2007 21:22:13 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071013150306.GH7110@artemis.corp>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0sy8=
-X-RZG-CLASS-ID: mo07
+	id S1752400AbXJMT64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 15:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752232AbXJMT64
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 15:58:56 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:50867 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751574AbXJMT6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 15:58:55 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1Ign8Q-0002mP-42; Sat, 13 Oct 2007 15:58:54 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 1DA661C4CE11; Sat, 13 Oct 2007 21:59:41 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0710130130380.25221@racer.site> (Johannes Schindelin's message of "Sat\, 13 Oct 2007 01\:46\:40 +0100 \(BST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60755>
 
-Pierre Habouzit, Sat, Oct 13, 2007 17:03:06 +0200:
-> On Sat, Oct 13, 2007 at 02:47:20PM +0000, Johannes Schindelin wrote:
-> > Thinking about this more, I am reverting my stance on the ARRAY_SIZE() 
-> > issue.  I think if you introduce a "OPTION_NONE = 0" in the enum, then 
-> > this single last comma should be enough.
-> 
->   adding a trailing comma does not add a NULL after that, it's ignored,
-> you're confused.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Yep
+> Jakub, thank you very much for doing this.  It is a very tedious
+> work, and I deem it invaluable.
 
->   Note that I don't really like using ARRAY_SIZE either, I kept it that
-> way, but my taste would rather be to have an "empty" option, and
-> explicitely mark the end of the array.
+And yet you trash the results.
 
-You can have both. Just stop at NULL-entry or when the 'size' elements
-passed, whatever happens first.
+>>    Git is just too complicated for a typical project. I understand
+>>    it's probably great for the Linux kernel but for a smaller
+>>    project like mine (Mesa) it's overkill and a frustration. (...)
+>>    With git everything seems hard. (...)  I've _wasted_ hours
+>>    trying to figure out git. That alone is a huge issue. I guess I
+>>    could go into specific details about my problems with git but
+>>    I've already spent enough time on this survey.
+>
+> I find it always a little strange how people want to use something
+> like git, but are unwilling to ask.  Is this such a big attack on
+> the manliness to admist one needs help or what?
+
+Not everybody likes getting the kind of treatment you find fit to dish
+out.
+
+>>    Figure out why people find git hard to learn and eliminate those
+>>    barriers to entry.  Make git more task-oriented rather than
+>>    data-model-oriented the way it is now.
+>
+> Frankly, expectations like these make me want to bang somebody's
+> head on the wall.
+
+And you wonder that people are unwilling to ask for things on the
+list?  When even mentioning something in a _survey_ makes core
+developers want to bang their heads against a wall?
+
+I find it a pity that my suggestion to ask about how comfortable
+people are with the tone on the list did not make it into the survey.
+Enough core developers make the tone sufficiently unconstructive to
+make it quite understandable that people are unwilling to ask
+questions here, in order to avoid getting their heads banged against a
+wall, virtual or not.
+
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
