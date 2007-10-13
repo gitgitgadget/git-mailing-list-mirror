@@ -1,7 +1,7 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 14/14] Use the asyncronous function infrastructure to run the content filter.
-Date: Sat, 13 Oct 2007 22:06:24 +0200
-Message-ID: <1192305984-22594-15-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 11/14] upload-pack: Run rev-list in an asynchronous function.
+Date: Sat, 13 Oct 2007 22:06:21 +0200
+Message-ID: <1192305984-22594-12-git-send-email-johannes.sixt@telecom.at>
 References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-3-git-send-email-johannes.sixt@telecom.at>
@@ -13,165 +13,164 @@ References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-9-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-10-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-11-git-send-email-johannes.sixt@telecom.at>
- <1192305984-22594-12-git-send-email-johannes.sixt@telecom.at>
- <1192305984-22594-13-git-send-email-johannes.sixt@telecom.at>
- <1192305984-22594-14-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Oct 13 22:07:51 2007
+X-From: git-owner@vger.kernel.org Sat Oct 13 22:08:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgnH4-0008Ve-LR
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:51 +0200
+	id 1IgnGz-0008Ve-5T
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758135AbXJMUG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:06:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758497AbXJMUG4
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:56 -0400
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:52604 "EHLO
+	id S1758184AbXJMUGl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 16:06:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750942AbXJMUGk
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:40 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:52596 "EHLO
 	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757739AbXJMUGa (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1757729AbXJMUGa (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 13 Oct 2007 16:06:30 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 1228E13A7A2;
-	Sat, 13 Oct 2007 22:06:29 +0200 (CEST)
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 6867413A790;
+	Sat, 13 Oct 2007 22:06:28 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.3.1134.gee562
-In-Reply-To: <1192305984-22594-14-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192305984-22594-11-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60765>
+
+This gets rid of an explicit fork().
+
+Since upload-pack has to coordinate two processes (rev-list and
+pack-objects), we cannot use the normal finish_async(), but have to monitor
+the process explicitly. Hence, there are no changes at this front.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- convert.c |   60 +++++++++++++++++++++++++++---------------------------------
- 1 files changed, 27 insertions(+), 33 deletions(-)
+ upload-pack.c |   46 ++++++++++++++++++----------------------------
+ 1 files changed, 18 insertions(+), 28 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index c870817..10161a0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -201,15 +201,21 @@ static char *crlf_to_worktree(const char *path, const char *src, unsigned long *
- 	return buffer;
+diff --git a/upload-pack.c b/upload-pack.c
+index c5aa0ea..6799468 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -97,11 +97,12 @@ static void show_edge(struct commit *commit)
+ 	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
  }
  
--static int filter_buffer(int fd, const char *src,
--			 unsigned long size, const char *cmd)
-+struct filter_params {
-+	const char *src;
-+	unsigned long size;
-+	const char *cmd;
-+};
-+
-+static int filter_buffer(int fd, void *data)
+-static void do_rev_list(int create_full_pack)
++static int do_rev_list(int fd, void *create_full_pack)
  {
- 	/*
- 	 * Spawn cmd and feed the buffer contents through its stdin.
- 	 */
- 	struct child_process child_process;
-+	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
--	const char *argv[] = { "sh", "-c", cmd, NULL };
-+	const char *argv[] = { "sh", "-c", params->cmd, NULL };
+ 	int i;
+ 	struct rev_info revs;
  
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-@@ -217,17 +223,17 @@ static int filter_buffer(int fd, const char *src,
- 	child_process.out = fd;
- 
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", cmd);
-+		return error("cannot fork to run external filter %s", params->cmd);
- 
--	write_err = (write_in_full(child_process.in, src, size) < 0);
-+	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", cmd);
-+		error("cannot feed the input to external filter %s", params->cmd);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", cmd, -status);
-+		error("external filter %s failed", params->cmd);
- 	return (write_err || status);
++	pack_pipe = fdopen(fd, "w");
+ 	if (create_full_pack)
+ 		use_thin_pack = 0; /* no point doing it */
+ 	init_revisions(&revs, NULL);
+@@ -131,14 +132,12 @@ static void do_rev_list(int create_full_pack)
+ 	prepare_revision_walk(&revs);
+ 	mark_edges_uninteresting(revs.commits, &revs, show_edge);
+ 	traverse_commit_list(&revs, show_commit, show_object);
++	return 0;
  }
  
-@@ -241,42 +247,31 @@ static char *apply_filter(const char *path, const char *src,
- 	 * (child --> cmd) --> us
- 	 */
- 	const int SLOP = 4096;
--	int pipe_feed[2];
--	int status;
- 	char *dst;
- 	unsigned long dstsize, dstalloc;
--	struct child_process child_process;
-+	struct async async;
-+	struct filter_params params;
+ static void create_pack_file(void)
+ {
+-	/* Pipe from rev-list to pack-objects
+-	 */
+-	int lp_pipe[2];
+-	pid_t pid_rev_list;
++	struct async rev_list;
+ 	struct child_process pack_objects;
+ 	int create_full_pack = (nr_our_refs == want_obj.nr && !have_obj.nr);
+ 	char data[8193], progress[128];
+@@ -148,22 +147,12 @@ static void create_pack_file(void)
+ 	const char *argv[10];
+ 	int arg = 0;
  
- 	if (!cmd)
- 		return NULL;
+-	if (pipe(lp_pipe) < 0)
+-		die("git-upload-pack: unable to create pipe");
+-	pid_rev_list = fork();
+-	if (pid_rev_list < 0)
++	rev_list.proc = do_rev_list;
++	/* .data is just a boolean: any non-NULL value will do */
++	rev_list.data = create_full_pack ? &rev_list : NULL;
++	if (start_async(&rev_list))
+ 		die("git-upload-pack: unable to fork git-rev-list");
  
--	memset(&child_process, 0, sizeof(child_process));
+-	if (!pid_rev_list) {
+-		close(lp_pipe[0]);
+-		pack_pipe = fdopen(lp_pipe[1], "w");
+-		do_rev_list(create_full_pack);
+-		exit(0);
+-	}
 -
--	if (pipe(pipe_feed) < 0) {
--		error("cannot create pipe to run external filter %s", cmd);
--		return NULL;
--	}
-+	memset(&async, 0, sizeof(async));
-+	async.proc = filter_buffer;
-+	async.data = &params;
-+	params.src = src;
-+	params.size = *sizep;
-+	params.cmd = cmd;
+-	/* close this so that it is not inherited by pack_objects */
+-	close(lp_pipe[1]);
+-
+ 	argv[arg++] = "pack-objects";
+ 	argv[arg++] = "--stdout";
+ 	if (!no_progress)
+@@ -173,14 +162,15 @@ static void create_pack_file(void)
+ 	argv[arg++] = NULL;
  
- 	fflush(NULL);
--	child_process.pid = fork();
--	if (child_process.pid < 0) {
--		error("cannot fork to run external filter %s", cmd);
--		close(pipe_feed[0]);
--		close(pipe_feed[1]);
--		return NULL;
--	}
--	if (!child_process.pid) {
--		close(pipe_feed[0]);
--		exit(filter_buffer(pipe_feed[1], src, *sizep, cmd));
--	}
--	close(pipe_feed[1]);
-+	if (start_async(&async))
-+		return 0;	/* error was already reported */
+ 	memset(&pack_objects, 0, sizeof(pack_objects));
+-	pack_objects.in = lp_pipe[0];	/* start_command closes it */
++	pack_objects.in = rev_list.out;	/* start_command closes it */
+ 	pack_objects.out = -1;
+ 	pack_objects.err = -1;
+ 	pack_objects.git_cmd = 1;
+ 	pack_objects.argv = argv;
++
+ 	if (start_command(&pack_objects)) {
+ 		/* daemon sets things up to ignore TERM */
+-		kill(pid_rev_list, SIGKILL);
++		kill(rev_list.pid, SIGKILL);
+ 		die("git-upload-pack: unable to fork git-pack-objects");
+ 	}
  
- 	dstalloc = *sizep;
- 	dst = xmalloc(dstalloc);
- 	dstsize = 0;
- 
- 	while (1) {
--		ssize_t numread = xread(pipe_feed[0], dst + dstsize,
-+		ssize_t numread = xread(async.out, dst + dstsize,
- 					dstalloc - dstsize);
- 
- 		if (numread <= 0) {
-@@ -293,15 +288,14 @@ static char *apply_filter(const char *path, const char *src,
- 			dst = xrealloc(dst, dstalloc);
+@@ -280,11 +270,11 @@ static void create_pack_file(void)
  		}
- 	}
--	if (close(pipe_feed[0])) {
-+	if (close(async.out)) {
- 		error("read from external filter %s failed", cmd);
- 		free(dst);
- 		dst = NULL;
- 	}
  
--	status = finish_command(&child_process);
--	if (status) {
--		error("external filter %s failed %d", cmd, -status);
-+	if (finish_async(&async)) {
-+		error("external filter %s failed", cmd);
- 		free(dst);
- 		dst = NULL;
- 	}
+ 		/* See if the children are still there */
+-		if (pid_rev_list || pack_objects.pid) {
++		if (rev_list.pid || pack_objects.pid) {
+ 			pid = waitpid(-1, &status, WNOHANG);
+ 			if (!pid)
+ 				continue;
+-			who = ((pid == pid_rev_list) ? "git-rev-list" :
++			who = ((pid == rev_list.pid) ? "git-rev-list" :
+ 			       (pid == pack_objects.pid) ? "git-pack-objects" :
+ 			       NULL);
+ 			if (!who) {
+@@ -302,11 +292,11 @@ static void create_pack_file(void)
+ 				      who);
+ 				goto fail;
+ 			}
+-			if (pid == pid_rev_list)
+-				pid_rev_list = 0;
++			if (pid == rev_list.pid)
++				rev_list.pid = 0;
+ 			if (pid == pack_objects.pid)
+ 				pack_objects.pid = 0;
+-			if (pid_rev_list || pack_objects.pid)
++			if (rev_list.pid || pack_objects.pid)
+ 				continue;
+ 		}
+ 
+@@ -329,8 +319,8 @@ static void create_pack_file(void)
+  fail:
+ 	if (pack_objects.pid)
+ 		kill(pack_objects.pid, SIGKILL);
+-	if (pid_rev_list)
+-		kill(pid_rev_list, SIGKILL);
++	if (rev_list.pid)
++		kill(rev_list.pid, SIGKILL);
+ 	send_client_data(3, abort_msg, sizeof(abort_msg));
+ 	die("git-upload-pack: %s", abort_msg);
+ }
 -- 
 1.5.3.3.1134.gee562
