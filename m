@@ -1,105 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git-fast-import crashes
-Date: Sat, 13 Oct 2007 09:50:27 +0200
-Message-ID: <20071013075027.GD7110@artemis.corp>
-References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com> <20071013032916.GL27899@spearce.org> <20071013033407.GM27899@spearce.org> <20071013073640.GC7110@artemis.corp>
+From: Jeff King <peff@peff.net>
+Subject: Re: Imports without Tariffs
+Date: Sat, 13 Oct 2007 03:57:23 -0400
+Message-ID: <20071013075723.GA27533@coredump.intra.peff.net>
+References: <30817A88-4313-4D38-95B0-FEC47C651CB0@mit.edu> <20071013040712.GA27227@coredump.intra.peff.net> <1240801C-F4CC-4290-8C3D-2038F1957DF3@MIT.EDU>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="PPYy/fEw/8QCHSq3";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: "Shawn O. Pearce" <spearce@spearce.org>,
-	Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 13 09:50:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@MIT.EDU>
+X-From: git-owner@vger.kernel.org Sat Oct 13 09:57:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igblh-0004VV-NL
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 09:50:42 +0200
+	id 1IgbsO-0005TI-FJ
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 09:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753293AbXJMHu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 03:50:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752631AbXJMHu3
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 03:50:29 -0400
-Received: from pan.madism.org ([88.191.52.104]:46334 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752537AbXJMHu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 03:50:28 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 69EE124BB6;
-	Sat, 13 Oct 2007 09:50:27 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 101CAF161; Sat, 13 Oct 2007 09:50:27 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org
+	id S1752785AbXJMH51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 03:57:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754110AbXJMH51
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 03:57:27 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4011 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752399AbXJMH50 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 03:57:26 -0400
+Received: (qmail 22557 invoked by uid 111); 13 Oct 2007 07:57:24 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 13 Oct 2007 03:57:24 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 13 Oct 2007 03:57:23 -0400
 Content-Disposition: inline
-In-Reply-To: <20071013073640.GC7110@artemis.corp>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <1240801C-F4CC-4290-8C3D-2038F1957DF3@MIT.EDU>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60726>
 
+On Sat, Oct 13, 2007 at 12:30:09AM -0400, Michael Witten wrote:
 
---PPYy/fEw/8QCHSq3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> except that git-rebase is smart enough to realize that C == C' and skip
+>> it (so it's a "safe" way of moving forward).
+>
+> This is good to know! The documentation should mention this case!
 
-On sam, oct 13, 2007 at 07:36:40 +0000, Pierre Habouzit wrote:
-> On Sat, Oct 13, 2007 at 03:34:07AM +0000, Shawn O. Pearce wrote:
-> > "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> > > Shun Kei Leung <kevinlsk@gmail.com> wrote:
-> > > > I am using git 1.5.3.4.206.g58ba4-dirty on Mac OS X 10.4.
-> > ....
-> > > > Program received signal EXC_BAD_ACCESS, Could not access memory.
-> > > > Reason: KERN_INVALID_ADDRESS at address: 0x64617469
-> > ....
-> > > This looks like it is
-> > > memory corruption (e.g. someone overwriting a free'd segment),
-> > > but that sort of memory corruption is very hard to track down.
-> >=20
-> > OK, so the version you have (58ba4) is the latest fast-import after
-> > the strbuf.c series went in.  The one immediately before that series
-> > was 4bf538 and is probably actually stable.
-> >=20
-> > So I wonder, can you test 4bf538 and then if it is good bisect
-> > between those two commits?  There must be a memory corruption
-> > introduced by one of the strbuf changes...
->=20
->   Gasp, if you get the offending sha1 commit, don't forget to Cc: me.
+Yes, it probably should. Can you submit a patch describing the behavior
+where you think it ought to go?
 
-  Okay, given that fast-import uses quote_c_style, I believe this is the
-same but that the one that was reported already. I've read the full
-`git diff 4bf53833dbca666f61b5177977e96d453527db20.. -- fast-import.c`
-and nothing alarming shows up.
+> Basically, the imported cvs history should be treated like
+> a remote that's being tracked. It seems like the solution
+> I proposed kind of does this and would work for other SCM
+> imports too.
 
-  Please try to apply:
-http://git.madism.org/?p=3Dgit.git;a=3Dcommit;h=3D7406e83342cd445ac38c1753c=
-5fce75377737e2f
+I think it's an interesting avenue to pursue, though I would worry a
+little about robustness. I like the fact that after rebasing, the
+commits have done a complete git->cvs->git loop and look identical, so I
+am sure everything made it through intact. But perhaps I'm just being
+paranoid.
 
-  And see if that fixes the issue for you. Else a bisection would be
-much appreciated. Thanks.
+As an alternate idea, why not try to have the CVS commit contain all
+information necessary to create a particular git commit. IOW, describe
+all of the data that goes into the commit hash as textual comments in
+the CVS commit (committer name/time, author name/time). And then
+theoretically git-cvsimport can reconstruct the exact same commits
+again, and your git->cvs->git merge really _will_ be a fastforward.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+> Unfortunately, they are the ones running the servers; I have to do my
+> git work behind the scenes.
 
---PPYy/fEw/8QCHSq3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+I've been in the same boat, and just used the rebase trick I described.
+Of course it was a very tiny project, so I didn't mind losing some of
+the full power of git.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHEHjDvGr7W6HudhwRAkhRAJwKuvQS9EEuu47AAsRKsumA0pdlJQCfW+nJ
-Va2O6NhDOFGIutqCyxFBSbA=
-=SJFk
------END PGP SIGNATURE-----
-
---PPYy/fEw/8QCHSq3--
+-Peff
