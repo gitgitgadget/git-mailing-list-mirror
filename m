@@ -1,65 +1,99 @@
-From: Tom Tobin <korpios@gmail.com>
-Subject: Re: [PATCH] Color support added to git-add--interactive.
-Date: Sat, 13 Oct 2007 15:26:46 -0500
-Message-ID: <1192307206.6103.18.camel@athena>
-References: <471045DA.5050902@gmail.com>  <1192306873.6103.14.camel@athena>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Port builtin-add.c to use the new option parser.
+Date: Sat, 13 Oct 2007 22:27:06 +0200
+Message-ID: <20071013202706.GJ7110@artemis.corp>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <1192282153-26684-3-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0710131544030.25221@racer.site> <20071013150306.GH7110@artemis.corp> <20071013192213.GB2875@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 13 22:27:03 2007
+Content-Type: multipart/signed; boundary="Z8yxTSU1mh2gsre7";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 13 22:27:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgnZd-0002j4-Jl
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:27:02 +0200
+	id 1IgnZx-0002lR-0v
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:27:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754011AbXJMU0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:26:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753870AbXJMU0u
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:26:50 -0400
-Received: from py-out-1112.google.com ([64.233.166.181]:46084 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753535AbXJMU0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 16:26:49 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2251423pyb
-        for <git@vger.kernel.org>; Sat, 13 Oct 2007 13:26:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:subject:to:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding:from;
-        bh=xJlODvp7mrU0JDAlRkB2zClDYxXjI+ONEOT5nYyb65w=;
-        b=uabaY0okojWch9L0EFAI6GabCVWyCz+d1/mGF2ut8P/ySET4taUp44wds6NaVFLNr88O3ipd+NpafHV4JUGklB/S9pC6VkZSz+pcc1714GxpzWALyI5G0rYeUGrKUTmxFkoPfFeNsGJXFK3cONcVjelDoMMseLrr6tLLD2ylDOE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:subject:to:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding:from;
-        b=s8S6AYTa3/t8BVLKRZsn1Rru+JakyJONsWL/JPD++d+WUdWC9qyyYonXp8dXPkJcv6zeQIkZ/tNdOkkwwWdpg6geYwXLy9HHdKHeIKtBVxU4EXkrOqVEySylbWg47hSNlnrxlm43yymh6hNhKrkXD5mRJxHJsZxQRMN935dNN08=
-Received: by 10.35.51.19 with SMTP id d19mr5375545pyk.1192307208074;
-        Sat, 13 Oct 2007 13:26:48 -0700 (PDT)
-Received: from ?192.168.1.197? ( [24.124.68.243])
-        by mx.google.com with ESMTPS id z80sm4668165pyg.2007.10.13.13.26.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 13 Oct 2007 13:26:47 -0700 (PDT)
-In-Reply-To: <1192306873.6103.14.camel@athena>
-X-Mailer: Evolution 2.12.0 
+	id S1756252AbXJMU1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 16:27:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754277AbXJMU1J
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:27:09 -0400
+Received: from pan.madism.org ([88.191.52.104]:60213 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753870AbXJMU1I (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 16:27:08 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id C8856244D2;
+	Sat, 13 Oct 2007 22:27:06 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 1950E3A0976; Sat, 13 Oct 2007 22:27:06 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+Content-Disposition: inline
+In-Reply-To: <20071013192213.GB2875@steel.home>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60774>
 
-On Sat, 2007-10-13 at 15:21 -0500, Tom Tobin wrote:
-> Meh, I really need to start posting the stuff I've hacked into git.
-> First the git-stash changes, now this.  Sigh.  ^_^
-> 
-> I have a variant of git-add--interactive that properly adds coloration
-> to diffs, taking the config file values already set for the color.diff
-> key and colorizing the unadorned diffs internally (rather than expecting
-> the output of git-diff/git-diff-files to be colorized).
-> 
-> Give me a couple of hours (still setting up my Macbook after repaving it
-> and installing Ubuntu) and I'll post what I've got for others to tear
-> apart and point out where I screwed up.  ;)
 
-... and now Evolution is screwing up my From: address (it should be
-"korpios@korpios.com"; probably since I'm routing everything through
-Google Apps).  Ah well, one more thing to fix first....
+--Z8yxTSU1mh2gsre7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Sat, Oct 13, 2007 at 07:22:13PM +0000, Alex Riesen wrote:
+> Pierre Habouzit, Sat, Oct 13, 2007 17:03:06 +0200:
+> > On Sat, Oct 13, 2007 at 02:47:20PM +0000, Johannes Schindelin wrote:
+> > > Thinking about this more, I am reverting my stance on the ARRAY_SIZE(=
+)=20
+> > > issue.  I think if you introduce a "OPTION_NONE =3D 0" in the enum, t=
+hen=20
+> > > this single last comma should be enough.
+> >=20
+> >   adding a trailing comma does not add a NULL after that, it's ignored,
+> > you're confused.
+>=20
+> Yep
+>=20
+> >   Note that I don't really like using ARRAY_SIZE either, I kept it that
+> > way, but my taste would rather be to have an "empty" option, and
+> > explicitely mark the end of the array.
+>=20
+> You can have both. Just stop at NULL-entry or when the 'size' elements
+> passed, whatever happens first.
+
+  Well I dislike the "count" thing, and Dscho agreed that it somehow
+sucked too. If you go see the current state of the ph/parseopt series
+you'll see it's not here anymore.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Z8yxTSU1mh2gsre7
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHESoavGr7W6HudhwRAg4uAJ9ONuyBnFp1szpMo/qG08/IIOMLwQCeLrEc
+hiBhPh+tvReqwHDPKEkvcbo=
+=BoJD
+-----END PGP SIGNATURE-----
+
+--Z8yxTSU1mh2gsre7--
