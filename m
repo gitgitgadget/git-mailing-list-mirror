@@ -1,71 +1,172 @@
-From: "Dan Z" <dzwell@gmail.com>
-Subject: Re: [PATCH] Color support added to git-add--interactive.
-Date: Sat, 13 Oct 2007 16:50:35 -0500
-Message-ID: <cff973550710131450r3b54a328k8db97488f4b50e2a@mail.gmail.com>
-References: <471045DA.5050902@gmail.com>
-	 <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
-	 <20071013172745.GA2624@coredump.intra.peff.net>
-	 <20071013175127.GA3183@coredump.intra.peff.net>
-	 <47112491.8070309@gmail.com>
-	 <8DDFBF9A-2C68-404B-843C-BE63C52F0DAF@wincent.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Add a simple option parser.
+Date: Sun, 14 Oct 2007 00:14:50 +0200
+Message-ID: <20071013221450.GC2875@steel.home>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <20071013191655.GA2875@steel.home> <20071013205404.GK7110@artemis.corp>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Jeff King" <peff@peff.net>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Jonathan del Strother" <maillist@steelskies.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Frank Lichtenheld" <frank@lichtenheld.de>
-To: "Wincent Colaiuta" <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sat Oct 13 23:50:53 2007
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 00:15:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igosl-0006Ob-Vq
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 23:50:52 +0200
+	id 1IgpGC-0001J2-0Y
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 00:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752904AbXJMVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 17:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbXJMVuh
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 17:50:37 -0400
-Received: from rv-out-0910.google.com ([209.85.198.185]:35931 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752450AbXJMVug (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 17:50:36 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1104183rvb
-        for <git@vger.kernel.org>; Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/OSzyW6YfxDB/7EHKQTOTSSNOk5LhW5XvtcKybSHHuw=;
-        b=WbyIWbn+UGDQzWxF9VIo66LU+HGdLvWDvfMZeIqkYYdQuu5yBEbLkTDiCnL2Ly18qgaBDX5yWJ3rdxf01Kr/Azo2qTTFjaG2vOJnxJT1nWuEZDF6aJVjsbT54bsH1BNFhvozguSpIn8tjR6QqO9CLFFIXaO+0y66QabAAUSx/ps=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hqPhmz1esDwwyYezA0KfQsGqE6BUeJuaarJ58psABeonJJQTuMVPveOITpwuhckBALAbtn/zekp9JUjaM4lYQzZEtBTuI0U0fa5bX0J+1lm5lfpWSJSDm2hE6uXyQJoye/W8iELPizzWe5cBlt8JjCwdX+y0ml7cttNrP2cexO0=
-Received: by 10.142.86.7 with SMTP id j7mr1288560wfb.1192312235397;
-        Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
-Received: by 10.142.216.17 with HTTP; Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
-In-Reply-To: <8DDFBF9A-2C68-404B-843C-BE63C52F0DAF@wincent.com>
+	id S1759389AbXJMWOy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 18:14:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759124AbXJMWOy
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 18:14:54 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:54230 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758791AbXJMWOx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 18:14:53 -0400
+Received: from tigra.home (Fc8ce.f.strato-dslnet.de [195.4.200.206])
+	by post.webmailer.de (fruni mo25) (RZmta 13.4)
+	with ESMTP id 202d90j9DJYAQD ; Sun, 14 Oct 2007 00:14:50 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 9458C277AE;
+	Sun, 14 Oct 2007 00:14:50 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 6102D56D22; Sun, 14 Oct 2007 00:14:50 +0200 (CEST)
 Content-Disposition: inline
+In-Reply-To: <20071013205404.GK7110@artemis.corp>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0sy8=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60781>
 
-On 10/13/07, Wincent Colaiuta <win@wincent.com> wrote:
-> Or could you just piggy-back on the settings for color.diff.<slot>?
->
-> And if a separate group for git-add is necessary, perhaps "add" would
-> be enough, rather than "add-interactive".
->
-> Wincent
->
+Pierre Habouzit, Sat, Oct 13, 2007 22:54:04 +0200:
+> On Sat, Oct 13, 2007 at 07:16:55PM +0000, Alex Riesen wrote:
+> > Pierre Habouzit, Sat, Oct 13, 2007 15:29:03 +0200:
+> > BTW, if you just printed the usage message out (it is about usage of a
+> > program, isn't it?) and called exit() everyone would be just as happy.
+> > And you wouldn't have to include strbuf (it is the only use of it),
+> > less code, too. It'd make simplier to stea^Wcopy your implementation,
+> > which I like :)
+> 
+>   the reason is that usage() is a wrapper around a callback, and I
+> suppose it's used by some GUI's or anything like that.
 
-I think color.add is better, because git-add--interactive goes beyond
-coloring diffs. When this is complete, it should probably use
-color.diff.<slot> for the actual diff output, and color.add.<slot> for
-colored prompts/commands.
+It is not. Not yet. What could they use a usage text for?
+Besides, you could just export the callback (call_usage_callback or
+something) from usage.c and call it.
 
-Dan
+>   FWIW you can rework the .c like this:
+
+on top of yours:
+
+From: Alex Riesen <raa.lkml@gmail.com>
+Date: Sun, 14 Oct 2007 00:10:51 +0200
+Subject: [PATCH] Rework make_usage to print the usage message immediately
+
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
+ parse-options.c |   60 ++++++++++++++++++++++++------------------------------
+ 1 files changed, 27 insertions(+), 33 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index 07abb50..1e3940f 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -1,6 +1,5 @@
+ #include "git-compat-util.h"
+ #include "parse-options.h"
+-#include "strbuf.h"
+ 
+ #define OPT_SHORT 1
+ #define OPT_UNSET 2
+@@ -171,57 +170,52 @@ int parse_options(int argc, const char **argv,
+ 
+ void make_usage(const char * const usagestr[], struct option *opts, int cnt)
+ {
+-	struct strbuf sb;
+-
+-	strbuf_init(&sb, 4096);
+-	do {
+-		strbuf_addstr(&sb, *usagestr++);
+-		strbuf_addch(&sb, '\n');
+-	} while (*usagestr);
++	fprintf(stderr, "usage: ");
++	while (*usagestr)
++		fprintf(stderr, "%s\n", *usagestr++);
+ 
+ 	if (cnt && opts->type != OPTION_GROUP)
+-		strbuf_addch(&sb, '\n');
++		fputc('\n', stderr);
+ 
+ 	for (; cnt-- > 0; opts++) {
+ 		size_t pos;
+ 
+ 		if (opts->type == OPTION_GROUP) {
+-			strbuf_addch(&sb, '\n');
++			fputc('\n', stderr);
+ 			if (*opts->help)
+-				strbuf_addf(&sb, "%s\n", opts->help);
++				fprintf(stderr, "%s\n", opts->help);
+ 			continue;
+ 		}
+ 
+-		pos = sb.len;
+-		strbuf_addstr(&sb, "    ");
+-		if (opts->short_name) {
+-			strbuf_addf(&sb, "-%c", opts->short_name);
+-		}
+-		if (opts->long_name) {
+-			strbuf_addf(&sb, opts->short_name ? ", --%s" : "--%s",
+-						opts->long_name);
+-		}
++		pos = fprintf(stderr, "    ");
++		if (opts->short_name)
++			pos += fprintf(stderr, "-%c", opts->short_name);
++		if (opts->long_name)
++			pos += fprintf(stderr,
++				       opts->short_name ? ", --%s" : "--%s",
++				       opts->long_name);
+ 		switch (opts->type) {
+ 		case OPTION_INTEGER:
+-			strbuf_addstr(&sb, " <n>");
++			fputs(" <n>", stderr);
++			pos += 4;
+ 			break;
+ 		case OPTION_STRING:
+-			if (opts->argh) {
+-				strbuf_addf(&sb, " <%s>", opts->argh);
+-			} else {
+-				strbuf_addstr(&sb, " ...");
++			if (opts->argh)
++				pos += fprintf(stderr, " <%s>", opts->argh);
++			else {
++				fputs(" ...", stderr);
++				pos += 4;
+ 			}
+ 			break;
+ 		default:
+ 			break;
+ 		}
+-		if (sb.len - pos <= USAGE_OPTS_WIDTH) {
+-			int pad = USAGE_OPTS_WIDTH - (sb.len - pos) + USAGE_GAP;
+-			strbuf_addf(&sb, "%*s%s\n", pad, "", opts->help);
+-		} else {
+-			strbuf_addf(&sb, "\n%*s%s\n", USAGE_OPTS_WIDTH + USAGE_GAP, "",
+-						opts->help);
+-		}
++		if (pos <= USAGE_OPTS_WIDTH) {
++			int pad = USAGE_OPTS_WIDTH - pos + USAGE_GAP;
++			fprintf(stderr, "%*s%s\n", pad, "", opts->help);
++		} else
++			fprintf(stderr, "\n%*s%s\n",
++				USAGE_OPTS_WIDTH + USAGE_GAP, "", opts->help);
+ 	}
+-	usage(sb.buf);
++	exit(129);
+ }
+-- 
+1.5.3.4.232.ga843
