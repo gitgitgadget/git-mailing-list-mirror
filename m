@@ -1,99 +1,58 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Port builtin-add.c to use the new option parser.
-Date: Sat, 13 Oct 2007 22:27:06 +0200
-Message-ID: <20071013202706.GJ7110@artemis.corp>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <1192282153-26684-3-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0710131544030.25221@racer.site> <20071013150306.GH7110@artemis.corp> <20071013192213.GB2875@steel.home>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sat, 13 Oct 2007 16:27:13 -0400
+Message-ID: <20071013202713.GA2467@fieldses.org>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Z8yxTSU1mh2gsre7";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=us-ascii
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 13 22:27:22 2007
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Oct 13 22:27:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgnZx-0002lR-0v
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:27:21 +0200
+	id 1Igna8-0002ms-CZ
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:27:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252AbXJMU1L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:27:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754277AbXJMU1J
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:27:09 -0400
-Received: from pan.madism.org ([88.191.52.104]:60213 "EHLO hermes.madism.org"
+	id S1756276AbXJMU1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 16:27:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756651AbXJMU1T
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:27:19 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:52794 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753870AbXJMU1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 16:27:08 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id C8856244D2;
-	Sat, 13 Oct 2007 22:27:06 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 1950E3A0976; Sat, 13 Oct 2007 22:27:06 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Alex Riesen <raa.lkml@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>
+	id S1755132AbXJMU1T (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 16:27:19 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IgnZq-0000s8-1i; Sat, 13 Oct 2007 16:27:14 -0400
 Content-Disposition: inline
-In-Reply-To: <20071013192213.GB2875@steel.home>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <853awepyz6.fsf@lola.goethe.zz>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60775>
 
+On Sat, Oct 13, 2007 at 09:59:41PM +0200, David Kastrup wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+...survey quote:
+> >>    Figure out why people find git hard to learn and eliminate those
+> >>    barriers to entry.  Make git more task-oriented rather than
+> >>    data-model-oriented the way it is now.
+> >
+> > Frankly, expectations like these make me want to bang somebody's
+> > head on the wall.
+> 
+> And you wonder that people are unwilling to ask for things on the
+> list?  When even mentioning something in a _survey_ makes core
+> developers want to bang their heads against a wall?
 
---Z8yxTSU1mh2gsre7
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Well, he does have a point that they could have been more specific.
 
-On Sat, Oct 13, 2007 at 07:22:13PM +0000, Alex Riesen wrote:
-> Pierre Habouzit, Sat, Oct 13, 2007 17:03:06 +0200:
-> > On Sat, Oct 13, 2007 at 02:47:20PM +0000, Johannes Schindelin wrote:
-> > > Thinking about this more, I am reverting my stance on the ARRAY_SIZE(=
-)=20
-> > > issue.  I think if you introduce a "OPTION_NONE =3D 0" in the enum, t=
-hen=20
-> > > this single last comma should be enough.
-> >=20
-> >   adding a trailing comma does not add a NULL after that, it's ignored,
-> > you're confused.
->=20
-> Yep
->=20
-> >   Note that I don't really like using ARRAY_SIZE either, I kept it that
-> > way, but my taste would rather be to have an "empty" option, and
-> > explicitely mark the end of the array.
->=20
-> You can have both. Just stop at NULL-entry or when the 'size' elements
-> passed, whatever happens first.
+But, yes, "I wish we could get people to be more specific" might be the
+better way to put it.
 
-  Well I dislike the "count" thing, and Dscho agreed that it somehow
-sucked too. If you go see the current state of the ph/parseopt series
-you'll see it's not here anymore.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---Z8yxTSU1mh2gsre7
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHESoavGr7W6HudhwRAg4uAJ9ONuyBnFp1szpMo/qG08/IIOMLwQCeLrEc
-hiBhPh+tvReqwHDPKEkvcbo=
-=BoJD
------END PGP SIGNATURE-----
-
---Z8yxTSU1mh2gsre7--
+--b.
