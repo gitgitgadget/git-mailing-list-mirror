@@ -1,7 +1,7 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 07/14] upload-pack: Use start_command() to run pack-objects in create_pack_file().
-Date: Sat, 13 Oct 2007 22:06:17 +0200
-Message-ID: <1192305984-22594-8-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 10/14] upload-pack: Move the revision walker into a separate function.
+Date: Sat, 13 Oct 2007 22:06:20 +0200
+Message-ID: <1192305984-22594-11-git-send-email-johannes.sixt@telecom.at>
 References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-3-git-send-email-johannes.sixt@telecom.at>
@@ -9,6 +9,9 @@ References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-5-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-6-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-7-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-8-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-9-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-10-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: gitster@pobox.com
 X-From: git-owner@vger.kernel.org Sat Oct 13 22:08:05 2007
@@ -16,237 +19,124 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgnH3-0008Ve-8e
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:49 +0200
+	id 1IgnH1-0008Ve-7f
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757781AbXJMUGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758497AbXJMUGw
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:52 -0400
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:52585 "EHLO
+	id S1757729AbXJMUGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 16:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758256AbXJMUGq
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:46 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:52591 "EHLO
 	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751032AbXJMUG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 16:06:28 -0400
+	with ESMTP id S1757429AbXJMUG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 16:06:29 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 69A5313A744;
-	Sat, 13 Oct 2007 22:06:27 +0200 (CEST)
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 2A62D13A5FA;
+	Sat, 13 Oct 2007 22:06:28 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.3.1134.gee562
-In-Reply-To: <1192305984-22594-7-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192305984-22594-10-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60767>
 
-This gets rid of an explicit fork/exec.
-
-Since upload-pack has to coordinate two processes (rev-list and
-pack-objects), we cannot use the normal finish_command(), but have to
-monitor the processes explicitly. Hence, the waitpid() call remains.
+While this is mostly a cleanup and makes a long function shorter, it later
+also allows us to use start_async() with this function.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- upload-pack.c |  105 ++++++++++++++++++++++++---------------------------------
- 1 files changed, 44 insertions(+), 61 deletions(-)
+ upload-pack.c |   70 ++++++++++++++++++++++++++++++--------------------------
+ 1 files changed, 37 insertions(+), 33 deletions(-)
 
 diff --git a/upload-pack.c b/upload-pack.c
-index fe96ef1..ef2894a 100644
+index ef2894a..c5aa0ea 100644
 --- a/upload-pack.c
 +++ b/upload-pack.c
-@@ -9,6 +9,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "list-objects.h"
-+#include "run-command.h"
+@@ -97,6 +97,42 @@ static void show_edge(struct commit *commit)
+ 	fprintf(pack_pipe, "-%s\n", sha1_to_hex(commit->object.sha1));
+ }
  
- static const char upload_pack_usage[] = "git-upload-pack [--strict] [--timeout=nn] <dir>";
- 
-@@ -98,16 +99,18 @@ static void show_edge(struct commit *commit)
- 
++static void do_rev_list(int create_full_pack)
++{
++	int i;
++	struct rev_info revs;
++
++	if (create_full_pack)
++		use_thin_pack = 0; /* no point doing it */
++	init_revisions(&revs, NULL);
++	revs.tag_objects = 1;
++	revs.tree_objects = 1;
++	revs.blob_objects = 1;
++	if (use_thin_pack)
++		revs.edge_hint = 1;
++
++	if (create_full_pack) {
++		const char *args[] = {"rev-list", "--all", NULL};
++		setup_revisions(2, args, &revs, NULL);
++	} else {
++		for (i = 0; i < want_obj.nr; i++) {
++			struct object *o = want_obj.objects[i].item;
++			/* why??? */
++			o->flags &= ~UNINTERESTING;
++			add_pending_object(&revs, o, NULL);
++		}
++		for (i = 0; i < have_obj.nr; i++) {
++			struct object *o = have_obj.objects[i].item;
++			o->flags |= UNINTERESTING;
++			add_pending_object(&revs, o, NULL);
++		}
++		setup_revisions(0, NULL, &revs, NULL);
++	}
++	prepare_revision_walk(&revs);
++	mark_edges_uninteresting(revs.commits, &revs, show_edge);
++	traverse_commit_list(&revs, show_commit, show_object);
++}
++
  static void create_pack_file(void)
  {
--	/* Pipes between rev-list to pack-objects, pack-objects to us
--	 * and pack-objects error stream for progress bar.
-+	/* Pipe from rev-list to pack-objects
- 	 */
--	int lp_pipe[2], pu_pipe[2], pe_pipe[2];
--	pid_t pid_rev_list, pid_pack_objects;
-+	int lp_pipe[2];
-+	pid_t pid_rev_list;
-+	struct child_process pack_objects;
- 	int create_full_pack = (nr_our_refs == want_obj.nr && !have_obj.nr);
- 	char data[8193], progress[128];
- 	char abort_msg[] = "aborting due to possible repository "
- 		"corruption on the remote side.";
- 	int buffered = -1;
-+	const char *argv[10];
-+	int arg = 0;
+ 	/* Pipe from rev-list to pack-objects
+@@ -119,41 +155,9 @@ static void create_pack_file(void)
+ 		die("git-upload-pack: unable to fork git-rev-list");
  
- 	if (pipe(lp_pipe) < 0)
- 		die("git-upload-pack: unable to create pipe");
-@@ -154,52 +157,32 @@ static void create_pack_file(void)
+ 	if (!pid_rev_list) {
+-		int i;
+-		struct rev_info revs;
+-
+ 		close(lp_pipe[0]);
+ 		pack_pipe = fdopen(lp_pipe[1], "w");
+-
+-		if (create_full_pack)
+-			use_thin_pack = 0; /* no point doing it */
+-		init_revisions(&revs, NULL);
+-		revs.tag_objects = 1;
+-		revs.tree_objects = 1;
+-		revs.blob_objects = 1;
+-		if (use_thin_pack)
+-			revs.edge_hint = 1;
+-
+-		if (create_full_pack) {
+-			const char *args[] = {"rev-list", "--all", NULL};
+-			setup_revisions(2, args, &revs, NULL);
+-		} else {
+-			for (i = 0; i < want_obj.nr; i++) {
+-				struct object *o = want_obj.objects[i].item;
+-				/* why??? */
+-				o->flags &= ~UNINTERESTING;
+-				add_pending_object(&revs, o, NULL);
+-			}
+-			for (i = 0; i < have_obj.nr; i++) {
+-				struct object *o = have_obj.objects[i].item;
+-				o->flags |= UNINTERESTING;
+-				add_pending_object(&revs, o, NULL);
+-			}
+-			setup_revisions(0, NULL, &revs, NULL);
+-		}
+-		prepare_revision_walk(&revs);
+-		mark_edges_uninteresting(revs.commits, &revs, show_edge);
+-		traverse_commit_list(&revs, show_commit, show_object);
++		do_rev_list(create_full_pack);
  		exit(0);
  	}
  
--	if (pipe(pu_pipe) < 0)
--		die("git-upload-pack: unable to create pipe");
--	if (pipe(pe_pipe) < 0)
--		die("git-upload-pack: unable to create pipe");
--	pid_pack_objects = fork();
--	if (pid_pack_objects < 0) {
-+	/* close this so that it is not inherited by pack_objects */
-+	close(lp_pipe[1]);
-+
-+	argv[arg++] = "pack-objects";
-+	argv[arg++] = "--stdout";
-+	if (!no_progress)
-+		argv[arg++] = "--progress";
-+	if (use_ofs_delta)
-+		argv[arg++] = "--delta-base-offset";
-+	argv[arg++] = NULL;
-+
-+	memset(&pack_objects, 0, sizeof(pack_objects));
-+	pack_objects.in = lp_pipe[0];	/* start_command closes it */
-+	pack_objects.out = -1;
-+	pack_objects.err = -1;
-+	pack_objects.git_cmd = 1;
-+	pack_objects.argv = argv;
-+	if (start_command(&pack_objects)) {
- 		/* daemon sets things up to ignore TERM */
- 		kill(pid_rev_list, SIGKILL);
- 		die("git-upload-pack: unable to fork git-pack-objects");
- 	}
--	if (!pid_pack_objects) {
--		const char *argv[10];
--		int i = 0;
--
--		dup2(lp_pipe[0], 0);
--		dup2(pu_pipe[1], 1);
--		dup2(pe_pipe[1], 2);
--
--		close(lp_pipe[0]);
--		close(lp_pipe[1]);
--		close(pu_pipe[0]);
--		close(pu_pipe[1]);
--		close(pe_pipe[0]);
--		close(pe_pipe[1]);
--
--		argv[i++] = "pack-objects";
--		argv[i++] = "--stdout";
--		if (!no_progress)
--			argv[i++] = "--progress";
--		if (use_ofs_delta)
--			argv[i++] = "--delta-base-offset";
--		argv[i++] = NULL;
--
--		execv_git_cmd(argv);
--		kill(pid_rev_list, SIGKILL);
--		die("git-upload-pack: unable to exec git-pack-objects");
--	}
--
--	close(lp_pipe[0]);
--	close(lp_pipe[1]);
- 
--	/* We read from pe_pipe[0] to capture stderr output for
--	 * progress bar, and pu_pipe[0] to capture the pack data.
-+	/* We read from pack_objects.err to capture stderr output for
-+	 * progress bar, and pack_objects.out to capture the pack data.
- 	 */
--	close(pe_pipe[1]);
--	close(pu_pipe[1]);
- 
- 	while (1) {
- 		const char *who;
-@@ -214,14 +197,14 @@ static void create_pack_file(void)
- 		pollsize = 0;
- 		pe = pu = -1;
- 
--		if (0 <= pu_pipe[0]) {
--			pfd[pollsize].fd = pu_pipe[0];
-+		if (0 <= pack_objects.out) {
-+			pfd[pollsize].fd = pack_objects.out;
- 			pfd[pollsize].events = POLLIN;
- 			pu = pollsize;
- 			pollsize++;
- 		}
--		if (0 <= pe_pipe[0]) {
--			pfd[pollsize].fd = pe_pipe[0];
-+		if (0 <= pack_objects.err) {
-+			pfd[pollsize].fd = pack_objects.err;
- 			pfd[pollsize].events = POLLIN;
- 			pe = pollsize;
- 			pollsize++;
-@@ -254,13 +237,13 @@ static void create_pack_file(void)
- 					*cp++ = buffered;
- 					outsz++;
- 				}
--				sz = xread(pu_pipe[0], cp,
-+				sz = xread(pack_objects.out, cp,
- 					  sizeof(data) - outsz);
- 				if (0 < sz)
- 						;
- 				else if (sz == 0) {
--					close(pu_pipe[0]);
--					pu_pipe[0] = -1;
-+					close(pack_objects.out);
-+					pack_objects.out = -1;
- 				}
- 				else
- 					goto fail;
-@@ -279,13 +262,13 @@ static void create_pack_file(void)
- 				/* Status ready; we ship that in the side-band
- 				 * or dump to the standard error.
- 				 */
--				sz = xread(pe_pipe[0], progress,
-+				sz = xread(pack_objects.err, progress,
- 					  sizeof(progress));
- 				if (0 < sz)
- 					send_client_data(2, progress, sz);
- 				else if (sz == 0) {
--					close(pe_pipe[0]);
--					pe_pipe[0] = -1;
-+					close(pack_objects.err);
-+					pack_objects.err = -1;
- 				}
- 				else
- 					goto fail;
-@@ -293,12 +276,12 @@ static void create_pack_file(void)
- 		}
- 
- 		/* See if the children are still there */
--		if (pid_rev_list || pid_pack_objects) {
-+		if (pid_rev_list || pack_objects.pid) {
- 			pid = waitpid(-1, &status, WNOHANG);
- 			if (!pid)
- 				continue;
- 			who = ((pid == pid_rev_list) ? "git-rev-list" :
--			       (pid == pid_pack_objects) ? "git-pack-objects" :
-+			       (pid == pack_objects.pid) ? "git-pack-objects" :
- 			       NULL);
- 			if (!who) {
- 				if (pid < 0) {
-@@ -317,9 +300,9 @@ static void create_pack_file(void)
- 			}
- 			if (pid == pid_rev_list)
- 				pid_rev_list = 0;
--			if (pid == pid_pack_objects)
--				pid_pack_objects = 0;
--			if (pid_rev_list || pid_pack_objects)
-+			if (pid == pack_objects.pid)
-+				pack_objects.pid = 0;
-+			if (pid_rev_list || pack_objects.pid)
- 				continue;
- 		}
- 
-@@ -340,8 +323,8 @@ static void create_pack_file(void)
- 		return;
- 	}
-  fail:
--	if (pid_pack_objects)
--		kill(pid_pack_objects, SIGKILL);
-+	if (pack_objects.pid)
-+		kill(pack_objects.pid, SIGKILL);
- 	if (pid_rev_list)
- 		kill(pid_rev_list, SIGKILL);
- 	send_client_data(3, abort_msg, sizeof(abort_msg));
 -- 
 1.5.3.3.1134.gee562
