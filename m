@@ -1,72 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sat, 13 Oct 2007 22:57:12 +0200
-Message-ID: <85myumohqv.fsf@lola.goethe.zz>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
-	<8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
-	<Pine.LNX.4.64.0710130130380.25221@racer.site>
-	<853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org>
+From: "Dan Z" <dzwell@gmail.com>
+Subject: Re: [PATCH] Color support added to git-add--interactive.
+Date: Sat, 13 Oct 2007 16:50:35 -0500
+Message-ID: <cff973550710131450r3b54a328k8db97488f4b50e2a@mail.gmail.com>
+References: <471045DA.5050902@gmail.com>
+	 <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
+	 <20071013172745.GA2624@coredump.intra.peff.net>
+	 <20071013175127.GA3183@coredump.intra.peff.net>
+	 <47112491.8070309@gmail.com>
+	 <8DDFBF9A-2C68-404B-843C-BE63C52F0DAF@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sat Oct 13 22:57:00 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Jeff King" <peff@peff.net>,
+	"Git Mailing List" <git@vger.kernel.org>,
+	"Jonathan del Strother" <maillist@steelskies.com>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Frank Lichtenheld" <frank@lichtenheld.de>
+To: "Wincent Colaiuta" <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat Oct 13 23:50:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igo2E-00077o-PN
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:56:35 +0200
+	id 1Igosl-0006Ob-Vq
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 23:50:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757115AbXJMU4Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:56:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756659AbXJMU4Z
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:56:25 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:40204 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756529AbXJMU4Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 16:56:24 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Igo23-0005r0-Cl; Sat, 13 Oct 2007 16:56:23 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 5D3BC1C4CE11; Sat, 13 Oct 2007 22:57:12 +0200 (CEST)
-In-Reply-To: <20071013202713.GA2467@fieldses.org> (J. Bruce Fields's message of "Sat\, 13 Oct 2007 16\:27\:13 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1752904AbXJMVuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 17:50:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752721AbXJMVuh
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 17:50:37 -0400
+Received: from rv-out-0910.google.com ([209.85.198.185]:35931 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752450AbXJMVug (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 17:50:36 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1104183rvb
+        for <git@vger.kernel.org>; Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/OSzyW6YfxDB/7EHKQTOTSSNOk5LhW5XvtcKybSHHuw=;
+        b=WbyIWbn+UGDQzWxF9VIo66LU+HGdLvWDvfMZeIqkYYdQuu5yBEbLkTDiCnL2Ly18qgaBDX5yWJ3rdxf01Kr/Azo2qTTFjaG2vOJnxJT1nWuEZDF6aJVjsbT54bsH1BNFhvozguSpIn8tjR6QqO9CLFFIXaO+0y66QabAAUSx/ps=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=hqPhmz1esDwwyYezA0KfQsGqE6BUeJuaarJ58psABeonJJQTuMVPveOITpwuhckBALAbtn/zekp9JUjaM4lYQzZEtBTuI0U0fa5bX0J+1lm5lfpWSJSDm2hE6uXyQJoye/W8iELPizzWe5cBlt8JjCwdX+y0ml7cttNrP2cexO0=
+Received: by 10.142.86.7 with SMTP id j7mr1288560wfb.1192312235397;
+        Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
+Received: by 10.142.216.17 with HTTP; Sat, 13 Oct 2007 14:50:35 -0700 (PDT)
+In-Reply-To: <8DDFBF9A-2C68-404B-843C-BE63C52F0DAF@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60780>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
-
-> On Sat, Oct 13, 2007 at 09:59:41PM +0200, David Kastrup wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> 
-> ...survey quote:
->> >>    Figure out why people find git hard to learn and eliminate those
->> >>    barriers to entry.  Make git more task-oriented rather than
->> >>    data-model-oriented the way it is now.
->> >
->> > Frankly, expectations like these make me want to bang somebody's
->> > head on the wall.
->> 
->> And you wonder that people are unwilling to ask for things on the
->> list?  When even mentioning something in a _survey_ makes core
->> developers want to bang their heads against a wall?
+On 10/13/07, Wincent Colaiuta <win@wincent.com> wrote:
+> Or could you just piggy-back on the settings for color.diff.<slot>?
 >
-> Well, he does have a point that they could have been more specific.
+> And if a separate group for git-add is necessary, perhaps "add" would
+> be enough, rather than "add-interactive".
+>
+> Wincent
+>
 
-He did not write "vague phrasings like this".  He wrote
-"_expectations_ like these make [him] want to bang somebody's head on
-the wall".
+I think color.add is better, because git-add--interactive goes beyond
+coloring diffs. When this is complete, it should probably use
+color.diff.<slot> for the actual diff output, and color.add.<slot> for
+colored prompts/commands.
 
-> But, yes, "I wish we could get people to be more specific" might be
-> the better way to put it.
-
-It is something entirely different.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Dan
