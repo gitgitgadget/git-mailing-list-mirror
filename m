@@ -1,65 +1,79 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-fast-import crashes
-Date: Fri, 12 Oct 2007 23:34:07 -0400
-Message-ID: <20071013033407.GM27899@spearce.org>
-References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com> <20071013032916.GL27899@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Shun Kei Leung <kevinlsk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 13 05:34:23 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: (unknown)
+Date: Sat, 13 Oct 2007 00:01:04 -0400
+Message-ID: <30817A88-4313-4D38-95B0-FEC47C651CB0@mit.edu>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 13 06:01:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgXle-0000Pn-90
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 05:34:22 +0200
+	id 1IgYBp-0003Yo-UH
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 06:01:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755620AbXJMDeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Oct 2007 23:34:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752337AbXJMDeM
-	(ORCPT <rfc822;git-outgoing>); Fri, 12 Oct 2007 23:34:12 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:48544 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755270AbXJMDeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Oct 2007 23:34:11 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IgXlE-0008HF-Cf; Fri, 12 Oct 2007 23:33:56 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id ACDA820FBAE; Fri, 12 Oct 2007 23:34:07 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071013032916.GL27899@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750754AbXJMEBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 00:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750753AbXJMEBP
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 00:01:15 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:44272 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750721AbXJMEBO (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Oct 2007 00:01:14 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9D418uU002541;
+	Sat, 13 Oct 2007 00:01:08 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9D415pb010170
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 13 Oct 2007 00:01:07 -0400 (EDT)
+Subject: 
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60719>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> Shun Kei Leung <kevinlsk@gmail.com> wrote:
-> > I am using git 1.5.3.4.206.g58ba4-dirty on Mac OS X 10.4.
-...
-> > Program received signal EXC_BAD_ACCESS, Could not access memory.
-> > Reason: KERN_INVALID_ADDRESS at address: 0x64617469
-...
-> This looks like it is
-> memory corruption (e.g. someone overwriting a free'd segment),
-> but that sort of memory corruption is very hard to track down.
+I apologize if this is received twice.
+I did add some comments, though!
 
-OK, so the version you have (58ba4) is the latest fast-import after
-the strbuf.c series went in.  The one immediately before that series
-was 4bf538 and is probably actually stable.
 
-So I wonder, can you test 4bf538 and then if it is good bisect
-between those two commits?  There must be a memory corruption
-introduced by one of the strbuf changes...
 
--- 
-Shawn.
+On 12 Oct 2007, at 10:49:10 PM, Jeff King wrote:
+> You are presumably doing a 'git-pull' on the cvsimport-ed commits. Try
+> doing a git-rebase, which will filter out commits which make the same
+> changes. Yes, it means throwing away your original commits, but the  
+> new
+> ones should be morally equivalent (and are now the "official" upstream
+> of the CVS repository).
+
+Now that you mention it, I think the best approach would be to:
+	
+	(1) cvsexportcommit
+	(2) git reset --hard LAST_CVS_IMPORT_AND_MERGE
+	(3) git cvsimport ..... # and merge
+
+I think this is what you mean; it seems to me that rebasing isn't  
+quite that.
+
+However, this will not preserve more complicated history such as merges
+from another git repository.
+
+Basically, I want to treat my git repository as the official  
+repository; the CVS
+repo is just their for the old farts to get the latest stuff ;-P
+
+Thanks!
+
+Michael
+
+PS
+Please send me other opinions.
