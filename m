@@ -1,83 +1,59 @@
 From: Jonathan del Strother <maillist@steelskies.com>
-Subject: [PATCH] gitk: Added support for OS X mouse wheel
-Date: Sat, 13 Oct 2007 18:33:07 +0100
-Message-ID: <193EA1A3-1BE3-42E4-8A47-0F025E0D3645@steelskies.com>
+Subject: Re: [PATCH] Fixing path quoting issues
+Date: Sat, 13 Oct 2007 19:12:08 +0100
+Message-ID: <92879AC5-2927-439B-8EB0-AC20AAEE412E@steelskies.com>
+References: <11920508172434-git-send-email-jon.delStrother@bestbefore.tv> <470DC05A.8020209@viscovery.net>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 13 19:33:25 2007
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Sat Oct 13 20:17:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igkrc-0000mV-0W
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 19:33:24 +0200
+	id 1IglTr-0001fM-VH
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 20:12:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756081AbXJMRdM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Oct 2007 13:33:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbXJMRdM
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 13:33:12 -0400
-Received: from smtp1.betherenow.co.uk ([87.194.0.68]:36747 "EHLO
+	id S932730AbXJMSMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 14:12:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932710AbXJMSMO
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 14:12:14 -0400
+Received: from smtp1.betherenow.co.uk ([87.194.0.68]:39452 "EHLO
 	smtp1.bethere.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755473AbXJMRdL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Oct 2007 13:33:11 -0400
+	with ESMTP id S1762506AbXJMSMM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 14:12:12 -0400
 Received: from [192.168.1.65] (87-194-43-188.bethere.co.uk [87.194.43.188])
-	by smtp1.bethere.co.uk (Postfix) with SMTP id 9543F98142;
-	Sat, 13 Oct 2007 18:33:09 +0100 (BST)
+	by smtp1.bethere.co.uk (Postfix) with SMTP id 5614998229;
+	Sat, 13 Oct 2007 19:12:10 +0100 (BST)
+In-Reply-To: <470DC05A.8020209@viscovery.net>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60749>
 
-(V=E4in=F6 J=E4rvel=E4 supplied this patch a while ago for 1.5.2.  It n=
-o longer
-applied cleanly, so I'm reposting it.)
+On 11 Oct 2007, at 07:19, Johannes Sixt wrote:
 
-MacBook doesn't seem to recognize MouseRelease-4 and -5 events, at all.
-So i added a support for the MouseWheel event, which i limited to Tcl/t=
-k
-aqua, as i couldn't test it neither on Linux or Windows. Tcl/tk needs t=
-o
-be updated from the version that is shipped with OS X 10.4 Tiger, for
-this patch to work.
+>> -	 git-commit -F msg -m amending ."
+>> +	git-commit -F msg -m amending ."
+>
+> You fix whitespace...
+>
+>>  test_expect_success \
+>> -	"using message from other commit" \
+>> -	"git-commit -C HEAD^ ."
+>> +	 "using message from other commit" \
+>> +	 "git-commit -C HEAD^ ."
+>
+> ... and you break it. More of these follow. Don't do that, it makes  
+> patch review unnecessarily hard.
 
-Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
----
-  gitk |   14 ++++++++++----
-  1 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/gitk b/gitk
-index 300fdce..9b3e627 100755
---- a/gitk
-+++ b/gitk
-@@ -838,11 +838,17 @@ proc makewindow {} {
-      bindall <1> {selcanvline %W %x %y}
-      #bindall <B1-Motion> {selcanvline %W %x %y}
-      if {[tk windowingsystem] =3D=3D "win32"} {
--	bind . <MouseWheel> { windows_mousewheel_redirector %W %X %Y %D }
--	bind $ctext <MouseWheel> { windows_mousewheel_redirector %W %X %Y %=20
-D ; break }
-+        bind . <MouseWheel> { windows_mousewheel_redirector %W %X %Y =20
-%D }
-+        bind $ctext <MouseWheel> { windows_mousewheel_redirector %W %=20
-X %Y %D ; break }
-      } else {
--	bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
--	bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+        bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
-+        bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+        if {[tk windowingsystem] eq "aqua"} {
-+            bindall <MouseWheel> {
-+                set delta [expr {- (%D)}]
-+                allcanvs yview scroll $delta units
-+            }
-+        }
-      }
-      bindall <2> "canvscan mark %W %x %y"
-      bindall <B2-Motion> "canvscan dragto %W %x %y"
---=20
-1.5.3.1
+I'm just preparing to release this patch... was that "don't break  
+whitespace", or "don't try to fix whitespace in a patch that's has  
+nothing to do with whitespacing-fixing" ?
+
+And while I'm here - tabs are preferred, are they?  There seem to be  
+a mixture of tabs & 4 space indentation.
