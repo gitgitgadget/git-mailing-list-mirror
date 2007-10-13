@@ -1,73 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-fast-import crashes
-Date: Sat, 13 Oct 2007 13:58:24 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710131357391.25221@racer.site>
-References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com>
- <20071013032916.GL27899@spearce.org>
+From: Frank Lichtenheld <frank@lichtenheld.de>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sat, 13 Oct 2007 14:58:45 +0200
+Message-ID: <20071013125845.GA31659@planck.djpig.de>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Oct 13 14:58:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 13 14:59:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IggZl-0003Y2-OI
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 14:58:42 +0200
+	id 1IggaA-0003cA-0Z
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 14:59:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753186AbXJMM6a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 08:58:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752966AbXJMM6a
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 08:58:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42996 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750858AbXJMM63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 08:58:29 -0400
-Received: (qmail invoked by alias); 13 Oct 2007 12:58:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp001) with SMTP; 13 Oct 2007 14:58:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX182TuY9rgc26nx1UwDmN3VbPBf88vr7H7qoG8K9Cg
-	UC7Llo7eS0r5yi
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071013032916.GL27899@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1752469AbXJMM64 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 08:58:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752284AbXJMM64
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 08:58:56 -0400
+Received: from planck.djpig.de ([85.10.192.180]:4416 "EHLO planck.djpig.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750858AbXJMM6z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 08:58:55 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by planck.djpig.de (Postfix) with ESMTP id 1ABCA88231;
+	Sat, 13 Oct 2007 14:58:54 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
+Received: from planck.djpig.de ([127.0.0.1])
+	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6Y1p0fI+KN1D; Sat, 13 Oct 2007 14:58:45 +0200 (CEST)
+Received: by planck.djpig.de (Postfix, from userid 1000)
+	id 6E68D88232; Sat, 13 Oct 2007 14:58:45 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710130130380.25221@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-On Fri, 12 Oct 2007, Shawn O. Pearce wrote:
-
-> Shun Kei Leung <kevinlsk@gmail.com> wrote:
-> > Program received signal EXC_BAD_ACCESS, Could not access memory.
-> > Reason: KERN_INVALID_ADDRESS at address: 0x64617469
-> > in_window (win=0x5004d0, offset=3501) at sha1_file.c:701
-> > 701             off_t win_off = win->offset;
-> ...
-> > (gdb) print win
-> > $1 = (struct pack_window *) 0x5004d0
-> > (gdb) print *win
-> > $2 = {
-> >   next = 0x64617461,
-> >   base = 0x20333936 <Address 0x20333936 out of bounds>,
-> >   offset = 22523564414626158,
-> >   len = 1685026675,
-> >   last_used = 795894075,
-> >   inuse_cnt = 0
-> > }
+On Sat, Oct 13, 2007 at 01:46:40AM +0100, Johannes Schindelin wrote:
+> On Sat, 13 Oct 2007, Jakub Narebski wrote:
+> >    Figure out why people find git hard to learn and eliminate those
+> >    barriers to entry.  Make git more task-oriented rather than
+> >    data-model-oriented the way it is now.
 > 
-> Wow.  There's no way that struct pack_window is valid anymore.
->
-> [...] 
->
-> This looks like it is memory corruption (e.g. someone overwriting a 
-> free'd segment), but that sort of memory corruption is very hard to 
-> track down.
+> Frankly, expectations like these make me want to bang somebody's head on 
+> the wall.  Why do people expect others to work for them for free?  Hard?
 
-I found valgrind invaluable to find such errors.
+It's called "User". And since this is the Git _User's_ Survey, I guess
+you will have to live with that. And anyway, where in the above you find
+something about "expectation" rather than "suggestion"?
 
-Ciao,
-Dscho
+Gruesse,
+-- 
+Frank Lichtenheld <frank@lichtenheld.de>
+www: http://www.djpig.de/
