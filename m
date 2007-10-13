@@ -1,50 +1,66 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: [bug] gitk can not read history if diff color is enabled
-Date: Sat, 13 Oct 2007 16:49:51 +0200
-Message-ID: <200710131649.51496.barra_cuda@katamail.com>
-References: <4710D3AA.8000502@softhome.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Port builtin-add.c to use the new option parser.
+Date: Sat, 13 Oct 2007 15:47:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710131544030.25221@racer.site>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
+ <1192282153-26684-2-git-send-email-madcoder@debian.org>
+ <1192282153-26684-3-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, msharov@users.sourceforge.net
-X-From: git-owner@vger.kernel.org Sat Oct 13 16:46:24 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sat Oct 13 16:47:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgiFy-00024O-82
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 16:46:22 +0200
+	id 1IgiHP-0002HZ-Q1
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 16:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762591AbXJMOqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 10:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762473AbXJMOqK
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 10:46:10 -0400
-Received: from slim-3c.inet.it ([213.92.5.125]:46215 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762426AbXJMOqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 10:46:08 -0400
-Received: from host88-56-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.56.88]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.56.88+NOIIOKR4wHHh; Sat, 13 Oct 2007 16:46:06 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <4710D3AA.8000502@softhome.net>
-Content-Disposition: inline
+	id S1762367AbXJMOra (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 10:47:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762521AbXJMOr2
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 10:47:28 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60083 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1762729AbXJMOrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 10:47:25 -0400
+Received: (qmail invoked by alias); 13 Oct 2007 14:47:23 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp044) with SMTP; 13 Oct 2007 16:47:23 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19vJAQu1vRvdPEauurTs5/H6P5nkBB7jlP5XWL6dd
+	05RtlvP49rP9oJ
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1192282153-26684-3-git-send-email-madcoder@debian.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Saturday 13 October 2007, Mike Sharov wrote:
-> Reproduced in git version 1.5.3.4.217.gbfc1, although it's been this way
-> for a while. To see the bug, enable color diff with
-> 
-> [diff]
-> color
-> 
-> and launch gitk on any repository (like the Linux kernel tree). The
-> result is a dialog box "Can't parse git log output '\x1b[33mcommit" etc.
-> qgit can still view the history without errors, so I guess it must be
-> possible to somehow turn off color for a specific query.
+Hi,
 
-A patch was posted, and is queued here:
+On Sat, 13 Oct 2007, Pierre Habouzit wrote:
 
-	http://hjemli.net/git/git/commit/?h=q/mb/gitk/log--no-color
+> +static struct option builtin_add_options[] = {
+> +	OPT_BOOLEAN('i', "interactive", &add_interactive, "interactive picking"),
+> +	OPT_BOOLEAN('n', NULL, &show_only, "dry-run"),
+> +	OPT_BOOLEAN('f', NULL, &ignored_too, "allow adding otherwise ignored files"),
+> +	OPT_BOOLEAN('v', NULL, &verbose, "be verbose"),
+> +	OPT_BOOLEAN('u', NULL, &take_worktree_changes, "update only files that git already knows about"),
+> +	OPT_BOOLEAN( 0 , "refresh", &refresh_only, "don't add, only refresh stat() informations in the index"),
+> +};
+
+I see you terminate the list by a ",".  How does this play with the option 
+parser?
+
+Thinking about this more, I am reverting my stance on the ARRAY_SIZE() 
+issue.  I think if you introduce a "OPTION_NONE = 0" in the enum, then 
+this single last comma should be enough.
+
+In the same vein, you would not need the NULL in builtin_add_usage[], 
+right?
+
+Ciao,
+Dscho
