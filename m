@@ -1,7 +1,7 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 08/14] Add infrastructure to run a function asynchronously.
-Date: Sat, 13 Oct 2007 22:06:18 +0200
-Message-ID: <1192305984-22594-9-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 12/14] t0021-conversion.sh: Test that the clean filter really cleans content.
+Date: Sat, 13 Oct 2007 22:06:22 +0200
+Message-ID: <1192305984-22594-13-git-send-email-johannes.sixt@telecom.at>
 References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-3-git-send-email-johannes.sixt@telecom.at>
@@ -10,161 +10,67 @@ References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-6-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-7-git-send-email-johannes.sixt@telecom.at>
  <1192305984-22594-8-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-9-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-10-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-11-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-12-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Oct 13 22:08:11 2007
+X-From: git-owner@vger.kernel.org Sat Oct 13 22:08:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgnH2-0008Ve-J1
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:49 +0200
+	id 1IgnH0-0008Ve-I5
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 22:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758529AbXJMUGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 16:06:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758414AbXJMUGt
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:49 -0400
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:52589 "EHLO
+	id S1758341AbXJMUGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 16:06:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757729AbXJMUGo
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 16:06:44 -0400
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:52598 "EHLO
 	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757175AbXJMUG2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 16:06:28 -0400
+	with ESMTP id S1757526AbXJMUG3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 16:06:29 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id AC32613A770;
-	Sat, 13 Oct 2007 22:06:27 +0200 (CEST)
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id A4C3513A6A6;
+	Sat, 13 Oct 2007 22:06:28 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.3.1134.gee562
-In-Reply-To: <1192305984-22594-8-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192305984-22594-12-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60771>
 
-This adds start_async() and finish_async(), which runs a function
-asynchronously. Communication with the caller happens only via pipes.
-For this reason, this implementation forks off a child process that runs
-the function.
+This test uses a rot13 filter, which is its own inverse. It tested only
+that the content was the same as the original after both the 'clean' and
+the 'smudge' filter were applied. This way it would not detect whether
+any filter was run at all. Hence, here we add another test that checks
+that the repository contained content that was processed by the 'clean'
+filter.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- run-command.c |   53 +++++++++++++++++++++++++++++++++++++++++++++--------
- run-command.h |   23 +++++++++++++++++++++++
- 2 files changed, 68 insertions(+), 8 deletions(-)
+ t/t0021-conversion.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-diff --git a/run-command.c b/run-command.c
-index d00c03b..111d584 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -127,16 +127,11 @@ int start_command(struct child_process *cmd)
- 	return 0;
- }
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index a839f4e..cb86029 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -42,7 +42,12 @@ test_expect_success check '
+ 	git diff --raw --exit-code :test :test.i &&
+ 	id=$(git rev-parse --verify :test) &&
+ 	embedded=$(sed -ne "$script" test.i) &&
+-	test "z$id" = "z$embedded"
++	test "z$id" = "z$embedded" &&
++
++	git cat-file blob :test.t > test.r &&
++
++	./rot13.sh < test.o > test.t &&
++	cmp test.r test.t
+ '
  
--int finish_command(struct child_process *cmd)
-+static int wait_or_whine(pid_t pid)
- {
--	if (cmd->close_in)
--		close(cmd->in);
--	if (cmd->close_out)
--		close(cmd->out);
--
- 	for (;;) {
- 		int status, code;
--		pid_t waiting = waitpid(cmd->pid, &status, 0);
-+		pid_t waiting = waitpid(pid, &status, 0);
- 
- 		if (waiting < 0) {
- 			if (errno == EINTR)
-@@ -144,7 +139,7 @@ int finish_command(struct child_process *cmd)
- 			error("waitpid failed (%s)", strerror(errno));
- 			return -ERR_RUN_COMMAND_WAITPID;
- 		}
--		if (waiting != cmd->pid)
-+		if (waiting != pid)
- 			return -ERR_RUN_COMMAND_WAITPID_WRONG_PID;
- 		if (WIFSIGNALED(status))
- 			return -ERR_RUN_COMMAND_WAITPID_SIGNAL;
-@@ -158,6 +153,15 @@ int finish_command(struct child_process *cmd)
- 	}
- }
- 
-+int finish_command(struct child_process *cmd)
-+{
-+	if (cmd->close_in)
-+		close(cmd->in);
-+	if (cmd->close_out)
-+		close(cmd->out);
-+	return wait_or_whine(cmd->pid);
-+}
-+
- int run_command(struct child_process *cmd)
- {
- 	int code = start_command(cmd);
-@@ -200,3 +204,36 @@ int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const
- 	cmd.env = env;
- 	return run_command(&cmd);
- }
-+
-+int start_async(struct async *async)
-+{
-+	int pipe_out[2];
-+
-+	if (pipe(pipe_out) < 0) {
-+		return error("cannot create pipe: %s", strerror(errno));
-+	}
-+
-+	async->pid = fork();
-+	if (async->pid < 0) {
-+		error("fork (async) failed: %s", strerror(errno));
-+		close(pipe_out[0]);
-+		close(pipe_out[1]);
-+		return -1;
-+	}
-+	if (!async->pid) {
-+		close(pipe_out[0]);
-+		exit(!!async->proc(pipe_out[1], async->data));
-+	}
-+	async->out = pipe_out[0];
-+	close(pipe_out[1]);
-+	return 0;
-+}
-+
-+int finish_async(struct async *async)
-+{
-+	int ret = 0;
-+
-+	if (wait_or_whine(async->pid))
-+		ret = error("waitpid (async) failed");
-+	return ret;
-+}
-diff --git a/run-command.h b/run-command.h
-index 35b9fb6..c5fd2fc 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -43,4 +43,27 @@ int run_command_v_opt_cd(const char **argv, int opt, const char *dir);
-  */
- int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir, const char *const *env);
- 
-+/*
-+ * The purpose of the following functions is to feed a pipe by running
-+ * a function asynchronously and providing output that the call reads
-+ * in a different pipe.
-+ *
-+ * It is expected that no synchronization and mutual exclusion between
-+ * the caller and the feed function is necessary so that the function
-+ * can run in a thread without interfering with the caller.
-+ */
-+struct async {
-+	/*
-+	 * proc writes to fd and closes it;
-+	 * returns 0 on success, non-zero on failure
-+	 */
-+	int (*proc)(int fd, void *data);
-+	void *data;
-+	int out;	/* caller reads from this */
-+	pid_t pid;
-+};
-+
-+int start_async(struct async *async);
-+int finish_async(struct async *async);
-+
- #endif
+ # If an expanded ident ever gets into the repository, we want to make sure that
 -- 
 1.5.3.3.1134.gee562
