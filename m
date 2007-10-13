@@ -1,104 +1,64 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Add a simple option parser.
-Date: Sat, 13 Oct 2007 21:16:55 +0200
-Message-ID: <20071013191655.GA2875@steel.home>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org>
+Subject: Re: [PATCH] Port builtin-add.c to use the new option parser.
+Date: Sat, 13 Oct 2007 21:22:13 +0200
+Message-ID: <20071013192213.GB2875@steel.home>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <1192282153-26684-3-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0710131544030.25221@racer.site> <20071013150306.GH7110@artemis.corp>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Oct 13 21:17:11 2007
+To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kristian =?iso-8859-15?Q?H=F8gsberg?=
+X-From: git-owner@vger.kernel.org Sat Oct 13 21:22:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgmU2-0001Ob-Kt
-	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 21:17:11 +0200
+	id 1IgmZE-00029a-W6
+	for gcvg-git-2@gmane.org; Sat, 13 Oct 2007 21:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756649AbXJMTQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 15:16:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753790AbXJMTQ7
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 15:16:59 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:29922 "EHLO
+	id S1757571AbXJMTWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 15:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757459AbXJMTWV
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 15:22:21 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:32568 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751932AbXJMTQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 15:16:58 -0400
+	with ESMTP id S1753790AbXJMTWU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 15:22:20 -0400
 Received: from tigra.home (Fc8ce.f.strato-dslnet.de [195.4.200.206])
-	by post.webmailer.de (fruni mo6) (RZmta 13.4)
-	with ESMTP id z02e33j9DD7C4K ; Sat, 13 Oct 2007 21:16:56 +0200 (MEST)
+	by post.webmailer.de (fruni mo9) (RZmta 13.4)
+	with ESMTP id m02e4fj9DHjbrX ; Sat, 13 Oct 2007 21:22:13 +0200 (MEST)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 35DB5277AE;
-	Sat, 13 Oct 2007 21:16:56 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id A106D277AE;
+	Sat, 13 Oct 2007 21:22:13 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id DE19A56D22; Sat, 13 Oct 2007 21:16:55 +0200 (CEST)
+	id 81F1256D22; Sat, 13 Oct 2007 21:22:13 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1192282153-26684-2-git-send-email-madcoder@debian.org>
+In-Reply-To: <20071013150306.GH7110@artemis.corp>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow0sy8=
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60754>
 
-Pierre Habouzit, Sat, Oct 13, 2007 15:29:03 +0200:
-> +static int opterror(struct option *opt, const char *reason, int flags)
+Pierre Habouzit, Sat, Oct 13, 2007 17:03:06 +0200:
+> On Sat, Oct 13, 2007 at 02:47:20PM +0000, Johannes Schindelin wrote:
+> > Thinking about this more, I am reverting my stance on the ARRAY_SIZE() 
+> > issue.  I think if you introduce a "OPTION_NONE = 0" in the enum, then 
+> > this single last comma should be enough.
+> 
+>   adding a trailing comma does not add a NULL after that, it's ignored,
+> you're confused.
 
-"const struct option *opt"? You never modify the struct option itself,
-only the values under the pointers it contains. Using const here will
-allow the compiler to reuse string constants (not that there will be
-much of the opportunity, but anyway) in the option arrays.
+Yep
 
-> +static int get_value(struct optparse_t *p, struct option *opt, int flags)
+>   Note that I don't really like using ARRAY_SIZE either, I kept it that
+> way, but my taste would rather be to have an "empty" option, and
+> explicitely mark the end of the array.
 
-"const struct option *opt"?
-
-> +static int parse_short_opt(struct optparse_t *p, struct option *options, int count)
-
-"const struct option *options"?
-
-> +int parse_options(int argc, const char **argv,
-> +                  struct option *options, int count,
-> +				  const char * const usagestr[], int flags)
-
-"const struct option *options"?
-
-> +void make_usage(const char * const usagestr[], struct option *opts, int cnt)
-
-"const struct option *opts"?
-
-Why not "const char *const *usagestr"? Especially if you change
-"usagestr" (the pointer itself) later. "[]" is sometimes a hint that
-the pointer itself should not be changed, being an array.
-
-And you want make opts const.
-
-BTW, it does not "make" usage. It calls the usage() or prints a usage
-description. "make" implies it creates the "usage", which according to
-the prototype is later nowhere to be found.
-
-> +{
-> +	struct strbuf sb;
-> +
-> +	strbuf_init(&sb, 4096);
-> +	do {
-> +		strbuf_addstr(&sb, *usagestr++);
-> +		strbuf_addch(&sb, '\n');
-> +	} while (*usagestr);
-
-This will crash for empty usagestr, like  "{ NULL }". Was it
-deliberately? (I'd make it deliberately, if I were you. I'd even used
-cnt of opts, to force people to document all options).
-
-> +     strbuf_addf(&sb, "\n%*s%s\n", USAGE_OPTS_WIDTH + USAGE_GAP, "",
-> +		    opts->help);
-...
-> +	usage(sb.buf);
-
-BTW, if you just printed the usage message out (it is about usage of a
-program, isn't it?) and called exit() everyone would be just as happy.
-And you wouldn't have to include strbuf (it is the only use of it),
-less code, too. It'd make simplier to stea^Wcopy your implementation,
-which I like :)
+You can have both. Just stop at NULL-entry or when the 'size' elements
+passed, whatever happens first.
