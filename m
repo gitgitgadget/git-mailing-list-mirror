@@ -1,77 +1,71 @@
-From: "Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>
-Subject: Re: [PATCH - amended] git-gui: update Italian translation
-Date: Sun, 14 Oct 2007 19:43:12 +0200
-Message-ID: <4d8e3fd30710141043j6785d663idc160b9f678efeb5@mail.gmail.com>
-References: <200710101533.17290.barra_cuda@katamail.com>
-	 <200710101658.32229.barra_cuda@katamail.com>
-	 <4d8e3fd30710100816t7254786fi58933496661fc15@mail.gmail.com>
-	 <200710102218.23482.barra_cuda@katamail.com>
-	 <20071012041535.GE27899@spearce.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Sun, 14 Oct 2007 19:48:29 +0200
+Message-ID: <85d4vhlh8y.fsf@lola.goethe.zz>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+	<F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com>
+	<854pgtonp5.fsf@lola.goethe.zz>
+	<200710141709.51579.chriscool@tuxfamily.org>
+	<4712400C.2080900@lsrfire.ath.cx> <85y7e5ll38.fsf@lola.goethe.zz>
+	<522E90CF-FC15-472F-B0A8-91C310CAF9BF@wincent.com>
+	<471250BC.7070307@trolltech.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Michele Ballabio" <barra_cuda@katamail.com>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 19:43:33 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Marius Storm-Olsen <marius@trolltech.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 19:49:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih7Ux-0004je-Cn
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:43:31 +0200
+	id 1Ih7ZJ-0005U2-VI
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:48:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758688AbXJNRnT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 13:43:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759119AbXJNRnQ
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:43:16 -0400
-Received: from rv-out-0910.google.com ([209.85.198.186]:15341 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758688AbXJNRnN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 13:43:13 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1237589rvb
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 10:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=xCLHYodIxEslxdjowhgMPqzM/WRIzENnugJm1bDnhxk=;
-        b=eST5wOJcQKsWx+/eksXBtFZwjD1ck1JE4NrXN3FkoDCx74RLPNhRiIykAqYW0Se9Zl4rSfWNN2w8DB5RgP1Sm9w0c2dOZRLIYVy0zUhFQtnVdu3MERl5lWkW8s4Cj1lwWddkJZYzu0SlflA+KvGCow3sC/ld8fZfzdZ5Vat1IXs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fwvcypgfRSVcp55HAy+y3wwoG9jOaHPdchIwJhyRaJqODNrXDU3FnlvC5yY00yrw9L1ZRaAvwVnTolxvE+/uJE79xwdyhWNws6a5yGs5ncWZGdd9KanJr7r8IVj5SIxtHe31NEss+UJ4RcGXXJaUqksjOEvthrEfgeLQ18mHH98=
-Received: by 10.142.239.11 with SMTP id m11mr1327520wfh.1192383792596;
-        Sun, 14 Oct 2007 10:43:12 -0700 (PDT)
-Received: by 10.143.43.21 with HTTP; Sun, 14 Oct 2007 10:43:12 -0700 (PDT)
-In-Reply-To: <20071012041535.GE27899@spearce.org>
-Content-Disposition: inline
+	id S1758269AbXJNRrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 13:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758254AbXJNRrj
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:47:39 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:58861 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758157AbXJNRrh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 13:47:37 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1Ih7Yt-0004eY-RG; Sun, 14 Oct 2007 13:47:36 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 58D7A1C4CE11; Sun, 14 Oct 2007 19:48:29 +0200 (CEST)
+In-Reply-To: <471250BC.7070307@trolltech.com> (Marius Storm-Olsen's message of "Sun\, 14 Oct 2007 19\:24\:12 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60882>
 
-On 10/12/07, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Michele Ballabio <barra_cuda@katamail.com> wrote:
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
-Ciao Michele,
+> Wincent Colaiuta said the following on 14.10.2007 18:35:
+>
+>> "undecided" sounds good to me. It should be clear to non-native
+>> speakers of English (at least, clearer than "dunno").
+>
+> What about just "unknown"?
 
-> > So here it is. (Sent as an attachment because I fear mangling, sorry).
+I tend to nitpick to the degree of silliness when my own suggestions
+are concerned, but "unknown" sounds to me like the state _before_ the
+test.  If a person says he is "undecided" about something that means
+that he _has_ thought about it already.  "Undecidable" might bring
+this distinction across more strongly, but it is a more complicated
+word and it insinuates that it is _impossible_ to come to a decision
+regardless of the spent effort.
 
-No problem. I do apologize for being so late in the review but I've
-been away from computers for a few days :-)
+"unknown" clearly is much better than "dunno" though even if my own
+favorite would be "undecided".
 
-Michele I really like the work you did, FWIW it really deserve my:
-Acked-by: Paolo Ciarrocchi <Paolo.Ciarrocchi@gmail.com>
-
-The translation of "commit" you suggested is _really_ a lot better
-then the translation mentioned in the tortoisesCVS repository:
-http://tortoisesvn.tigris.org/svn/tortoisesvn/trunk/Languages/Tortoise_it.po
-
-> Thanks.  I saw no further discussion on this thread so I have applied
-> the attached patch as-is.  It will be in my repo.or.cz tree in a
-> couple of hours.
-
-Ciao,
 -- 
-Paolo
-http://paolo.ciarrocchi.googlepages.com/
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
