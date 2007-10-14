@@ -1,94 +1,83 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 00:14:46 +0200
-Message-ID: <20071014221446.GC2776@steel.home>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Mon, 15 Oct 2007 00:15:36 +0200
+Message-ID: <8fe92b430710141515g1c33481al97d9bacf92b6be5b@mail.gmail.com>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	 <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+	 <Pine.LNX.4.64.0710130130380.25221@racer.site>
+	 <853awepyz6.fsf@lola.goethe.zz>
+	 <8fe92b430710141449r3f1b1a85oae2a5fb5b30c8b47@mail.gmail.com>
+	 <85k5ppjqfu.fsf@lola.goethe.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	git list <git@vger.kernel.org>, Eli Zaretskii <eliz@gnu.org>,
-	Make Windows <make-w32@gnu.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 15 00:15:21 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 00:16:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhBk0-0004YF-6w
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:15:20 +0200
+	id 1IhBkR-0004dN-Vp
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756461AbXJNWOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 18:14:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756492AbXJNWOt
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:14:49 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:33010 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755045AbXJNWOs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 18:14:48 -0400
-Received: from tigra.home (Fc8e3.f.strato-dslnet.de [195.4.200.227])
-	by post.webmailer.de (klopstock mo56) (RZmta 13.4)
-	with ESMTP id 5033f1j9ELUH9I ; Mon, 15 Oct 2007 00:14:46 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 8B25A277AE;
-	Mon, 15 Oct 2007 00:14:46 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 22A6356D22; Mon, 15 Oct 2007 00:14:46 +0200 (CEST)
+	id S1757363AbXJNWPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 18:15:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757035AbXJNWPh
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:15:37 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:45767 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756909AbXJNWPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 18:15:36 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1735309wah
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 15:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=25oMRbVvTUa4Zx8OScThKvcaljGnbx1h2u3mhtFGOEw=;
+        b=lOSDBER+MogyCS+G5FQsjJeK+xPMHzLo6eBjwPXkD4anE60XKBz98oyAsecArt0FQIxkToJJmf00yv004Epwd3PneIwEOrQg8YgkirQ0Pr0THTAxXknhGMz3Vj5nitMjmp9eGVH0UAKtrtAczsD2BOinMTW+rBAN23BiWyx/eM4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=fMwVyEuolXeEVJBDFXRTw4Vw5IIjAvJyee9COVUhC3gNLYfQs/yO22QxYvo9cTTxEj29ALqZ7KDZsxhbk/FV8++GVSt/8z2QEKkfXKdtS+AGbTjHCDdK3xc+VUJG/xgHAsbKFDcm50d0PjjMHq69n8447oAo96S5iotVigtaeoY=
+Received: by 10.114.157.1 with SMTP id f1mr6230172wae.1192400136343;
+        Sun, 14 Oct 2007 15:15:36 -0700 (PDT)
+Received: by 10.114.202.19 with HTTP; Sun, 14 Oct 2007 15:15:36 -0700 (PDT)
+In-Reply-To: <85k5ppjqfu.fsf@lola.goethe.zz>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710142112540.25221@racer.site>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow2U+g=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60917>
 
-Johannes Schindelin, Sun, Oct 14, 2007 22:14:25 +0200:
-> On Sun, 14 Oct 2007, Andreas Ericsson wrote:
-> > Johannes Schindelin wrote:
+On 10/15/07, David Kastrup <dak@gnu.org> wrote:
+> "Jakub Narebski" <jnareb@gmail.com> writes:
+>
+> > On 10/13/07, David Kastrup <dak@gnu.org> wrote:
 > >
-> > > I do not see any reason why libification helps the user experience on 
-> > > Windows.
-> > 
-> > I was under the impression that the windows port suffers from Windows' 
-> > lack of a proper fork() and friends and that a proper library would help 
-> > solving those problems. Perhaps I was misinformed.
-> 
-> It suffered.  Until Hannes Sixt did a very fine job which cumulated in the 
-> patch series he posted yesterday.  Of course, this work is the reason 
-> msysGit is functional.
-> 
+> >> I find it a pity that my suggestion to ask about how comfortable
+> >> people are with the tone on the list did not make it into the survey.
+> >> Enough core developers make the tone sufficiently unconstructive to
+> >> make it quite understandable that people are unwilling to ask
+> >> questions here, in order to avoid getting their heads banged against a
+> >> wall, virtual or not.
+> >
+> > I think next to last question in the survey
+> >
+> >  61. Did you have problems getting GIT help on mailing list or on
+> >  IRC channel?  What were it? What could be improved?
+> >
+> > was the place to put complaints about git mailing list.
+>
+> What if there are no problems getting help once you submit to letting
+> your head get bashed in?
+>
+> The problem is not with getting help on the list: the list is
+> bristling with competent people.  The problem is the price to pay in
+> self-esteem and comfort.
 
-Re "functional". Have to remind something (besides the fork):
+"What could be improved?"
 
-Filesystem:
-
-- no proper VFS (can't do anything with files opened elsewhere, and we
-  have not enough error handling and diagnostic output to detect the
-  problems)
-
-- no proper filename semantics (case-insensitivity and stupid rules for
-  allowed characters in filenames, like ":" in filenames in
-  cross-platform projects)
-
-- no acceptable level of performance in filesystem and VFS (readdir,
-  stat, open and read/write are annoyingly slow)
-
-- it is the only OS in the world with multi-root (/a/b/c and /a/b/c
-  can be not the same, depending on what current "drive" is) and
-  multi-cwd, which hasn't had formed itself into a problem yet, but
-  surely will
-
-- no real "mmap" (which kills perfomance and complicates code)
-
-Interprocess communication:
-
-- no reliable text environment (I'm programming in the damn thing for
-  10 years and I still don't know how to pass an environment variable
-  _for_sure_)
-
-- it has only one argument (limited in size) passed to started
-  programs, which means that there is no possible way to safely pass
-  file and text arguments on command line (more than one, that is)
+-- 
+Jakub Narebski
