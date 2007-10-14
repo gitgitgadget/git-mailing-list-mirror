@@ -1,71 +1,105 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 23:49:16 +0200
-Message-ID: <8fe92b430710141449r3f1b1a85oae2a5fb5b30c8b47@mail.gmail.com>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
-	 <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
-	 <Pine.LNX.4.64.0710130130380.25221@racer.site>
-	 <853awepyz6.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] [BUG FIXED 2] git-add (-a|-u)  and -n support
+Date: Sun, 14 Oct 2007 18:00:44 -0400
+Message-ID: <D44B7811-5A0F-4A31-9DB3-6D2BF645E543@MIT.EDU>
+References: <E1DCA1D1-1ED3-498A-A919-9EBAF3BA0870@mit.edu> <0458D1DA-6261-4DA6-91B0-739F4D35AADF@mit.edu> <E857D120-787F-460B-A167-4B5F4BD2C3B5@mit.edu> <vpq3awd25hs.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 23:49:40 2007
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 00:01:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhBL1-0000xj-Sp
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 23:49:32 +0200
+	id 1IhBWU-0002X9-DG
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:01:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764124AbXJNVtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 17:49:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764120AbXJNVtS
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 17:49:18 -0400
-Received: from wa-out-1112.google.com ([209.85.146.177]:58433 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764107AbXJNVtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 17:49:16 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so1729064wah
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=LuCqN6q1++Av5xvg3gmgsfSMofGm/bCtMth09U3nLvo=;
-        b=QVCJ5AfQ2UvrTNJy2WEcLebOGDN7VxvYe7mccTdgCBhCag+u88WvuYIYg8nt7a6B/a05PjVNkPXgREhauQjqNfI5e6Y+ImYH9jshSXclB2KODgmxbMmO3ZLu07WC7YUlK2tc0OKB+N3TejubppzPyPQhYsiSAsCfHCXUcLSlcM8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=um/ETJ88he2IxjGRQYhnJuAEJr3HM1XS2wftKQZr51MJzFjRH3ShtRX/dolZZkkXbsS+K0Ff7Yr3JF3/O9fjLZ7Q/5pucOZyBzMmaqciWfchpj/HK9KB9CtJ8UcMl2eaBHtlHXKgHluo3EEH2zJCAjjlpPqUzfWsUA0v9EK4QRc=
-Received: by 10.115.89.1 with SMTP id r1mr6216586wal.1192398556182;
-        Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
-Received: by 10.114.202.19 with HTTP; Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
-In-Reply-To: <853awepyz6.fsf@lola.goethe.zz>
-Content-Disposition: inline
+	id S1759929AbXJNWBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 18:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759803AbXJNWBM
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:01:12 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:51147 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754126AbXJNWBL (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 18:01:11 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9EM0oVx028046;
+	Sun, 14 Oct 2007 18:00:50 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9EM0jw7026400
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sun, 14 Oct 2007 18:00:50 -0400 (EDT)
+In-Reply-To: <vpq3awd25hs.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60910>
 
-On 10/13/07, David Kastrup <dak@gnu.org> wrote:
+Thanks for the reply!
 
-> I find it a pity that my suggestion to ask about how comfortable
-> people are with the tone on the list did not make it into the survey.
-> Enough core developers make the tone sufficiently unconstructive to
-> make it quite understandable that people are unwilling to ask
-> questions here, in order to avoid getting their heads banged against a
-> wall, virtual or not.
+On 14 Oct 2007, at 9:25:03 AM, Matthieu Moy wrote:
 
-I think next to last question in the survey
+> Michael Witten <mfwitten@MIT.EDU> writes:
+>
+>> Subject: [PATCH] git-add now understands two kinds of update:
+>>
+>>  	-u: update as before
+>>  	-a: update all as in a true 'git commit -a'
+>
+> I don't find the option set very intuitive. I'd prefer
+>
+>   - git add -u . => update the current directory as before
+>   - git add -u   => update all files from the root.
+>
+> But your solution has the advantage of being backward compatible, so,
+> no strong opinion here.
 
- 61. Did you have problems getting GIT help on mailing list or on IRC channel?
-     What were it? What could be improved?
+Here's compromise that is backwards compatible. For both git-add
+and git-commit:
+	
+	-a dir [dir2 ...] => all changes in the given dirs.
+	-a                => all changes from the root.
 
-was the place to put complaints about git mailing list. I didn't want
-to add separate question because this survey has too many questions
-(is too long) already.
+Then we can just leave -u in place for now, and mark it as deprecated.
 
--- 
-Jakub Narebski
+In any case, the goal is to make the intuition solid between
+git-commit and git-add.
+
+
+> (side note: also, while you're here, it would be nice to have a single
+> command to do "git add .; git add -u", i.e add all unknown files,
+> update all existing files, and actally remove all deleted files. In
+> one word, synchronize the index with the working tree completely.
+> Perhaps "-a" would be a good name for that, not sure)
+
+We can couple the above with -f to do this.
+
+
+>>  builtin-add.c |   69 +++++++++++++++++++++++++++++++++++++
+>> +-------------------
+>
+> Your patch is whitespace-damaged. I don't know how to fix that for
+> Apple Mail, but git-send-email can help.
+
+I see that now; Apple's trying to be smart about blank lines, it  
+would seem.
+
+>> static const char builtin_add_usage[] =
+>>  "git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--refresh] [--]
+>> <filepattern>...";
+>
+> You should document -a here, and in Documentation/git-add.txt if you
+> introduce it.
+
+Let's get -a/-u squared away first.
+
+Thanks again,
+Michael Witten
