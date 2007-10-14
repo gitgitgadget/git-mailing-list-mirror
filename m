@@ -1,72 +1,70 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: Imports without Tariffs
-Date: Sun, 14 Oct 2007 18:10:50 -0400
-Message-ID: <7B69C0EA-A1FB-4133-895E-AE30DBAECC11@MIT.EDU>
-References: <30817A88-4313-4D38-95B0-FEC47C651CB0@mit.edu> <20071013040712.GA27227@coredump.intra.peff.net> <1240801C-F4CC-4290-8C3D-2038F1957DF3@MIT.EDU> <20071013075723.GA27533@coredump.intra.peff.net> <814D00AE-B89A-45ED-A500-4643C825D0EB@mit.edu> <20071014164001.GC27595@sigill.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 00:11:25 2007
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Mon, 15 Oct 2007 00:12:53 +0200
+Message-ID: <85k5ppjqfu.fsf@lola.goethe.zz>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	<8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+	<Pine.LNX.4.64.0710130130380.25221@racer.site>
+	<853awepyz6.fsf@lola.goethe.zz>
+	<8fe92b430710141449r3f1b1a85oae2a5fb5b30c8b47@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 00:12:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhBfx-0003vD-KO
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:11:10 +0200
+	id 1IhBhE-00048L-DM
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:12:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786AbXJNWK7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 18:10:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753916AbXJNWK7
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:10:59 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:52632 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754107AbXJNWK6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 18:10:58 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9EMAq43002446;
-	Sun, 14 Oct 2007 18:10:52 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9EMApYp028047
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 14 Oct 2007 18:10:51 -0400 (EDT)
-In-Reply-To: <20071014164001.GC27595@sigill.intra.peff.net>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1755426AbXJNWMS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 18:12:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbXJNWMS
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:12:18 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:44030 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753916AbXJNWMR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 18:12:17 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1IhBh1-00008M-JV; Sun, 14 Oct 2007 18:12:15 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id BF4751C4CE11; Mon, 15 Oct 2007 00:12:54 +0200 (CEST)
+In-Reply-To: <8fe92b430710141449r3f1b1a85oae2a5fb5b30c8b47@mail.gmail.com> (Jakub Narebski's message of "Sun\, 14 Oct 2007 23\:49\:16 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60914>
 
-On 14 Oct 2007, at 12:40:01 PM, Jeff King wrote:
+"Jakub Narebski" <jnareb@gmail.com> writes:
 
-> On Sat, Oct 13, 2007 at 07:04:52PM -0400, Michael Witten wrote:
->> Do I just submit the patch to this list? How do I know it will be  
->> used?
+> On 10/13/07, David Kastrup <dak@gnu.org> wrote:
 >
-> Yes, send a patch to the list and to Junio (the maintainer).  See
-> Documentation/SubmittingPatches for details.
-
-Indeed! RTFM, as they say. ;-)
-
->> Frankly, I don't know how robust my idea is either, but it's simple
->> enough not to have many problems lurking in the shadows.
->>
->> It would certainly be more useful than not.
+>> I find it a pity that my suggestion to ask about how comfortable
+>> people are with the tone on the list did not make it into the survey.
+>> Enough core developers make the tone sufficiently unconstructive to
+>> make it quite understandable that people are unwilling to ask
+>> questions here, in order to avoid getting their heads banged against a
+>> wall, virtual or not.
 >
-> Then submit a patch implementing it. :)
+> I think next to last question in the survey
+>
+>  61. Did you have problems getting GIT help on mailing list or on
+>  IRC channel?  What were it? What could be improved?
+>
+> was the place to put complaints about git mailing list.
 
-Perl. Ugh. I'll see what I can do, though it may take 1.5 weeks.
+What if there are no problems getting help once you submit to letting
+your head get bashed in?
 
-> I like the idea of git secretly infiltrating institutions,
-> replacing CVS unbeknownst to management. It was the same for Linux in
-> the mid-90's ("our mail server is running on what!?").
+The problem is not with getting help on the list: the list is
+bristling with competent people.  The problem is the price to pay in
+self-esteem and comfort.
 
-:-)
-
-Replace CVS or Bust!
+-- 
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
