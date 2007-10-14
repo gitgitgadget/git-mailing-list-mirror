@@ -1,71 +1,83 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
-Subject: Re: Git User's Survey 2007 summary - git homepage improvements
-Date: Mon, 15 Oct 2007 00:56:18 +0200
-Message-ID: <20071014225618.GH31659@planck.djpig.de>
-References: <8fe92b430710141505y75ab61c4l50688fc9530e4f90@mail.gmail.com>
+From: "Dave Korn" <dave.korn@artimi.com>
+Subject: RE: Switching from CVS to GIT
+Date: Sun, 14 Oct 2007 23:59:35 +0100
+Message-ID: <023101c80eb5$e3b6b310$2e08a8c0@CAM.ARTIMI.COM>
+References: <1192293466.17584.95.camel@homebase.localnet><uy7e6keyv.fsf@gnu.org><1192381040.4908.57.camel@homebase.localnet><1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr><47125F74.9050600@op5.se><Pine.LNX.4.64.0710141934310.25221@racer.site><47126957.1020204@op5.se><Pine.LNX.4.64.0710142112540.25221@racer.site>
+	<20071014221446.GC2776@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Baudis <pasky@ucw.cz>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 00:56:44 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+Cc: 'Andreas Ericsson' <ae@op5.se>, 'Make Windows' <make-w32@gnu.org>,
+	'git list' <git@vger.kernel.org>
+To: "'Alex Riesen'" <raa.lkml@gmail.com>,
+	"'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 00:59:54 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhCO2-0002H6-2S
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:56:42 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758975AbXJNW4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 18:56:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758830AbXJNW4b
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:56:31 -0400
-Received: from planck.djpig.de ([85.10.192.180]:2018 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758636AbXJNW4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 18:56:30 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id D33CB88231;
-	Mon, 15 Oct 2007 00:56:28 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id R7EqZpWM4Ajm; Mon, 15 Oct 2007 00:56:18 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id B37BC88233; Mon, 15 Oct 2007 00:56:18 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <8fe92b430710141505y75ab61c4l50688fc9530e4f90@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60925>
+	id 1IhCR5-0002iI-3x
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 00:59:51 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IhCQy-0002x6-Et
+	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 18:59:44 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IhCQt-0002wP-Sa
+	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:39 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IhCQs-0002w9-4G
+	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:39 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IhCQr-0002w6-VA
+	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:37 -0400
+Received: from mail.artimi.com ([194.72.81.2])
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dave.korn@artimi.com>) id 1IhCQr-0007i7-Hr
+	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:37 -0400
+Received: from rainbow ([192.168.8.46]) by mail.artimi.com with Microsoft
+	SMTPSVC(6.0.3790.3959); Sun, 14 Oct 2007 23:59:35 +0100
+X-Mailer: Microsoft Office Outlook 11
+In-Reply-To: <20071014221446.GC2776@steel.home>
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
+Thread-Index: AcgOs4fHch/7bR+URh6XAXw0UYKR0AAAadQg
+X-OriginalArrivalTime: 14 Oct 2007 22:59:35.0261 (UTC)
+	FILETIME=[E3BAF8D0:01C80EB5]
+X-detected-kernel: by monty-python.gnu.org: Windows 2000 SP4, XP SP1+
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60926>
 
-On Mon, Oct 15, 2007 at 12:05:22AM +0200, Jakub Narebski wrote:
-> Generic:
->  # Dedicated domain name / site name, e.g. git.org or git.com
->    to have it look less like mirror or unofficial page
+On 14 October 2007 23:15, Alex Riesen wrote:
+
+> Interprocess communication:
 > 
->    (git.or.cz still comes first when searching Google for "git";
->    current domain name was available to homepage admin - historical
->    reason)
-
-Hmm, I guess most names that would qualify are already taken
-(most of them by squatters, though). So someone
-would have to pay money for this...
-(And I guess something like git-scm.org wouldn't qualify as more
-"official", would it?)
-
-However, I have to admit I had quite some problems remembering the
-domain name myself in the beginning...
-
-> Downloads:
->  # More up-to-date about new git versions.
+> - no reliable text environment (I'm programming in the damn thing for
+>   10 years and I still don't know how to pass an environment variable
+>   _for_sure_)
 > 
->    (With one person updating homepage, who is not git maintainer...)
+> - it has only one argument (limited in size) passed to started
+>   programs, which means that there is no possible way to safely pass
+>   file and text arguments on command line (more than one, that is)
 
-There are use-cases for shared repositories. Maybe this is one of them?
+  Whuh?
 
-Gruesse,
+http://msdn2.microsoft.com/en-us/library/y5zz48s1(VS.80).aspx
+
+
+    cheers,
+      DaveK
 -- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+Can't think of a witty .sigline today....
