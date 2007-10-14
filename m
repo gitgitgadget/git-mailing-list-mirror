@@ -1,61 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 01/14] Change git_connect() to return a struct child_process
- instead of a pid_t.
-Date: Sun, 14 Oct 2007 01:57:28 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710140156100.25221@racer.site>
-References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
- <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sat, 13 Oct 2007 18:13:18 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+ <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+ <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz>
+ <20071013202713.GA2467@fieldses.org>
+ <Pine.LNX.4.64.0710140135020.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Oct 14 02:57:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 03:13:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IgrnZ-0004Jo-Ut
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 02:57:42 +0200
+	id 1Igs3I-0006Sr-NC
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 03:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754344AbXJNA5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 20:57:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbXJNA5c
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 20:57:32 -0400
-Received: from mail.gmx.net ([213.165.64.20]:36150 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752214AbXJNA5b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 20:57:31 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 00:57:29 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp035) with SMTP; 14 Oct 2007 02:57:29 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/dFyBSbJbdr9Ylm63Yg1CWxHTQ/qpgTMYLS5FAuC
-	pviEyhTOXA5vM9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
-X-Y-GMX-Trusted: 0
+	id S1754238AbXJNBNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 21:13:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754084AbXJNBNj
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 21:13:39 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:54627 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754050AbXJNBNi (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Oct 2007 21:13:38 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9E1DIOQ020456
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 13 Oct 2007 18:13:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9E1DIrN028363;
+	Sat, 13 Oct 2007 18:13:18 -0700
+In-Reply-To: <Pine.LNX.4.64.0710140135020.25221@racer.site>
+X-Spam-Status: No, hits=-2.719 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60789>
 
-Hi,
 
-On Sat, 13 Oct 2007, Johannes Sixt wrote:
 
-> -int finish_connect(pid_t pid)
-> +int finish_connect(struct child_process *conn)
->  {
-> -	if (pid == 0)
-> +	if (conn == NULL)
->  		return 0;
->  
-> -	while (waitpid(pid, NULL, 0) < 0) {
-> +	while (waitpid(conn->pid, NULL, 0) < 0) {
->  		if (errno != EINTR)
->  			return -1;
+On Sun, 14 Oct 2007, Johannes Schindelin wrote:
+>
+> My main point is -- and always was -- that I'd like people to realise how 
+> much it depends on _them_ if (and when) their wishes come true.
 
-Just for completeness' sake: could you do a free(conn); before return -1;?
+Dscho, that's just not fair.
 
-Thanks,
-Dscho
+The fact is, stating what you wish for *is* taking an action. Starting to 
+complain about people stating their wishes (which you have done several 
+times) is simply unreasonable.
+
+You don't have to *do* what they wish for, but I really wish you stopped 
+complaining about people bringing up their hopes for improvement.
+
+Complain about it when somebody asks for something *stupid*. Explain why 
+it would be wrong to do something like that. But don't complain about 
+people having wish-lists, even if those people may not work on them.
+
+Not everybody is a "doer". It's important to get input from people who are 
+just plain users, or hope to be.
+
+		Linus
