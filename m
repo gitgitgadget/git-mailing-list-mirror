@@ -1,71 +1,135 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 01/14] Change git_connect() to return a struct child_process
- instead of a pid_t.
-Date: Sun, 14 Oct 2007 18:10:22 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710141810020.25221@racer.site>
-References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
- <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
- <Pine.LNX.4.64.0710140156100.25221@racer.site> <200710141140.10597.johannes.sixt@telecom.at>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sun Oct 14 19:11:17 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: Switching from CVS to GIT
+Date: Sun, 14 Oct 2007 19:10:05 +0200
+Message-ID: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+References: <1192293466.17584.95.camel@homebase.localnet>
+	<uy7e6keyv.fsf@gnu.org>
+	<1192381040.4908.57.camel@homebase.localnet>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/mixed; boundary="===============0461327013=="
+Cc: Make Windows <make-w32@gnu.org>
+To: git list <git@vger.kernel.org>
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Sun Oct 14 19:11:18 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih6za-0008De-L9
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:11:07 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758734AbXJNRKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 13:10:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758254AbXJNRKa
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:10:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758712AbXJNRK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 13:10:28 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 17:10:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp003) with SMTP; 14 Oct 2007 19:10:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19aCEUvyWxaMEUT/gIt9SvqrYYDqmJSJhmK44dzNO
-	pomnZISobF7Pyd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710141140.10597.johannes.sixt@telecom.at>
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60872>
+	id 1Ih6zV-0008Ca-Ju
+	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 19:11:01 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1Ih6zO-0006cR-9c
+	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 13:10:54 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1Ih6zJ-0006bX-HE
+	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:49 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1Ih6zI-0006aN-Kh
+	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:49 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1Ih6zI-0006aH-HR
+	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:48 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]
+	helo=kualalumpur.lrde.epita.fr)
+	by monty-python.gnu.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60) (envelope-from <tsuna@lrde.epita.fr>)
+	id 1Ih6zB-0002VP-GA; Sun, 14 Oct 2007 13:10:41 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa
+	(TLS-1.0:RSA_AES_128_CBC_SHA1:16) (Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1Ih6z9-0005w2-R1; Sun, 14 Oct 2007 19:10:39 +0200
+In-Reply-To: <1192381040.4908.57.camel@homebase.localnet>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 3)
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60873>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--===============0461327013==
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-63--673758817"
+Content-Transfer-Encoding: 7bit
 
-On Sun, 14 Oct 2007, Johannes Sixt wrote:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-63--673758817
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> On Sunday 14 October 2007 02:57, Johannes Schindelin wrote:
-> >
-> > On Sat, 13 Oct 2007, Johannes Sixt wrote:
-> > > -int finish_connect(pid_t pid)
-> > > +int finish_connect(struct child_process *conn)
-> > >  {
-> > > -	if (pid == 0)
-> > > +	if (conn == NULL)
-> > >  		return 0;
-> > >
-> > > -	while (waitpid(pid, NULL, 0) < 0) {
-> > > +	while (waitpid(conn->pid, NULL, 0) < 0) {
-> > >  		if (errno != EINTR)
-> > >  			return -1;
-> >
-> > Just for completeness' sake: could you do a free(conn); before return 
-> > -1;?
-> 
-> I know. But the loop is going away with the next patch, so I didn't 
-> bother. Can you live with that?
+Context: GNU make seems to be willing to switch from CVS to ...  
+something else.
 
-It'll be hard, but I'll try ;-)
+On Oct 14, 2007, at 6:57 PM, Paul Smith wrote:
 
-Ciao,
-Dscho
+> [...] the big thing no one else seems to have addressed much in
+> other discussions I've seen is portability.  It LOOKS like there are
+> native ports of GIT to MINGW, but I have no idea how complete and  
+> usable
+> they are.  If someone who has a Windows system could look into that it
+> would be a big help.
+
+I think the best thing to do is to ask directly on the Git ML.
+
+Someone already pointed out that he'd like to use Git on Windows but  
+doesn't want to install either Cygwin or MSYS.  Is this possible, or  
+will it be possible in the near future?  Is it possible to use one of  
+the various GUIs (git-gui, gitk, qgit) on Windows without requiring a  
+POSIXish shell etc.?
+
+When will the librarification of Git be finished?  (if Git is  
+available as a library, and if this library works on Windows, it will  
+greatly help truly native Windows ports).
+
+Not that I like Windows in any way, right, but it's legitimate for  
+people working on Windows ports of various software to be willing to  
+have a truly native port of Git for Windows.
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-63--673758817
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHEk1twwE67wC8PUkRAqZSAJ9Y9XlGn6S7yVDud2y+QUJsB9iTEgCg2Dn2
+OjD6eWV63RvJ/kGHC3Z3/KE=
+=jnln
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-63--673758817--
+
+
+
+--===============0461327013==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+Make-w32 mailing list
+Make-w32@gnu.org
+http://lists.gnu.org/mailman/listinfo/make-w32
+
+--===============0461327013==--
