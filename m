@@ -1,145 +1,81 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Update manpages to reflect new short and long option aliases
-Date: Sun, 14 Oct 2007 16:10:42 +0200
-Message-ID: <20071014141042.GA21197@diku.dk>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: git blame crashes with internal error
+Date: Sun, 14 Oct 2007 16:36:28 +0200
+Message-ID: <20071014143628.GA22568@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 16:16:34 2007
+Content-Type: multipart/mixed; boundary="LZvS9be/3tNcYl/X"
+Content-Transfer-Encoding: 8bit
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Oct 14 16:36:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih4Ge-0008GM-T7
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 16:16:33 +0200
+	id 1Ih4aD-0002Uu-1J
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 16:36:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbXJNOQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 10:16:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbXJNOQU
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 10:16:20 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:36391 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750930AbXJNOQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 10:16:19 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id E135F7E8084;
-	Sun, 14 Oct 2007 16:16:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id titdeKT2Ao-0; Sun, 14 Oct 2007 16:16:16 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 85A5352C346;
-	Sun, 14 Oct 2007 16:10:42 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id B9D3E6DFAB2; Sun, 14 Oct 2007 16:10:36 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 64D485B8001; Sun, 14 Oct 2007 16:10:42 +0200 (CEST)
+	id S1753572AbXJNOgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 10:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754559AbXJNOgc
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 10:36:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57393 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752233AbXJNOgc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 10:36:32 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 14:36:30 -0000
+Received: from i577BAEEF.versanet.de (EHLO localhost) [87.123.174.239]
+  by mail.gmx.net (mp042) with SMTP; 14 Oct 2007 16:36:30 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/+X/tGpTr+d0VuQv98UrWeYu36YJBAGzOe8hkj5J
+	oBL1b2y826FKvr
 Content-Disposition: inline
-In-Reply-To: <1192282153-26684-2-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60851>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/git-add.txt          |    4 ++--
- Documentation/git-branch.txt       |    2 +-
- Documentation/git-mv.txt           |    2 +-
- Documentation/git-rm.txt           |    4 ++--
- Documentation/git-symbolic-ref.txt |    2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
 
- Maybe this should wait, but it is just to document that this series (as
- of the version in your git tree) also adds new option aliases.
- 
- BTW, I didn't bother to change the synopsis lines but maybe I should.
+--LZvS9be/3tNcYl/X
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 2fe7355..963e1ab 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -50,10 +50,10 @@ OPTIONS
- 	and `dir/file2`) can be given to add all files in the
- 	directory, recursively.
- 
---n::
-+-n, \--dry-run::
-         Don't actually add the file(s), just show if they exist.
- 
---v::
-+-v, \--verbose::
-         Be verbose.
- 
- -f::
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index b7285bc..5e81aa4 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -85,7 +85,7 @@ OPTIONS
- -a::
- 	List both remote-tracking branches and local branches.
- 
---v::
-+-v, --verbose::
- 	Show sha1 and commit subject line for each head.
- 
- --abbrev=<length>::
-diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
-index 2c9cf74..3b8ca76 100644
---- a/Documentation/git-mv.txt
-+++ b/Documentation/git-mv.txt
-@@ -34,7 +34,7 @@ OPTIONS
- 	condition. An error happens when a source is neither existing nor
-         controlled by GIT, or when it would overwrite an existing
-         file unless '-f' is given.
---n::
-+-n, \--dry-run::
- 	Do nothing; only show what would happen
- 
- 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index be61a82..48c1d97 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -30,7 +30,7 @@ OPTIONS
- -f::
- 	Override the up-to-date check.
- 
---n::
-+-n, \--dry-run::
-         Don't actually remove the file(s), just show if they exist in
-         the index.
- 
-@@ -51,7 +51,7 @@ OPTIONS
- \--ignore-unmatch::
- 	Exit with a zero status even if no files matched.
- 
--\--quiet::
-+-q, \--quiet::
- 	git-rm normally outputs one line (in the form of an "rm" command)
- 	for each file removed. This option suppresses that output.
- 
-diff --git a/Documentation/git-symbolic-ref.txt b/Documentation/git-symbolic-ref.txt
-index a88f722..694caba 100644
---- a/Documentation/git-symbolic-ref.txt
-+++ b/Documentation/git-symbolic-ref.txt
-@@ -26,7 +26,7 @@ a regular file whose contents is `ref: refs/heads/master`.
- OPTIONS
- -------
- 
---q::
-+-q, --quiet::
- 	Do not issue an error message if the <name> is not a
- 	symbolic ref but a detached HEAD; instead exit with
- 	non-zero status silently.
--- 
-1.5.3.4.1166.gf076
+Hi Junio,
 
--- 
-Jonas Fonseca
+git blame just decided to crash on me, when I tried to use it while
+resolving a merge conflict. Interesting is probably, that it crashes
+when given the filename of a file that is not _directly_ affected by the
+merge, but contains code that originates from a file that caused
+conlicts.
+
+Error message is:
+fatal: internal error: ce_mode is 0
+
+I tried all git releases from 1.5.3 to 1.5.3.4 as well as the current
+master and all of them crashed. A small shell script to reproduce the
+problem is attached.
+
+Thanks,
+Björn
+
+--LZvS9be/3tNcYl/X
+Content-Type: application/x-sh
+Content-Disposition: attachment; filename="testcase.sh"
+Content-Transfer-Encoding: quoted-printable
+
+#!/bin/sh=0A=0Amkdir gittc=0Acd gittc=0A=0A# Create repo=0Agit init=0A=0A# =
+Create the old file=0Aecho "Old line" > file1=0Agit add file1=0Agit commit =
+-m file1=0A=0A# Branch=0Agit checkout -b foo=0A=0A# Do an ugly move and cha=
+nge=0Agit rm file1=0Aecho "New line ...\n... and more" > file2=0Agit add fi=
+le2=0Agit commit -m "Ugly"=0A=0A# Back to master and change something=0Agit=
+ checkout master=0Aecho "\n\n\n\n\n\n\n\n\n\nbla" >> file1=0Agit commit -a =
+-m file1=0A=0A# Back to foo and merge master=0Agit checkout foo=0Agit merge=
+ master=0Aecho "New line ...\n ... and more\n\n\n\n\n\n\nbla\nEven more" > =
+file2=0Agit rm file1=0Agit commit -a -m merged=0A=0A# Back to master and ch=
+ange file1 again=0Agit checkout master=0Ased -i 's/bla/foo/' file1=0Agit co=
+mmit -a -m replace=0A=0A=0A# Try to merge into foo again, and blame=0Agit c=
+heckout foo=0Agit merge master=0Agit blame file2 ### DIE=0A=0A
+--LZvS9be/3tNcYl/X--
