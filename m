@@ -1,54 +1,61 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Addition of "xmlto" to install documentation
-Date: Sun, 14 Oct 2007 01:43:33 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710140143000.25221@racer.site>
-References: <47112DAA.5080701@web.de>
+Subject: Re: [PATCH 01/14] Change git_connect() to return a struct child_process
+ instead of a pid_t.
+Date: Sun, 14 Oct 2007 01:57:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710140156100.25221@racer.site>
+References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
+ <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 02:43:53 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Oct 14 02:57:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igra6-0002kC-QN
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 02:43:47 +0200
+	id 1IgrnZ-0004Jo-Ut
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 02:57:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754208AbXJNAnh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 20:43:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754193AbXJNAnh
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 20:43:37 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46581 "HELO mail.gmx.net"
+	id S1754344AbXJNA5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 20:57:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754235AbXJNA5c
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 20:57:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36150 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754016AbXJNAng (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 20:43:36 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 00:43:34 -0000
+	id S1752214AbXJNA5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 20:57:31 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 00:57:29 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp055) with SMTP; 14 Oct 2007 02:43:34 +0200
+  by mail.gmx.net (mp035) with SMTP; 14 Oct 2007 02:57:29 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+/nR41DRS/lRbCxPfhAFKF9oX+L8pARKgIGrMGp7
-	ZXNhV5LkZigKO/
+X-Provags-ID: V01U2FsdGVkX1/dFyBSbJbdr9Ylm63Yg1CWxHTQ/qpgTMYLS5FAuC
+	pviEyhTOXA5vM9
 X-X-Sender: gene099@racer.site
-In-Reply-To: <47112DAA.5080701@web.de>
+In-Reply-To: <1192305984-22594-2-git-send-email-johannes.sixt@telecom.at>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60788>
 
 Hi,
 
-On Sat, 13 Oct 2007, Markus Elfring wrote:
+On Sat, 13 Oct 2007, Johannes Sixt wrote:
 
-> I have cloned the current Git release to my computer. I resolved all 
-> dependencies that were mentioned in the file "INSTALL". But when I've 
-> tried "make install install-doc" I got the message that "xmlto" was not 
-> found on my openSUSE 10.3 system. (I have installed it now.) Would you 
-> like to add this tool to the system requirements in the documentation?
+> -int finish_connect(pid_t pid)
+> +int finish_connect(struct child_process *conn)
+>  {
+> -	if (pid == 0)
+> +	if (conn == NULL)
+>  		return 0;
+>  
+> -	while (waitpid(pid, NULL, 0) < 0) {
+> +	while (waitpid(conn->pid, NULL, 0) < 0) {
+>  		if (errno != EINTR)
+>  			return -1;
 
-Well, it is not strictly necessary to build git, and not even to install 
-it, if you have the "man" branch.
+Just for completeness' sake: could you do a free(conn); before return -1;?
 
-Ciao,
+Thanks,
 Dscho
