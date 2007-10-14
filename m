@@ -1,81 +1,61 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC] CLI option parsing and usage generation for porcelains
-Date: Sun, 14 Oct 2007 02:18:55 -0700
-Message-ID: <20071014091855.GA17397@soma>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 14 Oct 2007 11:21:35 +0200
+Message-ID: <858x66nja8.fsf@lola.goethe.zz>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	<8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+	<Pine.LNX.4.64.0710130130380.25221@racer.site>
+	<853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org>
+	<Pine.LNX.4.64.0710140135020.25221@racer.site>
+	<alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
+	<Pine.LNX.4.64.0710140304430.25221@racer.site>
+	<4711D72B.2080107@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 11:19:14 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Oct 14 11:21:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igzct-0001iY-QU
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 11:19:12 +0200
+	id 1Igzee-0001zR-Po
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 11:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754785AbXJNJS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 05:18:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbXJNJS6
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 05:18:58 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44739 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754750AbXJNJS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 05:18:57 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 422D07DC0FE;
-	Sun, 14 Oct 2007 02:18:56 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1192282153-26684-1-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1754767AbXJNJUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 05:20:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbXJNJUu
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 05:20:50 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:55643 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754259AbXJNJUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 05:20:50 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1IgzeQ-0005T9-C8; Sun, 14 Oct 2007 05:20:46 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 7A3791C4CE11; Sun, 14 Oct 2007 11:21:35 +0200 (CEST)
+In-Reply-To: <4711D72B.2080107@op5.se> (Andreas Ericsson's message of "Sun\, 14 Oct 2007 10\:45\:31 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60819>
 
-Pierre Habouzit <madcoder@debian.org> wrote:
->   Following Kristian momentum, I've reworked his parse_option module
-> quite a lot, and now have some quite interesting features. The series is
-> available from git://git.madism.org/git.git (branch ph/strbuf).
-> 
->   The following series is open for comments, it's not 100% ready for
-> inclusion IMHO, as some details may need to be sorted out first, and
-> that I've not re-read the patches thoroughly yet. Though I uses the tip
-> of that branch as my everyday git for 2 weeks or so without any
-> noticeable issues.
-> 
->   And as examples are always easier to grok:
-> 
-> $ git fetch -h
-> usage: git-fetch [options] [<repository> <refspec>...]
-> 
->   -q, --quiet           be quiet
->   -v, --verbose         be verbose
-> 
->   -a, --append          append in .git/FETCH_HEAD
->   -f, --force           force non fast-forwards updates
->   --no-tags             don't follow tags at all
->   -t, --tags            fetch all tags
->   --depth <depth>       deepen history of a shallow clone
-> 
-> Advanced Options
->   -k, --keep            keep downloaded pack
->   -u, --update-head-ok  allow to update the head in the current branch
->   --upload-pack <path>  path to git-upload-pack on the remote
-> 
-> $ git rm -rf xdiff # yeah -rf now works !
+Andreas Ericsson <ae@op5.se> writes:
 
-Very nice.  I worked on gitopt around summer of 2006 but never had the
-time to test it thoroughly.  It was a _lot_ more intrusive than yours
-currently is (it touched the diff + revision family of commands).
+> I also think Linus made a very wise decision in picking Junio to
+> maintain it. So far, I haven't seen him accept a single
+> feature-patch into git that wasn't explained to solve a specific
+> problem.
 
-One feature I really like is automatically handling of long option
-abbreviations.  gitopt supported this at the expense of complexity
-and the aforementioned intrusivenes.  This allows automatic handling
-of the abbreviation style seen commonly in git shell scripts:
-
-   --a|--am|--ame|--amen|--amend)  (from git-commit.sh)
+While I hold Junio's technical judgment in high regard, it is actually
+the area of communication skills and conversation tone where I would
+really wish more to follow his example.
 
 -- 
-Eric Wong
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
