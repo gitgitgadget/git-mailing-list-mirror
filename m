@@ -1,131 +1,143 @@
 From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Simplify usage string printing
-Date: Sun, 14 Oct 2007 16:01:16 +0200
-Message-ID: <20071014140116.GA20970@diku.dk>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <1192282153-26684-3-git-send-email-madcoder@debian.org> <1192282153-26684-4-git-send-email-madcoder@debian.org> <1192282153-26684-5-git-send-email-madcoder@debian.org> <1192282153-26684-6-git-send-email-madcoder@debian.org> <1192282153-26684-7-git-send-email-madcoder@debian.org> <1192282153-26684-8-git-send-email-madcoder@debian.org> <1192282153-26684-9-git-send-email-madcoder@debian.org> <1192282153-26684-10-git-send-email-madcoder@debian.org>
+Subject: [PATCH] Update manpages to reflect new short and long option aliases
+Date: Sun, 14 Oct 2007 16:10:42 +0200
+Message-ID: <20071014141042.GA21197@diku.dk>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 16:07:24 2007
+X-From: git-owner@vger.kernel.org Sun Oct 14 16:16:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih47f-0006w1-1L
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 16:07:15 +0200
+	id 1Ih4Ge-0008GM-T7
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 16:16:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756332AbXJNOHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 10:07:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755044AbXJNOHE
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 10:07:04 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:35860 "EHLO mgw1.diku.dk"
+	id S1751865AbXJNOQU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 10:16:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753252AbXJNOQU
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 10:16:20 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:36391 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754560AbXJNOHB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 10:07:01 -0400
+	id S1750930AbXJNOQT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 10:16:19 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2246152C3E9;
-	Sun, 14 Oct 2007 16:07:00 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id E135F7E8084;
+	Sun, 14 Oct 2007 16:16:17 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at diku.dk
 Received: from mgw1.diku.dk ([127.0.0.1])
 	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cT8-LhpWMzDO; Sun, 14 Oct 2007 16:06:58 +0200 (CEST)
+	with ESMTP id titdeKT2Ao-0; Sun, 14 Oct 2007 16:16:16 +0200 (CEST)
 Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 08C557E8045;
-	Sun, 14 Oct 2007 16:01:17 +0200 (CEST)
+	by mgw1.diku.dk (Postfix) with ESMTP id 85A5352C346;
+	Sun, 14 Oct 2007 16:10:42 +0200 (CEST)
 Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
 	by nhugin.diku.dk (Postfix) with ESMTP
-	id 3929C6DFB7A; Sun, 14 Oct 2007 16:01:11 +0200 (CEST)
+	id B9D3E6DFAB2; Sun, 14 Oct 2007 16:10:36 +0200 (CEST)
 Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id D6DDB5B8001; Sun, 14 Oct 2007 16:01:16 +0200 (CEST)
+	id 64D485B8001; Sun, 14 Oct 2007 16:10:42 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <1192282153-26684-10-git-send-email-madcoder@debian.org>
+In-Reply-To: <1192282153-26684-2-git-send-email-madcoder@debian.org>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60850>
 
 Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
 ---
- builtin-branch.c     |    1 -
- builtin-update-ref.c |    1 -
- parse-options.c      |    2 +-
- 3 files changed, 1 insertions(+), 3 deletions(-)
+ Documentation/git-add.txt          |    4 ++--
+ Documentation/git-branch.txt       |    2 +-
+ Documentation/git-mv.txt           |    2 +-
+ Documentation/git-rm.txt           |    4 ++--
+ Documentation/git-symbolic-ref.txt |    2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
- Pierre Habouzit <madcoder@debian.org> wrote Sat, Oct 13, 2007:
- > Signed-off-by: Pierre Habouzit <madcoder@debian.org>
- > ---
- >  builtin-update-ref.c |   71 +++++++++++++++++++++-----------------------------
- >  1 files changed, 30 insertions(+), 41 deletions(-)
- > 
- > diff --git a/builtin-update-ref.c b/builtin-update-ref.c
- > index fe1f74c..eafb642 100644
- > --- a/builtin-update-ref.c
- > +++ b/builtin-update-ref.c
- > @@ -1,59 +1,48 @@
- >  #include "cache.h"
- >  #include "refs.h"
- >  #include "builtin.h"
- > +#include "parse-options.h"
- >  
- > -static const char git_update_ref_usage[] =
- > -"git-update-ref [-m <reason>] (-d <refname> <value> | [--no-deref] <refname> <value> [<oldval>])";
- > +static const char * const git_update_ref_usage[] = {
- > +	"",
- > +	"git-update-ref [options] -d <refname> <oldval>",
- > +	"git-update-ref [options]    <refname> <newval> [<oldval>]",
- > +	NULL
- > +};
-
- How about something like this to get rid of these empty strings
- that look strange?
-
-	> ./git update-ref -h
-	usage: git-update-ref [options] -d <refname> <oldval>
-	   or: git-update-ref [options]    <refname> <newval> [<oldval>]
-
-	    -m <reason>           reason of the update
-	    -d                    deletes the reference
-	    --no-deref            update <refname> not the one it points to
-
-diff --git a/builtin-branch.c b/builtin-branch.c
-index fbf983e..d7c4657 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -14,7 +14,6 @@
- #include "parse-options.h"
+ Maybe this should wait, but it is just to document that this series (as
+ of the version in your git tree) also adds new option aliases.
  
- static const char * const builtin_branch_usage[] = {
--	"",
- 	"git-branch [options] [-r | -a]",
- 	"git-branch [options] [-l] [-f] <branchname> [<start-point>]",
- 	"git-branch [options] [-r] (-d | -D) <branchname>",
-diff --git a/builtin-update-ref.c b/builtin-update-ref.c
-index d66d9b5..0cd7817 100644
---- a/builtin-update-ref.c
-+++ b/builtin-update-ref.c
-@@ -4,7 +4,6 @@
- #include "parse-options.h"
+ BTW, I didn't bother to change the synopsis lines but maybe I should.
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 2fe7355..963e1ab 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -50,10 +50,10 @@ OPTIONS
+ 	and `dir/file2`) can be given to add all files in the
+ 	directory, recursively.
  
- static const char * const git_update_ref_usage[] = {
--	"",
- 	"git-update-ref [options] -d <refname> <oldval>",
- 	"git-update-ref [options]    <refname> <newval> [<oldval>]",
- 	NULL
-diff --git a/parse-options.c b/parse-options.c
-index c45bb9b..b1d9608 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -181,7 +181,7 @@ void usage_with_options(const char * const *usagestr,
- {
- 	fprintf(stderr, "usage: %s\n", *usagestr);
- 	while (*++usagestr)
--		fprintf(stderr, "    %s\n", *usagestr);
-+		fprintf(stderr, "   or: %s\n", *usagestr);
+--n::
++-n, \--dry-run::
+         Don't actually add the file(s), just show if they exist.
  
- 	if (opts->type != OPTION_GROUP)
- 		fputc('\n', stderr);
+--v::
++-v, \--verbose::
+         Be verbose.
+ 
+ -f::
+diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
+index b7285bc..5e81aa4 100644
+--- a/Documentation/git-branch.txt
++++ b/Documentation/git-branch.txt
+@@ -85,7 +85,7 @@ OPTIONS
+ -a::
+ 	List both remote-tracking branches and local branches.
+ 
+--v::
++-v, --verbose::
+ 	Show sha1 and commit subject line for each head.
+ 
+ --abbrev=<length>::
+diff --git a/Documentation/git-mv.txt b/Documentation/git-mv.txt
+index 2c9cf74..3b8ca76 100644
+--- a/Documentation/git-mv.txt
++++ b/Documentation/git-mv.txt
+@@ -34,7 +34,7 @@ OPTIONS
+ 	condition. An error happens when a source is neither existing nor
+         controlled by GIT, or when it would overwrite an existing
+         file unless '-f' is given.
+--n::
++-n, \--dry-run::
+ 	Do nothing; only show what would happen
+ 
+ 
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index be61a82..48c1d97 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -30,7 +30,7 @@ OPTIONS
+ -f::
+ 	Override the up-to-date check.
+ 
+--n::
++-n, \--dry-run::
+         Don't actually remove the file(s), just show if they exist in
+         the index.
+ 
+@@ -51,7 +51,7 @@ OPTIONS
+ \--ignore-unmatch::
+ 	Exit with a zero status even if no files matched.
+ 
+-\--quiet::
++-q, \--quiet::
+ 	git-rm normally outputs one line (in the form of an "rm" command)
+ 	for each file removed. This option suppresses that output.
+ 
+diff --git a/Documentation/git-symbolic-ref.txt b/Documentation/git-symbolic-ref.txt
+index a88f722..694caba 100644
+--- a/Documentation/git-symbolic-ref.txt
++++ b/Documentation/git-symbolic-ref.txt
+@@ -26,7 +26,7 @@ a regular file whose contents is `ref: refs/heads/master`.
+ OPTIONS
+ -------
+ 
+--q::
++-q, --quiet::
+ 	Do not issue an error message if the <name> is not a
+ 	symbolic ref but a detached HEAD; instead exit with
+ 	non-zero status silently.
 -- 
 1.5.3.4.1166.gf076
 
