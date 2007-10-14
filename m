@@ -1,78 +1,67 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add color to git-add--interactive diffs (Take 2: now
- without spurious line break!)
-Date: Sun, 14 Oct 2007 19:55:05 +0200
-Message-ID: <471257F9.2090705@op5.se>
-References: <1192351494.7226.18.camel@athena> <EFADE863-FC59-4A50-B165-9D30D9648B97@wincent.com> <Pine.LNX.4.64.0710141814100.25221@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] parse-options: Allow abbreviated options when unambiguous
+Date: Sun, 14 Oct 2007 19:02:33 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710141901450.25221@racer.site>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
+ <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp>
+ <Pine.LNX.4.64.0710141751530.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Tom Tobin <korpios@korpios.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 19:57:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Oct 14 20:02:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih7gR-0006og-V9
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:55:24 +0200
+	id 1Ih7ne-0008C3-Rf
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 20:02:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758432AbXJNRzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 13:55:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758498AbXJNRzL
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:55:11 -0400
-Received: from mail.op5.se ([193.201.96.20]:56551 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758383AbXJNRzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 13:55:09 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id BFFA71730648;
-	Sun, 14 Oct 2007 19:55:07 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qboejNHjg-c2; Sun, 14 Oct 2007 19:55:07 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id BA5061730569;
-	Sun, 14 Oct 2007 19:55:06 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0710141814100.25221@racer.site>
+	id S1754285AbXJNSCk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 14:02:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753904AbXJNSCj
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 14:02:39 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50663 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753373AbXJNSCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 14:02:39 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 18:02:37 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp028) with SMTP; 14 Oct 2007 20:02:37 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18t4l91gGYtsmecQgPbJ9Ywo7PrTo3xrg8U1ErA74
+	DL4Jf6z0K486Z1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0710141751530.25221@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60885>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Sun, 14 Oct 2007, Wincent Colaiuta wrote:
-> 
->>> +sub parse_color {
->> You could simplify the manual escape sequence construction that you're 
->> doing here by using Term::ANSIColor like the other patches did. I see 
->> that git-send-email.perl uses that module too, so I guess depending on 
->> that module is ok.
-> 
-> Wrong.  Depending on that module is not correct, you always have to wrap 
-> it into an "if (<is_color>) {...}".
-> 
-> I use git add -i quite often, and I _never_ use git send-email.  My guess 
-> is that I am not alone with that.
-> 
+Hi,
 
-Not by a longshot, no. Personally I find git-send-email so tricky to use I've
-rolled my own sender. I circulated it on the list a year or so back, but it's
-not nearly so feature-full as git-send-email, so it never got much of an
-audience.
+On Sun, 14 Oct 2007, Johannes Schindelin wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> When there is an option "--amend", the option parser now recognizes 
+> "--am" for that option, provided that there is no other option beginning 
+> with "--am".
+
+And an amend for ultra-abbreviated options (as you noticed on IRC):
+
+diff --git a/parse-options.c b/parse-options.c
+index afc6c89..acabb98 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -137,6 +137,11 @@ is_abbreviated:
+ 				abbrev_flags = flags;
+ 				continue;
+ 			}
++			/* negated and abbreviated very much? */
++			if (!prefixcmp("no-", arg)) {
++				flags |= OPT_UNSET;
++				goto is_abbreviated;
++			}
+ 			/* negated? */
+ 			if (strncmp(arg, "no-", 3))
+ 				continue;
