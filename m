@@ -1,100 +1,90 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git blame crashes with internal error
-Date: Sun, 14 Oct 2007 21:21:00 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710142118590.25221@racer.site>
-References: <20071014143628.GA22568@atjola.homenet> <47122D02.9060204@op5.se>
- <20071014152327.GA24003@atjola.homenet> <Pine.LNX.4.64.0710141830050.25221@racer.site>
- <20071014201813.GA26872@atjola.homenet>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 14 Oct 2007 22:22:30 +0200
+Message-ID: <47127A86.2040607@op5.se>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site> <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org> <20071014014445.GN27899@spearce.org> <3f4fd2640710140320h5c1e1f7gf9f43a626aaa6897@mail.gmail.com> <47125BF7.2070503@midwinter.com> <20071014184050.GB31260@fieldses.org> <471272F5.2000902@op5.se> <Pine.LNX.4.64.0710142117220.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, gitster@pobox.com,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 22:21:20 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Steven Grimm <koreth@midwinter.com>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 22:22:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih9xd-0004F9-R3
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 22:21:18 +0200
+	id 1Ih9z4-0004Sq-Fp
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 22:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167AbXJNUVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 16:21:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753865AbXJNUVG
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 16:21:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60989 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755167AbXJNUVF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 16:21:05 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 20:21:04 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp050) with SMTP; 14 Oct 2007 22:21:04 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18/RolTz8s/IvAlzktNhSK6G56WyKMiz/bs3CAXiv
-	9RfTl+jokqBUbV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071014201813.GA26872@atjola.homenet>
-X-Y-GMX-Trusted: 0
+	id S1758489AbXJNUWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 16:22:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758411AbXJNUWg
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 16:22:36 -0400
+Received: from mail.op5.se ([193.201.96.20]:43555 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758110AbXJNUWf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 16:22:35 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 3E2561730708;
+	Sun, 14 Oct 2007 22:22:33 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wLY-58ngqRlZ; Sun, 14 Oct 2007 22:22:32 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id BE5C617306F0;
+	Sun, 14 Oct 2007 22:22:31 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0710142117220.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60902>
 
-Hi,
-
-On Sun, 14 Oct 2007, Bj?rn Steinbrink wrote:
-
-> On 2007.10.14 18:32:44 +0100, Johannes Schindelin wrote:
-> > 
-> > On Sun, 14 Oct 2007, Bj?rn Steinbrink wrote:
-> > 
-> > > On 2007.10.14 16:51:46 +0200, Andreas Ericsson wrote:
-> > > > Bj?rn Steinbrink wrote:
-> > > >> I tried all git releases from 1.5.3 to 1.5.3.4 as well as the current
-> > > >> master and all of them crashed. A small shell script to reproduce the
-> > > >> problem is attached.
-> > > >
-> > > > Manual bisect? Ugh. This *is* the century of the competent developer
-> > > > tools, you know... ;-)
-> > > 
-> > > Then, how do I search for a good version with git bisect if I only have
-> > > the one data-point "master is bad"?
-> > 
-> > AFAIK Junio introduced the option to start with just a bad commit, and no 
-> > known "good" one.
-> > 
-> > Yep, just found it.  Since v1.5.2-rc0~77^2(git-bisect: allow bisecting 
-> > with only one bad commit.) it is supported.
-> > 
-> > >From the commit message:
-> > 
-> >     This allows you to say:
-> > 
-> >         git bisect start
-> >         git bisect bad $bad
-> >         git bisect next
+Johannes Schindelin wrote:
+> Hi,
 > 
-> OK, using that approach, I bisected it, and even found a "guilty"
-> commit, although it is pretty much useless:
+> On Sun, 14 Oct 2007, Andreas Ericsson wrote:
 > 
-> 1cfe77333f274c9ba9879c2eb61057a790eb050f is first bad commit
-> commit 1cfe77333f274c9ba9879c2eb61057a790eb050f
-> Author: Junio C Hamano <junkio@cox.net>
-> Date:   Tue Jan 30 01:11:08 2007 -0800
+>> J. Bruce Fields wrote:
+>>
+>>> Though actually the quickest way to checkout an arbitrary revision is 
+>>> with detached heads, and that doesn't require learning git-branch 
+>>> right away.
+>> But the *easiest* way, where "easiest" means "involves the fewest 
+>> commands with smallest risk of fscking up your own repo", is to do
+>>
+>>
+>> git clone <other-devs-repo> other-devs-repo
+>> cd other-devs-repo
+>> git checkout -b thebug <the-bug-hash>
 > 
->     git-blame: no rev means start from the working tree file.
+> I'd just do
+> 
+> 	git checkout <the-bug>^{commit}
+> 
+> and be done...
+> 
 
-I think it is not useless.  It says exactly the same as I did, in another 
-reply:  git blame starts with your working tree.  As such, it has to do 
-some operations which happen to fail on unmerged files.
+So:
 
-So the solution in your case _really_ is:
+	if (have_bug_in_repo)
+		do_the_dscho_way()
+	else ...
 
-	git blame HEAD file2
+See what I mean?
 
-Explanation: with that command line, you ask git blame to start with a 
-given revision (instead of the working tree), which just so happens to be 
-the HEAD revision.
-
-Hth,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
