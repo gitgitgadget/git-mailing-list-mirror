@@ -1,61 +1,64 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 11:21:35 +0200
-Message-ID: <858x66nja8.fsf@lola.goethe.zz>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
-	<8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
-	<Pine.LNX.4.64.0710130130380.25221@racer.site>
-	<853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org>
-	<Pine.LNX.4.64.0710140135020.25221@racer.site>
-	<alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
-	<Pine.LNX.4.64.0710140304430.25221@racer.site>
-	<4711D72B.2080107@op5.se>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH 14/14] Use the asyncronous function infrastructure to run the content filter.
+Date: Sun, 14 Oct 2007 11:39:31 +0200
+Message-ID: <200710141139.31410.johannes.sixt@telecom.at>
+References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at> <1192305984-22594-15-git-send-email-johannes.sixt@telecom.at> <Pine.LNX.4.64.0710140404480.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Oct 14 11:21:02 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 14 11:39:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igzee-0001zR-Po
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 11:21:01 +0200
+	id 1Igzwm-0004cb-RW
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 11:39:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754767AbXJNJUv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 05:20:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbXJNJUu
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 05:20:50 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:55643 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754259AbXJNJUu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 05:20:50 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IgzeQ-0005T9-C8; Sun, 14 Oct 2007 05:20:46 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 7A3791C4CE11; Sun, 14 Oct 2007 11:21:35 +0200 (CEST)
-In-Reply-To: <4711D72B.2080107@op5.se> (Andreas Ericsson's message of "Sun\, 14 Oct 2007 10\:45\:31 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1754890AbXJNJjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 05:39:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754583AbXJNJje
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 05:39:34 -0400
+Received: from smtp3.srv.eunet.at ([193.154.160.89]:48775 "EHLO
+	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754843AbXJNJjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 05:39:33 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp3.srv.eunet.at (Postfix) with ESMTP id 4B81F10A929;
+	Sun, 14 Oct 2007 11:39:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 0FA4F58CE9;
+	Sun, 14 Oct 2007 11:39:32 +0200 (CEST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0710140404480.25221@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60820>
 
-Andreas Ericsson <ae@op5.se> writes:
+On Sunday 14 October 2007 05:07, Johannes Schindelin wrote:
+> Hi,
+>
+> On Sat, 13 Oct 2007, Johannes Sixt wrote:
+> >  	status = finish_command(&child_process);
+> >  	if (status)
+> > -		error("external filter %s failed %d", cmd, -status);
+> > +		error("external filter %s failed", params->cmd);
+>
+> Did you mean to remove the status from the output (it should probably read
+> "(exit status %d)" instead of just "%d", but an exit status can help
+> identify problems, right?
 
-> I also think Linus made a very wise decision in picking Junio to
-> maintain it. So far, I haven't seen him accept a single
-> feature-patch into git that wasn't explained to solve a specific
-> problem.
+Oops, that looks like an artefact. Will correct.
 
-While I hold Junio's technical judgment in high regard, it is actually
-the area of communication skills and conversation tone where I would
-really wish more to follow his example.
+> > +	if (start_async(&async))
+> > +		return 0;	/* error was already reported */
+>
+> Please write "return NULL;"
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Will do.
+
+-- Hannes
