@@ -1,205 +1,83 @@
-From: Tom Tobin <korpios@korpios.com>
-Subject: [PATCH] Add color to git-add--interactive diffs (Take 2: now
-	without spurious line break!)
-Date: Sun, 14 Oct 2007 03:44:54 -0500
-Message-ID: <1192351494.7226.18.camel@athena>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 14 Oct 2007 10:45:31 +0200
+Message-ID: <4711D72B.2080107@op5.se>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site> <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org> <Pine.LNX.4.64.0710140304430.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 10:45:41 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 10:46:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igz6A-0005Q1-47
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 10:45:22 +0200
+	id 1Igz6z-0005Xv-Rn
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 10:46:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754768AbXJNIpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 04:45:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754739AbXJNIpB
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 04:45:01 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:55451 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754565AbXJNIo7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 04:44:59 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2402916pyb
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 01:44:58 -0700 (PDT)
-Received: by 10.35.10.13 with SMTP id n13mr6092797pyi.1192351497779;
-        Sun, 14 Oct 2007 01:44:57 -0700 (PDT)
-Received: from ?192.168.1.197? ( [24.124.68.243])
-        by mx.google.com with ESMTPS id p77sm3150673pyb.2007.10.14.01.44.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Oct 2007 01:44:55 -0700 (PDT)
-X-Mailer: Evolution 2.12.0 
+	id S1754307AbXJNIph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 04:45:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbXJNIph
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 04:45:37 -0400
+Received: from mail.op5.se ([193.201.96.20]:45539 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754269AbXJNIpg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 04:45:36 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1AE931730666;
+	Sun, 14 Oct 2007 10:45:34 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8IA2JnFyprjU; Sun, 14 Oct 2007 10:45:33 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id D89A3173065D;
+	Sun, 14 Oct 2007 10:45:32 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0710140304430.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60806>
 
-(This is repost; my damned mail client wrapped a line in the patch last
-time, and now I've got that under control.  My apologies!)  :(
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 13 Oct 2007, Linus Torvalds wrote:
+> 
+>>
+>> Not everybody is a "doer". It's important to get input from people who are 
+>> just plain users, or hope to be.
+> 
+> A pity, but you're probably right.
+> 
 
-Seeing the recent discussion and code regarding adding color to
-git-add--interactive, I thought I'd throw in my recent attempt at
-colorizing the diffs.  (This doesn't handle anything else, such as the
-prompts.)
+It's not a pity, and he's most definitely right. Users tend to think in terms
+of "I'd like to get this task done" while coders tend to think in terms of
+"this would be cool/possible to implement". The reason git actually *works* so
+great is, I'm sure, the fact that it was originally designed around a very specific
+need by someone thinking like a *user*. The fact that it happened to be a pretty
+competent programmer just meant he could express his wishes as algorithms in a
+programming language and make it happen.
 
-After banging my head against parsing colorized output of git-add-files,
-I gave up and implemented internal colorization keying off of the
-color.diff configuration.
+I'm 100% sure that if Linus had been so interested in SCM's that he'd abandoned
+the Linux kernel to be full-time maintainer for git instead, it would have had
+all sorts of oddities in it that nobody uses, just because they're possible to
+do.
 
-Hopefully this can be of some use towards fully colorizing
-git-add--interactive; I'll admit up front that Perl isn't my primary
-language, so I apologize in advance for whatever stupidities I've
-introduced.  ;) 
+I also think Linus made a very wise decision in picking Junio to maintain it. So
+far, I haven't seen him accept a single feature-patch into git that wasn't
+explained to solve a specific problem.
 
-Signed-off-by: Tom Tobin <korpios@korpios.com>
----
- git-add--interactive.perl |  111 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 files changed, 109 insertions(+), 2 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index be68814..eeb38e6 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1,5 +1,6 @@
- #!/usr/bin/perl -w
- 
-+use List::Util qw(first);
- use strict;
- 
- sub run_cmd_pipe {
-@@ -22,6 +23,112 @@ if (!defined $GIT_DIR) {
- }
- chomp($GIT_DIR);
- 
-+my ($use_color) = 0;
-+my (%term_color_codes) = (
-+	"normal", "", "black", "0", "red", "1",
-+	"green", "2", "yellow", "3", "blue", "4",
-+	"magenta", "5", "cyan", "6", "white", "7"
-+);
-+my (%term_attr_codes) = (
-+	"bold", "1", "dim", "2", "ul", "4", "blink", "5", "reverse", "7"
-+);
-+my %colorconfig = (
-+	'color.diff' => 'never',
-+	'color.diff.plain' => '',
-+	'color.diff.meta' => 'bold',
-+	'color.diff.frag' => 'cyan',
-+	'color.diff.old' => 'red',
-+	'color.diff.new' => 'green',
-+	'color.diff.commit' => 'yellow',
-+	'color.diff.whitespace' => 'normal red'
-+	);
-+for (split("\n", `git-config --get-regexp '^color\.diff'`)) {
-+	my ($var, $val) = $_ =~ /^([^\s]+)\s(.*)$/;
-+	$colorconfig{$var} = $val;
-+}
-+if (first { $_ eq $colorconfig{'color.diff'} } ("true", "always", "auto")) {
-+	$use_color = 1;
-+}
-+
-+sub parse_color {
-+	my ($fg, $bg, $attr, $lookup);
-+	my ($fg_code, $bg_code, $attr_code, $output_code) = ("", "", "", "");
-+	my (@color) = @_;
-+	my (@colorvals) = defined($color[0]) ? split(" ", $color[0]) : ();
-+
-+	for (@colorvals) {
-+		$lookup = $term_color_codes{$_};
-+		if (defined($lookup)) {
-+			if (!defined($fg)) {
-+				$fg = 1;
-+				$fg_code = "3$lookup";
-+			} elsif (!defined($bg)) {
-+				$bg = 1;
-+				$bg_code = "4$lookup";
-+			} else {
-+				die("Color slots only take up to two colors!");
-+			}
-+			next;
-+		}
-+		$lookup = $term_attr_codes{$_};
-+		if (defined($lookup)) {
-+			if (!defined($attr)) {
-+				$attr = 1;
-+				$attr_code = $lookup;
-+			} else {
-+				die("Color slots only take a single attribute!");
-+			}
-+		} else {
-+			die("Unrecognized value for color slot!");
-+		}
-+	}
-+	for ($fg_code, $bg_code, $attr_code) {
-+		if ($_ eq "") {
-+			next;
-+		}
-+		if ($output_code ne "") {
-+			$output_code = $output_code . ";";
-+		}
-+		$output_code = $output_code . $_;
-+	}
-+	if (length($output_code)) {
-+		return "\e[${output_code}m";
-+	} else {
-+		return "";
-+	}
-+}
-+
-+sub colorize_head_line {
-+	my $line = shift @_;
-+	if ($use_color) {
-+		# git doesn't colorize these by default, soooo
-+		# if ($line =~ /^\+/) {
-+		#	 return parse_color($colorconfig{'color.diff.new'}) . "$line\e[m";
-+		# }
-+		# if ($line =~ /^-/) {
-+		#	 return parse_color($colorconfig{'color.diff.old'}) . "$line\e[m";
-+		# }
-+		return parse_color($colorconfig{'color.diff.meta'}) . "$line\e[m";
-+	}
-+	return $line;
-+}
-+
-+sub colorize_hunk_line {
-+	my $line = shift @_;
-+	if ($use_color) {
-+		if ($line =~ /^\+/) {
-+			return parse_color($colorconfig{'color.diff.new'}) . "$line\e[m";
-+		}
-+		if ($line =~ /^-/) {
-+			return parse_color($colorconfig{'color.diff.old'}) . "$line\e[m";
-+		}
-+		if ($line =~ /^@@ /) {
-+			return parse_color($colorconfig{'color.diff.frag'}) . "$line\e[m";
-+		}
-+	}
-+	return $line;
-+}
-+
- sub refresh {
- 	my $fh;
- 	open $fh, 'git update-index --refresh |'
-@@ -573,7 +680,7 @@ sub patch_update_cmd {
- 	my $path = $it->{VALUE};
- 	my ($head, @hunk) = parse_diff($path);
- 	for (@{$head->{TEXT}}) {
--		print;
-+		print colorize_head_line($_);
- 	}
- 	$num = scalar @hunk;
- 	$ix = 0;
-@@ -617,7 +724,7 @@ sub patch_update_cmd {
- 			$other .= '/s';
- 		}
- 		for (@{$hunk[$ix]{TEXT}}) {
--			print;
-+			print colorize_hunk_line($_);
- 		}
- 		print "Stage this hunk [y/n/a/d$other/?]? ";
- 		my $line = <STDIN>;
 -- 
-1.5.3.4
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
