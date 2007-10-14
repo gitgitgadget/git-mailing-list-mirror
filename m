@@ -1,79 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 03:06:40 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710140304430.25221@racer.site>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
- <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
- <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz>
- <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site>
- <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH 0/14] fork/exec removal series
+Date: Sat, 13 Oct 2007 22:11:49 -0400
+Message-ID: <20071014021149.GO27899@spearce.org>
+References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 04:07:02 2007
+Content-Type: text/plain; charset=utf-8
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Oct 14 04:12:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igssf-0004HC-1v
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 04:07:01 +0200
+	id 1Igsxd-0004wJ-PD
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 04:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbXJNCGr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Oct 2007 22:06:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbXJNCGr
-	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 22:06:47 -0400
-Received: from mail.gmx.net ([213.165.64.20]:52442 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754327AbXJNCGq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Oct 2007 22:06:46 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 02:06:44 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp014) with SMTP; 14 Oct 2007 04:06:44 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jlNQrI2SjKK3fUM5jWmUd57oaZZp3Cimz3yoBCJ
-	D1MKKBXhDOOAqp
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1754480AbXJNCMA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Oct 2007 22:12:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754430AbXJNCL7
+	(ORCPT <rfc822;git-outgoing>); Sat, 13 Oct 2007 22:11:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:34623 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754358AbXJNCL7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Oct 2007 22:11:59 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Igsx9-00041r-Rd; Sat, 13 Oct 2007 22:11:39 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id CFF5820FBAE; Sat, 13 Oct 2007 22:11:49 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60792>
 
-Hi,
-
-On Sat, 13 Oct 2007, Linus Torvalds wrote:
-
-> On Sun, 14 Oct 2007, Johannes Schindelin wrote:
-> >
-> > My main point is -- and always was -- that I'd like people to realise 
-> > how much it depends on _them_ if (and when) their wishes come true.
+Johannes Sixt <johannes.sixt@telecom.at> wrote:
+> here is a series of patches that removes a number fork/exec pairs.
+...
+> The series consists of 2 parts:
 > 
-> Dscho, that's just not fair.
+> - The first half replaces a number of fork/exec pairs by start_command/
+>   finish_command or run_command.
 > 
-> The fact is, stating what you wish for *is* taking an action. Starting 
-> to complain about people stating their wishes (which you have done 
-> several times) is simply unreasonable.
+> - The second half introduces a new framework that runs a function
+>   asynchronously. New functions start_async and finish_async are implemented
+>   similarly to start_command and run_command. They are used to replace
+>   occurrences of fork() that does not exec() in the child. Such code
+>   could in principle be run in a thread, and on MinGW port we will go this
+>   route, but on Posix we stay with fork().
 
-Well, maybe I overreacted.
+This series looks pretty good to me.  I like seeing huge blocks
+go away only to be replaced with the simple API offered by
+run-command.h.  Makes the result much easier to follow.
 
-> You don't have to *do* what they wish for, but I really wish you stopped 
-> complaining about people bringing up their hopes for improvement.
+The async interface is also quite simple.  Unfortunately there
+is some risk with the canonical fork() implementation in that the
+async routine might attempt to alter global data that the parent
+is also using, and folks on a good UNIX that is using the fork()
+implementation will not even notice as they are in totally separated
+address spaces.  But you'll see it in MSYS Git.
 
-Fair enough, I'll shut up about these issues.
+Since builtin-pack-objects now accepts (limited) pthread support,
+perhaps this should be implemented in terms of pthread support
+when pthreads are available?  Most Linux/BSD/Mac OS X systems do
+have pthreads these days and that's the majority of git users and
+developers.  This would make it more likely that bugs in this sort
+of code would be detected early.  Just a thought.
+ 
+>  13 files changed, 334 insertions(+), 369 deletions(-)
 
-At least as long as I can hold my breath ;-)
+Hard to argue with that final state.  You killed 35 lines and
+also made Git easier to port to "that OS unfortunately named after
+transparent glass thingies".
 
-> Complain about it when somebody asks for something *stupid*. Explain why 
-> it would be wrong to do something like that. But don't complain about 
-> people having wish-lists, even if those people may not work on them.
-> 
-> Not everybody is a "doer". It's important to get input from people who are 
-> just plain users, or hope to be.
-
-A pity, but you're probably right.
-
-Ciao,
-Dscho
+-- 
+Shawn.
