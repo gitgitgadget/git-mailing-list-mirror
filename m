@@ -1,96 +1,94 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 21:50:13 +0200
-Message-ID: <471272F5.2000902@op5.se>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site> <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org> <20071014014445.GN27899@spearce.org> <3f4fd2640710140320h5c1e1f7gf9f43a626aaa6897@mail.gmail.com> <47125BF7.2070503@midwinter.com> <20071014184050.GB31260@fieldses.org>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Addition of "xmlto" to install documentation
+Date: Sun, 14 Oct 2007 21:38:31 +0200
+Organization: http://freemail.web.de/
+Message-ID: <30629502.1192390711800.JavaMail.fmail@fmcert01.dlan.cinetic.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Reece Dunn <msclrhd@googlemail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 21:50:48 2007
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg="md5"; 
+	boundary="----=_Part_13532_997623.1192390711800"
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 22:04:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih9Tp-0008AG-Kd
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 21:50:30 +0200
+	id 1Ih9gi-0001ka-51
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 22:03:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755404AbXJNTuU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 15:50:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755942AbXJNTuU
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 15:50:20 -0400
-Received: from mail.op5.se ([193.201.96.20]:45207 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755103AbXJNTuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 15:50:18 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B036D17306EE;
-	Sun, 14 Oct 2007 21:50:16 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9Ryp58OQRzpj; Sun, 14 Oct 2007 21:50:15 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 2DF16173068B;
-	Sun, 14 Oct 2007 21:50:14 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071014184050.GB31260@fieldses.org>
+	id S1758682AbXJNUDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 16:03:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760826AbXJNUDg
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 16:03:36 -0400
+Received: from fmmailgate07.web.de ([217.72.192.248]:46066 "EHLO
+	fmmailgate07.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757140AbXJNUDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 16:03:35 -0400
+X-Greylist: delayed 1502 seconds by postgrey-1.27 at vger.kernel.org; Sun, 14 Oct 2007 16:03:35 EDT
+Received: from web.de 
+	by fmmailgate07.web.de (Postfix) with SMTP id CE8C02663;
+	Sun, 14 Oct 2007 21:38:31 +0200 (CEST)
+Received: from [80.140.80.78] by freemailng6003.web.de with HTTP;
+ Sun, 14 Oct 2007 21:38:31 +0200
+X-Provags-Id: V01U2FsdGVkX189UVAbzlt/mkTBxS8TOGo4ItxAsDnSrrd1Mm343u3BCC7Vh
+ VoxoTeWwkx8Ng5xwzx0NtNFqXPurHlaC/CyGTnfKnoT8CZ312mCvfVtGpzRP
+ w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60897>
 
-J. Bruce Fields wrote:
-> On Sun, Oct 14, 2007 at 11:12:07AM -0700, Steven Grimm wrote:
-> 
->> It's possible git's introductory documentation should delay talking 
->> about "git branch" until later, and start off talking about how to work 
->> with one (checked out) branch per repo.
-> 
-> One frequent use case is the case of a tester that wants to try out a
-> bugfix in some topic branch.  You want to tell them: "please test the
-> fix-that-bug branch in git://myproject.org/~me/repo.git".  They need to
-> get that checked out somehow.  And they should be able to do it without
-> re-cloning every time.
-> 
-> That's one motivation, among others, for including git-branch (and
-> git-remote) very early.
-> 
-> Though actually the quickest way to checkout an arbitrary revision is
-> with detached heads, and that doesn't require learning git-branch right
-> away.
+------=_Part_13532_997623.1192390711800
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: 7bit
 
-But the *easiest* way, where "easiest" means "involves the fewest commands
-with smallest risk of fscking up your own repo", is to do
+> Well, it is not strictly necessary to build git, and not even 
+> to install it, if you have the "man" branch.
 
+Thanks for your reply.
 
-git clone <other-devs-repo> other-devs-repo
-cd other-devs-repo
-git checkout -b thebug <the-bug-hash>
+I'll have to admit that I overlooked the hint for "the asciidoc/xmlto toolchain" because it was in a separate paragraph instead of another item in the system requirements enumeration. (The tool's version number does not look promising so far.)
+I rebuilt Git on my system because I was notified that a newer release became available.
 
+Regards,
+Markus
 
-The proper command-sequence for any other way of doing it will inevitably
-be different depending on whether or not the user has changes in his
-worktree or not, whether or not those changes conflict with the bug-spot,
-whether or not he's got the other developer's repo added as a remote, etc,
-etc.
+------=_Part_13532_997623.1192390711800
+Content-Type: application/pkcs7-signature; name=smime.p7s; smime-type=signed-data
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-Too many ifs, really, whereas the first way is guaranteed to work exactly
-the same way everytime, at the cost of almost always being ridiculously
-suboptimal.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+MIAGCSqGSIb3DQEHAqCAMIACAQExDjAMBggqhkiG9w0CBQUAMIAGCSqGSIb3DQEHAQAAoIID7TCC
+A+kwggLRoAMCAQICBAQwrlIwDQYJKoZIhvcNAQEEBQAwgaAxCzAJBgNVBAYTAkRFMRIwEAYDVQQK
+EwlXRUIuREUgQUcxFTATBgNVBAsTDFRydXN0IENlbnRlcjEaMBgGA1UEBxMRRC03NjIyNyBLYXJs
+c3J1aGUxLTArBgNVBAMTJFdFQi5ERSBUcnVzdENlbnRlciBFTWFpbC1aZXJ0aWZpa2F0ZTEbMBkG
+CSqGSIb3DQEJARYMdHJ1c3RAd2ViLmRlMB4XDTA2MTEwOTEzMTMxMVoXDTA3MTEwOTEzMTMxMVow
+XjEKMAgGA1UEBhMBRDERMA8GA1UEBxMITWVocmhvb2cxFzAVBgNVBAMTDk1hcmt1cyBFbGZyaW5n
+MSQwIgYJKoZIhvcNAQkBFhVtYXJrdXMuZWxmcmluZ0B3ZWIuZGUwgZ8wDQYJKoZIhvcNAQEBBQAD
+gY0AMIGJAoGBALQirwzOds2RJ3FWVboXzFZ1yMIWZDUwYBRQbCAAXArzXoBCkm7SgETY99z0bUHP
+Z+ExCGjSju812NvQaHvCvAmfgg9cpjyCY4wv82ikEuY7gdGIIWP3l2VSkrTjblPzd3A72UcK6Kae
+ck9EUx7EV3+24XTUi7ODfT7tGsR+QkQlAgMBAAGjge8wgewwHQYDVR0OBBYEFOicGjwMb3oq1lAf
+f4rk8Nczhq6uMB8GA1UdIwQYMBaAFFpkzNcIjXxhAsbLkgPXwrr53rzUMAwGA1UdEwEB/wQCMAAw
+EQYJYIZIAYb4QgEBBAQDAgSwMCMGCWCGSAGG+EIBAgQWFhRodHRwczovL3RydXN0LndlYi5kZTAa
+BglghkgBhvhCAQgEDRYLL0hpbGZlL0FHQi8wFgYJYIZIAYb4QgEDBAkWBy9ydi8/cz0wFgYJYIZI
+AYb4QgEHBAkWBy9ybi8/cz0wGAYJYIZIAYb4QgEEBAsWCS9ydkNBLz9zPTANBgkqhkiG9w0BAQQF
+AAOCAQEAF7ddQKVcy2gtHzmuJY0Fx0omO5RM1qrsFXEBb/S/2PTV9gy6qYdLtUw7WVqwX2homLGF
+dZHu6cxCPoki4ES1jLvMl1+E130iyuHM364x2rD4Hkvo86sTnNpWRK08ZqeQIBMlBAUn4kjQophT
+sgrxC416APUvjsJGvtnULtnsR1RDkv5JKdKbSxYfsrdH6hro7wtx8CONlz5jKTAjU9As9JOPuTJ+
+HQsY7GoXoNuE/5Sgd1lSOBV0JUgFS8Ixx8+XSGGZF2Dq/LlMcfdDuDNrkQSNZePERciCNUMVEsZg
+I6Pg13pXJ4sxRCYUnQehzmdGl8t8uGhQgRbGI6a52/ZCzjGCArowggK2AgEBMIGpMIGgMQswCQYD
+VQQGEwJERTESMBAGA1UEChMJV0VCLkRFIEFHMRUwEwYDVQQLEwxUcnVzdCBDZW50ZXIxGjAYBgNV
+BAcTEUQtNzYyMjcgS2FybHNydWhlMS0wKwYDVQQDEyRXRUIuREUgVHJ1c3RDZW50ZXIgRU1haWwt
+WmVydGlmaWthdGUxGzAZBgkqhkiG9w0BCQEWDHRydXN0QHdlYi5kZQIEBDCuUjAMBggqhkiG9w0C
+BQUAoIIBYzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0wNzEwMTQx
+OTM4MzFaMB8GCSqGSIb3DQEJBDESBBD348VRZQwz4ysCvYGwjvmlMEkGCSqGSIb3DQEJDzE8MDow
+CgYIKoZIhvcNAwcwDgYIKoZIhvcNAwICAgCAMA0GCCqGSIb3DQMCAgFAMA0GCCqGSIb3DQMCAgEo
+MIG8BgsqhkiG9w0BCRACCzGBrKCBqTCBoDELMAkGA1UEBhMCREUxEjAQBgNVBAoTCVdFQi5ERSBB
+RzEVMBMGA1UECxMMVHJ1c3QgQ2VudGVyMRowGAYDVQQHExFELTc2MjI3IEthcmxzcnVoZTEtMCsG
+A1UEAxMkV0VCLkRFIFRydXN0Q2VudGVyIEVNYWlsLVplcnRpZmlrYXRlMRswGQYJKoZIhvcNAQkB
+Fgx0cnVzdEB3ZWIuZGUCBAQwrlIwDQYJKoZIhvcNAQEBBQAEgYBfoH9N+AgMJa7MR77cFKNC6Ypq
+v/dsiBRqxzsG2SqGMv4akUNjxFwZBV7coJ8ckQ2JPpEZ9r4U4vXFB8Kkv53k5A67IE8t6jcPW3ZK
+f/0M33qfCv1+lgus3t/ssDzbOVe98D0ukIqw/4kAxopPl7nw24ziXRXUyR62lTK1Z8Re9gAAAAAA
+AA==
+------=_Part_13532_997623.1192390711800--
