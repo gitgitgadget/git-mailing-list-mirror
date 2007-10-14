@@ -1,66 +1,87 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Sun, 14 Oct 2007 18:13:00 +0200
-Message-ID: <4712400C.2080900@lsrfire.ath.cx>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com> <854pgtonp5.fsf@lola.goethe.zz> <200710141709.51579.chriscool@tuxfamily.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 6/7] Bisect: factorise "bisect_{bad,good,dunno}" into
+ "bisect_state".
+Date: Sun, 14 Oct 2007 17:15:09 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710141710230.25221@racer.site>
+References: <20071014143003.23ae649f.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Kastrup <dak@gnu.org>, Wincent Colaiuta <win@wincent.com>,
-	Junio Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
 To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 18:13:34 2007
+X-From: git-owner@vger.kernel.org Sun Oct 14 18:15:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih65k-000853-M4
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:13:25 +0200
+	id 1Ih67k-0008Mr-EX
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:15:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756462AbXJNQNO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2007 12:13:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756434AbXJNQNO
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:13:14 -0400
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:43568
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756309AbXJNQNN (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 12:13:13 -0400
-Received: from [10.0.1.201] (p57B7C54E.dip.t-dialin.net [87.183.197.78])
-	by neapel230.server4you.de (Postfix) with ESMTP id AF5F2873B9;
-	Sun, 14 Oct 2007 18:13:11 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <200710141709.51579.chriscool@tuxfamily.org>
+	id S1756490AbXJNQPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 12:15:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756413AbXJNQPP
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:15:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41215 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756480AbXJNQPO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 12:15:14 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 16:15:12 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp017) with SMTP; 14 Oct 2007 18:15:12 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lPBEdr42l1ApaiVXqN/k9bIKjHhXG/7muxxIYYF
+	/pF08oQ/FkD5ez
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071014143003.23ae649f.chriscool@tuxfamily.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60860>
 
-Christian Couder schrieb:
-> Le dimanche 14 octobre 2007, David Kastrup a =E9crit :
->> Wincent Colaiuta <win@wincent.com> writes:
->>> El 14/10/2007, a las 14:28, Christian Couder escribi=F3:
->>>> Here is my bisect dunno patch series again.
->>> Good work on the series, Christian, but don't you think that
->>> "unknown" would sound a little bit better than "dunno"? For people
->>> who don't speak English as a second language "dunno" might not be
->>> immediately clear.
->> "undecided"?
->=20
-> I choosed "dunno" because that was what Dscho suggested in this threa=
-d:
->=20
-> http://thread.gmane.org/gmane.comp.version-control.git/53584/focus=3D=
-53595
->=20
-> It seems to me short and understandable at the same time.
->=20
-> More meaningfull would be "untestable" or "cannottest" or "canttest" =
-but=20
-> it's much longer, while "good" and "bad" are short.
+Hi,
 
-Ugly?  Neutral?
+On Sun, 14 Oct 2007, Christian Couder wrote:
 
-Ren=E9
+> -bisect_bad() {
+> +bisect_state() {
+>  	bisect_autostart
+> -	case "$#" in
+> -	0)
+> -		rev=$(git rev-parse --verify HEAD) ;;
+> -	1)
+> -		rev=$(git rev-parse --verify "$1^{commit}") ;;
+> +	state=$1
+> +	case "$#,$state" in
+> +	0,*)
+> +		die "Please call 'bisect_state' with at least one argument." ;;
+> +	1,bad|1,good|1,dunno)
+> +		rev=$(git rev-parse --verify HEAD) ||
+> +			die "Bad rev input: HEAD"
+> +		bisect_write "$state" "$rev" ;;
+> +	2,bad)
+> +		rev=$(git rev-parse --verify "$2^{commit}") ||
+> +			die "Bad rev input: $2"
+> +		bisect_write "$state" "$rev" ;;
+
+Really?  As far as I see, "2,bad" is an error in the current bisect.
+
+> @@ -404,17 +390,15 @@ bisect_run () {
+>  	  exit $res
+>        fi
+>  
+> -      # Use "bisect_good" or "bisect_bad"
+> -      # depending on run success or failure.
+> +      # Find current state depending on run success or failure.
+>        if [ $res -gt 0 ]; then
+> -	  next_bisect='bisect_bad'
+> +	  state='bad'
+>        else
+> -	  next_bisect='bisect_good'
+> +	  state='good'
+>        fi
+
+Maybe it is time to have a special exit status for "dunno"?  But this is 
+not something to fix in your patch, just an idea for a future patch.
+
+Ciao,
+Dscho
