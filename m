@@ -1,71 +1,86 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Sun, 14 Oct 2007 19:48:29 +0200
-Message-ID: <85d4vhlh8y.fsf@lola.goethe.zz>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
-	<F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com>
-	<854pgtonp5.fsf@lola.goethe.zz>
-	<200710141709.51579.chriscool@tuxfamily.org>
-	<4712400C.2080900@lsrfire.ath.cx> <85y7e5ll38.fsf@lola.goethe.zz>
-	<522E90CF-FC15-472F-B0A8-91C310CAF9BF@wincent.com>
-	<471250BC.7070307@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git blame crashes with internal error
+Date: Sun, 14 Oct 2007 18:51:07 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710141843480.25221@racer.site>
+References: <20071014143628.GA22568@atjola.homenet> <20071014163702.GA2776@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Marius Storm-Olsen <marius@trolltech.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 19:49:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: =?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	gitster@pobox.com, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 19:53:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih7ZJ-0005U2-VI
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:48:02 +0200
+	id 1Ih7cv-00067O-Tr
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:51:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758269AbXJNRrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 13:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758254AbXJNRrj
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:47:39 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:58861 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758157AbXJNRrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 13:47:37 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Ih7Yt-0004eY-RG; Sun, 14 Oct 2007 13:47:36 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 58D7A1C4CE11; Sun, 14 Oct 2007 19:48:29 +0200 (CEST)
-In-Reply-To: <471250BC.7070307@trolltech.com> (Marius Storm-Olsen's message of "Sun\, 14 Oct 2007 19\:24\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1759867AbXJNRvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 13:51:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759852AbXJNRvP
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:51:15 -0400
+Received: from mail.gmx.net ([213.165.64.20]:55587 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759367AbXJNRvM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 13:51:12 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 17:51:10 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp053) with SMTP; 14 Oct 2007 19:51:10 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+/cJZCxfy/4JhZbw8UJ6EtAENb9R3/rlvLZOAS51
+	k2KttFvLCbqNh/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071014163702.GA2776@steel.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60883>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+Hi,
 
-> Wincent Colaiuta said the following on 14.10.2007 18:35:
->
->> "undecided" sounds good to me. It should be clear to non-native
->> speakers of English (at least, clearer than "dunno").
->
-> What about just "unknown"?
+On Sun, 14 Oct 2007, Alex Riesen wrote:
 
-I tend to nitpick to the degree of silliness when my own suggestions
-are concerned, but "unknown" sounds to me like the state _before_ the
-test.  If a person says he is "undecided" about something that means
-that he _has_ thought about it already.  "Undecidable" might bring
-this distinction across more strongly, but it is a more complicated
-word and it insinuates that it is _impossible_ to come to a decision
-regardless of the spent effort.
+> Bj?rn Steinbrink, Sun, Oct 14, 2007 16:36:28 +0200:
+> > 
+> > git blame just decided to crash on me, when I tried to use it while 
+> > resolving a merge conflict. Interesting is probably, that it crashes 
+> > when given the filename of a file that is not _directly_ affected by 
+> > the merge, but contains code that originates from a file that caused 
+> > conlicts.
+> > 
+> > Error message is: fatal: internal error: ce_mode is 0
+> 
+> It is not crashing. It is just not handling unexpected situation 
+> properly:
+> 
+>     $ testcase.sh
+>     ...
+>     Switched to branch "foo"
+>     CONFLICT (delete/modify): file1 deleted in HEAD and modified in master. Version master of file1 left in tree.
+>     Automatic merge failed; fix conflicts and then commit the result.
+>     fatal: internal error: ce_mode is 0
+>     $ git ls-files --cached --stage
+>     100644 72139f38953679bd19b3a7938c479d73c1aa7b59 1       file1
+>     100644 3181f904ce3f9364b08524edd262a7a2ac766c9c 3       file1
+>     100644 24e1ea80d6dcc497f60597b2a6d7cf65ecaa958a 0       file2
+> 
+> See? There is an unresolved merge.
 
-"unknown" clearly is much better than "dunno" though even if my own
-favorite would be "undecided".
+I _think_ that what blame does here is correct.  It wants to handle the 
+rename case, and because of the conflicts, it cannot determine the 
+renames.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+The proper thing to do now would be
+
+	git blame HEAD file2
+
+since you want to exclude the working tree from the blaming.
+
+I agree that the error message is not really helping here, though.  Since 
+we are not really libified, I do not see an easy way to help here, either, 
+short of git-blame checking for unmerged entries.
+
+Ciao,
+Dscho
