@@ -1,83 +1,128 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 10:45:31 +0200
-Message-ID: <4711D72B.2080107@op5.se>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site> <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org> <Pine.LNX.4.64.0710140304430.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 10:46:15 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH 1/6] push, send-pack: fix test if remote branch exists for colon-less refspec
+Date: Sun, 14 Oct 2007 10:54:40 +0200
+Message-ID: <1192352085653-git-send-email-prohaska@zib.de>
+References: <11923520851713-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 14 10:55:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Igz6z-0005Xv-Rn
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 10:46:14 +0200
+	id 1IgzFX-0006lW-0V
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 10:55:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754307AbXJNIph (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 04:45:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754292AbXJNIph
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 04:45:37 -0400
-Received: from mail.op5.se ([193.201.96.20]:45539 "EHLO mail.op5.se"
+	id S1754269AbXJNIyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 04:54:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754423AbXJNIyv
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 04:54:51 -0400
+Received: from mailer.zib.de ([130.73.108.11]:58228 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754269AbXJNIpg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 04:45:36 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1AE931730666;
-	Sun, 14 Oct 2007 10:45:34 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 8IA2JnFyprjU; Sun, 14 Oct 2007 10:45:33 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id D89A3173065D;
-	Sun, 14 Oct 2007 10:45:32 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0710140304430.25221@racer.site>
+	id S1754205AbXJNIyr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 04:54:47 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9E8sjsp025863
+	for <git@vger.kernel.org>; Sun, 14 Oct 2007 10:54:45 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9E8sjYs021275;
+	Sun, 14 Oct 2007 10:54:45 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <11923520851713-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60807>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Sat, 13 Oct 2007, Linus Torvalds wrote:
-> 
->>
->> Not everybody is a "doer". It's important to get input from people who are 
->> just plain users, or hope to be.
-> 
-> A pity, but you're probably right.
-> 
+A push must fail if the remote ref does not yet exist and the refspec
+does not start with refs/. Remote refs must explicitly be created with
+their full name.
 
-It's not a pity, and he's most definitely right. Users tend to think in terms
-of "I'd like to get this task done" while coders tend to think in terms of
-"this would be cool/possible to implement". The reason git actually *works* so
-great is, I'm sure, the fact that it was originally designed around a very specific
-need by someone thinking like a *user*. The fact that it happened to be a pretty
-competent programmer just meant he could express his wishes as algorithms in a
-programming language and make it happen.
+This commit adds some tests and fixes the existence check in send-pack.
 
-I'm 100% sure that if Linus had been so interested in SCM's that he'd abandoned
-the Linux kernel to be full-time maintainer for git instead, it would have had
-all sorts of oddities in it that nobody uses, just because they're possible to
-do.
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ remote.c              |    4 ++--
+ t/t5516-fetch-push.sh |   34 ++++++++++++++++++++++++++++++++--
+ 2 files changed, 34 insertions(+), 4 deletions(-)
 
-I also think Linus made a very wise decision in picking Junio to maintain it. So
-far, I haven't seen him accept a single feature-patch into git that wasn't
-explained to solve a specific problem.
-
+diff --git a/remote.c b/remote.c
+index bb774d0..36071b2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -511,12 +511,12 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 1:
+ 		break;
+ 	case 0:
+-		if (!memcmp(dst_value, "refs/", 5))
++		if (!memcmp(rs->dst ? rs->dst : rs->src , "refs/", 5))
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+ 		else
+ 			error("dst refspec %s does not match any "
+ 			      "existing ref on the remote and does "
+-			      "not start with refs/.", dst_value);
++			      "not start with refs/.", rs->dst ? rs->dst : rs->src);
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index ca46aaf..8629cf2 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -126,6 +126,36 @@ test_expect_success 'push with wildcard' '
+ 	)
+ '
+ 
++test_expect_success 'push nonexisting (1)' '
++
++	mk_test &&
++	if git push testrepo master
++	then
++		echo "Oops, should have failed"
++		false
++	fi
++
++'
++
++test_expect_success 'push nonexisting (2)' '
++
++	mk_test &&
++	if git push testrepo heads/master
++	then
++		echo "Oops, should have failed"
++		false
++	fi
++
++'
++
++test_expect_success 'push nonexisting (3)' '
++
++	mk_test &&
++	git push testrepo refs/heads/master &&
++	check_push_result $the_commit heads/master
++
++'
++
+ test_expect_success 'push with matching heads' '
+ 
+ 	mk_test heads/master &&
+@@ -225,7 +255,7 @@ test_expect_success 'push with colon-less refspec (3)' '
+ 		git tag -d frotz
+ 	fi &&
+ 	git branch -f frotz master &&
+-	git push testrepo frotz &&
++	git push testrepo refs/heads/frotz &&
+ 	check_push_result $the_commit heads/frotz &&
+ 	test 1 = $( cd testrepo && git show-ref | wc -l )
+ '
+@@ -238,7 +268,7 @@ test_expect_success 'push with colon-less refspec (4)' '
+ 		git branch -D frotz
+ 	fi &&
+ 	git tag -f frotz &&
+-	git push testrepo frotz &&
++	git push testrepo refs/tags/frotz &&
+ 	check_push_result $the_commit tags/frotz &&
+ 	test 1 = $( cd testrepo && git show-ref | wc -l )
+ 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.3.4.224.gc6b84
