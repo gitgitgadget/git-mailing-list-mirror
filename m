@@ -1,71 +1,79 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Update manpages to reflect new short and long option aliases
-Date: Sun, 14 Oct 2007 18:26:53 +0200
-Message-ID: <20071014162653.GH1198@artemis.corp>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <1192282153-26684-2-git-send-email-madcoder@debian.org> <20071014141042.GA21197@diku.dk>
-Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="X+8siUETKMkW99st";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Sun Oct 14 18:27:10 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Sun, 14 Oct 2007 18:35:57 +0200
+Message-ID: <522E90CF-FC15-472F-B0A8-91C310CAF9BF@wincent.com>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com> <854pgtonp5.fsf@lola.goethe.zz> <200710141709.51579.chriscool@tuxfamily.org> <4712400C.2080900@lsrfire.ath.cx> <85y7e5ll38.fsf@lola.goethe.zz>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Oct 14 18:36:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih6Iz-0001f2-8B
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:27:05 +0200
+	id 1Ih6SQ-000371-74
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756654AbXJNQ0z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 12:26:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755731AbXJNQ0z
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:26:55 -0400
-Received: from pan.madism.org ([88.191.52.104]:58769 "EHLO hermes.madism.org"
+	id S1755487AbXJNQgi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2007 12:36:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755561AbXJNQgi
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:36:38 -0400
+Received: from wincent.com ([72.3.236.74]:48537 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755556AbXJNQ0y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 12:26:54 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 1109924ED1;
-	Sun, 14 Oct 2007 18:26:54 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id B5FB33AF006; Sun, 14 Oct 2007 18:26:53 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <20071014141042.GA21197@diku.dk>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755022AbXJNQgi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 12:36:38 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9EGaPOl019918;
+	Sun, 14 Oct 2007 11:36:26 -0500
+In-Reply-To: <85y7e5ll38.fsf@lola.goethe.zz>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60865>
 
+El 14/10/2007, a las 18:25, David Kastrup escribi=F3:
 
---X+8siUETKMkW99st
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>
+>> Christian Couder schrieb:
+>>>
+>>> I choosed "dunno" because that was what Dscho suggested in this =20
+>>> thread:
+>>>
+>>> http://thread.gmane.org/gmane.comp.version-control.git/53584/=20
+>>> focus=3D53595
+>>>
+>>> It seems to me short and understandable at the same time.
+>>>
+>>> More meaningfull would be "untestable" or "cannottest" or
+>>> "canttest" but it's much longer, while "good" and "bad" are short.
+>>
+>> Ugly?  Neutral?
+>
+> "Ugly" has a certain charm to it but would probably not translate
+> well.  "Limbo" would be another such candidate, probably with better
+> translatability.  But while some of those have some geeky appeal, I
+> really think something reasonably plain like "undecided" would be
+> better in the long run.
 
-  added and pushed.
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+"undecided" sounds good to me. It should be clear to non-native =20
+speakers of English (at least, clearer than "dunno").
 
---X+8siUETKMkW99st
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+<personal opinion>
+   Another problem with "dunno" is that it might come across as a bit =20
+unprofessional due to its informality. Yes, you'll find it in most =20
+dictionaries, but always with a qualifier of "slang", "colloquial", =20
+"casual", "pronunciation spelling" or similar.
+</personal opinion>
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHEkNNvGr7W6HudhwRAqV2AJ9S9AOad1UrAjS4aL7xq2b3aihyngCfYN26
-ZQUi99Pi0NhExIP1FjLHKOc=
-=YgO0
------END PGP SIGNATURE-----
-
---X+8siUETKMkW99st--
+Cheers,
+Wincent
