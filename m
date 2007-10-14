@@ -1,89 +1,71 @@
-From: "David Tweed" <david.tweed@gmail.com>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 14 Oct 2007 22:10:14 +0100
-Message-ID: <e1dab3980710141410k23debb25mc578eed07c714f11@mail.gmail.com>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
-	 <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
-	 <Pine.LNX.4.64.0710130130380.25221@racer.site>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [PATCH] Fix a crash in ls-remote when refspec expands into nothing
+Date: Sun, 14 Oct 2007 23:26:05 +0200
+Message-ID: <8c5c35580710141426t2fcd9c3v7cf29168b0fa5a53@mail.gmail.com>
+References: <1191919868-4963-1-git-send-email-v@pp.inet.fi>
+	 <1191919868-4963-2-git-send-email-v@pp.inet.fi>
+	 <81553116-3A4F-4526-A772-9A43C53D3E22@pp.inet.fi>
+	 <20071009182043.GA2997@steel.home>
+	 <20071010051034.GA30834@coredump.intra.peff.net>
+	 <20071010212735.GB16635@steel.home>
+	 <20071012040745.GC27899@spearce.org>
+	 <20071012204004.GA6700@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: "Jakub Narebski" <jnareb@gmail.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 23:10:33 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"Jeff King" <peff@peff.net>,
+	"=?UTF-8?Q?V=C3=A4in=C3=B6_J=C3=A4rvel=C3=A4?=" <v@pp.inet.fi>,
+	git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 23:26:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhAjE-0003VU-Nk
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 23:10:29 +0200
+	id 1IhAyc-00064J-CG
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 23:26:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759170AbXJNVKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 17:10:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759428AbXJNVKS
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 17:10:18 -0400
-Received: from qb-out-0506.google.com ([72.14.204.229]:30213 "EHLO
-	qb-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703AbXJNVKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 17:10:16 -0400
-Received: by qb-out-0506.google.com with SMTP id e11so1697300qbe
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 14:10:14 -0700 (PDT)
+	id S1762723AbXJNV0J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 17:26:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759839AbXJNV0H
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 17:26:07 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:13090 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759798AbXJNV0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 17:26:06 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1723839wah
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 14:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ebMB+ZBSyamRBBfDSpiAT5Oa20LopfXlcaqKZr+8v34=;
-        b=MWSHHe597Cr8cdvCmvW4j0dAV8Tt+hFD9ulXRYReUpctzEWHTEb4XVc94R0Cila3A88C8pVZNYsHk8SrPPjOPMhqtq4LsfrwhPcIcEUA18e/d1JACPpuQd+jNcHmwS5T87V1PTugjhQ9F6FAJf5clhyRUEMyYlGqiSQ7yPby0Qg=
+        bh=H2KF+aS7b9ATDHleXkq9FmRmnBB+0PGxq/CkkY7jQvE=;
+        b=blEaHMNxayOGLQcahGDFfbkzcHoYcvRBy1kavH3Y7iZQ6pgHqYcWQfe0307xV9HVG89DPfHPZkY06lu7WM8n2jyZLO+kRFjOrAB0vFnjxvpS/6QU7GtdmliXwaNphNf4xYRphgUEfUhk759DM7AlNSLCGjCTxD6kmOHrY3uvZVM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=n7Gwz3TTz8zeTrqTyBwG2dfc6kSCTRc6RsGGQcZzRDlHTc/G5sn7HH6E2b2BoYaamJtKPRziTTlH/KjVbZJiM1qx3rrx328XfPD/qV63OLT3NPVm45ODn2Zs78qJDI/EfAzJk2/EygC8FdPU6PE4Xk9jHAP4gt1fGQyfXc9G/x0=
-Received: by 10.64.150.18 with SMTP id x18mr11191632qbd.1192396214251;
-        Sun, 14 Oct 2007 14:10:14 -0700 (PDT)
-Received: by 10.65.81.12 with HTTP; Sun, 14 Oct 2007 14:10:14 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710130130380.25221@racer.site>
+        b=o8vT8S3Z1dCAN4YcyoyqZeCWJEQC6K/0fSxqrqc9GSdwPIjlOPkJ24xb0uWoOvY4bCXXmWPxoVbRpVSxugidpyGdDoIdVhFDXgLoWt/WI0v3+fskXsZPgwLEG+726vkxEOqH9K++0rcMUaOWANv99Qzuli4i7iW9bgQqqPmBWvI=
+Received: by 10.114.197.1 with SMTP id u1mr6183746waf.1192397165146;
+        Sun, 14 Oct 2007 14:26:05 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Sun, 14 Oct 2007 14:26:05 -0700 (PDT)
+In-Reply-To: <20071012204004.GA6700@steel.home>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60907>
 
-On 10/13/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >    Figure out why people find git hard to learn and eliminate those
-> >    barriers to entry.  Make git more task-oriented rather than
-> >    data-model-oriented the way it is now.
+On 10/12/07, Alex Riesen <raa.lkml@gmail.com> wrote:
+> Shawn O. Pearce, Fri, Oct 12, 2007 06:07:45 +0200:
+> > I think the above patch is the only thing to do here.  Perhaps Alex
+> > can write up a formal patch and send it to back to the list and CC
+> > Lars Hjemli <hjemli@gmail.com> so he can put it into the patch queue.
 >
-> Frankly, expectations like these make me want to bang somebody's head on
-> the wall.  Why do people expect others to work for them for free?  Hard?
+> here you go
+>
 
-Since no-one else has mentioned it, I -- and I suspect some others --
-try to use the "beer round" model with FOSS. When I go out for drinks
-with people from work, I don't try and keep a precisely tally of who
-has bought a drink for me and so whom I shoud buy a drink, and worry
-about what how the accounting changes if me or someone goes home
-early. I generally take the view that all the imbalances will roughly
-balance out over the future. Sure you keep an eye out for complete
-freeloaders, but you don't get overexcited about a temporary
-imbalance.
-
-Likewise, I will sometimes make suggestions -- hopefully politely --
-of various projects where my skills don't fit. (Eg, I'm not going to
-add non-trivial features to the git shell scripts because I just don't
-know non-trivial shell.) Hopefully some minor patch I've submitted
-somewhere has, possibly through helping someone else who's helped
-someone else.... , helped you some minuscule amount.
-
-I'm perfectly fine with someone politely saying "no developers are
-interested in this, so it won't happen if you don't implement it
-yourself", but when you accuse people who just bring up a possible
-feature of being free-loaders it makes them question whether other
-projects would be more productive places to spend one's time.
-
-It's the difference between being told "I suspect you'll have to do it
-yourself" and "how dare you even ask that! do it yourself!".
+Thanks. I've replaced the tip of q/vj/fetch-t (in
+git://hjemli.net/pub/git/git) with this patch.
 
 -- 
-cheers, dave tweed__________________________
-david.tweed@gmail.com
-Rm 124, School of Systems Engineering, University of Reading.
-"we had no idea that when we added templates we were adding a Turing-
-complete compile-time language." -- C++ standardisation committee
+larsh
