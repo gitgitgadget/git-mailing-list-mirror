@@ -1,94 +1,94 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] parse-options: Allow abbreviated options when unambiguous
-Date: Sun, 14 Oct 2007 23:12:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710142309010.25221@racer.site>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
- <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp>
- <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site>
- <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 00:14:46 +0200
+Message-ID: <20071014221446.GC2776@steel.home>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 00:13:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Benoit SIGOURE <tsuna@lrde.epita.fr>,
+	git list <git@vger.kernel.org>, Eli Zaretskii <eliz@gnu.org>,
+	Make Windows <make-w32@gnu.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 00:15:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhBht-0004Ez-4f
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:13:09 +0200
+	id 1IhBk0-0004YF-6w
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:15:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754606AbXJNWM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 18:12:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbXJNWM7
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:12:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60340 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754262AbXJNWM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 18:12:58 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 22:12:57 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 15 Oct 2007 00:12:57 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19p03BlHDJpg6ICDCQx8HAkdsy8Ysph4wh5yG4cnb
-	zsJu19erlT7hMX
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071014210130.GA17675@soma>
-X-Y-GMX-Trusted: 0
+	id S1756461AbXJNWOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 18:14:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756492AbXJNWOt
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:14:49 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:33010 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755045AbXJNWOs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 18:14:48 -0400
+Received: from tigra.home (Fc8e3.f.strato-dslnet.de [195.4.200.227])
+	by post.webmailer.de (klopstock mo56) (RZmta 13.4)
+	with ESMTP id 5033f1j9ELUH9I ; Mon, 15 Oct 2007 00:14:46 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 8B25A277AE;
+	Mon, 15 Oct 2007 00:14:46 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 22A6356D22; Mon, 15 Oct 2007 00:14:46 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710142112540.25221@racer.site>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWow2U+g=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60916>
 
-Hi,
-
-On Sun, 14 Oct 2007, Eric Wong wrote:
-
-> Pierre Habouzit <madcoder@debian.org> wrote:
-> > On Sun, Oct 14, 2007 at 06:02:33PM +0000, Johannes Schindelin wrote:
-> > > Hi,
-> > > 
-> > > On Sun, 14 Oct 2007, Johannes Schindelin wrote:
-> > > 
-> > > > When there is an option "--amend", the option parser now recognizes 
-> > > > "--am" for that option, provided that there is no other option beginning 
-> > > > with "--am".
-> > > 
-> > > And an amend for ultra-abbreviated options (as you noticed on IRC):
-> > > 
-> > > diff --git a/parse-options.c b/parse-options.c
-> > > index afc6c89..acabb98 100644
-> > > --- a/parse-options.c
-> > > +++ b/parse-options.c
-> > > @@ -137,6 +137,11 @@ is_abbreviated:
-> > >  				abbrev_flags = flags;
-> > >  				continue;
-> > >  			}
-> > > +			/* negated and abbreviated very much? */
-> > > +			if (!prefixcmp("no-", arg)) {
-> > > +				flags |= OPT_UNSET;
-> > > +				goto is_abbreviated;
-> > > +			}
-> > >  			/* negated? */
-> > >  			if (strncmp(arg, "no-", 3))
-> > >  				continue;
+Johannes Schindelin, Sun, Oct 14, 2007 22:14:25 +0200:
+> On Sun, 14 Oct 2007, Andreas Ericsson wrote:
+> > Johannes Schindelin wrote:
+> >
+> > > I do not see any reason why libification helps the user experience on 
+> > > Windows.
 > > 
-> >   squashed on top on the previous, and pushed to my ph/parseopt branch.
+> > I was under the impression that the windows port suffers from Windows' 
+> > lack of a proper fork() and friends and that a proper library would help 
+> > solving those problems. Perhaps I was misinformed.
 > 
-> Awesome.  Thanks to both of you.
+> It suffered.  Until Hannes Sixt did a very fine job which cumulated in the 
+> patch series he posted yesterday.  Of course, this work is the reason 
+> msysGit is functional.
+> 
 
-Hehe, you're welcome.  Pierre even realised that my patch was not complete 
-(it did not catch overly short abbreviations "--n" and "--no"), and that 
-has been fixed, too.
+Re "functional". Have to remind something (besides the fork):
 
-While I have your attention: last weekend, I spoke to a guy from the 
-ffmpeg project, and he said that the only thing preventing them from 
-switching to git was the lack of svn:external support...
+Filesystem:
 
-(Of course I know that it is more difficult than that: ffmpeg itself is an 
-svn:external of MPlayer, but maybe we can get both of them to switch ;-)
+- no proper VFS (can't do anything with files opened elsewhere, and we
+  have not enough error handling and diagnostic output to detect the
+  problems)
 
-Do you have any idea when/if you're coming around to add that to git-svn?
+- no proper filename semantics (case-insensitivity and stupid rules for
+  allowed characters in filenames, like ":" in filenames in
+  cross-platform projects)
 
-Ciao,
-Dscho
+- no acceptable level of performance in filesystem and VFS (readdir,
+  stat, open and read/write are annoyingly slow)
+
+- it is the only OS in the world with multi-root (/a/b/c and /a/b/c
+  can be not the same, depending on what current "drive" is) and
+  multi-cwd, which hasn't had formed itself into a problem yet, but
+  surely will
+
+- no real "mmap" (which kills perfomance and complicates code)
+
+Interprocess communication:
+
+- no reliable text environment (I'm programming in the damn thing for
+  10 years and I still don't know how to pass an environment variable
+  _for_sure_)
+
+- it has only one argument (limited in size) passed to started
+  programs, which means that there is no possible way to safely pass
+  file and text arguments on command line (more than one, that is)
