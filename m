@@ -1,113 +1,99 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Switching from CVS to GIT
-Date: Sun, 14 Oct 2007 19:39:07 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710141934310.25221@racer.site>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 14 Oct 2007 14:40:50 -0400
+Message-ID: <20071014184050.GB31260@fieldses.org>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz> <20071013202713.GA2467@fieldses.org> <Pine.LNX.4.64.0710140135020.25221@racer.site> <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org> <20071014014445.GN27899@spearce.org> <3f4fd2640710140320h5c1e1f7gf9f43a626aaa6897@mail.gmail.com> <47125BF7.2070503@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	git list <git@vger.kernel.org>, Eli Zaretskii <eliz@gnu.org>,
-	Make Windows <make-w32@gnu.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sun Oct 14 20:40:08 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Reece Dunn <msclrhd@googlemail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 20:41:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih8Nd-0005qO-Aj
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 20:40:01 +0200
+	id 1Ih8Ok-00062V-Sq
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 20:41:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758825AbXJNSjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 14:39:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759385AbXJNSjO
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 14:39:14 -0400
-Received: from mail.gmx.net ([213.165.64.20]:58329 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754225AbXJNSjM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 14:39:12 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 18:39:11 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 14 Oct 2007 20:39:11 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/IHyZOuq3I5xTRTQ4KFq/T+m47jN/GynL/+v+fP6
-	6OuCO93bZd86kW
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47125F74.9050600@op5.se>
-X-Y-GMX-Trusted: 0
+	id S1763973AbXJNSlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 14:41:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763968AbXJNSlA
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 14:41:00 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:43362 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763961AbXJNSk6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 14:40:58 -0400
+Received: from bfields by fieldses.org with local (Exim 4.67)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Ih8OQ-0002jD-LG; Sun, 14 Oct 2007 14:40:50 -0400
+Content-Disposition: inline
+In-Reply-To: <47125BF7.2070503@midwinter.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60892>
 
-Hi,
+On Sun, Oct 14, 2007 at 11:12:07AM -0700, Steven Grimm wrote:
+> But that's just an aspect of a more general fact: it's hard to use git 
+> without getting exposed to the plumbing at least a little. Another example 
+> is the manpages: try to look up the commonly-used options to "git diff" 
+> (porcelain) and you will be forced to learn about "git rev-parse" 
+> (plumbing).
 
-On Sun, 14 Oct 2007, Andreas Ericsson wrote:
+As "plumbing" goes, "git rev-parse" isn't that bad, and the reference
+here (to the "SPECIFYING REVISIONS" section) strikes me as reasonable.
+We could factor out the common documentation into a separate (hopefully
+more user-friendly) manpage about specifying revisions, I guess, and
+refer to it everywhere instead of git-rev-parse.  I don't know--any
+other ideas?
 
-> Benoit SIGOURE wrote:
-> > Context: GNU make seems to be willing to switch from CVS to ... something
-> > else.
-> > 
-> > On Oct 14, 2007, at 6:57 PM, Paul Smith wrote:
-> > 
-> > > [...] the big thing no one else seems to have addressed much in
-> > > other discussions I've seen is portability.  It LOOKS like there are
-> > > native ports of GIT to MINGW, but I have no idea how complete and usable
-> > > they are.  If someone who has a Windows system could look into that it
-> > > would be a big help.
-> > 
-> > I think the best thing to do is to ask directly on the Git ML.
-> > 
-> > Someone already pointed out that he'd like to use Git on Windows but 
-> > doesn't want to install either Cygwin or MSYS.  Is this possible, or 
-> > will it be possible in the near future?
-> 
-> It is sort of possible. Without cygwin he'll be in the black for the few 
-> features that are still implemented as shell-scripts, but perhaps he/she 
-> will then be inclined to help us migrate those scripts to C builtins.
+> It's possible git's introductory documentation should delay talking 
+> about "git branch" until later, and start off talking about how to work 
+> with one (checked out) branch per repo.
 
-Umm.  There are quite a few shell scripts still _necessary_ to run git: 
-git-commit, git-fetch and git-merge being the most prominent ones.  The 
-first two are in the process of being rewritten _right_ _now_, but no 
-official git release has them yet.
+One frequent use case is the case of a tester that wants to try out a
+bugfix in some topic branch.  You want to tell them: "please test the
+fix-that-bug branch in git://myproject.org/~me/repo.git".  They need to
+get that checked out somehow.  And they should be able to do it without
+re-cloning every time.
 
-And I have to disagree strongly with the "black": In msysGit (which brings 
-its own minimal version of MSys), it is very smooth.
+That's one motivation, among others, for including git-branch (and
+git-remote) very early.
 
-> >  Is it possible to use one of the various GUIs (git-gui, gitk, qgit) 
-> > on Windows without requiring a POSIXish shell etc.?
-> > 
-> 
-> qgit is possible to use natively, if one installs the qgit4 libraries 
-> for windows, but it's more of a viewer than an action gui. git-gui and 
-> gitk are usable if you have the windows TCL port. I haven't tried it, 
-> but there are installers available, so testing it out (with all 
-> dependencies) shouldn't take too long.
+Though actually the quickest way to checkout an arbitrary revision is
+with detached heads, and that doesn't require learning git-branch right
+away.  I've tried rewriting the user-manual start that way but wasn't
+happy with the result and didn't get too far.  (See
+git://linux-nfs.org/~bfields/git.git docwork-detached.)
 
-FWIW msysGit comes with Tcl.  You can run git gui and gitk without any 
-hassles.
+> Update to a dirty working copy. I think there's a tendency in these parts 
+> to vastly underestimate the importance of being able to pull down updates 
+> from a master repository while you're in the middle of development. 
+> Mercurial's equivalent to bare "git pull", namely "hg pull" followed by "hg 
+> update", works fine if you have edits in your working copy; if there are 
+> conflicting changes, it pops you into a conflict resolution UI (or adds 
+> conflict markers, depending on your settings) and you continue on your 
+> merry way after resolving everything. This workflow is really common, 
+> especially in corporate settings where there's very fine-grained 
+> collaboration going on during initial development (a huge difference from 
+> the open-source world where most of the time it's just one person doing an 
+> initial prototype.) Right now working this way is a pain in git. Less so 
+> now that we have "git stash", but it could still be much, much smoother.
 
-> > When will the librarification of Git be finished?
-> 
-> When someone gets around to doing it ;-)
+I'm lost--how is "hg pull" different from "git pull" in this respect?
 
-There has been a GSoC project, and it has a nice small API which can be 
-called from Python, for example.
+> Verbosity. IMO Mercurial swings too far in this direction, but in general 
+> it's either completely silent or very terse in its output.
 
-Funnily enough, the first user is qgit as far as I know, which is written 
-in C++...
+Yes, there's a lot of low-hanging fruit here for someone that's
+interested in streamlining the default git command output.  The
+challenge is to get it a little terser while still being helpful (and
+preserving progress meters, and not obscuring what's going on any more
+than necessary).
 
-> >  (if Git is available as a library, and if this library works on 
-> > Windows, it will greatly help truly native Windows ports).
-> 
-> Yup. I believe the primary reason for libification is to easier support 
-> both porting and fully-fledged gui's.
-
-Why?
-
-I do not see any reason why libification helps the user experience on 
-Windows.
-
-Ciao,
-Dscho
+--b.
