@@ -1,74 +1,71 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 2/6] add get_sha1_with_real_ref() returning full name of ref on demand
-Date: Sun, 14 Oct 2007 23:37:21 +0200
-Message-ID: <5F1A8BAA-108D-4D55-9AEE-7ECDFA3DEB03@zib.de>
-References: <11923520851713-git-send-email-prohaska@zib.de> <1192352085653-git-send-email-prohaska@zib.de> <11923520852991-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710141819490.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 14 Oct 2007 23:49:16 +0200
+Message-ID: <8fe92b430710141449r3f1b1a85oae2a5fb5b30c8b47@mail.gmail.com>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	 <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+	 <Pine.LNX.4.64.0710130130380.25221@racer.site>
+	 <853awepyz6.fsf@lola.goethe.zz>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 14 23:36:06 2007
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Sun Oct 14 23:49:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhB7y-0007Py-B1
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 23:36:02 +0200
+	id 1IhBL1-0000xj-Sp
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 23:49:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754141AbXJNVfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 17:35:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754176AbXJNVfw
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 17:35:52 -0400
-Received: from mailer.zib.de ([130.73.108.11]:40458 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753668AbXJNVfw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 17:35:52 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9ELZoRh012955;
-	Sun, 14 Oct 2007 23:35:50 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1a406.pool.einsundeins.de [77.177.164.6])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9ELZnKk007506
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 14 Oct 2007 23:35:49 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0710141819490.25221@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1764124AbXJNVtS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 17:49:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764120AbXJNVtS
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 17:49:18 -0400
+Received: from wa-out-1112.google.com ([209.85.146.177]:58433 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764107AbXJNVtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 17:49:16 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1729064wah
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=LuCqN6q1++Av5xvg3gmgsfSMofGm/bCtMth09U3nLvo=;
+        b=QVCJ5AfQ2UvrTNJy2WEcLebOGDN7VxvYe7mccTdgCBhCag+u88WvuYIYg8nt7a6B/a05PjVNkPXgREhauQjqNfI5e6Y+ImYH9jshSXclB2KODgmxbMmO3ZLu07WC7YUlK2tc0OKB+N3TejubppzPyPQhYsiSAsCfHCXUcLSlcM8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=um/ETJ88he2IxjGRQYhnJuAEJr3HM1XS2wftKQZr51MJzFjRH3ShtRX/dolZZkkXbsS+K0Ff7Yr3JF3/O9fjLZ7Q/5pucOZyBzMmaqciWfchpj/HK9KB9CtJ8UcMl2eaBHtlHXKgHluo3EEH2zJCAjjlpPqUzfWsUA0v9EK4QRc=
+Received: by 10.115.89.1 with SMTP id r1mr6216586wal.1192398556182;
+        Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
+Received: by 10.114.202.19 with HTTP; Sun, 14 Oct 2007 14:49:16 -0700 (PDT)
+In-Reply-To: <853awepyz6.fsf@lola.goethe.zz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60909>
 
+On 10/13/07, David Kastrup <dak@gnu.org> wrote:
 
-On Oct 14, 2007, at 7:21 PM, Johannes Schindelin wrote:
+> I find it a pity that my suggestion to ask about how comfortable
+> people are with the tone on the list did not make it into the survey.
+> Enough core developers make the tone sufficiently unconstructive to
+> make it quite understandable that people are unwilling to ask
+> questions here, in order to avoid getting their heads banged against a
+> wall, virtual or not.
 
-> Hi,
->
-> On Sun, 14 Oct 2007, Steffen Prohaska wrote:
->
->> Deep inside get_sha1() the name of the requested ref is matched
->> according to the rules documented in git-rev-parse. This patch
->> introduces a function that returns the full name of the matched
->> ref to the outside.
->>
->> For example 'master' is typically returned as 'refs/heads/master'.
->>
->> The new function can be used by "git rev-parse" to print the full
->> name of the matched ref and can be used by "git send-pack" to expand
->> a local ref to its full name.
->
-> I have not really studies your patch, but from your description it  
-> sounds
-> as if dwim_ref() does what you want.
+I think next to last question in the survey
 
-Without my patch get_sha1_with_mode() calls get_sha1_1() calls  
-get_sha1_basic()
-calls dwim_ref(). I didn't analyze in detail what the *sha1*  
-functions add
-to what dwim_ref() provides.
+ 61. Did you have problems getting GIT help on mailing list or on IRC channel?
+     What were it? What could be improved?
 
-The patch passes the information from dwim_ref() up the callstack.  
-Maybe this
-is not needed and I could directly call dwim_ref(). But I don't know.
+was the place to put complaints about git mailing list. I didn't want
+to add separate question because this survey has too many questions
+(is too long) already.
 
-	Steffen
+-- 
+Jakub Narebski
