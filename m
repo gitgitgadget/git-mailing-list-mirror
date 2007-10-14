@@ -1,135 +1,194 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Switching from CVS to GIT
-Date: Sun, 14 Oct 2007 19:10:05 +0200
-Message-ID: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-References: <1192293466.17584.95.camel@homebase.localnet>
-	<uy7e6keyv.fsf@gnu.org>
-	<1192381040.4908.57.camel@homebase.localnet>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/mixed; boundary="===============0461327013=="
-Cc: Make Windows <make-w32@gnu.org>
-To: git list <git@vger.kernel.org>
-X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Sun Oct 14 19:11:18 2007
-Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
-Envelope-to: gnu-make-w32@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH amend 14/14] Use the asyncronous function infrastructure to run the content filter.
+Date: Sun, 14 Oct 2007 19:14:11 +0200
+Message-ID: <200710141914.11775.johannes.sixt@telecom.at>
+References: <1192305984-22594-1-git-send-email-johannes.sixt@telecom.at> <1192305984-22594-15-git-send-email-johannes.sixt@telecom.at> <Pine.LNX.4.64.0710140404480.25221@racer.site>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 19:14:31 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih6zV-0008Ca-Ju
-	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 19:11:01 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1Ih6zO-0006cR-9c
-	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 13:10:54 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1Ih6zJ-0006bX-HE
-	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:49 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1Ih6zI-0006aN-Kh
-	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:49 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1Ih6zI-0006aH-HR
-	for make-w32@gnu.org; Sun, 14 Oct 2007 13:10:48 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]
-	helo=kualalumpur.lrde.epita.fr)
-	by monty-python.gnu.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.60) (envelope-from <tsuna@lrde.epita.fr>)
-	id 1Ih6zB-0002VP-GA; Sun, 14 Oct 2007 13:10:41 -0400
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa
-	(TLS-1.0:RSA_AES_128_CBC_SHA1:16) (Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1Ih6z9-0005w2-R1; Sun, 14 Oct 2007 19:10:39 +0200
-In-Reply-To: <1192381040.4908.57.camel@homebase.localnet>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
-X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 3)
-X-BeenThere: make-w32@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/make-w32>
-List-Post: <mailto:make-w32@gnu.org>
-List-Help: <mailto:make-w32-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=subscribe>
-Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60873>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---===============0461327013==
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-63--673758817"
-Content-Transfer-Encoding: 7bit
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-63--673758817
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-Context: GNU make seems to be willing to switch from CVS to ...  
-something else.
-
-On Oct 14, 2007, at 6:57 PM, Paul Smith wrote:
-
-> [...] the big thing no one else seems to have addressed much in
-> other discussions I've seen is portability.  It LOOKS like there are
-> native ports of GIT to MINGW, but I have no idea how complete and  
-> usable
-> they are.  If someone who has a Windows system could look into that it
-> would be a big help.
-
-I think the best thing to do is to ask directly on the Git ML.
-
-Someone already pointed out that he'd like to use Git on Windows but  
-doesn't want to install either Cygwin or MSYS.  Is this possible, or  
-will it be possible in the near future?  Is it possible to use one of  
-the various GUIs (git-gui, gitk, qgit) on Windows without requiring a  
-POSIXish shell etc.?
-
-When will the librarification of Git be finished?  (if Git is  
-available as a library, and if this library works on Windows, it will  
-greatly help truly native Windows ports).
-
-Not that I like Windows in any way, right, but it's legitimate for  
-people working on Windows ports of various software to be willing to  
-have a truly native port of Git for Windows.
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-63--673758817
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHEk1twwE67wC8PUkRAqZSAJ9Y9XlGn6S7yVDud2y+QUJsB9iTEgCg2Dn2
-OjD6eWV63RvJ/kGHC3Z3/KE=
-=jnln
------END PGP SIGNATURE-----
-
---Apple-Mail-63--673758817--
-
-
-
---===============0461327013==
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
+	id 1Ih72m-0000Ff-5z
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 19:14:24 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754855AbXJNROO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 13:14:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754648AbXJNROO
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 13:14:14 -0400
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:45867 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753893AbXJNRON (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 13:14:13 -0400
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id 309E9BF7FF;
+	Sun, 14 Oct 2007 19:14:12 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id EDACE58CE9;
+	Sun, 14 Oct 2007 19:14:11 +0200 (CEST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <Pine.LNX.4.64.0710140404480.25221@racer.site>
 Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60874>
 
-_______________________________________________
-Make-w32 mailing list
-Make-w32@gnu.org
-http://lists.gnu.org/mailman/listinfo/make-w32
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+On Sunday 14 October 2007 05:07, Johannes Schindelin wrote:
+> On Sat, 13 Oct 2007, Johannes Sixt wrote:
+> >  	status = finish_command(&child_process);
+> >  	if (status)
+> > -		error("external filter %s failed %d", cmd, -status);
+> > +		error("external filter %s failed", params->cmd);
+>
+> Did you mean to remove the status from the output (it should probably read
+> "(exit status %d)" instead of just "%d", but an exit status can help
+> identify problems, right?
 
---===============0461327013==--
+I didn't mean to change the error message here.
+
+> > +	if (start_async(&async))
+> > +		return 0;	/* error was already reported */
+>
+> Please write "return NULL;"
+
+This patch now does just that.
+
+-- Hannes
+
+ convert.c |   60 +++++++++++++++++++++++++++---------------------------------
+ 1 files changed, 27 insertions(+), 33 deletions(-)
+
+diff --git a/convert.c b/convert.c
+index c870817..ac04157 100644
+--- a/convert.c
++++ b/convert.c
+@@ -201,15 +201,21 @@ static char *crlf_to_worktree(const char *path, const char *src, unsigned long *
+ 	return buffer;
+ }
+ 
+-static int filter_buffer(int fd, const char *src,
+-			 unsigned long size, const char *cmd)
++struct filter_params {
++	const char *src;
++	unsigned long size;
++	const char *cmd;
++};
++
++static int filter_buffer(int fd, void *data)
+ {
+ 	/*
+ 	 * Spawn cmd and feed the buffer contents through its stdin.
+ 	 */
+ 	struct child_process child_process;
++	struct filter_params *params = (struct filter_params *)data;
+ 	int write_err, status;
+-	const char *argv[] = { "sh", "-c", cmd, NULL };
++	const char *argv[] = { "sh", "-c", params->cmd, NULL };
+ 
+ 	memset(&child_process, 0, sizeof(child_process));
+ 	child_process.argv = argv;
+@@ -217,17 +223,17 @@ static int filter_buffer(int fd, const char *src,
+ 	child_process.out = fd;
+ 
+ 	if (start_command(&child_process))
+-		return error("cannot fork to run external filter %s", cmd);
++		return error("cannot fork to run external filter %s", params->cmd);
+ 
+-	write_err = (write_in_full(child_process.in, src, size) < 0);
++	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
+ 	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+-		error("cannot feed the input to external filter %s", cmd);
++		error("cannot feed the input to external filter %s", params->cmd);
+ 
+ 	status = finish_command(&child_process);
+ 	if (status)
+-		error("external filter %s failed %d", cmd, -status);
++		error("external filter %s failed %d", params->cmd, -status);
+ 	return (write_err || status);
+ }
+ 
+@@ -241,42 +247,31 @@ static char *apply_filter(const char *path, const char *src,
+ 	 * (child --> cmd) --> us
+ 	 */
+ 	const int SLOP = 4096;
+-	int pipe_feed[2];
+-	int status;
+ 	char *dst;
+ 	unsigned long dstsize, dstalloc;
+-	struct child_process child_process;
++	struct async async;
++	struct filter_params params;
+ 
+ 	if (!cmd)
+ 		return NULL;
+ 
+-	memset(&child_process, 0, sizeof(child_process));
+-
+-	if (pipe(pipe_feed) < 0) {
+-		error("cannot create pipe to run external filter %s", cmd);
+-		return NULL;
+-	}
++	memset(&async, 0, sizeof(async));
++	async.proc = filter_buffer;
++	async.data = &params;
++	params.src = src;
++	params.size = *sizep;
++	params.cmd = cmd;
+ 
+ 	fflush(NULL);
+-	child_process.pid = fork();
+-	if (child_process.pid < 0) {
+-		error("cannot fork to run external filter %s", cmd);
+-		close(pipe_feed[0]);
+-		close(pipe_feed[1]);
+-		return NULL;
+-	}
+-	if (!child_process.pid) {
+-		close(pipe_feed[0]);
+-		exit(filter_buffer(pipe_feed[1], src, *sizep, cmd));
+-	}
+-	close(pipe_feed[1]);
++	if (start_async(&async))
++		return NULL;	/* error was already reported */
+ 
+ 	dstalloc = *sizep;
+ 	dst = xmalloc(dstalloc);
+ 	dstsize = 0;
+ 
+ 	while (1) {
+-		ssize_t numread = xread(pipe_feed[0], dst + dstsize,
++		ssize_t numread = xread(async.out, dst + dstsize,
+ 					dstalloc - dstsize);
+ 
+ 		if (numread <= 0) {
+@@ -293,15 +288,14 @@ static char *apply_filter(const char *path, const char *src,
+ 			dst = xrealloc(dst, dstalloc);
+ 		}
+ 	}
+-	if (close(pipe_feed[0])) {
++	if (close(async.out)) {
+ 		error("read from external filter %s failed", cmd);
+ 		free(dst);
+ 		dst = NULL;
+ 	}
+ 
+-	status = finish_command(&child_process);
+-	if (status) {
+-		error("external filter %s failed %d", cmd, -status);
++	if (finish_async(&async)) {
++		error("external filter %s failed", cmd);
+ 		free(dst);
+ 		dst = NULL;
+ 	}
+-- 
+1.5.3.2.141.g48f10
