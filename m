@@ -1,77 +1,107 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: How to manage heads on a remote repository?
-Date: Sun, 14 Oct 2007 07:32:07 -0400
-Message-ID: <20071014113206.GB17368@thunk.org>
-References: <E1Ih0zJ-0004FZ-0A@tinytim.thunk.org> <ee77f5c20710140403j7a88ffa4q579a8c4118d8fd71@mail.gmail.com> <20071014110714.GA17368@thunk.org> <ee77f5c20710140412s1eb68991ke552995dbbd226b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 14 13:33:00 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Add color to git-add--interactive diffs (Take 2: now without spurious line break!)
+Date: Sun, 14 Oct 2007 13:36:32 +0200
+Message-ID: <EFADE863-FC59-4A50-B165-9D30D9648B97@wincent.com>
+References: <1192351494.7226.18.camel@athena>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tom Tobin <korpios@korpios.com>
+X-From: git-owner@vger.kernel.org Sun Oct 14 13:37:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih1i7-0002lh-B8
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 13:32:43 +0200
+	id 1Ih1mZ-0003RA-PD
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 13:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755707AbXJNLcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 07:32:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755816AbXJNLcd
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 07:32:33 -0400
-Received: from thunk.org ([69.25.196.29]:47189 "EHLO thunker.thunk.org"
+	id S1754832AbXJNLhJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2007 07:37:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754801AbXJNLhJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 07:37:09 -0400
+Received: from wincent.com ([72.3.236.74]:48101 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755007AbXJNLcc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 07:32:32 -0400
-Received: from root (helo=tinytim.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Ih1ri-0002VR-OO; Sun, 14 Oct 2007 07:42:39 -0400
-Received: from tytso by tinytim.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1Ih1hh-00059y-Pu; Sun, 14 Oct 2007 07:32:18 -0400
-Content-Disposition: inline
-In-Reply-To: <ee77f5c20710140412s1eb68991ke552995dbbd226b@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752089AbXJNLhI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 07:37:08 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9EBaxKM014448;
+	Sun, 14 Oct 2007 06:37:00 -0500
+In-Reply-To: <1192351494.7226.18.camel@athena>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60832>
 
-On Sun, Oct 14, 2007 at 09:12:43PM +1000, David Symonds wrote:
-> On 14/10/2007, Theodore Tso <tytso@mit.edu> wrote:
-> > On Sun, Oct 14, 2007 at 09:03:48PM +1000, David Symonds wrote:
-> > > git push <remote> :<branch_name>
-> > >
-> > > If the left side of the colon in a push refspec is empty, it deletes
-> > > the remote ref given by the right hand side.
-> >
-> > Cool, thanks!  It's not in the git-push man page.  I'll play with it
-> > some and then submit a patch update the man page.
-> 
-> Yes, it is, including in the examples section. 
+El 14/10/2007, a las 10:44, Tom Tobin escribi=F3:
 
-Wow, I completely missed that!  It would be nice if:
+> After banging my head against parsing colorized output of git-add-=20
+> files,
+> I gave up and implemented internal colorization keying off of the
+> color.diff configuration.
 
-       <refspec>
-          The canonical format of a <refspec> parameter is +?<src>:<dst>; that
-          is, an optional plus +, followed by the source ref, followed by a
-          colon :, followed by the destination ref.
+Great!
 
-.... mentioned that the source ref could be optional (just like it
-explicitly says the '+' is optional)...
+> +sub parse_color {
 
-          The <src> side can be an arbitrary "SHA1 expression" that can be
-          used as an argument to git-cat-file -t. E.g. master~4 (push four
-          parents before the current master head).
+You could simplify the manual escape sequence construction that =20
+you're doing here by using Term::ANSIColor like the other patches =20
+did. I see that git-send-email.perl uses that module too, so I guess =20
+depending on that module is ok.
 
-.... and I think the throwaway sentence at the end of the refspec
-would be better at the end of the second paragraph above.  I'll send a
-patch.
+I also wonder whether the config code should be using the git.pm =20
+module like git-send-email.perl and a couple others do (although it =20
+would be slower than slurping in all the config in one shot like you =20
+do; perhaps there's justification for a new function in git.pm that =20
+wraps git-config --get-regexp...).
 
-Thanks for pointing that out!
+> +sub colorize_head_line {
+> +	my $line =3D shift @_;
+> +	if ($use_color) {
+> +		# git doesn't colorize these by default, soooo
+> +		# if ($line =3D~ /^\+/) {
+> +		#	 return parse_color($colorconfig{'color.diff.new'}) . "$line\e=20
+> [m";
+> +		# }
+> +		# if ($line =3D~ /^-/) {
+> +		#	 return parse_color($colorconfig{'color.diff.old'}) . "$line\e=20
+> [m";
+> +		# }
+> +		return parse_color($colorconfig{'color.diff.meta'}) . "$line\e[m";
+> +	}
+> +	return $line;
+> +}
+> +
+> +sub colorize_hunk_line {
+> +	my $line =3D shift @_;
+> +	if ($use_color) {
+> +		if ($line =3D~ /^\+/) {
+> +			return parse_color($colorconfig{'color.diff.new'}) . "$line\e[m";
+> +		}
+> +		if ($line =3D~ /^-/) {
+> +			return parse_color($colorconfig{'color.diff.old'}) . "$line\e[m";
+> +		}
+> +		if ($line =3D~ /^@@ /) {
+> +			return parse_color($colorconfig{'color.diff.frag'}) . "$line\e[m"=
+;
+> +		}
+> +	}
+> +	return $line;
+> +}
 
-       	      	     	 		  - Ted
+This is a good start but to completely match the colorized output =20
+produced by diff it will need some additional logic; for example, =20
+highlighting spurious whitespace. Search for =20
+need_highlight_leading_space in diff.c and you'll see that the test =20
+is basically for any space which precedes a tab in the leading =20
+whitespace on newly inserted lines. In this case the spaces are =20
+highlighted using the whitespace color (normally red background).
+
+I don't know when color.diff.commit is ever used in diff output, but =20
+perhaps that would need to be handled as well.
+
+Cheers,
+Wincent
