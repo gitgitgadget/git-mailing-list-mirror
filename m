@@ -1,233 +1,66 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: [PATCH] [BUG FIXED] git-add (-a|-u)  and -n support
-Date: Sun, 14 Oct 2007 08:11:23 -0400
-Message-ID: <0458D1DA-6261-4DA6-91B0-739F4D35AADF@mit.edu>
-References: <E1DCA1D1-1ED3-498A-A919-9EBAF3BA0870@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 0/7] Bisect dunno
+Date: Sun, 14 Oct 2007 14:28:26 +0200
+Message-ID: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 14:11:57 2007
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 14 14:21:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih2K0-000814-Gn
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 14:11:52 +0200
+	id 1Ih2TN-0000tZ-W5
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 14:21:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757465AbXJNML2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 08:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754190AbXJNML2
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 08:11:28 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:39232 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757305AbXJNML1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 08:11:27 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9ECBPFM025476
-	for <git@vger.kernel.org>; Sun, 14 Oct 2007 08:11:25 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9ECBO3Z013323
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 14 Oct 2007 08:11:25 -0400 (EDT)
-In-Reply-To: <E1DCA1D1-1ED3-498A-A919-9EBAF3BA0870@mit.edu>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1755113AbXJNMVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 08:21:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755202AbXJNMVY
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 08:21:24 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38778 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754970AbXJNMVX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 08:21:23 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 79F9E1AB302;
+	Sun, 14 Oct 2007 14:21:21 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 3B7E71AB2CE;
+	Sun, 14 Oct 2007 14:21:21 +0200 (CEST)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60834>
 
+Hi all,
 
-On 14 Oct 2007, at 6:26:28 AM, Michael Witten wrote:
+Here is my bisect dunno patch series again.
+The changes since last time are the following:
 
-> Hello,
->
-> The git-add command doesn't handle -n when using -u.
->
-> I fixed this and added -a for adding ALL files, not
-> just those below the current directory (just like
-> git-commit).
->
-> The patch is below, but you can also download it from
-> http://web.mit.edu/mfwitten/git/0001-git-add-now-understands-two- 
-> kinds-of-update.patch
->
+[PATCH 1/7] rev-list: implement --bisect-all
+[PATCH 2/7] Bisect: fix some white spaces and empty lines breakages.
 
+-> No change.
 
-Unfortunately, I introduced a bug.
-The following:
+[PATCH 3/7] Bisect: implement "bisect dunno" to mark untestable revisions.
 
-> +				if (show_only)
-> +					remove_file_from_cache(path);
-> +				if (verbose)
-> +					printf("remove '%s'\n", path);
+-> Added dunno stuff in "bisect_replay" that I had forgotten.
+-> Use "bisect_write_good" and "bisect_write_bad" in "bisect_replay" 
+while at it.
 
-Should be:
+[PATCH 4/7] Bisect: factorise "bisect_write_*" functions.
+[PATCH 5/7] Bisect: factorise some logging into "bisect_write".
+[PATCH 6/7] Bisect: factorise "bisect_{bad,good,dunno}" into "bisect_state".
 
-> +				if (!show_only)
-> +					remove_file_from_cache(path);
-> +				if (verbose)
-> +					printf("remove '%s'\n", path);
+-> Some new factorisation and clean up work.
 
+[PATCH 7/7] Bisect: add "bisect dunno" to the documentation.
 
-The new patch is listed below:
-(http://web.mit.edu/mfwitten/git/0001-git-add-now-understands-two- 
-kinds-of-update.patch)
+-> Document "bisect dunno" and fix some short usage descriptions.
 
-
- From 6d7480062b1e1c513441d4bbc17a9a8b5d9b1c8f Mon Sep 17 00:00:00 2001
-From: Michael Witten <mfwitten@mit.edu>
-Date: Sun, 14 Oct 2007 06:13:20 -0400
-Subject: [PATCH] git-add now understands two kinds of update:
-
-  	-u: update as before
-  	-a: update all as in a true 'git commit -a'
-
-Also, -n works correctly now with the above options.
-
-Signed-off-by: Michael Witten <mfwitten@mit.edu>
----
-  builtin-add.c |   69 +++++++++++++++++++++++++++++++++++++ 
-+-------------------
-  1 files changed, 46 insertions(+), 23 deletions(-)
-
-diff --git a/builtin-add.c b/builtin-add.c
-index f9a6580..f180afe 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -13,10 +13,11 @@
-  #include "commit.h"
-  #include "revision.h"
-
-+enum update_type {NONE, ALL, CURRENT_DIRECTORY};
-+
-  static const char builtin_add_usage[] =
-  "git-add [-n] [-v] [-f] [--interactive | -i] [-u] [--refresh] [--]  
-<filepattern>...";
-
--static int take_worktree_changes;
-  static const char *excludes_file;
-
-  static void prune_directory(struct dir_struct *dir, const char  
-**pathspec, int prefix)
-@@ -83,40 +84,57 @@ static void fill_directory(struct dir_struct  
-*dir, const char **pathspec,
-  static void update_callback(struct diff_queue_struct *q,
-  			    struct diff_options *opt, void *cbdata)
-  {
--	int i, verbose;
--
--	verbose = *((int *)cbdata);
-+	int i;
-+	
-+	int* options   = (int*)cbdata;
-+	int  verbose   = options[0];
-+	int  show_only = options[1];
-+	
-  	for (i = 0; i < q->nr; i++) {
-  		struct diff_filepair *p = q->queue[i];
-  		const char *path = p->one->path;
--		switch (p->status) {
--		default:
--			die("unexpected diff status %c", p->status);
--		case DIFF_STATUS_UNMERGED:
--		case DIFF_STATUS_MODIFIED:
--		case DIFF_STATUS_TYPE_CHANGED:
--			add_file_to_cache(path, verbose);
--			break;
--		case DIFF_STATUS_DELETED:
--			remove_file_from_cache(path);
--			if (verbose)
--				printf("remove '%s'\n", path);
--			break;
-+		
-+		switch (p->status) {			
-+			case DIFF_STATUS_UNMERGED:
-+			case DIFF_STATUS_MODIFIED:
-+			case DIFF_STATUS_TYPE_CHANGED:
-+				if (show_only)
-+					printf("add '%s'\n", path);
-+				else
-+					add_file_to_cache(path, verbose);
-+				break;
-+			
-+			case DIFF_STATUS_DELETED:
-+				if (verbose)
-+					printf("remove '%s'\n", path);
-+				if (!show_only)
-+					remove_file_from_cache(path);
-+				break;
-+			
-+			default:
-+				die("unexpected diff status %c", p->status);
-  		}
-  	}
-  }
-
--static void update(int verbose, const char *prefix, const char **files)
-+static void update(enum update_type type, int verbose, int show_only,
-+                  const char *prefix, const char **files)
-  {
-  	struct rev_info rev;
-+	int callback_options[] = {verbose, show_only};
-+	
-  	init_revisions(&rev, prefix);
-  	setup_revisions(0, NULL, &rev, NULL);
--	rev.prune_data = get_pathspec(prefix, files);
-+	
-+	rev.prune_data = type == ALL ? NULL : get_pathspec(prefix, files);
-+	
-  	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-  	rev.diffopt.format_callback = update_callback;
--	rev.diffopt.format_callback_data = &verbose;
-+	rev.diffopt.format_callback_data = callback_options;
-+	
-  	if (read_cache() < 0)
-  		die("index file corrupt");
-+	
-  	run_diff_files(&rev, 0);
-  }
-
-@@ -158,6 +176,7 @@ int cmd_add(int argc, const char **argv, const  
-char *prefix)
-  {
-  	int i, newfd;
-  	int verbose = 0, show_only = 0, ignored_too = 0, refresh_only = 0;
-+	enum update_type update_type = NONE;
-  	const char **pathspec;
-  	struct dir_struct dir;
-  	int add_interactive = 0;
-@@ -201,8 +220,12 @@ int cmd_add(int argc, const char **argv, const  
-char *prefix)
-  			verbose = 1;
-  			continue;
-  		}
-+		if (!strcmp(arg, "-a")) {
-+			update_type = ALL;
-+			continue;
-+		}
-  		if (!strcmp(arg, "-u")) {
--			take_worktree_changes = 1;
-+			update_type = CURRENT_DIRECTORY;
-  			continue;
-  		}
-  		if (!strcmp(arg, "--refresh")) {
-@@ -212,8 +235,8 @@ int cmd_add(int argc, const char **argv, const  
-char *prefix)
-  		usage(builtin_add_usage);
-  	}
-
--	if (take_worktree_changes) {
--		update(verbose, prefix, argv + i);
-+	if (update_type) {
-+		update(update_type, verbose, show_only, prefix, argv + i);
-  		goto finish;
-  	}
-
--- 
-1.5.3.4.206.g58ba4-dirty
+Regards,
+Christian.
