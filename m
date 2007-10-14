@@ -1,83 +1,70 @@
-From: "Dave Korn" <dave.korn@artimi.com>
-Subject: RE: Switching from CVS to GIT
-Date: Sun, 14 Oct 2007 23:59:35 +0100
-Message-ID: <023101c80eb5$e3b6b310$2e08a8c0@CAM.ARTIMI.COM>
-References: <1192293466.17584.95.camel@homebase.localnet><uy7e6keyv.fsf@gnu.org><1192381040.4908.57.camel@homebase.localnet><1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr><47125F74.9050600@op5.se><Pine.LNX.4.64.0710141934310.25221@racer.site><47126957.1020204@op5.se><Pine.LNX.4.64.0710142112540.25221@racer.site>
-	<20071014221446.GC2776@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: git-svn and submodules, was Re: [PATCH] parse-options: Allow
+ abbreviated options when unambiguous
+Date: Sun, 14 Oct 2007 23:59:42 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710142359020.25221@racer.site>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
+ <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp>
+ <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site>
+ <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma>
+ <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: 'Andreas Ericsson' <ae@op5.se>, 'Make Windows' <make-w32@gnu.org>,
-	'git list' <git@vger.kernel.org>
-To: "'Alex Riesen'" <raa.lkml@gmail.com>,
-	"'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 00:59:54 2007
-Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
-Envelope-to: gnu-make-w32@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Oct 15 00:59:58 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhCR5-0002iI-3x
-	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 00:59:51 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1IhCQy-0002x6-Et
-	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 18:59:44 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1IhCQt-0002wP-Sa
-	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:39 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1IhCQs-0002w9-4G
-	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:39 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1IhCQr-0002w6-VA
-	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:37 -0400
-Received: from mail.artimi.com ([194.72.81.2])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dave.korn@artimi.com>) id 1IhCQr-0007i7-Hr
-	for make-w32@gnu.org; Sun, 14 Oct 2007 18:59:37 -0400
-Received: from rainbow ([192.168.8.46]) by mail.artimi.com with Microsoft
-	SMTPSVC(6.0.3790.3959); Sun, 14 Oct 2007 23:59:35 +0100
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <20071014221446.GC2776@steel.home>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-Thread-Index: AcgOs4fHch/7bR+URh6XAXw0UYKR0AAAadQg
-X-OriginalArrivalTime: 14 Oct 2007 22:59:35.0261 (UTC)
-	FILETIME=[E3BAF8D0:01C80EB5]
-X-detected-kernel: by monty-python.gnu.org: Windows 2000 SP4, XP SP1+
-X-BeenThere: make-w32@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/make-w32>
-List-Post: <mailto:make-w32@gnu.org>
-List-Help: <mailto:make-w32-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=subscribe>
-Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60926>
+	id 1IhCRB-0002jM-TE
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 00:59:58 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759901AbXJNW7s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 18:59:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759689AbXJNW7s
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 18:59:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41299 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759281AbXJNW7r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 18:59:47 -0400
+Received: (qmail invoked by alias); 14 Oct 2007 22:59:45 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp043) with SMTP; 15 Oct 2007 00:59:45 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XBj9YdBOX5m6VLBi6FyumPxV0R/mYWkMj8DAy46
+	pGaDV6bmKtz9J7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071014224959.GA17828@untitled>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60927>
 
-On 14 October 2007 23:15, Alex Riesen wrote:
+Hi,
 
-> Interprocess communication:
+On Sun, 14 Oct 2007, Eric Wong wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> > While I have your attention: last weekend, I spoke to a guy from the 
+> > ffmpeg project, and he said that the only thing preventing them from 
+> > switching to git was the lack of svn:external support...
+> > 
+> > (Of course I know that it is more difficult than that: ffmpeg itself 
+> > is an svn:external of MPlayer, but maybe we can get both of them to 
+> > switch ;-)
+> > 
+> > Do you have any idea when/if you're coming around to add that to 
+> > git-svn?
 > 
-> - no reliable text environment (I'm programming in the damn thing for
->   10 years and I still don't know how to pass an environment variable
->   _for_sure_)
-> 
-> - it has only one argument (limited in size) passed to started
->   programs, which means that there is no possible way to safely pass
->   file and text arguments on command line (more than one, that is)
+> Soonish, possibly within a next week, even.  I have actually have 
+> started a project (using git) that wants to use SVN-hosted repositories 
+> directly submodules; so the fact that I'll actually need something like 
+> it bodes well for getting it implemented :)
 
-  Whuh?
+Hehe.  Thanks!
 
-http://msdn2.microsoft.com/en-us/library/y5zz48s1(VS.80).aspx
-
-
-    cheers,
-      DaveK
--- 
-Can't think of a witty .sigline today....
+Ciao,
+Dscho
