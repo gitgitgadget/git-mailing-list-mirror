@@ -1,72 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Sun, 14 Oct 2007 17:16:32 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710141715470.25221@racer.site>
+Date: Sun, 14 Oct 2007 18:25:31 +0200
+Message-ID: <85y7e5ll38.fsf@lola.goethe.zz>
 References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+	<F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com>
+	<854pgtonp5.fsf@lola.goethe.zz>
+	<200710141709.51579.chriscool@tuxfamily.org>
+	<4712400C.2080900@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sun Oct 14 18:16:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Oct 14 18:25:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih693-00007D-Vh
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:16:50 +0200
+	id 1Ih6Gs-0001Ip-SL
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 18:24:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757959AbXJNQQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 12:16:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757875AbXJNQQi
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:16:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44924 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757584AbXJNQQh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 12:16:37 -0400
-Received: (qmail invoked by alias); 14 Oct 2007 16:16:36 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp033) with SMTP; 14 Oct 2007 18:16:36 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/npTZuE3nn/ehWPKfZTXwvUohheB3kGWKiPHtDYW
-	duOKqEBL3SQg/x
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
-X-Y-GMX-Trusted: 0
+	id S1756485AbXJNQYl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Oct 2007 12:24:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756630AbXJNQYl
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 12:24:41 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:39119 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756464AbXJNQYk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 12:24:40 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1Ih6Gc-0008RN-Pq; Sun, 14 Oct 2007 12:24:38 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id 877FE1C4CE11; Sun, 14 Oct 2007 18:25:31 +0200 (CEST)
+In-Reply-To: <4712400C.2080900@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
+ Scharfe"'s message of "Sun\, 14 Oct 2007 18\:13\:00 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60862>
 
-Hi,
+Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-On Sun, 14 Oct 2007, Christian Couder wrote:
+> Christian Couder schrieb:
+>>=20
+>> I choosed "dunno" because that was what Dscho suggested in this thre=
+ad:
+>>=20
+>> http://thread.gmane.org/gmane.comp.version-control.git/53584/focus=3D=
+53595
+>>=20
+>> It seems to me short and understandable at the same time.
+>>=20
+>> More meaningfull would be "untestable" or "cannottest" or
+>> "canttest" but it's much longer, while "good" and "bad" are short.
+>
+> Ugly?  Neutral?
 
-> Here is my bisect dunno patch series again.
-> The changes since last time are the following:
-> 
-> [PATCH 1/7] rev-list: implement --bisect-all
-> [PATCH 2/7] Bisect: fix some white spaces and empty lines breakages.
-> 
-> -> No change.
-> 
-> [PATCH 3/7] Bisect: implement "bisect dunno" to mark untestable revisions.
-> 
-> -> Added dunno stuff in "bisect_replay" that I had forgotten.
-> -> Use "bisect_write_good" and "bisect_write_bad" in "bisect_replay" 
-> while at it.
-> 
-> [PATCH 4/7] Bisect: factorise "bisect_write_*" functions.
-> [PATCH 5/7] Bisect: factorise some logging into "bisect_write".
-> [PATCH 6/7] Bisect: factorise "bisect_{bad,good,dunno}" into "bisect_state".
-> 
-> -> Some new factorisation and clean up work.
-> 
-> [PATCH 7/7] Bisect: add "bisect dunno" to the documentation.
-> 
-> -> Document "bisect dunno" and fix some short usage descriptions.
+"Ugly" has a certain charm to it but would probably not translate
+well.  "Limbo" would be another such candidate, probably with better
+translatability.  But while some of those have some geeky appeal, I
+really think something reasonably plain like "undecided" would be
+better in the long run.
 
-Thanks for doing this.  I think that especially the factorisation adds 
-tremendously to the readibility.
-
-Ciao,
-Dscho
+--=20
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
