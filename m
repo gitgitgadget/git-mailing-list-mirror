@@ -1,73 +1,64 @@
-From: Michael Witten <mfwitten@MIT.EDU>
+From: "David Symonds" <dsymonds@gmail.com>
 Subject: Re: How to manage heads on a remote repository?
-Date: Sun, 14 Oct 2007 06:55:31 -0400
-Message-ID: <FE53CAAB-6BAC-4EB6-A36F-C9DA69EDB04A@mit.edu>
+Date: Sun, 14 Oct 2007 21:03:48 +1000
+Message-ID: <ee77f5c20710140403j7a88ffa4q579a8c4118d8fd71@mail.gmail.com>
 References: <E1Ih0zJ-0004FZ-0A@tinytim.thunk.org>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 14 12:56:15 2007
+Cc: git@vger.kernel.org
+To: "Theodore Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sun Oct 14 13:04:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ih18e-0006XO-UV
-	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 12:56:05 +0200
+	id 1Ih1GM-0007WE-1f
+	for gcvg-git-2@gmane.org; Sun, 14 Oct 2007 13:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511AbXJNKzx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 06:55:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755170AbXJNKzx
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 06:55:53 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35015 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755367AbXJNKzw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Oct 2007 06:55:52 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9EAtWcM001319;
-	Sun, 14 Oct 2007 06:55:33 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9EAtWjR010467
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sun, 14 Oct 2007 06:55:32 -0400 (EDT)
+	id S1755514AbXJNLDt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Oct 2007 07:03:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755480AbXJNLDt
+	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 07:03:49 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:21155 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755170AbXJNLDs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Oct 2007 07:03:48 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1178830rvb
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 04:03:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=z2+2DnqTgx38pOqbJq3P60LfTX9hxPJ/TNIk87dBpXQ=;
+        b=P1kIRF5QHBWsYCQPK/wRbhP/8TOlrudCKwlV3vH2B/9OERPlPtC76e3VZfeJONkvXrjxCi6zTmyAgr588Sz+oGfmLFXuPBxZa39MoFD4LheUYvDxeJU8opUyGjuBI4uVugrRtjhQ2Ii4d2YRrnJLFPuzvaFqDhIOdkKFN18m0yw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=XqR9UwotesVRBzURkR7yOu1PSMWIcQnw+vCS2N/frVlTIbY61M7PlzE9qckykwhqB73eULoETirmO4GOBuatvq5K8WELwFJEqNvMm0TqkNn6fUWkD2lbPl36PWAv5DV9QEFCs84MwVGXUexIqmq21hBEC0jdi+u9yg/ayjr2XBI=
+Received: by 10.141.128.19 with SMTP id f19mr2279719rvn.1192359828033;
+        Sun, 14 Oct 2007 04:03:48 -0700 (PDT)
+Received: by 10.141.153.4 with HTTP; Sun, 14 Oct 2007 04:03:48 -0700 (PDT)
 In-Reply-To: <E1Ih0zJ-0004FZ-0A@tinytim.thunk.org>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60828>
 
-
-On 14 Oct 2007, at 6:46:25 AM, Theodore Ts'o wrote:
-
-> so any automation at the moment
-> looks like it would require me writing my own script and using  
-> something
-> like this:
+On 14/10/2007, Theodore Ts'o <tytso@mit.edu> wrote:
 >
->       ssh remote-host git --git-dir=xxx branch -D topics/foo
->
-> ... which of course wouldn't work repo.or.cz since it requires shell
-> access.
->
-> Am I missing anything?
+> I'm currently exploring the idea of not only making the equivalent of
+> "pu" and "next" available on a public repository for one of my projects,
+> but also the topics/* branches.   When thinking about how I might do
+> this, one snag I ran into is that the topics/foo and topics/bar branches
+> are ephemeral, and so when I replicate them to a remote repository,
+> either on kernel.org or repo.or.cz, I would need a way of removing a
+> head for a topic branch that had already been merged.
 
-With my little exposure to git, I'd say it's not currently possible
-with the git ui, but please wait for someone more authoritative to
-say so.
+git push <remote> :<branch_name>
 
-In any case, I've run across similar problems, and I think this is
-a good time to point out the feature that would be nice:
-	
-	All (most) git ui operations should be (relatively)
-	transparent across networks;
+If the left side of the colon in a push refspec is empty, it deletes
+the remote ref given by the right hand side.
 
-I would like to clone to a remote server, for instance.
 
-Michael Witten
+Dave.
