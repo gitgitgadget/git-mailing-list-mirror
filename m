@@ -1,195 +1,74 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: [PATCH] Let users override name of per-directory ignore file
-Date: Mon, 15 Oct 2007 14:30:35 +0200
-Message-ID: <47135D6B.5070308@op5.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 14:31:01 +0200
+Message-ID: <47135D85.50701@viscovery.net>
+References: <1192293466.17584.95.camel@homebase.localnet>	<uy7e6keyv.fsf@gnu.org>	<1192381040.4908.57.camel@homebase.localnet>	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>	<47125F74.9050600@op5.se>	<Pine.LNX.4.64.0710141934310.25221@racer.site> 	<47126957.1020204@op5.se>	<Pine.LNX.4.64.0710142112540.25221@racer.site> 	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>	<Pine.LNX.4.64.0710150039120.25221@racer.site>	<4712B616.165BBF8D@dessent.net>	<Pine.LNX.4.64.0710150217120.25221@racer.site>	<Pine.LNX.4.64.0710150223230.25221@racer.site>	<E1IhJ4K-00086x-5U@fencepost.gnu.org>	<AD60F584-7AAD-4083-9BA6-21F0D00D6D1D@zib.de>	<E1IhLBW-0006uw-19@fencepost.gnu.org>	<Pine.LNX.4.64.0710150946500.25221@racer.site> <E1IhNox-0004n2-N5@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 14:31:21 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, prohaska@zib.de,
+	make-w32@gnu.org, raa.lkml@gmail.com, ae@op5.se,
+	git@vger.kernel.org
+To: Eli Zaretskii <eliz@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 14:31:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhP60-0006LI-2n
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 14:30:56 +0200
+	id 1IhP6M-0006P3-DT
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 14:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758651AbXJOMal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 08:30:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758913AbXJOMak
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 08:30:40 -0400
-Received: from mail.op5.se ([193.201.96.20]:57923 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758391AbXJOMaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 08:30:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 420A1173070B
-	for <git@vger.kernel.org>; Mon, 15 Oct 2007 14:30:38 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.442
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.442 tagged_above=-10 required=6.6
-	tests=[AWL=0.057, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id LqPqFhTe4bDl for <git@vger.kernel.org>;
-	Mon, 15 Oct 2007 14:30:37 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 5A26017305A5
-	for <git@vger.kernel.org>; Mon, 15 Oct 2007 14:30:37 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+	id S1759126AbXJOMbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 08:31:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759572AbXJOMbF
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 08:31:05 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:41879 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759126AbXJOMbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 08:31:04 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IhP5u-0007bn-Pp; Mon, 15 Oct 2007 14:30:51 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 50FB269F; Mon, 15 Oct 2007 14:31:01 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <E1IhNox-0004n2-N5@fencepost.gnu.org>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60988>
 
-When collaborating with projects managed by some other
-scm, it often makes sense to have git read that other
-scm's ignore-files. This patch lets git do just that, if
-the user only tells it the name of the per-directory
-ignore file by specifying the newly introduced git config
-option 'core.ignorefile'.
+Eli Zaretskii schrieb:
+>> Date: Mon, 15 Oct 2007 09:47:25 +0100 (BST)
+>> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+>> cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org, 
+>>     raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr, make-w32@gnu.org
+>>
+>> If you could make Git compile with Visual C++, that would be fabulous.
+> 
+> I prefer GCC (the MinGW port), but without the MSYS ports of
+> additional tools.  I use the GnuWin32 ports augmented by some of my
+> own (where GnuWin32 ports are buggy or terribly slow).
 
-Theoretically, this could cause problems when projects get
-ported from some other scm to git, but in practice that
-is a moot point, as such changes are always followed by a
-flagday anyway.
+They should work, too. If a tool is missing, ought to notice it soon enough.
 
-Signed-off-by: Andreas Ericsson <ae@op5.se>
----
+These are important to note, though:
 
-I'm in the unfortunate position of being forced to work on a large
-amount of projects where the upstream repo is in either CVS or SVN,
-and fiddling with exclude-files gets more than just a little tedious.
-I've tested this patch lightly. git-status and git-add pick up the
-option. "make test" passes as well, and the patch is small enough to
-seem obviously correct, so I left it at that.
+- The tools must not do their own LF->CRLF conversion when they are used in 
+a pipeline, "just because they know it better".
 
-git-svn should probably set this option by default after a successful
-clone, and it has the smell of fruit so low-hanging it's practically
-already dropped from the tree, but unfortunately my perl-fu is so weak
-I can't even find where to add it. Volunteers?
+- GNU tar is needed (in the cpio emulator).
 
+- ln must be able to create hard links on NTFS or do the equivalent of
+cp -p
 
- Documentation/config.txt    |   10 ++++++++++
- Documentation/gitignore.txt |    5 +++++
- builtin-add.c               |   11 +++++++++--
- wt-status.c                 |    9 ++++++++-
- 4 files changed, 32 insertions(+), 3 deletions(-)
+- GNU cp -al will be needed and should create hard links on NTFS. (I plan to 
+use it for local clones in place of cpio -pl.)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 6b2fc82..267f93c 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -275,6 +275,16 @@ You probably do not need to adjust this value.
- +
- Common unit suffixes of 'k', 'm', or 'g' are supported.
- 
-+core.ignorefile::
-+	Tells git to use a different file for per-directory ignores.
-+	This is useful when one wishes to use git for a project
-+	when the upstream repository is managed by some other SCM
-+	whose ignore-file formats are the same as that of git.
-+	For example, setting core.ignorefile to .svnignore in
-+	repos where one interacts with the upstream project repo
-+	using gitlink:git-svn[1] will make a both SVN users and
-+	your own repo ignore the same files.
-+
- core.excludesfile::
- 	In addition to '.gitignore' (per-directory) and
- 	'.git/info/exclude', git looks into this file for patterns
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index e8b8581..f82eac6 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -32,6 +32,11 @@ precedence, the last matching pattern decides the outcome):
-    `.gitignore` file.  A project normally includes such
-    `.gitignore` files in its repository, containing patterns for
-    files generated as part of the project build.
-+   The name of the `.gitignore` file can be changed by setting
-+   the configuration variable 'core.ignorefile'. This is useful
-+   when using git for projects where upstream is using some other
-+   SCM. For example, setting 'core.ignorefile' to `.cvsignore`
-+   will make git ignore the same files CVS would.
- 
-  * Patterns read from `$GIT_DIR/info/exclude`.
- 
-diff --git a/builtin-add.c b/builtin-add.c
-index 966e145..c785d99 100644
---- a/builtin-add.c
-+++ b/builtin-add.c
-@@ -19,6 +19,7 @@ static const char builtin_add_usage[] =
- 
- static int take_worktree_changes;
- static const char *excludes_file;
-+static const char *ignore_file = ".gitignore";
- 
- static void prune_directory(struct dir_struct *dir, const char **pathspec, int prefix)
- {
-@@ -57,7 +58,7 @@ static void fill_directory(struct dir_struct *dir, const char **pathspec,
- 	memset(dir, 0, sizeof(*dir));
- 	if (!ignored_too) {
- 		dir->collect_ignored = 1;
--		dir->exclude_per_dir = ".gitignore";
-+		dir->exclude_per_dir = ignore_file;
- 		path = git_path("info/exclude");
- 		if (!access(path, R_OK))
- 			add_excludes_from_file(dir, path);
-@@ -144,6 +145,12 @@ static int git_add_config(const char *var, const char *value)
- 		excludes_file = xstrdup(value);
- 		return 0;
- 	}
-+	if (!strcmp(var, "core.ignorefile")) {
-+		if (!value)
-+			die("core.ignorefile without value");
-+		ignore_file = xstrdup(value);
-+		return 0;
-+	}
- 
- 	return git_default_config(var, value);
- }
-@@ -158,7 +165,7 @@ int interactive_add(void)
- static struct lock_file lock_file;
- 
- static const char ignore_error[] =
--"The following paths are ignored by one of your .gitignore files:\n";
-+"The following paths are ignored:\n";
- 
- int cmd_add(int argc, const char **argv, const char *prefix)
- {
-diff --git a/wt-status.c b/wt-status.c
-index 03b5ec4..103aefe 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -23,6 +23,7 @@ static const char use_add_rm_msg[] =
- static const char use_add_to_include_msg[] =
- "use \"git add <file>...\" to include in what will be committed";
- static const char *excludes_file;
-+static const char *ignore_file = ".gitignore";
- 
- static int parse_status_slot(const char *var, int offset)
- {
-@@ -257,7 +258,7 @@ static void wt_status_print_untracked(struct wt_status *s)
- 
- 	memset(&dir, 0, sizeof(dir));
- 
--	dir.exclude_per_dir = ".gitignore";
-+	dir.exclude_per_dir = ignore_file;
- 	if (!s->untracked) {
- 		dir.show_other_directories = 1;
- 		dir.hide_empty_directories = 1;
-@@ -370,5 +371,11 @@ int git_status_config(const char *k, const char *v)
- 		excludes_file = xstrdup(v);
- 		return 0;
- 	}
-+	if (!strcmp(k, "core.ignorefile")) {
-+		if (!v)
-+			die("core.ignorefile without value");
-+		ignore_file = xstrdup(v);
-+		return 0;
-+	}
- 	return git_default_config(k, v);
- }
--- 
-1.5.3.4.1155.gfe96ee-dirty
+Any feedback on how git works for you with these tools is appreciated.
+
+-- Hannes
