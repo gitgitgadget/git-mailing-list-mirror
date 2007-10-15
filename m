@@ -1,83 +1,100 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
+From: Eli Zaretskii <eliz@gnu.org>
 Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 18:43:54 +1300
-Message-ID: <46a038f90710142243s7d07d9f8td6c5c24383e135f3@mail.gmail.com>
+Date: Mon, 15 Oct 2007 01:56:39 -0400
+Message-ID: <E1IhIwR-0006be-Ki@fencepost.gnu.org>
 References: <1192293466.17584.95.camel@homebase.localnet>
-	 <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
-	 <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-	 <47125F74.9050600@op5.se>
-	 <Pine.LNX.4.64.0710141934310.25221@racer.site>
-	 <47126957.1020204@op5.se>
+	<uy7e6keyv.fsf@gnu.org>
+	<1192381040.4908.57.camel@homebase.localnet>
+	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+	<47125F74.9050600@op5.se>
+	<Pine.LNX.4.64.0710141934310.25221@racer.site>
+	<47126957.1020204@op5.se>
+	<Pine.LNX.4.64.0710142112540.25221@racer.site>
+	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+	<Pine.LNX.4.64.0710150039120.25221@racer.site>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Benoit SIGOURE" <tsuna@lrde.epita.fr>,
-	"git list" <git@vger.kernel.org>, "Eli Zaretskii" <eliz@gnu.org>,
-	"Make Windows" <make-w32@gnu.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 15 07:44:11 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 8bit
+Cc: ae@op5.se, raa.lkml@gmail.com, git@vger.kernel.org, make-w32@gnu.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 07:57:58 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhIkJ-0002Pf-Gb
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 07:44:07 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752973AbXJOFn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 01:43:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbXJOFn5
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 01:43:57 -0400
-Received: from hu-out-0506.google.com ([72.14.214.238]:5918 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752809AbXJOFn4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 01:43:56 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so1190760hue
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Z0pPx4KCFXhcAz0Wu6xjuBPCXIIbpOOr8v/8lmKZX+0=;
-        b=VFks9fGhiIIl0071VJrjanDzm3T6DvPASwmpaSJmyQBdK5PfFQBY1j5zbUl6yt44E0xYf4eDxtCje65nkDP8vATWsWlud1Rgac/McAGXBuVqvBve8EjFeW5l7sgR2uiFTKrAlzSw+uenAVKjQzGQ2CYIQ/JFUGGC/vBHMo7/ipQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pl4ZzqcERZXjQsEDTCnGfwfGYV/WxfRBfXNKsM4X9r9th7pOqJzHGKQwTxlh+LsO7Z04vnaRMNDlfsfY/+WKtfJtuvTQwHM2vPkzqCaF08BqOJjDMubT83sAz1+4ESiCa30iAoBq2JwItGwQ8rE5HYShWBLLssrqO0MIHS/YLiM=
-Received: by 10.67.19.17 with SMTP id w17mr7517559ugi.1192427034292;
-        Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
-Received: by 10.67.22.19 with HTTP; Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
-In-Reply-To: <47126957.1020204@op5.se>
-Content-Disposition: inline
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60946>
+	id 1IhIwf-000481-1T
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 07:56:53 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IhIwY-0007sy-EN
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 01:56:46 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IhIwU-0007sj-B5
+	for make-w32@gnu.org; Mon, 15 Oct 2007 01:56:42 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IhIwS-0007sX-Sl
+	for make-w32@gnu.org; Mon, 15 Oct 2007 01:56:41 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IhIwS-0007sU-PD
+	for make-w32@gnu.org; Mon, 15 Oct 2007 01:56:40 -0400
+Received: from fencepost.gnu.org ([140.186.70.10])
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <eliz@gnu.org>) id 1IhIwS-0000px-Dc
+	for make-w32@gnu.org; Mon, 15 Oct 2007 01:56:40 -0400
+Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <eliz@gnu.org>)
+	id 1IhIwR-0006be-Ki; Mon, 15 Oct 2007 01:56:39 -0400
+In-reply-to: <Pine.LNX.4.64.0710150039120.25221@racer.site> (message from
+	Johannes Schindelin on Mon, 15 Oct 2007 00:45:47 +0100 (BST))
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6, seldom 2.4 (older, 4)
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60947>
 
-On 10/15/07, Andreas Ericsson <ae@op5.se> wrote:
-> > And I have to disagree strongly with the "black": In msysGit (which brings
-> > its own minimal version of MSys), it is very smooth.
-> >
->
-> Oh? I didn't know that. Windows and its unixifying toolboxes is unknown
-> territory to me, as I happily spend all my time on various unices.
+> Date: Mon, 15 Oct 2007 00:45:47 +0100 (BST)
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> cc: Alex Riesen <raa.lkml@gmail.com>, ae@op5.se, tsuna@lrde.epita.fr, 
+>     git@vger.kernel.org, make-w32@gnu.org
+> 
+> The problem is not so much opening, but determining if an existing file 
+> and a file in the index have the same name.
+> 
+> For example, "README" in the index, but "readme" in the working directory, 
+> will be handled as "deleted/untracked" by the current machinery.  IOW git 
+> will not know that what it gets from readdir() as "readme" really is the 
+> same file as "README" in the index.
 
-I'm a unix-head too. Last couple of weeks had to work on a windows
-server, and installed msysGit. Very impressed - all the needed
-dependencies are there, from an end-user POV it "just works".
+That's because you think file names are simple strings and can be
+compared by simple string comparison.  This naìve view is not true
+even on POSIX systems: "foo/bar" and "/a/b/foo/bar" can be the same
+file, as well as "/a/b/c/d" and "/x/y/z", given the right symlinks.
+But for some reason that eludes me, people who are accustomed to POSIX
+stop right there and in effect say "file names are strings, if we only
+make them absolute and resolve links".  Instead, recognize that file
+names are not strings (although they inherit some of the strings'
+traits), and think in terms of "file-name comparison" abstraction;
+then everything will fall in place just fine.
 
-> I was under the impression that the windows port suffers from Windows'
-> lack of a proper fork() and friends and that a proper library would
-> help solving those problems. Perhaps I was misinformed.
+> > > - no acceptable level of performance in filesystem and VFS (readdir,
+> > >   stat, open and read/write are annoyingly slow)
+> > 
+> > With what libraries?  Native `stat' and `readdir' are quite fast. 
+> > Perhaps you mean the ported glibc (libgw32c), where `readdir' is indeed 
+> > painfully slow, but then you don't need to use it.
+> 
+> No, native.
 
-I think msys' DLLs might be doing what cygwin does, an emulated fork.
-
-A quite surprising thing is that msysgit manages to be very fast. Not
-as fast as the same git, same hw running on a recent Linux, but pretty
-usable fast for a tree with a few thousand files. Earlier/other git
-ports to win32 are pretty slow (still faster than svn and friends, but
-slooow).
-
-cheers,
-
-
-m
+Can you show a test case where this penalty is clearly visible?  I'm
+curious to see the numbers.  TIA
