@@ -1,53 +1,95 @@
-From: Eli Zaretskii <eliz@gnu.org>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 23:08:56 +0200
-Message-ID: <uwstohyqf.fsf@gnu.org>
-References: <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net> <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home> <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site> <4713BA89.633B86F2@dessent.net> <20071015194214.GC15541@steel.home> <4713C81F.A75FEFC2@dessent.net>
-Reply-To: Eli Zaretskii <eliz@gnu.org>
-Cc: raa.lkml@gmail.com, Johannes.Schindelin@gmx.de,
-	git@vger.kernel.org, ae@op5.se, tsuna@lrde.epita.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 00:06:26 2007
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: [PATCH] Git homepage: remove all the references to Cogito
+Date: Mon, 15 Oct 2007 23:38:00 +0200
+Message-ID: <20071015233800.6306e414@paolo-desktop>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: pasky@suse.cz
+X-From: git-owner@vger.kernel.org Tue Oct 16 00:33:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhXCV-0002xS-CV
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 23:10:11 +0200
+	id 1IhXdb-00014B-1F
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 23:38:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751579AbXJOVJ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 17:09:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750745AbXJOVJ6
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 17:09:58 -0400
-Received: from nitzan.inter.net.il ([213.8.233.22]:29660 "EHLO
-	nitzan.inter.net.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750742AbXJOVJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 17:09:57 -0400
-Received: from HOME-C4E4A596F7 (IGLD-80-230-6-147.inter.net.il [80.230.6.147])
-	by nitzan.inter.net.il (MOS 3.7.3a-GA)
-	with ESMTP id IAW31781 (AUTH halo1);
-	Mon, 15 Oct 2007 23:06:21 +0200 (IST)
-In-reply-to: <4713C81F.A75FEFC2@dessent.net> (message from Brian Dessent on
-	Mon, 15 Oct 2007 13:05:51 -0700)
+	id S1754611AbXJOVh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 17:37:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754570AbXJOVh5
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 17:37:57 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:21690 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753370AbXJOVh4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 17:37:56 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so970652ugc
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 14:37:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=E5hPplxXORAPFktVKmBa2Nk8OkthQlyd6AiFf/zyrDs=;
+        b=NrCkkT1shgtKEO3XHrU5eCgKci9x9zrt5P7ZDlfqpfij/RRIQqr89H2jhuQHudOiaf4tbSJgjw4vljeILE8u7OcRNCUno7UpIKwpDmuDeFRlRYJZWZGyms0aA+Scb41wer5Lga6dRgq87hieh5pLnx4BFXhgOBRRvt+EXuOL3Ws=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=WGu5WeEIJUhb4W16QvOIaxsoDxdkmTB3tBSmzLtiJd/HcHrgxIVLUiVPOXl1KRD/iBL/k7wQrYGSp3f7kDO90qVPyVBiZxR30HYPNWMesY8hsqj1o+Bj740MKfZBvdRfivSTVMHJIHJzphVieJtfOY1RQl/oze71ssDWHDmtE2c=
+Received: by 10.66.255.7 with SMTP id c7mr8348723ugi.1192484274364;
+        Mon, 15 Oct 2007 14:37:54 -0700 (PDT)
+Received: from paolo-desktop ( [82.50.4.36])
+        by mx.google.com with ESMTPS id i4sm2519357nfh.2007.10.15.14.37.52
+        (version=SSLv3 cipher=OTHER);
+        Mon, 15 Oct 2007 14:37:53 -0700 (PDT)
+X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61047>
 
-> Date: Mon, 15 Oct 2007 13:05:51 -0700
-> From: Brian Dessent <brian@dessent.net>
-> CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
->  	git@vger.kernel.org, Eli Zaretskii <eliz@gnu.org>, ae@op5.se,
->  	tsuna@lrde.epita.fr
-> 
-> I don't know of
-> any ports of bash that aren't MSYS or Cygwin based.  However I do think
-> there's a native port of zsh out there by the GnuWin32 project, which
-> when renamed as just "/bin/sh" might be suitable, but only if these
-> scripts don't use bash-isms.  I have not tried this zsh myself and
-> speed/compatibility wise I'm not sure it's up to snuff.
+It sounds like a good idea to remove all the references to Cogito from the git homepage since it's not longer supported.
+Changes tested with a local installation of the web server lighttpd
 
-I think you mean Amol's zsh (there's no GnuWin32 port of zsh AFAIK).
-Amol's zsh is what I use, but it has a few annoying bugs, even after I
-fixed some, that prevent it from running a typical configure script,
-for example.
+Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+---
+ index.html |   12 +-----------
+ 1 files changed, 1 insertions(+), 11 deletions(-)
+
+diff --git a/index.html b/index.html
+index 340aee0..41605ed 100644
+--- a/index.html
++++ b/index.html
+@@ -94,7 +94,6 @@ Junio C Hamano.</p>
+ 	-->
+ 	<br /><a href="course/stgit.html">Maintaining external patches</a>
+ 	<br /><a href="course/svn.html">Git for SVN users</a>
+-	<br /><a href="course/cvs.html">Cogito for CVS users</a>
+ 	<br /><em>More to come soon...</em>
+ 	</tr></td>
+ </table></div>
+@@ -286,15 +285,6 @@ a gitweb interface, at <a href="http://repo.or.cz/">http://repo.or.cz/</a>.</p>
+ 
+ <dl>
+ 
+-<dt id="cogito">Cogito</dt>
+-<dd>
+-<a href="http://git.or.cz/cogito/">Cogito</a>
+-is a popular version control system on top of Git.
+-It aims at seamless user interface and ease of use, providing
+-generally smoother user experience than the "raw" Git interface
+-and indeed also many other version control systems. However, it
+-also lacks many advanced capabilities of Git and is currently
+-being slowly phased out.</dd>
+ 
+ <dt id="stgit">StGIT</dt>
+ <dd><a href="http://www.procode.org/stgit/">Stacked Git</a> provides
+@@ -340,7 +330,7 @@ with help of a group of hackers 'round the net.
+ It is currently maintained by
+ Junio C Hamano.</p>
+ 
+-<p>The user discussion and development of Git, Cogito and other tools related to Git
++<p>The user discussion and development of Git and other tools related to Git
+ takes place on the Git mailing list - everyone is welcome to post
+ bug reports, feature requests, comments and patches to
+ <a href="mailto:git@vger.kernel.org">git@vger.kernel.org</a>.
+-- 
+1.5.3.4.206.g58ba4
