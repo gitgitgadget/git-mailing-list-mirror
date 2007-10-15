@@ -1,78 +1,61 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: [PATCH] [BUG FIXED 2] git-add (-a|-u)  and -n support
-Date: Mon, 15 Oct 2007 10:47:46 -0400
-Message-ID: <85EE4C64-2174-45D3-A459-69746C9CD51C@mit.edu>
-References: <E1DCA1D1-1ED3-498A-A919-9EBAF3BA0870@mit.edu> <0458D1DA-6261-4DA6-91B0-739F4D35AADF@mit.edu> <E857D120-787F-460B-A167-4B5F4BD2C3B5@mit.edu> <vpq3awd25hs.fsf@bauges.imag.fr> <D44B7811-5A0F-4A31-9DB3-6D2BF645E543@MIT.EDU> <20071015143137.GA7351@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git-svn and submodules
+Date: Mon, 15 Oct 2007 16:45:13 +0200
+Message-ID: <20071015144513.GB7351@diana.vm.bytemark.co.uk>
+References: <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp> <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site> <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 17:08:00 2007
+Cc: Eric Wong <normalperson@yhbt.net>, git list <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Oct 15 17:11:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhRFS-0007ZC-K9
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 16:48:51 +0200
+	id 1IhRCO-0006sy-6A
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 16:45:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754374AbXJOOs2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 10:48:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753808AbXJOOs1
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 10:48:27 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:55441 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753956AbXJOOs0 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 10:48:26 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9FElmXC008074;
-	Mon, 15 Oct 2007 10:47:49 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9FEllco024483
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Mon, 15 Oct 2007 10:47:48 -0400 (EDT)
-In-Reply-To: <20071015143137.GA7351@diana.vm.bytemark.co.uk>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1753213AbXJOOp2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 10:45:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751024AbXJOOp2
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 10:45:28 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4934 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753296AbXJOOp1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 10:45:27 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IhRBx-0002JY-00; Mon, 15 Oct 2007 15:45:13 +0100
+Content-Disposition: inline
+In-Reply-To: <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61005>
 
+On 2007-10-15 09:07:21 +0200, Benoit SIGOURE wrote:
 
-On 15 Oct 2007, at 10:31:37 AM, Karl Hasselstr=F6m wrote:
+>   - git svn create-ignore (to create one .gitignore per directory
+> from the svn:ignore properties. This has the disadvantage of
+> committing the .gitignore during the next dcommit,
 
-> On 2007-10-14 18:00:44 -0400, Michael Witten wrote:
->
->> Here's compromise that is backwards compatible. For both git-add and
->> git-commit:
->>
->>       -a dir [dir2 ...] =3D> all changes in the given dirs.
->>       -a                =3D> all changes from the root.
->>
->> Then we can just leave -u in place for now, and mark it as
->> deprecated.
->>
->> In any case, the goal is to make the intuition solid between
->> git-commit and git-add.
->
-> As I recall, Junio had some specific reason for calling the flag -u
-> instead of -a. Search in the list archive for the patch that
-> introduced the flag, or wait till he gets back and ask him.
+I built ignore support for git-svnignore a long time ago. It converts
+the per-directory svn:ignore to per-directory .gitignore at commit
+import time, which is very handy:
 
-I have a feeling it was because -u currently just updates modified
-files in the current directory, while -a updated all modified files.
+-I <ignorefile_name>::
+        Import the svn:ignore directory property to files with this
+        name in each directory. (The Subversion and GIT ignore
+        syntaxes are similar enough that using the Subversion patterns
+        directly with "-I .gitignore" will almost always just work.)
 
-=46ortunately, the suggestion above does not break anything.
+The only downside with that is that svn ignore patterns are
+non-recursive, while git ignore patterns are recursive. This could be
+solved by prefixing them with a "/".
 
-Michael Witten
-
-P.S.
-When is Junio coming back? I know I know... Look through the =20
-archives. :-P
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
