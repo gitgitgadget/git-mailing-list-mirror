@@ -1,97 +1,92 @@
-From: David Kastrup <dak@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 21:26:44 +0200
-Message-ID: <85ejfwi3gr.fsf@lola.goethe.zz>
-References: <1192293466.17584.95.camel@homebase.localnet>
-	<uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
-	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-	<47125F74.9050600@op5.se>
-	<Pine.LNX.4.64.0710141934310.25221@racer.site>
-	<47126957.1020204@op5.se>
-	<Pine.LNX.4.64.0710142112540.25221@racer.site>
-	<20071014221446.GC2776@steel.home> <feud8j$kdg$1@ger.gmane.org>
-	<20071015173832.GB2966@steel.home>
+Date: Mon, 15 Oct 2007 20:27:38 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710152026260.25221@racer.site>
+References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> 
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> 
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> 
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> 
+ <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net>
+  <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
+  <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site>
+ <4713BA89.633B86F2@dessent.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael Gebetsroither <gebi@sbox.tugraz.at>, make-w32@gnu.org,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 22:23:35 2007
-Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
-Envelope-to: gnu-make-w32@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>, Eli Zaretskii <eliz@gnu.org>,
+	ae@op5.se, tsuna@lrde.epita.fr
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 22:25:55 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhVZi-0003dC-TL
-	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 21:26:03 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1IhVZb-0004wf-HT
-	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 15:25:55 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1IhVZW-0004vD-Lt
-	for make-w32@gnu.org; Mon, 15 Oct 2007 15:25:50 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1IhVZV-0004v1-8O
-	for make-w32@gnu.org; Mon, 15 Oct 2007 15:25:50 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1IhVZV-0004uy-3n
-	for make-w32@gnu.org; Mon, 15 Oct 2007 15:25:49 -0400
-Received: from fencepost.gnu.org ([140.186.70.10])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>) id 1IhVZU-0001Gv-Tq
-	for make-w32@gnu.org; Mon, 15 Oct 2007 15:25:49 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IhVZT-0005hn-U8; Mon, 15 Oct 2007 15:25:48 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 139961C4D4B3; Mon, 15 Oct 2007 21:26:44 +0200 (CEST)
-In-Reply-To: <20071015173832.GB2966@steel.home> (Alex Riesen's message of
-	"Mon\, 15 Oct 2007 19\:38\:32 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
-X-detected-kernel: by monty-python.gnu.org: Linux 2.6, seldom 2.4 (older, 4)
-X-BeenThere: make-w32@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/make-w32>
-List-Post: <mailto:make-w32@gnu.org>
-List-Help: <mailto:make-w32-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=subscribe>
-Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61030>
+	id 1IhVbu-0004AC-2t
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 21:28:18 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1759668AbXJOT1r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 15:27:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759533AbXJOT1r
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 15:27:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38087 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759200AbXJOT1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 15:27:45 -0400
+Received: (qmail invoked by alias); 15 Oct 2007 19:27:43 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp036) with SMTP; 15 Oct 2007 21:27:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19T1iZQGthTQrRBAj4kmxBc3dYNfCy+bXq8SAciwP
+	OA8XFxBxpYHoPV
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4713BA89.633B86F2@dessent.net>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61031>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Hi,
 
-> Michael Gebetsroither, Mon, Oct 15, 2007 02:46:11 +0200:
->> > - it is the only OS in the world with multi-root (/a/b/c and /a/b/c
->> >   can be not the same, depending on what current "drive" is) and
->> >   multi-cwd, which hasn't had formed itself into a problem yet, but
->> >   surely will
->> 
->> Thats true for linux too.
->> /a/b/c and /a/b/c can be 2 totally different files depending on the vfs
->> namespace you are one.
->
-> No it is not. A process will always see the same filesystem object
-> under the same path at the any given time (IOW, you can't have many
-> namespaces active at the same time).
+On Mon, 15 Oct 2007, Brian Dessent wrote:
 
-dak@lola:/home/tmp/emacs$ mkdir -p /tmp/a/b
-dak@lola:/home/tmp/emacs$ cd /tmp/a/b
-dak@lola:/tmp/a/b$ sudo mount --bind /usr /tmp/a
-Password:
-dak@lola:/tmp/a/b$ command pwd
-/tmp/a/b
-dak@lola:/tmp/a/b$ ls -l
-total 0
-dak@lola:/tmp/a/b$ ls -l /tmp/a/b
-ls: /tmp/a/b: No such file or directory
-dak@lola:/tmp/a/b$ 
+> Johannes Schindelin wrote:
+> 
+> > My bigger concerns are the performance and stability.  For example, I 
+> > had a very annoying problem on one of the machines I am testing 
+> > msysGit on. The problem was _only_ fixable by deactivating component 
+> > of Logitech's WebCam driver!  Now, if a user-installable 3rd party 
+> > program can make my regular git crash, I am scared what more it can 
+> > do.
+> 
+> That is because the MSYS runtime is based on an old version of Cygwin, 
+> and it uses the same dirty tricks to emulate fork.  These tricks rely on 
+> having a repeatably consistent memory layout for a process each time it 
+> is started, and when third party tools add hooks that affect the load 
+> order or otherwise screw with the layout, the fork emulation fails. This 
+> is also why it is sometimes necessary to assign unique base addresses to 
+> all libraries (rebaseall) in order to get fork emulation working again.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Ah, thanks for the explanation!  (I knew that this thread still had 
+something useful in it ;-)
+
+> So yes, it is unfortunate that some system tools can drastically affect 
+> the ability of Cygwin and MSYS to function, but it's what we live with 
+> to have fork/exec emulation.  I see that there is work afoot to abstract 
+> process creation so that hopefully this won't be as much a concern in 
+> the near future.
+
+We never had the problem in git itself, since we never used fork() on 
+Windows.  The problem lies in our usage of bash and perl.
+
+Bash we can fix in the long run (this goes under the keyword 
+"builtinification" on the git list), but I do not see our reliance on Perl 
+going away, not for git {send-email,cvsimport,cvsexportcommit,svn}.  
+These are not too common operations, so common users will be able to do 
+without them.
+
+However, if you rely on the CVS/SVN connectors, or send-email, and in any 
+case in the short run, you better run Git on Windows only when that funny 
+Logitech driver is disabled ;-)
+
+Ciao,
+Dscho
