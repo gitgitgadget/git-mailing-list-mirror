@@ -1,88 +1,144 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 16:36:31 +0200
-Message-ID: <F17B71A6-879A-4036-908E-A74433BC39ED@zib.de>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org> <471448D0.6080200@op5.se> <2EA3BEC9-5B13-44D3-B190-CA77499F642C@zib.de> <Pine.LNX.4.64.0710161331440.25221@racer.site> <4D822762-D344-465E-B77D-90A64D61F5A9@zib.de> <Pine.LNX.4.64.0710161419140.25221@racer.site> <26554F2D-B44D-4691-A696-9B6924E08599@zib.de> <Pine.LNX.4.64.0710161512450.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Eli Zaretskii <eliz@gnu.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Alex Riesen <raa.lkml@gmail.com>, tsuna@lrde.epita.fr,
-	Andreas Ericsson <ae@op5.se>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 16:35:38 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: [PATCH 2/5] Implement git svn create-ignore.
+Date: Mon, 15 Oct 2007 17:35:03 +0200
+Message-ID: <1192462506-3783-2-git-send-email-tsuna@lrde.epita.fr>
+References: <1192462506-3783-1-git-send-email-tsuna@lrde.epita.fr>
+Cc: normalperson@yhbt.net, Benoit Sigoure <tsuna@lrde.epita.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 16:37:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhnW4-0005v3-FH
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:35:28 +0200
+	id 1IhnYE-0006VL-S4
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:37:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932704AbXJPOfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 10:35:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932605AbXJPOfL
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:35:11 -0400
-Received: from mailer.zib.de ([130.73.108.11]:59681 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932699AbXJPOfJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 10:35:09 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9GEZ2YG025530;
-	Tue, 16 Oct 2007 16:35:02 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9GEZ10d003220
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 16 Oct 2007 16:35:01 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0710161512450.25221@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S932728AbXJPOha (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 10:37:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932605AbXJPOha
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:37:30 -0400
+Received: from 1.139.39-62.rev.gaoland.net ([62.39.139.1]:56254 "EHLO
+	tsunaxbook.lrde.epita.fr" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1759126AbXJPOh2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 10:37:28 -0400
+Received: by tsunaxbook.lrde.epita.fr (Postfix, from userid 501)
+	id 1682BB411B5; Mon, 15 Oct 2007 17:35:07 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.4.214.g6f43
+In-Reply-To: <1192462506-3783-1-git-send-email-tsuna@lrde.epita.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61175>
 
+	* git-svn.perl (%cmd): Add the new command `create-ignore'.
+	(&cmd_create_ignore): New.
+	* t/t9101-git-svn-props.sh: Adjust the test-case for show-ignore and
+	add a test case for create-ignore.
 
-On Oct 16, 2007, at 4:14 PM, Johannes Schindelin wrote:
+Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
+---
+ git-svn.perl             |   27 +++++++++++++++++++++++++++
+ t/t9101-git-svn-props.sh |   28 +++++++++++++++++++++++++---
+ 2 files changed, 52 insertions(+), 3 deletions(-)
 
-> On Tue, 16 Oct 2007, Steffen Prohaska wrote:
->
->> On Oct 16, 2007, at 3:21 PM, Johannes Schindelin wrote:
->>
->>> What you want would probably be all too easy with a pre-commit hook.
->>> No need to clutter the git-core with code that is usually not needed
->>> (you'd only ever activate it on Linux when other developers use
->>> Windows or MacOSX).
->>
->> Personally, I'd be very happy if git enforced the minimal consent
->> between (supported) filesystems and provided a system to guarantee  
->> that
->> I can only create tree objects that can be checked out on all
->> (supported) filesystems.
->
-> This will not happen.  In the Linux kernel, there were exactly such  
-> cases,
-> where the filenames differed only in case.
->
-> Also, some projects I checked out (notably Perl) assume that  
-> Makefile is
-> different from makefile.
-
-weird Linux and Perl world, indeed.
-
-
-> So I think this will always be something Windows users
-
-and Mac users, who also need to deal with a case-preserving,
-but case-insensitive filesystem.
-
-> would wish to
-> impose onto others, while Linux users would always refuse.
-
-maybe Linux kernel developers. When I work on Linux, I'd be happy
-if git saved me from creating directories containing Readme and
-readme at the same time.
-
-	Steffen
+diff --git a/git-svn.perl b/git-svn.perl
+index abc83ec..94091ea 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -123,6 +123,10 @@ my %cmd = (
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+ 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
++	'create-ignore' => [ \&cmd_create_ignore,
++			     'Create a .gitignore per svn:ignore',
++			     { 'revision|r=i' => \$_revision
++			     } ],
+ 	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
+ 			{ 'revision|r=i' => \$_revision
+ 			} ],
+@@ -499,6 +503,29 @@ sub cmd_show_ignore {
+ 	});
+ }
+ 
++sub cmd_create_ignore {
++	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
++	$gs ||= Git::SVN->new;
++	my $r = (defined $_revision ? $_revision : $gs->ra->get_latest_revnum);
++	$gs->prop_walk($gs->{path}, $r, sub {
++		my ($gs, $path, $props) = @_;
++		# $path is of the form /path/to/dir/
++		my $ignore = '.' . $path . '.gitignore';
++		my $s = $props->{'svn:ignore'} or return;
++		open(GITIGNORE, '>', $ignore)
++		  or fatal("Failed to open `$ignore' for writing: $!\n");
++		$s =~ s/[\r\n]+/\n/g;
++		chomp $s;
++		# Prefix all patterns so that the ignore doesn't apply
++		# to sub-directories.
++		$s =~ s#^#/#gm;
++		print GITIGNORE "$s\n";
++		close(GITIGNORE)
++		  or fatal("Failed to close `$ignore': $!\n");
++		command_noisy('add', $ignore);
++	});
++}
++
+ sub cmd_multi_init {
+ 	my $url = shift;
+ 	unless (defined $_trunk || defined $_branches || defined $_tags) {
+diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
+index 5aac644..796d80e 100755
+--- a/t/t9101-git-svn-props.sh
++++ b/t/t9101-git-svn-props.sh
+@@ -126,19 +126,20 @@ cat > show-ignore.expect <<\EOF
+ # /
+ /no-such-file*
+ 
+-# deeply
++# /deeply/
+ /deeply/no-such-file*
+ 
+-# deeply/nested
++# /deeply/nested/
+ /deeply/nested/no-such-file*
+ 
+-# deeply/nested/directory
++# /deeply/nested/directory/
+ /deeply/nested/directory/no-such-file*
+ EOF
+ 
+ test_expect_success 'test show-ignore' "
+ 	cd test_wc &&
+ 	mkdir -p deeply/nested/directory &&
++	touch deeply/nested/directory/.keep &&
+ 	svn add deeply &&
+ 	svn up &&
+ 	svn propset -R svn:ignore 'no-such-file*' .
+@@ -148,4 +149,25 @@ test_expect_success 'test show-ignore' "
+ 	cmp show-ignore.expect show-ignore.got
+ 	"
+ 
++cat >create-ignore.expect <<\EOF
++/no-such-file*
++EOF
++
++cat >create-ignore-index.expect <<\EOF
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/nested/.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/nested/directory/.gitignore
++EOF
++
++test_expect_success 'test create-ignore' "
++	git-svn fetch && git pull . remotes/git-svn &&
++	git-svn create-ignore &&
++	cmp ./.gitignore create-ignore.expect &&
++	cmp ./deeply/.gitignore create-ignore.expect &&
++	cmp ./deeply/nested/.gitignore create-ignore.expect &&
++	cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
++	git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
++	"
++
+ test_done
+-- 
+1.5.3.4.214.g6f43
