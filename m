@@ -1,77 +1,81 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 08:39:33 +0200
-Message-ID: <47130B25.4010304@viscovery.net>
-References: <1192293466.17584.95.camel@homebase.localnet>	<uy7e6keyv.fsf@gnu.org>	<1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Mon, 15 Oct 2007 09:02:52 +0200
+Message-ID: <200710150902.52653.johan@herland.net>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+ <471302D2.6010405@trolltech.com>
+ <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>, Make Windows <make-w32@gnu.org>
-To: Benoit SIGOURE <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 15 08:39:50 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: David Symonds <dsymonds@gmail.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	David Kastrup <dak@gnu.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	=?iso-8859-1?q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 09:04:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhJcB-0001O3-Pf
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 08:39:48 +0200
+	id 1IhJzx-00057L-43
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 09:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753911AbXJOGjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 02:39:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753921AbXJOGjh
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 02:39:37 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:25261 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753677AbXJOGjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 02:39:36 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IhJbm-0004gd-Vj; Mon, 15 Oct 2007 08:39:23 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 4563C69F; Mon, 15 Oct 2007 08:39:33 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751778AbXJOHEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 03:04:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXJOHEI
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 03:04:08 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:55344 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751198AbXJOHEH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 03:04:07 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
+ no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JPX00D05YAEKA00@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 15 Oct 2007 09:03:50 +0200 (CEST)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-004-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPX00IMEY8TN540@no-osl-m323-srv-004-z2.isp.get.no> for
+ git@vger.kernel.org; Mon, 15 Oct 2007 09:02:53 +0200 (CEST)
+Received: from alpha.herland ([84.215.102.95])
+ by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JPX009OJY8TE6D0@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Mon, 15 Oct 2007 09:02:53 +0200 (CEST)
+In-reply-to: <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
+Content-disposition: inline
+User-Agent: KMail/1.9.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60953>
 
-Benoit SIGOURE schrieb:
-> Context: GNU make seems to be willing to switch from CVS to ... 
-> something else.
+On Monday 15 October 2007, David Symonds wrote:
+> On 15/10/2007, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> > David Kastrup said the following on 14.10.2007 19:48:
+> > >
+> > > "unknown" clearly is much better than "dunno" though even if my own
+> > > favorite would be "undecided".
+> >
+> > What then about a good'ol programming favorite, "void"? :-)
 > 
-> On Oct 14, 2007, at 6:57 PM, Paul Smith wrote:
-> 
->> [...] the big thing no one else seems to have addressed much in
->> other discussions I've seen is portability.  It LOOKS like there are
->> native ports of GIT to MINGW, but I have no idea how complete and usable
->> they are.  If someone who has a Windows system could look into that it
->> would be a big help.
-> 
-> I think the best thing to do is to ask directly on the Git ML.
-> 
-> Someone already pointed out that he'd like to use Git on Windows but 
-> doesn't want to install either Cygwin or MSYS.  Is this possible, or 
-> will it be possible in the near future?  Is it possible to use one of 
-> the various GUIs (git-gui, gitk, qgit) on Windows without requiring a 
-> POSIXish shell etc.?
+> "skip"? That would make semantic sense, right?
 
-FWIW, I'm using the MinGW port from cmd.exe, i.e. not from a posix shell, on 
-a *production* repository. gitk and git-gui work. Not all operations that I 
-regularly use are available[*] via the GUIs, like git-rebase or 
-non-fast-forwarding push, so the use of the command line is needed from time 
-to time.
+...or we could go all spaghetti western, and call it "ugly".
 
-Unfortunately, "Fetch" does not yet work[*] from within git-gui, so you have 
-to fall back to git-fetch on the command line.
+(as in "git-bisect [the <good>, the <bad> and the <ugly>]")
 
-Of course, the Posix toolset, including a shell, must still be installed 
-(and in my setup they are in the PATH), but you don't have to use it.
 
-[*] Note the distinction between "not available" and "does not work".
+Have fun! :)
 
--- Hannes
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
