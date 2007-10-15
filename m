@@ -1,79 +1,72 @@
-From: "Shun Kei Leung" <kevinlsk@gmail.com>
-Subject: Re: git-fast-import crashes
-Date: Mon, 15 Oct 2007 12:53:38 +0800
-Message-ID: <e66701d40710142153o70a7b696r928491be437ac6d@mail.gmail.com>
-References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com>
-	 <20071013032916.GL27899@spearce.org>
-	 <20071013033407.GM27899@spearce.org>
-	 <20071013073640.GC7110@artemis.corp>
-	 <20071013075027.GD7110@artemis.corp>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 18:35:22 +1300
+Message-ID: <46a038f90710142235i6d7e39c4qdb5d33941352e1aa@mail.gmail.com>
+References: <1192293466.17584.95.camel@homebase.localnet>
+	 <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
+	 <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+	 <Pine.LNX.4.64.0710141916510.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Pierre Habouzit" <madcoder@debian.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 06:54:01 2007
+Cc: "Benoit SIGOURE" <tsuna@lrde.epita.fr>,
+	"git list" <git@vger.kernel.org>, "Eli Zaretskii" <eliz@gnu.org>,
+	"Make Windows" <make-w32@gnu.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 07:35:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhHxh-0004pY-1o
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 06:53:53 +0200
+	id 1IhIc5-0001Ia-HB
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 07:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751445AbXJOExl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 00:53:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbXJOExl
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 00:53:41 -0400
-Received: from nf-out-0910.google.com ([64.233.182.190]:62476 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751407AbXJOExk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 00:53:40 -0400
-Received: by nf-out-0910.google.com with SMTP id g13so1165298nfb
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 21:53:39 -0700 (PDT)
+	id S1751702AbXJOFf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 01:35:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbXJOFf0
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 01:35:26 -0400
+Received: from hu-out-0506.google.com ([72.14.214.227]:3030 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751702AbXJOFfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 01:35:25 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so1189790hue
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 22:35:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=t+P8ZpAkyvkBXxpQHm+ACSnARIU9oThH2uakdm4vp3E=;
-        b=iLWYBPncFGjtItikrbCnSOK2+g03k/AGEJCLJyEIGZ0dZMykON29fzpLsuf7fFkXdYGiV6nyFoEw43K1epQRHdLIiVyGxxaXIMWRkLt2fhwMftooosvdj8C/e5iNTovVTMOH34rV44NQs6r5G1y1CubTAJvIBjuiVp2LvaOvSVw=
+        bh=EEPvMVnq4Oq0477uci3BaxorxMObdkIfjGZr8tKJPlU=;
+        b=ZnHsZgu+z26CIcZA8I5/q3aba9yCPJDMUAsfwxAZi5dDY7OEZ3SVOE/7yawC+iNtrMGwCIEGgz+dNlbbPJZeunfIt0yVSo7QyhLrW+RyVMdshN/AcbiniF1dhAc/m4CY+/cui9QajJ8u3raeAb2LTGr4FaQ8dR3X8K4KO3hcihM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=b/PL/bhy0/ppz3R/dfl5avc6LR4R2xo7AZBSJ31+rd4raKjAL7Y9+e0GZVWtvPq2aVUfIaWBvWN/QmKIqW4ISNfEIoDYVF/zhe2bCkVtwtcXzVUILEdQJKTDkEMMbGNzBxm7II7G34/RTErblQ4D1oKw0FpcKl0WmpUeyFjo+MA=
-Received: by 10.78.200.3 with SMTP id x3mr3690294huf.1192424019021;
-        Sun, 14 Oct 2007 21:53:39 -0700 (PDT)
-Received: by 10.78.132.20 with HTTP; Sun, 14 Oct 2007 21:53:38 -0700 (PDT)
-In-Reply-To: <20071013075027.GD7110@artemis.corp>
+        b=ZLKdD2Gj8eq6EJIcjlappS5YdeBPiqVFIQa68XcdEQTnwx7aNwADIsjzvjm4fg/wFefFqwn62cW/67zjYu+cB0c+lB+381n7ByorXecbiqtm8ITen4CK2cOr0uNaU4Evv9szIpewB0Dr2WgCnJkiY53qa1oAG8bjfoxlCfnaFUU=
+Received: by 10.66.252.8 with SMTP id z8mr7500368ugh.1192426522485;
+        Sun, 14 Oct 2007 22:35:22 -0700 (PDT)
+Received: by 10.67.22.19 with HTTP; Sun, 14 Oct 2007 22:35:22 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710141916510.25221@racer.site>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60945>
 
-Hi,
+On 10/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> There is msysGit.  This project is nearing to its first beta, being
+> self-hosted since mid-August IIRC.
 
-Sorry for the late reply. I was away from my computer in the weekend.
+I've been using it recently, I have to say it's pretty impressive -
+you can use it from cmd.com or from a bash window (courtesy of the
+msys environment included). The GUIs that ship with git are there
+(git-gui, gitk).
 
+I use gitk extensively, and it works *great*. My work-style is of a
+shell window for status/diff/commit actions and one or more gitk
+windows for browsing of proj history. You can use git-gui for a visual
+status/git/commit workflow, or qgit. qgit is more integrated, and
+might feel more "at home" for users that expect something more
+MDI-ish.
 
-Hi Pierre,
-
-I didn't try:
-http://git.madism.org/?p=git.git;a=commit;h=7406e83342cd445ac38c1753c5fce75377737e2f
-
-because the bad commit turns out to be b449f4c according to `git bisect'.
-
-
-Hi Shawn,
-
-I include the output of `git count-objects -v' for your information:
-
-count: 104
-size: 552
-in-pack: 10652
-packs: 12
-prune-packable: 0
-garbage: 0
+cheers.
 
 
-Regards,
-Kevin Leung
+martin
