@@ -1,77 +1,99 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 12:52:06 +0200
-Message-ID: <47134656.4070707@op5.se>
-References: <20071014221446.GC2776@steel.home>	<023101c80eb5$e3b6b310$2e08a8c0@CAM.ARTIMI.COM> <20071015000347.GA13033@old.davidb.org> <E1IhJ7T-0008AC-8b@fencepost.gnu.org> <47133DEC.6020600@op5.se> <4713431C.7030103@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: git-svn and submodules
+Date: Mon, 15 Oct 2007 12:53:11 +0200
+Message-ID: <AA453A15-BBF1-4EA6-B1AC-1C4E00E89FB2@lrde.epita.fr>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp> <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site> <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr> <86lka4ofb8.fsf@lola.quinscape.zz>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-74--609973098"
 Content-Transfer-Encoding: 7bit
-Cc: Eli Zaretskii <eliz@gnu.org>, David Brown <git@davidb.org>,
-	dave.korn@artimi.com, raa.lkml@gmail.com,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org, make-w32@gnu.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 15 12:52:46 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 12:54:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhNYj-0006sp-Sc
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 12:52:30 +0200
+	id 1IhNaC-000778-Em
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 12:54:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757893AbXJOKwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 06:52:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757068AbXJOKwM
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 06:52:12 -0400
-Received: from mail.op5.se ([193.201.96.20]:57213 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756363AbXJOKwK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 06:52:10 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E2D24173070E;
-	Mon, 15 Oct 2007 12:52:08 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.43
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.43 tagged_above=-10 required=6.6 tests=[AWL=0.069,
-	BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id HHBojHskMrQd; Mon, 15 Oct 2007 12:52:08 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 9F289173070B;
-	Mon, 15 Oct 2007 12:52:07 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <4713431C.7030103@viscovery.net>
+	id S1758403AbXJOKxt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 06:53:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758323AbXJOKxt
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 06:53:49 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:47883 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758263AbXJOKxs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 06:53:48 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IhNZz-0007eY-Cz; Mon, 15 Oct 2007 12:53:47 +0200
+In-Reply-To: <86lka4ofb8.fsf@lola.quinscape.zz>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60981>
 
-Johannes Sixt wrote:
-> Andreas Ericsson schrieb:
->> Eli Zaretskii wrote:
->>>
->>>> If you know what the library on the other end is doing to re-parse the
->>>> arguments back into separate strings, it might be possible to quote 
->>>> things
->>>> enough to handle names with spaces, but it is hard.
->>>
->>> It's not hard, it's just a bit of work.  And it needs to be done
->>> exactly once.
->>
->> Before someone beats me to it: "Patches welcome" ;-)
-> 
-> Let others do the research for you, hm?
-> 
-> http://repo.or.cz/w/git/mingw.git?a=blob;f=compat/mingw.c;h=2554f19765da5709b787e873da225c59f9d22bb7;hb=HEAD#l306 
-> 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-74--609973098
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Yup. Although it was more in the nature of "whoever wrote it surely knows
-he/she did it and where to find the patch", so I expect this wasn't much
-of a timesink for you. My apologies if I was incorrect.
+On Oct 15, 2007, at 12:14 PM, David Kastrup wrote:
+
+> Benoit SIGOURE <tsuna@lrde.epita.fr> writes:
+>
+>> This week I'm probably going to start to dive in git-svn by
+>> implementing simpler things first:
+>>   - git svn create-ignore (to create one .gitignore per directory
+>> from the svn:ignore properties.  This has the disadvantage of
+>> committing the .gitignore during the next dcommit, but when you
+>> import a repo with tons of ignores (>1000), using git svn show-ignore
+>> to build .git/info/exclude is *not* a good idea, because things like
+>> git-status will end up doing >1000 fnmatch *per file* in the repo,
+>> which leads to git-status taking more than 4s on my Core2Duo 2Ghz 2G
+>> RAM)
+>
+> Well, then this should be fixed in git general, by sorting the ignores
+> (wildcards in the first place where they can match), and then just
+> moving those patterns that can actually match according to sort order
+> to the list of fnmatch candidates (and moving those files that can't
+> match anymore die to the sort order out again).
+>
+> I don't think that the final "solution" for avoiding a lousy global
+> O(n^2) algorithm is to replace it with lousy local O(n^2) algorithms
+> and just hope for smaller values of n.
+
+That's entirely true, it's more of a workaround than a real  
+solution.  Anyways, there could be other situations in which someone  
+would like to generate the .gitignore instead of using .git/info/ 
+exclude, so this feature could be useful anyways.
+
+I can try to address this issue later, if I have enough free time in  
+my hands to do so.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-74--609973098
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHE0aXwwE67wC8PUkRAqilAKCbllgn8CZugNrRMkiCP7p2v4hQqwCgxnnM
+KX9a1gYFq0tEcNByX1yKq1w=
+=SWgN
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-74--609973098--
