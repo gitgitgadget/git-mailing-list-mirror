@@ -1,71 +1,100 @@
-From: David Brown <git@davidb.org>
+From: Brian Dessent <brian@dessent.net>
 Subject: Re: Switching from CVS to GIT
-Date: Sun, 14 Oct 2007 17:03:47 -0700
-Message-ID: <20071015000347.GA13033@old.davidb.org>
-References: <20071014221446.GC2776@steel.home> <023101c80eb5$e3b6b310$2e08a8c0@CAM.ARTIMI.COM>
+Date: Sun, 14 Oct 2007 17:36:38 -0700
+Organization: My own little world...
+Message-ID: <4712B616.165BBF8D@dessent.net>
+References: <1192293466.17584.95.camel@homebase.localnet>
+	<uy7e6keyv.fsf@gnu.org>
+	<1192381040.4908.57.camel@homebase.localnet>
+	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+	<47125F74.9050600@op5.se>
+	<Pine.LNX.4.64.0710141934310.25221@racer.site>
+	<47126957.1020204@op5.se>
+	<Pine.LNX.4.64.0710142112540.25221@racer.site>
+	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+	<Pine.LNX.4.64.0710150039120.25221@racer.site>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: 'Alex Riesen' <raa.lkml@gmail.com>,
-	'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-	'Andreas Ericsson' <ae@op5.se>,
-	'git list' <git@vger.kernel.org>,
-	'Make Windows' <make-w32@gnu.org>
-To: Dave Korn <dave.korn@artimi.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 02:04:08 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Alex Riesen <raa.lkml@gmail.com>, make-w32@gnu.org, ae@op5.se,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 02:37:05 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhDRH-0003CG-9V
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 02:04:07 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761040AbXJOAD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 20:03:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761015AbXJOAD5
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 20:03:57 -0400
-Received: from mail.davidb.org ([66.93.32.219]:48669 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760933AbXJOAD4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 20:03:56 -0400
-Received: from davidb by mail.davidb.org with local (Exim 4.67 #1 (Debian))
-	id 1IhDQx-0003TA-Rs; Sun, 14 Oct 2007 17:03:47 -0700
-Mail-Followup-To: Dave Korn <dave.korn@artimi.com>,
-	'Alex Riesen' <raa.lkml@gmail.com>,
-	'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-	'Andreas Ericsson' <ae@op5.se>, 'git list' <git@vger.kernel.org>,
-	'Make Windows' <make-w32@gnu.org>
-Content-Disposition: inline
-In-Reply-To: <023101c80eb5$e3b6b310$2e08a8c0@CAM.ARTIMI.COM>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60931>
+	id 1IhDxA-0007NE-TK
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 02:37:05 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IhDx4-00073G-8K
+	for gnu-make-w32@m.gmane.org; Sun, 14 Oct 2007 20:36:58 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IhDwy-00071L-RS
+	for make-w32@gnu.org; Sun, 14 Oct 2007 20:36:52 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IhDwy-00070z-B1
+	for make-w32@gnu.org; Sun, 14 Oct 2007 20:36:52 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IhDwy-00070w-5a
+	for make-w32@gnu.org; Sun, 14 Oct 2007 20:36:52 -0400
+Received: from dessent.net ([69.60.119.225])
+	by monty-python.gnu.org with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.60) (envelope-from <brian@dessent.net>)
+	id 1IhDwv-0004fY-5S; Sun, 14 Oct 2007 20:36:49 -0400
+Received: from localhost ([127.0.0.1] helo=dessent.net)
+	by dessent.net with esmtp (Exim 4.50)
+	id 1IhDwm-0006ee-9t; Mon, 15 Oct 2007 00:36:40 +0000
+X-Mailer: Mozilla 4.79 [en] (Windows NT 5.0; U)
+X-Accept-Language: en,en-US
+X-detected-kernel: by monty-python.gnu.org: Linux 2.4-2.6
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60932>
 
-On Sun, Oct 14, 2007 at 11:59:35PM +0100, Dave Korn wrote:
->On 14 October 2007 23:15, Alex Riesen wrote:
->
->> Interprocess communication:
->> 
->> - it has only one argument (limited in size) passed to started
->>   programs, which means that there is no possible way to safely pass
->>   file and text arguments on command line (more than one, that is)
->
->  Whuh?
->
->http://msdn2.microsoft.com/en-us/library/y5zz48s1(VS.80).aspx
+Johannes Schindelin wrote:
 
-The MS exec* calls just concatenate all of the argv arguments, separating
-them with a space into a single buffer.
+> The problem is that on Windows, you cannot keep a file open and delete it
+> at the same time.  This is an issue in Windows' equivalent of VFS.
+> 
+> A neat trick to work with temporary files without permission issues is to
+> open the file and delete it right after that.  This does not work on
+> Windows.
 
-Look at the general _exec* page:
+You can achieve the same thing on Windows with CreateFile() by setting
+the dwShareMode parameter to zero and setting the
+FILE_FLAG_DELETE_ON_CLOSE attribute on dwFlagsAndAttributes.  This
+results in a file that cannot be opened or read by any other process and
+that will be automatically deleted when all open handles are closed.
 
-   http://msdn2.microsoft.com/en-us/library/431x4c1w(VS.80).aspx
+> I think Alex means this: you can have C:\a\b\c and D:\a\b\c.  So depending
+> on which drive you are, you mean one or the other.  Just comparing the
+> paths is not enough.
 
-and read the first "Note" section.
+This just means that you have to consider the drive letter as part of
+the filename.
 
-If you know what the library on the other end is doing to re-parse the
-arguments back into separate strings, it might be possible to quote things
-enough to handle names with spaces, but it is hard.
+> > > - no real "mmap" (which kills perfomance and complicates code)
+> >
+> > You only need mmap because you are accustomed to use it on GNU/Linux.
+> 
+> Yes.  And we rely on the performance very much.
 
-David
+Windows may not call it mmap() but it most certainly has memory-mapped
+file IO:
+<http://msdn2.microsoft.com/en-us/library/aa366781.aspx#file_mapping_functions>.
+
+Brian
