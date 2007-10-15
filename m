@@ -1,69 +1,57 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 13:24:17 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710151321560.6887@woody.linux-foundation.org>
-References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> 
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> 
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> 
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> 
- <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net>
-  <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
-  <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site>
- <4713BA89.633B86F2@dessent.net>
- <Pine.LNX.4.64.0710152026260.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Eli Zaretskii <eliz@gnu.org>, ae@op5.se, tsuna@lrde.epita.fr
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 15 23:20:44 2007
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Mon, 15 Oct 2007 22:33:47 +0200
+Message-ID: <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com> <200710150902.52653.johan@herland.net> <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com> <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Wincent Colaiuta" <win@wincent.com>,
+	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Marius Storm-Olsen" <marius@trolltech.com>,
+	"David Kastrup" <dak@gnu.org>,
+	"Christian Couder" <chriscool@tuxfamily.org>,
+	=?ISO-8859-1?Q? "Ren=E9_Scharfe" ?= <rene.scharfe@lsrfire.ath.cx>,
+	"Junio Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 23:29:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhWVj-0000zF-CV
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:25:59 +0200
+	id 1IhX2A-0000Zo-32
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:59:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934520AbXJOUZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 16:25:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932878AbXJOUZr
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:25:47 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47968 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759431AbXJOUZq (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 16:25:46 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FKOIjS028163
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Oct 2007 13:24:19 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FKOHwO023410;
-	Mon, 15 Oct 2007 13:24:18 -0700
-In-Reply-To: <Pine.LNX.4.64.0710152026260.25221@racer.site>
-X-Spam-Status: No, hits=-2.718 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751692AbXJOU67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 16:58:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752025AbXJOU66
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:58:58 -0400
+Received: from rock.gnat.com ([205.232.38.15]:54030 "EHLO rock.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751013AbXJOU65 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 16:58:57 -0400
+X-Greylist: delayed 1504 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Oct 2007 16:58:57 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id B32881E7854;
+	Mon, 15 Oct 2007 16:33:52 -0400 (EDT)
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id xg7jq7kgwlaM; Mon, 15 Oct 2007 16:33:52 -0400 (EDT)
+Received: from [????N???p???b??$IPv6:::1] (nile.gnat.com [205.232.38.5])
+	by rock.gnat.com (Postfix) with ESMTP id 18E7B1E7840;
+	Mon, 15 Oct 2007 16:33:49 -0400 (EDT)
+In-Reply-To: <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61040>
 
+On Oct 15, 2007, at 13:53, David Symonds wrote:
+> That's also why I suggested "skip"; you might not be able to test a
+> particular commit, but you might also not *want* to test a particular
+> commit for some reason.
 
-
-On Mon, 15 Oct 2007, Johannes Schindelin wrote:
-> 
-> Bash we can fix in the long run (this goes under the keyword 
-> "builtinification" on the git list)
-
-I thought busybox was being used for the core commands? Is ash not 
-complete/usable enough (with all the fixes git has had for broken shells) 
-to be used? 
-
-I do agree that perl looks unavoidable, but I thought the windows port 
-already avoided at least bash. Not true?
-
-(or is it just that even with ash, you end up hitting all the same issues 
-with cygwin/msys?)
-
-		Linus
+Skip seems a great choice: it directly expresses the wish to
+not consider a certain commit. The reason is unimportant.
