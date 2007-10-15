@@ -1,63 +1,64 @@
-From: Mark Watts <mwatts42@gmail.com>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 20:05:00 +0000 (UTC)
-Message-ID: <44f2ad561ade78c9dd5c4607b8ca@news.gmane.org>
-References: <Pine.LNX.4.64.0710151938300.25221@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] cvsexportcommit: get rid of temporary directory
+Date: Mon, 15 Oct 2007 23:32:45 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710152332230.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	format=flowed
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 00:47:40 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, hjemli@gmail.com, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Oct 16 01:26:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhXrC-00046e-78
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 23:52:14 +0200
+	id 1IhYUl-0004Cw-6n
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 00:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759762AbXJOVv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 17:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932217AbXJOVvZ
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 17:51:25 -0400
-Received: from main.gmane.org ([80.91.229.2]:50398 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932212AbXJOVvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 17:51:24 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IhXfO-0001ht-9B
-	for git@vger.kernel.org; Mon, 15 Oct 2007 21:40:02 +0000
-Received: from cpe-24-24-82-42.stny.res.rr.com ([24.24.82.42])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 21:40:02 +0000
-Received: from mwatts42 by cpe-24-24-82-42.stny.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 21:40:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: cpe-24-24-82-42.stny.res.rr.com
-X-Newsreader: JetBrains Omea Pro 1098.1
+	id S1755025AbXJOWcy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 18:32:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754700AbXJOWcy
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 18:32:54 -0400
+Received: from mail.gmx.net ([213.165.64.20]:35188 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753531AbXJOWcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 18:32:53 -0400
+Received: (qmail invoked by alias); 15 Oct 2007 22:32:51 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 16 Oct 2007 00:32:51 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18jplRazvUjkt4R0tnFa62rR2h/AekBFa2aBE7NHl
+	MrPECi57uwGvLd
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61049>
 
-Hello Johannes,
 
-> My bigger concerns are the performance and stability.  For example, I
-> had a very annoying problem on one of the machines I am testing
-> msysGit on.  The problem was _only_ fixable by deactivating component
-> of Logitech's WebCam driver!  Now, if a user-installable 3rd party
-> program can make my regular git crash, I am scared what more it can
-> do.
+Since commit e86ad71fe5f53ae4434566bd09ea4256090e5a3a we do not use
+a temporary directory in cvsexportcommit.  So there is no need to set
+one up.
 
-Not just git.  This driver has known issues with a number of pieces of software. 
- The company I work with uses Delphi quite a bit and they also have Logitech 
-WebCams for the devs and for some reason this driver makes debugging impossible 
-with Delphi.  I have personally experienced this.  I have also heard of this 
-Logitech software having problems with other software too.  I have not however 
-tracked down exactly WHY this piece of software causes so much grief, only 
-that it does.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ git-cvsexportcommit.perl |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
 
--mark
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index a33fa8d..6b0123c 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -30,11 +30,6 @@ if ($opt_d) {
+ 	@cvs = ('cvs');
+ }
+ 
+-# setup a tempdir
+-our ($tmpdir, $tmpdirname) = tempdir('git-cvsapplycommit-XXXXXX',
+-				     TMPDIR => 1,
+-				     CLEANUP => 1);
+-
+ # resolve target commit
+ my $commit;
+ $commit = pop @ARGV;
+-- 
+1.5.3.4.1174.gcd0d6-dirty
