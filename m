@@ -1,60 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 09:34:03 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710150932560.25221@racer.site>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
-  <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-  <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> 
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> 
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
- <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net>
- <Pine.LNX.4.64.0710150217120.25221@racer.site> <u4pgtj9rs.fsf@gnu.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Mon, 15 Oct 2007 10:25:32 +0200
+Message-ID: <86odf0pywz.fsf@lola.quinscape.zz>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com> <854pgtonp5.fsf@lola.goethe.zz> <200710141709.51579.chriscool@tuxfamily.org> <4712400C.2080900@lsrfire.ath.cx>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?85y7e5ll38.fsf@l?= =?ISO-8859-1?Q?ola.goethe.zz=04>?= <522E90CF-FC15-472F-B0A8-91C310CAF9BF@wincent.com> <471250BC.7070307@trolltech.com> <85d4vhlh8y.fsf@lola.goethe.zz> <471302D2.6010405@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, raa.lkml@gmail.com, ae@op5.se,
-	tsuna@lrde.epita.fr, make-w32@gnu.org
-To: Eli Zaretskii <eliz@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 10:34:24 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 10:44:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhLP5-0001oP-3P
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 10:34:23 +0200
+	id 1IhLYt-0003Le-P4
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 10:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754899AbXJOIeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 04:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755053AbXJOIeL
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 04:34:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34275 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754916AbXJOIeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 04:34:10 -0400
-Received: (qmail invoked by alias); 15 Oct 2007 08:34:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 15 Oct 2007 10:34:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/4wFMvKkn4BCPB0NRJotdVTlkiXXVHdinsV32Nsp
-	Qc0GRwKVPF4J2o
-X-X-Sender: gene099@racer.site
-In-Reply-To: <u4pgtj9rs.fsf@gnu.org>
-X-Y-GMX-Trusted: 0
+	id S1755507AbXJOIoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 04:44:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbXJOIoT
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 04:44:19 -0400
+Received: from main.gmane.org ([80.91.229.2]:35696 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755263AbXJOIoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 04:44:18 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IhLRe-0007N3-1t
+	for git@vger.kernel.org; Mon, 15 Oct 2007 08:37:02 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:37:02 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:37:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:l0N60QuUX37mla7DXGLl7UbRFk4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60962>
 
-Hi,
+Marius Storm-Olsen <marius@trolltech.com> writes:
 
-On Mon, 15 Oct 2007, Eli Zaretskii wrote:
+> David Kastrup said the following on 14.10.2007 19:48:
+>> Marius Storm-Olsen <marius@trolltech.com> writes:
+>>
+>>> Wincent Colaiuta said the following on 14.10.2007 18:35:
+>>>
+>>>> "undecided" sounds good to me. It should be clear to non-native
+>>>> speakers of English (at least, clearer than "dunno").
+>>> What about just "unknown"?
+>>
+>> I tend to nitpick to the degree of silliness when my own suggestions
+>> are concerned, but "unknown" sounds to me like the state _before_ the
+>> test.  If a person says he is "undecided" about something that means
+>> that he _has_ thought about it already.  "Undecidable" might bring
+>> this distinction across more strongly, but it is a more complicated
+>> word and it insinuates that it is _impossible_ to come to a decision
+>> regardless of the spent effort.
+>>
+>> "unknown" clearly is much better than "dunno" though even if my own
+>> favorite would be "undecided".
+>
+> What then about a good'ol programming favorite, "void"? :-)
 
-> No, you need to think in abstractions rather than POSIX-isms, and then 
-> let each platform implement those abstractions as appropriate.
+Huh?  void is a type, not a value.  void would insinuate that it was
+wrong to ask the question, not that its answer could not be
+determined.
 
-Last time I checked, POSIX was already an abstraction, thankyouverymuch.
+> I agree that "unknown" might be a state even _before_ a person has
+> determined if a case is good or bad (same for 'dunno' actually: "-
+> Do you know if it works? - I dunno yet") When I think more about it,
+> I really like "void"..
 
-Anyway, this discussion gets out of hand.  The question was: does Git work 
-on Windows natively, and the answer as far as you are concerned is: yes.
+Well, I don't.
 
-Ciao,
-Dscho
+Basically, I would say that this seems to be so much a matter of
+personal taste that we should at this point of time leave the decision
+of how to pick this to Junio.  Whether this gets resolved by vote or
+by authority: seems like the fine lines are no longer worth the time
+invested in discussing them.
+
+-- 
+David Kastrup
