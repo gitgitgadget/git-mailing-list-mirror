@@ -1,72 +1,83 @@
 From: "Martin Langhoff" <martin.langhoff@gmail.com>
 Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 18:35:22 +1300
-Message-ID: <46a038f90710142235i6d7e39c4qdb5d33941352e1aa@mail.gmail.com>
+Date: Mon, 15 Oct 2007 18:43:54 +1300
+Message-ID: <46a038f90710142243s7d07d9f8td6c5c24383e135f3@mail.gmail.com>
 References: <1192293466.17584.95.camel@homebase.localnet>
 	 <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
 	 <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-	 <Pine.LNX.4.64.0710141916510.25221@racer.site>
+	 <47125F74.9050600@op5.se>
+	 <Pine.LNX.4.64.0710141934310.25221@racer.site>
+	 <47126957.1020204@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "Benoit SIGOURE" <tsuna@lrde.epita.fr>,
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Benoit SIGOURE" <tsuna@lrde.epita.fr>,
 	"git list" <git@vger.kernel.org>, "Eli Zaretskii" <eliz@gnu.org>,
 	"Make Windows" <make-w32@gnu.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 15 07:35:40 2007
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Oct 15 07:44:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhIc5-0001Ia-HB
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 07:35:37 +0200
+	id 1IhIkJ-0002Pf-Gb
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 07:44:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702AbXJOFf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 01:35:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751780AbXJOFf0
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 01:35:26 -0400
-Received: from hu-out-0506.google.com ([72.14.214.227]:3030 "EHLO
+	id S1752973AbXJOFn5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 01:43:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752859AbXJOFn5
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 01:43:57 -0400
+Received: from hu-out-0506.google.com ([72.14.214.238]:5918 "EHLO
 	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751702AbXJOFfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 01:35:25 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so1189790hue
-        for <git@vger.kernel.org>; Sun, 14 Oct 2007 22:35:23 -0700 (PDT)
+	with ESMTP id S1752809AbXJOFn4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 01:43:56 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so1190760hue
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=EEPvMVnq4Oq0477uci3BaxorxMObdkIfjGZr8tKJPlU=;
-        b=ZnHsZgu+z26CIcZA8I5/q3aba9yCPJDMUAsfwxAZi5dDY7OEZ3SVOE/7yawC+iNtrMGwCIEGgz+dNlbbPJZeunfIt0yVSo7QyhLrW+RyVMdshN/AcbiniF1dhAc/m4CY+/cui9QajJ8u3raeAb2LTGr4FaQ8dR3X8K4KO3hcihM=
+        bh=Z0pPx4KCFXhcAz0Wu6xjuBPCXIIbpOOr8v/8lmKZX+0=;
+        b=VFks9fGhiIIl0071VJrjanDzm3T6DvPASwmpaSJmyQBdK5PfFQBY1j5zbUl6yt44E0xYf4eDxtCje65nkDP8vATWsWlud1Rgac/McAGXBuVqvBve8EjFeW5l7sgR2uiFTKrAlzSw+uenAVKjQzGQ2CYIQ/JFUGGC/vBHMo7/ipQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZLKdD2Gj8eq6EJIcjlappS5YdeBPiqVFIQa68XcdEQTnwx7aNwADIsjzvjm4fg/wFefFqwn62cW/67zjYu+cB0c+lB+381n7ByorXecbiqtm8ITen4CK2cOr0uNaU4Evv9szIpewB0Dr2WgCnJkiY53qa1oAG8bjfoxlCfnaFUU=
-Received: by 10.66.252.8 with SMTP id z8mr7500368ugh.1192426522485;
-        Sun, 14 Oct 2007 22:35:22 -0700 (PDT)
-Received: by 10.67.22.19 with HTTP; Sun, 14 Oct 2007 22:35:22 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710141916510.25221@racer.site>
+        b=pl4ZzqcERZXjQsEDTCnGfwfGYV/WxfRBfXNKsM4X9r9th7pOqJzHGKQwTxlh+LsO7Z04vnaRMNDlfsfY/+WKtfJtuvTQwHM2vPkzqCaF08BqOJjDMubT83sAz1+4ESiCa30iAoBq2JwItGwQ8rE5HYShWBLLssrqO0MIHS/YLiM=
+Received: by 10.67.19.17 with SMTP id w17mr7517559ugi.1192427034292;
+        Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
+Received: by 10.67.22.19 with HTTP; Sun, 14 Oct 2007 22:43:54 -0700 (PDT)
+In-Reply-To: <47126957.1020204@op5.se>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60946>
 
-On 10/15/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> There is msysGit.  This project is nearing to its first beta, being
-> self-hosted since mid-August IIRC.
+On 10/15/07, Andreas Ericsson <ae@op5.se> wrote:
+> > And I have to disagree strongly with the "black": In msysGit (which brings
+> > its own minimal version of MSys), it is very smooth.
+> >
+>
+> Oh? I didn't know that. Windows and its unixifying toolboxes is unknown
+> territory to me, as I happily spend all my time on various unices.
 
-I've been using it recently, I have to say it's pretty impressive -
-you can use it from cmd.com or from a bash window (courtesy of the
-msys environment included). The GUIs that ship with git are there
-(git-gui, gitk).
+I'm a unix-head too. Last couple of weeks had to work on a windows
+server, and installed msysGit. Very impressed - all the needed
+dependencies are there, from an end-user POV it "just works".
 
-I use gitk extensively, and it works *great*. My work-style is of a
-shell window for status/diff/commit actions and one or more gitk
-windows for browsing of proj history. You can use git-gui for a visual
-status/git/commit workflow, or qgit. qgit is more integrated, and
-might feel more "at home" for users that expect something more
-MDI-ish.
+> I was under the impression that the windows port suffers from Windows'
+> lack of a proper fork() and friends and that a proper library would
+> help solving those problems. Perhaps I was misinformed.
 
-cheers.
+I think msys' DLLs might be doing what cygwin does, an emulated fork.
+
+A quite surprising thing is that msysgit manages to be very fast. Not
+as fast as the same git, same hw running on a recent Linux, but pretty
+usable fast for a tree with a few thousand files. Earlier/other git
+ports to win32 are pretty slow (still faster than svn and friends, but
+slooow).
+
+cheers,
 
 
-martin
+m
