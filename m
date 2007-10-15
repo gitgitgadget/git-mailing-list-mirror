@@ -1,104 +1,65 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: A note from the interim Git maintainer
-Date: Tue, 16 Oct 2007 01:54:48 -0400
-Message-ID: <20071016055448.GA13801@spearce.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Mon, 15 Oct 2007 22:47:48 +0200
+Message-ID: <85ve98gl57.fsf@lola.goethe.zz>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+	<471302D2.6010405@trolltech.com>
+	<ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
+	<200710150902.52653.johan@herland.net>
+	<7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
+	<ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
+	<0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 07:55:06 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: David Symonds <dsymonds@gmail.com>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Marius Storm-Olsen" <marius@trolltech.com>,
+	"Christian Couder" <chriscool@tuxfamily.org>,
+	=?iso-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	"Junio Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: Geert Bosch <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 07:55:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhfOT-0007fd-0e
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 07:55:05 +0200
+	id 1IhfOw-0007jQ-J9
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 07:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760226AbXJPFyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 01:54:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759937AbXJPFyy
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 01:54:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59038 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758775AbXJPFyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 01:54:53 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IhfOE-0000fg-7P; Tue, 16 Oct 2007 01:54:50 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 57E4720FBAE; Tue, 16 Oct 2007 01:54:49 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1760074AbXJPFzY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 01:55:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759184AbXJPFzY
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 01:55:24 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:56617 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758779AbXJPFzX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 01:55:23 -0400
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1IhfOg-0006AX-E4; Tue, 16 Oct 2007 01:55:18 -0400
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id E4F7A1C4D4B3; Mon, 15 Oct 2007 22:47:48 +0200 (CEST)
+In-Reply-To: <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com> (Geert Bosch's message of "Mon\, 15 Oct 2007 22\:33\:47 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61080>
 
-As most folks are probably now well aware, Junio has been offline
-for about 11 days and may still be offline for a little while more.
-Before he dropped offline Junio shared why he left on such a short
-notice with both Dscho and myself, as it meant cancelling the
-"git together" we were planning to have last weekend in San Jose.
+Geert Bosch <bosch@adacore.com> writes:
 
-I'm not going to get into the specific details as it is Junio's
-business and not mine.  But I can say that my thoughts and prayers
-to $DEITY are with him and his family at this time, and I don't
-expect him to be rushing back to git work tomorrow.  However I'm
-quite certain that Junio will return when he can.
+> On Oct 15, 2007, at 13:53, David Symonds wrote:
+>> That's also why I suggested "skip"; you might not be able to test a
+>> particular commit, but you might also not *want* to test a particular
+>> commit for some reason.
+>
+> Skip seems a great choice: it directly expresses the wish to
+> not consider a certain commit. The reason is unimportant.
 
-
-Lars Hjemli has done a terrific job of stacking up patches from the
-mailing list in his "q/*" branches, available for fetching directly
-from his tree at [*1*].  I really want to thank Lars for stepping
-up and doing this, as I think it has helped the community.
-
-Unfortunately there were quite a few q/* branches, some of which
-were not trivial to merge against the other topics that were already
-pending in Junio's next.  Someone really needed to go through the
-branches and merge them together into suitable maint, master and
-next branches.
-
-
-I've decided to step up and try to fill Junio's shoes.  To that end
-I am publishing a maint, master, next (and soon) pu branch from a
-new fork on repo.or.cz:
-
-  gitweb:  http://repo.or.cz/w/git/spearce.git
-  git:     git://repo.or.cz/git/spearce.git
-           http://repo.or.cz/r/git/spearce.git
-
-Traditional "What's in" messages will be sent in a minute.  I'm
-going to try to apply the exact same policies that Junio applies
-to these, so maint/master/next won't rewind, but pu may.
-
-I based my branches on top of the last items published by Junio,
-and am hoping that he will be open to pulling directly from these
-before he starts working again.  Junio obviously has the option
-not to pull from me, but if I do my job of interim maintainer well
-I can probably talk him into it.  :)
-
-I won't be publishing a tagged release from maint or master anytime
-soon.  Primarily because I don't think its time to do that, and also
-because I don't have a kernel.org account to upload the tarballs to.
-If a month goes by without Junio, well, lets just see what happens.
-
-
-I probably don't need to say this for the git regulars, but you
-can start to track my published branches yourself with git-remote
-if you are interested in testing and/or using these versions:
-
-  $ git remote add -f spearce git://repo.or.cz/git/spearce.git
-  $ git pull spearce master  ; # or next
-
-
-
-*1* git://hjemli.net/pub/git/git
+But it is an _action_, while "good" and "bad" are properties.
 
 -- 
-Shawn.
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
