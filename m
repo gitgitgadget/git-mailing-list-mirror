@@ -1,87 +1,82 @@
-From: Eli Zaretskii <eliz@gnu.org>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 08:37:58 -0400
-Message-ID: <E1IhPCo-0004ZO-N9@fencepost.gnu.org>
-References: <1192293466.17584.95.camel@homebase.localnet>	<uy7e6keyv.fsf@gnu.org>	<1192381040.4908.57.camel@homebase.localnet>	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>	<47125F74.9050600@op5.se>	<Pine.LNX.4.64.0710141934310.25221@racer.site>
-	<47126957.1020204@op5.se>	<Pine.LNX.4.64.0710142112540.25221@racer.site>
-	<20071014221446.GC2776@steel.home>
-	<u7ilpjp3x.fsf@gnu.org>	<Pine.LNX.4.64.0710150039120.25221@racer.site>	<4712B616.165BBF8D@dessent.net>	<Pine.LNX.4.64.0710150217120.25221@racer.site>	<Pine.LNX.4.64.0710150223230.25221@racer.site>	<E1IhJ4K-00086x-5U@fencepost.gnu.org>	<AD60F584-7AAD-4083-9BA6-21F0D00D6D1D@zib.de>	<E1IhLBW-0006uw-19@fencepost.gnu.org>	<Pine.LNX.4.64.0710150946500.25221@racer.site>
-	<E1IhNox-0004n2-N5@fencepost.gnu.org>
-	<47135D85.50701@viscovery.net>
-Reply-To: Eli Zaretskii <eliz@gnu.org>
-Cc: prohaska@zib.de, make-w32@gnu.org, Johannes.Schindelin@gmx.de,
-	raa.lkml@gmail.com, ae@op5.se, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 14:38:38 2007
-Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
-Envelope-to: gnu-make-w32@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 6/7] Bisect: factorise "bisect_{bad,good,dunno}" into
+ "bisect_state".
+Date: Mon, 15 Oct 2007 13:38:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710151338000.25221@racer.site>
+References: <20071014143003.23ae649f.chriscool@tuxfamily.org>
+ <Pine.LNX.4.64.0710141710230.25221@racer.site> <200710150542.17667.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 14:39:29 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhPD5-0007XK-Uf
-	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 14:38:16 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1IhPCz-0008Fr-Hr
-	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 08:38:09 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1IhPCr-0008Bs-Am
-	for make-w32@gnu.org; Mon, 15 Oct 2007 08:38:01 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1IhPCq-0008BG-Hj
-	for make-w32@gnu.org; Mon, 15 Oct 2007 08:38:00 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1IhPCq-0008Az-2j
-	for make-w32@gnu.org; Mon, 15 Oct 2007 08:38:00 -0400
-Received: from fencepost.gnu.org ([140.186.70.10])
-	by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <eliz@gnu.org>) id 1IhPCp-0003bh-Cl
-	for make-w32@gnu.org; Mon, 15 Oct 2007 08:37:59 -0400
-Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <eliz@gnu.org>)
-	id 1IhPCo-0004ZO-N9; Mon, 15 Oct 2007 08:37:58 -0400
-In-reply-to: <47135D85.50701@viscovery.net> (message from Johannes Sixt on
-	Mon, 15 Oct 2007 14:31:01 +0200)
-X-detected-kernel: by monty-python.gnu.org: Linux 2.6, seldom 2.4 (older, 4)
-X-BeenThere: make-w32@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/make-w32>
-List-Post: <mailto:make-w32@gnu.org>
-List-Help: <mailto:make-w32-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=subscribe>
-Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60989>
+	id 1IhPDy-0007hb-58
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 14:39:10 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1758814AbXJOMjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 08:39:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758804AbXJOMjA
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 08:39:00 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59918 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758798AbXJOMi7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 08:38:59 -0400
+Received: (qmail invoked by alias); 15 Oct 2007 12:38:58 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp028) with SMTP; 15 Oct 2007 14:38:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+czLghKZCctJRUv1uWcyI0AZifq0efaHyUuEJYuB
+	A0fzxtWOAY8mpS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200710150542.17667.chriscool@tuxfamily.org>
+X-Y-GMX-Trusted: 0
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60990>
 
-> Date: Mon, 15 Oct 2007 14:31:01 +0200
-> From: Johannes Sixt <j.sixt@viscovery.net>
-> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-> 	prohaska@zib.de, make-w32@gnu.org, raa.lkml@gmail.com, ae@op5.se,
-> 	git@vger.kernel.org
-> 
-> > I prefer GCC (the MinGW port), but without the MSYS ports of
-> > additional tools.  I use the GnuWin32 ports augmented by some of my
-> > own (where GnuWin32 ports are buggy or terribly slow).
-> 
-> They should work, too. If a tool is missing, ought to notice it soon enough.
-> 
-> These are important to note, though:
-> 
-> - The tools must not do their own LF->CRLF conversion when they are used in 
-> a pipeline, "just because they know it better".
-> 
-> - GNU tar is needed (in the cpio emulator).
-> 
-> - ln must be able to create hard links on NTFS or do the equivalent of
-> cp -p
-> 
-> - GNU cp -al will be needed and should create hard links on NTFS. (I plan to 
-> use it for local clones in place of cpio -pl.)
-> 
-> Any feedback on how git works for you with these tools is appreciated.
+Hi,
 
-Thanks, I will try.
+On Mon, 15 Oct 2007, Christian Couder wrote:
+
+> Le dimanche 14 octobre 2007, Johannes Schindelin a ?crit :
+>
+> > On Sun, 14 Oct 2007, Christian Couder wrote:
+> > > -bisect_bad() {
+> > > +bisect_state() {
+> > >  	bisect_autostart
+> > > -	case "$#" in
+> > > -	0)
+> > > -		rev=$(git rev-parse --verify HEAD) ;;
+> > > -	1)
+> > > -		rev=$(git rev-parse --verify "$1^{commit}") ;;
+> > > +	state=$1
+> > > +	case "$#,$state" in
+> > > +	0,*)
+> > > +		die "Please call 'bisect_state' with at least one argument." ;;
+> > > +	1,bad|1,good|1,dunno)
+> > > +		rev=$(git rev-parse --verify HEAD) ||
+> > > +			die "Bad rev input: HEAD"
+> > > +		bisect_write "$state" "$rev" ;;
+> > > +	2,bad)
+> > > +		rev=$(git rev-parse --verify "$2^{commit}") ||
+> > > +			die "Bad rev input: $2"
+> > > +		bisect_write "$state" "$rev" ;;
+> >
+> > Really?  As far as I see, "2,bad" is an error in the current bisect.
+> 
+> But the new "bisect_state" takes one more argument, because the first 
+> one must be "good" "bad" or "dunno".
+> 
+> So when there is only one argument HEAD is used, and when there are 2 
+> arguments, $2 is used as the good|bad|dunno rev.
+
+Ah, that explains it!  But do you not need to do "2,bad|2,good|2,dunno" in 
+that case?  Or even better: "2,*"?
+
+Thanks,
+Dscho
