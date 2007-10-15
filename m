@@ -1,82 +1,54 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Performance issue with excludes (was: Re: git-svn and submodules)
-Date: Mon, 15 Oct 2007 19:38:12 +0200
-Message-ID: <DF6FA0BD-C227-4F62-82D8-F4873CC52B5A@lrde.epita.fr>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp> <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site> <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr> <alpine.LFD.0.999.0710150848380.6887@woody.linux-foundation.org> <C7EA8AD7-BACA-4116-9C6B-90BA23F0005C@lrde.epita.fr> <alpine.LFD.0.999.0710150928450.6887@woody.linux-foundation.org> <45410184-8D7D-47ED-AB10-1A4E52D0ADB0@lrde.epita.fr> <alpine.LFD.0.999.0710151009460.6887@woody.linux-foundation.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-14--585671866"
+From: Brian Dessent <brian@dessent.net>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 11:37:27 -0700
+Organization: My own little world...
+Message-ID: <4713B367.52CEC7E2@dessent.net>
+References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net> <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
+Reply-To: git@vger.kernel.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 20:44:55 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, Eli Zaretskii <eliz@gnu.org>, ae@op5.se,
+	tsuna@lrde.epita.fr, make-w32@gnu.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 15 20:51:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhTuI-0004Ai-BA
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 19:39:10 +0200
+	id 1IhUp9-00012q-KI
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 20:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757676AbXJORiv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 13:38:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757537AbXJORiv
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 13:38:51 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:53406 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757478AbXJORiu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 13:38:50 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IhTtw-0005He-IT; Mon, 15 Oct 2007 19:38:48 +0200
-In-Reply-To: <alpine.LFD.0.999.0710151009460.6887@woody.linux-foundation.org>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S934258AbXJOShj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 14:37:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934090AbXJOShi
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 14:37:38 -0400
+Received: from dessent.net ([69.60.119.225]:43547 "EHLO dessent.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S934177AbXJOShg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 14:37:36 -0400
+Received: from localhost ([127.0.0.1] helo=dessent.net)
+	by dessent.net with esmtp (Exim 4.50)
+	id 1IhUok-0000sA-Lj; Mon, 15 Oct 2007 18:37:30 +0000
+X-Mailer: Mozilla 4.79 [en] (Windows NT 5.0; U)
+X-Accept-Language: en,en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61019>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-14--585671866
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Alex Riesen wrote:
 
-On Oct 15, 2007, at 7:10 PM, Linus Torvalds wrote:
+> He misunderstood. It is not what you meant. You cannot remove the open
+> file. What he talks about is removing the file after it is _closed_.
+> Junk.
 
-> On Mon, 15 Oct 2007, Benoit SIGOURE wrote:
->>
->> There is no .gitignore, only .git/info/exclude.
->
-> They do exactly the same thing (apart from the nesting nature of
-> .gitignore wrt subdirectories), so that doesn't change anything.
+I did not misunderstand.  The semantics are equivalent to the POSIX
+case: you end up with a handle to an open file that is exclusive to that
+process (it cannot be opened by any other process, even root) and that
+is automatically reclaimed by the filesystem when all open handles are
+closed, without any explicit action by the user.  It's not "unlinking an
+open file", no, but it's the same result.
 
-I fail to see how the mechanism work then.  You said that I needed to  
-add the .gitignore before adding all the other bummer stuff, fair  
-enough.  AFAIK .git/info/exclude doesn't need to be added, it's just  
-there.  But you can try to change the test, add the .git/info/exclude  
-*first* and then make a commit and then add all the bummer stuff and  
-then commit, and finally, do a git-status, for me it still takes 9s.
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-14--585671866
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHE6WEwwE67wC8PUkRAgrXAKCDpYpobNHcOqz+k2f5aXazbPyvvwCdGvZM
-VPpxSFCiVCh7e4JIAH5lgxE=
-=awIJ
------END PGP SIGNATURE-----
-
---Apple-Mail-14--585671866--
+Brian
