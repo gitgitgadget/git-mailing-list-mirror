@@ -1,81 +1,118 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Mon, 15 Oct 2007 09:02:52 +0200
-Message-ID: <200710150902.52653.johan@herland.net>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
- <471302D2.6010405@trolltech.com>
- <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: David Symonds <dsymonds@gmail.com>,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	David Kastrup <dak@gnu.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	=?iso-8859-1?q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio Hamano <junkio@cox.net>,
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: git-svn and submodules
+Date: Mon, 15 Oct 2007 09:07:21 +0200
+Message-ID: <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp> <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-69--623523175"
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 09:04:37 2007
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Mon Oct 15 09:08:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhJzx-00057L-43
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 09:04:21 +0200
+	id 1IhK3c-0005gq-Uc
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 09:08:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbXJOHEK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 03:04:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXJOHEI
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 03:04:08 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:55344 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198AbXJOHEH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 03:04:07 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-004-z2.isp.get.no by
- no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JPX00D05YAEKA00@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 15 Oct 2007 09:03:50 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-004-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPX00IMEY8TN540@no-osl-m323-srv-004-z2.isp.get.no> for
- git@vger.kernel.org; Mon, 15 Oct 2007 09:02:53 +0200 (CEST)
-Received: from alpha.herland ([84.215.102.95])
- by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JPX009OJY8TE6D0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Mon, 15 Oct 2007 09:02:53 +0200 (CEST)
-In-reply-to: <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
-Content-disposition: inline
-User-Agent: KMail/1.9.7
+	id S1752701AbXJOHH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 03:07:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752648AbXJOHH7
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 03:07:59 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:46557 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbXJOHH6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 03:07:58 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IhK3P-0002Uo-Qo; Mon, 15 Oct 2007 09:07:55 +0200
+In-Reply-To: <Pine.LNX.4.64.0710142359020.25221@racer.site>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60954>
 
-On Monday 15 October 2007, David Symonds wrote:
-> On 15/10/2007, Marius Storm-Olsen <marius@trolltech.com> wrote:
-> > David Kastrup said the following on 14.10.2007 19:48:
-> > >
-> > > "unknown" clearly is much better than "dunno" though even if my own
-> > > favorite would be "undecided".
-> >
-> > What then about a good'ol programming favorite, "void"? :-)
-> 
-> "skip"? That would make semantic sense, right?
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-69--623523175
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-...or we could go all spaghetti western, and call it "ugly".
+On Oct 15, 2007, at 12:59 AM, Johannes Schindelin wrote:
 
-(as in "git-bisect [the <good>, the <bad> and the <ugly>]")
+> Hi,
+>
+> On Sun, 14 Oct 2007, Eric Wong wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>
+>>> While I have your attention: last weekend, I spoke to a guy from the
+>>> ffmpeg project, and he said that the only thing preventing them from
+>>> switching to git was the lack of svn:external support...
+>>>
+>>> (Of course I know that it is more difficult than that: ffmpeg itself
+>>> is an svn:external of MPlayer, but maybe we can get both of them to
+>>> switch ;-)
+>>>
+>>> Do you have any idea when/if you're coming around to add that to
+>>> git-svn?
+>>
+>> Soonish, possibly within a next week, even.  I have actually have
+>> started a project (using git) that wants to use SVN-hosted  
+>> repositories
+>> directly submodules; so the fact that I'll actually need something  
+>> like
+>> it bodes well for getting it implemented :)
+>
+> Hehe.  Thanks!
+>
 
+Thanks for making this another thread because I didn't read the  
+answers to that patch and I was going to try and implement this  
+(svn:externals via submodules) sooner or later.  Hadn't I seen this,  
+we'd probably end up duplicating effort.  Maybe I can help with the  
+implementation?
 
-Have fun! :)
+This week I'm probably going to start to dive in git-svn by  
+implementing simpler things first:
+   - git svn create-ignore (to create one .gitignore per directory  
+from the svn:ignore properties.  This has the disadvantage of  
+committing the .gitignore during the next dcommit, but when you  
+import a repo with tons of ignores (>1000), using git svn show-ignore  
+to build .git/info/exclude is *not* a good idea, because things like  
+git-status will end up doing >1000 fnmatch *per file* in the repo,  
+which leads to git-status taking more than 4s on my Core2Duo 2Ghz 2G  
+RAM)
+   - git svn propget (to easily retrieve svn properties from withing  
+git-svn).  git svn propset would be nice too, but I guess it's harder  
+to implement.
 
-...Johan
+Cheers,
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-69--623523175
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHExGpwwE67wC8PUkRAq5oAKCsroZ6pUMLb4kGiAGcdBKuh3NhsQCgt8+/
+kGFMWBbSN7V+DDkwGAMbsyM=
+=gqwa
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-69--623523175--
