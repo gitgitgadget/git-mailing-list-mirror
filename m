@@ -1,66 +1,48 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 21:36:54 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710152136130.25221@racer.site>
-References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> 
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> 
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> 
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> 
- <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net>
-  <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
-  <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site>
- <4713BA89.633B86F2@dessent.net> <Pine.LNX.4.64.0710152026260.25221@racer.site>
- <alpine.LFD.0.999.0710151321560.6887@woody.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Documentation/git-tag.txt: Document how to backdate
+	tags
+Date: Mon, 15 Oct 2007 16:35:23 -0400
+Message-ID: <20071015203523.GA4428@sigill.intra.peff.net>
+References: <87bqbklu5r.fsf@hariken.mwolson.org> <871wcglqrg.fsf@hariken.mwolson.org> <7vps00ivgh.fsf@gitster.siamese.dyndns.org> <87hclck6qy.fsf@hariken.mwolson.org> <7vd4w0iqd5.fsf@gitster.siamese.dyndns.org> <87lka4cllp.fsf@hariken.mwolson.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Eli Zaretskii <eliz@gnu.org>, ae@op5.se, tsuna@lrde.epita.fr
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 23:30:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael Olson <mwolson@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 23:31:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhWgd-0003eP-DG
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:37:15 +0200
+	id 1IhWf1-0003Gr-Me
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:35:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759184AbXJOUhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 16:37:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757941AbXJOUhE
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:37:04 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55185 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757340AbXJOUhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 16:37:03 -0400
-Received: (qmail invoked by alias); 15 Oct 2007 20:37:01 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp017) with SMTP; 15 Oct 2007 22:37:01 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+S9Ap/8NuSPEiORWO/NlQ/psFdrdSApe6NcjF5Ja
-	BAYMLQZ8APDJe2
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0710151321560.6887@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1760719AbXJOUfY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 16:35:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760573AbXJOUfY
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:35:24 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4384 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759604AbXJOUfY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 16:35:24 -0400
+Received: (qmail 24432 invoked by uid 111); 15 Oct 2007 20:35:21 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 15 Oct 2007 16:35:21 -0400
+Received: (qmail 4489 invoked by uid 1000); 15 Oct 2007 20:35:23 -0000
+Content-Disposition: inline
+In-Reply-To: <87lka4cllp.fsf@hariken.mwolson.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61042>
 
-Hi,
+On Mon, Oct 15, 2007 at 01:51:30PM -0400, Michael Olson wrote:
 
-On Mon, 15 Oct 2007, Linus Torvalds wrote:
+> +On Backdating Tags
+> +~~~~~~~~~~~~~~~~~~
+> +
+> +If you have imported some changes from another VCS and would like
+> +to add tags for major releases of you work, it is useful to be able
 
-> On Mon, 15 Oct 2007, Johannes Schindelin wrote:
-> > 
-> > Bash we can fix in the long run (this goes under the keyword 
-> > "builtinification" on the git list)
-> 
-> I thought busybox was being used for the core commands? Is ash not 
-> complete/usable enough (with all the fixes git has had for broken 
-> shells) to be used?
+s/you/your/
 
-No, not yet.  The problem is not so much ash, as Nguyen, who said that 
-gitbox is not there yet.
-
-Ciao,
-Dscho
+-Peff
