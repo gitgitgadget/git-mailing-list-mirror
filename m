@@ -1,53 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Color support added to git-add--interactive.
-Date: Sun, 14 Oct 2007 23:43:39 -0400
-Message-ID: <20071015034338.GA4844@coredump.intra.peff.net>
-References: <471045DA.5050902@gmail.com> <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 15 05:44:02 2007
+From: Eli Zaretskii <eliz@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 06:06:42 +0200
+Message-ID: <u6419ja25.fsf@gnu.org>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
+Cc: raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr,
+	git@vger.kernel.org, make-w32@gnu.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 06:07:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhGs5-0004gW-6C
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 05:44:01 +0200
+	id 1IhHEL-0007Jn-Ni
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 06:07:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756216AbXJODnv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Oct 2007 23:43:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752981AbXJODnv
-	(ORCPT <rfc822;git-outgoing>); Sun, 14 Oct 2007 23:43:51 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3416 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755385AbXJODnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Oct 2007 23:43:50 -0400
-Received: (qmail 17077 invoked by uid 111); 15 Oct 2007 03:43:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sun, 14 Oct 2007 23:43:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sun, 14 Oct 2007 23:43:39 -0400
-Content-Disposition: inline
-In-Reply-To: <47112491.8070309@gmail.com>
+	id S1750761AbXJOEGu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 00:06:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750712AbXJOEGu
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 00:06:50 -0400
+Received: from heller.inter.net.il ([213.8.233.23]:14934 "EHLO
+	heller.inter.net.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750703AbXJOEGt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 00:06:49 -0400
+Received: from HOME-C4E4A596F7 (IGLD-84-229-224-70.inter.net.il [84.229.224.70])
+	by heller.inter.net.il (MOS 3.7.3a-GA)
+	with ESMTP id DVY95366 (AUTH halo1);
+	Mon, 15 Oct 2007 06:06:43 +0200 (IST)
+In-reply-to: <Pine.LNX.4.64.0710150039120.25221@racer.site> (message from
+	Johannes Schindelin on Mon, 15 Oct 2007 00:45:47 +0100 (BST))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60939>
 
-On Sat, Oct 13, 2007 at 03:03:29PM -0500, Dan Zwell wrote:
+> Date: Mon, 15 Oct 2007 00:45:47 +0100 (BST)
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> cc: Alex Riesen <raa.lkml@gmail.com>, ae@op5.se, tsuna@lrde.epita.fr, 
+>     git@vger.kernel.org, make-w32@gnu.org
+> 
+> The problem is that on Windows, you cannot keep a file open and delete it 
+> at the same time.
 
-> The importance of the diff coloring pales in comparison to the prompt 
-> coloring. Diff coloring is useful, but prompt coloring is a basic usability 
-> concern (if people can't easily tell where a hunk begins, the tool becomes 
-> annoying). Perhaps we could split this into two patches, merging the first 
-> after a few small changes can be taken care of, while the second may need 
+That is no longer true, for quite some time.  NT4 and later versions
+support that almost exactly like Posix filesystems.
 
-Yes, I think it is worth splitting into two patches, here. There seems
-to be orthogonal discussion on (colorizing and configuration of prompts versus
-how to handle colorized diffs).
+> > > - no acceptable level of performance in filesystem and VFS (readdir,
+> > >   stat, open and read/write are annoyingly slow)
+> > 
+> > With what libraries?  Native `stat' and `readdir' are quite fast. 
+> > Perhaps you mean the ported glibc (libgw32c), where `readdir' is indeed 
+> > painfully slow, but then you don't need to use it.
+> 
+> No, native.
+> 
+> Once you experienced the performance of git on Linux, then rebooted into 
+> Windows on the same box, you will grow a beard while waiting for trivial 
+> operations.
 
--Peff
+Maybe GIT assumes too much about `readdir' and `stat', and should
+refactor its code into better abstractions.
+
+> > > - it is the only OS in the world with multi-root (/a/b/c and /a/b/c
+> > >   can be not the same, depending on what current "drive" is)
+> > 
+> > So what? on Unix "a/b/c" can be not the same.  Both cases are simply not 
+> > complete file names, that's all.  No one said there must be a single 
+> > root for all volumes, it's the Posix jingoism creeping in again.
+> 
+> I think Alex means this: you can have C:\a\b\c and D:\a\b\c.  So depending 
+> on which drive you are, you mean one or the other.  Just comparing the 
+> paths is not enough.
+
+What _I_ meant is that the C: part is part of the full file name,
+exactly like the leading / is on Unix.
+
+> > > - No real "mmap" (which kills perfomance and complicates code)
+> > 
+> > You only need mmap because you are accustomed to use it on GNU/Linux.
+> 
+> Yes.  And we rely on the performance very much.
+
+There's no need for mmap to get memory performance, except if sbrk and
+friends are too slow.
