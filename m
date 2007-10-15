@@ -1,77 +1,87 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: [PATCH] Make the output of "git svn clone" less confusing.
-Date: Mon, 15 Oct 2007 17:21:10 +0200
-Message-ID: <87k5poflp5.fsf@lysator.liu.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 18:48:13 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: Performance issue with excludes (was: Re: git-svn and submodules)
+Date: Mon, 15 Oct 2007 18:51:27 +0200
+Message-ID: <45410184-8D7D-47ED-AB10-1A4E52D0ADB0@lrde.epita.fr>
+References: <1192282153-26684-1-git-send-email-madcoder@debian.org> <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp> <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site> <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr> <alpine.LFD.0.999.0710150848380.6887@woody.linux-foundation.org> <C7EA8AD7-BACA-4116-9C6B-90BA23F0005C@lrde.epita.fr> <alpine.LFD.0.999.0710150928450.6887@woody.linux-foundation.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-9--588476712"
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 18:54:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhST4-0000XD-76
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 18:06:58 +0200
+	id 1IhTAy-0002aG-6n
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 18:52:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757794AbXJOQGq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 12:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757475AbXJOQGq
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 12:06:46 -0400
-Received: from main.gmane.org ([80.91.229.2]:52955 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756861AbXJOQGp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 12:06:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IhRwN-0001mZ-98
-	for git@vger.kernel.org; Mon, 15 Oct 2007 15:33:11 +0000
-Received: from vtab.com ([62.20.90.195])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 15:33:11 +0000
-Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 15:33:11 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: vtab.com
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:ho6kh4Vv+gJn6VhCN9GKepLCMlw=
+	id S1759267AbXJOQwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 12:52:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757304AbXJOQwI
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 12:52:08 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:55557 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757495AbXJOQwH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 12:52:07 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IhTAk-0003QO-02; Mon, 15 Oct 2007 18:52:06 +0200
+In-Reply-To: <alpine.LFD.0.999.0710150928450.6887@woody.linux-foundation.org>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61011>
 
-The problem is that the first thing it prints is
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-9--588476712
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-  Initialized empty Git repository in .git/
+On Oct 15, 2007, at 6:34 PM, Linus Torvalds wrote:
 
-even if actually created a subdirectory and changed into it first. But =
-to the
-user, it looks like it is creating a .git/ dir in the directory he/she =
-is
-started git from.
----
- git-svn.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+> On Mon, 15 Oct 2007, Benoit SIGOURE wrote:
+>>
+>> I re-used the test that was posted some time ago:
+>
+> I think your test is scrogged. You should add the ".gitignore" file
+> *before* you do the "git add .". That's when it's going to hurt (since
+> that's when you have new files you don't yet know about).
+>
+> But then it should hurt only for the "git add ." phase, not for  
+> anything
+> else (unless we have the performance bug of doing the ignore  
+> matching even
+> on files we know about). And more importantly, it should hurt only  
+> once
+> (since afterwards, we'll know about the files and know not to ignore
+> them).
 
-This change makes it more chatty, which might not be a good thing. But
-I think the previous output was worse.
+There is no .gitignore, only .git/info/exclude.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 777e436..d4450ca 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -286,6 +286,7 @@ sub do_git_init_db {
-=20
- sub init_subdir {
- 	my $repo_path =3D shift or return;
-+	print "Creating directory $repo_path\n";
- 	mkpath([$repo_path]) unless -d $repo_path;
- 	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
- 	$ENV{GIT_DIR} =3D '.git';
---=20
-1.5.3.4.213.gb3127-dirty
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
 
---=20
-David K=C3=A5gedal
+
+
+--Apple-Mail-9--588476712
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHE5qQwwE67wC8PUkRAhb2AKDH/xVGxdqm3n/osWb07p3hbZUmmgCeO7eR
+T2rF1vmUEe0dCmA5m6nXuy8=
+=/YnS
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-9--588476712--
