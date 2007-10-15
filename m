@@ -1,69 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 21:19:51 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710152117290.25221@racer.site>
-References: <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+Date: Mon, 15 Oct 2007 13:24:17 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710151321560.6887@woody.linux-foundation.org>
+References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> 
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> 
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> 
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> 
  <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net>
- <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
- <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site>
- <4713BA89.633B86F2@dessent.net> <20071015194214.GC15541@steel.home>
- <4713C81F.A75FEFC2@dessent.net>
+  <Pine.LNX.4.64.0710150217120.25221@racer.site> <20071015175606.GE2966@steel.home>
+  <4713B367.52CEC7E2@dessent.net> <Pine.LNX.4.64.0710151938300.25221@racer.site>
+ <4713BA89.633B86F2@dessent.net>
+ <Pine.LNX.4.64.0710152026260.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Alex Riesen <raa.lkml@gmail.com>, Eli Zaretskii <eliz@gnu.org>,
-	ae@op5.se, tsuna@lrde.epita.fr
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 23:12:25 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
+	Eli Zaretskii <eliz@gnu.org>, ae@op5.se, tsuna@lrde.epita.fr
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 23:20:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhWQC-0007zt-Hp
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:20:17 +0200
+	id 1IhWVj-0000zF-CV
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 22:25:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757627AbXJOUUD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 16:20:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934117AbXJOUUD
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:20:03 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51834 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757627AbXJOUUA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 16:20:00 -0400
-Received: (qmail invoked by alias); 15 Oct 2007 20:19:56 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp029) with SMTP; 15 Oct 2007 22:19:56 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ixQZPO0sixadYOJGVfNsbqRwfcwSfcU1cL+Y0y6
-	y9rIV6X0ofcJPs
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4713C81F.A75FEFC2@dessent.net>
-X-Y-GMX-Trusted: 0
+	id S934520AbXJOUZs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 16:25:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932878AbXJOUZr
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 16:25:47 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47968 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1759431AbXJOUZq (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 16:25:46 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FKOIjS028163
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 15 Oct 2007 13:24:19 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FKOHwO023410;
+	Mon, 15 Oct 2007 13:24:18 -0700
+In-Reply-To: <Pine.LNX.4.64.0710152026260.25221@racer.site>
+X-Spam-Status: No, hits=-2.718 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61039>
 
-Hi,
 
-On Mon, 15 Oct 2007, Brian Dessent wrote:
 
-> Well, instead of using an MSYS build of Perl there's always ActiveState 
-> Perl.
+On Mon, 15 Oct 2007, Johannes Schindelin wrote:
+> 
+> Bash we can fix in the long run (this goes under the keyword 
+> "builtinification" on the git list)
 
-No, but thanks no.  You haven't been around long enough on this list to 
-count the issues, but it is known that ActiveState Perl is close to 
-Malbolge.
+I thought busybox was being used for the core commands? Is ash not 
+complete/usable enough (with all the fixes git has had for broken shells) 
+to be used? 
 
->  I think you may be stuck on the shell though -- I don't know of any 
-> ports of bash that aren't MSYS or Cygwin based.  However I do think 
-> there's a native port of zsh out there by the GnuWin32 project, which 
-> when renamed as just "/bin/sh" might be suitable, but only if these 
-> scripts don't use bash-isms.  I have not tried this zsh myself and 
-> speed/compatibility wise I'm not sure it's up to snuff.
+I do agree that perl looks unavoidable, but I thought the windows port 
+already avoided at least bash. Not true?
 
-There is a port of BusyBox' dash, which is nearing completion.  Once 
-Nguyen says it is ready enough, we will try to integrate it into msysGit.
+(or is it just that even with ash, you end up hitting all the same issues 
+with cygwin/msys?)
 
-Ciao,
-Dscho
+		Linus
