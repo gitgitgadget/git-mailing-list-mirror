@@ -1,82 +1,106 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 6/7] Bisect: factorise "bisect_{bad,good,dunno}" into
- "bisect_state".
-Date: Mon, 15 Oct 2007 13:38:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710151338000.25221@racer.site>
-References: <20071014143003.23ae649f.chriscool@tuxfamily.org>
- <Pine.LNX.4.64.0710141710230.25221@racer.site> <200710150542.17667.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 14:39:29 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: [PATCH 1/3] Fixing path quoting in git-rebase
+Date: Mon, 15 Oct 2007 14:13:47 +0100
+Message-ID: <11924540292687-git-send-email-maillist@steelskies.com>
+References: <4711486B.1050301@op5.se>
+Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 15:16:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhPDy-0007hb-58
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 14:39:10 +0200
+	id 1IhPlw-0005j7-3d
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 15:14:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758814AbXJOMjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 08:39:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758804AbXJOMjA
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 08:39:00 -0400
-Received: from mail.gmx.net ([213.165.64.20]:59918 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758798AbXJOMi7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 08:38:59 -0400
-Received: (qmail invoked by alias); 15 Oct 2007 12:38:58 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp028) with SMTP; 15 Oct 2007 14:38:58 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+czLghKZCctJRUv1uWcyI0AZifq0efaHyUuEJYuB
-	A0fzxtWOAY8mpS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710150542.17667.chriscool@tuxfamily.org>
-X-Y-GMX-Trusted: 0
+	id S1761082AbXJONNz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 09:13:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760956AbXJONNx
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 09:13:53 -0400
+Received: from gir.office.bestbefore.tv ([89.105.122.147]:54116 "EHLO
+	gir.office.bestbefore.tv" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760802AbXJONNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 09:13:51 -0400
+Received: by gir.office.bestbefore.tv (Postfix, from userid 501)
+	id CA06D2A41C9; Mon, 15 Oct 2007 14:13:49 +0100 (BST)
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <4711486B.1050301@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60991>
 
-Hi,
+From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 
-On Mon, 15 Oct 2007, Christian Couder wrote:
+git-rebase used to fail when run from a path with a space in.
 
-> Le dimanche 14 octobre 2007, Johannes Schindelin a ?crit :
->
-> > On Sun, 14 Oct 2007, Christian Couder wrote:
-> > > -bisect_bad() {
-> > > +bisect_state() {
-> > >  	bisect_autostart
-> > > -	case "$#" in
-> > > -	0)
-> > > -		rev=$(git rev-parse --verify HEAD) ;;
-> > > -	1)
-> > > -		rev=$(git rev-parse --verify "$1^{commit}") ;;
-> > > +	state=$1
-> > > +	case "$#,$state" in
-> > > +	0,*)
-> > > +		die "Please call 'bisect_state' with at least one argument." ;;
-> > > +	1,bad|1,good|1,dunno)
-> > > +		rev=$(git rev-parse --verify HEAD) ||
-> > > +			die "Bad rev input: HEAD"
-> > > +		bisect_write "$state" "$rev" ;;
-> > > +	2,bad)
-> > > +		rev=$(git rev-parse --verify "$2^{commit}") ||
-> > > +			die "Bad rev input: $2"
-> > > +		bisect_write "$state" "$rev" ;;
-> >
-> > Really?  As far as I see, "2,bad" is an error in the current bisect.
-> 
-> But the new "bisect_state" takes one more argument, because the first 
-> one must be "good" "bad" or "dunno".
-> 
-> So when there is only one argument HEAD is used, and when there are 2 
-> arguments, $2 is used as the good|bad|dunno rev.
+Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+---
+ git-rebase.sh |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
 
-Ah, that explains it!  But do you not need to do "2,bad|2,good|2,dunno" in 
-that case?  Or even better: "2,*"?
-
-Thanks,
-Dscho
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 1583402..9995d9d 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -59,7 +59,7 @@ continue_merge () {
+ 		die "$RESOLVEMSG"
+ 	fi
+ 
+-	cmt=`cat $dotest/current`
++	cmt=`cat "$dotest/current"`
+ 	if ! git diff-index --quiet HEAD
+ 	then
+ 		if ! git-commit -C "$cmt"
+@@ -84,14 +84,14 @@ continue_merge () {
+ }
+ 
+ call_merge () {
+-	cmt="$(cat $dotest/cmt.$1)"
++	cmt="$(cat "$dotest/cmt.$1")"
+ 	echo "$cmt" > "$dotest/current"
+ 	hd=$(git rev-parse --verify HEAD)
+ 	cmt_name=$(git symbolic-ref HEAD)
+-	msgnum=$(cat $dotest/msgnum)
+-	end=$(cat $dotest/end)
++	msgnum=$(cat "$dotest/msgnum")
++	end=$(cat "$dotest/end")
+ 	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
+-	eval GITHEAD_$hd='"$(cat $dotest/onto_name)"'
++	eval GITHEAD_$hd='"$(cat \"$dotest/onto_name\")"'
+ 	export GITHEAD_$cmt GITHEAD_$hd
+ 	git-merge-$strategy "$cmt^" -- "$hd" "$cmt"
+ 	rv=$?
+@@ -140,10 +140,10 @@ do
+ 		}
+ 		if test -d "$dotest"
+ 		then
+-			prev_head="`cat $dotest/prev_head`"
+-			end="`cat $dotest/end`"
+-			msgnum="`cat $dotest/msgnum`"
+-			onto="`cat $dotest/onto`"
++			prev_head=$(cat "$dotest/prev_head")
++			end=$(cat "$dotest/end")
++			msgnum=$(cat "$dotest/msgnum")
++			onto=$(cat "$dotest/onto")
+ 			continue_merge
+ 			while test "$msgnum" -le "$end"
+ 			do
+@@ -160,11 +160,11 @@ do
+ 		if test -d "$dotest"
+ 		then
+ 			git rerere clear
+-			prev_head="`cat $dotest/prev_head`"
+-			end="`cat $dotest/end`"
+-			msgnum="`cat $dotest/msgnum`"
++			prev_head=$(cat "$dotest/prev_head")
++			end=$(cat "$dotest/end")
++			msgnum=$(cat "$dotest/msgnum")
+ 			msgnum=$(($msgnum + 1))
+-			onto="`cat $dotest/onto`"
++			onto=$(cat "$dotest/onto")
+ 			while test "$msgnum" -le "$end"
+ 			do
+ 				call_merge "$msgnum"
+-- 
+1.5.3.1
