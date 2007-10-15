@@ -1,86 +1,77 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-svn and submodules
-Date: Mon, 15 Oct 2007 08:53:13 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710150848380.6887@woody.linux-foundation.org>
-References: <1192282153-26684-1-git-send-email-madcoder@debian.org>
- <20071014091855.GA17397@soma> <20071014095755.GF1198@artemis.corp>
- <Pine.LNX.4.64.0710141751530.25221@racer.site> <Pine.LNX.4.64.0710141901450.25221@racer.site>
- <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma>
- <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled>
- <Pine.LNX.4.64.0710142359020.25221@racer.site>
- <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: [PATCH] Make the output of "git svn clone" less confusing.
+Date: Mon, 15 Oct 2007 17:21:10 +0200
+Message-ID: <87k5poflp5.fsf@lysator.liu.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>, git list <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Benoit SIGOURE <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 15 18:34:57 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 18:48:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhSGk-00060z-Jq
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 17:54:15 +0200
+	id 1IhST4-0000XD-76
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 18:06:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756652AbXJOPyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 11:54:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756420AbXJOPyB
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 11:54:01 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49102 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756281AbXJOPyA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 11:54:00 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FFrE2Q009057
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Oct 2007 08:53:15 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9FFrDER012023;
-	Mon, 15 Oct 2007 08:53:14 -0700
-In-Reply-To: <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr>
-X-Spam-Status: No, hits=-2.378 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_36,TW_SV
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1757794AbXJOQGq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 12:06:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757475AbXJOQGq
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 12:06:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:52955 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756861AbXJOQGp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 12:06:45 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IhRwN-0001mZ-98
+	for git@vger.kernel.org; Mon, 15 Oct 2007 15:33:11 +0000
+Received: from vtab.com ([62.20.90.195])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 15:33:11 +0000
+Received: from davidk by vtab.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 15:33:11 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: vtab.com
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:ho6kh4Vv+gJn6VhCN9GKepLCMlw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61010>
 
+The problem is that the first thing it prints is
 
+  Initialized empty Git repository in .git/
 
-On Mon, 15 Oct 2007, Benoit SIGOURE wrote:
->
->  - git svn create-ignore (to create one .gitignore per directory from the
-> svn:ignore properties.  This has the disadvantage of committing the .gitignore
-> during the next dcommit, but when you import a repo with tons of ignores
-> (>1000), using git svn show-ignore to build .git/info/exclude is *not* a good
-> idea, because things like git-status will end up doing >1000 fnmatch *per
-> file* in the repo, which leads to git-status taking more than 4s on my
-> Core2Duo 2Ghz 2G RAM)
+even if actually created a subdirectory and changed into it first. But =
+to the
+user, it looks like it is creating a .git/ dir in the directory he/she =
+is
+started git from.
+---
+ git-svn.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-Ouch.
+This change makes it more chatty, which might not be a good thing. But
+I think the previous output was worse.
 
-That sounds largely unavoidable.. *But*.
+diff --git a/git-svn.perl b/git-svn.perl
+index 777e436..d4450ca 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -286,6 +286,7 @@ sub do_git_init_db {
+=20
+ sub init_subdir {
+ 	my $repo_path =3D shift or return;
++	print "Creating directory $repo_path\n";
+ 	mkpath([$repo_path]) unless -d $repo_path;
+ 	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
+ 	$ENV{GIT_DIR} =3D '.git';
+--=20
+1.5.3.4.213.gb3127-dirty
 
-Maybe we have a bug here. In particular, we generally shouldn't care about 
-the exclude/.gitignore file for ay paths that we know about, which means 
-that during an import, we really shouldn't ever even care about 
-.gitignore, since all the files are files we are expected to know about.
-
-So yes, in general, "git status" is going to be slow in a tree that has 
-been built (since things like object files etc will have to be checked 
-against the exclude list! (*)), but if it's a clean import with no 
-generated files and only files we already know about, that should not be 
-the case.
-
-So maybe we have a totally unnecessary performance issue, and do all the 
-fnmatch() on every path, whether we know about it or not?
-
-		Linus
-
-(*) It might be that we could also re-order the exclude list so that 
-entries that trigger are moved to the head of the list, because it's 
-likely that if you have tons of exclude entries, some of them trigger a 
-lot more than others (ie "*.o"), and trying those first is likely a good 
-idea.
+--=20
+David K=C3=A5gedal
