@@ -1,73 +1,64 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: [PATCH 1/2] gitk: Added support for OS X mouse wheel
-Date: Mon, 15 Oct 2007 10:33:07 +0100
-Message-ID: <1192440788347-git-send-email-maillist@steelskies.com>
-References: <8c5c35580710141727k4bbd2bgc2292cfcc6f97c4a@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] git-rebase: document suppression of duplicate commits
+Date: Mon, 15 Oct 2007 05:47:51 -0400
+Message-ID: <4C8A9577-F2DD-4C5E-98FD-37D27E90E897@MIT.EDU>
+References: <20071015044730.GA12118@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 11:34:02 2007
+X-From: git-owner@vger.kernel.org Mon Oct 15 11:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhMKD-0002gp-V4
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:33:26 +0200
+	id 1IhMYf-0005GK-SB
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757288AbXJOJdO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 05:33:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756469AbXJOJdN
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:33:13 -0400
-Received: from gir.office.bestbefore.tv ([89.105.122.147]:49466 "EHLO
-	gir.office.bestbefore.tv" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756472AbXJOJdL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 05:33:11 -0400
-Received: by gir.office.bestbefore.tv (Postfix, from userid 501)
-	id BB3B5270100; Mon, 15 Oct 2007 10:33:08 +0100 (BST)
-X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <8c5c35580710141727k4bbd2bgc2292cfcc6f97c4a@mail.gmail.com>
+	id S1756970AbXJOJsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 05:48:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754956AbXJOJsA
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:48:00 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:46152 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755477AbXJOJr7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 05:47:59 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9F9lrTp014631;
+	Mon, 15 Oct 2007 05:47:53 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9F9lqp6001644
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 15 Oct 2007 05:47:52 -0400 (EDT)
+In-Reply-To: <20071015044730.GA12118@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60973>
 
-=46rom: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 
-(V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4 supplied this patch a while ago for =
-1.5.2.  It no longer
-applied cleanly, so I'm reposting it.)
+On 15 Oct 2007, at 12:47:30 AM, Jeff King wrote:
 
-MacBook doesn't seem to recognize MouseRelease-4 and -5 events, at all.
-So i added a support for the MouseWheel event, which i limited to Tcl/t=
-k
-aqua, as i couldn't test it neither on Linux or Windows. Tcl/tk needs t=
-o
-be updated from the version that is shipped with OS X 10.4 Tiger, for
-this patch to work.
+> On Sat, Oct 13, 2007 at 07:04:52PM -0400, Michael Witten wrote:
+>> I can make a patch, but at the moment I'm swamped and I don't want to
+>> think about doing that.
+>
+> And whoever said procrastination didn't get things done?
 
-Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
----
- gitk |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+:-)
 
-diff --git a/gitk b/gitk
-index 300fdce..ee2a6f5 100755
---- a/gitk
-+++ b/gitk
-@@ -843,6 +843,12 @@ proc makewindow {} {
-     } else {
- 	bindall <ButtonRelease-4> "allcanvs yview scroll -5 units"
- 	bindall <ButtonRelease-5> "allcanvs yview scroll 5 units"
-+        if {[tk windowingsystem] eq "aqua"} {
-+            bindall <MouseWheel> {
-+                set delta [expr {- (%D)}]
-+                allcanvs yview scroll $delta units
-+            }
-+        }
-     }
-     bindall <2> "canvscan mark %W %x %y"
-     bindall <B2-Motion> "canvscan dragto %W %x %y"
---=20
-1.5.3.1
+Thanks.
+
+I'm pretty bad at setting priories, so I apologize for
+saying I'm swamped and then turning around to submit
+other patches.
+
+Sincerely,
+Michael Witten
