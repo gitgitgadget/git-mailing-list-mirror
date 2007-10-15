@@ -1,108 +1,88 @@
-From: David Kastrup <dak@gnu.org>
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
 Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 10:57:59 +0200
-Message-ID: <86d4vgpxew.fsf@lola.quinscape.zz>
-References: <1192293466.17584.95.camel@homebase.localnet>
-	<uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
-	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
-	<47125F74.9050600@op5.se>
-	<Pine.LNX.4.64.0710141934310.25221@racer.site>
-	<47126957.1020204@op5.se>
-	<Pine.LNX.4.64.0710142112540.25221@racer.site>
-	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
-	<Pine.LNX.4.64.0710150039120.25221@racer.site>
-	<E1IhIwR-0006be-Ki@fencepost.gnu.org>
-	<Pine.LNX.4.64.0710150936070.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 11:00:11 2007
+Date: Mon, 15 Oct 2007 11:02:54 +0200
+Message-ID: <DB8BA238-B1E3-48F2-AF90-A81BD0CD6A5F@lrde.epita.fr>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>  <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>  <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net> <Pine.LNX.4.64.0710150217120.25221@racer.site> <u4pgtj9rs.fsf@gnu.org> <Pine.LNX.4.64.0710150932560.25221@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-71--616589665"
+Content-Transfer-Encoding: 7bit
+Cc: Eli Zaretskii <eliz@gnu.org>, git list <git@vger.kernel.org>,
+	Make Windows <make-w32@gnu.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 15 11:04:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhLnl-0005oE-6V
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 10:59:53 +0200
+	id 1IhLrT-0006QG-QL
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:03:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752546AbXJOI7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 04:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751694AbXJOI7n
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 04:59:43 -0400
-Received: from main.gmane.org ([80.91.229.2]:53949 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751334AbXJOI7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 04:59:42 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IhLn1-00027c-VT
-	for git@vger.kernel.org; Mon, 15 Oct 2007 08:59:07 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:59:07 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:59:07 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-In-Reply-To: <Pine.LNX.4.64.0710150936070.25221@racer.site> (Johannes Schindelin's message of "Mon\, 15 Oct 2007 09\:44\:12 +0100 \(BST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:kIbxfpXMhLt8VzW3oWm7+OwjcBQ=
+	id S1753502AbXJOJDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 05:03:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbXJOJDd
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:03:33 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:53554 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752191AbXJOJDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 05:03:32 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IhLrH-0000lR-AZ; Mon, 15 Oct 2007 11:03:31 +0200
+In-Reply-To: <Pine.LNX.4.64.0710150932560.25221@racer.site>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60966>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-71--616589665
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+
+On Oct 15, 2007, at 10:34 AM, Johannes Schindelin wrote:
 
 > Hi,
 >
 > On Mon, 15 Oct 2007, Eli Zaretskii wrote:
 >
->> > Date: Mon, 15 Oct 2007 00:45:47 +0100 (BST)
->> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->> > cc: Alex Riesen <raa.lkml@gmail.com>, ae@op5.se, tsuna@lrde.epita.fr, 
->> >     git@vger.kernel.org, make-w32@gnu.org
->> > 
->> > The problem is not so much opening, but determining if an existing file 
->> > and a file in the index have the same name.
->> > 
->> > For example, "README" in the index, but "readme" in the working directory, 
->> > will be handled as "deleted/untracked" by the current machinery.  IOW git 
->> > will not know that what it gets from readdir() as "readme" really is the 
->> > same file as "README" in the index.
->> 
->> That's because you think file names are simple strings and can be
->> compared by simple string comparison.
+>> No, you need to think in abstractions rather than POSIX-isms, and  
+>> then
+>> let each platform implement those abstractions as appropriate.
 >
-> Almost...
->
->> This na?ve view is not true even on POSIX systems: "foo/bar" and 
->> "/a/b/foo/bar" can be the same file, as well as "/a/b/c/d" and "/x/y/z", 
->> given the right symlinks.
->
-> ... not quite, ah ...
->
->> But for some reason that eludes me, people who are accustomed to POSIX
->> stop right there and in effect say "file names are strings, if we only
->> make them absolute and resolve links".
->
-> ... yes!  There you have it.  Absolute filenames, resolved by
-> readlink() are assumed to be the unique (!) identifiers for the
-> contents.
+> Last time I checked, POSIX was already an abstraction,  
+> thankyouverymuch.
 
-They aren't.  One can mount the same file system several times in
-different places.  In Linux, one can even mount directories and files
-to several places at once.  Most Unices also support some
-case-insensitive file systems, and readlink does not canonicalize the
-casing.
+But as Eli pointed out, it's not universal, so you need higher  
+abstractions on top of them.
 
-> _Note:_ absolute paths _without_ readlink() resolving are _still_
-> unique identifiers; this time for files/symlinks.
+> Anyway, this discussion gets out of hand.
 
-Not even that.  A unique identifier for files would imply that
-touching the file does not affect, say, the access times of files with
-other unique identifiers.
+Not at all, actually I think some interesting points were made,  
+including on the technical side of the thing.
 
 -- 
-David Kastrup
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-71--616589665
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHEyy/wwE67wC8PUkRAhueAJ0f6nVel6nuw05ajRt815Wa+V9FdACePP2e
+pEqU/hcMt4CYI9bq4CvJ+BY=
+=LsaT
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-71--616589665--
