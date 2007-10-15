@@ -1,98 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-rebase: document suppression of duplicate commits
-Date: Mon, 15 Oct 2007 00:47:30 -0400
-Message-ID: <20071015044730.GA12118@coredump.intra.peff.net>
+From: "Shun Kei Leung" <kevinlsk@gmail.com>
+Subject: Re: git-fast-import crashes
+Date: Mon, 15 Oct 2007 12:53:38 +0800
+Message-ID: <e66701d40710142153o70a7b696r928491be437ac6d@mail.gmail.com>
+References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com>
+	 <20071013032916.GL27899@spearce.org>
+	 <20071013033407.GM27899@spearce.org>
+	 <20071013073640.GC7110@artemis.corp>
+	 <20071013075027.GD7110@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Lars Hjemli <lh@elementstorage.no>
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Mon Oct 15 06:48:00 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Pierre Habouzit" <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 06:54:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhHrx-00044r-FP
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 06:47:57 +0200
+	id 1IhHxh-0004pY-1o
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 06:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751029AbXJOErm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 00:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751322AbXJOErm
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 00:47:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2191 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751029AbXJOErl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 00:47:41 -0400
-Received: (qmail 17363 invoked by uid 111); 15 Oct 2007 04:47:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Mon, 15 Oct 2007 00:47:32 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Mon, 15 Oct 2007 00:47:30 -0400
+	id S1751445AbXJOExl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 00:53:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751436AbXJOExl
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 00:53:41 -0400
+Received: from nf-out-0910.google.com ([64.233.182.190]:62476 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751407AbXJOExk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 00:53:40 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1165298nfb
+        for <git@vger.kernel.org>; Sun, 14 Oct 2007 21:53:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=t+P8ZpAkyvkBXxpQHm+ACSnARIU9oThH2uakdm4vp3E=;
+        b=iLWYBPncFGjtItikrbCnSOK2+g03k/AGEJCLJyEIGZ0dZMykON29fzpLsuf7fFkXdYGiV6nyFoEw43K1epQRHdLIiVyGxxaXIMWRkLt2fhwMftooosvdj8C/e5iNTovVTMOH34rV44NQs6r5G1y1CubTAJvIBjuiVp2LvaOvSVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=b/PL/bhy0/ppz3R/dfl5avc6LR4R2xo7AZBSJ31+rd4raKjAL7Y9+e0GZVWtvPq2aVUfIaWBvWN/QmKIqW4ISNfEIoDYVF/zhe2bCkVtwtcXzVUILEdQJKTDkEMMbGNzBxm7II7G34/RTErblQ4D1oKw0FpcKl0WmpUeyFjo+MA=
+Received: by 10.78.200.3 with SMTP id x3mr3690294huf.1192424019021;
+        Sun, 14 Oct 2007 21:53:39 -0700 (PDT)
+Received: by 10.78.132.20 with HTTP; Sun, 14 Oct 2007 21:53:38 -0700 (PDT)
+In-Reply-To: <20071013075027.GD7110@artemis.corp>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60944>
 
-git-rebase uses format-patch's --ignore-if-in-upstream
-option, but we never document the user-visible behavior. The
-example is placed near the top of the example list rather
-than at the bottom because it is:
-  a. a simple example
-  b. a reasonably common scenario for many projects (mail
-     some patches which get accepted upstream, then rebase)
+Hi,
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On Sat, Oct 13, 2007 at 07:04:52PM -0400, Michael Witten wrote:
-> I can make a patch, but at the moment I'm swamped and I don't want to
-> think about doing that.
+Sorry for the late reply. I was away from my computer in the weekend.
 
-And whoever said procrastination didn't get things done?
 
- Documentation/git-rebase.txt |   25 ++++++++++++++++++++++++-
- 1 files changed, 24 insertions(+), 1 deletions(-)
+Hi Pierre,
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index e8e7579..b6efb48 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -28,7 +28,10 @@ The current branch is reset to <upstream>, or <newbase> if the
- `git reset --hard <upstream>` (or <newbase>).
- 
- The commits that were previously saved into the temporary area are
--then reapplied to the current branch, one by one, in order.
-+then reapplied to the current branch, one by one, in order. Note that
-+any commits in HEAD which introduce the same textual changes as a commit
-+in <upstream>..HEAD are omitted (i.e., a patch already accepted upstream
-+with a different commit message or timestamp will be skipped).
- 
- It is possible that a merge failure will prevent this process from being
- completely automatic.  You will have to resolve any such merge failure
-@@ -62,6 +65,26 @@ would be:
- The latter form is just a short-hand of `git checkout topic`
- followed by `git rebase master`.
- 
-+If the upstream branch already contains a change you have made (e.g.,
-+because you mailed a patch which was applied upstream), then that commit
-+will be skipped. For example, running `git-rebase master` on the
-+following history (in which A' and A introduce the same set of changes,
-+but have different committer information):
-+
-+------------
-+          A---B---C topic
-+         /
-+    D---E---A'---F master
-+------------
-+
-+will result in:
-+
-+------------
-+                   B'---C' topic
-+                  /
-+    D---E---A'---F master
-+------------
-+
- Here is how you would transplant a topic branch based on one
- branch to another, to pretend that you forked the topic branch
- from the latter branch, using `rebase --onto`.
--- 
-1.5.3.4.1155.gfe96ee-dirty
+I didn't try:
+http://git.madism.org/?p=git.git;a=commit;h=7406e83342cd445ac38c1753c5fce75377737e2f
+
+because the bad commit turns out to be b449f4c according to `git bisect'.
+
+
+Hi Shawn,
+
+I include the output of `git count-objects -v' for your information:
+
+count: 104
+size: 552
+in-pack: 10652
+packs: 12
+prune-packable: 0
+garbage: 0
+
+
+Regards,
+Kevin Leung
