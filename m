@@ -1,108 +1,70 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 11:23:37 +0200
-Message-ID: <E45D25D3-F37A-49BE-8B83-B4567322D41D@zib.de>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>  <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>  <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net> <Pine.LNX.4.64.0710150217120.25221@racer.site> <Pine.LNX.4.64.0710150223230.25221@racer.site> <E1IhJ4K-00086x-5U@fencepost.gnu.org> <AD60F584-7AAD-4083-9BA6-21F0D00D6D1D@zib.de> <E1IhLBW-0006uw-19@fencepost.gnu.org>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Mon, 15 Oct 2007 11:31:55 +0200
+Message-ID: <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com> <200710150902.52653.johan@herland.net>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-	raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr,
-	make-w32@gnu.org
-To: Eli Zaretskii <eliz@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Oct 15 11:22:39 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	David Kastrup <dak@gnu.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Oct 15 11:33:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhM9b-000106-PY
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:22:28 +0200
+	id 1IhMJh-0002ai-Mp
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756923AbXJOJWO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 05:22:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756697AbXJOJWN
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:22:13 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52323 "EHLO mailer.zib.de"
+	id S1756656AbXJOJcm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 05:32:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756472AbXJOJcm
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:32:42 -0400
+Received: from wincent.com ([72.3.236.74]:49986 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756100AbXJOJWM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 05:22:12 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9F9M6sP028967;
-	Mon, 15 Oct 2007 11:22:06 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	id S1755781AbXJOJcm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 05:32:42 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9F9M5rc011118
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 15 Oct 2007 11:22:06 +0200 (MEST)
-In-Reply-To: <E1IhLBW-0006uw-19@fencepost.gnu.org>
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9F9WRAT004886;
+	Mon, 15 Oct 2007 04:32:27 -0500
+In-Reply-To: <200710150902.52653.johan@herland.net>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60968>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60969>
 
+El 15/10/2007, a las 9:02, Johan Herland escribi=F3:
 
-On Oct 15, 2007, at 10:20 AM, Eli Zaretskii wrote:
-
->> Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  
->> git@vger.kernel.org,
->>         raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr, make- 
->> w32@gnu.org
->> From: Steffen Prohaska <prohaska@zib.de>
->> Date: Mon, 15 Oct 2007 09:56:40 +0200
+> On Monday 15 October 2007, David Symonds wrote:
+>> On 15/10/2007, Marius Storm-Olsen <marius@trolltech.com> wrote:
+>>> David Kastrup said the following on 14.10.2007 19:48:
+>>>>
+>>>> "unknown" clearly is much better than "dunno" though even if my ow=
+n
+>>>> favorite would be "undecided".
+>>>
+>>> What then about a good'ol programming favorite, "void"? :-)
 >>
->>> While we are at that: can you (or someone else) point me to
->>> instructions on how to build the MinGW port of GIT?  I found a  
->>> tarball
->>> of the MinGW-ported GIT (v1.5.3, I think), but what I don't seem  
->>> to be
->>> able to find is some kind of HOWTO: what tools I need to have
->>> installed, how to configure them (if there are any special issues
->>> there), what command(s) to type, etc.  Is there anything like  
->>> that out
->>> there, or can someone post such instructions?
->>
->> If you want to have a full working development environment, such that
->> you can start contributing to msysgit right away, and have no  
->> firewall
->> issues, go to
->>
->> 	http://code.google.com/p/msysgit/
->>
->> and install GitMe, currently
->>
->> 	http://msysgit.googlecode.com/files/GitMe-0.4.2.exe
->>
->> If you only care about an end-user setup, which contains only the git
->> binaries on your system, but no tools to compile them, stay tuned for
->> one or two days. We'll release an updated installer soon.
+>> "skip"? That would make semantic sense, right?
 >
-> Sorry I wasn't clear: I want neither.  I don't think I will have
-> enough free time to become an active contributor to GIT any time
-> soon.  OTOH, since binaries are not available (and I'd prefer a
-> tarball as opposed to an installer, to be more in control of what's
-> being installed and where),
-
-Ok, so I uploaded the most recent preview of the installer to
-
-http://msysgit.googlecode.com/files/WinGit-1.5.3-preview20071010.exe
-
-Note, we're about to release an updated version soon. Personally,
-I don't plan to put work in providing tar balls. A working installer
-has higher priority for me.
-
-
-> I asked about the development tools
-> (compiler and Binutils, obviously, but what else?) required to build
-> the source tarball with MinGW tools.
+> ...or we could go all spaghetti western, and call it "ugly".
 >
-> Do I understand correctly that building GIT currently requires MSYS?
-> That'd be unfortunate, at least for me.
+> (as in "git-bisect [the <good>, the <bad> and the <ugly>]")
 
-msysgit's GitMe contains all tools from MSYS required to build git.
-It also clones the git source and compiles it. It doesn't install
-anything outside the folder that you chose upon installation.
+<personal opinion>
+   Yes, it's funny, but I don't think an SCM interface is a place for =20
+jokes or puns. Git already has one big tongue-in-cheek attribute: =20
+it's name, so let's leave it at that.
+</personal opinion>
 
-I strongly believe it is the easiest way to compile git from source.
-
-	Steffen
+Cheers,
+Wincent
