@@ -1,88 +1,117 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Mon, 15 Oct 2007 10:25:32 +0200
-Message-ID: <86odf0pywz.fsf@lola.quinscape.zz>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <F32B0EEF-496C-4D6D-BD9A-B6A0C04E0EE3@wincent.com> <854pgtonp5.fsf@lola.goethe.zz> <200710141709.51579.chriscool@tuxfamily.org> <4712400C.2080900@lsrfire.ath.cx>  =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?85y7e5ll38.fsf@l?= =?ISO-8859-1?Q?ola.goethe.zz=04>?= <522E90CF-FC15-472F-B0A8-91C310CAF9BF@wincent.com> <471250BC.7070307@trolltech.com> <85d4vhlh8y.fsf@lola.goethe.zz> <471302D2.6010405@trolltech.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 09:44:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710150936070.25221@racer.site>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+ <Pine.LNX.4.64.0710150039120.25221@racer.site> <E1IhIwR-0006be-Ki@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 15 10:44:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr,
+	git@vger.kernel.org, make-w32@gnu.org
+To: Eli Zaretskii <eliz@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Oct 15 10:44:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhLYt-0003Le-P4
+	id 1IhLYu-0003Le-F9
 	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 10:44:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755507AbXJOIoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755565AbXJOIoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 04:44:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbXJOIoV
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 04:44:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:60393 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755452AbXJOIoT (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 15 Oct 2007 04:44:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755455AbXJOIoT
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 04:44:19 -0400
-Received: from main.gmane.org ([80.91.229.2]:35696 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755263AbXJOIoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 04:44:18 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IhLRe-0007N3-1t
-	for git@vger.kernel.org; Mon, 15 Oct 2007 08:37:02 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:37:02 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 08:37:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:l0N60QuUX37mla7DXGLl7UbRFk4=
+Received: (qmail invoked by alias); 15 Oct 2007 08:44:17 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp045) with SMTP; 15 Oct 2007 10:44:17 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+TkLFXdPCTMNCdpIbatzO/GQeKZbKPd46nIPG0n3
+	0elIXZEUVxn4H0
+X-X-Sender: gene099@racer.site
+In-Reply-To: <E1IhIwR-0006be-Ki@fencepost.gnu.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60963>
 
-Marius Storm-Olsen <marius@trolltech.com> writes:
+Hi,
 
-> David Kastrup said the following on 14.10.2007 19:48:
->> Marius Storm-Olsen <marius@trolltech.com> writes:
->>
->>> Wincent Colaiuta said the following on 14.10.2007 18:35:
->>>
->>>> "undecided" sounds good to me. It should be clear to non-native
->>>> speakers of English (at least, clearer than "dunno").
->>> What about just "unknown"?
->>
->> I tend to nitpick to the degree of silliness when my own suggestions
->> are concerned, but "unknown" sounds to me like the state _before_ the
->> test.  If a person says he is "undecided" about something that means
->> that he _has_ thought about it already.  "Undecidable" might bring
->> this distinction across more strongly, but it is a more complicated
->> word and it insinuates that it is _impossible_ to come to a decision
->> regardless of the spent effort.
->>
->> "unknown" clearly is much better than "dunno" though even if my own
->> favorite would be "undecided".
->
-> What then about a good'ol programming favorite, "void"? :-)
+On Mon, 15 Oct 2007, Eli Zaretskii wrote:
 
-Huh?  void is a type, not a value.  void would insinuate that it was
-wrong to ask the question, not that its answer could not be
-determined.
+> > Date: Mon, 15 Oct 2007 00:45:47 +0100 (BST)
+> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > cc: Alex Riesen <raa.lkml@gmail.com>, ae@op5.se, tsuna@lrde.epita.fr, 
+> >     git@vger.kernel.org, make-w32@gnu.org
+> > 
+> > The problem is not so much opening, but determining if an existing file 
+> > and a file in the index have the same name.
+> > 
+> > For example, "README" in the index, but "readme" in the working directory, 
+> > will be handled as "deleted/untracked" by the current machinery.  IOW git 
+> > will not know that what it gets from readdir() as "readme" really is the 
+> > same file as "README" in the index.
+> 
+> That's because you think file names are simple strings and can be
+> compared by simple string comparison.
 
-> I agree that "unknown" might be a state even _before_ a person has
-> determined if a case is good or bad (same for 'dunno' actually: "-
-> Do you know if it works? - I dunno yet") When I think more about it,
-> I really like "void"..
+Almost...
 
-Well, I don't.
+> This na?ve view is not true even on POSIX systems: "foo/bar" and 
+> "/a/b/foo/bar" can be the same file, as well as "/a/b/c/d" and "/x/y/z", 
+> given the right symlinks.
 
-Basically, I would say that this seems to be so much a matter of
-personal taste that we should at this point of time leave the decision
-of how to pick this to Junio.  Whether this gets resolved by vote or
-by authority: seems like the fine lines are no longer worth the time
-invested in discussing them.
+... not quite, ah ...
 
--- 
-David Kastrup
+> But for some reason that eludes me, people who are accustomed to POSIX
+> stop right there and in effect say "file names are strings, if we only
+> make them absolute and resolve links".
+
+... yes!  There you have it.  Absolute filenames, resolved by readlink() 
+are assumed to be the unique (!) identifiers for the contents.
+
+_Note:_ absolute paths _without_ readlink() resolving are _still_ unique 
+identifiers; this time for files/symlinks.
+
+Things like this utter rubbish that two different file names (which are 
+the keys in the keystore that a filesystem really is) make Windows' 
+filesystem operations so slow.
+
+I wonder when Windows heads will realise that this "convenience" is just 
+another reason why Windows is easily outperformed by other OSes (yes, the 
+last one is a plural).
+
+> > > > - no acceptable level of performance in filesystem and VFS 
+> > > >   (readdir, stat, open and read/write are annoyingly slow)
+> > > 
+> > > With what libraries?  Native `stat' and `readdir' are quite fast. 
+> > > Perhaps you mean the ported glibc (libgw32c), where `readdir' is 
+> > > indeed painfully slow, but then you don't need to use it.
+> > 
+> > No, native.
+> 
+> Can you show a test case where this penalty is clearly visible?  I'm 
+> curious to see the numbers.  TIA
+
+No, I cannot.  I will not go and buy a copy of Windows just to show you 
+the numbers.
+
+Since quite some time I only run Linux on my machine(s), and the reason 
+was a very unscientific experiment: I kept with the OS that did not freeze 
+and let me do nothing for more than one second.
+
+Now, that is my _personal_ decision.  If _you_ have no problem with 
+Windows, just stick with it.  (I always thought this goes without saying, 
+but Windows users tend to be very religious about this issue, thinking 
+just because I hate Windows that I want to make them switch.  Hahaha, no.)
+
+Ciao,
+Dscho
