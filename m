@@ -1,71 +1,120 @@
-From: "Dave Korn" <dave.korn@artimi.com>
-Subject: RE: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 19:25:55 +0100
-Message-ID: <030301c80f58$d37b9710$2e08a8c0@CAM.ARTIMI.COM>
-References: <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr><47125F74.9050600@op5.se><Pine.LNX.4.64.0710141934310.25221@racer.site><47126957.1020204@op5.se><Pine.LNX.4.64.0710142112540.25221@racer.site><20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org><Pine.LNX.4.64.0710150039120.25221@racer.site><E1IhIwR-0006be-Ki@fencepost.gnu.org><Pine.LNX.4.64.0710150936070.25221@racer.site> <20071015174922.GC2966@steel.home>
+From: Paul Smith <psmith@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Mon, 15 Oct 2007 14:29:38 -0400
+Organization: GNU's Not UNIX!
+Message-ID: <1192472978.8299.155.camel@homebase.localnet>
+References: <1192293466.17584.95.camel@homebase.localnet>
+	<uy7e6keyv.fsf@gnu.org>	<1192381040.4908.57.camel@homebase.localnet>
+	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+	<47125F74.9050600@op5.se>	<Pine.LNX.4.64.0710141934310.25221@racer.site>
+	<47126957.1020204@op5.se>	<Pine.LNX.4.64.0710142112540.25221@racer.site>
+	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+	<Pine.LNX.4.64.0710150039120.25221@racer.site>
+	<4712B616.165BBF8D@dessent.net>
+	<Pine.LNX.4.64.0710150217120.25221@racer.site>
+	<Pine.LNX.4.64.0710150223230.25221@racer.site>
+	<E1IhJ4K-00086x-5U@fencepost.gnu.org>
+	<AD60F584-7AAD-4083-9BA6-21F0D00D6D1D@zib.de>
+	<E1IhLBW-0006uw-19@fencepost.gnu.org>
+	<Pine.LNX.4.64.0710150946500.25221@racer.site>
+	<E1IhNox-0004n2-N5@fencepost.gnu.org> <47135D85.50701@viscovery.net>
+	<E1IhPCo-0004ZO-N9@fencepost.gnu.org>
+Reply-To: git@vger.kernel.org
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: <ae@op5.se>, <git@vger.kernel.org>, <make-w32@gnu.org>
-To: "'Alex Riesen'" <raa.lkml@gmail.com>,
-	"'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 15 21:30:08 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Cc: raa.lkml@gmail.com, prohaska@zib.de, make-w32@gnu.org,
+	Johannes.Schindelin@gmx.de, ae@op5.se,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Eli Zaretskii <eliz@gnu.org>
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Mon Oct 15 21:40:03 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhUdk-0006dJ-EB
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 20:26:08 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760709AbXJOSZ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 14:25:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759880AbXJOSZ6
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 14:25:58 -0400
-Received: from mail.artimi.com ([194.72.81.2]:13705 "EHLO mail.artimi.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758697AbXJOSZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 14:25:57 -0400
-Received: from rainbow ([192.168.8.46]) by mail.artimi.com with Microsoft SMTPSVC(6.0.3790.3959);
-	 Mon, 15 Oct 2007 19:25:55 +0100
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <20071015174922.GC2966@steel.home>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3138
-Thread-Index: AcgPVBHHEeita5VpRSKttbtOdJGWyQAA1/Tg
-X-OriginalArrivalTime: 15 Oct 2007 18:25:55.0371 (UTC) FILETIME=[D32057B0:01C80F58]
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61025>
+	id 1IhUhd-0007cZ-JK
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 20:30:09 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IhUhW-0006T3-OD
+	for gnu-make-w32@m.gmane.org; Mon, 15 Oct 2007 14:30:02 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IhUhR-0006SD-Ro
+	for make-w32@gnu.org; Mon, 15 Oct 2007 14:29:57 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IhUhQ-0006Qg-1m
+	for make-w32@gnu.org; Mon, 15 Oct 2007 14:29:57 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IhUhP-0006QZ-U5
+	for make-w32@gnu.org; Mon, 15 Oct 2007 14:29:55 -0400
+Received: from smtp02.lnh.mail.rcn.net ([207.172.157.102])
+	by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <psmith@gnu.org>)
+	id 1IhUhJ-0003WL-IF; Mon, 15 Oct 2007 14:29:49 -0400
+Received: from mr02.lnh.mail.rcn.net ([207.172.157.22])
+	by smtp02.lnh.mail.rcn.net with ESMTP; 15 Oct 2007 14:29:41 -0400
+Received: from smtp01.lnh.mail.rcn.net (smtp01.lnh.mail.rcn.net [207.172.4.11])
+	by mr02.lnh.mail.rcn.net (MOS 3.8.3-GA) with ESMTP id NXB65381;
+	Mon, 15 Oct 2007 14:29:41 -0400 (EDT)
+Received: from 65-78-30-67.c3-0.lex-ubr3.sbo-lex.ma.cable.rcn.com (HELO
+	homebase.localnet) ([65.78.30.67])
+	by smtp01.lnh.mail.rcn.net with ESMTP; 15 Oct 2007 14:31:19 -0400
+Received: from psmith by homebase.localnet with local (Exim 4.67)
+	(envelope-from <psmith@gnu.org>)
+	id 1IhUh9-0003eQ-72; Mon, 15 Oct 2007 14:29:39 -0400
+In-Reply-To: <E1IhPCo-0004ZO-N9@fencepost.gnu.org>
+X-Mailer: Evolution 2.12.0 
+X-Junkmail-Status: score=10/50, host=mr02.lnh.mail.rcn.net
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A090204.4713B195.0179,ss=1,fgs=0,
+	ip=207.172.4.11, so=2006-12-09 10:45:40,
+	dmn=5.4.3/2007-09-06
+X-detected-kernel: by monty-python.gnu.org: Genre and OS details not
+	recognized.
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61026>
 
-On 15 October 2007 18:49, Alex Riesen wrote:
+OK, enough.  I am extremely grateful for the porting and maintenance
+efforts of the GNU make porting team (since I have no Windows--or Amiga,
+or OS/2, or OpenVMS--systems to maintain these ports myself) and I'm not
+going to choose a tool unless it supports their environment and helps
+them to work more efficiently (or at least no less efficiently).  I'm
+not interested in getting into a pissing match over which operating
+system is better or worse, and I'm certainly not interested in unfounded
+inferences as to the character and quality of my porting team based on
+the operating system they are using.
 
-> Johannes Schindelin, Mon, Oct 15, 2007 10:44:12 +0200:
->> On Mon, 15 Oct 2007, Eli Zaretskii wrote:
->>> Can you show a test case where this penalty is clearly visible?  I'm
->>> curious to see the numbers.  TIA
-> ...
->> Now, that is my _personal_ decision.  If _you_ have no problem with
->> Windows, just stick with it.  (I always thought this goes without saying,
->> but Windows users tend to be very religious about this issue, thinking
->> just because I hate Windows that I want to make them switch.  Hahaha, no.)
-> 
-> They tend to be so exactly because they know how pathetic they are.
-> They just want to have something where they don't suck and do
-> everything to find it. And fail. Then they resort to graphics and
-> user-friendly interface.
+For those who have provided details and pointers regarding the state of
+GIT on Windows, thank you very much for your help: it's been very useful
+and Eli and others sound like they have enough information to be getting
+on with for now.  If you'd like to discuss some Windows porting issues
+further there are a number of extremely knowledgeable Windows / FLOSS
+programmers on the make-w32@gnu.org list--although they are generally
+very busy.
 
-  Translation:  "I feel that I am superior to other people.  This post has no
-content apart from me shooting my mouth off in an attempt to prove how much
-cleverer I am than anyone else.  However apart from my self-love I have no
-contribution to make to the discussion."
+If what you're interested in is self-congratulatory back-slapping over
+the superiority of Linux/POSIX, please keep that on the GIT mailing
+list, or else an advocacy forum somewhere.
 
-  This isn't slashdot.  A computer is just a tool, and it's really *you* who
-are being pathetic, because you confuse a choice of mass-manufactured consumer
-product with a statement about personal identity.  Loyalty to your favourite
-brand is a game of one-upmanship suitable only for kids.  You need to grow up.
 
-    cheers,
-      DaveK
+I'm setting followups to the GIT list.
+
+Cheers all!
+
 -- 
-Can't think of a witty .sigline today....
+-------------------------------------------------------------------------------
+ Paul D. Smith <psmith@gnu.org>          Find some GNU make tips at:
+ http://www.gnu.org                      http://make.mad-scientist.us
+ "Please remain calm...I may be mad, but I am a professional." --Mad Scientist
