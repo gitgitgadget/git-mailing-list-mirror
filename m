@@ -1,88 +1,65 @@
-From: Benoit SIGOURE <tsuna@lrde.epita.fr>
-Subject: Re: Switching from CVS to GIT
-Date: Mon, 15 Oct 2007 11:02:54 +0200
-Message-ID: <DB8BA238-B1E3-48F2-AF90-A81BD0CD6A5F@lrde.epita.fr>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>  <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>  <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710150039120.25221@racer.site> <4712B616.165BBF8D@dessent.net> <Pine.LNX.4.64.0710150217120.25221@racer.site> <u4pgtj9rs.fsf@gnu.org> <Pine.LNX.4.64.0710150932560.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-71--616589665"
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH] git-add (-a|-u)  and -n support
+Date: Mon, 15 Oct 2007 05:09:15 -0400
+Message-ID: <8ACD561E-6F12-4C64-BDBF-CDC697F95D82@MIT.EDU>
+References: <E1DCA1D1-1ED3-498A-A919-9EBAF3BA0870@mit.edu> <20071015042028.GB4844@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Eli Zaretskii <eliz@gnu.org>, git list <git@vger.kernel.org>,
-	Make Windows <make-w32@gnu.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 15 11:04:00 2007
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 15 11:10:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhLrT-0006QG-QL
-	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:03:44 +0200
+	id 1IhLxB-0007Mw-8v
+	for gcvg-git-2@gmane.org; Mon, 15 Oct 2007 11:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753502AbXJOJDd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 05:03:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbXJOJDd
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:03:33 -0400
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:53554 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752191AbXJOJDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 05:03:32 -0400
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IhLrH-0000lR-AZ; Mon, 15 Oct 2007 11:03:31 +0200
-In-Reply-To: <Pine.LNX.4.64.0710150932560.25221@racer.site>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1754099AbXJOJJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 05:09:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbXJOJJ0
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 05:09:26 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:43827 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753797AbXJOJJ0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 05:09:26 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9F99JvR004054;
+	Mon, 15 Oct 2007 05:09:19 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9F99IKX000169
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Mon, 15 Oct 2007 05:09:19 -0400 (EDT)
+In-Reply-To: <20071015042028.GB4844@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60966>
-
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-71--616589665
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-On Oct 15, 2007, at 10:34 AM, Johannes Schindelin wrote:
-
-> Hi,
->
-> On Mon, 15 Oct 2007, Eli Zaretskii wrote:
->
->> No, you need to think in abstractions rather than POSIX-isms, and  
->> then
->> let each platform implement those abstractions as appropriate.
->
-> Last time I checked, POSIX was already an abstraction,  
-> thankyouverymuch.
-
-But as Eli pointed out, it's not universal, so you need higher  
-abstractions on top of them.
-
-> Anyway, this discussion gets out of hand.
-
-Not at all, actually I think some interesting points were made,  
-including on the technical side of the thing.
-
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/60967>
 
 
+On 15 Oct 2007, at 12:20:28 AM, Jeff King wrote:
 
---Apple-Mail-71--616589665
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
+> Thank you for submitting a patch! However, please make sure you read
+> SubmittingPatches carefully.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
+I apologize, though I got your first email about
+Documentation/SubmittingPatches after I had sent
+in this patch; I had gone rummaging around the homepage
+for some information, but had found nothing special.
 
-iD8DBQFHEyy/wwE67wC8PUkRAhueAJ0f6nVel6nuw05ajRt815Wa+V9FdACePP2e
-pEqU/hcMt4CYI9bq4CvJ+BY=
-=LsaT
------END PGP SIGNATURE-----
+I just submitted a patch (properly!) to Petr Baudis
+to add a link to that documentation on the main page.
 
---Apple-Mail-71--616589665--
+> -Peff "policing the list with an iron fist in Junio's absence" King
+
+Don't worry, I didn't take it personally ;-)
+
+Sincerely,
+Michael Witten
