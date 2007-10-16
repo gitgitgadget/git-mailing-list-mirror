@@ -1,147 +1,104 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 07:14:56 +0200
-Message-ID: <471448D0.6080200@op5.se>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: A note from the interim Git maintainer
+Date: Tue, 16 Oct 2007 01:54:48 -0400
+Message-ID: <20071016055448.GA13801@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Daniel Barkalow <barkalow@iabervon.org>, raa.lkml@gmail.com,
-	Johannes.Schindelin@gmx.de, tsuna@lrde.epita.fr,
-	git@vger.kernel.org, make-w32@gnu.org
-To: Eli Zaretskii <eliz@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 07:15:42 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 07:55:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhemK-0002Su-6Q
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 07:15:40 +0200
+	id 1IhfOT-0007fd-0e
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 07:55:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760032AbXJPFPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 01:15:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759970AbXJPFPF
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 01:15:05 -0400
-Received: from mail.op5.se ([193.201.96.20]:54621 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758378AbXJPFPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 01:15:01 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B26191730744;
-	Tue, 16 Oct 2007 07:14:59 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id N6KVrnSzKRKd; Tue, 16 Oct 2007 07:14:58 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 14AD11730739;
-	Tue, 16 Oct 2007 07:14:57 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <uodezisvg.fsf@gnu.org>
+	id S1760226AbXJPFyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 01:54:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759937AbXJPFyy
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 01:54:54 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:59038 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758775AbXJPFyx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 01:54:53 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IhfOE-0000fg-7P; Tue, 16 Oct 2007 01:54:50 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 57E4720FBAE; Tue, 16 Oct 2007 01:54:49 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61079>
 
-Eli Zaretskii wrote:
->> Date: Mon, 15 Oct 2007 20:45:02 -0400 (EDT)
->> From: Daniel Barkalow <barkalow@iabervon.org>
->> cc: Alex Riesen <raa.lkml@gmail.com>, Johannes.Schindelin@gmx.de, ae@op5.se, 
->>     tsuna@lrde.epita.fr, git@vger.kernel.org, make-w32@gnu.org
->>
->> I believe the hassle is that readdir doesn't necessarily report a README in 
->> a directory which is supposed to have a README, when it has a readme 
->> instead.
-> 
-> Sorry I'm asking potentially stupid questions out of ignorance: why
-> would you want readdir to return `README' when you have `readme'?
-> 
+As most folks are probably now well aware, Junio has been offline
+for about 11 days and may still be offline for a little while more.
+Before he dropped offline Junio shared why he left on such a short
+notice with both Dscho and myself, as it meant cancelling the
+"git together" we were planning to have last weekend in San Jose.
 
-Because it might have been checked in as README, and since git is case
-sensitive that is what it'll think should be there when it reads the
-directories. If it's not, users get to see
-
-	removed: README
-	untracked: readme
-
-and there's really no easy way out of this one, since users on a case-
-sensitive filesystem might be involved in this project too, so it
-could be an intentional rename, but we don't know for sure. Just
-clobbering the in-git file is wrong, but overwriting a file on disk
-is wrong too. git tries hard to not ever lose any data for the user.
-
-> 
->>>> - no acceptable level of performance in filesystem and VFS (readdir,
->>>>   stat, open and read/write are annoyingly slow)
->>> With what libraries?  Native `stat' and `readdir' are quite fast.
->>> Perhaps you mean the ported glibc (libgw32c), where `readdir' is
->>> indeed painfully slow, but then you don't need to use it.
->> We want getting stat info, using readdir to figure out what files exist, 
->> for 106083 files in 1603 directories with a hot cache to take under 1s; 
->> otherwise "git status" takes a noticeable amount of time with a medium-big 
->> project, and we want people to be able to get info on what's changed 
->> effectively instantly. My impression is that Windows' native stat and 
->> readdir are plenty fast for what normal Windows programs want, but we 
->> actually expect reasonable performance on an unreasonably-big 
->> metadata-heavy input.
-> 
-> If that's the issue, then it's not a good idea to call `stat' and
-> `readdir' on Windows at all.  `stat' is a single system call on Posix
-> systems, while on Windows it usually needs to go out of its way
-> calling half a dozen system services to gather the `struct stat' info.
-> You need to call something like FindFirstFile, which can do the job of
-> `stat' and `readdir' together (and of `fnmatch', if you need to filter
-> only some files) in one go.  I don't know whether this will scan 100K
-> files under one second (maybe I will try it one of these days), but it
-> will definitely be faster than `readdir'+`stat' by maybe as much as an
-> order of magnitude.
-> 
-
-To be honest though, there are so many places which do the readdir+stat
-that I don't think it'd be worth factoring it out, especially since it
-*works* on windows. It's just slow, and only slow compared to various
-unices. I *think* (correct me if I'm wrong) that git is still faster
-than a whole bunch of other scm's on windows, but to one who's used to
-its performance on Linux that waiting several seconds to scan 10k files
-just feels wrong.
+I'm not going to get into the specific details as it is Junio's
+business and not mine.  But I can say that my thoughts and prayers
+to $DEITY are with him and his family at this time, and I don't
+expect him to be rushing back to git work tomorrow.  However I'm
+quite certain that Junio will return when he can.
 
 
->> We also expect to be able to make a sequence of file system operations 
->> such that programs starting at any time see the same database as the files 
->> containing the database get restructured.
-> 
-> Sorry, I don't understand this; please tell more about the operations,
-> ``the same database'' issue (what database?)
+Lars Hjemli has done a terrific job of stacking up patches from the
+mailing list in his "q/*" branches, available for fetching directly
+from his tree at [*1*].  I really want to thank Lars for stepping
+up and doing this, as I think it has helped the community.
 
-The object database, located under .git/objects.
+Unfortunately there were quite a few q/* branches, some of which
+were not trivial to merge against the other topics that were already
+pending in Junio's next.  Someone really needed to go through the
+branches and merge them together into suitable maint, master and
+next branches.
 
-> and what do you mean by
-> ``the files containing the database get restructured''.
-> 
 
-/* I'm on a limb here. Nicolas Pitre knows the git packfile format, so
- * perhaps he'll be kind enough to correct me if I'm wrong */
+I've decided to step up and try to fill Junio's shoes.  To that end
+I am publishing a maint, master, next (and soon) pu branch from a
+new fork on repo.or.cz:
 
-The mmap() stuff is primarily convenient when reading huge packfiles. As
-far as I understand it, they're ordered by some sort of delta similarity
-score, so mmap()'ing 100MiB or so of a certain packfile will most likely
-mean we have a couple of thousand "connected" revisions in memory. That
-database gets sort of restructured as the memory-chunk that's mmap()'ed
-get moved to read in the next couple of thousand revisions.
+  gitweb:  http://repo.or.cz/w/git/spearce.git
+  git:     git://repo.or.cz/git/spearce.git
+           http://repo.or.cz/r/git/spearce.git
 
-In all honesty, this doesn't matter much for already fully packed projects
-unless they're significantly larger than the Linux kernel, since git is so
-amazingly good at compressing large repos to a small size. Linux is ~180
-MiB fully packed, and most developer's systems could just read() that
-entire packfile into memory without much problem. But then again, no-one's
-ever had problems supporting the "normal" cases.
+Traditional "What's in" messages will be sent in a minute.  I'm
+going to try to apply the exact same policies that Junio applies
+to these, so maint/master/next won't rewind, but pu may.
+
+I based my branches on top of the last items published by Junio,
+and am hoping that he will be open to pulling directly from these
+before he starts working again.  Junio obviously has the option
+not to pull from me, but if I do my job of interim maintainer well
+I can probably talk him into it.  :)
+
+I won't be publishing a tagged release from maint or master anytime
+soon.  Primarily because I don't think its time to do that, and also
+because I don't have a kernel.org account to upload the tarballs to.
+If a month goes by without Junio, well, lets just see what happens.
+
+
+I probably don't need to say this for the git regulars, but you
+can start to track my published branches yourself with git-remote
+if you are interested in testing and/or using these versions:
+
+  $ git remote add -f spearce git://repo.or.cz/git/spearce.git
+  $ git pull spearce master  ; # or next
+
+
+
+*1* git://hjemli.net/pub/git/git
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Shawn.
