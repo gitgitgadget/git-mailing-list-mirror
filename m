@@ -1,68 +1,71 @@
-From: Jari Aalto <jari.aalto@cante.net>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 20:06:17 +0300
-Organization: Private
-Message-ID: <3awb7zw6.fsf@blue.sea.net>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-	<471476B7.5050105@users.sourceforge.net>
-	<8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
-	<47148F72.1090602@users.sourceforge.net>
-	<1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
-	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+Date: Tue, 16 Oct 2007 20:51:37 +0200
+Message-ID: <47150839.4060207@op5.se>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu> <4714F3A2.3080103@op5.se> <20071016183401.GR16774@lug-owl.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 20:29:51 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Jeffrey C. Ollie" <jeff@ocjtech.us>,
+	Adam Piatyszek <ediap@users.sourceforge.net>,
+	Lars Hjemli <lh@elementstorage.no>,
+	Michael Witten <mfwitten@mit.edu>, git@vger.kernel.org
+To: Jan-Benedict Glaw <jbglaw@lug-owl.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 20:52:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhrAi-0004cH-5O
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 20:29:40 +0200
+	id 1IhrWH-0001Qm-Oc
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 20:51:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935239AbXJPS2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 14:28:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935068AbXJPS2q
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 14:28:46 -0400
-Received: from main.gmane.org ([80.91.229.2]:39523 "EHLO ciao.gmane.org"
+	id S1761821AbXJPSvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 14:51:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761088AbXJPSvo
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 14:51:44 -0400
+Received: from mail.op5.se ([193.201.96.20]:37612 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935233AbXJPS2p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 14:28:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ihpzg-0002gL-7R
-	for git@vger.kernel.org; Tue, 16 Oct 2007 17:14:12 +0000
-Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 Oct 2007 17:14:12 +0000
-Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 16 Oct 2007 17:14:12 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:/rt/5hLA43IPiMD5vTOCCScXbXQ=
+	id S1759538AbXJPSvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 14:51:43 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 396B217306FD;
+	Tue, 16 Oct 2007 20:51:42 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ZKvITLdKKQ8o; Tue, 16 Oct 2007 20:51:39 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id C50F817306C1;
+	Tue, 16 Oct 2007 20:51:38 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <20071016183401.GR16774@lug-owl.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61237>
 
-* Tue 2007-10-16 Michael Witten <mfwitten AT MIT.EDU>
-* Message-Id: B2F6DB0C-4EFE-4C56-8E7A-31820320CA02 AT mit.edu
-> On 16 Oct 2007, at 11:26:07 AM, Jeffrey C. Ollie wrote:
->
->> Instead of using "(setq indent-tabs-mode t)" use "(setq indent-tabs-
->> mode
->> nil)".  This will force emacs to always use spaces to indent.
->
-> However, 8 spaces per tab is a lot of wasted
-> information to be bandying about.
+Jan-Benedict Glaw wrote:
+> On Tue, 2007-10-16 19:23:46 +0200, Andreas Ericsson <ae@op5.se> wrote:
+>> Jeffrey C. Ollie wrote:
+>>> On Tue, 2007-10-16 at 12:16 +0200, Adam Piatyszek wrote:
+>>>> And if one change the tab size, it will result in a messy alignment in
+>>>> line 5.
+>>> Which is why one should never should change the tab size from anything
+>>> but 8.
+>> I have mine set to 4. With an 11.2" screen and 1024x768 resolution, it's
+> 
+> You fir 768 lines of text and 1024 chars per line to such a small
+> display and still argue about too large tabs?
+> 
 
-Spaces are guaranteed to interpreted correctly in all environments. TABs
-are the source of too many problems.
-
-Jari
+If by "char" you mean "pixel", then yes.
 
 -- 
-Welcome to FOSS revolution: we fix and modify until it shines
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
