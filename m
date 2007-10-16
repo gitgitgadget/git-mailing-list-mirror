@@ -1,195 +1,149 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: use "no warnings 'once'" to disable false-positives
-Date: Tue, 16 Oct 2007 00:43:18 -0700
-Message-ID: <20071016074318.GA32348@soma>
-References: <20071015071912.GG984@void.codelabs.ru>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-fast-import crashes
+Date: Tue, 16 Oct 2007 09:46:45 +0200
+Message-ID: <20071016074645.GA6919@artemis.corp>
+References: <e66701d40710120242p6fc05148hd40d19d295373ac4@mail.gmail.com> <20071013032916.GL27899@spearce.org> <20071013033407.GM27899@spearce.org> <20071013073640.GC7110@artemis.corp> <20071013075027.GD7110@artemis.corp> <e66701d40710142153o70a7b696r928491be437ac6d@mail.gmail.com> <20071015073307.GA1508@artemis.corp> <e66701d40710150119y7c9e0ff6n83c5fbd25d351fc6@mail.gmail.com> <e66701d40710160013h270f685sef57f80382089f3c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eygene Ryabinkin <rea-git@codelabs.ru>
-X-From: git-owner@vger.kernel.org Tue Oct 16 09:44:12 2007
+Content-Type: multipart/signed; boundary="wac7ysb48OaltWcw";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Shun Kei Leung <kevinlsk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 09:47:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihh5b-0006PL-L8
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 09:43:44 +0200
+	id 1Ihh8l-0006yL-V7
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 09:47:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760977AbXJPHnU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 03:43:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759809AbXJPHnU
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 03:43:20 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:46382 "EHLO hand.yhbt.net"
+	id S1765181AbXJPHqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 03:46:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765032AbXJPHqt
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 03:46:49 -0400
+Received: from pan.madism.org ([88.191.52.104]:35545 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760266AbXJPHnT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 03:43:19 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id D6A0D7DC0FE;
-	Tue, 16 Oct 2007 00:43:18 -0700 (PDT)
+	id S1763386AbXJPHqs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 03:46:48 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id D2E8325371;
+	Tue, 16 Oct 2007 09:46:46 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id A65936E8B; Tue, 16 Oct 2007 09:46:45 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Shun Kei Leung <kevinlsk@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <20071015071912.GG984@void.codelabs.ru>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <e66701d40710160013h270f685sef57f80382089f3c@mail.gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61106>
 
-Thanks, minor nit regarding fixed in the patch below.
 
-	"{ no warnings 'once';"
+--wac7ysb48OaltWcw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-on the same line as the "{"
+On Tue, Oct 16, 2007 at 07:13:31AM +0000, Shun Kei Leung wrote:
+> Hi Pierre,
+>=20
+> I have tested with your patch applied, and it still crashed badly.
 
-From: Eygene Ryabinkin <rea-git@codelabs.ru>
-Date: Mon, 15 Oct 2007 11:19:12 +0400
-Subject: [PATCH] git-svn: use "no warnings 'once'" to disable false-positives
+  okay
 
-Some variables coming from the Subversion's Perl bindings are used
-in our code only once, so the interpreter warns us about it.  These
-warnings are false-positives, because the variables themselves are
-initialized in the binding's guts, that are made by SWIG.
+> I compiled the b449f4c version and I got a different backtrace from
+> GDB. I am still not sure about how the error occurs. I attached the
+> memory usage from various command line tools.
 
-Credits to Sam Vilain for his note about "no warnings 'once'".
+  I believe you should rather test master as any of the strbuf stages is
+broken for you, and that there has been some issues with strbuf fixed
+lately (not only the patch I asked you to try, but also an issue with
+empty strubufs, and you _need_ that patch).
 
-[ew: minor formatting change]
+> GDB output
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Program received signal EXC_BAD_ACCESS, Could not access memory.
+> Reason: KERN_INVALID_ADDRESS at address: 0x756c7463
+> 0x90018d0c in szone_realloc ()
+> (gdb) bt
+> #0  0x90018d0c in szone_realloc ()
+> #1  0x90018898 in realloc ()
+> #2  0x0001f8c8 in strbuf_grow (sb=3D0x75ef8, extra=3D0) at git-compat-uti=
+l.h:223
+> #3  0x0001fc14 in read_line (sb=3D0x75ef8, fp=3D0xa0001b9c, term=3D10) at=
+ strbuf.c:107
+> #4  0x00002da8 in read_next_command () at fast-import.c:1599
+> #5  0x0000742c in cmd_new_commit () at fast-import.c:2118
+> #6  0x00007e80 in main (argc=3D1, argv=3D0xbffff828) at fast-import.c:2390
+> (gdb) frame 3
+> #3  0x0001fc14 in read_line (sb=3D0x75ef8, fp=3D0xa0001b9c, term=3D10) at=
+ strbuf.c:107
+> 107                     strbuf_grow(sb, 1);
+> (gdb) print *sb
+> $1 =3D {
+>   alloc =3D 60,
+>   len =3D 23,
+>   eof =3D 0,
+>   buf =3D 0x5020b0 "D windows/packages/cdc/ces/adm"
+> }
+> (gdb) frame 2
+> #2  0x0001f8c8 in strbuf_grow (sb=3D0x75ef8, extra=3D0) at git-compat-uti=
+l.h:223
+> 223             void *ret =3D realloc(ptr, size);
+> (gdb) print (char *) ptr
+> $2 =3D 0x5020b0 "D windows/packages/cdc/ces/adm"
+> (gdb) print (char *)ret
+> $3 =3D 0xd <Address 0xd out of bounds>
 
-Signed-off-by: Eygene Ryabinkin <rea-git@codelabs.ru>
-Acked-by: Eric Wong <normalperson@yhbt.net>
----
- git-svn.perl |   87 ++++++++++++++++++++++++++++-----------------------------
- 1 files changed, 43 insertions(+), 44 deletions(-)
+  This does not make sense, ptr should be either valid or NULL.
+> The output of `leaks'
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>=20
+> Process 27075: 88 nodes malloced for 2335 KB
+> Process 27075: 6 leaks for 624 total leaked bytes.
+> Leak: 0x005012b0  size=3D208      string 'EOT'
+> Leak: 0x00501e60  size=3D128      string 'EOT'
+> Leak: 0x00501c80  size=3D128      string 'EOT'
+> Leak: 0x00500f10  size=3D64       string 'EOT'
+> Leak: 0x00501fa0  size=3D64       string 'EOT'
+> Leak: 0x00501f60  size=3D32
+>         0x00000000 0x02008000 0x00000000 0x01000000     ................
+>         0x02000000 0x0000001a 0x00000000 0x00000000     ................
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 2c8a158..1130a09 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -2303,23 +2303,31 @@ sub ssl_server_trust {
- 	my ($cred, $realm, $failures, $cert_info, $may_save, $pool) = @_;
- 	$may_save = undef if $_no_auth_cache;
- 	print STDERR "Error validating server certificate for '$realm':\n";
--	if ($failures & $SVN::Auth::SSL::UNKNOWNCA) {
--		print STDERR " - The certificate is not issued by a trusted ",
--		      "authority. Use the\n",
--	              "   fingerprint to validate the certificate manually!\n";
--	}
--	if ($failures & $SVN::Auth::SSL::CNMISMATCH) {
--		print STDERR " - The certificate hostname does not match.\n";
--	}
--	if ($failures & $SVN::Auth::SSL::NOTYETVALID) {
--		print STDERR " - The certificate is not yet valid.\n";
--	}
--	if ($failures & $SVN::Auth::SSL::EXPIRED) {
--		print STDERR " - The certificate has expired.\n";
--	}
--	if ($failures & $SVN::Auth::SSL::OTHER) {
--		print STDERR " - The certificate has an unknown error.\n";
--	}
-+	{
-+		no warnings 'once';
-+		# All variables SVN::Auth::SSL::* are used only once,
-+		# so we're shutting up Perl warnings about this.
-+		if ($failures & $SVN::Auth::SSL::UNKNOWNCA) {
-+			print STDERR " - The certificate is not issued ",
-+			    "by a trusted authority. Use the\n",
-+			    "   fingerprint to validate ",
-+			    "the certificate manually!\n";
-+		}
-+		if ($failures & $SVN::Auth::SSL::CNMISMATCH) {
-+			print STDERR " - The certificate hostname ",
-+			    "does not match.\n";
-+		}
-+		if ($failures & $SVN::Auth::SSL::NOTYETVALID) {
-+			print STDERR " - The certificate is not yet valid.\n";
-+		}
-+		if ($failures & $SVN::Auth::SSL::EXPIRED) {
-+			print STDERR " - The certificate has expired.\n";
-+		}
-+		if ($failures & $SVN::Auth::SSL::OTHER) {
-+			print STDERR " - The certificate has ",
-+			    "an unknown error.\n";
-+		}
-+	} # no warnings 'once'
- 	printf STDERR
- 	        "Certificate information:\n".
- 	        " - Hostname: %s\n".
-@@ -2403,20 +2411,6 @@ sub _read_password {
- 	$password;
- }
- 
--package main;
--
--{
--	my $kill_stupid_warnings = $SVN::Node::none.$SVN::Node::file.
--				$SVN::Node::dir.$SVN::Node::unknown.
--				$SVN::Node::none.$SVN::Node::file.
--				$SVN::Node::dir.$SVN::Node::unknown.
--				$SVN::Auth::SSL::CNMISMATCH.
--				$SVN::Auth::SSL::NOTYETVALID.
--				$SVN::Auth::SSL::EXPIRED.
--				$SVN::Auth::SSL::UNKNOWNCA.
--				$SVN::Auth::SSL::OTHER;
--}
--
- package SVN::Git::Fetcher;
- use vars qw/@ISA/;
- use strict;
-@@ -2833,16 +2827,21 @@ sub open_or_add_dir {
- 	if (!defined $t) {
- 		die "$full_path not known in r$self->{r} or we have a bug!\n";
- 	}
--	if ($t == $SVN::Node::none) {
--		return $self->add_directory($full_path, $baton,
--						undef, -1, $self->{pool});
--	} elsif ($t == $SVN::Node::dir) {
--		return $self->open_directory($full_path, $baton,
--						$self->{r}, $self->{pool});
--	}
--	print STDERR "$full_path already exists in repository at ",
--		"r$self->{r} and it is not a directory (",
--		($t == $SVN::Node::file ? 'file' : 'unknown'),"/$t)\n";
-+	{
-+		no warnings 'once';
-+		# SVN::Node::none and SVN::Node::file are used only once,
-+		# so we're shutting up Perl's warnings about them.
-+		if ($t == $SVN::Node::none) {
-+			return $self->add_directory($full_path, $baton,
-+			    undef, -1, $self->{pool});
-+		} elsif ($t == $SVN::Node::dir) {
-+			return $self->open_directory($full_path, $baton,
-+			    $self->{r}, $self->{pool});
-+		} # no warnings 'once'
-+		print STDERR "$full_path already exists in repository at ",
-+		    "r$self->{r} and it is not a directory (",
-+		    ($t == $SVN::Node::file ? 'file' : 'unknown'),"/$t)\n";
-+	} # no warnings 'once'
- 	exit 1;
- }
- 
-@@ -3068,11 +3067,11 @@ sub new {
- 	my $dont_store_passwords = 1;
- 	my $conf_t = ${$config}{'config'};
- 	{
-+		no warnings 'once';
- 		# The usage of $SVN::_Core::SVN_CONFIG_* variables
- 		# produces warnings that variables are used only once.
- 		# I had not found the better way to shut them up, so
--		# warnings are disabled in this block.
--		no warnings;
-+		# the warnings of type 'once' are disabled in this block.
- 		if (SVN::_Core::svn_config_get_bool($conf_t,
- 		    $SVN::_Core::SVN_CONFIG_SECTION_AUTH,
- 		    $SVN::_Core::SVN_CONFIG_OPTION_STORE_PASSWORDS,
-@@ -3087,7 +3086,7 @@ sub new {
- 		    1) == 0) {
- 			$Git::SVN::Prompt::_no_auth_cache = 1;
- 		}
--	}
-+	} # no warnings 'once'
- 	my $self = SVN::Ra->new(url => $url, auth => $baton,
- 	                      config => $config,
- 			      pool => SVN::Pool->new,
--- 
-1.5.3.4.1173.gcfeee
+  What I _really_ need is that you run your test into valgrind (the easy
+way is to rename git-fast-import into git-fast-import.bin, and make
+git-fast-import be a shell-script doing:
 
--- 
-Eric Wong
+  exec valgrind --log-file /tmp/git-fast-import git-fast-import "$@"
+
+  and please send to me the /tmp/git-fast-import.<pid> from the one that
+crashes.
+
+  And please do that on the most recent tip of master so that you have a
+(at least believe to be) full and sane strbuf series. Thanks.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--wac7ysb48OaltWcw
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHFGxlvGr7W6HudhwRAkiBAKCnnY9VvxsuTFfM2t9anGcWLGJ+6gCgoILU
+lev2jMKorvwCtTGrmWtKhDw=
+=Xova
+-----END PGP SIGNATURE-----
+
+--wac7ysb48OaltWcw--
