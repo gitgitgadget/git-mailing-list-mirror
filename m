@@ -1,75 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: How to Import a bitkeeper repo into git
-Date: Mon, 15 Oct 2007 18:22:59 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710151815230.6887@woody.linux-foundation.org>
-References: <598689.78740.qm@web56015.mail.re3.yahoo.com>
- <20070709173720.GS29994@genesis.frugalware.org>
- <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>
- <4713FA4A.5090501@bluelane.com> <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>
- <20071016011212.GA609@old.davidb.org>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 09:24:50 +0700
+Message-ID: <fcaeb9bf0710151924r258dd561hd13c22319d17f80f@mail.gmail.com>
+References: <Pine.LNX.4.64.0710142112540.25221@racer.site>
+	 <Pine.LNX.4.64.0710150217120.25221@racer.site>
+	 <20071015175606.GE2966@steel.home> <4713B367.52CEC7E2@dessent.net>
+	 <Pine.LNX.4.64.0710151938300.25221@racer.site>
+	 <4713BA89.633B86F2@dessent.net> <20071015194214.GC15541@steel.home>
+	 <4713C81F.A75FEFC2@dessent.net>
+	 <Pine.LNX.4.64.0710152117290.25221@racer.site>
+	 <7287AD62-3274-4B20-881C-D02E08C4B2EF@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Pete/Piet Delaney <pete@bluelane.com>,
-	VMiklos <vmiklos@frugalware.org>,
-	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 03:23:37 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>,
+	"Alex Riesen" <raa.lkml@gmail.com>, "Eli Zaretskii" <eliz@gnu.org>,
+	"Andreas Ericsson" <ae@op5.se>, tsuna@lrde.epita.fr,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 04:25:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihb9k-00053t-K3
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 03:23:37 +0200
+	id 1Ihc7j-0004xA-Kd
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 04:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756882AbXJPBX0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 21:23:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756190AbXJPBX0
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 21:23:26 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:56327 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756344AbXJPBXZ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 21:23:25 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9G1MxD4012181
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 15 Oct 2007 18:23:00 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9G1MxYT002461;
-	Mon, 15 Oct 2007 18:22:59 -0700
-In-Reply-To: <20071016011212.GA609@old.davidb.org>
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1761429AbXJPCYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 22:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757557AbXJPCYz
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 22:24:55 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:63736 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761102AbXJPCYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 22:24:52 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1449170nfb
+        for <git@vger.kernel.org>; Mon, 15 Oct 2007 19:24:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ZxbgdxANwWvO5AvMqIIbQTBzJ+QM/obf/ojWc6dl108=;
+        b=DrVH4pWE5VcFEbFaYmn4WMsRg+sMvYbfbn79AxQn/NbCRIDNk4TMe20YlzMIIoshyxXrVewD2xZno3GGLzihVK3UzHZB4MdNHxZM+aG47CjAz6hWEw/b35LtyBY/NLCUAM60nKS37pJUVnQNTlMI3uV6WSI8GPjOhPYE/VJfG4A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qzAn38PBZe0gaFRYxaxwxJnzf9FUj9p5G5Idrgsc43K0QnIIXAcM7X32Bb3PZ/QyP8CcUhWIGrZ4ZpFRv2gy9qyQMpZjYEFMnJUgby4zTPArLmuO3gKDJ9A746Ga7wDgvJdXM1HAkyHoeWwxgfHXSknb2yDmtSBL9NZvedFF/wc=
+Received: by 10.86.97.7 with SMTP id u7mr5481186fgb.1192501490566;
+        Mon, 15 Oct 2007 19:24:50 -0700 (PDT)
+Received: by 10.86.83.3 with HTTP; Mon, 15 Oct 2007 19:24:50 -0700 (PDT)
+In-Reply-To: <7287AD62-3274-4B20-881C-D02E08C4B2EF@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61063>
 
-
-
-On Mon, 15 Oct 2007, David Brown wrote:
+On 10/16/07, Steffen Prohaska <prohaska@zib.de> wrote:
 >
-> On Mon, Oct 15, 2007 at 05:45:44PM -0700, Linus Torvalds wrote:
-> 
-> > 	git diff -U99 | viewdiff -
-> 
-> Do you have reference for viewdiff.  I can't seem to locate it.
+> On Oct 15, 2007, at 10:19 PM, Johannes Schindelin wrote:
+> > There is a port of BusyBox' dash, which is nearing completion.  Once
+> > Nguyen says it is ready enough, we will try to integrate it into
+> > msysGit.
+>
+> Gnuarch [1] recommends zsh from the unxutils project [2].
 
-That was the stupid script I just posted ;)
+All zsh links in [2] are dead. I did try hard to find the legendary
+zsh for Windows before giving up and porting busybox's ash instead. If
+you have zsh source of the port, please send me. Thank you.
 
-> > [ Quite frankly, I don't understand why tools like meld and kdiff3 can't
-> > just take the unified diff directly - they have *all* the logic, it  should
-> > be trivial to do, and very useful to view diffs for those people  who like
-> > that graphical bling. ]
-> 
-> kompare can read the unified diffs.  If you add enough context, the result
-> is no different than the full files.
+>         Steffen
+>
+> [1] http://www.gnuarch.org/gnuarchwiki/Native_WIN32_Support
+> [2] http://unxutils.sourceforge.net/
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
 
-Ahh, good pointer. I had to google for it to find that it's part of the 
-kdesdk package, which I hadn't installed. But a simple "yum install 
-kdesdk" worked fine.
 
-Much better than my stupid script ;)
-
-		Linus
+-- 
+Duy
