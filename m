@@ -1,79 +1,66 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Tue, 16 Oct 2007 16:07:58 +1000
-Message-ID: <ee77f5c20710152307n48431a6eu5dc95ee504968e4e@mail.gmail.com>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
-	 <471302D2.6010405@trolltech.com>
-	 <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
-	 <200710150902.52653.johan@herland.net>
-	 <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
-	 <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
-	 <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com>
-	 <85ve98gl57.fsf@lola.goethe.zz>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 08:10:53 +0200
+Message-ID: <471455ED.8070408@viscovery.net>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47130B25.4010304@viscovery.net> <20071015231242.GR27899@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Geert Bosch" <bosch@adacore.com>,
-	"Wincent Colaiuta" <win@wincent.com>,
-	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Marius Storm-Olsen" <marius@trolltech.com>,
-	"Christian Couder" <chriscool@tuxfamily.org>,
-	"=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>,
-	"Junio Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "David Kastrup" <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 08:08:43 2007
+Cc: git list <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 08:11:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihfbe-00011P-Uc
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 08:08:43 +0200
+	id 1Ihfe0-0001LO-69
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 08:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932659AbXJPGIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 02:08:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932644AbXJPGIB
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 02:08:01 -0400
-Received: from nz-out-0506.google.com ([64.233.162.232]:21075 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760993AbXJPGIA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 02:08:00 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1128652nze
-        for <git@vger.kernel.org>; Mon, 15 Oct 2007 23:07:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=TFfjLd7yjg8W9pjNuhfGCzpTh2bQgl5oZJF1JcmqK64=;
-        b=cnkLKVWJaO913K6V7A982aseo/H43NlJthf9h9z9y+AETUjmyLEyzL8540wDDaVN5btP7yExT+9+JYXqPwRjwh3y/S81V9J61doP0x0WRCHic1hWtDOoHua7WLdQnWonBAgaNKKUdwuaRt1u6zE6+rtlV7vet95HhFSMshRdR+c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=EZ4Y5KE2r34XZSZtiowoBYGSqU8cWdq7aCsX50UKNUgV4fR0VqqLKQgKzOTPuqoBAGMwzECXFW2Jj0wfltYtb9rLj4nrXWlUWSBnQRJXKU4MJ5M426CmGLYWCpTw30ncFBq47rg9ub5ZF/lY015YjThH4ITl7NJ7Jz15C4M2tkY=
-Received: by 10.141.180.5 with SMTP id h5mr3226515rvp.1192514878765;
-        Mon, 15 Oct 2007 23:07:58 -0700 (PDT)
-Received: by 10.141.153.4 with HTTP; Mon, 15 Oct 2007 23:07:58 -0700 (PDT)
-In-Reply-To: <85ve98gl57.fsf@lola.goethe.zz>
-Content-Disposition: inline
+	id S1751803AbXJPGK6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 02:10:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751308AbXJPGK6
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 02:10:58 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:3320 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751148AbXJPGK5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 02:10:57 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ihfda-00069D-T3; Tue, 16 Oct 2007 08:10:43 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D84216B7; Tue, 16 Oct 2007 08:10:53 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071015231242.GR27899@spearce.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61087>
 
-On 16/10/2007, David Kastrup <dak@gnu.org> wrote:
-> Geert Bosch <bosch@adacore.com> writes:
->
-> > On Oct 15, 2007, at 13:53, David Symonds wrote:
-> >> That's also why I suggested "skip"; you might not be able to test a
-> >> particular commit, but you might also not *want* to test a particular
-> >> commit for some reason.
-> >
-> > Skip seems a great choice: it directly expresses the wish to
-> > not consider a certain commit. The reason is unimportant.
->
-> But it is an _action_, while "good" and "bad" are properties.
+Shawn O. Pearce schrieb:
+> Johannes Sixt <j.sixt@viscovery.net> wrote:
+>> Unfortunately, "Fetch" does not yet work[*] from within git-gui, so you 
+>> have to fall back to git-fetch on the command line.
+>>
+>> [*] Note the distinction between "not available" and "does not work".
+> 
+> What's broken?  Is this that Git protocol dump showing up in
+> git-gui's console window thing?
+> 
+> Are you using the C based fetch that is in git.git's next branch,
+> or the shell script based one that is in master?  Which Tcl/Tk
+> version are you using to run git-gui?
 
-"skipped", then. Either way, something like this has got to be much
-better than "dunno".
+It's the scripted fetch that does not work. The symptom is that the output 
+of at least one of the commands (upload-pack, I think, because what I see is 
+wire protocol) goes to a newly spawned console instead of wherever it was 
+redirected to.
 
+I didn't bother reporting since builtin-fetch is on the way (which will 
+hopefully make this a moot point) and our team here is comfortable with 
+calling git fetch on the command line.
 
-Dave.
+-- Hannes
