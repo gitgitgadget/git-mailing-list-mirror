@@ -1,99 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Eli Zaretskii <eliz@gnu.org>
 Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 14:15:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161414270.25221@racer.site>
+Date: Tue, 16 Oct 2007 09:16:12 -0400
+Message-ID: <E1IhmHM-0002hB-HR@fencepost.gnu.org>
 References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
  <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
  <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
  <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
  <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
  <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
- <471448D0.6080200@op5.se> <E1Ihfrl-0007w1-3I@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161324490.25221@racer.site> <E1IhlvV-0002qv-1K@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: ae@op5.se, barkalow@iabervon.org, raa.lkml@gmail.com,
+ <Pine.LNX.4.64.0710160032020.7638@iabervon.org> <E1IhgT2-0000bg-O6@fencepost.gnu.org> <Pine.LNX.4.64.0710161335260.25221@racer.site>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
+Cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se,
 	tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Eli Zaretskii <eliz@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:16:27 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:16:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhmHS-0004Hk-1X
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:16:18 +0200
+	id 1IhmHb-0004JZ-VZ
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:16:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932152AbXJPNQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 09:16:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755203AbXJPNQG
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:16:06 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41784 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754302AbXJPNQF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:16:05 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 13:16:02 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 16 Oct 2007 15:16:02 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX188iZVUGZQ8vayXDInhLn/w73B0Y0OUT0dUZ6h0XR
-	H4PExX54+qA8gD
-X-X-Sender: gene099@racer.site
-In-Reply-To: <E1IhlvV-0002qv-1K@fencepost.gnu.org>
-X-Y-GMX-Trusted: 0
+	id S932218AbXJPNQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:16:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756466AbXJPNQO
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:16:14 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:60292 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755203AbXJPNQN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:16:13 -0400
+Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <eliz@gnu.org>)
+	id 1IhmHM-0002hB-HR; Tue, 16 Oct 2007 09:16:12 -0400
+In-reply-to: <Pine.LNX.4.64.0710161335260.25221@racer.site> (message from
+	Johannes Schindelin on Tue, 16 Oct 2007 13:39:12 +0100 (BST))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61166>
 
-Hi,
-
-On Tue, 16 Oct 2007, Eli Zaretskii wrote:
-
-> > Date: Tue, 16 Oct 2007 13:29:41 +0100 (BST)
-> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > cc: Andreas Ericsson <ae@op5.se>, barkalow@iabervon.org, raa.lkml@gmail.com, 
-> >     tsuna@lrde.epita.fr, git@vger.kernel.org
-> > 
-> > > > 	removed: README
-> > > > 	untracked: readme
-> > > 
-> > > This is a non-issue, then: Windows filesystems are case-preserving, so 
-> > > if `README' became `readme', someone deliberately renamed it, in which 
-> > > case it's okay for git to react as above.
-> > 
-> > No, it is not.  On FAT filesystems, for example, I experienced Windows 
-> > happily naming a file "head" which was created under then name "HEAD".
+> Date: Tue, 16 Oct 2007 13:39:12 +0100 (BST)
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> cc: Daniel Barkalow <barkalow@iabervon.org>, raa.lkml@gmail.com, ae@op5.se, 
+>     tsuna@lrde.epita.fr, git@vger.kernel.org
 > 
-> What program did that, and how did you see that the file was named
-> "head" instead of "HEAD"?
-
-Git and ... Git.
-
-> > > Something for Windows users to decide, I guess.  It's not hard to 
-> > > refactor this, it just needs a motivated volunteer.
-> > 
-> > You?
+> > As I wrote in my other message, using native APIs improves performance 
+> > by at least a factor of two.
 > 
-> Maybe some day.
+> Somehow this does not appeal to my "portability is good" side.  You know, 
+> if we had to do such trickeries for every platform we support, we'd soon 
+> be as big as Subversion *cough*.
 
-Cool.
+You have to decide whether you care about performance enough to do
+that or not.  If you do, then introducing file I/O abstractions at
+higher level than the normal ``use-library-functions'' method is not
+such a hard problem, and doesn't make the binary larger because each
+platform gets only its own backend.  In practice, I have found that in
+most cases a few well-designed and strategically placed macros is all
+you need.
 
-> > > Unless that 10K is a typo and you really meant 100K, I don't think 
-> > > 10K files should take several seconds to scan on Windows.  I just 
-> > > tried "find -print" on a directory with 32K files in 4K 
-> > > subdirectories, and it took 8 sec elapsed with a hot cache.  So 10K 
-> > > files should take at most 2 seconds, even without optimizing file 
-> > > traversal code.  Doing the same with native Windows system calls 
-> > > ("dir /s") brings that down to 4 seconds for 32K files.
-> > 
-> > On Linux, I would have hit Control-C already.  Such an operation 
-> > typically takes less than 0.1 seconds.
-> 
-> We were not comparing Linux with Windows, we were talking about Windows 
-> user experience.  On Windows 4 seconds is not too long.
+> For me, this is the most annoying part about programming Win32.  They went 
+> out of their way to make it incompatible with everything else, and as a 
+> consequence it is a PITA to maintain crossplatform programs.
 
-Well, I was talking about user experience.  In this case of a user who 
-happens to be on Windows, but knows Linux' speed.
+Portability is a two-way street.  A program that wasn't designed to be
+portable will by definition be hard to port.  To me, what's annoying
+is a program that was designed around a single-OS model of APIs.
 
-Ciao,
-Dscho
+Cross-platform programs are not that hard if you design them to be
+like that from the ground up.  I'm working for a firm that does that
+for a living: we develop software that compiles and runs on Windows
+and Linux from the same source.
+
+> Explorer often accesses files it should not lock.  
+> On the machine I test msysGit on, this is the most common reason for a 
+> test case to fail: it cannot delete the temporary directory, which 
+> _should_ be unused.  Indeed, a second after that, it _is_ unused.
+
+One more reason not to launch Explorer, if you ask me ;-)  But maybe
+you have valid reasons to do that.  All I can say is that I never saw
+such problems, but then I don't usually run programs that rewrite
+files in a frenzy.
