@@ -1,89 +1,54 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] rev-list documentation: add "--bisect-all".
-Date: Tue, 16 Oct 2007 05:59:05 +0200
-Message-ID: <20071016055905.55c1d280.chriscool@tuxfamily.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 05:52:17 2007
+From: Eli Zaretskii <eliz@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 06:16:43 +0200
+Message-ID: <uprzfithw.fsf@gnu.org>
+References: <Pine.LNX.4.64.0710142112540.25221@racer.site>
+	 <Pine.LNX.4.64.0710150217120.25221@racer.site>
+	 <20071015175606.GE2966@steel.home> <4713B367.52CEC7E2@dessent.net>
+	 <Pine.LNX.4.64.0710151938300.25221@racer.site>
+	 <4713BA89.633B86F2@dessent.net> <20071015194214.GC15541@steel.home>
+	 <4713C81F.A75FEFC2@dessent.net>
+	 <Pine.LNX.4.64.0710152117290.25221@racer.site>
+	 <7287AD62-3274-4B20-881C-D02E08C4B2EF@zib.de> <fcaeb9bf0710151924r258dd561hd13c22319d17f80f@mail.gmail.com>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
+Cc: prohaska@zib.de, git@vger.kernel.org, raa.lkml@gmail.com,
+	ae@op5.se, tsuna@lrde.epita.fr, Johannes.Schindelin@gmx.de
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 06:17:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhdTd-000828-80
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 05:52:17 +0200
+	id 1IhdsG-00032Y-MJ
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 06:17:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758500AbXJPDwF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 23:52:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758229AbXJPDwD
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 23:52:03 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:33237 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758470AbXJPDwC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 23:52:02 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id EC12C1AB2BE;
-	Tue, 16 Oct 2007 05:52:00 +0200 (CEST)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 9FCA91AB2B6;
-	Tue, 16 Oct 2007 05:52:00 +0200 (CEST)
-X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
+	id S1751751AbXJPERe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 00:17:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751545AbXJPERe
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 00:17:34 -0400
+Received: from heller.inter.net.il ([213.8.233.23]:21143 "EHLO
+	heller.inter.net.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751149AbXJPERe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 00:17:34 -0400
+Received: from HOME-C4E4A596F7 (IGLD-84-229-211-164.inter.net.il [84.229.211.164])
+	by heller.inter.net.il (MOS 3.7.3a-GA)
+	with ESMTP id DWG43780 (AUTH halo1);
+	Tue, 16 Oct 2007 06:16:43 +0200 (IST)
+In-reply-to: <fcaeb9bf0710151924r258dd561hd13c22319d17f80f@mail.gmail.com>
+	(pclouds@gmail.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61071>
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/git-rev-list.txt |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+> Date: Tue, 16 Oct 2007 09:24:50 +0700
+> From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+> Cc: "Git Mailing List" <git@vger.kernel.org>, "Alex Riesen" <raa.lkml@gmail.com>, 
+> 	"Eli Zaretskii" <eliz@gnu.org>, "Andreas Ericsson" <ae@op5.se>, 
+> 	tsuna@lrde.epita.fr, 
+> 	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+> 
+> I did try hard to find the legendary
+> zsh for Windows before giving up and porting busybox's ash instead.
 
-	Le lundi 15 octobre 2007, Frank Lichtenheld a =E9crit :
-	>
-	> --bisect-all is still missing a Documentation/ patch.
-
-	Thanks for catching that.=20
-	Here is a patch.
-
-diff --git a/Documentation/git-rev-list.txt b/Documentation/git-rev-lis=
-t.txt
-index 7cd0e89..f6dd0c4 100644
---- a/Documentation/git-rev-list.txt
-+++ b/Documentation/git-rev-list.txt
-@@ -34,6 +34,7 @@ SYNOPSIS
- 	     [ \--pretty | \--header ]
- 	     [ \--bisect ]
- 	     [ \--bisect-vars ]
-+	     [ \--bisect-all ]
- 	     [ \--merge ]
- 	     [ \--reverse ]
- 	     [ \--walk-reflogs ]
-@@ -354,6 +355,21 @@ the expected number of commits to be tested if `bi=
-sect_rev`
- turns out to be bad to `bisect_bad`, and the number of commits
- we are bisecting right now to `bisect_all`.
-=20
-+--bisect-all::
-+
-+This outputs all the commit objects between the included and excluded
-+commits, ordered by their distance to the included and excluded
-+commits. The farthest from them is displayed first. (This is the only
-+one displayed by `--bisect`.)
-+
-+This is usefull because it makes it easy to choose a good commit to
-+test when you want to avoid to test some of them for some reason (they
-+may not compile for example).
-+
-+This option can be used along with `--bisect-vars`, in this case,
-+after all the sorted commit objects, there will be the same text as if
-+`--bisect-vars` has been used alone.
-+
- --
-=20
- Commit Ordering
---=20
-1.5.3.4.213.g68ad5
+Where can one find this port of busybox's ash?
