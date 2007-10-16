@@ -1,78 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Fix compilation when NO_CURL is defined
-Date: Tue, 16 Oct 2007 01:05:03 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710160104120.25221@racer.site>
-References: <20071015234830.GA9694@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: How to Import a bitkeeper repo into git
+Date: Mon, 15 Oct 2007 20:03:59 -0400
+Message-ID: <20071016000359.GT27899@spearce.org>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com> <20070709173720.GS29994@genesis.frugalware.org> <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org> <4713FA4A.5090501@bluelane.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 02:22:44 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	VMiklos <vmiklos@frugalware.org>,
+	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org
+To: Pete/Piet Delaney <pete@bluelane.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 02:23:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhZwY-0006qs-U6
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 02:05:55 +0200
+	id 1IhZva-0006mX-HD
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 02:04:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763837AbXJPAFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 20:05:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763843AbXJPAFN
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 20:05:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40544 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1763837AbXJPAFL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 20:05:11 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 00:05:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 16 Oct 2007 02:05:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18w6ioZWDkwMidn12FiShZWT+s5io6NEL/GEBtHfJ
-	q0uGEYIJz7TOnl
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071015234830.GA9694@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1756244AbXJPAE2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 20:04:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752853AbXJPAE2
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 20:04:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45780 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754010AbXJPAE1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 20:04:27 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IhZuY-0008ER-TT; Mon, 15 Oct 2007 20:03:50 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 031B520FBAE; Mon, 15 Oct 2007 20:03:59 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <4713FA4A.5090501@bluelane.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61056>
 
-Hi,
+Pete/Piet Delaney <pete@bluelane.com> wrote:
+> I imported the CVS repository to git and it worked great. Since all
+> of our other repository are in bitkeeper the management would like to
+> stick with CVS. With git apparently still being weak in the area of
+> supporting difftool on different version that seems somewhat reasonable
+> for the time being.
+...
+> I was curious why the difftool paradigm hasn't been integrated into
+> the git GUIs. It's very comfortable and I think it has been used in
+> other source code control systems, for example Sun Microsystems.
 
-On Mon, 15 Oct 2007, Shawn O. Pearce wrote:
+What's difftool?  What's so great about it?
 
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Forgive my ignorance but it has been many years since I last used
+BitKeeper and even when I did use it I didn't get into many of the
+features it offered.  Its entirely possible I never learned about
+difftool.
 
-Hehe, hardly ;-)
+I've never found that I cannot get the information I need out of Git
+when I need it.  Actually I've found it to be the easiest VCS to get
+data out of, beating CVS, Perforce, BitKeeper, SVN, etc. hands down.
+Of course I also know Git better than I know those tools...
 
-> There were a few places which did not cope well without curl.  This
-> fixes all of them.  We still need to link against the walker.o part
-> of the library as some parts of transport.o still call into there
-> even though we don't have HTTP support enabled.
-> 
-> If compiled with NO_CURL=1 we now get the following useful error
-> message:
-> 
->   $ git-fetch http://www.example.com/git
->   error: git was compiled without libcurl support.
->   fatal: Don't know how to fetch from http://www.example.com/git
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> ---
-> 
->  I think this is a better version of Dscho's original attempt at
->  making NO_CURL=YesPlease actually work again with the builtin
->  fetch series.
-> 
->  Makefile    |    6 +++---
->  transport.c |   23 +++++++----------------
->  2 files changed, 10 insertions(+), 19 deletions(-)
-
-Nice!
-
-I like it.
-
-Ciao,
-Dscho
+-- 
+Shawn.
