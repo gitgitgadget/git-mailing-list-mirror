@@ -1,84 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 13:04:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710161201320.7638@iabervon.org>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
- <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
- <Pine.LNX.4.64.0710160032020.7638@iabervon.org> <E1IhgT2-0000bg-O6@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161335260.25221@racer.site>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 07/25] parse-options: make some arguments optional, add
+ callbacks.
+Date: Tue, 16 Oct 2007 19:04:47 +0200
+Message-ID: <4714EF2F.70506@lsrfire.ath.cx>
+References: <1192522616-16274-1-git-send-email-madcoder@debian.org> <1192523998-19474-1-git-send-email-madcoder@debian.org> <1192523998-19474-2-git-send-email-madcoder@debian.org> <1192523998-19474-3-git-send-email-madcoder@debian.org> <1192523998-19474-4-git-send-email-madcoder@debian.org> <1192523998-19474-5-git-send-email-madcoder@debian.org> <1192523998-19474-6-git-send-email-madcoder@debian.org> <1192523998-19474-7-git-send-email-madcoder@debian.org> <20071016084510.GI6919@artemis.corp> <4714E90C.80305@lsrfire.ath.cx> <Pine.LNX.4.64.0710161742040.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Eli Zaretskii <eliz@gnu.org>, raa.lkml@gmail.com, ae@op5.se,
-	tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:05:05 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:05:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihpql-00008i-Sp
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:05:00 +0200
+	id 1Ihpr8-0000CB-1I
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:05:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755190AbXJPREY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 13:04:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754065AbXJPREY
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:04:24 -0400
-Received: from iabervon.org ([66.92.72.58]:54113 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753958AbXJPREX (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 13:04:23 -0400
-Received: (qmail 31965 invoked by uid 1000); 16 Oct 2007 17:04:21 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 16 Oct 2007 17:04:21 -0000
-In-Reply-To: <Pine.LNX.4.64.0710161335260.25221@racer.site>
+	id S1754065AbXJPRE7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2007 13:04:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbXJPRE7
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:04:59 -0400
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:49787
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753990AbXJPRE6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 13:04:58 -0400
+Received: from [10.0.1.201] (p57B7EF1C.dip.t-dialin.net [87.183.239.28])
+	by neapel230.server4you.de (Postfix) with ESMTP id 4AA50873B9;
+	Tue, 16 Oct 2007 19:04:57 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0710161742040.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61215>
 
-On Tue, 16 Oct 2007, Johannes Schindelin wrote:
-
+Johannes Schindelin schrieb:
 > Hi,
-> 
-> [culled make-w32, as per explicit request]
-> 
-> On Tue, 16 Oct 2007, Eli Zaretskii wrote:
-> 
-> > > Date: Tue, 16 Oct 2007 01:56:46 -0400 (EDT)
-> > > From: Daniel Barkalow <barkalow@iabervon.org>
-> > > cc: raa.lkml@gmail.com, Johannes.Schindelin@gmx.de, ae@op5.se, 
-> > >     tsuna@lrde.epita.fr, git@vger.kernel.org, make-w32@gnu.org
-> > > 
-> > > Ah, that's helpful. We don't actually care too much about the 
-> > > particular info in stat; we just want to know quickly if the file has 
-> > > changed, so we can hash only the ones that have been touched and get 
-> > > the actual content changes.
-> > 
-> > As I wrote in my other message, using native APIs improves performance 
-> > by at least a factor of two.
-> 
-> Somehow this does not appeal to my "portability is good" side.  You know, 
-> if we had to do such trickeries for every platform we support, we'd soon 
-> be as big as Subversion *cough*.
+>=20
+> On Tue, 16 Oct 2007, Ren? Scharfe wrote:
+>=20
+>> Pierre Habouzit schrieb:
+>>> This bit is to allow to aggregate options with arguments together w=
+hen
+>>> the argument is numeric.
+>>>
+>>>     +#if 0
+>>>     +		/* can be used to understand -A1B1 like -A1 -B1 */
+>>>     +		if (flag & OPT_SHORT && opt->opt && isdigit(*opt->opt)) {
+>>>     +			*(int *)opt->value =3D strtol(opt->opt, (char **)&opt->opt,=
+ 10);
+>>>     +			return 0;
+>>>     +		}
+>>>     +#endif
+>> I don't like it, it complicates number options with unit suffixes (e=
+=2Eg.
+>> --windows-memory of git-pack-objects).
+>=20
+> Why?  It only means that you cannot say -W10mxabc instead of -W10m xa=
+bc. =20
+>=20
+> Remember: this is a special case for OPT_INTEGER.  Nothing to do with=
+=20
+> OPT_SIZE, which you'd probably implement as a callback.
 
-I think that it would be a worthwhile project, from the point of view of 
-making the code easier to follow and making the internal APIs clearer, to 
-organize git's source to abstract the object database to read_sha1_file(), 
-has_sha1_file(), hash_sha1_file(), and write_sha1_file() as the arbiters 
-of what is in the local database (with other functions public as support 
-for over-the-wire protocols, which may, by not-really-coincidence, by used 
-for local storage as well); then Windows could have an entirely different 
-storage mechanism that doesn't rely on filesystem metadata speed.
+You mean I need to take a look at the actual patch to get a bit more
+context? ;-)  Now that I did, I retract my comment.
 
-It would also be worthwhile to untangle the index's stat cache aspects and 
-its tree-object-related aspects, so that there can be a platform- and 
-repository-specific concept of how to handle the working area, and then 
-Windows could do different stuff for the default case of setting up a 
-directory on the local filesystem.
+Pierre, FYI: I didn't see your patches coming through the NNTP gateway
+of gmane.org, which is my way of reading this list.  Its web interface
+doesn't show them, either, so it's probably not caused by my news reade=
+r.
 
-	-Daniel
-*This .sig left intentionally blank*
+Ren=E9
