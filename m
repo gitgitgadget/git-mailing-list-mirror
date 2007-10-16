@@ -1,69 +1,66 @@
-From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-Subject: [PATCH] Help people in finding the download links
-Date: Tue, 16 Oct 2007 23:58:28 +0200
-Message-ID: <20071016235828.380f70a3@paolo-desktop>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: [PATCH] tail -n not supported in all OSs
+Date: Tue, 16 Oct 2007 18:06:24 -0400
+Message-ID: <20071016220624.GC1314@closure.lan>
+References: <1192553837-18302-1-git-send-email-jari.aalto@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: pasky@suse.cz, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 23:59:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Wed Oct 17 00:07:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhuRS-0003v7-Oi
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 23:59:11 +0200
+	id 1IhuYp-0005VE-CP
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 00:06:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754688AbXJPV66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 17:58:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755332AbXJPV66
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 17:58:58 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:10544 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754305AbXJPV65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 17:58:57 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so171543ugc
-        for <git@vger.kernel.org>; Tue, 16 Oct 2007 14:58:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        bh=Q1JzSh3a+11Llmjo1N53kdtU1QFzcWv1e5u+v6JhAWw=;
-        b=ZZ2fy+cpDs6ACzoukX36gU/M4NUFcVnypKa+ZFREydMFT8QFk6CMuGWsvZT1WSBB17oP8Z/CQXKsFqZVXaX2g9a1auizYQjSIxiWNcyMI9zZ9zIVzHcZjjrhIhc5jEaue0Zj/10ZNmD9exNqjEK44N1NOhFMfle2H6m5oHQCMuo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=YtNlTpLgxR5uz0pMcknD6AHvDZOiXqNE9SIjMbKQyNMe6VtGUAaWr5c5yrC58qAc1do9nFiFegJiG2MqWW9XUx+JLO//AKIKCHqskV7fHwDhcFF5OWd21SAqtQqwxuVGO6VI5vI+aq05xcf5wdMTX1+uSQbW+LIpRi4xPTwgheA=
-Received: by 10.66.252.17 with SMTP id z17mr9580518ugh.1192571935595;
-        Tue, 16 Oct 2007 14:58:55 -0700 (PDT)
-Received: from paolo-desktop ( [82.56.4.108])
-        by mx.google.com with ESMTPS id j33sm703384ugc.2007.10.16.14.58.52
-        (version=SSLv3 cipher=OTHER);
-        Tue, 16 Oct 2007 14:58:54 -0700 (PDT)
-X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
+	id S935017AbXJPWG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 18:06:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965968AbXJPWG1
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 18:06:27 -0400
+Received: from thunk.org ([69.25.196.29]:48300 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S965964AbXJPWG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 18:06:26 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1IhuiK-0006YI-JK; Tue, 16 Oct 2007 18:16:36 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@thunk.org>)
+	id 1IhuYS-0001KF-Hv; Tue, 16 Oct 2007 18:06:24 -0400
+Content-Disposition: inline
+In-Reply-To: <1192553837-18302-1-git-send-email-jari.aalto@cante.net>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61263>
 
-I believe that with the following change it's a bit easier to visualize the table including the links to the tar.bz2 and tar.gz source packages.
+On Tue, Oct 16, 2007 at 07:57:14PM +0300, Jari Aalto wrote:
+> 
+> SunOS/Solaris tail(1) does not support option '-n'. The
+> following patches change occurrances of:
+> 
+>    tail -n <N>
+> 
+> to
+> 
+>    tail <N>
 
-Signed-off-by: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
----
- index.html |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+POSIX.2 guarantees that "tail -n 2" works.  "Tail -<N>" is considered
+obsolete.  Unfortunately Solaris requires you to use
+/usr/xpg4/bin/tail if you want a POSIX.2 compliant header file.  The
+/usr/bin/tail is designed for System V R3 compliance (i.e., from a
+full two decades ago; SVR3 was released in 1987), and is due to Sun's
+vow to Backwards Compatible Forever. 
 
-diff --git a/index.html b/index.html
-index dc5189a..b061178 100644
---- a/index.html
-+++ b/index.html
-@@ -54,7 +54,7 @@ Junio C Hamano.</p>
- 
- 
- <div style="float: right"><table class="releases">
--	<tr class="odd" align="center"><td colspan="2"><!--@DATE@-->[2007-10-03]</td></tr>
-+	<tr class="odd" align="center"><td colspan="2"><b>Download GIT source package</b> <!--@DATE@-->[2007-10-03]</td></tr>
- 	<tr align="center"><td colspan="2">The latest stable Git release is <b><!--@VNUM@-->v1.5.3.4</b>:</td></tr>
- 	<tr align="center"><td>
- 		<!--@TARLINK@--><a href="http://kernel.org/pub/software/scm/git/git-1.5.3.4.tar.bz2">tar.bz2</a>
--- 
-1.5.3.4.206.g58ba4
+See "man 5 standards" on a Solaris box to see how your PATH variable
+has to be set if you want something which is compatible with modern
+Unix/Linux common usage.
+
+					- Ted
