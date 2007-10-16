@@ -1,61 +1,84 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 02:45:47 -0400
-Message-ID: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 08:46:07 2007
+From: Eli Zaretskii <eliz@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 03:03:52 -0400
+Message-ID: <E1IhgT2-0000bg-O6@fencepost.gnu.org>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+ <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org> <Pine.LNX.4.64.0710160032020.7638@iabervon.org>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
+Cc: raa.lkml@gmail.com, Johannes.Schindelin@gmx.de, ae@op5.se,
+	tsuna@lrde.epita.fr, git@vger.kernel.org, make-w32@gnu.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 09:04:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhgBm-00065N-CS
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 08:46:02 +0200
+	id 1IhgTI-0000KB-4b
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 09:04:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763413AbXJPGpw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 02:45:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761446AbXJPGpw
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 02:45:52 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:48304 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760178AbXJPGpv (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 02:45:51 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9G6jn7v021948
-	for <git@vger.kernel.org>; Tue, 16 Oct 2007 02:45:49 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9G6jmgk026385
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 16 Oct 2007 02:45:48 -0400 (EDT)
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1754767AbXJPHDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 03:03:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbXJPHDz
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 03:03:55 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:41556 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753902AbXJPHDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 03:03:54 -0400
+Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <eliz@gnu.org>)
+	id 1IhgT2-0000bg-O6; Tue, 16 Oct 2007 03:03:52 -0400
+In-reply-to: <Pine.LNX.4.64.0710160032020.7638@iabervon.org> (message from
+	Daniel Barkalow on Tue, 16 Oct 2007 01:56:46 -0400 (EDT))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61096>
 
-What are the rules about tabs and spaces in source code?
+> Date: Tue, 16 Oct 2007 01:56:46 -0400 (EDT)
+> From: Daniel Barkalow <barkalow@iabervon.org>
+> cc: raa.lkml@gmail.com, Johannes.Schindelin@gmx.de, ae@op5.se, 
+>     tsuna@lrde.epita.fr, git@vger.kernel.org, make-w32@gnu.org
+> 
+> Ah, that's helpful. We don't actually care too much about the particular 
+> info in stat; we just want to know quickly if the file has changed, so we 
+> can hash only the ones that have been touched and get the actual content 
+> changes.
 
-I'm having a terrible time with formatting,
-especially in the perl scripts; there is a
-mix of spaces and tabs.
+As I wrote in my other message, using native APIs improves performance
+by at least a factor of two.
 
-from what I can deduce, single tabs are used
-to introduce the equivalent of 8 spaces while
-4 explicit spaces are used for half a tab.
+> The tricky thing is that, while the optimization 
+> process is running, other programs may be reading the database, so (1) the 
+> files that are no longer needed, because better-optimized versions are in 
+> place, may be open in another task
 
-I would recommend using all spaces, but the C
-code seems to prefer all tabs.
+Is this because another user might be accessing the database, or are
+there other popular use cases that cause this?  If the former, then
+this is not terribly important on Windows, since the situation when
+more than one user is logged and actively works is quite rare,
+basically limited to some scheduled task (the equivalent of a cron
+job) running for some user while another one is logged in
+interactively.
 
-In any case, some kind of standards need to be
-set, because no one is following anything curr-
-ently.
+This might be different on machines that use Cygwin, though.
 
-Sincerely,
-Michael Witten
+> Now, it's entirely possible that a completely different database 
+> implementation would be better on Windows, but our current one does a lot 
+> of creating files under different names, moving them to names where 
+> they'll be seen (since this is atomic under POSIX, and partial files are 
+> never seen by other tasks). Also, once we have new files in place, we 
+> unlink the files that they replace, so that new tasks will use the new 
+> ones and tasks that already have old ones open can still get the data out 
+> of them. Also, the files generally get mmaped, 
+
+Perhaps mmap introduces complications (I simply don't know), but in
+general, as I show elsewhere in this thread, you can do similar things
+on Windows, if you use native APIs (as opposed to emulations of Posix,
+like `open'), although you may need to rename the old file to get it
+out of the way of the new one with the same name, because otherwise
+the old file will still be seen, even if deleted, as long as it's open
+in some process.
