@@ -1,95 +1,60 @@
-From: Christopher Faylor <cgf-use-the-mailinglist-please@gnu.org>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 14:06:32 -0400
-Message-ID: <20071016180632.GA24953@ednor.casa.cgf.cx>
-References: <20071016155608.GA10603@old.davidb.org>
-	<03f401c81010$d8833de0$2e08a8c0@CAM.ARTIMI.COM>
+From: Andrew Morton <akpm@linux-foundation.org>
+Subject: Re: git-merge performance
+Date: Tue, 16 Oct 2007 11:18:25 -0700
+Message-ID: <20071016111825.5a142f00.akpm@linux-foundation.org>
+References: <20071016101748.ff132685.akpm@linux-foundation.org>
+	<4714F612.2010905@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: 'Andreas Ericsson' <ae@op5.se>, barkalow@iabervon.org,
-	raa.lkml@gmail.com, make-w32@gnu.org, git@vger.kernel.org,
-	'Eli Zaretskii' <eliz@gnu.org>, Dave Korn <dave.korn@artimi.com>,
-	Joh
-X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Tue Oct 16 20:07:22 2007
-Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
-Envelope-to: gnu-make-w32@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Oct 16 20:19:30 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihqoa-0005ot-JD
-	for gnu-make-w32@m.gmane.org; Tue, 16 Oct 2007 20:06:48 +0200
-Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1IhqoT-00034L-MI
-	for gnu-make-w32@m.gmane.org; Tue, 16 Oct 2007 14:06:41 -0400
-Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
-	id 1IhqoP-000342-68
-	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:37 -0400
-Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
-	id 1IhqoN-00033J-OC
-	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:36 -0400
-Received: from [199.232.76.173] (helo=monty-python.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1IhqoN-00033F-L1
-	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:35 -0400
-Received: from pool-70-20-17-24.bstnma.fios.verizon.net ([70.20.17.24]
-	helo=cgf.cx) by monty-python.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <cgf@cgf.cx>)
-	id 1IhqoL-0006C6-A2; Tue, 16 Oct 2007 14:06:33 -0400
-Received: from ednor.cgf.cx (ednor.casa.cgf.cx [192.168.187.5])
-	by cgf.cx (Postfix) with ESMTP id DF6A713C305;
-	Tue, 16 Oct 2007 14:06:32 -0400 (EDT)
-Received: by ednor.cgf.cx (Postfix, from userid 201)
-	id DBEBB2B353; Tue, 16 Oct 2007 14:06:32 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <03f401c81010$d8833de0$2e08a8c0@CAM.ARTIMI.COM>
-User-Agent: Mutt/1.5.16 (2007-06-09)
-X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 1)
-X-BeenThere: make-w32@gnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
-List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
-List-Archive: <http://lists.gnu.org/pipermail/make-w32>
-List-Post: <mailto:make-w32@gnu.org>
-List-Help: <mailto:make-w32-request@gnu.org?subject=help>
-List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
-	<mailto:make-w32-request@gnu.org?subject=subscribe>
-Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61234>
+	id 1Ihr0B-0001kb-LT
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 20:18:48 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S965257AbXJPSSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 14:18:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965255AbXJPSSd
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 14:18:33 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:39318 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965247AbXJPSSb (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 14:18:31 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GIIPVQ017322
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 16 Oct 2007 11:18:26 -0700
+Received: from akpm.corp.google.com (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with SMTP id l9GIIPh2009194;
+	Tue, 16 Oct 2007 11:18:25 -0700
+In-Reply-To: <4714F612.2010905@op5.se>
+X-Mailer: Sylpheed version 2.2.4 (GTK+ 2.8.20; i486-pc-linux-gnu)
+X-Spam-Status: No, hits=-2.647 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61235>
 
-On Tue, Oct 16, 2007 at 05:23:11PM +0100, Dave Korn wrote:
->On 16 October 2007 16:56, David Brown wrote:
->
->> On Tue, Oct 16, 2007 at 02:25:21AM -0400, Eli Zaretskii wrote:
->> 
->>> On the other hand, what packages have 100K files?  If there's only one
->>> -- the Linux kernel -- then I think this kind of performance is for
->>> all practical purposes unimportant on Windows, because while it is
->>> reasonable to assume that someone would like to use git on Windows,
->>> assuming that someone will develop the Linux kernel on Windows is --
->>> how should I put it -- _really_ far-fetched ;-)
->> 
->> Oh, I wish others could think this clearly.  Quoting a serious line off of
->> a task list at an unnamed company:
->> 
->>    - Make Linux kernel compile under windows.
->> 
->> I don't think it will move past just being a wish list item, but there seem
->> to be people that think it should be done.
->> 
->> Admittedly, they don't want developers doing it on windows, but want to
->> integrate kernel building into a windows-heavy build and release process.
->
->  Do that kind of thing here all the time, hence my previous post.  Apart from
->the netfilter stuff with the filenames-that-match-in-all-but-case, no real
->problems, took me a couple of hours one afternoon.
+On Tue, 16 Oct 2007 19:34:10 +0200
+Andreas Ericsson <ae@op5.se> wrote:
 
-Ditto.
+> Andrew Morton wrote:
+> > My git-pulling script (git-1.4.2) seems to have got quite a bit slower
+> > since the post-2.6.23 patchflood.  I just did a bit of poking and it's
+> > git-merge which is taking most of the time.
+> > 
+> 
+> That's odd. If it had been the remote fetching it would have been
+> understandable. Is this also happening with more recent gits? I know there
+> are some significant performance-improvements in 1.5.3.4 (or below).
+> 
 
-Coincidentially enough this is the reason I wrote managed mode for cygwin's
-mount.
-
-But, we're pretty far off-topic aren't we?
-
-cgf
+1.5.0 is no faster, but 1.5.3 appears to be seven times quicker.  Neato.
