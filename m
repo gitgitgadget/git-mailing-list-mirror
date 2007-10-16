@@ -1,83 +1,64 @@
-From: Eli Zaretskii <eliz@gnu.org>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 09:16:12 -0400
-Message-ID: <E1IhmHM-0002hB-HR@fencepost.gnu.org>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
- <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
- <Pine.LNX.4.64.0710160032020.7638@iabervon.org> <E1IhgT2-0000bg-O6@fencepost.gnu.org> <Pine.LNX.4.64.0710161335260.25221@racer.site>
-Reply-To: Eli Zaretskii <eliz@gnu.org>
-Cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se,
-	tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:16:32 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 09/25] Port builtin-add.c to use the new option parser.
+Date: Tue, 16 Oct 2007 14:17:29 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710161417150.25221@racer.site>
+References: <1192522616-16274-1-git-send-email-madcoder@debian.org>
+ <1192523998-19474-1-git-send-email-madcoder@debian.org>
+ <1192523998-19474-2-git-send-email-madcoder@debian.org>
+ <1192523998-19474-3-git-send-email-madcoder@debian.org>
+ <1192523998-19474-4-git-send-email-madcoder@debian.org>
+ <1192523998-19474-5-git-send-email-madcoder@debian.org>
+ <1192523998-19474-6-git-send-email-madcoder@debian.org>
+ <1192523998-19474-7-git-send-email-madcoder@debian.org>
+ <1192523998-19474-8-git-send-email-madcoder@debian.org>
+ <1192523998-19474-9-git-send-email-madcoder@debian.org>
+ <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Michael Witten <mfwitten@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:17:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhmHb-0004JZ-VZ
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:16:28 +0200
+	id 1IhmIt-0004gB-T0
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:17:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932218AbXJPNQO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 09:16:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756466AbXJPNQO
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:16:14 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:60292 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755203AbXJPNQN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:16:13 -0400
-Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <eliz@gnu.org>)
-	id 1IhmHM-0002hB-HR; Tue, 16 Oct 2007 09:16:12 -0400
-In-reply-to: <Pine.LNX.4.64.0710161335260.25221@racer.site> (message from
-	Johannes Schindelin on Tue, 16 Oct 2007 13:39:12 +0100 (BST))
+	id S932306AbXJPNRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:17:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbXJPNRi
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:17:38 -0400
+Received: from mail.gmx.net ([213.165.64.20]:33720 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756466AbXJPNRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:17:37 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 13:17:35 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp047) with SMTP; 16 Oct 2007 15:17:35 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/q0kkl2iHqam/gg9MoyttAhGUghHr8XqZ33Mm8WI
+	0hB4oSYVivex74
+X-X-Sender: gene099@racer.site
+In-Reply-To: <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61167>
 
-> Date: Tue, 16 Oct 2007 13:39:12 +0100 (BST)
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> cc: Daniel Barkalow <barkalow@iabervon.org>, raa.lkml@gmail.com, ae@op5.se, 
->     tsuna@lrde.epita.fr, git@vger.kernel.org
+Hi,
+
+On Tue, 16 Oct 2007, Michael Witten wrote:
+
+> On 16 Oct 2007, at 4:39:42 AM, Pierre Habouzit wrote:
 > 
-> > As I wrote in my other message, using native APIs improves performance 
-> > by at least a factor of two.
+> > +	OPT_BOOLEAN('u', NULL, &take_worktree_changes, "update only files
+> > that git already knows about"),
 > 
-> Somehow this does not appeal to my "portability is good" side.  You know, 
-> if we had to do such trickeries for every platform we support, we'd soon 
-> be as big as Subversion *cough*.
+> "update only files in the current directory that git already knows about"
 
-You have to decide whether you care about performance enough to do
-that or not.  If you do, then introducing file I/O abstractions at
-higher level than the normal ``use-library-functions'' method is not
-such a hard problem, and doesn't make the binary larger because each
-platform gets only its own backend.  In practice, I have found that in
-most cases a few well-designed and strategically placed macros is all
-you need.
+"update tracked files"
 
-> For me, this is the most annoying part about programming Win32.  They went 
-> out of their way to make it incompatible with everything else, and as a 
-> consequence it is a PITA to maintain crossplatform programs.
-
-Portability is a two-way street.  A program that wasn't designed to be
-portable will by definition be hard to port.  To me, what's annoying
-is a program that was designed around a single-OS model of APIs.
-
-Cross-platform programs are not that hard if you design them to be
-like that from the ground up.  I'm working for a firm that does that
-for a living: we develop software that compiles and runs on Windows
-and Linux from the same source.
-
-> Explorer often accesses files it should not lock.  
-> On the machine I test msysGit on, this is the most common reason for a 
-> test case to fail: it cannot delete the temporary directory, which 
-> _should_ be unused.  Indeed, a second after that, it _is_ unused.
-
-One more reason not to launch Explorer, if you ask me ;-)  But maybe
-you have valid reasons to do that.  All I can say is that I never saw
-such problems, but then I don't usually run programs that rewrite
-files in a frenzy.
+Ciao,
+Dscho
