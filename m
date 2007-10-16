@@ -1,86 +1,62 @@
-From: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+From: Michael Witten <mfwitten@MIT.EDU>
 Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 10:26:07 -0500
-Message-ID: <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-	 <471476B7.5050105@users.sourceforge.net>
-	 <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
-	 <47148F72.1090602@users.sourceforge.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=-qn72x4N9ar17GNNWIzKk"
-Cc: Lars Hjemli <lh@elementstorage.no>,
-	Michael Witten <mfwitten@mit.edu>, git@vger.kernel.org
-To: Adam Piatyszek <ediap@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Oct 16 17:51:26 2007
+Date: Tue, 16 Oct 2007 11:51:55 -0400
+Message-ID: <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jeffrey C. Ollie" <jeff@ocjtech.us>
+X-From: git-owner@vger.kernel.org Tue Oct 16 17:52:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhohZ-0000Jy-Dg
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:51:25 +0200
+	id 1IhoiP-0000VD-4p
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:52:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933359AbXJPPvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 11:51:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933274AbXJPPvO
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:51:14 -0400
-Received: from homer.isunet.net ([63.175.164.9]:39873 "EHLO homer.isunet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932600AbXJPPvO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 11:51:14 -0400
-X-Greylist: delayed 1500 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Oct 2007 11:51:13 EDT
-Received: from localhost (localhost [127.0.0.1])
-	by homer.isunet.net (Postfix) with ESMTP id DFE2A388157;
-	Tue, 16 Oct 2007 09:36:33 -0500 (CDT)
-Received: from homer.isunet.net ([63.175.164.9])
- by localhost (homer [63.175.164.9]) (amavisd-new, port 10024) with ESMTP
- id 01859-05; Tue, 16 Oct 2007 09:36:31 -0500 (CDT)
-Received: from max1.ocjtech.us (dsl-ppp239.isunet.net [63.175.164.239])
-	by homer.isunet.net (Postfix) with ESMTP id E0D8838802A;
-	Tue, 16 Oct 2007 09:36:30 -0500 (CDT)
-Received: from [172.16.2.6]
-	by max1.ocjtech.us with esmtps (TLSv1:RC4-MD5:128)
-	(Exim 4.62)
-	(envelope-from <jeff@ocjtech.us>)
-	id 1IhoJ7-0002Dq-5E; Tue, 16 Oct 2007 10:26:09 -0500
-In-Reply-To: <47148F72.1090602@users.sourceforge.net>
-X-Mailer: Evolution 2.10.3 (2.10.3-4.fc7) 
-X-Virus-Scanned: by amavisd-new at isunet.net
+	id S933389AbXJPPwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 11:52:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933385AbXJPPwG
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:52:06 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:42986 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933274AbXJPPwD (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 11:52:03 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9GFq050011801;
+	Tue, 16 Oct 2007 11:52:00 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9GFpxQf010988
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Oct 2007 11:51:59 -0400 (EDT)
+In-Reply-To: <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61200>
 
 
---=-qn72x4N9ar17GNNWIzKk
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On 16 Oct 2007, at 11:26:07 AM, Jeffrey C. Ollie wrote:
 
-On Tue, 2007-10-16 at 12:16 +0200, Adam Piatyszek wrote:
->=20
-> And if one change the tab size, it will result in a messy alignment in
-> line 5.
+> Instead of using "(setq indent-tabs-mode t)" use "(setq indent-tabs- 
+> mode
+> nil)".  This will force emacs to always use spaces to indent.
 
-Which is why one should never should change the tab size from anything
-but 8.
+That's part of the problem to begin with:
+people are using both way of indentation.
 
-> I guess there is no ideal solution for this in Emacs.
+I suggest this not be allowed, or that it
+be the only way of indenting.
 
-Instead of using "(setq indent-tabs-mode t)" use "(setq indent-tabs-mode
-nil)".  This will force emacs to always use spaces to indent.
+However, 8 spaces per tab is a lot of wasted
+information to be bandying about.
 
-Jeff
-
-
---=-qn72x4N9ar17GNNWIzKk
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQBHFNgLrtk7xyyIQRERApk5AJ4jpBpeZpU02VbwF5gLQvFhaTaVnQCfa7Q8
-/andQdEZa9c/d0BmhdLMu/g=
-=oxlD
------END PGP SIGNATURE-----
-
---=-qn72x4N9ar17GNNWIzKk--
+Michael Witten
