@@ -1,119 +1,97 @@
-From: Chris Shoemaker <c.shoemaker@cox.net>
-Subject: Re: .gitignore and svn:ignore [WAS: git-svn and submodules]
-Date: Tue, 16 Oct 2007 09:05:26 -0400
-Message-ID: <20071016130526.GA14263@pe.Belkin>
-References: <Pine.LNX.4.64.0710141901450.25221@racer.site> <20071014180815.GK1198@artemis.corp> <20071014210130.GA17675@soma> <Pine.LNX.4.64.0710142309010.25221@racer.site> <20071014224959.GA17828@untitled> <Pine.LNX.4.64.0710142359020.25221@racer.site> <05CAB148-56ED-4FF1-8AAB-4BA2A0B70C2C@lrde.epita.fr> <20071015144513.GB7351@diana.vm.bytemark.co.uk> <20071015151405.GA1655@pe.Belkin> <20071016075827.GB32348@soma>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 14:47:52 +0200
+Message-ID: <86sl4bjkef.fsf@lola.quinscape.zz>
+References: <1192293466.17584.95.camel@homebase.localnet>
+	<uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet>
+	<1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+	<47125F74.9050600@op5.se>
+	<Pine.LNX.4.64.0710141934310.25221@racer.site>
+	<47126957.1020204@op5.se>
+	<Pine.LNX.4.64.0710142112540.25221@racer.site>
+	<20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+	<Pine.LNX.4.64.0710151859590.7638@iabervon.org>
+	<uodezisvg.fsf@gnu.org>
+	<Pine.LNX.4.64.0710160032020.7638@iabervon.org>
+	<E1IhgT2-0000bg-O6@fencepost.gnu.org>
+	<Pine.LNX.4.64.0710161335260.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	git list <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:05:49 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:09:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihm7A-0001xD-9t
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:05:47 +0200
+	id 1IhmAN-0002iv-7R
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932132AbXJPNF3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2007 09:05:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758204AbXJPNF3
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:05:29 -0400
-Received: from eastrmmtao104.cox.net ([68.230.240.46]:44150 "EHLO
-	eastrmmtao104.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757645AbXJPNF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:05:28 -0400
-Received: from eastrmimpo02.cox.net ([68.1.16.120])
-          by eastrmmtao104.cox.net
-          (InterMail vM.7.08.02.01 201-2186-121-102-20070209) with ESMTP
-          id <20071016130528.QUGY19158.eastrmmtao104.cox.net@eastrmimpo02.cox.net>;
-          Tue, 16 Oct 2007 09:05:28 -0400
-Received: from localhost ([68.0.253.29])
-	by eastrmimpo02.cox.net with bizsmtp
-	id 115S1Y00M0epFYL0000000; Tue, 16 Oct 2007 09:05:26 -0400
-Received: from chris by localhost with local (Exim 4.66)
-	(envelope-from <c.shoemaker@cox.net>)
-	id 1Ihm6w-0003jB-Ji; Tue, 16 Oct 2007 09:05:26 -0400
-Content-Disposition: inline
-In-Reply-To: <20071016075827.GB32348@soma>
-User-Agent: Mutt/1.5.14 (2007-02-12)
+	id S932580AbXJPNIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:08:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbXJPNIo
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:08:44 -0400
+Received: from main.gmane.org ([80.91.229.2]:47226 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932152AbXJPNIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:08:42 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ihm2w-00064w-JU
+	for git@vger.kernel.org; Tue, 16 Oct 2007 13:01:19 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 13:01:18 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 13:01:18 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:9qzkEau0QYh2JjSKiQC9buW7Fxg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61162>
 
-On Tue, Oct 16, 2007 at 12:58:27AM -0700, Eric Wong wrote:
-> Chris Shoemaker <c.shoemaker@cox.net> wrote:
-> > On Mon, Oct 15, 2007 at 04:45:13PM +0200, Karl Hasselstr=F6m wrote:
-> > > On 2007-10-15 09:07:21 +0200, Benoit SIGOURE wrote:
-> > >=20
-> > > >   - git svn create-ignore (to create one .gitignore per directo=
-ry
-> > > > from the svn:ignore properties. This has the disadvantage of
-> > > > committing the .gitignore during the next dcommit,
-> > >=20
-> > > I built ignore support for git-svnignore a long time ago. It conv=
-erts
-> > > the per-directory svn:ignore to per-directory .gitignore at commi=
-t
-> > > import time, which is very handy:
-> > >=20
-> > > -I <ignorefile_name>::
-> > >         Import the svn:ignore directory property to files with th=
-is
-> > >         name in each directory. (The Subversion and GIT ignore
-> > >         syntaxes are similar enough that using the Subversion pat=
-terns
-> > >         directly with "-I .gitignore" will almost always just wor=
-k.)
-> > >=20
-> > > The only downside with that is that svn ignore patterns are
-> > > non-recursive, while git ignore patterns are recursive. This coul=
-d be
-> > > solved by prefixing them with a "/".
-> >=20
-> > Has anyone put any thought into mapping the other direction?=20
-> > i.e. .gitignore  ->  svn:ignore
->=20
-> If we support .gitignore <-> svn:ignore in git-svn; bidirectional,
-> transparent mapping is the only way I want to go.
->=20
->=20
-> This means that *all* .gitignore files will be translated to svn:igno=
-re
-> files and vice versa; and the .gitignore files will be NOT be committ=
-ed
-> to SVN itself, but present in the git-svn created mirrors.  Recursive
-> .gitignore definitions will be mapped to svn:ignore recursively on th=
-e
-> client side; and non-recursive ones will only map to one directory.
->=20
-> Sound good?
->=20
-> I may be sleepy at the moment, but the thought of implementing this i=
-s
-> sounding complicated now...
->=20
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-OTOH, a general propset solution would probably be good enough that I
-wouldn't even miss any transparent .gitignore -> svn:ignore mapping.
+> Hi,
+>
+> [culled make-w32, as per explicit request]
+>
+> On Tue, 16 Oct 2007, Eli Zaretskii wrote:
+>
+>> > Date: Tue, 16 Oct 2007 01:56:46 -0400 (EDT)
+>> > From: Daniel Barkalow <barkalow@iabervon.org>
+>> > cc: raa.lkml@gmail.com, Johannes.Schindelin@gmx.de, ae@op5.se, 
+>> >     tsuna@lrde.epita.fr, git@vger.kernel.org, make-w32@gnu.org
+>> > 
+>> > Ah, that's helpful. We don't actually care too much about the 
+>> > particular info in stat; we just want to know quickly if the file has 
+>> > changed, so we can hash only the ones that have been touched and get 
+>> > the actual content changes.
+>> 
+>> As I wrote in my other message, using native APIs improves
+>> performance by at least a factor of two.
+>
+> Somehow this does not appeal to my "portability is good" side.  You
+> know, if we had to do such trickeries for every platform we support,
+> we'd soon be as big as Subversion *cough*.
 
-I would just accept that I'd have to explicitly specify the
-svn:ignores.
+With a reasonable way of factoring out things, the per-platform
+overhead should be tolerable.
 
-> Since externals/submodules don't operate recursively in either
-> system like .gitignore; supporting svn:externals <=3D> submodules
-> will be much easier and done first[1] :)
->=20
-> [1] - I've personally rarely bothered with putting svn:ignores in the
-> repository and have been very much spoiled by .git/info/exclude;
-> whereas externals support I have semi-immediate use for.
+> For me, this is the most annoying part about programming Win32.
+> They went out of their way to make it incompatible with everything
+> else, and as a consequence it is a PITA to maintain crossplatform
+> programs.
 
-That's great.   I'm eager to see/test the svn:externals support.  Thank=
-s.
+Well, they certainly score high on the "almost, but not quite,
+entirely unlike tea" metric.  Enough compatibility to make it into
+projects with cross-platform specifications, and enough
+incompatibility to make it inconvenient to support anything but
+Windows once they made it into the door.
 
--chris
+-- 
+David Kastrup
