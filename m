@@ -1,90 +1,84 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 09/25] Port builtin-add.c to use the new option parser.
-Date: Tue, 16 Oct 2007 18:55:58 +0200
-Message-ID: <20071016165558.GD13946@artemis.corp>
-References: <1192523998-19474-1-git-send-email-madcoder@debian.org> <1192523998-19474-2-git-send-email-madcoder@debian.org> <1192523998-19474-3-git-send-email-madcoder@debian.org> <1192523998-19474-4-git-send-email-madcoder@debian.org> <1192523998-19474-5-git-send-email-madcoder@debian.org> <1192523998-19474-6-git-send-email-madcoder@debian.org> <1192523998-19474-7-git-send-email-madcoder@debian.org> <1192523998-19474-8-git-send-email-madcoder@debian.org> <1192523998-19474-9-git-send-email-madcoder@debian.org> <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 18:59:19 +0200
+Message-ID: <4714EDE7.3010407@op5.se>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org> <471448D0.6080200@op5.se> <E1Ihfrl-0007w1-3I@fencepost.gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="fXStkuK2IQBfcDe+";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Oct 16 18:56:19 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: barkalow@iabervon.org, raa.lkml@gmail.com,
+	Johannes.Schindelin@gmx.de, tsuna@lrde.epita.fr,
+	git@vger.kernel.org, make-w32@gnu.org
+To: Eli Zaretskii <eliz@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 18:59:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhpiJ-0006co-6u
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 18:56:15 +0200
+	id 1IhplX-0007PR-9W
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 18:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750962AbXJPQ4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 12:56:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760389AbXJPQ4D
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 12:56:03 -0400
-Received: from pan.madism.org ([88.191.52.104]:43350 "EHLO hermes.madism.org"
+	id S1760547AbXJPQ7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 12:59:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbXJPQ7Y
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 12:59:24 -0400
+Received: from mail.op5.se ([193.201.96.20]:32945 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760258AbXJPQ4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 12:56:00 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 2D8BC25542;
-	Tue, 16 Oct 2007 18:55:59 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 9E68532BACD; Tue, 16 Oct 2007 18:55:58 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Michael Witten <mfwitten@MIT.EDU>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753805AbXJPQ7X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 12:59:23 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 2061517306FB;
+	Tue, 16 Oct 2007 18:59:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id je79t6FUrr7d; Tue, 16 Oct 2007 18:59:30 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 1E3D817306C4;
+	Tue, 16 Oct 2007 18:59:30 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <E1Ihfrl-0007w1-3I@fencepost.gnu.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61213>
 
+Eli Zaretskii wrote:
+>> From: Andreas Ericsson <ae@op5.se>
+> 
+>> I *think* (correct me if I'm wrong) that git is still faster
+>> than a whole bunch of other scm's on windows, but to one who's used to
+>> its performance on Linux that waiting several seconds to scan 10k files
+>> just feels wrong.
+> 
+> Unless that 10K is a typo and you really meant 100K, I don't think 10K
+> files should take several seconds to scan on Windows.  I just tried
+> "find -print" on a directory with 32K files in 4K subdirectories, and
+> it took 8 sec elapsed with a hot cache.  So 10K files should take at
+> most 2 seconds, even without optimizing file traversal code.  Doing
+> the same with native Windows system calls ("dir /s") brings that down
+> to 4 seconds for 32K files.
+> 
 
---fXStkuK2IQBfcDe+
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It was a typo. Thanks for correcting me.
 
-On mar, oct 16, 2007 at 08:55:41 +0000, Michael Witten wrote:
->=20
-> On 16 Oct 2007, at 4:39:42 AM, Pierre Habouzit wrote:
->=20
-> >+	OPT_BOOLEAN('u', NULL, &take_worktree_changes, "update only files that=
-=20
-> >git already knows about"),
->=20
-> "update only files in the current directory that git already knows about"
+> On the other hand, what packages have 100K files?  If there's only one
+> -- the Linux kernel -- then I think this kind of performance is for
+> all practical purposes unimportant on Windows
 
-  As a general rule, as I'm not a native speaker, I'd be glad if someone
-went through the diffs and made it better english. I'm not sure what the
-more efficient way to merge those corrections is, as I'm not able to see
-if it's any better or not. So the someone mergint it (Shawn ?) may have
-to go through every OPTION_* and check the helps strings, and --amend
-fixes on top of the patches if needed. It looks like the best way to me.
+But it's most definitely not. The *huge* projects that have looked at
+git have sometimes turned it down simply because they're either cross-
+platform (Mozilla) or they have translators that use windows exclusively
+(KDE and Mozilla, just to mention two).
 
-  Alternatively, a native speaker could propose a 26th patch that fixes
-all of the bad strings on top of this series. But again, I won't do
-that, not because of lazyness, just because I can't decide :)
+Both Mozilla and KDE repos are *much* larger than the Linux repo.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---fXStkuK2IQBfcDe+
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHFO0evGr7W6HudhwRAhdyAJ4orO/mUTo7o28INlfz743lry8I9gCdFcCG
-6xQ32xTJKbe3RVXHdgODk6w=
-=WaFI
------END PGP SIGNATURE-----
-
---fXStkuK2IQBfcDe+--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
