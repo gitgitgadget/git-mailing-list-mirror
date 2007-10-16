@@ -1,81 +1,81 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: How to Import a bitkeeper repo into git
-Date: Tue, 16 Oct 2007 19:05:23 +0200
-Message-ID: <4714EF53.8090707@op5.se>
-References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <20070709173720.GS29994@genesis.frugalware.org>	 <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>	 <4713FA4A.5090501@bluelane.com>	 <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>	 <471433F3.40606@bluelane.com>	 <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>	 <471454B5.7040802@bluelane.com> <e5bfff550710160211g5dbfa7fai95386b173edc45c3@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: pete@bluelane.com, Linus Torvalds <torvalds@linux-foundation.org>,
-	VMiklos <vmiklos@frugalware.org>,
-	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:06:05 2007
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: [PATCH] git-commit.sh: Remove option -n from tail
+Date: Tue, 16 Oct 2007 19:57:16 +0300
+Message-ID: <1192553837-18302-3-git-send-email-jari.aalto@cante.net>
+References: <1192553837-18302-1-git-send-email-jari.aalto@cante.net>
+ <1192553837-18302-2-git-send-email-jari.aalto@cante.net>
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:06:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhprU-0000CB-Vp
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:05:47 +0200
+	id 1IhpsB-0000Uz-DS
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:06:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757778AbXJPRF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 13:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757740AbXJPRF2
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:05:28 -0400
-Received: from mail.op5.se ([193.201.96.20]:33060 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754379AbXJPRF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 13:05:27 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 917601730722;
-	Tue, 16 Oct 2007 19:05:25 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ySMZt0+CIO7H; Tue, 16 Oct 2007 19:05:25 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 6C7E117306FD;
-	Tue, 16 Oct 2007 19:05:24 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <e5bfff550710160211g5dbfa7fai95386b173edc45c3@mail.gmail.com>
+	id S1758017AbXJPRGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 13:06:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758693AbXJPRGR
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:06:17 -0400
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:57600 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757740AbXJPRGQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 13:06:16 -0400
+X-Greylist: delayed 535 seconds by postgrey-1.27 at vger.kernel.org; Tue, 16 Oct 2007 13:06:16 EDT
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id E6A5E1BCC7
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 19:57:20 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A018FEE3D83; Tue, 16 Oct 2007 19:57:20 +0300
+Received: from cante.cante.net (a81-197-175-198.elisa-laajakaista.fi [81.197.175.198])
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id D6BEA4BB9F
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 19:57:19 +0300 (EEST)
+Received: from jaalto by cante.cante.net with local (Exim 4.68)
+	(envelope-from <jaalto@cante.cante.net>)
+	id 1IhpjK-0004ll-1v; Tue, 16 Oct 2007 16:57:18 +0000
+X-Mailer: git-send-email 1.5.3.4
+In-Reply-To: <1192553837-18302-2-git-send-email-jari.aalto@cante.net>
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jaalto@cante.cante.net
+X-SA-Exim-Scanned: No (on cante.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61217>
 
-Marco Costalba wrote:
-> On 10/16/07, Pete/Piet Delaney <pete@bluelane.com> wrote:
-> 
->> Would it be worthwhile
->> to install Qt4 from src and try to use qgit-2.0?
->>
-> 
-> Yes it is. There are a lot of new featrures, is almost as stable as
-> the previous and if you are interested in file history (annotations)
-> in qgit-2.0 this feature has been greatly speeded up.
-> 
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ git-commit.sh |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
-The only thing I really, really, really don't like about qgit4 is the
-fact that it fudges up the commit-message. I've been trying for two
-days to get rid of the HTML output, but I just can't get it done
-without the signed-off-by email being enclosed in &lt;&gt; tags.
-
-Marco, is there any chance you could make the old commit-message view
-an option? Especially, the subject line should really, really be at the
-bottom, with the rest of the message-text (although I liked the other
-view without the colored box a lot more). The little arrows in the
-commit window are also fairly annoying, as one quite quickly understands
-that up-/down-arrows work much better for that sort of stuff anyway.
-
-I'm at my wits end wrt c++ and qt, and can't for the life of me think of
-how to make it an option :(
-
+diff --git a/git-commit.sh b/git-commit.sh
+index fcb8443..637cf48 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -3,6 +3,8 @@
+ # Copyright (c) 2005 Linus Torvalds
+ # Copyright (c) 2006 Junio C Hamano
+ 
++TAIL="tail"
++
+ USAGE='[-a | --interactive] [-s] [-v] [--no-verify] [-m <message> | -F <logfile> | (-C|-c) <commit> | --amend] [-u] [-e] [--author <author>] [--template <file>] [[-i | -o] <path>...]'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+@@ -442,10 +444,10 @@ t)
+ 		s/^/Signed-off-by: /
+ 		')
+ 	blank_before_signoff=
+-	tail -n 1 "$GIT_DIR"/COMMIT_EDITMSG |
++	$TAIL 1 "$GIT_DIR"/COMMIT_EDITMSG |
+ 	grep 'Signed-off-by:' >/dev/null || blank_before_signoff='
+ '
+-	tail -n 1 "$GIT_DIR"/COMMIT_EDITMSG |
++	$TAIL 1 "$GIT_DIR"/COMMIT_EDITMSG |
+ 	grep "$sign"$ >/dev/null ||
+ 	printf '%s%s\n' "$blank_before_signoff" "$sign" \
+ 		>>"$GIT_DIR"/COMMIT_EDITMSG
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.3.2.81.g17ed
