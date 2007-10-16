@@ -1,70 +1,83 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 07/25] parse-options: make some arguments optional, add
- callbacks.
-Date: Tue, 16 Oct 2007 14:18:15 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161417440.25221@racer.site>
-References: <1192522616-16274-1-git-send-email-madcoder@debian.org>
- <1192523998-19474-1-git-send-email-madcoder@debian.org>
- <1192523998-19474-2-git-send-email-madcoder@debian.org>
- <1192523998-19474-3-git-send-email-madcoder@debian.org>
- <1192523998-19474-4-git-send-email-madcoder@debian.org>
- <1192523998-19474-5-git-send-email-madcoder@debian.org>
- <1192523998-19474-6-git-send-email-madcoder@debian.org>
- <1192523998-19474-7-git-send-email-madcoder@debian.org> <20071016084510.GI6919@artemis.corp>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 14:21:52 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710161419140.25221@racer.site>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+ <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
+ <471448D0.6080200@op5.se> <2EA3BEC9-5B13-44D3-B190-CA77499F642C@zib.de>
+ <Pine.LNX.4.64.0710161331440.25221@racer.site> <4D822762-D344-465E-B77D-90A64D61F5A9@zib.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:18:35 2007
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Eli Zaretskii <eliz@gnu.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Alex Riesen <raa.lkml@gmail.com>, tsuna@lrde.epita.fr,
+	Andreas Ericsson <ae@op5.se>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:22:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhmJd-0004tm-5T
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:18:33 +0200
+	id 1IhmNB-0005q8-D7
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:22:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932330AbXJPNSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 09:18:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbXJPNSX
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:18:23 -0400
-Received: from mail.gmx.net ([213.165.64.20]:56021 "HELO mail.gmx.net"
+	id S932387AbXJPNWB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:22:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932381AbXJPNWB
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:22:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54153 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S932307AbXJPNSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:18:22 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 13:18:21 -0000
+	id S932325AbXJPNWA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:22:00 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 13:21:58 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp037) with SMTP; 16 Oct 2007 15:18:21 +0200
+  by mail.gmx.net (mp058) with SMTP; 16 Oct 2007 15:21:58 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+CrW4/YAqCgS390PubNNErw/YIuVzlxzCLqf8MCd
-	77LGWhXSxt9aPf
+X-Provags-ID: V01U2FsdGVkX18WAO5Qzf8WbCxa3WjmWqCgExhMSD1T6AktwGvO9Q
+	Vm7mc1/VYdoLgu
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20071016084510.GI6919@artemis.corp>
+In-Reply-To: <4D822762-D344-465E-B77D-90A64D61F5A9@zib.de>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61169>
 
 Hi,
 
-On Tue, 16 Oct 2007, Pierre Habouzit wrote:
+On Tue, 16 Oct 2007, Steffen Prohaska wrote:
 
-> This bit is to allow to aggregate options with arguments together when
-> the argument is numeric.
+> On Oct 16, 2007, at 2:33 PM, Johannes Schindelin wrote:
 > 
->     +#if 0
->     +		/* can be used to understand -A1B1 like -A1 -B1 */
->     +		if (flag & OPT_SHORT && opt->opt && isdigit(*opt->opt)) {
->     +			*(int *)opt->value = strtol(opt->opt, (char **)&opt->opt, 10);
->     +			return 0;
->     +		}
->     +#endif
+> > > Maybe we need a configuration similar to core.autocrlf (which controls
+> > > newline conversion) to control filename comparison and normalization?
+> > > 
+> > > Most obviously for the case (in-)sensitivity on Windows, but I also
+> > > remember the unicode normalization happening on Mac's HFS filesystem
+> > > that caused trouble in the past.
+> > 
+> > Robin Rosenberg has some preliminary code for that.  The idea is to wrap
+> > all filesystem operations in cache.h, and do a filename normalisation
+> > first.
 > 
-> I'm not a huge fan, but people may like it. Feel free to keep the
-> chunk, drop it, or enable it to your liking.
+> At that point we could add a safety check. Paths that differ only by
+> case, or whitespace, or ... (add general and project specific rules here)
+> should be denied. This would guarantee that tree objects can always be
+> checked out. Even if the filesystem capabilities are limited.
 
-FWIW I like it.  It allows me to aggregate options such as -M30 with other 
-short options.
+This would be an independent change.  The method I talked about only ever 
+looks at one filename, never what is already there.
+
+What you want would probably be all too easy with a pre-commit hook.  No 
+need to clutter the git-core with code that is usually not needed (you'd 
+only ever activate it on Linux when other developers use Windows or 
+MacOSX).
 
 Ciao,
 Dscho
