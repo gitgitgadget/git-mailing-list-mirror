@@ -1,45 +1,60 @@
-From: "franky" <yinping@kooxoo.com>
-Subject: should git command and git-command be equivalent?
-Date: Tue, 16 Oct 2007 11:22:39 +0800
-Message-ID: <20071016032240.AD2FD7E80@mail.kooxoo.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Tue, 16 Oct 2007 05:41:44 +0200
+Message-ID: <200710160541.45481.chriscool@tuxfamily.org>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 05:23:02 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Marius Storm-Olsen" <marius@trolltech.com>,
+	"David Kastrup" <dak@gnu.org>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"=?iso-8859-1?q?Ren=E9?= Scharfe" <rene.scharfe@lsrfire.ath.cx>,
+	"Junio Hamano" <junkio@cox.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 05:35:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihd1A-0004B1-4o
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 05:22:52 +0200
+	id 1IhdCq-0005hj-N7
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 05:34:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758049AbXJPDWm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 23:22:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757828AbXJPDWm
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 23:22:42 -0400
-Received: from mail.kooxoo.com ([60.28.194.208]:45584 "EHLO mail.kooxoo.com"
+	id S1756077AbXJPDeo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Oct 2007 23:34:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756847AbXJPDeo
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 23:34:44 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38227 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757890AbXJPDWl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 23:22:41 -0400
-Received: from yinping (unknown [124.42.17.129])
-	by mail.kooxoo.com (Postfix) with ESMTP id AD2FD7E80
-	for <git@vger.kernel.org>; Tue, 16 Oct 2007 11:22:40 +0800 (CST)
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-Thread-Index: AcgPo84DwCA0USXaSf6XlsU25mah3Q==
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+	id S1755572AbXJPDen convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Oct 2007 23:34:43 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 7E4011AB2B7;
+	Tue, 16 Oct 2007 05:34:41 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 3991E1AB2AF;
+	Tue, 16 Oct 2007 05:34:41 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61068>
 
-	I use git-init frequently and it confuses me for a long time that I
-can't init a bare repository. 
-	I just found I can do that by "git -bare init". However, I get used
-to "git-init" and I always tried "git-init -bare" (of course failed)
-	And I thought git-init and "git init" were always the same as most
-newbies of git. So, should git init and git-init be equivalent? If not, I
-think the document should be supplemented to clarify this.
+Le lundi 15 octobre 2007, David Symonds a =E9crit :
+> On 15/10/2007, Marius Storm-Olsen <marius@trolltech.com> wrote:
+> > David Kastrup said the following on 14.10.2007 19:48:
+> > > "unknown" clearly is much better than "dunno" though even if my o=
+wn
+> > > favorite would be "undecided".
+> >
+> > What then about a good'ol programming favorite, "void"? :-)
+>
+> "skip"? That would make semantic sense, right?
 
- franky
+Yeah, or "avoid".
+
+Christian.
