@@ -1,67 +1,56 @@
-From: "franky" <yinping@kooxoo.com>
-Subject: RE: Is there any plan to support partial checkout or submoudule improvement?
-Date: Tue, 16 Oct 2007 19:53:08 +0800
-Message-ID: <20071016115310.5FB957E6D@mail.kooxoo.com>
-References: <Pine.LNX.4.64.0710161158350.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: "'Lars Hjemli'" <hjemli@gmail.com>, <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 13:53:54 2007
+From: Eli Zaretskii <eliz@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 08:18:54 -0400
+Message-ID: <E1IhlNu-00071d-0v@fencepost.gnu.org>
+References: <Pine.LNX.4.64.0710142112540.25221@racer.site>
+	 <4713B367.52CEC7E2@dessent.net>
+	 <Pine.LNX.4.64.0710151938300.25221@racer.site>
+	 <4713BA89.633B86F2@dessent.net> <20071015194214.GC15541@steel.home>
+	 <4713C81F.A75FEFC2@dessent.net>
+	 <Pine.LNX.4.64.0710152117290.25221@racer.site>
+	 <7287AD62-3274-4B20-881C-D02E08C4B2EF@zib.de>
+	 <fcaeb9bf0710151924r258dd561hd13c22319d17f80f@mail.gmail.com>
+	 <uprzfithw.fsf@gnu.org> <fcaeb9bf0710160309y51101fbaicae463a10612010c@mail.gmail.com>
+Reply-To: Eli Zaretskii <eliz@gnu.org>
+Cc: prohaska@zib.de, git@vger.kernel.org, raa.lkml@gmail.com,
+	ae@op5.se, tsuna@lrde.epita.fr, Johannes.Schindelin@gmx.de
+To: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 14:19:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhkzE-0004XR-Uc
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:53:25 +0200
+	id 1IhlO7-0000eq-6Q
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 14:19:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760286AbXJPLxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 07:53:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760182AbXJPLxO
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:53:14 -0400
-Received: from mail.kooxoo.com ([60.28.194.208]:57501 "EHLO mail.kooxoo.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759943AbXJPLxN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 07:53:13 -0400
-Received: from yinping (unknown [124.42.17.129])
-	by mail.kooxoo.com (Postfix) with ESMTP id 5FB957E6D;
-	Tue, 16 Oct 2007 19:53:10 +0800 (CST)
-X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-In-Reply-To: <Pine.LNX.4.64.0710161158350.25221@racer.site>
-Thread-Index: AcgP5DxgXD0oTKRbSgCM8z6jQnAZ6AABg2Ig
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+	id S1756466AbXJPMS4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 08:18:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXJPMS4
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 08:18:56 -0400
+Received: from fencepost.gnu.org ([140.186.70.10]:52811 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755501AbXJPMSz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 08:18:55 -0400
+Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
+	(envelope-from <eliz@gnu.org>)
+	id 1IhlNu-00071d-0v; Tue, 16 Oct 2007 08:18:54 -0400
+In-reply-to: <fcaeb9bf0710160309y51101fbaicae463a10612010c@mail.gmail.com>
+	(pclouds@gmail.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61151>
 
-> [please do not top post.  Only keep the parts of the original message that
-> you are responding to, and put your answers just below.  It is a matter of
-> simple economy: it takes you just a couple of minutes, but spares those
-> "millions" of readers the minutes to understand what you're talking about.
-> In addition, it is a matter of politeness.]
-
-Thanks for the hint, and I have corrected this.
-
-> On Tue, 16 Oct 2007, franky wrote:
+> Date: Tue, 16 Oct 2007 17:09:08 +0700
+> From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+> Cc: prohaska@zib.de, git@vger.kernel.org, raa.lkml@gmail.com, ae@op5.se, 
+> 	tsuna@lrde.epita.fr, Johannes.Schindelin@gmx.de
 > 
-> > I want a single "git-pull" to deploy a new version and a
-> > single "git-reset" to back to versions before [on partial checkouts]
+> > Where can one find this port of busybox's ash?
+> >
 > 
-> You are talking as if your partial checkout was a project in its own
-> right.  Then make it so.  Do not use a partial checkout, but make that a
-> submodule.
+> http://repo.or.cz/w/git/pclouds.git?a=shortlog;h=gitbox
+> 
+> In directory box/shell.
 
-As I said in the first email, the submodule way suffers from the multiple
-commit problem: src and bin as two submodules of project, three commits (for
-the 3 dirs separately) are needed when src directory changes and compiled
-binaries being put in bin directory. It's annoying to have to give 3 commit
-logs.
- 
-franky
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Thanks!
