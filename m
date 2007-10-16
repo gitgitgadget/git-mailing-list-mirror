@@ -1,97 +1,74 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Is there any plan to support partial checkout or submoudule
-	improvement?
-Date: Tue, 16 Oct 2007 23:33:59 +0200
-Message-ID: <20071016213359.GJ26127@efreet.light.src>
-References: <Pine.LNX.4.64.0710161158350.25221@racer.site> <20071016115310.5FB957E6D@mail.kooxoo.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: remote#branch
+Date: Tue, 16 Oct 2007 22:35:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710162228560.25221@racer.site>
+References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
+ <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="AzNpbZlgThVzWita"
-Cc: 'Johannes Schindelin' <Johannes.Schindelin@gmx.de>,
-	'Lars Hjemli' <hjemli@gmail.com>, git@vger.kernel.org
-To: franky <yinping@kooxoo.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 23:34:46 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Tue Oct 16 23:36:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihu3p-0005rs-Ux
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 23:34:46 +0200
+	id 1Ihu51-0006Cy-NO
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 23:36:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S965648AbXJPVeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 17:34:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965718AbXJPVeL
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 17:34:11 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:46786 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965601AbXJPVeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 17:34:09 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B0A215739C;
-	Tue, 16 Oct 2007 23:34:05 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id kQnoEJVcC8co; Tue, 16 Oct 2007 23:34:03 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 8281E5731D;
-	Tue, 16 Oct 2007 23:34:00 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1Ihu35-0002Jn-8l; Tue, 16 Oct 2007 23:33:59 +0200
-Content-Disposition: inline
-In-Reply-To: <20071016115310.5FB957E6D@mail.kooxoo.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S965815AbXJPVfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 17:35:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965803AbXJPVff
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 17:35:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41866 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S965445AbXJPVfe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 17:35:34 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 21:35:31 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp049) with SMTP; 16 Oct 2007 23:35:31 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/UAMtUHtXUvMuZ0C6udnB3gcUd3Ty57vzEJq5/UX
+	yXZr8YYhF9CDyB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071016210904.GI26127@efreet.light.src>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61260>
 
+Hi,
 
---AzNpbZlgThVzWita
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Tue, 16 Oct 2007, Jan Hudec wrote:
 
-On Tue, Oct 16, 2007 at 19:53:08 +0800, franky wrote:
-> > You are talking as if your partial checkout was a project in its own
-> > right.  Then make it so.  Do not use a partial checkout, but make that a
-> > submodule.
->=20
-> As I said in the first email, the submodule way suffers from the multiple
-> commit problem: src and bin as two submodules of project, three commits (=
-for
-> the 3 dirs separately) are needed when src directory changes and compiled
-> binaries being put in bin directory. It's annoying to have to give 3 comm=
-it
-> logs.
+> If it is a fragment, than "#" is the only correct separator and should 
+> stay that way.
 
-Thinking about it, it's only two commits -- src can be a submodule, but bin
-a normal directory (you can choose not to check out subprojects during
-repository checkout).
+You did not listen, did you?  '#' is allowed in ref names.  Therefore this 
+character really would lock us in to only ever reference _one_ and _only_ 
+one remote branch at a time.  This might have worked for cogito, but it 
+does not for git.
 
-This has the advantage, that bin, even when src is not checked out, always
-knows what version of src it is based on (it's in the gitlink) and you only
-give two commit messages.
+So, I say it again, '#' is _out_.
 
-Now I would actually say that commiting bin independently is better.
-It allows you to commit sources more often (eg. if you are doing series of
-small fixes) and more flexibility for branching (you don't want to merge
-binaries).
+> If it is not a true fragment, than we might want to phase it out in 
+> favor of something else. But I would strongly prefer staying within 
+> characters allowed in URI (as per rfc2396).
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+If you do that, "http://<xyz-with-branch>" would be ambiguous, wouldn't 
+it?  This would already reference an HTTP resource, and you could not 
+embed refnames into the URL.
 
---AzNpbZlgThVzWita
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> As for multiple branches, separating them with "," feels logical to me, 
+> no matter what separates them from the repository path. On the other 
+> hand given that neither ":" nor "@" is allowed in refnames, reusing the 
+> same separator would make sense especially if git switched to either of 
+> those.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+',' is allowed in ref names, so ',' is out.
 
-iD8DBQFHFS5HRel1vVwhjGURAt8EAJoCCuXI2z85HduNqIHRaN3g4jt45gCgu+ev
-FjChpWZkXkvlZ4rE6h9r/OU=
-=QvpY
------END PGP SIGNATURE-----
-
---AzNpbZlgThVzWita--
+Ciao,
+Dscho
