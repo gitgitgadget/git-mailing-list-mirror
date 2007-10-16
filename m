@@ -1,93 +1,89 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Git User's Survey 2007 summary - git homepage improvements
-Date: Tue, 16 Oct 2007 22:12:47 +0200
-Message-ID: <20071016201247.GH26127@efreet.light.src>
-References: <8fe92b430710141505y75ab61c4l50688fc9530e4f90@mail.gmail.com> <20071014225618.GH31659@planck.djpig.de>
+From: Tom Tobin <korpios@korpios.com>
+Subject: Re: On Tabs and Spaces
+Date: Tue, 16 Oct 2007 15:18:20 -0500
+Message-ID: <1192565900.6430.16.camel@athena>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+	 <471476B7.5050105@users.sourceforge.net>
+	 <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
+	 <47148F72.1090602@users.sourceforge.net>
+	 <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+	 <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
+	 <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+ts6NCQ4mrNQIV8p"
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Petr Baudis <pasky@ucw.cz>
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 22:13:28 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 22:18:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhsnA-0003oV-11
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 22:13:28 +0200
+	id 1IhssE-0004sd-6N
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 22:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935917AbXJPUNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 16:13:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935912AbXJPUNA
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 16:13:00 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:36227 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935910AbXJPUM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 16:12:58 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id CA10A5725C;
-	Tue, 16 Oct 2007 22:12:56 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 1iaTg9XA0vfo; Tue, 16 Oct 2007 22:12:51 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 05B87574A0;
-	Tue, 16 Oct 2007 22:12:50 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IhsmV-00027b-W6; Tue, 16 Oct 2007 22:12:48 +0200
-Content-Disposition: inline
-In-Reply-To: <20071014225618.GH31659@planck.djpig.de>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1755809AbXJPUSb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2007 16:18:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751716AbXJPUSb
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 16:18:31 -0400
+Received: from py-out-1112.google.com ([64.233.166.178]:3704 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751478AbXJPUSa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 16:18:30 -0400
+Received: by py-out-1112.google.com with SMTP id u77so3899297pyb
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 13:18:27 -0700 (PDT)
+Received: by 10.35.121.12 with SMTP id y12mr9560467pym.1192565907245;
+        Tue, 16 Oct 2007 13:18:27 -0700 (PDT)
+Received: from ?127.0.0.1? ( [208.75.86.189])
+        by mx.google.com with ESMTPS id f51sm7192935pyh.2007.10.16.13.18.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Oct 2007 13:18:23 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+X-Mailer: Evolution 2.12.0 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61247>
 
-
---+ts6NCQ4mrNQIV8p
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Oct 15, 2007 at 00:56:18 +0200, Frank Lichtenheld wrote:
-> On Mon, Oct 15, 2007 at 12:05:22AM +0200, Jakub Narebski wrote:
-> > Generic:
-> >  # Dedicated domain name / site name, e.g. git.org or git.com
-> >    to have it look less like mirror or unofficial page
-> >=20
-> >    (git.or.cz still comes first when searching Google for "git";
-> >    current domain name was available to homepage admin - historical
-> >    reason)
+On Tue, 2007-10-16 at 12:20 -0700, Linus Torvalds wrote:
+> The only sane solution is the one the kernel and git have always used=
+:=20
+> tabs are 8 spaces wide, and anybody who disagrees can go screw themse=
+lves.=20
+> If you don't have 8-character tabs, you *will* get odd indentation.
 >=20
-> Hmm, I guess most names that would qualify are already taken
-> (most of them by squatters, though). So someone
-> would have to pay money for this...
-> (And I guess something like git-scm.org wouldn't qualify as more
-> "official", would it?)
+> And no, the answer is not to say "don't use tabs at all" and replace =
+them=20
+> by spaces. The answer is *also* not "tabs are just for initial code=20
+> indents", because not only will most sane editors never even show the=
+=20
+> difference, it's simply not how people work. So such a rule about=20
+> invisible things doesn't work.
+[...]
+> The fact that some projects have encouraged bad coding style and *ins=
+ane*=20
+> tab values is not a git problem. We should teach people to do *better=
+*,=20
+> not become worse just because others have done idiotic things.
 
-It certainly would. It would be 2nd level domain, not a 3rd level one.
+I'm reading two different ideas here, and it seems like you're
+conflating the two =E2=80=94 and, in the process, telling some pretty s=
+mart
+people (smarter than me, anyhow) to go fuck themselves.
 
-Note, that none of the other vcs' have a homepage at theirname.org --
-subversion is svn.tigris.org, bazaar is bazaaz-vcs.org, mercurial is
-www.selenic.com/mercurial, svk is svk.bestpractical.com, monotone is
-monotone.ca. So git-vcs.org would be quite good.
+If a project uses tabs, your statement regarding 8-char-width tabs make=
+s
+sense; you need some rule by which you can assume others are viewing th=
+e
+same thing you are.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+But you then dismiss out of hand the option of using all spaces; Python
+has been getting along perfectly well for quite some time by following
+this rule, and my experience with the language leads me to believe it's
+the wiser of the choices.  Questions over tab width simply *go away*;
+you pick an indentation level (Python uses 4) and stick with it.
 
---+ts6NCQ4mrNQIV8p
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHFRs/Rel1vVwhjGURAjBoAKC9kHwBzwo1lWBp+aYJ6gzyUJailACg4mtq
-1+swDgrbHIgbuU4IZOuny9k=
-=cqqr
------END PGP SIGNATURE-----
-
---+ts6NCQ4mrNQIV8p--
+I'm not arguing that git should switch to all spaces; projects tend to
+become set in their ways, and consistency can be valuable.  I'm merely
+pointing out that all-spaces is a quite *sane* option, even if it's one
+git doesn't choose.
