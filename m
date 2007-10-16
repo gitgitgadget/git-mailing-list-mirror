@@ -1,51 +1,67 @@
 From: "franky" <yinping@kooxoo.com>
 Subject: RE: Is there any plan to support partial checkout or submoudule improvement?
-Date: Tue, 16 Oct 2007 19:45:59 +0800
-Message-ID: <20071016114601.A66DC7E20@mail.kooxoo.com>
-References: <8c5c35580710160350h53a7b5c4k374067372d4aac1d@mail.gmail.com>
+Date: Tue, 16 Oct 2007 19:53:08 +0800
+Message-ID: <20071016115310.5FB957E6D@mail.kooxoo.com>
+References: <Pine.LNX.4.64.0710161158350.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain;
 	charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Lars Hjemli'" <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 13:46:35 2007
+Cc: "'Lars Hjemli'" <hjemli@gmail.com>, <git@vger.kernel.org>
+To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 13:53:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhksN-0003MX-Ui
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:46:20 +0200
+	id 1IhkzE-0004XR-Uc
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759835AbXJPLqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 07:46:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759825AbXJPLqG
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:46:06 -0400
-Received: from mail.kooxoo.com ([60.28.194.208]:35229 "EHLO mail.kooxoo.com"
+	id S1760286AbXJPLxO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 07:53:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760182AbXJPLxO
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:53:14 -0400
+Received: from mail.kooxoo.com ([60.28.194.208]:57501 "EHLO mail.kooxoo.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753710AbXJPLqF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 07:46:05 -0400
+	id S1759943AbXJPLxN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 07:53:13 -0400
 Received: from yinping (unknown [124.42.17.129])
-	by mail.kooxoo.com (Postfix) with ESMTP id A66DC7E20;
-	Tue, 16 Oct 2007 19:46:01 +0800 (CST)
+	by mail.kooxoo.com (Postfix) with ESMTP id 5FB957E6D;
+	Tue, 16 Oct 2007 19:53:10 +0800 (CST)
 X-Mailer: Microsoft Office Outlook, Build 11.0.5510
-In-Reply-To: <8c5c35580710160350h53a7b5c4k374067372d4aac1d@mail.gmail.com>
-Thread-Index: AcgP4mFUMxWUvuXeSZWcH7mHcax64wABxDRA
+In-Reply-To: <Pine.LNX.4.64.0710161158350.25221@racer.site>
+Thread-Index: AcgP5DxgXD0oTKRbSgCM8z6jQnAZ6AABg2Ig
 X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61150>
 
-> The <revspec> can be a tag. So you can easily create a wrapper script
-> to allow such things as
+> [please do not top post.  Only keep the parts of the original message that
+> you are responding to, and put your answers just below.  It is a matter of
+> simple economy: it takes you just a couple of minutes, but spares those
+> "millions" of readers the minutes to understand what you're talking about.
+> In addition, it is a matter of politeness.]
+
+Thanks for the hint, and I have corrected this.
+
+> On Tue, 16 Oct 2007, franky wrote:
 > 
-> $ ./deploy.sh v1.2.3
-> $ ./deploy.sh HEAD
-> $ ./deploy.sh master
-> $ ./deploy.sh <sha1>
-But it is an online services, I must take care, so I prefer the incremental
-update to avoid overwriting deployment directory fully each time. Another
-consideration, Full update also introduces the busy network traffic.
+> > I want a single "git-pull" to deploy a new version and a
+> > single "git-reset" to back to versions before [on partial checkouts]
+> 
+> You are talking as if your partial checkout was a project in its own
+> right.  Then make it so.  Do not use a partial checkout, but make that a
+> submodule.
 
+As I said in the first email, the submodule way suffers from the multiple
+commit problem: src and bin as two submodules of project, three commits (for
+the 3 dirs separately) are needed when src directory changes and compiled
+binaries being put in bin directory. It's annoying to have to give 3 commit
+logs.
+ 
 franky
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
