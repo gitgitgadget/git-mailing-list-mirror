@@ -1,44 +1,79 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: What's in git/spearce.git (stable)
-Date: Tue, 16 Oct 2007 22:28:12 +0200
-Message-ID: <200710162228.12680.barra_cuda@katamail.com>
-References: <20071016055634.GB13801@spearce.org>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: linux-2.6.git mirror
+Date: Tue, 16 Oct 2007 13:27:09 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E2701684C77@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
 Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 22:24:27 2007
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 22:27:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihsxl-0006C8-R4
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 22:24:26 +0200
+	id 1Iht0e-0006sB-Cs
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 22:27:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765401AbXJPUYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 16:24:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765267AbXJPUYN
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 16:24:13 -0400
-Received: from slim-3a.inet.it ([213.92.5.124]:56870 "EHLO slim-3a.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761673AbXJPUYM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 16:24:12 -0400
-Received: from host160-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.160]) by slim-3a.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.57.160+hK91nX7qkhF; Tue, 16 Oct 2007 22:24:06 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071016055634.GB13801@spearce.org>
-Content-Disposition: inline
+	id S1761425AbXJPU1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 16:27:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759551AbXJPU1O
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 16:27:14 -0400
+Received: from az33egw01.freescale.net ([192.88.158.102]:46006 "EHLO
+	az33egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753983AbXJPU1N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 16:27:13 -0400
+Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
+	by az33egw01.freescale.net (8.12.11/az33egw01) with ESMTP id l9GKRAn9003758
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 13:27:10 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id l9GKR9CB014638
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 15:27:10 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: linux-2.6.git mirror
+Thread-Index: AcgQMu0jhsVJ0qiIRTWLIjwQ4/1Z2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61249>
 
-On Tuesday 16 October 2007, Shawn O. Pearce wrote:
-> * The 'maint' branch has these fixes since the last announcement.
+Hi Linus,
 
-There are typos in RelNotes-1.5.3.5.txt:
 
-s/wilh/will
-s/Documention/Documentation
+I'm trying to setup a mirror of your Linux tree with git 1.5.3.1 and
+v2.6.23-5054-g821f3ef and I get the following error during this
+scenario:
+
+$ mkdir linux
+$ cd linux
+$ git --bare init --shared=all
+Initialized empty shared Git repository in /home/emmedve1/linux/
+$ git remote add --mirror -f origin
+git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+$ git fsck --full --strict	<- all fine
+$ git remote update
+Updating origin
+error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a
+commit
+error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a
+commit
+$ git fsck --full --strict	<- all fine
+
+The situation is similar with the git tree:
+
+error: Object a0e7d36193b96f552073558acf5fcc1f10528917 is a blob, not a
+commit
+
+Other repositories (sparse for example) don't necessarily expose this,
+but I didn't test too many. This situation doesn't seem to surface for
+non-bare clones. I searched a bit the web for this, but nothing obvious
+showed up.
+
+Is this something I should be worried about?
+
+
+Thanks for your patience,
+Emil.
