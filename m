@@ -1,7 +1,8 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 09/25] Port builtin-add.c to use the new option parser.
-Date: Tue, 16 Oct 2007 14:17:29 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161417150.25221@racer.site>
+Subject: Re: [PATCH 07/25] parse-options: make some arguments optional, add
+ callbacks.
+Date: Tue, 16 Oct 2007 14:18:15 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710161417440.25221@racer.site>
 References: <1192522616-16274-1-git-send-email-madcoder@debian.org>
  <1192523998-19474-1-git-send-email-madcoder@debian.org>
  <1192523998-19474-2-git-send-email-madcoder@debian.org>
@@ -9,56 +10,61 @@ References: <1192522616-16274-1-git-send-email-madcoder@debian.org>
  <1192523998-19474-4-git-send-email-madcoder@debian.org>
  <1192523998-19474-5-git-send-email-madcoder@debian.org>
  <1192523998-19474-6-git-send-email-madcoder@debian.org>
- <1192523998-19474-7-git-send-email-madcoder@debian.org>
- <1192523998-19474-8-git-send-email-madcoder@debian.org>
- <1192523998-19474-9-git-send-email-madcoder@debian.org>
- <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
+ <1192523998-19474-7-git-send-email-madcoder@debian.org> <20071016084510.GI6919@artemis.corp>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:17:48 2007
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:18:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhmIt-0004gB-T0
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:17:48 +0200
+	id 1IhmJd-0004tm-5T
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:18:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932306AbXJPNRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 09:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932140AbXJPNRi
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:17:38 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33720 "HELO mail.gmx.net"
+	id S932330AbXJPNSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:18:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932326AbXJPNSX
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:18:23 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56021 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756466AbXJPNRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:17:37 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 13:17:35 -0000
+	id S932307AbXJPNSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:18:22 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 13:18:21 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp047) with SMTP; 16 Oct 2007 15:17:35 +0200
+  by mail.gmx.net (mp037) with SMTP; 16 Oct 2007 15:18:21 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/q0kkl2iHqam/gg9MoyttAhGUghHr8XqZ33Mm8WI
-	0hB4oSYVivex74
+X-Provags-ID: V01U2FsdGVkX1+CrW4/YAqCgS390PubNNErw/YIuVzlxzCLqf8MCd
+	77LGWhXSxt9aPf
 X-X-Sender: gene099@racer.site
-In-Reply-To: <2209D123-A245-43C4-8DD9-A83386852556@mit.edu>
+In-Reply-To: <20071016084510.GI6919@artemis.corp>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61168>
 
 Hi,
 
-On Tue, 16 Oct 2007, Michael Witten wrote:
+On Tue, 16 Oct 2007, Pierre Habouzit wrote:
 
-> On 16 Oct 2007, at 4:39:42 AM, Pierre Habouzit wrote:
+> This bit is to allow to aggregate options with arguments together when
+> the argument is numeric.
 > 
-> > +	OPT_BOOLEAN('u', NULL, &take_worktree_changes, "update only files
-> > that git already knows about"),
+>     +#if 0
+>     +		/* can be used to understand -A1B1 like -A1 -B1 */
+>     +		if (flag & OPT_SHORT && opt->opt && isdigit(*opt->opt)) {
+>     +			*(int *)opt->value = strtol(opt->opt, (char **)&opt->opt, 10);
+>     +			return 0;
+>     +		}
+>     +#endif
 > 
-> "update only files in the current directory that git already knows about"
+> I'm not a huge fan, but people may like it. Feel free to keep the
+> chunk, drop it, or enable it to your liking.
 
-"update tracked files"
+FWIW I like it.  It allows me to aggregate options such as -M30 with other 
+short options.
 
 Ciao,
 Dscho
