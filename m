@@ -1,72 +1,71 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Some git mv questions
-Date: Tue, 16 Oct 2007 10:34:01 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710161030430.6887@woody.linux-foundation.org>
-References: <200710161733.49185.wielemak@science.uva.nl>
- <8c5c35580710160905v69787856m7ed11b037c1adef1@mail.gmail.com>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: On Tabs and Spaces
+Date: Tue, 16 Oct 2007 19:40:26 +0200
+Message-ID: <20071016174026.GA506@uranus.ravnborg.org>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <20071016070421.GE13801@spearce.org> <11F85069-1013-4685-9D56-C53F0F8231BF@MIT.EDU> <4714F2CA.5000509@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jan Wielemaker <wielemak@science.uva.nl>,
-	git list <git@vger.kernel.org>
-To: Lars Hjemli <hjemli@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:35:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Witten <mfwitten@MIT.EDU>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Oct 16 19:39:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhqK3-0007JP-KQ
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:35:16 +0200
+	id 1IhqOB-0008DA-VP
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:39:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760363AbXJPRfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 13:35:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760397AbXJPRfF
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:35:05 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:45928 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760363AbXJPRfD (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 13:35:03 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GHY2IE015101
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 16 Oct 2007 10:34:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GHY1kt007553;
-	Tue, 16 Oct 2007 10:34:01 -0700
-In-Reply-To: <8c5c35580710160905v69787856m7ed11b037c1adef1@mail.gmail.com>
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1758539AbXJPRi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 13:38:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759111AbXJPRi6
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:38:58 -0400
+Received: from pasmtpb.tele.dk ([80.160.77.98]:48312 "EHLO pasmtpB.tele.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761663AbXJPRi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 13:38:57 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpB.tele.dk (Postfix) with ESMTP id 3EED4E3100E;
+	Tue, 16 Oct 2007 19:38:53 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id B6BA5580D2; Tue, 16 Oct 2007 19:40:26 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4714F2CA.5000509@op5.se>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61231>
 
+General comment about the <tab> versus spaces debate.
 
+The root problem is stupid editors that does not show when a tab is used
+and when spaces are used.
+So people continue to mix tabs and spaces.
 
-On Tue, 16 Oct 2007, Lars Hjemli wrote:
+In linux people generally think that 8 aligned spaces equal a tab
+which is IMHO stupid.
+Tabs should be used for indent and not general alignment.
 
-> On 10/16/07, Jan Wielemaker <wielemak@science.uva.nl> wrote:
-> >         * On a somewhat bigger test I moved a large directory using
-> >         "git mv dir newdir" (where newdir is an existing directory).
-> >         Now "git status" gives a lot of new and deleted files!?
-> 
-> You could try to adjust diff.renameLimit in .git/config
+Consider:
+<tab>if (some long condition that
+<tab>....&& spans two lines) {
+<tab><tab>my_private_printf("bla bla bla"
+<tab><tab>.................."more bla bla\n");
+<tab><tab>}
 
-Yes. The default rename limit I did has turned out to be a disaster. It's 
-quite common to have more than a 100x100 matrix of deleted files.
+This will look good and align "more bla bla\n" as
+intended no matter your tab setting.
+But replacing the 8 spaces with a tab will
+cause it to look bad.
 
-For people with any kind of beefy hardware, I'd just suggest doing a
+And using tabs let me use the tabsetting I like (8) and other
+use the tab setting they like (2,3,4,5,6,7) and all is good.
 
-	git config --global diff.renamelimit 0
+And why a tab is 8 spaces and in considered good.
+Thats to teach people to write small independent functions
+that does _one_ thing and does it well.
+Mega functions with 6 times indent or more usually needs to
+be breaked up anyway.
 
-which disables the rename limiting entirely.
-
-There's a related (embarrassing) problem, namely that I think that the 
-current released versions (1.5.3.3 and 1.5.3.4) don't honor the 
-renamelimit configuration for merging, so if you do merges across renames 
-with changes to the renamed files, you need to use either an older git 
-that didn't have the rename limit at all (nor any of the speed-ups) or you 
-need to use current git from the 'master' branch.
-
-		Linus
+	Sam
