@@ -1,65 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: should git command and git-command be equivalent?
-Date: Tue, 16 Oct 2007 16:46:10 +0200
-Message-ID: <vpqhckri0ct.fsf@bauges.imag.fr>
-References: <20071016084800.270917E6F@mail.kooxoo.com>
-	<vpqk5pnmoah.fsf@bauges.imag.fr>
-	<ee77f5c20710160528k520704d7pd3cf99dea1f83a77@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCHv2 1/5] Add a generic tree traversal to fetch SVN properties.
+Date: Tue, 16 Oct 2007 16:53:28 +0200
+Message-ID: <4714D068.8090606@viscovery.net>
+References: <1192545412-10929-1-git-send-email-tsuna@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: franky <yinping@kooxoo.com>, git@vger.kernel.org
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 16:47:39 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, normalperson@yhbt.net
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 16 16:53:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhnhY-0000P6-Mc
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:47:21 +0200
+	id 1Ihnnj-00020u-7J
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:53:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933001AbXJPOrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 10:47:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932992AbXJPOrH
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:47:07 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60242 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932835AbXJPOrF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 10:47:05 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l9GEkFS7014510
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Oct 2007 16:46:15 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IhngQ-0004sw-Um; Tue, 16 Oct 2007 16:46:11 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IhngQ-0007NV-SQ; Tue, 16 Oct 2007 16:46:10 +0200
-In-Reply-To: <ee77f5c20710160528k520704d7pd3cf99dea1f83a77@mail.gmail.com> (David Symonds's message of "Tue\, 16 Oct 2007 22\:28\:28 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 16 Oct 2007 16:46:16 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S932739AbXJPOxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 10:53:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932715AbXJPOxc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:53:32 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:32524 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932540AbXJPOxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 10:53:32 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IhnnJ-0008Vc-OA; Tue, 16 Oct 2007 16:53:18 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 17FC76B7; Tue, 16 Oct 2007 16:53:29 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1192545412-10929-1-git-send-email-tsuna@lrde.epita.fr>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61187>
 
-"David Symonds" <dsymonds@gmail.com> writes:
+Benoit Sigoure schrieb:
+> 	* git-svn.perl (&traverse_ignore): Remove.
+> 	(&prop_walk): New.
+> 	(&cmd_show_ignore): Use prop_walk.
 
-> If you use the contrib/completion/git-completion.bash script, you can
-> type "git st<TAB>", and it'll complete it for you. Well, it did, until
-> git-stash came along and ruined it...
->
-> At any rate, the bash completion also completes things like branch
-> names, which can be immensely helpful.
+This may be your favorite style of commit messaged, but I think the 
+concensus for git is a different style of commit message: We would like to 
+see *why* this change is good. But you only note *what* was changed, 
+something that can be seen by looking at the patch anyway.
 
-I don't use bash, but the zsh completion for git is also excellent.
+The commit message should be helpful when the commit is looked at in 
+isolation, like when you are doing some code archeology half a year later 
+and e.g. git-blame/git-bisect points you to this commit.
 
-But "git st" is still one less key to type than "git st<tab>" ;-).
+Also a notice such as
 
--- 
-Matthieu
+  "With this we will be able to lift properties like svn:ignore into
+   .gitignore in a follow-up change."
+
+tells that this was actually part of a series and you don't have to remember 
+that half a year ago there were 4 more patches submitted in the same second 
+with this one.
+
+-- Hannes
