@@ -1,66 +1,61 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH] tail -n not supported in all OSs
-Date: Tue, 16 Oct 2007 18:06:24 -0400
-Message-ID: <20071016220624.GC1314@closure.lan>
-References: <1192553837-18302-1-git-send-email-jari.aalto@cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH 3/3] git-cvsexportcommit.perl: git-apply no longer needs --binary
+Date: Tue, 16 Oct 2007 18:13:44 -0400
+Message-ID: <561D7B44-9EDE-447B-A751-BE6E3A3AD9CC@mit.edu>
+References: <1192522094-4988-1-git-send-email-mfwitten@mit.edu> <Pine.LNX.4.64.0710161404220.25221@racer.site> <19B03C18-6BBD-4F67-93DC-37B422445C82@mit.edu> <200710162320.14917.robin.rosenberg.lists@dewire.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Oct 17 00:07:06 2007
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 00:14:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhuYp-0005VE-CP
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 00:06:47 +0200
+	id 1Ihufr-0007nD-MX
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 00:14:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935017AbXJPWG2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 18:06:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965968AbXJPWG1
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 18:06:27 -0400
-Received: from thunk.org ([69.25.196.29]:48300 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S965964AbXJPWG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 18:06:26 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IhuiK-0006YI-JK; Tue, 16 Oct 2007 18:16:36 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1IhuYS-0001KF-Hv; Tue, 16 Oct 2007 18:06:24 -0400
-Content-Disposition: inline
-In-Reply-To: <1192553837-18302-1-git-send-email-jari.aalto@cante.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S965809AbXJPWNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 18:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765449AbXJPWNw
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 18:13:52 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:35526 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761808AbXJPWNv (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 18:13:51 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9GMDkdn027171;
+	Tue, 16 Oct 2007 18:13:46 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9GMDjho000837
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Oct 2007 18:13:45 -0400 (EDT)
+In-Reply-To: <200710162320.14917.robin.rosenberg.lists@dewire.com>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61264>
 
-On Tue, Oct 16, 2007 at 07:57:14PM +0300, Jari Aalto wrote:
-> 
-> SunOS/Solaris tail(1) does not support option '-n'. The
-> following patches change occurrances of:
-> 
->    tail -n <N>
-> 
-> to
-> 
->    tail <N>
 
-POSIX.2 guarantees that "tail -n 2" works.  "Tail -<N>" is considered
-obsolete.  Unfortunately Solaris requires you to use
-/usr/xpg4/bin/tail if you want a POSIX.2 compliant header file.  The
-/usr/bin/tail is designed for System V R3 compliance (i.e., from a
-full two decades ago; SVR3 was released in 1987), and is due to Sun's
-vow to Backwards Compatible Forever. 
+On 16 Oct 2007, at 5:20:14 PM, Robin Rosenberg wrote:
 
-See "man 5 standards" on a Solaris box to see how your PATH variable
-has to be set if you want something which is compatible with modern
-Unix/Linux common usage.
+> So all this series does is... making it harder to follow the history?
 
-					- Ted
+If you follow the history solely on patches.
+
+
+> Ack for removing the --binary, the rest is just noise
+
+I think fixing the tabs is more important than removing --binary.
+
+It's clear the the entropy of tabulation increases over time;
+the tab patch acts as a buffer to reconstruct a clean signal.
+
+Michael Witten
