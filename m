@@ -1,71 +1,99 @@
-From: Steffen Prohaska <prohaska@zib.de>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 15:16:04 +0200
-Message-ID: <4D822762-D344-465E-B77D-90A64D61F5A9@zib.de>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org> <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr> <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site> <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site> <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org> <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org> <471448D0.6080200@op5.se> <2EA3BEC9-5B13-44D3-B190-CA77499F642C@zib.de> <Pine.LNX.4.64.0710161331440.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Eli Zaretskii <eliz@gnu.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Alex Riesen <raa.lkml@gmail.com>, tsuna@lrde.epita.fr,
-	Andreas Ericsson <ae@op5.se>
-To: Git Mailing List <git@vger.kernel.org>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 15:15:12 2007
+Date: Tue, 16 Oct 2007 14:15:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710161414270.25221@racer.site>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
+ <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
+ <471448D0.6080200@op5.se> <E1Ihfrl-0007w1-3I@fencepost.gnu.org>
+ <Pine.LNX.4.64.0710161324490.25221@racer.site> <E1IhlvV-0002qv-1K@fencepost.gnu.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: ae@op5.se, barkalow@iabervon.org, raa.lkml@gmail.com,
+	tsuna@lrde.epita.fr, git@vger.kernel.org
+To: Eli Zaretskii <eliz@gnu.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 15:16:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhmGE-0003wE-8j
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:15:02 +0200
+	id 1IhmHS-0004Hk-1X
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 15:16:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757265AbXJPNOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 09:14:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754302AbXJPNOv
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:14:51 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52729 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753422AbXJPNOv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 09:14:51 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9GDEYTn018054;
-	Tue, 16 Oct 2007 15:14:34 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9GDEXao017686
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 16 Oct 2007 15:14:33 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0710161331440.25221@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S932152AbXJPNQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 09:16:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755203AbXJPNQG
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 09:16:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41784 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754302AbXJPNQF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 09:16:05 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 13:16:02 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp054) with SMTP; 16 Oct 2007 15:16:02 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX188iZVUGZQ8vayXDInhLn/w73B0Y0OUT0dUZ6h0XR
+	H4PExX54+qA8gD
+X-X-Sender: gene099@racer.site
+In-Reply-To: <E1IhlvV-0002qv-1K@fencepost.gnu.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61165>
 
+Hi,
 
-On Oct 16, 2007, at 2:33 PM, Johannes Schindelin wrote:
+On Tue, 16 Oct 2007, Eli Zaretskii wrote:
 
->> Maybe we need a configuration similar to core.autocrlf (which  
->> controls
->> newline conversion) to control filename comparison and normalization?
->>
->> Most obviously for the case (in-)sensitivity on Windows, but I also
->> remember the unicode normalization happening on Mac's HFS filesystem
->> that caused trouble in the past.
->
-> Robin Rosenberg has some preliminary code for that.  The idea is to  
-> wrap
-> all filesystem operations in cache.h, and do a filename normalisation
-> first.
+> > Date: Tue, 16 Oct 2007 13:29:41 +0100 (BST)
+> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> > cc: Andreas Ericsson <ae@op5.se>, barkalow@iabervon.org, raa.lkml@gmail.com, 
+> >     tsuna@lrde.epita.fr, git@vger.kernel.org
+> > 
+> > > > 	removed: README
+> > > > 	untracked: readme
+> > > 
+> > > This is a non-issue, then: Windows filesystems are case-preserving, so 
+> > > if `README' became `readme', someone deliberately renamed it, in which 
+> > > case it's okay for git to react as above.
+> > 
+> > No, it is not.  On FAT filesystems, for example, I experienced Windows 
+> > happily naming a file "head" which was created under then name "HEAD".
+> 
+> What program did that, and how did you see that the file was named
+> "head" instead of "HEAD"?
 
-At that point we could add a safety check. Paths that differ only by
-case, or whitespace, or ... (add general and project specific rules  
-here)
-should be denied. This would guarantee that tree objects can always be
-checked out. Even if the filesystem capabilities are limited.
+Git and ... Git.
 
-Robin, what do you think?
+> > > Something for Windows users to decide, I guess.  It's not hard to 
+> > > refactor this, it just needs a motivated volunteer.
+> > 
+> > You?
+> 
+> Maybe some day.
 
-	Steffen
+Cool.
+
+> > > Unless that 10K is a typo and you really meant 100K, I don't think 
+> > > 10K files should take several seconds to scan on Windows.  I just 
+> > > tried "find -print" on a directory with 32K files in 4K 
+> > > subdirectories, and it took 8 sec elapsed with a hot cache.  So 10K 
+> > > files should take at most 2 seconds, even without optimizing file 
+> > > traversal code.  Doing the same with native Windows system calls 
+> > > ("dir /s") brings that down to 4 seconds for 32K files.
+> > 
+> > On Linux, I would have hit Control-C already.  Such an operation 
+> > typically takes less than 0.1 seconds.
+> 
+> We were not comparing Linux with Windows, we were talking about Windows 
+> user experience.  On Windows 4 seconds is not too long.
+
+Well, I was talking about user experience.  In this case of a user who 
+happens to be on Windows, but knows Linux' speed.
+
+Ciao,
+Dscho
