@@ -1,76 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 12:51:59 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710161247511.6887@woody.linux-foundation.org>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
- <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
- <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <20071016193605.GA829@glandium.org>
- <alpine.LFD.0.999.0710161240510.6887@woody.linux-foundation.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git-send-email: add a new sendemail.to configuration
+	variable
+Date: Tue, 16 Oct 2007 22:05:47 +0200
+Message-ID: <20071016200547.GR23810@genesis.frugalware.org>
+References: <1191242562-27486-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 21:52:38 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="tH81YkO9bF1TqYxP"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 16 22:06:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhsSz-0007Uc-0w
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 21:52:37 +0200
+	id 1Ihsfx-0001t7-7E
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 22:06:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934520AbXJPTwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 15:52:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932987AbXJPTwT
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 15:52:19 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:36781 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934520AbXJPTwS (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 15:52:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GJq0FY022960
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 16 Oct 2007 12:52:01 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GJpxUT012724;
-	Tue, 16 Oct 2007 12:51:59 -0700
-In-Reply-To: <alpine.LFD.0.999.0710161240510.6887@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.718 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932802AbXJPUFu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 16:05:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759319AbXJPUFu
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 16:05:50 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:39677 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752189AbXJPUFt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 16:05:49 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 8B6551B253D
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 22:05:47 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 14CCE44659
+	for <git@vger.kernel.org>; Tue, 16 Oct 2007 22:05:38 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 42A2513A4023; Tue, 16 Oct 2007 22:05:47 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1191242562-27486-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61244>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61245>
 
 
+--tH81YkO9bF1TqYxP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Tue, 16 Oct 2007, Linus Torvalds wrote:
-> 
-> But when it comes to computers, 8-character wide tab stops is the 
-> de-facto standard. It's what every single terminal defaults to. It's the 
-> only thing that some printers/terminals support. Anything else is by 
-> definition non-standard.
+On Mon, Oct 01, 2007 at 02:42:42PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> Several projects prefers to receive patches via a given email address. In these
+> cases it's handy to configure that address once.
 
-Side note: one reason you *have* to use 8-character wide tab stops if you 
-want to be sane is that while your editor may have alternate tab-stops, 
-but when you look at the sources any other ways or on any other setup, the 
-default is *always* going to be that 8-character wide tab-stop.
+could somebody please comment this patch? does it look ok?
 
-Do a "git cat-file -p :Makefile", and it will default to using "less". 
-Have you added "-x2" to you LESS environment variable? Has everybody else? 
-Not likely.
+thanks,
+- VMiklos
 
-Or what happens when you just cat it straight, without any less at all? 
+--tH81YkO9bF1TqYxP
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-In short: using anything but 8-char wide tab-stops is INSANE, because it 
-will inevitably showing the same source code in different ways depending 
-on which editor or other environment you use.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
 
-In contrast, if you just accept that 8-wide tabs are a fact, you never see 
-any of these issues. Everything "just works".
+iD8DBQFHFRmbe81tAgORUJYRAhfUAJsG9WRPXkLs0zSPk2299wYOGEQckQCgqDyQ
+2EG4TnUWQK8inRYuPFO2+m8=
+=g2o/
+-----END PGP SIGNATURE-----
 
-			Linus
+--tH81YkO9bF1TqYxP--
