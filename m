@@ -1,159 +1,142 @@
 From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: [PATCH 3/5] Add git svn propget.
-Date: Mon, 15 Oct 2007 17:35:04 +0200
-Message-ID: <1192462506-3783-3-git-send-email-tsuna@lrde.epita.fr>
-References: <1192462506-3783-1-git-send-email-tsuna@lrde.epita.fr>
- <1192462506-3783-2-git-send-email-tsuna@lrde.epita.fr>
+Subject: [PATCHv2 2/5] Implement git svn create-ignore.
+Date: Tue, 16 Oct 2007 16:36:49 +0200
+Message-ID: <1192545412-10929-2-git-send-email-tsuna@lrde.epita.fr>
+References: <1192545412-10929-1-git-send-email-tsuna@lrde.epita.fr>
 Cc: normalperson@yhbt.net, Benoit Sigoure <tsuna@lrde.epita.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 16:38:29 2007
+X-From: git-owner@vger.kernel.org Tue Oct 16 16:38:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhnYy-0006fy-Uh
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:38:29 +0200
+	id 1IhnZ0-0006fy-A9
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 16:38:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932838AbXJPOhh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 10:37:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932758AbXJPOhg
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:37:36 -0400
-Received: from 1.139.39-62.rev.gaoland.net ([62.39.139.1]:56256 "EHLO
+	id S932862AbXJPOhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 10:37:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932758AbXJPOhj
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 10:37:39 -0400
+Received: from 1.139.39-62.rev.gaoland.net ([62.39.139.1]:56270 "EHLO
 	tsunaxbook.lrde.epita.fr" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1759137AbXJPOh2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 10:37:28 -0400
+	by vger.kernel.org with ESMTP id S1759381AbXJPOha (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 10:37:30 -0400
 Received: by tsunaxbook.lrde.epita.fr (Postfix, from userid 501)
-	id 225DCB411D2; Mon, 15 Oct 2007 17:35:07 +0200 (CEST)
+	id D3D71B93467; Tue, 16 Oct 2007 16:36:52 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.4.214.g6f43
-In-Reply-To: <1192462506-3783-2-git-send-email-tsuna@lrde.epita.fr>
+In-Reply-To: <1192545412-10929-1-git-send-email-tsuna@lrde.epita.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61180>
 
-	* git-svn.perl (%cmd): Add the new command `propget'.
-	($cmd_dir_prefix): New global.
-	(&get_svnprops): New helper.
-	(&cmd_propget): New.  Use &get_svnprops.
-	* t/t9101-git-svn-props.sh: Add a test case for propget.
+	* git-svn.perl (%cmd): Add the new command `create-ignore'.
+	(&cmd_create_ignore): New.
+	* t/t9101-git-svn-props.sh: Adjust the test-case for show-ignore and
+	add a test case for create-ignore.
 
 Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
 ---
- git-svn.perl             |   57 ++++++++++++++++++++++++++++++++++++++++++++++
- t/t9101-git-svn-props.sh |   23 ++++++++++++++++++
- 2 files changed, 80 insertions(+), 0 deletions(-)
+ git-svn.perl             |   27 +++++++++++++++++++++++++++
+ t/t9101-git-svn-props.sh |   28 +++++++++++++++++++++++++---
+ 2 files changed, 52 insertions(+), 3 deletions(-)
 
 diff --git a/git-svn.perl b/git-svn.perl
-index 94091ea..e58ff38 100755
+index 95393b6..4d643d7 100755
 --- a/git-svn.perl
 +++ b/git-svn.perl
-@@ -9,6 +9,8 @@ use vars qw/	$AUTHOR $VERSION
- $AUTHOR = 'Eric Wong <normalperson@yhbt.net>';
- $VERSION = '@@GIT_VERSION@@';
- 
-+# From which subdir have we been invoked?
-+my $cmd_dir_prefix = command_oneline(qw/rev-parse --show-prefix/) || '';
- my $git_dir_user_set = 1 if defined $ENV{GIT_DIR};
- $ENV{GIT_DIR} ||= '.git';
- $Git::SVN::default_repo_id = 'svn';
-@@ -127,6 +129,9 @@ my %cmd = (
- 			     'Create a .gitignore per svn:ignore',
- 			     { 'revision|r=i' => \$_revision
- 			     } ],
-+        'propget' => [ \&cmd_propget,
-+		       'Print the value of a property on a file or directory',
-+		       { 'revision|r=i' => \$_revision } ],
+@@ -123,6 +123,10 @@ my %cmd = (
+ 	'set-tree' => [ \&cmd_set_tree,
+ 	                "Set an SVN repository to a git tree-ish",
+ 			{ 'stdin|' => \$_stdin, %cmt_opts, %fc_opts, } ],
++	'create-ignore' => [ \&cmd_create_ignore,
++			     'Create a .gitignore per svn:ignore',
++			     { 'revision|r=i' => \$_revision
++			     } ],
  	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
  			{ 'revision|r=i' => \$_revision
  			} ],
-@@ -526,6 +531,58 @@ sub cmd_create_ignore {
+@@ -499,6 +503,29 @@ sub cmd_show_ignore {
  	});
  }
  
-+# get_svnprops(PATH)
-+# ------------------
-+# Helper for cmd_propget below.
-+sub get_svnprops {
-+	my $path = shift;
++sub cmd_create_ignore {
 +	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
 +	$gs ||= Git::SVN->new;
-+
-+	# prefix THE PATH by the sub-directory from which the user
-+	# invoked us.
-+	$path = $cmd_dir_prefix . $path;
-+	fatal("No such file or directory: $path\n") unless -e $path;
-+	my $is_dir = -d $path ? 1 : 0;
-+	$path = $gs->{path} . '/' . $path;
-+
-+	# canonicalize the path (otherwise libsvn will abort or fail to
-+	# find the file)
-+	# File::Spec->canonpath doesn't collapse x/../y into y (for a
-+	# good reason), so let's do this manually.
-+	$path =~ s#/+#/#g;
-+	$path =~ s#/\.(?:/|$)#/#g;
-+	$path =~ s#/[^/]+/\.\.##g;
-+	$path =~ s#/$##g;
-+
 +	my $r = (defined $_revision ? $_revision : $gs->ra->get_latest_revnum);
-+	my $props;
-+	if ($is_dir)
-+	{
-+		(undef, undef, $props) = $gs->ra->get_dir($path, $r);
-+	}
-+	else
-+	{
-+		(undef, $props) = $gs->ra->get_file($path, $r, undef);
-+	}
-+	return $props;
-+}
-+
-+# cmd_propget (PROP, PATH)
-+# ------------------------
-+# Print the SVN property PROP for PATH.
-+sub cmd_propget {
-+	my ($prop, $path) = @_;
-+	$path = '.' if not defined $path;
-+	usage(1) if not defined $prop;
-+	my $props = get_svnprops($path);
-+	if (not defined $props->{$prop})
-+	{
-+		fatal("`$path' does not have a `$prop' SVN property.\n");
-+	}
-+	print $props->{$prop} . "\n";
++	$gs->prop_walk($gs->{path}, $r, sub {
++		my ($gs, $path, $props) = @_;
++		# $path is of the form /path/to/dir/
++		my $ignore = '.' . $path . '.gitignore';
++		my $s = $props->{'svn:ignore'} or return;
++		open(GITIGNORE, '>', $ignore)
++		  or fatal("Failed to open `$ignore' for writing: $!\n");
++		$s =~ s/[\r\n]+/\n/g;
++		chomp $s;
++		# Prefix all patterns so that the ignore doesn't apply
++		# to sub-directories.
++		$s =~ s#^#/#gm;
++		print GITIGNORE "$s\n";
++		close(GITIGNORE)
++		  or fatal("Failed to close `$ignore': $!\n");
++		command_noisy('add', $ignore);
++	});
 +}
 +
  sub cmd_multi_init {
  	my $url = shift;
  	unless (defined $_trunk || defined $_branches || defined $_tags) {
 diff --git a/t/t9101-git-svn-props.sh b/t/t9101-git-svn-props.sh
-index 796d80e..61c8799 100755
+index 5aac644..796d80e 100755
 --- a/t/t9101-git-svn-props.sh
 +++ b/t/t9101-git-svn-props.sh
-@@ -170,4 +170,27 @@ test_expect_success 'test create-ignore' "
- 	git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
+@@ -126,19 +126,20 @@ cat > show-ignore.expect <<\EOF
+ # /
+ /no-such-file*
+ 
+-# deeply
++# /deeply/
+ /deeply/no-such-file*
+ 
+-# deeply/nested
++# /deeply/nested/
+ /deeply/nested/no-such-file*
+ 
+-# deeply/nested/directory
++# /deeply/nested/directory/
+ /deeply/nested/directory/no-such-file*
+ EOF
+ 
+ test_expect_success 'test show-ignore' "
+ 	cd test_wc &&
+ 	mkdir -p deeply/nested/directory &&
++	touch deeply/nested/directory/.keep &&
+ 	svn add deeply &&
+ 	svn up &&
+ 	svn propset -R svn:ignore 'no-such-file*' .
+@@ -148,4 +149,25 @@ test_expect_success 'test show-ignore' "
+ 	cmp show-ignore.expect show-ignore.got
  	"
  
-+cat >prop.expect <<\EOF
-+no-such-file*
-+
-+EOF
-+cat >prop2.expect <<\EOF
-+8
++cat >create-ignore.expect <<\EOF
++/no-such-file*
 +EOF
 +
-+# This test can be improved: since all the svn:ignore contain the same
-+# pattern, it can pass even though the propget did not execute on the
-+# right directory.
-+test_expect_success 'test propget' "
-+	git-svn propget svn:ignore . | cmp - prop.expect &&
-+	cd deeply &&
-+	git-svn propget svn:ignore . | cmp - ../prop.expect &&
-+	git-svn propget svn:entry:committed-rev nested/directory/.keep \
-+	  | cmp - ../prop2.expect &&
-+	git-svn propget svn:ignore .. | cmp - ../prop.expect &&
-+	git-svn propget svn:ignore nested/ | cmp - ../prop.expect &&
-+	git-svn propget svn:ignore ./nested | cmp - ../prop.expect &&
-+	git-svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
++cat >create-ignore-index.expect <<\EOF
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/nested/.gitignore
++100644 8c52e5dfcd0a8b6b6bcfe6b41b89bcbf493718a5 0	deeply/nested/directory/.gitignore
++EOF
++
++test_expect_success 'test create-ignore' "
++	git-svn fetch && git pull . remotes/git-svn &&
++	git-svn create-ignore &&
++	cmp ./.gitignore create-ignore.expect &&
++	cmp ./deeply/.gitignore create-ignore.expect &&
++	cmp ./deeply/nested/.gitignore create-ignore.expect &&
++	cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
++	git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
 +	"
 +
  test_done
