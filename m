@@ -1,69 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 3/3] git-cvsexportcommit.perl: git-apply no longer needs
- --binary
-Date: Tue, 16 Oct 2007 23:49:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710162348260.25221@racer.site>
-References: <1192522094-4988-1-git-send-email-mfwitten@mit.edu>
- <Pine.LNX.4.64.0710161404220.25221@racer.site> <19B03C18-6BBD-4F67-93DC-37B422445C82@mit.edu>
- <200710162320.14917.robin.rosenberg.lists@dewire.com>
- <561D7B44-9EDE-447B-A751-BE6E3A3AD9CC@mit.edu>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Oct 17 00:49:43 2007
+From: Luke Lu <git@vicaya.com>
+Subject: [PATCH] Speed up project listing for large working trees by limiting find depth
+Date: Tue, 16 Oct 2007 16:02:01 -0700
+Message-ID: <1192575721-13666-1-git-send-email-git@vicaya.com>
+Cc: gitster@pobox.com, Luke Lu <git@vicaya.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 17 01:02:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhvEJ-0007Mx-8G
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 00:49:39 +0200
+	id 1IhvQx-0001Lj-74
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 01:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760555AbXJPWt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 18:49:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760403AbXJPWt2
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 18:49:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46892 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759566AbXJPWt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 18:49:27 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 22:49:25 -0000
-Received: from unknown (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp024) with SMTP; 17 Oct 2007 00:49:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+jWnwgGEyjPpzVgve7Eqpd2UAjbjIIEn2nka+Iw8
-	zl8SI4C1F2qz/3
-X-X-Sender: gene099@racer.site
-In-Reply-To: <561D7B44-9EDE-447B-A751-BE6E3A3AD9CC@mit.edu>
-X-Y-GMX-Trusted: 0
+	id S1755129AbXJPXCc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 19:02:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754240AbXJPXCc
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 19:02:32 -0400
+Received: from alnrmhc16.comcast.net ([206.18.177.56]:64073 "EHLO
+	alnrmhc16.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752674AbXJPXCb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 19:02:31 -0400
+Received: from localhost.localdomain (c-98-207-63-2.hsd1.ca.comcast.net[98.207.63.2])
+          by comcast.net (alnrmhc16) with SMTP
+          id <20071016230230b1600men7de>; Tue, 16 Oct 2007 23:02:30 +0000
+X-Mailer: git-send-email 1.5.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61273>
 
-Hi,
+Forgot -s last time when resubmitting the patch.
 
-On Tue, 16 Oct 2007, Michael Witten wrote:
+Here is a simple gitweb patch to speed up project listing on checked
+out repos with large trees. It was spending minutes in perl (5.8.8
+macports).  Reduced to a fraction of a second after the patch.
 
-> On 16 Oct 2007, at 5:20:14 PM, Robin Rosenberg wrote:
-> 
-> > So all this series does is... making it harder to follow the history?
-> 
-> If you follow the history solely on patches.
-> 
-> 
-> > Ack for removing the --binary, the rest is just noise
-> 
-> I think fixing the tabs is more important than removing --binary.
-> 
-> It's clear the the entropy of tabulation increases over time;
-> the tab patch acts as a buffer to reconstruct a clean signal.
+Signed-off-by: Luke Lu <git@vicaya.com>
+---
+ gitweb/gitweb.perl |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-Git.  The most advanced TCM - Tab Code Manager.  It's not about source, 
-it's about tabs.
-
-;-)
-
-Ciao,
-Dscho
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3064298..a30eef9 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1509,16 +1509,20 @@ sub git_get_projects_list {
+ 		# remove the trailing "/"
+ 		$dir =~ s!/+$!!;
+ 		my $pfxlen = length("$dir");
++		my $pfxdepth = ($dir =~ tr!/!!);
+ 
+ 		File::Find::find({
+ 			follow_fast => 1, # follow symbolic links
+ 			follow_skip => 2, # ignore duplicates
++			no_chdir => 1, # don't chdir into every directory
+ 			dangling_symlinks => 0, # ignore dangling symlinks, silently
+ 			wanted => sub {
+ 				# skip project-list toplevel, if we get it.
+ 				return if (m!^[/.]$!);
+ 				# only directories can be git repositories
+ 				return unless (-d $_);
++				# don't traverse too deep (Find is super slow on os x)
++				return if tr!/!! - $pfxdepth > 2 && ($File::Find::prune = 1);
+ 
+ 				my $subdir = substr($File::Find::name, $pfxlen + 1);
+ 				# we check related file in $projectroot
+-- 
+1.5.3.4
