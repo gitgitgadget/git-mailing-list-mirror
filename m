@@ -1,99 +1,129 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: What's cooking in git/spearce.git (topics)
-Date: Tue, 16 Oct 2007 02:04:56 -0400
-Message-ID: <20071016060456.GC13801@spearce.org>
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: Re: How to Import a bitkeeper repo into git
+Date: Mon, 15 Oct 2007 23:05:41 -0700
+Organization: Bluelane
+Message-ID: <471454B5.7040802@bluelane.com>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <20070709173720.GS29994@genesis.frugalware.org>	 <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>	 <4713FA4A.5090501@bluelane.com>	 <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>	 <471433F3.40606@bluelane.com> <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>
+Reply-To: pete@bluelane.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 16 08:05:50 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	VMiklos <vmiklos@frugalware.org>,
+	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 08:06:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhfYI-0000YK-PH
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 08:05:28 +0200
+	id 1IhfYz-0000cw-C3
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 08:05:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758779AbXJPGFD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 02:05:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755255AbXJPGFB
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 02:05:01 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:59393 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753952AbXJPGFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 02:05:00 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IhfY1-00011T-JC
-	for git@vger.kernel.org; Tue, 16 Oct 2007 02:04:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E4A7920FBAE; Tue, 16 Oct 2007 02:04:56 -0400 (EDT)
-Content-Disposition: inline
-X-master-at: 9de6d079200a50c0a61a5489e74419cb73993184
-X-next-at: 5f967a43962a9a44b0d8ca3c7ca54affe35332e1
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1759184AbXJPGFr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 02:05:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758202AbXJPGFr
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 02:05:47 -0400
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:56846 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755255AbXJPGFq (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 02:05:46 -0400
+Received: from piet2.bluelane.com ([64.95.123.130]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.1830);
+	 Tue, 16 Oct 2007 02:05:45 -0400
+User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
+In-Reply-To: <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>
+X-Enigmail-Version: 0.95.3
+X-OriginalArrivalTime: 16 Oct 2007 06:05:45.0524 (UTC) FILETIME=[97353740:01C80FBA]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61083>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61084>
 
-Here are the topics that have been cooking.  Commits prefixed
-with '-' are only in 'pu' while commits prefixed with '+' are
-in 'next'.  The topics list the commits in reverse chronological
-order.
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-I know there are a number of other topics that I don't have in my
-tree yet (bisect improvements, push refspec matching improvements,
-option parser).  I plan on loading those into 'pu' tomorrow.
-In the meantime we have this in next.
+Marco Costalba wrote:
 
+Hi Marco:
 
-* db/fetch-pack (Thu Oct 11 01:47:55 2007 +0100) 58 commits
- + fetch: if not fetching from default remote, ignore default merge
- + Support 'push --dry-run' for http transport
- + Support 'push --dry-run' for rsync transport
- + Fix 'push --all branch...' error handling
- + Fix compilation when NO_CURL is defined
- + Added a test for fetching remote tags when there is not tags.
- + Fix a crash in ls-remote when refspec expands into nothing
- + Remove duplicate ref matches in fetch
- ... and many more ...
+> On 10/16/07, Pete/Piet Delaney <pete@bluelane.com> wrote:
+>> I just download 'meld', looks interesting, I didn't know about it or
+>> 'kompare'. Linking either one into gitk would be a pleasant graphical
+>> 'bling'.
+>>
+> 
+> In case you are interested a git GUI viewer called qgit can spawn
+> 'Kompare' , 'Meld' or any other diff tool that support 'two files'
+> command line interface:
+> 
+> $my_preferred_diff_tool  file1.txt file2.txt
+> 
+> And they will show what you are looking for. The input files are
+> prepared by qgit that also handles the housekeeping at the end.
 
- The above commits are all new since Junio's last published next.
- About half of them fix known bugs in the builtin-fetch series.
- If you are running next, you want these fixes.
+Great, I installed Qgit version 1.5.3 a while ago, I didn't
+notice these advantages over gitq.
 
- I'm actually really happy with this series, but given the set of
- bugs that the above commits had to fix I think it needs to cook
- more in next before the topic can safely can graduate into master.
-
-* jc/am-quiet (Mon Oct 1 00:27:51 2007 -0700) 2 commits
- + git-am: fix typo in the previous one.
- + git-am: make the output quieter.
-
- I'm also really happy with this change.  If nobody objects I may
- move it over to master later this week.
+Yea, I just noticed, if I pull down External Diff in the files
+window it tosses the diffs to Kompare. Super!
 
 
-* lt/diff-rename (Tue Oct 2 19:28:19 2007 -0700) 1 commit
- + optimize diffcore-delta by sorting hash entries.
+> Another feature you asked, i.e. CTRL + right click to select a
+> revision (different from the parent) to diff against the current one
+> is also already implemented.
 
-* kh/commit (Mon Sep 17 20:06:47 2007 -0400) 4 commits
- + Export rerere() and launch_editor().
- + Introduce entry point add_interactive and add_files_to_cache
- + Enable wt-status to run against non-standard index file.
- + Enable wt-status output to a given FILE pointer.
+It's not quite a intuitive/familiar as with bitkeeper. I suspect I just
+need some practice. I selected a huge list if files that we use to
+filter the release with and double clicked on the file I thought showing
+to focus on that file. The I pulled down External Diff and it took for
+ever; like it's confused.
 
-* js/stash-create (Mon Jul 9 00:51:23 2007 -0700) 2 commits
- + rebase: allow starting from a dirty tree.
- + stash: implement "stash create"
+Often we/I want to see the rev history for a particular file.
+How would you do that with Qgit?
 
-I inherited the above three topics from Junio.  I haven't had a
-chance to really look at these yet myself to understand what their
-status is and how ready they are for master (or not ready as the
-case may be).
+> 
+> And of course the two above features can be integrated: you select two
+> random revisions and then call the external diff viewer to check at
+> the differences in the way you prefer.
+
+Can I see just the revs for a particular file?
+
+> 
+> It is possible to download qgit from
+> 
+> http://sourceforge.net/project/showfiles.php?group_id=139897
+
+I'll get the latest and greatest. Thinks. Often the problem is
+having the current version of Qt3. My workstation is Mandrake
+1005 Limited Edition (X11 Xinerama works on this release).
+Looks like I have Qt3 on my workstation. Would it be worthwhile
+to install Qt4 from src and try to use qgit-2.0?
+
+
+> 
+> Two versions:
+> 
+> qgit-1.5.7 is Qt3 based
+> 
+> qgit-2.0 is Qt4 based (works also under Windows)
+
+What new features are in 2.0 over 1.5.7?
+
+Thanks Marco,
+
+- -piet
+
+> 
+> 
+> 
+> regards
+> Marco
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHFFS0JICwm/rv3hoRAlFIAJsEbp22Fs1fGVlt+RIXOOjJ3ZiqIQCeIQ1/
+nG/JJUfuNNyoIL2MUJppId4=
+=JQWE
+-----END PGP SIGNATURE-----
