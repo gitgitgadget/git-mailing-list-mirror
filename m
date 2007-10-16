@@ -1,59 +1,61 @@
-From: Adam Piatyszek <ediap@users.sourceforge.net>
-Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 10:30:47 +0200
-Message-ID: <471476B7.5050105@users.sourceforge.net>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Is there any plan to support partial checkout or submoudule improvement?
+Date: Tue, 16 Oct 2007 10:42:39 +0200
+Message-ID: <8c5c35580710160142x1f699208gfc226072a27e997a@mail.gmail.com>
+References: <8c5c35580710160108s4faeaa61k7585d01703c0c8fc@mail.gmail.com>
+	 <20071016082720.E5EDA7E6F@mail.kooxoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Oct 16 10:42:05 2007
+To: franky <yinping@kooxoo.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 10:44:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihhzu-0007Be-3n
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 10:41:54 +0200
+	id 1Ihi12-0007QR-0U
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 10:43:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115AbXJPIlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 04:41:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932431AbXJPIlJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 04:41:09 -0400
-Received: from pisces.et.put.poznan.pl ([150.254.29.122]:44253 "EHLO
-	pisces.et.put.poznan.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932115AbXJPIkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 04:40:09 -0400
-Received: from hydrus.et.put.poznan.pl (hydrus.et.put.poznan.pl [150.254.11.145])
-	by pisces.et.put.poznan.pl (8.13.8/8.13.8) with ESMTP id l9G8Z3EC022700;
-	Tue, 16 Oct 2007 10:35:16 +0200 (CEST)
-	(envelope-from ediap@users.sourceforge.net)
-Received: from [150.254.11.65] (pc1065.et.put.poznan.pl [150.254.11.65])
-	by hydrus.et.put.poznan.pl (8.11.7p1+Sun/8.11.6) with ESMTP id l9G8USS25529;
-	Tue, 16 Oct 2007 10:30:28 +0200 (MET DST)
-User-Agent: Thunderbird 2.0.0.6 (X11/20070917)
-In-Reply-To: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-X-Enigmail-Version: 0.95.3
-OpenPGP: id=1F115CCB
-X-PMX-Version: 5.3.3.310218, Antispam-Engine: 2.5.2.313940, Antispam-Data: 2007.10.16.11002
-X-PerlMx-Spam: Gauge=IIIIIII, Probability=7%, Report='BODY_SIZE_400_499 0, __CT 0, __CTE 0, __CT_TEXT_PLAIN 0, __HAS_MSGID 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0, __SANE_MSGID 0, __STOCK_PHRASE_24 0, __USER_AGENT 0, __cbl.abuseat.org_TIMEOUT , __dnsbl.njabl.org_TIMEOUT , __pbl.spamhaus.org_TIMEOUT , __sbl.spamhaus.org_TIMEOUT '
+	id S932431AbXJPImv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 04:42:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757875AbXJPImv
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 04:42:51 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:2598 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754415AbXJPImu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 04:42:50 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2300025wah
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 01:42:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4CAShOS9696BBwHvuZ8GFeL6bheOlt3oYKOUoEfCfIw=;
+        b=O6I+0APT5GmoyPFhsIIvggoWCsQJcEp8JcEZxSAskIKcR9m9uMUjYB5lrtU1SEOG9VeTDplD7wSeaxdhUNER12invJq2sR9opOBzn1nel8FFFAuh3EbUjq9mOWskHKRe5t+lVI/wWTflJxUvyPBuG2U30HNN6Xf84WncpvHhtD0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=EnM2ocbrczfqh86vABzWLUgVtjQpajMnWCyNAkxbo84kQA/nANJ7qhPAN4UXna37U1QufEs0Vbjxt1POyFFJLxoAy4a1D3j0i1qBR0foTl3ORmPQLZzKfd0hSb7q1odpSg0yiAjHxvAeGvRfWg1jqSmPrTN1MwPq0I6qLdlgV1Q=
+Received: by 10.114.78.1 with SMTP id a1mr8134767wab.1192524169819;
+        Tue, 16 Oct 2007 01:42:49 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Tue, 16 Oct 2007 01:42:39 -0700 (PDT)
+In-Reply-To: <20071016082720.E5EDA7E6F@mail.kooxoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61118>
 
-* Michael Witten [16 X 2007 08:45]:
-> What are the rules about tabs and spaces in source code?
+On 10/16/07, franky <yinping@kooxoo.com> wrote:
+> I want a single "git-pull" to deploy a new version and a
+> single "git-reset" to back to versions before
 
-Following this topic, I am kindly asking for some tips on configuring
-Emacs and Vim to follow the rules used for Git and kernel code
-indentation/alignment.
-Thanks in advance!
+Well, there is always
 
-BR,
-/Adam
+$ git archive --remote=<repo> <revspec> <path> | tar -x
 
+This is effectively a partial checkout of an arbitrary revision from a
+remote repo.
 
--- 
-.:.  Adam Piatyszek - "ediap"       .:.  JID: ediap(at)jabber.org .:.
-.:.  ediap(at)users.sourceforge.net .:.  PGP key ID: 0x1F115CCB   .:.
+--
+larsh
