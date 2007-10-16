@@ -1,84 +1,68 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 16 Oct 2007 19:40:40 -0400
-Message-ID: <20071016234040.GF13801@spearce.org>
-References: <20071016060456.GC13801@spearce.org> <Pine.LNX.4.64.0710161209480.25221@racer.site>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: Alternative git logo and favicon
+Date: Wed, 17 Oct 2007 01:46:42 +0200
+Message-ID: <20071016234642.GD18279@machine.or.cz>
+References: <e8965c600706290054w43f896f3jaba176974938752d@mail.gmail.com> <f62h37$1jn$1@sea.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 01:40:57 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 01:46:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihw1v-0007eM-CG
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 01:40:55 +0200
+	id 1Ihw7l-0000GT-Qa
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 01:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932681AbXJPXkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 19:40:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760403AbXJPXkp
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 19:40:45 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46185 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754470AbXJPXko (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 19:40:44 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ihw1X-0008SM-Na; Tue, 16 Oct 2007 19:40:31 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 9E9C620FBAE; Tue, 16 Oct 2007 19:40:40 -0400 (EDT)
+	id S1761469AbXJPXqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 19:46:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761052AbXJPXqr
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 19:46:47 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:57572 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760687AbXJPXqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 19:46:47 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 050F15A45C; Wed, 17 Oct 2007 01:46:43 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710161209480.25221@racer.site>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <f62h37$1jn$1@sea.gmane.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61281>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> first let me thank you for being the interim maintainer.  I know it is 
-> much work, and I frankly do not have the time, or nerve, to do it.
-
-Heh.  In the past 24 hours I've really learned how much I appreciate
-the work that Junio does, and how infrequently I make it known that
-I'm happy he's doing it for us.  Nothing like understanding what
-the guy goes through then to walk a day in his shoes.  :-)
-
-> Out of 
-> curiousity: did you use the scripts in "todo" to send these emails?
-
-Yes.  Took me a few minutes to figure out which scripts did
-what magic.  Junio likes two character script names, because uh,
-they are short to type.  Then I hand modified the output to say
-git/spearce.git and appear from me, not Junio.  But otherwise they
-are the same scripts available from his Meta repository (aka the
-todo branch).
- 
-> On Tue, 16 Oct 2007, Shawn O. Pearce wrote:
+On Fri, Jun 29, 2007 at 10:49:41AM +0200, Jakub Narebski wrote:
+> [Cc: git@vger.kernel.org]
 > 
-> > * lt/diff-rename (Tue Oct 2 19:28:19 2007 -0700) 1 commit
+> Henrik Nyh wrote:
 > 
-> AFAIR this was ready to go to master, with a 5-10% speedup or so, just 
-> needing a bit of testing.  Which it should have gotten by now.
+> > I came up with an alternative logo/favicon to use with my gitweb:
+> > http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon.
+> > 
+> > Thought I'd sent it to the list in case someone else likes them.
+> 
+> Added to http://git.or.cz/gitwiki/GitRelatedLogos
+> 
+> But for me logo is too big and wrong proportions for gitweb (although quite
+> nice for git pages, I guess), and as favicon it is a bit unreadable.
 
-OK.  I'll look at it tomorrow and consider moving it.  I recall the
-context of this discussion now that you mention it, and I've been
-running this in production use since Junio committed it to next
-so I'm certainly not seeing any downsides to having this patch in
-the tree.
- 
-> > * kh/commit (Mon Sep 17 20:06:47 2007 -0400) 4 commits
-> > * js/stash-create (Mon Jul 9 00:51:23 2007 -0700) 2 commits
+Before anyone asks, I'm not against changing the logo on Git Homepage,
+but before that there should be a clear consensus in the community that
+$logo is better than what we currently have. Also, I think we should
+strive for consistency here. I think it might be actually good to have
+different logo for Git itself and another for Gitweb, but they should be
+graphically similar.
 
-Thanks for the summary on these two topics.  They are going to stay
-parked in next for a while then.  :-)
+I quite like Henrik's logo, but I have to admit that I got rather used
+to the old one. ;-) Also, one major problem I have with it is that it
+has too little contrast, the colors used seem too light to me and my eye
+can't find any "support" inside the logo. This is even much worse with
+the favicon where the logo isn't clearly visible on the white background
+at all.
 
 -- 
-Shawn.
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
