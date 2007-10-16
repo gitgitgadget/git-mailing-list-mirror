@@ -1,61 +1,74 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: [PATCH] Git homepage: remove all the references to Cogito
-Date: Tue, 16 Oct 2007 04:19:33 +0200
-Message-ID: <20071016021933.GH12156@machine.or.cz>
-References: <20071015233800.6306e414@paolo-desktop>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Mon, 15 Oct 2007 22:48:54 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710152245530.19446@xanadu.home>
+References: <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com>
+ <Pine.LNX.4.64.0710130130380.25221@racer.site> <853awepyz6.fsf@lola.goethe.zz>
+ <20071013202713.GA2467@fieldses.org>
+ <Pine.LNX.4.64.0710140135020.25221@racer.site>
+ <alpine.LFD.0.999.0710131810550.6887@woody.linux-foundation.org>
+ <20071014014445.GN27899@spearce.org>
+ <3f4fd2640710140320h5c1e1f7gf9f43a626aaa6897@mail.gmail.com>
+ <47125BF7.2070503@midwinter.com>
+ <alpine.LFD.0.9999.0710141542020.19446@xanadu.home>
+ <20071015232017.GS27899@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 04:47:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Reece Dunn <msclrhd@googlemail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 04:49:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhcSl-0007r8-HN
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 04:47:19 +0200
+	id 1IhcVE-0008BF-PX
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 04:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757559AbXJPCqI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Oct 2007 22:46:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756847AbXJPCqH
-	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 22:46:07 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:33169 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756650AbXJPCqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Oct 2007 22:46:06 -0400
-X-Greylist: delayed 1588 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Oct 2007 22:46:06 EDT
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 320755A4D3; Tue, 16 Oct 2007 04:19:33 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071015233800.6306e414@paolo-desktop>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1757828AbXJPCtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Oct 2007 22:49:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757676AbXJPCtm
+	(ORCPT <rfc822;git-outgoing>); Mon, 15 Oct 2007 22:49:42 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:63359 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756829AbXJPCtm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Oct 2007 22:49:42 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JPZ00I5TH5YWD00@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 15 Oct 2007 22:49:10 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071015232017.GS27899@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61065>
 
-On Mon, Oct 15, 2007 at 11:38:00PM +0200, Paolo Ciarrocchi wrote:
-> @@ -286,15 +285,6 @@ a gitweb interface, at <a href="http://repo.or.cz/">http://repo.or.cz/</a>.</p>
->  
->  <dl>
->  
-> -<dt id="cogito">Cogito</dt>
-> -<dd>
-> -<a href="http://git.or.cz/cogito/">Cogito</a>
-> -is a popular version control system on top of Git.
-> -It aims at seamless user interface and ease of use, providing
-> -generally smoother user experience than the "raw" Git interface
-> -and indeed also many other version control systems. However, it
-> -also lacks many advanced capabilities of Git and is currently
-> -being slowly phased out.</dd>
->  
->  <dt id="stgit">StGIT</dt>
->  <dd><a href="http://www.procode.org/stgit/">Stacked Git</a> provides
+On Mon, 15 Oct 2007, Shawn O. Pearce wrote:
 
-I'm not sure this is good idea, Cogito is still quite frequently used
-and it should be documented that it exists.
+> Nicolas Pitre <nico@cam.org> wrote:
+> > BTW I have patches here reworking the progress code for a more compact 
+> > display which should mitigate this issue quite a bit.
+> 
+> git-gui is scraping the output of the current progress meter using
+> a regex and then building a graphical progress bar from that output.
 
--- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+Erk!
+
+> Any change in how git produces the progress bar should still keep
+> it in a form that git-gui can regex match and scrape, preferably
+> without needing to know what version of git it is pulling that
+> output from.  For example just teach git-gui to try two different
+> regexps, new format and if that doesn't match then try the old
+> (aka current) format.
+
+I think my new format might be easier for you as the "title" and the 
+actual percentage and count is now on the same line.
+
+
+Nicolas
