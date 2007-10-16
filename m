@@ -1,73 +1,86 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 12:13:49 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0710161209190.8571@ds9.cixit.se>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: What's cooking in git/spearce.git (topics)
+Date: Tue, 16 Oct 2007 12:16:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710161209480.25221@racer.site>
+References: <20071016060456.GC13801@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 13:14:35 2007
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 13:16:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhkN9-0006mq-8p
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:14:03 +0200
+	id 1IhkPm-0007DY-7I
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655AbXJPLNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 07:13:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbXJPLNw
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:13:52 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:53188 "EHLO ds9.cixit.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755098AbXJPLNv (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 07:13:51 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9GBDnnQ027400
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Tue, 16 Oct 2007 13:13:49 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9GBDna3027395;
-	Tue, 16 Oct 2007 13:13:49 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20071014221446.GC2776@steel.home>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 16 Oct 2007 13:13:49 +0200 (CEST)
+	id S1758589AbXJPLQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 07:16:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758446AbXJPLQg
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:16:36 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59853 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758132AbXJPLQf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 07:16:35 -0400
+Received: (qmail invoked by alias); 16 Oct 2007 11:16:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp044) with SMTP; 16 Oct 2007 13:16:34 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+Y+FFLGciY/NaGj5FtMFNkVcrH4Nd01fKX8A7c2u
+	22A28plMdYlrgr
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071016060456.GC13801@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61146>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61147>
 
-> - it is the only OS in the world with multi-root (/a/b/c and /a/b/c
->   can be not the same, depending on what current "drive" is) and
->   multi-cwd, which hasn't had formed itself into a problem yet, but
->   surely will
+Hi,
 
-It's not the only OS with drive letters (although I don't see Git
-coming to my Symbian OS phone any time soon), but there is only one
-root. The problem is that it isn't addressable in the file system, and
-that the concept of what is the root is different depending on what you
-ask (either it's above the drive letters, or "My Computer").
+first let me thank you for being the interim maintainer.  I know it is 
+much work, and I frankly do not have the time, or nerve, to do it.  Out of 
+curiousity: did you use the scripts in "todo" to send these emails?
 
-You can create a search path rooted in "My Computer" if you want (using
-shell APIs), but you probably can't get a readable text representation
-of it.
+On Tue, 16 Oct 2007, Shawn O. Pearce wrote:
 
-> - it has only one argument (limited in size) passed to started
->   programs, which means that there is no possible way to safely pass
->   file and text arguments on command line (more than one, that is)
+> * lt/diff-rename (Tue Oct 2 19:28:19 2007 -0700) 1 commit
+>  + optimize diffcore-delta by sorting hash entries.
 
-Well, there are many other ways of passing arguments than on the
-command line, but they are probably difficult to access from console
-applications (things like DDE or whatever the current implementation is
-called).
+AFAIR this was ready to go to master, with a 5-10% speedup or so, just 
+needing a bit of testing.  Which it should have gotten by now.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+> * kh/commit (Mon Sep 17 20:06:47 2007 -0400) 4 commits
+>  + Export rerere() and launch_editor().
+>  + Introduce entry point add_interactive and add_files_to_cache
+>  + Enable wt-status to run against non-standard index file.
+>  + Enable wt-status output to a given FILE pointer.
+
+This is the beginning of the builtin-commit.  The option parser has to go 
+in before that (it was split out from the builtin-commit series), and the 
+(minimal) adjustments to builtin-commit.c for the now-changed option 
+parser have to be done.
+
+So I think this topic should stay in master until builtin-commit is there, 
+too.
+
+> * js/stash-create (Mon Jul 9 00:51:23 2007 -0700) 2 commits
+>  + rebase: allow starting from a dirty tree.
+>  + stash: implement "stash create"
+
+This needs more work in rebase-i, and Junio indicated that he's not 
+completely happy with it.
+
+It would serve to be able to rebase in a dirty tree, by first stashing 
+away the changes, and then applying them on top of the rebased branch.
+
+I think that this would avoid many "Huh?" effects, but it should try to 
+"git stash apply --index" first, falling back to "git stash apply".
+
+Something like that would be very nice for git-pull, too, I guess.
+
+However, I have not thought through all implications.
+
+Ciao,
+Dscho
