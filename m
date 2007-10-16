@@ -1,71 +1,59 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Petr Baudis <pasky@suse.cz>
 Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 16:05:34 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> 
- <471476B7.5050105@users.sourceforge.net>  <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
-  <47148F72.1090602@users.sourceforge.net>  <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
-  <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
-  <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena>
+Date: Wed, 17 Oct 2007 01:09:53 +0200
+Message-ID: <20071016230952.GA18099@machine.or.cz>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <20071016070421.GE13801@spearce.org> <11F85069-1013-4685-9D56-C53F0F8231BF@MIT.EDU> <4714F2CA.5000509@op5.se> <20071016174026.GA506@uranus.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tom Tobin <korpios@korpios.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 01:06:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>, Michael Witten <mfwitten@MIT.EDU>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 01:10:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhvTz-0001ii-KI
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 01:05:52 +0200
+	id 1IhvY5-0002dm-Lj
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 01:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935788AbXJPXFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 19:05:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755668AbXJPXFj
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 19:05:39 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:48703 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752789AbXJPXFh (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 19:05:37 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GN5ZxN003064
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 16 Oct 2007 16:05:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9GN5YMh022417;
-	Tue, 16 Oct 2007 16:05:34 -0700
-In-Reply-To: <1192565900.6430.16.camel@athena>
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753838AbXJPXJz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 19:09:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752833AbXJPXJz
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 19:09:55 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:42644 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752560AbXJPXJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 19:09:54 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id 132EB5A451; Wed, 17 Oct 2007 01:09:53 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20071016174026.GA506@uranus.ravnborg.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61275>
 
-
-
-On Tue, 16 Oct 2007, Tom Tobin wrote:
+On Tue, Oct 16, 2007 at 07:40:26PM +0200, Sam Ravnborg wrote:
+> Tabs should be used for indent and not general alignment.
 > 
-> But you then dismiss out of hand the option of using all spaces
+> Consider:
+> <tab>if (some long condition that
+> <tab>....&& spans two lines) {
+> <tab><tab>my_private_printf("bla bla bla"
+> <tab><tab>.................."more bla bla\n");
+> <tab><tab>}
+> 
+> This will look good and align "more bla bla\n" as
+> intended no matter your tab setting.
+> But replacing the 8 spaces with a tab will
+> cause it to look bad.
 
-I do indeed. I don't think it's sensible. And I did think I already 
-answered that issue by talking about how most editors don't even support 
-it or show the difference between tabs and spaces.
+I'd so much love to have this and sometimes do this even manually, but
+does anyone have an idea how to make vim do this for me? I never got
+around to investigate this in depth or possibly make a patch...
 
-For example, the editor I use - microemacs - supports tabs just fine. It 
-does auto-indentation etc. But it does it with hard-tabs by default, so 
-now you have to have some editor-specific setup for that particular 
-project if you ever want to do anything else.
-
-And that's really what it boils down to. Everybody support 8-character 
-hardtabs (and usually by default). They may support other things *too*, 
-but any time you move away from that standard behaviour, you'll most 
-likely find something that doesn't support the alternatives.
-
-So yes, the answer really is: "git uses 8-character hard-tabs, live with 
-it". 
-
-		Linus
+-- 
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
