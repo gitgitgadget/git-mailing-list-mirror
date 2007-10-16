@@ -1,86 +1,67 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: cogito and remote#branch, was Re: [PATCH] Git homepage: remove all
- the references to Cogito
-Date: Tue, 16 Oct 2007 11:49:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161139530.25221@racer.site>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Is there any plan to support partial checkout or submoudule improvement?
+Date: Tue, 16 Oct 2007 12:50:34 +0200
+Message-ID: <8c5c35580710160350h53a7b5c4k374067372d4aac1d@mail.gmail.com>
+References: <8c5c35580710160142x1f699208gfc226072a27e997a@mail.gmail.com>
+	 <20071016095622.CE14F7E6F@mail.kooxoo.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
-To: Petr Baudis <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Tue Oct 16 12:50:34 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: franky <yinping@kooxoo.com>
+X-From: git-owner@vger.kernel.org Tue Oct 16 12:50:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihk0C-0002uO-5u
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 12:50:20 +0200
+	id 1Ihk0c-0002yP-DJ
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 12:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757601AbXJPKuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 06:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757355AbXJPKuI
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 06:50:08 -0400
-Received: from mail.gmx.net ([213.165.64.20]:46331 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757313AbXJPKuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 06:50:06 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 10:50:05 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp034) with SMTP; 16 Oct 2007 12:50:05 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18k2AQNoHgkcCq8RNvKB2rAv7tSciCip9sPx0vPed
-	pbVDk/OviDcroj
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071016021933.GH12156@machine.or.cz>
-X-Y-GMX-Trusted: 0
+	id S1757788AbXJPKug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 06:50:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757621AbXJPKug
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 06:50:36 -0400
+Received: from wa-out-1112.google.com ([209.85.146.182]:60720 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757403AbXJPKuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 06:50:35 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so2335333wah
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 03:50:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=MdaiDL5Fj5pxywr30RjkK5MmJT/Diu7XVNo2HNA3q5c=;
+        b=HnsnOOPkYcvZ7zqe5baJLIDbnNBV3DJa2yStjo/VDstQnDxIAs10gBQ8M1oL5XmLYq0z6Ejw+6GFSFaeEU1xywdpLGsVNOblJWg0dXkuTD6MHvBlbEv10ukWRJPh1grbTePRlh/dYHG6TKBIEAAlUXDRVvKN6i16SL9upp9cKl0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=muFGIhRSvagcAYowMM5tzSUbtD37jiBQ2w6ydnghxJG+yW+mdBjcOF966rKoG4ubwYvd4ExRgN3J8s9x7yfU+0XbflkSPxeqS6Un9SJUrDhDyT3IcYoB2V29OBqmPdBBzrRZfQN7P3fHJ+dVoNwzcynjDaQsopQSdMOvLEl/8jE=
+Received: by 10.114.157.1 with SMTP id f1mr8294256wae.1192531834307;
+        Tue, 16 Oct 2007 03:50:34 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Tue, 16 Oct 2007 03:50:34 -0700 (PDT)
+In-Reply-To: <20071016095622.CE14F7E6F@mail.kooxoo.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61142>
 
-Hi,
+On 10/16/07, franky <yinping@kooxoo.com> wrote:
+> lars said:
+> > $ git archive --remote=<repo> <revspec> <path> | tar -x
+>
+> I can't know deployment version easily
 
-On Tue, 16 Oct 2007, Petr Baudis wrote:
+The <revspec> can be a tag. So you can easily create a wrapper script
+to allow such things as
 
-> On Mon, Oct 15, 2007 at 11:38:00PM +0200, Paolo Ciarrocchi wrote:
-> > @@ -286,15 +285,6 @@ a gitweb interface, at <a href="http://repo.or.cz/">http://repo.or.cz/</a>.</p>
-> >  
-> >  <dl>
-> >  
-> > -<dt id="cogito">Cogito</dt>
-> > -<dd>
-> > -<a href="http://git.or.cz/cogito/">Cogito</a>
-> > -is a popular version control system on top of Git.
-> > -It aims at seamless user interface and ease of use, providing
-> > -generally smoother user experience than the "raw" Git interface
-> > -and indeed also many other version control systems. However, it
-> > -also lacks many advanced capabilities of Git and is currently
-> > -being slowly phased out.</dd>
-> >  
-> >  <dt id="stgit">StGIT</dt>
-> >  <dd><a href="http://www.procode.org/stgit/">Stacked Git</a> provides
-> 
-> I'm not sure this is good idea, Cogito is still quite frequently used
-> and it should be documented that it exists.
+$ ./deploy.sh v1.2.3
+$ ./deploy.sh HEAD
+$ ./deploy.sh master
+$ ./deploy.sh <sha1>
 
-I agree.  But maybe it could be marked as unmaintained?  Maybe someone 
-steps up to maintain it.  Or, even better, comes up with a list of "this 
-is what I like do regularly with cogito, but there's no easy way with core 
-git" issues.
+(note: for this to work with the git:// protocol, git-daemon needs
+--enable=upload-archive)
 
-In related news, I recently thought about the url#branch issue.
-
-There were three arguments against it AFAIR: "#" is a comment marker, and 
-this syntax is not extensible to more than one branch names.  And that the 
-branch name is not really a part of the URL.
-
-Turns out that I am not so sure about the last two issues.
-
-It is easily extensible to more than one branch by remote#branch1#branch2, 
-and in a very real sense, this is a resource locator.
-
-And we could replace the "#" by every character that is illegal in ref 
-names as well as URLs.  I propose SPC.  ('#' is allowed in refnames.)
-
-Ciao,
-Dscho
+-- 
+larsh
