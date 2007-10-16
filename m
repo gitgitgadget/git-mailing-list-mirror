@@ -1,58 +1,95 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 04/25] Rework make_usage to print the usage message
-	immediately
-Date: Tue, 16 Oct 2007 19:56:50 +0200
-Message-ID: <20071016175650.GA9992@steel.home>
-References: <1192522616-16274-1-git-send-email-madcoder@debian.org> <1192523998-19474-1-git-send-email-madcoder@debian.org> <1192523998-19474-2-git-send-email-madcoder@debian.org> <1192523998-19474-3-git-send-email-madcoder@debian.org> <1192523998-19474-4-git-send-email-madcoder@debian.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Christopher Faylor <cgf-use-the-mailinglist-please@gnu.org>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 14:06:32 -0400
+Message-ID: <20071016180632.GA24953@ednor.casa.cgf.cx>
+References: <20071016155608.GA10603@old.davidb.org>
+	<03f401c81010$d8833de0$2e08a8c0@CAM.ARTIMI.COM>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 19:57:12 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+To: 'Andreas Ericsson' <ae@op5.se>, barkalow@iabervon.org,
+	raa.lkml@gmail.com, make-w32@gnu.org, git@vger.kernel.org,
+	'Eli Zaretskii' <eliz@gnu.org>, Dave Korn <dave.korn@artimi.com>,
+	Joh
+X-From: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org Tue Oct 16 20:07:22 2007
+Return-path: <make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org>
+Envelope-to: gnu-make-w32@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhqfB-0003O6-Sf
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 19:57:06 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760273AbXJPR44 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 13:56:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759297AbXJPR44
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 13:56:56 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:27482 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759607AbXJPR4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 13:56:55 -0400
-Received: from tigra.home (Fca67.f.strato-dslnet.de [195.4.202.103])
-	by post.webmailer.de (mrclete mo3) (RZmta 13.6)
-	with ESMTP id g036bej9GDuNVv ; Tue, 16 Oct 2007 19:56:51 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A1B5F277AE;
-	Tue, 16 Oct 2007 19:56:51 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2584D56D22; Tue, 16 Oct 2007 19:56:51 +0200 (CEST)
+	id 1Ihqoa-0005ot-JD
+	for gnu-make-w32@m.gmane.org; Tue, 16 Oct 2007 20:06:48 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1IhqoT-00034L-MI
+	for gnu-make-w32@m.gmane.org; Tue, 16 Oct 2007 14:06:41 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1IhqoP-000342-68
+	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:37 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1IhqoN-00033J-OC
+	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:36 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1IhqoN-00033F-L1
+	for make-w32@gnu.org; Tue, 16 Oct 2007 14:06:35 -0400
+Received: from pool-70-20-17-24.bstnma.fios.verizon.net ([70.20.17.24]
+	helo=cgf.cx) by monty-python.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <cgf@cgf.cx>)
+	id 1IhqoL-0006C6-A2; Tue, 16 Oct 2007 14:06:33 -0400
+Received: from ednor.cgf.cx (ednor.casa.cgf.cx [192.168.187.5])
+	by cgf.cx (Postfix) with ESMTP id DF6A713C305;
+	Tue, 16 Oct 2007 14:06:32 -0400 (EDT)
+Received: by ednor.cgf.cx (Postfix, from userid 201)
+	id DBEBB2B353; Tue, 16 Oct 2007 14:06:32 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1192523998-19474-4-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaGCTv2MPo=
-X-RZG-CLASS-ID: mo07
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61233>
+In-Reply-To: <03f401c81010$d8833de0$2e08a8c0@CAM.ARTIMI.COM>
+User-Agent: Mutt/1.5.16 (2007-06-09)
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6 (newer, 1)
+X-BeenThere: make-w32@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Discussion of Windows-specific issues with GNU make <make-w32.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/make-w32>
+List-Post: <mailto:make-w32@gnu.org>
+List-Help: <mailto:make-w32-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/make-w32>,
+	<mailto:make-w32-request@gnu.org?subject=subscribe>
+Sender: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Errors-To: make-w32-bounces+gnu-make-w32=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61234>
 
-Pierre Habouzit, Tue, Oct 16, 2007 10:39:37 +0200:
-> From: Alex Riesen <raa.lkml@gmail.com>
-> 
-> Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> ---
->  parse-options.c |   48 ++++++++++++++++++++++--------------------------
->  1 files changed, 22 insertions(+), 26 deletions(-)
+On Tue, Oct 16, 2007 at 05:23:11PM +0100, Dave Korn wrote:
+>On 16 October 2007 16:56, David Brown wrote:
+>
+>> On Tue, Oct 16, 2007 at 02:25:21AM -0400, Eli Zaretskii wrote:
+>> 
+>>> On the other hand, what packages have 100K files?  If there's only one
+>>> -- the Linux kernel -- then I think this kind of performance is for
+>>> all practical purposes unimportant on Windows, because while it is
+>>> reasonable to assume that someone would like to use git on Windows,
+>>> assuming that someone will develop the Linux kernel on Windows is --
+>>> how should I put it -- _really_ far-fetched ;-)
+>> 
+>> Oh, I wish others could think this clearly.  Quoting a serious line off of
+>> a task list at an unnamed company:
+>> 
+>>    - Make Linux kernel compile under windows.
+>> 
+>> I don't think it will move past just being a wish list item, but there seem
+>> to be people that think it should be done.
+>> 
+>> Admittedly, they don't want developers doing it on windows, but want to
+>> integrate kernel building into a windows-heavy build and release process.
+>
+>  Do that kind of thing here all the time, hence my previous post.  Apart from
+>the netfilter stuff with the filenames-that-match-in-all-but-case, no real
+>problems, took me a couple of hours one afternoon.
 
-Got it three times: you put git@kernel.org into To: and Cc:
+Ditto.
 
-Why stderr, BTW? For instance, the output from "git help" is on
-stdout. To be fair, I don't know why it is stdout there either.
+Coincidentially enough this is the reason I wrote managed mode for cygwin's
+mount.
+
+But, we're pretty far off-topic aren't we?
+
+cgf
