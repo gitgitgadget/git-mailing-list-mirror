@@ -1,63 +1,72 @@
-From: Eli Zaretskii <eliz@gnu.org>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 11:43:03 -0400
-Message-ID: <E1IhoZT-0005cj-6w@fencepost.gnu.org>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
- <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
- <Pine.LNX.4.64.0710160032020.7638@iabervon.org> <E1IhgT2-0000bg-O6@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161335260.25221@racer.site> <E1IhmHM-0002hB-HR@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161422110.25221@racer.site> <E1Ihnvq-0002Xr-F9@fencepost.gnu.org> <Pine.LNX.4.64.0710161617490.25221@racer.site>
-Reply-To: Eli Zaretskii <eliz@gnu.org>
-Cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se,
-	tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 16 17:43:21 2007
+From: "VAUCHER Laurent" <VAUCHER@fermat.eu>
+Subject: RE: Problem with git-svnimport
+Date: Tue, 16 Oct 2007 17:48:57 +0200
+Message-ID: <55DDB08CC9CD2941A70E8D626789A2C906A4031C@ec8l7ljvo9h5dde.hosting.exch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 17:47:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhoZi-0006is-FJ
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:43:18 +0200
+	id 1IhodC-0007gn-GU
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:46:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933107AbXJPPnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 11:43:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932987AbXJPPnH
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:43:07 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:33972 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933033AbXJPPnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 11:43:05 -0400
-Received: from eliz by fencepost.gnu.org with local (Exim 4.60)
-	(envelope-from <eliz@gnu.org>)
-	id 1IhoZT-0005cj-6w; Tue, 16 Oct 2007 11:43:03 -0400
-In-reply-to: <Pine.LNX.4.64.0710161617490.25221@racer.site> (message from
-	Johannes Schindelin on Tue, 16 Oct 2007 16:18:10 +0100 (BST))
+	id S932832AbXJPPqg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Oct 2007 11:46:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933428AbXJPPqg
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:46:36 -0400
+Received: from mail04.net-streams.fr ([213.41.74.9]:1799 "EHLO
+	mail04.net-streams.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933409AbXJPPqf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 11:46:35 -0400
+Received: from ec8l7ljvo9h5dde.hosting.exch [10.16.3.20] by mail04.net-streams.fr with ESMTP
+  (SMTPD-9.10) id AB2C0704; Tue, 16 Oct 2007 17:39:24 +0200
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Problem with git-svnimport
+Thread-Index: AcgP8ADfejCCl6nlQY+ySpGvCMx65gAG24Xw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61197>
 
-> Date: Tue, 16 Oct 2007 16:18:10 +0100 (BST)
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr, 
->     git@vger.kernel.org
-> 
-> > That's a ``feature'': Explorer is the parent of all the desktop
-> > display.  Kinda like the login shell on Unix: if you kill it, there
-> > goes your whole session.  Except that on Windows, the OS pays
-> > attention and restarts Explorer right away to get you back in
-> > business.  (In first versions of Windows, there was no restarting of
-> > Explorer, so if you killed it, you needed to reboot :-()
-> 
-> I kinda knew that.  But what's now with your recommendation to never run 
-> Explorer?
+In fact, I think the problem appears not with undescore characters but =
+spaces in tag and branche names.
 
-I meant not to open "My Computer" and use the GUI for browsing the
-directories.  If you meant that the touching of files is done even if
-you don't open the GUI, then just ignore my advice: Explorer cannot be
-killed.  I'm surprised that it touches files and directories,
-though...
+Do you think there's a way around this (other than manually renaming ta=
+gs and branches in the SVN repository)?
+
+Laurent.
+
+-----Message d'origine-----
+De : git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] De la=
+ part de VAUCHER Laurent
+Envoy=E9 : 16 October 2007 14:31
+=C0 : git@vger.kernel.org
+Objet : !! SPAM Suspect : SPAM-URL-DBL !! Problem with git-svnimport
+
+  Hi.
+
+  Trying to convert a svn repository to git, I encountered the followin=
+g
+error:
+
+Use of uninitialized value in hash element at /usr/bin/git-svnimport
+line 534.
+
+  Line 534 reads:
+	my $gitrev =3D $branches{$srcbranch}{$therev};
+
+  I have installed packages git-core and git-svn on Ubuntu. These
+package have versions: "1:1.5.2.5-2-feisty1"
+
+  The tool seems to choke on tags or branches with special characters
+(underscore, for instance).
+
+
+Laurent.
