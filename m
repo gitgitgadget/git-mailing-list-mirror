@@ -1,63 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: RE: Is there any plan to support partial checkout or submoudule
- improvement?
-Date: Tue, 16 Oct 2007 12:02:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161158350.25221@racer.site>
-References: <20071016082720.E5EDA7E6F@mail.kooxoo.com>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Switching from CVS to GIT
+Date: Tue, 16 Oct 2007 12:13:49 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0710161209190.8571@ds9.cixit.se>
+References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
+ <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
+ <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
+ <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
+ <20071014221446.GC2776@steel.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: 'Lars Hjemli' <hjemli@gmail.com>, git@vger.kernel.org
-To: franky <yinping@kooxoo.com>
-X-From: git-owner@vger.kernel.org Tue Oct 16 13:03:00 2007
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 16 13:14:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhkCR-0004x6-1I
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:02:59 +0200
+	id 1IhkN9-0006mq-8p
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 13:14:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932359AbXJPLCs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 07:02:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755190AbXJPLCs
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:02:48 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35555 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755001AbXJPLCr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 07:02:47 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 11:02:45 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp017) with SMTP; 16 Oct 2007 13:02:45 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19swZ9Y+LFs5fjfnRaP4BoGk4MORL4JgQQD+BVgdb
-	8jize0udJtKRk2
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071016082720.E5EDA7E6F@mail.kooxoo.com>
-X-Y-GMX-Trusted: 0
+	id S1756655AbXJPLNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 07:13:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757345AbXJPLNw
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 07:13:52 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:53188 "EHLO ds9.cixit.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755098AbXJPLNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 07:13:51 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9GBDnnQ027400
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Tue, 16 Oct 2007 13:13:49 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9GBDna3027395;
+	Tue, 16 Oct 2007 13:13:49 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20071014221446.GC2776@steel.home>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Tue, 16 Oct 2007 13:13:49 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61146>
 
-Hi,
+> - it is the only OS in the world with multi-root (/a/b/c and /a/b/c
+>   can be not the same, depending on what current "drive" is) and
+>   multi-cwd, which hasn't had formed itself into a problem yet, but
+>   surely will
 
-[please do not top post.  Only keep the parts of the original message that 
-you are responding to, and put your answers just below.  It is a matter of 
-simple economy: it takes you just a couple of minutes, but spares those 
-"millions" of readers the minutes to understand what you're talking about.  
-In addition, it is a matter of politeness.]
+It's not the only OS with drive letters (although I don't see Git
+coming to my Symbian OS phone any time soon), but there is only one
+root. The problem is that it isn't addressable in the file system, and
+that the concept of what is the root is different depending on what you
+ask (either it's above the drive letters, or "My Computer").
 
-On Tue, 16 Oct 2007, franky wrote:
+You can create a search path rooted in "My Computer" if you want (using
+shell APIs), but you probably can't get a readable text representation
+of it.
 
-> I want a single "git-pull" to deploy a new version and a
-> single "git-reset" to back to versions before [on partial checkouts]
+> - it has only one argument (limited in size) passed to started
+>   programs, which means that there is no possible way to safely pass
+>   file and text arguments on command line (more than one, that is)
 
-You are talking as if your partial checkout was a project in its own 
-right.  Then make it so.  Do not use a partial checkout, but make that a 
-submodule.
+Well, there are many other ways of passing arguments than on the
+command line, but they are probably difficult to access from console
+applications (things like DDE or whatever the current implementation is
+called).
 
-One reason _not_ to support partial checkouts is exactly to avoid people 
-falling into that mousetrap of thinking that they can sensibly merge 
-_parts_ of the HEAD.
-
-Ciao,
-Dscho
+-- 
+\\// Peter - http://www.softwolves.pp.se/
