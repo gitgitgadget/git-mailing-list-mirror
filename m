@@ -1,72 +1,58 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Switching from CVS to GIT
-Date: Tue, 16 Oct 2007 16:18:10 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710161617490.25221@racer.site>
-References: <1192293466.17584.95.camel@homebase.localnet> <uy7e6keyv.fsf@gnu.org>
- <1192381040.4908.57.camel@homebase.localnet> <1773C6F0-87BE-4F3C-B68A-171E1F32E242@lrde.epita.fr>
- <47125F74.9050600@op5.se> <Pine.LNX.4.64.0710141934310.25221@racer.site>
- <47126957.1020204@op5.se> <Pine.LNX.4.64.0710142112540.25221@racer.site>
- <20071014221446.GC2776@steel.home> <u7ilpjp3x.fsf@gnu.org>
- <Pine.LNX.4.64.0710151859590.7638@iabervon.org> <uodezisvg.fsf@gnu.org>
- <Pine.LNX.4.64.0710160032020.7638@iabervon.org> <E1IhgT2-0000bg-O6@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161335260.25221@racer.site> <E1IhmHM-0002hB-HR@fencepost.gnu.org>
- <Pine.LNX.4.64.0710161422110.25221@racer.site> <E1Ihnvq-0002Xr-F9@fencepost.gnu.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se,
-	tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Eli Zaretskii <eliz@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 16 17:18:44 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: [PATCH 3/3] git-cvsexportcommit.perl: git-apply no longer needs --binary
+Date: Tue, 16 Oct 2007 11:27:39 -0400
+Message-ID: <19B03C18-6BBD-4F67-93DC-37B422445C82@mit.edu>
+References: <1192522094-4988-1-git-send-email-mfwitten@mit.edu> <1192522094-4988-2-git-send-email-mfwitten@mit.edu> <1192522094-4988-3-git-send-email-mfwitten@mit.edu> <Pine.LNX.4.64.0710161404220.25221@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 16 17:28:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhoBj-0000Fc-6Z
-	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:18:31 +0200
+	id 1IhoLO-00037o-Fo
+	for gcvg-git-2@gmane.org; Tue, 16 Oct 2007 17:28:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933948AbXJPPSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 11:18:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933921AbXJPPST
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:18:19 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53461 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933902AbXJPPSS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 11:18:18 -0400
-Received: (qmail invoked by alias); 16 Oct 2007 15:18:16 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp005) with SMTP; 16 Oct 2007 17:18:16 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19o105Hd71oz9nQjDRMRdzcfJiYUV4pWyRKUSrX9g
-	y+GZ8Xq+uSIHFL
-X-X-Sender: gene099@racer.site
-In-Reply-To: <E1Ihnvq-0002Xr-F9@fencepost.gnu.org>
-X-Y-GMX-Trusted: 0
+	id S933864AbXJPP1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 11:27:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933891AbXJPP1q
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 11:27:46 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:63282 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933732AbXJPP1o (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 11:27:44 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9GFRfrU019112;
+	Tue, 16 Oct 2007 11:27:41 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9GFRefp027467
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 16 Oct 2007 11:27:41 -0400 (EDT)
+In-Reply-To: <Pine.LNX.4.64.0710161404220.25221@racer.site>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61193>
 
-Hi,
 
-On Tue, 16 Oct 2007, Eli Zaretskii wrote:
+On 16 Oct 2007, at 9:04:34 AM, Johannes Schindelin wrote:
 
-> > Date: Tue, 16 Oct 2007 14:24:34 +0100 (BST)
-> > From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> > cc: barkalow@iabervon.org, raa.lkml@gmail.com, ae@op5.se, tsuna@lrde.epita.fr, 
-> >     git@vger.kernel.org
-> > 
-> > Funny.  Last time I checked the toolbar went away, as well as the desktop, 
-> > when I killed explorer.exe.
-> 
-> That's a ``feature'': Explorer is the parent of all the desktop
-> display.  Kinda like the login shell on Unix: if you kill it, there
-> goes your whole session.  Except that on Windows, the OS pays
-> attention and restarts Explorer right away to get you back in
-> business.  (In first versions of Windows, there was no restarting of
-> Explorer, so if you killed it, you needed to reboot :-()
+> Hi,
+>
+> does --binary hurt?
 
-I kinda knew that.  But what's now with your recommendation to never run 
-Explorer?
+It's a no op according to the documentation.
 
-Ciao,
-Dscho
+In my experience, the healthier the trees are,
+the healthier the forest is.
+
+Michael Witten
