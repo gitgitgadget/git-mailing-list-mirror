@@ -1,87 +1,85 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git-apply segfault
-Date: Wed, 17 Oct 2007 13:10:35 +0200
-Message-ID: <20071017111035.GC4350@artemis.corp>
-References: <200710171100.01247.andyparkins@gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: Git User's Survey 2007 summary - git homepage improvements
+Date: Wed, 17 Oct 2007 13:11:36 +0200
+Message-ID: <20071017111136.GB23417@diku.dk>
+References: <8fe92b430710141505y75ab61c4l50688fc9530e4f90@mail.gmail.com> <20071014225618.GH31659@planck.djpig.de> <20071016201247.GH26127@efreet.light.src> <20071017000526.GG18279@machine.or.cz> <20071017002648.GH13801@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="dkEUBIird37B8yKS";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Andy Parkins <andyparkins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 13:11:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Petr Baudis <pasky@suse.cz>, Jan Hudec <bulb@ucw.cz>,
+	Frank Lichtenheld <frank@lichtenheld.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 13:15:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii6nk-0006IQ-J8
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:11:01 +0200
+	id 1Ii6rt-0007Z5-1J
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:15:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761960AbXJQLKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 07:10:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759248AbXJQLKi
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:10:38 -0400
-Received: from pan.madism.org ([88.191.52.104]:51981 "EHLO hermes.madism.org"
+	id S935134AbXJQLOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 07:14:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935108AbXJQLOf
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:14:35 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:55334 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755532AbXJQLKh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 07:10:37 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 5437F25380;
-	Wed, 17 Oct 2007 13:10:36 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id DD15C357D00; Wed, 17 Oct 2007 13:10:35 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+	id S935049AbXJQLOe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 07:14:34 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id D8356778055;
+	Wed, 17 Oct 2007 13:14:31 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mS2uJUjiCDmW; Wed, 17 Oct 2007 13:14:30 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id A78BB778063;
+	Wed, 17 Oct 2007 13:11:36 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id EB2C46DFAAF; Wed, 17 Oct 2007 13:11:26 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 8C0505B8001; Wed, 17 Oct 2007 13:11:36 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <200710171100.01247.andyparkins@gmail.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20071017002648.GH13801@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61368>
 
+Shawn O. Pearce <spearce@spearce.org> wrote Tue, Oct 16, 2007:
+> Petr Baudis <pasky@suse.cz> wrote:
+> > On Tue, Oct 16, 2007 at 10:12:47PM +0200, Jan Hudec wrote:
+> > > On Mon, Oct 15, 2007 at 00:56:18 +0200, Frank Lichtenheld wrote:
+> > > > On Mon, Oct 15, 2007 at 12:05:22AM +0200, Jakub Narebski wrote:
+> > > > > Generic:
+> > > > >  # Dedicated domain name / site name, e.g. git.org or git.com
+> ...
+> > > > (And I guess something like git-scm.org wouldn't qualify as more
+> > > > "official", would it?)
+> > > 
+> ...
+> > If someone trustworthy in the community has the resources to sponsor the
+> > domain, I will only be happy and gladly set it up on my side (I can run
+> > the nameservers myself too, if required).  But I don't have the
+> > resources for registering the domain myself, unfortunately.
+> 
+> "git" is a three letter word.  I don't think there have been *any*
+> three letter .com/.org/.net domains available for years.
+> 
+> I see that Jonas Fonseca registered git-scm.org today...  I wonder
+> what his plans are for that domain...
 
---dkEUBIird37B8yKS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The plan is to use it for git propaganda in some form or another. :-)
 
-On Wed, Oct 17, 2007 at 10:00:01AM +0000, Andy Parkins wrote:
-> Hello,
->=20
-> I've not got time to investigate this further just now, I'll try later.  =
-In=20
-> case anyone else wants to though; I just got this core dump when running =
-git=20
-> rebase using current git master (1.5.3.4.206.g58ba4):
+If the list decides that it could be a better official name or simply an
+alias (currently the case if I configured it correctly) to git.or.cz (or
+whatever the list comes up with) I will gladly act as a domain sponsor.
 
-  It's not the current master, it's an old one, the fix is in:
-90d16ec032b20f9f1146f3aceca12165aba3b6d6
+Also, as time permits, I would like to get more involved in creating a
+great online resource for git users and what better way to do that than
+"homesteading the websphere".
 
-  You must fetch from spearce.git[0] that has taken maintainance interim
-until junio comes back.
-
-Cheers,
-
-  [0] git://repo.or.cz/git/spearce.git
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---dkEUBIird37B8yKS
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHFe2rvGr7W6HudhwRAqs6AJ4w7h27lhqtqj78YNOGebGJUSzDdgCgniAC
-NJwA6kPVo7XNgXnhkIn7QAw=
-=9YSI
------END PGP SIGNATURE-----
-
---dkEUBIird37B8yKS--
+-- 
+Jonas Fonseca
