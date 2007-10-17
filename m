@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/6] more compact progress display
-Date: Tue, 16 Oct 2007 22:11:37 -0400
-Message-ID: <20071017021137.GO13801@spearce.org>
-References: <1192586150-13743-1-git-send-email-nico@cam.org> <1192586150-13743-2-git-send-email-nico@cam.org>
+Subject: Deltifying? (was [PATCH 3/6] pack-objects: no delta possible...)
+Date: Tue, 16 Oct 2007 22:15:55 -0400
+Message-ID: <20071017021555.GP13801@spearce.org>
+References: <1192586150-13743-1-git-send-email-nico@cam.org> <1192586150-13743-2-git-send-email-nico@cam.org> <1192586150-13743-3-git-send-email-nico@cam.org> <1192586150-13743-4-git-send-email-nico@cam.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 04:11:53 2007
+X-From: git-owner@vger.kernel.org Wed Oct 17 04:16:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhyO1-00064w-5b
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 04:11:53 +0200
+	id 1IhySA-0006sV-Oj
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 04:16:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756691AbXJQCLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 22:11:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755036AbXJQCLl
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 22:11:41 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:51511 "EHLO
+	id S1754995AbXJQCP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 22:15:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754231AbXJQCP7
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 22:15:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51670 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753064AbXJQCLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 22:11:41 -0400
+	with ESMTP id S1753194AbXJQCP6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 22:15:58 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IhyNb-0006SN-ED; Tue, 16 Oct 2007 22:11:27 -0400
+	id 1IhyRl-0006Zs-7Z; Tue, 16 Oct 2007 22:15:45 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AAFFF20FBAE; Tue, 16 Oct 2007 22:11:37 -0400 (EDT)
+	id 910FE20FBAE; Tue, 16 Oct 2007 22:15:55 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <1192586150-13743-2-git-send-email-nico@cam.org>
+In-Reply-To: <1192586150-13743-4-git-send-email-nico@cam.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,44 +40,19 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61314>
 
 Nicolas Pitre <nico@cam.org> wrote:
-> Each progress can be on a single line instead of two.
+>  			start_progress(&progress_state, "Deltifying objects",
 
-Nice.  Of course that screws with git-gui and now I have to
-match two regexs and not one.  But whatever.
- 
-> +++ b/progress.c
-> @@ -35,10 +35,11 @@ static void clear_progress_signal(void)
->  	progress_update = 0;
->  }
->  
-> -int display_progress(struct progress *progress, unsigned n)
-> +static int display(struct progress *progress, unsigned n, int done)
->  {
-> +	char *eol;
-> +
->  	if (progress->delay) {
-> -		char buf[80];
->  		if (!progress_update || --progress->delay)
->  			return 0;
->  		if (progress->total) {
-> @@ -51,60 +52,56 @@ int display_progress(struct progress *progress, unsigned n)
->  				return 0;
->  			}
->  		}
-> -		if (snprintf(buf, sizeof(buf),
-> -			     progress->delayed_title, progress->total))
-> -			fprintf(stderr, "%s\n", buf);
->  	}
-> +
-> +	progress->last_value = n;
+Totally unrelated to this patch but yesterday a coworker called the
+Grammar Police on me because Git said "Deltifying objects" in their
+console window during a fetch or push operation.  I told them it was
+perfectly valid, they disagreed.  I got free coffee out of the deal.
 
-Hmm. n is unsigned and last_value is signed.  Uh?  I know you are
-using the special value -1 to mean we've never output anything for
-this progress meter but mixing signed and unsigned always gives me
-the willies.
+But still, it bothers some users that we use perhaps less than
+commonly accepted English in an important tool's output.  Seeing it
+in your context just reminded me of that discussion yesterday.
 
 -- 
 Shawn.
