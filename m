@@ -1,126 +1,74 @@
-From: Christer Weinigel <christer@weinigel.se>
-Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 01:17:34 +0200
-Message-ID: <20071018011734.7b636141@localhost.localdomain>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-	<47148F72.1090602@users.sourceforge.net>
-	<1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
-	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
-	<3awb7zw6.fsf@blue.sea.net>
-	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
-	<1192565900.6430.16.camel@athena>
-	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
-	<20071017015109.303760cc@localhost.localdomain>
-	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
-	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
-	<alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
-	<1192645509.6640.21.camel@athena>
-	<alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>
-	<1192649598.6640.44.camel@athena>
-	<alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>
-	<20071017232146.4b9e4097@localhost.localdomain>
-	<Pine.LNX.4.64.0710172310270.25221@racer.site>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: How to Import a bitkeeper repo into git - Had a few questions on Qgit; I like the GUI.
+Date: Thu, 18 Oct 2007 01:26:21 +0200
+Message-ID: <e5bfff550710171626h733228aw7a251746d2b43c63@mail.gmail.com>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com>
+	 <47159779.6010502@bluelane.com>
+	 <e5bfff550710170030y7778e96ax146acea7a0e57a67@mail.gmail.com>
+	 <200710171800.37345.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:17:42 2007
+Cc: pete@bluelane.com, piet.delaney@gmail.piet.net,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	VMiklos <vmiklos@frugalware.org>,
+	"free cycle" <freecycler23@yahoo.com>, git@vger.kernel.org,
+	piet.delaney@gmail.com, "Piet Delaney" <pdelaney@bluelane.com>
+To: "Robin Rosenberg" <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 01:26:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiI8z-0003in-At
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:17:41 +0200
+	id 1IiIHe-00056V-Ra
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:26:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758600AbXJQXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 19:17:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754696AbXJQXR3
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:17:29 -0400
-Received: from 2-1-3-15a.ens.sth.bostream.se ([82.182.31.214]:45800 "EHLO
-	zoo.weinigel.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756800AbXJQXR2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 19:17:28 -0400
-Received: from localhost.localdomain (grue.localnet [10.128.0.1])
-	by zoo.weinigel.se (Postfix) with ESMTP id BE37F1240902;
-	Thu, 18 Oct 2007 01:17:26 +0200 (CEST)
-In-Reply-To: <Pine.LNX.4.64.0710172310270.25221@racer.site>
-X-Mailer: Claws Mail 2.9.1 (GTK+ 2.10.13; i386-redhat-linux-gnu)
+	id S1755174AbXJQX02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 19:26:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754222AbXJQX01
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:26:27 -0400
+Received: from ag-out-0708.google.com ([72.14.246.248]:57764 "EHLO
+	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761238AbXJQX00 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 19:26:26 -0400
+Received: by ag-out-0708.google.com with SMTP id 35so2094206aga
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gs8aIYci2AowxLDxF4XQsm+qxmi71yQqhYcf64f5cF0=;
+        b=Namy1+UBYh5D3aqH7ZPAY9qoGeCf3jBYLQnELFzgcBDhf18z9iM/eW8vKCDpomYPwNt2NTZGOCNw+Fb5eWJSIqy+PNRdkqM0tbywofxeMPN3USTQ9fFhtrti1IKFFyFLY8P4yhzwDquXBQ9u3l0OdNASatf2isfuuorKlUs4lWI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lYfdEfIDUVNezg2Z6GyjOu9409aSXKFgDEoD9Zc53Zp/vHqN9fonzaWByQQKk0pK5/qUpDuDfIqnnPdJg5P+KzDW9esr/Gzc53rEXUEBix9VpUYLqGTDw+nbDTNChF1/Xb+fHewSb4hIUtxBZLnDtI7x395DEkYT5t/qZbDwW0g=
+Received: by 10.141.178.5 with SMTP id f5mr4576586rvp.1192663581055;
+        Wed, 17 Oct 2007 16:26:21 -0700 (PDT)
+Received: by 10.140.185.19 with HTTP; Wed, 17 Oct 2007 16:26:21 -0700 (PDT)
+In-Reply-To: <200710171800.37345.robin.rosenberg.lists@dewire.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61438>
 
-On Wed, 17 Oct 2007 23:11:37 +0100 (BST)
-Johannes Schindelin <Johannes.w@gmx.de> wrote:
+On 10/17/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+>
+> You could avoid the temporary files if you just pipe the diff to kompare. That
+> would require an option to tell qgit that the external viewer can read a git diff.
+>
+> At the time qgit 1.5 was written, kompare could not handle git diffs.
+>
 
-> Hi,
-> 
-> On Wed, 17 Oct 2007, Christer Weinigel wrote:
-> 
-> > I think you would get at lot less argument if you weren't so damn
-> > self righteous about it.
-> 
-> Why is it that in this thread, people whom I have heard _nothing_ of 
-> before seem to think this would be a good time to let their opinion
-> be heard?  Now, _that_ is what I call righteous.  Show nothing but
-> opinion.
+So does the other tools I have checked at that time.
 
-I'm not that invisible am I?
+But I don't know if this fixes the problem of slowness reported. A
+little test Pete may do is just as I have written in the former email:
+try to save the big files that cause troubles where he prefers and run
+Kompare on them directly from the command line.
 
-    cd linux-2.6.22.7
-    find . -type f | xargs egrep -il "weinigel" | wc -l
-    17
+Is kompare faster? If no probably the 'pipe' technique will not solve
+the problem and shrinks the applicability of the external diff
+launcher to tools that handle diffs directly.
 
-Ahh, confirmation, I really do exist.  The earliest LSM entry I can find
-for myself is from 1995:
-
-http://www.ibiblio.org/pub/linux/kernel/patches/scanners/hpscan-0.1.1.5.lsm
-
-Mmm, nostalgia. :-)
-
-But yes, I haven't contributed anything to git so far, I mostly lurk
-on the mailing list and try to keep up with what's happening to git.
-In the beginning I sent a few ideas to the list (which quite sadly were
-ignored), but unfortunately I've been busy with paying work to do much
-with git after that.  And at work we use Perforce (yuk) or Subversion
-(a lot nicer than Perforce) and privately I use CVS just because I
-started using CVS ten years ago and haven't bothered to change.  And
-when I'm free I prefer to hack on hardware or device drivers instead.
-
-The reason I wrote my first mail in this thread is that I work in a
-different environment than Linus does and wanted to share that
-experience.  I usually work with embedded programming, where people use
-lots of different editors and in mixed environments.  Some people use
-Visual Studio on Windows because that's what they use for host
-programming, a lot of embedded development is done in the (almost
-invariably sucky) IDE that comes with the compilers for the embedded
-CPU, such as Microchips MPLAB or IAR Workbench, Eclipse is becoming
-quite popular for C development, Slickedit is also popular on Windows,
-a colleague prefers nedit for some strange reason, and so on. In such a
-heterogeneous environment the easiest way to make sure that people see
-the same indentation in all editors is to just tell them to use spaces
-for indentation, and I think that every editor I just mentioned has a
-setting to do that automatically.  Microemacs is the odd one out in
-that it doesn't support it.  And my employers haven't really been
-paying me to go on a crusade for the holy TAB is 8 spaces cause, they
-just want things done, so I've had to settle for a "good enough"
-solution which works most of the time. 
-
-So I just thought it was unfair of Linus to say that "use spaces"
-doesn't solve any problems, in some environments it does.  For the
-Linux kernel and Git, it's easier for the maintainer to enforce 
-the coding standards and since Linus and Junio prefer to use hard tabs,
-that are the rules that people who want to play with their toys
-have to adhere to.
-
-BTW, how serious is the problem with deltifying when there are a lot of
-spaces that David Kastrup mentioned?  It does sound like a quite
-serious problem if it has a big impact on the performance of Git.  Git
-isn't only used for the Linux kernel, so there has to be some projects
-that both use spaces for indentation and use Git out there.  Wouldn't
-it be a problem when people put ASCII graphics in comments or just have 
-comments like /*********************************/ in their code?
-
-  /Christer
+Marco
