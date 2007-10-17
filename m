@@ -1,73 +1,98 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Wed, 17 Oct 2007 18:13:28 +0200
-Message-ID: <86myuhg1nb.fsf@lola.quinscape.zz>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <ee77f5c20710152307n48431a6eu5dc95ee504968e4e@mail.gmail.com> <856417h9cj.fsf@lola.goethe.zz> <200710171810.56215.robin.rosenberg.lists@dewire.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 17 18:20:37 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: Re: [PATCH 2/2] Quoting paths in tests
+Date: Wed, 17 Oct 2007 18:07:38 +0100
+Message-ID: <6E65762D-FBC4-4A7C-97A9-20F6744E25DE@steelskies.com>
+References: <B495731E-C854-450B-943B-B96248B8F609@steelskies.com> <11926134961610-git-send-email-maillist@steelskies.com> <11926134961549-git-send-email-maillist@steelskies.com> <11926134961275-git-send-email-maillist@steelskies.com> <4715F2E6.1000708@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v907)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 17 19:08:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiBdN-00022X-9R
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 18:20:37 +0200
+	id 1IiCNE-0005ZZ-Cz
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 19:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763729AbXJQQUR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 12:20:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760852AbXJQQUR
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 12:20:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:46043 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758075AbXJQQUP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 12:20:15 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IiBco-0001qh-TC
-	for git@vger.kernel.org; Wed, 17 Oct 2007 16:20:02 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:20:02 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:20:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:7wT7dZD+X/06uIse2GrxrVfsPq4=
+	id S1762146AbXJQRHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 13:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762292AbXJQRHu
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 13:07:50 -0400
+Received: from juliet.asmallorange.com ([207.210.105.70]:59564 "EHLO
+	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759810AbXJQRHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 13:07:49 -0400
+Received: from [89.105.122.147] (helo=gir.office.bestbefore.tv)
+	by juliet.asmallorange.com with esmtpa (Exim 4.68)
+	(envelope-from <maillist@steelskies.com>)
+	id 1IiCMx-0005xN-5W; Wed, 17 Oct 2007 13:07:49 -0400
+In-Reply-To: <4715F2E6.1000708@viscovery.net>
+X-Mailer: Apple Mail (2.907)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - steelskies.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61392>
 
-Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
 
-> tisdag 16 oktober 2007 skrev David Kastrup:
->> "David Symonds" <dsymonds@gmail.com> writes:
->> 
->> > On 16/10/2007, David Kastrup <dak@gnu.org> wrote:
->> >> Geert Bosch <bosch@adacore.com> writes:
->> >>
->> >> > On Oct 15, 2007, at 13:53, David Symonds wrote:
->> >> >> That's also why I suggested "skip"; you might not be able to test a
->> >> >> particular commit, but you might also not *want* to test a particular
->> >> >> commit for some reason.
->> >> >
->> >> > Skip seems a great choice: it directly expresses the wish to
->> >> > not consider a certain commit. The reason is unimportant.
->> >>
->> >> But it is an _action_, while "good" and "bad" are properties.
->> >
->> > "skipped", then.
->> 
->> "good" and "bad" are descriptive.  "to be skipped" would be necessary
->> to fit it.
+On 17 Oct 2007, at 12:32, Johannes Sixt wrote:
+
+> Jonathan del Strother schrieb:
+>> --- a/t/lib-git-svn.sh
+>> +++ b/t/lib-git-svn.sh
+>> @@ -25,7 +25,7 @@ perl -w -e "
+>> use SVN::Core;
+>> use SVN::Repos;
+>> \$SVN::Core::VERSION gt '1.1.0' or exit(42);
+>> -system(qw/svnadmin create --fs-type fsfs/, '$svnrepo') == 0 or  
+>> exit(41);
+>> +system(qw/svnadmin create --fs-type fsfs/, \"$svnrepo\") == 0 or  
+>> exit(41);
 >
-> Yet another very short word: void.
+> Here you have to work harder: The reason is that this is part of a  
+> perl expression (as opposed to an eval'd string), which does not  
+> have access to $svnrepo of the shell by which it is invoked. The  
+> original version failed if there were single-quotes in $svnrepo, the  
+> new version fails if it contains double-quotes.
+...
+>
+> May I recommend that you run the test suite in a directory named  
+> like this:
+>
+> 	$ mkdir \"\ \$GIT_DIR\ \'
+> 	$ ls
+> 	" $GIT_DIR '
 
-It is not "yet another": I already explained why it does not fit.
 
--- 
-David Kastrup
+Eww.  I'm struggling a bit with paths this perverse, actually.
+
+For instance, git_editor in git-sh-setup expects the editor path to be  
+pre-quoted.  So in t3404, you need to produce escaped double quotes &  
+dollar signs, resulting in unpleasantness like this :
+
+VISUAL="`pwd`/fake-editor.sh"
+VISUAL=${VISUAL//\"/\\\"}
+VISUAL=${VISUAL//$/\\\$}
+VISUAL=\"$VISUAL\"
+export VISUAL
+
+
+And I'm struggling to come up with neat ways of rewriting things like,  
+eg, this bit from t5500 -
+test_expect_success "clone shallow" "git-clone --depth 2 \"file:// 
+`pwd`/.\" shallow"
+- to handle paths like that properly.
+
+
+Suggestions?
+
+Jon
