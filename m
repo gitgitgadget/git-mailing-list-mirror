@@ -1,96 +1,87 @@
-From: Gonzalo Garramuno <gga@filmaura.com>
-Subject: git update index question
-Date: Wed, 17 Oct 2007 07:23:39 -0300
-Message-ID: <4715E2AB.4030900@filmaura.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: git-apply segfault
+Date: Wed, 17 Oct 2007 13:10:35 +0200
+Message-ID: <20071017111035.GC4350@artemis.corp>
+References: <200710171100.01247.andyparkins@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 17 13:04:04 2007
+Content-Type: multipart/signed; boundary="dkEUBIird37B8yKS";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Andy Parkins <andyparkins@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 13:11:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii6h0-0004h2-Jl
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:04:03 +0200
+	id 1Ii6nk-0006IQ-J8
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:11:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759248AbXJQLDv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2007 07:03:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759322AbXJQLDv
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:03:51 -0400
-Received: from an.site5.com ([74.53.3.196]:40533 "EHLO an.site5.com"
+	id S1761960AbXJQLKi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 07:10:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759248AbXJQLKi
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:10:38 -0400
+Received: from pan.madism.org ([88.191.52.104]:51981 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759067AbXJQLDu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 07:03:50 -0400
-X-Greylist: delayed 2419 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Oct 2007 07:03:50 EDT
-Received: from [201.255.33.200] (helo=[192.168.1.3])
-	by an.site5.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <gga@filmaura.com>)
-	id 1Ii63h-0005ro-Qn
-	for git@vger.kernel.org; Wed, 17 Oct 2007 05:23:26 -0500
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - an.site5.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - filmaura.com
+	id S1755532AbXJQLKh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 07:10:37 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 5437F25380;
+	Wed, 17 Oct 2007 13:10:36 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id DD15C357D00; Wed, 17 Oct 2007 13:10:35 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Andy Parkins <andyparkins@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200710171100.01247.andyparkins@gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61366>
-
-Hi.  I'm new to git but have been using it successfully for about three=
-=20
-months now and love it.
-
-I've run into my first problem (or, more specifically) lack of=20
-understanding.
-
-I'm currently working on linux.
-
-After some modifications of my source code with a script and doing a=20
-commit with qgit, it seems some spaces at the end of those changed line=
-s=20
-got added.
-
-Now, whenever I try to do a commit, the result is that git aborts with
-* trailing whitespace (line XXX).
-That is, it fails due to git's pre-commit perl hook.
-
-Now, I've modified and changed the offending lines, but redoing the=20
-commit the problem persists.
-
-After loooking into it, I realized the issue is git's index file.  If=20
-git-diff-index is called without --cached, the diff matches what's on=20
-disk and works as I expect.  However, the pre-commit hook calls it with=
-=20
---cached which leads to the problem.
-
-Thus, since I don't want to modify the pre-commit hook, the question is=
-=20
-what's the proper way to rebuild git's index file for all the files tha=
-t=20
-were to be committed but weren't due to the abort.
-
-I've tried git-update-index with most of the flags with no success.  I=20
-only got it to update the index properly when I specifically specified =
-a=20
-filename with the problem, but I have a lot of files with the issue and=
-=20
-git already knows about them so I was hoping for a better method.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61367>
 
 
+--dkEUBIird37B8yKS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Wed, Oct 17, 2007 at 10:00:01AM +0000, Andy Parkins wrote:
+> Hello,
+>=20
+> I've not got time to investigate this further just now, I'll try later.  =
+In=20
+> case anyone else wants to though; I just got this core dump when running =
+git=20
+> rebase using current git master (1.5.3.4.206.g58ba4):
 
+  It's not the current master, it's an old one, the fix is in:
+90d16ec032b20f9f1146f3aceca12165aba3b6d6
 
+  You must fetch from spearce.git[0] that has taken maintainance interim
+until junio comes back.
 
+Cheers,
+
+  [0] git://repo.or.cz/git/spearce.git
 --=20
-Gonzalo Garramu=F1o
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-=46ilm Aura
-A New Dawn in Media Companies
+--dkEUBIird37B8yKS
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-gga@filmaura.com
-http://www.filmaura.com
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHFe2rvGr7W6HudhwRAqs6AJ4w7h27lhqtqj78YNOGebGJUSzDdgCgniAC
+NJwA6kPVo7XNgXnhkIn7QAw=
+=9YSI
+-----END PGP SIGNATURE-----
+
+--dkEUBIird37B8yKS--
