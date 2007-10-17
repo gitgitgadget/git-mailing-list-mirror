@@ -1,90 +1,78 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 00:44:22 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710180040320.25221@racer.site>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
- <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
- <20071017015109.303760cc@localhost.localdomain>
- <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
- <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
- <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
- <1192645509.6640.21.camel@athena> <alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>
- <1192649598.6640.44.camel@athena> <alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>
- <20071017232146.4b9e4097@localhost.localdomain> <Pine.LNX.4.64.0710172310270.25221@racer.site>
- <20071018011734.7b636141@localhost.localdomain>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Thu, 18 Oct 2007 00:46:28 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710180045160.25221@racer.site>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+ <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
+ <200710150902.52653.johan@herland.net> <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
+ <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
+ <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com> <85ve98gl57.fsf@lola.goethe.zz>
+ <alpine.LFD.0.999.0710171553580.26902@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Christer Weinigel <christer@weinigel.se>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:44:48 2007
+Cc: Geert Bosch <bosch@adacore.com>,
+	David Symonds <dsymonds@gmail.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio Hamano <junkio@cox.net>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 01:46:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiIZC-0007sE-5w
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:44:46 +0200
+	id 1IiIbE-0008AR-EV
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:46:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759025AbXJQXof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 19:44:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758635AbXJQXof
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:44:35 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47140 "HELO mail.gmx.net"
+	id S1759350AbXJQXqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 19:46:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759303AbXJQXql
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:46:41 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48980 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757574AbXJQXoe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 19:44:34 -0400
-Received: (qmail invoked by alias); 17 Oct 2007 23:44:32 -0000
+	id S1759242AbXJQXql (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 19:46:41 -0400
+Received: (qmail invoked by alias); 17 Oct 2007 23:46:39 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp036) with SMTP; 18 Oct 2007 01:44:32 +0200
+  by mail.gmx.net (mp010) with SMTP; 18 Oct 2007 01:46:39 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18woyByv6Ew255UUkhNqGlAV3Xdt3f2wGqzQuPNGT
-	lK8x99ce5E6m6P
+X-Provags-ID: V01U2FsdGVkX1+RTTsIij+RmVvMZHcljGDQ8hwDlgeNe/nLG816Pp
+	ZAQa5RDtFhkBXp
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20071018011734.7b636141@localhost.localdomain>
+In-Reply-To: <alpine.LFD.0.999.0710171553580.26902@woody.linux-foundation.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61443>
 
 Hi,
 
-On Thu, 18 Oct 2007, Christer Weinigel wrote:
+On Wed, 17 Oct 2007, Linus Torvalds wrote:
 
-> On Wed, 17 Oct 2007 23:11:37 +0100 (BST)
-> Johannes Schindelin <Johannes.w@gmx.de> wrote:
+> On Mon, 15 Oct 2007, David Kastrup wrote:
 > 
-> > On Wed, 17 Oct 2007, Christer Weinigel wrote:
+> > Geert Bosch <bosch@adacore.com> writes:
 > > 
-> > > I think you would get at lot less argument if you weren't so damn 
-> > > self righteous about it.
+> > > On Oct 15, 2007, at 13:53, David Symonds wrote:
+> > >> That's also why I suggested "skip"; you might not be able to test a 
+> > >> particular commit, but you might also not *want* to test a 
+> > >> particular commit for some reason.
+> > >
+> > > Skip seems a great choice: it directly expresses the wish to not 
+> > > consider a certain commit. The reason is unimportant.
 > > 
-> > Why is it that in this thread, people whom I have heard _nothing_ of 
-> > before seem to think this would be a good time to let their opinion
-> > be heard?  Now, _that_ is what I call righteous.  Show nothing but
-> > opinion.
+> > But it is an _action_, while "good" and "bad" are properties.
 > 
-> I'm not that invisible am I?
-> 
->     cd linux-2.6.22.7
->     find . -type f | xargs egrep -il "weinigel" | wc -l
->     17
+> Well, this has been debated to death, but I actually think that "skip" 
+> is a good choice, exactly because it's an action.
 
-File or directory not found.
+Could we, _please_, first decide if the implementation has merits, and 
+just apply it as is in that case?  We can rename it whatever anybody likes 
+later, and we can paint the bikeshed brown if you want to.
 
-We are not Linux specific here.  Besides, I was talking about _git_ source 
-code, just in case I did not make myself clear.
-
-> [...] and privately I use CVS just because I started using CVS ten years 
-> ago and haven't bothered to change.
-
-I wonder why you have to leave your hideout and comment on the source code 
-of _git_, then.  I mean, why do _you_ care?  (It should have become 
-apparent to you that _we_ care, so it looks even more like you wanted to 
-dictate a policy on git, which you have no business with.)
-
-Puzzled, and a little unnerved,
+Ciao,
 Dscho
