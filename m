@@ -1,177 +1,136 @@
 From: Pete/Piet Delaney <pete@bluelane.com>
-Subject: Re: How to Import a bitkeeper repo into git - Had a few questions
- on Qgit; I like the GUI.
-Date: Tue, 16 Oct 2007 22:02:49 -0700
+Subject: Re: How to Import a bitkeeper repo into git
+Date: Tue, 16 Oct 2007 22:22:01 -0700
 Organization: Bluelane
-Message-ID: <47159779.6010502@bluelane.com>
-References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <20070709173720.GS29994@genesis.frugalware.org>	 <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>	 <4713FA4A.5090501@bluelane.com>	 <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>	 <471433F3.40606@bluelane.com> <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>
-Reply-To: pete@bluelane.com, piet.delaney@gmail.piet.net
+Message-ID: <47159BF9.9040400@bluelane.com>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <20070709173720.GS29994@genesis.frugalware.org>	 <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>	 <4713FA4A.5090501@bluelane.com>	 <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>	 <471433F3.40606@bluelane.com>	 <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>	 <471454B5.7040802@bluelane.com> <e5bfff550710160211g5dbfa7fai95386b173edc45c3@mail.gmail.com>
+Reply-To: pete@bluelane.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	VMiklos <vmiklos@frugalware.org>,
-	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org,
-	piet.delaney@gmail.com, Piet Delaney <pdelaney@bluelane.com>
+	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org
 To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 07:03:19 2007
+X-From: git-owner@vger.kernel.org Wed Oct 17 07:22:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii13t-0003cv-5L
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 07:03:17 +0200
+	id 1Ii1MN-0006A9-55
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 07:22:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360AbXJQFC6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 01:02:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbXJQFC6
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 01:02:58 -0400
-Received: from outbound.mse2.exchange.ms ([69.25.50.247]:56823 "EHLO
+	id S1751950AbXJQFWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 01:22:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751218AbXJQFWL
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 01:22:11 -0400
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:56795 "EHLO
 	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751207AbXJQFC5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 01:02:57 -0400
+	by vger.kernel.org with ESMTP id S1750844AbXJQFWJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 01:22:09 -0400
 Received: from piet2.bluelane.com ([64.95.123.130]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.1830);
-	 Wed, 17 Oct 2007 01:02:55 -0400
+	 Wed, 17 Oct 2007 01:22:08 -0400
 User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
-In-Reply-To: <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>
+In-Reply-To: <e5bfff550710160211g5dbfa7fai95386b173edc45c3@mail.gmail.com>
 X-Enigmail-Version: 0.95.3
-X-OriginalArrivalTime: 17 Oct 2007 05:02:56.0219 (UTC) FILETIME=[FAF0AAB0:01C8107A]
+X-OriginalArrivalTime: 17 Oct 2007 05:22:08.0570 (UTC) FILETIME=[A9CB79A0:01C8107D]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61332>
 
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
 Marco Costalba wrote:
-
-Hi Marco:
-
-I've gone back and tried my old Qgit 1.5.3 and it was
-much closer in functionality to Bitkeeper.
-
 > On 10/16/07, Pete/Piet Delaney <pete@bluelane.com> wrote:
->> I just download 'meld', looks interesting, I didn't know about it or
->> 'kompare'. Linking either one into gitk would be a pleasant graphical
->> 'bling'.
+>> It's not quite a intuitive/familiar as with bitkeeper. I suspect I just
+>> need some practice. I selected a huge list if files that we use to
+>> filter the release with and double clicked on the file I thought showing
+>> to focus on that file. The I pulled down External Diff and it took for
+>> ever; like it's confused.
 >>
 > 
-> In case you are interested a git GUI viewer called qgit can spawn
-> 'Kompare' , 'Meld' or any other diff tool that support 'two files'
-> command line interface:
+> You shoudl select only _one_ additional revision.
 > 
-> $my_preferred_diff_tool  file1.txt file2.txt
+> The currenlty selected revision is the base + select another one
+> (only) with CTRL + *RIGHT* click (the file list change background
+> color) , then call external diff tool.
 > 
-> And they will show what you are looking for. The input files are
-> prepared by qgit that also handles the housekeeping at the end.
+>> Often we/I want to see the rev history for a particular file.
+>> How would you do that with Qgit?
+>>
+> 
+> Select the file from the file list (right bottom pane) or from the
+> tree view (use key 't' to toggle treev view) double click on it or use
+> context menu (right click on the file name) and that's all.
 
-While I'm looking at the diffs for a file if I pull down External Diff
-it launches 'kcompare' but for a file with a large change it seems
-to be running extremely slow. We have a file with 13,000 files in it
-and I have two changes in the file, each is an addition and deletion
-of about 100 lines in one contiguous block. If I click between them
-it's fine but since the 100 lines is more than one page I try to
-scroll thru the diff. At this point of time 'kompare' seems to be
-using 95% of the CPU time and it takes about 10 seconds for it to
-scroll. It scrolls fine in the qgit diff window. It;s not a problem
-for small files. Know of what can me done so that 'kcompare' works
-fast on large files; something like pointing it's tmp files to a
-not NFS partition.
+'t' worked fine but still can see how to diff do of the list of
+changes for a file. Viewing diffs of files based on change sets
+worked fine but I think with BitKeeper I found it helpful to be
+able to do a full 'kompare' type diff the file only; often I'm
+not interested in which change set it went into.
 
-
-Another problem I've noticed is that sometime while running git
-it seems to spend a large amount of time  switching from one
-change-set to the next; seems to be due to all of the tagged
-files.
-
-> Another feature you asked, i.e. CTRL + right click to select a
-> revision (different from the parent) to diff against the current one
-> is also already implemented.
-
-It seems that while I'm in "Rev List" mode I can select the the
-two versions to compare a selected file with View->External diff...
-
-Now, if I pull down "View File" or go to the file context were
-you see the change-set for a file then I can't get the CTRL + right
-click to allow me to diff two revisions of the file.
-
-While messing around in this area of trying to diff two revision
-of the file from the file context I got:
-- ------------------------------------------------------------------
-/nethome/piet/src/blux$ qgit
-Saving cache. Please wait...
-Compressing data...
-Done.
-Saving cache. Please wait...
-Compressing data...
-Done.
-ASSERT in getAncestor: empty file from
-e86306878efb575be80d070ac3dec49f8d358cd1
-ASSERT in lookupAnnotation: no annotation for cli/quagga-0.96/lib/bluelane.c
-ASSERT in remove: 8 is not the first in list
-Thrown exception 'Canceling annotation'
-Exception 'Canceling annotation' not handled in init...re-throw
-terminate called after throwing an instance of 'i'
-Aborted
-/nethome/piet/src/blux$
-- ------------------------------------------------------------------
-
-MY guess is that I should install a newer version of qgit,
-I'm using 1.5.3.
-
-How difficult is it to upgrade to the Qt4. Can I just
-install it to /usr/local and not interfere with Qt3?
-Last I recall messing with installing ethereal from src
-I needed a graphics lib and as I recall installing it in
-/usr/local/ confused some build crap. It would be interesting
-to try out your new qgit-2.0.
+Something for a future version or am I lucky and you have
+it covered already?
 
 > 
-> And of course the two above features can be integrated: you select two
-> random revisions and then call the external diff viewer to check at
-> the differences in the way you prefer.
-
-Right, but how do I do this from the file context?
-
+>> Can I see just the revs for a particular file?
+>>
 > 
-> It is possible to download qgit from
-> 
-> http://sourceforge.net/project/showfiles.php?group_id=139897
+> See above.
 > 
 > 
-> Two versions:
+> I know I'm going to tell you a very _unpopular_ thing, but, in case
+> you have 5 minutes of spare time (yes, it doesn't take longer), open
+> qgit then please press a nice key called 'F1', a nice handbook will
+> appear...
+
+Good Idea, thought it's brought up a few questions:
+
+	1. When I do the <control-minis> to Decrease the font size
+	   I can't undo it with the <control-plus>. Also <control-plus>
+	   doesn't seem to do anything.
+
+	2. When displaying the "Lane info" why can't I see the
+           branch names?
+
+>
+> I really suggest to look at it. To keep UI 'clean' a lot of features
+> are not immediatly visible, so reading the handbook (at least the
+> chapter's titiles) would give you a better idea of what qgit could do
+> for you.
+
+I'll read it a few more times. I seem to sometimes get into a state
+where I'm locked onto the current change set and can't get back to
+the other change sets without starting another qgit.
+
 > 
-> qgit-1.5.7 is Qt3 based
+>> I'll get the latest and greatest. Thinks. Often the problem is
+>> having the current version of Qt3. My workstation is Mandrake
+>> 1005 Limited Edition (X11 Xinerama works on this release).
+>> Looks like I have Qt3 on my workstation. Would it be worthwhile
+>> to install Qt4 from src and try to use qgit-2.0?
+>>
 > 
-> qgit-2.0 is Qt4 based (works also under Windows)
+> Yes it is. There are a lot of new featrures, is almost as stable as
+> the previous and if you are interested in file history (annotations)
+> in qgit-2.0 this feature has been greatly speeded up.
 
-Picked up both, I'll start with qgit-1.5.7.
+Do you know if it's a lot of work to install Qt4?
 
-Installing qt4 might not be so easy; looking at:
-
-	http://packages.qa.debian.org/q/qt4-x11.html
-
-it seems to be pretty big. The date on 1.5.7 was very
-close to 2.0 so I thought they might be very close in
-functionality and you maintaining the same code for
-both the common Qt3 and the new Qt4 to make it easy
-for users to install.
-
-Regards,
-Piet
+- -piet
 
 > 
 > 
-> 
-> regards
+> Have fun
 > Marco
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.7 (GNU/Linux)
 Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
 
-iD8DBQFHFZd4JICwm/rv3hoRAgMVAJ0d49Sbbuppt8o5F1U7tbkaQjSQzwCfV0nn
-mnFXyUWIKGhoxz7pqulJeVk=
-=Jq+Y
+iD8DBQFHFZv5JICwm/rv3hoRAky6AJ47DFL/pWa8CCHv0ezw0wdkLLmbIQCeJqZN
+cNHuMINv2/7fmnwczWcowhs=
+=VSZN
 -----END PGP SIGNATURE-----
