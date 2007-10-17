@@ -1,49 +1,65 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: SLES 10 git packages
-Date: Wed, 17 Oct 2007 15:52:02 +0200
-Message-ID: <20071017135202.GK18279@machine.or.cz>
-References: <20071016072742.GA11450@cip.informatik.uni-erlangen.de>
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: [PATCH] Use exit 1 instead of die when req_Root fails.
+Date: Wed, 17 Oct 2007 10:05:47 -0400
+Message-ID: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>
-To: Thomas Glanzmann <thomas@glanzmann.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 15:52:18 2007
+To: git@vger.kernel.org, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Wed Oct 17 16:06:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii9Jp-0005zN-FK
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 15:52:17 +0200
+	id 1Ii9Wv-0000Di-6U
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 16:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755301AbXJQNwH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 09:52:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755212AbXJQNwG
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 09:52:06 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:45944 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752842AbXJQNwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 09:52:05 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id CC62D5A443; Wed, 17 Oct 2007 15:52:02 +0200 (CEST)
+	id S933003AbXJQOFf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 10:05:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933012AbXJQOFf
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 10:05:35 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:60391 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932992AbXJQOFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 10:05:34 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by silverinsanity.com (Postfix) with ESMTP id 6E1261FFC131;
+	Wed, 17 Oct 2007 14:05:28 +0000 (UTC)
+Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
 Content-Disposition: inline
-In-Reply-To: <20071016072742.GA11450@cip.informatik.uni-erlangen.de>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61378>
 
-  Hi,
+This was causing test failures because die was exiting 255.
 
-On Tue, Oct 16, 2007 at 09:27:42AM +0200, Thomas Glanzmann wrote:
-> is there someone out there who maintains up2date git packages for SuSE
-> Linux Enterprise Server 10?
+Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
+---
 
-  there seem to be some in the build service:
+ Shawn, I sent this in a couple weeks ago but it looks like it never
+ made it into your repo.  It fixes test failures on my machine that have
+ been plauging me for months.
 
-	http://download.opensuse.org/repositories/devel:tools:scm/SLE_10
+ git-cvsserver.perl |    6 ++++--
+ 1 files changed, 4 insertions(+), 2 deletions(-)
 
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index 13dbd27..0d55fec 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -145,8 +145,10 @@ if ($state->{method} eq 'pserver') {
+     }
+     my $request = $1;
+     $line = <STDIN>; chomp $line;
+-    req_Root('root', $line) # reuse Root
+-       or die "E Invalid root $line \n";
++    unless (req_Root('root', $line)) { # reuse Root
++       print "E Invalid root $line \n";
++       exit 1;
++    }
+     $line = <STDIN>; chomp $line;
+     unless ($line eq 'anonymous') {
+        print "E Only anonymous user allowed via pserver\n";
 -- 
-				Petr "Pasky" Baudis
-Early to rise and early to bed makes a male healthy and wealthy and dead.
-                -- James Thurber
+1.5.3.4.206.g0cef9
