@@ -1,84 +1,90 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Thu, 18 Oct 2007 01:36:23 +0200
-Message-ID: <200710180136.24090.chriscool@tuxfamily.org>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <20071017073538.GB13801@spearce.org> <Pine.LNX.4.64.0710171906280.25221@racer.site>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 02:38:05 +0300
+Organization: Private
+Message-ID: <ejftl3c2.fsf@blue.sea.net>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+	<471476B7.5050105@users.sourceforge.net>
+	<8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
+	<47148F72.1090602@users.sourceforge.net>
+	<1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+	<3awb7zw6.fsf@blue.sea.net>
+	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+	<1192565900.6430.16.camel@athena>
+	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+	<20071017015109.303760cc@localhost.localdomain>
+	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+	<E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu>
+	<k5pll7rb.fsf@blue.sea.net> <47168E70.4070305@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:29:37 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 01:38:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiIKW-0005Wq-V4
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:29:37 +0200
+	id 1IiITA-0006s7-Mm
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:38:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756966AbXJQX3X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2007 19:29:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756920AbXJQX3X
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:29:23 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:39840 "EHLO smtp1-g19.free.fr"
+	id S1758269AbXJQXiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 19:38:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757735AbXJQXiV
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:38:21 -0400
+Received: from main.gmane.org ([80.91.229.2]:57040 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755418AbXJQX3V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 19:29:21 -0400
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 2407F1AB2BE;
-	Thu, 18 Oct 2007 01:29:20 +0200 (CEST)
-Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 06B141AB2BB;
-	Thu, 18 Oct 2007 01:29:20 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0710171906280.25221@racer.site>
-Content-Disposition: inline
+	id S1750855AbXJQXiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 19:38:21 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiISw-0008SJ-4O
+	for git@vger.kernel.org; Wed, 17 Oct 2007 23:38:18 +0000
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 23:38:18 +0000
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 23:38:18 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:JJDB7IdkIHOuWYoqbzN74jx+dtQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61440>
 
-Hi,
+* Thu 2007-10-18 Andreas Ericsson <ae@op5.se> gmane.comp.version-control.git
+* Message-Id: 47168E70.4070305@op5.se
+> And simply because nearly all (unix) editors still insert a hard tab
+> when pressing the tab key, and *mixing* tabs and spaces makes the
+> situation *really* unbearable, one really shouldn't use all spaces.
 
-Le mercredi 17 octobre 2007, Johannes Schindelin a =E9crit :
-> Hi,
->
-> On Wed, 17 Oct 2007, Shawn O. Pearce wrote:
-> > Christian Couder <chriscool@tuxfamily.org> wrote:
-> > > Here is my bisect dunno patch series again.
-> > > The changes since last time are the following:
-> >
-> > I now have this series queued in my pu branch.  It passes the tests
-> > it comes with, and doesn't appear to break anything, but apparently
-> > there is also still some debate about what a dunno should be called
-> > ("unknown", "void", "ugly", "dunno", "skip" ...).
->
-> AFAICT these are all bikeshed painting arguments, not technical
-> arguments. I was initially opposed to having --bisect-all, wanting to
-> have
-> --bisect-dunno <ref>...
->
-> But in the end, the people doing the work decide, and therefore I am =
-fine
-> with --bisect-all, especially since it seems clean enough for me.
->
-> As for all those "dunno is no English"...  I'd first merge the techni=
-cal
-> part (i.e. what you have now in pu), and then let the discussion abou=
-t
-> which synonyms to choose continue, until a consensus is formed about
-> other names (if there is a consensus at all!).
->
-> IMHO there is no reason to hold of the fine work of Christian,
+There was no assumption about a particular OS or editors. 
 
-It's also the fine work of Junio as he wrote most of=20
-the "rev-list --bisect-all" patch.
+The QA tools will take care of warning or making automatic formatting
+before the code is put to SCM. In projects you cannot assume anything
+about people, their tools or what OS they might use at hand.
 
-> just=20
-> because there are non-technical arguments still in the air.
+>> There is no such problem with spaces. 
+>>
 >
-> I want bisect dunno.  Even if there is another name later.
+> I beg to differ, for reasons stated multiple times elsewhere in this
+> thread.
 
-Thanks for your kind words,
-Christian.
+Consider:
+
+- Any editor will display the text written in "all spaces"
+  100 % the same. Regradless of any viewer or editor used.
+
+But the same is not true with text that uses tabs (because you
+really can't know what options the editor is preset / user set /
+regarding the treatment of tabs).
+
+The score is 1 - 0 for "all spaces" in this contest.
+
+-- 
+Welcome to FOSS revolution: we fix and modify until it shines
