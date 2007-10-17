@@ -1,62 +1,52 @@
-From: Frank Lichtenheld <frank@lichtenheld.de>
+From: Brian Gernhardt <benji@silverinsanity.com>
 Subject: Re: [PATCH] Use exit 1 instead of die when req_Root fails.
-Date: Wed, 17 Oct 2007 21:08:23 +0200
-Message-ID: <20071017190822.GD9041@planck.djpig.de>
-References: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com> <118833cc0710170739i179e7389k1e44f70086ca88be@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: Morten Welinder <mwelinder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 21:09:14 2007
+Date: Wed, 17 Oct 2007 15:15:26 -0400
+Message-ID: <98FA3712-B4E5-499A-B3E5-818FC33833DA@silverinsanity.com>
+References: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com> <20071017190646.GC9041@planck.djpig.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Frank Lichtenheld <frank@lichtenheld.de>
+X-From: git-owner@vger.kernel.org Wed Oct 17 21:15:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiEGW-0000tV-5G
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 21:09:12 +0200
+	id 1IiEMW-00029w-Fq
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 21:15:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933112AbXJQTIq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 15:08:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933099AbXJQTIp
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 15:08:45 -0400
-Received: from planck.djpig.de ([85.10.192.180]:3344 "EHLO planck.djpig.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933058AbXJQTIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 15:08:44 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by planck.djpig.de (Postfix) with ESMTP id ABE0C88231;
-	Wed, 17 Oct 2007 21:08:42 +0200 (CEST)
-X-Virus-Scanned: Debian amavisd-new at planck.djpig.de
-Received: from planck.djpig.de ([127.0.0.1])
-	by localhost (planck.djpig.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xZ6NubTFQfb5; Wed, 17 Oct 2007 21:08:34 +0200 (CEST)
-Received: by planck.djpig.de (Postfix, from userid 1000)
-	id A35DD88235; Wed, 17 Oct 2007 21:08:23 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <118833cc0710170739i179e7389k1e44f70086ca88be@mail.gmail.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1760090AbXJQTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 15:15:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759974AbXJQTPM
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 15:15:12 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:43835 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759241AbXJQTPK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 15:15:10 -0400
+Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id DA9A91FFC22D;
+	Wed, 17 Oct 2007 19:15:08 +0000 (UTC)
+In-Reply-To: <20071017190646.GC9041@planck.djpig.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61412>
 
-On Wed, Oct 17, 2007 at 10:39:52AM -0400, Morten Welinder wrote:
-> >  made it into your repo.  It fixes test failures on my machine that have
-> >  been plauging me for months.
-> 
-> That sounds more like a reason to fix the test.  "die" is the perl
-> standard way of
-> reporting an error.  It will print the error message on stderr, not on
-> stdout like
-> your version does.
 
-Please note that git-cvsserver is special in that its output will never
-be displayed directly to the user but is always interpreted first by
-the client. So print "E something" is acutally in some cases more
-correct than print STDERR something.
+On Oct 17, 2007, at 3:06 PM, Frank Lichtenheld wrote:
 
-Gruesse,
--- 
-Frank Lichtenheld <frank@lichtenheld.de>
-www: http://www.djpig.de/
+> I have this in my repo and will submit this with the other git- 
+> cvsserver
+> changes. I was just waiting for either Junio to return or someone else
+> stepping up.
+
+Ah.  I had missed that.  I just dug up the patch when switching to  
+Shawn's repo gave me those old testing errors.  Had thought it had  
+gotten lost in the shuffle.
+
+Never mind me then,
+~~ Brian
