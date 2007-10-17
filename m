@@ -1,85 +1,74 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: Git User's Survey 2007 summary - git homepage improvements
-Date: Wed, 17 Oct 2007 13:11:36 +0200
-Message-ID: <20071017111136.GB23417@diku.dk>
-References: <8fe92b430710141505y75ab61c4l50688fc9530e4f90@mail.gmail.com> <20071014225618.GH31659@planck.djpig.de> <20071016201247.GH26127@efreet.light.src> <20071017000526.GG18279@machine.or.cz> <20071017002648.GH13801@spearce.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Petr Baudis <pasky@suse.cz>, Jan Hudec <bulb@ucw.cz>,
-	Frank Lichtenheld <frank@lichtenheld.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 13:15:21 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: On Tabs and Spaces
+Date: Wed, 17 Oct 2007 07:23:31 -0400
+Message-ID: <6A484AE6-ECCD-4473-BEF8-3451EBF8FAFF@mit.edu>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org> <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu> <dbfc82860710170321l458ebd1cr6bf619cef9bb7300@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nikolai Weibull <now@bitwi.se>
+X-From: git-owner@vger.kernel.org Wed Oct 17 13:24:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii6rt-0007Z5-1J
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:15:17 +0200
+	id 1Ii70l-00016j-TY
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:24:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935134AbXJQLOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 07:14:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935108AbXJQLOf
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:14:35 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:55334 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935049AbXJQLOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 07:14:34 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id D8356778055;
-	Wed, 17 Oct 2007 13:14:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mS2uJUjiCDmW; Wed, 17 Oct 2007 13:14:30 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id A78BB778063;
-	Wed, 17 Oct 2007 13:11:36 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id EB2C46DFAAF; Wed, 17 Oct 2007 13:11:26 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 8C0505B8001; Wed, 17 Oct 2007 13:11:36 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071017002648.GH13801@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758715AbXJQLYR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 07:24:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758393AbXJQLYR
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:24:17 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:57044 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757732AbXJQLYQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 07:24:16 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9HBNeDx002850;
+	Wed, 17 Oct 2007 07:23:45 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9HBNYvj016195
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Wed, 17 Oct 2007 07:23:35 -0400 (EDT)
+In-Reply-To: <dbfc82860710170321l458ebd1cr6bf619cef9bb7300@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61369>
 
-Shawn O. Pearce <spearce@spearce.org> wrote Tue, Oct 16, 2007:
-> Petr Baudis <pasky@suse.cz> wrote:
-> > On Tue, Oct 16, 2007 at 10:12:47PM +0200, Jan Hudec wrote:
-> > > On Mon, Oct 15, 2007 at 00:56:18 +0200, Frank Lichtenheld wrote:
-> > > > On Mon, Oct 15, 2007 at 12:05:22AM +0200, Jakub Narebski wrote:
-> > > > > Generic:
-> > > > >  # Dedicated domain name / site name, e.g. git.org or git.com
-> ...
-> > > > (And I guess something like git-scm.org wouldn't qualify as more
-> > > > "official", would it?)
-> > > 
-> ...
-> > If someone trustworthy in the community has the resources to sponsor the
-> > domain, I will only be happy and gladly set it up on my side (I can run
-> > the nameservers myself too, if required).  But I don't have the
-> > resources for registering the domain myself, unfortunately.
-> 
-> "git" is a three letter word.  I don't think there have been *any*
-> three letter .com/.org/.net domains available for years.
-> 
-> I see that Jonas Fonseca registered git-scm.org today...  I wonder
-> what his plans are for that domain...
+On 17 Oct 2007, at 6:21:30 AM, Nikolai Weibull wrote:
 
-The plan is to use it for git propaganda in some form or another. :-)
+> According to this calculation the waste is 47808782 bytes, or about
+> 45.6 MiB, for 8-spaces-wide tabs.
 
-If the list decides that it could be a better official name or simply an
-alias (currently the case if I configured it correctly) to git.or.cz (or
-whatever the list comes up with) I will gladly act as a domain sponsor.
+I concede my calculation was crude.
 
-Also, as time permits, I would like to get more involved in creating a
-great online resource for git users and what better way to do that than
-"homesteading the websphere".
+Interestingly, modifying my calculation to look
+for tabs at the beginning of the line gives a
+similar result:
 
--- 
-Jonas Fonseca
+     # calculates the extra space required to
+     # use the given number of spaces/tab.
+     size()
+     {
+         count=`grep -RIo "^\`printf \"\t\"\`" . | wc -l`;
+         perl -e "print $count*$(($1-1))/1024/1024 . \" MiB\n\"";
+     }
+
+     size 8; => 49.7416791915894 MiB
+
+and for git:
+	
+     size 8; => 1.25082969665527 MiB
+
+
+Anyway, thanks for the neat script.
+
+mfwitten
