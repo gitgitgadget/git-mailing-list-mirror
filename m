@@ -1,125 +1,77 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] When renaming config sections delete conflicting sections
-Date: Wed, 17 Oct 2007 02:34:18 +0200
-Message-ID: <20071017003418.GA11013@diku.dk>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] gitweb: speed up project listing by limiting find depth
+Date: Tue, 16 Oct 2007 20:41:25 -0400
+Message-ID: <20071017004125.GI13801@spearce.org>
+References: <1192580691-14308-1-git-send-email-git@vicaya.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 02:37:32 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, gitster@pobox.com, Petr Baudis <pasky@suse.cz>
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 02:41:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihwuh-0000X4-S3
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 02:37:32 +0200
+	id 1Ihwyn-0001E6-Lo
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 02:41:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755601AbXJQAhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 20:37:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751250AbXJQAhU
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 20:37:20 -0400
-Received: from mgw1.diku.dk ([130.225.96.91]:48822 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751367AbXJQAhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 20:37:20 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id DF4B377802C;
-	Wed, 17 Oct 2007 02:37:17 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id gvxeX+nzq2IB; Wed, 17 Oct 2007 02:37:16 +0200 (CEST)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 3225686804E;
-	Wed, 17 Oct 2007 02:34:19 +0200 (CEST)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 1D4D96DFB71; Wed, 17 Oct 2007 02:34:10 +0200 (CEST)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 1B9225B8001; Wed, 17 Oct 2007 02:34:19 +0200 (CEST)
+	id S1755601AbXJQAlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 20:41:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752911AbXJQAlf
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 20:41:35 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:48349 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbXJQAle (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 20:41:34 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IhwyN-0005p3-Qd; Tue, 16 Oct 2007 20:41:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 33EC620FBAE; Tue, 16 Oct 2007 20:41:26 -0400 (EDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <1192580691-14308-1-git-send-email-git@vicaya.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61292>
 
-The old behavior of keeping config sections matching the new name caused
-problems leading to warnings being emitted by git-remote when renaming
-branches where information about tracked remote branches differed. To
-fix this any config sections that will conflict with the new name are
-removed from the config file. Update test to check for this.
+Luke Lu <git@vicaya.com> wrote:
+> diff --git a/Makefile b/Makefile
+> index 8db4dbe..b70ba8c 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -165,6 +165,7 @@ GITWEB_CONFIG = gitweb_config.perl
+>  GITWEB_HOME_LINK_STR = projects
+>  GITWEB_SITENAME =
+>  GITWEB_PROJECTROOT = /pub/git
+> +GITWEB_PROJECT_MAXDEPTH = 2
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- config.c               |    9 ++++++++-
- t/t1300-repo-config.sh |   17 +++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletions(-)
+I'd rather see this default to an unlimited (or maybe insane?) depth.
+Current users may be surprised upon upgrading to a more recent git
+when their gitweb stops showing projects because the default depth
+is too small.
 
- This command sequence was causing problems for me:
+repo.or.cz is up at 3 deep, maybe 4 right now, right Pasky?
+I think letting admins control the depth is a good idea, but its
+a performance tuning thing and probably shouldn't break existing
+setups.
 
-	git checkout -b test madcoder/next
-	git checkout -b test2 spearce/next
-	git branch -M test
+> +				# don't traverse too deep (Find is super slow on os x)
+> +				return if tr!/!! - $pfxdepth > $project_maxdepth && ($File::Find::prune = 1);
 
- On top of spearce/next ...
-
-diff --git a/config.c b/config.c
-index dc3148d..578849a 100644
---- a/config.c
-+++ b/config.c
-@@ -1013,6 +1013,14 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 			; /* do nothing */
- 		if (buf[i] == '[') {
- 			/* it's a section */
-+			remove = 0;
-+			if (new_name != NULL
-+			    && section_name_match (&buf[i+1], new_name)) {
-+				/* Remove any existing occurences of the
-+				 * new section. */
-+				remove = 1;
-+				continue;
-+			}
- 			if (section_name_match (&buf[i+1], old_name)) {
- 				ret++;
- 				if (new_name == NULL) {
-@@ -1026,7 +1034,6 @@ int git_config_rename_section(const char *old_name, const char *new_name)
- 				}
- 				continue;
- 			}
--			remove = 0;
- 		}
- 		if (remove)
- 			continue;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index 1d2bf2c..63b969e 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -419,6 +419,23 @@ EOF
- test_expect_success "section was removed properly" \
- 	"git diff -u expect .git/config"
- 
-+cat > .git/config << EOF
-+[branch "new-name"]
-+	x = 1
-+[branch "old-name"]
-+	y = 1
-+EOF
-+
-+test_expect_success "rename and remove old section" \
-+	'git config --rename-section branch.old-name branch.new-name'
-+
-+cat > expect << EOF
-+[branch "new-name"]
-+	y = 1
-+EOF
-+
-+test_expect_success "rename and remove succeeded" "git diff expect .git/config"
-+
- rm .git/config
- 
- cat > expect << EOF
--- 
-1.5.3.4.1206.g5f96-dirty
+I don't do much gitweb hacking, but I usually don't like to find
+code that mutates a value as an important side-effect in the middle
+of a boolean condition that is used to determine if we are breaking
+out of this function now, or falling through to do more work.  yea
+its more lines of code but I think it would be easier to grok if this
+was a proper if {...}.
 
 -- 
-Jonas Fonseca
+Shawn.
