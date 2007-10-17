@@ -1,79 +1,76 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Wed, 17 Oct 2007 18:10:55 +0200
-Message-ID: <200710171810.56215.robin.rosenberg.lists@dewire.com>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <ee77f5c20710152307n48431a6eu5dc95ee504968e4e@mail.gmail.com> <856417h9cj.fsf@lola.goethe.zz>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: On Tabs and Spaces
+Date: Wed, 17 Oct 2007 18:08:14 +0200
+Message-ID: <86sl49g1w1.fsf@lola.quinscape.zz>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>  =?ISO-8859-1?Q?=20=04?=
+	=?ISO-8859-1?Q?<B2F6DB0C-4EFE-4?= =?ISO-8859-1?Q?C56-8E7A-3182032?=
+	=?ISO-8859-1?Q?0CA02@mit.edu>?= <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org> <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?20071017015109=04.?= =?ISO-8859-1?Q?303760cc@localho?=
+	=?ISO-8859-1?Q?st.localdomain>?= <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "David Symonds" <dsymonds@gmail.com>,
-	"Geert Bosch" <bosch@adacore.com>,
-	"Wincent Colaiuta" <win@wincent.com>,
-	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
-	"Marius Storm-Olsen" <marius@trolltech.com>,
-	"Christian Couder" <chriscool@tuxfamily.org>,
-	=?iso-8859-1?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	"Junio Hamano" <junkio@cox.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 18:10:10 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 17 18:14:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiBS2-00078A-Um
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 18:08:55 +0200
+	id 1IiBXn-0000kp-Sd
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 18:14:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935348AbXJQQI3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 12:08:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935592AbXJQQI1
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 12:08:27 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:3101 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1765576AbXJQQIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 12:08:24 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id AFF09146E993;
-	Wed, 17 Oct 2007 17:59:45 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 13000-05; Wed, 17 Oct 2007 17:59:45 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 4B5FD82758E;
-	Wed, 17 Oct 2007 17:59:45 +0200 (CEST)
-User-Agent: KMail/1.9.6
-In-Reply-To: <856417h9cj.fsf@lola.goethe.zz>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S933663AbXJQQOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 12:14:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936205AbXJQQOm
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 12:14:42 -0400
+Received: from main.gmane.org ([80.91.229.2]:50599 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S936185AbXJQQOk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 12:14:40 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiBV8-0008AS-0C
+	for git@vger.kernel.org; Wed, 17 Oct 2007 16:12:06 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:12:05 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:12:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:e+lS7FmmlnGva9F9Cn9t2DeEBAo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61389>
 
-tisdag 16 oktober 2007 skrev David Kastrup:
-> "David Symonds" <dsymonds@gmail.com> writes:
-> 
-> > On 16/10/2007, David Kastrup <dak@gnu.org> wrote:
-> >> Geert Bosch <bosch@adacore.com> writes:
-> >>
-> >> > On Oct 15, 2007, at 13:53, David Symonds wrote:
-> >> >> That's also why I suggested "skip"; you might not be able to test a
-> >> >> particular commit, but you might also not *want* to test a particular
-> >> >> commit for some reason.
-> >> >
-> >> > Skip seems a great choice: it directly expresses the wish to
-> >> > not consider a certain commit. The reason is unimportant.
-> >>
-> >> But it is an _action_, while "good" and "bad" are properties.
-> >
-> > "skipped", then.
-> 
-> "good" and "bad" are descriptive.  "to be skipped" would be necessary
-> to fit it.
+Luke Lu <git@vicaya.com> writes:
 
-Yet another very short word: void.
+> But I still haven't seen any compelling arguments against the "all
+> space" case, other than "people will screw it up into mixed spaces",
+> which is really a straw man, as many multi-platform projects
+> enforced the all-space policy easily by using a pre-commit hook in
+> maintainers' repository.
 
-I'm thinking about ticket copies that sometimes are marked "void" so you cannot use it.
+All-space indentation renders the binary delta algorithm git uses for
+compression of packs slow and partly inoperative (all sequences of 16
+spaces share the same finger print, and the number of identical finger
+prints for which the file information is kept is reduced to 64).
 
--- robin
+> The only downside of all-space is a moderate space bloat in source,
+> which is insignificant, all things considered.
+
+It will also slow down git's packing and make it produce worse
+results.
+
+> I agree that "8-character tabs are the gold standard", only for the
+> tabstop==8 part but not the indent==tab part. For me the question
+> is: is it really so unreasonable to just say "all-space is the holy
+> grail"?
+
+Yes.
+
+-- 
+David Kastrup
