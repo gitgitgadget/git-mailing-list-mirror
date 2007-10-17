@@ -1,67 +1,90 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [QGIT4 PATCH] Add --no-color option to several calls to git
-Date: Thu, 18 Oct 2007 01:38:29 +0200
-Message-ID: <e5bfff550710171638l26d3e55ej9dc8b38f8aee7592@mail.gmail.com>
-References: <1192643649-18908-1-git-send-email-ya@slamail.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 00:44:22 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710180040320.25221@racer.site>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+ <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+ <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
+ <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+ <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+ <20071017015109.303760cc@localhost.localdomain>
+ <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+ <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+ <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+ <1192645509.6640.21.camel@athena> <alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>
+ <1192649598.6640.44.camel@athena> <alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>
+ <20071017232146.4b9e4097@localhost.localdomain> <Pine.LNX.4.64.0710172310270.25221@racer.site>
+ <20071018011734.7b636141@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Yaacov Akiba Slama" <ya@slamail.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:38:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
+To: Christer Weinigel <christer@weinigel.se>
+X-From: git-owner@vger.kernel.org Thu Oct 18 01:44:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiITQ-0006uF-5G
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:38:48 +0200
+	id 1IiIZC-0007sE-5w
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:44:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759499AbXJQXig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 19:38:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759303AbXJQXif
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:38:35 -0400
-Received: from ag-out-0708.google.com ([72.14.246.246]:28360 "EHLO
-	ag-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758843AbXJQXie (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 19:38:34 -0400
-Received: by ag-out-0708.google.com with SMTP id 35so2110121aga
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 16:38:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=6CdufvdPw8V32gKu6v/w28YFtpp5M8JZAcIH9ifE8Aw=;
-        b=AAXTh6b/V77r8k4RqDwTeN6Elgyr11QQSF3rIzyIFXy3f9umsHRu7zUYj1I4vn+nGt/ORg6zfUa0QDC4Kp6vxPMvBdIgpGX9e6a4lmnfmAgLvsjtG2qVtt+p/ArEreESYBaUFqjgEr2EQiAFjOtBuEnW4FpKl7ExfO45QMQPZuI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZMAP9V95aBq5CXGdSgxEf8ItlKwavhwyy8ZZ+MMoihodElGA3e+eaMAsOqmw/ASk7zsoYkSr1+JUAFND2DgfG2yaM5uTAa4PmaPseWrouxBaLHX7x2jCdf34a/HhToUlsjP2/7clv6thGBb0aWrH0UspfHQ7AKfsyDehlXGgG7o=
-Received: by 10.140.186.20 with SMTP id j20mr3267374rvf.1192664309427;
-        Wed, 17 Oct 2007 16:38:29 -0700 (PDT)
-Received: by 10.140.185.19 with HTTP; Wed, 17 Oct 2007 16:38:29 -0700 (PDT)
-In-Reply-To: <1192643649-18908-1-git-send-email-ya@slamail.org>
-Content-Disposition: inline
+	id S1759025AbXJQXof (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 19:44:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758635AbXJQXof
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:44:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47140 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1757574AbXJQXoe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 19:44:34 -0400
+Received: (qmail invoked by alias); 17 Oct 2007 23:44:32 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp036) with SMTP; 18 Oct 2007 01:44:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18woyByv6Ew255UUkhNqGlAV3Xdt3f2wGqzQuPNGT
+	lK8x99ce5E6m6P
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071018011734.7b636141@localhost.localdomain>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61442>
 
-On 10/17/07, Yaacov Akiba Slama <ya@slamail.org> wrote:
-> Setting "diff.color = true" in the configuration makes
-> the output of several git commands use color codes.
-> The color codes aren't parsed by qgit, so adds the --no-color" option
-> to the calls of these git commmands.
->
-> Signed-off-by: Yaacov Akiba Slama <ya@slamail.org>
-> ---
+Hi,
 
-Thanks for the patch I will apply probably this week-end.
+On Thu, 18 Oct 2007, Christer Weinigel wrote:
 
-Probably a point release both for qgit-2.0 and qgit-1.5.7 will be
-needed. This is a new feature of git that could break current qgit.
+> On Wed, 17 Oct 2007 23:11:37 +0100 (BST)
+> Johannes Schindelin <Johannes.w@gmx.de> wrote:
+> 
+> > On Wed, 17 Oct 2007, Christer Weinigel wrote:
+> > 
+> > > I think you would get at lot less argument if you weren't so damn 
+> > > self righteous about it.
+> > 
+> > Why is it that in this thread, people whom I have heard _nothing_ of 
+> > before seem to think this would be a good time to let their opinion
+> > be heard?  Now, _that_ is what I call righteous.  Show nothing but
+> > opinion.
+> 
+> I'm not that invisible am I?
+> 
+>     cd linux-2.6.22.7
+>     find . -type f | xargs egrep -il "weinigel" | wc -l
+>     17
 
-Could you please confirm me that with this patch qgit works flawless
-for you when "diff.color = true", I' m worried to push a new point
-release just to discover we need to fix some more.
+File or directory not found.
 
-Thanks
-Marco
+We are not Linux specific here.  Besides, I was talking about _git_ source 
+code, just in case I did not make myself clear.
+
+> [...] and privately I use CVS just because I started using CVS ten years 
+> ago and haven't bothered to change.
+
+I wonder why you have to leave your hideout and comment on the source code 
+of _git_, then.  I mean, why do _you_ care?  (It should have become 
+apparent to you that _we_ care, so it looks even more like you wanted to 
+dictate a policy on git, which you have no business with.)
+
+Puzzled, and a little unnerved,
+Dscho
