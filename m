@@ -1,204 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] Teach "git reflog" a subcommand to delete single entries
-Date: Wed, 17 Oct 2007 02:50:45 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710170249260.25221@racer.site>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: revised: [PATCH] Color support added to git-add--interactive.
+Date: Tue, 16 Oct 2007 21:51:52 -0400
+Message-ID: <20071017015152.GN13801@spearce.org>
+References: <471045DA.5050902@gmail.com> <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 17 03:51:07 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Dan Zwell <dzwell@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 03:52:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihy3u-0002nu-EE
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 03:51:06 +0200
+	id 1Ihy52-0002vG-6w
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 03:52:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761669AbXJQBuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 21:50:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761546AbXJQBuz
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 21:50:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41125 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761540AbXJQBuy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 21:50:54 -0400
-Received: (qmail invoked by alias); 17 Oct 2007 01:50:52 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 17 Oct 2007 03:50:52 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/nrYAni4HnoS5IXImJC+pY0D1lKWdBuW2gbCo4W4
-	0FIPigjMc5RIHD
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1761536AbXJQBwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 21:52:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760560AbXJQBwF
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 21:52:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:50876 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761989AbXJQBwE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 21:52:04 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ihy4U-0005id-Un; Tue, 16 Oct 2007 21:51:43 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 0D76C20FBAE; Tue, 16 Oct 2007 21:51:52 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20071016194709.3c1cb3a8@danzwell.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61305>
 
+Dan Zwell <dzwell@gmail.com> wrote:
+> Adds color to the prompts and output of git-add--interactive.
 
-This commit implements the "delete" subcommand:
+I'm probbaly going to publish this in `pu` tonight but I have some
+comments that I think need to be addressed before this graduates
+any further.
 
-	git reflog delete master@{2}
+First off, no Signed-off-by?  This is big enough that I refuse to
+put it in the main tree without one.  Second it would really have
+helped if the email was formatted with `git format-patch`.  Copying
+the message headers and body over for the commit message was less
+than fun.  I have better things to do with my time.
+ 
+> +color.interactive.<slot>::
+> +        Use customized color for add--interactive output. `<slot>`
 
-will delete the second reflog entry of the "master" branch.
+You probably should talk about `git add --interactive` as that
+is what the git-add documentation calls it.  Many end-users don't
+even know that `git add -i` is exec()'ing into another program to
+accomplish its task.  I fixed this up when I applied the patch.
 
-With this, it should be easy to implement "git stash pop" everybody
-seems to want these days.
+> +Note: these are not the same colors/attributes that the
+> +rest of git supports, but are specific to git-add--interactive.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Documentation/git-reflog.txt |    5 +++
- builtin-reflog.c             |   59 ++++++++++++++++++++++++++++++++++++++++++
- t/t1410-reflog.sh            |   26 ++++++++++++++++++
- 3 files changed, 90 insertions(+), 0 deletions(-)
+This is a problem in my opinion.  Why can't it match the same
+names that the C code recognizes?  What if we one day were to
+see git-add--interactive.perl converted to C?  How would we then
+reconcile the color handling at that point in time?
 
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index 5c7316c..a0c7cee 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -19,6 +19,8 @@ depending on the subcommand:
- git reflog expire [--dry-run] [--stale-fix] [--verbose]
- 	[--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...
- 
-+git reflog delete ref@\{specifier\}...
-+
- git reflog [show] [log-options]
- 
- Reflog is a mechanism to record when the tip of branches are
-@@ -36,6 +38,9 @@ subcommands) will take all the normal log options, and show the log of
- It is basically an alias for 'git log -g --abbrev-commit
- --pretty=oneline', see gitlink:git-log[1].
- 
-+To delete single entries from the reflog, use the subcommand "delete"
-+and specify the _exact_ entry (e.g. ``git reflog delete master@\{2\}'').
-+
- 
- OPTIONS
- -------
-diff --git a/builtin-reflog.c b/builtin-reflog.c
-index ce093ca..f422693 100644
---- a/builtin-reflog.c
-+++ b/builtin-reflog.c
-@@ -25,6 +25,7 @@ struct cmd_reflog_expire_cb {
- 	int verbose;
- 	unsigned long expire_total;
- 	unsigned long expire_unreachable;
-+	int recno;
- };
- 
- struct expire_reflog_cb {
-@@ -220,6 +221,9 @@ static int expire_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
- 			goto prune;
- 	}
- 
-+	if (cb->cmd->recno && --(cb->cmd->recno) == 0)
-+		goto prune;
-+
- 	if (cb->newlog) {
- 		char sign = (tz < 0) ? '-' : '+';
- 		int zone = (tz < 0) ? (-tz) : tz;
-@@ -363,6 +367,58 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix)
- 	return status;
- }
- 
-+static int count_reflog_ent(unsigned char *osha1, unsigned char *nsha1,
-+		const char *email, unsigned long timestamp, int tz,
-+		const char *message, void *cb_data)
-+{
-+	struct cmd_reflog_expire_cb *cb = cb_data;
-+	if (!cb->expire_total || timestamp < cb->expire_total)
-+		cb->recno++;
-+	return 0;
-+}
-+
-+static int cmd_reflog_delete(int argc, const char **argv, const char *prefix)
-+{
-+	struct cmd_reflog_expire_cb cb;
-+	int i, status = 0;
-+
-+	if (argc < 2)
-+		return error("Nothing to delete?");
-+
-+	memset(&cb, 0, sizeof(cb));
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *spec = strstr(argv[i], "@{");
-+		unsigned char sha1[20];
-+		char *ep, *ref;
-+		int recno;
-+
-+		if (!spec) {
-+			status |= error("Not a reflog: %s", ref);
-+			continue;
-+		}
-+
-+		if (!dwim_ref(argv[i], spec - argv[i], sha1, &ref)) {
-+			status |= error("%s points nowhere!", argv[i]);
-+			continue;
-+		}
-+
-+		recno = strtoul(spec + 2, &ep, 10);
-+		if (*ep == '}') {
-+			cb.recno = -recno;
-+			for_each_reflog_ent(ref, count_reflog_ent, &cb);
-+		} else {
-+			cb.expire_total = approxidate(spec + 2);
-+			for_each_reflog_ent(ref, count_reflog_ent, &cb);
-+			cb.expire_total = 0;
-+		}
-+
-+		status |= expire_reflog(ref, sha1, 0, &cb);
-+		free(ref);
-+	}
-+	return status;
-+}
-+
- /*
-  * main "reflog"
-  */
-@@ -382,6 +438,9 @@ int cmd_reflog(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[1], "expire"))
- 		return cmd_reflog_expire(argc - 1, argv + 1, prefix);
- 
-+	if (!strcmp(argv[1], "delete"))
-+		return cmd_reflog_delete(argc - 1, argv + 1, prefix);
-+
- 	/* Not a recognized reflog command..*/
- 	usage(reflog_usage);
- }
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index e5bbc38..12a53ed 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -175,4 +175,30 @@ test_expect_success 'recover and check' '
- 
- '
- 
-+test_expect_success 'delete' '
-+	echo 1 > C &&
-+	test_tick &&
-+	git commit -m rat C &&
-+
-+	echo 2 > C &&
-+	test_tick &&
-+	git commit -m ox C &&
-+
-+	echo 3 > C &&
-+	test_tick &&
-+	git commit -m tiger C &&
-+
-+	test 5 = $(git reflog | wc -l) &&
-+
-+	git reflog delete master@{1} &&
-+	git reflog show master > output &&
-+	test 4 = $(wc -l < output) &&
-+	! grep ox < output &&
-+
-+	git reflog delete master@{07.04.2005.15:15:00.-0700} &&
-+	git reflog show master > output &&
-+	test 3 = $(wc -l < output) &&
-+	! grep dragon < output
-+'
-+
- test_done
 -- 
-1.5.3.4.1223.ga973c
+Shawn.
