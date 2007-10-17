@@ -1,73 +1,73 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 19:05:21 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710171903340.25221@racer.site>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
- <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
- <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
- <20071017015109.303760cc@localhost.localdomain>
- <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
- <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
- <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Wed, 17 Oct 2007 19:10:37 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710171906280.25221@racer.site>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+ <20071017073538.GB13801@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Luke Lu <git@vicaya.com>, Christer Weinigel <christer@weinigel.se>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 17 20:06:14 2007
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Junio Hamano <junkio@cox.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 20:11:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiDHD-00039A-2F
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 20:05:53 +0200
+	id 1IiDMA-0004QT-6y
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 20:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516AbXJQSFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 14:05:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755943AbXJQSFj
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 14:05:39 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51479 "HELO mail.gmx.net"
+	id S1756678AbXJQSKs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 14:10:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756067AbXJQSKs
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 14:10:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:46652 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753464AbXJQSFi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 14:05:38 -0400
-Received: (qmail invoked by alias); 17 Oct 2007 18:05:36 -0000
+	id S1755813AbXJQSKr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 14:10:47 -0400
+Received: (qmail invoked by alias); 17 Oct 2007 18:10:45 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp031) with SMTP; 17 Oct 2007 20:05:36 +0200
+  by mail.gmx.net (mp021) with SMTP; 17 Oct 2007 20:10:45 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/yes1ijzfy1qGooBYV8JDrYnlemALR8LoG0GAXbo
-	ZXJzmsGuM3Ve+N
+X-Provags-ID: V01U2FsdGVkX1+2jpYoCP627skn2n3BCdPl8/QY5DkpZPkWQOi9Ig
+	0A+eNj1kzKqe1N
 X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+In-Reply-To: <20071017073538.GB13801@spearce.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61403>
 
 Hi,
 
-On Wed, 17 Oct 2007, Linus Torvalds wrote:
+On Wed, 17 Oct 2007, Shawn O. Pearce wrote:
 
-> On Wed, 17 Oct 2007, Luke Lu wrote:
+> Christian Couder <chriscool@tuxfamily.org> wrote:
+> > Here is my bisect dunno patch series again.
+> > The changes since last time are the following:
 > 
-> > As I mentioned, an all-space policy is trivial to enforce.
-> 
-> Hell no, it's not.
-> 
-> More importantly, I can guarantee that certain developers will refuse to 
-> be part of such a project with such an idiotic design that eats 
-> disk-space for no gain, and makes it impossible for me to use my normal 
-> editor.
+> I now have this series queued in my pu branch.  It passes the tests
+> it comes with, and doesn't appear to break anything, but apparently
+> there is also still some debate about what a dunno should be called
+> ("unknown", "void", "ugly", "dunno", "skip" ...).
 
-Yes.  Me, for one.
+AFAICT these are all bikeshed painting arguments, not technical arguments.  
+I was initially opposed to having --bisect-all, wanting to have 
+--bisect-dunno <ref>...
 
-But heck, _everyone_ is free to fork.  That is one of the missions of git: 
-"fork!".  You can maintain you tab-less fork, until people flock to you, 
-deciding to use your repo instead of Junio's, or Shawn's.  If enough 
-people decide, you will have more followers than the others.
+But in the end, the people doing the work decide, and therefore I am fine 
+with --bisect-all, especially since it seems clean enough for me.
+
+As for all those "dunno is no English"...  I'd first merge the technical 
+part (i.e. what you have now in pu), and then let the discussion about 
+which synonyms to choose continue, until a consensus is formed about other 
+names (if there is a consensus at all!).
+
+IMHO there is no reason to hold of the fine work of Christian, just 
+because there are non-technical arguments still in the air.
+
+I want bisect dunno.  Even if there is another name later.
 
 Ciao,
 Dscho
