@@ -1,53 +1,107 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Teach "git reflog" a subcommand to delete single entries
-Date: Wed, 17 Oct 2007 11:24:50 +0200
-Message-ID: <09CDCBB0-35F1-429C-8470-6020D481F452@wincent.com>
-References: <Pine.LNX.4.64.0710170249260.25221@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 11:25:45 2007
+From: Jonathan del Strother <maillist@steelskies.com>
+Subject: [PATCH 1/2] Fixing path quoting in git-rebase
+Date: Wed, 17 Oct 2007 10:31:35 +0100
+Message-ID: <11926134961549-git-send-email-maillist@steelskies.com>
+References: <B495731E-C854-450B-943B-B96248B8F609@steelskies.com>
+ <11926134961610-git-send-email-maillist@steelskies.com>
+Cc: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 17 11:31:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii59s-0003i3-Cm
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 11:25:44 +0200
+	id 1Ii5Fn-0004q0-79
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 11:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754980AbXJQJZb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2007 05:25:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754656AbXJQJZa
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 05:25:30 -0400
-Received: from wincent.com ([72.3.236.74]:54512 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754213AbXJQJZa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 05:25:30 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9H9POpL017072;
-	Wed, 17 Oct 2007 04:25:25 -0500
-In-Reply-To: <Pine.LNX.4.64.0710170249260.25221@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757742AbXJQJbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 05:31:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757637AbXJQJbk
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 05:31:40 -0400
+Received: from gir.office.bestbefore.tv ([89.105.122.147]:53719 "EHLO
+	gir.office.bestbefore.tv" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754932AbXJQJbi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 05:31:38 -0400
+Received: by gir.office.bestbefore.tv (Postfix, from userid 501)
+	id 68A742B97FE; Wed, 17 Oct 2007 10:31:36 +0100 (BST)
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <11926134961610-git-send-email-maillist@steelskies.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61357>
 
-El 17/10/2007, a las 3:50, Johannes Schindelin escribi=F3:
+From: Jonathan del Strother <jon.delStrother@bestbefore.tv>
 
-> This commit implements the "delete" subcommand:
->
-> 	git reflog delete master@{2}
->
-> will delete the second reflog entry of the "master" branch.
->
-> With this, it should be easy to implement "git stash pop" everybody
-> seems to want these days.
+git-rebase used to fail when run from a path with a space in.
 
-Looks good to me. Thanks for taking the initiative, Johannes.
+Signed-off-by: Jonathan del Strother <jon.delStrother@bestbefore.tv>
+---
+ git-rebase.sh |   26 +++++++++++++-------------
+ 1 files changed, 13 insertions(+), 13 deletions(-)
 
-Cheers,
-Wincent
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 1583402..224cca9 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -59,7 +59,7 @@ continue_merge () {
+ 		die "$RESOLVEMSG"
+ 	fi
+ 
+-	cmt=`cat $dotest/current`
++	cmt=`cat "$dotest/current"`
+ 	if ! git diff-index --quiet HEAD
+ 	then
+ 		if ! git-commit -C "$cmt"
+@@ -84,14 +84,14 @@ continue_merge () {
+ }
+ 
+ call_merge () {
+-	cmt="$(cat $dotest/cmt.$1)"
++	cmt="$(cat "$dotest/cmt.$1")"
+ 	echo "$cmt" > "$dotest/current"
+ 	hd=$(git rev-parse --verify HEAD)
+ 	cmt_name=$(git symbolic-ref HEAD)
+-	msgnum=$(cat $dotest/msgnum)
+-	end=$(cat $dotest/end)
++	msgnum=$(cat "$dotest/msgnum")
++	end=$(cat "$dotest/end")
+ 	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
+-	eval GITHEAD_$hd='"$(cat $dotest/onto_name)"'
++	eval GITHEAD_$hd='$(cat "$dotest/onto_name")'
+ 	export GITHEAD_$cmt GITHEAD_$hd
+ 	git-merge-$strategy "$cmt^" -- "$hd" "$cmt"
+ 	rv=$?
+@@ -140,10 +140,10 @@ do
+ 		}
+ 		if test -d "$dotest"
+ 		then
+-			prev_head="`cat $dotest/prev_head`"
+-			end="`cat $dotest/end`"
+-			msgnum="`cat $dotest/msgnum`"
+-			onto="`cat $dotest/onto`"
++			prev_head=$(cat "$dotest/prev_head")
++			end=$(cat "$dotest/end")
++			msgnum=$(cat "$dotest/msgnum")
++			onto=$(cat "$dotest/onto")
+ 			continue_merge
+ 			while test "$msgnum" -le "$end"
+ 			do
+@@ -160,11 +160,11 @@ do
+ 		if test -d "$dotest"
+ 		then
+ 			git rerere clear
+-			prev_head="`cat $dotest/prev_head`"
+-			end="`cat $dotest/end`"
+-			msgnum="`cat $dotest/msgnum`"
++			prev_head=$(cat "$dotest/prev_head")
++			end=$(cat "$dotest/end")
++			msgnum=$(cat "$dotest/msgnum")
+ 			msgnum=$(($msgnum + 1))
+-			onto="`cat $dotest/onto`"
++			onto=$(cat "$dotest/onto")
+ 			while test "$msgnum" -le "$end"
+ 			do
+ 				call_merge "$msgnum"
+-- 
+1.5.3.1
