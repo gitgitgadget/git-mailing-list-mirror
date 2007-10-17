@@ -1,67 +1,108 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] fix filter-branch documentation
-Date: Wed, 17 Oct 2007 03:22:25 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710170322000.25221@racer.site>
+Subject: [PATCH 2/2] filter-branch: update current branch when rewritten
+Date: Wed, 17 Oct 2007 03:23:10 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710170322400.25221@racer.site>
 References: <18197.24051.863751.436705@lisa.zopyra.com>
+ <Pine.LNX.4.64.0710170322000.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
 To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 04:22:49 2007
+X-From: git-owner@vger.kernel.org Wed Oct 17 04:23:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhyYX-0007oG-Mo
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 04:22:46 +0200
+	id 1IhyZe-00082y-7r
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 04:23:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXJQCWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 22:22:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754103AbXJQCWe
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 22:22:34 -0400
-Received: from mail.gmx.net ([213.165.64.20]:55975 "HELO mail.gmx.net"
+	id S934358AbXJQCXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 22:23:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932483AbXJQCXV
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 22:23:21 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34186 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753617AbXJQCWd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 22:22:33 -0400
-Received: (qmail invoked by alias); 17 Oct 2007 02:22:31 -0000
+	id S965742AbXJQCXT (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 22:23:19 -0400
+Received: (qmail invoked by alias); 17 Oct 2007 02:23:17 -0000
 Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp037) with SMTP; 17 Oct 2007 04:22:31 +0200
+  by mail.gmx.net (mp031) with SMTP; 17 Oct 2007 04:23:17 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+eagFIMlSexpwLQ1lgDYPyVUSI9gqQkH9KTzo853
-	Nm3ClZ7F3mZyjq
+X-Provags-ID: V01U2FsdGVkX182SSZiuDw23YQmiNhDg/nyJyvJrshh7yMwJnMfXL
+	LLXNA9pPS3QJDu
 X-X-Sender: gene099@racer.site
-In-Reply-To: <18197.24051.863751.436705@lisa.zopyra.com>
+In-Reply-To: <Pine.LNX.4.64.0710170322000.25221@racer.site>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61316>
 
 
-The man page for filter-branch still talked about writing the result
-to the branch "newbranch".  This is hopefully the last place where the
-old behaviour was described.
-
-Noticed by Bill Lear.
+Earlier, "git filter-branch --<options> HEAD" would not update the
+working tree after rewriting the branch.  This commit fixes it.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-filter-branch.txt |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
-index c878ed3..ba9b4fb 100644
---- a/Documentation/git-filter-branch.txt
-+++ b/Documentation/git-filter-branch.txt
-@@ -180,8 +180,7 @@ A significantly faster version:
- git filter-branch --index-filter 'git update-index --remove filename' HEAD
- --------------------------------------------------------------------------
+	Bill, I hope this clarifies some things for you, too...
+
+ git-filter-branch.sh     |   15 +++++++++++++++
+ t/t7003-filter-branch.sh |    4 +++-
+ 2 files changed, 18 insertions(+), 1 deletions(-)
+
+diff --git a/git-filter-branch.sh b/git-filter-branch.sh
+index a12f6c2..ffcc408 100755
+--- a/git-filter-branch.sh
++++ b/git-filter-branch.sh
+@@ -94,6 +94,10 @@ USAGE="[--env-filter <command>] [--tree-filter <command>] \
  
--Now, you will get the rewritten history saved in the branch 'newbranch'
--(your current branch is left untouched).
-+Now, you will get the rewritten history saved in HEAD.
+ . git-sh-setup
  
- To set a commit (which typically is at the tip of another
- history) to be the parent of the current initial commit, in
++git diff-files --quiet &&
++	git diff-index --cached --quiet HEAD ||
++	die "Cannot rewrite branch(es) with a dirty working directory."
++
+ tempdir=.git-rewrite
+ filter_env=
+ filter_tree=
+@@ -196,6 +200,9 @@ do
+ 	esac
+ done < "$tempdir"/backup-refs
+ 
++ORIG_GIT_DIR="$GIT_DIR"
++ORIG_GIT_WORK_TREE="$GIT_WORK_TREE"
++ORIG_GIT_INDEX_FILE="$GIT_INDEX_FILE"
+ export GIT_DIR GIT_WORK_TREE=.
+ 
+ # These refs should be updated if their heads were rewritten
+@@ -413,4 +420,12 @@ echo
+ test $count -gt 0 && echo "These refs were rewritten:"
+ git show-ref | grep ^"$orig_namespace"
+ 
++unset GIT_DIR GIT_WORK_TREE GIT_INDEX_FILE
++test -z "$ORIG_GIT_DIR" || GIT_DIR="$ORIG_GIT_DIR" && export GIT_DIR
++test -z "$ORIG_GIT_WORK_TREE" || GIT_WORK_TREE="$ORIG_GIT_WORK_TREE" &&
++	export GIT_WORK_TREE
++test -z "$ORIG_GIT_INDEX_FILE" || GIT_INDEX_FILE="$ORIG_GIT_INDEX_FILE" &&
++	export GIT_INDEX_FILE
++git read-tree -u -m HEAD
++
+ exit $ret
+diff --git a/t/t7003-filter-branch.sh b/t/t7003-filter-branch.sh
+index e935b20..2089351 100755
+--- a/t/t7003-filter-branch.sh
++++ b/t/t7003-filter-branch.sh
+@@ -41,7 +41,9 @@ test_expect_success 'rewrite, renaming a specific file' '
+ '
+ 
+ test_expect_success 'test that the file was renamed' '
+-	test d = $(git show HEAD:doh)
++	test d = $(git show HEAD:doh) &&
++	test -f doh &&
++	test d = $(cat doh)
+ '
+ 
+ git tag oldD HEAD~4
 -- 
 1.5.3.4.1223.ga973c
