@@ -1,103 +1,109 @@
-From: David <davvid@gmail.com>
-Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 20:41:34 -0700
-Message-ID: <402731c90710162041q457c7dd3tf906ba0c6faf29ca@mail.gmail.com>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-	 <20071016070421.GE13801@spearce.org>
-	 <11F85069-1013-4685-9D56-C53F0F8231BF@MIT.EDU>
-	 <4714F2CA.5000509@op5.se> <20071016174026.GA506@uranus.ravnborg.org>
-	 <20071016230952.GA18099@machine.or.cz>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Petr Baudis" <pasky@suse.cz>
-X-From: git-owner@vger.kernel.org Wed Oct 17 05:41:50 2007
+From: Luke Lu <git@vicaya.com>
+Subject: [PATCH] gitweb: speed up project listing on large work trees by limiting find depth
+Date: Tue, 16 Oct 2007 20:45:25 -0700
+Message-ID: <1192592725-28143-1-git-send-email-git@vicaya.com>
+Cc: pasky@suse.cz, spearce@spearce.org, Luke Lu <git@vicaya.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 17 05:46:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ihzn3-0001oL-Gb
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 05:41:49 +0200
+	id 1IhzrD-0002Nz-MF
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 05:46:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932620AbXJQDlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 23:41:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758291AbXJQDlh
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 23:41:37 -0400
-Received: from ug-out-1314.google.com ([66.249.92.174]:5022 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932620AbXJQDlg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Oct 2007 23:41:36 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so202476ugc
-        for <git@vger.kernel.org>; Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=PtFY7fcdqOXWcqAi8SS0sZu7UEKeyaha+mAhQQWGCb8=;
-        b=poa9eLbaAAzO3qR4Xh+okCl2qCkgGz0W1Fuc+lvCqMZ8st67WHOXJwmB18+JjQ4rtPmTIQ7K1S5X/msNQu9K5bDkGGemi3q83kDQWkg4RKitmd/3kc3c8EpAJpqxE2mCKKN5L7GvcaGtZtMXDoZs1zH3QMZbctJDOFWFzJ+p9qM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pUnE/e7i7N3sj40k1Oc0v+28UXp20E+V2XaIPrZdWsRrahU/NJUpm1bKHiLlGvpTFgEs0xAt/3QCER4K+H5V6Gb366GM2oKgY1tRsZpTS7rXqvagv/yv5WrA0hqsF0jcn4xrr9xfNjX1NVPbp6M30bgtqNOjxG1H8y5N7ZPd7bo=
-Received: by 10.66.225.17 with SMTP id x17mr117960ugg.1192592494715;
-        Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
-Received: by 10.67.118.1 with HTTP; Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
-In-Reply-To: <20071016230952.GA18099@machine.or.cz>
-Content-Disposition: inline
+	id S1754776AbXJQDp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 23:45:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754553AbXJQDp4
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 23:45:56 -0400
+Received: from rwcrmhc13.comcast.net ([216.148.227.153]:57257 "EHLO
+	rwcrmhc13.comcast.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752642AbXJQDp4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 23:45:56 -0400
+Received: from localhost.localdomain (c-98-207-63-2.hsd1.ca.comcast.net[98.207.63.2])
+          by comcast.net (rwcrmhc13) with SMTP
+          id <20071017034554m1300ohq5oe>; Wed, 17 Oct 2007 03:45:55 +0000
+X-Mailer: git-send-email 1.5.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61326>
 
-On 10/16/07, Petr Baudis <pasky@suse.cz> wrote:
-> On Tue, Oct 16, 2007 at 07:40:26PM +0200, Sam Ravnborg wrote:
-> > Tabs should be used for indent and not general alignment.
-> >
-> > Consider:
-> > <tab>if (some long condition that
-> > <tab>....&& spans two lines) {
-> > <tab><tab>my_private_printf("bla bla bla"
-> > <tab><tab>.................."more bla bla\n");
-> > <tab><tab>}
-> >
-> > This will look good and align "more bla bla\n" as
-> > intended no matter your tab setting.
-> > But replacing the 8 spaces with a tab will
-> > cause it to look bad.
->
-> I'd so much love to have this and sometimes do this even manually, but
-> does anyone have an idea how to make vim do this for me? I never got
-> around to investigate this in depth or possibly make a patch...
->
-> --
->                                 Petr "Pasky" Baudis
-> Early to rise and early to bed makes a male healthy and wealthy and dead.
->                 -- James Thurber
+Resubmitting patch after passing gitweb regression tests.
 
+Signed-off-by: Luke Lu <git@vicaya.com>
+---
+ Makefile                               |    2 ++
+ gitweb/gitweb.perl                     |   10 ++++++++++
+ t/t9500-gitweb-standalone-no-errors.sh |    1 +
+ 3 files changed, 13 insertions(+), 0 deletions(-)
 
-Hello
-I use both vim and emacs so I must be weird.
-Anyways, here's some useful vim settings that I've come across:
-
-set tabstop=8
-set softtabstop=8
-set shiftwidth=8
-set noexpandtab
-set list
-set listchars=<tab>:.\
-
-The last two are extremely useful, especially if you're hacking on
-python.  That's
-listchars=(less-than)tab(greater-than)(colon)(dot)(backslash)(space)
-(don't forget the space!).
-
-That makes vim display tabs with a "." indicator, so you have a very
-clear view of when tabs are in use.  This has helped me countless
-times.
-
-You can use any character in there instead of dot.  I actually use an
-extended ascii character since it looks nicer but I didn't want to
-risk email mangling it.
-
+diff --git a/Makefile b/Makefile
+index 8db4dbe..3e9938e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -165,6 +165,7 @@ GITWEB_CONFIG = gitweb_config.perl
+ GITWEB_HOME_LINK_STR = projects
+ GITWEB_SITENAME =
+ GITWEB_PROJECTROOT = /pub/git
++GITWEB_PROJECT_MAXDEPTH = 2007
+ GITWEB_EXPORT_OK =
+ GITWEB_STRICT_EXPORT =
+ GITWEB_BASE_URL =
+@@ -831,6 +832,7 @@ gitweb/gitweb.cgi: gitweb/gitweb.perl
+ 	    -e 's|++GITWEB_HOME_LINK_STR++|$(GITWEB_HOME_LINK_STR)|g' \
+ 	    -e 's|++GITWEB_SITENAME++|$(GITWEB_SITENAME)|g' \
+ 	    -e 's|++GITWEB_PROJECTROOT++|$(GITWEB_PROJECTROOT)|g' \
++	    -e 's|"++GITWEB_PROJECT_MAXDEPTH++"|$(GITWEB_PROJECT_MAXDEPTH)|g' \
+ 	    -e 's|++GITWEB_EXPORT_OK++|$(GITWEB_EXPORT_OK)|g' \
+ 	    -e 's|++GITWEB_STRICT_EXPORT++|$(GITWEB_STRICT_EXPORT)|g' \
+ 	    -e 's|++GITWEB_BASE_URL++|$(GITWEB_BASE_URL)|g' \
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 3064298..48e21da 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -35,6 +35,10 @@ our $GIT = "++GIT_BINDIR++/git";
+ #our $projectroot = "/pub/scm";
+ our $projectroot = "++GITWEB_PROJECTROOT++";
+ 
++# fs traversing limit for getting project list
++# the number is relative to the projectroot
++our $project_maxdepth = "++GITWEB_PROJECT_MAXDEPTH++";
++
+ # target of the home link on top of all pages
+ our $home_link = $my_uri || "/";
+ 
+@@ -1509,6 +1513,7 @@ sub git_get_projects_list {
+ 		# remove the trailing "/"
+ 		$dir =~ s!/+$!!;
+ 		my $pfxlen = length("$dir");
++		my $pfxdepth = ($dir =~ tr!/!!);
+ 
+ 		File::Find::find({
+ 			follow_fast => 1, # follow symbolic links
+@@ -1519,6 +1524,11 @@ sub git_get_projects_list {
+ 				return if (m!^[/.]$!);
+ 				# only directories can be git repositories
+ 				return unless (-d $_);
++				# don't traverse too deep (Find is super slow on os x)
++				if (($File::Find::name =~ tr!/!!) - $pfxdepth > $project_maxdepth) {
++					$File::Find::prune = 1;
++					return;
++				}
+ 
+ 				my $subdir = substr($File::Find::name, $pfxlen + 1);
+ 				# we check related file in $projectroot
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 642b836..f7bad5b 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -18,6 +18,7 @@ gitweb_init () {
+ our \$version = "current";
+ our \$GIT = "git";
+ our \$projectroot = "$(pwd)";
++our \$project_maxdepth = 8;
+ our \$home_link_str = "projects";
+ our \$site_name = "[localhost]";
+ our \$site_header = "";
 -- 
-    David
+1.5.3.4
