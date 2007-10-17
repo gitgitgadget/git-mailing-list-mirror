@@ -1,87 +1,126 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Wed, 17 Oct 2007 15:59:04 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710171553580.26902@woody.linux-foundation.org>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
- <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
- <200710150902.52653.johan@herland.net> <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
- <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
- <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com>
- <85ve98gl57.fsf@lola.goethe.zz>
+From: Christer Weinigel <christer@weinigel.se>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 01:17:34 +0200
+Message-ID: <20071018011734.7b636141@localhost.localdomain>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+	<47148F72.1090602@users.sourceforge.net>
+	<1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+	<3awb7zw6.fsf@blue.sea.net>
+	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+	<1192565900.6430.16.camel@athena>
+	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+	<20071017015109.303760cc@localhost.localdomain>
+	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+	<alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+	<1192645509.6640.21.camel@athena>
+	<alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>
+	<1192649598.6640.44.camel@athena>
+	<alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>
+	<20071017232146.4b9e4097@localhost.localdomain>
+	<Pine.LNX.4.64.0710172310270.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Geert Bosch <bosch@adacore.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio Hamano <junkio@cox.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:01:16 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 18 01:17:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiHsv-00014O-1c
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:01:05 +0200
+	id 1IiI8z-0003in-At
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:17:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759864AbXJQXAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 19:00:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760163AbXJQXAe
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:00:34 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54769 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759146AbXJQXAc (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 19:00:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HMx6xN000326
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Oct 2007 15:59:07 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HMx4pW012595;
-	Wed, 17 Oct 2007 15:59:04 -0700
-In-Reply-To: <85ve98gl57.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-3.217 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1758600AbXJQXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 19:17:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754696AbXJQXR3
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:17:29 -0400
+Received: from 2-1-3-15a.ens.sth.bostream.se ([82.182.31.214]:45800 "EHLO
+	zoo.weinigel.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756800AbXJQXR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 19:17:28 -0400
+Received: from localhost.localdomain (grue.localnet [10.128.0.1])
+	by zoo.weinigel.se (Postfix) with ESMTP id BE37F1240902;
+	Thu, 18 Oct 2007 01:17:26 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0710172310270.25221@racer.site>
+X-Mailer: Claws Mail 2.9.1 (GTK+ 2.10.13; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61437>
 
+On Wed, 17 Oct 2007 23:11:37 +0100 (BST)
+Johannes Schindelin <Johannes.w@gmx.de> wrote:
 
-
-On Mon, 15 Oct 2007, David Kastrup wrote:
-
-> Geert Bosch <bosch@adacore.com> writes:
+> Hi,
 > 
-> > On Oct 15, 2007, at 13:53, David Symonds wrote:
-> >> That's also why I suggested "skip"; you might not be able to test a
-> >> particular commit, but you might also not *want* to test a particular
-> >> commit for some reason.
-> >
-> > Skip seems a great choice: it directly expresses the wish to
-> > not consider a certain commit. The reason is unimportant.
+> On Wed, 17 Oct 2007, Christer Weinigel wrote:
 > 
-> But it is an _action_, while "good" and "bad" are properties.
+> > I think you would get at lot less argument if you weren't so damn
+> > self righteous about it.
+> 
+> Why is it that in this thread, people whom I have heard _nothing_ of 
+> before seem to think this would be a good time to let their opinion
+> be heard?  Now, _that_ is what I call righteous.  Show nothing but
+> opinion.
 
-Well, this has been debated to death, but I actually think that "skip" is 
-a good choice, exactly because it's an action.
+I'm not that invisible am I?
 
-"good" and "bad" do indeed describe properties of the commit, and are used 
-to describe the state of the tree in question. In contrast, "git bisect 
-skip" says not somethign about the state of that tree - it talks about 
-what we should *do* with that tree.
+    cd linux-2.6.22.7
+    find . -type f | xargs egrep -il "weinigel" | wc -l
+    17
 
-IOW, I think "git bisect skip" in some sense has more to do with an action 
-like "git bisect start", than with "good" or "bad". 
+Ahh, confirmation, I really do exist.  The earliest LSM entry I can find
+for myself is from 1995:
 
-(Yes, "good" and "bad" have an action associated with them too - namely to 
-start the next bisection event - but they are not named according to the 
-action they cause, but because they describe the tree state)
+http://www.ibiblio.org/pub/linux/kernel/patches/scanners/hpscan-0.1.1.5.lsm
 
-			Linus
+Mmm, nostalgia. :-)
+
+But yes, I haven't contributed anything to git so far, I mostly lurk
+on the mailing list and try to keep up with what's happening to git.
+In the beginning I sent a few ideas to the list (which quite sadly were
+ignored), but unfortunately I've been busy with paying work to do much
+with git after that.  And at work we use Perforce (yuk) or Subversion
+(a lot nicer than Perforce) and privately I use CVS just because I
+started using CVS ten years ago and haven't bothered to change.  And
+when I'm free I prefer to hack on hardware or device drivers instead.
+
+The reason I wrote my first mail in this thread is that I work in a
+different environment than Linus does and wanted to share that
+experience.  I usually work with embedded programming, where people use
+lots of different editors and in mixed environments.  Some people use
+Visual Studio on Windows because that's what they use for host
+programming, a lot of embedded development is done in the (almost
+invariably sucky) IDE that comes with the compilers for the embedded
+CPU, such as Microchips MPLAB or IAR Workbench, Eclipse is becoming
+quite popular for C development, Slickedit is also popular on Windows,
+a colleague prefers nedit for some strange reason, and so on. In such a
+heterogeneous environment the easiest way to make sure that people see
+the same indentation in all editors is to just tell them to use spaces
+for indentation, and I think that every editor I just mentioned has a
+setting to do that automatically.  Microemacs is the odd one out in
+that it doesn't support it.  And my employers haven't really been
+paying me to go on a crusade for the holy TAB is 8 spaces cause, they
+just want things done, so I've had to settle for a "good enough"
+solution which works most of the time. 
+
+So I just thought it was unfair of Linus to say that "use spaces"
+doesn't solve any problems, in some environments it does.  For the
+Linux kernel and Git, it's easier for the maintainer to enforce 
+the coding standards and since Linus and Junio prefer to use hard tabs,
+that are the rules that people who want to play with their toys
+have to adhere to.
+
+BTW, how serious is the problem with deltifying when there are a lot of
+spaces that David Kastrup mentioned?  It does sound like a quite
+serious problem if it has a big impact on the performance of Git.  Git
+isn't only used for the Linux kernel, so there has to be some projects
+that both use spaces for indentation and use Git out there.  Wouldn't
+it be a problem when people put ASCII graphics in comments or just have 
+comments like /*********************************/ in their code?
+
+  /Christer
