@@ -1,94 +1,103 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: David <davvid@gmail.com>
 Subject: Re: On Tabs and Spaces
-Date: Tue, 16 Oct 2007 20:29:01 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710162019150.26902@woody.linux-foundation.org>
+Date: Tue, 16 Oct 2007 20:41:34 -0700
+Message-ID: <402731c90710162041q457c7dd3tf906ba0c6faf29ca@mail.gmail.com>
 References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
- <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
- <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
- <20071017015109.303760cc@localhost.localdomain>
- <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
- <B01BBB60-6231-4AF6-9A64-10374464E442@mit.edu>
+	 <20071016070421.GE13801@spearce.org>
+	 <11F85069-1013-4685-9D56-C53F0F8231BF@MIT.EDU>
+	 <4714F2CA.5000509@op5.se> <20071016174026.GA506@uranus.ravnborg.org>
+	 <20071016230952.GA18099@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Oct 17 05:29:48 2007
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Oct 17 05:41:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IhzbP-0000Hi-Py
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 05:29:48 +0200
+	id 1Ihzn3-0001oL-Gb
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 05:41:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936358AbXJQD3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Oct 2007 23:29:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936350AbXJQD3J
-	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 23:29:09 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:33772 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S935824AbXJQD3F (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Oct 2007 23:29:05 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9H3T2Qe016542
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 16 Oct 2007 20:29:03 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9H3T24U031942;
-	Tue, 16 Oct 2007 20:29:02 -0700
-In-Reply-To: <B01BBB60-6231-4AF6-9A64-10374464E442@mit.edu>
-X-Spam-Status: No, hits=-2.668 required=5 tests=AWL,BAYES_00,OSDL_NIGERIAN_GOLD
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932620AbXJQDlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Oct 2007 23:41:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758291AbXJQDlh
+	(ORCPT <rfc822;git-outgoing>); Tue, 16 Oct 2007 23:41:37 -0400
+Received: from ug-out-1314.google.com ([66.249.92.174]:5022 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932620AbXJQDlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Oct 2007 23:41:36 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so202476ugc
+        for <git@vger.kernel.org>; Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=PtFY7fcdqOXWcqAi8SS0sZu7UEKeyaha+mAhQQWGCb8=;
+        b=poa9eLbaAAzO3qR4Xh+okCl2qCkgGz0W1Fuc+lvCqMZ8st67WHOXJwmB18+JjQ4rtPmTIQ7K1S5X/msNQu9K5bDkGGemi3q83kDQWkg4RKitmd/3kc3c8EpAJpqxE2mCKKN5L7GvcaGtZtMXDoZs1zH3QMZbctJDOFWFzJ+p9qM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=pUnE/e7i7N3sj40k1Oc0v+28UXp20E+V2XaIPrZdWsRrahU/NJUpm1bKHiLlGvpTFgEs0xAt/3QCER4K+H5V6Gb366GM2oKgY1tRsZpTS7rXqvagv/yv5WrA0hqsF0jcn4xrr9xfNjX1NVPbp6M30bgtqNOjxG1H8y5N7ZPd7bo=
+Received: by 10.66.225.17 with SMTP id x17mr117960ugg.1192592494715;
+        Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
+Received: by 10.67.118.1 with HTTP; Tue, 16 Oct 2007 20:41:34 -0700 (PDT)
+In-Reply-To: <20071016230952.GA18099@machine.or.cz>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61325>
+
+On 10/16/07, Petr Baudis <pasky@suse.cz> wrote:
+> On Tue, Oct 16, 2007 at 07:40:26PM +0200, Sam Ravnborg wrote:
+> > Tabs should be used for indent and not general alignment.
+> >
+> > Consider:
+> > <tab>if (some long condition that
+> > <tab>....&& spans two lines) {
+> > <tab><tab>my_private_printf("bla bla bla"
+> > <tab><tab>.................."more bla bla\n");
+> > <tab><tab>}
+> >
+> > This will look good and align "more bla bla\n" as
+> > intended no matter your tab setting.
+> > But replacing the 8 spaces with a tab will
+> > cause it to look bad.
+>
+> I'd so much love to have this and sometimes do this even manually, but
+> does anyone have an idea how to make vim do this for me? I never got
+> around to investigate this in depth or possibly make a patch...
+>
+> --
+>                                 Petr "Pasky" Baudis
+> Early to rise and early to bed makes a male healthy and wealthy and dead.
+>                 -- James Thurber
 
 
+Hello
+I use both vim and emacs so I must be weird.
+Anyways, here's some useful vim settings that I've come across:
 
-On Tue, 16 Oct 2007, Michael Witten wrote:
-> 
-> On 16 Oct 2007, at 8:45:51 PM, Linus Torvalds wrote:
-> 
-> > And is it really so unreasonable to just say "8-character tabs are the
-> > gold standard"?
-> 
-> It's unreasonable not to list that anywhere.
+set tabstop=8
+set softtabstop=8
+set shiftwidth=8
+set noexpandtab
+set list
+set listchars=<tab>:.\
 
-Heh.
+The last two are extremely useful, especially if you're hacking on
+python.  That's
+listchars=(less-than)tab(greater-than)(colon)(dot)(backslash)(space)
+(don't forget the space!).
 
-I was sure we had a "CodingStyle", but it turns out that no, we don't, and 
-yes, the 8-tab assumption is implicit in (a) the kernel rules (which git 
-started out following for obvious reasons, and which *does* have 
-documentation making this very explicit indeed) and (b) those few places 
-where you can actually see it in the result.
+That makes vim display tabs with a "." indicator, so you have a very
+clear view of when tabs are in use.  This has helped me countless
+times.
 
-So maybe it should be made explicit. You can see the effect right now by 
-doing
+You can use any character in there instead of dot.  I actually use an
+extended ascii character since it looks nicer but I didn't want to
+risk email mangling it.
 
-	git grep -1 '	 ' *.c
-
-(again, that regex is a "tab+space", although it's not obvious) and then 
-looking for places where we line up things in ways that simply wouldn't 
-have worked if it wasn't a 8-wide tab, ie things like
-
-	...
-	check_all_attr = xrealloc(check_all_attr,
-				  sizeof(*check_all_attr) * attr_nr);
-	..
-	read_tree_recursive(args->tree, args->base, plen, 0,
-			    args->pathspec, write_zip_entry);
-	..
-
-where the arguments wouldn't line up for anything but 8-char-wide tabs.
-
-(But the code is certainly *readable* with other tab sizes, so it's not 
-like this makes it impossible to work if somebody has a 4-space tab, it 
-just means that such people can get odd effects - but they may not even 
-realize that others see things line up!)
-
-		Linus
+-- 
+    David
