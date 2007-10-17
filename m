@@ -1,52 +1,60 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] Use exit 1 instead of die when req_Root fails.
-Date: Wed, 17 Oct 2007 15:15:26 -0400
-Message-ID: <98FA3712-B4E5-499A-B3E5-818FC33833DA@silverinsanity.com>
-References: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com> <20071017190646.GC9041@planck.djpig.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, spearce@spearce.org
-To: Frank Lichtenheld <frank@lichtenheld.de>
-X-From: git-owner@vger.kernel.org Wed Oct 17 21:15:36 2007
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Wed, 17 Oct 2007 21:23:29 +0200
+Message-ID: <20071017192329.GA20609@diana.vm.bytemark.co.uk>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org> <ee77f5c20710152307n48431a6eu5dc95ee504968e4e@mail.gmail.com> <856417h9cj.fsf@lola.goethe.zz> <200710171810.56215.robin.rosenberg.lists@dewire.com> <20071017161749.GA17985@diana.vm.bytemark.co.uk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Kastrup <dak@gnu.org>, David Symonds <dsymonds@gmail.com>,
+	Geert Bosch <bosch@adacore.com>,
+	Wincent Colaiuta <win@wincent.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Marius Storm-Olsen <marius@trolltech.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 21:24:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiEMW-00029w-Fq
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 21:15:24 +0200
+	id 1IiEVb-0004Gi-Gw
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 21:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760090AbXJQTPM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 15:15:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759974AbXJQTPM
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 15:15:12 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:43835 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759241AbXJQTPK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 15:15:10 -0400
-Received: from [192.168.1.2] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id DA9A91FFC22D;
-	Wed, 17 Oct 2007 19:15:08 +0000 (UTC)
-In-Reply-To: <20071017190646.GC9041@planck.djpig.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751127AbXJQTYg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2007 15:24:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750863AbXJQTYf
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 15:24:35 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2157 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750824AbXJQTYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 15:24:35 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IiEUL-0005Nk-00; Wed, 17 Oct 2007 20:23:29 +0100
+Content-Disposition: inline
+In-Reply-To: <20071017161749.GA17985@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61413>
 
+On 2007-10-17 18:17:49 +0200, Karl Hasselstr=F6m wrote:
 
-On Oct 17, 2007, at 3:06 PM, Frank Lichtenheld wrote:
+> On 2007-10-17 18:10:55 +0200, Robin Rosenberg wrote:
+>
+> > Yet another very short word: void.
+>
+> My vote is for "supercalifragilisticexpialidocious". It's clearly
+> superior to the 1500 other suggestions in this thread.
 
-> I have this in my repo and will submit this with the other git- 
-> cvsserver
-> changes. I was just waiting for either Junio to return or someone else
-> stepping up.
+(Not intended as an attack on this particular suggestion, by the way.
+Sorry if it sounded a bit harsh.)
 
-Ah.  I had missed that.  I just dug up the patch when switching to  
-Shawn's repo gave me those old testing errors.  Had thought it had  
-gotten lost in the shuffle.
-
-Never mind me then,
-~~ Brian
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
