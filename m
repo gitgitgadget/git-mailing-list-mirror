@@ -1,61 +1,97 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [PATCH] Use exit 1 instead of die when req_Root fails.
-Date: Wed, 17 Oct 2007 17:39:47 +0200
-Message-ID: <8c5c35580710170839l4b31a4fao5b41efafc5a83883@mail.gmail.com>
-References: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com>
-	 <118833cc0710170739i179e7389k1e44f70086ca88be@mail.gmail.com>
-	 <DC3D43FD-F03D-4E0A-9C2B-DE56F9C16D60@silverinsanity.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: How to Import a bitkeeper repo into git
+Date: Wed, 17 Oct 2007 17:50:00 +0200
+Message-ID: <47162F28.4040908@op5.se>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <20070709173720.GS29994@genesis.frugalware.org>	 <alpine.LFD.0.999.0707091049080.31544@woody.linux-foundation.org>	 <4713FA4A.5090501@bluelane.com>	 <alpine.LFD.0.999.0710151711280.6887@woody.linux-foundation.org>	 <471433F3.40606@bluelane.com>	 <e5bfff550710152156t33ba10dam6171e3210c18d3ac@mail.gmail.com>	 <471454B5.7040802@bluelane.com>	 <e5bfff550710160211g5dbfa7fai95386b173edc45c3@mail.gmail.com>	 <4714EF53.8090707@op5.se> <e5bfff550710162357r2c3744b1me5138edf24a56090@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Morten Welinder" <mwelinder@gmail.com>, git@vger.kernel.org,
-	spearce@spearce.org
-To: "Brian Gernhardt" <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 17:40:06 2007
+Cc: git@vger.kernel.org
+To: Marco Costalba <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 17:50:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiB06-0000EZ-1a
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 17:40:02 +0200
+	id 1IiBA1-0002bQ-Ax
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 17:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758765AbXJQPju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 11:39:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758637AbXJQPju
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 11:39:50 -0400
-Received: from nz-out-0506.google.com ([64.233.162.239]:19266 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758765AbXJQPjt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 11:39:49 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so1545537nze
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 08:39:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0nwA4hZspzcmvZSPKPX0k0Gofg6AhM4i3eugku/Or94=;
-        b=B+uNuS/drEJe/p9cgVhs+JS00Hko4QTHqUvhx1r5DMR7ncG2ICxi8PrljqLSBI4nIAQY06N1tzuG0KOFHCgSMU1mzwzBiMF2BieqBbSbcItk7pG8P3NaatN7QMS4UIE3zJ2A+jlbCCB+LNBbjjetRCQGrqXjtJxyRg4yBDVjtH0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=jbQjuaM6Fr+XZo6SZG/9Hl2qtJgTKvsX4OPeloVyHPfi3gHlcdGu3UkXcZJ6Q6qTXZr/O3nZoacArUxDrPsFH8WYn7edi3OYXIRvPjgq8oP4wHvtB3KnKyOLcABSUut9twCFi+bByaVxzokdqYzD5Y86vWRnHgA7WTSTAYpmBvM=
-Received: by 10.114.254.1 with SMTP id b1mr9962778wai.1192635587537;
-        Wed, 17 Oct 2007 08:39:47 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Wed, 17 Oct 2007 08:39:47 -0700 (PDT)
-In-Reply-To: <DC3D43FD-F03D-4E0A-9C2B-DE56F9C16D60@silverinsanity.com>
-Content-Disposition: inline
+	id S1761994AbXJQPuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 11:50:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761586AbXJQPuF
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 11:50:05 -0400
+Received: from mail.op5.se ([193.201.96.20]:40657 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761358AbXJQPuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 11:50:03 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 65D41173064F;
+	Wed, 17 Oct 2007 17:49:46 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 57-oWBDxgfLF; Wed, 17 Oct 2007 17:49:45 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id B9E1117305AF;
+	Wed, 17 Oct 2007 17:49:45 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <e5bfff550710162357r2c3744b1me5138edf24a56090@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61385>
 
-On 10/17/07, Brian Gernhardt <benji@silverinsanity.com> wrote:
-> The problem is that die can exit with varying exit codes, and exit
-> codes >= 128 make the test suite assume something has gone wrong with
-> the test.
+Marco Costalba wrote:
+> On 10/16/07, Andreas Ericsson <ae@op5.se> wrote:
+>> Marco Costalba wrote:
+>>> On 10/16/07, Pete/Piet Delaney <pete@bluelane.com> wrote:
+>>>
+>>>> Would it be worthwhile
+>>>> to install Qt4 from src and try to use qgit-2.0?
+>>>>
+>>> Yes it is. There are a lot of new featrures, is almost as stable as
+>>> the previous and if you are interested in file history (annotations)
+>>> in qgit-2.0 this feature has been greatly speeded up.
+>>>
+>> The only thing I really, really, really don't like about qgit4 is the
+>> fact that it fudges up the commit-message. I've been trying for two
+>> days to get rid of the HTML output, but I just can't get it done
+>> without the signed-off-by email being enclosed in &lt;&gt; tags.
+>>
+> 
+> You mean when you commit some changes or when you brows the revisions?
+> 
 
-This makes me wonder: what about all the other instances of die() in
-git-cvsserver? Or in any of the other perl scripts, for that matter?
-Should they all be fixed, or is it this particular test that is wrong?
+When I browse the revisions. 
+
+> If it is the highlighted title that annoy you I can try to remove the
+> background color, or set as plain text as an option.
+> 
+
+That does annoy me indeed, but the primary annoyance is the fact that
+the subject is no longer listed with the rest of the commit message, but
+rather above the ancestry links.
+
+
+>> view without the colored box a lot more). The little arrows in the
+>> commit window are also fairly annoying, as one quite quickly understands
+>> that up-/down-arrows work much better for that sort of stuff anyway.
+>>
+> 
+> Little arrows should already be removable from settings->browse->'Show
+> smart labels' , you can also add lateral tabs with
+> settings->browse->'Show tabbed revisions' if you like.
+> 
+
+Sweet. I'll have to look into it. Thanks for your gentle instruction, and
+a great product :)
 
 -- 
-larsh
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
