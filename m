@@ -1,75 +1,96 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 12:32:13 +0100
-Message-ID: <200710171232.13062.andyparkins@gmail.com>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <20071016230952.GA18099@machine.or.cz> <402731c90710162041q457c7dd3tf906ba0c6faf29ca@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 2/2] Quoting paths in tests
+Date: Wed, 17 Oct 2007 13:32:54 +0200
+Message-ID: <4715F2E6.1000708@viscovery.net>
+References: <B495731E-C854-450B-943B-B96248B8F609@steelskies.com> <11926134961610-git-send-email-maillist@steelskies.com> <11926134961549-git-send-email-maillist@steelskies.com> <11926134961275-git-send-email-maillist@steelskies.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: David <davvid@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 17 13:32:28 2007
+Cc: git@vger.kernel.org,
+	Jonathan del Strother <jon.delStrother@bestbefore.tv>
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 13:33:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii78W-0002SP-8U
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:32:28 +0200
+	id 1Ii799-0002bL-DO
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 13:33:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758701AbXJQLcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 07:32:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758618AbXJQLcS
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:32:18 -0400
-Received: from ug-out-1314.google.com ([66.249.92.168]:61616 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757976AbXJQLcR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 07:32:17 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so237663ugc
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 04:32:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        bh=Bq+u9yLwlt7O3KZpsTvCY6hPd4xkj7uPS7fMl68aY4k=;
-        b=Kv5bpEOK6DhRaPj6pThp+2xqpZt8i2DOroH5bKbzeWgqyTyvrOKa+iJeKxaHpnAmp9BLdxq+4eAJsZ3sJN7Kz/pVjMwDoWuePqwycO8t7dt6fq3jzrhFXGS6gSUIkWVqt/vdwPyN+om3AKOyiUmfVYIjpYdKUt5/hKBrZklDhxY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-disposition:content-type:content-transfer-encoding:message-id;
-        b=eTHY0VIuFYnK91K1ckEuGfOye60zAKDswKM1jenlINrKRSme0uY6ExBbComHZTtXaSkMu2pVtdSLTFAMVqKLHHx7QDcrWRKzZBoDIyrlIhS20zPygERQJHya7UQb8unh7hqwrUgPu0KwDPmCrIcEPsWYDJyQ4MLldd2Yvw6TFps=
-Received: by 10.67.116.15 with SMTP id t15mr527917ugm.1192620736032;
-        Wed, 17 Oct 2007 04:32:16 -0700 (PDT)
-Received: from dvr.360vision.com ( [194.70.53.227])
-        by mx.google.com with ESMTPS id b33sm1783533ika.2007.10.17.04.32.14
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Oct 2007 04:32:14 -0700 (PDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <402731c90710162041q457c7dd3tf906ba0c6faf29ca@mail.gmail.com>
-Content-Disposition: inline
+	id S1759322AbXJQLc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 07:32:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759420AbXJQLc5
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 07:32:57 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:20817 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759002AbXJQLc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 07:32:56 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ii78k-0007yX-6a; Wed, 17 Oct 2007 13:32:42 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 2ECAEA33B; Wed, 17 Oct 2007 13:32:54 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <11926134961275-git-send-email-maillist@steelskies.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61371>
 
-On Wednesday 2007 October 17, David wrote:
+Jonathan del Strother schrieb:
+> --- a/t/lib-git-svn.sh
+> +++ b/t/lib-git-svn.sh
+> @@ -25,7 +25,7 @@ perl -w -e "
+>  use SVN::Core;
+>  use SVN::Repos;
+>  \$SVN::Core::VERSION gt '1.1.0' or exit(42);
+> -system(qw/svnadmin create --fs-type fsfs/, '$svnrepo') == 0 or exit(41);
+> +system(qw/svnadmin create --fs-type fsfs/, \"$svnrepo\") == 0 or exit(41);
 
-> The last two are extremely useful, especially if you're hacking on
-> python.  That's
-> listchars=(less-than)tab(greater-than)(colon)(dot)(backslash)(space)
-> (don't forget the space!).
+Here you have to work harder: The reason is that this is part of a perl 
+expression (as opposed to an eval'd string), which does not have access to 
+$svnrepo of the shell by which it is invoked. The original version failed if 
+there were single-quotes in $svnrepo, the new version fails if it contains 
+double-quotes.
 
-On the subject of high-ascii chars.  Here's my favourite for your .vimrc
-
- execute 'set listchars+=tab:'.nr2char(187).nr2char(183)
-
-187 is the "significantly greater than" symbol and 183 is a central dot.  i.e. 
-every character of a tab is non-space.  The actual characters used aren't 
-actually the point I wanted to make; the thing here is that two non-space 
-characters are used, so every column occupied by the tab is visible - this 
-makes it very easy to see where tabs end and spaces begin.
+>  " >&3 2>&4
 
 
+> -	svn import -m 'import for git-svn' . $svnrepo >/dev/null &&
+> +	svn import -m 'import for git-svn' . \"$svnrepo\" >/dev/null &&
 
-Andy
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+This must be
+
+	svn import -m 'import for git-svn' . \"\$svnrepo\" >/dev/null &&
+
+to be safe. Your version would break with names with double-quotes, because 
+$svnrepo would be expanded and then eval'd inside test_expect_*. This error 
+recurs numerous times until the end of the patch.
+
+May I recommend that you run the test suite in a directory named like this:
+
+	$ mkdir \"\ \$GIT_DIR\ \'
+	$ ls
+	" $GIT_DIR '
+
+> -		( mkdir -p $GIT_DIR/svn/\$ref/info/ &&
+> -		echo $svnrepo\$path > $GIT_DIR/svn/\$ref/info/url ) || exit 1;
+> +		( mkdir -p \"$GIT_DIR\"/svn/\$ref/info/ &&
+> +		echo \"$svnrepo\"\$path > \"$GIT_DIR\"/svn/\$ref/info/url ) || exit 1;
+
+I assume $path is under control of the test script, otherwise it must be 
+inside the double-quotes, too.
+
+>  test_expect_success  ".rev_db auto-converted to .rev_db.UUID" "
+>  	git-svn fetch -i trunk &&
+> -	expect=$GIT_DIR/svn/trunk/.rev_db.* &&
+> +	expect=\"\`find \"\$GIT_DIR\"/svn/trunk/ -name '.rev_db.*'\`\" &&
+
+Why is this trickery with find needed? Isn't it easier to put the whole test 
+case in single-quotes instead?
+
+-- Hannes
