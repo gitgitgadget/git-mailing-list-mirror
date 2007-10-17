@@ -1,117 +1,96 @@
-From: "Nikolai Weibull" <now@bitwi.se>
-Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 12:21:30 +0200
-Message-ID: <dbfc82860710170321l458ebd1cr6bf619cef9bb7300@mail.gmail.com>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
-	 <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
-	 <3awb7zw6.fsf@blue.sea.net>
-	 <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
-	 <1192565900.6430.16.camel@athena>
-	 <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
-	 <20071017015109.303760cc@localhost.localdomain>
-	 <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
-	 <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
-	 <E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] When renaming config sections delete conflicting sections
+Date: Wed, 17 Oct 2007 12:37:26 +0200
+Message-ID: <20071017103726.GA23417@diku.dk>
+References: <20071017003418.GA11013@diku.dk> <20071017005517.GJ13801@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Luke Lu" <git@vicaya.com>, git@vger.kernel.org
-To: "Michael Witten" <mfwitten@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Oct 17 12:21:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 17 12:40:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii622-00056y-9B
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 12:21:42 +0200
+	id 1Ii6KK-0008S9-Ol
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 12:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758084AbXJQKVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 06:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757988AbXJQKVc
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 06:21:32 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:23775 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757919AbXJQKVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 06:21:31 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1697911rvb
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 03:21:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=rLVP520Gews2j8ACB2E8bi0dIxRLD8mrKZImyaBlSrg=;
-        b=d5eT3BkUkr1puxur74PIfwGBDu3UlVLA0cuoPAVqgWNQ/kG1hw/Qh/Ozb2bJ5anI+yWPFGdQp15S45Hfyb/W3DJ5rn6BWA+aOYxKhsYRMDSmf2aoN2icyx91ta3UGgvx5Din32iMAEx0ELtYC48q5vCaXX4htzAWLk+m/x2+M4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=j8qGDCcgM7x6755B9wu+KbJgvT+cApNDhtdVkJIwwqE95aidfDS2hL2LtSBrmITgutFQUxFccn+PothahRqmRhMknXfD4ZQGVYUjAZZIvuBiPcVbWl7eei0sIHn0nKbRu2Qo6UHPds3RtQWtn+DP97sYGzLBxgZirtid+G99aKM=
-Received: by 10.114.13.1 with SMTP id 1mr9655478wam.1192616490256;
-        Wed, 17 Oct 2007 03:21:30 -0700 (PDT)
-Received: by 10.114.196.8 with HTTP; Wed, 17 Oct 2007 03:21:30 -0700 (PDT)
-In-Reply-To: <E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu>
+	id S1757703AbXJQKkZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 06:40:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757639AbXJQKkZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 06:40:25 -0400
+Received: from mgw1.diku.dk ([130.225.96.91]:34080 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756741AbXJQKkY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 06:40:24 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id D8B19968065;
+	Wed, 17 Oct 2007 12:40:22 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id XQHF-3v8GZ5f; Wed, 17 Oct 2007 12:40:21 +0200 (CEST)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id EC4FF7A80AA;
+	Wed, 17 Oct 2007 12:37:26 +0200 (CEST)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 3BF726DF84F; Wed, 17 Oct 2007 12:37:17 +0200 (CEST)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id C9E525B8001; Wed, 17 Oct 2007 12:37:26 +0200 (CEST)
 Content-Disposition: inline
-X-Google-Sender-Auth: c5c9b97d449a88a1
+In-Reply-To: <20071017005517.GJ13801@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61363>
 
-On 10/17/07, Michael Witten <mfwitten@mit.edu> wrote:
->
-> On 17 Oct 2007, at 3:17:08 AM, Luke Lu wrote:
->
-> > But I still haven't seen any compelling arguments against the "all
-> > space" case
->
-> Overhead!
->
-> If you use 8 spaces instead of one tab,
-> that's using up 7x more space!
->
-> Consider:
->
->      # calculates the extra space required to
->      # use the given number of spaces/tab.
->      size()
->      {
->          count=`grep -RIo "\`printf \"\t\"\`" . | wc -l`;
->          perl -e "print $count*$(($1-1))/1024/1024 . \" MB\n\"";
->      }
->
->      Then in in a git working tree:
->
->          size 8; # 1.28701210021973 MB
->          size 4; # 0.551576614379883 MB
->
->      In a linux kernel working tree:
->
->          size 8; # 61.4902725219727 MB
->          size 4; # 26.3529739379883 MB
+Shawn O. Pearce <spearce@spearce.org> wrote Tue, Oct 16, 2007:
+> Jonas Fonseca <fonseca@diku.dk> wrote:
+> > The old behavior of keeping config sections matching the new name caused
+> > problems leading to warnings being emitted by git-remote when renaming
+> > branches where information about tracked remote branches differed. To
+> > fix this any config sections that will conflict with the new name are
+> > removed from the config file. Update test to check for this.
+> ...
+> >  This command sequence was causing problems for me:
+> > 
+> > 	git checkout -b test madcoder/next
+> > 	git checkout -b test2 spearce/next
+> > 	git branch -M test
+> 
+> Ouch.  But this may cause the user to lose what they might consider
+> important settings relative to the old section named branch.test.
 
-As already pointed out, this isn't the true waste.  Run the following
-Ruby script to determine the true waste:
+True, but to me the meaning of -M is "I know what I am doing".
 
------------- cut here -----------
-TabWidth = 8
+> I think in the case you mention above where you are doing a
+> `branch -M` the user really does want the basic branch properties
+> to be forced over (branch.$name.remote, branch.$name.merge) but
+> they probably do not want other branch properties to be removed
+> or deleted.  Or maybe they do.
 
-actual_size = 0
-expanded_size = 0
-ARGF.each_line do |line|
-  width = 0
-  line.each_byte do |byte|
-    width += (byte == ?\t) ? (TabWidth - (width % TabWidth)) : 1
-  end
-  actual_size += line.length
-  expanded_size += width
-end
-puts (expanded_size - actual_size).to_s
------------- cut here -----------
+You never know, and sure if there is an option to gracefully avoid
+lossing this information that is the right approach, but I don't see how
+this can be done in this situation. Besides currently only
+branch.$name.mergoptions will be lost, hardly a problem.
 
-This will give you the actual space waste.  Run it like so:
+> Its really hard to second guess the user's intent here.  I think
+> its too broad to whack an entire section when renaming. [...]
+>
+> So we don't blindly replace multi-valued keys just because the
+> user asked us to.  I don't really see a section as being that much
+> different to warrant a potentially lossy behavior by default.
 
-% ruby space-waste.rb /usr/src/linux/**/*.[ch]
+Because it makes sense in this situation and erroring out is a good
+choice, but we are running out of git-branch options based on the letter
+'m'. And to me, -m is the default for renaming branches, and -M is a
+shortcut for doing a lot of other stuff with well-defined implications.
 
-(or in a similar manner that doesn't fail due to going over the
-maximum command-line limit).
+Perhaps we can enable only this "lossy behavior" only for git-branch by
+adding an extra argument to git_config_rename_section? Then we can later
+add a new option to git-config along the lines of --overwrite-section.
 
-According to this calculation the waste is 47808782 bytes, or about
-45.6 MiB, for 8-spaces-wide tabs.
+-- 
+Jonas Fonseca
