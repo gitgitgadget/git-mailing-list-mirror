@@ -1,83 +1,68 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 08:53:55 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
- <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com>
- <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
- <20071017015109.303760cc@localhost.localdomain>
- <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
- <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: How to Import a bitkeeper repo into git - Had a few questions on Qgit; I like the GUI.
+Date: Wed, 17 Oct 2007 18:00:36 +0200
+Message-ID: <200710171800.37345.robin.rosenberg.lists@dewire.com>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com> <47159779.6010502@bluelane.com> <e5bfff550710170030y7778e96ax146acea7a0e57a67@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Christer Weinigel <christer@weinigel.se>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Luke Lu <git@vicaya.com>
-X-From: git-owner@vger.kernel.org Wed Oct 17 17:54:32 2007
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: pete@bluelane.com, piet.delaney@gmail.piet.net,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	VMiklos <vmiklos@frugalware.org>,
+	"free cycle" <freecycler23@yahoo.com>, git@vger.kernel.org,
+	piet.delaney@gmail.com, "Piet Delaney" <pdelaney@bluelane.com>
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 17 17:58:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiBE7-0003ZV-BC
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 17:54:31 +0200
+	id 1IiBIC-0004RG-L7
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 17:58:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761397AbXJQPyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 11:54:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759530AbXJQPyT
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 11:54:19 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:36248 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755164AbXJQPyS (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 11:54:18 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HFrvKu007980
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Oct 2007 08:53:58 -0700
+	id S1765384AbXJQP6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 11:58:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764544AbXJQP6I
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 11:58:08 -0400
+Received: from [83.140.172.130] ([83.140.172.130]:2867 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1765263AbXJQP6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 11:58:06 -0400
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HFrt7G028361;
-	Wed, 17 Oct 2007 08:53:56 -0700
-In-Reply-To: <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	by dewire.com (Postfix) with ESMTP id 1B7E5146E990;
+	Wed, 17 Oct 2007 17:49:27 +0200 (CEST)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 12749-09; Wed, 17 Oct 2007 17:49:26 +0200 (CEST)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id A87BC82758E;
+	Wed, 17 Oct 2007 17:49:26 +0200 (CEST)
+User-Agent: KMail/1.9.6
+In-Reply-To: <e5bfff550710170030y7778e96ax146acea7a0e57a67@mail.gmail.com>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61387>
 
-
-
-On Wed, 17 Oct 2007, Luke Lu wrote:
+onsdag 17 oktober 2007 skrev Marco Costalba:
+> On 10/17/07, Pete/Piet Delaney <pete@bluelane.com> wrote:
+> >
+> > While I'm looking at the diffs for a file if I pull down External Diff
+> > it launches 'kcompare' but for a file with a large change it seems
+> > to be running extremely slow.
 > 
-> Well, we just established that all-space is perfect, look-wise.
+> qgit does not intergarte Kompare functionality, it just prepares the
+> files and spawns a Kompare process.
+> 
+> So there's seem nothing qgit can do about Kompare speed. You can try
+> with different diff viewers, meld,...etc..
 
-But we also established that an all-space model is not stable, because any 
-unix developers will start adding tabs instead of spaces.
+You could avoid the temporary files if you just pipe the diff to kompare. That
+would require an option to tell qgit that the external viewer can read a git diff.
 
-> As I mentioned, an all-space policy is trivial to enforce.
+At the time qgit 1.5 was written, kompare could not handle git diffs.
 
-Hell no, it's not.
-
-More importantly, I can guarantee that certain developers will refuse to 
-be part of such a project with such an idiotic design that eats disk-space 
-for no gain, and makes it impossible for me to use my normal editor.
-
-> But I still haven't seen any compelling arguments against the "all space"
-> case, other than "people will screw it up into mixed spaces", which is really
-> a straw man, as many multi-platform projects enforced the all-space policy
-> easily by using a pre-commit hook in maintainers' repository.
-
-Hey, you start your own projct, and you can enforce whatever idiotic rules 
-you want to. 
-
-But in the meantime, all-tab indentations are equally good, and are the 
-defacto rule. So *you* are the one who should show compelling arguments 
-for changing, and so far you haven't shown any.
-
-Really: what is the problem with hardtabs? Absolutely none.
-
-			Linus
+-- robin
