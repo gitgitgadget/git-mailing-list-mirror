@@ -1,59 +1,53 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: Re: [PATCH 1/3] Fixing path quoting in git-rebase
-Date: Wed, 17 Oct 2007 10:14:01 +0100
-Message-ID: <B495731E-C854-450B-943B-B96248B8F609@steelskies.com>
-References: <4711486B.1050301@op5.se> <11924540292687-git-send-email-maillist@steelskies.com> <47136D92.8060104@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v907)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 17 11:14:22 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Teach "git reflog" a subcommand to delete single entries
+Date: Wed, 17 Oct 2007 11:24:50 +0200
+Message-ID: <09CDCBB0-35F1-429C-8470-6020D481F452@wincent.com>
+References: <Pine.LNX.4.64.0710170249260.25221@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 17 11:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ii4yp-0001mx-2z
-	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 11:14:19 +0200
+	id 1Ii59s-0003i3-Cm
+	for gcvg-git-2@gmane.org; Wed, 17 Oct 2007 11:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756053AbXJQJOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 05:14:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754773AbXJQJOH
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 05:14:07 -0400
-Received: from juliet.asmallorange.com ([207.210.105.70]:32947 "EHLO
-	juliet.asmallorange.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756053AbXJQJOF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 05:14:05 -0400
-Received: from [89.105.122.147] (helo=gir.office.bestbefore.tv)
-	by juliet.asmallorange.com with esmtpa (Exim 4.68)
-	(envelope-from <maillist@steelskies.com>)
-	id 1Ii4ya-0005hY-67; Wed, 17 Oct 2007 05:14:04 -0400
-In-Reply-To: <47136D92.8060104@viscovery.net>
-X-Mailer: Apple Mail (2.907)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - juliet.asmallorange.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - steelskies.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754980AbXJQJZb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Oct 2007 05:25:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754656AbXJQJZa
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 05:25:30 -0400
+Received: from wincent.com ([72.3.236.74]:54512 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754213AbXJQJZa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 05:25:30 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9H9POpL017072;
+	Wed, 17 Oct 2007 04:25:25 -0500
+In-Reply-To: <Pine.LNX.4.64.0710170249260.25221@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61356>
 
-On 15 Oct 2007, at 14:39, Johannes Sixt wrote:
+El 17/10/2007, a las 3:50, Johannes Schindelin escribi=F3:
 
-> Jonathan del Strother schrieb:
->> -	eval GITHEAD_$hd='"$(cat $dotest/onto_name)"'
->> +	eval GITHEAD_$hd='"$(cat \"$dotest/onto_name\")"'
+> This commit implements the "delete" subcommand:
 >
-> I believe this is not correct. It should be this way:
+> 	git reflog delete master@{2}
 >
-> 	eval GITHEAD_$hd='$(cat "$dotest/onto_name")'
+> will delete the second reflog entry of the "master" branch.
 >
-> You can test it with a conflicting git-rebase -m. It only affects  
-> what the conflict markers look like. The test suite does not test it.
+> With this, it should be easy to implement "git stash pop" everybody
+> seems to want these days.
 
-Thanks for catching that.  I'll post revised patches this morning
+Looks good to me. Thanks for taking the initiative, Johannes.
+
+Cheers,
+Wincent
