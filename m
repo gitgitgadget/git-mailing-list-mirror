@@ -1,85 +1,51 @@
-From: Jeff King <peff@peff.net>
+From: Paul Wankadia <junyer@gmail.com>
 Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 23:23:07 -0400
-Message-ID: <20071018032307.GA7313@coredump.intra.peff.net>
-References: <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org> <20071018003256.GA5062@coredump.intra.peff.net> <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org> <20071018024553.GA5186@coredump.intra.peff.net> <alpine.LFD.0.999.0710171955580.26902@woody.linux-foundation.org>
+Date: Thu, 18 Oct 2007 03:31:43 +0000 (UTC)
+Message-ID: <loom.20071018T032910-500@post.gmane.org>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu> <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Luke Lu <git@vicaya.com>, Christer Weinigel <christer@weinigel.se>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 05:23:24 2007
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 05:32:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiLyk-0005fb-AO
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 05:23:22 +0200
+	id 1IiM7G-0006nc-HM
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 05:32:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760590AbXJRDXL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 23:23:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760869AbXJRDXK
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 23:23:10 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4067 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755720AbXJRDXJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 23:23:09 -0400
-Received: (qmail 31945 invoked by uid 111); 18 Oct 2007 03:23:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 17 Oct 2007 23:23:08 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Oct 2007 23:23:07 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710171955580.26902@woody.linux-foundation.org>
+	id S1761379AbXJRDb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 23:31:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761222AbXJRDb6
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 23:31:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:59319 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760206AbXJRDb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 23:31:58 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiM6v-0003aU-Oo
+	for git@vger.kernel.org; Thu, 18 Oct 2007 03:31:50 +0000
+Received: from 210.9.11.194 ([210.9.11.194])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 03:31:49 +0000
+Received: from junyer by 210.9.11.194 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 03:31:49 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 210.9.11.194 (Mozilla/5.0 (X11; U; FreeBSD i386; en-US; rv:1.7.13) Gecko/20060426)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61458>
 
-On Wed, Oct 17, 2007 at 08:13:23PM -0700, Linus Torvalds wrote:
+Linus Torvalds <torvalds <at> linux-foundation.org> writes:
 
-> Yes. 
-> 
-> You're missing the fact that some people have problems with editors.
-> 
-> So they add a line, and they add *that* line with the wrong kind of 
-> indentation. And it shows up among the other lines like this (here the 
-> whole patch is indented):
+> The only sane solution is the one the kernel and git have always used: 
+> tabs are 8 spaces wide, and anybody who disagrees can go screw themselves. 
 
-Oh. I thought you meant "if you have an all-spaces policy, your diffs
-will not look good." But what you meant was "when people screw up your
-policy by mixing tabs and spaces, your diffs will not look good." And
-that applies equally, whether they are screwing up your all-tabs or
-all-spaces setup (and I remain convinced that no matter what your
-policy, people _will_ screw it up).
-
-Thanks for the clarification.
-
-> It's very seldom the case that you grow some problem space and performance 
-> stays the same.
-
-Yes. I wondered whether the increased size would really matter here, or
-if it would get lost in the noise of program startup and other
-activities. But in this case, it really does matter.
-
-> > Gah, I can't believe I've not only been sucked into a tab vs spaces
-> > discussion, but now I've actually wasted time doing a performance
-> > comparison on it.
-> Well, performance analysis isn't exactly a "waste". That "git grep" was 
-
-No, it's not a waste. In the grand scheme of things, I don't actually
-care that much about the result, but hey, I think I may be the only
-person out of this gigantic thread to actually provide _numbers_. :)
-
-> Yeah, I don't think it's wonderful, but it might even be a good thing as a 
-> "hey, at least you are aware of the notion of GC now" kind of introduction 
-> to people (who then hopefully realize that they don't actually want 
-> automatic GC, but rather do it once a week or something).
-
-It would have been nicer if it said something like "Your repository
-looks crufty. Running git-gc --auto..." using whatever terms users would
-be comfortable with. Instead, it just started with "Counting objects"
-and a long wait. I happen to know what that means, but I'm not sure how
-a git newbie would react (though it looked _much_ nicer because of
-Nico's recent terser progress patches).
-
--Peff
+I hope and pray that you are parodied on "South Park" someday.
