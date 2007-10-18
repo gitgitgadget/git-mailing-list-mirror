@@ -1,116 +1,80 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Make the output of "git svn clone" less confusing.
-Date: Thu, 18 Oct 2007 03:33:01 -0700
-Message-ID: <20071018103301.GA21121@soma>
-References: <87k5poflp5.fsf@lysator.liu.se> <20071018070617.GA29238@spearce.org>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 13:36:40 +0300
+Organization: Private
+Message-ID: <4pgolnev.fsf@blue.sea.net>
+References: <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+	<3awb7zw6.fsf@blue.sea.net>
+	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+	<1192565900.6430.16.camel@athena>
+	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+	<20071017015109.303760cc@localhost.localdomain>
+	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+	<E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu>
+	<k5pll7rb.fsf@blue.sea.net> <20071018054246.GA9423@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 12:33:20 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 12:37:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiSgn-0000T7-Lv
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 12:33:18 +0200
+	id 1IiSkZ-0001GH-IC
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 12:37:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760667AbXJRKdG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 06:33:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755726AbXJRKdF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 06:33:05 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:48365 "EHLO hand.yhbt.net"
+	id S1756084AbXJRKg7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 06:36:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756228AbXJRKg7
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 06:36:59 -0400
+Received: from main.gmane.org ([80.91.229.2]:39940 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756769AbXJRKdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 06:33:04 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 2A0F77DC0FE;
-	Thu, 18 Oct 2007 03:33:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20071018070617.GA29238@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755071AbXJRKg5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 06:36:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiSkJ-0006DQ-R6
+	for git@vger.kernel.org; Thu, 18 Oct 2007 10:36:55 +0000
+Received: from a81-197-175-198.elisa-laajakaista.fi ([81.197.175.198])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 10:36:55 +0000
+Received: from jari.aalto by a81-197-175-198.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 10:36:55 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: a81-197-175-198.elisa-laajakaista.fi
+User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
+Cancel-Lock: sha1:/eoAXKumReJoyAKMsiw8oSQc3Rk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61513>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> David K=E5gedal <davidk@lysator.liu.se> wrote:
-> > The problem is that the first thing it prints is
-> >=20
-> >   Initialized empty Git repository in .git/
-> >=20
-> > even if actually created a subdirectory and changed into it first. =
-But to the
-> > user, it looks like it is creating a .git/ dir in the directory he/=
-she is
-> > started git from.
->=20
-> Eric, ack/nack?
-
-Nack, here's (hopefully) a better patch.
-
-David: agree/disagree?
-
-=46rom 62648d512a27a546707da160c939d665e6da57b4 Mon Sep 17 00:00:00 200=
-1
-=46rom: Eric Wong <normalperson@yhbt.net>
-Date: Thu, 18 Oct 2007 03:29:28 -0700
-Subject: [PATCH] git-svn: make the output of "git svn clone" less confu=
-sing
-MIME-Version: 1.0
-Content-Type: text/plain; charset=3Dutf-8
-Content-Transfer-Encoding: 8bit
-
-Original patch by David K=E5gedal:
-> The problem is that the first thing it prints is
+* Thu 2007-10-18 Mike Hommey <mh@glandium.org> gmane.comp.version-control.git
+* Message-Id: 20071018054246.GA9423@glandium.org
+>> Any cross platform development or electronic exchange is guaranteed to
+>> be interpreted correctly when policy enforces "only spaces"
 >
->   Initialized empty Git repository in .git/
->
-> even if actually created a subdirectory and changed into it
-> first. But to the user, it looks like it is creating a .git/ dir
-> in the directory he/she is started git from.
+> There is such problem with spaces. A lot of editors will just insert
+> tabs to indent a new line when the previous you were typing begins with
+> enough spaces, in which case you end up with spaces and tabs mixed all
+> the way. It ends up being worse than all tabs.
 
-Instead of using a relative path, I'm capturing the
-output of git-init and adding the absolute path to it.
+There is "all-spaces", but there is no "all-tabs" choice.
 
-Signed-off-by: Eric Wong <normalperson@yhbt.net>
----
+The latter will always be mixture of "spaces and tabs". We have no
+control how the tabs mix with spaces or vice versa: there could even be
+"eight spaces" + proper tabs.
 
- I've actually just noticed that setting GIT_DIR=3D before running
- git-svn clone is very broken, and I probably won't get a chance
- to fix it for at least 24 hours (if I'm even awake)...
+Speaking generalities (not the git project):
 
- Johannes/Benoit/all: git-svn submodules will probably have to
- wait till the weekend...
+    People can't be controlled, or their settings. Therefore there is a
+    policy and QA tools to monitor the issues and make things canonical;
+    whatever that is for the project.
 
- git-svn.perl |    5 ++++-
- 1 files changed, 4 insertions(+), 1 deletions(-)
+Jari
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 777e436..4873bad 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -3,6 +3,7 @@
- # License: GPL v2 or later
- use warnings;
- use strict;
-+use Cwd qw/getcwd/;
- use vars qw/	$AUTHOR $VERSION
- 		$sha1 $sha1_short $_revision
- 		$_q $_authors %users/;
-@@ -272,7 +273,9 @@ sub do_git_init_db {
- 				push @init_db, "--shared";
- 			}
- 		}
--		command_noisy(@init_db);
-+		my $init_out =3D command(@init_db);
-+		$init_out =3D~ s!(\.git)!getcwd .  "/$1"!e;
-+		print $init_out, "\n";
- 	}
- 	my $set;
- 	my $pfx =3D "svn-remote.$Git::SVN::default_repo_id";
---=20
-Eric Wong
+-- 
+Welcome to FOSS revolution: we fix and modify until it shines
