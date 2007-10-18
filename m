@@ -1,76 +1,107 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 0/7] Bisect dunno
-Date: Wed, 17 Oct 2007 16:59:03 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710171654300.26902@woody.linux-foundation.org>
-References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
- <471302D2.6010405@trolltech.com> <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
- <200710150902.52653.johan@herland.net> <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
- <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
- <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com> <85ve98gl57.fsf@lola.goethe.zz>
- <alpine.LFD.0.999.0710171553580.26902@woody.linux-foundation.org>
- <Pine.LNX.4.64.0710180045160.25221@racer.site>
+From: Christer Weinigel <christer@weinigel.se>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 02:31:03 +0200
+Message-ID: <20071018023103.5d27ee35@localhost.localdomain>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>
+	<1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
+	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>
+	<3awb7zw6.fsf@blue.sea.net>
+	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+	<1192565900.6430.16.camel@athena>
+	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+	<20071017015109.303760cc@localhost.localdomain>
+	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+	<alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+	<1192645509.6640.21.camel@athena>
+	<alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>
+	<1192649598.6640.44.camel@athena>
+	<alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>
+	<20071017232146.4b9e4097@localhost.localdomain>
+	<Pine.LNX.4.64.0710172310270.25221@racer.site>
+	<20071018011734.7b636141@localhost.localdomain>
+	<Pine.LNX.4.64.0710180040320.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Geert Bosch <bosch@adacore.com>,
-	David Symonds <dsymonds@gmail.com>,
-	Wincent Colaiuta <win@wincent.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Marius Storm-Olsen <marius@trolltech.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Ren? Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio Hamano <junkio@cox.net>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 18 01:59:46 2007
+X-From: git-owner@vger.kernel.org Thu Oct 18 02:31:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiInf-0001qU-AR
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 01:59:43 +0200
+	id 1IiJIa-0007Ip-7h
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 02:31:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757503AbXJQX7d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 19:59:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757493AbXJQX7d
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 19:59:33 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49898 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757429AbXJQX7c (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 19:59:32 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HNx303004343
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Oct 2007 16:59:05 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9HNx3OM014745;
-	Wed, 17 Oct 2007 16:59:03 -0700
-In-Reply-To: <Pine.LNX.4.64.0710180045160.25221@racer.site>
-X-Spam-Status: No, hits=-3.217 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1763530AbXJRAa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 20:30:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763848AbXJRAa7
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 20:30:59 -0400
+Received: from 2-1-3-15a.ens.sth.bostream.se ([82.182.31.214]:36349 "EHLO
+	zoo.weinigel.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763605AbXJRAa5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 20:30:57 -0400
+Received: from localhost.localdomain (grue.localnet [10.128.0.1])
+	by zoo.weinigel.se (Postfix) with ESMTP id 4455F1240902;
+	Thu, 18 Oct 2007 02:30:55 +0200 (CEST)
+In-Reply-To: <Pine.LNX.4.64.0710180040320.25221@racer.site>
+X-Mailer: Claws Mail 2.9.1 (GTK+ 2.10.13; i386-redhat-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61446>
 
+On Thu, 18 Oct 2007 00:44:22 +0100 (BST)
+Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 
-
-On Thu, 18 Oct 2007, Johannes Schindelin wrote:
+> Hi,
 > 
-> Could we, _please_, first decide if the implementation has merits, and 
-> just apply it as is in that case?  We can rename it whatever anybody likes 
-> later, and we can paint the bikeshed brown if you want to.
+> On Thu, 18 Oct 2007, Christer Weinigel wrote:
+> 
+> > I'm not that invisible am I?
+> > 
+> >     cd linux-2.6.22.7
+> >     find . -type f | xargs egrep -il "weinigel" | wc -l
+> >     17
+> 
+> File or directory not found.
+> 
+> We are not Linux specific here.  Besides, I was talking about _git_
+> source code, just in case I did not make myself clear.
 
-I thought everybody really agreed that being able to skip commits that you 
-cannot say good/bad about is a feature worth doing?
+You do not have a sense of humor, do you?  And you elided the paragraph
+where I said that I haven't contributed anything to git so far. :-/
 
-Right now we actually have some docs in the man-page about doing that 
-avoidance manually, so it's not like it's debatable whether this issue 
-comes up. It most definitely does come up.
+> > [...] and privately I use CVS just because I started using CVS ten
+> > years ago and haven't bothered to change.
+> 
+> I wonder why you have to leave your hideout and comment on the source
+> code of _git_, then.  I mean, why do _you_ care?  (It should have
+> become apparent to you that _we_ care, so it looks even more like you
+> wanted to dictate a policy on git, which you have no business with.)
 
-Does anybody really think it's not a good feature? And I've not seen 
-negative comments about the implementation either apart from some small 
-details that I think got fixed up already (but maybe the complaints were 
-all hidden by the shed color discussions ;)
+Where did I say that I'm not interested in git?  If I weren't I
+wouldn't have been reading this mailing list since it was first
+created.  The reason I don't use git is a lack of time.  Professionally
+I usually have no need to use git since my employer doesn't use it.
+On my own time, I haven't even had time and energy to switch away from
+CVS, even though I ought to have done that years ago.  I dabble a bit
+with git, mercurial, org bitkeeper (or did at least) when I need to
+access something out on the net which is stored in such a repository,
+but I haven't switched any of my projects over to using anything else.
 
-			Linus
+I'm definitely interested in git, and it's interesting to read the
+mailing list to see where git is going.  And I'd definitely like git to
+move in a direction where it's usable for me, or even better, where I
+can recommend it to my (often Windows-only) colleagues.  
+
+And once again you cut out the part where I said that git is Junio's
+baby, he decides what goes into the main git tree, and if he says 8
+wide hard tabs, that it is.  I haven't argued against that at all.  So
+I'm wondering why you are trying to project things I haven't
+said on me.
+
+  /Christer (pissing contensts are silly, so why the hell am I getting
+             involved in one?)
