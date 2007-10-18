@@ -1,56 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git push bug?
-Date: Thu, 18 Oct 2007 17:21:17 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710181720010.25221@racer.site>
-References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se> 
- <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de> <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+From: Alex Bennee <kernel-hacker@bennee.com>
+Subject: [PATCH] cvs export: ensure we add directories in order
+Date: Thu, 18 Oct 2007 17:15:44 +0100
+Organization: Insert joke here
+Message-ID: <1192724144.26933.64.camel@murta.transitives.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
-To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-X-From: git-owner@vger.kernel.org Thu Oct 18 18:21:42 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 18:44:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiY7y-0003pQ-7W
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:21:42 +0200
+	id 1IiYTY-0000R6-5F
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:44:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756991AbXJRQVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 12:21:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbXJRQVb
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:21:31 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51116 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754073AbXJRQVa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 12:21:30 -0400
-Received: (qmail invoked by alias); 18 Oct 2007 16:21:28 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 18 Oct 2007 18:21:28 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191nnVqhzV1np8l4NECQ55IDgBQZrbyZ31NGAihq4
-	5YxmBU8/YtwqeS
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
-X-Y-GMX-Trusted: 0
+	id S1756754AbXJRQns (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 12:43:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757509AbXJRQns
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:43:48 -0400
+Received: from mx.transitive.com ([217.207.128.220]:54436 "EHLO
+	pennyblack.transitives.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757594AbXJRQnr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 12:43:47 -0400
+X-Greylist: delayed 1717 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Oct 2007 12:43:47 EDT
+Received: from [192.168.2.164] (helo=[192.168.2.164])
+	by pennyblack.transitives.com with esmtp (Exim 4.50)
+	id 1IiY0J-0000Rr-RA
+	for git@vger.kernel.org; Thu, 18 Oct 2007 16:13:48 +0000
+X-Mailer: Evolution 2.10.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61545>
 
 Hi,
 
-On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+CVS gets understandably upset if you try and add a subdirectory before
+it's parent directory. This patch fixes that.
 
-> Seems like it is a bit too easy to make mistakes here. Why can I delete 
-> a branch with :linus but not create one with linus:linus?
+>From d99d4e7eb0ce7b85fb84d3c57f57abbb100baa5e Mon Sep 17 00:00:00 2001
+From: Alex Bennee <alex@bennee.com>
+Date: Thu, 18 Oct 2007 17:12:13 +0100
+Subject: [PATCH] Ensure we add directories in the correct order
 
-I wonder why you bother with the colon at all.  Just
+---
+ git-cvsexportcommit.perl |   11 +++++++++++
+ 1 files changed, 11 insertions(+), 0 deletions(-)
 
-	git push <remote> linus
+diff --git a/git-cvsexportcommit.perl b/git-cvsexportcommit.perl
+index 0a21215..a70c583 100755
+--- a/git-cvsexportcommit.perl
++++ b/git-cvsexportcommit.perl
+@@ -234,6 +234,17 @@ print "Applying\n";
+ 
+ print "Patch applied successfully. Adding new files and directories to CVS\n";
+ my $dirtypatch = 0;
++
++#
++# We have to add the directories in order otherwise we will have
++# problems when we try and add the sub-directory of a directory we
++# have not added yet.
++#
++# Luckily this is easy to deal with by sorting the directories and
++# dealing with the shortest ones first.
++#
++@dirs = sort { length $a <=> length $b} @dirs;
++
+ foreach my $d (@dirs) {
+     if (system(@cvs,'add',$d)) {
+ 	$dirtypatch = 1;
+-- 
+1.5.2.5
 
-and be done with it.  The colon is only there to play interesting games, 
-not something as simple as "push this branch" or "push this tag".
 
-Ciao,
-Dscho
+
+-- 
+Alex, homepage: http://www.bennee.com/~alex/
+Business is a good game -- lots of competition and minimum of rules. You
+keep score with money. -- Nolan Bushnell, founder of Atari
