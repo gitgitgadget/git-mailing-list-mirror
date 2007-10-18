@@ -1,124 +1,65 @@
-From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-Subject: Re: git push bug?
-Date: Thu, 18 Oct 2007 18:10:47 +0200
-Organization: Transmode AB
-Message-ID: <1192723847.9433.25.camel@gentoo-jocke.transmode.se>
-References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
-	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
-	 <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
-Reply-To: joakim.tjernlund@transmode.se
+From: walt <wa1ter@myrealbox.com>
+Subject: git-merge: need a tap with the cluestick, please
+Date: Thu, 18 Oct 2007 09:17:55 -0700
+Organization: none
+Message-ID: <ff80tr$hh1$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Oct 18 18:13:14 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 18:17:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiXzl-00029J-Dd
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:13:13 +0200
+	id 1IiY3m-0002v0-Md
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756592AbXJRQNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 12:13:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758248AbXJRQM7
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:12:59 -0400
-Received: from mail.transmode.se ([83.241.175.147]:22957 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1750871AbXJRQM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 12:12:59 -0400
-Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
-Received: from gentoo-jocke by mail.transmode.se; 18 Oct 2007 18:12:57 +0200
-In-Reply-To: <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
-X-Mailer: Evolution 2.10.3 
+	id S1757433AbXJRQRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 12:17:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757193AbXJRQRK
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:17:10 -0400
+Received: from main.gmane.org ([80.91.229.2]:39274 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756952AbXJRQRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 12:17:09 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiY3V-0002rt-L7
+	for git@vger.kernel.org; Thu, 18 Oct 2007 16:17:05 +0000
+Received: from adsl-69-234-211-250.dsl.irvnca.pacbell.net ([69.234.211.250])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 16:17:05 +0000
+Received: from wa1ter by adsl-69-234-211-250.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 16:17:05 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-69-234-211-250.dsl.irvnca.pacbell.net
+User-Agent: Thunderbird 3.0a1pre (X11/2007101707)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61543>
 
-On Thu, 2007-10-18 at 18:01 +0200, Joakim Tjernlund wrote:
-> On Thu, 2007-10-18 at 17:14 +0200, Steffen Prohaska wrote:
-> > On Oct 18, 2007, at 4:50 PM, Joakim Tjernlund wrote:
-> > 
-> > >
-> > > I thougth I could create a new branch on the server using:
-> > >
-> > > # > git push ssh://devsrv/var/git/os2kernel.git linus:refs/linus
-> > > Warning: No xauth data; using fake authentication data for X11  
-> > > forwarding.
-> > > updating 'refs/linus' using 'refs/heads/linus'
-> > >  from 0000000000000000000000000000000000000000
-> > >  to bbf25010f1a6b761914430f5fca081ec8c7accd1
-> > > Generating pack...
-> > > Done counting 0 objects.
-> > > Writing 0 objects...
-> > > Total 0 (delta 0), reused 0 (delta 0)
-> > > error: refusing to create funny ref 'refs/linus' locally
-> > > ng refs/linus funny refname
-> > > error: failed to push to 'ssh://devsrv/var/git/os2kernel.git'
-> > >
-> > > but that doesn't work. Am I doing this wrong?
-> > 
-> > Include 'heads' in your remote refspec:
-> > 
-> >     git push ssh://devsrv/var/git/os2kernel.git linus:refs/heads/linus
-> 
-> Now the push went OK:
-> git push  ssh://devsrv/var/git/os2kernel.git linus:refs/head/linus
-> Warning: No xauth data; using fake authentication data for X11 forwarding.
-> updating 'refs/head/linus' using 'refs/heads/linus'
->   from 0000000000000000000000000000000000000000
->   to   bbf25010f1a6b761914430f5fca081ec8c7accd1
-> Generating pack...
-> Done counting 0 objects.
-> Writing 0 objects...
-> Total 0 (delta 0), reused 0 (delta 0)
-> refs/head/linus: 0000000000000000000000000000000000000000 -> bbf25010f1a6b761914430f5fca081ec8c7accd1
-> 
-> but there is no linus branch in the server repo!
-> 
-> However:
->  git push  ssh://devsrv/var/git/os2kernel.git linus
-> 
-> creates a linus branch in the server and 
-> 
->  git push  ssh://devsrv/var/git/os2kernel.git :linus
->  Warning: No xauth data; using fake authentication data for X11 forwarding. 
->  deleting 'refs/heads/linus'
->  refs/heads/linus: bbf25010f1a6b761914430f5fca081ec8c7accd1 -> deleted
->  Everything up-to-date
-> 
-> deletes the linus branch on the server and so does
-> git push  ssh://devsrv/var/git/os2kernel.git :refs/heads/linus
-> 
-> ahh, now I see. When creating the branch the refspec needs to be refs/heads/linus,
-> not refs/head/linus
-> 
-> refs/head/linus will create just that on the server. git branch does not look
-> there, only in refs/heads
-> 
-> Seems like it is a bit too easy to make mistakes here. Why can I delete
-> a branch with :linus but not create one with linus:linus?
-> Also confusing that git lets me create refs/head/linus when git branch
-> cannot find it.
-> 
->  Jocke
+I just tried my first local modification to Linus's tree, and I
+can't get the merge to work.  Maybe my whole approach is wrong?
 
-BTW this does not work either:
+I wanted start compiling the kernel out-of-tree, so I added my
+own 'obj' directory at the top level.
 
-git reset --hard HEAD^
-git push -f  ssh://devsrv/var/git/os2kernel.git +master:master
-updating 'refs/heads/master'
-  from 9c344d18d01221c8f25080cb58910e6b09efbf55
-  to   5761a9e5924b34615c748fba2dcb977ed04c1243
-Generating pack...
-Done counting 0 objects.
-Writing 0 objects...
-Total 0 (delta 0), reused 0 (delta 0)
-error: denying non-fast forward refs/heads/master (you should pull first)
-ng refs/heads/master non-fast forward
-error: failed to push to 'ssh://devsrv/var/git/os2kernel.git'
+I then got conflicts when trying to pull from Linus, so I added
+my 'obj' directory to my toplevel .gitignore file and committed
+the local change to my 'master' branch.  (This is my only local
+modification because I'm only tracking Linus, not developing the
+kernel.)
 
-I thought the + in +master:master and the -f option should let me
-do that.
+Now when I pull from Linus the merge stops in the middle because of
+conflicts with my .gitignore file <sigh>.  Anything I try now with
+git-merge tells me I can't do that in the middle of a conflicted
+merge.  Yes, I know that now, but what should I do instead?
+
+I could move my 'obj' out-of-tree but then I wouldn't learn anything.
+This has to be bone-head easy, but not for me :)
+
+Clues most welcome.
