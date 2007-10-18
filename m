@@ -1,65 +1,73 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Use exit 1 instead of die when req_Root fails.
-Date: Thu, 18 Oct 2007 01:04:56 -0400
-Message-ID: <20071018050456.GD14735@spearce.org>
-References: <20071017140547.GA21691@Hermes.cust.hotspot.t-mobile.com> <20071017190646.GC9041@planck.djpig.de> <98FA3712-B4E5-499A-B3E5-818FC33833DA@silverinsanity.com>
+From: Mike Galbraith <efault@gmx.de>
+Subject: Re: pulling Already up-to-date linux-2.6 repo takes ~8 minutes?
+Date: Thu, 18 Oct 2007 07:09:10 +0200
+Message-ID: <1192684150.7390.15.camel@Homer.simpson.net>
+References: <1192678865.20353.14.camel@Homer.simpson.net>
+	 <20071018045001.GA14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:05:59 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:09:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiNZL-0001mZ-UO
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:05:40 +0200
+	id 1IiNdO-0002HD-8F
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:09:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751902AbXJRFFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 01:05:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751663AbXJRFFF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:05:05 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50880 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886AbXJRFFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 01:05:03 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IiNZ1-0005oN-Bk; Thu, 18 Oct 2007 01:04:55 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 46DE420FBAE; Thu, 18 Oct 2007 01:04:57 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <98FA3712-B4E5-499A-B3E5-818FC33833DA@silverinsanity.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753117AbXJRFJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 01:09:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752199AbXJRFJO
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:09:14 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43527 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751157AbXJRFJN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 01:09:13 -0400
+Received: (qmail invoked by alias); 18 Oct 2007 05:09:11 -0000
+Received: from p54B5BA2B.dip0.t-ipconnect.de (EHLO [192.168.178.23]) [84.181.186.43]
+  by mail.gmx.net (mp034) with SMTP; 18 Oct 2007 07:09:11 +0200
+X-Authenticated: #14349625
+X-Provags-ID: V01U2FsdGVkX1+CbspzAlKCuoc71o4SBAiF4d39dVQSO7b8xhQOne
+	bmq1VyizNcAV01
+In-Reply-To: <20071018045001.GA14735@spearce.org>
+X-Mailer: Evolution 2.8.2 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61475>
 
-Brian Gernhardt <benji@silverinsanity.com> wrote:
-> On Oct 17, 2007, at 3:06 PM, Frank Lichtenheld wrote:
+On Thu, 2007-10-18 at 00:50 -0400, Shawn O. Pearce wrote:
+
+> The problem here is you aren't on a branch, you are on a detached
+> HEAD.  So we must have setup the wrong thing in .git/FETCH_HEAD
+> and we didn't actually merge.
+
+Aha.  (I didn't setup anything that I can recall, followed a howto I
+found)
+
+> What version of git is this, exactly (`git version`)?
+
+git version 1.5.3.4.203.gcc61a
+
+> I'd suggest making your life a little bit easier.  Consider creating
+> a remote that points to Linus:
 > 
-> >I have this in my repo and will submit this with the other git- 
-> >cvsserver
-> >changes. I was just waiting for either Junio to return or someone else
-> >stepping up.
+>   $ git remote add linus git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>   $ git checkout -b master   ; # or any other branch
+>   $ git config branch.master.remote linus
+>   $ git config branch.master.merge refs/heads/master
 > 
-> Ah.  I had missed that.  I just dug up the patch when switching to  
-> Shawn's repo gave me those old testing errors.  Had thought it had  
-> gotten lost in the shuffle.
+> Now you can update from Linus with just:
+> 
+>   $ git pull
+> 
+> Provided you are on branch "master", or whatever other branches
+> you setup those branch.*.remote and branch.*.merge configuration
+> options for.
 
-It did.  I have your resubmit that started this thread in my INQ and
-will try to get to it today.  But if Frank has a queue of stuff I've
-missed I'd like a pointer to it so I can also try to start working
-through it.  I know I also have some other topics that Lars Hjemli
-accumlated in his tree that I still need to cherry-pick over into
-mine, but I don't see the one we are talking about in there.
+Thanks, I appreciate it, kernel.org likely does too.
 
--- 
-Shawn.
+	-Mike
