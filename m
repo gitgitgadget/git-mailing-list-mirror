@@ -1,66 +1,65 @@
-From: Gonzalo Garramuno <gga@filmaura.com>
-Subject: Splitting a repository
-Date: Thu, 18 Oct 2007 14:35:00 -0300
-Message-ID: <47179944.6080608@filmaura.com>
+From: Patrick Welche <prlw1@newn.cam.ac.uk>
+Subject: NI_MAXSERV trivial patch
+Date: Thu, 18 Oct 2007 18:17:39 +0100
+Message-ID: <20071018171739.GC580@quartz.itdept.newn.cam.ac.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 19:35:22 2007
+X-From: git-owner@vger.kernel.org Thu Oct 18 19:50:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiZHE-0003LM-Dh
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 19:35:20 +0200
+	id 1IiZVx-0006nb-Kj
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 19:50:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758410AbXJRRfJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 13:35:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756893AbXJRRfJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 13:35:09 -0400
-Received: from an.site5.com ([74.53.3.196]:56786 "EHLO an.site5.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758179AbXJRRfH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 13:35:07 -0400
-Received: from [201.255.33.200] (helo=[192.168.1.3])
-	by an.site5.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <gga@filmaura.com>)
-	id 1IiZGp-0005mk-0y
-	for git@vger.kernel.org; Thu, 18 Oct 2007 12:34:57 -0500
-User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - an.site5.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - filmaura.com
+	id S1758579AbXJRRuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 13:50:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758312AbXJRRuU
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 13:50:20 -0400
+Received: from henry.newn.cam.ac.uk ([131.111.204.130]:57868 "EHLO
+	henry.newn.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757477AbXJRRuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 13:50:19 -0400
+X-Greylist: delayed 1958 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Oct 2007 13:50:19 EDT
+Received: from quartz.itdept.newn.cam.ac.uk ([192.168.200.180])
+	by henry.newn.cam.ac.uk with esmtp (Exim 4.66)
+	(envelope-from <prlw1@newn.cam.ac.uk>)
+	id 1IiZ08-0004mM-0y
+	for git@vger.kernel.org; Thu, 18 Oct 2007 18:17:40 +0100
+Received: from prlw1 by quartz.itdept.newn.cam.ac.uk with local (Exim 4.66)
+	(envelope-from <prlw1@newn.cam.ac.uk>)
+	id 1IiZ07-0003iq-Ut
+	for git@vger.kernel.org; Thu, 18 Oct 2007 18:17:39 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-03-22)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61550>
+
+I found I needed
+
+--- daemon.c.orig       2007-09-02 06:57:44.000000000 +0100
++++ daemon.c    2007-10-18 16:04:00.000000000 +0100
+@@ -9,6 +9,10 @@
+ #define HOST_NAME_MAX 256
+ #endif
+ 
++#ifndef NI_MAXSERV
++#define NI_MAXSERV 32
++#endif
++
+ static int log_syslog;
+ static int verbose;
+ static int reuseaddr;
 
 
-I have a project I have been working on for some time and one of its=20
-libraries has grown too much.
-I'm now wanting to split that library into a separate git repository.
-I'm wondering what's the best way to go around this.  Ideally I would=20
-like to have:
-	* all history on those library files be moved to the new repository.
-	* all history on those library files be removed from the original=20
-repository.
-
-or:
-	* have the original repository library directory be "linked" to the ne=
-w=20
-repository.
 
 
---=20
-Gonzalo Garramu=F1o
+to compile git, as for me NI_MAXSERV is defined in netdb.h, and it
+doesn't seem worthwhile to include the whole header.
 
-=46ilm Aura
-A New Dawn in Media Companies
+Cheers,
 
-gga@filmaura.com
-http://www.filmaura.com
+Patrick
