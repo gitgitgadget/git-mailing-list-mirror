@@ -1,68 +1,61 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: linux-2.6.git mirror
-Date: Thu, 18 Oct 2007 15:26:08 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710181518120.26902@woody.linux-foundation.org>
-References: <598D5675D34BE349929AF5EDE9B03E2701684C77@az33exm24.fsl.freesca
- le.net>
+Subject: Re: [PATCH] git-blame shouldn't crash if run in an unmerged tree
+Date: Thu, 18 Oct 2007 15:38:23 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710181529490.26902@woody.linux-foundation.org>
+References: <20071018063407.GA28861@spearce.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Medve Emilian-EMMEDVE1 <Emilian.Medve@freescale.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 00:26:51 2007
+Cc: git@vger.kernel.org, B.Steinbrink@gmx.de
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 00:39:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IidpK-0005Xx-Qb
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:26:51 +0200
+	id 1Iie1X-0007gH-MN
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:39:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934110AbXJRW0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 18:26:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765891AbXJRW0S
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:26:18 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:39976 "EHLO
+	id S1758162AbXJRWjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 18:39:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbXJRWjM
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:39:12 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:46767 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1763523AbXJRW0R (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:26:17 -0400
+	by vger.kernel.org with ESMTP id S1757354AbXJRWjK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:39:10 -0400
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMQ9qw013614
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMcPmJ014026
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Oct 2007 15:26:11 -0700
+	Thu, 18 Oct 2007 15:38:26 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMQ8CF001636;
-	Thu, 18 Oct 2007 15:26:09 -0700
-In-Reply-To: <598D5675D34BE349929AF5EDE9B03E2701684C77@az33exm24.fsl.freescale.net>
-X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMcNHO002119;
+	Thu, 18 Oct 2007 15:38:24 -0700
+In-Reply-To: <20071018063407.GA28861@spearce.org>
+X-Spam-Status: No, hits=-4.716 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61566>
 
 
 
-On Tue, 16 Oct 2007, Medve Emilian-EMMEDVE1 wrote:
+On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
 >
-> $ git remote update
-> Updating origin
-> error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
-> error: Object 5dc01c595e6c6ec9ccda4f6f69c131c0dd945f8c is a tree, not a commit
+> I'm applying this patch to my maint tree tonight as it does resolve
+> the issue for now.  What surprised me was the file that we were
+> crashing out on wasn't even the file we wanted to get the blame
+> data for.  :-\
 
-Interesting. Something seems to be assuming that all tags are commits. 
-Which is not true. You can have (and the kernel repo does this) a tag 
-pointing to a pure tree state (with no history), or as in the case of git 
-itself, there's a tag pointing to a blob that contains Junio's public key.
+Please feel free to add a Signed-off-by: there. I guess I didn't add it in 
+the original email, because I wasn't sure if I'd have the energy to see if 
+I could just remove the clearing of "ce_mode". I never did.
 
-> The situation is similar with the git tree:
-> 
-> error: Object a0e7d36193b96f552073558acf5fcc1f10528917 is a blob, not a commit
+That whole "ce->ce_mode = 0" thing is really hacky, and we use it for two 
+totally different things ("git read-tree" uses it for "delete this entry", 
+and reading the index uses it when you ask for only merged entries). Bad 
+form, and not very logical.
 
-Yeah, same thing.
-
-> Is this something I should be worried about?
-
-No, but if it still happens with a newer git, holler.
-
-			Linus
+		Linus
