@@ -1,65 +1,60 @@
-From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
-Subject: RE: linux-2.6.git mirror
-Date: Thu, 18 Oct 2007 15:46:10 -0700
-Message-ID: <598D5675D34BE349929AF5EDE9B03E270168517F@az33exm24.fsl.freescale.net>
-References: <598D5675D34BE349929AF5EDE9B03E2701684C77@az33exm24.fsl.freesca le.net> <alpine.LFD.0.999.0710181518120.26902@woody.linux-foundation.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git on afs
+Date: Thu, 18 Oct 2007 15:47:00 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710181543380.26902@woody.linux-foundation.org>
+References: <20071018203106.GA13518@fries.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 00:46:50 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Todd T. Fries" <todd@fries.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 00:48:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iie8e-0000SZ-Q5
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:46:49 +0200
+	id 1Iie9o-0000ds-9k
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760330AbXJRWqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 18:46:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757550AbXJRWqQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:46:16 -0400
-Received: from de01egw02.freescale.net ([192.88.165.103]:42840 "EHLO
-	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758853AbXJRWqP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:46:15 -0400
-Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
-	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l9IMkBK1007370
-	for <git@vger.kernel.org>; Thu, 18 Oct 2007 15:46:12 -0700 (MST)
-Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
-	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l9IMkBUi026564
-	for <git@vger.kernel.org>; Thu, 18 Oct 2007 17:46:11 -0500 (CDT)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <alpine.LFD.0.999.0710181518120.26902@woody.linux-foundation.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: linux-2.6.git mirror
-Thread-Index: AcgR1wZgkrY1fzqNTvCwC6qGIP2JTQAAH3Eg
+	id S1757550AbXJRWrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 18:47:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753668AbXJRWrt
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:47:49 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:45934 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751768AbXJRWrs (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:47:48 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMl5Uu014441
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Oct 2007 15:47:06 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMl0g1002426;
+	Thu, 18 Oct 2007 15:47:04 -0700
+In-Reply-To: <20071018203106.GA13518@fries.net>
+X-Spam-Status: No, hits=-2.716 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61568>
-
-Hi Linus,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61569>
 
 
-> > Is this something I should be worried about?
+
+On Thu, 18 Oct 2007, Todd T. Fries wrote:
 > 
-> No, but if it still happens with a newer git, holler.
+> 2) git presumes that DTYPE(de) != DT_DIR .. means the dirent is not a dir
+>    this is not true for afs
 
-I tested this with Junio's latest master and a couple of stable releases
-from the maint branch with the same result. In my ignorance I suspected
-the build infrastructure so I tried different gcc versions (4.x and 3.x)
-and optimization levels (including -O0) different libraries, etc. that I
-had on a few machines around here. The result was the same.
+That's a major bug, and has nothing to do with AFS. Oops. 
 
-What worried me is that I think I traced the source of the error message
-in commit.c and in both two possible places from where the message could
-come the processing flow seems to be cut shorter because of this.
+If you look just a bit lower, you'll see that just a few lines down, git 
+handles DT_UNKNOWN correctly, and just does a lstat() on it as required. I 
+guess that logic should be moved up, or alternatively the exclude logic 
+should be moved down.
 
+Your patch looks ok, but at the same time, I don't think it's really the 
+right thing to do, since it now does that lstat() twice.
 
-Thanks for your reply,
-Emil.
+		Linus
