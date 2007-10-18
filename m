@@ -1,70 +1,79 @@
-From: "Evan Carroll" <me@evancarroll.com>
-Subject: Application to install man pages.
-Date: Thu, 18 Oct 2007 13:59:37 -0500
-Message-ID: <428b865e0710181159i7a12f2b7y22619f0eaf36d2c1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 20:59:56 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH] attr: fix segfault in gitattributes parsing code
+Date: Thu, 18 Oct 2007 22:02:35 +0200
+Message-ID: <11927377551318-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: spearce@spearce.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 22:03:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiab0-0005Xh-E8
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:59:50 +0200
+	id 1Iiba6-0002hT-5X
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 22:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759000AbXJRS7k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 14:59:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758990AbXJRS7j
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:59:39 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:36471 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758824AbXJRS7j (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 14:59:39 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so490777ugc
-        for <git@vger.kernel.org>; Thu, 18 Oct 2007 11:59:37 -0700 (PDT)
-Received: by 10.66.243.4 with SMTP id q4mr2173508ugh.1192733977496;
-        Thu, 18 Oct 2007 11:59:37 -0700 (PDT)
-Received: by 10.67.96.11 with HTTP; Thu, 18 Oct 2007 11:59:37 -0700 (PDT)
-Content-Disposition: inline
+	id S1763323AbXJRUCl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 16:02:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbXJRUCl
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 16:02:41 -0400
+Received: from mailer.zib.de ([130.73.108.11]:45203 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933070AbXJRUCk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 16:02:40 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9IK2a14022273;
+	Thu, 18 Oct 2007 22:02:36 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9IK2aqY011575;
+	Thu, 18 Oct 2007 22:02:36 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61557>
 
-This is a one liner but might help for simply a quick install of the
-git manpages.
+git may segfault if gitattributes contains an invalid
+entry. A test is added to t0020 that triggers the segfault.
+The parsing code is fixed to avoid the crash.
 
->From f5797d786fd4a6f9633054bb0f0ce894a06d6650 Mon Sep 17 00:00:00 2001
-From: root <root@x60s.(none)>
-Date: Thu, 18 Oct 2007 13:45:16 -0500
-Subject: [PATCH] install_man.sh script which installs the man pages
-
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- install_man.sh |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
- create mode 100755 install_man.sh
+ attr.c          |    5 ++++-
+ t/t0020-crlf.sh |    7 +++++++
+ 2 files changed, 11 insertions(+), 1 deletions(-)
 
-diff --git a/install_man.sh b/install_man.sh
-new file mode 100755
-index 0000000..b722425
---- /dev/null
-+++ b/install_man.sh
-@@ -0,0 +1,2 @@
-+#/bin/sh
-+ cp -R --copy-contents ./man* /usr/local/man
+diff --git a/attr.c b/attr.c
+index 92704a3..741db3b 100644
+--- a/attr.c
++++ b/attr.c
+@@ -209,8 +209,11 @@ static struct match_attr *parse_attr_line(const char *line, const char *src,
+ 		num_attr = 0;
+ 		cp = name + namelen;
+ 		cp = cp + strspn(cp, blank);
+-		while (*cp)
++		while (*cp) {
+ 			cp = parse_attr(src, lineno, cp, &num_attr, res);
++			if (!cp)
++				return NULL;
++		}
+ 		if (pass)
+ 			break;
+ 		res = xcalloc(1,
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 0807d9f..62bc4bb 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -371,4 +371,11 @@ test_expect_success 'in-tree .gitattributes (4)' '
+ 	}
+ '
+ 
++test_expect_success 'invalid .gitattributes (must not crash)' '
++
++	echo "three +crlf" >>.gitattributes &&
++	git diff
++
++'
++
+ test_done
 -- 
-1.5.3.4.206.g58ba4
-
-
-I was also wondering if it might be useful to have a command in the
-master branch of the git repo that switches branches and installs the
-man pages.. possibly as run in the makefile if .git exists then switch
-branches, and run install_man.sh. Just an idea.
-
--- 
-Evan Carroll
-System Lord of the Internets
-me@evancarroll.com
-832-445-8877
+1.5.3.4.1261.g626eb
