@@ -1,81 +1,66 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] Make the output of "git svn clone" less confusing.
-Date: Thu, 18 Oct 2007 10:14:43 -0700
-Message-ID: <20071018171443.GA13040@untitled>
-References: <87k5poflp5.fsf@lysator.liu.se> <20071018070617.GA29238@spearce.org> <20071018103301.GA21121@soma> <87abqgiqsj.fsf@lysator.liu.se>
+From: Gonzalo Garramuno <gga@filmaura.com>
+Subject: Splitting a repository
+Date: Thu, 18 Oct 2007 14:35:00 -0300
+Message-ID: <47179944.6080608@filmaura.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O.Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Thu Oct 18 19:15:02 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 19:35:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiYxW-00075f-CU
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 19:14:58 +0200
+	id 1IiZHE-0003LM-Dh
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 19:35:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765639AbXJRROr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 13:14:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765095AbXJRROq
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 13:14:46 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:48602 "EHLO hand.yhbt.net"
+	id S1758410AbXJRRfJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 13:35:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756893AbXJRRfJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 13:35:09 -0400
+Received: from an.site5.com ([74.53.3.196]:56786 "EHLO an.site5.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S934010AbXJRROo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 13:14:44 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 937567DC0FE;
-	Thu, 18 Oct 2007 10:14:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87abqgiqsj.fsf@lysator.liu.se>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1758179AbXJRRfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 13:35:07 -0400
+Received: from [201.255.33.200] (helo=[192.168.1.3])
+	by an.site5.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <gga@filmaura.com>)
+	id 1IiZGp-0005mk-0y
+	for git@vger.kernel.org; Thu, 18 Oct 2007 12:34:57 -0500
+User-Agent: Thunderbird 1.5.0.12 (X11/20070604)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - an.site5.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - filmaura.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61549>
 
-David K=E5gedal <davidk@lysator.liu.se> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
->=20
-> > "Shawn O. Pearce" <spearce@spearce.org> wrote:
-> >> David K=E5gedal <davidk@lysator.liu.se> wrote:
-> >> > The problem is that the first thing it prints is
-> >> >=20
-> >> >   Initialized empty Git repository in .git/
-> >> >=20
-> >> > even if actually created a subdirectory and changed into it firs=
-t. But to the
-> >> > user, it looks like it is creating a .git/ dir in the directory =
-he/she is
-> >> > started git from.
-> >>=20
-> >> Eric, ack/nack?
-> >
-> > Nack, here's (hopefully) a better patch.
-> >
-> > David: agree/disagree?
->=20
-> I don't really like this. Now you added a dependency on exactly how
-> git-init-db will format its output.  So if e.g. it is updated to use
-> the absolute path your patch will create bogus output.
 
-Yes, it's quite ugly :/   I think the best solution would be to fix all
-GIT_DIR=3D setting issues and getting git-svn to always respect it for
-init/clone/fetch (and tests, of course!).  I probably won't get around
-to doing any of this until Friday night or Saturday (PST), however...
+I have a project I have been working on for some time and one of its=20
+libraries has grown too much.
+I'm now wanting to split that library into a separate git repository.
+I'm wondering what's the best way to go around this.  Ideally I would=20
+like to have:
+	* all history on those library files be moved to the new repository.
+	* all history on those library files be removed from the original=20
+repository.
 
-Shawn: feel free to ignore this series for now
+or:
+	* have the original repository library directory be "linked" to the ne=
+w=20
+repository.
 
-> Did you consider my suggestion of not doing the chdir befor running
-> git-init-db?
-
-That would likely break clone, and also this (from my message
-under the commit message).
-
->  I've actually just noticed that setting GIT_DIR=3D before running
->  git-svn clone is very broken, and I probably won't get a chance
->  to fix it for at least 24 hours (if I'm even awake)...
 
 --=20
-Eric Wong
+Gonzalo Garramu=F1o
+
+=46ilm Aura
+A New Dawn in Media Companies
+
+gga@filmaura.com
+http://www.filmaura.com
