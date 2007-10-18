@@ -1,59 +1,57 @@
-From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-Subject: Re: git push bug?
-Date: Thu, 18 Oct 2007 18:31:56 +0200
-Organization: Transmode AB
-Message-ID: <1192725116.4954.7.camel@gentoo-jocke.transmode.se>
-References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
-	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
-	 <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
-	 <Pine.LNX.4.64.0710181720010.25221@racer.site>
-Reply-To: joakim.tjernlund@transmode.se
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Add a message explaining that automatic GC is about to
+	start
+Date: Thu, 18 Oct 2007 14:08:44 -0400
+Message-ID: <20071018180843.GA11624@sigill.intra.peff.net>
+References: <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org> <20071018003256.GA5062@coredump.intra.peff.net> <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org> <20071018024553.GA5186@coredump.intra.peff.net> <alpine.LFD.0.999.0710171955580.26902@woody.linux-foundation.org> <20071018032307.GA7313@coredump.intra.peff.net> <20071018044143.GA24043@midwinter.com> <3391BADA-B5B4-4A8E-A6C0-42169AFC0331@silverinsanity.com> <47176AB9.7010409@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 18 20:04:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Luke Lu <git@vicaya.com>,
+	Christer Weinigel <christer@weinigel.se>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 20:09:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiZj4-0001vC-Ia
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:04:07 +0200
+	id 1IiZnj-0002z1-Bk
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:08:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758153AbXJRSDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 14:03:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756776AbXJRSDz
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:03:55 -0400
-Received: from mail.transmode.se ([83.241.175.147]:25540 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753183AbXJRSDy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 14:03:54 -0400
-Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
-Received: from gentoo-jocke by mail.transmode.se; 18 Oct 2007 20:03:48 +0200
-In-Reply-To: <Pine.LNX.4.64.0710181720010.25221@racer.site>
-X-Mailer: Evolution 2.10.3 
+	id S1756835AbXJRSIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 14:08:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758312AbXJRSIo
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:08:44 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1734 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756388AbXJRSIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 14:08:44 -0400
+Received: (qmail 4135 invoked by uid 111); 18 Oct 2007 18:08:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 18 Oct 2007 14:08:42 -0400
+Received: (qmail 11659 invoked by uid 1000); 18 Oct 2007 18:08:44 -0000
+Content-Disposition: inline
+In-Reply-To: <47176AB9.7010409@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61552>
 
-On Thu, 2007-10-18 at 17:21 +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
-> 
-> > Seems like it is a bit too easy to make mistakes here. Why can I delete 
-> > a branch with :linus but not create one with linus:linus?
-> 
-> I wonder why you bother with the colon at all.  Just
-> 
-> 	git push <remote> linus
-> 
-> and be done with it.  The colon is only there to play interesting games, 
-> not something as simple as "push this branch" or "push this tag".
+On Thu, Oct 18, 2007 at 07:16:25AM -0700, Steven Grimm wrote:
 
-First, I didn't know that I could do that.
-Secondly, I was also looking do v2.6.23:linus refspecs
+>> installed in the first place.  Perhaps a message more along the lines of 
+>> "To avoid this, run "git gc" manually on a regular basis.  See 'git help 
+>> gc' for more information."
+>
+> That's a good point. Jeff / Shawn, do you agree with that? I'll come up with 
+> an alternate patch if so.
 
- Jocke 
+Yes, that seems reasonable. I think the most important thing is that
+they realize that "git-gc" is responsible for what is happening.  That
+should allow them to find more information in the documentation if they
+want (and Brian's suggestion points directly to the documentation, which
+is great).
+
+-Peff
