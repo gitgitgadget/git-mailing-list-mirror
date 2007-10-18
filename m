@@ -1,71 +1,102 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git-merge: need a tap with the cluestick, please
-Date: Thu, 18 Oct 2007 19:35:18 -0400
-Message-ID: <20071018233518.GL14735@spearce.org>
-References: <ff80tr$hh1$1@ger.gmane.org>
+From: Pete/Piet Delaney <pete@bluelane.com>
+Subject: Re: Qgit performance and maintain CVS environment with GIT repository
+Date: Thu, 18 Oct 2007 16:41:52 -0700
+Organization: Bluelane
+Message-ID: <4717EF40.6000509@bluelane.com>
+References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <47159779.6010502@bluelane.com>	 <e5bfff550710170030y7778e96ax146acea7a0e57a67@mail.gmail.com>	 <200710171800.37345.robin.rosenberg.lists@dewire.com> <e5bfff550710171626h733228aw7a251746d2b43c63@mail.gmail.com>
+Reply-To: pete@bluelane.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: walt <wa1ter@myrealbox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 01:35:35 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	piet.delaney@gmail.piet.net,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	VMiklos <vmiklos@frugalware.org>,
+	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org,
+	piet.delaney@gmail.com, Piet Delaney <pdelaney@bluelane.com>
+To: Marco Costalba <mcostalba@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 19 01:42:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iietq-0008PM-WE
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 01:35:35 +0200
+	id 1Iif0H-0000sy-P4
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 01:42:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757810AbXJRXfX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 19:35:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754134AbXJRXfX
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 19:35:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:37441 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753267AbXJRXfW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 19:35:22 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IietO-000408-UW; Thu, 18 Oct 2007 19:35:07 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0356120FBAE; Thu, 18 Oct 2007 19:35:19 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <ff80tr$hh1$1@ger.gmane.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S933702AbXJRXl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 19:41:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933650AbXJRXl7
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 19:41:59 -0400
+Received: from outbound.mse2.exchange.ms ([69.25.50.247]:1163 "EHLO
+	mse2fe1.mse2.exchange.ms" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S933519AbXJRXl5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 19:41:57 -0400
+Received: from piet2.bluelane.com ([64.95.123.130]) by mse2fe1.mse2.exchange.ms with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 18 Oct 2007 19:41:56 -0400
+User-Agent: Thunderbird 2.0.0.6 (X11/20070728)
+In-Reply-To: <e5bfff550710171626h733228aw7a251746d2b43c63@mail.gmail.com>
+X-Enigmail-Version: 0.95.3
+X-OriginalArrivalTime: 18 Oct 2007 23:41:56.0430 (UTC) FILETIME=[780996E0:01C811E0]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61576>
 
-walt <wa1ter@myrealbox.com> wrote:
-> Now when I pull from Linus the merge stops in the middle because of
-> conflicts with my .gitignore file <sigh>.  Anything I try now with
-> git-merge tells me I can't do that in the middle of a conflicted
-> merge.  Yes, I know that now, but what should I do instead?
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Marco Costalba wrote:
+> On 10/17/07, Robin Rosenberg <robin.rosenberg.lists@dewire.com> wrote:
+>> You could avoid the temporary files if you just pipe the diff to kompare. That
+>> would require an option to tell qgit that the external viewer can read a git diff.
+>>
+>> At the time qgit 1.5 was written, kompare could not handle git diffs.
+>>
 > 
-> I could move my 'obj' out-of-tree but then I wouldn't learn anything.
-> This has to be bone-head easy, but not for me :)
+> So does the other tools I have checked at that time.
+> 
+> But I don't know if this fixes the problem of slowness reported. A
+> little test Pete may do is just as I have written in the former email:
+> try to save the big files that cause troubles where he prefers and run
+> Kompare on them directly from the command line.
+> 
+> Is kompare faster? If no probably the 'pipe' technique will not solve
+> the problem and shrinks the applicability of the external diff
+> launcher to tools that handle diffs directly.
 
-How about putting the ignore for your obj dir in your own private
-exclude file:
+Marco:
+   I'll try kcompare on the huge files both on and off the NFS
+   file system to see if it has a noticeable impact.
 
-  $ echo /obj >>.git/info/exclude
+Johannes:
+  I read somewhere in the past week that it was possible to maintain
+  our existing CVS environment with git. I though it was a separate
+  package to export git back to cvs but I just noticed a git-cvsserver
+  and as a std part of git and was wondering about using that.
 
-will cause Git to ignore an "obj" directory if it is found in the
-top level of the repository.  And since this file is not actually
-tracked as part of the repository it will apply to all branches
-in this repository and won't cause merge conflicts when upstream
-makes changes to .gitignore.
+  We have a number of build machines with flamebox perl scripts pulling
+  out CVS branches for builds. I was wondering what is the best way to
+  use git and it's nicer pull/push model and merge facility and possibly
+  maintain CVS exports for scripts doing builds if possible the cvsweb
+  and bonsai (CVS Query Form) that a number of engineers are currently
+  using. I started looking over out flamebox scripts with the intent
+  up converting them over to git but I mentioned the git to cvs
+  coexistence and we are wondering if that's a better route than
+  upgrading the flamebox scripts. Having our existing cvsweb, bonsai,
+  and gitweb along with the git utilities seems at least desirable.
+  Any thoughts or suggestions?
 
-As for aborting a merge that you have gotten into the middle of
-decided you want to get out of, use `git reset --hard`.  That will
-throw away all of the unmerged state and put you back to your
-pre-merge state.
+- -piet
 
--- 
-Shawn.
+> 
+> Marco
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHF+8/JICwm/rv3hoRApKnAJ4suTVrULHeVnU2HrS3TDo+eTzxVQCbBH7x
+NzKdc6wRc1VdAOWgXOXBJ4U=
+=RuQc
+-----END PGP SIGNATURE-----
