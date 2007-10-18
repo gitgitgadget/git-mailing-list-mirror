@@ -1,84 +1,64 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 08:02:19 +0200
-Message-ID: <4716F6EB.8060800@op5.se>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu>	<B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu>	<3awb7zw6.fsf@blue.sea.net>	<alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>	<1192565900.6430.16.camel@athena>	<alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>	<20071017015109.303760cc@localhost.localdomain>	<alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>	<3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>	<alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>	<1192645509.6640.21.camel@athena>	<alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org>	<1192649598.6640.44.camel@athena>	<alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org>	<20071017232146.4b9e4097@localhost.localdomain>	<Pine.LNX.4.64.071017231
- 0270.25221@racer.site>	<20071018011734.7b636141@localhost.localdomain>	<Pine.LNX.4.64.0710180040320.25221@racer.site> <20071018023103.5d27ee35@localhost.localdomain>
+From: Mike Galbraith <efault@gmx.de>
+Subject: Re: pulling Already up-to-date linux-2.6 repo takes ~8 minutes?
+Date: Thu, 18 Oct 2007 08:05:39 +0200
+Message-ID: <1192687539.9097.7.camel@Homer.simpson.net>
+References: <1192678865.20353.14.camel@Homer.simpson.net>
+	 <20071018045001.GA14735@spearce.org>
+	 <1192684150.7390.15.camel@Homer.simpson.net>
+	 <1192685971.7390.21.camel@Homer.simpson.net>
+	 <20071018054834.GH14735@spearce.org>
+	 <1192686882.9097.2.camel@Homer.simpson.net>
+	 <20071018055729.GI14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Christer Weinigel <christer@weinigel.se>
-X-From: git-owner@vger.kernel.org Thu Oct 18 08:02:40 2007
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 08:05:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiOSo-0000QV-Kn
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 08:02:35 +0200
+	id 1IiOW2-0000pm-0X
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 08:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507AbXJRGCY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 02:02:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752497AbXJRGCY
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 02:02:24 -0400
-Received: from mail.op5.se ([193.201.96.20]:36138 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751992AbXJRGCX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 02:02:23 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 0BCEB17305BD;
-	Thu, 18 Oct 2007 08:02:22 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5E6BQ84TX4YI; Thu, 18 Oct 2007 08:02:21 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id EBA2E17305B9;
-	Thu, 18 Oct 2007 08:02:20 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071018023103.5d27ee35@localhost.localdomain>
+	id S1754082AbXJRGFn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 02:05:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbXJRGFm
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 02:05:42 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42882 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753117AbXJRGFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 02:05:42 -0400
+Received: (qmail invoked by alias); 18 Oct 2007 06:05:40 -0000
+Received: from p54B5BA2B.dip0.t-ipconnect.de (EHLO [192.168.178.23]) [84.181.186.43]
+  by mail.gmx.net (mp035) with SMTP; 18 Oct 2007 08:05:40 +0200
+X-Authenticated: #14349625
+X-Provags-ID: V01U2FsdGVkX18Nx4RXI3oNuweJ8ot/+8DmrZSnSsFl81+Dwm9k20
+	IANz+CiGrbem98
+In-Reply-To: <20071018055729.GI14735@spearce.org>
+X-Mailer: Evolution 2.8.2 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61488>
 
-Christer Weinigel wrote:
+On Thu, 2007-10-18 at 01:57 -0400, Shawn O. Pearce wrote:
+> Mike Galbraith <efault@gmx.de> wrote:
+> > On Thu, 2007-10-18 at 01:48 -0400, Shawn O. Pearce wrote:
+> > 
+> > > Look to see if there's anything on your current master branch that
+> > > you don't want/need anymore:
+> > > 
+> > > 	$ git log ..master
+> > 
+> > git trees here are meant to be absolutely virgin, so...
 > 
->   /Christer (pissing contensts are silly, so why the hell am I getting
->              involved in one?)
+> Whaa?  You found something that's better for manging the kernel
+> sources then Git?  ;-)
 
-Because the right to an opinion is so fundamental to us that when someone
-claims yours is stupid for reasons you (or me, or anyone) find unfair, we
-stand up and say so. It's not a sign of being stupid. It's a sign of being
-protective about a very basic democratic right, and oss people are usually
-very protective about those. Freedom of everything comes easier to people
-than "force christianity on the world, but keep your sources open!".
+cp vi diff patch :)  I'm crawling toward the 20th century though.  The
+tiny bit of git functionality I do use is pretty darn spiffy. 
 
-Linus is definitely not the most polite of people out there. Had he been
-less than top-ranked in the meritocracy he would have been utterly and
-totally annihilated on several mailing lists a really long time ago. At
-the same time, he's entitled to his opinion the same way everyone is, and
-he's entitled to express it any way he wants. When he's *really* off the
-mark, people will tell him so. Or ignore him totally, like an embarrassing
-grandfather who's just gotten too drunk at the christmas dinner and started
-fondling his grandsons girlfriend. However, the same goes for everyone else,
-and Linus *is* fond of telling people "so". If nothing else, it saves
-time to head off dead ends right at the start.
-
-Linus isn't sacrosankt, just enough of a corner-stone that people will keep
-listening to him even if he's wildly offending.
-
-tabs-vs-spaces is not, I feel, a discussion that has a great impact in
-the world, so being "really off the mark" is not really possible there.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+	-Mike
