@@ -1,83 +1,73 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: git on afs (fwd)
-Date: Thu, 18 Oct 2007 17:48:01 -0500 (CDT)
-Message-ID: <Pine.LNX.4.64.0710181746020.30020@torch.nrlssc.navy.mil>
+From: Petr Baudis <pasky@suse.cz>
+Subject: Re: [PATCH] Remove link to the survey from the git home page.
+Date: Fri, 19 Oct 2007 00:51:09 +0200
+Message-ID: <20071018225109.GQ18279@machine.or.cz>
+References: <20071016235714.190672ff@paolo-desktop> <2c6b72b30710180525s3924c720rb7cb715dc7b43c3b@mail.gmail.com> <4d8e3fd30710180830l30e2e371r4cadee0c8ff2e82f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/Mixed; boundary="-1602208999-79759986-1192747054=:30020"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 19 00:48:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonas Fonseca <jonas.fonseca@gmail.com>, git@vger.kernel.org
+To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 00:52:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IieA4-0000gr-OU
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:48:17 +0200
+	id 1IieDf-0001Md-CD
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:51:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759788AbXJRWsG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 18:48:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759392AbXJRWsF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:48:05 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:35955 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754370AbXJRWsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 18:48:04 -0400
-Received: from starfish.gems.nrlssc.navy.mil (localhost [127.0.0.1])
-	by mail.nrlssc.navy.mil (8.13.7/8.13.7) with ESMTP id l9IMm17Q017166
-	for <git@vger.kernel.org>; Thu, 18 Oct 2007 17:48:01 -0500
-Received: from torch.nrlssc.navy.mil ([128.160.25.59]) by starfish.gems.nrlssc.navy.mil with Microsoft SMTPSVC(6.0.3790.3959);
-	 Thu, 18 Oct 2007 17:48:01 -0500
-Content-ID: <Pine.LNX.4.64.0710181746021.30020@torch.nrlssc.navy.mil>
-X-OriginalArrivalTime: 18 Oct 2007 22:48:01.0160 (UTC) FILETIME=[EFAA9080:01C811D8]
-X-TM-AS-Product-Ver: : ISVW-6.0.0.2339-5.0.0.1023-15336001
-X-TM-AS-Result: : Yes--5.790200-0-31-1
-X-TM-AS-Category-Info: : 31:0.000000
-X-TM-AS-MatchedID: : 150567-147015-148033-148039
+	id S1764513AbXJRWvQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 18:51:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933854AbXJRWvP
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:51:15 -0400
+Received: from w241.dkm.cz ([62.24.88.241]:35863 "EHLO machine.or.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1764241AbXJRWvN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 18:51:13 -0400
+Received: by machine.or.cz (Postfix, from userid 2001)
+	id F391F5A52D; Fri, 19 Oct 2007 00:51:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <4d8e3fd30710180830l30e2e371r4cadee0c8ff2e82f@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61571>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+  Hi,
 
----1602208999-79759986-1192747054=:30020
-Content-Type: TEXT/PLAIN; format=flowed; charset=X-UNKNOWN
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <Pine.LNX.4.64.0710181746022.30020@torch.nrlssc.navy.mil>
+On Thu, Oct 18, 2007 at 05:30:58PM +0200, Paolo Ciarrocchi wrote:
+> On 10/18/07, Jonas Fonseca <jonas.fonseca@gmail.com> wrote:
+> > On 10/16/07, Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com> wrote:
+> > > As far as I know the survey is close so it makes sense to remove the link/text from the home page.
+> >
+> > Pasky has provided me with write access to git-homepage.git and to test
+> > the setup I have applied this change, which seemed to have been overlooked.
+> >
+> > Pasky, maybe you can update git.or.cz and perhaps also remove the link
+> > from the front page of repo.or.cz? :)
+> 
+> Pasky, Jonas,
+> I cannot enter IRC at the moment so I'm sending here a note with my proposal.
+> 
+> I recently got interested in drupal and I wondered whether it would a
+> good idea to try to play in a sandbox with a drupal installation and
+> somehow compare the actual static homepage with an alternative drupal
+> based portal.
+> 
+> What do you think?
 
+  to be honest, I'm kinda sceptical. It's not really clear at all to me
+what added value would drupal bring, and there're plenty of downsides
+(mainly around various additional maintenance costs) to balance out.
 
+  I probably wouldn't be able to tend for a drupal installation
+personally, since I barely get time to maintain even the current
+simplistic web page.
 
-Added the mailing list back in.
+  (But it isn't required that *I* run the homepage.  :-) And I certainly
+wouldn't want to stifle "innovation".)
 
-
-On Thu, 18 Oct 2007, Todd T. Fries wrote:
-
-> link() returns -1 errno 17 File exists on afs.
->=20
-> To further muddy the waters, linking within the same dir is ok,
-> linking outside the same dir is not:
->=20
-> todd@ispdesk/p6 ~/tmp=A661$ mkdir dir
-> todd@ispdesk/p6 ~/tmp=A662$ touch a
-> todd@ispdesk/p6 ~/tmp=A663$ ln a b
-> todd@ispdesk/p6 ~/tmp=A664$ ls -l a b
-> -rw-r--r--  2 4  wheel  0 Oct 18 17:09 a
-> -rw-r--r--  2 4  wheel  0 Oct 18 17:09 b
-> todd@ispdesk/p6 ~/tmp=A665$ ls -li a b
-> 2068032 -rw-r--r--  2 4  wheel  0 Oct 18 17:09 a
-> 2068032 -rw-r--r--  2 4  wheel  0 Oct 18 17:09 b
-> todd@ispdesk/p6 ~/tmp=A666$ ln a dir/b
-> ln: dir/b: File exists
-> todd@ispdesk/p6 ~/tmp=A667$ echo $?
-
-That error is just bogus on afs. If it returned a sane
-error, things would just work.
-
-But, looks like afs only supports linking within the same
-directory: http://www.angelfire.com/hi/plutonic/afs-faq.html
-
-So, you could look into whether the temp file can be sanely
-created in the same directory as the final filename.
-
--brandon
----1602208999-79759986-1192747054=:30020--
+-- 
+				Petr "Pasky" Baudis
+Early to rise and early to bed makes a male healthy and wealthy and dead.
+                -- James Thurber
