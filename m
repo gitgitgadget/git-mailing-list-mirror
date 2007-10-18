@@ -1,62 +1,79 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: Cloning an StGit repository
-Date: Thu, 18 Oct 2007 14:51:32 +0200
-Message-ID: <20071018125132.GA5403@diana.vm.bytemark.co.uk>
-References: <64de5c8b0710180456x24031754od7062d504e72b215@mail.gmail.com>
+From: cho <tobutaz@gmail.com>
+Subject: Re: [BUG] git-svn not following svn moves
+Date: Thu, 18 Oct 2007 13:11:47 +0000 (UTC)
+Message-ID: <ff7m2j$2eu$2@ger.gmane.org>
+References: <ff7fhg$2eu$1@ger.gmane.org>
+	<20071018121328.GA5358@xp.machine.xx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Rajkumar S <rajkumars@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 14:52:02 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 15:12:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiUr1-0002cS-MU
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 14:52:00 +0200
+	id 1IiVAq-00072e-Bl
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 15:12:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745AbXJRMvt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 08:51:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756842AbXJRMvs
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 08:51:48 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2244 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754255AbXJRMvr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 08:51:47 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IiUqb-0001TU-00; Thu, 18 Oct 2007 13:51:33 +0100
-Content-Disposition: inline
-In-Reply-To: <64de5c8b0710180456x24031754od7062d504e72b215@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1751396AbXJRNMR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 09:12:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbXJRNMR
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 09:12:17 -0400
+Received: from main.gmane.org ([80.91.229.2]:59123 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750764AbXJRNMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 09:12:16 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiVAO-0005Yq-7e
+	for git@vger.kernel.org; Thu, 18 Oct 2007 13:12:00 +0000
+Received: from dhcp26-237.enst.fr ([137.194.26.237])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 13:12:00 +0000
+Received: from tobutaz by dhcp26-237.enst.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 13:12:00 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: dhcp26-237.enst.fr
+User-Agent: Pan/0.129 (Benson & Hedges Moscow Gold)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61527>
 
-On 2007-10-18 17:26:48 +0530, Rajkumar S wrote:
+Le Thu, 18 Oct 2007 14:13:28 +0200, Peter Baumann a =C3=A9crit=C2=A0:
+> Any chance you could provide a testcase which is similar to what
+> happened in your private repo so that the problem could be reproduced
+> here?
 
-> git --bare fetch ../stg_branch my_branch02:my_branch02
-> my_branch02:my_branch02 my_branch01:my_branch01  master:master
-[...]
-> It says
-> * refs/heads/my_branch02: not updating to non-fast forward branch
-> 'my_branch02' of ../stg_branch
->
-> my_branch02 is the StGit managed branch from stg_branch, other
-> normal branchs are getting merged. Since this is StGit managed, fast
-> forward merge is not possible, I guess. So how can I pull in the
-> StGit managed changes to web.git repository?
+I've surprised myself but yes, there is a simple testcase.
 
-Either prefix each of the refspects with a + (as in
-+my_branch01:my_branch01), or use the -f flag (which has the same
-effect as using + on all the refspecs). This will allow the refs to be
-overwritten even if it's not a fast-forward.
+svnadmin create repo
+svn checkout file://$PWD/repo checkout
+cd checkout/
+svn mkdir trunk tags branches
+svn ci -m 'Standard svn layout.'
+cd trunk/
+svn mkdir doc
+touch doc/README
+svn add doc/README
+svn ci -m 'Add README.'
+cd ..
+svn mv trunk/ branches/oldtrunk
+svn ci -m 'Moved trunk.'
+svn mkdir trunk
+svn ci -m 'New trunk.'
+cd trunk/
+touch THIS_IS_THE_NEW_TRUNK
+svn add THIS_IS_THE_NEW_TRUNK
+svn ci -m 'Add marker.'
+cd ../..
+git svn clone file://$PWD/repo --stdlayout git-clone
+cd git-clone/
+tree
 
-You have to do this with StGit-managed branches, since StGit is
-essentially just a convenient way to rebase commits.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+So the testcase basically involves moving the trunk.
+git-svn gets very confused and keeps a mixture of the old and new trunk=
+=2E
