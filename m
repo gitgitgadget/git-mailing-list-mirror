@@ -1,74 +1,62 @@
-From: Yaacov Akiba Slama <ya@slamail.org>
-Subject: Re: [QGIT4 PATCH] Add --no-color option to several calls to git
-Date: Thu, 18 Oct 2007 15:41:06 +0200
-Message-ID: <47176272.40704@slamail.org>
-References: <1192643649-18908-1-git-send-email-ya@slamail.org> <e5bfff550710171638l26d3e55ej9dc8b38f8aee7592@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] Add a message explaining that automatic GC is about to start
+Date: Thu, 18 Oct 2007 09:52:08 -0400
+Message-ID: <3391BADA-B5B4-4A8E-A6C0-42169AFC0331@silverinsanity.com>
+References: <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org> <20071018003256.GA5062@coredump.intra.peff.net> <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org> <20071018024553.GA5186@coredump.intra.peff.net> <alpine.LFD.0.999.0710171955580.26902@woody.linux-foundation.org> <20071018032307.GA7313@coredump.intra.peff.net> <20071018044143.GA24043@midwinter.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marco Costalba <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 15:41:39 2007
+Cc: Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Luke Lu <git@vicaya.com>,
+	Christer Weinigel <christer@weinigel.se>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
+To: koreth@midwinter.com
+X-From: git-owner@vger.kernel.org Thu Oct 18 15:52:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiVcz-0006FR-Rs
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 15:41:34 +0200
+	id 1IiVnk-0000kc-DY
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 15:52:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762122AbXJRNlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 09:41:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761868AbXJRNlV
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 09:41:21 -0400
-Received: from mail.cyaris.com ([195.140.142.33]:34170 "EHLO c1-033.cyaris.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757658AbXJRNlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 09:41:19 -0400
-Received: from [10.13.33.101] (helo=localhost.localdomain ident=Debian-exim)
-	by c1-033.cyaris.net with esmtpsa (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IiVcg-0003CT-E5; Thu, 18 Oct 2007 15:41:17 +0200
-Received: from localhost ([127.0.0.1] ident=yaslama)
-	by localhost.localdomain with esmtp (Exim 4.68)
-	(envelope-from <ya@slamail.org>)
-	id 1IiVcZ-0007Nl-Vc; Thu, 18 Oct 2007 15:41:07 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20071009 Thunderbird/2.0.0.6 Mnenhy/0.7.5.666
-In-Reply-To: <e5bfff550710171638l26d3e55ej9dc8b38f8aee7592@mail.gmail.com>
-X-Spam-Score: -1.4 (-)
-X-Spam-Report: Spam detection software, running on the system "c1-033.cyaris.net", has
-	identified this incoming email as possible spam.  The original message
-	has been attached to this so you can view it (if it isn't spam) or label
-	similar future email.  If you have any questions, see
-	the administrator of that system for details.
-	Content preview:  Marco Costalba wrote: > Could you please confirm me that with
-	this patch qgit works flawless > for you when "diff.color = true", I' m worried
-	to push a new point > release just to discover we need to fix some more.
-	> I can confirm that at least the basic operations are working for me with
-	several repositories. But I wonder if it's not better to add to git the support
-	of a GIT_COLORS environment variable which would be set for instance to :
-	[...] 
-	Content analysis details:   (-1.4 points, 5.0 required)
-	pts rule name              description
-	---- ---------------------- --------------------------------------------------
-	-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP
+	id S1761957AbXJRNv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 09:51:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757827AbXJRNv7
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 09:51:59 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:48025 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757776AbXJRNv6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 09:51:58 -0400
+Received: from [IPv6???1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id F18511FFC22B;
+	Thu, 18 Oct 2007 13:51:50 +0000 (UTC)
+In-Reply-To: <20071018044143.GA24043@midwinter.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61530>
 
-Marco Costalba wrote:
 
-> Could you please confirm me that with this patch qgit works flawless
-> for you when "diff.color = true", I' m worried to push a new point
-> release just to discover we need to fix some more.
->   
-I can  confirm that at least the basic operations are working for me 
-with several repositories.
-But I wonder if it's not better to add to git the support of a 
-GIT_COLORS environment variable which would be set for instance to :
+On Oct 18, 2007, at 12:41 AM, koreth@midwinter.com wrote:
 
-diff=false:branch=false:status=false
+> And as an added bonus, we can tell people how to turn off automatic GC
+> and how to invoke it by hand.
 
-in gitk, qgit and other frontends.
+> +		fprintf(stderr, "Packing your repository for optimum "
+> +			"performance. If you would rather run\n"
+> +			"\"git gc\" by hand, run \"git config gc.auto 0\" "
+> +			"to disable automatic cleanup.\n");
 
---yas
+I'm not sure telling the users how to disable it every time it shows  
+up is a good idea.  gc --auto exists for the naive user, and  
+suggesting they turn it off each time it happens will just result  
+in...  people turning it off, leading back to the performance issues  
+that caused the feature to be installed in the first place.  Perhaps  
+a message more along the lines of "To avoid this, run "git gc"  
+manually on a regular basis.  See 'git help gc' for more information."
+
+~~ Brian
