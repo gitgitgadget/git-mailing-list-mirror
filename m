@@ -1,61 +1,65 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: Subversion developer: svn is for dumb people
-Date: Fri, 19 Oct 2007 11:40:59 +1300
-Message-ID: <4717E0FB.1060705@vilain.net>
-References: <47176CE0.7030609@midwinter.com>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: RE: linux-2.6.git mirror
+Date: Thu, 18 Oct 2007 15:46:10 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E270168517F@az33exm24.fsl.freescale.net>
+References: <598D5675D34BE349929AF5EDE9B03E2701684C77@az33exm24.fsl.freesca le.net> <alpine.LFD.0.999.0710181518120.26902@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: 'git' <git@vger.kernel.org>
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 00:41:23 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 00:46:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iie3M-00083Y-Hg
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:41:21 +0200
+	id 1Iie8e-0000SZ-Q5
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:46:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751334AbXJRWlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 18:41:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbXJRWlI
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:41:08 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:43847 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751097AbXJRWlG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 18:41:06 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 361BA21CFE8; Fri, 19 Oct 2007 11:41:05 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 8ACE621CFDB;
-	Fri, 19 Oct 2007 11:41:01 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <47176CE0.7030609@midwinter.com>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1760330AbXJRWqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 18:46:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757550AbXJRWqQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:46:16 -0400
+Received: from de01egw02.freescale.net ([192.88.165.103]:42840 "EHLO
+	de01egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758853AbXJRWqP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:46:15 -0400
+Received: from de01smr01.freescale.net (de01smr01.freescale.net [10.208.0.31])
+	by de01egw02.freescale.net (8.12.11/de01egw02) with ESMTP id l9IMkBK1007370
+	for <git@vger.kernel.org>; Thu, 18 Oct 2007 15:46:12 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr01.freescale.net (8.13.1/8.13.0) with ESMTP id l9IMkBUi026564
+	for <git@vger.kernel.org>; Thu, 18 Oct 2007 17:46:11 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <alpine.LFD.0.999.0710181518120.26902@woody.linux-foundation.org>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: linux-2.6.git mirror
+Thread-Index: AcgR1wZgkrY1fzqNTvCwC6qGIP2JTQAAH3Eg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61568>
 
-Steven Grimm wrote:
-> some of his specific arguments
-> about DVCS are on the bogus side. "Centralized systems encourage code 
-> reviews," for one --
+Hi Linus,
 
-I heard this from the core Subversion team too.  The hypothesis is that
-by forcing groups to be unable to proceed without continually rebasing
-to each other's work, that collaboration is enhanced.
 
-I think any argument which states that a restrictive system is better
-than a non-restrictive system, when the non-restrictive system can be
-used in the same way as the restrictive system (either with
-configuration, or agreement with the committers) is quite bizarre.
+> > Is this something I should be worried about?
+> 
+> No, but if it still happens with a newer git, holler.
 
-Sam.
+I tested this with Junio's latest master and a couple of stable releases
+from the maint branch with the same result. In my ignorance I suspected
+the build infrastructure so I tried different gcc versions (4.x and 3.x)
+and optimization levels (including -O0) different libraries, etc. that I
+had on a few machines around here. The result was the same.
+
+What worried me is that I think I traced the source of the error message
+in commit.c and in both two possible places from where the message could
+come the processing flow seems to be cut shorter because of this.
+
+
+Thanks for your reply,
+Emil.
