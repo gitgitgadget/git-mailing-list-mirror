@@ -1,51 +1,96 @@
-From: Paul Wankadia <junyer@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 03:31:43 +0000 (UTC)
-Message-ID: <loom.20071018T032910-500@post.gmane.org>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu> <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+Date: Wed, 17 Oct 2007 20:32:58 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710172017020.26902@woody.linux-foundation.org>
+References: <1192565900.6430.16.camel@athena>
+ <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
+ <20071017015109.303760cc@localhost.localdomain>
+ <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
+ <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
+ <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
+ <20071018003256.GA5062@coredump.intra.peff.net>
+ <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org>
+ <20071018024553.GA5186@coredump.intra.peff.net> <Pine.LNX.4.64.0710172002020.10276@asgard.lang.hm>
+ <20071018030055.GA7218@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 05:32:12 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: david@lang.hm, Luke Lu <git@vicaya.com>,
+	Christer Weinigel <christer@weinigel.se>,
+	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 05:33:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiM7G-0006nc-HM
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 05:32:10 +0200
+	id 1IiM8e-0006yB-IN
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 05:33:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761379AbXJRDb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 23:31:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761222AbXJRDb6
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 23:31:58 -0400
-Received: from main.gmane.org ([80.91.229.2]:59319 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760206AbXJRDb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Oct 2007 23:31:58 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IiM6v-0003aU-Oo
-	for git@vger.kernel.org; Thu, 18 Oct 2007 03:31:50 +0000
-Received: from 210.9.11.194 ([210.9.11.194])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Oct 2007 03:31:49 +0000
-Received: from junyer by 210.9.11.194 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Oct 2007 03:31:49 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 210.9.11.194 (Mozilla/5.0 (X11; U; FreeBSD i386; en-US; rv:1.7.13) Gecko/20060426)
+	id S1761190AbXJRDdZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 23:33:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761611AbXJRDdZ
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 23:33:25 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49220 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1761096AbXJRDdY (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 23:33:24 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9I3X3kn016474
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 17 Oct 2007 20:33:04 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9I3WwKP022571;
+	Wed, 17 Oct 2007 20:33:00 -0700
+In-Reply-To: <20071018030055.GA7218@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61459>
 
-Linus Torvalds <torvalds <at> linux-foundation.org> writes:
 
-> The only sane solution is the one the kernel and git have always used: 
-> tabs are 8 spaces wide, and anybody who disagrees can go screw themselves. 
 
-I hope and pray that you are parodied on "South Park" someday.
+On Wed, 17 Oct 2007, Jeff King wrote:
+> 
+> Yes, obviously. The people who advocate mixing really _are_ objectively
+> wrong. But I was talking about all-spaces versus all-tabs.
+
+If you really are all one-or-the-other, then everything is obviously fine, 
+and spaces have somewhat stronger guarantees (I say "somewhat", because 
+the line-up-guarantee of all-spaces is only guaranteed with fixed-width 
+fonts, and hard-tab indents often look nicer in printouts, and are 
+generally much more flexible in just how wide you make the indent *look*, 
+ie hard-tabs at least *allow* people to see the indents in different 
+ways, even if that will potentially mess up any alignment).
+
+But some mixing is inevitable, and at least in UNIX, the tendency is for 
+tabs, not spaces, by default, so tabs have a much higher chance of 
+*staying* mostly tabs, while anybody who uses spaces pretty much *will* 
+get tabs inserted by just about any programming editor that isn't set up 
+for python.
+
+So you always get _some_ amount of mixing, exactly because most editors 
+won't show you the difference, and what people aren't aware of, they don't 
+think about. There's no getting away from that, unless you actually 
+enforce it with hooks (and in a distributed environment, even that isn't 
+really going to fly, is it?).
+
+And if you *do* decide to enforce it with hooks, you now have issues like 
+the fact that some files mustn't do it (autoconvert tabs to spaces in a 
+Makefile, and it just stops working!), and others have somewhat subtle 
+issues forcing your converter to be somewhat knowledgeable (trivial 
+example: strings that are spread across multiple lines in C..)
+
+In general, if you do enforce it (which I personally think is not likely a 
+good idea, but hey, it's up to the project), I'd *still* suggest going the 
+way of enforcing hard-tabs, not spaces. As mentioned, space does matter, 
+but hardtabs really are "friendlier", and if you're a vi user, you can do 
+a :set tabstop=4 and if that's what you're used to, it will all look 
+better to you.
+
+In contrast, all-spaces just sucks. It really has no redeeming values.
+
+		Linus
