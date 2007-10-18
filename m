@@ -1,65 +1,56 @@
-From: walt <wa1ter@myrealbox.com>
-Subject: git-merge: need a tap with the cluestick, please
-Date: Thu, 18 Oct 2007 09:17:55 -0700
-Organization: none
-Message-ID: <ff80tr$hh1$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git push bug?
+Date: Thu, 18 Oct 2007 17:21:17 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710181720010.25221@racer.site>
+References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se> 
+ <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de> <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 18:17:25 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Thu Oct 18 18:21:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiY3m-0002v0-Md
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:17:23 +0200
+	id 1IiY7y-0003pQ-7W
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:21:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757433AbXJRQRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 12:17:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757193AbXJRQRK
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:17:10 -0400
-Received: from main.gmane.org ([80.91.229.2]:39274 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756952AbXJRQRJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 12:17:09 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IiY3V-0002rt-L7
-	for git@vger.kernel.org; Thu, 18 Oct 2007 16:17:05 +0000
-Received: from adsl-69-234-211-250.dsl.irvnca.pacbell.net ([69.234.211.250])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Oct 2007 16:17:05 +0000
-Received: from wa1ter by adsl-69-234-211-250.dsl.irvnca.pacbell.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Oct 2007 16:17:05 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-69-234-211-250.dsl.irvnca.pacbell.net
-User-Agent: Thunderbird 3.0a1pre (X11/2007101707)
+	id S1756991AbXJRQVb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 12:21:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbXJRQVb
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:21:31 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51116 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754073AbXJRQVa (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 12:21:30 -0400
+Received: (qmail invoked by alias); 18 Oct 2007 16:21:28 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp042) with SMTP; 18 Oct 2007 18:21:28 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX191nnVqhzV1np8l4NECQ55IDgBQZrbyZ31NGAihq4
+	5YxmBU8/YtwqeS
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61544>
 
-I just tried my first local modification to Linus's tree, and I
-can't get the merge to work.  Maybe my whole approach is wrong?
+Hi,
 
-I wanted start compiling the kernel out-of-tree, so I added my
-own 'obj' directory at the top level.
+On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
 
-I then got conflicts when trying to pull from Linus, so I added
-my 'obj' directory to my toplevel .gitignore file and committed
-the local change to my 'master' branch.  (This is my only local
-modification because I'm only tracking Linus, not developing the
-kernel.)
+> Seems like it is a bit too easy to make mistakes here. Why can I delete 
+> a branch with :linus but not create one with linus:linus?
 
-Now when I pull from Linus the merge stops in the middle because of
-conflicts with my .gitignore file <sigh>.  Anything I try now with
-git-merge tells me I can't do that in the middle of a conflicted
-merge.  Yes, I know that now, but what should I do instead?
+I wonder why you bother with the colon at all.  Just
 
-I could move my 'obj' out-of-tree but then I wouldn't learn anything.
-This has to be bone-head easy, but not for me :)
+	git push <remote> linus
 
-Clues most welcome.
+and be done with it.  The colon is only there to play interesting games, 
+not something as simple as "push this branch" or "push this tag".
+
+Ciao,
+Dscho
