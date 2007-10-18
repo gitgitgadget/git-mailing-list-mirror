@@ -1,65 +1,59 @@
-From: Patrick Welche <prlw1@newn.cam.ac.uk>
-Subject: NI_MAXSERV trivial patch
-Date: Thu, 18 Oct 2007 18:17:39 +0100
-Message-ID: <20071018171739.GC580@quartz.itdept.newn.cam.ac.uk>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Re: git push bug?
+Date: Thu, 18 Oct 2007 18:31:56 +0200
+Organization: Transmode AB
+Message-ID: <1192725116.4954.7.camel@gentoo-jocke.transmode.se>
+References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
+	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
+	 <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+	 <Pine.LNX.4.64.0710181720010.25221@racer.site>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 19:50:48 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 18 20:04:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiZVx-0006nb-Kj
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 19:50:34 +0200
+	id 1IiZj4-0001vC-Ia
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758579AbXJRRuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 13:50:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758312AbXJRRuU
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 13:50:20 -0400
-Received: from henry.newn.cam.ac.uk ([131.111.204.130]:57868 "EHLO
-	henry.newn.cam.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757477AbXJRRuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 13:50:19 -0400
-X-Greylist: delayed 1958 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Oct 2007 13:50:19 EDT
-Received: from quartz.itdept.newn.cam.ac.uk ([192.168.200.180])
-	by henry.newn.cam.ac.uk with esmtp (Exim 4.66)
-	(envelope-from <prlw1@newn.cam.ac.uk>)
-	id 1IiZ08-0004mM-0y
-	for git@vger.kernel.org; Thu, 18 Oct 2007 18:17:40 +0100
-Received: from prlw1 by quartz.itdept.newn.cam.ac.uk with local (Exim 4.66)
-	(envelope-from <prlw1@newn.cam.ac.uk>)
-	id 1IiZ07-0003iq-Ut
-	for git@vger.kernel.org; Thu, 18 Oct 2007 18:17:39 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.14 (2007-03-22)
+	id S1758153AbXJRSDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 14:03:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756776AbXJRSDz
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:03:55 -0400
+Received: from mail.transmode.se ([83.241.175.147]:25540 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753183AbXJRSDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 14:03:54 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 18 Oct 2007 20:03:48 +0200
+In-Reply-To: <Pine.LNX.4.64.0710181720010.25221@racer.site>
+X-Mailer: Evolution 2.10.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61551>
 
-I found I needed
+On Thu, 2007-10-18 at 17:21 +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+> 
+> > Seems like it is a bit too easy to make mistakes here. Why can I delete 
+> > a branch with :linus but not create one with linus:linus?
+> 
+> I wonder why you bother with the colon at all.  Just
+> 
+> 	git push <remote> linus
+> 
+> and be done with it.  The colon is only there to play interesting games, 
+> not something as simple as "push this branch" or "push this tag".
 
---- daemon.c.orig       2007-09-02 06:57:44.000000000 +0100
-+++ daemon.c    2007-10-18 16:04:00.000000000 +0100
-@@ -9,6 +9,10 @@
- #define HOST_NAME_MAX 256
- #endif
- 
-+#ifndef NI_MAXSERV
-+#define NI_MAXSERV 32
-+#endif
-+
- static int log_syslog;
- static int verbose;
- static int reuseaddr;
+First, I didn't know that I could do that.
+Secondly, I was also looking do v2.6.23:linus refspecs
 
-
-
-
-to compile git, as for me NI_MAXSERV is defined in netdb.h, and it
-doesn't seem worthwhile to include the whole header.
-
-Cheers,
-
-Patrick
+ Jocke 
