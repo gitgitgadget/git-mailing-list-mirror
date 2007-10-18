@@ -1,86 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: On Tabs and Spaces
-Date: Wed, 17 Oct 2007 17:59:27 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org>
-References: <1192548367.3821.4.camel@lt21223.campus.dmacc.edu>
- <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net>
- <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
- <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org>
- <20071017015109.303760cc@localhost.localdomain>
- <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org>
- <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com>
- <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org>
- <20071018003256.GA5062@coredump.intra.peff.net>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH 0/7] Bisect dunno
+Date: Thu, 18 Oct 2007 11:24:08 +1000
+Message-ID: <ee77f5c20710171824o33ea13aqe6a6c8aa096f56c7@mail.gmail.com>
+References: <20071014142826.8caa0a9f.chriscool@tuxfamily.org>
+	 <471302D2.6010405@trolltech.com>
+	 <ee77f5c20710142315j192b9f65m22d7980769a46cec@mail.gmail.com>
+	 <200710150902.52653.johan@herland.net>
+	 <7EDF99A4-00BD-4F89-A31F-DCA33723CDD5@wincent.com>
+	 <ee77f5c20710150453g1220d968k9a23f2b8329a67db@mail.gmail.com>
+	 <0C82FD96-2CF9-4E66-91EB-DBC2CFF003E8@adacore.com>
+	 <85ve98gl57.fsf@lola.goethe.zz>
+	 <alpine.LFD.0.999.0710171553580.26902@woody.linux-foundation.org>
+	 <Pine.LNX.4.64.0710180045160.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Luke Lu <git@vicaya.com>, Christer Weinigel <christer@weinigel.se>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 03:00:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	"Geert Bosch" <bosch@adacore.com>,
+	"Wincent Colaiuta" <win@wincent.com>,
+	"Johan Herland" <johan@herland.net>, git@vger.kernel.org,
+	"Marius Storm-Olsen" <marius@trolltech.com>,
+	"Christian Couder" <chriscool@tuxfamily.org>,
+	"Ren? Scharfe" <rene.scharfe@lsrfire.ath.cx>,
+	"Junio Hamano" <junkio@cox.net>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 18 03:24:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiJk6-00034c-E8
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 03:00:06 +0200
+	id 1IiK7b-0006Rs-Oo
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 03:24:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754422AbXJRA7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Oct 2007 20:59:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760982AbXJRA7k
-	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 20:59:40 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43906 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754403AbXJRA7j (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Oct 2007 20:59:39 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9I0xRTK009036
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 17 Oct 2007 17:59:28 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9I0xRm3017094;
-	Wed, 17 Oct 2007 17:59:27 -0700
-In-Reply-To: <20071018003256.GA5062@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.717 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1760804AbXJRBYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Oct 2007 21:24:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754504AbXJRBYL
+	(ORCPT <rfc822;git-outgoing>); Wed, 17 Oct 2007 21:24:11 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:23084 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758880AbXJRBYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Oct 2007 21:24:09 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so12773rvb
+        for <git@vger.kernel.org>; Wed, 17 Oct 2007 18:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QhKs+2gObtmyRg/njvwI8DkRZrPaQ959byFr2YBp+EA=;
+        b=TAcca4Hp0VLxKkCMMluuihLJeosSGQalDUiqqyBxvwizg8zOegmKJ7bgSPBXeab4w4bzfom2PTTfAw93MT+wrUkkXQKxoJ64GmwU99dPnI9M2I7wzXajbNFoDkx4oOFXPUAjbzkF4fMtZmFEq54wQxjVf2sfl9WPhrSS5gO+j64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bIQzatsXkmS5Qz9P8GFznty/fVl9yWYQB9OVNHhqap3y2o5l4oWCwH3PnSi6dcoFT+KPHMPvsrPtznpAPa2jP/bSAuRO1eFB3zeyNKDRZgcoPhbxYc857ZGtpME0nZi62J8s8JrHVFji1x/GOP7c/OHTgiI7Uf7tDMcuhaTawSk=
+Received: by 10.141.178.5 with SMTP id f5mr4629075rvp.1192670649607;
+        Wed, 17 Oct 2007 18:24:09 -0700 (PDT)
+Received: by 10.141.153.4 with HTTP; Wed, 17 Oct 2007 18:24:08 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.64.0710180045160.25221@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61449>
+
+On 18/10/2007, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 17 Oct 2007, Linus Torvalds wrote:
+>
+> > Well, this has been debated to death, but I actually think that "skip"
+> > is a good choice, exactly because it's an action.
+>
+> Could we, _please_, first decide if the implementation has merits, and
+> just apply it as is in that case?  We can rename it whatever anybody likes
+> later, and we can paint the bikeshed brown if you want to.
+
+I figured with something like this, it'd be a lot easier to get the
+colour right first, since command UI is harder to repaint if it gets
+widely adopted. Anyway, I think the patch itself is a very good
+feature.
 
 
-
-On Wed, 17 Oct 2007, Jeff King wrote:
-> 
-> In what way does an all-space model cause people to accidentally add
-> tabs, but an all-tab model does not cause people to accidentally add
-> spaces?
-
-It happens. We do de-spacification in the kernel occasionally when it is 
-an annoyance. Usually it shows up in patches, though - exactly because 
-code which adds spaces instead of tabs won't line up correctly in the 
-diff.
-
-So it doesn't matter *which* one you use (all spaces or all tabs) in that 
-sense. But clearly tabs are *way* more common at least in any UNIX 
-project, and tabs really do have the advantage of being smaller.
-
-And smaller *is* faster. Do something like this on the kernel:
-
-	GIT_PAGER= time git grep sched_fair
-
-and then do the same thing with the kernel sources blown up by 20% by 
-de-tabification. Guess which one is 20% slower?
-
-And whoever said that disk space doesn't matter doesn't know what he is 
-talking about. Disk space most *definitely* matters. Do the above test 
-with a cold-cache case, and think what 20% more IO does to you (or 20% 
-less disk cache).
-
-But no, the size issues are secondary, I'm not claiming anything else. 
-Although I do suspect that historically, they have been primary, and have 
-been the thing that has resulted in the fact that tabs are so commonly 
-used.
-
-			Linus
+Dave.
