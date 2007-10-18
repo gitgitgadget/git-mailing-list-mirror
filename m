@@ -1,96 +1,117 @@
-From: lmage11@twcny.rr.com
-Subject: Proposed git mv behavioral change
-Date: Thu, 18 Oct 2007 11:47:32 -0400
-Message-ID: <c594999b2337.2337c594999b@nyroc.rr.com>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Re: git push bug?
+Date: Thu, 18 Oct 2007 18:01:08 +0200
+Organization: Transmode AB
+Message-ID: <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
+	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 18 17:47:49 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Oct 18 18:01:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiXbA-0004aV-IP
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 17:47:49 +0200
+	id 1IiXoO-0007le-BJ
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 18:01:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756214AbXJRPrg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 11:47:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751274AbXJRPrg
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 11:47:36 -0400
-Received: from ms-smtp-03.nyroc.rr.com ([24.24.2.57]:43241 "EHLO
-	ms-smtp-03.nyroc.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755971AbXJRPrf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 11:47:35 -0400
-Received: from ms-mss-05 (ms-mss-05-smtp-b [10.10.4.35])
-	by ms-smtp-03.nyroc.rr.com (8.13.6/8.13.6) with ESMTP id l9IFlW65025261
-	for <git@vger.kernel.org>; Thu, 18 Oct 2007 11:47:34 -0400 (EDT)
-Received: from nyroc.rr.com (localhost [127.0.0.1]) by ms-mss-05.nyroc.rr.com
- (iPlanet Messaging Server 5.2 HotFix 2.10 (built Dec 26 2005))
- with ESMTP id <0JQ400MHJ6J89L@ms-mss-05.nyroc.rr.com> for git@vger.kernel.org;
- Thu, 18 Oct 2007 11:47:32 -0400 (EDT)
-Received: from [10.10.6.25] (Forwarded-For: [170.158.82.52])
- by ms-mss-05.nyroc.rr.com (mshttpd); Thu, 18 Oct 2007 11:47:32 -0400
-X-Mailer: iPlanet Messenger Express 5.2 HotFix 2.10 (built Dec 26 2005)
-Content-language: en
-Content-disposition: inline
-X-Accept-Language: en
-X-Virus-Scanned: Symantec AntiVirus Scan Engine
+	id S934107AbXJRQBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 12:01:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933221AbXJRQBO
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 12:01:14 -0400
+Received: from mail.transmode.se ([83.241.175.147]:22634 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S933975AbXJRQBM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 12:01:12 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 18 Oct 2007 18:01:09 +0200
+In-Reply-To: <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
+X-Mailer: Evolution 2.10.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61539>
 
-Hey, all...
+On Thu, 2007-10-18 at 17:14 +0200, Steffen Prohaska wrote:
+> On Oct 18, 2007, at 4:50 PM, Joakim Tjernlund wrote:
+> 
+> >
+> > I thougth I could create a new branch on the server using:
+> >
+> > # > git push ssh://devsrv/var/git/os2kernel.git linus:refs/linus
+> > Warning: No xauth data; using fake authentication data for X11  
+> > forwarding.
+> > updating 'refs/linus' using 'refs/heads/linus'
+> >  from 0000000000000000000000000000000000000000
+> >  to bbf25010f1a6b761914430f5fca081ec8c7accd1
+> > Generating pack...
+> > Done counting 0 objects.
+> > Writing 0 objects...
+> > Total 0 (delta 0), reused 0 (delta 0)
+> > error: refusing to create funny ref 'refs/linus' locally
+> > ng refs/linus funny refname
+> > error: failed to push to 'ssh://devsrv/var/git/os2kernel.git'
+> >
+> > but that doesn't work. Am I doing this wrong?
+> 
+> Include 'heads' in your remote refspec:
+> 
+>     git push ssh://devsrv/var/git/os2kernel.git linus:refs/heads/linus
 
-Based on a question I asked on freenode's #git channel a few days ago, it seems that most 
-people only use git 
-mv when the file they're moving is clean. Those that don't have become accustomed to the 
-behavior that git-mv 
-uses when the file is dirty - to pull all unstaged changes into the index. As far as I can tell, 
-this behavior is 
-largely historical. When git-mv was written in bash (or perl, or whatever it was initially written 
-in), it was most 
-convenient to implement it as "mv oldname newname; git add newname;", or something 
-similar, which would 
-result in pulling in all wd changes. However, it seems to me that this behavior violates git's 
-consistency. Usually 
-when I do something with git, I expect it to do only what it says it will do, and nothing more. 
-The 
-documentation for git-mv says "The index is updated after successful completion", but I 
-would tend to assume 
-that this was referring to the name change and not the change in the actual contents of the 
-file.
+Now the push went OK:
+git push  ssh://devsrv/var/git/os2kernel.git linus:refs/head/linus
+Warning: No xauth data; using fake authentication data for X11 forwarding.
+updating 'refs/head/linus' using 'refs/heads/linus'
+  from 0000000000000000000000000000000000000000
+  to   bbf25010f1a6b761914430f5fca081ec8c7accd1
+Generating pack...
+Done counting 0 objects.
+Writing 0 objects...
+Total 0 (delta 0), reused 0 (delta 0)
+refs/head/linus: 0000000000000000000000000000000000000000 -> bbf25010f1a6b761914430f5fca081ec8c7accd1
 
-In my situation, I have some changes to a file that I'm not yet ready to commit. In the 
-meantime, I've started 
-working on another unrelated change that involves renaming one of the files which contain 
-unstaged changes. 
-I'd like to be able to perform this move without having my unstaged changes implicitly 
-staged without my 
-knowledge. When I want information put into the index, I either use git update-index if I 
-want to explicitly 
-stage an entire file or I use git add -i's patch command to explicitly stage individual chunks. I 
-like having very 
-fine-grained control over what goes into the index and what doesn't.
+but there is no linus branch in the server repo!
 
-Therefore, I propose that git mv's behavior be changed. I think it would make far more sense 
-for a move to only 
-change the actual name of the file and to not pull in unstaged changes. In other words, I'd 
-like the index entry 
-for the original file name to be removed and an index entry to be added with a different 
-name, but using the 
-exact same blob hash as the original file. I don't know exactly how git manages the index 
-internally, but a 
-shortcut for this would be to simply rename the index entry in place.
+However:
+ git push  ssh://devsrv/var/git/os2kernel.git linus
 
-I'm willing to look into what changes would need to be made to the code for this change to 
-happen; I'm not 
-asking for someone to do all the work for me. :)
+creates a linus branch in the server and 
 
-So... Yeah. I'd like to know what people think about this before I put a significant amount of 
-effort into it. After 
-all, we know how lazy programmers are... :)
+ git push  ssh://devsrv/var/git/os2kernel.git :linus
+ Warning: No xauth data; using fake authentication data for X11 forwarding. 
+ deleting 'refs/heads/linus'
+ refs/heads/linus: bbf25010f1a6b761914430f5fca081ec8c7accd1 -> deleted
+ Everything up-to-date
 
-Thanks,
-   Ari
+deletes the linus branch on the server and so does
+git push  ssh://devsrv/var/git/os2kernel.git :refs/heads/linus
+
+ahh, now I see. When creating the branch the refspec needs to be refs/heads/linus,
+not refs/head/linus
+
+refs/head/linus will create just that on the server. git branch does not look
+there, only in refs/heads
+
+Seems like it is a bit too easy to make mistakes here. Why can I delete
+a branch with :linus but not create one with linus:linus?
+Also confusing that git lets me create refs/head/linus when git branch
+cannot find it.
+
+ Jocke
+
+> You may need to cleanup though. I'm not sure if the remote side
+> already created 'refs/linus'. The error message only indicates that
+> locally git refused to create the "funny refname". Pushing a refspec
+> with an empty local part should delete the "funny refname" on the
+> remote:
+> 
+>     git push ssh://devsrv/var/git/os2kernel.git :refs/linus
+> 
+> Did this solve your problem?
+> 
+> 	Steffen
+> 
