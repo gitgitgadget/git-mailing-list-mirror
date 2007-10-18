@@ -1,57 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Add a message explaining that automatic GC is about to
-	start
-Date: Thu, 18 Oct 2007 14:08:44 -0400
-Message-ID: <20071018180843.GA11624@sigill.intra.peff.net>
-References: <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org> <20071018003256.GA5062@coredump.intra.peff.net> <alpine.LFD.0.999.0710171753020.26902@woody.linux-foundation.org> <20071018024553.GA5186@coredump.intra.peff.net> <alpine.LFD.0.999.0710171955580.26902@woody.linux-foundation.org> <20071018032307.GA7313@coredump.intra.peff.net> <20071018044143.GA24043@midwinter.com> <3391BADA-B5B4-4A8E-A6C0-42169AFC0331@silverinsanity.com> <47176AB9.7010409@midwinter.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Problem with git-svnimport
+Date: Thu, 18 Oct 2007 20:09:16 +0200
+Message-ID: <20071018180916.GK26127@efreet.light.src>
+References: <55DDB08CC9CD2941A70E8D626789A2C906A4031A@ec8l7ljvo9h5dde.hosting.exch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Luke Lu <git@vicaya.com>,
-	Christer Weinigel <christer@weinigel.se>,
-	Tom Tobin <korpios@korpios.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Thu Oct 18 20:09:06 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="KrHCbChajFcK0yQE"
+Cc: git@vger.kernel.org
+To: VAUCHER Laurent <VAUCHER@fermat.eu>
+X-From: git-owner@vger.kernel.org Thu Oct 18 20:09:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiZnj-0002z1-Bk
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:08:55 +0200
+	id 1IiZoU-00038N-Gq
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:09:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756835AbXJRSIo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 14:08:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758312AbXJRSIo
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:08:44 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1734 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756388AbXJRSIo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 14:08:44 -0400
-Received: (qmail 4135 invoked by uid 111); 18 Oct 2007 18:08:42 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 18 Oct 2007 14:08:42 -0400
-Received: (qmail 11659 invoked by uid 1000); 18 Oct 2007 18:08:44 -0000
+	id S1758840AbXJRSJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 14:09:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758824AbXJRSJc
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:09:32 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:48769 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758575AbXJRSJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 14:09:31 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E8BA357298;
+	Thu, 18 Oct 2007 20:09:23 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id pGYlRpvjfa4P; Thu, 18 Oct 2007 20:09:21 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id C57A757262;
+	Thu, 18 Oct 2007 20:09:19 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IiZo4-0007mK-Bh; Thu, 18 Oct 2007 20:09:16 +0200
 Content-Disposition: inline
-In-Reply-To: <47176AB9.7010409@midwinter.com>
+In-Reply-To: <55DDB08CC9CD2941A70E8D626789A2C906A4031A@ec8l7ljvo9h5dde.hosting.exch>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61553>
 
-On Thu, Oct 18, 2007 at 07:16:25AM -0700, Steven Grimm wrote:
 
->> installed in the first place.  Perhaps a message more along the lines of 
->> "To avoid this, run "git gc" manually on a regular basis.  See 'git help 
->> gc' for more information."
->
-> That's a good point. Jeff / Shawn, do you agree with that? I'll come up with 
-> an alternate patch if so.
+--KrHCbChajFcK0yQE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, that seems reasonable. I think the most important thing is that
-they realize that "git-gc" is responsible for what is happening.  That
-should allow them to find more information in the documentation if they
-want (and Brian's suggestion points directly to the documentation, which
-is great).
+On Tue, Oct 16, 2007 at 14:30:30 +0200, VAUCHER Laurent wrote:
+>   Hi.
+>=20
+>   Trying to convert a svn repository to git, I encountered the following
+> error:
+>=20
+> Use of uninitialized value in hash element at /usr/bin/git-svnimport
+> line 534.
+>=20
+>   Line 534 reads:
+> 	my $gitrev =3D $branches{$srcbranch}{$therev};
+>=20
+>   I have installed packages git-core and git-svn on Ubuntu. These
+> package have versions: "1:1.5.2.5-2-feisty1"
+>=20
+>   The tool seems to choke on tags or branches with special characters
+> (underscore, for instance).
 
--Peff
+git-svnimport is obsoleted (or mostly so) by git-svn. Look at that, please.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--KrHCbChajFcK0yQE
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHF6FMRel1vVwhjGURAjKLAJ43TtaQGvAh88Bzlxq/IE3lOV5vJQCfYSnd
+N3XNrNnuJtb1PLM+WSXs9vw=
+=14q7
+-----END PGP SIGNATURE-----
+
+--KrHCbChajFcK0yQE--
