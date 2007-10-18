@@ -1,89 +1,70 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Problem with git-svnimport
-Date: Thu, 18 Oct 2007 20:09:16 +0200
-Message-ID: <20071018180916.GK26127@efreet.light.src>
-References: <55DDB08CC9CD2941A70E8D626789A2C906A4031A@ec8l7ljvo9h5dde.hosting.exch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Subversion developer: svn is for dumb people
+Date: Thu, 18 Oct 2007 14:33:53 -0400
+Message-ID: <20071018183353.GD11624@sigill.intra.peff.net>
+References: <47176CE0.7030609@midwinter.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="KrHCbChajFcK0yQE"
-Cc: git@vger.kernel.org
-To: VAUCHER Laurent <VAUCHER@fermat.eu>
-X-From: git-owner@vger.kernel.org Thu Oct 18 20:09:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: 'git' <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Thu Oct 18 20:34:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiZoU-00038N-Gq
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:09:42 +0200
+	id 1IiaC7-0000Dc-98
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 20:34:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758840AbXJRSJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 14:09:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758824AbXJRSJc
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:09:32 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:48769 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758575AbXJRSJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 14:09:31 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id E8BA357298;
-	Thu, 18 Oct 2007 20:09:23 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id pGYlRpvjfa4P; Thu, 18 Oct 2007 20:09:21 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id C57A757262;
-	Thu, 18 Oct 2007 20:09:19 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IiZo4-0007mK-Bh; Thu, 18 Oct 2007 20:09:16 +0200
+	id S1757857AbXJRSdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 14:33:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757206AbXJRSdy
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 14:33:54 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2024 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753158AbXJRSdx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 14:33:53 -0400
+Received: (qmail 4279 invoked by uid 111); 18 Oct 2007 18:33:50 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+    by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 18 Oct 2007 14:33:50 -0400
+Received: (qmail 11977 invoked by uid 1000); 18 Oct 2007 18:33:53 -0000
 Content-Disposition: inline
-In-Reply-To: <55DDB08CC9CD2941A70E8D626789A2C906A4031A@ec8l7ljvo9h5dde.hosting.exch>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+In-Reply-To: <47176CE0.7030609@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61554>
 
+On Thu, Oct 18, 2007 at 07:25:36AM -0700, Steven Grimm wrote:
 
---KrHCbChajFcK0yQE
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Okay, my summary is slightly facetious, but that's basically the gist of 
+> what he's saying: you should choose Subversion rather than a DVCS because 
+> most of your users won't be smart enough to use the better tool.
 
-On Tue, Oct 16, 2007 at 14:30:30 +0200, VAUCHER Laurent wrote:
->   Hi.
->=20
->   Trying to convert a svn repository to git, I encountered the following
-> error:
->=20
-> Use of uninitialized value in hash element at /usr/bin/git-svnimport
-> line 534.
->=20
->   Line 534 reads:
-> 	my $gitrev =3D $branches{$srcbranch}{$therev};
->=20
->   I have installed packages git-core and git-svn on Ubuntu. These
-> package have versions: "1:1.5.2.5-2-feisty1"
->=20
->   The tool seems to choke on tags or branches with special characters
-> (underscore, for instance).
+An interesting point he brings up (which I think is totally bogus) is
+(paraphrased): "DVCS systems encourage people to work in isolation and
+then patch-bomb the upstream."
 
-git-svnimport is obsoleted (or mostly so) by git-svn. Look at that, please.
+But I think it's quite the opposite. He compares two scenarios: in
+$DVCS, the user forks, works quietly in their cave for a few weeks, and
+then produces a result. With a centralized VCS, the user gets a private
+branch, and people keep up with their work as it progresses.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+This isn't realistic for two reasons:
 
---KrHCbChajFcK0yQE
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+  1. Contributors to projects now using DVCS systems _weren't_ using SVN
+     or CVS in this way before (presumably because the effort in getting
+     private branches set up in a central repository was too much -- if
+     I want to hack on a project, I want to do it _now_, not after I
+     have gotten approval to use the VCS by the maintainer).  Instead,
+     they sat in their cave using primitive tools like 'diff' and
+     'patch' until they patch-bombed the upstream.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+  2. DVCS systems (well, git, at least) focus on workflows that allow
+     for quick communication and code review. Patches are a first-class
+     item in git, which means that
+       - every change is on the mailing list for review
+       - work-in-progress patches are easy to post, easy for reviewers
+         to read, easy for reviewers to apply, and, if accepted,
+         easy for the maintainer to apply
 
-iD8DBQFHF6FMRel1vVwhjGURAjKLAJ43TtaQGvAh88Bzlxq/IE3lOV5vJQCfYSnd
-N3XNrNnuJtb1PLM+WSXs9vw=
-=14q7
------END PGP SIGNATURE-----
-
---KrHCbChajFcK0yQE--
+-Peff
