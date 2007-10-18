@@ -1,61 +1,61 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH] git-blame shouldn't crash if run in an unmerged tree
-Date: Thu, 18 Oct 2007 15:38:23 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710181529490.26902@woody.linux-foundation.org>
-References: <20071018063407.GA28861@spearce.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Subversion developer: svn is for dumb people
+Date: Fri, 19 Oct 2007 11:40:59 +1300
+Message-ID: <4717E0FB.1060705@vilain.net>
+References: <47176CE0.7030609@midwinter.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, B.Steinbrink@gmx.de
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 00:39:28 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: 'git' <git@vger.kernel.org>
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 00:41:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iie1X-0007gH-MN
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:39:28 +0200
+	id 1Iie3M-00083Y-Hg
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 00:41:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758162AbXJRWjN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 18:39:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753901AbXJRWjM
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:39:12 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:46767 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757354AbXJRWjK (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 18:39:10 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMcPmJ014026
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 18 Oct 2007 15:38:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9IMcNHO002119;
-	Thu, 18 Oct 2007 15:38:24 -0700
-In-Reply-To: <20071018063407.GA28861@spearce.org>
-X-Spam-Status: No, hits=-4.716 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751334AbXJRWlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 18:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751768AbXJRWlI
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 18:41:08 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:43847 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751097AbXJRWlG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 18:41:06 -0400
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 361BA21CFE8; Fri, 19 Oct 2007 11:41:05 +1300 (NZDT)
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 8ACE621CFDB;
+	Fri, 19 Oct 2007 11:41:01 +1300 (NZDT)
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <47176CE0.7030609@midwinter.com>
+X-Enigmail-Version: 0.94.2.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61566>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61567>
 
+Steven Grimm wrote:
+> some of his specific arguments
+> about DVCS are on the bogus side. "Centralized systems encourage code 
+> reviews," for one --
 
+I heard this from the core Subversion team too.  The hypothesis is that
+by forcing groups to be unable to proceed without continually rebasing
+to each other's work, that collaboration is enhanced.
 
-On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
->
-> I'm applying this patch to my maint tree tonight as it does resolve
-> the issue for now.  What surprised me was the file that we were
-> crashing out on wasn't even the file we wanted to get the blame
-> data for.  :-\
+I think any argument which states that a restrictive system is better
+than a non-restrictive system, when the non-restrictive system can be
+used in the same way as the restrictive system (either with
+configuration, or agreement with the committers) is quite bizarre.
 
-Please feel free to add a Signed-off-by: there. I guess I didn't add it in 
-the original email, because I wasn't sure if I'd have the energy to see if 
-I could just remove the clearing of "ce_mode". I never did.
-
-That whole "ce->ce_mode = 0" thing is really hacky, and we use it for two 
-totally different things ("git read-tree" uses it for "delete this entry", 
-and reading the index uses it when you ask for only merged entries). Bad 
-form, and not very logical.
-
-		Linus
+Sam.
