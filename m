@@ -1,80 +1,57 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Make the output of "git svn clone" less confusing.
-Date: Thu, 18 Oct 2007 03:06:17 -0400
-Message-ID: <20071018070617.GA29238@spearce.org>
-References: <87k5poflp5.fsf@lysator.liu.se>
+From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 09:12:44 +0200
+Message-ID: <87odewzyj7.fsf@lysator.liu.se>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org> <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <alpine.LFD.0.999.0710170849590.26902@woody.linux-foundation.org> <1192645509.6640.21.camel@athena> <alpine.LFD.0.999.0710171147190.26902@woody.linux-foundation.org> <1192649598.6640.44.camel@athena> <alpine.LFD.0.999.0710171246500.26902@woody.linux-foundation.org> <20071017232146.4b9e4097@localhost.localdomain> <Pine.LNX.4.64.07101723
+ 10270.25221@racer.site> <20071018011734.7b636141@localhost.localdomain> <Pine.LNX.4.64.0710180040320.25221@racer.site> <20071018023103.5d27ee35@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>,
-	git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 09:06:38 2007
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 18 09:13:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiPSn-0000wR-1t
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 09:06:37 +0200
+	id 1IiPZ8-000223-AG
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 09:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761447AbXJRHGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 03:06:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761418AbXJRHGX
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 03:06:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:54074 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761271AbXJRHGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 03:06:21 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IiPSQ-0004VC-Ke; Thu, 18 Oct 2007 03:06:14 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CCA0220FBAE; Thu, 18 Oct 2007 03:06:17 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <87k5poflp5.fsf@lysator.liu.se>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1753735AbXJRHM6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 03:12:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755458AbXJRHM6
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 03:12:58 -0400
+Received: from main.gmane.org ([80.91.229.2]:56765 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753564AbXJRHM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 03:12:57 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IiPYs-0007ya-QV
+	for git@vger.kernel.org; Thu, 18 Oct 2007 07:12:54 +0000
+Received: from 77.241.128.250.bredband.tre.se ([77.241.128.250])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 07:12:54 +0000
+Received: from davidk by 77.241.128.250.bredband.tre.se with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Oct 2007 07:12:54 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 77.241.128.250.bredband.tre.se
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:lU0QGGUK8wWEhnXCVxA2Brtmanw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61498>
 
-David Kgedal <davidk@lysator.liu.se> wrote:
-> The problem is that the first thing it prints is
-> 
->   Initialized empty Git repository in .git/
-> 
-> even if actually created a subdirectory and changed into it first. But to the
-> user, it looks like it is creating a .git/ dir in the directory he/she is
-> started git from.
+Christer Weinigel <christer@weinigel.se> writes:
 
-Eric, ack/nack?
+> I usually have no need to use git since my employer doesn't use it.
 
-> ---
->  git-svn.perl |    1 +
->  1 files changed, 1 insertions(+), 0 deletions(-)
-> 
-> This change makes it more chatty, which might not be a good thing. But
-> I think the previous output was worse.
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 777e436..d4450ca 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -286,6 +286,7 @@ sub do_git_init_db {
->  
->  sub init_subdir {
->  	my $repo_path = shift or return;
-> +	print "Creating directory $repo_path\n";
->  	mkpath([$repo_path]) unless -d $repo_path;
->  	chdir $repo_path or die "Couldn't chdir to $repo_path: $!\n";
->  	$ENV{GIT_DIR} = '.git';
-> -- 
-> 1.5.3.4.213.gb3127-dirty
+That is actually not true. My employer doesn't use it either (we use
+svn). But that doesn't stop me from using it all the time. git is an
+excellent offline svn client.
 
--- 
-Shawn.
+(hej wingel)
+--=20
+David K=C3=A5gedal
