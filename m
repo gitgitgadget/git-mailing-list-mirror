@@ -1,54 +1,106 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH 1/6] more compact progress display
-Date: Thu, 18 Oct 2007 10:34:37 +0200
-Message-ID: <20071018083437.GA302@diana.vm.bytemark.co.uk>
-References: <1192586150-13743-1-git-send-email-nico@cam.org> <1192586150-13743-2-git-send-email-nico@cam.org> <20071017021137.GO13801@spearce.org> <20071017082003.GA10799@diana.vm.bytemark.co.uk> <alpine.LFD.0.9999.0710171653500.19446@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 10:35:28 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 1/2 v3] mergetool: use path to mergetool in config var mergetool.<tool>.path
+Date: Thu, 18 Oct 2007 10:40:09 +0200
+Message-ID: <4591BA15-EB6B-4058-A2D0-879556481E59@zib.de>
+References: <11926413722362-git-send-email-prohaska@zib.de> <11926413723666-git-send-email-prohaska@zib.de> <20071018052724.GA27813@spearce.org> <923DDB10-C9E9-4797-9FC1-D31DEEBE75B7@zib.de> <20071018080049.GK14735@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 10:38:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiQqj-000104-Rm
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 10:35:26 +0200
+	id 1IiQu8-0001Yv-Om
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 10:38:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757665AbXJRIfO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Oct 2007 04:35:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757407AbXJRIfO
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 04:35:14 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2226 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755832AbXJRIfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 04:35:12 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IiQpx-00008B-00; Thu, 18 Oct 2007 09:34:37 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710171653500.19446@xanadu.home>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1757924AbXJRIip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 04:38:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755953AbXJRIip
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 04:38:45 -0400
+Received: from mailer.zib.de ([130.73.108.11]:51479 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762737AbXJRIin (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 04:38:43 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9I8cexn019822;
+	Thu, 18 Oct 2007 10:38:40 +0200 (CEST)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9I8cdoE010918
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 18 Oct 2007 10:38:39 +0200 (MEST)
+In-Reply-To: <20071018080049.GK14735@spearce.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61507>
 
-On 2007-10-17 16:56:09 -0400, Nicolas Pitre wrote:
 
-> On Wed, 17 Oct 2007, Karl Hasselstr=F6m wrote:
+On Oct 18, 2007, at 10:00 AM, Shawn O. Pearce wrote:
+
+> Steffen Prohaska <prohaska@zib.de> wrote:
+>> On Oct 18, 2007, at 7:27 AM, Shawn O. Pearce wrote:
+>>> ...
+>>>> +    test -n "$merge_tool" || valid_tool "$merge_tool" || {
+>>>
+>>> Wouldn't an empty $merge_tool string be caught above in the
+>>> valid_tool function where it falls through and returns 1?
+>>> So isn't test -n here redundant?
+>>
+>> Sharp eyes, thanks.
+>>
+>> Correct is
+>>
+>> test -z "$merge_tool" || valid_tool "$merge_tool" || {
+>>
+>> No merge tool or a valid merge tool is allowed at this place.
+>> If the tool's already empty there's no need to tell the user
+>> that it will be reset to empty.
+>>
+>> I'll send a v4 version.
 >
-> > Maybe an env variable could cause the code to emit
-> > machine-friendly progress information instead?
+> Thanks but its a little late.
+
+Sorry.
+
+
+> I'm about to push maint/master/next/pu
+> and this series is in next.  While testing it I found another
+> bug related to init_tool_merge_tool_path() not having $merge_tool
+> initialized and thus causing it to never select a default tool if
+> the user didn't have one configured.
+
+I see. Thanks for fixing this.
+
+
+> Here's what I'm actually about to push out:
+
+One remark ...
+
+[...]
 >
-> That won't help with remotely generated progress unaware of local
-> env variable, and the remote server might still be generating old
-> format.
+>  if test -z "$merge_tool"; then
+>      merge_tool=`git config merge.tool`
+> -    case "$merge_tool" in
+> -	kdiff3 | tkdiff | xxdiff | meld | opendiff | emerge | vimdiff |  
+> gvimdiff | "")
+> -	    ;; # happy
+> -	*)
+> +    if ! valid_tool "$merge_tool"; then
 
-Ah, I didn't realize the progress meter was generated on the remote
-side. Sorry for the noise.
+I think its ok to have an empty tool here ...
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+>  	    echo >&2 "git config option merge.tool set to unknown tool:  
+> $merge_tool"
+>  	    echo >&2 "Resetting to default..."
+
+... So we should not print this message if the tool is empty.
+
+But an empty tool is not valid. Therefore a check if "$merge_tool"
+is not empty should be added to the if.
+
+	Steffen
