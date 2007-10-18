@@ -1,74 +1,61 @@
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
 Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 00:31:54 -0400
-Message-ID: <200710180031.54819.dmitry.torokhov@gmail.com>
-References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <47168E70.4070305@op5.se> <ejftl3c2.fsf@blue.sea.net>
+Date: Thu, 18 Oct 2007 08:36:23 +0400
+Message-ID: <20071018043623.GA20054@dpotapov.dyndns.org>
+References: <634393B0-734A-4884-93E3-42F7D3CB157F@mit.edu> <471476B7.5050105@users.sourceforge.net> <8c5c35580710160204s5a4f9fb3j68c0a86c4d080cb7@mail.gmail.com> <47148F72.1090602@users.sourceforge.net> <1192548367.3821.4.camel@lt21223.campus.dmacc.edu> <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 06:32:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Oct 18 06:36:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiN3o-0006dC-C4
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 06:32:40 +0200
+	id 1IiN7d-00074S-Cr
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 06:36:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752705AbXJREcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 00:32:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752254AbXJREcD
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 00:32:03 -0400
-Received: from py-out-1112.google.com ([64.233.166.182]:50053 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752218AbXJREcA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 00:32:00 -0400
-Received: by py-out-1112.google.com with SMTP id u77so92187pyb
-        for <git@vger.kernel.org>; Wed, 17 Oct 2007 21:31:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=nPNz8UzggOtxV+MipCQGSWS4q/Zvmdrf8+593HSHn3I=;
-        b=ROWbpLodMKLFIp/0fazGH1DPD5pmB6gBqhJIT0thNXrVheKi7r/mSK5SNIE8+0KPcsgImpmpTBvgRCcaTfY3AbTpbYYpzKxgX6fUli93Il65aIlY4ikK64PgpK7Q8FUb/2O4IQwy4bbPoN2e2bDsBSDM+CAiSrdGv7p/7TiOyNs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Mu+M0vunjApfZvJotrq7ED7M+G762qB8sSKV+Ogk13bex6Q3DJiPR+9aOAKofamu4JOHYwFsk1QbE0H5wSs+KNGSUZr6gnlHT8Gzd/xOfPswrE7eKlhsLPfLf590PvDxaib4XebxI1gF3wkIuNKeEF+/WsyT+NfytTYtYWPq58Y=
-Received: by 10.35.12.10 with SMTP id p10mr146374pyi.1192681919108;
-        Wed, 17 Oct 2007 21:31:59 -0700 (PDT)
-Received: from mailhub.coreip.homeip.net ( [74.142.80.143])
-        by mx.google.com with ESMTPS id n80sm551948pyh.2007.10.17.21.31.56
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 17 Oct 2007 21:31:57 -0700 (PDT)
-Received: from anvil.corenet.prv (anvil.corenet.prv [192.168.45.170])
-	by mailhub.coreip.homeip.net (Postfix) with ESMTP id 4989F526C18;
-	Thu, 18 Oct 2007 00:31:55 -0400 (EDT)
-Received: by anvil.corenet.prv (Postfix, from userid 500)
-	id 0437954EAC3; Thu, 18 Oct 2007 00:31:54 -0400 (EDT)
-User-Agent: KMail/1.9.7
-In-Reply-To: <ejftl3c2.fsf@blue.sea.net>
+	id S1753767AbXJREg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 00:36:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753802AbXJREg0
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 00:36:26 -0400
+Received: from smtp05.mtu.ru ([62.5.255.52]:57235 "EHLO smtp05.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753742AbXJREgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 00:36:25 -0400
+Received: from potapov.private (ppp85-141-239-26.pppoe.mtu-net.ru [85.141.239.26])
+	by smtp05.mtu.ru (Postfix) with ESMTP id AC01E985DD5;
+	Thu, 18 Oct 2007 08:36:23 +0400 (MSD)
+Received: from dpotapov by potapov.private with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1IiN7P-0005GA-BM; Thu, 18 Oct 2007 08:36:23 +0400
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61464>
 
-On Wednesday 17 October 2007, Jari Aalto wrote:
-> - Any editor will display the text written in "all spaces"
->   100 % the same. Regradless of any viewer or editor used.
-> 
-> But the same is not true with text that uses tabs (because you
-> really can't know what options the editor is preset / user set /
-> regarding the treatment of tabs).
-> 
-> The score is 1 - 0 for "all spaces" in this contest.
-> 
+On Tue, Oct 16, 2007 at 12:20:50PM -0700, Linus Torvalds wrote:
+> The answer is *also* not "tabs are just for initial code 
+> indents",
 
-How about this - I like tabs because when you removing it you
-need to hit Backspace just once and don't have to strain your
-eyes figuring out "Did I delete enough? Does it line up now?"
+Unfortunately, it leads to some problems. For example, you can type:
+git blame alloc.c
 
--- 
+2c1cbec1 (Linus Torvalds     2007-04-16 22:10:19 -0700 21) #define DEFINE_ALLOCATOR(name, type)				\
+855419f7 (Linus Torvalds     2006-06-19 10:44:15 -0700 22) static unsigned int name##_allocs;				\
+100c5f3b (Linus Torvalds     2007-04-16 22:11:43 -0700 23) void *alloc_##name##_node(void)					\
+855419f7 (Linus Torvalds     2006-06-19 10:44:15 -0700 24) {								\
+855419f7 (Linus Torvalds     2006-06-19 10:44:15 -0700 25) 	static int nr;						\
+
+and see that the end of line 23 does not look right. Because of that,
+I prefer tabs for initial code indents and spaces in other places. Of
+course, my preferences are irrelevant when it comes to someone else's
+project, and I can easily use whatever style it takes to get things
+done. It is just that "use tabs elsewhere and everything will be fine
+as long as you have the standard tab setting" is not exactly correct.
+The rest is people's preferences and habits...
+
 Dmitry
