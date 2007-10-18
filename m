@@ -1,78 +1,103 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: On Tabs and Spaces
-Date: Thu, 18 Oct 2007 07:42:46 +0200
-Organization: glandium.org
-Message-ID: <20071018054246.GA9423@glandium.org>
-References: <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org> <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu> <k5pll7rb.fsf@blue.sea.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: pulling Already up-to-date linux-2.6 repo takes ~8 minutes?
+Date: Thu, 18 Oct 2007 01:48:34 -0400
+Message-ID: <20071018054834.GH14735@spearce.org>
+References: <1192678865.20353.14.camel@Homer.simpson.net> <20071018045001.GA14735@spearce.org> <1192684150.7390.15.camel@Homer.simpson.net> <1192685971.7390.21.camel@Homer.simpson.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:44:21 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git <git@vger.kernel.org>
+To: Mike Galbraith <efault@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:48:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiOB7-0006cu-4Y
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:44:17 +0200
+	id 1IiOFW-0007CV-QQ
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753150AbXJRFoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 01:44:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbXJRFoF
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:44:05 -0400
-Received: from vawad.err.no ([85.19.200.177]:59317 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753783AbXJRFoE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 01:44:04 -0400
-Received: from aputeaux-153-1-29-122.w82-124.abo.wanadoo.fr ([82.124.191.122] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IiOAX-00050s-Gr; Thu, 18 Oct 2007 07:43:41 +0200
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1IiO9e-0002Zf-VG; Thu, 18 Oct 2007 07:42:46 +0200
+	id S1751827AbXJRFsj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 01:48:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751846AbXJRFsj
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:48:39 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52001 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750894AbXJRFsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 01:48:38 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IiOFE-0008GX-W7; Thu, 18 Oct 2007 01:48:33 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 39BD320FBAE; Thu, 18 Oct 2007 01:48:35 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <k5pll7rb.fsf@blue.sea.net>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
+In-Reply-To: <1192685971.7390.21.camel@Homer.simpson.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61484>
 
-On Thu, Oct 18, 2007 at 01:02:32AM +0300, Jari Aalto wrote:
-> * Wed 2007-10-17 Michael Witten <mfwitten@MIT.EDU>
-> * Message-Id: E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu
-> > On 17 Oct 2007, at 3:17:08 AM, Luke Lu wrote:
-> >
-> >> But I still haven't seen any compelling arguments against the "all
-> >> space" case
-> >
-> > Overhead!
-> >
-> > If you use 8 spaces instead of one tab,
-> > that's using up 7x more space!
+Mike Galbraith <efault@gmx.de> wrote:
+> Dang.  git was happy with everything above except the checkout -b
+> master, so I can't get off the dangling limb I'm on, and onto a solid
+> branch.
 > 
-> Software is the right place to worry about optimization. We should trust
-> SCM to make proper and efficient deltas. If not, algorithms need
-> improvemnts.
-> 
-> Any cross platform development or electronic exchange is guaranteed to
-> be interpreted correctly when policy enforces "only spaces"
-> 
-> As we have already seen in numerous times in this thread, using tabs
-> will - eventually - be interpreted in some editor, in some display, in
-> some encironment using some tools ... incorrectly or different than the
-> author intended. Simply because editors are configurable and we cannot
-> know what settings they may have when they load the file in.
-> 
-> There is no such problem with spaces. 
+> root@Homer: git checkout -b master
+> git checkout: branch master already exists
+> root@Homer: git branch
+> * (no branch)
+>   master
 
-There is such problem with spaces. A lot of editors will just insert
-tabs to indent a new line when the previous you were typing begins with
-enough spaces, in which case you end up with spaces and tabs mixed all
-the way. It ends up being worse than all tabs.
+Look to see if there's anything on your current master branch that
+you don't want/need anymore:
 
-Mike
+	$ git log ..master
+
+If that comes up empty (no output) or you mean to discard those
+changes then you can just force create the branch and check it out:
+
+	$ git branch -f master
+	$ git checkout master
+
+On the other hand if you want to keep those changes then you should
+consider creating a different branch than master, or merging master
+first:
+
+	$ git merge master
+
+
+> root@Homer: time git pull
+> remote: Total 48507 (delta 38878), reused 44654 (delta 35166)
+...
+
+Well, you downloaded everything again.  However...
+
+> 3419 objects were added to complete this thin pack.
+> * refs/remotes/origin/master: fast forward to branch 'master' of git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+>   old..new: 86a71db..d85714d
+
+This time we actually stored a remote tracking branch.
+
+So although we didn't actually merge Linus' current version into
+your detached HEAD we did save it under a remote tracking branch
+(named "origin/master") so the next time you run git-pull we won't
+actually need to download that data again.  We already have it,
+and know we have it.
+
+Its just not in your current branch.
+
+> You are not currently on a branch; you must explicitly
+> specify which branch you wish to merge:
+>   git pull <remote> <branch>
+
+If you finish switching to a real branch with a configured remote
+and merge entry then this message should go away and you should be
+able to efficiently pull Linus' tree into your own.
+
+-- 
+Shawn.
