@@ -1,63 +1,78 @@
-From: Mike Galbraith <efault@gmx.de>
-Subject: Re: pulling Already up-to-date linux-2.6 repo takes ~8 minutes?
-Date: Thu, 18 Oct 2007 07:42:54 +0200
-Message-ID: <1192686174.7390.23.camel@Homer.simpson.net>
-References: <1192678865.20353.14.camel@Homer.simpson.net>
-	 <20071018045001.GA14735@spearce.org>
-	 <1192684150.7390.15.camel@Homer.simpson.net>
-	 <1192685971.7390.21.camel@Homer.simpson.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: On Tabs and Spaces
+Date: Thu, 18 Oct 2007 07:42:46 +0200
+Organization: glandium.org
+Message-ID: <20071018054246.GA9423@glandium.org>
+References: <B2F6DB0C-4EFE-4C56-8E7A-31820320CA02@mit.edu> <3awb7zw6.fsf@blue.sea.net> <alpine.LFD.0.999.0710161214530.6887@woody.linux-foundation.org> <1192565900.6430.16.camel@athena> <alpine.LFD.0.999.0710161559150.6887@woody.linux-foundation.org> <20071017015109.303760cc@localhost.localdomain> <alpine.LFD.0.999.0710161722320.26902@woody.linux-foundation.org> <3A9408D5-2667-43A6-A0CE-C0720B3A3987@vicaya.com> <E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu> <k5pll7rb.fsf@blue.sea.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 18 07:43:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Oct 18 07:44:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiOA1-0006T2-SN
-	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:43:10 +0200
+	id 1IiOB7-0006cu-4Y
+	for gcvg-git-2@gmane.org; Thu, 18 Oct 2007 07:44:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563AbXJRFm7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 01:42:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbXJRFm7
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:42:59 -0400
-Received: from mail.gmx.net ([213.165.64.20]:53784 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751902AbXJRFm6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 01:42:58 -0400
-Received: (qmail invoked by alias); 18 Oct 2007 05:42:56 -0000
-Received: from p54B5BA2B.dip0.t-ipconnect.de (EHLO [192.168.178.23]) [84.181.186.43]
-  by mail.gmx.net (mp014) with SMTP; 18 Oct 2007 07:42:56 +0200
-X-Authenticated: #14349625
-X-Provags-ID: V01U2FsdGVkX18cTesNvwUcHR/7++WMY0ehOyr+AOou2OostrLK0W
-	Mje/UJGQwY8YZB
-In-Reply-To: <1192685971.7390.21.camel@Homer.simpson.net>
-X-Mailer: Evolution 2.8.2 
-X-Y-GMX-Trusted: 0
+	id S1753150AbXJRFoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 01:44:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751579AbXJRFoF
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 01:44:05 -0400
+Received: from vawad.err.no ([85.19.200.177]:59317 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753783AbXJRFoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 01:44:04 -0400
+Received: from aputeaux-153-1-29-122.w82-124.abo.wanadoo.fr ([82.124.191.122] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IiOAX-00050s-Gr; Thu, 18 Oct 2007 07:43:41 +0200
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IiO9e-0002Zf-VG; Thu, 18 Oct 2007 07:42:46 +0200
+Content-Disposition: inline
+In-Reply-To: <k5pll7rb.fsf@blue.sea.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 0.0): Status=No hits=0.0 required=5.0 tests=none version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61483>
 
-On Thu, 2007-10-18 at 07:39 +0200, Mike Galbraith wrote:
-> On Thu, 2007-10-18 at 07:09 +0200, Mike Galbraith wrote:
+On Thu, Oct 18, 2007 at 01:02:32AM +0300, Jari Aalto wrote:
+> * Wed 2007-10-17 Michael Witten <mfwitten@MIT.EDU>
+> * Message-Id: E29971BA-7306-4570-8383-26D0C9C0B814@mit.edu
+> > On 17 Oct 2007, at 3:17:08 AM, Luke Lu wrote:
+> >
+> >> But I still haven't seen any compelling arguments against the "all
+> >> space" case
+> >
+> > Overhead!
+> >
+> > If you use 8 spaces instead of one tab,
+> > that's using up 7x more space!
 > 
-> > > I'd suggest making your life a little bit easier.  Consider creating
-> > > a remote that points to Linus:
-> > > 
-> > >   $ git remote add linus git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-> > >   $ git checkout -b master   ; # or any other branch
-> > >   $ git config branch.master.remote linus
-> > >   $ git config branch.master.merge refs/heads/master
+> Software is the right place to worry about optimization. We should trust
+> SCM to make proper and efficient deltas. If not, algorithms need
+> improvemnts.
 > 
-> Dang.  git was happy with everything above except the checkout -b
-> master, so I can't get off the dangling limb I'm on, and onto a solid
-> branch.
+> Any cross platform development or electronic exchange is guaranteed to
+> be interpreted correctly when policy enforces "only spaces"
+> 
+> As we have already seen in numerous times in this thread, using tabs
+> will - eventually - be interpreted in some editor, in some display, in
+> some encironment using some tools ... incorrectly or different than the
+> author intended. Simply because editors are configurable and we cannot
+> know what settings they may have when they load the file in.
+> 
+> There is no such problem with spaces. 
 
-Pff.  -f.
+There is such problem with spaces. A lot of editors will just insert
+tabs to indent a new line when the previous you were typing begins with
+enough spaces, in which case you end up with spaces and tabs mixed all
+the way. It ends up being worse than all tabs.
 
-Thanks, ~4 second pull is MUCH better :)
-
-	-Mike
+Mike
