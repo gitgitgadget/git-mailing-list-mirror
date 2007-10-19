@@ -1,66 +1,49 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
-	objects'
-Date: Thu, 18 Oct 2007 23:56:47 -0400
-Message-ID: <20071019035647.GA18717@coredump.intra.peff.net>
-References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182251110.19446@xanadu.home> <20071019030749.GA9274@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182312160.19446@xanadu.home> <20071019033228.GA10697@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182340550.19446@xanadu.home>
+Subject: Re: Proposed git mv behavioral change
+Date: Thu, 18 Oct 2007 23:58:38 -0400
+Message-ID: <20071019035838.GB18717@coredump.intra.peff.net>
+References: <c594999b2337.2337c594999b@nyroc.rr.com> <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net> <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU> <20071019034704.GB11095@coredump.intra.peff.net> <C5184350-51A7-46B4-B0C9-E32F79214546@MIT.EDU>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:57:45 2007
+Cc: git@vger.kernel.org
+To: Michael Witten <mfwitten@MIT.EDU>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:59:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiiyx-0003hm-AA
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:57:07 +0200
+	id 1Iij0h-0004QH-EE
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:58:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760673AbXJSD4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:56:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966505AbXJSD4w
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:56:52 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2285 "EHLO
+	id S966533AbXJSD6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:58:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966512AbXJSD6m
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:58:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2876 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966479AbXJSD4u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:56:50 -0400
-Received: (qmail 8879 invoked by uid 111); 19 Oct 2007 03:56:48 -0000
+	id S966425AbXJSD6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 23:58:40 -0400
+Received: (qmail 8898 invoked by uid 111); 19 Oct 2007 03:58:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:56:48 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:56:47 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:58:39 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:58:38 -0400
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710182340550.19446@xanadu.home>
+In-Reply-To: <C5184350-51A7-46B4-B0C9-E32F79214546@MIT.EDU>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61643>
 
-On Thu, Oct 18, 2007 at 11:50:39PM -0400, Nicolas Pitre wrote:
+On Thu, Oct 18, 2007 at 11:53:05PM -0400, Michael Witten wrote:
 
-> Maybe we should have a shortcut notation for <ref>@{1}..<ref> instead?
-> I end up using that all the time since the fetch result has long 
-> scrolled off the screen when I want to look at what was fetched.
+>>   3. You don't want to commit your changes, so you git-mv in the index
+>>      only without involving your dirty working tree file.
+> That's exactly what the original poster wanted.
+>
+> It's not unreasonable.
 
-I must confess to never using reflogs in that case...for some reason
-they just never come to mind. But now that you and Shawn mention them,
-there's really no reason to leave the hash..hash for the fetch.
-
-As for a shortcut notation, what about allowing '..' notation inside a
-reflog. I.e., <ref>@{a..b} is the same as <ref>@{a}..<ref>@{b}? So you
-could perhaps do origin/master@{1..}?
-
-I'm not sure if there are syntactic issues with parsing out the '..' (or
-'...') operator.
-
-> > although that URL is almost a line by itself. :)
-> It is, therefore I'd skip "Fetching from " entirely.
-
-Yes, I was tempted to suggest that. I think it might need some context,
-depending on what comes right before it.
-
-> That looks fine for a push.  I'd say "remote foo -> local bar" for a 
-> fetch.
-
-Agreed.
+I guess. I really think git-stash is your friend here. But you can still
+do step (3) with git-update-index (I'll leave the exact details as an
+exercise for the reader).
 
 -Peff
