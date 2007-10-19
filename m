@@ -1,73 +1,94 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 19:26:10 +0200
-Message-ID: <20071019172610.GE30825@uranus.ravnborg.org>
-References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <4718D25A.7040109@midwinter.com> <alpine.LFD.0.9999.0710191211210.19446@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git push bug?
+Date: Fri, 19 Oct 2007 19:24:40 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0710191920210.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se> 
+ <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>  <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+  <Pine.LNX.4.64.0710181720010.25221@racer.site> 
+ <1192725116.4954.7.camel@gentoo-jocke.transmode.se> 
+ <Pine.LNX.4.64.0710182259190.25221@racer.site> <1192805255.1875.25.camel@gentoo-jocke.transmode.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 19:26:05 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Fri Oct 19 19:26:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iivbn-0007GB-Bx
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 19:26:03 +0200
+	id 1Iivbo-0007GB-2D
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 19:26:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935742AbXJSRYl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 13:24:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935719AbXJSRYk
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 13:24:40 -0400
-Received: from pasmtpa.tele.dk ([80.160.77.114]:43505 "EHLO pasmtpA.tele.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935493AbXJSRYj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 13:24:39 -0400
-Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
-	by pasmtpA.tele.dk (Postfix) with ESMTP id 34E968008CA;
-	Fri, 19 Oct 2007 19:24:35 +0200 (CEST)
-Received: by ravnborg.org (Postfix, from userid 500)
-	id 741DF580D2; Fri, 19 Oct 2007 19:26:10 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710191211210.19446@xanadu.home>
-User-Agent: Mutt/1.4.2.1i
+	id S935858AbXJSRYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 13:24:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935712AbXJSRYp
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 13:24:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41439 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1765502AbXJSRYn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 13:24:43 -0400
+Received: (qmail invoked by alias); 19 Oct 2007 17:24:41 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp051) with SMTP; 19 Oct 2007 19:24:41 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+2qcwjzMq2KVRob5JnasYPYovJsYD9HM1cY3N/Xs
+	waTJf+NfweIGmd
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <1192805255.1875.25.camel@gentoo-jocke.transmode.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61735>
 
-On Fri, Oct 19, 2007 at 12:12:41PM -0400, Nicolas Pitre wrote:
-> On Fri, 19 Oct 2007, Steven Grimm wrote:
-> 
-> > On 19/10/2007, Jeff King <peff@peff.net> wrote:
-> > > This makes the fetch output much more terse. It is likely to
-> > > be very controversial. Here's an example of the new output:
-> > >
-> > > Indexing objects: 100% (1061/1061), done.
-> > > Resolving deltas: 100% (638/638), done.
-> > 
-> > Those two lines are actually my beef with the fetch output. As a newbie, I had
-> > no idea what "Indexing objects" actually meant. We have this thing called "the
-> > index" in git so I would expect "Indexing objects" to have something to do
-> > with that, but it doesn't seem to.
-> > 
-> > How about something more descriptive of the high-level operation that's going
-> > on, along the lines of:
-> > 
-> > Gathering changes from remote: 100% (1061/1061), done.
-> > Applying changes locally: 100% (638/638), done.
-> 
-> This is even more wrong.
-> 
-> Agreed, indexing objects might not be the best description.  It probably 
-> will become "receiving objects" along with a bandwitth meter.
+Hi,
 
-The term 'objects' here always confuses me. What is often my first
-thing to check the number of individual commits being added after
-a git pull. Wether a commit touches one or several files is less
-important (to my way of using git).
+On Fri, 19 Oct 2007, Joakim Tjernlund wrote:
 
-	Sam
+> On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
+> > 
+> > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+> > 
+> > > First, I didn't know that I could do that. Secondly, I was also 
+> > > looking do v2.6.23:linus refspecs
+> > 
+> > 
+> > First, then our documentation could be better.  How?
+> 
+> Well, it isn't clear to me how all this is supposed to work and what is 
+> bugs. Clearifying that would help.
+> 
+> For instances I did a push with v2.6.23:refs/heads/linus and now I got a 
+> branch with the SHA1 of v2.6.23 
+> tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d) in it. Makes gitk display 
+> that branch as "linus^{}".
+
+It strikes me as really odd that you would _want_ to create a branch 
+remotely, that has _never_ existed locally.
+
+> > Second, why not "git checkout -b linus v2.6.23 && git push origin 
+> > linus"?
+> 
+> An extra checkout that takes time but works.
+
+Not only that: before trying to publish something, I would have expected 
+you to have that branch locally, and that you actually worked on it.
+
+> Doesn't make the above "weiredness" go away though.
+
+Yes it does.
+
+git checkout -b <branchname> resolves to the commit that the tag pointed 
+to.  So it would not push a tag, which you did.
+
+Of course you could do what you planned to do, if you knew git better.  
+But you are not familiar enough with git's inner workings yet, so I 
+suggest to stay with things for now that work _always_, and exactly as 
+expected.
+
+Such as creating a branch locally, with exactly the name that you plan it 
+to have remotely, and then pushing it with "git push origin <branchname>".  
+Easy as apple pie.
+
+Ciao,
+Dscho
