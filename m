@@ -1,187 +1,143 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git on afs
-Date: Fri, 19 Oct 2007 10:59:22 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710191049400.26902@woody.linux-foundation.org>
-References: <20071018203106.GA13518@fries.net>
- <alpine.LFD.0.999.0710181543380.26902@woody.linux-foundation.org>
- <20071019060624.GK14735@spearce.org> <200710190719.21660.todd@fries.net>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: git push bug?
+Date: Fri, 19 Oct 2007 20:50:29 +0200
+Message-ID: <000001c81280$ebc5c5e0$5267a8c0@Jocke>
+References: <Pine.LNX.4.64.0710191920210.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Brandon Casey <casey@nrlssc.navy.mil>
-To: "Todd T. Fries" <todd@fries.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 19:59:51 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'Steffen Prohaska'" <prohaska@zib.de>,
+	"'git'" <git@vger.kernel.org>
+To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 19 20:51:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiw8U-0005h3-2I
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 19:59:50 +0200
+	id 1Iiww8-0008Qq-Ct
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 20:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765617AbXJSR7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 13:59:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765512AbXJSR7k
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 13:59:40 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:44676 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754950AbXJSR7j (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 13:59:39 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JHxPYn019048
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 19 Oct 2007 10:59:27 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JHxMwX012810;
-	Fri, 19 Oct 2007 10:59:25 -0700
-In-Reply-To: <200710190719.21660.todd@fries.net>
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S935468AbXJSSuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 14:50:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935895AbXJSSuh
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 14:50:37 -0400
+Received: from mail.transmode.se ([83.241.175.147]:55612 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S934532AbXJSSug (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 14:50:36 -0400
+Received: from Jocke ([84.217.95.61]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Fri, 19 Oct 2007 20:50:32 +0200
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+In-Reply-To: <Pine.LNX.4.64.0710191920210.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+Thread-Index: AcgSdO9Hwt2ehTuiT1a323gas/ILxgABmRow
+X-OriginalArrivalTime: 19 Oct 2007 18:50:33.0034 (UTC) FILETIME=[ED88D2A0:01C81280]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61739>
 
-
-
-On Fri, 19 Oct 2007, Todd T. Fries wrote:
+> -----Original Message-----
+> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+> Sent: den 19 oktober 2007 19:25
+> To: Joakim Tjernlund
+> Cc: Steffen Prohaska; git
+> Subject: Re: git push bug?
 > 
-> If DT_UNKNOWN exists, then we have to do a stat() of some form to
-> find out the right type.
+> Hi,
 > 
-> This is difficult to fix properly to avoid the extra stat() since
-> inside the switch logic we do the recursion, but we might have
-> avoided it earlier because of the exclusion.
+> On Fri, 19 Oct 2007, Joakim Tjernlund wrote:
 > 
-> I'll send a separate diff for an updated link() vs rename() diff.
+> > On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
+> > > 
+> > > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+> > > 
+> > > > First, I didn't know that I could do that. Secondly, I was also 
+> > > > looking do v2.6.23:linus refspecs
+> > > 
+> > > 
+> > > First, then our documentation could be better.  How?
+> > 
+> > Well, it isn't clear to me how all this is supposed to work 
+> and what is 
+> > bugs. Clearifying that would help.
+> > 
+> > For instances I did a push with v2.6.23:refs/heads/linus 
+> and now I got a 
+> > branch with the SHA1 of v2.6.23 
+> > tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d) in it. Makes 
+> gitk display 
+> > that branch as "linus^{}".
 > 
-> I've attached an updated diff that should address concerns of everyone
-> who gave me feedback on my dir.c changes.
-> 
-> Better?
+> It strikes me as really odd that you would _want_ to create a branch 
+> remotely, that has _never_ existed locally.
 
-Yes. I think this is ok, although I also did this alternate patch that is 
-anal about not bothering to call "lstat()" if it can decide that the path 
-is ignored even before that.
+It strikes me as really odd that a core developers like yourself
+hasn't tried to justify/explain why push works as it does.
 
-That happened in the case of a pathname that was ignored, and we did not 
-ask for "dir->show_ignored". That test used to be *together* with the 
-"DTYPE(de) != DT_DIR", but splitting the two tests up means that we can do 
-that (common) test before we even bother to calculate the real dtype.
+As I am trying to convince our dev. group here to move to git instead of subversion, I
+need to learn how git works. Now I have gotten to the push function and I need
+to know what can be done with push and how, pitfalls too. As I go along I find behavior
+that I find odd and report these to the list.
 
-Of course, that optimization only matters for systems that don't have, or 
-don't fill in DTYPE properly, but I get a bit anal about these kinds of 
-optimizations.
+ git push <repo> v2.6.23:refs/heads/linus
+will make a tag look like a branch
 
-I also clarified the real relationship between "exclude" and 
-"dir->show_ignored". It used to do
+ git push <repo> linus:linus
+won't let me create the remote branch linus but
+ git push <repo> linus
+will
 
-	if (exclude != dir->show_ignored) {
-		..
-
-which wasn't exactly obvious, because it triggers for two different cases:
-
- - the path is marked excluded, but we are not interested in ignored 
-   files: ignore it
-
- - the path is *not* excluded, but we *are* interested in ignored files: 
-   ignore it unless it's a directory, in which case we might have ignored 
-   files inside the directory and need to recurse into it).
-
-so this splits them into those two cases, since the first case doesn't 
-even care about the type.
-
-I also made a the DT_UNKNOWN case a separate helper function, and added 
-some commentary to the cases.
-
-Does this patch work for you?
-
-		Linus
-
----
- dir.c |   52 ++++++++++++++++++++++++++++++++++++++--------------
- 1 files changed, 38 insertions(+), 14 deletions(-)
-
-diff --git a/dir.c b/dir.c
-index eb6c3ab..f843c4d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -443,6 +443,24 @@ static int in_pathspec(const char *path, int len, const struct path_simplify *si
- 	return 0;
- }
+ git push <repo> :linus
+OOPS, now I just deleted remote branch linus, no warning
  
-+static int get_dtype(struct dirent *de, const char *path)
-+{
-+	int dtype = DTYPE(de);
-+	struct stat st;
-+
-+	if (dtype != DT_UNKNOWN)
-+		return dtype;
-+	if (lstat(path, &st))
-+		return dtype;
-+	if (S_ISREG(st.st_mode))
-+		return DT_REG;
-+	if (S_ISDIR(st.st_mode))
-+		return DT_DIR;
-+	if (S_ISLNK(st.st_mode))
-+		return DT_LNK;
-+	return dtype;
-+}
-+
- /*
-  * Read a directory tree. We currently ignore anything but
-  * directories, regular files and symlinks. That's because git
-@@ -466,7 +484,7 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
- 		exclude_stk = push_exclude_per_directory(dir, base, baselen);
- 
- 		while ((de = readdir(fdir)) != NULL) {
--			int len;
-+			int len, dtype;
- 			int exclude;
- 
- 			if ((de->d_name[0] == '.') &&
-@@ -486,24 +504,30 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, co
- 			if (exclude && dir->collect_ignored
- 			    && in_pathspec(fullname, baselen + len, simplify))
- 				dir_add_ignored(dir, fullname, baselen + len);
--			if (exclude != dir->show_ignored) {
--				if (!dir->show_ignored || DTYPE(de) != DT_DIR) {
-+
-+			/*
-+			 * Excluded? If we don't explicitly want to show
-+			 * ignored files, ignore it
-+			 */
-+			if (exclude && !dir->show_ignored)
-+				continue;
-+
-+			dtype = get_dtype(de, fullname);
-+
-+			/*
-+			 * Do we want to see just the ignored files?
-+			 * We still need to recurse into directories,
-+			 * even if we don't ignore them, since the
-+			 * directory may contain files that we do..
-+			 */
-+			if (!exclude && dir->show_ignored) {
-+				if (dtype != DT_DIR)
- 					continue;
--				}
- 			}
- 
--			switch (DTYPE(de)) {
--			struct stat st;
-+			switch (dtype) {
- 			default:
- 				continue;
--			case DT_UNKNOWN:
--				if (lstat(fullname, &st))
--					continue;
--				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode))
--					break;
--				if (!S_ISDIR(st.st_mode))
--					continue;
--				/* fallthrough */
- 			case DT_DIR:
- 				memcpy(fullname + baselen + len, "/", 2);
- 				len++;
+ git push <repo> linus:refs/head/linus
+creates a branch that is invisible(wont show in git branch -a)
+
+ git push <repo> linus:refs/heads/newbranch
+creates remote branch newbranch, but you have to know the magic words
+refs/heads/ to do it.
+
+Se what I mean? 
+
+> 
+> > > Second, why not "git checkout -b linus v2.6.23 && git push origin 
+> > > linus"?
+> > 
+> > An extra checkout that takes time but works.
+> 
+> Not only that: before trying to publish something, I would 
+> have expected 
+> you to have that branch locally, and that you actually worked on it.
+> 
+> > Doesn't make the above "weiredness" go away though.
+> 
+> Yes it does.
+
+No it doesn't. If someone else in my group wants to create a branch they
+might do the same mistakes as I did.
+
+> 
+> git checkout -b <branchname> resolves to the commit that the 
+> tag pointed 
+> to.  So it would not push a tag, which you did.
+> 
+> Of course you could do what you planned to do, if you knew 
+> git better.  
+> But you are not familiar enough with git's inner workings yet, so I 
+> suggest to stay with things for now that work _always_, and 
+> exactly as 
+> expected.
+> 
+> Such as creating a branch locally, with exactly the name that 
+> you plan it 
+> to have remotely, and then pushing it with "git push origin 
+> <branchname>".  
+> Easy as apple pie.
+> 
+> Ciao,
+> Dscho
+> 
+> 
+> 
