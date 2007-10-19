@@ -1,82 +1,77 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 14:51:30 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710191431450.19446@xanadu.home>
-References: <20071019062219.GA28499@coredump.intra.peff.net>
- <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
- <20071019073938.GN14735@spearce.org> <4718D25A.7040109@midwinter.com>
- <alpine.LFD.0.9999.0710191211210.19446@xanadu.home>
- <20071019172610.GE30825@uranus.ravnborg.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
+ objects'
+Date: Fri, 19 Oct 2007 12:00:15 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710191157560.26902@woody.linux-foundation.org>
+References: <20071019021255.GD3290@coredump.intra.peff.net>
+ <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
+ <20071019030749.GA9274@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
+ <20071019033228.GA10697@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0710182340550.19446@xanadu.home>
+ <20071019035647.GA18717@coredump.intra.peff.net>
+ <alpine.LFD.0.999.0710182111030.26902@woody.linux-foundation.org>
+ <20071019042930.GA16487@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0710190753040.19446@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Steven Grimm <koreth@midwinter.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
 	git@vger.kernel.org
-To: Sam Ravnborg <sam@ravnborg.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 20:51:53 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:00:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiwwk-00008m-NT
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 20:51:47 +0200
+	id 1Iix5c-0002Ah-MD
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:00:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757456AbXJSSvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 14:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758801AbXJSSvf
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 14:51:35 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:58321 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757456AbXJSSve (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 14:51:34 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQ600LN09PUYQ00@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Oct 2007 14:51:33 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019172610.GE30825@uranus.ravnborg.org>
+	id S1764211AbXJSTAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:00:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762962AbXJSTAo
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:00:44 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:56746 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757301AbXJSTAn (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 15:00:43 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JJ0GIM024299
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 19 Oct 2007 12:00:17 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JJ0F4M015143;
+	Fri, 19 Oct 2007 12:00:16 -0700
+In-Reply-To: <alpine.LFD.0.9999.0710190753040.19446@xanadu.home>
+X-Spam-Status: No, hits=-4.72 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61741>
 
-On Fri, 19 Oct 2007, Sam Ravnborg wrote:
 
-> On Fri, Oct 19, 2007 at 12:12:41PM -0400, Nicolas Pitre wrote:
-> > This is even more wrong.
+
+On Fri, 19 Oct 2007, Nicolas Pitre wrote:
+> On Fri, 19 Oct 2007, Jeff King wrote:
 > > 
-> > Agreed, indexing objects might not be the best description.  It probably 
-> > will become "receiving objects" along with a bandwitth meter.
+> > Ah, right. I hadn't thought of that. While it would be a nice
+> > convenience feature, it's probably not worth the deep internal hackery
+> > that would be required.
 > 
-> The term 'objects' here always confuses me. What is often my first
-> thing to check the number of individual commits being added after
-> a git pull. Wether a commit touches one or several files is less
-> important (to my way of using git).
+> What about a preprocessor that could match <1>@{<2>..<3>} in the 
+> argument list and substitute that with <1>@{<2>}..<1>@{<3>} before it is 
+> actually parsed?
 
-Let me unconfuse you.
+Could be done, but I almost think it would be better to just make the 
+sha1_name.c interfaces take some extended data structure which allows 
+looking up multiple SHA1's at the same time.
 
-Git storage is made of, well, objects.  You might think that objects are 
-related to the number of files concerned by a set of commits during a 
-pull, but this is not the case.  It is well possible to have a commit 
-touching 100 files and have much fewer new objects created than that.  
-Reverting a patch, for example, would only restore a reference to older 
-objects in the database.  The same is true if you move an entire 
-directory around.
+Sure, we'd leave the "simple" interfaces around for users that simply want 
+just one SHA1 value, but that would allow us to remove duplicate code from 
+revision.c and rev-parse.c. And it would allow us to generally make the 
+SHA1 parsing fancier: there may well be other expressions that are worth 
+doing.
 
-The opposite is also true: you can have more new objects than modified 
-files for a single commit, depending on the directory depth.
-
-So the number of objects has no exact relationship what so ever with the 
-number of objects.  However the number of objects has a much more direct 
-influence on the time to perform a fetch, and that is what we're 
-displaying here.  After all when you issue a pull and wait for it to 
-complete, you wait for X amount of objects to be transferred and not Y 
-amount of commits.
-
-The important metric is therefore measured in "objects".  But you're 
-free to ignore it and only look at the percentage if you prefer.
-
-
-Nicolas
+		Linus
