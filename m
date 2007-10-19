@@ -1,84 +1,60 @@
-From: Nicolas Pitre <nico@cam.org>
+From: Steven Grimm <koreth@midwinter.com>
 Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 11:03:00 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710191058570.19446@xanadu.home>
-References: <20071019062219.GA28499@coredump.intra.peff.net>
- <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
- <20071019073938.GN14735@spearce.org>
- <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
- <20071019113822.GB16726@thunk.org>
- <20071019143844.GB23765@diana.vm.bytemark.co.uk>
+Date: Fri, 19 Oct 2007 08:50:50 -0700
+Message-ID: <4718D25A.7040109@midwinter.com>
+References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_3CMZVC1aqzd3F6gJvxiNdw)"
-Cc: Theodore Tso <tytso@thunk.org>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
-To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 17:03:32 2007
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 17:51:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IitNn-00074M-4I
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 17:03:27 +0200
+	id 1Iiu7w-0001fH-00
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 17:51:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932856AbXJSPDO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 11:03:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXJSPDO
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 11:03:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:51029 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755930AbXJSPDN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 11:03:13 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQ500DJYZ50Z4I0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Oct 2007 11:03:02 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019143844.GB23765@diana.vm.bytemark.co.uk>
+	id S1753666AbXJSPu4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 11:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753523AbXJSPuz
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 11:50:55 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:32800 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751333AbXJSPuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 11:50:55 -0400
+Received: (qmail 31461 invoked from network); 19 Oct 2007 15:50:54 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=O3mRVJOVkuATWjjp/0jLj1hiFmbu6StSkNC3Not1jz2f/0fqJJ6mRwXZdP8ykk/5  ;
+Received: from localhost (HELO sgrimm-mbp.lan) (koreth@127.0.0.1)
+  by localhost with SMTP; 19 Oct 2007 15:50:53 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <20071019073938.GN14735@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61727>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 19/10/2007, Jeff King <peff@peff.net> wrote:
+ > This makes the fetch output much more terse. It is likely to
+ > be very controversial. Here's an example of the new output:
+ >
+ > Indexing objects: 100% (1061/1061), done.
+ > Resolving deltas: 100% (638/638), done.
 
---Boundary_(ID_3CMZVC1aqzd3F6gJvxiNdw)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
+Those two lines are actually my beef with the fetch output. As a newbie, 
+I had no idea what "Indexing objects" actually meant. We have this thing 
+called "the index" in git so I would expect "Indexing objects" to have 
+something to do with that, but it doesn't seem to.
 
-On Fri, 19 Oct 2007, Karl Hasselström wrote:
+How about something more descriptive of the high-level operation that's 
+going on, along the lines of:
 
-> On 2007-10-19 07:38:22 -0400, Theodore Tso wrote:
-> 
-> > Finally, one last question --- am I the only one who had to take a
-> > second look at the whether the arrow should be <- or ->? The
-> > question is whether we are saying "gitk is moving to include all of
-> > spearce/gitk"; but I could also see it stated that we are assigning
-> > refs/heads/gitk with refs/remotes/spearce/gitk, in which case the
-> > arrow should be reversed. Or maybe:
-> >
-> > ==> git://repo.or.cz/git/spearce.git
-> >  * branch gitk := spearce/gitk                (new)
-> >  * branch maint := spearce/maint              1aa3d01..e7187e4
-> >  * branch master := spearce/master            de61e42..7840ce6
-> >  * branch next := spearce/next                895be02..2fe5433
-> >  + branch pu := spearce/pu                    89fa332...1e4c517
-> >  * branch todo := spearce/todo                (new)
-> 
-> I think the reasoning behind the "foo -> spearce/foo" syntax is that
-> "(refs/heads/)foo" in the remote repository has been fetched to
-> "(refs/remotes/)spearce/foo" in the local repository.
+Gathering changes from remote: 100% (1061/1061), done.
+Applying changes locally: 100% (638/638), done.
 
-Well, the important thing is that the _content_ is moving from the 
-remote repository to the local one.  That's how the arrow should be 
-interpreted conceptually.  The fact that technically we end up assigning 
-the local ref with the remote value is a technical issue.
-
-
-Nicolas
-
---Boundary_(ID_3CMZVC1aqzd3F6gJvxiNdw)--
+-Steve
