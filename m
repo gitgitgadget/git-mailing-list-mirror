@@ -1,71 +1,73 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
-Date: Thu, 18 Oct 2007 23:38:59 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710182328580.19446@xanadu.home>
-References: <20071019004527.GA12930@spearce.org>
- <20071019021255.GD3290@coredump.intra.peff.net>
- <20071019022154.GY14735@spearce.org>
- <alpine.LFD.0.9999.0710182247130.19446@xanadu.home>
- <20071019031737.GD14735@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:39:43 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: Proposed git mv behavioral change
+Date: Thu, 18 Oct 2007 23:40:47 -0400
+Message-ID: <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU>
+References: <c594999b2337.2337c594999b@nyroc.rr.com> <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:41:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiii6-0001UX-UI
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:39:43 +0200
+	id 1IiijS-0001hi-Mr
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934165AbXJSDjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:39:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759232AbXJSDjD
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:39:03 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:63686 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751380AbXJSDjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:39:01 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
- with ESMTP id <0JQ5005CQ3GZFTM0@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 18 Oct 2007 23:39:00 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019031737.GD14735@spearce.org>
+	id S965625AbXJSDkz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:40:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965558AbXJSDkz
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:40:55 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:40459 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S965605AbXJSDkz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 23:40:55 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9J3envg009661;
+	Thu, 18 Oct 2007 23:40:49 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9J3emL8007282
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Oct 2007 23:40:49 -0400 (EDT)
+In-Reply-To: <20071019033500.GB10697@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61635>
-
-On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
-
-> Nicolas Pitre <nico@cam.org> wrote:
-> > On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
-> > 
-> > > I really don't have an opinion either way.  Actually I think the
-> > > entire progress system of git-pack-objects should be reduced even
-> > > further so that users aren't exposed to the internal phases we
-> > > are going through.  Most of them just don't care.  They just
-> > > want to know when its going to be done[*1*].
-> > 
-> > Well, with my latest patches in that area, the typical progress on 
-> > screen has been cut in half.  And the different phases are intertaining.
-> 
-> Yup.  Your patches were a big improvement.  But I'm now sitting here
-> wondering if we shouldn't just allow a progress meter to overwrite
-> the prior one.  Then you only see the current task and progress,
-> or the final output if we have nothing further to say about that.
-
-And then you've lost some diagnostic clue (the absolute numbers) about 
-the actual number of objects that were listed for "deltification" for 
-example.
-
-And imagine that you see the progress moving slowly because the remote 
-server is a NSLU2, but it says 80%.  Then you go for a coffee and the 
-progress says 20% when you return because it now has moved to a 
-different phase.  Rather counter intuitive.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61636>
 
 
-Nicolas
+On 18 Oct 2007, at 11:35:00 PM, Jeff King wrote:
+
+> Right, I mean regular "mv", not "git-mv". The only thing that doesn't
+> accomplish is moving the "from" entry in the index to the "to" entry
+> (but I'm not sure that's such a good idea).  Perhaps I've lost  
+> sight of
+> your original goal. Can you state more succintly what you are  
+> trying to
+> accomplish?
+
+I think you're right.
+
+Anyway, succinctly:
+
+> What you want to happen is the following:
+> 	
+> 	git show HEAD:A.txt > path/B.txt
+> 	git add path/B.txt
+> 	mv A.txt B.txt
+> 	git rm A.txt
+
+Better:
+
+>  	mv A.txt path/B.txt
+> 	Point the index entry for A.txt to path/B.txt
+
+I hope that's right.
