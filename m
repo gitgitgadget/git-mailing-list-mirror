@@ -1,57 +1,99 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH resend again] gitk: Do not pick up file names of "copy
- from" lines
-Date: Fri, 19 Oct 2007 10:05:55 +0200
-Message-ID: <47186563.3070607@viscovery.net>
-References: <20071019052823.GI14735@spearce.org> <47185BCC.9010307@viscovery.net> <20071019073253.GM14735@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 04:07:55 -0400
+Message-ID: <20071019080755.GO14735@spearce.org>
+References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <20071019075725.GA29436@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 10:09:16 2007
+Content-Type: text/plain; charset=utf-8
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 10:08:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
-	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1Iimuk-0001wv-72
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 10:09:02 +0200
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IimuW-0005YW-M1
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 10:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934087AbXJSIGq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 04:06:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764751AbXJSIGp
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 04:06:45 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:35132 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1765807AbXJSIGm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 04:06:42 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IimrW-0003z1-2m; Fri, 19 Oct 2007 10:05:42 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 68660546; Fri, 19 Oct 2007 10:05:55 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071019073253.GM14735@spearce.org>
-X-Spam-Score: 0.2 (/)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_80=2
+	id S933808AbXJSIIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 04:08:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761154AbXJSIII
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 04:08:08 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:51707 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751117AbXJSIIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 04:08:01 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Iimtf-0006gQ-Bv; Fri, 19 Oct 2007 04:07:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id BC92D20FBAE; Fri, 19 Oct 2007 04:07:55 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20071019075725.GA29436@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61669>
 
-Shawn O. Pearce schrieb:
-> Johannes Sixt <j.sixt@viscovery.net> wrote:
->>  Would you mind putting this one into your queue, too? I haven't seen it
->>  appear in Paul's repo.
+Jeff King <peff@peff.net> wrote:
+> On Fri, Oct 19, 2007 at 03:39:39AM -0400, Shawn O. Pearce wrote:
 > 
-> I think it is already in Paul's repo:
+> > What about this on top of Jeff's patch?
+> > 
+> > $ git fetch jc
+> > ...
+> > ==> git://repo.or.cz/alt-git.git
+> >  * tag junio-gpg-pub ......................... (new)
+> >  * tag v1.5.0 .......................... (tag moved)
+> 
+> Ugh. I strongly suspect that it would look ugly on anything bigger than
+> about 80 columns, anyway. You are probably better off just not worrying
+> about the terminal width, and always using an 80-ish column total. And
+> then you don't have to worry about the ugly ioctl call.
 
-No, it's not. I checked both Paul's master and dev, and also your own
-gitk branch. Would you mind cherry-picking from the tip of
+Then you get linewrap on smaller terminals, and bigger ones don't
+line up the right side.  *shrug*
+ 
+> > +			show_update("* branch", note, "->", "FETCH_HEAD", NULL);
+> 
+> Hrm, btw, I can't seem to get this one to show (I was curious how ugly
+> the FETCH_HEAD would look).
 
-git://repo.or.cz/git/mingw.git mob
+Yea, I can't easily see how to get this to generate.
+ 
+> >  		if (verbose)
+> > -			fprintf(stderr, " - %s == %s\n",
+> > -				note, pretty_ref);
+> > +			show_update("-", note, "==", pretty_ref, "unchanged");
+> >  		return 0;
+> 
+> Also, I was unable to generate a test case that showed this one. Did
+> you?
 
-Thanks,
--- Hannes
+git fetch -v jc
+
+> > +static void determine_window_size(void)
+> > +{
+> > +	struct winsize ws;
+> > +	if (!ioctl(2, TIOCGWINSZ, &ws))
+> > +		ws_cols = ws.ws_col;
+> > +}
+> > +
+> 
+> Ugh. How portable is this?
+
+No clue.  It compiles fine here on Mac OS X and on Linux, but those
+are both reasonably modern UNIX systems.  Older systems like Solaris
+8 or an ancient OpenBSD might have an issue.  I suspect though that
+this is a reasonably standard thing but its not in POSIX so uh,
+probably a bad thing to do.
+
+-- 
+Shawn.
