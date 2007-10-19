@@ -1,71 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: gitk patch collection pull request
-Date: Fri, 19 Oct 2007 12:31:47 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710191227340.26902@woody.linux-foundation.org>
-References: <20071019052823.GI14735@spearce.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH 03/14] Use start_command() to run content filters instead of explicit fork/exec.
+Date: Fri, 19 Oct 2007 21:47:55 +0200
+Message-ID: <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
+References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
+ <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
+ <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
+Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 21:32:13 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IixZn-00087s-2S
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:32:07 +0200
+	id 1IixpX-0002gS-Et
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762527AbXJSTb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 15:31:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760097AbXJSTb4
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:31:56 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:57696 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759584AbXJSTbz (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 15:31:55 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JJVmq8026131
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 19 Oct 2007 12:31:49 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JJVlO6016359;
-	Fri, 19 Oct 2007 12:31:47 -0700
-In-Reply-To: <20071019052823.GI14735@spearce.org>
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S932290AbXJSTsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:48:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932284AbXJSTsL
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:11 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44488 "EHLO
+	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1764641AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 15:48:09 -0400
+Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8D3D597D48;
+	Fri, 19 Oct 2007 21:48:07 +0200 (CEST)
+X-Mailer: git-send-email 1.5.3.4.315.g2ce38
+In-Reply-To: <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61744>
 
+The previous code already used finish_command() to wait for the process
+to terminate, but did not use start_command() to run it.
 
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+ convert.c |   30 +++++++-----------------------
+ 1 files changed, 7 insertions(+), 23 deletions(-)
 
-On Fri, 19 Oct 2007, Shawn O. Pearce wrote:
->
-> The following changes since commit 719c2b9d926bf2be4879015e3620d27d32f007b6:
->   Paul Mackerras (1):
->         gitk: Fix bug causing undefined variable error when cherry-picking
-
-The biggest problem I have with gitk is that it is almost totally useless 
-for when you have a file limit.
-
-I do "gitk --merge" (which has an implicit file limit of the list 
-of unmerged files) or just "gitk ORIG_HEAD.. Makefile" and the *history* 
-of gitk looks fine.
-
-But the diffs are crap and useless, because they contain all the stuff I 
-did *not* want, and hides all the relevant information.
-
-So then I might use the nice gitk history window to see the commits, but I 
-will fall back on "git log -p --merge" and "git log -p ORIG_HEAD.. Makefile"
-for the real work. 
-
-I had that happen unusually many times lately, since we had a fair number 
-of (mostly trivial) conflicts during this merge window. And it's sad. Gitk 
-is so good in so many other ways, and then it is so *totally* useless when 
-it comes to something as fundamental as just looking at the history of a 
-few files.
-
-			Linus
+diff --git a/convert.c b/convert.c
+index aa95834..d83c2fc 100644
+--- a/convert.c
++++ b/convert.c
+@@ -199,34 +199,18 @@ static int filter_buffer(const char *path, const char *src,
+ 	 * Spawn cmd and feed the buffer contents through its stdin.
+ 	 */
+ 	struct child_process child_process;
+-	int pipe_feed[2];
+ 	int write_err, status;
++	const char *argv[] = { "sh", "-c", cmd, NULL };
+ 
+ 	memset(&child_process, 0, sizeof(child_process));
++	child_process.argv = argv;
++	child_process.in = -1;
+ 
+-	if (pipe(pipe_feed) < 0) {
+-		error("cannot create pipe to run external filter %s", cmd);
+-		return 1;
+-	}
+-
+-	child_process.pid = fork();
+-	if (child_process.pid < 0) {
+-		error("cannot fork to run external filter %s", cmd);
+-		close(pipe_feed[0]);
+-		close(pipe_feed[1]);
+-		return 1;
+-	}
+-	if (!child_process.pid) {
+-		dup2(pipe_feed[0], 0);
+-		close(pipe_feed[0]);
+-		close(pipe_feed[1]);
+-		execlp("sh", "sh", "-c", cmd, NULL);
+-		return 1;
+-	}
+-	close(pipe_feed[0]);
++	if (start_command(&child_process))
++		return error("cannot fork to run external filter %s", cmd);
+ 
+-	write_err = (write_in_full(pipe_feed[1], src, size) < 0);
+-	if (close(pipe_feed[1]))
++	write_err = (write_in_full(child_process.in, src, size) < 0);
++	if (close(child_process.in))
+ 		write_err = 1;
+ 	if (write_err)
+ 		error("cannot feed the input to external filter %s", cmd);
+-- 
+1.5.3.4.315.g2ce38
