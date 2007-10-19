@@ -1,103 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 16:41:07 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0710191640250.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <20071019062219.GA28499@coredump.intra.peff.net> 
- <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> 
- <20071019073938.GN14735@spearce.org>  <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
-  <20071019113822.GB16726@thunk.org> <4718A3AB.7090301@viscovery.net> 
- <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
- <8aa486160710190731v67626fd8wa94ba069a17f73ce@mail.gmail.com>
+From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+Subject: Re: git push bug?
+Date: Fri, 19 Oct 2007 16:47:35 +0200
+Organization: Transmode AB
+Message-ID: <1192805255.1875.25.camel@gentoo-jocke.transmode.se>
+References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
+	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
+	 <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
+	 <Pine.LNX.4.64.0710181720010.25221@racer.site>
+	 <1192725116.4954.7.camel@gentoo-jocke.transmode.se>
+	 <Pine.LNX.4.64.0710182259190.25221@racer.site>
+Reply-To: joakim.tjernlund@transmode.se
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Johannes Sixt <j.sixt@viscovery.net>,
-	Theodore Tso <tytso@thunk.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 16:41:35 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 19 16:47:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iit2R-0001Xp-Fg
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:41:23 +0200
+	id 1Iit8i-000385-Ms
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:47:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964786AbXJSOlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 10:41:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932973AbXJSOlM
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:41:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:44527 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S933205AbXJSOlL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 10:41:11 -0400
-Received: (qmail invoked by alias); 19 Oct 2007 14:41:09 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp052) with SMTP; 19 Oct 2007 16:41:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ykmtYaAFyVgHEuBjpMiI+5up0Dp6q5es04aWb1R
-	gcR2cD9jDQNiJD
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <8aa486160710190731v67626fd8wa94ba069a17f73ce@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1760082AbXJSOrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 10:47:39 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760004AbXJSOrj
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:47:39 -0400
+Received: from mail.transmode.se ([83.241.175.147]:48499 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1759933AbXJSOri (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 10:47:38 -0400
+Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
+Received: from gentoo-jocke by mail.transmode.se; 19 Oct 2007 16:47:36 +0200
+In-Reply-To: <Pine.LNX.4.64.0710182259190.25221@racer.site>
+X-Mailer: Evolution 2.10.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61722>
 
-Hi,
-
-On Fri, 19 Oct 2007, Santi B?jar wrote:
-
-> On 10/19/07, Nicolas Pitre <nico@cam.org> wrote:
-> > On Fri, 19 Oct 2007, Johannes Sixt wrote:
-> >
-> > > Theodore Tso schrieb:
-> > > > ==> git://repo.or.cz/git/spearce.git
-> > > >  * branch gitk -> spearce/gitk              (new)
-> > > >  * branch maint -> spearce/maint    1aa3d01..e7187e4
-> > > >  * branch master -> spearce/master  de61e42..7840ce6
-> > > >  * branch next -> spearce/next              895be02..2fe5433
-> > > >  + branch pu -> spearce/pu          89fa332...1e4c517
-> > > >  * branch todo -> spearce/todo              (new)
-> > >
-> > > > As far as the padding, it would be a pain to figure out how to make
-> > > > the right hand column be padded so that it starts 3 spaces after the
-> > > > longest "  * branch foo -> bar" line, but that would look the best.
-> > >
-> > > But this way it wouldn't be difficult at all:
-> > >
-> > > ==> git://repo.or.cz/git/spearce.git
-> > >  * (new)              gitk -> spearce/gitk
-> > >  * 1aa3d01..e7187e4   maint -> spearce/maint
-> > >  * de61e42..7840ce6   master -> spearce/master
-> > >  * 895be02..2fe5433   next -> spearce/next
-> > >  + 89fa332...1e4c517  pu -> spearce/pu
-> > >  * (new)              todo -> spearce/todo
-> >
-> > Actually I think this is the best format so far: one line per branch, no
-> > terminal width issue (long branch names are simply wrapped), the
-> > old..new info is there also with the single character marker to quickly
-> > notice the type of update.
+On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
+> Hi,
 > 
-> I like it too. I would like to add some more descripton, because I
-> think for newbies the .. and ... can be overlooked. Something like:
+> On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
 > 
-> $ git fetch spearce
-> ...
-> URL: git://repo.or.cz/git/spearce.git
->  * (new)              spearce/gitk: new branch 'gitk'
+> > On Thu, 2007-10-18 at 17:21 +0100, Johannes Schindelin wrote:
+> > 
+> > > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+> > > 
+> > > > Seems like it is a bit too easy to make mistakes here. Why can I 
+> > > > delete a branch with :linus but not create one with linus:linus?
+> > > 
+> > > I wonder why you bother with the colon at all.  Just
+> > > 
+> > > 	git push <remote> linus
+> > > 
+> > > and be done with it.  The colon is only there to play interesting 
+> > > games, not something as simple as "push this branch" or "push this 
+> > > tag".
+> > 
+> > First, I didn't know that I could do that. Secondly, I was also looking 
+> > do v2.6.23:linus refspecs
+> 
+> 
+> First, then our documentation could be better.  How?
 
-Nah, that is just duplication.
+Well, it isn't clear to me how all this is supposed to work and
+what is bugs. Clearifying that would help.
 
->  * 1aa3d01..e7187e4   spearce/maint: fast forward to branch 'maint'
->  * de61e42..7840ce6   spearce/master: fast forward to branch 'master'
->  * 895be02..2fe5433   spearce/next: fast forward to branch 'next'
->  + 89fa332...1e4c517  spearce/pu: forcing update to non-fast forward branch 'pu'
+For instances I did a push with v2.6.23:refs/heads/linus and now
+I got a branch with the SHA1 of v2.6.23 tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d)
+in it. Makes gitk display that branch as "linus^{}".
 
-Better to say (forced) if need be.  But I do not think so.  I like Hannes' 
-proposal as-is.
+> 
+> Second, why not "git checkout -b linus v2.6.23 && git push origin linus"?
 
-Ciao,
-Dscho
+An extra checkout that takes time but works. Doesn't make the above
+"weiredness" go away though.
+
+ Jocke
+
+> 
+> Ciao,
+> Dscho
+> 
+> 
