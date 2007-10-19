@@ -1,92 +1,89 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Qgit performance and maintain CVS environment with GIT repository
-Date: Fri, 19 Oct 2007 09:14:18 +0200
-Message-ID: <4718594A.2070407@op5.se>
-References: <598689.78740.qm@web56015.mail.re3.yahoo.com>	 <47159779.6010502@bluelane.com>	 <e5bfff550710170030y7778e96ax146acea7a0e57a67@mail.gmail.com>	 <200710171800.37345.robin.rosenberg.lists@dewire.com> <e5bfff550710171626h733228aw7a251746d2b43c63@mail.gmail.com> <4717EF40.6000509@bluelane.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH resend again] gitk: Do not pick up file names of "copy from"
+ lines
+Date: Fri, 19 Oct 2007 09:25:00 +0200
+Message-ID: <47185BCC.9010307@viscovery.net>
+References: <20071019052823.GI14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	piet.delaney@gmail.piet.net,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	VMiklos <vmiklos@frugalware.org>,
-	free cycle <freecycler23@yahoo.com>, git@vger.kernel.org,
-	piet.delaney@gmail.com, Piet Delaney <pdelaney@bluelane.com>
-To: pete@bluelane.com
-X-From: git-owner@vger.kernel.org Fri Oct 19 09:15:38 2007
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 09:25:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iim52-0005Df-S4
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 09:15:37 +0200
+	id 1IimEP-0006sc-Mi
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 09:25:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755609AbXJSHPX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 03:15:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755344AbXJSHPX
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 03:15:23 -0400
-Received: from mail.op5.se ([193.201.96.20]:55855 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754152AbXJSHPW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 03:15:22 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 974201730663;
-	Fri, 19 Oct 2007 09:15:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id CDlXF+-VOSRm; Fri, 19 Oct 2007 09:15:18 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 235A017305AC;
-	Fri, 19 Oct 2007 09:14:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <4717EF40.6000509@bluelane.com>
+	id S1762264AbXJSHZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 03:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751700AbXJSHZF
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 03:25:05 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:23276 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756237AbXJSHZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 03:25:03 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IimDv-0002dv-2e; Fri, 19 Oct 2007 09:24:47 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 5FBB2546; Fri, 19 Oct 2007 09:25:00 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071019052823.GI14735@spearce.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61661>
 
-Pete/Piet Delaney wrote:
-> Johannes:
->   I read somewhere in the past week that it was possible to maintain
->   our existing CVS environment with git. I though it was a separate
->   package to export git back to cvs but I just noticed a git-cvsserver
->   and as a std part of git and was wondering about using that.
-> 
->   We have a number of build machines with flamebox perl scripts pulling
->   out CVS branches for builds. I was wondering what is the best way to
->   use git and it's nicer pull/push model and merge facility and possibly
->   maintain CVS exports for scripts doing builds if possible the cvsweb
->   and bonsai (CVS Query Form) that a number of engineers are currently
->   using. I started looking over out flamebox scripts with the intent
->   up converting them over to git but I mentioned the git to cvs
->   coexistence and we are wondering if that's a better route than
->   upgrading the flamebox scripts. Having our existing cvsweb, bonsai,
->   and gitweb along with the git utilities seems at least desirable.
->   Any thoughts or suggestions?
-> 
+From: Johannes Sixt <johannes.sixt@telecom.at>
 
-If you do convert them to git, you can fairly easily do an automatic
-bisect on build-errors, and the developer can (after some time) get
-an email of what machines they broke the code on and what the bad
-commit was.
+A file copy would be detected only if the original file was modified in the
+same commit. This implies that there will be a patch listed under the
+original file name, and we would expect that clicking the original file
+name in the file list warps the patch window to that file's patch. (If the
+original file was not modified, the copy would not be detected in the first
+place, the copied file would be listed as "new file", and this whole matter
+would not apply.)
 
-Besides that, it's not a black-and-white scenario. If I were you I'd set
-up git-cvsserver and make sure that works for all the scripts, and then
-pick one or two auto-build things to convert to git. Preferrably on a
-separate machine, so everything keeps working the same as always while
-you're fiddling with the auto-build stuff.
+However, if the name of the copy is sorted after the original file's patch,
+then the logic introduced by commit d1cb298b0b (which picks up the link
+information from the "copy from" line) would overwrite the link
+information that is already present for the original file name, which was
+parsed earlier. Hence, this patch reverts part of said commit.
 
-Just my two cents.
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+  Shawn O. Pearce schrieb:
+  > I'm carrying these in my pu branch but would like to move them up
+  > into master.
 
+  Would you mind putting this one into your queue, too? I haven't seen it
+  appear in Paul's repo.
+
+  -- Hannes
+
+  gitk |    3 +--
+  1 files changed, 1 insertions(+), 2 deletions(-)
+
+diff --git a/gitk b/gitk
+index b3ca704..1306382 100755
+--- a/gitk
++++ b/gitk
+@@ -5216,8 +5216,7 @@ proc getblobdiffline {bdf ids} {
+  	    set diffinhdr 0
+
+  	} elseif {$diffinhdr} {
+-	    if {![string compare -length 12 "rename from " $line] ||
+-		![string compare -length 10 "copy from " $line]} {
++	    if {![string compare -length 12 "rename from " $line]} {
+  		set fname [string range $line [expr 6 + [string first " from " $line] ] end]
+  		if {[string index $fname 0] eq "\""} {
+  		    set fname [lindex $fname 0]
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.3.722.gccbb1
