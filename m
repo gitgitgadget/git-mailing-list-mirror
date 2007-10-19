@@ -1,66 +1,77 @@
-From: "Dan McGee" <dan@archlinux.org>
-Subject: Re: [PATCH] send-pack: respect '+' on wildcard refspecs
-Date: Fri, 19 Oct 2007 09:11:00 -0500
-Message-ID: <449c10960710190711p712e780dl5bb322d0804e4ecc@mail.gmail.com>
-References: <20071019090400.GA8944@coredump.intra.peff.net>
-	 <449c10960710190510y3af3ffa2ydb9ae4a01b5d480c@mail.gmail.com>
-	 <20071019122755.GA17002@coredump.intra.peff.net>
-	 <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com>
-	 <20071019134339.GA21852@coredump.intra.peff.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 10:14:59 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+ <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+ <20071019073938.GN14735@spearce.org>
+ <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+ <20071019113822.GB16726@thunk.org> <4718A3AB.7090301@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Jeff King" <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 16:11:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Theodore Tso <tytso@thunk.org>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 16:15:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IisZV-0001UW-3s
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:11:30 +0200
+	id 1IisdQ-0002WV-AJ
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:15:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759531AbXJSOLH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 10:11:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758833AbXJSOLF
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:11:05 -0400
-Received: from nz-out-0506.google.com ([64.233.162.227]:32772 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760149AbXJSOLE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 10:11:04 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so58070nze
-        for <git@vger.kernel.org>; Fri, 19 Oct 2007 07:11:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=PF0FNpZ31Pk/k2RPNrtdmSc6sE1+tKxd8gNywEwC7OE=;
-        b=qFbfS2QFsLs2E7jYrpZYLO/Hj8W2S6yTTvMVRlYMOkXks/n1icS9/WUtQeHaE6srahdy5tVQV8m566+NMYzkn6RG5AKWts77ALMqOeTyquv6Jk74Ribq0fRL6umAPakAr0+cudc8buB3OZRiW5+6FsSCTwR3HXOzpzksgrB3UJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=ulodsEYpQiNWoZ1RvKCLEfj8CJUlKcJnuA+b3EQwKe9U0/UrsCh6VL09dqgRGR8FbRGXpNBf7zrIAC47foz6TRRisiMcUI92GQNnUJizL1vQKF4g9ouIaCqlZx8tggqNwAjycwAqJ9S+uvTv6h0kUHD1eezgkcJSk/TBIKbDj7Q=
-Received: by 10.115.92.2 with SMTP id u2mr2086752wal.1192803060546;
-        Fri, 19 Oct 2007 07:11:00 -0700 (PDT)
-Received: by 10.114.67.15 with HTTP; Fri, 19 Oct 2007 07:11:00 -0700 (PDT)
-In-Reply-To: <20071019134339.GA21852@coredump.intra.peff.net>
-Content-Disposition: inline
-X-Google-Sender-Auth: 14d32b01533f58f4
+	id S1758928AbXJSOPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 10:15:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757721AbXJSOPF
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:15:05 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:46892 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759399AbXJSOPB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 10:15:01 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JQ500MWJWWZL350@VL-MO-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 10:15:00 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4718A3AB.7090301@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61712>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61713>
 
-Ahh, shoot. Forgot to reply to all.
+On Fri, 19 Oct 2007, Johannes Sixt wrote:
 
-On 10/19/07, Jeff King <peff@peff.net> wrote:
-> It is based on Shawn's next, 2fe5433b. Are you sure you're not doing
-> something silly like executing an older version of git that is in your
-> PATH?
+> Theodore Tso schrieb:
+> > ==> git://repo.or.cz/git/spearce.git
+> >  * branch gitk -> spearce/gitk		(new)
+> >  * branch maint -> spearce/maint	1aa3d01..e7187e4
+> >  * branch master -> spearce/master	de61e42..7840ce6
+> >  * branch next -> spearce/next		895be02..2fe5433
+> >  + branch pu -> spearce/pu		89fa332...1e4c517
+> >  * branch todo -> spearce/todo		(new)
+> 
+> > As far as the padding, it would be a pain to figure out how to make
+> > the right hand column be padded so that it starts 3 spaces after the
+> > longest "  * branch foo -> bar" line, but that would look the best.
+> 
+> But this way it wouldn't be difficult at all:
+> 
+> ==> git://repo.or.cz/git/spearce.git
+>  * (new)              gitk -> spearce/gitk
+>  * 1aa3d01..e7187e4   maint -> spearce/maint
+>  * de61e42..7840ce6   master -> spearce/master
+>  * 895be02..2fe5433   next -> spearce/next
+>  + 89fa332...1e4c517  pu -> spearce/pu
+>  * (new)              todo -> spearce/todo
 
-Yeah, just tried that again, definitely using the right version of
-git. Before I apply your patch, both my test script and your addition
-to t5400 fail. After applying your patch, my test script fails but
-your addition to t5400 succeeds. Could this be something where
-git-push and git-send-pack are not interacting correctly?
+Actually I think this is the best format so far: one line per branch, no 
+terminal width issue (long branch names are simply wrapped), the 
+old..new info is there also with the single character marker to quickly 
+notice the type of update.
 
--Dan
+
+Nicolas
