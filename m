@@ -1,143 +1,82 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: git push bug?
-Date: Fri, 19 Oct 2007 20:50:29 +0200
-Message-ID: <000001c81280$ebc5c5e0$5267a8c0@Jocke>
-References: <Pine.LNX.4.64.0710191920210.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 14:51:30 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710191431450.19446@xanadu.home>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+ <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+ <20071019073938.GN14735@spearce.org> <4718D25A.7040109@midwinter.com>
+ <alpine.LFD.0.9999.0710191211210.19446@xanadu.home>
+ <20071019172610.GE30825@uranus.ravnborg.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'Steffen Prohaska'" <prohaska@zib.de>,
-	"'git'" <git@vger.kernel.org>
-To: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 19 20:51:23 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Steven Grimm <koreth@midwinter.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 20:51:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiww8-0008Qq-Ct
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 20:51:08 +0200
+	id 1Iiwwk-00008m-NT
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 20:51:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935468AbXJSSuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 14:50:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935895AbXJSSuh
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 14:50:37 -0400
-Received: from mail.transmode.se ([83.241.175.147]:55612 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S934532AbXJSSug (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 14:50:36 -0400
-Received: from Jocke ([84.217.95.61]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Fri, 19 Oct 2007 20:50:32 +0200
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
-In-Reply-To: <Pine.LNX.4.64.0710191920210.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-Thread-Index: AcgSdO9Hwt2ehTuiT1a323gas/ILxgABmRow
-X-OriginalArrivalTime: 19 Oct 2007 18:50:33.0034 (UTC) FILETIME=[ED88D2A0:01C81280]
+	id S1757456AbXJSSvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 14:51:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758801AbXJSSvf
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 14:51:35 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:58321 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757456AbXJSSve (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 14:51:34 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JQ600LN09PUYQ00@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 14:51:33 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071019172610.GE30825@uranus.ravnborg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61740>
 
-> -----Original Message-----
-> From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
-> Sent: den 19 oktober 2007 19:25
-> To: Joakim Tjernlund
-> Cc: Steffen Prohaska; git
-> Subject: Re: git push bug?
-> 
-> Hi,
-> 
-> On Fri, 19 Oct 2007, Joakim Tjernlund wrote:
-> 
-> > On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
-> > > 
-> > > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
-> > > 
-> > > > First, I didn't know that I could do that. Secondly, I was also 
-> > > > looking do v2.6.23:linus refspecs
-> > > 
-> > > 
-> > > First, then our documentation could be better.  How?
+On Fri, 19 Oct 2007, Sam Ravnborg wrote:
+
+> On Fri, Oct 19, 2007 at 12:12:41PM -0400, Nicolas Pitre wrote:
+> > This is even more wrong.
 > > 
-> > Well, it isn't clear to me how all this is supposed to work 
-> and what is 
-> > bugs. Clearifying that would help.
-> > 
-> > For instances I did a push with v2.6.23:refs/heads/linus 
-> and now I got a 
-> > branch with the SHA1 of v2.6.23 
-> > tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d) in it. Makes 
-> gitk display 
-> > that branch as "linus^{}".
+> > Agreed, indexing objects might not be the best description.  It probably 
+> > will become "receiving objects" along with a bandwitth meter.
 > 
-> It strikes me as really odd that you would _want_ to create a branch 
-> remotely, that has _never_ existed locally.
+> The term 'objects' here always confuses me. What is often my first
+> thing to check the number of individual commits being added after
+> a git pull. Wether a commit touches one or several files is less
+> important (to my way of using git).
 
-It strikes me as really odd that a core developers like yourself
-hasn't tried to justify/explain why push works as it does.
+Let me unconfuse you.
 
-As I am trying to convince our dev. group here to move to git instead of subversion, I
-need to learn how git works. Now I have gotten to the push function and I need
-to know what can be done with push and how, pitfalls too. As I go along I find behavior
-that I find odd and report these to the list.
+Git storage is made of, well, objects.  You might think that objects are 
+related to the number of files concerned by a set of commits during a 
+pull, but this is not the case.  It is well possible to have a commit 
+touching 100 files and have much fewer new objects created than that.  
+Reverting a patch, for example, would only restore a reference to older 
+objects in the database.  The same is true if you move an entire 
+directory around.
 
- git push <repo> v2.6.23:refs/heads/linus
-will make a tag look like a branch
+The opposite is also true: you can have more new objects than modified 
+files for a single commit, depending on the directory depth.
 
- git push <repo> linus:linus
-won't let me create the remote branch linus but
- git push <repo> linus
-will
+So the number of objects has no exact relationship what so ever with the 
+number of objects.  However the number of objects has a much more direct 
+influence on the time to perform a fetch, and that is what we're 
+displaying here.  After all when you issue a pull and wait for it to 
+complete, you wait for X amount of objects to be transferred and not Y 
+amount of commits.
 
- git push <repo> :linus
-OOPS, now I just deleted remote branch linus, no warning
- 
- git push <repo> linus:refs/head/linus
-creates a branch that is invisible(wont show in git branch -a)
+The important metric is therefore measured in "objects".  But you're 
+free to ignore it and only look at the percentage if you prefer.
 
- git push <repo> linus:refs/heads/newbranch
-creates remote branch newbranch, but you have to know the magic words
-refs/heads/ to do it.
 
-Se what I mean? 
-
-> 
-> > > Second, why not "git checkout -b linus v2.6.23 && git push origin 
-> > > linus"?
-> > 
-> > An extra checkout that takes time but works.
-> 
-> Not only that: before trying to publish something, I would 
-> have expected 
-> you to have that branch locally, and that you actually worked on it.
-> 
-> > Doesn't make the above "weiredness" go away though.
-> 
-> Yes it does.
-
-No it doesn't. If someone else in my group wants to create a branch they
-might do the same mistakes as I did.
-
-> 
-> git checkout -b <branchname> resolves to the commit that the 
-> tag pointed 
-> to.  So it would not push a tag, which you did.
-> 
-> Of course you could do what you planned to do, if you knew 
-> git better.  
-> But you are not familiar enough with git's inner workings yet, so I 
-> suggest to stay with things for now that work _always_, and 
-> exactly as 
-> expected.
-> 
-> Such as creating a branch locally, with exactly the name that 
-> you plan it 
-> to have remotely, and then pushing it with "git push origin 
-> <branchname>".  
-> Easy as apple pie.
-> 
-> Ciao,
-> Dscho
-> 
-> 
-> 
+Nicolas
