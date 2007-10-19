@@ -1,74 +1,254 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 14:31:39 +0200
-Message-ID: <4718A3AB.7090301@viscovery.net>
-References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com> <20071019113822.GB16726@thunk.org>
+From: Scott Parish <sRp@srparish.net>
+Subject: [PATCH] allow git to use the PATH for finding subcommands and help
+	docs
+Date: Fri, 19 Oct 2007 06:04:03 -0700
+Message-ID: <20071019130402.GD1463@srparish.net>
+References: <20071019065931.GB1463@srparish.net> <47185DAF.7060809@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@thunk.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 14:59:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 15:04:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IirRO-000110-Lu
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 14:59:03 +0200
+	id 1IirWa-0002Jk-Uk
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:04:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762995AbXJSM63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 08:58:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762146AbXJSM63
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 08:58:29 -0400
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:20056 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762824AbXJSM62 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 08:58:28 -0400
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IirQZ-0005ed-59; Fri, 19 Oct 2007 14:58:11 +0200
-Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 0A223546; Fri, 19 Oct 2007 14:31:40 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071019113822.GB16726@thunk.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753021AbXJSNEN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 09:04:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753427AbXJSNEN
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:04:13 -0400
+Received: from smtp-gw6.mailanyone.net ([208.70.128.57]:52916 "EHLO
+	smtp-gw6.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753021AbXJSNEM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 09:04:12 -0400
+X-Greylist: delayed 21827 seconds by postgrey-1.27 at vger.kernel.org; Fri, 19 Oct 2007 09:04:12 EDT
+Received: from mailanyone.net
+	by smtp-gw6.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP quinn@srparish.net)
+	id 1IirWM-0006gl-Dv; Fri, 19 Oct 2007 08:04:10 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Fri, 19 Oct 2007 06:04:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <47185DAF.7060809@viscovery.net>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61700>
 
-Theodore Tso schrieb:
-> ==> git://repo.or.cz/git/spearce.git
->  * branch gitk -> spearce/gitk		(new)
->  * branch maint -> spearce/maint	1aa3d01..e7187e4
->  * branch master -> spearce/master	de61e42..7840ce6
->  * branch next -> spearce/next		895be02..2fe5433
->  + branch pu -> spearce/pu		89fa332...1e4c517
->  * branch todo -> spearce/todo		(new)
+I have a situation where software for a distribution is installed
+into a fake "prefix" and then moved to one of several potential
+places to be used by users. Given that the final location isn't
+static, i can't depend on builtin_exec_path. I'd really like users
+to be able to get started with git as easily as possible. With the
+current setup, they would have to create and maintain either an
+GIT_EXEC_PATH or an alias for including --exec-path, as well as a
+MANPATH and PERL5LIB. This seem like an unnessisary burden.
 
-> As far as the padding, it would be a pain to figure out how to make
-> the right hand column be padded so that it starts 3 spaces after the
-> longest "  * branch foo -> bar" line, but that would look the best.
+I'd like to make it so that git works equally well when it is ran
+via an absolute path (already partially works), relative path, or
+from the PATH. (in saying "equally well" i'm including perl commands
+and help commands)
 
-But this way it wouldn't be difficult at all:
+To do this i've had to make the following changes:
 
-==> git://repo.or.cz/git/spearce.git
-  * (new)              gitk -> spearce/gitk
-  * 1aa3d01..e7187e4   maint -> spearce/maint
-  * de61e42..7840ce6   master -> spearce/master
-  * 895be02..2fe5433   next -> spearce/next
-  + 89fa332...1e4c517  pu -> spearce/pu
-  * (new)              todo -> spearce/todo
+ + check PATH for the location of git
+ + the checking of argv[0] was restricted to absolute paths; remove
+   that restriction so it also works when called with a relative
+   path (eg ../../otheruser/usr/bin/git)
+ + try to guess and set the env for the typical relative locations for
+   MANPATH and PERL5LIB based off exec_path
 
-(I don't know where to put the label 'branch'.)
+Signed-off-by: Scott R Parish <srp@srparish.net>
+---
+ exec_cmd.c |   50 ++++++++++++++++++++++++++++++++++++++-
+ git.c      |   76 +++++++++++++++++++++++++++++++++++++++++------------------
+ 2 files changed, 102 insertions(+), 24 deletions(-)
 
-BTW, I like the ID ranges, too, and have used the information
-occasionally.
-
--- Hannes
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 9b74ed2..c6ecca9 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -13,19 +13,67 @@ void git_set_exec_path(const char *exec_path)
+ }
+ 
+ 
++/* Return the first path in PATH that git is found in or NULL if not found */
++char *git_path_from_env(void)
++{
++	const char *env_paths = getenv("PATH");
++	const char *git = "/git";
++	int git_len = strlen(git);
++	char *paths, *path, *colon, *git_path;
++	int path_len;
++	struct stat st;
++
++	if (!env_paths)
++		return NULL;
++
++	path_len = strlen(env_paths);
++	path = paths = xmalloc(path_len + 1);
++	memcpy(paths, env_paths, path_len + 1);
++
++	while ((char *)1 != path) {
++		if ((colon = strchr(path, ':')))
++		    *colon = 0;
++
++		path_len = strlen(path);
++		git_path = xmalloc(path_len + git_len + 1);
++		memcpy(git_path, path, path_len);
++		memcpy(git_path + path_len, git, git_len + 1);
++
++		if (!stat(git_path, &st)) { /* found */
++			free(paths);
++			git_path[path_len] = 0;
++			return git_path;
++		}
++
++		free(git_path);
++		path = colon + 1;
++	}
++
++	free(paths);
++	return NULL;
++}
++
++
+ /* Returns the highest-priority, location to look for git programs. */
+ const char *git_exec_path(void)
+ {
+-	const char *env;
++	const char *env, *path;
+ 
+ 	if (current_exec_path)
+ 		return current_exec_path;
+ 
+ 	env = getenv(EXEC_PATH_ENVIRONMENT);
+ 	if (env && *env) {
++		current_exec_path = env;
+ 		return env;
+ 	}
+ 
++	if ((path = git_path_from_env())) {
++		current_exec_path = path;
++		return path;
++	}
++
++	current_exec_path = builtin_exec_path;
+ 	return builtin_exec_path;
+ }
+ 
+diff --git a/git.c b/git.c
+index 9eaca1d..252ee7c 100644
+--- a/git.c
++++ b/git.c
+@@ -6,26 +6,56 @@
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
+ 
+-static void prepend_to_path(const char *dir, int len)
++static void prepend_to_env(const char *env, const char *basedir,
++			   const char *subdir, const char *env_default)
+ {
+-	const char *old_path = getenv("PATH");
+-	char *path;
+-	int path_len = len;
+-
+-	if (!old_path)
+-		old_path = "/usr/local/bin:/usr/bin:/bin";
+-
+-	path_len = len + strlen(old_path) + 1;
+-
+-	path = xmalloc(path_len + 1);
++	const char *old = getenv(env);
++	int basedir_len = strlen(basedir);
++	int subdir_len = strlen(subdir);
++	char *new;
++	int old_len;
++	
++	if (!old)
++		old = env_default;
++
++	old_len = strlen(old);
++
++	new = xmalloc(basedir_len + subdir_len + old_len + 1);
++	
++	memcpy(new, basedir, basedir_len);
++	memcpy(new + basedir_len, subdir, subdir_len);
++	memcpy(new + basedir_len + subdir_len, old, old_len + 1);
++	
++	if (setenv(env, new, 1))
++		fprintf(stderr, "Setenv failed: %s\n", strerror(errno));
++
++	free(new);
++}
+ 
+-	memcpy(path, dir, len);
+-	path[len] = ':';
+-	memcpy(path + len + 1, old_path, path_len - len);
++static void prepend_to_envs(const char *dir, int len)
++{
++	char *slash;
++	char *basedir;
++
++	/* basedir is dir with "/bin" stripped off */
++	basedir = xmalloc(len + 1);
++	memcpy(basedir, dir, len + 1);
++	
++	if ((slash = strrchr(basedir, '/'))) {
++		*slash = 0;
++		while (slash == basedir + --len) /* found trailing slash */
++			if ((slash = strrchr(basedir, '/')))
++				*slash = 0;
++	}
+ 
+-	setenv("PATH", path, 1);
++	prepend_to_env("PATH", basedir, "/bin:",
++		       "/usr/local/bin:/usr/bin:/bin");
++	prepend_to_env("MANPATH", basedir, "/share/man:",
++		       "/usr/local/share/man:/usr/share/man");
++	prepend_to_env("PERL5LIB", basedir, "/lib/perl5:",
++		       "/usr/lib/perl5");
+ 
+-	free(path);
++	free(basedir);
+ }
+ 
+ static int handle_options(const char*** argv, int* argc, int* envchanged)
+@@ -414,8 +444,7 @@ int main(int argc, const char **argv)
+ 	 */
+ 	if (slash) {
+ 		*slash++ = 0;
+-		if (*cmd == '/')
+-			exec_path = cmd;
++		exec_path = cmd;
+ 		cmd = slash;
+ 	}
+ 
+@@ -453,14 +482,15 @@ int main(int argc, const char **argv)
+ 	/*
+ 	 * We execute external git command via execv_git_cmd(),
+ 	 * which looks at "--exec-path" option, GIT_EXEC_PATH
+-	 * environment, and $(gitexecdir) in Makefile while built,
+-	 * in this order.  For scripted commands, we prepend
+-	 * the value of the exec_path variable to the PATH.
++	 * environment, PATH environment, and $(gitexecdir) in
++	 * Makefile while built, in this order.  For scripted
++	 * commands, we prepend the value of the exec_path
++	 * variable to the PATH.
+ 	 */
+ 	if (exec_path)
+-		prepend_to_path(exec_path, strlen(exec_path));
++		prepend_to_envs(exec_path, strlen(exec_path));
+ 	exec_path = git_exec_path();
+-	prepend_to_path(exec_path, strlen(exec_path));
++	prepend_to_envs(exec_path, strlen(exec_path));
+ 
+ 	while (1) {
+ 		/* See if it's an internal command */
+-- 
+1.5.3.4.206.g58ba4-dirty
