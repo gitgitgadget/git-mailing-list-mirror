@@ -1,65 +1,80 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
-Date: Thu, 18 Oct 2007 23:27:53 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710182325300.19446@xanadu.home>
-References: <20071019004527.GA12930@spearce.org>
- <20071019021255.GD3290@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0710182238470.19446@xanadu.home>
- <20071019025913.GA9227@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0710182306300.19446@xanadu.home>
- <20071019031535.GB9274@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
+	objects'
+Date: Thu, 18 Oct 2007 23:32:28 -0400
+Message-ID: <20071019033228.GA10697@coredump.intra.peff.net>
+References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182251110.19446@xanadu.home> <20071019030749.GA9274@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=us-ascii
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:28:06 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:32:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiiWs-0000EK-8a
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:28:06 +0200
+	id 1IiibL-0000k8-J0
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934609AbXJSD14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:27:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965577AbXJSD1z
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:27:55 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:54011 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934587AbXJSD1x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:27:53 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
- with ESMTP id <0JQ5000U82YHDF50@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 18 Oct 2007 23:27:53 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019031535.GB9274@coredump.intra.peff.net>
+	id S933923AbXJSDcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:32:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760588AbXJSDcb
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:32:31 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3447 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760580AbXJSDca (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 23:32:30 -0400
+Received: (qmail 8573 invoked by uid 111); 19 Oct 2007 03:32:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:32:29 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:32:28 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61632>
 
-On Thu, 18 Oct 2007, Jeff King wrote:
+On Thu, Oct 18, 2007 at 11:24:41PM -0400, Nicolas Pitre wrote:
 
-> On Thu, Oct 18, 2007 at 11:11:26PM -0400, Nicolas Pitre wrote:
-> 
-> > I think we might sidestep the issue entirely by remaining somewhat vague 
-> > and simply saying "compressing objects" for that phase.  This is the 
-> > part responsible for the reduction of a Git repository from 3GB down to 
-> > 200MB anyway.
-> 
-> OK. I liked it a little more specific, but perhaps users really don't
-> care what's going on. And it seems there is some support of simply
-> "compressing", so that's probably reasonable.
-> 
-> I think that is going to make the statistics line doubly confusing,
-> though, since we never even use the word "delta" (or any wacky
-> verbifications based on it), and then they get a line about numbers of
-> new and reused deltas.
+> Frankly, I think effort should be spent on the refs update display at 
+> this point.  Something that looks like:
 
-Well, at least the statistics are real, and we're not inventing anything 
-here.
+Also agreed.
 
+> * refs/heads/origin: fast forward to branch 'master' of git://gi
+> t.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+>   old..new: 66ffb04..4fa4d23
+>
+> [...]
+>
+> You usually get long lines that gets wrapped, so that means 3 lines of 
+> screen space for one updated branches.  Is the "66ffb04..4fa4d23" 
+> information really useful?  Might someone ever care?
 
-Nicolas
+I have used it occasionally when tracking repos to see what new commits
+have happened. Usually I use a separate branch to mark "what I've seen"
+(i.e., fetch, gitk origin..master, pull), but if it's a branch that I'm
+not actively tracking, the display is useful.
+
+What is really useless in that line is the fact that _every_ ref is
+going to have the name of the remote, even though we only support
+fetching from one remote at a time. Perhaps something like:
+
+Fetching from git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+ * refs/heads/origin: fast forward to branch 'master'
+
+although that URL is almost a line by itself. :)
+
+Also, why do we abbreviate "refs/heads/master" from the remote, but we
+don't abbreviate refs/heads/origin for the local? Maybe something like:
+
+  * local heads/origin -> remote heads/master (fast forward)
+
+or for separate remote
+
+  * local remotes/origin/master -> remote heads/master (fast forward)
+
+Thoughts?
+
+-Peff
