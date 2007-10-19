@@ -1,95 +1,75 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 2/2] Documentation/git-gc: improve description of --auto
-Date: Thu, 18 Oct 2007 22:29:09 -0400
-Message-ID: <20071019022909.GZ14735@spearce.org>
-References: <20071019020510.GB7711@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Steven Grimm <koreth@midwinter.com>,
-	Brian Gernhardt <benji@silverinsanity.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 04:29:31 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: Proposed git mv behavioral change
+Date: Thu, 18 Oct 2007 22:29:28 -0400
+Message-ID: <A2491F60-A00E-412A-8389-1C9EB5EDFCEF@mit.edu>
+References: <c594999b2337.2337c594999b@nyroc.rr.com> <D2EAAC6D-567D-454A-AECA-C90FA2C369AE@mit.edu> <20071019015715.GW14735@spearce.org> <7F18F52A-3D57-4510-B71B-69D43480126E@MIT.EDU> <20071019021618.GE3290@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 04:29:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iihc7-0001CI-PZ
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 04:29:28 +0200
+	id 1IihcV-0001G5-N3
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 04:29:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760000AbXJSC3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 22:29:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760614AbXJSC3R
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 22:29:17 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:43369 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758959AbXJSC3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 22:29:16 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iihbb-0008SJ-Ez; Thu, 18 Oct 2007 22:28:55 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3A1FF20FBAE; Thu, 18 Oct 2007 22:29:09 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071019020510.GB7711@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1761378AbXJSC3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 22:29:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760888AbXJSC3k
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 22:29:40 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:61050 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760763AbXJSC3j (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 22:29:39 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9J2TUjI004693;
+	Thu, 18 Oct 2007 22:29:30 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9J2TTK6026549
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Oct 2007 22:29:30 -0400 (EDT)
+In-Reply-To: <20071019021618.GE3290@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61609>
 
-Jeff King <peff@peff.net> wrote:
-> It is a little bit odd that there is so much low-level detail in the
-> '--auto' description versus the rest of the page. But I think it reads
-> OK. Also note that the previous incarnation (and my changes) use the
-> `foo` form to monospace arguments, while the rest of the page uses 'foo'
-> (which actually means emphasis). I think the former is more correct, but
-> asciidoc renders the latter much more pleasantly in manpages. I will see
-> if I can tweak asciidoc to make this look better.
 
-I like this a lot better than what was there before.  Nice work.
-I have no real opinion on the asciidoc syntax.
+On 18 Oct 2007, at 10:15:29 PM, Shawn O. Pearce wrote:
+> git-add amounts to either inserting a new path->stat/sha1 entry
+> in the index, or updating an existing entry with new stat/sha1
+> information.
+>
+> git-rm amounts to removing a path->stat/sha1 entry from the index.
+> It's just gone once the git-rm is completed.  As if it was never
+> there to begin with.
+>
+> A git-commit (really git-write-tree but same difference to the
+> end-user) stores whatever is in the index as the gospel truth for
+> how that commit's files should appear.
 
-I personally prefer to read commands in the source as `foo` and
-feel that asciidoc should just format it correctly for the backend.
-If it isn't then we should try to work with the asciidoc folks to
-get it right...
+Ah. Basically my 'pseudo-code' is correct, but redundant.
 
->  --auto::
-> -	With this option, `git gc` checks if there are too many
-> -	loose objects in the repository and runs
-> -	gitlink:git-repack[1] with `-d -l` option to pack them.
-> -	The threshold for loose objects is set with `gc.auto` configuration
-> -	variable, and can be disabled by setting it to 0.  Some
-> -	Porcelain commands use this after they perform operation
-> -	that could create many loose objects automatically.
-> -	Additionally, when there are too many packs are present,
-> -	they are consolidated into one larger pack by running
-> -	the `git-repack` command with `-A` option.  The
-> -	threshold for number of packs is set with
-> -	`gc.autopacklimit` configuration variable.
-> +	With this option, `git gc` checks whether any housekeeping is
-> +	required; if not, it exits without performing any work.
-> +	Some git commands run `git gc --auto` after performing
-> +	operations that could create many loose objects.
-> ++
-> +Housekeeping is required if there are too many loose objects or
-> +too many packs in the repository. If the number of loose objects
-> +exceeds the value of the `gc.auto` configuration variable, then
-> +all loose objects are combined into a single pack using
-> +`git-repack -d -l`.  Setting the value of `gc.auto` to 0
-> +disables automatic packing of loose objects.
-> ++
-> +If the number of packs exceeds the value of `gc.autopacklimit`,
-> +then existing packs (except those marked with a `.keep` file)
-> +are consolidated into a single pack by using the `-A` option of
-> +`git-repack`. Setting `gc.autopacklimit` to 0 disables
-> +automatic consolidation of packs.
 
--- 
-Shawn.
+On 18 Oct 2007, at 10:16:18 PM, Jeff King wrote:
+> Eh? The changes will make it into history when you commit. Or  
+> perhaps I
+> don't understand your question. Can you rephrase it?
+
+I misunderstood the (lack) of details.
+
+On 18 Oct 2007, at 10:15:29 PM, Shawn O. Pearce wrote:
+> But its all really as simple as it seems.
+
+It's about time I read more thoroughly through the manual!
+
+Thanks.
