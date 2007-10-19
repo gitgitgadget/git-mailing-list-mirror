@@ -1,77 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
-	objects'
-Date: Thu, 18 Oct 2007 22:34:25 -0400
-Message-ID: <20071019023425.GB8298@coredump.intra.peff.net>
-References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <20071019022154.GY14735@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
+Date: Thu, 18 Oct 2007 22:34:26 -0400
+Message-ID: <20071019023426.GA14735@spearce.org>
+References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <47181430.2080907@vilain.net> <ee77f5c20710181924j7c538468r75f0f17968af7b01@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 04:34:40 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Sam Vilain <sam@vilain.net>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 04:34:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iihh9-0001yg-Uw
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 04:34:40 +0200
+	id 1IihhN-00020j-5M
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 04:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763575AbXJSCe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 22:34:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763538AbXJSCe2
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 22:34:28 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2206 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763569AbXJSCe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 22:34:27 -0400
-Received: (qmail 7724 invoked by uid 111); 19 Oct 2007 02:34:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 22:34:26 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 22:34:25 -0400
+	id S1763779AbXJSCeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 22:34:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763754AbXJSCeh
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 22:34:37 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:43517 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763538AbXJSCeg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 22:34:36 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Iihgi-00008z-WA; Thu, 18 Oct 2007 22:34:13 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id C83C920FBAE; Thu, 18 Oct 2007 22:34:26 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071019022154.GY14735@spearce.org>
+In-Reply-To: <ee77f5c20710181924j7c538468r75f0f17968af7b01@mail.gmail.com>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61611>
 
-On Thu, Oct 18, 2007 at 10:21:54PM -0400, Shawn O. Pearce wrote:
+David Symonds <dsymonds@gmail.com> wrote:
+> On 19/10/2007, Sam Vilain <sam@vilain.net> wrote:
+> > Jeff King wrote:
+> > > Boo. I _like_ "deltifying". Sure, it's probably not in the dictionary,
+> > > but that's how languages change: saying "delta compressing" all the time
+> > > will get awkward, so people invent a new word using existing rules to
+> > > explain a common phenomenon.
+> >
+> > This is not very considerate to non-native speakers, though, who might
+> > not grasp the neogolism.
+> >
+> > Perhaps just "compressing" if it gets awkward.
+> 
+> Forward thinking, that's probably most sensible, since git 4.7 might
+> not use delta compression, but maybe wavelet compression, or other
+> scheme entirely. Using deltas is an implementation detail, after all.
 
-> My eyes have gotten used to "Deltifying" but I have to admit that
-> in my early Git days I thought it looked damn odd.  Today I'm far
-> too familiar with Git to really notice this as a problem now.
+Heh.  I just remembered that my packv4 topic had a phase it called
+"Dictifying objects".  Which ran before "Deltifying objects".  It was
+just another form of compression, but it was also timeconsuming
+and an entirely different loop so it got its own progress meter.
 
-OK, I will confess I found it a little odd at first, but I think it's a
-straightforward and playful extension of the language, which is
-something I like. But you know, we have the corporate git customers to
-think about these days. ;)
+I'm leaning to making it just say "Compressing objects".  Simple,
+to the point, reasonably describes the action, and most people will
+understand what it means: "Oh, time to go get coffee if that number
+there is reeeealy big..."  :-)
 
-> I really don't have an opinion either way.  Actually I think the
-> entire progress system of git-pack-objects should be reduced even
-> further so that users aren't exposed to the internal phases we
-> are going through.  Most of them just don't care.  They just
-> want to know when its going to be done[*1*].
-
-On a similar note, some complaints with progress meters, even after
-recent patches:
-  - When fetching, one progress meter says "Indexing" which, while
-    technically true, is almost certainly blocking on "Downloading". In
-    fact, it is not clear from the existing messages exactly _when_ we
-    are downloading, and when we are just computing, which is something
-    I think a user might want to know. Objections to changing this
-    (though perhaps index-pack will need to be told when it is
-    downloading and when it is just indexing)? Objections to a
-    throughput indicator?
-  - Running git-gc, we now get something like:
-      Counting objects: 62317, done.
-      Deltifying objects: 100% (18042/18042), done.
-      Writing objects: 100% (62317/62317), done.
-      Total 62317 (delta 43861), reused 61404 (delta 43036)
-      Pack pack-32f8ac40c1a5ec146e45c657cb16f53fdd354095 created.
-      Removing unused objects 100%...
-      Done.
-    Can we get rid of total statistics (I think this is useful for some
-    power users, but perhaps there should be a verbosity level), the
-    name of the pack file (same deal), and the totally useless "Done."?
-
--Peff
+-- 
+Shawn.
