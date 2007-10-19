@@ -1,106 +1,61 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 04/14] Use run_command() to spawn external diff programs instead of fork/exec.
-Date: Fri, 19 Oct 2007 21:47:56 +0200
-Message-ID: <1192823286-9654-5-git-send-email-johannes.sixt@telecom.at>
-References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 0/14 resend] fork/exec removal series
+Date: Fri, 19 Oct 2007 21:47:52 +0200
+Message-ID: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:29 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IixpY-0002gS-So
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:25 +0200
+	id 1IixpW-0002gS-Oh
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406AbXJSTsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 15:48:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXJSTsP
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:15 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:44494 "EHLO
+	id S1765930AbXJSTsK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:48:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765363AbXJSTsJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:09 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44478 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764773AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1764582AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 19 Oct 2007 15:48:09 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id B9B8D97D4B;
-	Fri, 19 Oct 2007 21:48:07 +0200 (CEST)
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id C1D0A97B0D;
+	Fri, 19 Oct 2007 21:48:06 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.4.315.g2ce38
-In-Reply-To: <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61747>
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
----
- diff.c |   38 +++-----------------------------------
- 1 files changed, 3 insertions(+), 35 deletions(-)
+Here it is again, a series of patches that removes a number fork/exec pairs.
 
-diff --git a/diff.c b/diff.c
-index 6648e01..30b7544 100644
---- a/diff.c
-+++ b/diff.c
-@@ -9,6 +9,7 @@
- #include "xdiff-interface.h"
- #include "color.h"
- #include "attr.h"
-+#include "run-command.h"
- 
- #ifdef NO_FAST_WORKING_DIRECTORY
- #define FAST_WORKING_DIRECTORY 0
-@@ -1748,40 +1749,6 @@ static void remove_tempfile_on_signal(int signo)
- 	raise(signo);
- }
- 
--static int spawn_prog(const char *pgm, const char **arg)
--{
--	pid_t pid;
--	int status;
--
--	fflush(NULL);
--	pid = fork();
--	if (pid < 0)
--		die("unable to fork");
--	if (!pid) {
--		execvp(pgm, (char *const*) arg);
--		exit(255);
--	}
--
--	while (waitpid(pid, &status, 0) < 0) {
--		if (errno == EINTR)
--			continue;
--		return -1;
--	}
--
--	/* Earlier we did not check the exit status because
--	 * diff exits non-zero if files are different, and
--	 * we are not interested in knowing that.  It was a
--	 * mistake which made it harder to quit a diff-*
--	 * session that uses the git-apply-patch-script as
--	 * the GIT_EXTERNAL_DIFF.  A custom GIT_EXTERNAL_DIFF
--	 * should also exit non-zero only when it wants to
--	 * abort the entire diff-* session.
--	 */
--	if (WIFEXITED(status) && !WEXITSTATUS(status))
--		return 0;
--	return -1;
--}
--
- /* An external diff command takes:
-  *
-  * diff-cmd name infile1 infile1-sha1 infile1-mode \
-@@ -1834,7 +1801,8 @@ static void run_external_diff(const char *pgm,
- 		*arg++ = name;
- 	}
- 	*arg = NULL;
--	retval = spawn_prog(pgm, spawn_arg);
-+	fflush(NULL);
-+	retval = run_command_v_opt(spawn_arg, 0);
- 	remove_tempfile();
- 	if (retval) {
- 		fprintf(stderr, "external diff died, stopping at %s.\n", name);
--- 
-1.5.3.4.315.g2ce38
+The series goes on top of the builtin-fetch pack topic, specifically,
+cfa5b2b7f (Avoid scary errors...) and obsoletes q/jsi/no-fork of Lars'
+patch queue.
+
+The difference compared to the last time I sent are in:
+
+[02/14] Use start_command() in git_connect() instead of explicit fork/exec.
+[13/14] Avoid a dup2(2) in apply_filter() - start_command() can do it for us.
+[14/14] Use the asyncronous function infrastructure to run the content filter.
+
+which had conflicts with the strbuf series.
+
+ builtin-archive.c     |    8 +-
+ builtin-fetch-pack.c  |  101 +++++++++----------------
+ cache.h               |    4 +-
+ connect.c             |  128 +++++++++++++++----------------
+ convert.c             |   88 ++++++++--------------
+ diff.c                |   38 +---------
+ peek-remote.c         |    8 +-
+ run-command.c         |   78 +++++++++++++++++---
+ run-command.h         |   23 ++++++
+ send-pack.c           |    8 +-
+ t/t0021-conversion.sh |    7 ++-
+ transport.c           |    9 +--
+ upload-pack.c         |  199 ++++++++++++++++++++++---------------------------
+ 13 files changed, 332 insertions(+), 367 deletions(-)
+
+-- Hannes
