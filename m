@@ -1,89 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: Subversion developer: svn is for dumb people
-Date: Fri, 19 Oct 2007 15:17:05 +0200 (CEST)
-Message-ID: <Pine.LNX.4.64.0710191514190.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <47176CE0.7030609@midwinter.com> <20071019113447.GC4404@artemis.corp>
+Date: Fri, 19 Oct 2007 15:19:34 +0200
+Message-ID: <20071019131934.GD4404@artemis.corp>
+References: <47176CE0.7030609@midwinter.com> <20071019113447.GC4404@artemis.corp> <Pine.LNX.4.64.0710191514190.16728@wbgn129.biozentrum.uni-wuerzburg.de>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="-1148944103-357464387-1192799825=:16728"
+Content-Type: multipart/signed; boundary="BRE3mIcgqKzpedwo";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Steven Grimm <koreth@midwinter.com>, 'git' <git@vger.kernel.org>
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 15:17:28 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 19 15:19:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iirj7-0005ZH-W7
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:17:22 +0200
+	id 1IirlU-00060x-AM
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:19:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756134AbXJSNRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 09:17:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755499AbXJSNRJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:17:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42391 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753021AbXJSNRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 09:17:08 -0400
-Received: (qmail invoked by alias); 19 Oct 2007 13:17:06 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp001) with SMTP; 19 Oct 2007 15:17:06 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+F8bYA2Z+FKdFeu0aFlamKlr/2ARcTdpW3M6not1
-	UNL6WmP4HNBHJo
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20071019113447.GC4404@artemis.corp>
-X-Y-GMX-Trusted: 0
+	id S1757513AbXJSNTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 09:19:37 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757264AbXJSNTh
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:19:37 -0400
+Received: from pan.madism.org ([88.191.52.104]:42372 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756172AbXJSNTg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 09:19:36 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 2037E25D33;
+	Fri, 19 Oct 2007 15:19:34 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 6A0CD3577AD; Fri, 19 Oct 2007 15:19:34 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steven Grimm <koreth@midwinter.com>, 'git' <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710191514190.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61704>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
----1148944103-357464387-1192799825=:16728
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+--BRE3mIcgqKzpedwo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Oct 19, 2007 at 01:17:05PM +0000, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Fri, 19 Oct 2007, Pierre Habouzit wrote:
+>=20
+> > On Thu, Oct 18, 2007 at 02:25:36PM +0000, Steven Grimm wrote:
+> > > Thought folks here might get a kick out of this:
+> > >=20
+> > > http://blog.red-bean.com/sussman/?p=3D79
+> > >=20
+> > > Okay, my summary is slightly facetious, but that's basically the gist=
+=20
+> > > of what he's saying: you should choose Subversion rather than a DVCS=
+=20
+> > > because most of your users won't be smart enough to use the better=20
+> > > tool.
+> > >=20
+> > > I can't say he's completely wrong, especially about the 20/80% idea=
+=20
+> > > (though I think "20%" is generous), but some of his specific argument=
+s=20
+> > > about DVCS are on the bogus side. "Centralized systems encourage code=
+=20
+> > > reviews," for one -- I challenge him to find a project with a more=20
+> > > pervasive and effective code-reviewing culture than the git project.
+> >=20
+> >   Your argument is also bogus.
+> >=20
+> >   IMNSHO, peer reviewing has nothing to do with git, svn, or $SCM. It's=
+=20
+> > a social pattern. There are people that do it because they understand=
+=20
+> > it's a good and necessary sound thing to do, and there are the others.=
+=20
+> > Guess what, it has a lot to do with the 20%/80% line (that I would have=
+=20
+> > more described as the 2/98 but well=E2=80=A6).
+>=20
+> I tend to disagree.  Git at least _enables_ you to have the=20
+> one-committer-per-repository scheme, it even _encourages_ it to a certain=
+=20
+> extent.
+>=20
+> And once you go that route, it is easy to see that the committer says "I=
+=20
+> will not let that _crap_ enter my repository."  Bingo, peer review.
+>=20
+> Compare that to a centralised repository, where more often than not, the=
+=20
+> administrator is not even part of the developer community!  It is much=20
+> easier not to feel too responsible for the code you are committing there.
 
-On Fri, 19 Oct 2007, Pierre Habouzit wrote:
+  I agree, that's why I said that git made it easier. WHat I pretend to
+be wrong is to say that a SCM will make people review code or not. Git
+merely help people that want to always review code to be completely sure
+some review has happened before the code is merged. But nothing in git
+forbids you to use the big fat <centralized repo with everyone having
+push access to it>-mode.
 
-> On Thu, Oct 18, 2007 at 02:25:36PM +0000, Steven Grimm wrote:
-> > Thought folks here might get a kick out of this:
-> > 
-> > http://blog.red-bean.com/sussman/?p=79
-> > 
-> > Okay, my summary is slightly facetious, but that's basically the gist 
-> > of what he's saying: you should choose Subversion rather than a DVCS 
-> > because most of your users won't be smart enough to use the better 
-> > tool.
-> > 
-> > I can't say he's completely wrong, especially about the 20/80% idea 
-> > (though I think "20%" is generous), but some of his specific arguments 
-> > about DVCS are on the bogus side. "Centralized systems encourage code 
-> > reviews," for one -- I challenge him to find a project with a more 
-> > pervasive and effective code-reviewing culture than the git project.
-> 
->   Your argument is also bogus.
-> 
->   IMNSHO, peer reviewing has nothing to do with git, svn, or $SCM. It's 
-> a social pattern. There are people that do it because they understand 
-> it's a good and necessary sound thing to do, and there are the others. 
-> Guess what, it has a lot to do with the 20%/80% line (that I would have 
-> more described as the 2/98 but well…).
 
-I tend to disagree.  Git at least _enables_ you to have the 
-one-committer-per-repository scheme, it even _encourages_ it to a certain 
-extent.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-And once you go that route, it is easy to see that the committer says "I 
-will not let that _crap_ enter my repository."  Bingo, peer review.
+--BRE3mIcgqKzpedwo
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Compare that to a centralised repository, where more often than not, the 
-administrator is not even part of the developer community!  It is much 
-easier not to feel too responsible for the code you are committing there.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Ciao,
-Dscho
+iD8DBQBHGK7mvGr7W6HudhwRAiBcAJwPCinYEb+UYQkySXVZ3wMaFydUsQCgpop2
+R21K4xt9+oY6VyGI52M5v2Q=
+=4KyL
+-----END PGP SIGNATURE-----
 
----1148944103-357464387-1192799825=:16728--
+--BRE3mIcgqKzpedwo--
