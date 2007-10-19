@@ -1,80 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
-	objects'
-Date: Thu, 18 Oct 2007 23:32:28 -0400
-Message-ID: <20071019033228.GA10697@coredump.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
+Date: Thu, 18 Oct 2007 23:33:27 -0400
+Message-ID: <20071019033327.GF14735@spearce.org>
 References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182251110.19446@xanadu.home> <20071019030749.GA9274@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
 To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:32:44 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:33:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiibL-0000k8-J0
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:32:44 +0200
+	id 1IiicN-0000tE-5S
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933923AbXJSDcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:32:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760588AbXJSDcb
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:32:31 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3447 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760580AbXJSDca (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:32:30 -0400
-Received: (qmail 8573 invoked by uid 111); 19 Oct 2007 03:32:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:32:29 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:32:28 -0400
+	id S1758654AbXJSDdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758284AbXJSDdg
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:33:36 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44976 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758280AbXJSDdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 23:33:35 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Iiibp-0002HT-4h; Thu, 18 Oct 2007 23:33:13 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 6571020FBAE; Thu, 18 Oct 2007 23:33:27 -0400 (EDT)
 Content-Disposition: inline
 In-Reply-To: <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61633>
 
-On Thu, Oct 18, 2007 at 11:24:41PM -0400, Nicolas Pitre wrote:
-
+Nicolas Pitre <nico@cam.org> wrote:
 > Frankly, I think effort should be spent on the refs update display at 
 > this point.  Something that looks like:
-
-Also agreed.
-
+> 
 > * refs/heads/origin: fast forward to branch 'master' of git://gi
 > t.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
 >   old..new: 66ffb04..4fa4d23
->
-> [...]
->
+> 
+> [ note that I arbitrarily cut the long line before the 80th column to 
+>   show the effect within an email ]
+> 
 > You usually get long lines that gets wrapped, so that means 3 lines of 
 > screen space for one updated branches.  Is the "66ffb04..4fa4d23" 
 > information really useful?  Might someone ever care?
 
-I have used it occasionally when tracking repos to see what new commits
-have happened. Usually I use a separate branch to mark "what I've seen"
-(i.e., fetch, gitk origin..master, pull), but if it's a branch that I'm
-not actively tracking, the display is useful.
+The reason its formatted the way it is today is someone can grab
+that line into a copy-paste buffer and throw it onto a "git-log"
+or "gitk" command line with ease to see what new stuff has come in.
 
-What is really useless in that line is the fact that _every_ ref is
-going to have the name of the remote, even though we only support
-fetching from one remote at a time. Perhaps something like:
+Me, I just use the reflog if I care (`origin@{1}..origin`) to see
+what a fetch changed in the tracking branch.
 
-Fetching from git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
- * refs/heads/origin: fast forward to branch 'master'
+However I *don't* need the remote branch name or the remote URL,
+especially if we are storing it into a tracking branch.  That's most
+likely coming from a configured remote that the user fetches from
+frequently.  I don't think about Linus' URL, I think about the fact
+that in my linux-2.6 repository his directory is my origin remote.
 
-although that URL is almost a line by itself. :)
+Maybe something like this would be more useful:
 
-Also, why do we abbreviate "refs/heads/master" from the remote, but we
-don't abbreviate refs/heads/origin for the local? Maybe something like:
+ * origin: fast-forwarded: 66ffb04..4fa4d23
 
-  * local heads/origin -> remote heads/master (fast forward)
+Or if you are using refs/remotes style tracking branches:
 
-or for separate remote
+ * origin/master: fast-forwarded: 66ffb04..4fa4d23
+ * origin/pu: forcing update: 66ffb04..4fa4d23
 
-  * local remotes/origin/master -> remote heads/master (fast forward)
+Too terse?  Yea, probably.  But it is a whole lot shorter.
 
-Thoughts?
 
--Peff
+My other pet peeve here is the display from send-pack and
+receive-pack when you push a ref.  Hello?
+
+  updating 'refs/heads/master'
+    from de61e42b539ffbd28d2a2ba827bb0eb79767057b
+    to   d7e56dbc4f60f6bd238e8612783541d89f006fb7
+  ...
+  refs/heads/master: de61e42b539ffbd28d2a2ba827bb0eb79767057b -> d7e56dbc4f60f6bd238e8612783541d89f006fb7
+
+That's like 4 too many SHA-1 strings for the average user.
+
+-- 
+Shawn.
