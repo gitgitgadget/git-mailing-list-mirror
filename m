@@ -1,73 +1,68 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: Proposed git mv behavioral change
-Date: Fri, 19 Oct 2007 11:57:22 -0400
-Message-ID: <9E5BD9E5-9027-4F92-8E32-BF78BA25321C@MIT.EDU>
-References: <c594999b2337.2337c594999b@nyroc.rr.com> <D2EAAC6D-567D-454A-AECA-C90FA2C369AE@mit.edu> <20071019015715.GW14735@spearce.org> <7F18F52A-3D57-4510-B71B-69D43480126E@MIT.EDU> <20071019021618.GE3290@coredump.intra.peff.net> <A2491F60-A00E-412A-8389-1C9EB5EDFCEF@mit.edu> <28B30BAE-9482-4219-924B-F0EDFB2936FB@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 17:57:44 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 12:12:41 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710191211210.19446@xanadu.home>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+ <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+ <20071019073938.GN14735@spearce.org> <4718D25A.7040109@midwinter.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 18:13:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiuEE-0003W2-9P
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 17:57:38 +0200
+	id 1IiuT3-0007JR-3t
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 18:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754891AbXJSP51 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 11:57:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754818AbXJSP51
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 11:57:27 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:43194 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754549AbXJSP50 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 11:57:26 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9JFvOr1001547;
-	Fri, 19 Oct 2007 11:57:24 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9JFvNxA019270
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Fri, 19 Oct 2007 11:57:24 -0400 (EDT)
-In-Reply-To: <28B30BAE-9482-4219-924B-F0EDFB2936FB@wincent.com>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1755344AbXJSQMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 12:12:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754760AbXJSQMn
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 12:12:43 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:46381 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753537AbXJSQMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 12:12:43 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JQ600H852D560E0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 12:12:42 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4718D25A.7040109@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61730>
+
+On Fri, 19 Oct 2007, Steven Grimm wrote:
+
+> On 19/10/2007, Jeff King <peff@peff.net> wrote:
+> > This makes the fetch output much more terse. It is likely to
+> > be very controversial. Here's an example of the new output:
+> >
+> > Indexing objects: 100% (1061/1061), done.
+> > Resolving deltas: 100% (638/638), done.
+> 
+> Those two lines are actually my beef with the fetch output. As a newbie, I had
+> no idea what "Indexing objects" actually meant. We have this thing called "the
+> index" in git so I would expect "Indexing objects" to have something to do
+> with that, but it doesn't seem to.
+> 
+> How about something more descriptive of the high-level operation that's going
+> on, along the lines of:
+> 
+> Gathering changes from remote: 100% (1061/1061), done.
+> Applying changes locally: 100% (638/638), done.
+
+This is even more wrong.
+
+Agreed, indexing objects might not be the best description.  It probably 
+will become "receiving objects" along with a bandwitth meter.
 
 
-On 19 Oct 2007, at 7:33:39 AM, Wincent Colaiuta wrote:
-
->> What you want to happen is the following:
->> 	
->> 	git show HEAD:A.txt > path/B.txt
->> 	git add path/B.txt
->> 	mv A.txt B.txt
->> 	git rm A.txt
->>
->> Is this correct?
->
-> Here you're copying the content of A.txt as it was in the last  
-> (HEAD) commit, but from what the poster said he wants the content  
-> of A.txt as it is staged in the index (that is, there may be staged  
-> but uncomitted changes).
->
->> Better:
->>
->>>  	mv A.txt path/B.txt
->>> 	Point the index entry for A.txt to path/B.txt
->
-> Yes, that is basically what he was asking for, as I read it.
-
-You're right.
-
-There is the subtlety in the first case that he's already staged  
-something.
+Nicolas
