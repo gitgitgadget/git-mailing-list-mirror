@@ -1,52 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-pack: respect '+' on wildcard refspecs
-Date: Fri, 19 Oct 2007 09:43:39 -0400
-Message-ID: <20071019134339.GA21852@coredump.intra.peff.net>
-References: <20071019090400.GA8944@coredump.intra.peff.net> <449c10960710190510y3af3ffa2ydb9ae4a01b5d480c@mail.gmail.com> <20071019122755.GA17002@coredump.intra.peff.net> <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] allow git to use the PATH for finding subcommands and
+ help	docs
+Date: Fri, 19 Oct 2007 15:21:12 +0200
+Message-ID: <4718AF48.9020607@viscovery.net>
+References: <20071019065931.GB1463@srparish.net> <47185DAF.7060809@viscovery.net> <20071019130402.GD1463@srparish.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Dan McGee <dan@archlinux.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 15:43:56 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Scott Parish <sRp@srparish.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 15:48:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iis8n-0002cs-Hu
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:43:54 +0200
+	id 1IisDP-0003iR-FE
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:48:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752981AbXJSNnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 09:43:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753377AbXJSNnm
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:43:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1940 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752981AbXJSNnm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 09:43:42 -0400
-Received: (qmail 12972 invoked by uid 111); 19 Oct 2007 13:43:40 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 19 Oct 2007 09:43:40 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Oct 2007 09:43:39 -0400
-Content-Disposition: inline
-In-Reply-To: <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com>
+	id S1759351AbXJSNs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 09:48:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758841AbXJSNs1
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:48:27 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:25268 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759361AbXJSNs1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 09:48:27 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IisCx-0001Iw-CK; Fri, 19 Oct 2007 15:48:11 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A208F546; Fri, 19 Oct 2007 15:21:12 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071019130402.GD1463@srparish.net>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61710>
 
-On Fri, Oct 19, 2007 at 08:38:06AM -0500, Dan McGee wrote:
+Scott Parish schrieb:
+> I have a situation where software for a distribution is installed
+> into a fake "prefix" and then moved to one of several potential
+> places to be used by users. Given that the final location isn't
+> static, i can't depend on builtin_exec_path. I'd really like users
+> to be able to get started with git as easily as possible. With the
+> current setup, they would have to create and maintain either an
+> GIT_EXEC_PATH or an alias for including --exec-path, as well as a
+> MANPATH and PERL5LIB. This seem like an unnessisary burden.
 
-> origin(junio)/master: 58ba4f6
-> origin(junio)/next: fe96ee67ec5840
-> spearce/master: 7840ce6cb24a9d
-> spearce/next: 2fe5433b416f0df
-> 
-> Can you let me know what commit you based the patch off of? I'm at
-> work for the next 8 hours or so, so I can't look in to this a whole
-> lot until tonight.
+Interesting. How does this compare to this 2-patch-series:
 
-It is based on Shawn's next, 2fe5433b. Are you sure you're not doing
-something silly like executing an older version of git that is in your
-PATH?
+http://repo.or.cz/w/git/mingw.git?a=commitdiff;h=e479ea2f911b8c70a269ba59372a4fef90f8907c
+http://repo.or.cz/w/git/mingw.git?a=commitdiff;h=00a4ff4f3f8ec7e6b3ac15456f00b22b03f438ae
 
--Peff
+which I had come up with to accomplish something very similar
+(on Windows). Your approach looks superior, but I hadn't gone
+into depths, yet.
+
+-- Hannes
