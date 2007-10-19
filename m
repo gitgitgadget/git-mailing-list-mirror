@@ -1,88 +1,77 @@
-From: Joakim Tjernlund <joakim.tjernlund@transmode.se>
-Subject: Re: git push bug?
-Date: Fri, 19 Oct 2007 16:47:35 +0200
-Organization: Transmode AB
-Message-ID: <1192805255.1875.25.camel@gentoo-jocke.transmode.se>
-References: <1192719040.9433.5.camel@gentoo-jocke.transmode.se>
-	 <0DAC53EF-021D-441C-9520-9795AAB6DE54@zib.de>
-	 <1192723269.9433.21.camel@gentoo-jocke.transmode.se>
-	 <Pine.LNX.4.64.0710181720010.25221@racer.site>
-	 <1192725116.4954.7.camel@gentoo-jocke.transmode.se>
-	 <Pine.LNX.4.64.0710182259190.25221@racer.site>
-Reply-To: joakim.tjernlund@transmode.se
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 10:52:57 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710191050090.19446@xanadu.home>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+ <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+ <20071019073938.GN14735@spearce.org>
+ <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+ <20071019113822.GB16726@thunk.org> <4718A3AB.7090301@viscovery.net>
+ <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
+ <8aa486160710190731v67626fd8wa94ba069a17f73ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 19 16:47:57 2007
+Content-Type: multipart/mixed; boundary="Boundary_(ID_Uf5z2ZlWY7xBan4ftt3EUQ)"
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Theodore Tso <tytso@thunk.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: =?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 16:53:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iit8i-000385-Ms
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:47:53 +0200
+	id 1IitE4-0004TV-D0
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760082AbXJSOrj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 10:47:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760004AbXJSOrj
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:47:39 -0400
-Received: from mail.transmode.se ([83.241.175.147]:48499 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759933AbXJSOri (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 10:47:38 -0400
-Received: mail.transmode.se 192.168.46.15 from 192.168.1.15 192.168.1.15 via HTTP with MS-WebStorage 6.0.6249
-Received: from gentoo-jocke by mail.transmode.se; 19 Oct 2007 16:47:36 +0200
-In-Reply-To: <Pine.LNX.4.64.0710182259190.25221@racer.site>
-X-Mailer: Evolution 2.10.3 
+	id S965531AbXJSOw7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 10:52:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965510AbXJSOw7
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:52:59 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:52517 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S965490AbXJSOw6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 10:52:58 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JQ500GE2YO9YSV0@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 10:52:57 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <8aa486160710190731v67626fd8wa94ba069a17f73ce@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61723>
 
-On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
-> 
-> > On Thu, 2007-10-18 at 17:21 +0100, Johannes Schindelin wrote:
-> > 
-> > > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
-> > > 
-> > > > Seems like it is a bit too easy to make mistakes here. Why can I 
-> > > > delete a branch with :linus but not create one with linus:linus?
-> > > 
-> > > I wonder why you bother with the colon at all.  Just
-> > > 
-> > > 	git push <remote> linus
-> > > 
-> > > and be done with it.  The colon is only there to play interesting 
-> > > games, not something as simple as "push this branch" or "push this 
-> > > tag".
-> > 
-> > First, I didn't know that I could do that. Secondly, I was also looking 
-> > do v2.6.23:linus refspecs
-> 
-> 
-> First, then our documentation could be better.  How?
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Well, it isn't clear to me how all this is supposed to work and
-what is bugs. Clearifying that would help.
+--Boundary_(ID_Uf5z2ZlWY7xBan4ftt3EUQ)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
-For instances I did a push with v2.6.23:refs/heads/linus and now
-I got a branch with the SHA1 of v2.6.23 tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d)
-in it. Makes gitk display that branch as "linus^{}".
+On Fri, 19 Oct 2007, Santi Béjar wrote:
 
+> I like it too. I would like to add some more descripton, because I
+> think for newbies the .. and ... can be overlooked. Something like:
 > 
-> Second, why not "git checkout -b linus v2.6.23 && git push origin linus"?
+> $ git fetch spearce
+> ...
+> URL: git://repo.or.cz/git/spearce.git
+>  * (new)              spearce/gitk: new branch 'gitk'
+>  * 1aa3d01..e7187e4   spearce/maint: fast forward to branch 'maint'
+>  * de61e42..7840ce6   spearce/master: fast forward to branch 'master'
+>  * 895be02..2fe5433   spearce/next: fast forward to branch 'next'
+>  + 89fa332...1e4c517  spearce/pu: forcing update to non-fast forward branch 'pu'
+>  * (new)              spearce/todo: new branch spearce/todo
 
-An extra checkout that takes time but works. Doesn't make the above
-"weiredness" go away though.
+Well, I don't like it as much.  First I don't think newbies will care 
+much more even if the type of update is spelled out verbosely.  Better 
+keep it short and add all the necessary information in the fetch man 
+page instead.
 
- Jocke
 
-> 
-> Ciao,
-> Dscho
-> 
-> 
+Nicolas
+
+--Boundary_(ID_Uf5z2ZlWY7xBan4ftt3EUQ)--
