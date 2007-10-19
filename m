@@ -1,65 +1,103 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: git stash apply usability issues
-Date: Fri, 19 Oct 2007 15:27:53 +0200
-Message-ID: <20071019132753.GA23765@diana.vm.bytemark.co.uk>
-References: <47171A21.9030003@viscovery.net> <20071019013156.GU14735@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: stash clear, was Re: git: avoiding merges, rebasing
+Date: Fri, 19 Oct 2007 15:37:37 +0200 (CEST)
+Message-ID: <Pine.LNX.4.64.0710191533490.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <200709301421.52192.bruno@clisp.org>
+	<200710020347.43733.bruno@clisp.org>
+	<4AD64749-F4A3-4A61-B1EE-D12523293661@lrde.epita.fr>
+	<200710021350.54625.bruno@clisp.org> <47023699.3080606@byu.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 15:28:41 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: bug-gnulib@gnu.org, Bruno Haible <bruno@clisp.org>, git@vger.kernel.org
+To: Eric Blake <ebb9@byu.net>
+X-From: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org Fri Oct 19 15:38:06 2007
+Return-path: <bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org>
+Envelope-to: gnu-bug-gnulib@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiru3-0007a4-7c
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:28:39 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757341AbXJSN22 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Oct 2007 09:28:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756134AbXJSN22
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:28:28 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2949 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755499AbXJSN21 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 09:28:27 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IirtJ-0006He-00; Fri, 19 Oct 2007 14:27:53 +0100
-Content-Disposition: inline
-In-Reply-To: <20071019013156.GU14735@spearce.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61705>
+	id 1Iis34-000184-F1
+	for gnu-bug-gnulib@m.gmane.org; Fri, 19 Oct 2007 15:37:58 +0200
+Received: from localhost ([127.0.0.1] helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1Iis2w-0004jl-VO
+	for gnu-bug-gnulib@m.gmane.org; Fri, 19 Oct 2007 09:37:50 -0400
+Received: from mailman by lists.gnu.org with tmda-scanned (Exim 4.43)
+	id 1Iis2q-0004jW-GK
+	for bug-gnulib@gnu.org; Fri, 19 Oct 2007 09:37:44 -0400
+Received: from exim by lists.gnu.org with spam-scanned (Exim 4.43)
+	id 1Iis2o-0004jD-U4
+	for bug-gnulib@gnu.org; Fri, 19 Oct 2007 09:37:44 -0400
+Received: from [199.232.76.173] (helo=monty-python.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1Iis2o-0004jA-Op
+	for bug-gnulib@gnu.org; Fri, 19 Oct 2007 09:37:42 -0400
+Received: from mail.gmx.net ([213.165.64.20])
+	by monty-python.gnu.org with smtp (Exim 4.60)
+	(envelope-from <Johannes.Schindelin@gmx.de>) id 1Iis2o-0003OJ-9F
+	for bug-gnulib@gnu.org; Fri, 19 Oct 2007 09:37:42 -0400
+Received: (qmail invoked by alias); 19 Oct 2007 13:37:40 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO
+	wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+	by mail.gmx.net (mp018) with SMTP; 19 Oct 2007 15:37:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+dJxZfU0CdhyW2GzH4/Q7R5gv46Ujp4za5Af8ahU
+	iLaI22S4v3deZL
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <47023699.3080606@byu.net>
+X-Y-GMX-Trusted: 0
+X-detected-kernel: by monty-python.gnu.org: Linux 2.6, seldom 2.4 (older, 4)
+X-BeenThere: bug-gnulib@gnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Gnulib discussion list <bug-gnulib.gnu.org>
+List-Unsubscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=unsubscribe>
+List-Archive: <http://lists.gnu.org/pipermail/bug-gnulib>
+List-Post: <mailto:bug-gnulib@gnu.org>
+List-Help: <mailto:bug-gnulib-request@gnu.org?subject=help>
+List-Subscribe: <http://lists.gnu.org/mailman/listinfo/bug-gnulib>,
+	<mailto:bug-gnulib-request@gnu.org?subject=subscribe>
+Sender: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Errors-To: bug-gnulib-bounces+gnu-bug-gnulib=m.gmane.org@gnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61706>
 
-On 2007-10-18 21:31:56 -0400, Shawn O. Pearce wrote:
+Hi,
 
-> Johannes Sixt <j.sixt@viscovery.net> wrote:
+On Tue, 2 Oct 2007, Eric Blake wrote:
 
-> > (2) when 'git stash apply' runs merge-recursive, it treats the
-> > current state as 'ours' and the stash as 'theirs'. IMHO it should
-> > be the other way round: I have stashed away changes to a binary
-> > file. Then committed a different modification to it, and now want
-> > to apply the stash. This results in a conflict that leaves the
-> > current state in the working tree, but I had preferred that the
-> > stashed binary file were in the working tree now.
-> >
-> > What do other git-stash users think about changing the order?
->
-> The current order is the same order that git-rebase uses. I'm not
-> saying its correct, just that its the same as rebase.
+> -----BEGIN PGP SIGNED MESSAGE-----
+> Hash: SHA1
+> 
+> [adding the git list]
+> 
+> According to Bruno Haible on 10/2/2007 5:50 AM:
+> > Hello Benoit,
+> > 
+> >>>     $ git stash
+> >>>     $ git pull
+> >>>     $ git stash apply
+> >>>     $ git stash clean              ; typo!
+> >>>     $ git stash clear              ; fatal correction to typo!
+> >>>
+> >>> and lost 20 modified files. Well, not really lost. Just took me a  
+> >>> while to
+> >> I don't really see how and why you "lost 20 modified files".
+> > 
+> > I lost modifications to 20 files. "git stash clean" moved these modifications
+> > into a stash named "clean", and "git stash clear" killed it.
+> 
+> While we're at it, I wish 'git stash clear' would take an optional 
+> argument that says which stash(es) to clear, rather than blindly 
+> clearing the entire stash.
 
-=46WIW, StGit push works the same way. The idea being that the current
-HEAD is our current state ("ours"), and the patch we're pushing is
-some change we want to apply ("theirs"). I always felt that this was a
-very natural order of things. But I guess the philosophy in the
-"stash" case is subtly different, so maybe the change is warranted
-there.
+I'd rather avoid "enhancing" stash clear.  IMHO it is a little 
+misdesigned, making it way too easy to hang yourself.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Instead, how about writing a stash pop?  "git stash pop [<stash>]".  It 
+would literally just call git stash apply && git reflog delete.  Should 
+not be too difficult, now that I provided "git reflog delete" ;-)
+
+Maybe even deprecating "git stash clear", or doing away with it 
+altogether.
+
+Ciao,
+Dscho
