@@ -1,89 +1,110 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Proposed git mv behavioral change
-Date: Fri, 19 Oct 2007 13:33:39 +0200
-Message-ID: <28B30BAE-9482-4219-924B-F0EDFB2936FB@wincent.com>
-References: <c594999b2337.2337c594999b@nyroc.rr.com> <D2EAAC6D-567D-454A-AECA-C90FA2C369AE@mit.edu> <20071019015715.GW14735@spearce.org> <7F18F52A-3D57-4510-B71B-69D43480126E@MIT.EDU> <20071019021618.GE3290@coredump.intra.peff.net> <A2491F60-A00E-412A-8389-1C9EB5EDFCEF@mit.edu>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
+From: Theodore Tso <tytso@thunk.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 07:38:22 -0400
+Message-ID: <20071019113822.GB16726@thunk.org>
+References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
 	git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Oct 19 13:39:45 2007
+To: Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 19 13:45:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
+Received: from mail-forward.uio.no ([129.240.10.42])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1IiqHs-0003Hi-Ki
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 13:45:08 +0200
+Received: from mail-mx6.uio.no ([129.240.10.47])
+	by pat.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IiqHl-0002Tl-Jz
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 13:45:01 +0200
 Received: from vger.kernel.org ([209.132.176.167])
-	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IiqCZ-0007FZ-0B
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 13:39:39 +0200
+	by mail-mx6.uio.no with esmtp (Exim 4.67)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1IiqHc-0007KJ-TD
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 13:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753009AbXJSLeb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Oct 2007 07:34:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752140AbXJSLeb
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 07:34:31 -0400
-Received: from wincent.com ([72.3.236.74]:59101 "EHLO s69819.wincent.com"
+	id S1753539AbXJSLif convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Oct 2007 07:38:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753509AbXJSLif
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 07:38:35 -0400
+Received: from THUNK.ORG ([69.25.196.29]:52463 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751081AbXJSLea convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 07:34:30 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9JBYI3W018281;
-	Fri, 19 Oct 2007 06:34:22 -0500
-In-Reply-To: <A2491F60-A00E-412A-8389-1C9EB5EDFCEF@mit.edu>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752670AbXJSLie (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 07:38:34 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1IiqLI-0000eo-O5; Fri, 19 Oct 2007 07:48:40 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@thunk.org>)
+	id 1IiqBK-0008MG-Qf; Fri, 19 Oct 2007 07:38:22 -0400
+Content-Disposition: inline
+In-Reply-To: <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+1;1609;0cFrom: Theodore Tso <tytso@mit.edu>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61690>
+X-UiO-ClamAV-Virus: No
+X-UiO-Spam-info: not spam, SpamAssassin (score=-7.0, required=12.0, autolearn=disabled, RCVD_IN_DNSWL_MED=-4,UIO_VGER=-3)
+X-UiO-Scanned: CC7FAABD960871C4D8CF2F058545BD7005EEA0D5
+X-UiO-SPAM-Test: remote_host: 209.132.176.167 spam_score: -69 maxlevel 200 minaction 2 bait 0 mail/h: 110 total 622645 max/h 813 blacklist 0 greylist 0 ratelimit 0
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61691>
 
-El 19/10/2007, a las 4:29, Michael Witten escribi=F3:
+On Fri, Oct 19, 2007 at 12:03:24PM +0200, Santi B=E9jar wrote:
+> This way it is slightly less terse than the other proposals but not
+> that cryptic and it normally fits in one line without padding. And I
+> really like to see what has changed explicitly with the old..new line=
+=2E
 
-> Ah. Basically my 'pseudo-code' is correct, but redundant.
+Same here.
 
-If I understood the original poster's proposal then I don't think =20
-your code does what he asked for:
+I find the old..new information occasionally useful, since it allows
+me to do the git diff --- something for which ORIG_HEAD isn't enough
+when you are pulling multiple heads, such as in git.  Can we keep that
+optional via a config or an command-line option?
 
-> What you want to happen is the following:
-> =09
-> 	git show HEAD:A.txt > path/B.txt
-> 	git add path/B.txt
-> 	mv A.txt B.txt
-> 	git rm A.txt
->
-> Is this correct?
+Hmm... how about this?
 
-Here you're copying the content of A.txt as it was in the last (HEAD) =20
-commit, but from what the poster said he wants the content of A.txt =20
-as it is staged in the index (that is, there may be staged but =20
-uncomitted changes).
+=3D=3D> git://repo.or.cz/git/spearce.git
+ * branch gitk -> spearce/gitk		(new)
+ * branch maint -> spearce/maint	1aa3d01..e7187e4
+ * branch master -> spearce/master	de61e42..7840ce6
+ * branch next -> spearce/next		895be02..2fe5433
+ + branch pu -> spearce/pu		89fa332...1e4c517
+ * branch todo -> spearce/todo		(new)
 
-> Better:
->
->>  	mv A.txt path/B.txt
->> 	Point the index entry for A.txt to path/B.txt
+If the branch is new, obviously old..new won't be useful.  The
+non-fast forward branch is getting indicated twice, once with the "+"
+sign, and once with the triple dot in the range.  =20
 
-Yes, that is basically what he was asking for, as I read it.
+As far as the padding, it would be a pain to figure out how to make
+the right hand column be padded so that it starts 3 spaces after the
+longest "  * branch foo -> bar" line, but that would look the best.
 
-El 19/10/2007, a las 5:47, Jeff King escribi=F3:
+=46inally, one last question --- am I the only one who had to take a
+second look at the whether the arrow should be <- or ->?  The question
+is whether we are saying "gitk is moving to include all of
+spearce/gitk"; but I could also see it stated that we are assigning
+refs/heads/gitk with refs/remotes/spearce/gitk, in which case the
+arrow should be reversed.   Or maybe:
 
-> Hrm. So you _do_ want to do an index-only move of A to B, in which =20
-> case
-> the suggestion of a "git-mv --cached" seems sensible. Though I'm =20
-> curious
-> why you want that.
+=3D=3D> git://repo.or.cz/git/spearce.git
+ * branch gitk :=3D spearce/gitk		(new)
+ * branch maint :=3D spearce/maint	1aa3d01..e7187e4
+ * branch master :=3D spearce/master	de61e42..7840ce6
+ * branch next :=3D spearce/next		895be02..2fe5433
+ + branch pu :=3D spearce/pu		89fa332...1e4c517
+ * branch todo :=3D spearce/todo		(new)
 
-I agree that git-stash can be used in this workflow but I can also =20
-imagine cases where the proposed "git-mv --cached" might be a bit =20
-nicer. I'm thinking of occasions where you just want to do something =20
-like:
+(Or is that too Pascal-like?  :-)
 
-   git mv --cached foo bar
-   git add --interactive bar
-
-I'm not sure the proposed "--cached" switch should ever be the =20
-default -- would need to ponder that one -- but I do think the switch =20
-would be a nice addition.
-
-Cheers,
-Wincent
+      	       	    	       	      	  	   - Ted
