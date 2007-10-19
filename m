@@ -1,101 +1,84 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Avoid invoking diff drivers during git-stash
-Date: Thu, 18 Oct 2007 21:33:50 -0400
-Message-ID: <20071019013350.GA14020@spearce.org>
-References: <47171A21.9030003@viscovery.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 03:34:06 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: Proposed git mv behavioral change
+Date: Thu, 18 Oct 2007 21:47:12 -0400
+Message-ID: <D2EAAC6D-567D-454A-AECA-C90FA2C369AE@mit.edu>
+References: <c594999b2337.2337c594999b@nyroc.rr.com>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: lmage11@twcny.rr.com
+X-From: git-owner@vger.kernel.org Fri Oct 19 03:47:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IigkX-0001PW-LI
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 03:34:06 +0200
+	id 1Iigxh-00035Y-VJ
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 03:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759767AbXJSBdz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 21:33:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759674AbXJSBdy
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 21:33:54 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41670 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759470AbXJSBdy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 21:33:54 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iigk5-0004zK-LH; Thu, 18 Oct 2007 21:33:37 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id EB0C420FBAE; Thu, 18 Oct 2007 21:33:50 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <47171A21.9030003@viscovery.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1758621AbXJSBrW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 21:47:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759767AbXJSBrW
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 21:47:22 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:53544 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754408AbXJSBrW (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 21:47:22 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9J1lIpH013033;
+	Thu, 18 Oct 2007 21:47:18 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9J1lCUP019894
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Oct 2007 21:47:18 -0400 (EDT)
+In-Reply-To: <c594999b2337.2337c594999b@nyroc.rr.com>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61595>
 
-git-stash needs to restrict itself to plumbing when running automated
-diffs as part of its operation as the user may have configured a
-custom diff driver that opens an interactive UI for certain/all
-files.  Doing that during scripted actions is very unfriendly to
-the end-user and may cause git-stash to fail to work.
 
-Reported by Johannes Sixt
+On 18 Oct 2007, at 11:47:32 AM, lmage11@twcny.rr.com wrote:
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+> I don't know exactly how git manages the index
+> internally, but a
+> shortcut for this would be to simply rename the index entry in place.
 
- Johannes Sixt <j.sixt@viscovery.net> wrote:
- > (1) Looking at git-stash.sh I see a few uses of 'git diff' in
- > apply_stash(). Shouldn't these use one of git-diff-{tree,index,files)? The
- > reason is that porcelain 'git diff' invokes custom diff drivers (that in my   
- > case run a UI program), whereas the plumbing does not.
- >
- > Is there a particular reason to use porcelain 'git diff'?
+Seems like the shortcut would lose the history and confuse git.
 
- Does this fix the problem?
+Anyway,
 
- git-stash.sh |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+Let's say you have a file, A.txt, with contents:
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 7ba6162..def3163 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -110,7 +110,7 @@ show_stash () {
- 
- 	w_commit=$(git rev-parse --verify "$s") &&
- 	b_commit=$(git rev-parse --verify "$s^") &&
--	git diff $flags $b_commit $w_commit
-+	git diff-tree $flags $b_commit $w_commit
- }
- 
- apply_stash () {
-@@ -139,7 +139,7 @@ apply_stash () {
- 	unstashed_index_tree=
- 	if test -n "$unstash_index" && test "$b_tree" != "$i_tree"
- 	then
--		git diff --binary $s^2^..$s^2 | git apply --cached
-+		git diff-tree --binary $s^2^..$s^2 | git apply --cached
- 		test $? -ne 0 &&
- 			die 'Conflicts in index. Try without --index.'
- 		unstashed_index_tree=$(git-write-tree) ||
-@@ -162,7 +162,7 @@ apply_stash () {
- 			git read-tree "$unstashed_index_tree"
- 		else
- 			a="$TMP-added" &&
--			git diff --cached --name-only --diff-filter=A $c_tree >"$a" &&
-+			git diff-index --cached --name-only --diff-filter=A $c_tree >"$a" &&
- 			git read-tree --reset $c_tree &&
- 			git update-index --add --stdin <"$a" ||
- 				die "Cannot unstage modified files"
--- 
-1.5.3.4.1249.g895be
+	A
+
+You edit this file so that it has contents:
+	
+	A_dirty
+
+You're saying that, currently, 'git-mv A.txt path/B.txt'
+does this:
+	
+	mv A.txt path/B.txt
+	git add path/B.txt
+	git rm  A.txt
+
+So that A.txt is indeed moved to path/B.txt, but now
+A_dirty has been added to the index.
+
+What you want to happen is the following:
+	
+	git show HEAD:A.txt > path/B.txt
+	git add path/B.txt
+	mv A.txt B.txt
+	git rm A.txt
+
+Is this correct?
+
+Michael Witten
