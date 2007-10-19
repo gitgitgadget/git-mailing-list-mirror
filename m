@@ -1,7 +1,7 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 14/14] Use the asyncronous function infrastructure to run the content filter.
-Date: Fri, 19 Oct 2007 21:48:06 +0200
-Message-ID: <1192823286-9654-15-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 09/14] Use the asyncronous function infrastructure in builtin-fetch-pack.c.
+Date: Fri, 19 Oct 2007 21:48:01 +0200
+Message-ID: <1192823286-9654-10-git-send-email-johannes.sixt@telecom.at>
 References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
@@ -11,157 +11,125 @@ References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-7-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-8-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-9-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-10-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-11-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-12-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-13-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-14-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 21:49:40 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:49:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iixqk-0002t3-BZ
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:49:38 +0200
+	id 1Iixqe-0002t3-KI
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:49:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935141AbXJSTsh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 15:48:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934340AbXJSTsg
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:36 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:44532 "EHLO
+	id S933300AbXJSTsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:48:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764839AbXJSTsV
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:21 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44512 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932288AbXJSTsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 15:48:12 -0400
+	with ESMTP id S1765935AbXJSTsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 15:48:10 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 545F597C80;
-	Fri, 19 Oct 2007 21:48:10 +0200 (CEST)
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 286BD97D62;
+	Fri, 19 Oct 2007 21:48:09 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.4.315.g2ce38
-In-Reply-To: <1192823286-9654-14-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192823286-9654-9-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61753>
+
+We run the sideband demultiplexer in an asynchronous function.
+
+Note that earlier there was a check in the child process that closed
+xd[1] only if it was different from xd[0]; this test is no longer needed
+because git_connect() always returns two different file descriptors
+(see ec587fde0a76780931c7ac32474c8c000aa45134).
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- convert.c |   61 ++++++++++++++++++++++++++++---------------------------------
- 1 files changed, 28 insertions(+), 33 deletions(-)
+ builtin-fetch-pack.c |   39 ++++++++++++++++++---------------------
+ 1 files changed, 18 insertions(+), 21 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index 8dc9965..4df7559 100644
---- a/convert.c
-+++ b/convert.c
-@@ -192,15 +192,21 @@ static int crlf_to_worktree(const char *path, const char *src, size_t len,
- 	return 1;
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 871b704..51d8a32 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -457,42 +457,37 @@ static int everything_local(struct ref **refs, int nr_match, char **match)
+ 	return retval;
  }
  
--static int filter_buffer(int fd, const char *src,
--			 unsigned long size, const char *cmd)
-+struct filter_params {
-+	const char *src;
-+	unsigned long size;
-+	const char *cmd;
-+};
-+
-+static int filter_buffer(int fd, void *data)
+-static pid_t setup_sideband(int fd[2], int xd[2])
++static int sideband_demux(int fd, void *data)
  {
- 	/*
- 	 * Spawn cmd and feed the buffer contents through its stdin.
+-	pid_t side_pid;
++	int *xd = data;
+ 
++	close(xd[1]);
++	return recv_sideband("fetch-pack", xd[0], fd, 2);
++}
++
++static void setup_sideband(int fd[2], int xd[2], struct async *demux)
++{
+ 	if (!use_sideband) {
+ 		fd[0] = xd[0];
+ 		fd[1] = xd[1];
+-		return 0;
++		return;
+ 	}
+ 	/* xd[] is talking with upload-pack; subprocess reads from
+ 	 * xd[0], spits out band#2 to stderr, and feeds us band#1
+-	 * through our fd[0].
++	 * through demux->out.
  	 */
- 	struct child_process child_process;
-+	struct filter_params *params = (struct filter_params *)data;
- 	int write_err, status;
--	const char *argv[] = { "sh", "-c", cmd, NULL };
-+	const char *argv[] = { "sh", "-c", params->cmd, NULL };
- 
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-@@ -208,17 +214,17 @@ static int filter_buffer(int fd, const char *src,
- 	child_process.out = fd;
- 
- 	if (start_command(&child_process))
--		return error("cannot fork to run external filter %s", cmd);
-+		return error("cannot fork to run external filter %s", params->cmd);
- 
--	write_err = (write_in_full(child_process.in, src, size) < 0);
-+	write_err = (write_in_full(child_process.in, params->src, params->size) < 0);
- 	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
--		error("cannot feed the input to external filter %s", cmd);
-+		error("cannot feed the input to external filter %s", params->cmd);
- 
- 	status = finish_command(&child_process);
- 	if (status)
--		error("external filter %s failed %d", cmd, -status);
-+		error("external filter %s failed %d", params->cmd, -status);
- 	return (write_err || status);
+-	if (pipe(fd) < 0)
+-		die("fetch-pack: unable to set up pipe");
+-	side_pid = fork();
+-	if (side_pid < 0)
++	demux->proc = sideband_demux;
++	demux->data = xd;
++	if (start_async(demux))
+ 		die("fetch-pack: unable to fork off sideband demultiplexer");
+-	if (!side_pid) {
+-		/* subprocess */
+-		close(fd[0]);
+-		if (xd[0] != xd[1])
+-			close(xd[1]);
+-		if (recv_sideband("fetch-pack", xd[0], fd[1], 2))
+-			exit(1);
+-		exit(0);
+-	}
+ 	close(xd[0]);
+-	close(fd[1]);
++	fd[0] = demux->out;
+ 	fd[1] = xd[1];
+-	return side_pid;
  }
  
-@@ -231,47 +237,36 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	 *
- 	 * (child --> cmd) --> us
- 	 */
--	int pipe_feed[2];
--	int status, ret = 1;
--	struct child_process child_process;
-+	int ret = 1;
- 	struct strbuf nbuf;
-+	struct async async;
-+	struct filter_params params;
+ static int get_pack(int xd[2], char **pack_lockfile)
+ {
+-	pid_t side_pid;
++	struct async demux;
+ 	int fd[2];
+ 	const char *argv[20];
+ 	char keep_arg[256];
+@@ -501,7 +496,7 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 	int do_keep = args.keep_pack;
+ 	struct child_process cmd;
  
- 	if (!cmd)
- 		return 0;
+-	side_pid = setup_sideband(fd, xd);
++	setup_sideband(fd, xd, &demux);
  
--	memset(&child_process, 0, sizeof(child_process));
--
--	if (pipe(pipe_feed) < 0) {
--		error("cannot create pipe to run external filter %s", cmd);
--		return 0;
--	}
-+	memset(&async, 0, sizeof(async));
-+	async.proc = filter_buffer;
-+	async.data = &params;
-+	params.src = src;
-+	params.size = len;
-+	params.cmd = cmd;
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.argv = argv;
+@@ -556,6 +551,8 @@ static int get_pack(int xd[2], char **pack_lockfile)
  
- 	fflush(NULL);
--	child_process.pid = fork();
--	if (child_process.pid < 0) {
--		error("cannot fork to run external filter %s", cmd);
--		close(pipe_feed[0]);
--		close(pipe_feed[1]);
--		return 0;
--	}
--	if (!child_process.pid) {
--		close(pipe_feed[0]);
--		exit(filter_buffer(pipe_feed[1], src, len, cmd));
--	}
--	close(pipe_feed[1]);
-+	if (start_async(&async))
-+		return 0;	/* error was already reported */
- 
- 	strbuf_init(&nbuf, 0);
--	if (strbuf_read(&nbuf, pipe_feed[0], len) < 0) {
-+	if (strbuf_read(&nbuf, async.out, len) < 0) {
- 		error("read from external filter %s failed", cmd);
- 		ret = 0;
- 	}
--	if (close(pipe_feed[0])) {
-+	if (close(async.out)) {
- 		error("read from external filter %s failed", cmd);
- 		ret = 0;
- 	}
--	status = finish_command(&child_process);
--	if (status) {
--		error("external filter %s failed %d", cmd, -status);
-+	if (finish_async(&async)) {
-+		error("external filter %s failed", cmd);
- 		ret = 0;
- 	}
+ 	if (finish_command(&cmd))
+ 		die("%s failed", argv[0]);
++	if (use_sideband && finish_async(&demux))
++		die("error in sideband demultiplexer");
+ 	return 0;
+ }
  
 -- 
 1.5.3.4.315.g2ce38
