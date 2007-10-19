@@ -1,80 +1,74 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git-submodule questions
-Date: Fri, 19 Oct 2007 14:30:50 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710191423130.26902@woody.linux-foundation.org>
-References: <428b865e0710191354v59f558bbv4536d60902977ac@mail.gmail.com>
- <alpine.LFD.0.999.0710191420410.26902@woody.linux-foundation.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 17:40:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710191739270.19446@xanadu.home>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+ <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+ <20071019073938.GN14735@spearce.org>
+ <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+ <20071019113822.GB16726@thunk.org>
+ <20071019143844.GB23765@diana.vm.bytemark.co.uk>
+ <alpine.LFD.0.9999.0710191058570.19446@xanadu.home>
+ <20071019211755.GC751@thunk.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Evan Carroll <me@evancarroll.com>
-X-From: git-owner@vger.kernel.org Fri Oct 19 23:31:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 19 23:41:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IizRN-0006hj-OS
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 23:31:34 +0200
+	id 1Iizap-0008Qi-FJ
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 23:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966623AbXJSVbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 17:31:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S935576AbXJSVbW
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 17:31:22 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:55711 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934052AbXJSVbV (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 17:31:21 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JLUopx000647
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 19 Oct 2007 14:30:51 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9JLUoWx021109;
-	Fri, 19 Oct 2007 14:30:50 -0700
-In-Reply-To: <alpine.LFD.0.999.0710191420410.26902@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.72 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S936480AbXJSVlJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 17:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936460AbXJSVlG
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 17:41:06 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:25737 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S936438AbXJSVlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 17:41:04 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JQ6008DSHK0KOY1@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 17:40:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071019211755.GC751@thunk.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61768>
 
+On Fri, 19 Oct 2007, Theodore Tso wrote:
 
-
-On Fri, 19 Oct 2007, Linus Torvalds wrote:
+> On Fri, Oct 19, 2007 at 11:03:00AM -0400, Nicolas Pitre wrote:
+> > Well, the important thing is that the _content_ is moving from the 
+> > remote repository to the local one.  That's how the arrow should be 
+> > interpreted conceptually.  The fact that technically we end up assigning 
+> > the local ref with the remote value is a technical issue.
 > 
-> In fact, it should be enough to do
+> If the _content_ is moving from the remote repository to the local
+> one, I would think the arrow should be pointing from the remote
+> repoistory to the local one, i.e.:
 > 
-> 	cd /srv/DM
-> 	git init
-> 	git add .
-> 	git commit
+>   * 895be02..2fe5433   next <- spearce/next
 > 
-> and you're now literally all done!
+> But right now we are proposing:
+> 
+>   * 895be02..2fe5433   next -> spearce/next
+> 
+> I would think the former makes more sense is the content is going
+> *from* spearce/next into the local next branch.
 
-.. btw, when I say that, I guess I'm lying a bit.
+No.  "next" is the name of the _remote_ branch that is stored locally in 
+spearce/next.  So the arrow is correct.
 
-Yes, the above will actually generate a valid git superproject repository, 
-but it won't generate/populate the necessary .gitmodules stuff. You'd need 
-to add it by hand.
 
-But yes, if you want to avoid doing that hand-editing, you should use the 
-whole "git submodule add .." thing to clone the git repos you already have 
-into a supermodule. But the .gitmodules thing really is pretty simple, you 
-just do something like
-
-	[submodule "x"]
-		path = x
-		url = official-url-of-x
-	[submodule "y"]
-		path = y
-		url = official-url-of-y
-
-and now you just do "git submodule init" and you should be all done 
-(again, the "git submodule init" thing you could do by hand by editing 
-the .git/config file, but since you can do it automatically in-place, 
-there's no real point).
-
-		Linus
+Nicolas
