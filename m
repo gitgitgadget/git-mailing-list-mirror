@@ -1,90 +1,52 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: [PATCH-resent] gitk: fix in procedure drawcommits
-Date: Fri, 19 Oct 2007 15:44:22 +0200
-Message-ID: <200710191544.22228.barra_cuda@katamail.com>
-References: <20071019052823.GI14735@spearce.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] send-pack: respect '+' on wildcard refspecs
+Date: Fri, 19 Oct 2007 09:43:39 -0400
+Message-ID: <20071019134339.GA21852@coredump.intra.peff.net>
+References: <20071019090400.GA8944@coredump.intra.peff.net> <449c10960710190510y3af3ffa2ydb9ae4a01b5d480c@mail.gmail.com> <20071019122755.GA17002@coredump.intra.peff.net> <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Paul Mackerras <paulus@samba.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 19 15:41:00 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Dan McGee <dan@archlinux.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 15:43:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iis5m-0001js-PU
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:40:47 +0200
+	id 1Iis8n-0002cs-Hu
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 15:43:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762995AbXJSNka convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Oct 2007 09:40:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762899AbXJSNk3
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:40:29 -0400
-Received: from slim-3c.inet.it ([213.92.5.125]:59453 "EHLO slim-3c.inet.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762105AbXJSNk1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 09:40:27 -0400
-Received: from host123-57-static.104-80-b.business.telecomitalia.it ([::ffff:80.104.57.123]) by slim-3c.inet.it via I-SMTP-5.4.4-547
-	id ::ffff:80.104.57.123+xjKoK4QXXf5; Fri, 19 Oct 2007 15:40:24 +0200
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071019052823.GI14735@spearce.org>
+	id S1752981AbXJSNnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 09:43:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753377AbXJSNnm
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 09:43:42 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1940 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752981AbXJSNnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 09:43:42 -0400
+Received: (qmail 12972 invoked by uid 111); 19 Oct 2007 13:43:40 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Fri, 19 Oct 2007 09:43:40 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Oct 2007 09:43:39 -0400
 Content-Disposition: inline
+In-Reply-To: <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61709>
 
-This patch indroduces a check before unsetting an array element.
+On Fri, Oct 19, 2007 at 08:38:06AM -0500, Dan McGee wrote:
 
-Without this, gitk may complain with
+> origin(junio)/master: 58ba4f6
+> origin(junio)/next: fe96ee67ec5840
+> spearce/master: 7840ce6cb24a9d
+> spearce/next: 2fe5433b416f0df
+> 
+> Can you let me know what commit you based the patch off of? I'm at
+> work for the next 8 hours or so, so I can't look in to this a whole
+> lot until tonight.
 
-	can't unset "prevlines(...)": no such element in array
+It is based on Shawn's next, 2fe5433b. Are you sure you're not doing
+something silly like executing an older version of git that is in your
+PATH?
 
-when scrolling happens.
-
-Signed-off-by: Michele Ballabio <barra_cuda@katamail.com>
----
-
-There's an error that seems to occur in gitk only on
-mutt's imported repo, but I don't know why. This is
-hopefully the right fix.
-
-An example of this error:
-
-can't unset "prevlines(a3b4383d69e0754346578c85ba8ff7c05bd88705)": no s=
-uch element in array
-can't unset "prevlines(a3b4383d69e0754346578c85ba8ff7c05bd88705)": no s=
-uch element in array
-=C2=A0 =C2=A0 while executing
-"unset prevlines($lid)"
-=C2=A0 =C2=A0 (procedure "drawcommits" line 39)
-=C2=A0 =C2=A0 invoked from within
-"drawcommits $row $endrow"
-=C2=A0 =C2=A0 (procedure "drawfrac" line 10)
-=C2=A0 =C2=A0 invoked from within
-"drawfrac $f0 $f1"
-=C2=A0 =C2=A0 (procedure "scrollcanv" line 3)
-=C2=A0 =C2=A0 invoked from within
-"scrollcanv .tf.histframe.csb 0.00672513 0.0087015"
-
- gitk |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/gitk b/gitk
-index 300fdce..527b716 100755
---- a/gitk
-+++ b/gitk
-@@ -3697,7 +3697,9 @@ proc drawcommits {row {endrow {}}} {
-=20
- 	if {[info exists lineends($r)]} {
- 	    foreach lid $lineends($r) {
--		unset prevlines($lid)
-+		if {[info exists prevlines($lid)]} {
-+		    unset prevlines($lid)
-+		}
- 	    }
- 	}
- 	set rowids [lindex $rowidlist $r]
---=20
-1.5.3
+-Peff
