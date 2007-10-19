@@ -1,93 +1,64 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
-Date: Thu, 18 Oct 2007 23:50:39 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710182340550.19446@xanadu.home>
-References: <20071019004527.GA12930@spearce.org>
- <20071019021255.GD3290@coredump.intra.peff.net>
- <20071019022154.GY14735@spearce.org>
- <20071019023425.GB8298@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
- <20071019030749.GA9274@coredump.intra.peff.net>
- <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
- <20071019033228.GA10697@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: Proposed git mv behavioral change
+Date: Thu, 18 Oct 2007 23:53:05 -0400
+Message-ID: <C5184350-51A7-46B4-B0C9-E32F79214546@MIT.EDU>
+References: <c594999b2337.2337c594999b@nyroc.rr.com> <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net> <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU> <20071019034704.GB11095@coredump.intra.peff.net>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:50:54 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:53:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iiisu-0002uv-VG
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:50:53 +0200
+	id 1IiivM-0003Ch-ON
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763720AbXJSDul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:50:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762259AbXJSDul
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:50:41 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:8951 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759439AbXJSDuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:50:40 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQ500LSK40FNNO0@VL-MH-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 18 Oct 2007 23:50:39 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019033228.GA10697@coredump.intra.peff.net>
+	id S1758991AbXJSDxN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:53:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760495AbXJSDxN
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:53:13 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:42444 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758974AbXJSDxM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 23:53:12 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9J3r6ej015496;
+	Thu, 18 Oct 2007 23:53:06 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9J3r5Ew008966
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Oct 2007 23:53:06 -0400 (EDT)
+In-Reply-To: <20071019034704.GB11095@coredump.intra.peff.net>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61640>
-
-On Thu, 18 Oct 2007, Jeff King wrote:
-
-> On Thu, Oct 18, 2007 at 11:24:41PM -0400, Nicolas Pitre wrote:
-> 
-> > You usually get long lines that gets wrapped, so that means 3 lines of 
-> > screen space for one updated branches.  Is the "66ffb04..4fa4d23" 
-> > information really useful?  Might someone ever care?
-> 
-> I have used it occasionally when tracking repos to see what new commits
-> have happened. Usually I use a separate branch to mark "what I've seen"
-> (i.e., fetch, gitk origin..master, pull), but if it's a branch that I'm
-> not actively tracking, the display is useful.
-
-Maybe we should have a shortcut notation for <ref>@{1}..<ref> instead?
-I end up using that all the time since the fetch result has long 
-scrolled off the screen when I want to look at what was fetched.
-
-Usully this llooks like:
-
-	git pull
-	git log @{1}..
-
-But using origin/master@{1}..origin/master is a bit cumbersome.
-
-> What is really useless in that line is the fact that _every_ ref is
-> going to have the name of the remote, even though we only support
-> fetching from one remote at a time. Perhaps something like:
-> 
-> Fetching from git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
->  * refs/heads/origin: fast forward to branch 'master'
-> 
-> although that URL is almost a line by itself. :)
-
-It is, therefore I'd skip "Fetching from " entirely.
-
-> Also, why do we abbreviate "refs/heads/master" from the remote, but we
-> don't abbreviate refs/heads/origin for the local? Maybe something like:
-> 
->   * local heads/origin -> remote heads/master (fast forward)
-> 
-> or for separate remote
-> 
->   * local remotes/origin/master -> remote heads/master (fast forward)
-
-That looks fine for a push.  I'd say "remote foo -> local bar" for a 
-fetch.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61641>
 
 
-Nicolas
+On 18 Oct 2007, at 11:47:05 PM, Jeff King wrote:
+
+> The only workflow I can think of is:
+>
+>   1. you modify a.c
+>   2. your boss comes in and tells you to make some unrelated change,
+>      which involves moving a.c to b.c
+>   3. You don't want to commit your changes, so you git-mv in the index
+>      only without involving your dirty working tree file.
+>   4. You commit the index (which doesn't have your changes from (1)
+>
+> I think that is sort of a bogus workflow
+
+Ha!
+
+That's exactly what the original poster wanted.
+
+It's not unreasonable.
