@@ -1,58 +1,80 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
-	objects'
-Date: Thu, 18 Oct 2007 22:59:13 -0400
-Message-ID: <20071019025913.GA9227@coredump.intra.peff.net>
-References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182238470.19446@xanadu.home>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
+Date: Thu, 18 Oct 2007 23:01:02 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
+References: <20071019004527.GA12930@spearce.org>
+ <20071019021255.GD3290@coredump.intra.peff.net>
+ <20071019022154.GY14735@spearce.org>
+ <20071019023425.GB8298@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 04:59:43 2007
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:01:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iii5F-0005AT-7U
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 04:59:33 +0200
+	id 1Iii6v-0005M8-2J
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760500AbXJSC7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 22:59:18 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763907AbXJSC7R
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 22:59:17 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2601 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1763880AbXJSC7Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 22:59:16 -0400
-Received: (qmail 8110 invoked by uid 111); 19 Oct 2007 02:59:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 22:59:14 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 22:59:13 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710182238470.19446@xanadu.home>
+	id S1759930AbXJSDBF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:01:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759281AbXJSDBE
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:01:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:28947 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759674AbXJSDBD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 23:01:03 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JQ50016N1PQZ030@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 18 Oct 2007 23:01:02 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071019023425.GB8298@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61620>
 
-On Thu, Oct 18, 2007 at 10:45:31PM -0400, Nicolas Pitre wrote:
+On Thu, 18 Oct 2007, Jeff King wrote:
 
-> Yet that progress display isn't solely about "delta compressing".  It 
-> also includes the search for best object match in order to keep the 
-> smallest delta possible.
+> On a similar note, some complaints with progress meters, even after
+> recent patches:
+>   - When fetching, one progress meter says "Indexing" which, while
+>     technically true, is almost certainly blocking on "Downloading". In
+>     fact, it is not clear from the existing messages exactly _when_ we
+>     are downloading, and when we are just computing, which is something
+>     I think a user might want to know. Objections to changing this
+>     (though perhaps index-pack will need to be told when it is
+>     downloading and when it is just indexing)? Objections to a
+>     throughput indicator?
 
-In fact, isn't that progress meter _solely_ about finding the best
-matches? The actual deltification (that is, the creation of the deltas
-and writing of them to the packfile happens during the writing phase --
-unless, of course, we've cached the deltas during the search phase).
+I have some WIP for that.
 
-Perhaps one of:
+>   - Running git-gc, we now get something like:
+>       Counting objects: 62317, done.
+>       Deltifying objects: 100% (18042/18042), done.
+>       Writing objects: 100% (62317/62317), done.
+>       Total 62317 (delta 43861), reused 61404 (delta 43036)
+>       Pack pack-32f8ac40c1a5ec146e45c657cb16f53fdd354095 created.
+>       Removing unused objects 100%...
+>       Done.
+>     Can we get rid of total statistics (I think this is useful for some
+>     power users, but perhaps there should be a verbosity level), the
+>     name of the pack file (same deal), and the totally useless "Done."?
 
-  Finding deltas
-  Finding delta candidates
-  Matching objects
+Agreed for the pack name.  Certainly no one cares.
 
-or something similar (though I don't especially like any of them, I
-think you get the idea).
+Maybe the "Removing unused objects" should use the common progress 
+infrastructure?  It could even use the delayed interface, just like when 
+checking out files, so no progress at all is displayed when that 
+operation completes within a certain delay.  And the removal of unused 
+objects is usually quick.
 
--Peff
+But I like the statistics.  They might be pretty handy to diagnoze 
+performance issues on remote servers for example.
+
+
+Nicolas
