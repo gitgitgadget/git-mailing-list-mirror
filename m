@@ -1,64 +1,143 @@
-From: Theodore Tso <tytso@thunk.org>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 17:58:11 -0400
-Message-ID: <20071019215811.GE751@thunk.org>
-References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com> <20071019113822.GB16726@thunk.org> <20071019143844.GB23765@diana.vm.bytemark.co.uk> <alpine.LFD.0.9999.0710191058570.19446@xanadu.home> <20071019211755.GC751@thunk.org> <alpine.LFD.0.9999.0710191739270.19446@xanadu.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: RE: git push bug?
+Date: Fri, 19 Oct 2007 23:46:29 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710192338400.25221@racer.site>
+References: <000001c81280$ebc5c5e0$5267a8c0@Jocke>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 23:58:43 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: 'Steffen Prohaska' <prohaska@zib.de>, 'git' <git@vger.kernel.org>
+To: Joakim Tjernlund <joakim.tjernlund@transmode.se>
+X-From: git-owner@vger.kernel.org Sat Oct 20 00:47:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iizra-0003JA-RM
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 23:58:39 +0200
+	id 1Ij0cL-0004rW-Ca
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 00:46:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S967610AbXJSV61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 17:58:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966798AbXJSV60
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 17:58:26 -0400
-Received: from THUNK.ORG ([69.25.196.29]:42771 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S967604AbXJSV60 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 17:58:26 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Ij016-000377-65; Fri, 19 Oct 2007 18:08:28 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1Iizr9-0003Di-EA; Fri, 19 Oct 2007 17:58:11 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710191739270.19446@xanadu.home>
-1;1609;0cFrom: Theodore Tso <tytso@mit.edu>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752605AbXJSWqq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 18:46:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752491AbXJSWqq
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 18:46:46 -0400
+Received: from mail.gmx.net ([213.165.64.20]:57656 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751958AbXJSWqp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 18:46:45 -0400
+Received: (qmail invoked by alias); 19 Oct 2007 22:46:43 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp012) with SMTP; 20 Oct 2007 00:46:43 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/rl387DsDrO7cx8uTJ0RTCUcK24DHLEPjlmnPsai
+	KxhKB1Fh5LtDga
+X-X-Sender: gene099@racer.site
+In-Reply-To: <000001c81280$ebc5c5e0$5267a8c0@Jocke>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61771>
 
-On Fri, Oct 19, 2007 at 05:40:48PM -0400, Nicolas Pitre wrote:
-> No.  "next" is the name of the _remote_ branch that is stored locally in 
-> spearce/next.  So the arrow is correct.
+Hi,
 
-Ah; yes, you're right.  I can see this being very confusing to the
-newbie, though.  Enough so that in beginner mode we might want it to
-say:
+On Fri, 19 Oct 2007, Joakim Tjernlund wrote:
 
-   895be02..2fe5433   (remote) next -> (local) spearce/next
+> > From: Johannes Schindelin [mailto:Johannes.Schindelin@gmx.de] 
+> > 
+> > On Fri, 19 Oct 2007, Joakim Tjernlund wrote:
+> > 
+> > > On Thu, 2007-10-18 at 23:00 +0100, Johannes Schindelin wrote:
+> > > > 
+> > > > On Thu, 18 Oct 2007, Joakim Tjernlund wrote:
+> > > > 
+> > > > > First, I didn't know that I could do that. Secondly, I was also 
+> > > > > looking do v2.6.23:linus refspecs
+> > > > 
+> > > > 
+> > > > First, then our documentation could be better.  How?
+> > > 
+> > > Well, it isn't clear to me how all this is supposed to work and what 
+> > > is bugs. Clearifying that would help.
+> > > 
+> > > For instances I did a push with v2.6.23:refs/heads/linus and now I 
+> > > got a branch with the SHA1 of v2.6.23 
+> > > tag(0b8bc8b91cf6befea20fe78b90367ca7b61cfa0d) in it. Makes gitk 
+> > > display that branch as "linus^{}".
+> > 
+> > It strikes me as really odd that you would _want_ to create a branch 
+> > remotely, that has _never_ existed locally.
+> 
+> It strikes me as really odd that a core developers like yourself
+> hasn't tried to justify/explain why push works as it does.
 
-... especially since the git pull might follow up the pull with a
-merge from the local remotes/spearce/next to the local next branch.
-So it would be a good idea that it is clear when we are referring to a
-local or a remote branch.
+Well, I explained that I think the "src:dst" way to specify things are not 
+meant for git newbies.  Don't use it.
 
-   		      	       	       	       - Ted
+git push <remote> <branchname> works exactly as advertised.  It pushes the 
+specified branch to the remote repository.
+
+> As I am trying to convince our dev. group here to move to git instead of 
+> subversion, I need to learn how git works. Now I have gotten to the push 
+> function and I need to know what can be done with push and how, pitfalls 
+> too. As I go along I find behavior that I find odd and report these to 
+> the list.
+> 
+>  git push <repo> v2.6.23:refs/heads/linus
+> will make a tag look like a branch
+
+Don't use src:dest notation.
+
+>  git push <repo> linus:linus
+> won't let me create the remote branch linus
+
+Don't use src:dest notation.
+
+> but
+>  git push <repo> linus
+> will
+
+Use this.  This is good.
+
+>  git push <repo> :linus
+> OOPS, now I just deleted remote branch linus, no warning
+
+Don't use src:dest notation.
+
+>  git push <repo> linus:refs/head/linus
+> creates a branch that is invisible(wont show in git branch -a)
+
+Don't use src:dest notation.
+
+>  git push <repo> linus:refs/heads/newbranch
+> creates remote branch newbranch, but you have to know the magic words
+> refs/heads/ to do it.
+
+Don't use src:dest notation.
+
+> Se what I mean? 
+
+Yes.
+
+I hope you return the honour.
+
+> > > > Second, why not "git checkout -b linus v2.6.23 && git push origin 
+> > > > linus"?
+> > > 
+> > > An extra checkout that takes time but works.
+> > 
+> > Not only that: before trying to publish something, I would have 
+> > expected you to have that branch locally, and that you actually worked 
+> > on it.
+> > 
+> > > Doesn't make the above "weiredness" go away though.
+> > 
+> > Yes it does.
+> 
+> No it doesn't. If someone else in my group wants to create a branch they 
+> might do the same mistakes as I did.
+
+Yes, it does.  You no longer can push a tag onto a remote branch by 
+accident.  Just don't use the src:dest notation.  Forget about it.  You 
+definitely don't need it before you understand git better.
+
+Hth,
+Dscho
