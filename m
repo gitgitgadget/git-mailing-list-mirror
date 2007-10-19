@@ -1,91 +1,182 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 03/14] Use start_command() to run content filters instead of explicit fork/exec.
-Date: Fri, 19 Oct 2007 21:47:55 +0200
-Message-ID: <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 02/14] Use start_command() in git_connect() instead of explicit fork/exec.
+Date: Fri, 19 Oct 2007 21:47:54 +0200
+Message-ID: <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
 References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
- <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:24 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IixpX-0002gS-Et
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:23 +0200
+	id 1IixpY-0002gS-6K
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932290AbXJSTsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 15:48:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932284AbXJSTsL
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:11 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:44488 "EHLO
+	id S932284AbXJSTsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXJSTsN
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:13 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44484 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1764641AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1763884AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 19 Oct 2007 15:48:09 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 8D3D597D48;
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id 53F2E97C80;
 	Fri, 19 Oct 2007 21:48:07 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.4.315.g2ce38
-In-Reply-To: <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61745>
 
-The previous code already used finish_command() to wait for the process
-to terminate, but did not use start_command() to run it.
+The child process handling is delegated to start_command() and
+finish_command().
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- convert.c |   30 +++++++-----------------------
- 1 files changed, 7 insertions(+), 23 deletions(-)
+ connect.c |  103 ++++++++++++++++++++++++++++--------------------------------
+ 1 files changed, 48 insertions(+), 55 deletions(-)
 
-diff --git a/convert.c b/convert.c
-index aa95834..d83c2fc 100644
---- a/convert.c
-+++ b/convert.c
-@@ -199,34 +199,18 @@ static int filter_buffer(const char *path, const char *src,
- 	 * Spawn cmd and feed the buffer contents through its stdin.
- 	 */
- 	struct child_process child_process;
--	int pipe_feed[2];
- 	int write_err, status;
-+	const char *argv[] = { "sh", "-c", cmd, NULL };
+diff --git a/connect.c b/connect.c
+index e66e171..d19c7b1 100644
+--- a/connect.c
++++ b/connect.c
+@@ -482,11 +482,12 @@ struct child_process *git_connect(int fd[2], char *url,
+ 	char *host, *path = url;
+ 	char *end;
+ 	int c;
+-	int pipefd[2][2];
+ 	struct child_process *conn;
+ 	enum protocol protocol = PROTO_LOCAL;
+ 	int free_path = 0;
+ 	char *port = NULL;
++	const char **arg;
++	struct strbuf cmd;
  
- 	memset(&child_process, 0, sizeof(child_process));
-+	child_process.argv = argv;
-+	child_process.in = -1;
+ 	/* Without this we cannot rely on waitpid() to tell
+ 	 * what happened to our children.
+@@ -572,59 +573,52 @@ struct child_process *git_connect(int fd[2], char *url,
+ 		return NULL;
+ 	}
  
--	if (pipe(pipe_feed) < 0) {
--		error("cannot create pipe to run external filter %s", cmd);
--		return 1;
--	}
+-	if (pipe(pipefd[0]) < 0 || pipe(pipefd[1]) < 0)
+-		die("unable to create pipe pair for communication");
+ 	conn = xcalloc(1, sizeof(*conn));
+-	conn->pid = fork();
+-	if (conn->pid < 0)
+-		die("unable to fork");
+-	if (!conn->pid) {
+-		struct strbuf cmd;
 -
--	child_process.pid = fork();
--	if (child_process.pid < 0) {
--		error("cannot fork to run external filter %s", cmd);
--		close(pipe_feed[0]);
--		close(pipe_feed[1]);
--		return 1;
--	}
--	if (!child_process.pid) {
--		dup2(pipe_feed[0], 0);
--		close(pipe_feed[0]);
--		close(pipe_feed[1]);
--		execlp("sh", "sh", "-c", cmd, NULL);
--		return 1;
--	}
--	close(pipe_feed[0]);
-+	if (start_command(&child_process))
-+		return error("cannot fork to run external filter %s", cmd);
+-		strbuf_init(&cmd, MAX_CMD_LEN);
+-		strbuf_addstr(&cmd, prog);
+-		strbuf_addch(&cmd, ' ');
+-		sq_quote_buf(&cmd, path);
+-		if (cmd.len >= MAX_CMD_LEN)
+-			die("command line too long");
+-
+-		dup2(pipefd[1][0], 0);
+-		dup2(pipefd[0][1], 1);
+-		close(pipefd[0][0]);
+-		close(pipefd[0][1]);
+-		close(pipefd[1][0]);
+-		close(pipefd[1][1]);
+-		if (protocol == PROTO_SSH) {
+-			const char *ssh, *ssh_basename;
+-			ssh = getenv("GIT_SSH");
+-			if (!ssh) ssh = "ssh";
+-			ssh_basename = strrchr(ssh, '/');
+-			if (!ssh_basename)
+-				ssh_basename = ssh;
+-			else
+-				ssh_basename++;
  
--	write_err = (write_in_full(pipe_feed[1], src, size) < 0);
--	if (close(pipe_feed[1]))
-+	write_err = (write_in_full(child_process.in, src, size) < 0);
-+	if (close(child_process.in))
- 		write_err = 1;
- 	if (write_err)
- 		error("cannot feed the input to external filter %s", cmd);
+-			if (!port)
+-				execlp(ssh, ssh_basename, host, cmd.buf, NULL);
+-			else
+-				execlp(ssh, ssh_basename, "-p", port, host,
+-				       cmd.buf, NULL);
++	strbuf_init(&cmd, MAX_CMD_LEN);
++	strbuf_addstr(&cmd, prog);
++	strbuf_addch(&cmd, ' ');
++	sq_quote_buf(&cmd, path);
++	if (cmd.len >= MAX_CMD_LEN)
++		die("command line too long");
++
++	conn->in = conn->out = -1;
++	conn->argv = arg = xcalloc(6, sizeof(*arg));
++	if (protocol == PROTO_SSH) {
++		const char *ssh = getenv("GIT_SSH");
++		if (!ssh) ssh = "ssh";
++
++		*arg++ = ssh;
++		if (port) {
++			*arg++ = "-p";
++			*arg++ = port;
+ 		}
+-		else {
+-			unsetenv(ALTERNATE_DB_ENVIRONMENT);
+-			unsetenv(DB_ENVIRONMENT);
+-			unsetenv(GIT_DIR_ENVIRONMENT);
+-			unsetenv(GIT_WORK_TREE_ENVIRONMENT);
+-			unsetenv(GRAFT_ENVIRONMENT);
+-			unsetenv(INDEX_ENVIRONMENT);
+-			execlp("sh", "sh", "-c", cmd.buf, NULL);
+-		}
+-		die("exec failed");
++		*arg++ = host;
++	}
++	else {
++		/* remove these from the environment */
++		const char *env[] = {
++			ALTERNATE_DB_ENVIRONMENT,
++			DB_ENVIRONMENT,
++			GIT_DIR_ENVIRONMENT,
++			GIT_WORK_TREE_ENVIRONMENT,
++			GRAFT_ENVIRONMENT,
++			INDEX_ENVIRONMENT,
++			NULL
++		};
++		conn->env = env;
++		*arg++ = "sh";
++		*arg++ = "-c";
+ 	}
+-	fd[0] = pipefd[0][0];
+-	fd[1] = pipefd[1][1];
+-	close(pipefd[0][1]);
+-	close(pipefd[1][0]);
++	*arg++ = cmd.buf;
++	*arg = NULL;
++
++	if (start_command(conn))
++		die("unable to fork");
++
++	fd[0] = conn->out; /* read from child's stdout */
++	fd[1] = conn->in;  /* write to child's stdin */
++	strbuf_release(&cmd);
+ 	if (free_path)
+ 		free(path);
+ 	return conn;
+@@ -632,13 +626,12 @@ struct child_process *git_connect(int fd[2], char *url,
+ 
+ int finish_connect(struct child_process *conn)
+ {
++	int code;
+ 	if (conn == NULL)
+ 		return 0;
+ 
+-	while (waitpid(conn->pid, NULL, 0) < 0) {
+-		if (errno != EINTR)
+-			return -1;
+-	}
++	code = finish_command(conn);
++	free(conn->argv);
+ 	free(conn);
+-	return 0;
++	return code;
+ }
 -- 
 1.5.3.4.315.g2ce38
