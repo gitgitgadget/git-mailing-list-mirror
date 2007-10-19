@@ -1,138 +1,90 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Teach prune-packed to use the standard progress meter
-Date: Fri, 19 Oct 2007 00:11:47 -0400
-Message-ID: <20071019041147.GA16408@spearce.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
+ objects'
+Date: Thu, 18 Oct 2007 21:21:55 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710182111030.26902@woody.linux-foundation.org>
+References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net>
+ <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
+ <20071019030749.GA9274@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182312160.19446@xanadu.home>
+ <20071019033228.GA10697@coredump.intra.peff.net>
+ <alpine.LFD.0.9999.0710182340550.19446@xanadu.home>
+ <20071019035647.GA18717@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>, Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 06:12:13 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Nicolas Pitre <nico@cam.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 06:22:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IijDX-0006FH-KW
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 06:12:12 +0200
+	id 1IijNZ-0007bt-3I
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 06:22:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751314AbXJSEL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 00:11:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965861AbXJSEL5
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 00:11:57 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45867 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S964813AbXJSEL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 00:11:56 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IijCv-0004AU-Ks; Fri, 19 Oct 2007 00:11:33 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 3F79120FBAE; Fri, 19 Oct 2007 00:11:48 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751762AbXJSEWV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 00:22:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXJSEWV
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 00:22:21 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41214 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750759AbXJSEWU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Oct 2007 00:22:20 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9J4LuKt000729
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 18 Oct 2007 21:21:57 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9J4Lt2W014784;
+	Thu, 18 Oct 2007 21:21:56 -0700
+In-Reply-To: <20071019035647.GA18717@coredump.intra.peff.net>
+X-Spam-Status: No, hits=-4.72 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61645>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61646>
 
-Rather than reimplementing the progress meter logic and always
-showing 100 lines of output while pruning already packed objects
-we now use a delayed progress meter and only show it if there are
-enough objects to make us take a little while.
 
-Most users won't see the message anymore as it usually doesn't take
-very long to delete the already packed loose objects.  This neatens
-the output of a git-gc or git-repack execution, which is especially
-important for a `git gc --auto` triggered from within another
-command.
 
-We perform the display_progress() call from within the very innermost
-loop in case we spend more than 1 second within any single object
-directory.  This ensures that a progress_update event from the
-timer will still trigger in a timely fashion and allow the user to
-see the progress meter.
+On Thu, 18 Oct 2007, Jeff King wrote:
+> 
+> As for a shortcut notation, what about allowing '..' notation inside a
+> reflog. I.e., <ref>@{a..b} is the same as <ref>@{a}..<ref>@{b}? So you
+> could perhaps do origin/master@{1..}?
 
-While I'm in here I changed the message to be more descriptive of
-its actual task.  "Deleting unused objects" is a little scary for
-new users as they wonder where these unused objects came from and
-how they should avoid them.  Truth is these objects aren't unused
-in the sense of what git-prune would call a dangling object, these
-are used but are just duplicates of things we have already stored
-in a packfile.
+I'd love it, but the way our current SHA1 parser works, I don't think it 
+can really do it.
 
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
+Basically, we currently assume that a SHA1 expression always expands to a 
+*single* SHA1.
 
- On top of np/progress topic.  I kicked around a few different
- changes for the progress title but finally settled on this one.
- Improvement suggestions welcome.
+And then, on top of that SHA1 expression parser, we then have a totally 
+separate logic (which is *not* part of the SHA1 expression parser itself) 
+that handles the "a..b" and "a...b" cases.
 
- builtin-prune-packed.c |   15 +++++++++++----
- 1 files changed, 11 insertions(+), 4 deletions(-)
+In other words, all the magic "head@{xyz}" logic is all in sha1_name.c, 
+but that never handles any ranges at all.
 
-diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
-index 9777300..015c8bb 100644
---- a/builtin-prune-packed.c
-+++ b/builtin-prune-packed.c
-@@ -1,5 +1,6 @@
- #include "builtin.h"
- #include "cache.h"
-+#include "progress.h"
- 
- static const char prune_packed_usage[] =
- "git-prune-packed [-n] [-q]";
-@@ -7,6 +8,8 @@ static const char prune_packed_usage[] =
- #define DRY_RUN 01
- #define VERBOSE 02
- 
-+static struct progress progress;
-+
- static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
- {
- 	struct dirent *de;
-@@ -23,6 +26,8 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
- 		if (!has_sha1_pack(sha1, NULL))
- 			continue;
- 		memcpy(pathname + len, de->d_name, 38);
-+		if (opts == VERBOSE)
-+			display_progress(&progress, i + 1);
- 		if (opts & DRY_RUN)
- 			printf("rm -f %s\n", pathname);
- 		else if (unlink(pathname) < 0)
-@@ -39,6 +44,11 @@ void prune_packed_objects(int opts)
- 	const char *dir = get_object_directory();
- 	int len = strlen(dir);
- 
-+	if (opts == VERBOSE)
-+		start_progress_delay(&progress,
-+			"Removing duplicate objects",
-+			256, 95, 2);
-+
- 	if (len > PATH_MAX - 42)
- 		die("impossible object directory");
- 	memcpy(pathname, dir, len);
-@@ -49,16 +59,13 @@ void prune_packed_objects(int opts)
- 
- 		sprintf(pathname + len, "%02x/", i);
- 		d = opendir(pathname);
--		if (opts == VERBOSE && (d || i == 255))
--			fprintf(stderr, "Removing unused objects %d%%...\015",
--				((i+1) * 100) / 256);
- 		if (!d)
- 			continue;
- 		prune_dir(i, d, pathname, len + 3, opts);
- 		closedir(d);
- 	}
- 	if (opts == VERBOSE)
--		fprintf(stderr, "\nDone.\n");
-+		stop_progress(&progress);
- }
- 
- int cmd_prune_packed(int argc, const char **argv, const char *prefix)
--- 
-1.5.3.4.1249.g895be
+And then the range handling is a separate thing in revision.c and 
+builtin-rev-parse.c.
+
+So I think your syntax is wonderful, but it would require moving the 
+complex range handling into sha1_name.c, and would also require that file 
+to get a more complex interface (right now all the sha1_name.c routines 
+just take the "fill in this one SHA1 hash" approach, but ".." and "..." 
+means that you have multiple objects *and* you can mark one of them as 
+being "negated" etc..)
+
+> I'm not sure if there are syntactic issues with parsing out the '..' (or
+> '...') operator.
+
+See above: I don't think we have syntax problems per se: it's just that 
+right now the "complex" parser (the one that knows about ^, ~, and @{x} 
+etc) simply cannot do anything but a single SHA1 due to internal interface 
+issues.
+
+		Linus
