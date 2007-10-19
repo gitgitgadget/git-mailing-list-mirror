@@ -1,53 +1,63 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: Proposed git mv behavioral change
-Date: Thu, 18 Oct 2007 22:54:19 -0400
-Message-ID: <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu>
-References: <c594999b2337.2337c594999b@nyroc.rr.com> <20071019015419.GV14735@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:07:01 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing
+	objects'
+Date: Thu, 18 Oct 2007 23:07:49 -0400
+Message-ID: <20071019030749.GA9274@coredump.intra.peff.net>
+References: <20071019004527.GA12930@spearce.org> <20071019021255.GD3290@coredump.intra.peff.net> <20071019022154.GY14735@spearce.org> <20071019023425.GB8298@coredump.intra.peff.net> <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 05:08:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IiiCS-00064v-7I
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:07:00 +0200
+	id 1IiiDT-0006Cr-HR
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533AbXJSDGt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:06:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbXJSDGt
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:06:49 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:34391 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750885AbXJSDGs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Oct 2007 23:06:48 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9J36hOb023078;
-	Thu, 18 Oct 2007 23:06:44 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9J2sKXb000288
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Thu, 18 Oct 2007 22:54:21 -0400 (EDT)
-In-Reply-To: <20071019015419.GV14735@spearce.org>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1756102AbXJSDHw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Oct 2007 23:07:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751732AbXJSDHw
+	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:07:52 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3559 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750703AbXJSDHw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Oct 2007 23:07:52 -0400
+Received: (qmail 8238 invoked by uid 111); 19 Oct 2007 03:07:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:07:50 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:07:49 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.9999.0710182251110.19446@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61623>
 
+On Thu, Oct 18, 2007 at 11:01:02PM -0400, Nicolas Pitre wrote:
 
-On 18 Oct 2007, at 9:54:19 PM, Shawn O. Pearce wrote:
+> >   - When fetching, one progress meter says "Indexing" which, while
+> >     technically true, is almost certainly blocking on "Downloading". In
+> 
+> I have some WIP for that.
 
-> Elsewhere in git we use the --cached command line option to mean
-> "only make the change in the index".
+Great, I won't start work on it, then.
 
+> Maybe the "Removing unused objects" should use the common progress 
+> infrastructure?  It could even use the delayed interface, just like when 
+> checking out files, so no progress at all is displayed when that 
+> operation completes within a certain delay.  And the removal of unused 
+> objects is usually quick.
 
-It seems like --cached should be phased out in favor of --index/ed
+Are you volunteering (I think you know the progress code best)?
+Otherwise, I will get to it, but probably not tonight.
+
+> But I like the statistics.  They might be pretty handy to diagnoze 
+> performance issues on remote servers for example.
+
+They are by far the most useful of the three lines I mentioned, but I
+just wonder if they are a bit meaningless and cluttery for light users.
+We can always cut the others and see how it looks.
+
+-Peff
