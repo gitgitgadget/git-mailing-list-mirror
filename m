@@ -1,49 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Proposed git mv behavioral change
-Date: Thu, 18 Oct 2007 23:58:38 -0400
-Message-ID: <20071019035838.GB18717@coredump.intra.peff.net>
-References: <c594999b2337.2337c594999b@nyroc.rr.com> <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net> <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU> <20071019034704.GB11095@coredump.intra.peff.net> <C5184350-51A7-46B4-B0C9-E32F79214546@MIT.EDU>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
+Date: Fri, 19 Oct 2007 00:02:13 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710182354300.19446@xanadu.home>
+References: <20071019004527.GA12930@spearce.org>
+ <20071019021255.GD3290@coredump.intra.peff.net>
+ <20071019022154.GY14735@spearce.org>
+ <alpine.LFD.0.9999.0710182247130.19446@xanadu.home>
+ <20071019031737.GD14735@spearce.org>
+ <alpine.LFD.0.9999.0710182328580.19446@xanadu.home>
+ <20071019034501.GG14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael Witten <mfwitten@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Oct 19 05:59:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 06:02:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iij0h-0004QH-EE
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 05:58:55 +0200
+	id 1Iij4L-00055M-C8
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 06:02:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S966533AbXJSD6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Oct 2007 23:58:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S966512AbXJSD6m
-	(ORCPT <rfc822;git-outgoing>); Thu, 18 Oct 2007 23:58:42 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2876 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S966425AbXJSD6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Oct 2007 23:58:40 -0400
-Received: (qmail 8898 invoked by uid 111); 19 Oct 2007 03:58:39 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 18 Oct 2007 23:58:39 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Oct 2007 23:58:38 -0400
-Content-Disposition: inline
-In-Reply-To: <C5184350-51A7-46B4-B0C9-E32F79214546@MIT.EDU>
+	id S1750963AbXJSEC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 00:02:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbXJSEC2
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 00:02:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:17291 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750956AbXJSEC1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 00:02:27 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
+ with ESMTP id <0JQ500I244JP1AD0@VL-MO-MR003.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 19 Oct 2007 00:02:13 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20071019034501.GG14735@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61644>
 
-On Thu, Oct 18, 2007 at 11:53:05PM -0400, Michael Witten wrote:
+On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
 
->>   3. You don't want to commit your changes, so you git-mv in the index
->>      only without involving your dirty working tree file.
-> That's exactly what the original poster wanted.
->
-> It's not unreasonable.
+> Nicolas Pitre <nico@cam.org> wrote:
+> > And imagine that you see the progress moving slowly because the remote 
+> > server is a NSLU2, but it says 80%.  Then you go for a coffee and the 
+> > progress says 20% when you return because it now has moved to a 
+> > different phase.  Rather counter intuitive.
+> 
+> Yea, I didn't consider that.  That's where you need to show the
+> number of steps and which one you are on, so the meter looks
+> more like:
+> 
+> 	Step 1/3: Counting objects: .... \r
+> 	Step 2/4: Compressing objects: ... \r
+> 	Step 3/3: Writing objects: .... \r
+> 
+> only all smashed into one line of course, so only the most recent
+> one is being displayed.
 
-I guess. I really think git-stash is your friend here. But you can still
-do step (3) with git-update-index (I'll leave the exact details as an
-exercise for the reader).
+Yet you might not know in advance how many steps there'll be.  You might 
+or might not have the deltification phase (I simply can't let that term 
+go...), pack indexing also have 1 or 2 steps, and if objects are 
+unpacked instead then you have only one step.
 
--Peff
+Given the asynchronous nature of the sideband messages, I think that 
+could only create messed up displays.  Some messages are terminated with 
+\n and others with \r.
+
+
+Nicolas
