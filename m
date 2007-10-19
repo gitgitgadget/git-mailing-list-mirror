@@ -1,96 +1,74 @@
-From: Andy Parkins <andyparkins@gmail.com>
-Subject: Re: Subversion developer: svn is for dumb people
-Date: Fri, 19 Oct 2007 13:10:15 +0100
-Message-ID: <ffa6r7$223$1@ger.gmane.org>
-References: <47176CE0.7030609@midwinter.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Fri, 19 Oct 2007 14:31:39 +0200
+Message-ID: <4718A3AB.7090301@viscovery.net>
+References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com> <20071019113822.GB16726@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 19 14:50:53 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: =?ISO-8859-1?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@thunk.org>
+X-From: git-owner@vger.kernel.org Fri Oct 19 14:59:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IirJP-0007YW-4m
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 14:50:47 +0200
+	id 1IirRO-000110-Lu
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 14:59:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762473AbXJSMuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 08:50:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763460AbXJSMuJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 08:50:09 -0400
-Received: from main.gmane.org ([80.91.229.2]:51453 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758369AbXJSMuG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 08:50:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IirIg-0007fI-CE
-	for git@vger.kernel.org; Fri, 19 Oct 2007 12:50:02 +0000
-Received: from 194.70.53.227 ([194.70.53.227])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 Oct 2007 12:50:02 +0000
-Received: from andyparkins by 194.70.53.227 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 19 Oct 2007 12:50:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 194.70.53.227
-User-Agent: KNode/0.10.5
+	id S1762995AbXJSM63 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 08:58:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762146AbXJSM63
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 08:58:29 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:20056 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762824AbXJSM62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 08:58:28 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IirQZ-0005ed-59; Fri, 19 Oct 2007 14:58:11 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0A223546; Fri, 19 Oct 2007 14:31:40 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071019113822.GB16726@thunk.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61699>
 
-Steven Grimm wrote:
+Theodore Tso schrieb:
+> ==> git://repo.or.cz/git/spearce.git
+>  * branch gitk -> spearce/gitk		(new)
+>  * branch maint -> spearce/maint	1aa3d01..e7187e4
+>  * branch master -> spearce/master	de61e42..7840ce6
+>  * branch next -> spearce/next		895be02..2fe5433
+>  + branch pu -> spearce/pu		89fa332...1e4c517
+>  * branch todo -> spearce/todo		(new)
 
-> find code reviews *harder* in a centralized system because you end up
+> As far as the padding, it would be a pain to figure out how to make
+> the right hand column be padded so that it starts 3 spaces after the
+> longest "  * branch foo -> bar" line, but that would look the best.
 
-I think I'd argue that git actually reduces the problems of patchbombs
-(which is a code-review problem).
+But this way it wouldn't be difficult at all:
 
-Those who are going to patchbomb will do it whatever their VCS choice (and
-I'm not entirely convinced that patchbombs are as bad as is made out in
-that article).  With a centralised VCS the patch almost has to be one giant
-diff - very hard to read and review.  Git, on the other hand, allows the
-patchbomber to work alone crafting not only beautiful code, but a beautiful
-patch series.  The bomb can be easy to review, easy to reject, and easy to
-modify.  It becomes far more likely that the code can be used in some way.
+==> git://repo.or.cz/git/spearce.git
+  * (new)              gitk -> spearce/gitk
+  * 1aa3d01..e7187e4   maint -> spearce/maint
+  * de61e42..7840ce6   master -> spearce/master
+  * 895be02..2fe5433   next -> spearce/next
+  + 89fa332...1e4c517  pu -> spearce/pu
+  * (new)              todo -> spearce/todo
 
-I guarantee that the only reason I ever contributed anything to git itself
-was because the bureaucracy line is so low - and it is low because of git.
+(I don't know where to put the label 'branch'.)
 
-Key features for a DVCS from a newbie point of view:
- - Making a fool of yourself can be done in private rather than in public.
-   I have loads of branches in my git repository that I will never submit,
-   because they were the beginnings of ideas that didn't pan out (and I'm 
-   lazy)
- - You don't need _any_ permission to fork/branch.
- - You can work away on your feature without worrying too much that time
-   has passed and the main project has moved on and you aren't keeping up
-   to date.  I've got a set of patches for git (the REF_PATHS stuff) that I
-   started a year ago.  I recently rebased it and brought it up to date.
-   It's still not in mainline, but I'm not panicking, nor do I have to
-   abandon it because it's so easy to catch up whenever I want to.
- - I can work on two features simultaneously.  If I have two ideas - crazy
-   and safe, both independent, I can work on both without having to mix
-   them for the day when I submit.  This makes it a lot easier to keep them
-   on the go, and a lot easier for the maintainer to decide what goes in and
-   what doesn't.
- - The ability to craft a log messages that are kept locally and easily
-   edited before submission goes a long way to helping cross the
-   brave-enough-to-submit barrier.  Presenting new code as an unknown
-   developer on a project is (I think) quite a stressful thing.  Git let's
-   you feel as prepared as you want before you take that leap into having
-   your code ripped apart.
+BTW, I like the ID ranges, too, and have used the information
+occasionally.
 
-In short: those pro-centralised arguments are nonsense.  Even if they
-weren't the advantages of DVCS heavily outweigh the advantages of CVCS.
-
-
-
-Andy
-
--- 
-Dr Andy Parkins, M Eng (hons), MIET
-andyparkins@gmail.com
+-- Hannes
