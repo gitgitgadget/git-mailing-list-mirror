@@ -1,73 +1,138 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] Change 'Deltifying objects' to 'Delta compressing objects'
-Date: Fri, 19 Oct 2007 00:02:13 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710182354300.19446@xanadu.home>
-References: <20071019004527.GA12930@spearce.org>
- <20071019021255.GD3290@coredump.intra.peff.net>
- <20071019022154.GY14735@spearce.org>
- <alpine.LFD.0.9999.0710182247130.19446@xanadu.home>
- <20071019031737.GD14735@spearce.org>
- <alpine.LFD.0.9999.0710182328580.19446@xanadu.home>
- <20071019034501.GG14735@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH] Teach prune-packed to use the standard progress meter
+Date: Fri, 19 Oct 2007 00:11:47 -0400
+Message-ID: <20071019041147.GA16408@spearce.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 06:02:42 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>, Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 19 06:12:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iij4L-00055M-C8
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 06:02:41 +0200
+	id 1IijDX-0006FH-KW
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 06:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750963AbXJSEC2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 00:02:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750966AbXJSEC2
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 00:02:28 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:17291 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750956AbXJSEC1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 00:02:27 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
- with ESMTP id <0JQ500I244JP1AD0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Oct 2007 00:02:13 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071019034501.GG14735@spearce.org>
+	id S1751314AbXJSEL6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 00:11:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S965861AbXJSEL5
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 00:11:57 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45867 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S964813AbXJSEL4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 00:11:56 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IijCv-0004AU-Ks; Fri, 19 Oct 2007 00:11:33 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3F79120FBAE; Fri, 19 Oct 2007 00:11:48 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61645>
 
-On Thu, 18 Oct 2007, Shawn O. Pearce wrote:
+Rather than reimplementing the progress meter logic and always
+showing 100 lines of output while pruning already packed objects
+we now use a delayed progress meter and only show it if there are
+enough objects to make us take a little while.
 
-> Nicolas Pitre <nico@cam.org> wrote:
-> > And imagine that you see the progress moving slowly because the remote 
-> > server is a NSLU2, but it says 80%.  Then you go for a coffee and the 
-> > progress says 20% when you return because it now has moved to a 
-> > different phase.  Rather counter intuitive.
-> 
-> Yea, I didn't consider that.  That's where you need to show the
-> number of steps and which one you are on, so the meter looks
-> more like:
-> 
-> 	Step 1/3: Counting objects: .... \r
-> 	Step 2/4: Compressing objects: ... \r
-> 	Step 3/3: Writing objects: .... \r
-> 
-> only all smashed into one line of course, so only the most recent
-> one is being displayed.
+Most users won't see the message anymore as it usually doesn't take
+very long to delete the already packed loose objects.  This neatens
+the output of a git-gc or git-repack execution, which is especially
+important for a `git gc --auto` triggered from within another
+command.
 
-Yet you might not know in advance how many steps there'll be.  You might 
-or might not have the deltification phase (I simply can't let that term 
-go...), pack indexing also have 1 or 2 steps, and if objects are 
-unpacked instead then you have only one step.
+We perform the display_progress() call from within the very innermost
+loop in case we spend more than 1 second within any single object
+directory.  This ensures that a progress_update event from the
+timer will still trigger in a timely fashion and allow the user to
+see the progress meter.
 
-Given the asynchronous nature of the sideband messages, I think that 
-could only create messed up displays.  Some messages are terminated with 
-\n and others with \r.
+While I'm in here I changed the message to be more descriptive of
+its actual task.  "Deleting unused objects" is a little scary for
+new users as they wonder where these unused objects came from and
+how they should avoid them.  Truth is these objects aren't unused
+in the sense of what git-prune would call a dangling object, these
+are used but are just duplicates of things we have already stored
+in a packfile.
 
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-Nicolas
+ On top of np/progress topic.  I kicked around a few different
+ changes for the progress title but finally settled on this one.
+ Improvement suggestions welcome.
+
+ builtin-prune-packed.c |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/builtin-prune-packed.c b/builtin-prune-packed.c
+index 9777300..015c8bb 100644
+--- a/builtin-prune-packed.c
++++ b/builtin-prune-packed.c
+@@ -1,5 +1,6 @@
+ #include "builtin.h"
+ #include "cache.h"
++#include "progress.h"
+ 
+ static const char prune_packed_usage[] =
+ "git-prune-packed [-n] [-q]";
+@@ -7,6 +8,8 @@ static const char prune_packed_usage[] =
+ #define DRY_RUN 01
+ #define VERBOSE 02
+ 
++static struct progress progress;
++
+ static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
+ {
+ 	struct dirent *de;
+@@ -23,6 +26,8 @@ static void prune_dir(int i, DIR *dir, char *pathname, int len, int opts)
+ 		if (!has_sha1_pack(sha1, NULL))
+ 			continue;
+ 		memcpy(pathname + len, de->d_name, 38);
++		if (opts == VERBOSE)
++			display_progress(&progress, i + 1);
+ 		if (opts & DRY_RUN)
+ 			printf("rm -f %s\n", pathname);
+ 		else if (unlink(pathname) < 0)
+@@ -39,6 +44,11 @@ void prune_packed_objects(int opts)
+ 	const char *dir = get_object_directory();
+ 	int len = strlen(dir);
+ 
++	if (opts == VERBOSE)
++		start_progress_delay(&progress,
++			"Removing duplicate objects",
++			256, 95, 2);
++
+ 	if (len > PATH_MAX - 42)
+ 		die("impossible object directory");
+ 	memcpy(pathname, dir, len);
+@@ -49,16 +59,13 @@ void prune_packed_objects(int opts)
+ 
+ 		sprintf(pathname + len, "%02x/", i);
+ 		d = opendir(pathname);
+-		if (opts == VERBOSE && (d || i == 255))
+-			fprintf(stderr, "Removing unused objects %d%%...\015",
+-				((i+1) * 100) / 256);
+ 		if (!d)
+ 			continue;
+ 		prune_dir(i, d, pathname, len + 3, opts);
+ 		closedir(d);
+ 	}
+ 	if (opts == VERBOSE)
+-		fprintf(stderr, "\nDone.\n");
++		stop_progress(&progress);
+ }
+ 
+ int cmd_prune_packed(int argc, const char **argv, const char *prefix)
+-- 
+1.5.3.4.1249.g895be
