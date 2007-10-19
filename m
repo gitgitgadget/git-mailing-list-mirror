@@ -1,77 +1,74 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Fri, 19 Oct 2007 10:14:59 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
-References: <20071019062219.GA28499@coredump.intra.peff.net>
- <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
- <20071019073938.GN14735@spearce.org>
- <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
- <20071019113822.GB16726@thunk.org> <4718A3AB.7090301@viscovery.net>
+From: Scott Parish <sRp@srparish.net>
+Subject: Re: [PATCH] allow git to use the PATH for finding subcommands and
+	help docs
+Date: Fri, 19 Oct 2007 07:18:05 -0700
+Message-ID: <20071019141805.GE1463@srparish.net>
+References: <20071019065931.GB1463@srparish.net> <47185DAF.7060809@viscovery.net> <20071019130402.GD1463@srparish.net> <4718AF48.9020607@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Theodore Tso <tytso@thunk.org>,
-	=?ISO-8859-15?Q?Santi_B=E9jar?= <sbejar@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Oct 19 16:15:33 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 16:18:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IisdQ-0002WV-AJ
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:15:32 +0200
+	id 1IisgH-0003LM-6I
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 16:18:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758928AbXJSOPG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 10:15:06 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757721AbXJSOPF
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:15:05 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:46892 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759399AbXJSOPB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 10:15:01 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-0.15 (built Feb  9 2007))
- with ESMTP id <0JQ500MWJWWZL350@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 19 Oct 2007 10:15:00 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4718A3AB.7090301@viscovery.net>
+	id S1760277AbXJSOSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 10:18:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760253AbXJSOSO
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 10:18:14 -0400
+Received: from smtp-gw6.mailanyone.net ([208.70.128.57]:47851 "EHLO
+	smtp-gw6.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760136AbXJSOSN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 10:18:13 -0400
+Received: from mailanyone.net
+	by smtp-gw6.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP quinn@srparish.net)
+	id 1Iisg0-0005Wm-AQ; Fri, 19 Oct 2007 09:18:12 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Fri, 19 Oct 2007 07:18:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4718AF48.9020607@viscovery.net>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61714>
 
-On Fri, 19 Oct 2007, Johannes Sixt wrote:
+On Fri, Oct 19, 2007 at 03:21:12PM +0200, Johannes Sixt wrote:
 
-> Theodore Tso schrieb:
-> > ==> git://repo.or.cz/git/spearce.git
-> >  * branch gitk -> spearce/gitk		(new)
-> >  * branch maint -> spearce/maint	1aa3d01..e7187e4
-> >  * branch master -> spearce/master	de61e42..7840ce6
-> >  * branch next -> spearce/next		895be02..2fe5433
-> >  + branch pu -> spearce/pu		89fa332...1e4c517
-> >  * branch todo -> spearce/todo		(new)
+>  Scott Parish schrieb:
+> > I have a situation where software for a distribution is installed
+> > into a fake "prefix" and then moved to one of several potential
+> > places to be used by users. Given that the final location isn't
+> > static, i can't depend on builtin_exec_path. I'd really like users
+> > to be able to get started with git as easily as possible. With the
+> > current setup, they would have to create and maintain either an
+> > GIT_EXEC_PATH or an alias for including --exec-path, as well as a
+> > MANPATH and PERL5LIB. This seem like an unnessisary burden.
 > 
-> > As far as the padding, it would be a pain to figure out how to make
-> > the right hand column be padded so that it starts 3 spaces after the
-> > longest "  * branch foo -> bar" line, but that would look the best.
+>  Interesting. How does this compare to this 2-patch-series:
 > 
-> But this way it wouldn't be difficult at all:
+>  http://repo.or.cz/w/git/mingw.git?a=commitdiff;h=e479ea2f911b8c70a269ba59372a4fef90f8907c
+>  http://repo.or.cz/w/git/mingw.git?a=commitdiff;h=00a4ff4f3f8ec7e6b3ac15456f00b22b03f438ae
 > 
-> ==> git://repo.or.cz/git/spearce.git
->  * (new)              gitk -> spearce/gitk
->  * 1aa3d01..e7187e4   maint -> spearce/maint
->  * de61e42..7840ce6   master -> spearce/master
->  * 895be02..2fe5433   next -> spearce/next
->  + 89fa332...1e4c517  pu -> spearce/pu
->  * (new)              todo -> spearce/todo
+>  which I had come up with to accomplish something very similar
+>  (on Windows). Your approach looks superior, but I hadn't gone
+>  into depths, yet.
 
-Actually I think this is the best format so far: one line per branch, no 
-terminal width issue (long branch names are simply wrapped), the 
-old..new info is there also with the single character marker to quickly 
-notice the type of update.
+I know very little about what's available on windows. Looking at
+your code, it looks like the command isn't passed in in argv[0] and
+that it contains the windows style path seperators. My code currently
+assumes that PATH is a colon separated list, and that directories
+are separated with '/'. How should these assumptions change for
+windows?
 
+sRp
 
-Nicolas
+-- 
+Scott Parish
+http://srparish.net/
