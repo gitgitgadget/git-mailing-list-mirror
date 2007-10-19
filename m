@@ -1,182 +1,106 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 02/14] Use start_command() in git_connect() instead of explicit fork/exec.
-Date: Fri, 19 Oct 2007 21:47:54 +0200
-Message-ID: <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 04/14] Use run_command() to spawn external diff programs instead of fork/exec.
+Date: Fri, 19 Oct 2007 21:47:56 +0200
+Message-ID: <1192823286-9654-5-git-send-email-johannes.sixt@telecom.at>
 References: <1192823286-9654-1-git-send-email-johannes.sixt@telecom.at>
  <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
+ <1192823286-9654-3-git-send-email-johannes.sixt@telecom.at>
+ <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:27 2007
+X-From: git-owner@vger.kernel.org Fri Oct 19 21:48:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IixpY-0002gS-6K
-	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:24 +0200
+	id 1IixpY-0002gS-So
+	for gcvg-git-2@gmane.org; Fri, 19 Oct 2007 21:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932284AbXJSTsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 15:48:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXJSTsN
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:13 -0400
-Received: from smtp4.srv.eunet.at ([193.154.160.226]:44484 "EHLO
+	id S932406AbXJSTsQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 15:48:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932398AbXJSTsP
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 15:48:15 -0400
+Received: from smtp4.srv.eunet.at ([193.154.160.226]:44494 "EHLO
 	smtp4.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763884AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1764773AbXJSTsJ (ORCPT <rfc822;git@vger.kernel.org>);
 	Fri, 19 Oct 2007 15:48:09 -0400
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp4.srv.eunet.at (Postfix) with ESMTP id 53F2E97C80;
+	by smtp4.srv.eunet.at (Postfix) with ESMTP id B9B8D97D4B;
 	Fri, 19 Oct 2007 21:48:07 +0200 (CEST)
 X-Mailer: git-send-email 1.5.3.4.315.g2ce38
-In-Reply-To: <1192823286-9654-2-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1192823286-9654-4-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61745>
-
-The child process handling is delegated to start_command() and
-finish_command().
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61746>
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- connect.c |  103 ++++++++++++++++++++++++++++--------------------------------
- 1 files changed, 48 insertions(+), 55 deletions(-)
+ diff.c |   38 +++-----------------------------------
+ 1 files changed, 3 insertions(+), 35 deletions(-)
 
-diff --git a/connect.c b/connect.c
-index e66e171..d19c7b1 100644
---- a/connect.c
-+++ b/connect.c
-@@ -482,11 +482,12 @@ struct child_process *git_connect(int fd[2], char *url,
- 	char *host, *path = url;
- 	char *end;
- 	int c;
--	int pipefd[2][2];
- 	struct child_process *conn;
- 	enum protocol protocol = PROTO_LOCAL;
- 	int free_path = 0;
- 	char *port = NULL;
-+	const char **arg;
-+	struct strbuf cmd;
+diff --git a/diff.c b/diff.c
+index 6648e01..30b7544 100644
+--- a/diff.c
++++ b/diff.c
+@@ -9,6 +9,7 @@
+ #include "xdiff-interface.h"
+ #include "color.h"
+ #include "attr.h"
++#include "run-command.h"
  
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
-@@ -572,59 +573,52 @@ struct child_process *git_connect(int fd[2], char *url,
- 		return NULL;
- 	}
- 
--	if (pipe(pipefd[0]) < 0 || pipe(pipefd[1]) < 0)
--		die("unable to create pipe pair for communication");
- 	conn = xcalloc(1, sizeof(*conn));
--	conn->pid = fork();
--	if (conn->pid < 0)
--		die("unable to fork");
--	if (!conn->pid) {
--		struct strbuf cmd;
--
--		strbuf_init(&cmd, MAX_CMD_LEN);
--		strbuf_addstr(&cmd, prog);
--		strbuf_addch(&cmd, ' ');
--		sq_quote_buf(&cmd, path);
--		if (cmd.len >= MAX_CMD_LEN)
--			die("command line too long");
--
--		dup2(pipefd[1][0], 0);
--		dup2(pipefd[0][1], 1);
--		close(pipefd[0][0]);
--		close(pipefd[0][1]);
--		close(pipefd[1][0]);
--		close(pipefd[1][1]);
--		if (protocol == PROTO_SSH) {
--			const char *ssh, *ssh_basename;
--			ssh = getenv("GIT_SSH");
--			if (!ssh) ssh = "ssh";
--			ssh_basename = strrchr(ssh, '/');
--			if (!ssh_basename)
--				ssh_basename = ssh;
--			else
--				ssh_basename++;
- 
--			if (!port)
--				execlp(ssh, ssh_basename, host, cmd.buf, NULL);
--			else
--				execlp(ssh, ssh_basename, "-p", port, host,
--				       cmd.buf, NULL);
-+	strbuf_init(&cmd, MAX_CMD_LEN);
-+	strbuf_addstr(&cmd, prog);
-+	strbuf_addch(&cmd, ' ');
-+	sq_quote_buf(&cmd, path);
-+	if (cmd.len >= MAX_CMD_LEN)
-+		die("command line too long");
-+
-+	conn->in = conn->out = -1;
-+	conn->argv = arg = xcalloc(6, sizeof(*arg));
-+	if (protocol == PROTO_SSH) {
-+		const char *ssh = getenv("GIT_SSH");
-+		if (!ssh) ssh = "ssh";
-+
-+		*arg++ = ssh;
-+		if (port) {
-+			*arg++ = "-p";
-+			*arg++ = port;
- 		}
--		else {
--			unsetenv(ALTERNATE_DB_ENVIRONMENT);
--			unsetenv(DB_ENVIRONMENT);
--			unsetenv(GIT_DIR_ENVIRONMENT);
--			unsetenv(GIT_WORK_TREE_ENVIRONMENT);
--			unsetenv(GRAFT_ENVIRONMENT);
--			unsetenv(INDEX_ENVIRONMENT);
--			execlp("sh", "sh", "-c", cmd.buf, NULL);
--		}
--		die("exec failed");
-+		*arg++ = host;
-+	}
-+	else {
-+		/* remove these from the environment */
-+		const char *env[] = {
-+			ALTERNATE_DB_ENVIRONMENT,
-+			DB_ENVIRONMENT,
-+			GIT_DIR_ENVIRONMENT,
-+			GIT_WORK_TREE_ENVIRONMENT,
-+			GRAFT_ENVIRONMENT,
-+			INDEX_ENVIRONMENT,
-+			NULL
-+		};
-+		conn->env = env;
-+		*arg++ = "sh";
-+		*arg++ = "-c";
- 	}
--	fd[0] = pipefd[0][0];
--	fd[1] = pipefd[1][1];
--	close(pipefd[0][1]);
--	close(pipefd[1][0]);
-+	*arg++ = cmd.buf;
-+	*arg = NULL;
-+
-+	if (start_command(conn))
-+		die("unable to fork");
-+
-+	fd[0] = conn->out; /* read from child's stdout */
-+	fd[1] = conn->in;  /* write to child's stdin */
-+	strbuf_release(&cmd);
- 	if (free_path)
- 		free(path);
- 	return conn;
-@@ -632,13 +626,12 @@ struct child_process *git_connect(int fd[2], char *url,
- 
- int finish_connect(struct child_process *conn)
- {
-+	int code;
- 	if (conn == NULL)
- 		return 0;
- 
--	while (waitpid(conn->pid, NULL, 0) < 0) {
--		if (errno != EINTR)
--			return -1;
--	}
-+	code = finish_command(conn);
-+	free(conn->argv);
- 	free(conn);
--	return 0;
-+	return code;
+ #ifdef NO_FAST_WORKING_DIRECTORY
+ #define FAST_WORKING_DIRECTORY 0
+@@ -1748,40 +1749,6 @@ static void remove_tempfile_on_signal(int signo)
+ 	raise(signo);
  }
+ 
+-static int spawn_prog(const char *pgm, const char **arg)
+-{
+-	pid_t pid;
+-	int status;
+-
+-	fflush(NULL);
+-	pid = fork();
+-	if (pid < 0)
+-		die("unable to fork");
+-	if (!pid) {
+-		execvp(pgm, (char *const*) arg);
+-		exit(255);
+-	}
+-
+-	while (waitpid(pid, &status, 0) < 0) {
+-		if (errno == EINTR)
+-			continue;
+-		return -1;
+-	}
+-
+-	/* Earlier we did not check the exit status because
+-	 * diff exits non-zero if files are different, and
+-	 * we are not interested in knowing that.  It was a
+-	 * mistake which made it harder to quit a diff-*
+-	 * session that uses the git-apply-patch-script as
+-	 * the GIT_EXTERNAL_DIFF.  A custom GIT_EXTERNAL_DIFF
+-	 * should also exit non-zero only when it wants to
+-	 * abort the entire diff-* session.
+-	 */
+-	if (WIFEXITED(status) && !WEXITSTATUS(status))
+-		return 0;
+-	return -1;
+-}
+-
+ /* An external diff command takes:
+  *
+  * diff-cmd name infile1 infile1-sha1 infile1-mode \
+@@ -1834,7 +1801,8 @@ static void run_external_diff(const char *pgm,
+ 		*arg++ = name;
+ 	}
+ 	*arg = NULL;
+-	retval = spawn_prog(pgm, spawn_arg);
++	fflush(NULL);
++	retval = run_command_v_opt(spawn_arg, 0);
+ 	remove_tempfile();
+ 	if (retval) {
+ 		fprintf(stderr, "external diff died, stopping at %s.\n", name);
 -- 
 1.5.3.4.315.g2ce38
