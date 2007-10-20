@@ -1,64 +1,105 @@
-From: Michael Witten <mfwitten@MIT.EDU>
-Subject: Re: Proposed git mv behavioral change
-Date: Sat, 20 Oct 2007 02:45:05 -0400
-Message-ID: <8D972813-2D7F-4D6A-958F-B76E947E7BC3@MIT.EDU>
-References: <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net> <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU> <20071019034704.GB11095@coredump.intra.peff.net> <1192859748.13347.146.camel@g4mdd.entnet> <20071020062400.GA30388@coredump.intra.peff.net> <20071020063628.GV14735@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.2)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 08:45:39 2007
+From: Scott R Parish <srp@srparish.net>
+Subject: [PATCH] If git is ran with a relative path, try building an
+	absolute exec_path from it
+Date: Fri, 19 Oct 2007 23:46:17 -0700
+Message-ID: <20071020064617.GC2237@srparish.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 20 08:46:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij85Z-0000FN-2l
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 08:45:37 +0200
+	id 1Ij86W-0000Sf-6R
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 08:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762493AbXJTGpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 02:45:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762425AbXJTGpZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 02:45:25 -0400
-Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:34415 "EHLO
-	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1762493AbXJTGpY (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2007 02:45:24 -0400
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9K6j7YS006623;
-	Sat, 20 Oct 2007 02:45:12 -0400 (EDT)
-Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
-	(authenticated bits=0)
-        (User authenticated as mfwitten@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9K6j6go022709
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Sat, 20 Oct 2007 02:45:06 -0400 (EDT)
-In-Reply-To: <20071020063628.GV14735@spearce.org>
-X-Mailer: Apple Mail (2.752.2)
-X-Scanned-By: MIMEDefang 2.42
-X-Spam-Flag: NO
-X-Spam-Score: 0.00
+	id S1762829AbXJTGqZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 02:46:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762803AbXJTGqY
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 02:46:24 -0400
+Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:55785 "EHLO
+	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762660AbXJTGqY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 02:46:24 -0400
+Received: from mailanyone.net
+	by smtp-gw51.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP quinn@srparish.net)
+	id 1Ij86J-0007mp-7T
+	for git@vger.kernel.org; Sat, 20 Oct 2007 01:46:23 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Fri, 19 Oct 2007 23:46:19 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61801>
 
+ Signed-off-by: Scott R Parish <srp@srparish.net>
 
-On 20 Oct 2007, at 2:36:28 AM, Shawn O. Pearce wrote:
+---
+ git.c |   35 +++++++++++++++++++++++++++++++++--
+ 1 files changed, 33 insertions(+), 2 deletions(-)
 
-> Today I move the file, then unstage the hunks I'm not sure about,
-> then go back and restage them.  Annoying.  It really disrupts
-> my workflow.
-
-I know it's against policy, but the proposed change should be set
-as the default at some point, in my opinion.
-
-Perhaps when the -u flagged is not used, there can be a warning that
-states -u will become the default at a certain time.
-
-In fact, -u speaks "update" to me, and I would expect it to signal
-the current behavior.
-
-I have a feeling that my suggestion will not go far,
-but I also think that backwards compatibility can
-overstay its welcome.
+diff --git a/git.c b/git.c
+index 9eaca1d..d129ecc 100644
+--- a/git.c
++++ b/git.c
+@@ -28,6 +28,35 @@ static void prepend_to_path(const char *dir, int len)
+ 	free(path);
+ }
+ 
++static char *rel_to_abs_exec_path(const char *cmd) {
++	int len, rc;
++	char *exec_path = xmalloc(PATH_MAX + 1);
++
++	if (!getcwd(exec_path, PATH_MAX)) {
++		fprintf(stderr, "git: cannot determine current directory: %s\n",
++			strerror(errno));
++		free(exec_path);
++		return NULL;
++	}
++	len = strlen(exec_path);
++
++	/* Trivial cleanup */
++	while (!prefixcmp(cmd, "./")) {
++		cmd += 2;
++		while (*cmd == '/')
++			cmd++;
++	}
++
++	rc = snprintf(exec_path + len, PATH_MAX - len, "/%s", cmd);
++	if (rc < 0 || rc >= PATH_MAX - len) {
++		fprintf(stderr, "git: command name given is too long.\n");
++		free(exec_path);
++		return NULL;
++	}
++
++	return exec_path;
++}
++
+ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ {
+ 	int handled = 0;
+@@ -409,13 +438,15 @@ int main(int argc, const char **argv)
+ 	/*
+ 	 * Take the basename of argv[0] as the command
+ 	 * name, and the dirname as the default exec_path
+-	 * if it's an absolute path and we don't have
+-	 * anything better.
++	 * if we don't have anything better.
+ 	 */
+ 	if (slash) {
+ 		*slash++ = 0;
+ 		if (*cmd == '/')
+ 			exec_path = cmd;
++		else
++			exec_path = rel_to_abs_exec_path(cmd);
++
+ 		cmd = slash;
+ 	}
+ 
+-- 
+1.5.3.GIT
