@@ -1,61 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
-Date: Sat, 20 Oct 2007 01:00:19 -0400
-Message-ID: <20071020050019.GA27282@coredump.intra.peff.net>
-References: <20071019062219.GA28499@coredump.intra.peff.net> <ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com> <20071019073938.GN14735@spearce.org> <8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com> <20071019113822.GB16726@thunk.org> <4718A3AB.7090301@viscovery.net> <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git on afs
+Date: Sat, 20 Oct 2007 01:29:06 -0400
+Message-ID: <20071020052906.GT14735@spearce.org>
+References: <20071018203106.GA13518@fries.net> <20071019054814.GJ14735@spearce.org> <200710190742.08174.todd@fries.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Theodore Tso <tytso@thunk.org>,
-	Santi =?iso-8859-1?Q?B=E9jar?= <sbejar@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Symonds <dsymonds@gmail.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 07:00:38 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Brandon Casey <casey@nrlssc.navy.mil>
+To: "Todd T. Fries" <todd@fries.net>
+X-From: git-owner@vger.kernel.org Sat Oct 20 07:29:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij6Ru-0006eB-E2
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 07:00:34 +0200
+	id 1Ij6tt-0002vt-Il
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 07:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752332AbXJTFAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 01:00:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752326AbXJTFAW
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 01:00:22 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2706 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752235AbXJTFAV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 01:00:21 -0400
-Received: (qmail 18632 invoked by uid 111); 20 Oct 2007 05:00:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 20 Oct 2007 01:00:20 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Oct 2007 01:00:19 -0400
+	id S1752632AbXJTF3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 01:29:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752581AbXJTF3R
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 01:29:17 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45435 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752553AbXJTF3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 01:29:16 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ij6tY-0002A2-Nh; Sat, 20 Oct 2007 01:29:09 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 3BE0620FBAE; Sat, 20 Oct 2007 01:29:07 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710191009330.19446@xanadu.home>
+In-Reply-To: <200710190742.08174.todd@fries.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61785>
 
-On Fri, Oct 19, 2007 at 10:14:59AM -0400, Nicolas Pitre wrote:
+"Todd T. Fries" <todd@fries.net> wrote:
+> It should not matter, but I'm using arla's afs client on OpenBSD; the errno
+> is 17 (EEXIST), the very errno that bypasses the coda hack's rename():
+...
+> I can assure you that the 2nd argument to link does not exist ;-)
+...
+> The only downside is that either on coda or if the file already exists, it
+> will try a spurrous rename(), in which case it will fail with EEXIST again,
+> so I hope this is not a big negative.
 
-> > ==> git://repo.or.cz/git/spearce.git
-> >  * (new)              gitk -> spearce/gitk
-> >  * 1aa3d01..e7187e4   maint -> spearce/maint
-> >  * de61e42..7840ce6   master -> spearce/master
-> >  * 895be02..2fe5433   next -> spearce/next
-> >  + 89fa332...1e4c517  pu -> spearce/pu
-> >  * (new)              todo -> spearce/todo
-> 
-> Actually I think this is the best format so far: one line per branch, no 
-> terminal width issue (long branch names are simply wrapped), the 
-> old..new info is there also with the single character marker to quickly 
-> notice the type of update.
+Actually there is a really big downside.  rename() is defined to
+unlink the destination if it already exists, so you'll never get
+EEXIST from a rename() call.
 
-Technically speaking, the hash IDs can be up to 80 characters long,
-since they are meant to be unique abbreviations. But in practice, I
-think leaving enough space for 10 + '...' + 10 should accomodate just
-about any project (IIRC, the kernel's longest non-unique is around 9).
+This means that an existing (known to be good) object can be
+overwritten as a result of a rename with another copy of the object.
+We've never really had that behavior as part of our security model
+has been to always trust what is already in the repository and
+refuse to replace something we already have.
+ 
+> --- a/sha1_file.c
+> +++ b/sha1_file.c
+> @@ -2004,8 +2004,13 @@ int move_temp_to_file(const char *tmpfile, const char *filename)
+>  	 *
+>  	 * When this succeeds, we just return 0. We have nothing
+>  	 * left to unlink.
+> +	 *
+> +	 * AFS hack - afs is similar to coda, but inconveniently
+> +	 * set errno to EEXIST, so call rename() if the link()
+> +	 * above fails unconditionally.  Small bit of extra work
+> +	 * so afs functions properly.
+>  	 */
+> -	if (ret && ret != EEXIST) {
+> +	if (ret) {
+>  		if (!rename(tmpfile, filename))
+>  			return 0;
+>  		ret = errno;
 
--Peff
+This is very unfortunate.  There's no way to tell that the file
+already exists.  This whole AFS link() returning EEXIST is sort of
+like the unlink() call on Solaris UFS working on directories as root
+and leaving corrupted filesystems.  At some point the application
+just cannot be reasonably expected to work on a system that acts
+this insane.
+
+I think I would rather change sha1_file.c to write temporary files
+into the destination directory, rather than one level up and try to
+hardlink them into position.  At least there we can rely on hardlinks
+within Coda and AFS, and only need this rename special case for FAT.
+
+-- 
+Shawn.
