@@ -1,86 +1,123 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: git-p4 pull request
-Date: Sat, 20 Oct 2007 17:17:50 +0200
-Message-ID: <200710201717.54604.simon@lst.de>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: gitk patch collection pull request
+Date: Sat, 20 Oct 2007 17:32:16 +0200
+Message-ID: <20071020153216.GD19521@efreet.light.src>
+References: <20071019052823.GI14735@spearce.org> <18200.36704.936554.220173@cargo.ozlabs.ibm.com> <531A500E-667F-413C-BD20-D23DC817EB72@steelskies.com> <18201.60047.898077.579869@cargo.ozlabs.ibm.com> <B3349B61-995B-42D0-B777-CEA618943848@steelskies.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1561638.hBs7vqTY69";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Chris Pettitt <cpettitt@gmail.com>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 17:18:14 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5gxpn/Q6ypwruk0T"
+Cc: Paul Mackerras <paulus@samba.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jonathan del Strother <maillist@steelskies.com>
+X-From: git-owner@vger.kernel.org Sat Oct 20 17:32:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjG5S-0000TF-Kh
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 17:18:03 +0200
+	id 1IjGJd-0004gR-SQ
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 17:32:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755793AbXJTPRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 11:17:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755546AbXJTPRu
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 11:17:50 -0400
-Received: from esparsett.troll.no ([62.70.27.18]:33232 "EHLO
-	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755526AbXJTPRt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 11:17:49 -0400
-Received: from esparsett.troll.no (localhost [127.0.0.1])
-	by localhost (Postfix) with SMTP
-	id 5D90C7422D; Sat, 20 Oct 2007 17:17:46 +0200 (CEST)
-Received: from luria.local (unknown [172.20.1.59])
-	by esparsett.troll.no (Postfix) with ESMTP
-	id E983C741E9; Sat, 20 Oct 2007 17:17:45 +0200 (CEST)
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
+	id S1756001AbXJTPc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 11:32:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755999AbXJTPc2
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 11:32:28 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:47056 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755972AbXJTPc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 11:32:27 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 0F3D15729A;
+	Sat, 20 Oct 2007 17:32:26 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id XDwTBbg6eHKE; Sat, 20 Oct 2007 17:32:23 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 5C21E5729B;
+	Sat, 20 Oct 2007 17:32:22 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IjGJE-0002JE-Ap; Sat, 20 Oct 2007 17:32:16 +0200
+Content-Disposition: inline
+In-Reply-To: <B3349B61-995B-42D0-B777-CEA618943848@steelskies.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61841>
 
---nextPart1561638.hBs7vqTY69
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+
+--5gxpn/Q6ypwruk0T
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Sat, Oct 20, 2007 at 14:00:20 +0100, Jonathan del Strother wrote:
+>
+> On 20 Oct 2007, at 12:46, Paul Mackerras wrote:
+>
+>> Jonathan del Strother writes:
+>>
+>>> In my defense, most of that file is space indented, and the places
+>>
+>> Only the lines that are indented 1 level start with spaces.  Any line
+>> that is indented 2 or more levels should start with a tab.
+>
+>>> It seems to have the whole 'tabs for code
+>>> indentation, with space for alignment' rule back-to-front.
+>>
+>> I don't recall signing up to that rule. :)  I use 4-column indentation
+>> and 8-column tabs, and my editor (emacs) handles it all automatically
+>> for me.
+>
+>
+> Ugh...  I don't usually get involved in tab/space wars, but I'm curious..=
+=2E=20
+> why on earth would you choose this style?
 
-The following changes since commit 7840ce6cb24a9d65152d45e08f5d7cf7dc97a2e3:
-  Shawn O. Pearce (1):
-        Merge branch 'maint'
+Because that's default behaviour of both emacs and vi when you set
+indentation different from tabstop. Actually most of GNU software, whether =
+it
+uses the GNU standard indent of 2, or more, uses tabs for any indents
+over 8. Probably even most unix software uses this.
 
-are available in the git repository at:
+Actually, even if the indent is 8, function arguments are often aligned und=
+er
+the open parenthesis and a tabs + spaces combination is normally used for
+that as well (because, again, that's what most editors will by default do!).
 
-  git://repo.or.cz/git/git-p4.git git-p4
-
-Chris Pettitt (1):
-      git-p4 support for perforce renames.
-
-Simon Hausmann (1):
-      git-p4: When skipping a patch as part of "git-p4 submit" make sure we=
+> With space indentation you can make sure that everyone sees the indentati=
+on=20
+> as it was intended.  With tab indentation, you save space, add semantic=
 =20
-correctly revert to the previous state of the files using "p4 revert".
+> meaning, and let people control how wide they want their indents to appea=
+r.=20
+>  This approach seems to take the worst parts of each and combine them. =
+=20
+> What's the benefit?
 
- contrib/fast-import/git-p4 |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+Tab stops are every 8 characters. No more, no less. Ever. This makes the te=
+xt
+with whatever formating you want the shortest.
 
+> I appreciate I'm not going to convert you - this is an honest question.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
 
-These changes fit nicely into master I would say.
-
-Thanks,
-Simon
-
---nextPart1561638.hBs7vqTY69
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+--5gxpn/Q6ypwruk0T
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.6 (GNU/Linux)
 
-iD8DBQBHGhwiWXvMThJCpvIRAooSAKCfmXgmqNC2uUge8JmvGX3jK6KoKgCdGo5r
-S6q4K+ag897Sa2Z5aIRG/U4=
-=1Vhy
+iD8DBQFHGh+ARel1vVwhjGURAj2gAKDsCAg8v6yBKP948n8QL1l+nruIlQCg3yoH
+z/5eeyylAhhr9qyiftB/Hks=
+=j46i
 -----END PGP SIGNATURE-----
 
---nextPart1561638.hBs7vqTY69--
+--5gxpn/Q6ypwruk0T--
