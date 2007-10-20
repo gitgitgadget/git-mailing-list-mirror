@@ -1,139 +1,98 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: How can I access remote branches in a cloned repository on my
-	local machine?
-Date: Sat, 20 Oct 2007 16:09:27 +0200
-Message-ID: <20071020140927.GC19521@efreet.light.src>
-References: <05B1B470-1C86-40E6-9E33-968809414537@atlasocean.com>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="69pVuxX8awAiJ7fD"
-Cc: git@vger.kernel.org
-To: Erich Ocean <erich@atlasocean.com>
-X-From: git-owner@vger.kernel.org Sat Oct 20 16:09:54 2007
+From: Erich Ocean <erich@atlasocean.com>
+Subject: [Solved] How can I access remote branches in a cloned repository on my local machine?
+Date: Sat, 20 Oct 2007 07:18:46 -0700
+Message-ID: <20CAFC3D-7684-480D-B340-C3206BA08DE5@atlasocean.com>
+References: <05B1B470-1C86-40E6-9E33-968809414537@atlasocean.com> <Pine.LNX.4.64.0710201449340.8248@beast.quantumfyre.co.uk> <Pine.LNX.4.64.0710201455540.8248@beast.quantumfyre.co.uk>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 20 16:19:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjF1R-0004w2-L2
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 16:09:50 +0200
+	id 1IjFAp-00083s-N3
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 16:19:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754304AbXJTOJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 10:09:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754258AbXJTOJe
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 10:09:34 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:41668 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752702AbXJTOJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 10:09:33 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 3C37B57372;
-	Sat, 20 Oct 2007 16:09:32 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id B12gVZGX50wb; Sat, 20 Oct 2007 16:09:29 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A80CF57371;
-	Sat, 20 Oct 2007 16:09:28 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IjF15-00027c-D6; Sat, 20 Oct 2007 16:09:27 +0200
-Content-Disposition: inline
-In-Reply-To: <05B1B470-1C86-40E6-9E33-968809414537@atlasocean.com>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753804AbXJTOSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 10:18:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754401AbXJTOSt
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 10:18:49 -0400
+Received: from georgia.textdrive.com ([207.7.107.246]:56604 "EHLO
+	georgia.textdrive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752404AbXJTOSs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 10:18:48 -0400
+Received: from [192.168.6.221] (mail.one-k.com [206.114.20.226])
+	by georgia.textdrive.com (Postfix) with ESMTP id 580FF3509C
+	for <git@vger.kernel.org>; Sat, 20 Oct 2007 14:18:48 +0000 (GMT)
+In-Reply-To: <Pine.LNX.4.64.0710201455540.8248@beast.quantumfyre.co.uk>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61839>
 
+Per Julian Phillips' suggestion:
 
---69pVuxX8awAiJ7fD
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ > logan-2:~ ocean$ cd commiters/
+ > logan-2:~/commiters ocean$ git config remote.origin.fetch +refs/ 
+remotes/*:refs/remotes/*
+ > logan-2:~/commiters ocean$ git fetch
+ > git@git.1kstudios.lan's password:
+ > * refs/remotes/eocean/master: storing remote branch 'eocean/ 
+master' of git@git.1kstudios.lan:dev
+ >   commit: 06b4b2e
+ > * refs/remotes/gt/master: storing remote branch 'gt/master' of  
+git@git.1kstudios.lan:dev
+ >   commit: 889a585
+ > * refs/remotes/jchumley/master: storing remote branch 'jchumley/ 
+master' of git@git.1kstudios.lan:dev
+ >   commit: 18cead3
+ > logan-2:~/commiters ocean$ git branch
+ >   +refs/remotes/eocean/master
+ >   +refs/remotes/gt/master
+ >   +refs/remotes/jchumley/master
+ > * master
+ > logan-2:~/commiters ocean$ git checkout  +refs/remotes/jchumley/ 
+master
+ > Switched to branch "+refs/remotes/jchumley/master"
 
-On Sat, Oct 20, 2007 at 06:15:21 -0700, Erich Ocean wrote:
-> Our developer group has a shared git repository at=20
-> git@git.1kstudios.lan:dev.
+Best, Erich
+
+On Oct 20, 2007, at 6:56 AM, Julian Phillips wrote:
+
+> On Sat, 20 Oct 2007, Julian Phillips wrote:
 >
-> Each developer has established their own local repository by running:
+>>>  The problem is, when I clone git@git.1kstudios.lan:dev, the various
+>>>  <username>/master's aren't there. I have tried a bunch of  
+>>> different ways,
+>>>  but they all give me errors. For example:
+>>
+>> The default fetch refspec doesn't include the remotes - after all,  
+>> you normally don't want the origin for your origin ...
+>>
+>>>  How can I access remote branches in a cloned repository on my local
+>>>  machine?
+>>
+>> Try something like:
+>>
+>> git config remote.origin.fetch +refs/remotes/*:+refs/remotes/*
 >
-> 	git clone git@git.1kstudios.lan:dev
-> 	git config remote.origin.push master:refs/remotes/<username>/master
-
-The paths on server are refs/remotes/<userame>/master.
-
-It's more common to publish (push to public or shared repository) to
-refs/heads. The refs/remotes namespace is normally only used when fetching.
-There's nothing in git saying you can't do it your way, but there are things
-that make the common way more convenient.
-
-> Each developer then does a `git pull` to update their master branch, merg=
-es=20
-> their changes from their local topic branches, and then does `git push` t=
-o=20
-> make the results available at git@git.1kstudios.lan:dev.
+> sorry, that should have been:
+> git config remote.origin.fetch +refs/remotes/*:refs/remotes/*
 >
-> As the integrator, I have then been ssh'ing into the git@git.1kstudios.la=
-n=20
-> machine, cd'ing to "dev" and doing:
+>> git fetch
 >
-> 	git merge <username>/master
-
-Yes, because locally refs/remotes is searched when looking for unqualified
-ref. But if you checked that out, git would complain it's not a branch and
-created a detached head.
-
-> to incorporate their changes after running `git diff` to see what the=20
-> changes are.
+> -- 
+> Julian
 >
-> My own development repository is set up identically to the other=20
-> developers.
->
-> What I would like to do now is clone the git@git.1kstudios.lan:dev=20
-> repository on my local machine a second time, checkout a <username>/maste=
-r=20
-> branch in that repository, and then use BBEdit's graphical diff to visual=
-ly=20
-> see the changes between my own repository and what another developer has=
-=20
-> pushed to the shared repository. I'll then merge them into my own develop=
-er=20
-> repository and push that to the shared repository for the rest of the=20
-> developers to pull from, so no longer will I merge by ssh'ing into the=20
-> machine with the shared repository.
->
-> The problem is, when I clone git@git.1kstudios.lan:dev, the various=20
-> <username>/master's aren't there. I have tried a bunch of different ways,=
-=20
-> but they all give me errors. For example:
-
-By default clone only compies refs from refs/heads to refs/remotes/origin a=
-nd
-=66rom refs/tags to refs/tags.
-
-You have two options here:
- - Move the branches on server to refs/heads. Then the various
-   <username>/master will be visible locally as origin/<username>/master
-   (qualified names refs/remotes/origin/<username>/master -- you can of
-   course call the remote differently if you want).
- - Add +refs/remotes/*:refs/remotes/origin/* to remote.origin.fetch config
-   key in your local repository (I am not sure it will work properly with
-   multiple source patterns with the same destination pattern, though).
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---69pVuxX8awAiJ7fD
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHGgwXRel1vVwhjGURAqLYAKDuzVSMQKlIQE0+hSsfZW26oaMhbgCeJSZc
-nmpLkElTuK0KJsB42kuFIBI=
-=s5P0
------END PGP SIGNATURE-----
-
---69pVuxX8awAiJ7fD--
+>  ---
+> "The National Association of Theater Concessionaires reported that in
+> 1986, 60% of all candy sold in movie theaters was sold to Roger  
+> Ebert."
+> 		-- D. Letterman
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
