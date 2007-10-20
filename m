@@ -1,99 +1,98 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: Fourth incarnation of the msysGit herald
-Date: Sat, 20 Oct 2007 15:33:59 +0200
-Message-ID: <20071020133359.GB19521@efreet.light.src>
-References: <Pine.LNX.4.64.0710200024460.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="i9LlY+UWpKt15+FH"
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 20 15:34:23 2007
+From: Erich Ocean <erich@atlasocean.com>
+Subject: How can I access remote branches in a cloned repository on my local machine?
+Date: Sat, 20 Oct 2007 06:15:21 -0700
+Message-ID: <05B1B470-1C86-40E6-9E33-968809414537@atlasocean.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 20 15:39:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjET8-0000eD-Ji
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 15:34:23 +0200
+	id 1IjEYA-0002OL-5Y
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 15:39:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753753AbXJTNeL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 09:34:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753364AbXJTNeL
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 09:34:11 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:43003 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753046AbXJTNeJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 09:34:09 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id C87B857369;
-	Sat, 20 Oct 2007 15:34:07 +0200 (CEST)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id Wruiu3XMvR1F; Sat, 20 Oct 2007 15:34:05 +0200 (CEST)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 42BAC573CC;
-	Sat, 20 Oct 2007 15:34:04 +0200 (CEST)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IjESl-00022m-Bm; Sat, 20 Oct 2007 15:33:59 +0200
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710200024460.25221@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1754006AbXJTNjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 09:39:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753046AbXJTNjW
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 09:39:22 -0400
+Received: from georgia.textdrive.com ([207.7.107.246]:53768 "EHLO
+	georgia.textdrive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752681AbXJTNjV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 09:39:21 -0400
+X-Greylist: delayed 1437 seconds by postgrey-1.27 at vger.kernel.org; Sat, 20 Oct 2007 09:39:21 EDT
+Received: from [192.168.2.4] (cpe-76-168-244-235.socal.res.rr.com [76.168.244.235])
+	by georgia.textdrive.com (Postfix) with ESMTP id 1AAEE350F3
+	for <git@vger.kernel.org>; Sat, 20 Oct 2007 13:15:23 +0000 (GMT)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61833>
 
+Our developer group has a shared git repository at git@git. 
+1kstudios.lan:dev.
 
---i9LlY+UWpKt15+FH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Each developer has established their own local repository by running:
 
-On Sat, Oct 20, 2007 at 00:25:49 +0100, Johannes Schindelin wrote:
-> git gui
-> =3D=3D=3D=3D=3D=3D=3D
->=20
-> git gui is a really nice program, and as I often said, I consider it
-> more porcelain than a gui, since it uses the git core directly, instead
-> of wrapping around porcelain commands.
->=20
-> The user experience I had with git gui made me think that this should
-> be the primary interface Windows users should be confronted with, not
-> the command line.
->=20
-> The major problem we had in msysGit is that git-gui was to be launched
-> from the Start Menu, or a QuickLaunch icon.  This is in contrast to
-> the shell, where you usually start git gui in a working directory.
+	git clone git@git.1kstudios.lan:dev
+	git config remote.origin.push master:refs/remotes/<username>/master
 
-It would be nice to install an entry in the explorer menu to run git-gui in
-a selected directory. It can be done by just writing something like to the
-registry (completely untested -- I just looked it up on the internet):
+Each developer then does a `git pull` to update their master branch,  
+merges their changes from their local topic branches, and then does  
+`git push` to make the results available at git@git.1kstudios.lan:dev.
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\Git Gui]
-@=3D"Git Gui"
+As the integrator, I have then been ssh'ing into the git@git. 
+1kstudios.lan machine, cd'ing to "dev" and doing:
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Classes\Folder\shell\Git Gui\command]
-@=3D"git --git-dir=3D%L gui"
+	git merge <username>/master
 
-(The directory is passed in %L, but git --git-gui=3D"dir" gui seems to work=
-, at
-least on Linux. It needs absolute path, but you'll have that.)
+to incorporate their changes after running `git diff` to see what the  
+changes are.
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+My own development repository is set up identically to the other  
+developers.
 
---i9LlY+UWpKt15+FH
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+What I would like to do now is clone the git@git.1kstudios.lan:dev  
+repository on my local machine a second time, checkout a <username>/ 
+master branch in that repository, and then use BBEdit's graphical  
+diff to visually see the changes between my own repository and what  
+another developer has pushed to the shared repository. I'll then  
+merge them into my own developer repository and push that to the  
+shared repository for the rest of the developers to pull from, so no  
+longer will I merge by ssh'ing into the machine with the shared  
+repository.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+The problem is, when I clone git@git.1kstudios.lan:dev, the various  
+<username>/master's aren't there. I have tried a bunch of different  
+ways, but they all give me errors. For example:
 
-iD8DBQFHGgPHRel1vVwhjGURAvfQAJ4pxypHuc741WfJAOX2HYjur24BKACgyasp
-I66588onRNAz+/dVq5bRNEo=
-=vDkG
------END PGP SIGNATURE-----
+ > logan-2:~ ocean$ git clone git@git.1kstudios.lan:dev commiters
+ > Initialized empty Git repository in /Users/ocean/commiters/.git/
+ > git@git.1kstudios.lan's password:
+ > remote: Generating pack...
+ > remote: Done counting 7029 objects.
+ > remote: Deltifying 7029 objects...
+ > remote:  100% (7029/7029) done
+ > Indexing 7029 objects...
+ > remote: Total 7029 (delta 3334), reused 2456 (delta 1154)
+ >  100% (7029/7029) done
+ > Resolving 3334 deltas...
+ >  100% (3334/3334) done
+ > Checking 3864 files out...
+ >  100% (3864/3864) done
+ > logan-2:~ ocean$ cd commiters
+ > logan-2:~/commiters ocean$ git branch
+ > * masterlogan-2:~/commiters ocean$ git checkout -b jchumley/master  
+jchumley
+ > git checkout: updating paths is incompatible with switching  
+branches/forcing
 
---i9LlY+UWpKt15+FH--
+How can I access remote branches in a cloned repository on my local  
+machine?
+
+Thanks!
+
+Erich
