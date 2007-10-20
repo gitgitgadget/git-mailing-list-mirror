@@ -1,94 +1,164 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sat, 20 Oct 2007 10:03:33 +0200
-Message-ID: <4719B655.90204@op5.se>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>	 <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail .com>	 <Pine.LNX.4.64.0710130130380.25221@racer.site> <1192827476.4522.93.camel@cacharro.xalalinux.org>
+From: "Scott R Parish" <srp@srparish.net>
+Subject: Re: [PATCH] When exec'ing sub-commands,
+      fall back on execvp (thePATH)
+Date: Sat, 20 Oct 2007 03:12:17 -0500 (CDT)
+Message-ID: <1192867937.v2.fusewebmail-240137@f>
+Reply-To: srp@srparish.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Federico Mena Quintero <federico@novell.com>
-X-From: git-owner@vger.kernel.org Sat Oct 20 10:03:58 2007
+Content-Type: text/plain;charset=iso-8859-1
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 20 10:12:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij9JO-00084M-6o
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 10:03:58 +0200
+	id 1Ij9Rq-0001a2-4H
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 10:12:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752209AbXJTIDk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 04:03:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752072AbXJTIDk
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 04:03:40 -0400
-Received: from mail.op5.se ([193.201.96.20]:46708 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750880AbXJTIDh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 04:03:37 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id DC807173066C;
-	Sat, 20 Oct 2007 10:03:35 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 0Lmrx-B8sWDm; Sat, 20 Oct 2007 10:03:35 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 7EF4F17305B9;
-	Sat, 20 Oct 2007 10:03:34 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <1192827476.4522.93.camel@cacharro.xalalinux.org>
+	id S1762503AbXJTIMZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 04:12:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753386AbXJTIMY
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 04:12:24 -0400
+Received: from smtp-gw7.mailanyone.net ([208.70.128.55]:47426 "EHLO
+	smtp-gw7.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760414AbXJTIMT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 04:12:19 -0400
+Received: from mailanyone.net
+	by smtp-gw7.mailanyone.net with esmtpa (MailAnyone extSMTP srp)
+	id 1Ij9RS-0001tJ-5P; Sat, 20 Oct 2007 03:12:18 -0500
+Received: from 127.0.0.1
+        (FuseMail web AccountID 240137)
+        by webmail.fusemail.com with HTTP;
+        Sat, 20 Oct 2007 03:12:17 -0500 (CDT)
+User-Agent: FuseMail W
+X-Priority: 3
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61810>
 
-Federico Mena Quintero wrote:
-> 
-> "Find out why people find git hard to learn and eliminate those barriers
-> to entry" is what we do with usability tests e.g. in GNOME.
+Yeah, that seems to work fine. The theoretical drawback to this approach
+is that it could possibly effect the order in which the paths are tried.
+For instance, if a user did "export GIT_EXEC_PATH=", then the
+builtin_exec_path wouldn't be tried before the PATH. (i doubt that it
+would be a problem, but thought i should note it)
 
-And what every major corporation who's serious about UI's do. Windows
-works the way it does because that's how idiots expect it to work. Sad but
-true. If our aim is world domination, we need not cater to the morons, but
-we must make it easier for them to start learning on their own.
+sRp
 
->  You ask
-> people to use your software to accomplish well-defined tasks ("send a
-> mail to foo@bar.com", "using the word processor, copy this fancy printed
-> layout").  Then, you see how they *expect* your software to work, you
-> see in which places it doesn't behave like that, and you fix it.  This
-> produces very good results.  For Git in particular this could be things
-> like, "Import this project from SVN, fix a bug, commit the patch", or
-> "You are a maintainer, merge in these two branches from two
-> contributors".
-> 
 
-I like it. So much so that I'll see if I can get a non-programmer at work
-to do these tasks. Now... to assemble that task-list. Suggestions welcome.
+----- Original Message -----
+Subject: Re: [PATCH] When exec'ing sub-commands, fall back on execvp
+(thePATH)
+Date: Sat, October 20, 2007 0:30
+From: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
 
-> 
-> It's hard to know where to begin :)  Do I need "git-cherry-pick" or
-> "git-cherry"?  Why is the "apply a patch" command called "git-am"?  Why
-> is it different from "git-apply"?  From "git-applypatch"?  Etc.
-> 
-
-I agree completely. It wouldn't be hard to make git-apply figure out if
-it's being fed something that 'am' would normally want, and if it's being
-fed it inside a git repo. If so, make it work just like 'am'.
-git-applypatch was deprecated a long time ago and has already been removed.
-
-Personally, I can't help but think that the numerous times I've heard "oh
-gods, that's a lot of commands" should finally mean something. I've started
-taking a look at which of them one can bundle together. If we can drop the
-porcelainish commands down to ~30 or so, and hide the plumbing from git-<tab>
-listings, the initial hurdle people have to jump would be significantly lower.
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Hi,
+>
+> On Fri, 19 Oct 2007, Scott Parish wrote:
+>
+> > diff --git a/exec_cmd.c b/exec_cmd.c
+> > index 9b74ed2..674c9f3 100644
+> > --- a/exec_cmd.c
+> > +++ b/exec_cmd.c
+> > @@ -34,15 +34,15 @@ int execv_git_cmd(const char **argv)
+> >  {
+> >          char git_command[PATH_MAX + 1];
+> >          int i;
+> > +        int rc;
+> >          const char *paths[] = { current_exec_path,
+> >                                  getenv(EXEC_PATH_ENVIRONMENT),
+> >                                  builtin_exec_path };
+> > +        const char *tmp;
+> > +        size_t len;
+> >
+> >          for (i = 0; i < ARRAY_SIZE(paths); ++i) {
+> > -                size_t len;
+> > -                int rc;
+> >                  const char *exec_dir = paths[i];
+> > -                const char *tmp;
+> >
+> >                  if (!exec_dir || !*exec_dir) continue;
+> >
+> > @@ -106,8 +106,26 @@ int execv_git_cmd(const char **argv)
+> >
+> >                  argv[0] = tmp;
+> >          }
+> > -        return -1;
+> >
+> > +        rc = snprintf(git_command, sizeof(git_command), "git-%s",
+argv[0]);
+> > +        if (rc < 0 || rc >= sizeof(git_command) - len) {
+> > +                fprintf(stderr, "git: command name given is too
+long.\n");
+> > +                return -1;
+> > +        }
+> > +
+> > +        tmp = argv[0];
+> > +        argv[0] = git_command;
+> > +
+> > +        trace_argv_printf(argv, -1, "trace: exec:");
+> > +
+> > +        /* execve() can only ever return if it fails */
+> > +        execvp(git_command, (char **)argv);
+> > +
+> > +        trace_printf("trace: exec failed: %s\n", strerror(errno));
+> > +
+> > +        argv[0] = tmp;
+> > +
+> > +        return -1;
+> >  }
+>
+> I am not sure that this is elegant enough: Something like this (completely
+> untested) might be better:
+>
+> diff --git a/exec_cmd.c b/exec_cmd.c
+> index 9b74ed2..c928f37 100644
+> --- a/exec_cmd.c
+> +++ b/exec_cmd.c
+> @@ -36,7 +36,8 @@ int execv_git_cmd(const char **argv)
+>          int i;
+>          const char *paths[] = { current_exec_path,
+>                                  getenv(EXEC_PATH_ENVIRONMENT),
+> -                                builtin_exec_path };
+> +                                builtin_exec_path,
+> +                                "" };
+>
+>          for (i = 0; i < ARRAY_SIZE(paths); ++i) {
+>                  size_t len;
+> @@ -44,9 +45,12 @@ int execv_git_cmd(const char **argv)
+>                  const char *exec_dir = paths[i];
+>                  const char *tmp;
+>
+> -                if (!exec_dir || !*exec_dir) continue;
+> +                if (!exec_dir) continue;
+>
+> -                if (*exec_dir != '/') {
+> +                if (!*exec_dir)
+> +                        /* try PATH */
+> +                        *git_command = '\0';
+> +                else if (*exec_dir != '/') {
+>                          if (!getcwd(git_command, sizeof(git_command))) {
+>                                  fprintf(stderr, "git: cannot determine "
+>                                          "current directory: %s\n",
+> @@ -81,7 +85,7 @@ int execv_git_cmd(const char **argv)
+>
+>                  len = strlen(git_command);
+>                  rc = snprintf(git_command + len, sizeof(git_command) -
+len,
+> -                              "/git-%s", argv[0]);
+> +                              "%sgit-%s", *exec_dir ? "/" : "", argv[0]);
+>                  if (rc < 0 || rc >= sizeof(git_command) - len) {
+>                          fprintf(stderr,
+>                                  "git: command name given is too long.\n");
+>
+> Ciao,
+> Dscho
+>
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
+>
