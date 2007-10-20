@@ -1,55 +1,69 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH] gitk: add check for required tcl version >= 8.4
-Date: Sat, 20 Oct 2007 21:19:11 +1000
-Message-ID: <18201.58415.361214.601377@cargo.ozlabs.ibm.com>
-References: <7vlkaplsu1.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Announcement of Git wikibook
+Date: Sat, 20 Oct 2007 13:20:36 +0200
+Message-ID: <64557FA7-E190-4498-9771-6561E6D7205E@wincent.com>
+References: <428b865e0710191321ndd08564yec6366cb10705af6@mail.gmail.com> <C0D5CAE0-A152-4572-81D5-AF2A78DD89C6@zib.de> <8e04b5820710200040q76301c58j33e5d0895956b150@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Steffen Prohaska" <prohaska@zib.de>,
+	"Evan Carroll" <me@evancarroll.com>, git@vger.kernel.org
+To: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
 X-From: git-owner@vger.kernel.org Sat Oct 20 13:28:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by dough.gmane.org with esmtp (Exim 4.50)
-	id 1IjCVH-0001HG-KU
+	id 1IjCVI-0001HG-AP
 	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 13:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755979AbXJTLVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 07:21:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754407AbXJTLVM
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 07:21:12 -0400
-Received: from ozlabs.org ([203.10.76.45]:55179 "EHLO ozlabs.org"
+	id S1755397AbXJTLVX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Oct 2007 07:21:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756247AbXJTLVX
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 07:21:23 -0400
+Received: from wincent.com ([72.3.236.74]:33024 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750807AbXJTLVL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 07:21:11 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 038E5DDEB6; Sat, 20 Oct 2007 21:21:11 +1000 (EST)
-In-Reply-To: <7vlkaplsu1.fsf@gitster.siamese.dyndns.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1754407AbXJTLVW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2007 07:21:22 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9KBLHfo015002;
+	Sat, 20 Oct 2007 06:21:18 -0500
+In-Reply-To: <8e04b5820710200040q76301c58j33e5d0895956b150@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61820>
 
-Junio C Hamano writes:
+El 20/10/2007, a las 9:40, Ciprian Dorin Craciun escribi=F3:
 
-> From: Steffen Prohaska <prohaska@zib.de>
-> Date: Fri, 28 Sep 2007 22:57:22 +0200
-> 
-> gitk requires tcl version >= 8.4 to work flawlessly. So let's
-> check the tcl version and quit if it's too low.
-> 
-> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-> ---
-> 
->  * I do not have a ready access to older tcl/tk myself, so I
->    cannot judge if this is sensible or not.  Just forwarding in
->    case you missed it.
+>     There is nothing wrong with either of the two approaches. They
+> could both coexist but address different needs:
+>     -- the manual should be more oriented on technical issues and
+> addresses only the most recent versions;
+>     -- the book should be more user-oriented, and more general,
+> explaining how source management should be addressed by using git, an=
+d
+> maybe make comparisons with may other versioning systems. Also the
+> book could relate to many versions -- both old and new.
+>
+>     Also I would note that the wiki book is more easy to edit... If
+> you spot errors or want to add something you just go and edit it and
+> the effect is immediate. But in contrast sending patches involves som=
+e
+> overhead...
 
-Thanks for the patch.  I have put in something similar using the
-package require command, and using show_error to display the error in
-a window.
+But Git already has its own easy-to-edit, official wiki:
 
-Paul.
+   http://git.or.cz/gitwiki
+
+Creating a separate wiki book seems like an unnecessary duplication =20
+of effort.
+
+(Obviously, you or anybody else is free to contribute documentation =20
+wherever you want.)
+
+Cheers,
+Wincent
