@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: gitk patch collection pull request
-Date: Fri, 19 Oct 2007 23:10:48 -0400
-Message-ID: <20071020031048.GQ14735@spearce.org>
-References: <20071019052823.GI14735@spearce.org> <18200.36704.936554.220173@cargo.ozlabs.ibm.com>
+Subject: Re: [PATCH] git-cherry-pick: improve description of -x.
+Date: Fri, 19 Oct 2007 23:19:17 -0400
+Message-ID: <20071020031917.GR14735@spearce.org>
+References: <20071019174134.GD9906@ins.uni-bonn.de> <20071019211152.GN3917@planck.djpig.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 05:11:07 2007
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 20 05:19:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij4jy-0004n8-3F
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 05:11:06 +0200
+	id 1Ij4sA-00067S-FM
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 05:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S936619AbXJTDKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 23:10:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S936561AbXJTDKw
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 23:10:52 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:41845 "EHLO
+	id S1755868AbXJTDTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Oct 2007 23:19:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754410AbXJTDTX
+	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 23:19:23 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:42013 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S936446AbXJTDKv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 23:10:51 -0400
+	with ESMTP id S1751296AbXJTDTW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Oct 2007 23:19:22 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1Ij4jU-0003CW-VR; Fri, 19 Oct 2007 23:10:37 -0400
+	id 1Ij4ri-0003SH-Fr; Fri, 19 Oct 2007 23:19:06 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1D4A120FBAE; Fri, 19 Oct 2007 23:10:48 -0400 (EDT)
+	id B400120FBAE; Fri, 19 Oct 2007 23:19:17 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <18200.36704.936554.220173@cargo.ozlabs.ibm.com>
+In-Reply-To: <20071019211152.GN3917@planck.djpig.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,37 +40,26 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61779>
 
-Paul Mackerras <paulus@samba.org> wrote:
-> Shawn O. Pearce writes:
-> > The following changes since commit 719c2b9d926bf2be4879015e3620d27d32f007b6:
-> >   Paul Mackerras (1):
-> >         gitk: Fix bug causing undefined variable error when cherry-picking
+Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> On Fri, Oct 19, 2007 at 07:41:34PM +0200, Ralf Wildenhues wrote:
+> > Further, I am surprised that -x seems to be nonfunctional when the
+> > cherry pick introduces a conflict.  Example:
+> [...]
+> > The prototype commit message now does not contain the
+> > | (cherry picked from commit ...).
 > > 
-> > are available in the git repository at:
-> > 
-> >   git://repo.or.cz:/git/spearce.git gitk
-...
-> > Jonathan del Strother (2):
-> >       gitk: Added support for OS X mouse wheel
-> >       Fixing gitk indentation
+> > Is that by design (because there were conflicts) or an omission?
+> > In case of the former, maybe the description of -x should mention this.
 > 
-> This one is bogus.  Firstly, it doesn't have "gitk:" at the start of
-> the headline (and "Fixing" should be "Fix").  Secondly, the actual
-> change itself is bogus.  It changes an initial tab to 8 spaces on each
-> of 4 lines.  I like it the way it is - and if he wanted to change it,
-> he should have changed it throughout the file, not just on 4 lines.
-> So that change is rejected.
-> 
-> The other changes are OK.  If you could re-do your tree without
-> 0d6df4de (and possible change "Added" to "Add" in e1b5683c while
-> you're at it), I'll do the pull.
+> git commit currently doesn't know that you commit a cherry-pick. The -c
+> only says to use the commit message of the original commit. So this is
+> currently by design.
 
-Done.  I also added this one from Michele:
-
-  From: Michele Ballabio <barra_cuda@katamail.com>
-  Subject: [PATCH-resent] gitk: fix in procedure drawcommits
-
+Ralf, can you submit an updated version of this patch that describes
+the current behavior better, given the "by design" remark above
+from Frank?
+ 
 -- 
 Shawn.
