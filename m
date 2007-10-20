@@ -1,65 +1,50 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-cherry-pick: improve description of -x.
-Date: Fri, 19 Oct 2007 23:19:17 -0400
-Message-ID: <20071020031917.GR14735@spearce.org>
-References: <20071019174134.GD9906@ins.uni-bonn.de> <20071019211152.GN3917@planck.djpig.de>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] send-pack: respect '+' on wildcard refspecs
+Date: Sat, 20 Oct 2007 00:22:57 -0400
+Message-ID: <20071020042257.GA26755@coredump.intra.peff.net>
+References: <20071019090400.GA8944@coredump.intra.peff.net> <449c10960710190510y3af3ffa2ydb9ae4a01b5d480c@mail.gmail.com> <20071019122755.GA17002@coredump.intra.peff.net> <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com> <20071019134339.GA21852@coredump.intra.peff.net> <449c10960710191800j3e61b80cma2c582080c1dd07c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Oct 20 05:19:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dan McGee <dan@archlinux.org>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Oct 20 06:23:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij4sA-00067S-FM
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 05:19:34 +0200
+	id 1Ij5rp-00009M-Em
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 06:23:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755868AbXJTDTX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Oct 2007 23:19:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754410AbXJTDTX
-	(ORCPT <rfc822;git-outgoing>); Fri, 19 Oct 2007 23:19:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:42013 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296AbXJTDTW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Oct 2007 23:19:22 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ij4ri-0003SH-Fr; Fri, 19 Oct 2007 23:19:06 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id B400120FBAE; Fri, 19 Oct 2007 23:19:17 -0400 (EDT)
+	id S1751955AbXJTEXB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 00:23:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751924AbXJTEXB
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 00:23:01 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4498 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878AbXJTEXA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 00:23:00 -0400
+Received: (qmail 18479 invoked by uid 111); 20 Oct 2007 04:22:58 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 20 Oct 2007 00:22:58 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Oct 2007 00:22:57 -0400
 Content-Disposition: inline
-In-Reply-To: <20071019211152.GN3917@planck.djpig.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <449c10960710191800j3e61b80cma2c582080c1dd07c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61780>
 
-Frank Lichtenheld <frank@lichtenheld.de> wrote:
-> On Fri, Oct 19, 2007 at 07:41:34PM +0200, Ralf Wildenhues wrote:
-> > Further, I am surprised that -x seems to be nonfunctional when the
-> > cherry pick introduces a conflict.  Example:
-> [...]
-> > The prototype commit message now does not contain the
-> > | (cherry picked from commit ...).
-> > 
-> > Is that by design (because there were conflicts) or an omission?
-> > In case of the former, maybe the description of -x should mention this.
+On Fri, Oct 19, 2007 at 08:00:37PM -0500, Dan McGee wrote:
+
+> Turns out I didn't have GIT_EXEC_PATH set up right. Once I do that,
+> everything seems to work just fine.
 > 
-> git commit currently doesn't know that you commit a cherry-pick. The -c
-> only says to use the commit message of the original commit. So this is
-> currently by design.
+> Thanks for looking into this Jeff, and git-bisect just won me over. It
+> made easy work of finding the commit that broke this.
 
-Ralf, can you submit an updated version of this patch that describes
-the current behavior better, given the "by design" remark above
-from Frank?
- 
--- 
-Shawn.
+Huzzah, success! Shawn, this should probably go on 'maint'. Although it
+is probably not high priority (it has been broken since May; I think
+wildcard push refspecs must not be that common), it is a fairly trivial
+fix that shouldn't impact anyone else.
+
+-Peff
