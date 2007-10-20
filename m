@@ -1,155 +1,134 @@
 From: Ari Entlich <lmage11@twcny.rr.com>
 Subject: Re: Proposed git mv behavioral change
-Date: Sat, 20 Oct 2007 01:55:48 -0400
-Message-ID: <1192859748.13347.146.camel@g4mdd.entnet>
-References: <c594999b2337.2337c594999b@nyroc.rr.com>
-	 <20071019015419.GV14735@spearce.org>
-	 <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu>
-	 <20071019031959.GE14735@spearce.org>
-	 <20071019032407.GA10622@coredump.intra.peff.net>
-	 <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU>
-	 <20071019033500.GB10697@coredump.intra.peff.net>
-	 <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU>
-	 <20071019034704.GB11095@coredump.intra.peff.net>
+Date: Sat, 20 Oct 2007 01:55:53 -0400
+Message-ID: <1192859753.13347.147.camel@g4mdd.entnet>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Michael Witten <mfwitten@MIT.EDU>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Oct 20 07:56:14 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@MIT.EDU>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sat Oct 20 07:56:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij7Jl-0007hi-0L
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 07:56:13 +0200
+	id 1Ij7Jl-0007hi-Mk
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 07:56:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757913AbXJTFz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 01:55:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752676AbXJTFz7
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 01:55:59 -0400
-Received: from ms-smtp-05.nyroc.rr.com ([24.24.2.59]:63884 "EHLO
+	id S1759605AbXJTF4F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 20 Oct 2007 01:56:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759304AbXJTF4F
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 01:56:05 -0400
+Received: from ms-smtp-05.nyroc.rr.com ([24.24.2.59]:63894 "EHLO
 	ms-smtp-05.nyroc.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752657AbXJTFz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 01:55:58 -0400
+	with ESMTP id S1752676AbXJTF4C (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 01:56:02 -0400
 Received: from [192.168.123.196] (cpe-24-59-99-35.twcny.res.rr.com [24.59.99.35])
-	by ms-smtp-05.nyroc.rr.com (8.13.6/8.13.6) with ESMTP id l9K5tpUv024980;
-	Sat, 20 Oct 2007 01:55:52 -0400 (EDT)
-In-Reply-To: <20071019034704.GB11095@coredump.intra.peff.net>
+	by ms-smtp-05.nyroc.rr.com (8.13.6/8.13.6) with ESMTP id l9K5tuqq024998;
+	Sat, 20 Oct 2007 01:55:56 -0400 (EDT)
 X-Mailer: Evolution 2.10.3 
 X-Virus-Scanned: Symantec AntiVirus Scan Engine
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61787>
 
-On Thu, 2007-10-18 at 23:47 -0400, Jeff King wrote: 
-> On Thu, Oct 18, 2007 at 11:40:47PM -0400, Michael Witten wrote:
-> 
-> > Anyway, succinctly:
+On Fri, 2007-10-19 at 13:33 +0200, Wincent Colaiuta wrote:
+> El 19/10/2007, a las 4:29, Michael Witten escribi=C3=B3:
+> > Ah. Basically my 'pseudo-code' is correct, but redundant.
+>=20
+> If I understood the original poster's proposal then I don't think you=
+r
+> code does what he asked for:
+>=20
+> > What you want to happen is the following:
+> >=20
+> > git show HEAD:A.txt > path/B.txt
+> > git add path/B.txt
+> > mv A.txt B.txt
+> > git rm A.txt
 > >
-> >> What you want to happen is the following:
-> >> 	
-> >> 	git show HEAD:A.txt > path/B.txt
-> >> 	git add path/B.txt
-> >> 	mv A.txt B.txt
-> >> 	git rm A.txt
+> > Is this correct?
+>=20
+> Here you're copying the content of A.txt as it was in the last (HEAD)
+> commit, but from what the poster said he wants the content of A.txt a=
+s
+> it is staged in the index (that is, there may be staged but uncomitte=
+d
+> changes).
 
-The one above is not only "worse" than the one below, it's wrong. See
-Wincent's message and my response to it.
+You took the words right out of my mouth! :)
 
-> >
+Yeah, I noticed the problem with using HEAD, but the other problem is
+that this would change the contents of the file in the working director=
+y
+file, which I don't want. Thus, putting the contents of the file as it
+is in the index into the working directory wouldn't be correct either.
+In addition, I'm not quite sure where that "mv A.txt B.txt" came from,
+since we're supposed to be moving A.txt to path/B.txt...
+
 > > Better:
 > >
-> >>  	mv A.txt path/B.txt
-> >> 	Point the index entry for A.txt to path/B.txt
-> >
-> > I hope that's right.
-> 
-> Hrm. So you _do_ want to do an index-only move of A to B, in which case
-> the suggestion of a "git-mv --cached" seems sensible. Though I'm curious
-> why you want that.
+> > > mv A.txt path/B.txt
+> > > Point the index entry for A.txt to path/B.txt
+>=20
+> Yes, that is basically what he was asking for, as I read it.
 
-Well, I also want to move the working directory file so that the index
-and the working directory still match up and so that their differences
-are preserved. Therefore, --cached isn't quite right (see Shawn's
-messages and my response to them).
+Yep! I was going to respond to your (Michael's) original message saying
+exactly that. :)
 
-> The only workflow I can think of is: 
-> 1. you modify a.c
->   2. your boss comes in and tells you to make some unrelated change,
->      which involves moving a.c to b.c
->   3. You don't want to commit your changes, so you git-mv in the index
->      only without involving your dirty working tree file.
->   4. You commit the index (which doesn't have your changes from (1)
-> 
-> I think that is sort of a bogus workflow, though, since you will never
-> have actually compiled or tested the changes in (2). You are much better
-> to git-stash your current work, fulfill the boss's request, then
-> unstash.
+> El 19/10/2007, a las 5:47, Jeff King escribi=C3=B3:
+> > Hrm. So you _do_ want to do an index-only move of A to B, in which=20
+> > case the suggestion of a "git-mv --cached" seems sensible. Though=20
+> > I'm curious why you want that.
+>=20
+> I agree that git-stash can be used in this workflow but I can also=20
+> imagine cases where the proposed "git-mv --cached" might be a bit=20
+> nicer.
 
-Hmm, that's an interesting point. Are you talking about situations in
-which your changes after (1) leave the program in an uncompilable state?
-In this situation, I could imagine git stash being a better solution. In
-my situation, however, the project was compilable. The reason I didn't
-want to commit the changes was because I wasn't entirely satisfied with
-how I implemented the change I was trying to make; I thought there might
-be a better way to do it. I wanted to get some comparatively
-straightforward changes out of the way before I tackled it.
+As Shawn said, --cached wouldn't be entirely accurate as the file in th=
+e
+working directory is being moved as well.
 
-On some level, the reason I want this change isn't entirely because it's
-preventing me from doing something I want to do. I've come to really
-like git and how the index can be used to separate all of the changes
-you have made from the changes that you want to commit in individual
-commits. I've come to really like how much access to the lower-level
-interfaces git provides. It seems to me that people should support this
-simply because it provides more power to the user. If the user wants
-their unstaged changes to be staged, they can explicitly do it with git
-update-index or some such command.
+git-stash has been suggested to me numerous times, but I really feel
+that there's no need to use it in this case - if the git mv command gav=
+e
+adequate control to the user, it would be unnecessary.
 
-If the issue is whether this would be the default, that's a completely
-separate issue, and one which I don't really have a strong opinion on.
-If it were up to me, I'd probably choose to make it the default, but
-this might break some people's expectations. I want to keep git
-accessible to as many people as possible, not force it into the mold
-that I feel is the only correct one. If the functionality is available
-but only used when you want it, what's the harm in including it?
+> I'm thinking of occasions where you just want to do something=20
+> like:
+>=20
+> git mv --cached foo bar
+> git add --interactive bar
 
-I don't really see why you're analyzing the situations in which this
-would be used. I think it should be obvious from my descriptions of my
-situation that there is an application for this functionality. Unless
-you're going to start calling my process bogus (as you did to the one
-involving a boss), which I would not appreciate, I'd argue that the same
-mentality should be applied to this that is applied to kernel drivers -
-if it's useful to even only one person, it should be supported. This
-functionality of git wouldn't even be that extreme an example, though -
-there's no telling whether somebody might be in a situation like mine
-and find that they want to do what I want to do.
+I think it would be the other way around, since the only time this
+change would effect anything is when there are changes still waiting to
+be staged.
 
-But... that's not even the point I was going to make. I think the
-questions you should be asking are things like "Does this fit with the
-overall architecture?", "Does this or doesn't this provide power and
-flexibility to the user?", etc. Is git being made for "the 80%" that use
-Subversion and need to be supported by a cushy GUI, or "the 20%" that
-thrive on power and are in touch with future trends?
+Are you talking about REALLY only changing the index? I can't think of
+why you'd want to do this either... After all, wouldn't there be no bar
+file to do git add --interactive on? In addition, I don't think giving
+--interactive a filename is meaningful...
 
-So... yeah. Sorry, I know this got to sounding incredibly
-propagandistic, but this is what propaganda's for, right? :)
+> I'm not sure the proposed "--cached" switch should ever be the=20
+> default -- would need to ponder that one -- but I do think the switch=
+=20
+> would be a nice addition.
 
-Sorry if anything I've said here sounded confrontational; that was not
-not my intent at all. I'm just raising some points I think are
-important. I don't want any flame wars...
+Yeah, that is one thing I was wondering. It would break compatibility,
+but would it be enough to put a note about that in the announcements fo=
+r
+a release? Could you make the change at a release when the interface
+isn't guaranteed to be the same, or is this practice only done with
+libraries?
 
-On Thu, 2007-10-18 at 23:58 -0400, Jeff King wrote:
-> On Thu, Oct 18, 2007 at 11:53:05PM -0400, Michael Witten wrote:
-> > It's not unreasonable.
-> 
-> I guess. I really think git-stash is your friend here. But you can
-> still do step (3) with git-update-index (I'll leave the exact details
-> as an exercise for the reader).
-
-See my response to Wincent's message for my opinion on using git stash.
-I seems to me that using it is more of a workaround than a fix.
+It might be interesting to do some sort of survey of whether people
+depend on this behavior. It seems pretty inconsistent with how git work=
+s
+otherwise, and I'd be surprised if a lot of people expect it (kinda lik=
+e
+the Spanish Inquisition :-P).
 
 Thanks,
 	Ari
