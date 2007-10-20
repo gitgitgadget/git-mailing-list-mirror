@@ -1,97 +1,64 @@
-From: Scott Parish <srp@srparish.net>
-Subject: [PATCH] When exec'ing sub-commands, fall back on execvp (the PATH)
-Date: Fri, 19 Oct 2007 23:44:59 -0700
-Message-ID: <20071020064459.GB2237@srparish.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 20 08:45:20 2007
+From: Michael Witten <mfwitten@MIT.EDU>
+Subject: Re: Proposed git mv behavioral change
+Date: Sat, 20 Oct 2007 02:45:05 -0400
+Message-ID: <8D972813-2D7F-4D6A-958F-B76E947E7BC3@MIT.EDU>
+References: <20071019015419.GV14735@spearce.org> <A2C1BF08-4CC8-4F98-9CA8-B81B2FBFE9E4@mit.edu> <20071019031959.GE14735@spearce.org> <20071019032407.GA10622@coredump.intra.peff.net> <7E3647F4-E61C-4FBE-9AA7-81CDBE324308@MIT.EDU> <20071019033500.GB10697@coredump.intra.peff.net> <93BF5798-F1C3-48EE-8233-A0F111BF8138@MIT.EDU> <20071019034704.GB11095@coredump.intra.peff.net> <1192859748.13347.146.camel@g4mdd.entnet> <20071020062400.GA30388@coredump.intra.peff.net> <20071020063628.GV14735@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v752.2)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Oct 20 08:45:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij85H-0000BA-Ou
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 08:45:20 +0200
+	id 1Ij85Z-0000FN-2l
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 08:45:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762111AbXJTGpH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 02:45:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760927AbXJTGpH
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 02:45:07 -0400
-Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:52684 "EHLO
-	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762022AbXJTGpG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 02:45:06 -0400
-Received: from mailanyone.net
-	by smtp-gw51.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1Ij853-0006w3-42
-	for git@vger.kernel.org; Sat, 20 Oct 2007 01:45:05 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Fri, 19 Oct 2007 23:45:00 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1762493AbXJTGpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 02:45:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762425AbXJTGpZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 02:45:25 -0400
+Received: from BISCAYNE-ONE-STATION.MIT.EDU ([18.7.7.80]:34415 "EHLO
+	biscayne-one-station.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1762493AbXJTGpY (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2007 02:45:24 -0400
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by biscayne-one-station.mit.edu (8.13.6/8.9.2) with ESMTP id l9K6j7YS006623;
+	Sat, 20 Oct 2007 02:45:12 -0400 (EDT)
+Received: from [18.239.2.43] (WITTEN.MIT.EDU [18.239.2.43])
+	(authenticated bits=0)
+        (User authenticated as mfwitten@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id l9K6j6go022709
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Sat, 20 Oct 2007 02:45:06 -0400 (EDT)
+In-Reply-To: <20071020063628.GV14735@spearce.org>
+X-Mailer: Apple Mail (2.752.2)
+X-Scanned-By: MIMEDefang 2.42
+X-Spam-Flag: NO
+X-Spam-Score: 0.00
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61800>
 
- Signed-off-by: Scott R Parish <srp@srparish.net>
 
----
- exec_cmd.c |   26 ++++++++++++++++++++++----
- 1 files changed, 22 insertions(+), 4 deletions(-)
+On 20 Oct 2007, at 2:36:28 AM, Shawn O. Pearce wrote:
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 9b74ed2..674c9f3 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -34,15 +34,15 @@ int execv_git_cmd(const char **argv)
- {
- 	char git_command[PATH_MAX + 1];
- 	int i;
-+	int rc;
- 	const char *paths[] = { current_exec_path,
- 				getenv(EXEC_PATH_ENVIRONMENT),
- 				builtin_exec_path };
-+	const char *tmp;
-+	size_t len;
- 
- 	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
--		size_t len;
--		int rc;
- 		const char *exec_dir = paths[i];
--		const char *tmp;
- 
- 		if (!exec_dir || !*exec_dir) continue;
- 
-@@ -106,8 +106,26 @@ int execv_git_cmd(const char **argv)
- 
- 		argv[0] = tmp;
- 	}
--	return -1;
- 
-+	rc = snprintf(git_command, sizeof(git_command), "git-%s", argv[0]);
-+	if (rc < 0 || rc >= sizeof(git_command) - len) {
-+		fprintf(stderr, "git: command name given is too long.\n");
-+		return -1;
-+	}
-+
-+	tmp = argv[0];
-+	argv[0] = git_command;
-+
-+	trace_argv_printf(argv, -1, "trace: exec:");
-+
-+	/* execve() can only ever return if it fails */
-+	execvp(git_command, (char **)argv);
-+
-+	trace_printf("trace: exec failed: %s\n", strerror(errno));
-+
-+	argv[0] = tmp;
-+
-+	return -1;
- }
- 
- 
--- 
-1.5.3.GIT
+> Today I move the file, then unstage the hunks I'm not sure about,
+> then go back and restage them.  Annoying.  It really disrupts
+> my workflow.
+
+I know it's against policy, but the proposed change should be set
+as the default at some point, in my opinion.
+
+Perhaps when the -u flagged is not used, there can be a warning that
+states -u will become the default at a certain time.
+
+In fact, -u speaks "update" to me, and I would expect it to signal
+the current behavior.
+
+I have a feeling that my suggestion will not go far,
+but I also think that backwards compatibility can
+overstay its welcome.
