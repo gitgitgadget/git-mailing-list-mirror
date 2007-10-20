@@ -1,66 +1,65 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: gitk patch collection pull request
-Date: Fri, 19 Oct 2007 21:51:27 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710192149020.3794@woody.linux-foundation.org>
-References: <20071019052823.GI14735@spearce.org>
- <alpine.LFD.0.999.0710191227340.26902@woody.linux-foundation.org>
- <18201.34779.27836.531742@cargo.ozlabs.ibm.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] send-pack: respect '+' on wildcard refspecs
+Date: Sat, 20 Oct 2007 00:57:33 -0400
+Message-ID: <20071020045733.GS14735@spearce.org>
+References: <20071019090400.GA8944@coredump.intra.peff.net> <449c10960710190510y3af3ffa2ydb9ae4a01b5d480c@mail.gmail.com> <20071019122755.GA17002@coredump.intra.peff.net> <449c10960710190638j5823b19dl903ae369965e884e@mail.gmail.com> <20071019134339.GA21852@coredump.intra.peff.net> <449c10960710191800j3e61b80cma2c582080c1dd07c@mail.gmail.com> <20071020042257.GA26755@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sat Oct 20 06:51:54 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Dan McGee <dan@archlinux.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Oct 20 06:57:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij6JU-0005Im-VX
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 06:51:53 +0200
+	id 1Ij6PH-0006Fj-0J
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 06:57:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752170AbXJTEvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 00:51:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752161AbXJTEvl
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 00:51:41 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:49251 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752129AbXJTEvk (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 20 Oct 2007 00:51:40 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9K4pSNK020524
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 19 Oct 2007 21:51:29 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9K4pRNG003905;
-	Fri, 19 Oct 2007 21:51:28 -0700
-In-Reply-To: <18201.34779.27836.531742@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=-2.72 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752276AbXJTE5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 00:57:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752235AbXJTE5i
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 00:57:38 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:44553 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752219AbXJTE5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 00:57:38 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ij6P1-0007iz-EZ; Sat, 20 Oct 2007 00:57:35 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id EF31E20FBAE; Sat, 20 Oct 2007 00:57:33 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20071020042257.GA26755@coredump.intra.peff.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61783>
 
-
-
-On Sat, 20 Oct 2007, Paul Mackerras wrote:
+Jeff King <peff@peff.net> wrote:
+> On Fri, Oct 19, 2007 at 08:00:37PM -0500, Dan McGee wrote:
 > 
-> Do you mean that when you have a file limit, the diff window should
-> just show the diffs for those files, not any other files the commit
-> might have modified?
+> > Turns out I didn't have GIT_EXEC_PATH set up right. Once I do that,
+> > everything seems to work just fine.
+> > 
+> > Thanks for looking into this Jeff, and git-bisect just won me over. It
+> > made easy work of finding the commit that broke this.
+> 
+> Huzzah, success! Shawn, this should probably go on 'maint'. Although it
+> is probably not high priority (it has been broken since May; I think
+> wildcard push refspecs must not be that common), it is a fairly trivial
+> fix that shouldn't impact anyone else.
 
-Yes. The same way "git log -p" works by default.
+Yea, its already queued on maint.  Both the patch and the
+tests are obviously correct.  Its broken without the patch.
+Its documented/expected behavior fixed by the patch.  IMHO it
+belongs in maint.
 
-With perhaps a checkbox to toggle the "--full-diff" behaviour.
-
-> That would be easy enough to implement in gitk.
-
-Well, the "--merged" case is slightly trickier, since git will figure out 
-the pathnames on its own (it limits pathnames to the intersection of the 
-names you give one the command line *and* the list of unmerged files, ie 
-the "filter" becomes "git ls-files -u [pathspec]".
-
-But goodie. I look forward to it ;)
-
-		Linus
+-- 
+Shawn.
