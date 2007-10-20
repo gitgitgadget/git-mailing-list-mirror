@@ -1,71 +1,55 @@
-From: Bram Schoenmakers <me@bramschoenmakers.nl>
-Subject: [PATCH] Mention split command in git-add manpage
-Date: Sat, 20 Oct 2007 21:15:08 +0200
-Message-ID: <200710202115.10028.me@bramschoenmakers.nl>
-Reply-To: me@bramschoenmakers.nl
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Deduce exec_path also from calls to git with a     
+ relative path
+Date: Sat, 20 Oct 2007 22:31:47 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710202225520.25221@racer.site>
+References: <1192868006.v2.fusewebmail-240137@f>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Oct 20 21:15:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, spearce@spearce.org, gitster@pobox.com
+To: Scott R Parish <srp@srparish.net>
+X-From: git-owner@vger.kernel.org Sun Oct 21 03:32:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjJnJ-0000ZJ-RD
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 21:15:34 +0200
+	id 1IjPfw-000692-SQ
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 03:32:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757701AbXJTTPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 15:15:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757802AbXJTTPV
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 15:15:21 -0400
-Received: from viefep18-int.chello.at ([213.46.255.22]:5551 "EHLO
-	viefep18-int.chello.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755025AbXJTTPT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 15:15:19 -0400
-Received: from IMP ([192.168.13.239]) by viefep18-int.chello.at
-          (InterMail vM.7.08.02.00 201-2186-121-20061213) with ESMTP
-          id <20071020191514.WCEU11104.viefep18-int.chello.at@IMP>;
-          Sat, 20 Oct 2007 21:15:14 +0200
-Received: from [192.168.1.100] ([77.251.93.109])
-	by IMP with chello.at
-	id 2jFB1Y00b2Mani50000000; Sat, 20 Oct 2007 21:15:14 +0200
-User-Agent: KMail/1.9.7
-X-Face: &[!|}QvdlkzFIu,|mW.\-Ci1t2d@CEo+#Q14@XM9*@`S,@l*5r-m!\,,kFc:ZlD62]6/>=?utf-8?q?=5B=0A=09Ovg=3BN=5Bqk=3B=60w6=3D5abys2!H+EUYcEDJ?=<R$6{yw]Wn]%kBpfM!H{Z:/MG[=]8"l":u7mOK)=?utf-8?q?bV=0A=09d?=<@pasEk@x{^+[vVtDh0l#Gnr1@L7foyeRl8`ANOb*VekgZ|-\Td<|{:T>=?utf-8?q?=25lo=26d67gO=2E!/=0A=09w?=@YD{YH]Ebe{@|(qtKgoum%{-=qXlf.+/`^E<'!m"?5d<&C(:B+p*KjP'-Knv!6U<=?utf-8?q?1W!=7EZ=0A=09P3ee-=7BfAb-i+MsJHM?=@
-Content-Disposition: inline
+	id S1750759AbXJUBcJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 21:32:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750757AbXJUBcI
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 21:32:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38133 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750759AbXJUBcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 21:32:07 -0400
+Received: (qmail invoked by alias); 20 Oct 2007 21:32:04 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp046) with SMTP; 20 Oct 2007 23:32:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19LLG54w7xL6JebCAZlP2xojJx5ozFu0czePd+B/d
+	YsMCttmPKwkIn5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1192868006.v2.fusewebmail-240137@f>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61851>
 
-Hello,
+Hi,
 
-A little patch for the git-add manpage which mentions the 's' option for 
-splitting hunks in git-add -i mode.
+On Sat, 20 Oct 2007, Scott R Parish wrote:
 
----
- Documentation/git-add.txt |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+> Wow, that sure cleaned up nicely! :)
 
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 2fe7355..032957a 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -210,6 +210,7 @@ patch::
-        k - do not decide on this hunk now, and view the previous
-            undecided hunk
-        K - do not decide on this hunk now, and view the previous hunk
-+       s - split large hunks at context lines in the middle
- +
- After deciding the fate for all hunks, if there is any hunk
- that was chosen, the index is updated with the selected hunks.
--- 
-1.5.2.5
+Heh.
 
-Kind regards,
+BTW I did not mean to discourage you...  Rather, I wanted to show you that 
+this list is a wonderful place to learn, as I did, do, and will do many 
+times here.  (Just to clarify, since somebody said that I am usually not 
+nice to newbies... cannot understand that at all ;-)
 
--- 
-Bram Schoenmakers
-
-You can contact me directly on ICQ with #153817629
+Ciao,
+Dscho
