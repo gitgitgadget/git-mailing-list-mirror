@@ -1,98 +1,86 @@
-From: Erich Ocean <erich@atlasocean.com>
-Subject: [Solved] How can I access remote branches in a cloned repository on my local machine?
-Date: Sat, 20 Oct 2007 07:18:46 -0700
-Message-ID: <20CAFC3D-7684-480D-B340-C3206BA08DE5@atlasocean.com>
-References: <05B1B470-1C86-40E6-9E33-968809414537@atlasocean.com> <Pine.LNX.4.64.0710201449340.8248@beast.quantumfyre.co.uk> <Pine.LNX.4.64.0710201455540.8248@beast.quantumfyre.co.uk>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: Simon Hausmann <simon@lst.de>
+Subject: git-p4 pull request
+Date: Sat, 20 Oct 2007 17:17:50 +0200
+Message-ID: <200710201717.54604.simon@lst.de>
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+  boundary="nextPart1561638.hBs7vqTY69";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 20 16:19:32 2007
+Cc: git@vger.kernel.org, Chris Pettitt <cpettitt@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sat Oct 20 17:18:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjFAp-00083s-N3
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 16:19:32 +0200
+	id 1IjG5S-0000TF-Kh
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 17:18:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753804AbXJTOSt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 10:18:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754401AbXJTOSt
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 10:18:49 -0400
-Received: from georgia.textdrive.com ([207.7.107.246]:56604 "EHLO
-	georgia.textdrive.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752404AbXJTOSs (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 10:18:48 -0400
-Received: from [192.168.6.221] (mail.one-k.com [206.114.20.226])
-	by georgia.textdrive.com (Postfix) with ESMTP id 580FF3509C
-	for <git@vger.kernel.org>; Sat, 20 Oct 2007 14:18:48 +0000 (GMT)
-In-Reply-To: <Pine.LNX.4.64.0710201455540.8248@beast.quantumfyre.co.uk>
-X-Mailer: Apple Mail (2.752.3)
+	id S1755793AbXJTPRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 11:17:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755546AbXJTPRu
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 11:17:50 -0400
+Received: from esparsett.troll.no ([62.70.27.18]:33232 "EHLO
+	esparsett.troll.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755526AbXJTPRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 11:17:49 -0400
+Received: from esparsett.troll.no (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP
+	id 5D90C7422D; Sat, 20 Oct 2007 17:17:46 +0200 (CEST)
+Received: from luria.local (unknown [172.20.1.59])
+	by esparsett.troll.no (Postfix) with ESMTP
+	id E983C741E9; Sat, 20 Oct 2007 17:17:45 +0200 (CEST)
+User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61840>
 
-Per Julian Phillips' suggestion:
+--nextPart1561638.hBs7vqTY69
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
- > logan-2:~ ocean$ cd commiters/
- > logan-2:~/commiters ocean$ git config remote.origin.fetch +refs/ 
-remotes/*:refs/remotes/*
- > logan-2:~/commiters ocean$ git fetch
- > git@git.1kstudios.lan's password:
- > * refs/remotes/eocean/master: storing remote branch 'eocean/ 
-master' of git@git.1kstudios.lan:dev
- >   commit: 06b4b2e
- > * refs/remotes/gt/master: storing remote branch 'gt/master' of  
-git@git.1kstudios.lan:dev
- >   commit: 889a585
- > * refs/remotes/jchumley/master: storing remote branch 'jchumley/ 
-master' of git@git.1kstudios.lan:dev
- >   commit: 18cead3
- > logan-2:~/commiters ocean$ git branch
- >   +refs/remotes/eocean/master
- >   +refs/remotes/gt/master
- >   +refs/remotes/jchumley/master
- > * master
- > logan-2:~/commiters ocean$ git checkout  +refs/remotes/jchumley/ 
-master
- > Switched to branch "+refs/remotes/jchumley/master"
+Hi,
 
-Best, Erich
+The following changes since commit 7840ce6cb24a9d65152d45e08f5d7cf7dc97a2e3:
+  Shawn O. Pearce (1):
+        Merge branch 'maint'
 
-On Oct 20, 2007, at 6:56 AM, Julian Phillips wrote:
+are available in the git repository at:
 
-> On Sat, 20 Oct 2007, Julian Phillips wrote:
->
->>>  The problem is, when I clone git@git.1kstudios.lan:dev, the various
->>>  <username>/master's aren't there. I have tried a bunch of  
->>> different ways,
->>>  but they all give me errors. For example:
->>
->> The default fetch refspec doesn't include the remotes - after all,  
->> you normally don't want the origin for your origin ...
->>
->>>  How can I access remote branches in a cloned repository on my local
->>>  machine?
->>
->> Try something like:
->>
->> git config remote.origin.fetch +refs/remotes/*:+refs/remotes/*
->
-> sorry, that should have been:
-> git config remote.origin.fetch +refs/remotes/*:refs/remotes/*
->
->> git fetch
->
-> -- 
-> Julian
->
->  ---
-> "The National Association of Theater Concessionaires reported that in
-> 1986, 60% of all candy sold in movie theaters was sold to Roger  
-> Ebert."
-> 		-- D. Letterman
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+  git://repo.or.cz/git/git-p4.git git-p4
+
+Chris Pettitt (1):
+      git-p4 support for perforce renames.
+
+Simon Hausmann (1):
+      git-p4: When skipping a patch as part of "git-p4 submit" make sure we=
+=20
+correctly revert to the previous state of the files using "p4 revert".
+
+ contrib/fast-import/git-p4 |   16 +++++++++++++++-
+ 1 files changed, 15 insertions(+), 1 deletions(-)
+
+
+These changes fit nicely into master I would say.
+
+Thanks,
+Simon
+
+--nextPart1561638.hBs7vqTY69
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHGhwiWXvMThJCpvIRAooSAKCfmXgmqNC2uUge8JmvGX3jK6KoKgCdGo5r
+S6q4K+ag897Sa2Z5aIRG/U4=
+=1Vhy
+-----END PGP SIGNATURE-----
+
+--nextPart1561638.hBs7vqTY69--
