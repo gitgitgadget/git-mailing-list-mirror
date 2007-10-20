@@ -1,138 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] When exec'ing sub-commands, fall back on execvp (the
- PATH)
-Date: Sat, 20 Oct 2007 08:30:54 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710200824270.25221@racer.site>
-References: <20071020064459.GB2237@srparish.net>
+From: "Ciprian Dorin Craciun" <ciprian.craciun@gmail.com>
+Subject: Re: Announcement of Git wikibook
+Date: Sat, 20 Oct 2007 10:40:24 +0300
+Message-ID: <8e04b5820710200040q76301c58j33e5d0895956b150@mail.gmail.com>
+References: <428b865e0710191321ndd08564yec6366cb10705af6@mail.gmail.com>
+	 <C0D5CAE0-A152-4572-81D5-AF2A78DD89C6@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Scott Parish <srp@srparish.net>
-X-From: git-owner@vger.kernel.org Sat Oct 20 09:31:52 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Evan Carroll" <me@evancarroll.com>, git@vger.kernel.org
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sat Oct 20 09:40:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ij8oG-0001FL-7Y
-	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 09:31:48 +0200
+	id 1Ij8wq-0003FA-JB
+	for gcvg-git-2@gmane.org; Sat, 20 Oct 2007 09:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757684AbXJTHbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 03:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757414AbXJTHbN
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 03:31:13 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42133 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755750AbXJTHbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 03:31:11 -0400
-Received: (qmail invoked by alias); 20 Oct 2007 07:31:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp010) with SMTP; 20 Oct 2007 09:31:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/IcrhFgH/Imo8+Xs+iWTaf4Be4XSuXWjz/cWZavz
-	5Kab4Z8ZuEEAhQ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071020064459.GB2237@srparish.net>
-X-Y-GMX-Trusted: 0
+	id S1753260AbXJTHk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 03:40:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbXJTHk1
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 03:40:27 -0400
+Received: from wx-out-0506.google.com ([66.249.82.235]:14289 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170AbXJTHk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 03:40:26 -0400
+Received: by wx-out-0506.google.com with SMTP id h31so740282wxd
+        for <git@vger.kernel.org>; Sat, 20 Oct 2007 00:40:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=mslgSXK0L6G+oZcz+T7fPRyqhbUOiO4M4pK7R/cXJY4=;
+        b=N4Kmsd2d0mjjE4i4oSJDHoAasH5RwoFqXxM8MNnNwSPj6yhb+1MN5/ptL2MBWj5ciKLZZqiMmBTZ5NcX+X51jxDI2clSuXnpvQxUkPoP4TQ4KrtYvL/mwncGkC4nnUrYpkLzYGU4CjmRuaItU5YFwWkWFw2/WhvSJzfLZGum+tQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=tytkx71q7xs76aTql0qreOv8qEJQDegZJyruBzqINbWi/4Zb4kORzy1+/S2T0PDTFabEJxz9zLDzOdtZT12VAwK1PCowIsoK0igtKyX9fp3XHLyaovD35hj/FsmkFj1BOolH/8ULDSAu5eThZ3Uw+aDdhFcs0/h9xvmGMwczLfE=
+Received: by 10.70.40.1 with SMTP id n1mr4455567wxn.1192866024876;
+        Sat, 20 Oct 2007 00:40:24 -0700 (PDT)
+Received: by 10.70.116.2 with HTTP; Sat, 20 Oct 2007 00:40:24 -0700 (PDT)
+In-Reply-To: <C0D5CAE0-A152-4572-81D5-AF2A78DD89C6@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61807>
 
-Hi,
+    There is nothing wrong with either of the two approaches. They
+could both coexist but address different needs:
+    -- the manual should be more oriented on technical issues and
+addresses only the most recent versions;
+    -- the book should be more user-oriented, and more general,
+explaining how source management should be addressed by using git, and
+maybe make comparisons with may other versioning systems. Also the
+book could relate to many versions -- both old and new.
 
-On Fri, 19 Oct 2007, Scott Parish wrote:
+    Also I would note that the wiki book is more easy to edit... If
+you spot errors or want to add something you just go and edit it and
+the effect is immediate. But in contrast sending patches involves some
+overhead...
 
-> diff --git a/exec_cmd.c b/exec_cmd.c
-> index 9b74ed2..674c9f3 100644
-> --- a/exec_cmd.c
-> +++ b/exec_cmd.c
-> @@ -34,15 +34,15 @@ int execv_git_cmd(const char **argv)
->  {
->  	char git_command[PATH_MAX + 1];
->  	int i;
-> +	int rc;
->  	const char *paths[] = { current_exec_path,
->  				getenv(EXEC_PATH_ENVIRONMENT),
->  				builtin_exec_path };
-> +	const char *tmp;
-> +	size_t len;
->  
->  	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
-> -		size_t len;
-> -		int rc;
->  		const char *exec_dir = paths[i];
-> -		const char *tmp;
->  
->  		if (!exec_dir || !*exec_dir) continue;
->  
-> @@ -106,8 +106,26 @@ int execv_git_cmd(const char **argv)
->  
->  		argv[0] = tmp;
->  	}
-> -	return -1;
->  
-> +	rc = snprintf(git_command, sizeof(git_command), "git-%s", argv[0]);
-> +	if (rc < 0 || rc >= sizeof(git_command) - len) {
-> +		fprintf(stderr, "git: command name given is too long.\n");
-> +		return -1;
-> +	}
-> +
-> +	tmp = argv[0];
-> +	argv[0] = git_command;
-> +
-> +	trace_argv_printf(argv, -1, "trace: exec:");
-> +
-> +	/* execve() can only ever return if it fails */
-> +	execvp(git_command, (char **)argv);
-> +
-> +	trace_printf("trace: exec failed: %s\n", strerror(errno));
-> +
-> +	argv[0] = tmp;
-> +
-> +	return -1;
->  }
+    Ciprian.
 
-I am not sure that this is elegant enough: Something like this (completely 
-untested) might be better:
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 9b74ed2..c928f37 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -36,7 +36,8 @@ int execv_git_cmd(const char **argv)
- 	int i;
- 	const char *paths[] = { current_exec_path,
- 				getenv(EXEC_PATH_ENVIRONMENT),
--				builtin_exec_path };
-+				builtin_exec_path,
-+				"" };
- 
- 	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
- 		size_t len;
-@@ -44,9 +45,12 @@ int execv_git_cmd(const char **argv)
- 		const char *exec_dir = paths[i];
- 		const char *tmp;
- 
--		if (!exec_dir || !*exec_dir) continue;
-+		if (!exec_dir) continue;
- 
--		if (*exec_dir != '/') {
-+		if (!*exec_dir)
-+			/* try PATH */
-+			*git_command = '\0';
-+		else if (*exec_dir != '/') {
- 			if (!getcwd(git_command, sizeof(git_command))) {
- 				fprintf(stderr, "git: cannot determine "
- 					"current directory: %s\n",
-@@ -81,7 +85,7 @@ int execv_git_cmd(const char **argv)
- 
- 		len = strlen(git_command);
- 		rc = snprintf(git_command + len, sizeof(git_command) - len,
--			      "/git-%s", argv[0]);
-+			      "%sgit-%s", *exec_dir ? "/" : "", argv[0]);
- 		if (rc < 0 || rc >= sizeof(git_command) - len) {
- 			fprintf(stderr,
- 				"git: command name given is too long.\n");
-
-Ciao,
-Dscho
+On 10/19/07, Steffen Prohaska <prohaska@zib.de> wrote:
+>
+> On Oct 19, 2007, at 10:21 PM, Evan Carroll wrote:
+>
+> > I've create a git wikibook if anyone wants to help expand it.
+> > http://en.wikibooks.org/wiki/Source_Control_Management_With_Git
+>
+> I'm just curious. What is the advantage of a wikibook?
+>
+> We already have a manual
+>
+> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html
+>
+> including a todo list
+>
+> http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#todo
+>
+> So, why don't you send patches improving the manual, but instead
+> started a wiki book from scratch?
+>
+>         Steffen
