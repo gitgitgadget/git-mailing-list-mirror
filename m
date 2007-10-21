@@ -1,75 +1,78 @@
 From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] On error, do not list all commands, but point to --help option.
-Date: Sun, 21 Oct 2007 10:58:56 +0200
-Message-ID: <ED3FFB7A-861F-47E4-97EA-D7A05552FC2C@wincent.com>
-References: <bqaujirk.fsf@blue.sea.net> <Pine.LNX.4.64.0710202126430.25221@racer.site> <odetifoh.fsf@blue.sea.net> <Pine.LNX.4.64.0710210001390.25221@racer.site> <20071021020653.GA14735@spearce.org>
+Subject: Re: Announcement of Git wikibook
+Date: Sun, 21 Oct 2007 11:10:24 +0200
+Message-ID: <F430333B-B29B-4992-9474-0E87006CBA77@wincent.com>
+References: <428b865e0710191321ndd08564yec6366cb10705af6@mail.gmail.com> <C0D5CAE0-A152-4572-81D5-AF2A78DD89C6@zib.de> <8e04b5820710200040q76301c58j33e5d0895956b150@mail.gmail.com> <Pine.LNX.4.64.0710202232280.25221@racer.site> <20071021030927.GA19450@dervierte>
 Mime-Version: 1.0 (Apple Message framework v752.3)
 Content-Type: text/plain; charset=ISO-8859-1;
 	delsp=yes	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 21 11:00:06 2007
+	Ciprian Dorin Craciun <ciprian.craciun@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Evan Carroll <me@evancarroll.com>, git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 21 11:11:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjWfE-00054u-HJ
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 11:00:04 +0200
+	id 1IjWqG-0007Yi-0f
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 11:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751255AbXJUI7x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Oct 2007 04:59:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbXJUI7x
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 04:59:53 -0400
-Received: from wincent.com ([72.3.236.74]:34901 "EHLO s69819.wincent.com"
+	id S1751191AbXJUJLQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Oct 2007 05:11:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751289AbXJUJLQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 05:11:16 -0400
+Received: from wincent.com ([72.3.236.74]:34934 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751161AbXJUI7w convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2007 04:59:52 -0400
+	id S1750964AbXJUJLP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2007 05:11:15 -0400
 Received: from [192.168.0.129] (localhost [127.0.0.1])
 	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9L8xiYH003519;
-	Sun, 21 Oct 2007 03:59:45 -0500
-In-Reply-To: <20071021020653.GA14735@spearce.org>
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9L9B7vC004345;
+	Sun, 21 Oct 2007 04:11:08 -0500
+In-Reply-To: <20071021030927.GA19450@dervierte>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61890>
 
-El 21/10/2007, a las 4:06, Shawn O. Pearce escribi=F3:
+El 21/10/2007, a las 5:09, Steven Walter escribi=F3:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>>> On Sat, 20 Oct 2007, Jari Aalto wrote:
->>>>
->>>>> - commented out call to list_common_cmds_help()
->>
->> Well, I'm almost sure of the opposite.  One of the big results of =20
->> the Git
->> Survey was that git is still not user-friendly enough.  Your patch =20
->> would
->> only make this issue worse.
+> On Sat, Oct 20, 2007 at 10:34:34PM +0100, Johannes Schindelin wrote:
+>> I am torn.  On one side I like the Wiki approach.  On the other =20
+>> hand, the
+>> Wiki will get less review by git oldtimers, whereas the patches to
+>> user-manual are usually reviewed as thoroughly as the code patches.
 >
-> Actually I think Jari's patch helps for the reason originally
-> stated in the message (less output when you make a small typo).
-> Though I agree that the commented out code should just be removed.
->
-> I actually had to do `git config alias.upsh push` just to keep
-> myself from screaming every time I made a small typo and Git gave
-> me a screenful of "helpful reminders".
+> No offense, but review by old timers can be both a blessing and a =20
+> curse.
+> Well, it's not the "review" that is so much a problem as the =20
+> "editorial
+> control."  In my opinion (and I believe this is what the original =20
+> poster
+> was saying), the official Git User Manual focuses more on technical
+> issues and less on introducing git to a new user.
 
-If you want to go really user friendly, how about a check against the =20
-list of known commands using a shortest-edit distance algorithm?
+But it's not an "intro", it's a user manual. That means it's supposed =20
+to be a comprehensive, in-depth treatment of just about everything. =20
+The technical content is a good thing; it's supposed to be the =20
+document you turn to when you want to move beyond superficial use to =20
+genuine, in-depth understanding.
 
-   Unknown command: 'upsh': did you mean 'push'?
-   Type 'git help' for usage.
+There are other documents with the goal of "introducing git to the =20
+new user", grouped together here:
 
-Here's just one of many articles introducing the shortest-edit idea, =20
-as popularized by Google:
+<http://git.or.cz/course/index.html>
 
-   <http://norvig.com/spell-correct.html>
+And also under the "Documentation" heading on the Git home page:
 
-What do you think?
+<http://git.or.cz/>
+
+Those are probably the articles that should be worked on and =20
+augmented if you care about introducing things to a newbie.
 
 Cheers,
 Wincent
