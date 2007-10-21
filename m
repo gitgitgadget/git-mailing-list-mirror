@@ -1,70 +1,47 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH] On error, do not list all commands, but point to --help option
-Date: Sun, 21 Oct 2007 01:41:41 +0300
-Organization: Private
-Message-ID: <ir51if2y.fsf@blue.sea.net>
-References: <bqaujirk.fsf@blue.sea.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] On error, do not list all commands, but point to
+	--help option.
+Date: Sat, 20 Oct 2007 23:24:27 -0400
+Message-ID: <20071021032427.GB8545@coredump.intra.peff.net>
+References: <bqaujirk.fsf@blue.sea.net> <Pine.LNX.4.64.0710202126430.25221@racer.site> <odetifoh.fsf@blue.sea.net> <Pine.LNX.4.64.0710210001390.25221@racer.site> <20071021020653.GA14735@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 21 05:14:50 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 05:24:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjRH5-0006zz-Vr
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 05:14:48 +0200
+	id 1IjRQh-0008Vd-GZ
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 05:24:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750826AbXJUDOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Oct 2007 23:14:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750814AbXJUDOg
-	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 23:14:36 -0400
-Received: from main.gmane.org ([80.91.229.2]:54907 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754AbXJUDOf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Oct 2007 23:14:35 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IjN19-0006IQ-0J
-	for git@vger.kernel.org; Sat, 20 Oct 2007 22:42:03 +0000
-Received: from a91-155-177-132.elisa-laajakaista.fi ([91.155.177.132])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 20 Oct 2007 22:42:02 +0000
-Received: from jari.aalto by a91-155-177-132.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 20 Oct 2007 22:42:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-177-132.elisa-laajakaista.fi
-User-Agent: Gnus/5.110007 (No Gnus v0.7) Emacs/22.1 (windows-nt)
-Cancel-Lock: sha1:MuaVFfX88VRdA9u5Y3xGaIp1Xz0=
+	id S1751024AbXJUDYb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Oct 2007 23:24:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751022AbXJUDYb
+	(ORCPT <rfc822;git-outgoing>); Sat, 20 Oct 2007 23:24:31 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3993 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750963AbXJUDYa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Oct 2007 23:24:30 -0400
+Received: (qmail 24015 invoked by uid 111); 21 Oct 2007 03:24:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Sat, 20 Oct 2007 23:24:28 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Sat, 20 Oct 2007 23:24:27 -0400
+Content-Disposition: inline
+In-Reply-To: <20071021020653.GA14735@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61872>
 
+On Sat, Oct 20, 2007 at 10:06:53PM -0400, Shawn O. Pearce wrote:
 
-- Remove out call to list_common_cmds_help()
-- Send error message to stderr, not stdout.
+> I actually had to do `git config alias.upsh push` just to keep
+> myself from screaming every time I made a small typo and Git gave
+> me a screenful of "helpful reminders".
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- help.c |    3 +--
- 1 files changed, 1 insertions(+), 2 deletions(-)
+Yeah, somebody should really work on bash completion...
 
-diff --git a/help.c b/help.c
-index 1cd33ec..814a8cd 100644
---- a/help.c
-+++ b/help.c
-@@ -185,8 +185,7 @@ static void show_man_page(const char *git_cmd)
- 
- void help_unknown_cmd(const char *cmd)
- {
--	printf("git: '%s' is not a git-command\n\n", cmd);
--	list_common_cmds_help();
-+	fprintf(stderr, "git: '%s' is not a git-command. See --help\n\n", cmd);
- 	exit(1);
- }
- 
--- 
-1.5.3.2.81.g17ed
+-Peff
