@@ -1,107 +1,192 @@
-From: Scott Parish <sRp@srparish.net>
-Subject: Re: [PATCH] execv_git_cmd(): also try PATH if everything else
-	fails.
-Date: Sun, 21 Oct 2007 11:21:50 -0700
-Message-ID: <20071021182150.GG16291@srparish.net>
-References: <1192867937.v2.fusewebmail-240137@f> <20071020205721.GA16291@srparish.net> <Pine.LNX.4.64.0710202258440.25221@racer.site>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH] Split out "exact content match" phase of rename detection
+Date: Sun, 21 Oct 2007 11:40:47 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710211137480.10525@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0710201158580.10525@woody.linux-foundation.or
+ g>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 21 20:22:48 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+To: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 20:41:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjfRn-0002vL-Jk
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 20:22:48 +0200
+	id 1Ijfk0-0007vd-2i
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 20:41:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbXJUSWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 14:22:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751833AbXJUSWf
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 14:22:35 -0400
-Received: from [208.70.128.56] ([208.70.128.56]:47805 "EHLO
-	smtp-gw5.mailanyone.net" rhost-flags-FAIL-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751816AbXJUSWe (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2007 14:22:34 -0400
-Received: from mailanyone.net
-	by smtp-gw5.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1IjfQu-0003zZ-Vd; Sun, 21 Oct 2007 13:21:53 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Sun, 21 Oct 2007 11:21:52 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710202258440.25221@racer.site>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1751651AbXJUSlY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 14:41:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751744AbXJUSlX
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 14:41:23 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59372 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751651AbXJUSlX (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2007 14:41:23 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9LIemKT008632
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 21 Oct 2007 11:40:49 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9LIelAA023088;
+	Sun, 21 Oct 2007 11:40:47 -0700
+In-Reply-To: <alpine.LFD.0.999.0710201158580.10525@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-4.718 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61908>
 
-Earlier, we tried to find the git commands in several possible exec
-dirs.  Now, if all of these failed, try to find the git command in
-PATH.
 
-This allows you to install the git programs somewhere else than
-originally specified when building git, as long as you add that location
-to the PATH.
+Split out "exact content match" phase of rename detection
 
-Implementation by Johannes Schindelin
+This makes the exact content match a separate function of its own.
+Partly to cut down a bit on the size of the diffcore_rename() function
+(which is too complex as it is), and partly because there are smarter
+ways to do this than an O(m*n) loop over it all, and that function
+should be rewritten to take that into account.
 
-Signed-off-by: Scott R Parish <srp@srparish.net>
+Whether I'll get to the rewrite or not is not clear, but this is a
+worthy cleanup regardless.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
- exec_cmd.c |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 9b74ed2..374ffc9 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -36,7 +36,8 @@ int execv_git_cmd(const char **argv)
- 	int i;
- 	const char *paths[] = { current_exec_path,
- 				getenv(EXEC_PATH_ENVIRONMENT),
--				builtin_exec_path };
-+				builtin_exec_path,
-+				"" };
+So, I'm looking a bit at rename handling, since it's got the scalability 
+problems. Andy Chu of google pointed to an algorithm that doesn't use a 
+m*n array, but instead a hash table to match things up, and that should be 
+much better. No promises as to whether I'll ever actually implement it, 
+but just looking at that diffcore_rename function makes your head ache, 
+and while this doesn't improve any code, at least it splits one 
+independent thing out of it..
+
+---
+ diffcore-rename.c |   90 +++++++++++++++++++++++++++++++++--------------------
+ 1 files changed, 56 insertions(+), 34 deletions(-)
+
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 142e537..2077a9b 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -262,6 +262,58 @@ static int compute_stays(struct diff_queue_struct *q,
+ 	return 1;
+ }
  
- 	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
- 		size_t len;
-@@ -44,9 +45,12 @@ int execv_git_cmd(const char **argv)
- 		const char *exec_dir = paths[i];
- 		const char *tmp;
++/*
++ * Find exact renames first.
++ *
++ * The first round matches up the up-to-date entries,
++ * and then during the second round we try to match
++ * cache-dirty entries as well.
++ *
++ * Note: the rest of the rename logic depends on this
++ * phase also populating all the filespecs for any
++ * entry that isn't matched up with an exact rename,
++ * see "is_exact_match()".
++ */
++static int find_exact_renames(void)
++{
++	int rename_count = 0;
++	int contents_too;
++
++	for (contents_too = 0; contents_too < 2; contents_too++) {
++		int i;
++
++		for (i = 0; i < rename_dst_nr; i++) {
++			struct diff_filespec *two = rename_dst[i].two;
++			int j;
++
++			if (rename_dst[i].pair)
++				continue; /* dealt with an earlier round */
++			for (j = 0; j < rename_src_nr; j++) {
++				int k;
++				struct diff_filespec *one = rename_src[j].one;
++				if (!is_exact_match(one, two, contents_too))
++					continue;
++
++				/* see if there is a basename match, too */
++				for (k = j; k < rename_src_nr; k++) {
++					one = rename_src[k].one;
++					if (basename_same(one, two) &&
++						is_exact_match(one, two,
++							contents_too)) {
++						j = k;
++						break;
++					}
++				}
++
++				record_rename_pair(i, j, (int)MAX_SCORE);
++				rename_count++;
++				break; /* we are done with this entry */
++			}
++		}
++	}
++	return rename_count;
++}
++
+ void diffcore_rename(struct diff_options *options)
+ {
+ 	int detect_rename = options->detect_rename;
+@@ -270,12 +322,11 @@ void diffcore_rename(struct diff_options *options)
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	struct diff_queue_struct outq;
+ 	struct diff_score *mx;
+-	int i, j, rename_count, contents_too;
++	int i, j, rename_count;
+ 	int num_create, num_src, dst_cnt;
  
--		if (!exec_dir || !*exec_dir) continue;
-+		if (!exec_dir) continue;
+ 	if (!minimum_score)
+ 		minimum_score = DEFAULT_RENAME_SCORE;
+-	rename_count = 0;
  
--		if (*exec_dir != '/') {
-+		if (!*exec_dir)
-+			/* try PATH */
-+			*git_command = '\0';
-+		else if (*exec_dir != '/') {
- 			if (!getcwd(git_command, sizeof(git_command))) {
- 				fprintf(stderr, "git: cannot determine "
- 					"current directory: %s\n",
-@@ -81,7 +85,7 @@ int execv_git_cmd(const char **argv)
+ 	for (i = 0; i < q->nr; i++) {
+ 		struct diff_filepair *p = q->queue[i];
+@@ -318,40 +369,11 @@ void diffcore_rename(struct diff_options *options)
+ 	if (rename_dst_nr * rename_src_nr > rename_limit * rename_limit)
+ 		goto cleanup;
  
- 		len = strlen(git_command);
- 		rc = snprintf(git_command + len, sizeof(git_command) - len,
--			      "/git-%s", argv[0]);
-+			      "%sgit-%s", *exec_dir ? "/" : "", argv[0]);
- 		if (rc < 0 || rc >= sizeof(git_command) - len) {
- 			fprintf(stderr,
- 				"git: command name given is too long.\n");
-@@ -99,8 +103,8 @@ int execv_git_cmd(const char **argv)
+-	/* We really want to cull the candidates list early
++	/*
++	 * We really want to cull the candidates list early
+ 	 * with cheap tests in order to avoid doing deltas.
+-	 * The first round matches up the up-to-date entries,
+-	 * and then during the second round we try to match
+-	 * cache-dirty entries as well.
+ 	 */
+-	for (contents_too = 0; contents_too < 2; contents_too++) {
+-		for (i = 0; i < rename_dst_nr; i++) {
+-			struct diff_filespec *two = rename_dst[i].two;
+-			if (rename_dst[i].pair)
+-				continue; /* dealt with an earlier round */
+-			for (j = 0; j < rename_src_nr; j++) {
+-				int k;
+-				struct diff_filespec *one = rename_src[j].one;
+-				if (!is_exact_match(one, two, contents_too))
+-					continue;
+-
+-				/* see if there is a basename match, too */
+-				for (k = j; k < rename_src_nr; k++) {
+-					one = rename_src[k].one;
+-					if (basename_same(one, two) &&
+-						is_exact_match(one, two,
+-							contents_too)) {
+-						j = k;
+-						break;
+-					}
+-				}
+-
+-				record_rename_pair(i, j, (int)MAX_SCORE);
+-				rename_count++;
+-				break; /* we are done with this entry */
+-			}
+-		}
+-	}
++	rename_count = find_exact_renames();
  
- 		trace_argv_printf(argv, -1, "trace: exec:");
- 
--		/* execve() can only ever return if it fails */
--		execve(git_command, (char **)argv, environ);
-+		/* execvp() can only ever return if it fails */
-+		execvp(git_command, (char **)argv);
- 
- 		trace_printf("trace: exec failed: %s\n", strerror(errno));
- 
--- 
-1.5.3.4.206.g58ba4-dirty
+ 	/* Have we run out the created file pool?  If so we can avoid
+ 	 * doing the delta matrix altogether.
