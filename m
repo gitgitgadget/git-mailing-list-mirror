@@ -1,89 +1,90 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/2] Correct some sizeof(size_t) != sizeof(unsigned long)  typing errors
-Date: Sun, 21 Oct 2007 12:31:32 +0200
-Message-ID: <20071021103132.GA25741@artemis.corp>
-References: <20071021052537.GB31927@spearce.org> <471B1AA5.8070009@lsrfire.ath.cx>
+From: Rocco Rutte <pdmef@gmx.net>
+Subject: Re: [PATCH-resent] gitk: fix in procedure drawcommits
+Date: Sun, 21 Oct 2007 14:12:36 +0200
+Organization: Berlin University of Technology
+Message-ID: <20071021121236.GA290@localhost.daprodeges.fqdn.th-h.de>
+References: <20071019052823.GI14735@spearce.org> <200710191544.22228.barra_cuda@katamail.com> <18201.54648.707559.480169@cargo.ozlabs.ibm.com> <200710201802.48111.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="huq684BweRXVnRxX";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sun Oct 21 12:31:49 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 21 14:12:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjY5z-0007OM-DB
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 12:31:47 +0200
+	id 1IjZfs-0005gY-L3
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 14:12:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751392AbXJUKbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 06:31:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbXJUKbf
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 06:31:35 -0400
-Received: from pan.madism.org ([88.191.52.104]:42590 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751313AbXJUKbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 06:31:34 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 7961119E4E;
-	Sun, 21 Oct 2007 12:31:33 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 550973CEDCB; Sun, 21 Oct 2007 12:31:32 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+	id S1751481AbXJUMMp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 08:12:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751431AbXJUMMp
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 08:12:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:42462 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751360AbXJUMMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 08:12:44 -0400
+Received: (qmail invoked by alias); 21 Oct 2007 12:12:41 -0000
+Received: from dslb-088-073-081-135.pools.arcor-ip.net (EHLO localhost.daprodeges.fqdn.th-h.de) [88.73.81.135]
+  by mail.gmx.net (mp038) with SMTP; 21 Oct 2007 14:12:41 +0200
+X-Authenticated: #1642131
+X-Provags-ID: V01U2FsdGVkX1/Ay+ddLNbAx9RcOg8TYzJrzd7dYlUjfsdv3BhNK2
+	rOyi3UREJBJAyx
+Mail-Followup-To: Michele Ballabio <barra_cuda@katamail.com>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
 Content-Disposition: inline
-In-Reply-To: <471B1AA5.8070009@lsrfire.ath.cx>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <200710201802.48111.barra_cuda@katamail.com>
+X-GnuPG-Key: http://user.cs.tu-berlin.de/~pdmef/rrutte.gpg
+X-Blog: http://user.cs.tu-berlin.de/~pdmef/horst.cgi?o
+X-System: localhost (Darwin 8.10.2 i386)
+User-Agent: Mutt/1.5.16 (2007-10-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61899>
 
+[ No need to Cc: me as I'm on the git list, too ]
 
---huq684BweRXVnRxX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Sun, Oct 21, 2007 at 09:23:49AM +0000, Ren=C3=A9 Scharfe wrote:
-> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-> > ---
-> >  builtin-apply.c   |    2 +-
-> >  builtin-archive.c |    2 +-
-> >  diff.c            |    4 ++--
-> >  entry.c           |    2 +-
-> >  strbuf.h          |    8 +++++++-
-> >  test-delta.c      |    3 ++-
-> >  6 files changed, 14 insertions(+), 7 deletions(-)
->=20
-> I have a feeling this is going in then wrong direction.  Shouldn't
-> we rather use size_t everywhere?  malloc() takes a size_t, and it's
-> the basis of strbuf and also of the file content functions.
+* Michele Ballabio [07-10-20 18:02:47 +0200] wrote:
 
-  I agree, Junio was working on a patch that generalized use of size_t's
-when unsigned long where used and size_t meant, I suppose he didn't had
-the time to push it.
+>Uh-oh. I think I just found the issue. That's probably a bug
+>somewhere in the import (either fast-export or fast-import or
+>the original repo, I don't know), so I'm not sure if gitk
+>should be patched, but since the resulting repo seems correct
+>as far as git is concerned (i.e. git fsck --full --strict
+>doesn't complain), I guess something should be done.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+>Here is the culprit (or so I think). One of the guilty commits is:
 
---huq684BweRXVnRxX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+>	commit a3b4383d69e0754346578c85ba8ff7c05bd88705
+>	tree 1bf99cd22abe97c59f8c0b7ad6b8244f0854b8af
+>	parent 6d919fccf603aba995035fa0fb507aa2bd3bf0ae
+>	parent 6d919fccf603aba995035fa0fb507aa2bd3bf0ae
+>	author Brendan Cully <brendan@kublai.com> 1179646159 -0700
+>	committer Brendan Cully <brendan@kublai.com> 1179646159 -0700
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+>	    Forget SMTP password if authentication fails.
+>	    Thanks to Gregory Shapiro for the initial patch (I've moved the reset
+>	    from smtp_auth_sasl up to smtp_auth, and used the account API
+>	    instead of twiddling account bits by hand). Closes #2872.
 
-iD8DBQBHGyqEvGr7W6HudhwRAi62AJ9TRjWw/HgCynMyJwLto2jExiIHJgCfWh8F
-WBxMpMfWTm30/772wnhADv8=
-=pr9m
------END PGP SIGNATURE-----
+Oh. Yes, this is a bug in the python scripts that get merges quite 
+wrong. I didn't notice that earlier as git doesn't complain and the 
+contents of the repo turns out as identical.
 
---huq684BweRXVnRxX--
+I'll push fixes (e.g. packed refs support) to the fast-export repo in 
+Monday. With these changes, the mutt repo as well hg-crew (which has far 
+more merges than the mutt repo) seem to work correctly (no identical 
+parents and identical contents).
+
+Thanks for tracking it down.
+
+Still I think fast-import could warn or error out if its gets such 
+content which doesn't really make sense...
+
+Rocco
