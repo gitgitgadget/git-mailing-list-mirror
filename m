@@ -1,283 +1,179 @@
-From: Scott R Parish <srp@srparish.net>
-Subject: [PATCH] "git help -a" should search all exec_paths and PATH
-Date: Sun, 21 Oct 2007 14:48:46 -0700
-Message-ID: <20071021214846.GI16291@srparish.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 21 23:49:02 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH] Be nice with compilers that do not support runtime paths at all.
+Date: Sun, 21 Oct 2007 23:56:22 +0200
+Message-ID: <09169ECD-19E1-44D1-8539-71EBBA3826A8@lrde.epita.fr>
+References: <7vsl4rdgf4.fsf@gitster.siamese.dyndns.org> <1191450052-23619-1-git-send-email-tsuna@lrde.epita.fr> <7vejgbdbyn.fsf@gitster.siamese.dyndns.org> <34DAC3CA-E226-4488-8B03-FC45A6A95F78@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-3--51782542"
+Content-Transfer-Encoding: 7bit
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 23:56:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjifN-00083p-Oo
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 23:49:02 +0200
+	id 1Ijimp-0001X4-28
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 23:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750799AbXJUVsu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 17:48:50 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750827AbXJUVsu
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 17:48:50 -0400
-Received: from smtp-gw7.mailanyone.net ([208.70.128.55]:46065 "EHLO
-	smtp-gw7.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757AbXJUVst (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 17:48:49 -0400
-Received: from mailanyone.net
-	by smtp-gw7.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1IjifA-00015I-9x
-	for git@vger.kernel.org; Sun, 21 Oct 2007 16:48:48 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Sun, 21 Oct 2007 14:48:47 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1750850AbXJUV4a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 17:56:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750839AbXJUV4a
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 17:56:30 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:50809 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750807AbXJUV43 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 17:56:29 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IjimZ-0004M2-Bx
+	for git@vger.kernel.org; Sun, 21 Oct 2007 23:56:27 +0200
+In-Reply-To: <34DAC3CA-E226-4488-8B03-FC45A6A95F78@lrde.epita.fr>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61911>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61912>
 
-Currently "git help -a" only searches in the highest priority exec_path,
-meaning at worst, nothing is listed if the git commands are only available
-from the PATH. It also makes git slightly less extensible.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-3--51782542
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-To fix this, help.c is modified to search in all the exec_paths and PATH
-for potential git commands. So that it has access to all the exec_paths,
-exec_cmd.c now exposes the various paths. "current_exec_path" is renamed
-as its name is misleading.
+On Oct 4, 2007, at 5:59 PM, Benoit SIGOURE wrote:
 
-Signed-off-by: Scott R Parish <srp@srparish.net>
----
- exec_cmd.c |   26 +++++++++++---
- exec_cmd.h |    3 ++
- git.c      |    2 +-
- help.c     |  103 +++++++++++++++++++++++++++++++++++++++++++-----------------
- 4 files changed, 98 insertions(+), 36 deletions(-)
+> On Oct 4, 2007, at 1:18 AM, Junio C Hamano wrote:
+>
+>> Benoit Sigoure <tsuna@lrde.epita.fr> writes:
+>>
+>>> diff --git a/Makefile b/Makefile
+>>> index a1fe443..7c6c453 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -100,6 +100,9 @@ all::
+>>>  # that tells runtime paths to dynamic libraries;
+>>>  # "-Wl,-rpath=/path/lib" is used instead.
+>>>  #
+>>> +# Define NO_RPATH if your dynamic loader doesn't support runtime  
+>>> paths at
+>>> +# all.
+>>> +#
+>>>  # Define USE_NSEC below if you want git to care about sub-second  
+>>> file mtimes
+>>>  # and ctimes. Note that you need recent glibc (at least 2.2.4)  
+>>> for this, and
+>>>  # it will BREAK YOUR LOCAL DIFFS! show-diff and anything using  
+>>> it will likely
+>>
+>> Thanks for this part;
+>>
+>>> @@ -507,6 +510,7 @@ ifeq ($(uname_S),Darwin)
+>>>  			BASIC_LDFLAGS += -L/opt/local/lib
+>>>  		endif
+>>>  	endif
+>>> +        NO_RPATH = YesPlease
+>>>  endif
+>>
+>> I'll let Darwin users to fight the defaults for this part out.
+>
+> No more replies on this thread, and the Apple documentation  
+> confirms that there is no rpath support in the dynamic loader of  
+> OSX 10.4 and before.  I don't know about the soon-to-be-released  
+> 10.5 aka Leopard.
+>
+>>> @@ -521,7 +525,10 @@ ifndef NO_CURL
+>>>  	ifdef CURLDIR
+>>>  		# Try "-Wl,-rpath=$(CURLDIR)/$(lib)" in such a case.
+>>>  		BASIC_CFLAGS += -I$(CURLDIR)/include
+>>> -		CURL_LIBCURL = -L$(CURLDIR)/$(lib) $(CC_LD_DYNPATH)$(CURLDIR)/$ 
+>>> (lib) -lcurl
+>>> +		CURL_LIBCURL = -L$(CURLDIR)/$(lib) -lcurl
+>>> +ifndef NO_RPATH
+>>> +		CURL_LIBCURL += $(CC_LD_DYNPATH)$(CURLDIR)/$(lib)
+>>> +endif
+>>>  	else
+>>>  		CURL_LIBCURL = -lcurl
+>>>  	endif
+>>
+>>> @@ -539,7 +546,10 @@ endif
+>>>
+>>>  ifdef ZLIB_PATH
+>>>  	BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+>>> -	EXTLIBS += -L$(ZLIB_PATH)/$(lib) $(CC_LD_DYNPATH)$(ZLIB_PATH)/$ 
+>>> (lib)
+>>> +	EXTLIBS += -L$(ZLIB_PATH)/$(lib)
+>>> +ifndef NO_RPATH
+>>> +	EXTLIBS += $(CC_LD_DYNPATH)$(ZLIB_PATH)/$(lib)
+>>> +endif
+>>>  endif
+>>>  EXTLIBS += -lz
+>>>
+>>
+>> While these parts are ugly but correct, I think...
+>>
+>>> @@ -547,7 +557,10 @@ ifndef NO_OPENSSL
+>>>  	OPENSSL_LIBSSL = -lssl
+>>>  	ifdef OPENSSLDIR
+>>>  		BASIC_CFLAGS += -I$(OPENSSLDIR)/include
+>>> -		OPENSSL_LINK = -L$(OPENSSLDIR)/$(lib) $(CC_LD_DYNPATH)$ 
+>>> (OPENSSLDIR)/$(lib)
+>>> +		OPENSSL_LINK = -L$(OPENSSLDIR)/$(lib)
+>>> +ifndef NO_RPATH
+>>> +		OPENSSL_LINK = $(CC_LD_DYNPATH)$(OPENSSLDIR)/$(lib)
+>>> +endif
+>>>  	else
+>>>  		OPENSSL_LINK =
+>>>  	endif
+>>
+>> this and the ICONV one are missing s/=/+=/.
+>
+> You're right, sorry.
+>
+>>
+>> If we do not care about supporting too old GNU make, we can do
+>> this by first adding this near the top:
+>>
+>>         ifndef NO_RPATH
+>>         LINKER_PATH = -L$(1) $(CC_LD_DYNPATH)$(1)
+>>         else
+>>         LINKER_PATH = -L$(1)
+>>         endif
+>>
+>> and then doing something like:
+>>
+>> 	CURL_LIBCURL = $(call LINKER_PATH,$(CURLDIR)/$(lib))
+>> 	OPENSSL_LINK = $(call LINKER_PATH,$(OPENSSLDIR)/$(lib))
+>>
+>> to make it easier to read and less error prone.
+>>
+>
+> Yes.  I can rework the patch, but the question is: do you care  
+> about old GNU make?  Can I rewrite the patch with this feature?
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 374ffc9..2c787a4 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -5,21 +5,35 @@
- 
- extern char **environ;
- static const char *builtin_exec_path = GIT_EXEC_PATH;
--static const char *current_exec_path;
-+static const char *argv_exec_path;
- 
--void git_set_exec_path(const char *exec_path)
-+void git_set_argv_exec_path(const char *exec_path)
- {
--	current_exec_path = exec_path;
-+	argv_exec_path = exec_path;
- }
- 
-+const char *git_argv_exec_path(void)
-+{
-+	return argv_exec_path;
-+}
-+
-+const char *git_builtin_exec_path(void)
-+{
-+	return builtin_exec_path;
-+}
-+
-+const char *git_env_exec_path(void)
-+{
-+	return getenv(EXEC_PATH_ENVIRONMENT); 
-+}
- 
- /* Returns the highest-priority, location to look for git programs. */
- const char *git_exec_path(void)
- {
- 	const char *env;
- 
--	if (current_exec_path)
--		return current_exec_path;
-+	if (argv_exec_path)
-+		return argv_exec_path;
- 
- 	env = getenv(EXEC_PATH_ENVIRONMENT);
- 	if (env && *env) {
-@@ -34,7 +48,7 @@ int execv_git_cmd(const char **argv)
- {
- 	char git_command[PATH_MAX + 1];
- 	int i;
--	const char *paths[] = { current_exec_path,
-+	const char *paths[] = { argv_exec_path,
- 				getenv(EXEC_PATH_ENVIRONMENT),
- 				builtin_exec_path,
- 				"" };
-diff --git a/exec_cmd.h b/exec_cmd.h
-index 849a839..315fe83 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -3,6 +3,9 @@
- 
- extern void git_set_exec_path(const char *exec_path);
- extern const char* git_exec_path(void);
-+extern const char* git_argv_exec_path(void);
-+extern const char* git_builtin_exec_path(void);
-+extern const char* git_env_exec_path(void);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
- extern int execl_git_cmd(const char *cmd, ...);
- 
-diff --git a/git.c b/git.c
-index 853e66c..b67fb17 100644
---- a/git.c
-+++ b/git.c
-@@ -51,7 +51,7 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
- 		if (!prefixcmp(cmd, "--exec-path")) {
- 			cmd += 11;
- 			if (*cmd == '=')
--				git_set_exec_path(cmd + 1);
-+				git_set_argv_exec_path(cmd + 1);
- 			else {
- 				puts(git_exec_path());
- 				exit(0);
-diff --git a/help.c b/help.c
-index b0d2dd4..85b2853 100644
---- a/help.c
-+++ b/help.c
-@@ -93,37 +93,27 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
- 	}
- }
- 
--static void list_commands(const char *exec_path, const char *pattern)
-+static unsigned int list_commands_in_dir(const char *dir, const char *prefix)
- {
- 	unsigned int longest = 0;
--	char path[PATH_MAX];
--	int dirlen;
--	DIR *dir = opendir(exec_path);
-+	int start_dir = open(".", O_RDONLY, 0);
-+	DIR *dirp = opendir(dir);
- 	struct dirent *de;
- 
--	if (!dir) {
--		fprintf(stderr, "git: '%s': %s\n", exec_path, strerror(errno));
--		exit(1);
-+	if (!dirp || chdir(dir)) {
-+		fchdir(start_dir);
-+		close(start_dir);
-+		return 0;
- 	}
- 
--	dirlen = strlen(exec_path);
--	if (PATH_MAX - 20 < dirlen) {
--		fprintf(stderr, "git: insanely long exec-path '%s'\n",
--			exec_path);
--		exit(1);
--	}
--
--	memcpy(path, exec_path, dirlen);
--	path[dirlen++] = '/';
--
--	while ((de = readdir(dir)) != NULL) {
-+	while ((de = readdir(dirp)) != NULL) {
- 		struct stat st;
- 		int entlen;
--
--		if (prefixcmp(de->d_name, "git-"))
-+			
-+		if (prefixcmp(de->d_name, prefix))
- 			continue;
--		strcpy(path+dirlen, de->d_name);
--		if (stat(path, &st) || /* stat, not lstat */
-+
-+		if (stat(de->d_name, &st) || /* stat, not lstat */
- 		    !S_ISREG(st.st_mode) ||
- 		    !(st.st_mode & S_IXUSR))
- 			continue;
-@@ -137,12 +127,67 @@ static void list_commands(const char *exec_path, const char *pattern)
- 
- 		add_cmdname(de->d_name + 4, entlen-4);
- 	}
--	closedir(dir);
- 
--	printf("git commands available in '%s'\n", exec_path);
--	printf("----------------------------");
--	mput_char('-', strlen(exec_path));
--	putchar('\n');
-+	closedir(dirp);
-+	fchdir(start_dir);
-+	close(start_dir);
-+
-+	return longest;
-+}
-+
-+static unsigned int list_commands_in_PATH(const char *prefix)
-+{
-+	unsigned int longest = 0;
-+	unsigned int len;
-+	const char *env_path = getenv("PATH");
-+	char *paths, *path, *colon;
-+       
-+	if (!env_path)
-+		return longest;
-+
-+	path = paths = xstrdup(env_path);
-+
-+	while ((char *)1 != path) {
-+		if ((colon = strchr(path, ':')))
-+			*colon = 0;
-+
-+		len = list_commands_in_dir(path, prefix);
-+		longest = MAX(longest, len);
-+
-+		path = colon + 1;
-+	}
-+
-+	free(paths);
-+	return longest;
-+}
-+
-+static void list_commands(const char *prefix)
-+{
-+	unsigned int longest = 0;
-+	unsigned int len;
-+	const char *paths[] = { git_argv_exec_path(),
-+				git_env_exec_path(),
-+				git_builtin_exec_path(),
-+				"" };
-+	int i;
-+
-+	for (i = 0; i < ARRAY_SIZE(paths); i++) {
-+		if (!paths[i])
-+			continue;
-+
-+		if (!*paths[i]) {
-+			/* try PATH */
-+			len = list_commands_in_PATH(prefix);
-+			longest = MAX(longest, len);
-+		}
-+		else {
-+			len = list_commands_in_dir(paths[i], prefix);
-+			longest = MAX(longest, len);
-+		}
-+	}
-+
-+	printf("available git commands\n");
-+	printf("----------------------\n");
- 	pretty_print_string_list(cmdname, longest - 4);
- 	putchar('\n');
- }
-@@ -158,7 +203,7 @@ static void list_common_cmds_help(void)
- 
- 	puts("The most commonly used git commands are:");
- 	for (i = 0; i < ARRAY_SIZE(common_cmds); i++) {
--		printf("   %s   ", common_cmds[i].name);
-+		printf("   %s	", common_cmds[i].name);
- 		mput_char(' ', longest - strlen(common_cmds[i].name));
- 		puts(common_cmds[i].help);
- 	}
-@@ -210,7 +255,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
- 		printf("usage: %s\n\n", git_usage_string);
- 		if(exec_path)
--			list_commands(exec_path, "git-*");
-+			list_commands("git-");
- 		exit(0);
- 	}
- 
+I know Junio is still offline but maybe someone else has an objection  
+against this?
+
 -- 
-1.5.3.4.209.g5d1ce-dirty
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-3--51782542
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHG8sGwwE67wC8PUkRAn9KAJ9P3wmHa1sKLaQS4GKdoBzyfWZ/SgCeJqcP
+KJNL5ak/nrF/8ZRPWrgiBwM=
+=nTai
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-3--51782542--
