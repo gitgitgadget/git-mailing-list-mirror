@@ -1,73 +1,80 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: How to run git-gui always in English?
-Date: Sun, 21 Oct 2007 03:15:43 -0400
-Message-ID: <20071021071543.GF14735@spearce.org>
-References: <CCAD0DE0-65D4-4FEC-B02F-658010FECD04@zib.de> <20071021065230.GE14735@spearce.org> <C65193EE-A45D-49ED-8831-1A006421A915@zib.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 21 Oct 2007 09:17:27 +0200
+Message-ID: <471AFD07.4040606@op5.se>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>  <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de> <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com> <Pine.LNX.4.64.0710210031130.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Oct 21 09:16:01 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Oct 21 09:17:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjV2W-0001zK-9c
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 09:16:00 +0200
+	id 1IjV4B-0002GY-VF
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 09:17:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751004AbXJUHPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 03:15:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750808AbXJUHPr
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 03:15:47 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:35535 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750763AbXJUHPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 03:15:46 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IjV2G-0001gH-19; Sun, 21 Oct 2007 03:15:44 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 8C4ED20FBAE; Sun, 21 Oct 2007 03:15:43 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <C65193EE-A45D-49ED-8831-1A006421A915@zib.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751101AbXJUHRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 03:17:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbXJUHRc
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 03:17:32 -0400
+Received: from mail.op5.se ([193.201.96.20]:40089 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750912AbXJUHRb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 03:17:31 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1574F1730584;
+	Sun, 21 Oct 2007 09:17:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7p7U5STVBS-e; Sun, 21 Oct 2007 09:17:29 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id DE6FC1730582;
+	Sun, 21 Oct 2007 09:17:28 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0710210031130.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61887>
 
-Steffen Prohaska <prohaska@zib.de> wrote:
-> On Oct 21, 2007, at 8:52 AM, Shawn O. Pearce wrote:
-> >
-> >I think that if you set LANG=en before you start git-gui it will
-> >take on English, and so will all of the standard dialogs that we
-> >"borrow" from wish.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> Do we have a chance before we source the real git-gui.tcl?
-> Maybe we could "set env(LANG)" based on "git config gui.lang"?
-> Or is it already too late because we needed to restart wish?
+> On Sun, 21 Oct 2007, Jakub Narebski wrote:
+> 
+>> On 10/20/07, Steffen Prohaska <prohaska@zib.de> wrote:
+>>
+>>> Maybe we could group commands into more categories?
+>>>
+>>> plumbing: should be hidden from the 'normal' user. Porcelain
+>>>    should be sufficient for every standard task.
+>> The problem is division between what is porcelain and what is plumbing. 
+>> Some commands are right on border (git-fsck, git-update-index, 
+>> git-rev-parse comes to mind).
+> 
+> Sorry, but my impression from the latest mails was that the commands are 
+> fine.  What is lacking is a nice, _small_ collection of recommended 
+> workflows.  And when we have agreed on such a set of workflows, we 
+> optimize the hell out of them.  Only this time it is not performance, but 
+> user-friendliness.
+> 
 
-Hmm.  Really quick testing here shows that we just need to make sure
-env(LANG) is set before we do the msgcat::mcload call in git-gui.sh
-line 104.
-
-If we're going to use a `git config gui.lang` thing then we can
-probably just make a msgcat::mclocale call on line 103 just before we
-load our message file.  Unfortunately this is before we have located
-git so technically git-gui doesn't know how to run git-config and
-thus cannot get to gui.lang.  :-|
-
-Hmm.  Looking at this further we may be able to insert the mclocale
-call at two locations; one at line 864 before we open the repository
-wizard, and again at line 1802, just before we start to initialize
-our UI.  This does mean that for really serious errors (e.g. "No
-git in PATH") we'll be using your native OS language.
+http://www.kernel.org/pub/software/scm/git/docs/everyday.html would be a
+good starting point, I think.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
