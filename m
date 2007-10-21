@@ -1,63 +1,56 @@
-From: "Yin Ping" <pkufranky@gmail.com>
-Subject: Re: [BUG] git-mv submodule failure
-Date: Sun, 21 Oct 2007 13:48:41 +0800
-Message-ID: <46dff0320710202248v56af5cb0gcf7dacb32848eca3@mail.gmail.com>
-References: <46dff0320710192301p3e1d88d5l3b662b72b051d920@mail.gmail.com>
-	 <Pine.LNX.4.64.0710202223590.25221@racer.site>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Sun, 21 Oct 2007 10:08:13 +0400
+Message-ID: <20071021060813.GK20588@dpotapov.dyndns.org>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710121508g13917080mac156250abfccf20@mail.gmail.com> <Pine.LNX.4.64.0710130130380.25221@racer.site> <1192827476.4522.93.camel@cacharro.xalalinux.org> <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de> <4719E69B.3020906@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 21 07:48:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Oct 21 08:08:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjTgE-000534-NE
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 07:48:55 +0200
+	id 1IjTzC-00084a-B5
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 08:08:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751118AbXJUFsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 01:48:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751259AbXJUFsm
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 01:48:42 -0400
-Received: from py-out-1112.google.com ([64.233.166.178]:24036 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750922AbXJUFsm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 01:48:42 -0400
-Received: by py-out-1112.google.com with SMTP id u77so1785900pyb
-        for <git@vger.kernel.org>; Sat, 20 Oct 2007 22:48:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=WManZ3TcqBQNDpjKsUWrw2hztqFbSCNYkpEm0OP4xA0=;
-        b=KJ1iXT1HZ4ax+y07ibf4/g3gvDOWgQUlZWV52Hik+g4+35j8BWIrUCG71Ea3VoKrQlBcNQULImVU4ACcyUPPlnLhcEGwiKiK+1EuMz0i1YSAGeIU2O07XCsGRJqLkqWJ04Ff5Lh+y1V9Ro1KEqRVCXwXXOy3kIrNqdRBeuPn29U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BJXcWkr8UQd9K43U55yxTDlu3vKjLdt+8Z4BV8dPEY0pfXpveZqk8cv99NOIu7InZchVY8mfejxsu/jLF1jG1Ru6AzqmWcC2qW96V5OaBlDmrhTSZ7bOPKO7XJyyTkYUWxbufqUfWmkz3oiha6eHeuwxJzLoa5rgwRlQwkZPocY=
-Received: by 10.35.70.17 with SMTP id x17mr4345035pyk.1192945721367;
-        Sat, 20 Oct 2007 22:48:41 -0700 (PDT)
-Received: by 10.35.52.7 with HTTP; Sat, 20 Oct 2007 22:48:41 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.64.0710202223590.25221@racer.site>
+	id S1750927AbXJUGIQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 02:08:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751164AbXJUGIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 02:08:16 -0400
+Received: from smtp06.mtu.ru ([62.5.255.53]:50151 "EHLO smtp06.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750927AbXJUGIP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 02:08:15 -0400
+Received: from potapov.private (ppp85-141-188-192.pppoe.mtu-net.ru [85.141.188.192])
+	by smtp06.mtu.ru (Postfix) with ESMTP id 552C57D0DE8;
+	Sun, 21 Oct 2007 10:08:13 +0400 (MSD)
+Received: from dpotapov by potapov.private with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1IjTyv-0007K4-4Q; Sun, 21 Oct 2007 10:08:13 +0400
 Content-Disposition: inline
+In-Reply-To: <4719E69B.3020906@op5.se>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61881>
 
->
-> But of course .gitmodules is unaffected.  But it should be changed, too.
->
+On Sat, Oct 20, 2007 at 01:29:31PM +0200, Andreas Ericsson wrote:
+> Steffen Prohaska wrote:
+> >
+> >plumbing: should be hidden from the 'normal' user. Porcelain
+> >  should be sufficient for every standard task.
+> >
+> 
+> Agreed. /usr/libexec/git/ seems to me to be the ideal spot for
+> it.
 
-IMHO, changing .gitmodules is what the 'git-submodule mv' should do,
-and 'git-mv' should only rename the module directory
+/usr/libexec is against the Filesystem Hierarchy Standard (FHS).
+It is better to use /usr/lib/git/ for that.
 
-> Ciao,
-> Dscho
->
->
-
-
--- 
-franky
+Dmitry
