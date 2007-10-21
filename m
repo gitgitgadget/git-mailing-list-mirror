@@ -1,80 +1,116 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Sun, 21 Oct 2007 09:17:27 +0200
-Message-ID: <471AFD07.4040606@op5.se>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>  <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de> <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com> <Pine.LNX.4.64.0710210031130.25221@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Oct 21 09:17:44 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: .gittattributes handling has deficiencies
+Date: Sun, 21 Oct 2007 10:48:55 +0200
+Message-ID: <1192956535617-git-send-email-prohaska@zib.de>
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sun Oct 21 10:50:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjV4B-0002GY-VF
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 09:17:44 +0200
+	id 1IjWVV-00039P-JM
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 10:50:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751101AbXJUHRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 03:17:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751075AbXJUHRc
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 03:17:32 -0400
-Received: from mail.op5.se ([193.201.96.20]:40089 "EHLO mail.op5.se"
+	id S1751080AbXJUIts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 04:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbXJUItr
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 04:49:47 -0400
+Received: from mailer.zib.de ([130.73.108.11]:58438 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750912AbXJUHRb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 03:17:31 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 1574F1730584;
-	Sun, 21 Oct 2007 09:17:30 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 7p7U5STVBS-e; Sun, 21 Oct 2007 09:17:29 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id DE6FC1730582;
-	Sun, 21 Oct 2007 09:17:28 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0710210031130.25221@racer.site>
+	id S1750987AbXJUItq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 04:49:46 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9L8mu90022608
+	for <git@vger.kernel.org>; Sun, 21 Oct 2007 10:49:44 +0200 (CEST)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9L8mtv8017531;
+	Sun, 21 Oct 2007 10:48:56 +0200 (MEST)
+X-Mailer: git-send-email 1.5.2.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61888>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Sun, 21 Oct 2007, Jakub Narebski wrote:
-> 
->> On 10/20/07, Steffen Prohaska <prohaska@zib.de> wrote:
->>
->>> Maybe we could group commands into more categories?
->>>
->>> plumbing: should be hidden from the 'normal' user. Porcelain
->>>    should be sufficient for every standard task.
->> The problem is division between what is porcelain and what is plumbing. 
->> Some commands are right on border (git-fsck, git-update-index, 
->> git-rev-parse comes to mind).
-> 
-> Sorry, but my impression from the latest mails was that the commands are 
-> fine.  What is lacking is a nice, _small_ collection of recommended 
-> workflows.  And when we have agreed on such a set of workflows, we 
-> optimize the hell out of them.  Only this time it is not performance, but 
-> user-friendliness.
-> 
+If a .gitattributes is in the work tree and we checkout a
+different head, the .gitattributes of the head we are switching
+to must have precedence. Files are expected to be converted as
+configured in the .gitattributes that is available in the head
+we're switching to.
 
-http://www.kernel.org/pub/software/scm/git/docs/everyday.html would be a
-good starting point, I think.
+This adds a test case revealing deficiencies of the current
+handling of .gitattributes.
 
+At a first glance, I saw two possible resolutions:
+1) .gitattributes from the index has precedence. It's unclear
+   how merging can be handled appropriately.
+2) .gitattributes are handled as a special file. Checkout is a
+   two pass process. In the first pass only the special file
+   .gitattributes is checked out. In th second pass the remaining
+   files are added. Maybe this gives a perspective how to handle
+   merges.
+
+But actually the issue is much harder to solve.
+
+Here is what needs to be done: Whenever the attributes of a file
+change the file must be freshly checked out according to the
+attributes of the head we switch to. The file itself does not
+necessarily change between the two commits. A fresh checkout is
+already needed if only .gitattributes change.
+
+But this is really hard to solve. We would need to compare
+attributes before and after for _all_ files that have attributes
+in one of the two commits and check if they changed. If so, we
+need to do a fresh checkout according to the new attributes.
+
+Maybe the gitattributes of a file should be part of the per-file
+flags in the index. Thus we could verify if the flags changed and
+if so, adjust the work tree accordig to the new flags.  I'm
+lacking a deeper insight into the git internals.  Therefore, I
+can't really say if the index is the right place.  But it looks
+to me as if changing an attribute should be treated similar to a
+changing sha1, as far as the work tree is concerned.
+
+So, I need some help.
+    Steffen
+
+---
+ t/t0020-crlf.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+
+diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
+index 62bc4bb..5d7e033 100755
+--- a/t/t0020-crlf.sh
++++ b/t/t0020-crlf.sh
+@@ -371,6 +371,29 @@ test_expect_success 'in-tree .gitattributes (4)' '
+ 	}
+ '
+ 
++test_expect_success 'in-tree .gitattributes (5)' '
++
++	git reset --hard master &&
++	echo >.gitattributes &&
++	git add .gitattributes &&
++	git commit -m "empty .gitattributes" &&
++	rm -rf tmp one dir .gitattributes patch.file three &&
++	git reset --hard master &&
++	git checkout master^ &&
++
++	if remove_cr one >/dev/null
++	then
++		echo "Eh? one should not have CRLF"
++		false
++	else
++		: happy
++	fi &&
++	remove_cr three >/dev/null || {
++		echo "Eh? three should still have CRLF"
++		false
++	}
++'
++
+ test_expect_success 'invalid .gitattributes (must not crash)' '
+ 
+ 	echo "three +crlf" >>.gitattributes &&
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+1.5.3.mingw.1.138.g7bf9d
