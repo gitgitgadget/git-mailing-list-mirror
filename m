@@ -1,116 +1,75 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: .gittattributes handling has deficiencies
-Date: Sun, 21 Oct 2007 10:48:55 +0200
-Message-ID: <1192956535617-git-send-email-prohaska@zib.de>
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Oct 21 10:50:03 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] On error, do not list all commands, but point to --help option.
+Date: Sun, 21 Oct 2007 10:58:56 +0200
+Message-ID: <ED3FFB7A-861F-47E4-97EA-D7A05552FC2C@wincent.com>
+References: <bqaujirk.fsf@blue.sea.net> <Pine.LNX.4.64.0710202126430.25221@racer.site> <odetifoh.fsf@blue.sea.net> <Pine.LNX.4.64.0710210001390.25221@racer.site> <20071021020653.GA14735@spearce.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 11:00:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjWVV-00039P-JM
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 10:50:02 +0200
+	id 1IjWfE-00054u-HJ
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 11:00:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751080AbXJUIts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 04:49:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751272AbXJUItr
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 04:49:47 -0400
-Received: from mailer.zib.de ([130.73.108.11]:58438 "EHLO mailer.zib.de"
+	id S1751255AbXJUI7x convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Oct 2007 04:59:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751254AbXJUI7x
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 04:59:53 -0400
+Received: from wincent.com ([72.3.236.74]:34901 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750987AbXJUItq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 04:49:46 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9L8mu90022608
-	for <git@vger.kernel.org>; Sun, 21 Oct 2007 10:49:44 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9L8mtv8017531;
-	Sun, 21 Oct 2007 10:48:56 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
+	id S1751161AbXJUI7w convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 21 Oct 2007 04:59:52 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9L8xiYH003519;
+	Sun, 21 Oct 2007 03:59:45 -0500
+In-Reply-To: <20071021020653.GA14735@spearce.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61889>
 
-If a .gitattributes is in the work tree and we checkout a
-different head, the .gitattributes of the head we are switching
-to must have precedence. Files are expected to be converted as
-configured in the .gitattributes that is available in the head
-we're switching to.
+El 21/10/2007, a las 4:06, Shawn O. Pearce escribi=F3:
 
-This adds a test case revealing deficiencies of the current
-handling of .gitattributes.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>>>> On Sat, 20 Oct 2007, Jari Aalto wrote:
+>>>>
+>>>>> - commented out call to list_common_cmds_help()
+>>
+>> Well, I'm almost sure of the opposite.  One of the big results of =20
+>> the Git
+>> Survey was that git is still not user-friendly enough.  Your patch =20
+>> would
+>> only make this issue worse.
+>
+> Actually I think Jari's patch helps for the reason originally
+> stated in the message (less output when you make a small typo).
+> Though I agree that the commented out code should just be removed.
+>
+> I actually had to do `git config alias.upsh push` just to keep
+> myself from screaming every time I made a small typo and Git gave
+> me a screenful of "helpful reminders".
 
-At a first glance, I saw two possible resolutions:
-1) .gitattributes from the index has precedence. It's unclear
-   how merging can be handled appropriately.
-2) .gitattributes are handled as a special file. Checkout is a
-   two pass process. In the first pass only the special file
-   .gitattributes is checked out. In th second pass the remaining
-   files are added. Maybe this gives a perspective how to handle
-   merges.
+If you want to go really user friendly, how about a check against the =20
+list of known commands using a shortest-edit distance algorithm?
 
-But actually the issue is much harder to solve.
+   Unknown command: 'upsh': did you mean 'push'?
+   Type 'git help' for usage.
 
-Here is what needs to be done: Whenever the attributes of a file
-change the file must be freshly checked out according to the
-attributes of the head we switch to. The file itself does not
-necessarily change between the two commits. A fresh checkout is
-already needed if only .gitattributes change.
+Here's just one of many articles introducing the shortest-edit idea, =20
+as popularized by Google:
 
-But this is really hard to solve. We would need to compare
-attributes before and after for _all_ files that have attributes
-in one of the two commits and check if they changed. If so, we
-need to do a fresh checkout according to the new attributes.
+   <http://norvig.com/spell-correct.html>
 
-Maybe the gitattributes of a file should be part of the per-file
-flags in the index. Thus we could verify if the flags changed and
-if so, adjust the work tree accordig to the new flags.  I'm
-lacking a deeper insight into the git internals.  Therefore, I
-can't really say if the index is the right place.  But it looks
-to me as if changing an attribute should be treated similar to a
-changing sha1, as far as the work tree is concerned.
+What do you think?
 
-So, I need some help.
-    Steffen
-
----
- t/t0020-crlf.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/t/t0020-crlf.sh b/t/t0020-crlf.sh
-index 62bc4bb..5d7e033 100755
---- a/t/t0020-crlf.sh
-+++ b/t/t0020-crlf.sh
-@@ -371,6 +371,29 @@ test_expect_success 'in-tree .gitattributes (4)' '
- 	}
- '
- 
-+test_expect_success 'in-tree .gitattributes (5)' '
-+
-+	git reset --hard master &&
-+	echo >.gitattributes &&
-+	git add .gitattributes &&
-+	git commit -m "empty .gitattributes" &&
-+	rm -rf tmp one dir .gitattributes patch.file three &&
-+	git reset --hard master &&
-+	git checkout master^ &&
-+
-+	if remove_cr one >/dev/null
-+	then
-+		echo "Eh? one should not have CRLF"
-+		false
-+	else
-+		: happy
-+	fi &&
-+	remove_cr three >/dev/null || {
-+		echo "Eh? three should still have CRLF"
-+		false
-+	}
-+'
-+
- test_expect_success 'invalid .gitattributes (must not crash)' '
- 
- 	echo "three +crlf" >>.gitattributes &&
--- 
-1.5.3.mingw.1.138.g7bf9d
+Cheers,
+Wincent
