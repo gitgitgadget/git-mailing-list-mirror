@@ -1,65 +1,89 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: .gittattributes handling has deficiencies
-Date: Sun, 21 Oct 2007 12:27:52 +0200
-Message-ID: <B61AE1A9-E983-4ACE-BF71-8FDC113A4F34@zib.de>
-References: <1192956535617-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710210204580.4818@asgard>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Sun Oct 21 12:26:45 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 2/2] Correct some sizeof(size_t) != sizeof(unsigned long)  typing errors
+Date: Sun, 21 Oct 2007 12:31:32 +0200
+Message-ID: <20071021103132.GA25741@artemis.corp>
+References: <20071021052537.GB31927@spearce.org> <471B1AA5.8070009@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="huq684BweRXVnRxX";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Oct 21 12:31:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjY15-0006NP-OE
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 12:26:44 +0200
+	id 1IjY5z-0007OM-DB
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 12:31:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751367AbXJUK0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 06:26:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbXJUK0c
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 06:26:32 -0400
-Received: from mailer.zib.de ([130.73.108.11]:64901 "EHLO mailer.zib.de"
+	id S1751392AbXJUKbf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 06:31:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751333AbXJUKbf
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 06:31:35 -0400
+Received: from pan.madism.org ([88.191.52.104]:42590 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751321AbXJUK0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 06:26:31 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9LAQPBX027168;
-	Sun, 21 Oct 2007 12:26:26 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1b164.pool.einsundeins.de [77.177.177.100])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9LAQOSW001964
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 21 Oct 2007 12:26:24 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0710210204580.4818@asgard>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751313AbXJUKbe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 06:31:34 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 7961119E4E;
+	Sun, 21 Oct 2007 12:31:33 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 550973CEDCB; Sun, 21 Oct 2007 12:31:32 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <471B1AA5.8070009@lsrfire.ath.cx>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61898>
 
 
-On Oct 21, 2007, at 11:19 AM, david@lang.hm wrote:
+--huq684BweRXVnRxX
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> But this is really hard to solve. We would need to compare
->> attributes before and after for _all_ files that have attributes
->> in one of the two commits and check if they changed. If so, we
->> need to do a fresh checkout according to the new attributes.
->
-> if you know that you will get the new .gitattributes if it changes,  
-> setup a post-checkout hook to checkout everything if it has  
-> changed. it's far from ideal, but it should be a good, safe, first  
-> approximation.
+On Sun, Oct 21, 2007 at 09:23:49AM +0000, Ren=C3=A9 Scharfe wrote:
+> > Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+> > ---
+> >  builtin-apply.c   |    2 +-
+> >  builtin-archive.c |    2 +-
+> >  diff.c            |    4 ++--
+> >  entry.c           |    2 +-
+> >  strbuf.h          |    8 +++++++-
+> >  test-delta.c      |    3 ++-
+> >  6 files changed, 14 insertions(+), 7 deletions(-)
+>=20
+> I have a feeling this is going in then wrong direction.  Shouldn't
+> we rather use size_t everywhere?  malloc() takes a size_t, and it's
+> the basis of strbuf and also of the file content functions.
 
+  I agree, Junio was working on a patch that generalized use of size_t's
+when unsigned long where used and size_t meant, I suppose he didn't had
+the time to push it.
 
-That's not good enough. I'll stop using .gitattributes. I
-need to teach >40 devs how to use git on Windows. I only use
-features that work flawlessly. .gitattributes doesn't. It bit
-me twice now.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Luckily, core.autocrlf works if you set it before the first
-checkout and never change it. This seems sufficient for me if
-all files that have mixed line endings are fixed right away.
+--huq684BweRXVnRxX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	Steffen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHGyqEvGr7W6HudhwRAi62AJ9TRjWw/HgCynMyJwLto2jExiIHJgCfWh8F
+WBxMpMfWTm30/772wnhADv8=
+=pr9m
+-----END PGP SIGNATURE-----
+
+--huq684BweRXVnRxX--
