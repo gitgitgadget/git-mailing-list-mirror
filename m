@@ -1,72 +1,87 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] gitweb: Provide title attributes for abbreviated author names.
-Date: Sun, 21 Oct 2007 14:29:16 +1000
-Message-ID: <ee77f5c20710202129t7f60aebbib24d91ba360f64a2@mail.gmail.com>
-References: <1192581277533-git-send-email-dsymonds@gmail.com>
-	 <20071021032533.GA30717@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/2] Use PRIuMAX instead of 'unsigned long long' in show-index
+Date: Sun, 21 Oct 2007 01:25:23 -0400
+Message-ID: <20071021052523.GA31927@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: pasky@suse.cz, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 21 06:29:39 2007
+Content-Type: text/plain; charset=utf-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 21 07:25:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjSRV-0001vd-H3
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 06:29:37 +0200
+	id 1IjTJn-0001l2-MC
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 07:25:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750805AbXJUE3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Oct 2007 00:29:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750788AbXJUE3R
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 00:29:17 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:15666 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738AbXJUE3R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 00:29:17 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so853819rvb
-        for <git@vger.kernel.org>; Sat, 20 Oct 2007 21:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KY/KxpbSFg7VKiPqqlD7PdjLl3MQ4jGfVLdaLGKlDAY=;
-        b=YU+L41qUZttGEV0TMiRDDJvcz5H0Ts1ordZ07710NgOCcHGFk/FJn3eL9WXl23KGuT+yR2AZYic/djBRQbluOKpthFUfhCFR6R/m3uOIaiKxce50ZMcy0GotrioF/5jOvBTJ73PSMCNwka67fMWSeR6N8EInsCCQgW5ovkQeyzg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ghf003xaKZcDlB9INrkbQHvNvWqi9VD47eBJ3wpH/BDtRsA3VVD6AdoXpf0+Hh/ydg2UCLqWTLVRSDKY8WK4rxonDtRYgQJwDmON6AWrvmc+0rO0LKV/yc+IMUOGpAge+EJ1s8RKnMgIJlCDVd6tuEbSqaqKtbWhUU1TsD2qHoE=
-Received: by 10.140.207.2 with SMTP id e2mr1728442rvg.1192940956442;
-        Sat, 20 Oct 2007 21:29:16 -0700 (PDT)
-Received: by 10.141.153.4 with HTTP; Sat, 20 Oct 2007 21:29:16 -0700 (PDT)
-In-Reply-To: <20071021032533.GA30717@spearce.org>
+	id S1751011AbXJUFZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 01:25:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbXJUFZ1
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 01:25:27 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:33244 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750927AbXJUFZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 01:25:26 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IjTJU-0007Br-RJ
+	for git@vger.kernel.org; Sun, 21 Oct 2007 01:25:24 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 693B020FBAE; Sun, 21 Oct 2007 01:25:23 -0400 (EDT)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61877>
 
-On 21/10/2007, Shawn O. Pearce <spearce@spearce.org> wrote:
-> Nice, but...
->
-> David Symonds <dsymonds@gmail.com> wrote:
-> > +++ b/gitweb/gitweb.perl
-> > @@ -3461,9 +3461,15 @@ sub git_shortlog_body {
-> >                       print "<tr class=\"light\">\n";
-> >               }
-> >               $alternate ^= 1;
-> > +             my $author = chop_str($co{'author_name'}, 10);
-> > +             if ($author ne $co{'author_name'}) {
-> > +                     $author = "<span title=\"$co{'author_name'}\">" . esc_html($author) . "</span>";
->
-> Doesn't this produce invalid HTML if $co{'author_name'} has a special
-> HTML character in it such as & or "?  Note that " is much more likely
-> as it is often used for nicknames.  The old code properly escaped
-> the author name, and indeed you are doing it for the abbreviated
-> version but not the full version.
+Elsewhere in Git we already use PRIuMAX and cast to uintmax_t when
+we need to display a value that is 'very big' and we're not exactly
+sure what the largest display size is for this platform.
 
-Sure, I'll fix it up and resend. I might even refactor some code at
-the same time.
+This particular fix is needed so we can do the incredibly crazy
+temporary hack of:
 
+    diff --git a/cache.h b/cache.h
+    index e0abcd6..6637fd8 100644
+    --- a/cache.h
+    +++ b/cache.h
+    @@ -6,6 +6,7 @@
 
-Dave.
+     #include SHA1_HEADER
+     #include <zlib.h>
+    +#define long long long
+
+     #if ZLIB_VERNUM < 0x1200
+     #define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+
+allowing us to more easily look for locations where we are passing
+a pointer to an 8 byte value to a function that expects a 4 byte
+value.  This can occur on some platforms where sizeof(long) == 8
+and sizeof(size_t) == 4.
+
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ show-index.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/show-index.c b/show-index.c
+index 57ed9e8..7253991 100644
+--- a/show-index.c
++++ b/show-index.c
+@@ -68,7 +68,7 @@ int main(int argc, char **argv)
+ 						     ntohl(off64[1]);
+ 				off64_nr++;
+ 			}
+-			printf("%llu %s (%08x)\n", (unsigned long long) offset,
++			printf("%" PRIuMAX " %s (%08x)\n", (uintmax_t) offset,
+ 			       sha1_to_hex(entries[i].sha1),
+ 			       ntohl(entries[i].crc));
+ 		}
+-- 
+1.5.3.4.1270.g2fe543
