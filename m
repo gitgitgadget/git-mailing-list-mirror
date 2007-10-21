@@ -1,88 +1,96 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] On error, do not list all commands, but point to --help
- option.
-Date: Sun, 21 Oct 2007 14:42:25 +0200
-Message-ID: <471B4931.5040102@op5.se>
-References: <bqaujirk.fsf@blue.sea.net> <Pine.LNX.4.64.0710202126430.25221@racer.site> <odetifoh.fsf@blue.sea.net> <Pine.LNX.4.64.0710210001390.25221@racer.site> <20071021020653.GA14735@spearce.org> <ED3FFB7A-861F-47E4-97EA-D7A05552FC2C@wincent.com>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: gitk still interested in translations?
+Date: Sun, 21 Oct 2007 14:54:22 +0200
+Message-ID: <200710211454.23143.stimming@tuhh.de>
+References: <20070727165318.e96b1yxxwsooo884@webmail.tu-harburg.de> <20070727170300.t01ku4u2sg04sgsk@webmail.tu-harburg.de> <18090.44123.905869.974967@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Sun Oct 21 14:42:44 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Oct 21 15:00:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ija8g-00066p-IB
-	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 14:42:42 +0200
+	id 1IjaPT-0002Sy-72
+	for gcvg-git-2@gmane.org; Sun, 21 Oct 2007 15:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751598AbXJUMma convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Oct 2007 08:42:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751496AbXJUMma
-	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 08:42:30 -0400
-Received: from mail.op5.se ([193.201.96.20]:59487 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751461AbXJUMm3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Oct 2007 08:42:29 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id EE5721730578;
-	Sun, 21 Oct 2007 14:42:27 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id L3EJ6p+DPOYO; Sun, 21 Oct 2007 14:42:26 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 5648F173056F;
-	Sun, 21 Oct 2007 14:42:26 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <ED3FFB7A-861F-47E4-97EA-D7A05552FC2C@wincent.com>
+	id S1751834AbXJUM7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Oct 2007 08:59:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751829AbXJUM7v
+	(ORCPT <rfc822;git-outgoing>); Sun, 21 Oct 2007 08:59:51 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:35583 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751804AbXJUM7u (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Oct 2007 08:59:50 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9LCxJfk026057
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Sun, 21 Oct 2007 14:59:20 +0200
+Received: from [192.168.2.102] (p549028DD.dip0.t-ipconnect.de [84.144.40.221])
+	(user=alucst mech=LOGIN bits=0)
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9LCxI6j029723
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 21 Oct 2007 14:59:19 +0200
+User-Agent: KMail/1.9.5
+In-Reply-To: <18090.44123.905869.974967@cargo.ozlabs.ibm.com>
+Content-Disposition: inline
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61901>
 
-Wincent Colaiuta wrote:
-> El 21/10/2007, a las 4:06, Shawn O. Pearce escribi=F3:
->=20
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->>>>> On Sat, 20 Oct 2007, Jari Aalto wrote:
->>>>>
->>>>>> - commented out call to list_common_cmds_help()
->>>
->>> Well, I'm almost sure of the opposite.  One of the big results of t=
-he=20
->>> Git
->>> Survey was that git is still not user-friendly enough.  Your patch =
-would
->>> only make this issue worse.
->>
->> Actually I think Jari's patch helps for the reason originally
->> stated in the message (less output when you make a small typo).
->> Though I agree that the commented out code should just be removed.
->>
->> I actually had to do `git config alias.upsh push` just to keep
->> myself from screaming every time I made a small typo and Git gave
->> me a screenful of "helpful reminders".
->=20
-> If you want to go really user friendly, how about a check against the=
-=20
-> list of known commands using a shortest-edit distance algorithm?
->=20
+Hi Paul,
 
-http://en.wikipedia.org/wiki/Levenshtein_distance
+in July I submitted patches to add the necessary framework for UI 
+translations/i18n to the gitk tool [1] [2], and I'd also volunteer to provide 
+a full German translation. As you pointed out [3], this would require some 
+decisions on integration and installation places, which according to Junios 
+reply [4] didn't seem too difficult.
 
-Implementing the algorithm doesn't seem terribly difficult.
+What is the progress on your i18n plans in gitk? None of the patches had been 
+applied to gitk, have they? If you say you *are* interested, I'd be happy to 
+provide an up-to-date patch against gitk.git @ kernel.org for #1 Makefile 
+rules, #2 msgcat integration, and most importantly #3 message markup.
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Christian
+
+[1] http://marc.info/?l=git&m=118554802809395&w=2
+[2] http://marc.info/?l=git&m=118554865029767&w=2
+[3] http://marc.info/?l=git&m=118559040716553&w=2
+[4] http://marc.info/?l=git&m=118559853016496&w=2
+
+Am Samstag, 28. Juli 2007 04:39 schrieb Paul Mackerras:
+> Christian Stimming writes:
+> > Similar to the discussion in git-gui, all user-visible strings are
+> > passed through the [mc ...] procedure to have them translated by msgcat.
+> >
+> > Signed-off-by: Christian Stimming <stimming@tuhh.de>
+> > ---
+> > @Paul: Are you interested in applying this? If yes, I'd happily
+>
+> Yes, it doesn't look too bad.  The patch seemed to be line-wrapped and
+> whitespace-damaged, though.
+>
+> > provide the Makefile rules for string extraction and translation
+> > catalog updates, but I'd like to hear a proposal or decision on where
+> > to place them. Should the po files for translation go into the po/
+> > subdirectory? And then a proposal/decision of where to install the
+> > compiled .msg catalogs will be necessary.
+>
+> Yes indeed.  Junio?
+>
+> Is it possible to include the translations, or at least the more
+> common translations, in the Tcl code itself?  So far I have managed to
+> have gitk be self-contained, in that it doesn't need any external data
+> files, which simplifies installation and is a useful attribute in some
+> situations.
+>
+> Also I would want to be sure that gitk wouldn't crash or fail to
+> function if it can't find its message catalogs.
+>
+> Paul.
