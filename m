@@ -1,62 +1,81 @@
-From: Michael Hendricks <michael@ndrix.org>
-Subject: Re: [PATCH] Dissociating a repository from its alternates
-Date: Mon, 22 Oct 2007 12:04:28 -0600
-Message-ID: <20071022180424.GA17429@ginosko.local>
-References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net> <Pine.LNX.4.63.0702151638130.22628@wbgn013.biozentrum.uni-wuerzburg.de> <7v8xex50aa.fsf@assigned-by-dhcp.cox.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+ summary continued
+Date: Mon, 22 Oct 2007 14:06:00 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710221305230.32497@iabervon.org>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
+ <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
+  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
+ <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+ <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
+ <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
+ <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se>
+ <Pine.LNX.4.64.0710221445170.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
 	git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 20:04:59 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 22 20:06:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik1dv-0001kA-OA
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 20:04:48 +0200
+	id 1Ik1fL-0002El-QQ
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 20:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751724AbXJVSEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 14:04:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751880AbXJVSEd
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 14:04:33 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43882 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751681AbXJVSEc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 14:04:32 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id BC17034C6E;
-	Mon, 22 Oct 2007 14:04:31 -0400 (EDT)
-Received: from heartbeat1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 22 Oct 2007 14:04:31 -0400
-X-Sasl-enc: ekqjAGz0Rv2q1eJLOvtnqDtWRUJk7vIbg4aN3w803Hdp 1193076271
-Received: from ndrix.org (tameion.ndrix.org [166.230.131.80])
-	by mail.messagingengine.com (Postfix) with ESMTP id 1BF31707C;
-	Mon, 22 Oct 2007 14:04:30 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <7v8xex50aa.fsf@assigned-by-dhcp.cox.net>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1752008AbXJVSGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 14:06:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbXJVSGD
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 14:06:03 -0400
+Received: from iabervon.org ([66.92.72.58]:45666 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751460AbXJVSGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 14:06:01 -0400
+Received: (qmail 14134 invoked by uid 1000); 22 Oct 2007 18:06:00 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 22 Oct 2007 18:06:00 -0000
+In-Reply-To: <Pine.LNX.4.64.0710221445170.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62034>
 
-On Fri, Feb 16, 2007 at 12:13:01PM -0800, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, 22 Oct 2007, Johannes Schindelin wrote:
+
+> Hi,
 > 
-> > On Wed, 14 Feb 2007, Junio C Hamano wrote:
-> >
-> >> People often start out with "clone -l -s" (or --reference) and
-> >> later wish to dissociate the repository from its alternates.
-> >
-> > Why not make a really dumb script which just _copies_ (or maybe 
-> > optionally hard link) the objects from the alternate repo, and then kills 
-> > the alternatives file? That should be easier. You always can repack after 
-> > that.
+> On Mon, 22 Oct 2007, Andreas Ericsson wrote:
 > 
-> I think that is much safer.
+> > If I were to suggest any improvements, it'd be to change the semantics of
+> > git-pull to always update the local branches set up to be merged with the
+> > remote tracking branches when they, prior to fetching, pointed to the same
+> > commit, such that when
+> > 
+> > $ git show-ref master
+> > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
+> > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
+> > 
+> > refs/heads/master gets set to refs/remotes/origin/master post-fetch.
+> 
+> In general, this should fail.  Because you are expected to have local 
+> changes in the local branches.  What you describe suggests that you should 
+> not use the branch name "master" at all, but "origin/master".
 
-Was such a script ever incorporated into Git?
+If you push your changes to the origin soon after making them, you'll only 
+have local changes if somebody else changed something while you were 
+working on a change. You're expected to create local changes in the local 
+branches, but you shouldn't generally sit on them forever, and when you've 
+pushed them, you no longer have any difference in content between local 
+and remote.
 
--- 
-Michael
+If the project has multiple branches in the central repository, and you 
+make changes for each of them at different times, but only one each day, 
+the normal case will be to have local changes sitting in at most one of 
+the branches, and, in particular, no local changes left in any branch 
+other than HEAD.
+
+	-Daniel
+*This .sig left intentionally blank*
