@@ -1,92 +1,75 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Mon, 22 Oct 2007 14:38:38 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710221428390.25221@racer.site>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
- <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
- <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
- <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
- <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
- <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
- <Pine.LNX.4.64.0710221156540.25221@racer.site> <ED965042-27DE-450B-96CB-00D27000FAF6@wincent.com>
+Subject: Re: git filter-branch --subdirectory-filter error
+Date: Mon, 22 Oct 2007 14:44:25 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221440540.25221@racer.site>
+References: <200710221227.13279.wielemak@science.uva.nl>
+ <Pine.LNX.4.64.0710221218150.25221@racer.site> <200710221337.50730.wielemak@science.uva.nl>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Oct 22 15:39:16 2007
+Cc: git@vger.kernel.org
+To: Jan Wielemaker <wielemak@science.uva.nl>
+X-From: git-owner@vger.kernel.org Mon Oct 22 15:45:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjxUw-0001pV-Sv
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:39:15 +0200
+	id 1IjxaW-0003iO-KS
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:45:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751957AbXJVNjD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 09:39:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751783AbXJVNjB
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:39:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:54778 "HELO mail.gmx.net"
+	id S1752629AbXJVNos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 09:44:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752487AbXJVNos
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:44:48 -0400
+Received: from mail.gmx.net ([213.165.64.20]:43385 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751460AbXJVNjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 09:39:01 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 13:38:59 -0000
+	id S1751879AbXJVNos (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 09:44:48 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 13:44:46 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp016) with SMTP; 22 Oct 2007 15:38:59 +0200
+  by mail.gmx.net (mp024) with SMTP; 22 Oct 2007 15:44:46 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ErxU1rlpEe1sdvDxgG9KBUW8fBWpcHENyl8mHZq
-	T5adVSWt8j+Fsw
+X-Provags-ID: V01U2FsdGVkX1+zSe8xBSSzpWQjtbwjnC9aVP2vevtdcVf/yZxpJz
+	Z1RUhrP714SfG2
 X-X-Sender: gene099@racer.site
-In-Reply-To: <ED965042-27DE-450B-96CB-00D27000FAF6@wincent.com>
+In-Reply-To: <200710221337.50730.wielemak@science.uva.nl>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62004>
 
 Hi,
 
-On Mon, 22 Oct 2007, Wincent Colaiuta wrote:
+On Mon, 22 Oct 2007, Jan Wielemaker wrote:
 
-> El 22/10/2007, a las 13:04, Johannes Schindelin escribi?:
+> On Monday 22 October 2007 13:20, Johannes Schindelin wrote:
+>
+> > The subdirectory filter does not look kindly upon a history where some 
+> > commits lack the subdirectory in question.  However, this should work:
+> >
+> > 	git filter-branch --subdirectory--filter RDF 95807fe01..HEAD
 > 
-> > So once again, what operations involving git do people use regularly?
+> Thanks, but ... hmmm.
 > 
-> Here are my top ten commands, sorted by the number of times they appear 
-> in my ~/.bash_history:
+> $ git filter-branch --subdirectory-filter RDF 
+> 95807fe01c39d3092e3ac3a98061711323154d77..HEAD
+> Rewrite 0a43c802dd60f53d48136a32526a4b2a5f0d43e5 (1/11)fatal: Not a valid 
+> object name 0a43c802dd60f53d48136a32526a4b2a5f0d43e5:RDF
+> Could not initialize the index
 
-Thanks.  That's a really good idea.  I did the same, and it turns out that 
-my list was wrong:
+I suspect again that this commit does not contain the RDF/ subdirectory.
 
-     68 log
-     50 fetch
-     36 show
-     33 diff
-     19 grep
-     19 commit
-     14 ps (my alias which runs -p status)
-     10 config
-      8 rebase
-      8 push
+> This started as a big project with a lot of history in CVS, including 
+> moved (read deleted and re-created) files. This was moved to SVN and 
+> from there immediately to GIT. In GIT lots of things have been renamed. 
+> The RDF directory was created quite recent in the project and things 
+> from various subdirectories were moved there.
+> 
+> Is there something that might be worth a try or should we go the simple
+> way: keeping the old combined repo for later reference and create two
+> new ones from fresh files?
 
-Everybody who wants to find out the same: this is how I did it:
-
-cat .bash_history |
-	tr ";" "\\n" |
-	sed -n "s/^ *git[- ]\([^ ]*\).*$/\1/p" |
-	sort |
-	uniq -c |
-	sort -r -n
-
-One thing that I realised by looking at my list: It probably makes more 
-sense teaching people about "fetch" in the beginning, teach other parts 
-about git, and only then "push".
-
-We tend to teach people about "fetch" and "push" at the same time, but 
-this is not consistent with any workflow.
+It sure sounds pretty tricky.  (IOW I'm probably unable to help more...)
 
 Ciao,
 Dscho
