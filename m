@@ -1,87 +1,102 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Be nice with compilers that do not support runtime paths
- at all.
-Date: Mon, 22 Oct 2007 11:52:56 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710221149530.25221@racer.site>
-References: <7vsl4rdgf4.fsf@gitster.siamese.dyndns.org>
- <1191450052-23619-1-git-send-email-tsuna@lrde.epita.fr>
- <7vejgbdbyn.fsf@gitster.siamese.dyndns.org> <34DAC3CA-E226-4488-8B03-FC45A6A95F78@lrde.epita.fr>
- <09169ECD-19E1-44D1-8539-71EBBA3826A8@lrde.epita.fr> <20071022064454.GV14735@spearce.org>
+Subject: best git practices, was Re: Git User's Survey 2007 unfinished summary
+ continued
+Date: Mon, 22 Oct 2007 12:04:31 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221156540.25221@racer.site>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
+ <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
+  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
+ <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+ <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
+ <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>,
-	git list <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 12:53:44 2007
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Oct 22 13:06:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ijuub-0004g6-DM
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 12:53:33 +0200
+	id 1Ijv5n-0007rX-PC
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 13:05:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411AbXJVKxU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 06:53:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752276AbXJVKxU
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 06:53:20 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41956 "HELO mail.gmx.net"
+	id S1751754AbXJVLEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 07:04:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751665AbXJVLEz
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 07:04:55 -0400
+Received: from mail.gmx.net ([213.165.64.20]:47811 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752066AbXJVKxT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 06:53:19 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 10:53:17 -0000
+	id S1751651AbXJVLEy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 07:04:54 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 11:04:51 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 22 Oct 2007 12:53:17 +0200
+  by mail.gmx.net (mp043) with SMTP; 22 Oct 2007 13:04:51 +0200
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18lSHp+YL0laB3N1BaWbSFqwJZ/5KMkECnNkE5QMm
-	FSFq1Xmz4jhJOX
+X-Provags-ID: V01U2FsdGVkX18DhQ14DlADvb861RtjscOAsRGLNn9scS0k5Brq4C
+	2SpD0uEAXIFAuq
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20071022064454.GV14735@spearce.org>
+In-Reply-To: <471C586A.9030900@op5.se>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61986>
 
 Hi,
 
-On Mon, 22 Oct 2007, Shawn O. Pearce wrote:
+On Mon, 22 Oct 2007, Andreas Ericsson wrote:
 
-> Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
-> > >On Oct 4, 2007, at 1:18 AM, Junio C Hamano wrote:
-> > >>Benoit Sigoure <tsuna@lrde.epita.fr> writes:
-> > >>
-> > >>If we do not care about supporting too old GNU make, we can do
-> > >>this by first adding this near the top:
-> > >>
-> > >>        ifndef NO_RPATH
-> > >>        LINKER_PATH = -L$(1) $(CC_LD_DYNPATH)$(1)
-> > >>        else
-> > >>        LINKER_PATH = -L$(1)
-> > >>        endif
-> > >>
-> > >>and then doing something like:
-> > >>
-> > >>	CURL_LIBCURL = $(call LINKER_PATH,$(CURLDIR)/$(lib))
-> > >>	OPENSSL_LINK = $(call LINKER_PATH,$(OPENSSLDIR)/$(lib))
-> > >>
-> > >>to make it easier to read and less error prone.
-> > >
-> > >Yes.  I can rework the patch, but the question is: do you care  
-> > >about old GNU make?  Can I rewrite the patch with this feature?
-> > 
-> > I know Junio is still offline but maybe someone else has an objection 
-> > against this?
+> Johannes Schindelin wrote:
 > 
-> How old of a GNU make are talking about here?  The above is certainly a 
-> lot nicer to read, but I'd hate to suddenly ship a new Git that someone 
-> cannot compile because their GNU make is too old.
+> > I'd really like people to respond not so much with broad and general 
+> > statements to my mail (those statements tend to be rather useless to 
+> > find how to make git more suitable to newbies), but rather with 
+> > concrete top ten lists of what they do daily.
+> > 
+> > My top ten list:
+> > 
+> > - git diff
+> > - git commit
+> > - git status
+> > - git fetch
+> > - git rebase
+> > - git pull
+> > - git cherry-pick
+> > - git bisect
+> > - git push
+> > - git add
+> > 
+> > So again, I'd like people who did _not_ tweak git to their likings to 
+> > tell the most common steps they do.  My hope is that we see things 
+> > that are good practices, but could use an easier user interface.
+> 
+> I'm not so sure we'd want to hide commands that git-gurus simply do not 
+> use, such as git-blame.
 
-I seem to remember remember that we had some shell quoting in the 
-Makefile, and it was "call"ed.  That broke some setups, so we got rid of 
-it.
+I was not talking about commands that git gurus simply do not use.  I 
+explicitely avoided asking "git gurus" for what they use.
 
-*starting "git log -Scall Makefile"*: yep.  It even was me fixing it, in 
-39c015c556f285106931e0500f301de462b0e46e.
+> In my opinion, we should just locate the highest level available of UI 
+> tool that implements a particular feature and have that listed in the 
+> git[- ]<tab> view.
+
+>From the survey it is utterly clear that the available UI tools are still 
+not good enough.
+
+So once again, what operations involving git do people use regularly?
+
+<rationale>There is a good chance that git is not optimised for most 
+people's daily workflows, as project maintainers seemed to be much more 
+forthcoming with patches, and therefore maintainers' tasks are much more 
+optimised than in other SCMs.</rationale>
 
 Ciao,
 Dscho
+
+P.S.: If nobody replies with actual daily workflows to this mail, I'll 
+just assume that this complaint in the user survey was just bullocks, and 
+no change in git is needed.
