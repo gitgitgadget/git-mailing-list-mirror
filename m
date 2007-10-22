@@ -1,36 +1,38 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] "git help" and "git help -a" shouldn't exit(1) unless they error
-Date: Mon, 22 Oct 2007 01:47:41 -0400
-Message-ID: <20071022054741.GP14735@spearce.org>
-References: <20071021214744.GH16291@srparish.net>
+Subject: Re: [PATCH 0/9] Bisect skip
+Date: Mon, 22 Oct 2007 02:02:19 -0400
+Message-ID: <20071022060219.GQ14735@spearce.org>
+References: <200710220747.28731.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Scott R Parish <srp@srparish.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 07:48:01 2007
+Cc: Junio Hamano <junkio@cox.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Oct 22 08:02:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ijq8u-0000GI-6I
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:48:00 +0200
+	id 1IjqN3-0002k7-Si
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 08:02:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005AbXJVFrq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 01:47:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751975AbXJVFrq
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:47:46 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46497 "EHLO
+	id S1751517AbXJVGC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 02:02:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751344AbXJVGC0
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 02:02:26 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46873 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752076AbXJVFrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 01:47:45 -0400
+	with ESMTP id S1751188AbXJVGCZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 02:02:25 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1Ijq8d-0000kd-Qz; Mon, 22 Oct 2007 01:47:43 -0400
+	id 1IjqMn-0001Sp-4Q; Mon, 22 Oct 2007 02:02:21 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1E90920FBAE; Mon, 22 Oct 2007 01:47:42 -0400 (EDT)
+	id B055820FBAE; Mon, 22 Oct 2007 02:02:19 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071021214744.GH16291@srparish.net>
+In-Reply-To: <200710220747.28731.chriscool@tuxfamily.org>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,39 +42,21 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61950>
 
-Scott R Parish <srp@srparish.net> wrote:
-> diff --git a/help.c b/help.c
-> index 1cd33ec..b0d2dd4 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -204,14 +204,14 @@ int cmd_help(int argc, const char **argv, const char *prefix)
->  	if (!help_cmd) {
->  		printf("usage: %s\n\n", git_usage_string);
->  		list_common_cmds_help();
-> -		exit(1);
-> +		exit(0);
->  	}
+Christian Couder <chriscool@tuxfamily.org> wrote:
+> Here is the "bisect skip" patch series.
+> It's just a rename from "dunno" to "skip" compared to the previous "dunno" 
+> patch series that was in Shawn's pu branch.
+> 
+> In fact there is no change in the first 3 patches and trivial changes in the 
+> other patches.
 
-Although it seems simple on the surface this patch breaks the
-test suite:
+Thanks.  I'm reparking this new version in pu tonight.  It is too
+late in the morning here for me to go through this any further than
+applying and merging.  I'm almost done looking through and testing
+the new option parser series and then will be looking at this one
+next; probably Tuesday.
 
-	$ make test
-	make -C t/ all
-	make[1]: Entering directory `/home/spearce/mygit/t'
-	*** t0000-basic.sh ***
-	You do not seem to have built git yet.
-
-The issue here is t0000-basic.sh runs "../git" and tests that the
-exit status is 1.  If it isn't (the patch above makes it 0) we just
-abort the test suite entirely.
-
-I think its correct for "git help" to exit 0, and also for "git
-help checkout" or "git checkout --help" to exit 0, but "git" by
-itself with no subcommand should exit with an error, it requires a
-subcommand to continue.  So some sort of change is needed in git.c
-to handle this special no subcommand condition.
-  
 -- 
 Shawn.
