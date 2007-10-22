@@ -1,57 +1,88 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] git-cherry-pick: improve description of -x.
-Date: Mon, 22 Oct 2007 07:19:08 +0200
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071022051908.GA16164@ins.uni-bonn.de>
-References: <20071019174134.GD9906@ins.uni-bonn.de> <20071019211152.GN3917@planck.djpig.de> <20071020031917.GR14735@spearce.org> <20071021093618.GC12794@ins.uni-bonn.de> <20071022051453.GM14735@spearce.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: [PATCH] "git help -a" should search all exec_paths and PATH
+Date: Mon, 22 Oct 2007 01:30:17 -0400
+Message-ID: <20071022053016.GN14735@spearce.org>
+References: <20071021214846.GI16291@srparish.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 07:19:25 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Scott R Parish <srp@srparish.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 07:30:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjphC-0002wP-Nt
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:19:23 +0200
+	id 1IjpsN-0005QA-Oj
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:30:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751625AbXJVFTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 01:19:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751411AbXJVFTL
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:19:11 -0400
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:56787 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751373AbXJVFTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 01:19:11 -0400
-Received: from localhost.localdomain (xdsl-87-78-69-149.netcologne.de [87.78.69.149])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 43E0A40000237;
-	Mon, 22 Oct 2007 07:19:09 +0200 (CEST)
-Received: from ralf by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1Ijpgy-0005Hy-Mn; Mon, 22 Oct 2007 07:19:08 +0200
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+	id S1751169AbXJVFaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 01:30:24 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbXJVFaX
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:30:23 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:46026 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751162AbXJVFaV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 01:30:21 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ijprn-0007sq-Ma; Mon, 22 Oct 2007 01:30:19 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id AC5F120FB09; Mon, 22 Oct 2007 01:30:17 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071022051453.GM14735@spearce.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <20071021214846.GI16291@srparish.net>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61935>
 
-* Shawn O. Pearce wrote on Mon, Oct 22, 2007 at 07:14:53AM CEST:
-> 
-> I think you are right that the current behavior of -x *not*
-> including the prior commit SHA-1 in the case of a conflict is wrong.
-> The problem however is that git-commit.sh doesn't get the data
-> necessary to preseve the original author name/email/date/tz unless
-> you use the "-c $id" option.
+Scott R Parish <srp@srparish.net> wrote:
+> Currently "git help -a" only searches in the highest priority exec_path,
+> meaning at worst, nothing is listed if the git commands are only available
+> from the PATH. It also makes git slightly less extensible.
+...
+>  extern char **environ;
+>  static const char *builtin_exec_path = GIT_EXEC_PATH;
+> -static const char *current_exec_path;
+> +static const char *argv_exec_path;
+>  
+> -void git_set_exec_path(const char *exec_path)
+> +void git_set_argv_exec_path(const char *exec_path)
+>  {
+> -	current_exec_path = exec_path;
+> +	argv_exec_path = exec_path;
+>  }
 
-But the note added by -x is even missing when I add "-c $id" to
-the git-commit command!  That's the point I was trying to make,
-and really the only thing that seemed weird to me.
+I'd rather see a rename isolated from a logic change.  I find
+it easier to review.
+  
+> +const char *git_argv_exec_path(void)
+> +const char *git_builtin_exec_path(void)
+> +const char *git_env_exec_path(void)
 
-Cheers,
-Ralf
+And yet later you then build the same priority array as already used
+by execv_git_cmd().  Why not just make a function that builds the
+array for the caller, so both execv_git_cmd() and list_commands()
+can both use the same array?
+
+> +static unsigned int list_commands_in_dir(const char *dir, const char *prefix)
+>  {
+> +	int start_dir = open(".", O_RDONLY, 0);
+...
+> +	if (!dirp || chdir(dir)) {
+> +		fchdir(start_dir);
+
+fchdir() isn't as portable as Git currently is.  Thus far we have
+avoided using fchdir().  Requiring it here for something as "simple"
+as listing help is not a good improvement as it will limit who can
+run git-help.  Why can't you stat the individual entries by joining
+the paths together?
+
+-- 
+Shawn.
