@@ -1,80 +1,64 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: .gittattributes handling has deficiencies
-Date: Mon, 22 Oct 2007 15:04:41 +0200
-Message-ID: <A524F676-BFFD-4AA7-8683-9623F12D2F2D@zib.de>
-References: <1192956535617-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710210204580.4818@asgard> <20071022050111.GL14735@spearce.org> <565E1D52-59C4-4EB8-AA81-FF94F346FE61@zib.de> <Pine.LNX.4.64.0710221125350.25221@racer.site>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
+Date: Mon, 22 Oct 2007 15:17:19 +0200
+Message-ID: <ED965042-27DE-450B-96CB-00D27000FAF6@wincent.com>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>  <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org> <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de> <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com> <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se> <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se> <Pine.LNX.4.64.0710221156540.25221@racer.site>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, david@lang.hm,
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
 	git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 22 15:06:01 2007
+X-From: git-owner@vger.kernel.org Mon Oct 22 15:18:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ijwxx-00078f-3k
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:05:40 +0200
+	id 1IjxAv-0003BP-U3
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752199AbXJVNE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 09:04:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752186AbXJVNE4
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:04:56 -0400
-Received: from mailer.zib.de ([130.73.108.11]:52752 "EHLO mailer.zib.de"
+	id S1754932AbXJVNST convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Oct 2007 09:18:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754769AbXJVNST
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:18:19 -0400
+Received: from wincent.com ([72.3.236.74]:37457 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752126AbXJVNE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 09:04:56 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9MD3DND025552;
-	Mon, 22 Oct 2007 15:04:44 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	id S1754551AbXJVNSS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 09:18:18 -0400
+Received: from [192.168.0.129] (localhost [127.0.0.1])
 	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9MD3C6W021044
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 22 Oct 2007 15:03:12 +0200 (MEST)
-In-Reply-To: <Pine.LNX.4.64.0710221125350.25221@racer.site>
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9MDI5kj015838;
+	Mon, 22 Oct 2007 08:18:06 -0500
+In-Reply-To: <Pine.LNX.4.64.0710221156540.25221@racer.site>
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62000>
 
+El 22/10/2007, a las 13:04, Johannes Schindelin escribi=F3:
 
-On Oct 22, 2007, at 12:29 PM, Johannes Schindelin wrote:
+> So once again, what operations involving git do people use regularly?
 
->
-> On Mon, 22 Oct 2007, Steffen Prohaska wrote:
->
->> .gitattributes is first looked for in the working directory, and  
->> if not
->> there, .gitattributes is read from the index.
->
-> Of course we could change that to do it the other way round.  But this
-> would contradict expectations when you edit .gitattributes and then
-> checkout single files without having git-add'ed .gitattributes first.
->
-> The biggest problem in your setup, however, is not  
-> if .gitattributes is
-> read from the index or the working directory.  The biggest problem  
-> is that
-> files are not touched when their contents have not changed.
->
-> IOW if you have .gitattributes in the to-be-checked-out branch  
-> which say
-> that README is crlf, and in the current branch it is not, and README's
-> _contents_ are identical in both branches, a "git checkout
-> <that-other-branch>" will not rewrite README, and consequently not  
-> change
-> the working copy to crlf.
+Here are my top ten commands, sorted by the number of times they =20
+appear in my ~/.bash_history:
 
-Exactly. The order of reading .gitattributes from the working
-directory or the index doesn't matter. The current mechanism
-has a more fundamental deficiency.
+533 status
+342 diff
+252 commit
+234 add
+123 checkout
+116 log
+106 push
+97 config
+83 show
+83 branch
 
-Changes of.gitattributes can influence how the same content
-is checked out to the work tree. If .gitattributes change the
-checkout may need to be updated, even if the real content did
-not change.
+Not very scientific, but it gives a rough idea of how one Git newbie =20
+(using it for several months) with a very basic workflow uses Git.
 
-	Steffen
+Cheers,
+Wincent
