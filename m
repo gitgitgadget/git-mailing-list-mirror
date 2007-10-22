@@ -1,103 +1,80 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add some fancy colors in the test library when terminal    supports it.
-Date: Mon, 22 Oct 2007 15:45:41 +0200
-Message-ID: <20071022134541.GA9776@artemis.corp>
-References: <20071022081341.GC32763@artemis.corp> <471C6510.8010300@viscovery.net> <20071022112401.GE32763@artemis.corp> <471C8B02.6080202@viscovery.net> <20071022121106.GA7151@artemis.corp> <471C950E.40702@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+ summary continued
+Date: Mon, 22 Oct 2007 14:48:20 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221445170.25221@racer.site>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
+ <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
+  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
+ <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+ <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
+ <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
+ <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="tThc/1wpZn/ma/RB";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 15:46:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Oct 22 15:48:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjxbQ-0003zK-1k
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:45:56 +0200
+	id 1IjxeI-0004yY-FO
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 15:48:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752672AbXJVNpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 09:45:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752632AbXJVNpo
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:45:44 -0400
-Received: from pan.madism.org ([88.191.52.104]:46411 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752644AbXJVNpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 09:45:43 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 4CF27264C4;
-	Mon, 22 Oct 2007 15:45:41 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 671CE3CC237; Mon, 22 Oct 2007 15:45:41 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <471C950E.40702@viscovery.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752617AbXJVNsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 09:48:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbXJVNsn
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 09:48:43 -0400
+Received: from mail.gmx.net ([213.165.64.20]:45636 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752497AbXJVNsm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 09:48:42 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 13:48:40 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 22 Oct 2007 15:48:40 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+hzBEmd6GhGIalVCNWgGm1DMwYfXvnaQzqH98AIk
+	z5FBn+ZZLZmyeA
+X-X-Sender: gene099@racer.site
+In-Reply-To: <471C9B13.9080603@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62007>
 
+Hi,
 
---tThc/1wpZn/ma/RB
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 22 Oct 2007, Andreas Ericsson wrote:
 
-On Mon, Oct 22, 2007 at 12:18:22PM +0000, Johannes Sixt wrote:
-> Pierre Habouzit schrieb:
-> >On Mon, Oct 22, 2007 at 11:35:30AM +0000, Johannes Sixt wrote:
-> >>Pierre Habouzit schrieb:
-> >>>On Mon, Oct 22, 2007 at 08:53:36AM +0000, Johannes Sixt wrote:
-> >>>>Pierre Habouzit schrieb:
-> >>>>>+say_color () {
-> >>>>>+	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
-> >>>>>+	shift
-> >>>>>+	echo "* $*"
-> >>>>>+	tput op
->        ^^^^^^^^
-> I am talking about this line.
+> If I were to suggest any improvements, it'd be to change the semantics of
+> git-pull to always update the local branches set up to be merged with the
+> remote tracking branches when they, prior to fetching, pointed to the same
+> commit, such that when
+> 
+> $ git show-ref master
+> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
+> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
+> 
+> refs/heads/master gets set to refs/remotes/origin/master post-fetch.
 
-  Oooh, good catch :P it should be guarded by a [ "$nocolor" =3D 0 ]
-indeed :P (or use your solution).
+In general, this should fail.  Because you are expected to have local 
+changes in the local branches.  What you describe suggests that you should 
+not use the branch name "master" at all, but "origin/master".
 
-> >>>>>+}
-> >>I wanted to point out that if tput is not available, the second=20
-> >>invocation will leave "tput: command not found" behind on stderr.=20
-> >>Therefore, I proposed to make the definition of say_color() different=
-=20
-> >>depending on whether $color is set or not. Then you don't need to test=
-=20
-> >>for $color twice inside the function.
-> >  Right we can do that. I'll try to rework the patch. and no it
-> >shouldn't leave tput: command not found as I 2>/dev/null and I think the
-> >shell doesn't print that in that case. At least my zsh doesn't.
->=20
-> There is no 2>/dev/null. Am I missing something?
+That said, there is a pretty simple way to achieve what you want (even if 
+it does not help the confusion you create between local and remote 
+branches):
 
-  I was.
+	git config --add remote.origin.fetch master:master
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+Of course, when you checkout "master" and pull then, you'll get even more 
+problems, _exactly_ because you muddled up the clear distinction between 
+local and remote branches.
 
---tThc/1wpZn/ma/RB
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHHKmFvGr7W6HudhwRAq+IAJ9RvQhZ8HN1ZUn/a4DHheJdWyLAgwCeMfFf
-dpA0x7C0kLjygSzcK3YiDts=
-=QB7b
------END PGP SIGNATURE-----
-
---tThc/1wpZn/ma/RB--
+Ciao,
+Dscho
