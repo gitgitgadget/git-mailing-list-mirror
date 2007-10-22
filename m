@@ -1,88 +1,83 @@
-From: Federico Mena Quintero <federico@novell.com>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Mon, 22 Oct 2007 09:53:00 -0500
-Message-ID: <1193064780.4522.142.camel@cacharro.xalalinux.org>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
-	 <Pine.LNX.4.64.0710130130380.25221@racer.site>
-	 <1192827476.4522.93.camel@cacharro.xalalinux.org>  <4719B655.90204@op5.se>
-	 <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
-	 <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
-	 <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
-	 <Pine.LNX.4.64.0710212308540.25221@racer.site>  <471C586A.9030900@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+ summary continued
+Date: Mon, 22 Oct 2007 16:00:34 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221558230.25221@racer.site>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
+ <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
+  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
+ <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+ <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
+ <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
+ <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se>
+ <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
 To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Oct 22 16:51:11 2007
+X-From: git-owner@vger.kernel.org Mon Oct 22 17:01:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjycW-0003mo-P8
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 16:51:09 +0200
+	id 1IjymC-0007Se-ML
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 17:01:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751699AbXJVOu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 10:50:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751726AbXJVOu6
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 10:50:58 -0400
-Received: from jericho.provo.novell.com ([137.65.248.124]:39255 "EHLO
-	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751594AbXJVOu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 10:50:57 -0400
-Received: from [164.99.195.83] ([164.99.195.83])
-	by jericho.provo.novell.com with ESMTP; Mon, 22 Oct 2007 08:50:46 -0600
-In-Reply-To: <471C586A.9030900@op5.se>
-X-Mailer: Evolution 2.11.5 
+	id S1751034AbXJVPA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 11:00:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751175AbXJVPA5
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 11:00:57 -0400
+Received: from mail.gmx.net ([213.165.64.20]:49157 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750956AbXJVPA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 11:00:56 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 15:00:54 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp038) with SMTP; 22 Oct 2007 17:00:54 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19SFVVavWFSaS9Y4KM2+HHPADou3pyW1Uzj97b/qo
+	Kq/IYXq9/C0dvU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <471CB443.9070606@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62018>
 
-On Mon, 2007-10-22 at 09:59 +0200, Andreas Ericsson wrote:
+Hi,
 
-> I doubt many people on this list regularly use git-blame but it's a 
-> command that's definitely non-trivial to script out using only the 
-> "proper" commands, and CVS/SVN users expect it to be there, so it's 
-> probably worth listing anyhow.
+On Mon, 22 Oct 2007, Andreas Ericsson wrote:
 
-Hmmm, I don't really want to turn the "summary" thread into oodles of
-sub-threads, but here goes :)
+> Johannes Schindelin wrote:
+> 
+> > On Mon, 22 Oct 2007, Andreas Ericsson wrote:
+> > 
+> > > If I were to suggest any improvements, it'd be to change the 
+> > > semantics of git-pull to always update the local branches set up to 
+> > > be merged with the remote tracking branches when they, prior to 
+> > > fetching, pointed to the same commit, such that when
+> > > 
+> > > $ git show-ref master
+> > > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
+> > > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
+> > > 
+> > > refs/heads/master gets set to refs/remotes/origin/master post-fetch.
+> > 
+> > In general, this should fail.  Because you are expected to have local 
+> > changes in the local branches.
+> 
+> 
+> BS argument.
 
-Personally I find git-blame *EXTREMELY* useful.  The workflow is:
+Aha.  So you want to make sure that the local branches are no longer 
+"purely" local.  And you want to stop updating them when unpushed changes 
+are in the local branches.
 
-1. Bug #12345 for FooApp gets assigned to you.
+Seems I cannot help you.
 
-2. git-svn clone fooapp's repository
-
-3. git checkout -b my-bugfix-branch-for-12345
-
-4. debug debug debug
-
-5. "WTF?  Who wrote this crappy code?"
-
-6. git blame culprit-file.c
-
-7. "Oh, it was $person with $commit_id... what were they thinking at the
-time?"
-
-8. git show $commit_id
-
-9. "Oh, I see their intentions now... what was going on at that time?"
-
-10. git log <date range around $commit_id>
-
-11. etc.
-
-Git-blame is very nice for code archaeology (long explanation at
-http://mail.gnome.org/archives/desktop-devel-list/2007-September/msg00238.html).
-
-> Similarly, it might be helpful to have help topics the gdb way, like 
-> "git help patches".
-
-This would be simply fantastic.  If those help topics suggested
-workflows, I'd be delighted :)  Feel free to poke me if you write up
-some text; I'd love to help on this.
-
-  Federico
+Ciao,
+Dscho
