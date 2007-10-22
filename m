@@ -1,78 +1,107 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: odd behavior with concurrent fetch/checkout
-Date: Mon, 22 Oct 2007 12:51:25 -0400
-Message-ID: <20071022165125.GG583@fieldses.org>
+From: Scott R Parish <srp@srparish.net>
+Subject: [PATCH] "current_exec_path" is a misleading name, use "argv_exec_path"
+Date: Mon, 22 Oct 2007 17:01:08 +0000
+Message-ID: <20071022170108.GA29642@srparish.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 22 18:51:47 2007
+X-From: git-owner@vger.kernel.org Mon Oct 22 19:08:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik0V8-0000p4-P0
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 18:51:39 +0200
+	id 1Ik0kz-0006x4-KJ
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 19:08:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752076AbXJVQv1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 12:51:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751870AbXJVQv1
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 12:51:27 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:58057 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752026AbXJVQv0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 12:51:26 -0400
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Ik0Uv-000314-OE
-	for git@vger.kernel.org; Mon, 22 Oct 2007 12:51:25 -0400
+	id S1751815AbXJVRHu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 13:07:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXJVRHu
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 13:07:50 -0400
+Received: from [207.210.74.68] ([207.210.74.68]:44416 "EHLO srparish.net"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751460AbXJVRHt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 13:07:49 -0400
+X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Oct 2007 13:07:49 EDT
+Received: (qmail 29719 invoked by alias); 22 Oct 2007 17:01:08 +0000
 Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-11)
+User-Agent: Mutt/1.5.10i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62026>
 
-Just now I checked out a topic branch in my working repo:
+ Signed-off-by: Scott R Parish <srp@srparish.net>
 
-	git checkout server-xprt-switch
+---
+ exec_cmd.c |   12 ++++++------
+ exec_cmd.h |    2 +-
+ git.c      |    2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-and while waiting for it to complete (I just started work and caches
-were all cold), I ran a
-
-	git fetch origin
-
-in another window to update from Linus.  The git fetch gave a warning:
-
-	remote: Generating pack...
-	remote: Counting objects: 7550
-	remote: Done counting 12885 objects.
-	remote: Result has 8400 objects.
-	remote: Deltifying 8400 objects...
-	remote:  100% (8400/8400) done
-	Indexing 8400 objects...
-	remote: Total 8400 (delta 7257), reused 5696 (delta 4586)
-	 100% (8400/8400) done
-	Resolving 7257 deltas...
-	 100% (7257/7257) done
-	* refs/remotes/origin/master: fast forward to branch 'master' of
-	* git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-	  old..new: d85714d..55b70a0
-	Cannot fetch into the current branch.
-
-Why the warning?  Also, afterwards I was left with server-xprt-switch
-pointing to the tip of the branch I'd just switched from (another
-miscellaneous topic branch).  The working directory was in some
-completely different state--thanks to a quick reset --hard I don't know
-what it was.  Also, in the reflog for the checked-out branch:
-
-	commit bac1e7977eb4781e62cee7f1c7c3d13a9e5d8d74
-	Reflog: server-xprt-switch@{0} (J. Bruce Fields <bfields@citi.umich.edu>)
-	Reflog message: fetch origin: Undoing incorrectly fetched HEAD.
-	Author: J. Bruce Fields <bfields@citi.umich.edu>
-	Date:   Mon Oct 22 12:32:37 2007 -0400
-	...
-
-Why was a fetch into the remote fooling with HEAD or anything under
-refs/heads/?
-
---b.
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 9b74ed2..8b681d0 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -5,11 +5,11 @@
+ 
+ extern char **environ;
+ static const char *builtin_exec_path = GIT_EXEC_PATH;
+-static const char *current_exec_path;
++static const char *argv_exec_path = 0;
+ 
+-void git_set_exec_path(const char *exec_path)
++void git_set_argv_exec_path(const char *exec_path)
+ {
+-	current_exec_path = exec_path;
++	argv_exec_path = exec_path;
+ }
+ 
+ 
+@@ -18,8 +18,8 @@ const char *git_exec_path(void)
+ {
+ 	const char *env;
+ 
+-	if (current_exec_path)
+-		return current_exec_path;
++	if (argv_exec_path)
++		return argv_exec_path;
+ 
+ 	env = getenv(EXEC_PATH_ENVIRONMENT);
+ 	if (env && *env) {
+@@ -34,7 +34,7 @@ int execv_git_cmd(const char **argv)
+ {
+ 	char git_command[PATH_MAX + 1];
+ 	int i;
+-	const char *paths[] = { current_exec_path,
++	const char *paths[] = { argv_exec_path,
+ 				getenv(EXEC_PATH_ENVIRONMENT),
+ 				builtin_exec_path };
+ 
+diff --git a/exec_cmd.h b/exec_cmd.h
+index 849a839..da99287 100644
+--- a/exec_cmd.h
++++ b/exec_cmd.h
+@@ -1,7 +1,7 @@
+ #ifndef GIT_EXEC_CMD_H
+ #define GIT_EXEC_CMD_H
+ 
+-extern void git_set_exec_path(const char *exec_path);
++extern void git_set_argv_exec_path(const char *exec_path);
+ extern const char* git_exec_path(void);
+ extern int execv_git_cmd(const char **argv); /* NULL terminated */
+ extern int execl_git_cmd(const char *cmd, ...);
+diff --git a/git.c b/git.c
+index e1c99e3..f659338 100644
+--- a/git.c
++++ b/git.c
+@@ -51,7 +51,7 @@ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ 		if (!prefixcmp(cmd, "--exec-path")) {
+ 			cmd += 11;
+ 			if (*cmd == '=')
+-				git_set_exec_path(cmd + 1);
++				git_set_argv_exec_path(cmd + 1);
+ 			else {
+ 				puts(git_exec_path());
+ 				exit(0);
+-- 
+gitgui.0.8.4.11176.gd9205-dirty
