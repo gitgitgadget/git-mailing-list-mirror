@@ -1,132 +1,101 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add some fancy colors in the test library when terminal  supports it.
-Date: Mon, 22 Oct 2007 13:24:01 +0200
-Message-ID: <20071022112401.GE32763@artemis.corp>
-References: <20071022081341.GC32763@artemis.corp> <471C6510.8010300@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Howto request: going home in the middle of something?
+Date: Mon, 22 Oct 2007 12:32:43 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221230130.25221@racer.site>
+References: <200710181144.22655.wielemak@science.uva.nl>
+ <20071018112758.GN18279@machine.or.cz> <200710221044.24191.wielemak@science.uva.nl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="E13BgyNx05feLLmH";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 13:24:22 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Jan Wielemaker <wielemak@science.uva.nl>
+X-From: git-owner@vger.kernel.org Mon Oct 22 13:33:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjvON-0005kw-8o
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 13:24:19 +0200
+	id 1IjvX5-0000Ku-Ny
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 13:33:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751980AbXJVLYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 07:24:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbXJVLYG
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 07:24:06 -0400
-Received: from pan.madism.org ([88.191.52.104]:57922 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751939AbXJVLYF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 07:24:05 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id D25E926165;
-	Mon, 22 Oct 2007 13:24:02 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 168CF3CC233; Mon, 22 Oct 2007 13:24:02 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <471C6510.8010300@viscovery.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751724AbXJVLdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 07:33:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751797AbXJVLdG
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 07:33:06 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37669 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751668AbXJVLdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 07:33:05 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 11:33:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp027) with SMTP; 22 Oct 2007 13:33:04 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+M4FI/D0mMfGhqp/feMjpJ0XU1gvaF/Q1Ld8vpsp
+	N+Hgh1Gq/0QqfA
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200710221044.24191.wielemak@science.uva.nl>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61991>
 
+Hi,
 
---E13BgyNx05feLLmH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 22 Oct 2007, Jan Wielemaker wrote:
 
-On Mon, Oct 22, 2007 at 08:53:36AM +0000, Johannes Sixt wrote:
-> Pierre Habouzit schrieb:
-> >Signed-off-by: Pierre Habouzit <madcoder@debian.org>
-> >---
-> >Maybe this is just me, but I don't find the output of the test-suite
-> >easy to watch while scrolling. This puts some colors in proper places.
-> >  * end-test summaries are in green or red depending on the sucess of
-> >    the tests.
-> >  * errors are in red.
-> >  * skipped tests and other things that tests `say` are in brown (now
-> >    you can _see_ that your testsuite skips some tests on purpose, I
-> >    only noticed recently that I missed part of the environment for
-> >    proper testing).
-> >I'm not 100% sure the test to see if terminal supports color is correct,=
-=20
-> >and
-> >people using emacs shell buffer or alike tools may have better ideas on=
-=20
-> >how to
-> >make it.
-> >and yes, I know that it "depends" upon tput, but if tput isn't=20
-> >available, the
-> >    [ "x$TERM" !=3D "xdumb" ] && tput hpa 60 >/dev/null 2>&1 && tput set=
-af=20
-> >1 >/dev/null 2>&1
-> >expression will fail, and color will be disabled.
-> > t/test-lib.sh |   32 ++++++++++++++++++++++----------
-> > 1 files changed, 22 insertions(+), 10 deletions(-)
-> >diff --git a/t/test-lib.sh b/t/test-lib.sh
-> >index cc1253c..c6521c0 100644
-> >--- a/t/test-lib.sh
-> >+++ b/t/test-lib.sh
-> >@@ -59,14 +59,24 @@ esac
-> > # '
-> > # . ./test-lib.sh
-> > +[ "x$TERM" !=3D "xdumb" ] && tput hpa 60 >/dev/null 2>&1 && tput setaf=
- 1=20
-> >>/dev/null 2>&1
-> >+nocolor=3D$?
->=20
-> test "x$TERM" !=3D "xdumb" &&
-> 	tput hpa 60 >/dev/null 2>&1 &&
-> 	tput setaf 1 >/dev/null 2>&1 &&
-> 	color=3Dt
->=20
-> BTW, doesn't tput fail if stdout/stderr is not a terminal, like above?
->=20
-> >+
-> >+say_color () {
-> >+	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
-> >+	shift
-> >+	echo "* $*"
-> >+	tput op
-> >+}
->=20
-> What if tput is not available, like on Windows? How about this (at the=20
-> end of the file, so it can obey --no-color):
+> Thanks for the replies.	 I think I can live with something like this
+> 
+> 	<work, in the middle of something>
+> 	$ git checkout -b home
+> 	$ git commit
+> 	$ git checkout master
+> 	<arriving at home>
+> 	$ git jan@work:repo fetch home:home	(using ssh)
 
-  I answered to it already in my first mail: if tput isn't available,
-the command fails, and $? is non 0. and nocolor is set. Or color isn't
-set to 't' for your proposal.
+You probably meant "git fetch jan@work:repo home:home".
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+> 	$ git checkout home
+> 	<continue editing>
+> 	$ git commit --amend
+> 	$ git checkout master
+> 	$ git merge home
+> 	$ git -d home
+> 	$ git commit
+> 	$ git push
+> 	<arriving at work>
+> 	$ git -d home
+> 	$ git pull
+> 
+> Its still a bit many commands and you have to be aware what you are
+> doing for quite a while, but it does provide one single clean commit
+> message, doesn't change the shared repo until all is finished and allows
+> to abandon all work without leaving traces.
+> 
+> Personally I'd be more happy with
+> 
+> 	<work, in the middle of something>
+> 	$ git stash
+> 	<arriving at home>
+> 	$ git stash fetch jan@work{0}	(well, some sensible syntax)
+> 	$ git stash apply
+> 	<continue editing>
+> 	$ git commit
+> 	$ git push
+> 	<arriving at work>
+> 	$ git pull
 
---E13BgyNx05feLLmH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+Happily, that is already possible:  However, instead of
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+	git stash fetch jan@work{0}
 
-iD8DBQBHHIhRvGr7W6HudhwRApoEAJ0ZoxwYppdYzLNkMxMt4kvZqjq/3wCaAvoM
-BD2Rt/V8Hux192Xxh4yg2tE=
-=rGnJ
------END PGP SIGNATURE-----
+you should say
 
---E13BgyNx05feLLmH--
+	git fetch jan@work stash:stash
+
+This will only fetch the last stash, but that is what you wanted anyway, 
+right?
+
+Ciao,
+Dscho
+
+P.S.: Since you top-posted, I just ignored the mail you quoted, assuming 
+that it was not relevant to your mail.
