@@ -1,7 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 5/9] Bisect: factorise "bisect_write_*" functions.
-Date: Mon, 22 Oct 2007 07:48:42 +0200
-Message-ID: <20071022074842.be5f5841.chriscool@tuxfamily.org>
+Subject: [PATCH 6/9] Bisect: factorise some logging into "bisect_write".
+Date: Mon, 22 Oct 2007 07:48:54 +0200
+Message-ID: <20071022074854.b1362e76.chriscool@tuxfamily.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
@@ -9,151 +9,148 @@ Cc: git@vger.kernel.org
 To: Junio Hamano <junkio@cox.net>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 22 07:42:00 2007
+X-From: git-owner@vger.kernel.org Mon Oct 22 07:42:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ijq35-0007bR-Ng
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:42:00 +0200
+	id 1Ijq3D-0007e1-Hw
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:42:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892AbXJVFlk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 01:41:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751883AbXJVFlk
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:41:40 -0400
-Received: from smtp1-g19.free.fr ([212.27.42.27]:36323 "EHLO smtp1-g19.free.fr"
+	id S1751963AbXJVFlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 01:41:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751952AbXJVFlx
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:41:53 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:36364 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751874AbXJVFlj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 01:41:39 -0400
+	id S1751966AbXJVFlw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 01:41:52 -0400
 Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 92E681AB2D0;
-	Mon, 22 Oct 2007 07:41:38 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 394F91AB2DC;
+	Mon, 22 Oct 2007 07:41:51 +0200 (CEST)
 Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 493E11AB2AE;
-	Mon, 22 Oct 2007 07:41:38 +0200 (CEST)
+	by smtp1-g19.free.fr (Postfix) with SMTP id E29481AB2DB;
+	Mon, 22 Oct 2007 07:41:50 +0200 (CEST)
 X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61943>
+
+Also use "die" instead of "echo >&2 something ; exit 1".
+And simplify "bisect_replay".
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-bisect.sh |   46 ++++++++++++++++++++--------------------------
- 1 files changed, 20 insertions(+), 26 deletions(-)
+ git-bisect.sh |   46 +++++++++++++---------------------------------
+ 1 files changed, 13 insertions(+), 33 deletions(-)
 
 diff --git a/git-bisect.sh b/git-bisect.sh
-index cd46190..82aa404 100755
+index 82aa404..d7f0a20 100755
 --- a/git-bisect.sh
 +++ b/git-bisect.sh
-@@ -108,9 +108,9 @@ bisect_start() {
+@@ -106,12 +106,11 @@ bisect_start() {
+ 		        die "'$arg' does not appear to be a valid revision"
+ 		    break
  		}
- 		if [ $bad_seen -eq 0 ]; then
- 		    bad_seen=1
--		    bisect_write_bad "$rev"
-+		    bisect_write 'bad' "$rev"
- 		else
--		    bisect_write_good "$rev"
-+		    bisect_write 'good' "$rev"
- 		fi
+-		if [ $bad_seen -eq 0 ]; then
+-		    bad_seen=1
+-		    bisect_write 'bad' "$rev"
+-		else
+-		    bisect_write 'good' "$rev"
+-		fi
++		case $bad_seen in
++		0) state='bad' ; bad_seen=1 ;;
++		*) state='good' ;;
++		esac
++		bisect_write "$state" "$rev" 'nolog'
  		shift
  		;;
-@@ -122,6 +122,18 @@ bisect_start() {
- 	bisect_auto_next
+ 	    esac
+@@ -132,6 +131,7 @@ bisect_write() {
+ 	esac
+ 	echo "$rev" >"$GIT_DIR/refs/bisect/$tag"
+ 	echo "# $state: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++	test -z "$nolog" && echo "git-bisect $state $rev" >>"$GIT_DIR/BISECT_LOG"
  }
  
-+bisect_write() {
-+	state="$1"
-+	rev="$2"
-+	case "$state" in
-+		bad)		tag="$state" ;;
-+		good|skip)	tag="$state"-"$rev" ;;
-+		*)		die "Bad bisect_write argument: $state" ;;
-+	esac
-+	echo "$rev" >"$GIT_DIR/refs/bisect/$tag"
-+	echo "# $state: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
-+}
-+
  bisect_bad() {
- 	bisect_autostart
- 	case "$#" in
-@@ -132,17 +144,11 @@ bisect_bad() {
- 	*)
+@@ -145,7 +145,6 @@ bisect_bad() {
  		usage ;;
  	esac || exit
--	bisect_write_bad "$rev"
-+	bisect_write 'bad' "$rev"
- 	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	bisect_write 'bad' "$rev"
+-	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
  	bisect_auto_next
  }
  
--bisect_write_bad() {
--	rev="$1"
--	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
--	echo "# bad: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
--}
--
- bisect_good() {
- 	bisect_autostart
- 	case "$#" in
-@@ -153,18 +159,12 @@ bisect_good() {
- 	for rev in $revs
+@@ -160,7 +159,6 @@ bisect_good() {
  	do
  		rev=$(git rev-parse --verify "$rev^{commit}") || exit
--		bisect_write_good "$rev"
-+		bisect_write 'good' "$rev"
- 		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+ 		bisect_write 'good' "$rev"
+-		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
  	done
  	bisect_auto_next
  }
- 
--bisect_write_good() {
--	rev="$1"
--	echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
--	echo "# good: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
--}
--
- bisect_skip() {
- 	bisect_autostart
- 	case "$#" in
-@@ -175,18 +175,12 @@ bisect_skip() {
- 	for rev in $revs
+@@ -176,7 +174,6 @@ bisect_skip() {
  	do
  		rev=$(git rev-parse --verify "$rev^{commit}") || exit
--		bisect_write_skip "$rev"
-+		bisect_write 'skip' "$rev"
- 		echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
+ 		bisect_write 'skip' "$rev"
+-		echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
  	done
  	bisect_auto_next
  }
+@@ -352,10 +349,8 @@ bisect_reset() {
+ 	   else
+ 	       branch=master
+ 	   fi ;;
+-	1) git show-ref --verify --quiet -- "refs/heads/$1" || {
+-	       echo >&2 "$1 does not seem to be a valid branch"
+-	       exit 1
+-	   }
++	1) git show-ref --verify --quiet -- "refs/heads/$1" ||
++	       die "$1 does not seem to be a valid branch"
+ 	   branch="$1" ;;
+ 	*)
+ 	    usage ;;
+@@ -375,10 +370,7 @@ bisect_clean_state() {
+ }
  
--bisect_write_skip() {
--	rev="$1"
--	echo "$rev" >"$GIT_DIR/refs/bisect/skip-$rev"
--	echo "# skip: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
--}
--
- bisect_next_check() {
- 	missing_good= missing_bad=
- 	git show-ref -q --verify refs/bisect/bad || missing_bad=t
-@@ -395,15 +389,15 @@ bisect_replay () {
- 			eval "$cmd"
- 			;;
- 		good)
--			bisect_write_good "$rev"
-+			bisect_write 'good' "$rev"
- 			echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
- 			;;
- 		bad)
--			bisect_write_bad "$rev"
-+			bisect_write 'bad' "$rev"
- 			echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
- 			;;
- 		skip)
--			bisect_write_skip "$rev"
-+			bisect_write 'skip' "$rev"
- 			echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
- 			;;
+ bisect_replay () {
+-	test -r "$1" || {
+-		echo >&2 "cannot read $1 for replaying"
+-		exit 1
+-	}
++	test -r "$1" || die "cannot read $1 for replaying"
+ 	bisect_reset
+ 	while read bisect command rev
+ 	do
+@@ -386,23 +378,11 @@ bisect_replay () {
+ 		case "$command" in
+ 		start)
+ 			cmd="bisect_start $rev"
+-			eval "$cmd"
+-			;;
+-		good)
+-			bisect_write 'good' "$rev"
+-			echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+-			;;
+-		bad)
+-			bisect_write 'bad' "$rev"
+-			echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+-			;;
+-		skip)
+-			bisect_write 'skip' "$rev"
+-			echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
+-			;;
++			eval "$cmd" ;;
++		good|bad|skip)
++			bisect_write "$command" "$rev" ;;
  		*)
+-			echo >&2 "?? what are you talking about?"
+-			exit 1 ;;
++			die "?? what are you talking about?" ;;
+ 		esac
+ 	done <"$1"
+ 	bisect_auto_next
 -- 
 1.5.3.3.136.g591d1-dirty
