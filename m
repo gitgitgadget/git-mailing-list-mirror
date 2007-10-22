@@ -1,94 +1,63 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Mon, 22 Oct 2007 17:27:17 +0200
-Message-ID: <C711793E-BBA0-4AB5-84A7-D37555F80676@zib.de>
-References: <20071022063222.GS14735@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] execv_git_cmd(): also try PATH if everything else fails.
+Date: Mon, 22 Oct 2007 17:36:32 +0200
+Message-ID: <471CC380.5030603@viscovery.net>
+References: <1192867937.v2.fusewebmail-240137@f> <20071020205721.GA16291@srparish.net> <Pine.LNX.4.64.0710202258440.25221@racer.site> <20071021023614.GB14735@spearce.org> <Pine.LNX.4.64.0710212256270.25221@racer.site> <20071022143637.GP16291@srparish.net> <471CBF88.6020300@op5.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 17:26:21 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>, Scott Parish <sRp@srparish.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 17:36:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjzAO-0000yR-JQ
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 17:26:09 +0200
+	id 1IjzKk-0005NN-FM
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 17:36:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370AbXJVPZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 11:25:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752428AbXJVPZz
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 11:25:55 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63968 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752214AbXJVPZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 11:25:55 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9MFPqpG007537;
-	Mon, 22 Oct 2007 17:25:52 +0200 (CEST)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9MFPpLZ023731
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 22 Oct 2007 17:25:52 +0200 (MEST)
-In-Reply-To: <20071022063222.GS14735@spearce.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751460AbXJVPgi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 11:36:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752593AbXJVPgi
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 11:36:38 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:4521 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752584AbXJVPgh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 11:36:37 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IjzKD-0005YD-MY; Mon, 22 Oct 2007 17:36:18 +0200
+Received: from [192.168.1.42] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 0765D6B7; Mon, 22 Oct 2007 17:36:32 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <471CBF88.6020300@op5.se>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62023>
 
+Andreas Ericsson schrieb:
+> Scott Parish wrote:
+>> I'm tempted to try a different approach. What if instead of looping
+>> and building up strings of all the different absolute paths we want
+>> to try we just prepend to PATH with the correct extra precedence,
+>> and then call execvp on the command we want?
+>>
+> 
+> That's how the original git --exec-dir feature got implemented. There's 
+> even a nifty function for it in git.c; prepend_to_path(). It's a 
+> provably workable solution.
 
-On Oct 22, 2007, at 8:32 AM, Shawn O. Pearce wrote:
+The reason that this was done is for the sake of shell scripts: They need to 
+have the path that was finally decided as exec-path in $PATH.
 
-> * sp/push-refspec (Sun Oct 14 10:54:45 2007 +0200) 6 commits
->  - push, send-pack: use same rules as git-rev-parse to resolve
->    refspecs
->  - add ref_cmp_full_short() comparing full ref name with a short name
->  - push, send-pack: support pushing HEAD to real ref name
->  - rev-parse: teach "git rev-parse --symbolic" to print the full ref
->    name
->  - add get_sha1_with_real_ref() returning full name of ref on demand
->  - push, send-pack: fix test if remote branch exists for colon-less
->    refspec
->
-> I've briefly looked at this series and there's reasons why its not
-> in next yet.
+But I can't think of any negative side effect if *all* exec-path candidates 
+are in $PATH. It's important, though, that all paths are absolute because 
+the tools chdir every now and then.
 
-It's not ready for next. Especially the last patch in the list
-changes the existing behaviour in a way that might be unexpected
-by longtime git users. And maybe we even need for the 1.6 cycle
-before we can change the behaviour of git push.
-
-
-> Its actually something that I'm interested in seeing
-> fixed as the current behavior of how git-push matches refs on the
-> remote side is just plain nuts.  I'll look at it further after I
-> get ph/parseopt and cc/skip into next.
-
-I planned to draw a conclusion from the discussion in
-
-http://marc.info/?l=git&m=119286893014690&w=2
-
-and send an updated proposal based on what I learnt. But
-unfortunately I didn't have time yet.
-
-My impression now is that the details of the behaviour of "git
-push" are hard to understand and should be made more explicit.
-
-Related tasks are currently encoded in the refspecs, but the
-details are not always obvious right away:
-- creation of new branches on the remote side.
-- deletion of branches on the remote side.
-- pushing of branches matching on local and remote side.
-- pushing local branches explicitly to a different ref on the remote.
-- save newbies from pushing to 'non-standard' location, that
-   is only push to heads and tags.
-- but also allow to push to funny refs if you force git to
-   do this.
-
-All this is related to the topic above, although its maybe too much
-to be solved at once.
-
-	Steffen
+-- Hannes
