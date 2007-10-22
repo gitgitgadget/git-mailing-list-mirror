@@ -1,87 +1,68 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] use only the PATH for exec'ing git commands
-Date: Mon, 22 Oct 2007 21:01:02 +0200
-Message-ID: <20071022190102.GA23714@steel.home>
-References: <20071022170148.GB29642@srparish.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Dissociating a repository from its alternates
+Date: Mon, 22 Oct 2007 20:05:58 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710221957360.25221@racer.site>
+References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
+ <Pine.LNX.4.63.0702151638130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
+ <7v8xex50aa.fsf@assigned-by-dhcp.cox.net> <20071022180424.GA17429@ginosko.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Scott R Parish <srp@srparish.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 21:01:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Michael Hendricks <michael@ndrix.org>
+X-From: git-owner@vger.kernel.org Mon Oct 22 21:06:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik2Wn-0006To-P1
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 21:01:30 +0200
+	id 1Ik2bi-0008Jy-NF
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 21:06:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755238AbXJVTBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 15:01:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbXJVTBK
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 15:01:10 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:25967 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755347AbXJVTBJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 15:01:09 -0400
-Received: from tigra.home (Fab70.f.strato-dslnet.de [195.4.171.112])
-	by post.webmailer.de (klopstock mo51) (RZmta 13.6)
-	with ESMTP id a003f0j9MHKRn7 ; Mon, 22 Oct 2007 21:01:03 +0200 (MEST)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 8BA82277AE;
-	Mon, 22 Oct 2007 21:01:03 +0200 (CEST)
-Received: by steel.home (Postfix, from userid 1000)
-	id CCCDE56D22; Mon, 22 Oct 2007 21:01:02 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20071022170148.GB29642@srparish.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJKf+sU=
-X-RZG-CLASS-ID: mo07
+	id S1752521AbXJVTGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 15:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbXJVTGW
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 15:06:22 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41754 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751815AbXJVTGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 15:06:22 -0400
+Received: (qmail invoked by alias); 22 Oct 2007 19:06:20 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp047) with SMTP; 22 Oct 2007 21:06:20 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18nDosue3UnqtGigGONf5Yy67l9dZF191ajvBLOnz
+	GzvhBEyR+nYO//
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071022180424.GA17429@ginosko.local>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62036>
 
-Scott R Parish, Mon, Oct 22, 2007 19:01:48 +0200:
-> +static void add_path(struct strbuf *out, const char *path)
-> +{
-> +	if (path && strlen(path)) {
-> +		if (is_absolute_path(path))
-> +			strbuf_addstr(out, path);
-> +		else
-> +			strbuf_addstr(out, make_absolute_path(path));
-> +
-> +		strbuf_addch(out, ':');
+Hi,
 
-Shouldn't it break MingW32 native port?
+On Mon, 22 Oct 2007, Michael Hendricks wrote:
 
-> +	}
-> +}
-> +
-> +void setup_path(const char *cmd_path)
-> +{
-> +	const char *old_path = getenv("PATH");
-> +	struct strbuf new_path;
-> +
-> +	strbuf_init(&new_path, 0);
-> +
-> +	add_path(&new_path, argv_exec_path);
-> +	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
-> +	add_path(&new_path, builtin_exec_path);
-> +	add_path(&new_path, cmd_path);
-> +		
+> On Fri, Feb 16, 2007 at 12:13:01PM -0800, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > On Wed, 14 Feb 2007, Junio C Hamano wrote:
+> > >
+> > >> People often start out with "clone -l -s" (or --reference) and
+> > >> later wish to dissociate the repository from its alternates.
+> > >
+> > > Why not make a really dumb script which just _copies_ (or maybe 
+> > > optionally hard link) the objects from the alternate repo, and then kills 
+> > > the alternatives file? That should be easier. You always can repack after 
+> > > that.
+> > 
+> > I think that is much safer.
+> 
+> Was such a script ever incorporated into Git?
 
-trailing space
+Not that I know of, but "git repack -a && rm .git/objects/info/alternates" 
+should do what you want.  You can even make a script of it, add some 
+documentation and a test case, and earn git fame by posting a patch ;-)
 
-> +	if (old_path)
-> +		strbuf_addstr(&new_path, old_path);
-> +	else 
-> +		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
-
-the default PATH is platform-dependent. Git is multi-platform.
-You should consider putting the path list somewhere in Makefile,
-config.mak or configure.
-
-> +
-> +	setenv("PATH", new_path.buf, 1);
+Ciao,
+Dscho
