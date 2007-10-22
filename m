@@ -1,84 +1,71 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Git User's Survey 2007 unfinished summary continued
-Date: Mon, 22 Oct 2007 16:29:02 +0200
-Message-ID: <471CB3AE.7080802@op5.se>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>	 <Pine.LNX.4.64.0710130130380.25221@racer.site>	 <1192827476.4522.93.camel@cacharro.xalalinux.org>	 <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>	 <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>	 <Pine.LNX.4.64.0710210031130.25221@racer.site>	 <471AFD07.4040606@op5.se>	 <Pine.LNX.4.64.0710212308540.25221@racer.site>	 <471C586A.9030900@op5.se> <8fe92b430710220526i65ecb862ie1037e9d94d93b83@mail.gmail.com>
+From: Scott Parish <sRp@srparish.net>
+Subject: Re: [PATCH] don't set-group-id on directories on apple
+Date: Mon, 22 Oct 2007 07:29:45 -0700
+Message-ID: <20071022142945.GO16291@srparish.net>
+References: <20071022075459.GA1157@srparish.net> <Pine.LNX.4.64.0710221234070.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 22 16:29:55 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 22 16:30:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjyHr-0003lk-8E
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 16:29:47 +0200
+	id 1IjyI5-0003sT-NC
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 16:30:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbXJVO3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 10:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753184AbXJVO3J
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 10:29:09 -0400
-Received: from mail.op5.se ([193.201.96.20]:44491 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751961AbXJVO3I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 10:29:08 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id CFAB41730683;
-	Mon, 22 Oct 2007 16:29:06 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.473
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.473 tagged_above=-10 required=6.6
-	tests=[AWL=0.026, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mWbmTtsbgzfW; Mon, 22 Oct 2007 16:29:06 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 1878E17305A3;
-	Mon, 22 Oct 2007 16:29:04 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <8fe92b430710220526i65ecb862ie1037e9d94d93b83@mail.gmail.com>
+	id S1752291AbXJVO3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 10:29:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752038AbXJVO3t
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 10:29:49 -0400
+Received: from smtp-gw8.mailanyone.net ([208.70.128.73]:34692 "EHLO
+	smtp-gw8.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751840AbXJVO3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 10:29:48 -0400
+Received: from mailanyone.net
+	by smtp-gw8.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP srp)
+	id 1IjyHq-00066N-F8; Mon, 22 Oct 2007 09:29:47 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Mon, 22 Oct 2007 07:29:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710221234070.25221@racer.site>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62013>
 
-Jakub Narebski wrote:
-> On 10/22/07, Andreas Ericsson <ae@op5.se> wrote:
-> [...]
->>>>>> On 10/20/07, Steffen Prohaska <prohaska@zib.de> wrote:
->>>>>>
->>>>>>> Maybe we could group commands into more categories?
-> 
->> Similarly, it might be helpful to have help topics the gdb way, like
->> "git help patches". It's one of those things that people have come to
->> expect from a software tool, so perhaps we should humor them? Given gits
->> "every help topic is a man-page" idiom, this shouldn't require any real
->> technical effort.
->>
->> Such topics should probably include
->> merge/merges/merging - overview of various ways of putting two lines of
->> development back together
->> patch/patches - how to create, send and apply
->> tags/branches/refs - what they are, why they're good, link to merging
-> 
-> Very good idea. It is definitely something that can be worked on.
-> 
-> By the way, what do you think about "spying" version of git, specially
-> marked release which gathers statistics of porcelain used, with
-> frequency of its use, and git-sendstats command added in this release?
-> 
+On Mon, Oct 22, 2007 at 03:16:01PM +0100, Johannes Schindelin wrote:
 
-I like it and I'd use it. What's more interesting is that I could 
-probably get my co-workers to do the same.
+> On Mon, 22 Oct 2007, Scott R Parish wrote:
+> 
+> > "git init --shared=all" was failing because chmod was returning
+> > EPERM.
+> 
+> Not here.  This is git version 1.5.3.rc4.1716.gc3498, and "uname -a" says
+> 
+> Darwin michael-stirrats-mac-mini.local 8.10.0 Darwin Kernel Version 
+> 8.10.0: Wed May 23 16:50:59 PDT 2007; root:xnu-792.21.3~1/RELEASE_PPC 
+> Power Macintosh powerpc
+
+Darwin poplar.local 8.10.1 Darwin Kernel Version 8.10.1: Wed May 23 16:33:00 PDT 2007; root:xnu-792.22.5~1/RELEASE_I386 i386 i386
+
+> Is it possible that you have stricter permission settings?
+
+This is a possibility, but i have no idea what that might be. I've
+tried googling around without any luck (except for a post about
+reading "mkdir(2)").
+
+> Or that you try to re-initialise a repository that somebody else
+> initialised originally?
+
+No, this was a failure when running tests (t1301-shared-repo.sh)
+
+sRp
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Scott Parish
+http://srparish.net/
