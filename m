@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: .gittattributes handling has deficiencies
-Date: Mon, 22 Oct 2007 01:01:11 -0400
-Message-ID: <20071022050111.GL14735@spearce.org>
-References: <1192956535617-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710210204580.4818@asgard>
+Subject: Re: [PATCH] git-cherry-pick: improve description of -x.
+Date: Mon, 22 Oct 2007 01:14:53 -0400
+Message-ID: <20071022051453.GM14735@spearce.org>
+References: <20071019174134.GD9906@ins.uni-bonn.de> <20071019211152.GN3917@planck.djpig.de> <20071020031917.GR14735@spearce.org> <20071021093618.GC12794@ins.uni-bonn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-To: david@lang.hm
-X-From: git-owner@vger.kernel.org Mon Oct 22 07:01:30 2007
+Cc: Frank Lichtenheld <frank@lichtenheld.de>, git@vger.kernel.org
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Oct 22 07:15:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjpPs-0008UA-K4
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:01:29 +0200
+	id 1IjpdD-0002Gq-7A
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:15:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751355AbXJVFBQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 01:01:16 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751169AbXJVFBQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:01:16 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45224 "EHLO
+	id S1753617AbXJVFPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 01:15:01 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753819AbXJVFPA
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:15:00 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:45584 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751090AbXJVFBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 01:01:15 -0400
+	with ESMTP id S1751188AbXJVFO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 01:14:59 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IjpPd-0005ns-SX; Mon, 22 Oct 2007 01:01:13 -0400
+	id 1Ijpct-00073l-Vr; Mon, 22 Oct 2007 01:14:56 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id DF36B20FBAE; Mon, 22 Oct 2007 01:01:11 -0400 (EDT)
+	id 1553B20FBAE; Mon, 22 Oct 2007 01:14:53 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710210204580.4818@asgard>
+In-Reply-To: <20071021093618.GC12794@ins.uni-bonn.de>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,49 +40,41 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61933>
 
-david@lang.hm wrote:
-> On Sun, 21 Oct 2007, Steffen Prohaska wrote:
-> >If a .gitattributes is in the work tree and we checkout a
-> >different head, the .gitattributes of the head we are switching
-> >to must have precedence.
-> >
-> >Maybe the gitattributes of a file should be part of the per-file
-> >flags in the index. Thus we could verify if the flags changed and
-> >if so, adjust the work tree accordig to the new flags.  I'm
-> >lacking a deeper insight into the git internals.  Therefore, I
-> >can't really say if the index is the right place.  But it looks
-> >to me as if changing an attribute should be treated similar to a
-> >changing sha1, as far as the work tree is concerned.
+Ralf Wildenhues <Ralf.Wildenhues@gmx.de> wrote:
+> * Shawn O. Pearce wrote on Sat, Oct 20, 2007 at 05:19:17AM CEST:
+> > Frank Lichtenheld <frank@lichtenheld.de> wrote:
+> > > On Fri, Oct 19, 2007 at 07:41:34PM +0200, Ralf Wildenhues wrote:
+> > > > 
+> > > > Is that by design (because there were conflicts) or an omission?
+> > > > In case of the former, maybe the description of -x should mention this.
+> > > 
+> > > git commit currently doesn't know that you commit a cherry-pick. The -c
+> > > only says to use the commit message of the original commit. So this is
+> > > currently by design.
+> > 
+> > Ralf, can you submit an updated version of this patch that describes
+> > the current behavior better, given the "by design" remark above
+> > from Frank?
 > 
-> the problem with this is that each attribute ends up needing it's own 
-> flag, which severely limits extending things (see the discussions on file 
-> permissions for examples). it's also much harder to manipulate them then 
-> in a file.
+> Here it goes.  Still makes me wonder whether that is the ideal mode of
+> operation or not.
 
-Yea, you really don't want to copy .gitattributes into the per-file
-records in the index.  That's not going to scale as more types of
-attributes are defined.
+Thanks.
 
-Fortunately the .gitattributes file format was designed to be
-readable even when there's merge conflicts; that is it is a
-very simple line-oriented record format.  One could difference
-the old .gitattributes currently found in the index against the
-.gitattributes we are switching to (from the target tree-ish),
-scan the lines removed/added, find which files those match against
-in the target tree-ish, and just add those files to the list of
-things we need to checkout.
+I think you are right that the current behavior of -x *not*
+including the prior commit SHA-1 in the case of a conflict is wrong.
+The problem however is that git-commit.sh doesn't get the data
+necessary to preseve the original author name/email/date/tz unless
+you use the "-c $id" option.  There's some work here to store the
+necessary information into a file that git-commit.sh could pickup,
+and then making sure stale versions of those files get cleaned up
+properly, etc.
 
-If any of those files is dirty then we just refuse the checkout,
-just as if the file was modified and we were switching branches.
-The user then needs to decide how to continue (probably stash the
-file and then restart the checkout).
-
-Rather simple IMHO.  Of course I haven't gone into that part of
-read-tree recently, and the .gitattribute parser reads from the
-working directory, so you need to make sure you checkout the target
-.gitattributes file before anything else in the "to process list".
-
+At least the current behavior is now documented.  Maybe someone
+will be bothered enough by it to try and submit a patch that changes
+the behavior.
+ 
 -- 
 Shawn.
