@@ -1,72 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] execv_git_cmd(): also try PATH if everything else fails.
-Date: Mon, 22 Oct 2007 11:35:48 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710221135100.25221@racer.site>
-References: <1192867937.v2.fusewebmail-240137@f> <20071020205721.GA16291@srparish.net>
- <Pine.LNX.4.64.0710202258440.25221@racer.site> <20071021023614.GB14735@spearce.org>
- <Pine.LNX.4.64.0710212256270.25221@racer.site> <20071022042110.GJ14735@spearce.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [PATCH] Let users override name of per-directory ignore file
+Date: Mon, 22 Oct 2007 12:50:29 +0200
+Message-ID: <20071022105029.GB31862@diana.vm.bytemark.co.uk>
+References: <20071021144542.8855A5BB85@nox.op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Scott Parish <sRp@srparish.net>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 12:36:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, spearce@spearce.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Oct 22 12:51:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ijudz-0008Ie-5y
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 12:36:23 +0200
+	id 1IjusH-0003wx-Bp
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 12:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520AbXJVKgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 06:36:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751481AbXJVKgM
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 06:36:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47857 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751120AbXJVKgL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 06:36:11 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 10:36:09 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp048) with SMTP; 22 Oct 2007 12:36:09 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX187e1Z5jPY7b2/g5AhRFkEEb8822TY/Kw7QynW/Bs
-	bJmdba/NiMSil4
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071022042110.GJ14735@spearce.org>
-X-Y-GMX-Trusted: 0
+	id S1751362AbXJVKu4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Oct 2007 06:50:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751482AbXJVKu4
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 06:50:56 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3607 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750937AbXJVKuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 06:50:55 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1Ijure-0008OW-00; Mon, 22 Oct 2007 11:50:30 +0100
+Content-Disposition: inline
+In-Reply-To: <20071021144542.8855A5BB85@nox.op5.se>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61984>
 
-Hi,
+On 2007-10-15 14:09:32 +0200, Andreas Ericsson wrote:
 
-On Mon, 22 Oct 2007, Shawn O. Pearce wrote:
+> When collaborating with projects managed by some other scm, it often
+> makes sense to have git read that other scm's ignore-files. This
+> patch lets git do just that, if the user only tells it the name of
+> the per-directory ignore file by specifying the newly introduced git
+> config option 'core.ignorefile'.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Earlier, we tried to find the git commands in several possible exec
-> > dirs.  Now, if all of these failed, try to find the git command in
-> > PATH.
-> ...
-> > diff --git a/exec_cmd.c b/exec_cmd.c
-> > index 9b74ed2..70b84b0 100644
-> > --- a/exec_cmd.c
-> > +++ b/exec_cmd.c
-> > @@ -36,7 +36,8 @@ int execv_git_cmd(const char **argv)
-> >  	int i;
-> >  	const char *paths[] = { current_exec_path,
-> >  				getenv(EXEC_PATH_ENVIRONMENT),
-> > -				builtin_exec_path };
-> > +				builtin_exec_path,
-> > +				"" };
-> 
-> So if the user sets GIT_EXEC_PATH="" and exports it we'll search $PATH 
-> before the builtin exec path that Git was compiled with? Are we sure we 
-> want to do that?
+> +	For example, setting core.ignorefile to .svnignore in
+> +	repos where one interacts with the upstream project repo
+> +	using gitlink:git-svn[1] will make a both SVN users and
+> +	your own repo ignore the same files.
 
-I thought the proper way to unset EXEC_PATH was to "unset GIT_EXEC_PATH".  
-In that case, getenv(EXEC_PATH_ENVIRONMENT) returns NULL and we're fine, 
-no?
+> +   The name of the `.gitignore` file can be changed by setting
+> +   the configuration variable 'core.ignorefile'. This is useful
+> +   when using git for projects where upstream is using some other
+> +   SCM. For example, setting 'core.ignorefile' to `.cvsignore`
+> +   will make git ignore the same files CVS would.
 
-Ciao,
-Dscho
+I agree with what you're trying to do, but you're ignoring the fact
+that Subversion's ignore patterns (and possibly cvs's too -- I haven't
+checked) are not recursive, while the patterns in .gitignore are
+recursive per default. So using ignore patterns directly from
+Subversion ignores more files under git than the same patterns did
+under Subversion.
+
+One possible way to solve that would be to optionally have
+non-recursive per-directory ignore files. I haven't looked at how this
+is implemented, though, so I don't know if it's a good suggestion or
+not.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
