@@ -1,82 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Tue, 23 Oct 2007 00:21:03 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710230017120.25221@racer.site>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
- <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
-  <4719B655.90204@op5.se>  <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de> 
- <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com> 
- <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se> 
- <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se> 
- <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se> 
- <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se> 
- <Pine.LNX.4.64.0710221558230.25221@racer.site>  <471CBEB1.2030008@op5.se>
- <1193081785.4522.181.camel@cacharro.xalalinux.org>
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: Git User's Survey 2007 unfinished summary continued
+Date: Tue, 23 Oct 2007 01:27:07 +0200
+Message-ID: <8fe92b430710221627p6d8a28a3oa0d6f747d99af0b6@mail.gmail.com>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	 <1192827476.4522.93.camel@cacharro.xalalinux.org>
+	 <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
+	 <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+	 <Pine.LNX.4.64.0710210031130.25221@racer.site>
+	 <471AFD07.4040606@op5.se>
+	 <Pine.LNX.4.64.0710212308540.25221@racer.site>
+	 <471C586A.9030900@op5.se>
+	 <1193064780.4522.142.camel@cacharro.xalalinux.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Federico Mena Quintero <federico@novell.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 01:21:43 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Andreas Ericsson" <ae@op5.se>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: "Federico Mena Quintero" <federico@novell.com>
+X-From: git-owner@vger.kernel.org Tue Oct 23 01:27:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik6ab-0000ly-UP
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 01:21:42 +0200
+	id 1Ik6gM-0002ID-7t
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 01:27:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612AbXJVXV3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 19:21:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751475AbXJVXV3
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 19:21:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:34271 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751394AbXJVXV2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 19:21:28 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 23:21:26 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp046) with SMTP; 23 Oct 2007 01:21:26 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/cn1JXTRPcB5Gqb3hiRne4B9/YQAYXeOMW6NtlXJ
-	hWcQk93Y7B8voE
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1193081785.4522.181.camel@cacharro.xalalinux.org>
-X-Y-GMX-Trusted: 0
+	id S1751799AbXJVX1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 19:27:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751781AbXJVX1L
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 19:27:11 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:11753 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757AbXJVX1J (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 19:27:09 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1334824rvb
+        for <git@vger.kernel.org>; Mon, 22 Oct 2007 16:27:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+vuQi2w1MLOD/RLhFyhwnjo7un6ishfH6j09YnIqV9k=;
+        b=iFl8HkLFl/mY4yIWyfq9oD6Xk9lZIYmTLPo6+tQnnRM96RbVFwAU1pfhWwlv1aNqfZRe8m4cv+n3bUe3mJTQi7nEXAB8FRODnmZ2y6NGXSOkmxwlBXNeDnWj/oTEHctmAoI/ujNfjrLxdAOoTQKsxqW+U5odtfiC6EMhP3TEPD0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bZbn/sN/A16NU3tAnogb6Ngy3dFIG3sWE0/acKPLJOZ4YUluWZA8VOHoE6B+pLBBvADbAxzogy+g8On8oBD83A5ajP2jGc5sBcs/Vq6C0fAAyMbYTfp72VFAlIhBmCLvTCaAuaysHpIlxPDl75HCsGuha4efoLEh9qLWGFt85oI=
+Received: by 10.114.169.2 with SMTP id r2mr1884212wae.1193095627250;
+        Mon, 22 Oct 2007 16:27:07 -0700 (PDT)
+Received: by 10.114.160.12 with HTTP; Mon, 22 Oct 2007 16:27:07 -0700 (PDT)
+In-Reply-To: <1193064780.4522.142.camel@cacharro.xalalinux.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62056>
 
-Hi,
+On 10/22/07, Federico Mena Quintero <federico@novell.com> wrote:
+> On Mon, 2007-10-22 at 09:59 +0200, Andreas Ericsson wrote:
+>
+>> I doubt many people on this list regularly use git-blame but it's a
+>> command that's definitely non-trivial to script out using only the
+>> "proper" commands, and CVS/SVN users expect it to be there, so it's
+>> probably worth listing anyhow.
 
-On Mon, 22 Oct 2007, Federico Mena Quintero wrote:
+> Personally I find git-blame *EXTREMELY* useful.  The workflow is:
 
-> On Mon, 2007-10-22 at 17:16 +0200, Andreas Ericsson wrote:
-> 
-> > To me, it's more along the lines of "let git help me not make the 
-> > mistake of hacking on a six-week old codebase when I've explicitly asked 
-> > it to merge these and those remote tracking branches into these and 
-> > those local branches". Not updating those branches when there *are* 
-> > changes on them is something users can understand and will probably also 
-> > appreciate, but the reason for not allowing even fast-forwards escape me.
-> 
-> I'd love this behavior, FWIW.
-> 
-> The "branches should not track their origin by default" seems suited
-> only to Linux kernel maintainers who frequently pull from many different
-> people, not to "random hacker who wants to keep track of a project he
-> doesn't maintain" :)
+> 5. "WTF?  Who wrote this crappy code?"
+>
+> 6. git blame culprit-file.c
+>
+> 7. "Oh, it was $person with $commit_id... what were they thinking at the
+> time?"
+>
+> 8. git show $commit_id
 
-The problem I see here is not that the kernel folks would suffer, but that 
-the behaviour would not be easy to explain.  Which is a sure way to not 
-only give people rope, but put their heads in the noose.
+You don't need blame for that (by the way, as git-blame is slow, you
+can try -L option to limit range of lines; it is a pity that 'git gui
+blame' does not support it yet). You can use 'pickaxe search', i.e.
+"git log -S'<crappy code>'". Sometimes it is better than git-blame...
 
-Not having clear semantics is prone to lead to misunderstandings, and 
-mistakes.
-
-IOW while I trust you when you say it would make things easier for you, I 
-am quite certain it would make things much harder for a substantial part 
-of the rest of humanity.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
