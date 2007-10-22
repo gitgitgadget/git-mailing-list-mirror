@@ -1,81 +1,87 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Mon, 22 Oct 2007 14:06:00 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710221305230.32497@iabervon.org>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> 
- <Pine.LNX.4.64.0710130130380.25221@racer.site>  <1192827476.4522.93.camel@cacharro.xalalinux.org>
-  <4719B655.90204@op5.se> <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
- <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
- <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se>
- <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se>
- <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se>
- <Pine.LNX.4.64.0710221445170.25221@racer.site>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] use only the PATH for exec'ing git commands
+Date: Mon, 22 Oct 2007 21:01:02 +0200
+Message-ID: <20071022190102.GA23714@steel.home>
+References: <20071022170148.GB29642@srparish.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, Jakub Narebski <jnareb@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 22 20:06:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott R Parish <srp@srparish.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 21:01:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik1fL-0002El-QQ
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 20:06:16 +0200
+	id 1Ik2Wn-0006To-P1
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 21:01:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752008AbXJVSGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 14:06:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbXJVSGD
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 14:06:03 -0400
-Received: from iabervon.org ([66.92.72.58]:45666 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751460AbXJVSGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 14:06:01 -0400
-Received: (qmail 14134 invoked by uid 1000); 22 Oct 2007 18:06:00 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 22 Oct 2007 18:06:00 -0000
-In-Reply-To: <Pine.LNX.4.64.0710221445170.25221@racer.site>
+	id S1755238AbXJVTBM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 15:01:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752675AbXJVTBK
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 15:01:10 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:25967 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755347AbXJVTBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 15:01:09 -0400
+Received: from tigra.home (Fab70.f.strato-dslnet.de [195.4.171.112])
+	by post.webmailer.de (klopstock mo51) (RZmta 13.6)
+	with ESMTP id a003f0j9MHKRn7 ; Mon, 22 Oct 2007 21:01:03 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 8BA82277AE;
+	Mon, 22 Oct 2007 21:01:03 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id CCCDE56D22; Mon, 22 Oct 2007 21:01:02 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20071022170148.GB29642@srparish.net>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzwpJKf+sU=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62035>
 
-On Mon, 22 Oct 2007, Johannes Schindelin wrote:
+Scott R Parish, Mon, Oct 22, 2007 19:01:48 +0200:
+> +static void add_path(struct strbuf *out, const char *path)
+> +{
+> +	if (path && strlen(path)) {
+> +		if (is_absolute_path(path))
+> +			strbuf_addstr(out, path);
+> +		else
+> +			strbuf_addstr(out, make_absolute_path(path));
+> +
+> +		strbuf_addch(out, ':');
 
-> Hi,
-> 
-> On Mon, 22 Oct 2007, Andreas Ericsson wrote:
-> 
-> > If I were to suggest any improvements, it'd be to change the semantics of
-> > git-pull to always update the local branches set up to be merged with the
-> > remote tracking branches when they, prior to fetching, pointed to the same
-> > commit, such that when
-> > 
-> > $ git show-ref master
-> > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
-> > d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
-> > 
-> > refs/heads/master gets set to refs/remotes/origin/master post-fetch.
-> 
-> In general, this should fail.  Because you are expected to have local 
-> changes in the local branches.  What you describe suggests that you should 
-> not use the branch name "master" at all, but "origin/master".
+Shouldn't it break MingW32 native port?
 
-If you push your changes to the origin soon after making them, you'll only 
-have local changes if somebody else changed something while you were 
-working on a change. You're expected to create local changes in the local 
-branches, but you shouldn't generally sit on them forever, and when you've 
-pushed them, you no longer have any difference in content between local 
-and remote.
+> +	}
+> +}
+> +
+> +void setup_path(const char *cmd_path)
+> +{
+> +	const char *old_path = getenv("PATH");
+> +	struct strbuf new_path;
+> +
+> +	strbuf_init(&new_path, 0);
+> +
+> +	add_path(&new_path, argv_exec_path);
+> +	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
+> +	add_path(&new_path, builtin_exec_path);
+> +	add_path(&new_path, cmd_path);
+> +		
 
-If the project has multiple branches in the central repository, and you 
-make changes for each of them at different times, but only one each day, 
-the normal case will be to have local changes sitting in at most one of 
-the branches, and, in particular, no local changes left in any branch 
-other than HEAD.
+trailing space
 
-	-Daniel
-*This .sig left intentionally blank*
+> +	if (old_path)
+> +		strbuf_addstr(&new_path, old_path);
+> +	else 
+> +		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
+
+the default PATH is platform-dependent. Git is multi-platform.
+You should consider putting the path list somewhere in Makefile,
+config.mak or configure.
+
+> +
+> +	setenv("PATH", new_path.buf, 1);
