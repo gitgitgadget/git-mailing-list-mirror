@@ -1,67 +1,132 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git filter-branch --subdirectory-filter error
-Date: Mon, 22 Oct 2007 12:20:05 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710221218150.25221@racer.site>
-References: <200710221227.13279.wielemak@science.uva.nl>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Add some fancy colors in the test library when terminal  supports it.
+Date: Mon, 22 Oct 2007 13:24:01 +0200
+Message-ID: <20071022112401.GE32763@artemis.corp>
+References: <20071022081341.GC32763@artemis.corp> <471C6510.8010300@viscovery.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jan Wielemaker <wielemak@science.uva.nl>
-X-From: git-owner@vger.kernel.org Mon Oct 22 13:20:41 2007
+Content-Type: multipart/signed; boundary="E13BgyNx05feLLmH";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Oct 22 13:24:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjvKo-0004Wt-Tg
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 13:20:39 +0200
+	id 1IjvON-0005kw-8o
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 13:24:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751834AbXJVLU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 07:20:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751888AbXJVLU2
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 07:20:28 -0400
-Received: from mail.gmx.net ([213.165.64.20]:47353 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751721AbXJVLU1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 07:20:27 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 11:20:25 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 22 Oct 2007 13:20:25 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/BgyIQbMzBh+1jcydrFkM/BPIKiDZGXs4h6dqzgB
-	F+rPyh5hUvHnzP
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710221227.13279.wielemak@science.uva.nl>
-X-Y-GMX-Trusted: 0
+	id S1751980AbXJVLYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 07:24:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751963AbXJVLYG
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 07:24:06 -0400
+Received: from pan.madism.org ([88.191.52.104]:57922 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751939AbXJVLYF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 07:24:05 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id D25E926165;
+	Mon, 22 Oct 2007 13:24:02 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id 168CF3CC233; Mon, 22 Oct 2007 13:24:02 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <471C6510.8010300@viscovery.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61990>
 
-Hi,
 
-On Mon, 22 Oct 2007, Jan Wielemaker wrote:
+--E13BgyNx05feLLmH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> Finished a big re-shuffle of a big project, while other developers 
-> continued. Worked really well. Thanks guys! But now I have two top 
-> directories and I want to create two new repositories, each containing 
-> one of these directories (because the one holds copyrighted data and we 
-> want the other to become public software). So, I happily run
-> 
-> 	$ git filter-branch --subdirectory-filter RDF HEAD
-> 
-> Where RDF is an existing directory.  I get:
-> 
-> Rewrite 95807fe01c39d3092e3ac3a98061711323154d77 (1/12)fatal: Not a valid 
-> object name 95807fe01c39d3092e3ac3a98061711323154d77:RDF
-> Could not initialize the index
+On Mon, Oct 22, 2007 at 08:53:36AM +0000, Johannes Sixt wrote:
+> Pierre Habouzit schrieb:
+> >Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> >---
+> >Maybe this is just me, but I don't find the output of the test-suite
+> >easy to watch while scrolling. This puts some colors in proper places.
+> >  * end-test summaries are in green or red depending on the sucess of
+> >    the tests.
+> >  * errors are in red.
+> >  * skipped tests and other things that tests `say` are in brown (now
+> >    you can _see_ that your testsuite skips some tests on purpose, I
+> >    only noticed recently that I missed part of the environment for
+> >    proper testing).
+> >I'm not 100% sure the test to see if terminal supports color is correct,=
+=20
+> >and
+> >people using emacs shell buffer or alike tools may have better ideas on=
+=20
+> >how to
+> >make it.
+> >and yes, I know that it "depends" upon tput, but if tput isn't=20
+> >available, the
+> >    [ "x$TERM" !=3D "xdumb" ] && tput hpa 60 >/dev/null 2>&1 && tput set=
+af=20
+> >1 >/dev/null 2>&1
+> >expression will fail, and color will be disabled.
+> > t/test-lib.sh |   32 ++++++++++++++++++++++----------
+> > 1 files changed, 22 insertions(+), 10 deletions(-)
+> >diff --git a/t/test-lib.sh b/t/test-lib.sh
+> >index cc1253c..c6521c0 100644
+> >--- a/t/test-lib.sh
+> >+++ b/t/test-lib.sh
+> >@@ -59,14 +59,24 @@ esac
+> > # '
+> > # . ./test-lib.sh
+> > +[ "x$TERM" !=3D "xdumb" ] && tput hpa 60 >/dev/null 2>&1 && tput setaf=
+ 1=20
+> >>/dev/null 2>&1
+> >+nocolor=3D$?
+>=20
+> test "x$TERM" !=3D "xdumb" &&
+> 	tput hpa 60 >/dev/null 2>&1 &&
+> 	tput setaf 1 >/dev/null 2>&1 &&
+> 	color=3Dt
+>=20
+> BTW, doesn't tput fail if stdout/stderr is not a terminal, like above?
+>=20
+> >+
+> >+say_color () {
+> >+	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
+> >+	shift
+> >+	echo "* $*"
+> >+	tput op
+> >+}
+>=20
+> What if tput is not available, like on Windows? How about this (at the=20
+> end of the file, so it can obey --no-color):
 
-I guess that 95807fe01 is the parent of a commit adding the RDF/ 
-directory.
+  I answered to it already in my first mail: if tput isn't available,
+the command fails, and $? is non 0. and nocolor is set. Or color isn't
+set to 't' for your proposal.
 
-The subdirectory filter does not look kindly upon a history where some 
-commits lack the subdirectory in question.  However, this should work:
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-	git filter-branch --subdirectory--filter RDF 95807fe01..HEAD
+--E13BgyNx05feLLmH
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Hth,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHHIhRvGr7W6HudhwRApoEAJ0ZoxwYppdYzLNkMxMt4kvZqjq/3wCaAvoM
+BD2Rt/V8Hux192Xxh4yg2tE=
+=rGnJ
+-----END PGP SIGNATURE-----
+
+--E13BgyNx05feLLmH--
