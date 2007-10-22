@@ -1,76 +1,104 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] use only the PATH for exec'ing git commands
-Date: Tue, 23 Oct 2007 00:34:27 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710230026380.25221@racer.site>
-References: <1193091122.v2.fusewebmail-240137@f> <20071022224015.GG23714@steel.home>
+From: "Jakub Narebski" <jnareb@gmail.com>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
+Date: Tue, 23 Oct 2007 01:35:41 +0200
+Message-ID: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
+References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com>
+	 <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com>
+	 <Pine.LNX.4.64.0710210031130.25221@racer.site>
+	 <471AFD07.4040606@op5.se>
+	 <Pine.LNX.4.64.0710212308540.25221@racer.site>
+	 <471C586A.9030900@op5.se>
+	 <Pine.LNX.4.64.0710221156540.25221@racer.site>
+	 <471C9B13.9080603@op5.se>
+	 <Pine.LNX.4.64.0710221445170.25221@racer.site>
+	 <471CB443.9070606@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Scott R Parish <srp@srparish.net>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 01:35:05 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Steffen Prohaska" <prohaska@zib.de>,
+	"Federico Mena Quintero" <federico@novell.com>, git@vger.kernel.org
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Oct 23 01:36:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik6nZ-0004Gn-2u
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 01:35:05 +0200
+	id 1Ik6ok-0004Zu-KX
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 01:36:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751115AbXJVXex (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 19:34:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751374AbXJVXex
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 19:34:53 -0400
-Received: from mail.gmx.net ([213.165.64.20]:40924 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751003AbXJVXex (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 19:34:53 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 23:34:51 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 23 Oct 2007 01:34:51 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18+36cgdng+EwqVM9WNQoiew3qObEnJ6ysLRnUBMy
-	eJdTMx7aBQt5Xb
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071022224015.GG23714@steel.home>
-X-Y-GMX-Trusted: 0
+	id S1751848AbXJVXfo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 19:35:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751604AbXJVXfo
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 19:35:44 -0400
+Received: from nz-out-0506.google.com ([64.233.162.234]:10261 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752850AbXJVXfn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 19:35:43 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so591705nze
+        for <git@vger.kernel.org>; Mon, 22 Oct 2007 16:35:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Lix2YXEVrl5qAMiGznlI7HWYVRvK00NtOpDKse0uoy0=;
+        b=Z6OGFBWiyatrdO2d78HRiev5Sa3yCF5uIq0VU1+sIUQgZfV3tRQI/asgay1NOymubmeu5+OL5myOV5PXgp082JbqJOsQB+JRVe5nle3ge3kPlvEG932PWmfeVona3CUzvZJfGgdeAs39seDCimr5AixmSvgqMihEDpMz6PNfU6U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=WzXBEdE7t3h9kB+kgHnmhN+1WQ9dGm1pp4fK5C8pKUh+8H4Vr0nIog7n5J+EirngLG+Xqg2R4xc/9OT7LlVEQxBcwkOzdMfYuqFh6tTQ+TOsblXXxIYyGwRdZTcXlAAofWQe1f0SXHzdNNw6vYf7F/oHmHMfflmcwm3YytlZuH4=
+Received: by 10.114.160.1 with SMTP id i1mr6120603wae.1193096141917;
+        Mon, 22 Oct 2007 16:35:41 -0700 (PDT)
+Received: by 10.114.160.12 with HTTP; Mon, 22 Oct 2007 16:35:41 -0700 (PDT)
+In-Reply-To: <471CB443.9070606@op5.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62058>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62059>
 
-Hi,
+On 10/22/07, Andreas Ericsson <ae@op5.se> wrote:
+> Johannes Schindelin wrote:
+>> On Mon, 22 Oct 2007, Andreas Ericsson wrote:
+>>
+>>> If I were to suggest any improvements, it'd be to change the semantics of
+>>> git-pull to always update the local branches set up to be merged with the
+>>> remote tracking branches when they, prior to fetching, pointed to the same
+>>> commit, such that when
+>>>
+>>> $ git show-ref master
+>>> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
+>>> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
+>>>
+>>> refs/heads/master gets set to refs/remotes/origin/master post-fetch.
+>>
+>> In general, this should fail.  Because you are expected to have local
+>> changes in the local branches.
+>
+>
+> BS argument. Git knows when I haven't got any changes on my local
+> branches, and it can be fairly safely assumed that when I feel like
+> making any, I'd like to make them off as fresh a tip as possible unless
+> I explicitly tell git otherwise.
+[cut]
 
-On Tue, 23 Oct 2007, Alex Riesen wrote:
+It would be I think possible to make git behave as you want, although I'd rather
+(at least at first) have behaviour described above turned on by some option
+or config variable. I guess that it would be not that hard to make script to do
+what you ant (and probably it would be best if you tried your idea that way).
 
-> Scott R Parish, Tue, Oct 23, 2007 00:12:02 +0200:
-> > > Alex Riesen, Mon, Oct 22, 2007 12:01
-> > > Scott R Parish, Mon, Oct 22, 2007 19:01:48 +0200:
-> > > > +                strbuf_addch(out, ':');
-> > >
-> > > Shouldn't it break MingW32 native port?
-> > 
-> > What can i do here to better accommodate MingW32? You're right, just 
-> > because the original code did it this way isn't a good excuse for me 
-> > not to do it better.
-> 
-> someone here mentioned "higher abstractions".
+There are the following caveats.
+1. For each local branch that is to be updated on pull, this branch
+must be marked as tracking some branch of some repository. This has to
+be explicitely done; for example by creating those branches using
+--track option.
+2. Git can do a merge with conflicts _only_ if that branch is checked
+out. So for all local branches which you want to get updated using
+"git pull --update-all <repo>" (or something like that), the merge
+with remote branch should be either fast-forward, trivial merge, or
+merge without conflicts. "git pull --update-all <repo>" would return
+then list of updated branches and list of branches which cannot be
+updated.
 
-That someone may well have mentioned that term, but what he meant was 
-special case those code paths which have to be treated differently for 
-Windows, and Windows alone.
-
-(Yeah, I know, a response to that was that Nokia phones have drive 
-letters, too, but that was an invalid objection to that particular 
-statement, since Nokia phones expect the full path at any time, so I did 
-not even bother answering to that mail.  Well, in a way, I guess I just 
-did.)
-
-All this boils down to adding code dedicated to Windows.  And I am a huge 
-fan of the principle that you should cross bridges when you get to them, 
-and not before (i.e. avoid over-engineering).
-
-So my vote is: get it in as-is, us msysGit lot will cope with it in one 
-way or another.  (We already have at least one other place where ":" is 
-used, which we have to cope with, in shell.c:do_cvs_command().)
-
-Ciao,
-Dscho
+So... are you going to try to implement that?
+-- 
+Jakub Narebski
