@@ -1,68 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Dissociating a repository from its alternates
-Date: Mon, 22 Oct 2007 20:05:58 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710221957360.25221@racer.site>
-References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702151638130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xex50aa.fsf@assigned-by-dhcp.cox.net> <20071022180424.GA17429@ginosko.local>
+From: "Eric Merritt" <cyberlync@gmail.com>
+Subject: Re: [PATCH] use only the PATH for exec'ing git commands
+Date: Mon, 22 Oct 2007 12:25:21 -0700
+Message-ID: <f69c840c0710221225u5df73cf9x7f95ea3bd530c160@mail.gmail.com>
+References: <20071022170148.GB29642@srparish.net>
+	 <20071022190102.GA23714@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Michael Hendricks <michael@ndrix.org>
-X-From: git-owner@vger.kernel.org Mon Oct 22 21:06:38 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Scott R Parish" <srp@srparish.net>, git@vger.kernel.org
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 22 21:25:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik2bi-0008Jy-NF
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 21:06:35 +0200
+	id 1Ik2u7-0006kI-KL
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 21:25:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521AbXJVTGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 15:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752206AbXJVTGW
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 15:06:22 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41754 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751815AbXJVTGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 15:06:22 -0400
-Received: (qmail invoked by alias); 22 Oct 2007 19:06:20 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp047) with SMTP; 22 Oct 2007 21:06:20 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18nDosue3UnqtGigGONf5Yy67l9dZF191ajvBLOnz
-	GzvhBEyR+nYO//
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071022180424.GA17429@ginosko.local>
-X-Y-GMX-Trusted: 0
+	id S1752407AbXJVTZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 15:25:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752580AbXJVTZX
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 15:25:23 -0400
+Received: from nz-out-0506.google.com ([64.233.162.229]:58420 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752376AbXJVTZX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 15:25:23 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so526983nze
+        for <git@vger.kernel.org>; Mon, 22 Oct 2007 12:25:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4QilpJblzsOsuZi9/y8BTE7aTecP+V+9Hg0PUXcLZs0=;
+        b=mYIaMvKbcJiMY5oc7dXeSutqz6D0VzZKcyiRukHx32rNHEF5jEU5zIsvqYozZi2iWG0pfanRMZC5yZGUTu5/kJ47Snm8Pe0DsMSBYI5Ya2Q81zKCDhgSDdQPXyJAAW2V+OfycXW6g9ouOcjN0vXHk90bmv69wD9qmrhnxIa1ies=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=oWVYyqEkZne/gfD3XWtm8cl98KuK2iQsA019+97NzxJ80c31z2Y/wfn40FpFOW5Po/7GOMSY9bcaKi0P5F3nZAr8v3iMNM7BTYLU1hvM5frhe7mxI2c73+pHMuNg4dysoJxPOSOl5f6nQTAyXRcqLppLXCFStodONnLkKz5ABEM=
+Received: by 10.114.153.18 with SMTP id a18mr2516887wae.1193081121127;
+        Mon, 22 Oct 2007 12:25:21 -0700 (PDT)
+Received: by 10.114.166.20 with HTTP; Mon, 22 Oct 2007 12:25:21 -0700 (PDT)
+In-Reply-To: <20071022190102.GA23714@steel.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62037>
 
-Hi,
+> the default PATH is platform-dependent. Git is multi-platform.
+> You should consider putting the path list somewhere in Makefile,
+> config.mak or configure.
 
-On Mon, 22 Oct 2007, Michael Hendricks wrote:
-
-> On Fri, Feb 16, 2007 at 12:13:01PM -0800, Junio C Hamano wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > 
-> > > On Wed, 14 Feb 2007, Junio C Hamano wrote:
-> > >
-> > >> People often start out with "clone -l -s" (or --reference) and
-> > >> later wish to dissociate the repository from its alternates.
-> > >
-> > > Why not make a really dumb script which just _copies_ (or maybe 
-> > > optionally hard link) the objects from the alternate repo, and then kills 
-> > > the alternatives file? That should be easier. You always can repack after 
-> > > that.
-> > 
-> > I think that is much safer.
-> 
-> Was such a script ever incorporated into Git?
-
-Not that I know of, but "git repack -a && rm .git/objects/info/alternates" 
-should do what you want.  You can even make a script of it, add some 
-documentation and a test case, and earn git fame by posting a patch ;-)
-
-Ciao,
-Dscho
+This static configuration that you describe is one of the things this
+patch is designed to strip out. Compile time configuration breaks down
+completly if you don't deploy to the path defined when the system was
+compiled. Thats a problem.
