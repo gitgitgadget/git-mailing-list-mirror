@@ -1,88 +1,58 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] "git help -a" should search all exec_paths and PATH
-Date: Mon, 22 Oct 2007 01:30:17 -0400
-Message-ID: <20071022053016.GN14735@spearce.org>
-References: <20071021214846.GI16291@srparish.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: .gittattributes handling has deficiencies
+Date: Mon, 22 Oct 2007 07:38:28 +0200
+Message-ID: <2C5D2967-A89F-4056-AD2A-0644B952C38F@zib.de>
+References: <1192956535617-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710210204580.4818@asgard> <B61AE1A9-E983-4ACE-BF71-8FDC113A4F34@zib.de> <Pine.LNX.4.64.0710211007430.4818@asgard> <1A07FEE6-88D8-4ED7-BEFD-F7F3B71310A5@zib.de> <Pine.LNX.4.64.0710211056580.4818@asgard> <C7F59DFB-D4E4-4F75-88F7-F1A90C7D41E8@zib.de> <Pine.LNX.4.64.0710211645210.12998@asgard.lang.hm> <Pine.LNX.4.64.0710211703060.12998@asgard.lang.hm>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Scott R Parish <srp@srparish.net>
-X-From: git-owner@vger.kernel.org Mon Oct 22 07:30:59 2007
+To: david@lang.hm
+X-From: git-owner@vger.kernel.org Mon Oct 22 07:37:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IjpsN-0005QA-Oj
-	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:30:56 +0200
+	id 1Ijpyv-0006pk-4R
+	for gcvg-git-2@gmane.org; Mon, 22 Oct 2007 07:37:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169AbXJVFaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 01:30:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751892AbXJVFaX
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:30:23 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:46026 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751162AbXJVFaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 01:30:21 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Ijprn-0007sq-Ma; Mon, 22 Oct 2007 01:30:19 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id AC5F120FB09; Mon, 22 Oct 2007 01:30:17 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071021214846.GI16291@srparish.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751179AbXJVFhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 01:37:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750709AbXJVFhF
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 01:37:05 -0400
+Received: from mailer.zib.de ([130.73.108.11]:42393 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750908AbXJVFhD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 01:37:03 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9M5b01E009395;
+	Mon, 22 Oct 2007 07:37:00 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db11d6f.pool.einsundeins.de [77.177.29.111])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9M5axKx026250
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 22 Oct 2007 07:36:59 +0200 (MEST)
+In-Reply-To: <Pine.LNX.4.64.0710211703060.12998@asgard.lang.hm>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/61936>
 
-Scott R Parish <srp@srparish.net> wrote:
-> Currently "git help -a" only searches in the highest priority exec_path,
-> meaning at worst, nothing is listed if the git commands are only available
-> from the PATH. It also makes git slightly less extensible.
-...
->  extern char **environ;
->  static const char *builtin_exec_path = GIT_EXEC_PATH;
-> -static const char *current_exec_path;
-> +static const char *argv_exec_path;
->  
-> -void git_set_exec_path(const char *exec_path)
-> +void git_set_argv_exec_path(const char *exec_path)
->  {
-> -	current_exec_path = exec_path;
-> +	argv_exec_path = exec_path;
->  }
 
-I'd rather see a rename isolated from a logic change.  I find
-it easier to review.
-  
-> +const char *git_argv_exec_path(void)
-> +const char *git_builtin_exec_path(void)
-> +const char *git_env_exec_path(void)
+On Oct 22, 2007, at 2:05 AM, david@lang.hm wrote:
 
-And yet later you then build the same priority array as already used
-by execv_git_cmd().  Why not just make a function that builds the
-array for the caller, so both execv_git_cmd() and list_commands()
-can both use the same array?
+>
+> by the way, I am not saying that my suggestion is the right way for  
+> things to be (especially long term), but I'm trying to figure out a  
+> work-around for the short term.
 
-> +static unsigned int list_commands_in_dir(const char *dir, const char *prefix)
->  {
-> +	int start_dir = open(".", O_RDONLY, 0);
-...
-> +	if (!dirp || chdir(dir)) {
-> +		fchdir(start_dir);
+And I'm saying your proposed workaround is dangerous and doesn't
+work reliably.
 
-fchdir() isn't as portable as Git currently is.  Thus far we have
-avoided using fchdir().  Requiring it here for something as "simple"
-as listing help is not a good improvement as it will limit who can
-run git-help.  Why can't you stat the individual entries by joining
-the paths together?
+> I'm very interested to see the logn-term suggestions, becouse I  
+> suspect that modt of them could be leveraged for the metastore jobs.
 
--- 
-Shawn.
+I'd prefer this, too.
+	
+	Steffen
