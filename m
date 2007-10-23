@@ -1,96 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] rev-list: implement --bisect-all
-Date: Tue, 23 Oct 2007 14:33:15 -0700
-Message-ID: <7vabq97bz8.fsf@gitster.siamese.dyndns.org>
-References: <20071008053438.6a829b91.chriscool@tuxfamily.org>
-	<Pine.LNX.4.64.0710080442420.4174@racer.site>
-	<200710080708.46579.chriscool@tuxfamily.org>
-	<Pine.LNX.4.64.0710080607180.4174@racer.site>
+From: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
+Subject: UI and git-completion.sh
+Date: Tue, 23 Oct 2007 23:46:17 +0200
+Message-ID: <20071023234617.45a4fc64@paolo-desktop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 23 23:33:59 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 23 23:46:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkRNa-000330-13
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 23:33:38 +0200
+	id 1IkRZw-0007l3-D4
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 23:46:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752137AbXJWVdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 17:33:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXJWVdX
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 17:33:23 -0400
-Received: from rune.pobox.com ([208.210.124.79]:45457 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751992AbXJWVdW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 17:33:22 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 4E01114EBDE;
-	Tue, 23 Oct 2007 17:33:43 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 7C4D614EB34;
-	Tue, 23 Oct 2007 17:33:39 -0400 (EDT)
-In-Reply-To: <Pine.LNX.4.64.0710080607180.4174@racer.site> (Johannes
-	Schindelin's message of "Mon, 8 Oct 2007 06:08:58 +0100 (BST)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752426AbXJWVqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 17:46:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752062AbXJWVqM
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 17:46:12 -0400
+Received: from ug-out-1314.google.com ([66.249.92.171]:47596 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277AbXJWVqL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 17:46:11 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so211242ugc
+        for <git@vger.kernel.org>; Tue, 23 Oct 2007 14:46:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        bh=/WaPuPbmKovtrdUecZZHgcMeKLzA3gfawzaeXoqjjGU=;
+        b=MTwcEsNg8T0Hh72iU8JEHRzHM7hzsPm1f+UqcqhctPCJffoTe+Ux6PL2/aF3HyWZ62uYBIwezBEBmpFkCCF8tzF1Za/x/ZW5UCCEF2GbaAn42Ni1qF0o5J9rbiDVqXjTftd/tz6DAiRMg9nr4et54s+27dmj256gZNxlCZVeJlY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:x-mailer:mime-version:content-type:content-transfer-encoding;
+        b=mSwml6HPwqqkFiGpbW/YwRTOquDUV4pDcI1Aih6SdifvkZ9bTllK+aG4YRj/m2QUmhv0iNsRAtnwKDY9GRzr/2QRy8ts7VhpvfBA2+9ZFuoqr59q+pkGydFEZyMdsidh2InRFme3uAvXvgF3fH5sf4FIA7/tdpCfQrmwxMwkEMM=
+Received: by 10.67.196.2 with SMTP id y2mr1300678ugp.1193175969880;
+        Tue, 23 Oct 2007 14:46:09 -0700 (PDT)
+Received: from paolo-desktop ( [82.50.3.236])
+        by mx.google.com with ESMTPS id o7sm903285uge.2007.10.23.14.46.08
+        (version=SSLv3 cipher=OTHER);
+        Tue, 23 Oct 2007 14:46:09 -0700 (PDT)
+X-Mailer: Sylpheed-Claws 1.0.5 (GTK+ 1.2.10; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62162>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi all,
+I just asked for help on the #git irc channel in order to install
+the .git-completion.sh script (thanks nessundorma) and after using it 
+for a while I started wondering why I cannot find any reference to it the 
+official documentation.
+The only important think that git grep found is:
+	paolo@paolo-desktop:~/git$ git grep completion *
+	Documentation/RelNotes-1.5.0.txt: - Bash completion scripts have been updated heavily.
+Shouldn't it be mentioned somewhere? 
 
-> On Mon, 8 Oct 2007, Christian Couder wrote:
->
->> but I am not sure that the "dunno" logic should be the first part of it 
->> to be done in C.
->
-> The thing is, git-bisect is porcelain-ish.  And by having a lot of the 
-> functionality there, which is not really porcelain, but plumbing, you 
-> prevent other porcelains, such as git-gui or qgit, from using that 
-> function.
->
-> Which is bad.
+I know that newbies are somehow scared by the following:
+	paolo@paolo-desktop:~/git$ git-
+	Display all 151 possibilities? (y or n)
+What? Do I have to learn 151 commands?
+No way!
 
-Still, it is good to prototype in the script while figuring out
-what the desired behaviour is, I would say.
+Using the git-completation script it all boils down to 48 commands.
 
-What I was hoping to see when I posted --bisect-all suggestion
-was a bit different from what Christian did, by the way.
+paolo@paolo-desktop:~/git$ git 
+add                   fetch                 rebase 
+am                    filter-branch         rebase--interactive 
+annotate              format-patch          relink 
+apply                 fsck                  remote 
+archive               gc                    repack 
+bisect                get-tar-commit-id     request-pull 
+blame                 grep                  reset 
+branch                gui                   resolve 
+bundle                imap-send             revert 
+checkout              init                  rm 
+checkout-index        instaweb              send-email 
+cherry                log                   shortlog 
+cherry-pick           lost-found            show 
+citool                ls-files              show-branch 
+clean                 ls-remote             show-ref 
+clone                 ls-tree               stash 
+commit                merge                 status 
+config                mergetool             submodule 
+convert-objects       mv                    tag 
+count-objects         name-rev              var 
+describe              pickaxe               verify-pack 
+diff                  pull                  whatchanged 
+diff-stages           push
 
-In addition to the bisect/skip-* that are filtered at the shell
-level, if you feed the list of commits that cannot be tested to
-the bisection plumbing, you can affect the way the resulting
-list from the --bisect-all is sorted.
+And I think I can remove some commands from the list.
 
-Suppose you have this (B is bad, G is good):
+What people think about starting suggesting the usage of the script in the documentation?
+I just want to know the opinion of the list before trying to write a documentation patch.
+Next step would be to reduce the number of the items listed by git <tab> but I know there is 
+already a discussion about it on the list.
 
-           o---.........---o---Y---o---o---B
-          /                       /
-     G---o---.........---o---Z---X
-
-and one round of bisection picked X.  You find it untestable,
-and Y and Z both bisects the remaining set equally well.  In
-such a case, the current code sorts the resulting set, with Y
-and Z next to each other (because they are both closest to the
-midway), and the Porcelain filters out X which is better than Y
-or Z.  You may end up picking Z.
-
-Often, when X is not testable, neither is Z.  We would be better
-off to avoid checking a commit close to what are known to be
-untestable while there are other commits that are equally close
-to the midway.
-
-So instead of sorting the list solely based on the mid-ness like
-the current code does (i.e. compare_commit_dist()), we can tweak
-commits' mid-ness value (i.e. best_bisection_sorted() computes
-it in distance variable) by penalizing it with the closeness of
-the commit to known untestable commits.
-
-Naively, "closeness" of commit Z to commit X can be defined as
-something simple as "rev-list Z...X | wc -l".  The smaller the
-number, the closer the commits.
+Regards,
+		Paolo
