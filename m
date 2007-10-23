@@ -1,70 +1,116 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 4/7] Bisect: factorise "bisect_write_*" functions.
-Date: Wed, 24 Oct 2007 00:36:22 +0200
-Message-ID: <471E7766.6000303@op5.se>
-References: <20071014142938.d722299c.chriscool@tuxfamily.org> <7v640x7a4n.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: How to run git-gui always in English?
+Date: Tue, 23 Oct 2007 18:45:38 -0400
+Message-ID: <20071023224537.GH14735@spearce.org>
+References: <CCAD0DE0-65D4-4FEC-B02F-658010FECD04@zib.de> <5AD0C329-7136-42A3-9202-865E70A29B65@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 00:36:42 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 24 00:46:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkSMY-0006EJ-Eg
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 00:36:38 +0200
+	id 1IkSVY-0000TQ-WC
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 00:45:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755253AbXJWWg1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2007 18:36:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755269AbXJWWg0
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 18:36:26 -0400
-Received: from mail.op5.se ([193.201.96.20]:42126 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753117AbXJWWgZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 18:36:25 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id EFBFE17306C0;
-	Wed, 24 Oct 2007 00:34:19 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TSZCDa4AOTsX; Wed, 24 Oct 2007 00:34:19 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id EC0B017306B9;
-	Wed, 24 Oct 2007 00:34:18 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7v640x7a4n.fsf@gitster.siamese.dyndns.org>
+	id S1752644AbXJWWpm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 18:45:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752651AbXJWWpm
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 18:45:42 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:52495 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752344AbXJWWpl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 18:45:41 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IkSV7-0006bN-RV; Tue, 23 Oct 2007 18:45:30 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 19CD020FBAE; Tue, 23 Oct 2007 18:45:38 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <5AD0C329-7136-42A3-9202-865E70A29B65@zib.de>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62168>
 
-Junio C Hamano wrote:
-> Sort of offtopic, but is "factorise" a correct verb here?  I
-> thought "factorise" is to express a non prime number as the
-> product of prime numbers.
->=20
+Steffen Prohaska <prohaska@zib.de> wrote:
+> On Oct 21, 2007, at 8:47 AM, Steffen Prohaska wrote:
+> 
+> >How can I switch msysgit's git-gui to English, independently of
+> >the language selected for Windows? I recognized that git-gui
+> >adjusts to the 'language selection' of Windows. How can I
+> >disable this? I want git-gui to always display English. Nothing
+> >else, never! I can't help people who use a different language
+> >in the gui, because I'll not understand what they are talking
+> >about and they'll not understand me.
+> 
+> And it's even worse. An error in the localization can completely
+> break git-gui. Apparently the German localization included in
+> msysgit's Git-1.5.3-preview20071019.exe _is_ broken (see
+> attached png).
+> 
+> Shouldn't the localization code be a bit more fault tolerant?
 
-It's the reverse of expanding brackets, like so:
-2x=B2 + x - 3 =3D (2x + 3)(x - 1)
+Yes.  This is a possible workaround:
 
-> "refactor" is the act of splitting and merging pieces of
-> functions for better reuse, isn't it?
->=20
+>From 410aa617e7ca8240500e90f0b0389bde7b7b40aa Mon Sep 17 00:00:00 2001
+From: Shawn O. Pearce <spearce@spearce.org>
+Date: Tue, 23 Oct 2007 18:44:55 -0400
+Subject: [PATCH] git-gui: Protect against bad translation strings
 
-Yes.
+If a translation string uses a format character we don't have an
+argument for then it may throw an error when we attempt to format
+the translation.  In this case switch back to the default format
+that comes with the program (aka the English translation).
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-gui.sh |   15 +++++++++++----
+ 1 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 38c6e59..a7227ac 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -88,13 +88,20 @@ if {![catch {set _verbose $env(GITGUI_VERBOSE)}]} {
+ 
+ package require msgcat
+ 
+-proc mc {fmt args} {
+-	set fmt [::msgcat::mc $fmt]
++proc _mc_trim {fmt} {
+ 	set cmk [string first @@ $fmt]
+ 	if {$cmk > 0} {
+-		set fmt [string range $fmt 0 [expr {$cmk - 1}]]
++		return [string range $fmt 0 [expr {$cmk - 1}]]
+ 	}
+-	return [eval [list format $fmt] $args]
++	return $fmt
++}
++
++proc mc {en_fmt args} {
++	set fmt [_mc_trim [::msgcat::mc $en_fmt]]
++	if {[catch {set msg [eval [list format $fmt] $args]} err]} {
++		set msg [eval [list format [_mc_trim $en_fmt]] $args]
++	}
++	return $msg
+ }
+ 
+ proc strcat {args} {
+-- 
+1.5.3.4.1324.ga7925
+
+
+
+-- 
+Shawn.
