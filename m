@@ -1,123 +1,62 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH 1/2] gitweb: Refactor abbreviation-with-title-attribute code.
-Date: Tue, 23 Oct 2007 11:31:22 +1000
-Message-ID: <1193103083390-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
-To: pasky@suse.cz, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Tue Oct 23 03:32:28 2007
+From: Dan Zwell <dzwell@zwell.net>
+Subject: Re: [PATCH] resend of git-add--interactive color patch against
+ spearce/pu
+Date: Mon, 22 Oct 2007 21:11:14 -0500
+Message-ID: <20071022211114.07c927e8@danzwell.com>
+References: <471045DA.5050902@gmail.com>
+	<19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
+	<20071013172745.GA2624@coredump.intra.peff.net>
+	<20071013175127.GA3183@coredump.intra.peff.net>
+	<47112491.8070309@gmail.com>
+	<20071015034338.GA4844@coredump.intra.peff.net>
+	<20071016194709.3c1cb3a8@danzwell.com>
+	<20071017015152.GN13801@spearce.org>
+	<20071022163244.4af72973@danzwell.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Dan Zwell <dzwell@zwell.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 04:13:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik8d9-0006Qs-7X
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 03:32:27 +0200
+	id 1Ik9GX-0005we-P4
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 04:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701AbXJWBcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 21:32:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbXJWBcM
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 21:32:12 -0400
-Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:49477 "EHLO
-	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751402AbXJWBcK (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 21:32:10 -0400
-X-IronPort-AV: E=Sophos;i="4.21,314,1188743400"; 
-   d="scan'208";a="172497340"
-Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
-  by ipmail03.adl2.internode.on.net with ESMTP; 23 Oct 2007 11:01:28 +0930
-X-Mailer: git-send-email 1.5.3.1
+	id S1751867AbXJWCM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 22:12:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751865AbXJWCM6
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 22:12:58 -0400
+Received: from gator290.hostgator.com ([74.53.26.226]:55280 "EHLO
+	gator290.hostgator.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751848AbXJWCM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 22:12:57 -0400
+Received: from [143.44.70.185] (port=56998 helo=danzwell.com)
+	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.66)
+	(envelope-from <dzwell@zwell.net>)
+	id 1Ik9GF-0006DM-D2; Mon, 22 Oct 2007 21:12:52 -0500
+In-Reply-To: <20071022163244.4af72973@danzwell.com>
+X-Mailer: Claws Mail 3.0.2 (GTK+ 2.10.14; x86_64-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - gator290.hostgator.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
+X-AntiAbuse: Sender Address Domain - zwell.net
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62071>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- gitweb/gitweb.perl |   45 +++++++++++++++++++++------------------------
- 1 files changed, 21 insertions(+), 24 deletions(-)
+I apparently missed the e-mail where Shawn Pearce explained where his
+repository was. The following patch is my recent change(s), rebased
+against that.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index ea84c75..a835bd1 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -842,6 +842,23 @@ sub chop_str {
- 	return "$body$tail";
- }
- 
-+# takes the same arguments as chop_str, but also wraps a <span> around the
-+# result with a title attribute if it does get chopped. Additionally, the
-+# string is HTML-escaped.
-+sub chop_and_escape_str {
-+	my $str = shift;
-+	my $len = shift;
-+	my $add_len = shift || 10;
-+
-+	my $chopped = chop_str($str, $len, $add_len);
-+	if ($chopped eq $str) {
-+		return esc_html($chopped);
-+	} else {
-+		return qq{<span title="} . esc_html($str) . qq{">} .
-+			esc_html($chopped) . qq{</span>};
-+	}
-+}
-+
- ## ----------------------------------------------------------------------
- ## functions returning short strings
- 
-@@ -3427,12 +3444,7 @@ sub git_shortlog_body {
- 			print "<tr class=\"light\">\n";
- 		}
- 		$alternate ^= 1;
--		my $author = chop_str($co{'author_name'}, 10);
--		if ($author ne $co{'author_name'}) {
--			$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
--		} else {
--			$author = esc_html($author);
--		}
-+		my $author = chop_and_escape_str($co{'author_name'}, 10);
- 		# git_summary() used print "<td><i>$co{'age_string'}</i></td>\n" .
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 		      "<td><i>" . $author . "</i></td>\n" .
-@@ -3484,12 +3496,7 @@ sub git_history_body {
- 		}
- 		$alternate ^= 1;
- 	# shortlog uses      chop_str($co{'author_name'}, 10)
--		my $author = chop_str($co{'author_name'}, 15, 3);
--		if ($author ne $co{'author_name'}) {
--			"<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
--		} else {
--			$author = esc_html($author);
--		}
-+		my $author = chop_and_escape_str($co{'author_name'}, 15, 3);
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 		      "<td><i>" . $author . "</i></td>\n" .
- 		      "<td>";
-@@ -3645,12 +3652,7 @@ sub git_search_grep_body {
- 			print "<tr class=\"light\">\n";
- 		}
- 		$alternate ^= 1;
--		my $author = chop_str($co{'author_name'}, 15, 5);
--		if ($author ne $co{'author_name'}) {
--			$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
--		} else {
--			$author = esc_html($author);
--		}
-+		my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
- 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 		      "<td><i>" . $author . "</i></td>\n" .
- 		      "<td>" .
-@@ -5165,12 +5167,7 @@ sub git_search {
- 						print "<tr class=\"light\">\n";
- 					}
- 					$alternate ^= 1;
--					my $author = chop_str($co{'author_name'}, 15, 5);
--					if ($author ne $co{'author_name'}) {
--						$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
--					} else {
--						$author = esc_html($author);
--					}
-+					my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
- 					print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
- 					      "<td><i>" . $author . "</i></td>\n" .
- 					      "<td>" .
--- 
-1.5.3.1
+Dan
