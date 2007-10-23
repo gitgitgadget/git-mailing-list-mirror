@@ -1,71 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] Let git-add--interactive read colors from
-	git-config
-Date: Tue, 23 Oct 2007 00:27:02 -0400
-Message-ID: <20071023042702.GB28312@coredump.intra.peff.net>
-References: <471045DA.5050902@gmail.com> <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022164048.71a3dceb@danzwell.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git/spearce.git (topics)
+Date: Tue, 23 Oct 2007 00:27:52 -0400
+Message-ID: <20071023042752.GY14735@spearce.org>
+References: <20071016060456.GC13801@spearce.org> <Pine.LNX.4.64.0710161209480.25221@racer.site> <20071016195744.GB32132@closure.lan> <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Tue Oct 23 06:27:25 2007
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:28:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkBMQ-0008B7-9D
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:27:22 +0200
+	id 1IkBNC-0008Q6-Gx
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:28:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751359AbXJWE1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 00:27:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXJWE1I
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:27:08 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1636 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750846AbXJWE1H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 00:27:07 -0400
-Received: (qmail 31410 invoked by uid 111); 23 Oct 2007 04:27:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 23 Oct 2007 00:27:03 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2007 00:27:02 -0400
+	id S1751557AbXJWE17 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 00:27:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXJWE17
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:27:59 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39194 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751324AbXJWE16 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 00:27:58 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IkBMx-0001BW-3w; Tue, 23 Oct 2007 00:27:55 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 5D53F20FBAE; Tue, 23 Oct 2007 00:27:53 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071022164048.71a3dceb@danzwell.com>
+In-Reply-To: <20071023012140.GC22997@thunk.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62082>
 
-On Mon, Oct 22, 2007 at 04:40:48PM -0500, Dan Zwell wrote:
+Theodore Tso <tytso@mit.edu> wrote:
+> On Mon, Oct 22, 2007 at 06:15:09PM -0700, Junio C Hamano wrote:
+> > 
+> > Sorry, WI is for "what's in", WC is for "what's cooking".  I
+> > should remove PU and RB from there.
+> 
+> I assume PU is what you used to build your proposed-update branch?
 
-> Note: the code to parse git-style color strings to perl-style color
-> strings should eventually be added to Git.pm so that other (perl)
-> parts of git can be configured to read colors from .gitconfig in
-> a nicer way. A git-style string is "ul red black", while perl 
-> likes strings like "underline red on_black".
+Actually I found PU of some use:
 
-Why not do it as part of this patch, then?
+	git branch -f pu next
+	git checkout pu
+	./Meta/PU --continue
 
-> +	# Sane (visible) defaults:
-> +	if (! @git_prompt_color) {
-> +		@git_prompt_color = ("blue", "bold");
-> +	}
+its a little sluggish to list, but made it pretty easy to pick
+topics for merging into pu.  git-rerere really makes it easy to
+recover conflicts in pu during future rebuilds of pu.
 
-I think it might be a bit more readable to keep the assignment and
-defaults together:
+> based off of master, and then merged into next.  Or maybe I'm not
+> understanding how to make the WC and git-topic.perl script work and
+> sing for me perfectly?
 
-  my @git_prompt_color = split /\s+/,
-    qx(git config --get color.interactive.prompt) || 'blue bold';
+The other tidbits I managed to learn by trial and error here was
+to make sure I did the following:
 
-Though I wonder why we are splitting here at all, since we just end up
-converting the list into a scalar below. And if we just turned that into
-a function, we could get a nice:
+	- make sure master is fully merged into next
+	- make sure next is fully merged into pu
+	- Run "Meta/git-topic.perl --base=master | less"
 
-  my $prompt_color = git_color_to_ansicolor(
-    qx(git config --get color.interactive.prompt) || 'blue bold');
+It wasn't uncommon for me to merge master->next, next->pu, run
+git-topic, then reset both next and pu *back* to what I had last
+published (remote tracking branches updated during push make this
+easy) before moving on with my next and pu updating activities.
 
--Peff
+Of course take my notes above with a grain of salt; I only worked
+this way for a week and it took me a couple of days to come up with
+the above.  Junio may very well have it streamlined even more.
+
+-- 
+Shawn.
