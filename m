@@ -1,116 +1,125 @@
-From: martin f krafft <madduck@madduck.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: unmerging feature branches
-Date: Tue, 23 Oct 2007 19:16:11 +0200
-Message-ID: <20071023171611.GA18783@piper.oerlikon.madduck.net>
-References: <20071023152445.GA10070@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+Date: Tue, 23 Oct 2007 10:40:16 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org>
+References: <20071023152445.GA10070@piper.oerlikon.madduck.net>
+ <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+ <20071023171611.GA18783@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 19:16:56 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 19:40:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkNN0-0005f1-S0
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:16:47 +0200
+	id 1IkNk8-0007Ha-Rl
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:40:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbXJWRQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 13:16:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXJWRQf
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:16:35 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:40458 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751935AbXJWRQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 13:16:34 -0400
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id C5F8EA800D;
-	Tue, 23 Oct 2007 19:16:38 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 5865E9F13B;
-	Tue, 23 Oct 2007 19:16:12 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 44B4A4408; Tue, 23 Oct 2007 19:16:11 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4574/Tue Oct 23 16:57:10 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+	id S1751926AbXJWRk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 13:40:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbXJWRk3
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:40:29 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:52226 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751792AbXJWRk2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 13:40:28 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NHeKjI028990
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 23 Oct 2007 10:40:21 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NHeGDu030995;
+	Tue, 23 Oct 2007 10:40:18 -0700
+In-Reply-To: <20071023171611.GA18783@piper.oerlikon.madduck.net>
+X-Spam-Status: No, hits=-2.722 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62139>
 
 
---ibTvN161/egqYuK8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-also sprach Linus Torvalds <torvalds@linux-foundation.org> [2007.10.23.1850=
- +0200]:
-> First off, let me say that to some degree, what you ask for is not=20
-> possible. Why?
->=20
-> Since you have pushed out the stuff, and don't want to rewrite history=20
-> (which would result in trouble for down-streams - and I heartily approve)=
-,=20
-> whatever you do will always have that merge in the commit history.
->=20
-> And that means that while you can certainly undo the *data* that the merg=
-e=20
-> brought in, git will always know that you already merged up that branch.=
-=20
+On Tue, 23 Oct 2007, martin f krafft wrote:
+> 
+> > So you can revert the data, but then if you want to get it back, you'll 
+> > need to revert the revert - you cannot just merge the branch again. 
+> 
+> Ouch!
 
-This is precisely what I meant, sorry for not being clear. This is
-what git-revert does...
+Well, it's not necessarily "Ouch".
 
-> So you can revert the data, but then if you want to get it back, you'll=
-=20
-> need to revert the revert - you cannot just merge the branch again.=20
+It actually depends on what you want to do. Sometimes this is a feature, 
+and the thing is, it actually works for other things that just merge 
+commits.
 
-Ouch!
+In other words, think of what happens when you merge some development 
+branch, and then "git revert" a single commit from that branch - the exact 
+same thing will happen - future merges of that branch will *not* re-do the 
+commit, because you "already have it", and you reverted it after-the-fact.
 
-> 	# You now have the "temporary" branch that contains just the
-> 	# diff that effectively undoes that one merge. Go back to the
-> 	# tip of your development, and cherry-pick it to get git to
-> 	# help you do a good job merging it with all the subsequent
-> 	# development
+And in many ways, this is "obviously" what you want to happen!
 
-Ah, that's a good idea.
+Now, I say "obviously" in quotes, because it's not at all obvious in an 
+absolute sense - it may be that you reverted the commit not because it was 
+buggy, but because your stable branch wasn't ready for it yet, and maybe 
+in the future you do actually want the code that the revert reverted. So 
+in that sense, nothing is really "obvious", and this is simply how things 
+work. But I think that it's easier to explain why git does something like 
+this when you speak about normal commits, and it all makes sense.
 
-Thanks for your time and input!
+When you revert the data from a merge, the exact same issue happens. A 
+revert (whether done by "git revert", or by the sequence of events I 
+described) very fundamentally undoes the *data* part, but leaves the 
+history intact, and that has implications for future events that think 
+about history - which is mostly "git merge", but there are other thigns 
+too.
 
-PS: this question of mine came out of a discussion on using Git for
-Debian packaging: what happens when we actually need to remove
-a feature from one package to the next:
-  http://lists.madduck.net/pipermail/vcs-pkg/2007-October/000059.html
+As an example of "other things" that take history into account, think 
+about something like "git rebase". It's not a merge, but it also takes 
+history into account in certain ways: in particular, it may be effectively 
+a "series of cherry-picks", but it actually takes the history of both 
+branches into account, and will not re-apply a patch that already exists 
+in the target history.
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-#define emacs eighty megabytes and constantly swapping.
-=20
-spamtraps: madduck.bogus@madduck.net
+What does that mean? Let's say that both histories contain a patch X (not 
+the same commit, but the same patch), but one history also contains the 
+revert of X. Again, the revert reverts the data, but it does *not* revert 
+the history, so when you cherry-pick all the stuff from the other branch, 
+X will *not* happen - even if it would apply cleanly, and even if a plain 
+"git cherry-pick" would have redone it!
 
---ibTvN161/egqYuK8
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+Why? History, again. Because "git rebase" sees that the commit already 
+existed, it won't even try to apply it again, never mind that it could 
+have worked. The "revert" didn't undo the history, just the data.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+So a "revert" is fundamentally different from a "undo". Most of the time 
+that's exactly what you want, and I'm not pointing this out as a problem, 
+I just wanted to point out that it has "effects". Sometimes the effects 
+are good, sometimes they are bad, and while they are always very reliable 
+and there's never any question about what git will do, people don't always 
+think like git, and whether the effects are "good" or "bad" is probably 
+entirely up to whether they match users expectations or not.
 
-iD8DBQFHHixbIgvIgzMMSnURAvTSAJkBquqn7vFCF51dF4Dq6U2qBLA9KwCbBT4G
-3zA7pWuPgeocGIcQaENB5H8=
-=grQP
------END PGP SIGNATURE-----
+So sometimes the behaviour of "git revert" will be exactly what people 
+expected and wanted ("good, I'll never get that commit again when I pull, 
+because I told git that I don't want that commit"), and sometimes it will 
+_not_ be what people expected and wanted ("oh, I didn't get that commit, 
+even though I was now ready for it - because I had reverted it back when I 
+was *not* ready for it").
 
---ibTvN161/egqYuK8--
+See? The logic is exactly the same in both cases, but one was good, the 
+other bad, and the only difference was really the mindset of the user.
+
+A tool can't ever get "mindset of the user" differences right. At least 
+not until we add the "esp option" ;)
+
+So I really don't want to push this as a problem or deficiency, I think 
+it's a good thing. But it's a good thing only when people are *aware* of 
+what "revert" really means.
+
+			Linus
