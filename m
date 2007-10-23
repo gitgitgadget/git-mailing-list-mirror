@@ -1,75 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Added basic color support to git add --interactive
-Date: Tue, 23 Oct 2007 00:03:16 -0400
-Message-ID: <20071023040315.GA28312@coredump.intra.peff.net>
-References: <471045DA.5050902@gmail.com> <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022163244.4af72973@danzwell.com>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git/spearce.git (topics)
+Date: Tue, 23 Oct 2007 00:05:22 -0400
+Message-ID: <20071023040522.GX14735@spearce.org>
+References: <20071016060456.GC13801@spearce.org> <Pine.LNX.4.64.0710161209480.25221@racer.site> <20071016195744.GB32132@closure.lan> <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org> <20071023020044.GA27132@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Tue Oct 23 06:03:44 2007
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:05:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkAzV-0003CF-Nw
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:03:42 +0200
+	id 1IkB1O-0003U8-Ld
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:05:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751882AbXJWEDT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 00:03:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbXJWEDT
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:03:19 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1265 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751393AbXJWEDS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 00:03:18 -0400
-Received: (qmail 31310 invoked by uid 111); 23 Oct 2007 04:03:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 23 Oct 2007 00:03:17 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2007 00:03:16 -0400
+	id S1751113AbXJWEF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 00:05:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbXJWEF2
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:05:28 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:38589 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811AbXJWEF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 00:05:27 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IkB0x-0000Aq-E9; Tue, 23 Oct 2007 00:05:11 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 1A61A20FBAE; Tue, 23 Oct 2007 00:05:22 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071022163244.4af72973@danzwell.com>
+In-Reply-To: <20071023020044.GA27132@thunk.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62079>
 
-On Mon, Oct 22, 2007 at 04:32:44PM -0500, Dan Zwell wrote:
+Theodore Tso <tytso@mit.edu> wrote:
+> On Mon, Oct 22, 2007 at 06:29:59PM -0700, Junio C Hamano wrote:
+> > Well, the policy is never to commit directly on top of next
+> > (iow, only merge other topics and nothing else).  Otherwise it
+> > becomes hard to allow individual topics graduate to 'master'
+> > independently.
+> 
+> I see.  So if it's non-trivial enough that you want it to "cook" in
+> next for a cycle, you'll create a topic branch for it (based off of
+> 'master'), and then force a merge into 'next'?
 
-> +my ($use_color, $prompt_color, $header_color, $help_color);
-> +my $color_config = qx(git config --get color.interactive);
-> +if ($color_config=~/true|always/ || -t STDOUT && $color_config=~/auto/) {
-> +	$use_color = "true";
-> +        # Sane (visible) defaults:
-> +        $prompt_color = "blue bold";
-> +        $header_color = "bold";
-> +        $help_color = "red bold";
+Yes.  Because 'next' always has commits in it that never appear in
+'master'.  So any topic forked from master must merge into next.
+It can't be a fast-forward.  No forced merging required.
 
-Bad indentation?
+Of course this isn't true for a new project.  That first topic
+that forked from master to *create* next will be a fast-forward
+as it creates next.  But that's no big deal.  The second topic will
+merge into next, and that first topic can still be merged back into
+master without merging next (or the second topic).
 
-> +sub print_colored {
-> +	my $color = shift;
-> +	my @strings = @_;
-> +
-> +	if ($use_color) {
-> +		print Term::ANSIColor::color($color);
-> +		print(@strings);
-> +		print Term::ANSIColor::color("reset");
-> +	} else {
-> +		print @strings;
-> +	}
-> +}
+I was also doing the same thing Junio already explained to manage
+next and pu while he was away.  Except I shortcut his:
 
-This does nothing for embedded newlines in the strings, which means that
-you can end up with ${COLOR}text\n${RESET}, which fouls up changed
-backgrounds. See commit 50f575fc. Since the strings you are printing are
-small, I don't see any problem with making a copy, using a regex to
-insert the color coding, and printing that (I think I even posted
-example code in a previous thread on this subject).
+	git checkout pu
+	git reset --hard next
 
--Peff
+as:
+
+	git branch -f pu next
+	git checkout pu
+
+as I'm was usually already sitting on next.  This saved my poor
+little laptop from a second of IO chugging as it slewed around
+between the two versions.  There were no files to update as it
+switched from next to pu, and pu was already setup for merging
+the proposed topics.  :-)
+
+-- 
+Shawn.
