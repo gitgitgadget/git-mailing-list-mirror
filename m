@@ -1,123 +1,121 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
-Date: Tue, 23 Oct 2007 07:38:23 +0200
-Message-ID: <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>
-References: <8fe92b430710081355i7d3dbaa2q9a8939b55d7ca7dc@mail.gmail.com> <8fe92b430710201606i47e85b24k17abd819bf0d353b@mail.gmail.com> <Pine.LNX.4.64.0710210031130.25221@racer.site> <471AFD07.4040606@op5.se> <Pine.LNX.4.64.0710212308540.25221@racer.site> <471C586A.9030900@op5.se> <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se> <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se> <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Andreas Ericsson" <ae@op5.se>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Federico Mena Quintero" <federico@novell.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 07:37:39 2007
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: What's cooking in git/spearce.git (topics)
+Date: Tue, 23 Oct 2007 01:42:38 -0400
+Message-ID: <20071023054238.GE14735@spearce.org>
+References: <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org> <20071023020044.GA27132@thunk.org> <20071023040522.GX14735@spearce.org> <20071023043321.GC27132@thunk.org> <20071023044657.GC14735@spearce.org> <20071023045632.GD27132@thunk.org> <20071023050726.GD14735@spearce.org> <20071023053003.GE27132@thunk.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 23 07:42:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkCSN-0005NO-N6
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 07:37:36 +0200
+	id 1IkCXY-0006Qu-Rz
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 07:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181AbXJWFhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 01:37:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752178AbXJWFhE
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 01:37:04 -0400
-Received: from mailer.zib.de ([130.73.108.11]:64969 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752145AbXJWFhB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 01:37:01 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9N5atU1021422;
-	Tue, 23 Oct 2007 07:36:55 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1b654.pool.einsundeins.de [77.177.182.84])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9N5aswX009470
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 23 Oct 2007 07:36:55 +0200 (MEST)
-In-Reply-To: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751277AbXJWFmp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 01:42:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751178AbXJWFmp
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 01:42:45 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:41386 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243AbXJWFmo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 01:42:44 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IkCXH-0004fR-Op; Tue, 23 Oct 2007 01:42:39 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8F2E320FBAE; Tue, 23 Oct 2007 01:42:38 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <20071023053003.GE27132@thunk.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62095>
 
+Theodore Tso <tytso@mit.edu> wrote:
+> On Tue, Oct 23, 2007 at 01:07:26AM -0400, Shawn O. Pearce wrote:
+> > Junio has in the past proposed rewinding next, especially after a
+> > significant release (e.g. 1.5.3).  
+> 
+> Hmm, yes.  I think I'd want to rewind next after a while; the thought
+> of next drifting hundreds or thousands of commits away from master
+> just gives me the heebee-jeebies.  I'm sure it mostly works, but it
+> just feels wrong.  :-)
 
-On Oct 23, 2007, at 1:35 AM, Jakub Narebski wrote:
+There's been a couple of times in git history where Junio has basically
+done this to whack next back into line:
 
-> On 10/22/07, Andreas Ericsson <ae@op5.se> wrote:
->> Johannes Schindelin wrote:
->>> On Mon, 22 Oct 2007, Andreas Ericsson wrote:
->>>
->>>> If I were to suggest any improvements, it'd be to change the  
->>>> semantics of
->>>> git-pull to always update the local branches set up to be merged  
->>>> with the
->>>> remote tracking branches when they, prior to fetching, pointed  
->>>> to the same
->>>> commit, such that when
->>>>
->>>> $ git show-ref master
->>>> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/heads/master
->>>> d4027a816dd0b416dc8c7b37e2c260e6905f11b6 refs/remotes/origin/master
->>>>
->>>> refs/heads/master gets set to refs/remotes/origin/master post- 
->>>> fetch.
->>>
->>> In general, this should fail.  Because you are expected to have  
->>> local
->>> changes in the local branches.
->>
->>
->> BS argument. Git knows when I haven't got any changes on my local
->> branches, and it can be fairly safely assumed that when I feel like
->> making any, I'd like to make them off as fresh a tip as possible  
->> unless
->> I explicitly tell git otherwise.
-> [cut]
->
-> It would be I think possible to make git behave as you want,  
-> although I'd rather
-> (at least at first) have behaviour described above turned on by  
-> some option
-> or config variable. I guess that it would be not that hard to make  
-> script to do
-> what you ant (and probably it would be best if you tried your idea  
-> that way).
->
-> There are the following caveats.
-> 1. For each local branch that is to be updated on pull, this branch
-> must be marked as tracking some branch of some repository. This has to
-> be explicitely done; for example by creating those branches using
-> --track option.
+	git checkout next
+	git diff next master | git apply --index
+	git commit -m "Whack next back in line"
 
-True, and only the branches matching the remote currently pulled
-should be considered. Tracking branches pointing to a different
-remote need to be skipped.
+Because we've found a change or two lurking in there that shouldn't
+have been there after a while.  I think it was related to a merge
+conflict that happened in next but didn't in master or something
+like that.  But usually this difference exists as there's usually
+always something cooking in next.
+ 
+> > A bunch of folks (myself included if I recall correctly) didn't want
+> > to do this, as we create topic branches locally from things in next
+> > and sometimes make commits over them to improve the topic further.
+> 
+> I guess I don't see why this would be a hardship; would a quick rebase
+> on the topic branches more or less take care of the problem?  
 
+Yes.  But you need the prior value of the branch so you can do
+something easy like:
 
-> 2. Git can do a merge with conflicts _only_ if that branch is checked
-> out.
+	git checkout yourtopic
+	git rebase --onto $newtopic $oldtopic
 
-Andreas' proposal contains an important requirement that
-avoids this problem. His proposal states "when they, prior
-to fetching, pointed to the same commit [the head in remotes
-pointed to]". That is only fast-forwards are needed, which
-never have merge conflicts.
+which means you probably need to look through the logs for not just
+pu but also pu@{1}.  A script to break out the topic branches from
+pu post fetch and store them as proper tracking branches would make
+this easier, but that much.  If you plan ahead you can save that
+$oldtopic point so you can do something like this:
 
+	git log pu ; # find $newtopic
+	git checkout yourtopic
+	git rebase --onto $newtopic base-yourtopic
+	git tag -f base-yourtopic $newtopic
 
-> So for all local branches which you want to get updated using
-> "git pull --update-all <repo>" (or something like that), the merge
-> with remote branch should be either fast-forward, trivial merge, or
-> merge without conflicts. "git pull --update-all <repo>" would return
-> then list of updated branches and list of branches which cannot be
-> updated.
+> I guess that brings up another question; I've been regularly rebasing
+> the topics branches as master and next advances... probably more out
+> of superstition than anything else.  Is that a bad idea for any reason?
 
-Maybe Andreas' proposal could be extended as you describe.
-But I don't think any merging should automatically be done. I'd
-only support fast forwards. Merging always includes a risk
-of unexpected changes to the code; even if there are no merge
-conflicts detected by git. I think it is reasonable to leave
-all such cases to the user for manual resolution. Supporting
-fast-forward should be sufficient.
+It keeps the history shorter in gitk.  But otherwise it isn't bad.
+Unless you are running into a lot of conflicts every time you rebase
+and its wasting your time.  ;-)
 
-	Steffen
+I prefer to rebase the topics until they've merged to an integration
+branch that doesn't rewind (e.g. master or next in git.git).
+That way they have the shortest line possible in gitk between the
+final merge and the start point.
+
+There are good reasons why there's an "author" and a "committer"
+field in commits.  Rebasing will change the committer field's
+timestamp, but not the author field.  And author comes from the
+email, to preserve the original date of development.
+ 
+> Hmm... I guess some of this would be really good to get into the Howto
+> section of the user guide when talking about git workflows!
+
+Yea, I think so too.  We've adopted this model in git.git because
+it works for our community.  A lot of other communities aren't
+too far away, as we have a lot of crossover in members.  E.g. we
+learned a lot from the kernel community.
+
+-- 
+Shawn.
