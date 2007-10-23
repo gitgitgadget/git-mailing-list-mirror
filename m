@@ -1,69 +1,112 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH 1/2] Added basic color support to git add --interactive
-Date: Tue, 23 Oct 2007 09:44:59 +0200
-Message-ID: <A225BBC0-2607-4952-8578-EC9A181C418E@wincent.com>
-References: <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022163244.4af72973@danzwell.com> <20071023040315.GA28312@coredump.intra.peff.net> <D1795135-AD5E-491C-99E6-30486E189B13@wincent.com> <20071023064106.GA30351@coredump.intra.peff.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=ISO-8859-1;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dan Zwell <dzwell@zwell.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 23 09:46:25 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Add some fancy colors in the test library when terminal supports it.
+Date: Tue, 23 Oct 2007 10:13:27 +0200
+Message-ID: <20071023081327.GA21334@artemis.corp>
+References: <20071022081341.GC32763@artemis.corp> <200710230608.15124.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="EVF5PPMfhYS0aIcm";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 10:13:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkET1-0004IT-NC
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 09:46:24 +0200
+	id 1IkEtU-0003b3-FB
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 10:13:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbXJWHqM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2007 03:46:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751462AbXJWHqL
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 03:46:11 -0400
-Received: from wincent.com ([72.3.236.74]:39157 "EHLO s69819.wincent.com"
+	id S1751713AbXJWINd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 04:13:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbXJWINc
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 04:13:32 -0400
+Received: from pan.madism.org ([88.191.52.104]:37896 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751148AbXJWHqL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 03:46:11 -0400
-Received: from [192.168.0.129] (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9N7jk3K004471;
-	Tue, 23 Oct 2007 02:45:47 -0500
-In-Reply-To: <20071023064106.GA30351@coredump.intra.peff.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751564AbXJWINa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 04:13:30 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id DACFF2653A;
+	Tue, 23 Oct 2007 10:13:28 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id A2AB33CC0B2; Tue, 23 Oct 2007 10:13:27 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200710230608.15124.chriscool@tuxfamily.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62120>
 
-El 23/10/2007, a las 8:41, Jeff King escribi=F3:
 
-> On Tue, Oct 23, 2007 at 08:28:28AM +0200, Wincent Colaiuta wrote:
->
->> I did too, where you add a third, optional "trailer" parameter to th=
-e
->> function where you pass the newline if there is one (following the =20
->> style of
->> the functions in color.c). Pasting it below.
->
-> The problem with that approach is that you can only send in a single
-> line at a time (with the newline detached!), so it makes life =20
-> harder for
-> the caller. E.g., there is at least one spot that uses a here-doc wit=
-h
-> many lines; splitting that into a bunch of print_ansi_color calls =20
-> would
-> be unnecessarily ugly.
+--EVF5PPMfhYS0aIcm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, I agree that it complicates things for the caller. I was just =20
-copying the model found in color.c; but seeing as this is Perl =20
-splitting into lines inside the printing function would be =20
-straightforward.
+On Tue, Oct 23, 2007 at 04:08:14AM +0000, Christian Couder wrote:
+> Hi Pierre,
+>=20
+> Le lundi 22 octobre 2007, Pierre Habouzit a =C3=A9crit :
+> > +
+> > +say_color () {
+> > +	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
+> > +	shift
+> > +	echo "* $*"
+> > +	tput op
+> > +}
+> > +
+> >  error () {
+> > -	echo "* error: $*"
+> > +	say_color 9 "* error: $*"
+>=20
+> This will print something like "* * error: ..." instead of "* error: ..."
+>=20
+> The following should work:
+>=20
+> > +	say_color 9 "error: $*"
+>=20
+> By the way, where do the 9 here and the 10 and the -1 below come from ?
+> "man 5 terminfo" says that only values form 0 to 7 are portably defined.
+> Maybe 9 is a bold red and 10 a bold green, or something like that, but it=
+=20
+> doesn't seem to work on my konsole.
 
-Cheers,
-Wincent
+Right I should use tput setb or sth like that to ask for bold mode
+probably.
+
+> Anyway, perhaps having:
+>=20
+> _red=3D1
+> _green=3D2
+>=20
+> and then using "say_color $_red stuff" might be easier to understand and=
+=20
+> change if needed.
+
+Agreed.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--EVF5PPMfhYS0aIcm
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHHa0nvGr7W6HudhwRApsHAJ44LNxaOJly4O0RSfxgWkwbf8FqDwCeNO24
+4HiJe35XUl6bFh21jENA9TM=
+=2axQ
+-----END PGP SIGNATURE-----
+
+--EVF5PPMfhYS0aIcm--
