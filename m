@@ -1,137 +1,79 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 23 Oct 2007 08:03:38 -0400
-Message-ID: <20071023120338.GG27132@thunk.org>
-References: <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org> <20071023020044.GA27132@thunk.org> <20071023040522.GX14735@spearce.org> <20071023043321.GC27132@thunk.org> <20071023044657.GC14735@spearce.org> <20071023045632.GD27132@thunk.org> <20071023050726.GD14735@spearce.org> <20071023053003.GE27132@thunk.org> <20071023054238.GE14735@spearce.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] execv_git_cmd(): also try PATH if everything else fails.
+Date: Tue, 23 Oct 2007 13:12:03 +0200
+Message-ID: <471DD703.70608@op5.se>
+References: <1192867937.v2.fusewebmail-240137@f> <20071020205721.GA16291@srparish.net> <Pine.LNX.4.64.0710202258440.25221@racer.site> <20071021023614.GB14735@spearce.org> <Pine.LNX.4.64.0710212256270.25221@racer.site> <20071022143637.GP16291@srparish.net> <471CBF88.6020300@op5.se> <471CC380.5030603@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Scott Parish <sRp@srparish.net>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 14:04:11 2007
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 17:20:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkIUU-0001g5-Rx
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 14:04:11 +0200
+	id 1IkLYf-0007kX-QG
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 17:20:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751848AbXJWMD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 08:03:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751841AbXJWMD7
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 08:03:59 -0400
-Received: from THUNK.ORG ([69.25.196.29]:54954 "EHLO thunker.thunk.org"
+	id S1752985AbXJWPU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 11:20:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752901AbXJWPU1
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 11:20:27 -0400
+Received: from mail.op5.se ([193.201.96.20]:39281 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751608AbXJWMD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 08:03:58 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IkIe7-0002hi-0G; Tue, 23 Oct 2007 08:14:07 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1IkITy-0008J1-Bp; Tue, 23 Oct 2007 08:03:38 -0400
-Content-Disposition: inline
-In-Reply-To: <20071023054238.GE14735@spearce.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752820AbXJWPU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 11:20:26 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id CE09817305A5;
+	Tue, 23 Oct 2007 17:20:24 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.455
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.455 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, DATE_IN_PAST_03_06=0.044, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id O+H82NQnD+Xn; Tue, 23 Oct 2007 17:20:24 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id AA0651730598;
+	Tue, 23 Oct 2007 17:20:23 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <471CC380.5030603@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62129>
 
-On Tue, Oct 23, 2007 at 01:42:38AM -0400, Shawn O. Pearce wrote:
-> Yes.  But you need the prior value of the branch so you can do
-> something easy like:
+Johannes Sixt wrote:
+> Andreas Ericsson schrieb:
+>> Scott Parish wrote:
+>>> I'm tempted to try a different approach. What if instead of looping
+>>> and building up strings of all the different absolute paths we want
+>>> to try we just prepend to PATH with the correct extra precedence,
+>>> and then call execvp on the command we want?
+>>>
+>>
+>> That's how the original git --exec-dir feature got implemented. 
+>> There's even a nifty function for it in git.c; prepend_to_path(). It's 
+>> a provably workable solution.
 > 
-> 	git checkout yourtopic
-> 	git rebase --onto $newtopic $oldtopic
+> The reason that this was done is for the sake of shell scripts: They 
+> need to have the path that was finally decided as exec-path in $PATH.
 > 
-> which means you probably need to look through the logs for not just
-> pu but also pu@{1}.  A script to break out the topic branches from
-> pu post fetch and store them as proper tracking branches would make
-> this easier, but that much.  If you plan ahead you can save that
-> $oldtopic point so you can do something like this:
+> But I can't think of any negative side effect if *all* exec-path 
+> candidates are in $PATH. It's important, though, that all paths are 
+> absolute because the tools chdir every now and then.
 > 
-> 	git log pu ; # find $newtopic
-> 	git checkout yourtopic
-> 	git rebase --onto $newtopic base-yourtopic
-> 	git tag -f base-yourtopic $newtopic
 
-Yeah, I had thought about writing a little script that would take my
-project's topic branches, and then push them out into the public
-repository under topics/ad/extents-testcases or
-topics/tt/badblocks-cleanup.  That would make it easy to find the head
-of your topic, and once you find that, the base of your-topic isn't
-that hard to find, since it would just be the result of "git-rev-list
-topic ^master | tail -1".
+So long as they're added in "success:failed:failed" order, I don't see
+any issues either. Assuming we stop prepending once we find something
+that works, that should be a non-issue.
 
-One of the reasons I was thinking the above is because most of the
-patches are coming into my end as emailed patch series, and I end up
-tweaking them a lot as I carry them around in the topics branch.  So
-if other people want to see what I've done to a branch after I've done
-a git rebase --interactive, it's easier if they can get access to the
-individual topics branch, so they can extract out the patch series
-while it's being tweaked by me (and possibly others).
-
-This is probably because my view of git has been colored by kernel
-community practices, where patches are normally perfected and get
-rebased a lot (normally in a sub-maintainer or maintainer's tree)
-before they get pushed to Linus, and in my mental model a topic branch
-represents the maintainer's git tree in the central repository.
-
-The extreme end of this would be the classical BitKeeper model, where
-Larry McVoy once argued to me that he didn't like history to *ever* be
-rewound/rewritten, since not only did this interfere with other people
-trees once they had been pushed, but it causes development history to
-be lost, which is always valuable.  (Of course, in the end he did
-write "bk fold", which squashes the last N commits into 1, mainly due
-to customer pressure.)  The kernel viewpoint is to rebase all the
-time, because the history is so huge that we don't *want* to see the
-development history of the rough drafts of features before they get
-merged into mainline.
-
-> It keeps the history shorter in gitk.  But otherwise it isn't bad.
-> Unless you are running into a lot of conflicts every time you rebase
-> and its wasting your time.  ;-)
-
-It sounds like what you are saying here is that the git.git tree takes
-a viewpoint which is slightly between the extremes of the kernel model
-(which does involve resolving rebasing a lot and resolving lots of
-conflicts, but heh, that's not Linus's problem, that's been pushed out
-to the leafs of the developer community, and besides, it strongly
-encourages topics to get merged into the mainline fast), and the
-classical Bitkeeper model, which says that philosophical goodness
-means you should keep *all* development history once it enters the BK SCM.
-
-With git.git, we are essentially throwing away development history
-while it is in 'pu', but once a commit graduates to 'next', we do keep
-the development history forever.  The downside to this is that
-development 'crud' can build up in next; even if all substantive
-commits in 'next' end up graduating to 'master', there will still be
-lots of merge commits that will only be in 'next'.   
-
-I have an emotional bias which tends to treat that excess history as
-toxic waste to be avoided at all costs, but that's probably because
-when you have a git tree as huge as the kernel, life is easier if the
-history is kept as clean as possible.  
-
-Which I suppose is easy enough to do in the git.git model; if you
-throw away the 'next' branch and then rewind it so it is forked off of
-'master' all of that history essentially gets flushed.  The downside
-is that people maintaining topics branches which were forked against
-the old 'next' will need to do some grotty work to rebase their
-patches, so any attempt to rewind next would probably require the
-central maintainer to give plenty of notice, and then on the flag day,
-save 'next' as 'old-next' before rewinding to allow the other
-developers to more easily rebase any private branches they might have.
-
-Hmm, interesting.  A lot of this is quite subtle, or at least the
-impacts of different choices in the git workflow really didn't become
-obvious to me until I started trying I stepped into the central
-maintainer role for a project using git!
-
-							- Ted
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
