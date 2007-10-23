@@ -1,36 +1,40 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] execv_git_cmd(): also try PATH if everything else fails.
-Date: Tue, 23 Oct 2007 00:34:05 -0400
-Message-ID: <20071023043405.GA14735@spearce.org>
-References: <1192867937.v2.fusewebmail-240137@f> <20071020205721.GA16291@srparish.net> <Pine.LNX.4.64.0710202258440.25221@racer.site> <20071021023614.GB14735@spearce.org> <Pine.LNX.4.64.0710212256270.25221@racer.site> <20071022042110.GJ14735@spearce.org> <Pine.LNX.4.64.0710221135100.25221@racer.site>
+Subject: Re: [PATCH] Let git-add--interactive read "git colors" from git-config
+Date: Tue, 23 Oct 2007 00:40:55 -0400
+Message-ID: <20071023044055.GB14735@spearce.org>
+References: <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022163244.4af72973@danzwell.com> <20071022211958.045895ac@danzwell.com> <20071023042956.GC28312@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Scott Parish <sRp@srparish.net>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 23 06:34:26 2007
+Cc: Dan Zwell <dzwell@zwell.net>, Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:42:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkBTD-0001FR-J2
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:34:24 +0200
+	id 1IkBb3-000341-UG
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805AbXJWEeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 00:34:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751792AbXJWEeL
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:34:11 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39357 "EHLO
+	id S1752341AbXJWElJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 00:41:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753677AbXJWElI
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:41:08 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:39547 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751771AbXJWEeK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 00:34:10 -0400
+	with ESMTP id S1753651AbXJWElG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 00:41:06 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IkBSy-0001Md-2I; Tue, 23 Oct 2007 00:34:08 -0400
+	id 1IkBZZ-0001rM-H9; Tue, 23 Oct 2007 00:40:57 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5A6AA20FBAE; Tue, 23 Oct 2007 00:34:06 -0400 (EDT)
+	id E75E820FBAE; Tue, 23 Oct 2007 00:40:55 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710221135100.25221@racer.site>
+In-Reply-To: <20071023042956.GC28312@coredump.intra.peff.net>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,38 +44,33 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62088>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 22 Oct 2007, Shawn O. Pearce wrote:
-> > Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > > Earlier, we tried to find the git commands in several possible exec
-> > > dirs.  Now, if all of these failed, try to find the git command in
-> > > PATH.
-> > ...
-> > > diff --git a/exec_cmd.c b/exec_cmd.c
-> > > index 9b74ed2..70b84b0 100644
-> > > --- a/exec_cmd.c
-> > > +++ b/exec_cmd.c
-> > > @@ -36,7 +36,8 @@ int execv_git_cmd(const char **argv)
-> > >  	int i;
-> > >  	const char *paths[] = { current_exec_path,
-> > >  				getenv(EXEC_PATH_ENVIRONMENT),
-> > > -				builtin_exec_path };
-> > > +				builtin_exec_path,
-> > > +				"" };
-> > 
-> > So if the user sets GIT_EXEC_PATH="" and exports it we'll search $PATH 
-> > before the builtin exec path that Git was compiled with? Are we sure we 
-> > want to do that?
+Jeff King <peff@peff.net> wrote:
+> On Mon, Oct 22, 2007 at 09:19:58PM -0500, Dan Zwell wrote:
 > 
-> I thought the proper way to unset EXEC_PATH was to "unset GIT_EXEC_PATH".  
-> In that case, getenv(EXEC_PATH_ENVIRONMENT) returns NULL and we're fine, 
-> no?
+> > This patch is againts Shawn Pearce's "pu" branch.
+> 
+> Don't do that. The code in 'pu' is a mess of half-working features. If
+> your patch is accepted, then it has to be picked apart from those
+> half-working features that aren't being accepted (which hopefully isn't
+> hard if nobody has been working in the same area, but can be quite
+> ugly).  Base your work on 'master' if possible, or 'next' if it relies
+> on features only in next. If it relies on some topic branch that is
+> _only_ in pu, then mention explicitly which topic.
 
-Sure.  But can't you also export an environment variable that is
-set to the empty string?  At least on UNIX.  Windows thinks unset
-and empty string are the same thing.
+And even when you base work on things in next, don't base it on the
+tip of next.  Base it on a specific topic that is merged into next.
+Next is also a mess of features, but they are more likely to be in
+a working state than the features in pu.
+
+Topics in next will merge to master at different times.  If your
+changes depend on more than one topic that may make it more difficult
+for the maintainer to merge your topic to master.
+
+Fortunately In Dan's case the only topic in pu that impacted
+git-add--interactive was his dz/color-addi topic, so this probably
+applies to the tip of it just as well as it does to the tip of pu.
 
 -- 
 Shawn.
