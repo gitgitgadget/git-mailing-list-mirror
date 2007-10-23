@@ -1,82 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Dissociating a repository from its alternates
-Date: Tue, 23 Oct 2007 01:13:31 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710230112131.25221@racer.site>
-References: <7vabzfhn9q.fsf@assigned-by-dhcp.cox.net>
- <Pine.LNX.4.63.0702151638130.22628@wbgn013.biozentrum.uni-wuerzburg.de>
- <7v8xex50aa.fsf@assigned-by-dhcp.cox.net> <20071022180424.GA17429@ginosko.local>
- <Pine.LNX.4.64.0710221957360.25221@racer.site> <20071022233050.GA18430@ginosko.ndrix.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk patch collection pull request
+Date: Tue, 23 Oct 2007 10:20:47 +1000
+Message-ID: <18205.15967.792413.775786@cargo.ozlabs.ibm.com>
+References: <20071019052823.GI14735@spearce.org>
+	<alpine.LFD.0.999.0710191227340.26902@woody.linux-foundation.org>
+	<18201.34779.27836.531742@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710192149020.3794@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Michael Hendricks <michael@ndrix.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 02:14:15 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 02:21:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik7PS-0005X0-4l
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 02:14:14 +0200
+	id 1Ik7WF-0007Lk-Nh
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 02:21:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751631AbXJWAN6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 20:13:58 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbXJWAN5
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 20:13:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51503 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751310AbXJWAN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 20:13:56 -0400
-Received: (qmail invoked by alias); 23 Oct 2007 00:13:54 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 23 Oct 2007 02:13:54 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18IqiAACZUIEmU8Tk1pA6WMl2P89LWnEWYxuUcFbL
-	ShfEo/Xc4QhUm5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071022233050.GA18430@ginosko.ndrix.org>
-X-Y-GMX-Trusted: 0
+	id S1751257AbXJWAVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 20:21:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750988AbXJWAVD
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 20:21:03 -0400
+Received: from ozlabs.org ([203.10.76.45]:41630 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750703AbXJWAVB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 20:21:01 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 41626DDE33; Tue, 23 Oct 2007 10:21:00 +1000 (EST)
+In-Reply-To: <alpine.LFD.0.999.0710192149020.3794@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62063>
 
-Hi,
+Linus Torvalds writes:
 
-On Mon, 22 Oct 2007, Michael Hendricks wrote:
-
-> On Mon, Oct 22, 2007 at 08:05:58PM +0100, Johannes Schindelin wrote:
-> > On Mon, 22 Oct 2007, Michael Hendricks wrote:
-> > > Was such a script ever incorporated into Git?
+> On Sat, 20 Oct 2007, Paul Mackerras wrote:
 > > 
-> > Not that I know of, but "git repack -a && rm
-> > .git/objects/info/alternates" should do what you want.  You can even
-> > make a script of it, add some documentation and a test case, and earn
-> > git fame by posting a patch ;-)
+> > Do you mean that when you have a file limit, the diff window should
+> > just show the diffs for those files, not any other files the commit
+> > might have modified?
 > 
-> With 1.5.3.4, it doesn't appear to work:
+> Yes. The same way "git log -p" works by default.
 > 
->  $ git clone -s git git2
->  Initialized empty Git repository in /Users/michael/src/git2/.git/
-> 
->  $ cd git2
-> 
->  $ git repack -a && rm .git/objects/info/alternates
->  Generating pack...
->  Done counting 0 objects.
->  Nothing new to pack.
-> 
->  $ git status
->  # On branch master
->  fatal: bad object HEAD
+> With perhaps a checkbox to toggle the "--full-diff" behaviour.
 
-Indeed.  Seems that somewhere along the line, repack learnt to imply "-l" 
-by "-a" or something.  Try this instead of "git repack -a":
+OK, done.  The checkbox is in the Edit/Preferences window.  It's
+called "Limit diffs to listed paths" and it's on by default.
 
-	git rev-parse --all |
-		git pack-objects --revs .git/objects/pack/pack
+> > That would be easy enough to implement in gitk.
+> 
+> Well, the "--merged" case is slightly trickier, since git will figure out 
+> the pathnames on its own (it limits pathnames to the intersection of the 
+> names you give one the command line *and* the list of unmerged files, ie 
+> the "filter" becomes "git ls-files -u [pathspec]".
 
-(And make sure you read the relevant parts of the documentation to 
-understand what you're doing ;-)
+If you use the --merge flag, gitk will do a git ls-files -u at
+startup, and use the result as the list of paths (after intersecting
+it with the paths on the command line, if you specify paths there).
 
-Hth,
-Dscho
+I pondered whether I needed to re-do the git ls-files -u when you
+update the view with File->Update.  I decided not to for now, but it
+would be possible to add it.
+
+> But goodie. I look forward to it ;)
+
+I just pushed it out to my gitk.git repo (master branch).  Enjoy. :)
+
+Paul.
