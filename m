@@ -1,112 +1,61 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add some fancy colors in the test library when terminal supports it.
-Date: Tue, 23 Oct 2007 10:13:27 +0200
-Message-ID: <20071023081327.GA21334@artemis.corp>
-References: <20071022081341.GC32763@artemis.corp> <200710230608.15124.chriscool@tuxfamily.org>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: [RFC/PATCH] git-fetch: mega-terse fetch output
+Date: Tue, 23 Oct 2007 17:39:46 +0900
+Message-ID: <buomyua6x7x.fsf@dhapc248.dev.necel.com>
+References: <20071019062219.GA28499@coredump.intra.peff.net>
+	<ee77f5c20710182339g30d025f0tfe74479d672ae36e@mail.gmail.com>
+	<20071019073938.GN14735@spearce.org>
+	<8aa486160710190303l4ce996daqf5c8025c857ea8@mail.gmail.com>
+	<alpine.LFD.0.9999.0710190913280.19446@xanadu.home>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="EVF5PPMfhYS0aIcm";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 10:13:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Santi =?utf-8?Q?B=C3=A9jar?= <sbejar@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Symonds <dsymonds@gmail.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 10:41:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkEtU-0003b3-FB
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 10:13:44 +0200
+	id 1IkFJz-0003R0-Dw
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 10:41:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751713AbXJWINd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 04:13:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751683AbXJWINc
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 04:13:32 -0400
-Received: from pan.madism.org ([88.191.52.104]:37896 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751564AbXJWINa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 04:13:30 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id DACFF2653A;
-	Tue, 23 Oct 2007 10:13:28 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id A2AB33CC0B2; Tue, 23 Oct 2007 10:13:27 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <200710230608.15124.chriscool@tuxfamily.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751838AbXJWIkp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 04:40:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751815AbXJWIkp
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 04:40:45 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:34489 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751608AbXJWIko (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 04:40:44 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l9N8djSH011066;
+	Tue, 23 Oct 2007 17:39:48 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Tue, 23 Oct 2007 17:39:48 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Tue, 23 Oct 2007 17:39:48 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 8EBF9B67; Tue, 23 Oct 2007 17:39:46 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <alpine.LFD.0.9999.0710190913280.19446@xanadu.home> (Nicolas Pitre's message of "Fri\, 19 Oct 2007 09\:15\:26 -0400 \(EDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62121>
 
+Nicolas Pitre <nico@cam.org> writes:
+> I think the advantage of having only one line of output per branch 
+> really outweight the need for old..new notation.  Do you really benefit 
+> from it?
 
---EVF5PPMfhYS0aIcm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+The "one-line" issue has already been resolved in other messages, but I
+just wanted to say I use this info all the time.
 
-On Tue, Oct 23, 2007 at 04:08:14AM +0000, Christian Couder wrote:
-> Hi Pierre,
->=20
-> Le lundi 22 octobre 2007, Pierre Habouzit a =C3=A9crit :
-> > +
-> > +say_color () {
-> > +	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
-> > +	shift
-> > +	echo "* $*"
-> > +	tput op
-> > +}
-> > +
-> >  error () {
-> > -	echo "* error: $*"
-> > +	say_color 9 "* error: $*"
->=20
-> This will print something like "* * error: ..." instead of "* error: ..."
->=20
-> The following should work:
->=20
-> > +	say_color 9 "error: $*"
->=20
-> By the way, where do the 9 here and the 10 and the -1 below come from ?
-> "man 5 terminfo" says that only values form 0 to 7 are portably defined.
-> Maybe 9 is a bold red and 10 a bold green, or something like that, but it=
-=20
-> doesn't seem to work on my konsole.
+-Miles
 
-Right I should use tput setb or sth like that to ask for bold mode
-probably.
-
-> Anyway, perhaps having:
->=20
-> _red=3D1
-> _green=3D2
->=20
-> and then using "say_color $_red stuff" might be easier to understand and=
-=20
-> change if needed.
-
-Agreed.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---EVF5PPMfhYS0aIcm
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHHa0nvGr7W6HudhwRApsHAJ44LNxaOJly4O0RSfxgWkwbf8FqDwCeNO24
-4HiJe35XUl6bFh21jENA9TM=
-=2axQ
------END PGP SIGNATURE-----
-
---EVF5PPMfhYS0aIcm--
+-- 
+"Suppose He doesn't give a shit?  Suppose there is a God but He
+just doesn't give a shit?"  [George Carlin]
