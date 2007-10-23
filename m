@@ -1,64 +1,76 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
 Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Mon, 22 Oct 2007 19:32:02 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710221930330.30120@woody.linux-foundation.org>
-References: <20071022063222.GS14735@spearce.org>
- <20071022071644.GA7290@coredump.intra.peff.net>
+Date: Mon, 22 Oct 2007 23:34:54 -0400
+Message-ID: <20071023033454.GW14735@spearce.org>
+References: <20071022063222.GS14735@spearce.org> <7vy7du8vv7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 23 04:32:32 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 23 05:35:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik9ZE-0001uf-IZ
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 04:32:29 +0200
+	id 1IkAXv-00065n-NQ
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 05:35:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751677AbXJWCcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 22:32:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751417AbXJWCcQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 22:32:16 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43598 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751512AbXJWCcQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 22:32:16 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9N2W2f7029685
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 22 Oct 2007 19:32:07 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9N2W2rS027733;
-	Mon, 22 Oct 2007 19:32:02 -0700
-In-Reply-To: <20071022071644.GA7290@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-2.721 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751256AbXJWDfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 23:35:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751917AbXJWDfA
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 23:35:00 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:37852 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750891AbXJWDe7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Oct 2007 23:34:59 -0400
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IkAXV-00071P-29; Mon, 22 Oct 2007 23:34:45 -0400
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 4B15420FBAE; Mon, 22 Oct 2007 23:34:55 -0400 (EDT)
+Content-Disposition: inline
+In-Reply-To: <7vy7du8vv7.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62074>
 
+Junio C Hamano <gitster@pobox.com> wrote:
+> Thanks for keeping the git list running smoothly while I was away.
 
-Sorry, I missed this while being busy hacking and not reading email ;)
-
-On Mon, 22 Oct 2007, Jeff King wrote:
+Funny thing.  There's this tool called "git" that makes it really
+easy to fork a project, apply patches straight from email, and
+republish it for others to read and work on top of.  You should
+check it out sometime.  :-)
+ 
+> I've pulled the four integration branches from you, and split
+> out the topic branches out of next and pu so that I can take a
+> look at them individually.  I haven't looked at the actual
+> changes yet (but I do not have to, as long as I can trust
+> capable others), and only skimmed the list messages (about 2200
+> of them since I left).
 > 
-> Patch is below (please just squash with the one from Linus).
+> git.git at k.org and alt-git.git at repo.or.cz should be in sync
+> with you now.  I'll take a look at the recent changes after
+> grabbing some sleep ;-)
 
-Your patch is better than what used to be there, but
+We're glad to have you back.  Or should I say _I'm_ glad to have
+you back.  Never underestimate a man until you've at least walked
+a week in his shoes.  :-)
 
-> -			/* Already picked as a destination? */
-> +			/* Already picked as a source? */
->  			if (!p->src_dst)
->  				continue;
+Most of the patches that happened while you were away were merged
+or parked into my git/spearce.git work (in large part thanks
+to Lars Hjemli's work during the first week you were offline).
+So hopefully you can just pickup from "recent history" (e.g. today
+forward) and if we missed anything really interesting authors can
+repost once you've had a chance to get caught up.
 
-the above is wrong, the whole thing should be dropped (we *want* to be 
-able to re-use sources).
-
-Anyway, the set of fixes I sent out earlier included fixing that stupid 
-loop as one of the things.
-
-		Linus
+-- 
+Shawn.
