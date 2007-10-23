@@ -1,48 +1,48 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: UI and git-completion.sh
-Date: Tue, 23 Oct 2007 15:00:16 -0700
-Message-ID: <471E6EF0.2060403@midwinter.com>
-References: <20071023234617.45a4fc64@paolo-desktop>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/7] Bisect: factorise "bisect_write_*" functions.
+Date: Tue, 23 Oct 2007 15:13:12 -0700
+Message-ID: <7v640x7a4n.fsf@gitster.siamese.dyndns.org>
+References: <20071014142938.d722299c.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 00:00:53 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Oct 24 00:13:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkRne-0003bR-O6
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 00:00:35 +0200
+	id 1IkS0F-0007eQ-7m
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 00:13:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262AbXJWWAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 18:00:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXJWWAX
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 18:00:23 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:44885 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751878AbXJWWAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 18:00:22 -0400
-Received: (qmail 13529 invoked from network); 23 Oct 2007 22:00:21 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=sAasrfQeuVpt8Q7YglbvXoomRJ0WGsZmvimIUBXDU0+RWaVrRRG4tkZZxzGH9FKM  ;
-Received: from localhost (HELO sgrimm-mbp.local) (koreth@127.0.0.1)
-  by localhost with SMTP; 23 Oct 2007 22:00:21 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <20071023234617.45a4fc64@paolo-desktop>
+	id S1754771AbXJWWNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 18:13:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754661AbXJWWNW
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 18:13:22 -0400
+Received: from rune.pobox.com ([208.210.124.79]:46164 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754557AbXJWWNV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 18:13:21 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 2EBEF14EBC8;
+	Tue, 23 Oct 2007 18:13:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 790D814EAD1;
+	Tue, 23 Oct 2007 18:13:36 -0400 (EDT)
+In-Reply-To: <20071014142938.d722299c.chriscool@tuxfamily.org> (Christian
+	Couder's message of "Sun, 14 Oct 2007 14:29:38 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62164>
 
-Paolo Ciarrocchi wrote:
-> What people think about starting suggesting the usage of the script in the documentation?
->   
-Also might be worth mentioning the zsh completion support. (I know it's 
-there, but haven't used it -- maybe its author would care to describe it 
-a bit?)
+Sort of offtopic, but is "factorise" a correct verb here?  I
+thought "factorise" is to express a non prime number as the
+product of prime numbers.
 
--Steve
+"refactor" is the act of splitting and merging pieces of
+functions for better reuse, isn't it?
