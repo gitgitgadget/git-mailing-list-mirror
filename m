@@ -1,76 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Mon, 22 Oct 2007 18:29:59 -0700
-Message-ID: <7vtzoi8voo.fsf@gitster.siamese.dyndns.org>
-References: <20071016060456.GC13801@spearce.org>
-	<Pine.LNX.4.64.0710161209480.25221@racer.site>
-	<20071016195744.GB32132@closure.lan>
-	<7v3aw2aaxu.fsf@gitster.siamese.dyndns.org>
-	<20071023012140.GC22997@thunk.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 23 03:30:23 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH 2/2] gitweb: Use chop_and_escape_str in more places.
+Date: Tue, 23 Oct 2007 11:31:23 +1000
+Message-ID: <11931030851501-git-send-email-dsymonds@gmail.com>
+References: <1193103083390-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
+To: pasky@suse.cz, spearce@spearce.org
+X-From: git-owner@vger.kernel.org Tue Oct 23 03:32:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik8b8-00063T-TG
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 03:30:23 +0200
+	id 1Ik8d8-0006Qs-Ix
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 03:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751655AbXJWBaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 21:30:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751402AbXJWBaJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 21:30:09 -0400
-Received: from rune.pobox.com ([208.210.124.79]:56267 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751245AbXJWBaH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 21:30:07 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 536F214E40E;
-	Mon, 22 Oct 2007 21:30:28 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 6FAE114E410;
-	Mon, 22 Oct 2007 21:30:23 -0400 (EDT)
-In-Reply-To: <20071023012140.GC22997@thunk.org> (Theodore Tso's message of
-	"Mon, 22 Oct 2007 21:21:40 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751679AbXJWBcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 21:32:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbXJWBcK
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 21:32:10 -0400
+Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:49477 "EHLO
+	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751392AbXJWBcJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 21:32:09 -0400
+X-IronPort-AV: E=Sophos;i="4.21,314,1188743400"; 
+   d="scan'208";a="172497348"
+Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
+  by ipmail03.adl2.internode.on.net with ESMTP; 23 Oct 2007 11:01:29 +0930
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <1193103083390-git-send-email-dsymonds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62069>
 
-Theodore Tso <tytso@mit.edu> writes:
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ gitweb/gitweb.perl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-> I assume PU is what you used to build your proposed-update branch?
-> I'm actually trying to use it, and it is useful, although it hasn't
-> been working for me completely perfectly.  I've still been trying to
-> figure out if the reason why it hasn't been working quite right is due
-> to my not understanding how to use it correctly, or whether you don't
-> use it these days.
-
-Ah, these days I almost always do:
-
-	git checkout pu
-	git reset --hard next
-
-and then merge the topics that haven't been merged anywhere by
-hand, using output from
-
-        Meta/git-topic.perl
-
-as the guide.
-
-> One question which I have had about the WC script is that if I
-> manually add a commit to the next branch, it ends up showing up in all
-> of the topic branches as a commit that was part of that topic branch
-> which is in next...
-
-Well, the policy is never to commit directly on top of next
-(iow, only merge other topics and nothing else).  Otherwise it
-becomes hard to allow individual topics graduate to 'master'
-independently.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a835bd1..1b6c823 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3402,7 +3402,7 @@ sub git_project_list_body {
+ 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
+ 		                        -class => "list", -title => $pr->{'descr_long'}},
+ 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+-		      "<td><i>" . esc_html(chop_str($pr->{'owner'}, 15)) . "</i></td>\n";
++		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
+ 		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
+ 		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
+ 		      "<td class=\"link\">" .
+@@ -3657,7 +3657,7 @@ sub git_search_grep_body {
+ 		      "<td><i>" . $author . "</i></td>\n" .
+ 		      "<td>" .
+ 		      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}), -class => "list subject"},
+-			       esc_html(chop_str($co{'title'}, 50)) . "<br/>");
++			       chop_and_escape_str($co{'title'}, 50) . "<br/>");
+ 		my $comment = $co{'comment'};
+ 		foreach my $line (@$comment) {
+ 			if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
+@@ -5173,7 +5173,7 @@ sub git_search {
+ 					      "<td>" .
+ 					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}),
+ 					              -class => "list subject"},
+-					              esc_html(chop_str($co{'title'}, 50)) . "<br/>");
++					              chop_and_escape_str($co{'title'}, 50) . "<br/>");
+ 					while (my $setref = shift @files) {
+ 						my %set = %$setref;
+ 						print $cgi->a({-href => href(action=>"blob", hash_base=>$co{'id'},
+-- 
+1.5.3.1
