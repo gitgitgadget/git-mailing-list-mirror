@@ -1,84 +1,89 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 23 Oct 2007 13:44:36 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710231131320.32497@iabervon.org>
-References: <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org>
- <20071023020044.GA27132@thunk.org> <20071023040522.GX14735@spearce.org>
- <20071023043321.GC27132@thunk.org> <20071023044657.GC14735@spearce.org>
- <20071023045632.GD27132@thunk.org> <20071023050726.GD14735@spearce.org>
- <20071023053003.GE27132@thunk.org> <20071023054238.GE14735@spearce.org>
- <20071023120338.GG27132@thunk.org>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: Re: Howto request: going home in the middle of something?
+Date: Tue, 23 Oct 2007 13:56:55 -0400
+Message-ID: <20071023135655.x6g6mln1j4880wog@intranet.digizenstudio.com>
+References: <200710181144.22655.wielemak@science.uva.nl>
+	<20071018112758.GN18279@machine.or.cz>
+	<200710221044.24191.wielemak@science.uva.nl>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 23 19:45:00 2007
+Content-Type: text/plain;
+	charset=UTF-8;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 8BIT
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org
+To: Jan Wielemaker <wielemak@science.uva.nl>
+X-From: git-owner@vger.kernel.org Tue Oct 23 19:57:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkNoF-0000uT-4L
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:44:55 +0200
+	id 1IkO05-0005pO-ET
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:57:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752234AbXJWRoj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 13:44:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752230AbXJWRoi
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:44:38 -0400
-Received: from iabervon.org ([66.92.72.58]:58730 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752192AbXJWRoh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 13:44:37 -0400
-Received: (qmail 24014 invoked by uid 1000); 23 Oct 2007 17:44:36 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 23 Oct 2007 17:44:36 -0000
-In-Reply-To: <20071023120338.GG27132@thunk.org>
+	id S1752680AbXJWR46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 13:56:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbXJWR46
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:56:58 -0400
+Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:43945
+	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751983AbXJWR45 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 13:56:57 -0400
+Received: (qmail 27306 invoked from network); 23 Oct 2007 17:56:56 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 23 Oct 2007 17:56:56 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 78485100079;
+	Tue, 23 Oct 2007 17:56:56 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RWDV-NqVfW+8; Tue, 23 Oct 2007 13:56:55 -0400 (EDT)
+Received: by ip-72-167-33-213.ip.secureserver.net (Postfix, from userid 48)
+	id 96C2E100099; Tue, 23 Oct 2007 13:56:55 -0400 (EDT)
+Received: from mailrelay3.private.geico.com (mailrelay3.private.geico.com
+	[205.143.204.110]) by intranet.digizenstudio.com (Horde MIME library) with
+	HTTP; Tue, 23 Oct 2007 13:56:55 -0400
+In-Reply-To: <200710221044.24191.wielemak@science.uva.nl>
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62141>
 
-I keep thinking that there should be a better mechanism to use for "pu" 
-than a branch. Normally what you see in "pu" is a sequential merge of 
-"next" and a number of topic branches, where the series of merges is 
-either entirely uninteresting or only interesting in a schematic sense 
-(that is, it is interesting what topics appear, and in what order, but the 
-snapshot of each topic's head when it got merged isn't interesting).
 
-That is, the work which "pu" consists of, and therefore the history is a 
-sequence of steps, each of which is one or more of: "add this topic", 
-"update this topic", "remove this topic", "update to a new next". And we 
-don't keep a record of this history, but it's not what's discarded by 
-rewinding anyway.
+Quoting Jan Wielemaker <wielemak@science.uva.nl>:
 
-I think that, if we actually care about this sort of thing, we'd want to 
-make "pu" a series of commits, each with the previous "pu" as the sole 
-parent, with a series object given in a new header. The series object 
-would start with a "next" commit, and then list the topics merged by name 
-and head-as-merged. Of course, the "pu" commits would contain the 
-resulting tree as normal, so that people without a git that understands 
-this would see "pu" as consisting of a straight line of commits, each of 
-which simply shows the net effect of the changes. Or something like that. 
-I suppose "pu" could also be represented as a superproject where each 
-subproject is "next" or a topic branch, if we really want to avoid 
-introducing new objects, but that seems unweildy somehow.
+> Thanks for the replies.	 I think I can live with something like this
+>
+> 	<work, in the middle of something>
+> 	$ git checkout -b home
+> 	$ git commit
+> 	$ git checkout master
+> 	<arriving at home>
+> 	$ git jan@work:repo fetch home:home	(using ssh)
+> 	$ git checkout home
+> 	<continue editing>
+> 	$ git commit --amend
+> 	$ git checkout master
+> 	$ git merge home
+> 	$ git -d home
+> 	$ git commit
+> 	$ git push
+> 	<arriving at work>
+> 	$ git -d home
+> 	$ git pull
+>
+> Its still a bit many commands and you have to be aware what you are
+> doing for quite a while, but it does provide one single clean commit
+> message, doesn't change the shared repo until all is finished and allows
+> to abandon all work without leaving traces.
 
-Is this worth doing? It might be; I bet it would make debugging -mm a 
-whole lot nicer. (First bisect through -mm to find the action Andrew took 
-that accepted the breakage, then bisect the history within that action.) I 
-bet the status quo is a real pain when the feature that broke is only in 
--mm and later in Andrew's list than the tree whose change triggered the 
-failure (i.e., -mm4 works; -mm5 doesn't work, and everything in -mm5 is 
-either broken or untestable).
+What does the extra branch gain for us here? That's not a rhetorical  
+question, I'm actually curious to learn, because I always just commit,  
+switch to another computer, pull, and reset HEAD^.
 
-And, of course, "origin/pu[db/builtin-fetch]" would be an easy thing to 
-build into git, and it could even generate extra magic, where it knows 
-what the topic was last rebased on, so git could lead people through 
-"rebase everything in a pu collection on the new base for the collection"
-and "make my local topic branch agree with my topic branch as present in 
-origin/pu".
-
-	-Daniel
-*This .sig left intentionally blank*
+Thanks.
+-- 
+Jing Xue
