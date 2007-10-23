@@ -1,86 +1,289 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 23 Oct 2007 00:05:22 -0400
-Message-ID: <20071023040522.GX14735@spearce.org>
-References: <20071016060456.GC13801@spearce.org> <Pine.LNX.4.64.0710161209480.25221@racer.site> <20071016195744.GB32132@closure.lan> <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org> <20071023020044.GA27132@thunk.org>
+From: Scott Parish <sRp@srparish.net>
+Subject: [PATCH trailing ws fixed] use only the PATH for exec'ing git
+	commands
+Date: Mon, 22 Oct 2007 21:08:45 -0700
+Message-ID: <20071023040844.GQ16291@srparish.net>
+References: <20071022170148.GB29642@srparish.net> <20071022190102.GA23714@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 23 06:05:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:09:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkB1O-0003U8-Ld
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:05:49 +0200
+	id 1IkB4c-0004GO-1F
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:08:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751113AbXJWEF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 00:05:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750991AbXJWEF2
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:05:28 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:38589 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750811AbXJWEF1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 00:05:27 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IkB0x-0000Aq-E9; Tue, 23 Oct 2007 00:05:11 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 1A61A20FBAE; Tue, 23 Oct 2007 00:05:22 -0400 (EDT)
+	id S1751393AbXJWEIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 00:08:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXJWEIq
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:08:46 -0400
+Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:38201 "EHLO
+	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751103AbXJWEIq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 00:08:46 -0400
+Received: from mailanyone.net
+	by smtp-gw51.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP srp)
+	id 1IkB4O-0002dQ-Lr; Mon, 22 Oct 2007 23:08:45 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Mon, 22 Oct 2007 21:08:46 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20071023020044.GA27132@thunk.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <20071022190102.GA23714@steel.home>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62080>
 
-Theodore Tso <tytso@mit.edu> wrote:
-> On Mon, Oct 22, 2007 at 06:29:59PM -0700, Junio C Hamano wrote:
-> > Well, the policy is never to commit directly on top of next
-> > (iow, only merge other topics and nothing else).  Otherwise it
-> > becomes hard to allow individual topics graduate to 'master'
-> > independently.
-> 
-> I see.  So if it's non-trivial enough that you want it to "cook" in
-> next for a cycle, you'll create a topic branch for it (based off of
-> 'master'), and then force a merge into 'next'?
+We need to correctly set up PATH for non-c based git commands. Since we
+already do this, we can just use that PATH and execvp, instead of looping
+over the paths with execve.
 
-Yes.  Because 'next' always has commits in it that never appear in
-'master'.  So any topic forked from master must merge into next.
-It can't be a fast-forward.  No forced merging required.
+This patch adds a setup_path() function to exec_cmd.c, which sets
+the PATH order correctly for our search order. execv_git_cmd() is
+stripped down to setting up argv and calling execvp(). git.c's main()
+only only needs to call setup_path().
 
-Of course this isn't true for a new project.  That first topic
-that forked from master to *create* next will be a fast-forward
-as it creates next.  But that's no big deal.  The second topic will
-merge into next, and that first topic can still be merged back into
-master without merging next (or the second topic).
+Signed-off-by: Scott R Parish <srp@srparish.net>
+---
+ exec_cmd.c |  121 ++++++++++++++++++++++++++----------------------------------
+ exec_cmd.h |    1 +
+ git.c      |   43 +++------------------
+ 3 files changed, 60 insertions(+), 105 deletions(-)
 
-I was also doing the same thing Junio already explained to manage
-next and pu while he was away.  Except I shortcut his:
-
-	git checkout pu
-	git reset --hard next
-
-as:
-
-	git branch -f pu next
-	git checkout pu
-
-as I'm was usually already sitting on next.  This saved my poor
-little laptop from a second of IO chugging as it slewed around
-between the two versions.  There were no files to update as it
-switched from next to pu, and pu was already setup for merging
-the proposed topics.  :-)
-
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 8b681d0..c228dbf 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -29,85 +29,68 @@ const char *git_exec_path(void)
+ 	return builtin_exec_path;
+ }
+ 
++static void add_path(struct strbuf *out, const char *path)
++{
++	if (path && strlen(path)) {
++		if (is_absolute_path(path))
++			strbuf_addstr(out, path);
++		else
++			strbuf_addstr(out, make_absolute_path(path));
++
++		strbuf_addch(out, ':');
++	}
++}
++
++void setup_path(const char *cmd_path)
++{
++	const char *old_path = getenv("PATH");
++	struct strbuf new_path;
++
++	strbuf_init(&new_path, 0);
++
++	add_path(&new_path, argv_exec_path);
++	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
++	add_path(&new_path, builtin_exec_path);
++	add_path(&new_path, cmd_path);
++
++	if (old_path)
++		strbuf_addstr(&new_path, old_path);
++	else
++		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
++
++	setenv("PATH", new_path.buf, 1);
++
++	strbuf_release(&new_path);
++}
+ 
+ int execv_git_cmd(const char **argv)
+ {
+-	char git_command[PATH_MAX + 1];
+-	int i;
+-	const char *paths[] = { argv_exec_path,
+-				getenv(EXEC_PATH_ENVIRONMENT),
+-				builtin_exec_path };
+-
+-	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
+-		size_t len;
+-		int rc;
+-		const char *exec_dir = paths[i];
+-		const char *tmp;
+-
+-		if (!exec_dir || !*exec_dir) continue;
+-
+-		if (*exec_dir != '/') {
+-			if (!getcwd(git_command, sizeof(git_command))) {
+-				fprintf(stderr, "git: cannot determine "
+-					"current directory: %s\n",
+-					strerror(errno));
+-				break;
+-			}
+-			len = strlen(git_command);
+-
+-			/* Trivial cleanup */
+-			while (!prefixcmp(exec_dir, "./")) {
+-				exec_dir += 2;
+-				while (*exec_dir == '/')
+-					exec_dir++;
+-			}
+-
+-			rc = snprintf(git_command + len,
+-				      sizeof(git_command) - len, "/%s",
+-				      exec_dir);
+-			if (rc < 0 || rc >= sizeof(git_command) - len) {
+-				fprintf(stderr, "git: command name given "
+-					"is too long.\n");
+-				break;
+-			}
+-		} else {
+-			if (strlen(exec_dir) + 1 > sizeof(git_command)) {
+-				fprintf(stderr, "git: command name given "
+-					"is too long.\n");
+-				break;
+-			}
+-			strcpy(git_command, exec_dir);
+-		}
+-
+-		len = strlen(git_command);
+-		rc = snprintf(git_command + len, sizeof(git_command) - len,
+-			      "/git-%s", argv[0]);
+-		if (rc < 0 || rc >= sizeof(git_command) - len) {
+-			fprintf(stderr,
+-				"git: command name given is too long.\n");
+-			break;
+-		}
++	struct strbuf cmd;
++	const char *tmp;
+ 
+-		/* argv[0] must be the git command, but the argv array
+-		 * belongs to the caller, and my be reused in
+-		 * subsequent loop iterations. Save argv[0] and
+-		 * restore it on error.
+-		 */
++	strbuf_init(&cmd, 0);
++	strbuf_addf(&cmd, "git-%s", argv[0]);
+ 
+-		tmp = argv[0];
+-		argv[0] = git_command;
++	/* argv[0] must be the git command, but the argv array
++	 * belongs to the caller, and my be reused in
++	 * subsequent loop iterations. Save argv[0] and
++	 * restore it on error.
++	 */
++	tmp = argv[0];
++	argv[0] = cmd.buf;
+ 
+-		trace_argv_printf(argv, -1, "trace: exec:");
++	trace_argv_printf(argv, -1, "trace: exec:");
+ 
+-		/* execve() can only ever return if it fails */
+-		execve(git_command, (char **)argv, environ);
++	/* execvp() can only ever return if it fails */
++	execvp(cmd.buf, (char **)argv);
+ 
+-		trace_printf("trace: exec failed: %s\n", strerror(errno));
++	trace_printf("trace: exec failed: %s\n", strerror(errno));
+ 
+-		argv[0] = tmp;
+-	}
+-	return -1;
++	argv[0] = tmp;
+ 
++	strbuf_release(&cmd);
++
++	return -1;
+ }
+ 
+ 
+diff --git a/exec_cmd.h b/exec_cmd.h
+index da99287..a892355 100644
+--- a/exec_cmd.h
++++ b/exec_cmd.h
+@@ -3,6 +3,7 @@
+ 
+ extern void git_set_argv_exec_path(const char *exec_path);
+ extern const char* git_exec_path(void);
++extern void setup_path(const char *);
+ extern int execv_git_cmd(const char **argv); /* NULL terminated */
+ extern int execl_git_cmd(const char *cmd, ...);
+ 
+diff --git a/git.c b/git.c
+index f659338..a639e42 100644
+--- a/git.c
++++ b/git.c
+@@ -6,28 +6,6 @@
+ const char git_usage_string[] =
+ 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
+ 
+-static void prepend_to_path(const char *dir, int len)
+-{
+-	const char *old_path = getenv("PATH");
+-	char *path;
+-	int path_len = len;
+-
+-	if (!old_path)
+-		old_path = "/usr/local/bin:/usr/bin:/bin";
+-
+-	path_len = len + strlen(old_path) + 1;
+-
+-	path = xmalloc(path_len + 1);
+-
+-	memcpy(path, dir, len);
+-	path[len] = ':';
+-	memcpy(path + len + 1, old_path, path_len - len);
+-
+-	setenv("PATH", path, 1);
+-
+-	free(path);
+-}
+-
+ static int handle_options(const char*** argv, int* argc, int* envchanged)
+ {
+ 	int handled = 0;
+@@ -403,7 +381,7 @@ int main(int argc, const char **argv)
+ {
+ 	const char *cmd = argv[0] ? argv[0] : "git-help";
+ 	char *slash = strrchr(cmd, '/');
+-	const char *exec_path = NULL;
++	const char *cmd_path = NULL;
+ 	int done_alias = 0;
+ 
+ 	/*
+@@ -413,10 +391,7 @@ int main(int argc, const char **argv)
+ 	 */
+ 	if (slash) {
+ 		*slash++ = 0;
+-		if (*cmd == '/')
+-			exec_path = cmd;
+-		else
+-			exec_path = xstrdup(make_absolute_path(cmd));
++		cmd_path = cmd;
+ 		cmd = slash;
+ 	}
+ 
+@@ -451,16 +426,12 @@ int main(int argc, const char **argv)
+ 	cmd = argv[0];
+ 
+ 	/*
+-	 * We execute external git command via execv_git_cmd(),
+-	 * which looks at "--exec-path" option, GIT_EXEC_PATH
+-	 * environment, and $(gitexecdir) in Makefile while built,
+-	 * in this order.  For scripted commands, we prepend
+-	 * the value of the exec_path variable to the PATH.
++	 * We use PATH to find git commands, but we prepend some higher
++	 * precidence paths: the "--exec-path" option, the GIT_EXEC_PATH
++	 * environment, and the $(gitexecdir) from the Makefile at build
++	 * time.
+ 	 */
+-	if (exec_path)
+-		prepend_to_path(exec_path, strlen(exec_path));
+-	exec_path = git_exec_path();
+-	prepend_to_path(exec_path, strlen(exec_path));
++	setup_path(cmd_path);
+ 
+ 	while (1) {
+ 		/* See if it's an internal command */
 -- 
-Shawn.
+gitgui.0.8.4.11176.gd9205-dirty
