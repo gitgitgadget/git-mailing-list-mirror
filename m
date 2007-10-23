@@ -1,71 +1,116 @@
-From: Sven Herzberg <sven@imendio.com>
-Subject: git-annotate - leaking hundrets of megabytes
-Date: Tue, 23 Oct 2007 19:00:34 +0200
-Message-ID: <471E28B2.7020508@imendio.com>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: unmerging feature branches
+Date: Tue, 23 Oct 2007 19:16:11 +0200
+Message-ID: <20071023171611.GA18783@piper.oerlikon.madduck.net>
+References: <20071023152445.GA10070@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 23 19:01:51 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ibTvN161/egqYuK8"
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 19:16:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkN7j-0006wA-QF
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:01:00 +0200
+	id 1IkNN0-0005f1-S0
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 19:16:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753909AbXJWRAo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 13:00:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753903AbXJWRAo
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:00:44 -0400
-Received: from holken.mikan.net ([83.145.56.183]:60201 "EHLO holken.mikan.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753905AbXJWRAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 13:00:43 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by holken.mikan.net (Postfix) with ESMTP id 210E914582
-	for <git@vger.kernel.org>; Tue, 23 Oct 2007 19:00:39 +0200 (CEST)
-Received: from holken.mikan.net ([127.0.0.1])
-	by localhost (holken.mikan.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 10344-03 for <git@vger.kernel.org>;
-	Tue, 23 Oct 2007 19:00:36 +0200 (CEST)
-Received: from [192.168.2.102] (p548FFF58.dip.t-dialin.net [84.143.255.88])
-	by holken.mikan.net (Postfix) with ESMTP id EEDE214571
-	for <git@vger.kernel.org>; Tue, 23 Oct 2007 19:00:35 +0200 (CEST)
-User-Agent: Thunderbird 1.5.0.13 (X11/20070824)
-X-Virus-Scanned: Debian amavisd-new at holken.mikan.net
-X-Spam-Status: No, score=-97.544 tagged_above=-999 required=4
-	tests=[AWL=0.368, RCVD_IN_SORBS_DUL=2.088, USER_IN_WHITELIST=-100]
-X-Spam-Score: -97.544
-X-Spam-Level: 
+	id S1751992AbXJWRQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 13:16:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751862AbXJWRQf
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 13:16:35 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:40458 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbXJWRQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 13:16:34 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id C5F8EA800D;
+	Tue, 23 Oct 2007 19:16:38 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 5865E9F13B;
+	Tue, 23 Oct 2007 19:16:12 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 44B4A4408; Tue, 23 Oct 2007 19:16:11 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4574/Tue Oct 23 16:57:10 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62138>
 
-Hey,
 
-I just started to write a small tool that's supposed to provide a
-graphical annotation view. It's supposed to display the information of
-git-annotate and provide a way to browse through the history (so people
-can click on links that refer to older revisions, etc.). According to
-the man page of git-annotate, I looked into the incremental mode to make
-sure the tool can load the information step by step.
+--ibTvN161/egqYuK8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-However, to make sure the user interface doesn't block while
-"git-annotate --incremental" is running, I decided to take a really slow
-annotation while developing and then I saw that git-annotate leaks
-*lots* of memory (at least in that use-case).
+also sprach Linus Torvalds <torvalds@linux-foundation.org> [2007.10.23.1850=
+ +0200]:
+> First off, let me say that to some degree, what you ask for is not=20
+> possible. Why?
+>=20
+> Since you have pushed out the stuff, and don't want to rewrite history=20
+> (which would result in trouble for down-streams - and I heartily approve)=
+,=20
+> whatever you do will always have that merge in the commit history.
+>=20
+> And that means that while you can certainly undo the *data* that the merg=
+e=20
+> brought in, git will always know that you already merged up that branch.=
+=20
 
-In my example, it used up to 450MB:
-http://people.imendio.com/~sven/massif.18740.png
+This is precisely what I meant, sorry for not being clear. This is
+what git-revert does...
 
-Reproduce:
-1. git clone git://git.webkit.org/WebKit.git
-2. cd WebKit/WebCore
-3. git-annotate --incremental ChangeLog
+> So you can revert the data, but then if you want to get it back, you'll=
+=20
+> need to revert the revert - you cannot just merge the branch again.=20
 
-Regards,
-  Sven
+Ouch!
 
-PS: Please CC me as I'm not on the list.
+> 	# You now have the "temporary" branch that contains just the
+> 	# diff that effectively undoes that one merge. Go back to the
+> 	# tip of your development, and cherry-pick it to get git to
+> 	# help you do a good job merging it with all the subsequent
+> 	# development
+
+Ah, that's a good idea.
+
+Thanks for your time and input!
+
+PS: this question of mine came out of a discussion on using Git for
+Debian packaging: what happens when we actually need to remove
+a feature from one package to the next:
+  http://lists.madduck.net/pipermail/vcs-pkg/2007-October/000059.html
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+#define emacs eighty megabytes and constantly swapping.
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--ibTvN161/egqYuK8
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHHixbIgvIgzMMSnURAvTSAJkBquqn7vFCF51dF4Dq6U2qBLA9KwCbBT4G
+3zA7pWuPgeocGIcQaENB5H8=
+=grQP
+-----END PGP SIGNATURE-----
+
+--ibTvN161/egqYuK8--
