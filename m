@@ -1,289 +1,71 @@
-From: Scott Parish <sRp@srparish.net>
-Subject: [PATCH trailing ws fixed] use only the PATH for exec'ing git
-	commands
-Date: Mon, 22 Oct 2007 21:08:45 -0700
-Message-ID: <20071023040844.GQ16291@srparish.net>
-References: <20071022170148.GB29642@srparish.net> <20071022190102.GA23714@steel.home>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] Let git-add--interactive read colors from
+	git-config
+Date: Tue, 23 Oct 2007 00:27:02 -0400
+Message-ID: <20071023042702.GB28312@coredump.intra.peff.net>
+References: <471045DA.5050902@gmail.com> <19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com> <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022164048.71a3dceb@danzwell.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Tue Oct 23 06:09:00 2007
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Dan Zwell <dzwell@zwell.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:27:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkB4c-0004GO-1F
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:08:58 +0200
+	id 1IkBMQ-0008B7-9D
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:27:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751393AbXJWEIr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 00:08:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXJWEIq
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:08:46 -0400
-Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:38201 "EHLO
-	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103AbXJWEIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 00:08:46 -0400
-Received: from mailanyone.net
-	by smtp-gw51.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1IkB4O-0002dQ-Lr; Mon, 22 Oct 2007 23:08:45 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Mon, 22 Oct 2007 21:08:46 -0700 (PDT)
+	id S1751359AbXJWE1J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 00:27:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751348AbXJWE1I
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:27:08 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1636 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750846AbXJWE1H (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 00:27:07 -0400
+Received: (qmail 31410 invoked by uid 111); 23 Oct 2007 04:27:03 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 23 Oct 2007 00:27:03 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Oct 2007 00:27:02 -0400
 Content-Disposition: inline
-In-Reply-To: <20071022190102.GA23714@steel.home>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+In-Reply-To: <20071022164048.71a3dceb@danzwell.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62081>
 
-We need to correctly set up PATH for non-c based git commands. Since we
-already do this, we can just use that PATH and execvp, instead of looping
-over the paths with execve.
+On Mon, Oct 22, 2007 at 04:40:48PM -0500, Dan Zwell wrote:
 
-This patch adds a setup_path() function to exec_cmd.c, which sets
-the PATH order correctly for our search order. execv_git_cmd() is
-stripped down to setting up argv and calling execvp(). git.c's main()
-only only needs to call setup_path().
+> Note: the code to parse git-style color strings to perl-style color
+> strings should eventually be added to Git.pm so that other (perl)
+> parts of git can be configured to read colors from .gitconfig in
+> a nicer way. A git-style string is "ul red black", while perl 
+> likes strings like "underline red on_black".
 
-Signed-off-by: Scott R Parish <srp@srparish.net>
----
- exec_cmd.c |  121 ++++++++++++++++++++++++++----------------------------------
- exec_cmd.h |    1 +
- git.c      |   43 +++------------------
- 3 files changed, 60 insertions(+), 105 deletions(-)
+Why not do it as part of this patch, then?
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 8b681d0..c228dbf 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -29,85 +29,68 @@ const char *git_exec_path(void)
- 	return builtin_exec_path;
- }
- 
-+static void add_path(struct strbuf *out, const char *path)
-+{
-+	if (path && strlen(path)) {
-+		if (is_absolute_path(path))
-+			strbuf_addstr(out, path);
-+		else
-+			strbuf_addstr(out, make_absolute_path(path));
-+
-+		strbuf_addch(out, ':');
-+	}
-+}
-+
-+void setup_path(const char *cmd_path)
-+{
-+	const char *old_path = getenv("PATH");
-+	struct strbuf new_path;
-+
-+	strbuf_init(&new_path, 0);
-+
-+	add_path(&new_path, argv_exec_path);
-+	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
-+	add_path(&new_path, builtin_exec_path);
-+	add_path(&new_path, cmd_path);
-+
-+	if (old_path)
-+		strbuf_addstr(&new_path, old_path);
-+	else
-+		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
-+
-+	setenv("PATH", new_path.buf, 1);
-+
-+	strbuf_release(&new_path);
-+}
- 
- int execv_git_cmd(const char **argv)
- {
--	char git_command[PATH_MAX + 1];
--	int i;
--	const char *paths[] = { argv_exec_path,
--				getenv(EXEC_PATH_ENVIRONMENT),
--				builtin_exec_path };
--
--	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
--		size_t len;
--		int rc;
--		const char *exec_dir = paths[i];
--		const char *tmp;
--
--		if (!exec_dir || !*exec_dir) continue;
--
--		if (*exec_dir != '/') {
--			if (!getcwd(git_command, sizeof(git_command))) {
--				fprintf(stderr, "git: cannot determine "
--					"current directory: %s\n",
--					strerror(errno));
--				break;
--			}
--			len = strlen(git_command);
--
--			/* Trivial cleanup */
--			while (!prefixcmp(exec_dir, "./")) {
--				exec_dir += 2;
--				while (*exec_dir == '/')
--					exec_dir++;
--			}
--
--			rc = snprintf(git_command + len,
--				      sizeof(git_command) - len, "/%s",
--				      exec_dir);
--			if (rc < 0 || rc >= sizeof(git_command) - len) {
--				fprintf(stderr, "git: command name given "
--					"is too long.\n");
--				break;
--			}
--		} else {
--			if (strlen(exec_dir) + 1 > sizeof(git_command)) {
--				fprintf(stderr, "git: command name given "
--					"is too long.\n");
--				break;
--			}
--			strcpy(git_command, exec_dir);
--		}
--
--		len = strlen(git_command);
--		rc = snprintf(git_command + len, sizeof(git_command) - len,
--			      "/git-%s", argv[0]);
--		if (rc < 0 || rc >= sizeof(git_command) - len) {
--			fprintf(stderr,
--				"git: command name given is too long.\n");
--			break;
--		}
-+	struct strbuf cmd;
-+	const char *tmp;
- 
--		/* argv[0] must be the git command, but the argv array
--		 * belongs to the caller, and my be reused in
--		 * subsequent loop iterations. Save argv[0] and
--		 * restore it on error.
--		 */
-+	strbuf_init(&cmd, 0);
-+	strbuf_addf(&cmd, "git-%s", argv[0]);
- 
--		tmp = argv[0];
--		argv[0] = git_command;
-+	/* argv[0] must be the git command, but the argv array
-+	 * belongs to the caller, and my be reused in
-+	 * subsequent loop iterations. Save argv[0] and
-+	 * restore it on error.
-+	 */
-+	tmp = argv[0];
-+	argv[0] = cmd.buf;
- 
--		trace_argv_printf(argv, -1, "trace: exec:");
-+	trace_argv_printf(argv, -1, "trace: exec:");
- 
--		/* execve() can only ever return if it fails */
--		execve(git_command, (char **)argv, environ);
-+	/* execvp() can only ever return if it fails */
-+	execvp(cmd.buf, (char **)argv);
- 
--		trace_printf("trace: exec failed: %s\n", strerror(errno));
-+	trace_printf("trace: exec failed: %s\n", strerror(errno));
- 
--		argv[0] = tmp;
--	}
--	return -1;
-+	argv[0] = tmp;
- 
-+	strbuf_release(&cmd);
-+
-+	return -1;
- }
- 
- 
-diff --git a/exec_cmd.h b/exec_cmd.h
-index da99287..a892355 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -3,6 +3,7 @@
- 
- extern void git_set_argv_exec_path(const char *exec_path);
- extern const char* git_exec_path(void);
-+extern void setup_path(const char *);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
- extern int execl_git_cmd(const char *cmd, ...);
- 
-diff --git a/git.c b/git.c
-index f659338..a639e42 100644
---- a/git.c
-+++ b/git.c
-@@ -6,28 +6,6 @@
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
- 
--static void prepend_to_path(const char *dir, int len)
--{
--	const char *old_path = getenv("PATH");
--	char *path;
--	int path_len = len;
--
--	if (!old_path)
--		old_path = "/usr/local/bin:/usr/bin:/bin";
--
--	path_len = len + strlen(old_path) + 1;
--
--	path = xmalloc(path_len + 1);
--
--	memcpy(path, dir, len);
--	path[len] = ':';
--	memcpy(path + len + 1, old_path, path_len - len);
--
--	setenv("PATH", path, 1);
--
--	free(path);
--}
--
- static int handle_options(const char*** argv, int* argc, int* envchanged)
- {
- 	int handled = 0;
-@@ -403,7 +381,7 @@ int main(int argc, const char **argv)
- {
- 	const char *cmd = argv[0] ? argv[0] : "git-help";
- 	char *slash = strrchr(cmd, '/');
--	const char *exec_path = NULL;
-+	const char *cmd_path = NULL;
- 	int done_alias = 0;
- 
- 	/*
-@@ -413,10 +391,7 @@ int main(int argc, const char **argv)
- 	 */
- 	if (slash) {
- 		*slash++ = 0;
--		if (*cmd == '/')
--			exec_path = cmd;
--		else
--			exec_path = xstrdup(make_absolute_path(cmd));
-+		cmd_path = cmd;
- 		cmd = slash;
- 	}
- 
-@@ -451,16 +426,12 @@ int main(int argc, const char **argv)
- 	cmd = argv[0];
- 
- 	/*
--	 * We execute external git command via execv_git_cmd(),
--	 * which looks at "--exec-path" option, GIT_EXEC_PATH
--	 * environment, and $(gitexecdir) in Makefile while built,
--	 * in this order.  For scripted commands, we prepend
--	 * the value of the exec_path variable to the PATH.
-+	 * We use PATH to find git commands, but we prepend some higher
-+	 * precidence paths: the "--exec-path" option, the GIT_EXEC_PATH
-+	 * environment, and the $(gitexecdir) from the Makefile at build
-+	 * time.
- 	 */
--	if (exec_path)
--		prepend_to_path(exec_path, strlen(exec_path));
--	exec_path = git_exec_path();
--	prepend_to_path(exec_path, strlen(exec_path));
-+	setup_path(cmd_path);
- 
- 	while (1) {
- 		/* See if it's an internal command */
--- 
-gitgui.0.8.4.11176.gd9205-dirty
+> +	# Sane (visible) defaults:
+> +	if (! @git_prompt_color) {
+> +		@git_prompt_color = ("blue", "bold");
+> +	}
+
+I think it might be a bit more readable to keep the assignment and
+defaults together:
+
+  my @git_prompt_color = split /\s+/,
+    qx(git config --get color.interactive.prompt) || 'blue bold';
+
+Though I wonder why we are splitting here at all, since we just end up
+converting the list into a scalar below. And if we just turned that into
+a function, we could get a nice:
+
+  my $prompt_color = git_color_to_ansicolor(
+    qx(git config --get color.interactive.prompt) || 'blue bold');
+
+-Peff
