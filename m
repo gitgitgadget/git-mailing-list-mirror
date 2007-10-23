@@ -1,71 +1,52 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: stash clear, was Re: git: avoiding merges, rebasing
-Date: Tue, 23 Oct 2007 17:55:02 +0900
-Message-ID: <buohcki6wih.fsf@dhapc248.dev.necel.com>
-References: <200709301421.52192.bruno@clisp.org>
-	<200710020347.43733.bruno@clisp.org>
-	<4AD64749-F4A3-4A61-B1EE-D12523293661@lrde.epita.fr>
-	<200710021350.54625.bruno@clisp.org> <47023699.3080606@byu.net>
-	<Pine.LNX.4.64.0710191533490.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: gitk still interested in translations?
+Date: Tue, 23 Oct 2007 20:17:48 +1000
+Message-ID: <18205.51788.329558.665318@cargo.ozlabs.ibm.com>
+References: <20070727165318.e96b1yxxwsooo884@webmail.tu-harburg.de>
+	<20070727170300.t01ku4u2sg04sgsk@webmail.tu-harburg.de>
+	<18090.44123.905869.974967@cargo.ozlabs.ibm.com>
+	<200710211454.23143.stimming@tuhh.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Eric Blake <ebb9@byu.net>, bug-gnulib@gnu.org,
-	Bruno Haible <bruno@clisp.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Oct 23 10:56:00 2007
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Tue Oct 23 12:28:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkFYA-00083l-EA
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 10:55:46 +0200
+	id 1IkGzl-0003HJ-Pn
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 12:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220AbXJWIz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 04:55:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752189AbXJWIz2
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 04:55:28 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:42792 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752057AbXJWIz0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 04:55:26 -0400
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l9N8su9G004204;
-	Tue, 23 Oct 2007 17:55:02 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay31.aps.necel.com with ESMTP; Tue, 23 Oct 2007 17:55:02 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay11.aps.necel.com with ESMTP; Tue, 23 Oct 2007 17:55:02 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 70E4AB67; Tue, 23 Oct 2007 17:55:02 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <Pine.LNX.4.64.0710191533490.16728@wbgn129.biozentrum.uni-wuerzburg.de> (Johannes Schindelin's message of "Fri\, 19 Oct 2007 15\:37\:37 +0200 \(CEST\)")
+	id S1751713AbXJWK2K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 06:28:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751682AbXJWK2J
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 06:28:09 -0400
+Received: from ozlabs.org ([203.10.76.45]:40317 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751601AbXJWK2I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 06:28:08 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 53A16DDF34; Tue, 23 Oct 2007 20:28:06 +1000 (EST)
+In-Reply-To: <200710211454.23143.stimming@tuhh.de>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62124>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Instead, how about writing a stash pop?  "git stash pop [<stash>]".  It 
-> would literally just call git stash apply && git reflog delete.  Should 
-> not be too difficult, now that I provided "git reflog delete" ;-)
->
-> Maybe even deprecating "git stash clear", or doing away with it 
-> altogether.
+Christian Stimming writes:
 
-That would match my usual usage well.
+> What is the progress on your i18n plans in gitk? None of the patches had been 
+> applied to gitk, have they? If you say you *are* interested, I'd be happy to 
+> provide an up-to-date patch against gitk.git @ kernel.org for #1 Makefile 
+> rules, #2 msgcat integration, and most importantly #3 message markup.
 
-Actually, I really like the way the tla (arch) "undo" and "redo"
-commands work:  "tla undo" is roughly equivalent to "git stash", but by
-default chooses a name with an appended integer which is one greater
-than the greatest existing "stash" (to use git terminology).  "tla redo"
-by default applies the last saved value and deletes it.  So basically
-push and pop.  Usually, of course, you only use one level, but on the
-occasions when you want more, it feels very natural.
+No, I haven't put in any of the i18n stuff.  I would certainly be
+interested in seeing the patches, and I will probably apply them.
 
-I dunno how this would work with stash, but push/pop functionality would
-be good...
+What was the resolution about where to install the mesesage catalogs?
 
--Miles
-
--- 
-Saa, shall we dance?  (from a dance-class advertisement)
+Regards,
+Paul.
