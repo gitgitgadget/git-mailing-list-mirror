@@ -1,8 +1,7 @@
 From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH 2/2] gitweb: Use chop_and_escape_str in more places.
-Date: Tue, 23 Oct 2007 11:31:23 +1000
-Message-ID: <11931030851501-git-send-email-dsymonds@gmail.com>
-References: <1193103083390-git-send-email-dsymonds@gmail.com>
+Subject: [PATCH 1/2] gitweb: Refactor abbreviation-with-title-attribute code.
+Date: Tue, 23 Oct 2007 11:31:22 +1000
+Message-ID: <1193103083390-git-send-email-dsymonds@gmail.com>
 Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
 To: pasky@suse.cz, spearce@spearce.org
 X-From: git-owner@vger.kernel.org Tue Oct 23 03:32:28 2007
@@ -10,63 +9,115 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ik8d8-0006Qs-Ix
+	id 1Ik8d9-0006Qs-7X
 	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 03:32:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751679AbXJWBcL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 21:32:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbXJWBcK
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 21:32:10 -0400
+	id S1751701AbXJWBcM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Oct 2007 21:32:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751635AbXJWBcM
+	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 21:32:12 -0400
 Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:49477 "EHLO
 	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751392AbXJWBcJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 21:32:09 -0400
+	by vger.kernel.org with ESMTP id S1751402AbXJWBcK (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Oct 2007 21:32:10 -0400
 X-IronPort-AV: E=Sophos;i="4.21,314,1188743400"; 
-   d="scan'208";a="172497348"
+   d="scan'208";a="172497340"
 Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
-  by ipmail03.adl2.internode.on.net with ESMTP; 23 Oct 2007 11:01:29 +0930
+  by ipmail03.adl2.internode.on.net with ESMTP; 23 Oct 2007 11:01:28 +0930
 X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <1193103083390-git-send-email-dsymonds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62070>
 
 Signed-off-by: David Symonds <dsymonds@gmail.com>
 ---
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ gitweb/gitweb.perl |   45 +++++++++++++++++++++------------------------
+ 1 files changed, 21 insertions(+), 24 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a835bd1..1b6c823 100755
+index ea84c75..a835bd1 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -3402,7 +3402,7 @@ sub git_project_list_body {
- 		      "<td>" . $cgi->a({-href => href(project=>$pr->{'path'}, action=>"summary"),
- 		                        -class => "list", -title => $pr->{'descr_long'}},
- 		                        esc_html($pr->{'descr'})) . "</td>\n" .
--		      "<td><i>" . esc_html(chop_str($pr->{'owner'}, 15)) . "</i></td>\n";
-+		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></td>\n";
- 		print "<td class=\"". age_class($pr->{'age'}) . "\">" .
- 		      (defined $pr->{'age_string'} ? $pr->{'age_string'} : "No commits") . "</td>\n" .
- 		      "<td class=\"link\">" .
-@@ -3657,7 +3657,7 @@ sub git_search_grep_body {
+@@ -842,6 +842,23 @@ sub chop_str {
+ 	return "$body$tail";
+ }
+ 
++# takes the same arguments as chop_str, but also wraps a <span> around the
++# result with a title attribute if it does get chopped. Additionally, the
++# string is HTML-escaped.
++sub chop_and_escape_str {
++	my $str = shift;
++	my $len = shift;
++	my $add_len = shift || 10;
++
++	my $chopped = chop_str($str, $len, $add_len);
++	if ($chopped eq $str) {
++		return esc_html($chopped);
++	} else {
++		return qq{<span title="} . esc_html($str) . qq{">} .
++			esc_html($chopped) . qq{</span>};
++	}
++}
++
+ ## ----------------------------------------------------------------------
+ ## functions returning short strings
+ 
+@@ -3427,12 +3444,7 @@ sub git_shortlog_body {
+ 			print "<tr class=\"light\">\n";
+ 		}
+ 		$alternate ^= 1;
+-		my $author = chop_str($co{'author_name'}, 10);
+-		if ($author ne $co{'author_name'}) {
+-			$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
+-		} else {
+-			$author = esc_html($author);
+-		}
++		my $author = chop_and_escape_str($co{'author_name'}, 10);
+ 		# git_summary() used print "<td><i>$co{'age_string'}</i></td>\n" .
+ 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+ 		      "<td><i>" . $author . "</i></td>\n" .
+@@ -3484,12 +3496,7 @@ sub git_history_body {
+ 		}
+ 		$alternate ^= 1;
+ 	# shortlog uses      chop_str($co{'author_name'}, 10)
+-		my $author = chop_str($co{'author_name'}, 15, 3);
+-		if ($author ne $co{'author_name'}) {
+-			"<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
+-		} else {
+-			$author = esc_html($author);
+-		}
++		my $author = chop_and_escape_str($co{'author_name'}, 15, 3);
+ 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+ 		      "<td><i>" . $author . "</i></td>\n" .
+ 		      "<td>";
+@@ -3645,12 +3652,7 @@ sub git_search_grep_body {
+ 			print "<tr class=\"light\">\n";
+ 		}
+ 		$alternate ^= 1;
+-		my $author = chop_str($co{'author_name'}, 15, 5);
+-		if ($author ne $co{'author_name'}) {
+-			$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
+-		} else {
+-			$author = esc_html($author);
+-		}
++		my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
+ 		print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
  		      "<td><i>" . $author . "</i></td>\n" .
  		      "<td>" .
- 		      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}), -class => "list subject"},
--			       esc_html(chop_str($co{'title'}, 50)) . "<br/>");
-+			       chop_and_escape_str($co{'title'}, 50) . "<br/>");
- 		my $comment = $co{'comment'};
- 		foreach my $line (@$comment) {
- 			if ($line =~ m/^(.*)($search_regexp)(.*)$/i) {
-@@ -5173,7 +5173,7 @@ sub git_search {
+@@ -5165,12 +5167,7 @@ sub git_search {
+ 						print "<tr class=\"light\">\n";
+ 					}
+ 					$alternate ^= 1;
+-					my $author = chop_str($co{'author_name'}, 15, 5);
+-					if ($author ne $co{'author_name'}) {
+-						$author = "<span title=\"" . esc_html($co{'author_name'}) . "\">" . esc_html($author) . "</span>";
+-					} else {
+-						$author = esc_html($author);
+-					}
++					my $author = chop_and_escape_str($co{'author_name'}, 15, 5);
+ 					print "<td title=\"$co{'age_string_age'}\"><i>$co{'age_string_date'}</i></td>\n" .
+ 					      "<td><i>" . $author . "</i></td>\n" .
  					      "<td>" .
- 					      $cgi->a({-href => href(action=>"commit", hash=>$co{'id'}),
- 					              -class => "list subject"},
--					              esc_html(chop_str($co{'title'}, 50)) . "<br/>");
-+					              chop_and_escape_str($co{'title'}, 50) . "<br/>");
- 					while (my $setref = shift @files) {
- 						my %set = %$setref;
- 						print $cgi->a({-href => href(action=>"blob", hash_base=>$co{'id'},
 -- 
 1.5.3.1
