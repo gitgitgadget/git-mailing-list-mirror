@@ -1,95 +1,122 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 23 Oct 2007 12:00:38 -0700
-Message-ID: <7vtzoh7j1l.fsf@gitster.siamese.dyndns.org>
-References: <20071023012140.GC22997@thunk.org>
-	<7vtzoi8voo.fsf@gitster.siamese.dyndns.org>
-	<20071023020044.GA27132@thunk.org>
-	<20071023040522.GX14735@spearce.org>
-	<20071023043321.GC27132@thunk.org>
-	<20071023044657.GC14735@spearce.org>
-	<20071023045632.GD27132@thunk.org>
-	<20071023050726.GD14735@spearce.org>
-	<20071023053003.GE27132@thunk.org>
-	<20071023054238.GE14735@spearce.org>
-	<20071023120338.GG27132@thunk.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: unmerging feature branches
+Date: Tue, 23 Oct 2007 21:17:38 +0200
+Message-ID: <20071023191738.GA24575@piper.oerlikon.madduck.net>
+References: <20071023152445.GA10070@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org> <20071023171611.GA18783@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org> <20071023180825.GA20343@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710231115060.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 23 21:01:15 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="pf9I7BMVVzbSWLtt"
+To: Linus Torvalds <torvalds@linux-foundation.org>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 21:18:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkOzs-0005PL-6i
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:01:00 +0200
+	id 1IkPGJ-0002sF-Ln
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbXJWTAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 15:00:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbXJWTAs
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:00:48 -0400
-Received: from rune.pobox.com ([208.210.124.79]:42641 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752152AbXJWTAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 15:00:47 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 44CB714E8B9;
-	Tue, 23 Oct 2007 15:01:08 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id E84F614EAC1;
-	Tue, 23 Oct 2007 15:01:02 -0400 (EDT)
-In-Reply-To: <20071023120338.GG27132@thunk.org> (Theodore Tso's message of
-	"Tue, 23 Oct 2007 08:03:38 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752255AbXJWTRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 15:17:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752127AbXJWTRr
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:17:47 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:51828 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752234AbXJWTRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 15:17:47 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id E38B3A8068;
+	Tue, 23 Oct 2007 21:17:55 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 0C35A9F13B;
+	Tue, 23 Oct 2007 21:17:39 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 6FE774408; Tue, 23 Oct 2007 21:17:38 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710231115060.30120@woody.linux-foundation.org>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4574/Tue Oct 23 16:57:10 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62149>
 
-Theodore Tso <tytso@mit.edu> writes:
 
-> With git.git, we are essentially throwing away development history
-> while it is in 'pu', but once a commit graduates to 'next', we do keep
-> the development history forever.  The downside to this is that
-> development 'crud' can build up in next; even if all substantive
-> commits in 'next' end up graduating to 'master', there will still be
-> lots of merge commits that will only be in 'next'.   
->
-> I have an emotional bias which tends to treat that excess history as
-> toxic waste to be avoided at all costs, but that's probably because
-> when you have a git tree as huge as the kernel, life is easier if the
-> history is kept as clean as possible.  
->
-> Which I suppose is easy enough to do in the git.git model; if you
-> throw away the 'next' branch and then rewind it so it is forked off of
-> 'master' all of that history essentially gets flushed.
+--pf9I7BMVVzbSWLtt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You can view 'next' as if it is sort of -mm.  Following 'master'
-is like following Linus tree, whose development is without those
-numerous 'merge improvements again' merges into 'next'.
+also sprach Linus Torvalds <torvalds@linux-foundation.org> [2007.10.23.2024=
+ +0200]:
+> So it does look at the commits only in the sense that it uses the "shape"=
+=20
+> of the history (which is obviously built up from many individual commits!=
+)=20
+> but it never looks at any individual commit per se.
 
-> The downside
-> is that people maintaining topics branches which were forked against
-> the old 'next' will need to do some grotty work to rebase their
-> patches, so any attempt to rewind next would probably require the
-> central maintainer to give plenty of notice, and then on the flag day,
-> save 'next' as 'old-next' before rewinding to allow the other
-> developers to more easily rebase any private branches they might have.
+I don't follow what you mean with "shape". The following is
+a history:
 
-An alternative is to give an easier access to the tips of
-individual topic branch head, at least to the ones that have
-been merged to 'next' as they will never be rewound once they
-are in 'next', and encourage people to fork off of them, instead
-of 'next' directly.  Then 'next' will be more like 'pu'.
+ o - x - o - o - o - m - o - A* - o - m2 - o - master
+      \             /                /
+       `o - A - L -' - F - o - o - T' - branch
 
-> Hmm, interesting.  A lot of this is quite subtle, or at least the
-> impacts of different choices in the git workflow really didn't become
-> obvious to me until I started trying I stepped into the central
-> maintainer role for a project using git!
+A is a commit, A* is the commit which reverts (the data change by)
+A. L and F are to mark the last and first commits before and after
+the first merge m. T is the tip of 'branch'
 
-Very true.
+After merge point m2, the change introduced by A will *not* be in
+master. This much makes sense.
+
+What did not make sense is how Git determines to leave it out. But
+I think that after drawing the above, it's now clear:
+
+by shape you mean the actual graph, and when 'branch' is merged into
+master at m2, Git goes back in time to conclude that master...L must
+already be present in master due to the intersection of the two
+lines at m, and thus finds commit F as the "oldest direct
+descendant" of m2. L is an older descendant of m2, but it's not
+direct in the sense that there are multiple paths from m2 to L. Thus
+Git will only merge F..T at m2.
+
+Or as you put it:
+
+> If Foo has had *new* commits in the meantime, those new commits
+> will show up, of course, but the old commits have absolutely zero
+> effect, because they will be part of the common history.
+
+I think I am (moderately) clear again on the inner working of Git.
+Sorry for the confusion.
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+"the search for the perfect martini is a fraud. the perfect martini
+ is a belt of gin from the bottle; anything else is the decadent
+ trappings of civilization."
+                                                            -- t. k.
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--pf9I7BMVVzbSWLtt
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHHkjRIgvIgzMMSnURAlicAJ4lVzhXjBe/dofjWZb6QzHe+dTEfQCg0wRs
+JifCVaeQflMYfS9TGi5+VrU=
+=wB6Q
+-----END PGP SIGNATURE-----
+
+--pf9I7BMVVzbSWLtt--
