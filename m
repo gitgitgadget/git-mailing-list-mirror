@@ -1,84 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: unmerging feature branches
-Date: Tue, 23 Oct 2007 12:33:29 -0700
-Message-ID: <7vir4x7hiu.fsf@gitster.siamese.dyndns.org>
+Date: Tue, 23 Oct 2007 12:38:26 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710231221530.30120@woody.linux-foundation.org>
 References: <20071023152445.GA10070@piper.oerlikon.madduck.net>
-	<alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+ <20071023171611.GA18783@piper.oerlikon.madduck.net>
+ <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org>
+ <20071023180825.GA20343@piper.oerlikon.madduck.net>
+ <alpine.LFD.0.999.0710231115060.30120@woody.linux-foundation.org>
+ <20071023191738.GA24575@piper.oerlikon.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>,
-	git discussion list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 21:33:54 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Tue Oct 23 21:39:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkPVc-0008Fm-Rd
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:33:49 +0200
+	id 1IkPbE-0001k3-9r
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:39:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751684AbXJWTdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 15:33:36 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbXJWTdg
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:33:36 -0400
-Received: from rune.pobox.com ([208.210.124.79]:43276 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751574AbXJWTdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 15:33:35 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id AF8F814E951;
-	Tue, 23 Oct 2007 15:33:56 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DFFD114EA7A;
-	Tue, 23 Oct 2007 15:33:52 -0400 (EDT)
-In-Reply-To: <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
-	(Linus Torvalds's message of "Tue, 23 Oct 2007 09:50:59 -0700 (PDT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753028AbXJWTjX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 15:39:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753010AbXJWTjX
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:39:23 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59653 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752302AbXJWTjW (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 15:39:22 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NJcRgt002650
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 23 Oct 2007 12:38:28 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NJcQBn003091;
+	Tue, 23 Oct 2007 12:38:26 -0700
+In-Reply-To: <20071023191738.GA24575@piper.oerlikon.madduck.net>
+X-Spam-Status: No, hits=-2.72 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62152>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Now, that said, reverting the data is not that hard. There is not any 
-> single-command "revert this arm of a merge", but on the other hand, git 
-> can certainly help you.
->
-> The way to do it is:
->
-> 	# go back to just before the merge, create a "fixup" branch
-> 	#
-> 	git branch -b fixup M^
->
-> 	# merge all of it again, *except* the branch you didn't want to 
-> 	# merge (this example assumes that you had a four-way octopus 
-> 	# merge, and you now want to turn it into a three-way with the
-> 	# next-to-last parent skipped):
-> ...
 
-Desire to revert an octopus would, as you demonstrated, often be
-to revert only one arm, but I think allowing to revert a twohead
-merge should be trivial.  If we define "reverting a merge" to
-always revert all arms, then this should suffice.
+On Tue, 23 Oct 2007, martin f krafft wrote:
+> 
+> I don't follow what you mean with "shape". The following is
+> a history:
+> 
+>  o - x - o - o - o - m - o - A* - o - m2 - o - master
+>       \             /                /
+>        `o - A - L -' - F - o - o - T' - branch
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index a655c8e..719e293 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -269,8 +269,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 
- 	if (!commit->parents)
- 		die ("Cannot %s a root commit", me);
--	if (commit->parents->next)
--		die ("Cannot %s a multi-parent commit.", me);
-+	if (action != REVERT && commit->parents->next)
-+		die ("Cannot %s a merge commit.", me);
- 	if (!(message = commit->buffer))
- 		die ("Cannot get commit message for %s",
- 				sha1_to_hex(commit->object.sha1));
+Right. And you can do two things when merging:
 
-Note that allowing cherry-pick by removing the above two lines
-allow replaying the data of a merge similar to a squash merge.
+ - the wrong and insane thing: look at the *contents* of each commit, to 
+   decide if a commit does a certain thing.
+
+ - the git thing: never look at individual commits at all, except to find 
+   the global history, what I called the "shape".
+
+So git obviously very much *does* look at history,  but it does so only to 
+find the common point. So in when you create "m2", it looked at the 
+history to see that the common point of the two branches was "L". And once 
+it has found that, all the other stuff is totally irrelevant. It doesn't 
+matter if there are a million commits between 'm' and 'm2', the only thing 
+that mattered was the "topology" aka "shape" of the history.
+
+See?
+
+So git never actually cares about the individual commits A*, F, and T (or 
+anything else) when it merges those two histories and created "m2".
+
+It did *traverse* those commits, in order to find that "Oh, the last 
+common state was 'L'", but it never looked at them in any other sense. 
+They were all individually uninteresting, and the only sense in which they 
+mattered at all was as the incidental building blocks of the history.
+
+That's what I mean by the "shape" of the history: when merging git does 
+walk the commits to see how it all holds together, but git doesn't then 
+care in any way what the commits *do* apart from how they connected up 
+the history of the two branches.
+
+And once git has found the common commit, it then just merges purely based 
+on the contents of the common commit and the two (or more, in the case of 
+octopus merges) endpoints. So again, at that point it never looks at any 
+of the individual commits, it only looks at what the *state* was.
+
+(This is all a bit more complex when thers is more than one "common 
+commit", but that's just a detail, and doesn't change the argument).
+
+And git-rebase is obviously totally different: git-rebase also finds the 
+common points, but uses that to just discard all the shared history that 
+cannot matter, and then it walks all the *unshared* commits to match them 
+up and see which ones already look like they exist (as another commit, but 
+one that has the equivalent diff!), and which ones are worthy of trying to 
+add.
+
+> A is a commit, A* is the commit which reverts (the data change by)
+> A. L and F are to mark the last and first commits before and after
+> the first merge m. T is the tip of 'branch'
+> 
+> After merge point m2, the change introduced by A will *not* be in
+> master. This much makes sense.
+
+Yes.
+
+> What did not make sense is how Git determines to leave it out. But
+> I think that after drawing the above, it's now clear:
+> 
+> by shape you mean the actual graph, and when 'branch' is merged into
+> master at m2, Git goes back in time to conclude that master...L must
+> already be present in master due to the intersection of the two
+> lines at m, and thus finds commit F as the "oldest direct
+> descendant" of m2. L is an older descendant of m2, but it's not
+> direct in the sense that there are multiple paths from m2 to L. Thus
+> Git will only merge F..T at m2.
+
+Exactly.
+
+> Or as you put it:
+> 
+> > If Foo has had *new* commits in the meantime, those new commits
+> > will show up, of course, but the old commits have absolutely zero
+> > effect, because they will be part of the common history.
+> 
+> I think I am (moderately) clear again on the inner working of Git.
+> Sorry for the confusion.
+
+Hey, I think these things are good to clarify, maybe somebody else didn't 
+quite understand it. And the more "graphical" and concrete some problem 
+is, the more likely people are to "get it". 
+
+What is interesting is how the actual rules that git follows are *really* 
+simple. But they result in all this fairly complex, almost "emergent" 
+behaviour. It's like the basic data structures: in many ways, git really 
+only has those four basic object types, and you can really descibe 
+everything git does in terms of those very simple core data structures: 
+but a *repository* is certainly not something simple.
+
+But the final "behaviour" really all comes from the interactions of 
+things. The rules are all really really simple, the data structures are 
+all totally trivial, but the possibility for interactions causes all the 
+excitement.
+
+			Linus
