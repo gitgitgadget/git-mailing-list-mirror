@@ -1,55 +1,80 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Mon, 22 Oct 2007 22:00:44 -0400
-Message-ID: <20071023020044.GA27132@thunk.org>
-References: <20071016060456.GC13801@spearce.org> <Pine.LNX.4.64.0710161209480.25221@racer.site> <20071016195744.GB32132@closure.lan> <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Add some fancy colors in the test library when terminal supports it.
+Date: Tue, 23 Oct 2007 06:08:14 +0200
+Message-ID: <200710230608.15124.chriscool@tuxfamily.org>
+References: <20071022081341.GC32763@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 23 05:56:44 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 06:01:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkAsl-000203-9N
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 05:56:43 +0200
+	id 1IkAxJ-0002me-16
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 06:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752065AbXJWD4c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Oct 2007 23:56:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752052AbXJWD4c
-	(ORCPT <rfc822;git-outgoing>); Mon, 22 Oct 2007 23:56:32 -0400
-Received: from thunk.org ([69.25.196.29]:52532 "EHLO thunker.thunk.org"
+	id S1750842AbXJWEBO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2007 00:01:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750815AbXJWEBO
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 00:01:14 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:39067 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751916AbXJWD4c (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Oct 2007 23:56:32 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IkB2R-00012B-Vn; Tue, 23 Oct 2007 00:06:44 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1Ik94W-000758-7s; Mon, 22 Oct 2007 22:00:44 -0400
+	id S1750811AbXJWEBN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 00:01:13 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id C0E0B1AB2BA;
+	Tue, 23 Oct 2007 06:01:11 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 811D41AB2B8;
+	Tue, 23 Oct 2007 06:01:11 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <20071022081341.GC32763@artemis.corp>
 Content-Disposition: inline
-In-Reply-To: <7vtzoi8voo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62077>
 
-On Mon, Oct 22, 2007 at 06:29:59PM -0700, Junio C Hamano wrote:
-> Well, the policy is never to commit directly on top of next
-> (iow, only merge other topics and nothing else).  Otherwise it
-> becomes hard to allow individual topics graduate to 'master'
-> independently.
+Hi Pierre,
 
-I see.  So if it's non-trivial enough that you want it to "cook" in
-next for a cycle, you'll create a topic branch for it (based off of
-'master'), and then force a merge into 'next'?
+Le lundi 22 octobre 2007, Pierre Habouzit a =E9crit :
+> +
+> +say_color () {
+> +	[ "$nocolor" =3D 0 ] &&  [ "$1" !=3D '-1' ] && tput setaf "$1"
+> +	shift
+> +	echo "* $*"
+> +	tput op
+> +}
+> +
+>  error () {
+> -	echo "* error: $*"
+> +	say_color 9 "* error: $*"
 
-					- Ted
+This will print something like "* * error: ..." instead of "* error: ..=
+=2E"
+
+The following should work:
+
+> +	say_color 9 "error: $*"
+
+By the way, where do the 9 here and the 10 and the -1 below come from ?
+"man 5 terminfo" says that only values form 0 to 7 are portably defined=
+=2E
+Maybe 9 is a bold red and 10 a bold green, or something like that, but =
+it=20
+doesn't seem to work on my konsole.
+
+Anyway, perhaps having:
+
+_red=3D1
+_green=3D2
+
+and then using "say_color $_red stuff" might be easier to understand an=
+d=20
+change if needed.
+
+Thanks for this good idea,
+Christian.
