@@ -1,65 +1,84 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: gitk patch collection pull request
-Date: Tue, 23 Oct 2007 12:17:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710231214150.30120@woody.linux-foundation.org>
-References: <20071019052823.GI14735@spearce.org>
- <alpine.LFD.0.999.0710191227340.26902@woody.linux-foundation.org>
- <18201.34779.27836.531742@cargo.ozlabs.ibm.com>
- <alpine.LFD.0.999.0710192149020.3794@woody.linux-foundation.org>
- <18205.15967.792413.775786@cargo.ozlabs.ibm.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: unmerging feature branches
+Date: Tue, 23 Oct 2007 12:33:29 -0700
+Message-ID: <7vir4x7hiu.fsf@gitster.siamese.dyndns.org>
+References: <20071023152445.GA10070@piper.oerlikon.madduck.net>
+	<alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 21:18:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: martin f krafft <madduck@madduck.net>,
+	git discussion list <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Oct 23 21:33:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkPGk-0002za-Uo
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:18:27 +0200
+	id 1IkPVc-0008Fm-Rd
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 21:33:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752331AbXJWTSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 15:18:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752344AbXJWTSP
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:18:15 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54203 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752127AbXJWTSO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Oct 2007 15:18:14 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NJHa5N001508
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 23 Oct 2007 12:17:37 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9NJHaEw002277;
-	Tue, 23 Oct 2007 12:17:36 -0700
-In-Reply-To: <18205.15967.792413.775786@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=-2.42 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_12
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751684AbXJWTdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 15:33:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751848AbXJWTdg
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 15:33:36 -0400
+Received: from rune.pobox.com ([208.210.124.79]:43276 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751574AbXJWTdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 15:33:35 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id AF8F814E951;
+	Tue, 23 Oct 2007 15:33:56 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id DFFD114EA7A;
+	Tue, 23 Oct 2007 15:33:52 -0400 (EDT)
+In-Reply-To: <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Tue, 23 Oct 2007 09:50:59 -0700 (PDT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62151>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
+> Now, that said, reverting the data is not that hard. There is not any 
+> single-command "revert this arm of a merge", but on the other hand, git 
+> can certainly help you.
+>
+> The way to do it is:
+>
+> 	# go back to just before the merge, create a "fixup" branch
+> 	#
+> 	git branch -b fixup M^
+>
+> 	# merge all of it again, *except* the branch you didn't want to 
+> 	# merge (this example assumes that you had a four-way octopus 
+> 	# merge, and you now want to turn it into a three-way with the
+> 	# next-to-last parent skipped):
+> ...
 
-On Tue, 23 Oct 2007, Paul Mackerras wrote:
-> 
-> OK, done.  The checkbox is in the Edit/Preferences window.  It's
-> called "Limit diffs to listed paths" and it's on by default.
+Desire to revert an octopus would, as you demonstrated, often be
+to revert only one arm, but I think allowing to revert a twohead
+merge should be trivial.  If we define "reverting a merge" to
+always revert all arms, then this should suffice.
 
-Ok, the diff looks fine, but now the "list of files" pane on the right is 
-empty. 
+diff --git a/builtin-revert.c b/builtin-revert.c
+index a655c8e..719e293 100644
+--- a/builtin-revert.c
++++ b/builtin-revert.c
+@@ -269,8 +269,8 @@ static int revert_or_cherry_pick(int argc, const char **argv)
+ 
+ 	if (!commit->parents)
+ 		die ("Cannot %s a root commit", me);
+-	if (commit->parents->next)
+-		die ("Cannot %s a multi-parent commit.", me);
++	if (action != REVERT && commit->parents->next)
++		die ("Cannot %s a merge commit.", me);
+ 	if (!(message = commit->buffer))
+ 		die ("Cannot get commit message for %s",
+ 				sha1_to_hex(commit->object.sha1));
 
-Even when you limit the diff output, you often have lots of files. At 
-least I do, because I often limit by subdirectory. So I'd still like to 
-see the file list on the right, so that I can jump to a particular part of 
-the diff.
-
-(It would also be nice if it showed the *size* of the changes a'la 
-diffstat or something, but that's another and independent issue).
-
-		Linus
+Note that allowing cherry-pick by removing the above two lines
+allow replaying the data of a merge similar to a squash merge.
