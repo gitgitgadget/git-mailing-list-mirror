@@ -1,70 +1,87 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: What's cooking in git/spearce.git (topics)
-Date: Tue, 23 Oct 2007 01:30:03 -0400
-Message-ID: <20071023053003.GE27132@thunk.org>
-References: <20071016195744.GB32132@closure.lan> <7v3aw2aaxu.fsf@gitster.siamese.dyndns.org> <20071023012140.GC22997@thunk.org> <7vtzoi8voo.fsf@gitster.siamese.dyndns.org> <20071023020044.GA27132@thunk.org> <20071023040522.GX14735@spearce.org> <20071023043321.GC27132@thunk.org> <20071023044657.GC14735@spearce.org> <20071023045632.GD27132@thunk.org> <20071023050726.GD14735@spearce.org>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: [PATCH] Add color to git-add--interactive diffs (Total
+	different idea to solve the problem)
+Date: Tue, 23 Oct 2007 07:34:01 +0200
+Message-ID: <20071023053401.GB9330@xp.machine.xx>
+References: <1192351494.7226.18.camel@athena> <20071022204719.GA23348@xp.machine.xx> <Pine.LNX.4.64.0710230054130.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Oct 23 07:30:34 2007
+Cc: Tom Tobin <korpios@korpios.com>, Dan Zwell <dzwell@gmail.com>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Oct 23 07:34:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkCLY-0003ul-OQ
-	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 07:30:33 +0200
+	id 1IkCPP-0004iG-RT
+	for gcvg-git-2@gmane.org; Tue, 23 Oct 2007 07:34:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763AbXJWFaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 01:30:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751363AbXJWFaU
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 01:30:20 -0400
-Received: from thunk.org ([69.25.196.29]:52744 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751324AbXJWFaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 01:30:19 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IkCVD-0001RZ-BV; Tue, 23 Oct 2007 01:40:31 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1IkCL5-0007fB-CN; Tue, 23 Oct 2007 01:30:03 -0400
+	id S1751294AbXJWFeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 01:34:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751992AbXJWFeH
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 01:34:07 -0400
+Received: from mail.gmx.net ([213.165.64.20]:54696 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751968AbXJWFeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 01:34:06 -0400
+Received: (qmail invoked by alias); 23 Oct 2007 05:34:03 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp009) with SMTP; 23 Oct 2007 07:34:03 +0200
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1+9eEwPZj69bBtorekX9KOSFyzQMOn6/v+q++33Oc
+	CTgykijq5Jomfw
 Content-Disposition: inline
-In-Reply-To: <20071023050726.GD14735@spearce.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+In-Reply-To: <Pine.LNX.4.64.0710230054130.25221@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62093>
 
-On Tue, Oct 23, 2007 at 01:07:26AM -0400, Shawn O. Pearce wrote:
-> Junio has in the past proposed rewinding next, especially after a
-> significant release (e.g. 1.5.3).  
+On Tue, Oct 23, 2007 at 12:55:44AM +0100, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 22 Oct 2007, Peter Baumann wrote:
+> 
+> > Wouldn't it make more sense to implement the diff coloring inside git 
+> > apply so that you could use something like
+> > 
+> >         diff file1 file2|git apply --color
+> > 
+> > to make the generated diff with colors [1]? It already implements the
+> > same semantic for generating a diffstat, using
+> > 
+> >         diff file1 file2|git apply --stat
+> 
+> No.  In both cases, "git diff" realises that the output is no terminal, 
+> and switches off color generation.  (Just try with diff.color=true instead 
+> of =auto.)
+> 
 
-Hmm, yes.  I think I'd want to rewind next after a while; the thought
-of next drifting hundreds or thousands of commits away from master
-just gives me the heebee-jeebies.  I'm sure it mostly works, but it
-just feels wrong.  :-)
+I didn't mean git-diff here, instead I meant diff, so no coloring involved
+on the diff side. The git-apply would be enhanced to do the coloring on
+every diff it gets on its STDIN.
 
-> A bunch of folks (myself included if I recall correctly) didn't want
-> to do this, as we create topic branches locally from things in next
-> and sometimes make commits over them to improve the topic further.
+In the git-add -i case, the perl script whould do something along these
+lines:
 
-I guess I don't see why this would be a hardship; would a quick rebase
-on the topic branches more or less take care of the problem?  
+	foreach my $file (@files) {
+		# read in the diff of a file *WITHOUT* using color
+		@diff = `git-diff-files $file`;
 
-I guess that brings up another question; I've been regularly rebasing
-the topics branches as master and next advances... probably more out
-of superstition than anything else.  Is that a bad idea for any reason?
+		# ... store it away for later use in hunk selection ...
 
 
-Hmm... I guess some of this would be really good to get into the Howto
-section of the user guide when talking about git workflows!
+		# print out a nice colored diff for the user
+		`echo @diff | git apply --color`
+	}
 
-	       	    	       	       	     	 - Ted
+Instead of handcoding the colorization in the git-add--interactive perl
+script, just enhance git-apply to do the colorization *after the fact* for
+you on _any_ patch you throw at it in its STDIN.
+
+-Peter
