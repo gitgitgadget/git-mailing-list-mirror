@@ -1,91 +1,52 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: git-remote: Use of uninitialized value in string ne, line 248
-Date: Wed, 24 Oct 2007 13:08:07 +0200
-Message-ID: <20071024110807.GA12501@piper.oerlikon.madduck.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: git-{diff,ls}-files from a subdirectory fails ...
+Date: Wed, 24 Oct 2007 13:26:26 +0200
+Message-ID: <20071024112626.GA6459@diana.vm.bytemark.co.uk>
+References: <20071024012038.GA31326@diana.vm.bytemark.co.uk> <Pine.LNX.4.64.0710241104560.25221@racer.site> <20071024104055.GB3908@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Q68bSM7Ycu6FN28Q"
-To: git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 24 13:08:26 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 24 13:26:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ike64-0007Vg-Vr
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 13:08:25 +0200
+	id 1IkeNq-00059j-BC
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 13:26:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbXJXLIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 07:08:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754826AbXJXLIN
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 07:08:13 -0400
-Received: from clegg.madduck.net ([82.197.162.59]:37633 "EHLO
-	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753077AbXJXLIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 07:08:12 -0400
-Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by clegg.madduck.net (postfix) with ESMTP id 6030BA808F
-	for <git@vger.kernel.org>; Wed, 24 Oct 2007 13:08:48 +0200 (CEST)
-Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
-	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 4A9739F13B
-	for <git@vger.kernel.org>; Wed, 24 Oct 2007 13:08:07 +0200 (CEST)
-Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
-	id 27B644408; Wed, 24 Oct 2007 13:08:07 +0200 (CEST)
+	id S1753826AbXJXL0e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Oct 2007 07:26:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753971AbXJXL0e
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 07:26:34 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1057 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753619AbXJXL0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 07:26:33 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IkeNW-0001gf-00; Wed, 24 Oct 2007 12:26:26 +0100
 Content-Disposition: inline
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: ClamAV 0.91.2/4589/Wed Oct 24 11:55:55 2007 on clegg.madduck.net
-X-Virus-Status: Clean
+In-Reply-To: <20071024104055.GB3908@diana.vm.bytemark.co.uk>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62209>
 
+On 2007-10-24 12:40:55 +0200, Karl Hasselstr=F6m wrote:
 
---Q68bSM7Ycu6FN28Q
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 2007-10-24 11:06:43 +0100, Johannes Schindelin wrote:
+>
+> > IOW if you run git version v1.5.3.4-14-gdd5c8af or newer, you
+> > should not experience this.
+>
+> Thanks for the pointer; that looks like it might indeed fix this
+> bug. Will hopefully have time to verify later today.
 
-I am useless at Perl, otherwise I'd fix this, but I don't know
-what's going on, so best I can do is report it. This is against
-current tip of master.
-
-piper:~> git remote show origin
-* remote origin
-  URL: ssh://git.madduck.net/~/git/etc/mailplate.git
-Use of uninitialized value in string ne at /usr/local/stow/git/bin/git-remo=
-te line 248.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^=
-^^^^^^^^^^^^
-  Tracked remote branches
-    master
-piper:~> git branch
-* master
+It works! Very timely bugfix ...
 
 --=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-"... and so he killed Miguel in a rit of fealous jage."
-                                               -- inspector clouseau
-=20
-spamtraps: madduck.bogus@madduck.net
-
---Q68bSM7Ycu6FN28Q
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHHyeXIgvIgzMMSnURAuMqAJ0XZ2jrMMF3n1GhbMzMLbsxQTpgVgCeIv0s
-exsBcoQ+kG4g0O/REfSxELg=
-=lTAg
------END PGP SIGNATURE-----
-
---Q68bSM7Ycu6FN28Q--
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
