@@ -1,79 +1,71 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add some fancy colors in the test library when terminal supports it.
-Date: Wed, 24 Oct 2007 22:28:17 +0200
-Message-ID: <20071024202817.GB10900@artemis.corp>
-References: <1193256219-24222-1-git-send-email-madcoder@debian.org> <1193256219-24222-2-git-send-email-madcoder@debian.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+	summary continued
+Date: Wed, 24 Oct 2007 16:33:35 -0400
+Message-ID: <20071024203335.GJ29830@fieldses.org>
+References: <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se> <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com> <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site> <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="3uo+9/B/ebqu+fSQ";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 24 22:28:38 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 24 22:33:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikmq6-0003ey-Pb
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 22:28:31 +0200
+	id 1IkmvO-0005fK-Ed
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 22:33:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756027AbXJXU2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 16:28:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756066AbXJXU2U
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 16:28:20 -0400
-Received: from pan.madism.org ([88.191.52.104]:46438 "EHLO hermes.madism.org"
+	id S1754095AbXJXUdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 16:33:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754606AbXJXUdp
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 16:33:45 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:46083 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756027AbXJXU2T (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 16:28:19 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 902E72653A;
-	Wed, 24 Oct 2007 22:28:18 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 02B4B31B302; Wed, 24 Oct 2007 22:28:17 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	git@vger.kernel.org
+	id S1753714AbXJXUdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 16:33:44 -0400
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Ikmv1-0002YU-Af; Wed, 24 Oct 2007 16:33:35 -0400
 Content-Disposition: inline
-In-Reply-To: <1193256219-24222-2-git-send-email-madcoder@debian.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62236>
 
+On Wed, Oct 24, 2007 at 10:12:29PM +0200, Steffen Prohaska wrote:
+> On Oct 24, 2007, at 9:48 PM, J. Bruce Fields wrote:
+>
+>>
+>>> I want git pull to work like git push.
+>>
+>> That strikes me as a less complete solution, since it only helps in the
+>> case where the other branches all happen to be unmodified locally (hence
+>> can be fast-forwarded).  In other cases the "git push" will still emit a
+>> spurious error.
+>
+> Well, but then there's something you should really think
+> about.
 
---3uo+9/B/ebqu+fSQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Perhaps, but not necessarily; you may have some branches with local
+changes that you're content to leave unpushed (and un-updated).
 
-> +default_color=3D0
-> +fail_color=3D1    # red
-> +pass_color=3D2    # green
-> +msg_color=3D3     # brown
-> +
+So the case where this proposal helps is the case where:
+	- the user hasn't learned how to name individual branches on the
+	  push commandline, or has learned to do so, but wants less
+	  typing, and
+	- the user has one or more unmodified copies of remote branches
+	  lying around, and
+	- the user minds being reminded that those copies are out of
+	  date, and
+	- the user either has no *modified* copies of local branches, or
+	  has some but doesn't mind being reminded that they're out of
+	  date on each push.
 
-  err, sorry, this part is spurious, I wasn't paying attention when I
-re-read my patch. It's impressive how many mistakes you catch reading
-the same patch 20 minutes later=E2=80=A6
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---3uo+9/B/ebqu+fSQ
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHH6rhvGr7W6HudhwRAvU4AKCNweA8FG9RRW/7nMTYKCOM6DZnvwCfd1JE
-glky/p/rrna0roiIAw6pBgM=
-=iO7S
------END PGP SIGNATURE-----
-
---3uo+9/B/ebqu+fSQ--
+--b.
