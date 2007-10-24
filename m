@@ -1,136 +1,119 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Thu, 25 Oct 2007 00:28:39 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710250021430.25221@racer.site>
-References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
- <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site>
- <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org>
- <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org>
- <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024203335.GJ29830@fieldses.org>
- <471FB3D0.4040800@op5.se> <20071024212854.GB6069@xp.machine.xx>
- <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site>
- <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: [PATCH] git-cvsimport: Add -N option to force a new import
+Date: Wed, 24 Oct 2007 19:28:39 -0400
+Message-ID: <1193268519.8008.11.camel@mattlaptop2>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Peter Baumann <waste.manager@gmx.de>, Andreas Ericsson <ae@op5.se>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Oct 25 01:29:24 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 01:30:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikpf9-00076u-Q6
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 01:29:24 +0200
+	id 1IkpgE-0007PM-3m
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 01:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754364AbXJXX3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 19:29:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754291AbXJXX3L
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 19:29:11 -0400
-Received: from mail.gmx.net ([213.165.64.20]:50299 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754278AbXJXX3K (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 19:29:10 -0400
-Received: (qmail invoked by alias); 24 Oct 2007 23:29:07 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp058) with SMTP; 25 Oct 2007 01:29:07 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/aaqIFPiTa8laXso4PRxtnOShijmzJyWIr3JY5s2
-	qkSkMC3PzbssYO
-X-X-Sender: gene099@racer.site
-In-Reply-To: <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1754484AbXJXXaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 19:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754482AbXJXXaR
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 19:30:17 -0400
+Received: from sumo.dreamhost.com ([66.33.216.29]:54398 "EHLO
+	sumo.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754467AbXJXXaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 19:30:16 -0400
+Received: from jankymail-a1.dreamhost.com (sd-green-bigip-83.dreamhost.com [208.97.132.83])
+	by sumo.dreamhost.com (Postfix) with ESMTP id 0E9EC17DDC5
+	for <git@vger.kernel.org>; Wed, 24 Oct 2007 16:30:16 -0700 (PDT)
+Received: from [129.2.207.218] (rmccutch.student.umd.edu [129.2.207.218])
+	by jankymail-a1.dreamhost.com (Postfix) with ESMTP id 7AF6B986E8;
+	Wed, 24 Oct 2007 16:28:40 -0700 (PDT)
+X-Mailer: Evolution 2.12.1 (2.12.1-3.matt1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62254>
 
-Hi,
+I had a git repository for development of rsync and wanted to start
+importing the upstream CVS with git-cvsimport, but git-cvsimport saw
+that the git repository existed and insisted on updating a previous
+import.  This patch adds an -N option to git-cvsimport to force a new
+import and updates the documentation appropriately.
 
-On Thu, 25 Oct 2007, Steffen Prohaska wrote:
+Signed-off-by: Matt McCutchen <matt@mattmccutchen.net>
+---
+I implemented this because I needed it; adopt it in the main git if you
+like it.
 
-> On Oct 25, 2007, at 12:14 AM, Johannes Schindelin wrote:
-> 
-> > But I think I have to drive my message home again: if what you desire 
-> > becomes reality, you take away the clear distinction between local and 
-> > remote branches.  In fact, those branches are neither local (because 
-> > the next pull will automatically update them with remote changes, but 
-> > _only_ if they fast-forward) nor remote (because you plan to work on 
-> > them locally).
-> 
-> Exactly, because I do not work on those branches alone. These are 
-> _shared_ branches. I can work on such a branch with a group of 
-> developers. I'm willing to accept this bit of chaos.
+ Documentation/git-cvsimport.txt |    5 ++++-
+ git-cvsimport.perl              |    9 ++++++---
+ 2 files changed, 10 insertions(+), 4 deletions(-)
 
-It is not just a chaos.  I see a serious problem here.  On _your_ 
-computer, you do _not_ have a shared branch.  Which is visible _even_ in 
-your modified work flow when you have unpushed changes.
+diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+index fdd7ec7..f595957 100644
+--- a/Documentation/git-cvsimport.txt
++++ b/Documentation/git-cvsimport.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	      [-A <author-conv-file>] [-p <options-for-cvsps>] [-P <file>]
+ 	      [-C <git_repository>] [-z <fuzz>] [-i] [-k] [-u] [-s <subst>]
+ 	      [-a] [-m] [-M <regex>] [-S <regex>] [-L <commitlimit>]
+-	      [-r <remote>] [<CVS_module>]
++	      [-r <remote>] [-N] [<CVS_module>]
+ 
 
-So your desired illusion that your local branches are anything but local 
-branches will never be perfect enough.
-
-> Your rebase workflow is not possible if more than one dev wants to work 
-> on the topic branch together.
-
-Why not?  I do it all the time.  CVS users do it all the time, for that 
-matter.
-
-> Eventually you can linearize such a topic branch using rebase. But you 
-> need to agree first that everyone else needs to delete the branch.
-
-No, you can linearize your branch already while cleaning up your local 
-branch before continuing to work on the topic.
-
-> > But here is a proposal which should make you and your developers 
-> > happy, _and_ should be even easier to explain:
-> > 
-> > Work with topic branches.  And when you're done, delete them.
-> 
-> Again, if you want to share the topic branch the situation gets
-> more complex.
-
-Hardly so.  In my proposed solution to your problem, there is nothing 
-which prevents you from working off of another branch than "master".
-
-> > So the beginning of the day could look like this:
-> > 
-> > 	git fetch
-> > 	git checkout -b todays-topic origin/master
-> > 
-> > 	[hack hack hack]
-> > 	[test test test]
-> > 	[debug debug debug]
-> > 	[occasionally commit]
-> > 	[occasionally git rebase -i origin/master]
-> > 
-> > and the end of the topic
-> > 
-> > 	git branch -M master
-> > 	git push origin master
-> > 
-> > If you should not be ready to push by the end of the day, no need to
-> > worry.  Just stay on that topic branch, and before pushing, do
-> > 
-> > 	git fetch
-> > 	git rebase origin/master
-> > 
-> > In _every_ case where I explained git, I found that people appreciated the
-> > two-step procedures (like you will find in the examples I showed you
-> > above): one git command to work locally, and one to push/fetch to/from
-> > origin.
-> 
-> Maybe. I know git quite well now and in a shared workflow "git pull"
-> with auto-fast-forward would help me. I often need to run "for each
-> local branch: git checkout ; git merge" to get rid of the errors
-> reported by "git push".
-
-The problem I see here: you know git quite well.  Others don't, and will 
-be mightily confused why pull updates local branches sometimes, and 
-sometimes not.
-
-Ciao,
-Dscho
+ DESCRIPTION
+@@ -144,6 +144,9 @@ It is not recommended to use this feature if you intend to
+ export changes back to CVS again later with
+ gitlink:git-cvsexportcommit[1].
+ 
++-N::
++	Do a new import even if the git repository already exists.
++
+ -h::
+ 	Print a short usage message and exit.
+ 
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 2954fb8..6f03be9 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -29,7 +29,7 @@ use IPC::Open2;
+ $SIG{'PIPE'}="IGNORE";
+ $ENV{'TZ'}="UTC";
+ 
+-our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,$opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r);
++our ($opt_h,$opt_o,$opt_v,$opt_k,$opt_u,$opt_d,$opt_p,$opt_C,$opt_z,$opt_i,$opt_P, $opt_s,$opt_m,$opt_M,$opt_A,$opt_S,$opt_L, $opt_a, $opt_r, $opt_N);
+ my (%conv_author_name, %conv_author_email);
+ 
+ sub usage(;$) {
+@@ -40,7 +40,7 @@ Usage: ${\basename $0}     # fetch/update GIT from CVS
+        [-o branch-for-HEAD] [-h] [-v] [-d CVSROOT] [-A author-conv-file]
+        [-p opts-for-cvsps] [-P file] [-C GIT_repository] [-z fuzz] [-i] [-k]
+        [-u] [-s subst] [-a] [-m] [-M regex] [-S regex] [-L commitlimit]
+-       [-r remote] [CVS_module]
++       [-r remote] [-N] [CVS_module]
+ END
+ 	exit(1);
+ }
+@@ -114,7 +114,7 @@ sub read_repo_config {
+     }
+ }
+ 
+-my $opts = "haivmkuo:d:p:r:C:z:s:M:P:A:S:L:";
++my $opts = "haivmkuNo:d:p:r:C:z:s:M:P:A:S:L:";
+ read_repo_config($opts);
+ getopts($opts) or usage();
+ usage if $opt_h;
+@@ -563,7 +563,10 @@ unless (-d $git_dir) {
+ 	die "Cannot init the GIT db at $git_tree: $?\n" if $?;
+ 	system("git-read-tree");
+ 	die "Cannot init an empty tree: $?\n" if $?;
++	$opt_N = 1;
++}
+ 
++if ($opt_N) {
+ 	$last_branch = $opt_o;
+ 	$orig_branch = "";
+ } else {
+-- 
+1.5.3.3.128.g56927
