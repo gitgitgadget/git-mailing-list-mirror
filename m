@@ -1,77 +1,82 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: intended use of "git --exec-path"?
-Date: Wed, 24 Oct 2007 15:54:52 +1000
-Message-ID: <ee77f5c20710232254j32afa044t841b4a4f6fcdfd7d@mail.gmail.com>
-References: <20071024043224.GR16291@srparish.net>
-	 <20071024043819.GI14735@spearce.org>
-	 <20071024054749.GT16291@srparish.net>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 7/9] git-hash-object: Add --stdin-paths option
+Date: Tue, 23 Oct 2007 23:11:23 -0700
+Message-ID: <20071024061123.GA10916@soma>
+References: <1193118397-4696-2-git-send-email-aroben@apple.com> <1193118397-4696-3-git-send-email-aroben@apple.com> <1193118397-4696-4-git-send-email-aroben@apple.com> <1193118397-4696-5-git-send-email-aroben@apple.com> <1193118397-4696-6-git-send-email-aroben@apple.com> <1193118397-4696-7-git-send-email-aroben@apple.com> <1193118397-4696-8-git-send-email-aroben@apple.com> <20071023055331.GF14735@spearce.org> <471D8D34.4050104@apple.com> <20071023061022.GG14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: "Scott Parish" <sRp@srparish.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 07:55:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Roben <aroben@apple.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Oct 24 08:11:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkZCv-0004Y5-JN
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 07:55:10 +0200
+	id 1IkZSs-00085d-JS
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 08:11:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755011AbXJXFyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 01:54:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754839AbXJXFyy
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 01:54:54 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:37590 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754366AbXJXFyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 01:54:53 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so82610rvb
-        for <git@vger.kernel.org>; Tue, 23 Oct 2007 22:54:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bVPkSuBayGkH/ooBASkeMg59pctPsTA27d5KcJxmmnk=;
-        b=qI5egiOPH3Vm0dRffGjUXvU3EOACsZr7gXxQH1SK4htuejalvbXDnlSNK3jiVkb0ccxcXDtHF5nC3BNADkbB/jrMTAGrGhLI6VM0Ik/GvsXU+W80Eca/fUZycuYa+YhD2NeGEUxd0mTFi8GkOx3RlZHXHAo8yXtUOYB2o4Kul/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pc2DhBy4A+vNS3yZicAr+hRNCIF9I4b6NVaa7nwFGtw8M/pGGJMHSm3dsPP6d/Dx5JZTE2vE0h+lbRceTiknb6eWuSLAB/uOTt692ZqjwTVKbFNS5kvxvdTZkWwQ1Fw+LLqyYCvWWbva/da6cgmLMgop4Q0QdGoZzOJzjgF/XTo=
-Received: by 10.141.19.16 with SMTP id w16mr86045rvi.1193205292829;
-        Tue, 23 Oct 2007 22:54:52 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Tue, 23 Oct 2007 22:54:52 -0700 (PDT)
-In-Reply-To: <20071024054749.GT16291@srparish.net>
+	id S1753749AbXJXGL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 02:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753567AbXJXGL0
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 02:11:26 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:53121 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753287AbXJXGL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 02:11:26 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 2565A7DC0FE;
+	Tue, 23 Oct 2007 23:11:25 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20071023061022.GG14735@spearce.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62195>
 
-On 10/24/07, Scott Parish <sRp@srparish.net> wrote:
-> On Wed, Oct 24, 2007 at 12:38:19AM -0400, Shawn O. Pearce wrote:
->
-> > Scott Parish <sRp@srparish.net> wrote:
-> > > "git --exec-path" presently prints out the highest priority path
-> > > to find executable in. That's a what; i'm curious why and when it
-> > > should be used. Basically i'm wondering if its still useful, and
-> > > what, if anything, it should be printing.
-> >
-> > git-gui uses it.  git-gui runs git-* by prefixing it with the
-> > exec path.  It also scans the first line of the file if we are on
-> > Windows and the "executable" doesn't end in ".exe" so it can figure
-> > out what process to run it through.
-> >
-> > So it really can't go away.
->
-> So it sounds like it might be more helpful for git to return its
-> PATH, so other programs can set their PATH or search for executables
-> accordingly.
+"Shawn O. Pearce" <spearce@spearce.org> wrote:
+> Adam Roben <aroben@apple.com> wrote:
+> > Shawn O. Pearce wrote:
+> > >Adam Roben <aroben@apple.com> wrote:
+> > >  
+> > >>This allows multiple paths to be specified on stdin.
+> > >
+> > >git-fast-import wasn't suited to the task?
+> > 
+> > I actually considered using fast-import for the whole shebang, but 
+> > decided that I don't yet understand the workings and structure of 
+> > git-svn well enough to make such a big change.
+> > 
+> > git-svn uses git-hash-object to both determine a file's hash and insert 
+> > it into the index in one go -- can fast-import do this? Or will it just 
+> > put it in the index and not give you the hash back? The latter was my 
+> > impression.
+> 
+> It doesn't currently give you the hash back.  You can sort of get
+> to it by marking the blob then using the 'checkpoint' command to
+> dump the marks to a file, which you can read in.  Not good.
+> 
+> It probably wouldn't be very difficult to give fast-import a way
+> to dump marks back on stdout as they are assigned.  So long as the
+> frontend either locksteps with fast-import or is willing to monitor
+> it with a select/poll type of arrangement and read from stdout as
+> soon as its ready.
+> 
+> Probably a 5 line code change to fast-import.  Like this.  Only Git
+> won't recognize that object SHA-1 as its in a packfile that has
+> no index.  You'd need to 'checkpoint' to flush the object out, or
+> just use all of fast-import for the processing.  So yea, I guess
+> I can see now how its not suited to this.
 
-You don't necessarily want to be monkeying around with $PATH if you're
-trying to use a particular git installation (say, a build of next)
-instead of your "proper" install, which is in your $PATH; if you call
-/some/random/path/git-whatever, it should use the git tools in
-/some/random/path/, not in $PATH.
+Shawn, thanks for clearing that up.  I was previously considering
+fast-import for git-svn, but never had time[1] to really look at it.
 
+I guess Adam is on the right track with his patches.
 
-Dave.
+[1] - Sorry to all on the list, but I've really been slacking on git-svn
+      work.  I was going to get some stuff done this weekend but decided
+      to attempt to fight my nasty caffeine addiction instead :x
+
+-- 
+Eric Wong
