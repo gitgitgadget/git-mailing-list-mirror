@@ -1,79 +1,49 @@
-From: Adam Roben <aroben@apple.com>
-Subject: Re: [PATCH 5/9] git-cat-file: Add --separator option
-Date: Tue, 23 Oct 2007 21:26:05 -0700
-Message-ID: <471EC95D.6050201@apple.com>
-References: <1193118397-4696-1-git-send-email-aroben@apple.com> <1193118397-4696-2-git-send-email-aroben@apple.com> <1193118397-4696-3-git-send-email-aroben@apple.com> <1193118397-4696-4-git-send-email-aroben@apple.com> <1193118397-4696-5-git-send-email-aroben@apple.com> <1193118397-4696-6-git-send-email-aroben@apple.com> <20071024034301.GE24924@lavos.net>
+From: Scott Parish <sRp@srparish.net>
+Subject: intended use of "git --exec-path"?
+Date: Tue, 23 Oct 2007 21:32:24 -0700
+Message-ID: <20071024043224.GR16291@srparish.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 06:27:09 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 06:32:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkXph-0003UV-T6
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 06:27:06 +0200
+	id 1IkXv0-0004cN-6O
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 06:32:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750750AbXJXE0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 00:26:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750733AbXJXE0v
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 00:26:51 -0400
-Received: from mail-out4.apple.com ([17.254.13.23]:57786 "EHLO
-	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750701AbXJXE0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 00:26:50 -0400
-Received: from relay8.apple.com (relay8.apple.com [17.128.113.38])
-	by mail-out4.apple.com (Postfix) with ESMTP id A7AF016AB748;
-	Tue, 23 Oct 2007 21:26:40 -0700 (PDT)
-Received: from relay8.apple.com (unknown [127.0.0.1])
-	by relay8.apple.com (Symantec Mail Security) with ESMTP id 8EDDB40023;
-	Tue, 23 Oct 2007 21:26:40 -0700 (PDT)
-X-AuditID: 11807126-a7b2dbb000000803-70-471ec980c3b0
-Received: from [17.203.12.72] (aroben3.apple.com [17.203.12.72])
-	by relay8.apple.com (Apple SCV relay) with ESMTP id 751D340018;
-	Tue, 23 Oct 2007 21:26:40 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071024034301.GE24924@lavos.net>
-X-Brightmail-Tracker: AAAAAA==
+	id S1751451AbXJXEcX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 00:32:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751421AbXJXEcX
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 00:32:23 -0400
+Received: from smtp-gw7.mailanyone.net ([208.70.128.55]:42185 "EHLO
+	smtp-gw7.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751293AbXJXEcW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 00:32:22 -0400
+Received: from mailanyone.net
+	by smtp-gw7.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP quinn@srparish.net)
+	id 1IkXun-0003tQ-IC
+	for git@vger.kernel.org; Tue, 23 Oct 2007 23:32:21 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Tue, 23 Oct 2007 21:32:25 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62187>
 
-Brian Downing wrote:
-> On Mon, Oct 22, 2007 at 10:46:33PM -0700, Adam Roben wrote:
->   
->> +--separator::
->> +	A string to print in between the output for each object passed on
->> +	stdin. A newline will be appended to the separator each time it is
->> +	printed.
->>     
->
-> Maybe I'm just unreasonably paranoid, but I don't think I could ever
-> trust that you'd never find an arbitrary separator in the data.  I
-> suppose if you scanned the files beforehand you could come up with
-> something guaranteed to be unique, but that seems like a pain (and
-> doesn't happen regardless in patch 9/9; it just uses
-> "--------------GITCATFILESEPARATOR-----------")  If I were committing to
-> SVN, it's sure not something I'd like to bet the integrity of my data
-> on.
->   
+"git --exec-path" presently prints out the highest priority path
+to find executable in. That's a what; i'm curious why and when it
+should be used. Basically i'm wondering if its still useful, and
+what, if anything, it should be printing.
 
-I had some of the same concerns.
+Thanks
+sRp
 
-> I think a far more reasonable output format for multiple objects would
-> be something like:
->
-> <count> LF
-> <raw data> LF
->
-> Where <count> is the number of bytes in the <raw data> as an ASCII
-> decimal integer.
->   
-
-This sounds like a much better solution. I'll implement it that way and 
-send out a new patch. Thanks for the suggestion!
-
--Adam
+-- 
+Scott Parish
+http://srparish.net/
