@@ -1,74 +1,136 @@
-From: "Jakub Narebski" <jnareb@gmail.com>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
-Date: Thu, 25 Oct 2007 01:27:10 +0200
-Message-ID: <8fe92b430710241627v3ec51b20qf0b4e60356336363@mail.gmail.com>
-References: <DE4FB702-24E8-421F-8447-04A5C7F7B5D2@zib.de>
-	 <Pine.LNX.4.64.0710210031130.25221@racer.site>
-	 <471AFD07.4040606@op5.se>
-	 <Pine.LNX.4.64.0710212308540.25221@racer.site>
-	 <471C586A.9030900@op5.se>
-	 <Pine.LNX.4.64.0710221156540.25221@racer.site>
-	 <8fe92b430710231906l35606fe2j2b7c28ed6f4dd1a3@mail.gmail.com>
-	 <20071024102950.GA3908@diana.vm.bytemark.co.uk>
-	 <8fe92b430710240404u202521d4g2275bc4886956807@mail.gmail.com>
-	 <20071024113123.GB6459@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+ summary continued
+Date: Thu, 25 Oct 2007 00:28:39 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710250021430.25221@racer.site>
+References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
+ <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site>
+ <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org>
+ <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org>
+ <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024203335.GJ29830@fieldses.org>
+ <471FB3D0.4040800@op5.se> <20071024212854.GB6069@xp.machine.xx>
+ <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site>
+ <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, "Catalin Marinas" <catalin.marinas@gmail.com>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 01:27:29 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Peter Baumann <waste.manager@gmx.de>, Andreas Ericsson <ae@op5.se>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Oct 25 01:29:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkpdF-0006Zm-4a
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 01:27:25 +0200
+	id 1Ikpf9-00076u-Q6
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 01:29:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754151AbXJXX1M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Oct 2007 19:27:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754143AbXJXX1M
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 19:27:12 -0400
-Received: from wa-out-1112.google.com ([209.85.146.180]:57397 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbXJXX1L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Oct 2007 19:27:11 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so420112wah
-        for <git@vger.kernel.org>; Wed, 24 Oct 2007 16:27:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=kwvt0CWQ7r/DElyRafHT+nM/maOWHyjl18BlqPEjRjM=;
-        b=tw183vREPr6PEJFK3N0XdfcxMsbNb/YmPbkx4FcrQCCGfUN5Gq42brQ7KOf7sGm8Vhp+9kzIzg20Jegvs6Q2WxX+SFV+4qpvyNCHRmMDR/TJNjRXSlo/EHCotvcjZDTcOZGdqQtVO2/1TAbJnJMCx1CzRYJAoe82fMnvqnOS3Ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=tQT5v2YAiF1wMnyYiWCZttxQme4cT0enw/kETebLYL1oUx7oVForcBIZtpva1zYw21ZHwlGSk6LqXiU4XO9IIBGTx4NL9gRaumWxvfs19f/BvV8QH/MZpmfZkVA53HDVeZ6jRefhLgto5WPQdIQ6OEIUdvgUaTFQFm0XCTvF1MM=
-Received: by 10.114.190.6 with SMTP id n6mr1303450waf.1193268431028;
-        Wed, 24 Oct 2007 16:27:11 -0700 (PDT)
-Received: by 10.114.195.16 with HTTP; Wed, 24 Oct 2007 16:27:10 -0700 (PDT)
-In-Reply-To: <20071024113123.GB6459@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1754364AbXJXX3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 19:29:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754291AbXJXX3L
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 19:29:11 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50299 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754278AbXJXX3K (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 19:29:10 -0400
+Received: (qmail invoked by alias); 24 Oct 2007 23:29:07 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp058) with SMTP; 25 Oct 2007 01:29:07 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/aaqIFPiTa8laXso4PRxtnOShijmzJyWIr3JY5s2
+	qkSkMC3PzbssYO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62253>
 
-On 10/24/07, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> On 2007-10-24 13:04:01 +0200, Jakub Narebski wrote:
->
->> By the way, there is SRPM for StGIT in
->> http://homepage.ntlworld.com/cmarinas/stgit/ (I need it because I
->> have Python 2.4), but it is not listed on downloads page...
->
-> I'll leave the webpage question to Catalin, but I'm curious about the
-> Python version remark. What exactly is the problem?
+Hi,
 
-If I remember correctly the StGIT RPM requires python 2.5
-(and is build using python 2.5, so install with --force doesn't work).
+On Thu, 25 Oct 2007, Steffen Prohaska wrote:
 
-BTW. SRPM is better than tar.gz because I can simply do "rpmbuild
---rebuild" to get binary RPM to install.
+> On Oct 25, 2007, at 12:14 AM, Johannes Schindelin wrote:
+> 
+> > But I think I have to drive my message home again: if what you desire 
+> > becomes reality, you take away the clear distinction between local and 
+> > remote branches.  In fact, those branches are neither local (because 
+> > the next pull will automatically update them with remote changes, but 
+> > _only_ if they fast-forward) nor remote (because you plan to work on 
+> > them locally).
+> 
+> Exactly, because I do not work on those branches alone. These are 
+> _shared_ branches. I can work on such a branch with a group of 
+> developers. I'm willing to accept this bit of chaos.
 
---=20
-Jakub Narebski
+It is not just a chaos.  I see a serious problem here.  On _your_ 
+computer, you do _not_ have a shared branch.  Which is visible _even_ in 
+your modified work flow when you have unpushed changes.
+
+So your desired illusion that your local branches are anything but local 
+branches will never be perfect enough.
+
+> Your rebase workflow is not possible if more than one dev wants to work 
+> on the topic branch together.
+
+Why not?  I do it all the time.  CVS users do it all the time, for that 
+matter.
+
+> Eventually you can linearize such a topic branch using rebase. But you 
+> need to agree first that everyone else needs to delete the branch.
+
+No, you can linearize your branch already while cleaning up your local 
+branch before continuing to work on the topic.
+
+> > But here is a proposal which should make you and your developers 
+> > happy, _and_ should be even easier to explain:
+> > 
+> > Work with topic branches.  And when you're done, delete them.
+> 
+> Again, if you want to share the topic branch the situation gets
+> more complex.
+
+Hardly so.  In my proposed solution to your problem, there is nothing 
+which prevents you from working off of another branch than "master".
+
+> > So the beginning of the day could look like this:
+> > 
+> > 	git fetch
+> > 	git checkout -b todays-topic origin/master
+> > 
+> > 	[hack hack hack]
+> > 	[test test test]
+> > 	[debug debug debug]
+> > 	[occasionally commit]
+> > 	[occasionally git rebase -i origin/master]
+> > 
+> > and the end of the topic
+> > 
+> > 	git branch -M master
+> > 	git push origin master
+> > 
+> > If you should not be ready to push by the end of the day, no need to
+> > worry.  Just stay on that topic branch, and before pushing, do
+> > 
+> > 	git fetch
+> > 	git rebase origin/master
+> > 
+> > In _every_ case where I explained git, I found that people appreciated the
+> > two-step procedures (like you will find in the examples I showed you
+> > above): one git command to work locally, and one to push/fetch to/from
+> > origin.
+> 
+> Maybe. I know git quite well now and in a shared workflow "git pull"
+> with auto-fast-forward would help me. I often need to run "for each
+> local branch: git checkout ; git merge" to get rid of the errors
+> reported by "git push".
+
+The problem I see here: you know git quite well.  Others don't, and will 
+be mightily confused why pull updates local branches sometimes, and 
+sometimes not.
+
+Ciao,
+Dscho
