@@ -1,88 +1,71 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [PATCH 0/9] Make git-svn fetch ~1.7x faster
-Date: Wed, 24 Oct 2007 13:43:51 +1300
-Message-ID: <471E9547.2030100@vilain.net>
-References: <1193118397-4696-1-git-send-email-aroben@apple.com> <20071023060812.GA30978@glandium.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: UI and git-completion.sh
+Date: Wed, 24 Oct 2007 02:46:20 +0200
+Message-ID: <vpqbqapgx0j.fsf@bauges.imag.fr>
+References: <20071023234617.45a4fc64@paolo-desktop>
+	<471E6EF0.2060403@midwinter.com> <86ve8x9z1f.fsf@blue.stonehenge.com>
+	<vpqir4xgzep.fsf@bauges.imag.fr> <86prz59y9s.fsf@blue.stonehenge.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, aroben@apple.com
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Wed Oct 24 02:44:16 2007
+Cc: Steven Grimm <koreth@midwinter.com>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: merlyn@stonehenge.com (Randal L. Schwartz)
+X-From: git-owner@vger.kernel.org Wed Oct 24 02:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkUM0-0005U9-Ul
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 02:44:13 +0200
+	id 1IkUOk-000644-UF
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 02:47:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753770AbXJXAoA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 20:44:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753835AbXJXAoA
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 20:44:00 -0400
-Received: from watts.utsl.gen.nz ([202.78.240.73]:48619 "EHLO
-	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753753AbXJXAn7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 20:43:59 -0400
-Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
-	id 18E3F21CFEA; Wed, 24 Oct 2007 13:43:57 +1300 (NZDT)
-Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by magnus.utsl.gen.nz (Postfix) with ESMTP id 90D8D21CF66;
-	Wed, 24 Oct 2007 13:43:53 +1300 (NZDT)
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-In-Reply-To: <20071023060812.GA30978@glandium.org>
-X-Enigmail-Version: 0.94.2.0
-X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
-	mail.magnus.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.8 required=5.0 tests=ALL_TRUSTED autolearn=failed 
-	version=3.0.2
+	id S1753659AbXJXAqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Oct 2007 20:46:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753021AbXJXAqv
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 20:46:51 -0400
+Received: from imag.imag.fr ([129.88.30.1]:40378 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752454AbXJXAqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 20:46:51 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id l9O0kK6p027765
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 24 Oct 2007 02:46:21 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IkUO4-00043n-Og; Wed, 24 Oct 2007 02:46:20 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IkUO4-0004ta-MF; Wed, 24 Oct 2007 02:46:20 +0200
+In-Reply-To: <86prz59y9s.fsf@blue.stonehenge.com> (Randal L. Schwartz's message of "Tue\, 23 Oct 2007 17\:01\:03 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 24 Oct 2007 02:46:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62178>
 
-Mike Hommey wrote:
-> On Mon, Oct 22, 2007 at 10:46:28PM -0700, Adam Roben wrote:
->> This patch series makes git-svn fetch about 1.7x faster by reducing the number
->> of forks/execs that occur for each file retrieved from Subversion. To do so, a
->> few new options are added to git-cat-file and git-hash-object to allow
->> continuous input on stdin and continuous output on stdout, so that one instance
->> of each of these commands can be kept running for the duration of the fetch.
-> 
-> You don't need to do this to avoid forks. Just use git-fast-import
-> instead.
+merlyn@stonehenge.com (Randal L. Schwartz) writes:
 
-git-fast-import only covers the hash-object side of things, not cat-file.
+>>>>>> "Matthieu" == Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+> Matthieu> In zsh itself.
+>
+> Matthieu> Completion/Unix/Command/_git
+>
+> Not in my version of zsh.  Any chance I can add that to my 4.2.3
+> installation?
 
-git-fast-import does not currently suit 'gradual deployment' for
-converters such as git-svn, because it;
+http://zsh.cvs.sourceforge.net/zsh/zsh/Completion/Unix/Command/_git
 
-  - returns object IDs at the end, when you checkpoint.
+Try adding it to your $fpath, hopefully, the new _git doesn't use the
+other new zsh features, and it will work (I have a CVS _git with a
+4.3.4 zsh, and it works like a charm).
 
-    This could be 'fixed' by allowing a marks log file instead of or in
-    addition to the current behaviour, though if the exporter is
-    continually waiting for the tokens rather than using marks, it will
-    slow it down.
-
-  - you can't use plumbing commands, such as rev-parse, cat-file, etc on
-    objects which have not been checkpointed yet.
-
-  - can't just stream a file of unknown length to it as you can to
-    hash-object
-
-These are the design trade-offs of using fast-import.  Using
-fast-import, you are creating a 'transaction' area which uses user
-sequences instead of (git)database-issued identifiers.  And this
-transaction is isolated from the other concurrent users of the object
-database.  However the interface does not have the full git CLI
-available to it, so unlike a regular database transaction, you end up
-having to care.
-
-Rewriting the importer so as to correctly deal with these problems is
-quite challenging, and for slow import sources such as Subversion, of
-limited merit.
-
-Sam.
+-- 
+Matthieu
