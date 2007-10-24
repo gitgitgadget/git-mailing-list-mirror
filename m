@@ -1,114 +1,73 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
-Date: Wed, 24 Oct 2007 23:16:26 +0200
-Message-ID: <AF6B550F-99FB-4F65-BA07-662AD590D070@zib.de>
-References: <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se> <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com> <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site> <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024203335.GJ29830@fieldses.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed Oct 24 23:15:35 2007
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] git-send-email: add a new sendemail.to configuration
+	variable
+Date: Wed, 24 Oct 2007 23:16:54 +0200
+Message-ID: <20071024211654.GT23810@genesis.frugalware.org>
+References: <1191242562-27486-1-git-send-email-vmiklos@frugalware.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="2Uwm888OkiLvmClh"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 24 23:17:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IknZX-0004rt-Im
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 23:15:28 +0200
+	id 1IknbC-0005Vw-M6
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 23:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752931AbXJXVPK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 17:15:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754238AbXJXVPK
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 17:15:10 -0400
-Received: from mailer.zib.de ([130.73.108.11]:46863 "EHLO mailer.zib.de"
+	id S1755405AbXJXVQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 17:16:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754088AbXJXVQ5
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 17:16:57 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:14203 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752931AbXJXVPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 17:15:08 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9OLF0ae007777;
-	Wed, 24 Oct 2007 23:15:00 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db1097b.pool.einsundeins.de [77.177.9.123])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9OLEwPw020155
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 24 Oct 2007 23:14:59 +0200 (MEST)
-In-Reply-To: <20071024203335.GJ29830@fieldses.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754005AbXJXVQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 17:16:57 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id F2FC01B254E;
+	Wed, 24 Oct 2007 23:16:54 +0200 (CEST)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 0A7AE44659;
+	Wed, 24 Oct 2007 23:16:36 +0200 (CEST)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 9B08F13A4029; Wed, 24 Oct 2007 23:16:54 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <1191242562-27486-1-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62241>
 
 
-On Oct 24, 2007, at 10:33 PM, J. Bruce Fields wrote:
+--2Uwm888OkiLvmClh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> On Wed, Oct 24, 2007 at 10:12:29PM +0200, Steffen Prohaska wrote:
->> On Oct 24, 2007, at 9:48 PM, J. Bruce Fields wrote:
->>
->>>
->>>> I want git pull to work like git push.
->>>
->>> That strikes me as a less complete solution, since it only helps  
->>> in the
->>> case where the other branches all happen to be unmodified locally  
->>> (hence
->>> can be fast-forwarded).  In other cases the "git push" will still  
->>> emit a
->>> spurious error.
->>
->> Well, but then there's something you should really think
->> about.
->
-> Perhaps, but not necessarily; you may have some branches with local
-> changes that you're content to leave unpushed (and un-updated).
+Hello,
 
-Personally, I don't dare to work that way. But if you do want
-to keep local changes on branches that would normally be pushed
-but you do not want to push them now, you must not call "git
-push" without arguments in the first place. Then you'll never
-see the error emitted by push.
+On Mon, Oct 01, 2007 at 02:42:42PM +0200, Miklos Vajna <vmiklos@frugalware.org> wrote:
+> Several projects prefers to receive patches via a given email address. In these
+> cases it's handy to configure that address once.
 
-I put local changes that I do not intend to change right away
-on a special branch for/<branch>. I only merge them to <branch>
-if I decided to push them, and then I push them soon (maybe
-after I prepared more branches and then push all at once).
+I'm just replying again to this patch, I think it was forgotten in the
+recent flurry of patches... :)
 
+thanks,
+- VMiklos
 
-> So the case where this proposal helps is the case where:
-> 	- the user hasn't learned how to name individual branches on the
-> 	  push commandline, or has learned to do so, but wants less
-> 	  typing, and
+--2Uwm888OkiLvmClh
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Well, as I wrote above "git push" is a too sharp knife for
-me. I _never_ have local changes that I don't intend to push.
-So "git push" always does the right thing for me.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
 
+iD8DBQFHH7ZGe81tAgORUJYRAjxqAJ9KepWfNs0puCEE33/J2uin+bS8AACfSfpQ
+nRcqUJciggzW873kBDzbK0c=
+=sKnw
+-----END PGP SIGNATURE-----
 
-> 	- the user has one or more unmodified copies of remote branches
-> 	  lying around, and
-> 	- the user minds being reminded that those copies are out of
-> 	  date, and
-> 	- the user either has no *modified* copies of local branches, or
-> 	  has some but doesn't mind being reminded that they're out of
-> 	  date on each push.
-
-I see your point. These are may requirements to make the
-proposed behaviour of "git pull" useful. But I'd recommend to
-use git exactly as you described when working with a shared
-repository:
-
-Just use "git pull" and "git push" and everything will be fine
-if you work as follows:
-- Use the same branch names that are used on the origin.
-- Only check out branches locally that you are especially interested in.
-- Only put changes on those branches if you intend to push them.
-- Use "git pull" before you start to prepare branches for
-   "git push".
-- Keep you privat work on branches that are named differently
-   from branches in the shared repository.
-
-	Steffen
+--2Uwm888OkiLvmClh--
