@@ -1,58 +1,67 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: UI and git-completion.sh
-Date: Tue, 23 Oct 2007 19:57:11 -0500
-Message-ID: <20071024005711.GD24924@lavos.net>
-References: <20071023234617.45a4fc64@paolo-desktop> <471E6EF0.2060403@midwinter.com> <86ve8x9z1f.fsf@blue.stonehenge.com> <vpqir4xgzep.fsf@bauges.imag.fr> <86prz59y9s.fsf@blue.stonehenge.com> <471E91C9.3000004@midwinter.com> <86d4v59wvt.fsf@blue.stonehenge.com> <20071024005549.GC24924@lavos.net>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: git-{diff,ls}-files from a subdirectory fails ...
+Date: Wed, 24 Oct 2007 03:20:38 +0200
+Message-ID: <20071024012038.GA31326@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: "Randal L. Schwartz" <merlyn@stonehenge.com>
-X-From: git-owner@vger.kernel.org Wed Oct 24 03:07:11 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 24 03:21:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkUiE-0003Hd-S3
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 03:07:11 +0200
+	id 1IkUvc-0006Sq-Qm
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 03:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752830AbXJXBG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Oct 2007 21:06:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbXJXBG7
-	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 21:06:59 -0400
-Received: from mxsf04.insightbb.com ([74.128.0.74]:61644 "EHLO
-	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752784AbXJXBG6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Oct 2007 21:06:58 -0400
-X-IronPort-AV: E=Sophos;i="4.21,320,1188792000"; 
-   d="scan'208";a="87142134"
-Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
-  by mxsf04.insightbb.com with ESMTP; 23 Oct 2007 20:57:22 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4HANA0HkdKhvkY/2dsb2JhbACBWo5k
-X-IronPort-AV: E=Sophos;i="4.21,320,1188792000"; 
-   d="scan'208";a="88493670"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav01.insightbb.com with ESMTP; 23 Oct 2007 20:57:22 -0400
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id CE4C1309F21; Tue, 23 Oct 2007 19:57:11 -0500 (CDT)
+	id S1755340AbXJXBUt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Oct 2007 21:20:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755331AbXJXBUt
+	(ORCPT <rfc822;git-outgoing>); Tue, 23 Oct 2007 21:20:49 -0400
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2885 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754640AbXJXBUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Oct 2007 21:20:48 -0400
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IkUvG-0008Di-00; Wed, 24 Oct 2007 02:20:38 +0100
 Content-Disposition: inline
-In-Reply-To: <20071024005549.GC24924@lavos.net>
+X-Manual-Spam-Check: kha@treskal.com, clean
 User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62182>
 
-On Tue, Oct 23, 2007 at 07:55:49PM -0500, Brian Downing wrote:
-> I dunno the "right" way to do it, but I had this in my .zshrc file that
-> I presumably cargo-culted from somewhere:
-> 
->     fpath=( $HOME/.zsh/compfuncs $fpath )
+=2E.. when GIT_DIR is specified.
 
-I think this has to come before "compinit" or whatever starts up the new
-completion engine.
+I have a repository at ~/stgit-lib. With cwd at the top of the tree,
+things work as expected when I set all those fancy envoronment
+variables:
 
--bcd
+  kha@yoghurt:~/stgit-lib> git-diff-files --name-only
+  stgit/utillib.py
+
+  kha@yoghurt:~/stgit-lib> GIT_DIR=3D/home/kha/stgit-lib/.git GIT_INDEX=
+_FILE=3D/home/kha/stgit-lib/.git/index GIT_WORK_TREE=3D/home/kha/stgit-=
+lib git-diff-files --name-only
+  stgit/utillib.py
+
+However, it doen't seem to work from a subdirectory:
+
+  kha@yoghurt:~/stgit-lib/stgit> git-diff-files --name-only
+  stgit/utillib.py
+
+  kha@yoghurt:~/stgit-lib/stgit> GIT_DIR=3D/home/kha/stgit-lib/.git GIT=
+_INDEX_FILE=3D/home/kha/stgit-lib/.git/index GIT_WORK_TREE=3D/home/kha/=
+stgit-lib git-diff-files --name-only | wc
+      170     170    3560
+
+Instead of just the one changed file, I get a list of what looks like
+all the files in the project, suggesting that maybe git assumes I'm at
+the root of the worktree when I'm not.
+
+git-ls-files seems to behave the same way. Bug or user error?
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
