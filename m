@@ -1,77 +1,54 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: UI and git-completion.sh
-Date: Wed, 24 Oct 2007 19:07:06 +0200
-Message-ID: <20071024170706.GA29387@artemis.corp>
-References: <20071023234617.45a4fc64@paolo-desktop> <Pine.LNX.4.64.0710241113190.25221@racer.site>
+From: "Medve Emilian-EMMEDVE1" <Emilian.Medve@freescale.com>
+Subject: Recover a stash
+Date: Wed, 24 Oct 2007 10:26:06 -0700
+Message-ID: <598D5675D34BE349929AF5EDE9B03E27016E5841@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="envbJBWh7q8WU6mo";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 24 19:07:50 2007
+Content-Type: text/plain;
+	charset="US-ASCII"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 24 19:27:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikjhe-0004KD-Ji
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 19:07:35 +0200
+	id 1Ikk0R-0004F5-U8
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 19:27:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755020AbXJXRHN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 13:07:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbXJXRHN
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 13:07:13 -0400
-Received: from pan.madism.org ([88.191.52.104]:48652 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755814AbXJXRHK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 13:07:10 -0400
-Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 362AC26B34;
-	Wed, 24 Oct 2007 19:07:06 +0200 (CEST)
-Received: by madism.org (Postfix, from userid 1000)
-	id 6E16631B254; Wed, 24 Oct 2007 19:07:06 +0200 (CEST)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710241113190.25221@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754451AbXJXR0O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 13:26:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753078AbXJXR0N
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 13:26:13 -0400
+Received: from de01egw01.freescale.net ([192.88.165.102]:54420 "EHLO
+	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186AbXJXR0M convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Oct 2007 13:26:12 -0400
+Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
+	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id l9OHQ86a023419
+	for <git@vger.kernel.org>; Wed, 24 Oct 2007 10:26:08 -0700 (MST)
+Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
+	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id l9OHQ7J4027271
+	for <git@vger.kernel.org>; Wed, 24 Oct 2007 12:26:07 -0500 (CDT)
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: Recover a stash
+Thread-Index: AcgWYvW6YWuEjPBnTVG2j33yfjd+HQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62222>
+
+Hello,
 
 
---envbJBWh7q8WU6mo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Is there any way to recover a stash as a... stash? I accidently removed
+a stash I still need and I'd like to recover it as a stash. I can see
+the dangling commit objects in the database with git lost-found and I
+can have a branch/head point at them, but it's not understood as stash
+anymore.
 
-On Wed, Oct 24, 2007 at 10:20:07AM +0000, Johannes Schindelin wrote:
-> BTW Pierre's idea of generating many (if not all) of these completions on=
-=20
-> the fly (maybe with "--help-completion"?) is intriguing.
 
-  To be fair, it's not my idea, I'm just bought to it.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---envbJBWh7q8WU6mo
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHH3u6vGr7W6HudhwRApgTAKCjHEUmKCccOnaX3N6DnI6Z5yS0egCfUXHR
-MN8PPCV8e1i5CFtDTE+JDgU=
-=0R/F
------END PGP SIGNATURE-----
-
---envbJBWh7q8WU6mo--
+Thank you,
+Emil.
