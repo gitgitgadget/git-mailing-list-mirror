@@ -1,59 +1,166 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: intended use of "git --exec-path"?
-Date: Wed, 24 Oct 2007 00:38:19 -0400
-Message-ID: <20071024043819.GI14735@spearce.org>
-References: <20071024043224.GR16291@srparish.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH 1/3] Bisect: refactor "bisect_write_*" functions.
+Date: Wed, 24 Oct 2007 07:01:05 +0200
+Message-ID: <20071024070105.2381ab12.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Scott Parish <sRp@srparish.net>
-X-From: git-owner@vger.kernel.org Wed Oct 24 06:38:39 2007
+To: Junio Hamano <junkio@cox.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 24 06:54:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkY0r-0005wV-80
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 06:38:37 +0200
+	id 1IkYG3-0000Li-Um
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 06:54:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753267AbXJXEiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 00:38:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753023AbXJXEiY
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 00:38:24 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:33709 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816AbXJXEiX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 00:38:23 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IkY0c-0000Li-6c; Wed, 24 Oct 2007 00:38:22 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E277720FBAE; Wed, 24 Oct 2007 00:38:19 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <20071024043224.GR16291@srparish.net>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751421AbXJXEyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 00:54:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751116AbXJXEyG
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 00:54:06 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:39750 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750716AbXJXEyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 00:54:04 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 8F2F21AB2C2;
+	Wed, 24 Oct 2007 06:54:02 +0200 (CEST)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id EF0A71AB2C1;
+	Wed, 24 Oct 2007 06:54:01 +0200 (CEST)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62189>
 
-Scott Parish <sRp@srparish.net> wrote:
-> "git --exec-path" presently prints out the highest priority path
-> to find executable in. That's a what; i'm curious why and when it
-> should be used. Basically i'm wondering if its still useful, and
-> what, if anything, it should be printing.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
+ git-bisect.sh |   46 ++++++++++++++++++++--------------------------
+ 1 files changed, 20 insertions(+), 26 deletions(-)
 
-git-gui uses it.  git-gui runs git-* by prefixing it with the
-exec path.  It also scans the first line of the file if we are on
-Windows and the "executable" doesn't end in ".exe" so it can figure
-out what process to run it through.
+	This patch series change the title of 3 patches in the
+	"bisect skip" series from "Bisect: factorise ..." to
+	"Bisect: refactor ...".
+	In the second patch in this series a missing line has
+	also been added back. 
 
-So it really can't go away.
-
+diff --git a/git-bisect.sh b/git-bisect.sh
+index cd46190..82aa404 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -108,9 +108,9 @@ bisect_start() {
+ 		}
+ 		if [ $bad_seen -eq 0 ]; then
+ 		    bad_seen=1
+-		    bisect_write_bad "$rev"
++		    bisect_write 'bad' "$rev"
+ 		else
+-		    bisect_write_good "$rev"
++		    bisect_write 'good' "$rev"
+ 		fi
+ 		shift
+ 		;;
+@@ -122,6 +122,18 @@ bisect_start() {
+ 	bisect_auto_next
+ }
+ 
++bisect_write() {
++	state="$1"
++	rev="$2"
++	case "$state" in
++		bad)		tag="$state" ;;
++		good|skip)	tag="$state"-"$rev" ;;
++		*)		die "Bad bisect_write argument: $state" ;;
++	esac
++	echo "$rev" >"$GIT_DIR/refs/bisect/$tag"
++	echo "# $state: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
++}
++
+ bisect_bad() {
+ 	bisect_autostart
+ 	case "$#" in
+@@ -132,17 +144,11 @@ bisect_bad() {
+ 	*)
+ 		usage ;;
+ 	esac || exit
+-	bisect_write_bad "$rev"
++	bisect_write 'bad' "$rev"
+ 	echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	bisect_auto_next
+ }
+ 
+-bisect_write_bad() {
+-	rev="$1"
+-	echo "$rev" >"$GIT_DIR/refs/bisect/bad"
+-	echo "# bad: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+-}
+-
+ bisect_good() {
+ 	bisect_autostart
+ 	case "$#" in
+@@ -153,18 +159,12 @@ bisect_good() {
+ 	for rev in $revs
+ 	do
+ 		rev=$(git rev-parse --verify "$rev^{commit}") || exit
+-		bisect_write_good "$rev"
++		bisect_write 'good' "$rev"
+ 		echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	done
+ 	bisect_auto_next
+ }
+ 
+-bisect_write_good() {
+-	rev="$1"
+-	echo "$rev" >"$GIT_DIR/refs/bisect/good-$rev"
+-	echo "# good: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+-}
+-
+ bisect_skip() {
+ 	bisect_autostart
+ 	case "$#" in
+@@ -175,18 +175,12 @@ bisect_skip() {
+ 	for rev in $revs
+ 	do
+ 		rev=$(git rev-parse --verify "$rev^{commit}") || exit
+-		bisect_write_skip "$rev"
++		bisect_write 'skip' "$rev"
+ 		echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
+ 	done
+ 	bisect_auto_next
+ }
+ 
+-bisect_write_skip() {
+-	rev="$1"
+-	echo "$rev" >"$GIT_DIR/refs/bisect/skip-$rev"
+-	echo "# skip: "$(git show-branch $rev) >>"$GIT_DIR/BISECT_LOG"
+-}
+-
+ bisect_next_check() {
+ 	missing_good= missing_bad=
+ 	git show-ref -q --verify refs/bisect/bad || missing_bad=t
+@@ -395,15 +389,15 @@ bisect_replay () {
+ 			eval "$cmd"
+ 			;;
+ 		good)
+-			bisect_write_good "$rev"
++			bisect_write 'good' "$rev"
+ 			echo "git-bisect good $rev" >>"$GIT_DIR/BISECT_LOG"
+ 			;;
+ 		bad)
+-			bisect_write_bad "$rev"
++			bisect_write 'bad' "$rev"
+ 			echo "git-bisect bad $rev" >>"$GIT_DIR/BISECT_LOG"
+ 			;;
+ 		skip)
+-			bisect_write_skip "$rev"
++			bisect_write 'skip' "$rev"
+ 			echo "git-bisect skip $rev" >>"$GIT_DIR/BISECT_LOG"
+ 			;;
+ 		*)
 -- 
-Shawn.
+1.5.3.4.215.g187cf
