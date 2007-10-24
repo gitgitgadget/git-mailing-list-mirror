@@ -1,155 +1,93 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Wed, 24 Oct 2007 22:13:05 +0200
-Message-ID: <471FA751.4000603@op5.se>
-References: <Pine.LNX.4.64.0710221156540.25221@racer.site> <471C9B13.9080603@op5.se> <Pine.LNX.4.64.0710221445170.25221@racer.site> <471CB443.9070606@op5.se> <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com> <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site> <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org>
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: git-remote: Use of uninitialized value in string ne, line 248
+Date: Wed, 24 Oct 2007 22:27:24 +0200
+Message-ID: <20071024202724.GA2292@piper.oerlikon.madduck.net>
+References: <20071024110807.GA12501@piper.oerlikon.madduck.net> <7vwstc68bk.fsf@gitster.siamese.dyndns.org> <20071024193954.GA5280@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Wed Oct 24 22:13:45 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="VS++wcV0S1rZb1Fb"
+To: Alex Riesen <raa.lkml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	git discussion list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 24 22:27:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikmbm-00063c-Q4
-	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 22:13:43 +0200
+	id 1IkmpY-0003S8-EY
+	for gcvg-git-2@gmane.org; Wed, 24 Oct 2007 22:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754377AbXJXUNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 16:13:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753342AbXJXUNM
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 16:13:12 -0400
-Received: from mail.op5.se ([193.201.96.20]:40037 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754382AbXJXUNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 16:13:10 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 2E8421730694;
-	Wed, 24 Oct 2007 22:12:54 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id znxBAozQpeHn; Wed, 24 Oct 2007 22:12:53 +0200 (CEST)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 20192173066A;
-	Wed, 24 Oct 2007 22:12:51 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071024194849.GH29830@fieldses.org>
+	id S1753612AbXJXU1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 16:27:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753840AbXJXU1m
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 16:27:42 -0400
+Received: from clegg.madduck.net ([82.197.162.59]:38228 "EHLO
+	clegg.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753548AbXJXU1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Oct 2007 16:27:41 -0400
+Received: from wall.oerlikon.madduck.net (77-56-87-151.dclient.hispeed.ch [77.56.87.151])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "wall.oerlikon.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by clegg.madduck.net (postfix) with ESMTP id 8D9B8A808F;
+	Wed, 24 Oct 2007 22:28:20 +0200 (CEST)
+Received: from piper.oerlikon.madduck.net (piper.oerlikon.madduck.net [192.168.14.3])
+	by wall.oerlikon.madduck.net (Postfix) with ESMTP id 3A57D9F13B;
+	Wed, 24 Oct 2007 22:27:25 +0200 (CEST)
+Received: by piper.oerlikon.madduck.net (Postfix, from userid 1000)
+	id 09AB14408; Wed, 24 Oct 2007 22:27:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20071024193954.GA5280@steel.home>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux lenny/sid kernel 2.6.22-2-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Virus-Scanned: ClamAV 0.91.2/4591/Wed Oct 24 21:47:49 2007 on clegg.madduck.net
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62234>
 
-J. Bruce Fields wrote:
-> On Wed, Oct 24, 2007 at 09:41:05PM +0200, Andreas Ericsson wrote:
->> J. Bruce Fields wrote:
->>> On Wed, Oct 24, 2007 at 08:48:54PM +0200, Steffen Prohaska wrote:
->>>> The central shared repo is called project-shared.git and contains,
->>>> for example, the following branches:
->>>>    master
->>>>    next
->>>>    work/topicA
->>>>    work/topicB
->>>>    ...
->>>>
->>>>
->>>> Developers clone the repo and check out the branches they are
->>>> interested in. For example a developer may want to track next
->>>> and work on topicB:
->>>>
->>>>    git clone ssh://central.example.com/project-shared.git project
->>>>    cd project
->>>>    git checkout -b next origin/next
->>>>    git checkout -b work/topicB origin/work/topicB
->>>>
->>>> This is sufficient. No adding of remotes is needed. Neither
->>>> is a private repository on a server required. After cloning,
->>>> developers have all they need.
->>>>
->>>> Later work/topicB has new commits and should be pushed:
->>>>
->>>>    git push origin
->>>>
->>>> The default behaviour of push is fine. Only matching branches
->>>> are pushed.
->>>>
->>>> _But_, origin is a shared repository. Therefore branches may
->>>> have advanced and git push may report
->>>>
->>>> error: remote 'refs/heads/next' is not a strict subset of local ref 
->>>> 'refs/heads/next'. maybe you are not up-to-date and need to pull first?
->>>>
->>>> So here's the problem. The developer didn't do anything wrong.
->>>> But git complaints with an error. Git also recommends to run
->>>> pull, so the developer runs "git pull". But this doesn't help,
->>>> because it's only updating work/topicB and "git push" will
->>>> complain with the very same error.
->>>>
->>>> What you need to do is
->>>>
->>>>    git checkout <local-branch>
->>>>    git pull
->>>>    git checkout <local-branch2>
->>>>    git pull
->>>>    ...
->>>>
->>>> for every local branch.
->>> Or just
->>> 	git push origin work/topicB
->>> since that's all you really wanted to push anyway.
->> git pull. Not git push. git pull operates on one working branch
->> at a time (by default), whereas git push uploads and fast-forwards
->> all the common branches (by default).
-> 
-> I understand.  I was just suggesting that if the goal was to avoid the
-> error message on push, then specifying the branch to push explicitly
-> would be a solution.
-> 
 
-A better way to avoid that error message is ofcourse to make sure one
-always starts development off of the latest version of the particular
-branch one wants to work on.
+--VS++wcV0S1rZb1Fb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
->> I want git pull to work like git push.
-> 
-> That strikes me as a less complete solution, since it only helps in the
-> case where the other branches all happen to be unmodified locally (hence
-> can be fast-forwarded).
+also sprach Alex Riesen <raa.lkml@gmail.com> [2007.10.24.2139 +0200]:
+> just you never call yor branches "0".
 
-For a corporate environment with multiple modules, the scenario where the
-upstream is modified and the local branches aren't is more common than
-anything else. The failure on push happens because developers do
+Wow, Perl is weird. :)
 
-git pull; # Yup, gotta do that to get the latest changes
-git checkout whatever; # Here's where I want to work
-work work work
-git push; # ach crivens! bloody stupid git of a tool to ALWAYS BREAK!
+perl -e 'print "The earth is a disk!\n" if ( "earth" =3D=3D "flat" );'
 
->  In other cases the "git push" will still emit a
-> spurious error.
-> 
+Is there a way to make it explicit that you're checking for a value
+being defined, where a "false" value would count as true, just as
+long as there is a value?
 
-If the tool can make it happen as few times as possible, that's good
-enough for me. It's a lot easier to explain to my co-workers that
-their push failed because someone else worked on it simultaneously
-and pushed before they did, rather than telling them that they did
-the pull/checkout sequence in the wrong order.
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+micro$oft dns service terminates abnormally
+when it receives a response
+to a dns query that was never made.
+fix information: run your dns service on a different platform.
+                                                            -- bugtraq
+=20
+spamtraps: madduck.bogus@madduck.net
 
-In the one scenario, it's "oh, I see". In the other, it's "god damn
-piece of shit tool". Simple as that.
+--VS++wcV0S1rZb1Fb
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHH6qsIgvIgzMMSnURAj2MAKDLmChZvk7tlBSPbp1SKf9Mb0J8MgCghpvv
+2OvTprBCzOoil/YPztiMr5U=
+=sEMF
+-----END PGP SIGNATURE-----
+
+--VS++wcV0S1rZb1Fb--
