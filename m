@@ -1,89 +1,56 @@
-From: Federico Mena Quintero <federico@novell.com>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
-	summary continued
-Date: Thu, 25 Oct 2007 11:16:04 -0500
-Message-ID: <1193328964.4522.361.camel@cacharro.xalalinux.org>
-References: <Pine.LNX.4.64.0710212308540.25221@racer.site>
-	 <471C9B13.9080603@op5.se> <Pine.LNX.4.64.0710221445170.25221@racer.site>
-	 <471CB443.9070606@op5.se>
-	 <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
-	 <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>
-	 <Pine.LNX.4.64.0710231155321.25221@racer.site>
-	 <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de>
-	 <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se>
-	 <8fe92b430710241648j609d4d00x121836001a69d1e6@mail.gmail.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: best git practices, was Re: Git User's Survey 2007
+	unfinishedsummary continued
+Date: Thu, 25 Oct 2007 12:38:35 -0400
+Message-ID: <20071025163835.GB31888@fieldses.org>
+References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com> <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site> <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024212854.GB6069@xp.machine.xx> <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site> <1193328386.4522.352.camel@cacharro.xalalinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 18:14:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Federico Mena Quintero <federico@novell.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 18:40:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il5LR-0002Pf-Hq
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 18:14:05 +0200
+	id 1Il5kX-00011u-JA
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 18:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751144AbXJYQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 12:13:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbXJYQNw
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 12:13:52 -0400
-Received: from jericho.provo.novell.com ([137.65.248.124]:23704 "EHLO
-	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751058AbXJYQNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 12:13:52 -0400
-Received: from [164.99.192.129] ([164.99.192.129])
-	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 10:13:47 -0600
-In-Reply-To: <8fe92b430710241648j609d4d00x121836001a69d1e6@mail.gmail.com>
-X-Mailer: Evolution 2.11.5 
+	id S1758602AbXJYQin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 12:38:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761358AbXJYQin
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 12:38:43 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:46787 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761266AbXJYQil (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 12:38:41 -0400
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Il5jA-0001bA-1H; Thu, 25 Oct 2007 12:38:36 -0400
+Content-Disposition: inline
+In-Reply-To: <1193328386.4522.352.camel@cacharro.xalalinux.org>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62334>
 
-On Thu, 2007-10-25 at 01:48 +0200, Jakub Narebski wrote:
+On Thu, Oct 25, 2007 at 11:06:26AM -0500, Federico Mena Quintero wrote:
+> So, a few problems so far, with possible solutions:
+> 
+> * The docs do not make it easy to understand what git-fetch does.  Can
+> we just cut&paste most of "Git for computer scientists" into the Git
+> user's manual?).
 
-> git push is opposite (almost) to git fetch, not to git pull.
+It's definitely not a simple cut-and-paste--even with permission from
+the author of "Git for computer scientists", fitting this in would
+require rethinking the ordering of topics in the manual.  Also, there's
+the restriction that we'd like to keep it looking good in plain ascii,
+so diagrams have to be done in ascii somehow.
 
-This asymmetry is also part of what makes Git hard to learn at first.
+But as for using ideas from "Git for computer scientists", and/or
+rethinking the ordering of the user's manual to make it more helpful.
+Yes, that would be great!  Let me know what I can do to help.
 
-There is a lot of new terminology to learn:
-
-  refs
-  remotes
-  fast-forwarding
-  rebasing
-  origin
-  master
-  HEAD (which is not quite the same as good old CVS's HEAD)
-  etc.
-
-The solution is not, "have a good glossary" (which is needed, anyway),
-but to make the documentation introduce those concepts at the right
-time, instead of being chock-full of them from the beginning :)
-
-Carl Worth's git-ification of the Mercurial book chapter is very nice in
-this regard; it doesn't dump all the terminology on you, but rather
-takes its time to introduce each concept when you are ready to know
-about it [1].
-
-It's kind of sad that the first thing "man git-push" tells you is this:
-
-       git-push - Update remote refs along with associated objects
-
-So you go, "refs?  associated objects?  whaaaaaat?" :)
-
-Imagine someone learning the GIMP a few versions ago.  "I want to make
-this photo sharper".  You go to the Filters/Enhance menu and you see
-
-  Laplace
-  Sobel
-  Sharpen
-  Unsharp mask
-
-All of those sharpen the image.  Which one do you pick?
-
-[1] http://cworth.org/hgbook-git/
-
-  Federico
+--b.
