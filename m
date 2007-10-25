@@ -1,60 +1,89 @@
-From: merlyn@stonehenge.com (Randal L. Schwartz)
-Subject: Re: recent change in git.git/master broke my repos
-Date: Thu, 25 Oct 2007 09:06:28 -0700
-Message-ID: <867ilb6uwr.fsf@blue.stonehenge.com>
-References: <86oden6z97.fsf@blue.stonehenge.com>
-	<20071025155142.GB19655@coredump.intra.peff.net>
-	<86fxzz6vfh.fsf@blue.stonehenge.com>
-	<20071025155712.GA21446@coredump.intra.peff.net>
-	<86bqan6v9f.fsf@blue.stonehenge.com>
-	<20071025160159.GA21505@coredump.intra.peff.net>
+From: Federico Mena Quintero <federico@novell.com>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+	summary continued
+Date: Thu, 25 Oct 2007 11:16:04 -0500
+Message-ID: <1193328964.4522.361.camel@cacharro.xalalinux.org>
+References: <Pine.LNX.4.64.0710212308540.25221@racer.site>
+	 <471C9B13.9080603@op5.se> <Pine.LNX.4.64.0710221445170.25221@racer.site>
+	 <471CB443.9070606@op5.se>
+	 <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
+	 <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>
+	 <Pine.LNX.4.64.0710231155321.25221@racer.site>
+	 <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de>
+	 <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se>
+	 <8fe92b430710241648j609d4d00x121836001a69d1e6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 25 18:07:00 2007
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 18:14:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il5EQ-0000aX-FR
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 18:06:50 +0200
+	id 1Il5LR-0002Pf-Hq
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 18:14:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751800AbXJYQGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 12:06:31 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750998AbXJYQGa
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 12:06:30 -0400
-Received: from blue.stonehenge.com ([209.223.236.162]:18995 "EHLO
-	blue.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751500AbXJYQGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 12:06:30 -0400
-Received: by blue.stonehenge.com (Postfix, from userid 1001)
-	id B6B4B1DE552; Thu, 25 Oct 2007 09:06:28 -0700 (PDT)
-x-mayan-date: Long count = 12.19.14.13.16; tzolkin = 5 Cib; haab = 4 Zac
-In-Reply-To: <20071025160159.GA21505@coredump.intra.peff.net> (Jeff King's message of "Thu, 25 Oct 2007 12:01:59 -0400")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) Emacs/21.4 (berkeley-unix)
+	id S1751144AbXJYQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 12:13:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751190AbXJYQNw
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 12:13:52 -0400
+Received: from jericho.provo.novell.com ([137.65.248.124]:23704 "EHLO
+	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751058AbXJYQNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 12:13:52 -0400
+Received: from [164.99.192.129] ([164.99.192.129])
+	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 10:13:47 -0600
+In-Reply-To: <8fe92b430710241648j609d4d00x121836001a69d1e6@mail.gmail.com>
+X-Mailer: Evolution 2.11.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62333>
 
->>>>> "Jeff" == Jeff King <peff@peff.net> writes:
+On Thu, 2007-10-25 at 01:48 +0200, Jakub Narebski wrote:
 
-Jeff> On Thu, Oct 25, 2007 at 08:58:52AM -0700, Randal L. Schwartz wrote:
-Jeff> So that should take the remote's refs/heads/* and put them in your
-Jeff> refs/remotes/origin/*. I don't see how that would have anything to do
-Jeff> with your 'refs/heads/upstream' branch.
->> 
->> Agreed, but that's the place where fetch might look at refs/heads/upstream,
->> and the behavior is definitely different between yesterday and today.
+> git push is opposite (almost) to git fetch, not to git pull.
 
-Jeff> Fair enough. How about my other questions. Can you 'git-show upstream'?
-Jeff> Can you 'git-show origin/master'?
+This asymmetry is also part of what makes Git hard to learn at first.
 
-yes, and they show the same thing.
+There is a lot of new terminology to learn:
 
--- 
-Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
-<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
-Perl/Unix/security consulting, Technical writing, Comedy, etc. etc.
-See PerlTraining.Stonehenge.com for onsite and open-enrollment Perl training!
+  refs
+  remotes
+  fast-forwarding
+  rebasing
+  origin
+  master
+  HEAD (which is not quite the same as good old CVS's HEAD)
+  etc.
+
+The solution is not, "have a good glossary" (which is needed, anyway),
+but to make the documentation introduce those concepts at the right
+time, instead of being chock-full of them from the beginning :)
+
+Carl Worth's git-ification of the Mercurial book chapter is very nice in
+this regard; it doesn't dump all the terminology on you, but rather
+takes its time to introduce each concept when you are ready to know
+about it [1].
+
+It's kind of sad that the first thing "man git-push" tells you is this:
+
+       git-push - Update remote refs along with associated objects
+
+So you go, "refs?  associated objects?  whaaaaaat?" :)
+
+Imagine someone learning the GIMP a few versions ago.  "I want to make
+this photo sharper".  You go to the Filters/Enhance menu and you see
+
+  Laplace
+  Sobel
+  Sharpen
+  Unsharp mask
+
+All of those sharpen the image.  Which one do you pick?
+
+[1] http://cworth.org/hgbook-git/
+
+  Federico
