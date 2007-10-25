@@ -1,54 +1,55 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: best git practices, was Re: Git User's Survey 2007
-	unfinishedsummary continued
-Date: Thu, 25 Oct 2007 16:27:44 -0400
-Message-ID: <20071025202744.GE31888@fieldses.org>
-References: <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024212854.GB6069@xp.machine.xx> <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site> <1193328386.4522.352.camel@cacharro.xalalinux.org> <20071025163835.GB31888@fieldses.org> <1193335562.4522.403.camel@cacharro.xalalinux.org> <4720FA6E.9040805@op5.se>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: recent change in git.git/master broke my repos
+Date: Thu, 25 Oct 2007 16:38:06 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0710251637240.22100@xanadu.home>
+References: <86oden6z97.fsf@blue.stonehenge.com>
+ <20071025150107.GB31196@diana.vm.bytemark.co.uk>
+ <alpine.LFD.0.9999.0710251344220.22100@xanadu.home> <4720FB4E.3030300@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Federico Mena Quintero <federico@novell.com>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
 To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Oct 25 22:28:19 2007
+X-From: git-owner@vger.kernel.org Thu Oct 25 22:38:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il9JC-0003iW-Th
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:28:03 +0200
+	id 1Il9TO-0006QN-Ag
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:38:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbXJYU1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 16:27:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbXJYU1t
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:27:49 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:43755 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752785AbXJYU1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 16:27:48 -0400
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Il9Iu-0000iI-CM; Thu, 25 Oct 2007 16:27:44 -0400
-Content-Disposition: inline
-In-Reply-To: <4720FA6E.9040805@op5.se>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1751680AbXJYUiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 16:38:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751710AbXJYUiV
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:38:21 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:12104 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751588AbXJYUiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 16:38:20 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JQH00KCXINJPW91@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 25 Oct 2007 16:38:11 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <4720FB4E.3030300@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62372>
 
-On Thu, Oct 25, 2007 at 10:19:58PM +0200, Andreas Ericsson wrote:
-> Federico Mena Quintero wrote:
->> On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
->>> Also, there's
->>> the restriction that we'd like to keep it looking good in plain ascii,
->>> so diagrams have to be done in ascii somehow.
->> Hmm, what's the rationale for this?  I'd assume that most people read
->> the user's manual as a web page (or as bedside reading if they can print
->> a PDF thereof), where diagrams can be pretty.
->
-> man pages.
+On Thu, 25 Oct 2007, Andreas Ericsson wrote:
 
-I think he's talking about Documentation/user-manual.txt, which isn't
-turned into man pages.  (Might be nice if it could be though, I
-suppose.)
+> Nicolas Pitre wrote:
+> > Isn't that called a remote branch that gets updated with "git fetch' ?
+> > You can even trick Git into not using the refs/remotes/ namespace for them
+> > if you wish.
+> > 
+> 
+> You'd lose the ability to do "git diff origin/master" while disconnected
+> though. It's quite valuable.
 
---b.
+I don't see how you'd lose anything.
+
+
+Nicolas
