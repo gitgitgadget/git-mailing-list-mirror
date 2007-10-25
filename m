@@ -1,64 +1,81 @@
-From: Federico Mena Quintero <federico@novell.com>
-Subject: Re: best git practices, was Re: Git User's Survey 2007
-	unfinishedsummary continued
-Date: Thu, 25 Oct 2007 13:06:02 -0500
-Message-ID: <1193335562.4522.403.camel@cacharro.xalalinux.org>
-References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
-	 <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>
-	 <Pine.LNX.4.64.0710231155321.25221@racer.site>
-	 <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de>
-	 <20071024194849.GH29830@fieldses.org>
-	 <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de>
-	 <20071024212854.GB6069@xp.machine.xx>
-	 <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>
-	 <Pine.LNX.4.64.0710242258201.25221@racer.site>
-	 <1193328386.4522.352.camel@cacharro.xalalinux.org>
-	 <20071025163835.GB31888@fieldses.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: recent change in git.git/master broke my repos
+Date: Thu, 25 Oct 2007 14:05:20 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710251351330.7345@iabervon.org>
+References: <86oden6z97.fsf@blue.stonehenge.com> <20071025165633.GA24143@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Thu Oct 25 20:04:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 25 20:06:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il744-0007Sy-R6
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:04:17 +0200
+	id 1Il75L-0007lO-4V
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:05:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135AbXJYSED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 14:04:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752957AbXJYSED
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:04:03 -0400
-Received: from jericho.provo.novell.com ([137.65.248.124]:27760 "EHLO
-	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752752AbXJYSEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 14:04:00 -0400
-Received: from [164.99.192.129] ([164.99.192.129])
-	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 12:03:44 -0600
-In-Reply-To: <20071025163835.GB31888@fieldses.org>
-X-Mailer: Evolution 2.11.5 
+	id S1752300AbXJYSFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 14:05:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752702AbXJYSFW
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:05:22 -0400
+Received: from iabervon.org ([66.92.72.58]:35806 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751660AbXJYSFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 14:05:22 -0400
+Received: (qmail 8444 invoked by uid 1000); 25 Oct 2007 18:05:20 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 25 Oct 2007 18:05:20 -0000
+In-Reply-To: <20071025165633.GA24143@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62341>
 
-On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
+On Thu, 25 Oct 2007, Jeff King wrote:
 
-> It's definitely not a simple cut-and-paste--even with permission from
-> the author of "Git for computer scientists", fitting this in would
-> require rethinking the ordering of topics in the manual.
+> On Thu, Oct 25, 2007 at 07:32:36AM -0700, Randal L. Schwartz wrote:
+> 
+> > I have echo "ref: refs/remotes/origin/master" >.git/refs/heads/upstream
+> > so that my daily update script can go:
+> > 
+> >    git-fetch
+> >    if [ repo is on master, and is not dirty ];
+> >       git-merge upstream
+> >    fi
+> > 
+> > Yesterday that worked.
+> > 
+> > Today I get a rash of:
+> > 
+> >   fatal: Couldn't find remote ref refs/remotes/origin/master
+> > 
+> > from my git-fetch.
+> 
+> Randal and I discussed this a bit on IRC, and it turns out not to be
+> related to the 'upstream' symref. Instead, he had a broken
+> branch.master.merge config that pointed to "refs/remotes/origin/master"
+> (which you can see from his script above doesn't actually get used).
+> 
+> So presumably the old git-fetch didn't care that the contents of
+> branch.*.master didn't exist (it's just that nothing got marked for
+> merging), but the one just merged from the db/fetch-pack topic does.
+> 
+> Is this behavior change intentional?
 
-Oh, that can be done.  It's easier to move text around than to
-rearchitect code :)
+It's not exactly intentional; it's just that nobody seems to have tested 
+this particular misconfiguration. It should probably report an error 
+(since the configuration is, in fact, broken and potentially misleading), 
+but it probably shouldn't be fatal and certainly shouldn't be so 
+uninformative.
 
-> Also, there's
-> the restriction that we'd like to keep it looking good in plain ascii,
-> so diagrams have to be done in ascii somehow.
+I guess it's a new feature that you can use a branch.*.merge line to 
+select a ref that otherwise wouldn't be fetched at all, cause it to be 
+fetched, and have it marked for merging; previously, such a config line 
+would just be ignored, as it didn't exactly match anything. It's a side 
+effect that something that doesn't exist (by that name on the remote side) 
+is now an issue.
 
-Hmm, what's the rationale for this?  I'd assume that most people read
-the user's manual as a web page (or as bedside reading if they can print
-a PDF thereof), where diagrams can be pretty.
-
-  Federico
+	-Daniel
+*This .sig left intentionally blank*
