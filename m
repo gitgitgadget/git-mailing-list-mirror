@@ -1,99 +1,140 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: best git practices, was Re: Git User's Survey 2007
-	unfinishedsummary continued
-Date: Thu, 25 Oct 2007 14:23:58 -0400
-Message-ID: <20071025182358.GA10664@thunk.org>
-References: <Pine.LNX.4.64.0710242258201.25221@racer.site> <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de> <Pine.LNX.4.64.0710250021430.25221@racer.site> <47204297.5050109@op5.se> <Pine.LNX.4.64.0710251112390.25221@racer.site> <472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org> <4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org> <1193335339.4522.398.camel@cacharro.xalalinux.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6/6] Do exact rename detection regardless of rename limits
+Date: Thu, 25 Oct 2007 11:24:47 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710251123280.30120@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.or
+ g>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Oct 25 20:25:00 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 20:27:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il7Nw-0004eE-Tn
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:24:49 +0200
+	id 1Il7QM-0005Jq-Ob
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752872AbXJYSYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 14:24:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752404AbXJYSYh
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:24:37 -0400
-Received: from thunk.org ([69.25.196.29]:44285 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752093AbXJYSYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 14:24:36 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Il7Xi-0008Sg-76; Thu, 25 Oct 2007 14:34:57 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1Il7NA-0002rR-W7; Thu, 25 Oct 2007 14:24:01 -0400
-Content-Disposition: inline
-In-Reply-To: <1193335339.4522.398.camel@cacharro.xalalinux.org>
-1;1609;0cTo: Federico Mena Quintero <federico@novell.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752873AbXJYS1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 14:27:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752615AbXJYS1E
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:27:04 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:38212 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752550AbXJYS1B (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2007 14:27:01 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PIOm7l019440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 25 Oct 2007 11:24:49 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PIOmGu008116;
+	Thu, 25 Oct 2007 11:24:48 -0700
+In-Reply-To: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-3.221 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62351>
 
-On Thu, Oct 25, 2007 at 01:02:19PM -0500, Federico Mena Quintero wrote:
-> On Thu, 2007-10-25 at 11:21 -0400, Theodore Tso wrote:
-> 
-> > And of course it's inelegant.  You just told us we were dealing with
-> > CVS-brain-damaged corporate developers who can't be bothered to learn
-> > about the fine points of using things the git way.
-> 
-> Ignore the corporate developers who use SCMs only because their company
-> requires them to.  Git is not the right thing for them; some
-> Eclipse-based monstrosity probably is.  It's like the horrendous
-> Oracle-based expense-reporting thing we have to use at Novell; I use it
-> because they make me, not because I'm particularly excited about
-> reporting expenses :)
 
-I think I misunderstand Andreas' problem statement.  What I proposed
-is useful for corporate developers who are deeply confused by
-branches, especially when a single working directory is constantly
-jumping back and forth between several branches.  (Having the current
-branch in your bash prompt is a *big* help here, but we can't count on
-them having it.)
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6/6] Do exact rename detection regardless of rename limits
 
-So setting up a solution where each branch gets its own working
-directory is a great solution where you have some number of newbie
-developers in a company that get easily confused, while still
-providing advanced users the ability to use the full power of git, and
-giving both the newbie and advanced users the advantages of
-disconnected operations.  And, of course, hopefully some day the
-newbie users will grow up to become advanced users.
+Now that the exact rename detection is linear-time (with a very small
+constant factor to boot), there is no longer any reason to limit it by
+the number of files involved.
 
-Right now I suspect a number of projects who have picked hg or bzr do
-so because the traditional git model is too confusing to newbie users.
-So for those people, creating the model where branch == a separate
-directory may make life easier for them.  That's probably the one
-thing that bzr does much better than git; it has a number of modes
-which act as training wheels for the easily confused user.  For
-example, the bzr's "bound branch" requires you to have network access,
-since anything that modifies the local repository requires hitting the
-remote server as well.  Horrible!  Gives you all of the downsides of
-CVS!  But it allows some users to use the SCM is CVS-style mode, while
-allowing more advanced users to use it in a more distributed mode.
+In some trivial testing, I created a repository with a directory that
+had a hundred thousand files in it (all with different contents), and
+then moved that directory to show the effects of renaming 100,000 files.
 
-So I think it *is* useful to help the corporate developers, because
-that means there are more git users --- and someday some of us on this
-list might have to work at such a company, and better that they use
-git than something like perforce or Clearcase, right?  :-)
+With the new code, that resulted in
 
-> However, *do think* of the free software developers who have been using
-> CVS forever.  You won't make friends among them if you keep saying, "you
-> use CVS?  You are brain-damaged, then."  
+	[torvalds@woody big-rename]$ time ~/git/git show -C | wc -l
+	400006
 
-Fair enough.  I used the term somewhat toungue-in-cheek, and I
-probably should have said "newbie user" instead.
+	real    0m2.071s
+	user    0m1.520s
+	sys     0m0.576s
 
-							- Ted
+ie the code can correctly detect the hundred thousand renames in about 2
+seconds (the number "400006" comes from four lines for each rename:
+
+	diff --git a/really-big-dir/file-1-1-1-1-1 b/moved-big-dir/file-1-1-1-1-1
+	similarity index 100%
+	rename from really-big-dir/file-1-1-1-1-1
+	rename to moved-big-dir/file-1-1-1-1-1
+
+and the extra six lines is from a one-liner commit message and all the
+commit information and spacing).
+
+Most of those two seconds weren't even really the rename detection, it's
+really all the other stuff needed to get there.
+
+With the old code, this wouldn't have been practically possible.  Doing
+a pairwise check of the ten billion possible pairs would have been
+prohibitively expensive.  In fact, even with the rename limiter in
+place, the old code would waste a lot of time just on the diff_filespec
+checks, and despite not even trying to find renames, it used to look
+like:
+
+	[torvalds@woody big-rename]$ time git show -C | wc -l
+	1400006
+
+	real    0m12.337s
+	user    0m12.285s
+	sys     0m0.192s
+
+ie we used to take 12 seconds for this load and not even do any rename
+detection! (The number 1400006 comes from fourteen lines per file moved:
+seven lines each for the delete and the create of a one-liner file, and
+the same extra six lines of commit information).
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This obviously just moves the rename detection call. It made sense as a 
+separate patch largely because of the explanation that goes along with it, 
+but it conceptually is very different from actually improving the rename 
+detection logic itself. So it got a patch of its own.
+
+ diffcore-rename.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index e7e370b..3946932 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -429,6 +429,12 @@ void diffcore_rename(struct diff_options *options)
+ 		goto cleanup; /* nothing to do */
+ 
+ 	/*
++	 * We really want to cull the candidates list early
++	 * with cheap tests in order to avoid doing deltas.
++	 */
++	rename_count = find_exact_renames();
++
++	/*
+ 	 * This basically does a test for the rename matrix not
+ 	 * growing larger than a "rename_limit" square matrix, ie:
+ 	 *
+@@ -444,12 +450,6 @@ void diffcore_rename(struct diff_options *options)
+ 	if (rename_dst_nr * rename_src_nr > rename_limit * rename_limit)
+ 		goto cleanup;
+ 
+-	/*
+-	 * We really want to cull the candidates list early
+-	 * with cheap tests in order to avoid doing deltas.
+-	 */
+-	rename_count = find_exact_renames();
+-
+ 	/* Have we run out the created file pool?  If so we can avoid
+ 	 * doing the delta matrix altogether.
+ 	 */
+-- 
+1.5.3.4.330.g1dec6
