@@ -1,94 +1,122 @@
-From: Scott Parish <sRp@srparish.net>
-Subject: Re: [PATCH 6/7] walk PATH to generate list of commands for "help
-	-a"
-Date: Thu, 25 Oct 2007 00:07:45 -0700
-Message-ID: <20071025070744.GH759@srparish.net>
-References: <1193283437-1706-1-git-send-email-srp@srparish.net> <1193283437-1706-2-git-send-email-srp@srparish.net> <1193283437-1706-3-git-send-email-srp@srparish.net> <1193283437-1706-4-git-send-email-srp@srparish.net> <1193283437-1706-5-git-send-email-srp@srparish.net> <1193283437-1706-6-git-send-email-srp@srparish.net> <7vve8v24al.fsf@gitster.siamese.dyndns.org> <20071025050736.GG759@srparish.net> <7vk5pb21xv.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
+ summary continued
+Date: Thu, 25 Oct 2007 09:15:35 +0200
+Message-ID: <47204297.5050109@op5.se>
+References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com> <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de> <Pine.LNX.4.64.0710231155321.25221@racer.site> <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024192058.GF29830@fieldses.org> <471F9FD1.6080002@op5.se> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024203335.GJ29830@fieldses.org> <471FB3D0.4040800@op5.se> <20071024212854.GB6069@xp.machine.xx> <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site> <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de> <Pine.LNX.4.64.0710250021430.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 09:08:01 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Peter Baumann <waste.manager@gmx.de>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Oct 25 09:15:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikwow-0002d1-Lk
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 09:07:59 +0200
+	id 1Ikwwb-0004jW-MF
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 09:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754350AbXJYHHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 03:07:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753265AbXJYHHq
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 03:07:46 -0400
-Received: from smtp-gw5.mailanyone.net ([208.70.128.56]:48059 "EHLO
-	smtp-gw5.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752962AbXJYHHp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 03:07:45 -0400
-Received: from mailanyone.net
-	by smtp-gw5.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP quinn@srparish.net)
-	id 1Ikwoh-0004ka-KN; Thu, 25 Oct 2007 02:07:44 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Thu, 25 Oct 2007 00:07:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vk5pb21xv.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1756344AbXJYHPm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 03:15:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754812AbXJYHPm
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 03:15:42 -0400
+Received: from mail.op5.se ([193.201.96.20]:53878 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756221AbXJYHPl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 03:15:41 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 79C9617306FF;
+	Thu, 25 Oct 2007 09:15:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 6SeHFmD4KdbT; Thu, 25 Oct 2007 09:15:37 +0200 (CEST)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 66E7817306F3;
+	Thu, 25 Oct 2007 09:15:36 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0710250021430.25221@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62281>
 
-On Wed, Oct 24, 2007 at 10:33:32PM -0700, Junio C Hamano wrote:
-
-> > Well, the ultimate reason that i've been working on all of this is
-> > i'd like to push git as a viable development tool where i work. To
-> > give an effective idea, lets say that shared tools get placed on
-> > nfs servers, which can be mounted to different paths depending on
-> > which nfs server is up or down or which system is the nfs client.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> It sounds to me that your nfs client systems might find what
-> people usually expect in /usr/local/bin not there but on
-> /mnt/random47/bin depending on the system, without a reasonable
-> system administration effort that places stable symlinks to give
-> end users a consistent view of the world regardless from which
-> client, which sounds insane.  I personally do not think we
-> should support lazy system administrators by making git unsafe.
-
-Well, the exact details are completely fictitious, made up to
-illustrate the situation without breaking confidential agreements.
-I'm not sure i completely agree with the design, but there are good
-reasons for it, and at this point i have little or no control over
-it.
-
-> >> It may be nicer if the user can somehow tell from the output if
-> >> each of the command is from the standard set (i.e. on
-> >> GIT_EXEC_PATH or built-in), or from a non standard place (either
-> >> custom command as intended, or an unintended obsolete leftover).
-> >
-> > What if git marked commands that weren't found in the location where
-> > it thinks that it is running from?
+> On Thu, 25 Oct 2007, Steffen Prohaska wrote:
 > 
-> Currently "git help -a" says "available in $where" at the top.
-> Perhaps make a separate list that is listed as "available from
-> elsewhere" and show the ones that are on PATH but not masked by
-> the ones on GIT_EXEC_PATH?
+>> On Oct 25, 2007, at 12:14 AM, Johannes Schindelin wrote:
+>>
+>>> But I think I have to drive my message home again: if what you desire 
+>>> becomes reality, you take away the clear distinction between local and 
+>>> remote branches.  In fact, those branches are neither local (because 
+>>> the next pull will automatically update them with remote changes, but 
+>>> _only_ if they fast-forward) nor remote (because you plan to work on 
+>>> them locally).
+>> Exactly, because I do not work on those branches alone. These are 
+>> _shared_ branches. I can work on such a branch with a group of 
+>> developers. I'm willing to accept this bit of chaos.
 > 
->     git commands available in '/home/junio/git-next/bin'
->     ----------------------------------------------------
->       add                 gui                 rebase--interactive
->       add--interactive    hash-object         receive-pack
->       ...
+> It is not just a chaos.  I see a serious problem here.  On _your_ 
+> computer, you do _not_ have a shared branch.  Which is visible _even_ in 
+> your modified work flow when you have unpushed changes.
 > 
->     git commands available from elsewhere on your $PATH
->     ----------------------------------------------------
->       frotz               nitfol
 
-Nice! I'll try doing that, probably won't have time to finish until
-later tomorrow.
+Ofcourse it is. People might pull from it. That's the whole point of a
+distributed model.
 
-sRp
+> So your desired illusion that your local branches are anything but local 
+> branches will never be perfect enough.
+> 
+>> Your rebase workflow is not possible if more than one dev wants to work 
+>> on the topic branch together.
+> 
+> Why not?  I do it all the time.  CVS users do it all the time, for that 
+> matter.
+> 
+
+For 200 branches at a time, where any of them might have changed? Do they
+*really* go into all those branches and make really, really sure they run
+git pull before they ever do anything? Isn't there a teensy weensy risk of
+them forgetting that sometime when they really meant to do it?
+
+On the other hand, if they absolutely *must* fork a branch at a specific
+point in history (rather than "the latest published work this branch has"),
+won't they run gitk/qgit/git-log/whatever, regardless of where their branch
+head is?
+
+> 
+> The problem I see here: you know git quite well.  Others don't, and will 
+> be mightily confused why pull updates local branches sometimes, and 
+> sometimes not.
+
+Do you know this, or are you just guessing? I'm getting the exact same
+confusion with the current behaviour. "Why the hell doesn't git update
+all the branches I told the damn stupid tool to auto-merge when I pull?"
+frequently echoes around the office. My co-workers aren't interested in
+learning about git internals, or its reasons for doing what it does.
+They don't give a damn about local vs remote namespaces for their branches.
+They want to get some work done the smoothest way possible, but with our
+small forest of repositories and the bushel of branches in each repo
+makes life difficult for them, because they just can't imagine that
+git doesn't do what they told it to, which is "this branch tracks that".
+They may work on "this", but still want it to track "that" so they don't
+have to run "git-update-all.sh", or "git-walk-everything.sh" or any other
+of a dozen small and near-identical scripts floating around the office.
 
 -- 
-Scott Parish
-http://srparish.net/
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
