@@ -1,59 +1,73 @@
-From: "Felipe Balbi" <felipebalbi@users.sourceforge.net>
-Subject: git-svnimport
-Date: Thu, 25 Oct 2007 12:25:20 +0300
-Message-ID: <31e679430710250225w39a876d0w738d819245e514e@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Feature request: Limit git-status reports to a directory
+Date: Thu, 25 Oct 2007 10:55:12 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710251050390.25221@racer.site>
+References: <ffofbm$lmc$1@ger.gmane.org> <46dff0320710241914t7d93aae1t991fbcaacde77046@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 11:25:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Michel Marti <mma@objectxp.com>, git@vger.kernel.org
+To: Yin Ping <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 11:56:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ikyy6-0004IQ-Ok
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 11:25:35 +0200
+	id 1IkzSF-0006Cu-II
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 11:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752876AbXJYJZW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 05:25:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752590AbXJYJZW
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 05:25:22 -0400
-Received: from wa-out-1112.google.com ([209.85.146.179]:39794 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514AbXJYJZV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 05:25:21 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so554954wah
-        for <git@vger.kernel.org>; Thu, 25 Oct 2007 02:25:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=0vxj/ErBi/oNVh2lf4cJ2RsWkZgCv2e8FsfxiZgdJVc=;
-        b=fytrHiVj6QZr7re/2ja38db3OuOwjNQ4NnW7TVNKqvVfzhfmRgqTKKvvEXn6bid+Qvie4iLvc39LGTNSPE31oRD/UcPYFqXYPq6aLzJZVDFKhCp00TVwYdG0VZ+YQ3F6kZes/J/0c61DSl2tgn53NjLB3M3sqJG+FmgBd4tljVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=Wn6xlKx0WGWINEn5/ulcIWFuJeBeVTQ3H3BcFjwu2cH9KdWr92xbwq5HQglB8LBAYGNAFfsZLlDpfgwWyKekmVyT4cwxgEoaL3yslBBt929NOeh0nQWkKerwKUxRXAoxwdORK6+HBdJOKJIDpno7oN9dCi1N+a5uTaQpl7mlYLU=
-Received: by 10.115.72.1 with SMTP id z1mr1879360wak.1193304320508;
-        Thu, 25 Oct 2007 02:25:20 -0700 (PDT)
-Received: by 10.114.61.4 with HTTP; Thu, 25 Oct 2007 02:25:20 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: a24dfe2204e518ff
+	id S1759570AbXJYJzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 05:55:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759126AbXJYJzp
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 05:55:45 -0400
+Received: from mail.gmx.net ([213.165.64.20]:53870 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759517AbXJYJzo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 05:55:44 -0400
+Received: (qmail invoked by alias); 25 Oct 2007 09:55:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp028) with SMTP; 25 Oct 2007 11:55:42 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18JEJdbFc0JlE90VxQj7x9wKS0Bsi3kAEeG+jphVi
+	jqscC6/H7upw7Z
+X-X-Sender: gene099@racer.site
+In-Reply-To: <46dff0320710241914t7d93aae1t991fbcaacde77046@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62289>
 
-Hello all,
+Hi,
 
-I was importing busybox svn repository to git but I got a connection
-timeout after more than 19k commits... is there a way to continue
-where the error happened or should I do it all over again ??
+On Thu, 25 Oct 2007, Yin Ping wrote:
 
+> On 10/25/07, Michel Marti <mma@objectxp.com> wrote:
+> > I am sometimes interested in only seeing the status for a specific 
+> > directory (and its sub-directories), but git-status is no help in this 
+> > case - passing a directory does some sort of "git-commit --dry-run". I 
+> > first thought that this is a bug until I saw in the man-page that this 
+> > is actually a feature...
+>
+> It's also painful for me. IMHO, the behaviour of "git-status" should 
+> keep consistent with "git-diff" and "git-log" which allow for the path.
 
-Thanks
+I am not so sure.  In other SCMs, "git status" may be a way to do "git 
+diff --name-only" or "git ls-files", but not in git.  Here, it strictly 
+means "what would be happening if I were to commit _right_ _now_?".
 
--- 
-Best Regards,
+> Another point, It will be helpful to add a config item to change the 
+> default behaviour for 'git-diff" and "git-log". For example, 
+> 'diff.defaultcurrentpath=true' to let git only show difference in 
+> current directory instead of difference in top directory when typing 
+> 'git-diff'
 
-Felipe Balbi
-felipebalbi@users.sourceforge.net
+IMHO it is not asking users too much when you say "git diff ." is for the 
+current directory, and "git diff" is for the whole working tree.
+
+Besides, we cannot really change the default behaviour, since some 
+porcelains use "git log" (and certainly there are some which use "git 
+diff", too).  They would suffer from this unexpected -- and indeed 
+inconsistent, since the setting can differ between repositories -- output.
+
+Hth,
+Dscho
