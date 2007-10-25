@@ -1,63 +1,69 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: recent change in git.git/master broke my repos
-Date: Thu, 25 Oct 2007 13:46:04 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0710251344220.22100@xanadu.home>
-References: <86oden6z97.fsf@blue.stonehenge.com>
- <20071025150107.GB31196@diana.vm.bytemark.co.uk>
+From: Federico Mena Quintero <federico@novell.com>
+Subject: Re: best git practices, was Re: Git User's Survey 2007
+	unfinishedsummary continued
+Date: Thu, 25 Oct 2007 13:02:19 -0500
+Message-ID: <1193335339.4522.398.camel@cacharro.xalalinux.org>
+References: <20071024212854.GB6069@xp.machine.xx>
+	 <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>
+	 <Pine.LNX.4.64.0710242258201.25221@racer.site>
+	 <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
+	 <Pine.LNX.4.64.0710250021430.25221@racer.site> <47204297.5050109@op5.se>
+	 <Pine.LNX.4.64.0710251112390.25221@racer.site> <472070E5.4090303@op5.se>
+	 <20071025132401.GA22103@thunk.org> <4720AF05.3050308@op5.se>
+	 <20071025152159.GB22103@thunk.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_cJ7ONRU/Mx3Uu12/5iyPTA)"
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-To: =?ISO-8859-15?Q?Karl_Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 19:46:58 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 25 20:00:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il6nJ-0002x7-Ma
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 19:46:58 +0200
+	id 1Il70L-0006Hl-T2
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:00:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751878AbXJYRqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 13:46:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751935AbXJYRqG
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 13:46:06 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:32695 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751564AbXJYRqG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 13:46:06 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQH00GQ7AOS94V0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 25 Oct 2007 13:46:04 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071025150107.GB31196@diana.vm.bytemark.co.uk>
+	id S1752202AbXJYSAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 14:00:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbXJYSAM
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:00:12 -0400
+Received: from jericho.provo.novell.com ([137.65.248.124]:27614 "EHLO
+	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751812AbXJYSAK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 14:00:10 -0400
+Received: from [164.99.192.129] ([164.99.192.129])
+	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 12:00:01 -0600
+In-Reply-To: <20071025152159.GB22103@thunk.org>
+X-Mailer: Evolution 2.11.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62339>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, 2007-10-25 at 11:21 -0400, Theodore Tso wrote:
 
---Boundary_(ID_cJ7ONRU/Mx3Uu12/5iyPTA)
-Content-type: TEXT/PLAIN; charset=iso-8859-1
-Content-transfer-encoding: 8BIT
+> And of course it's inelegant.  You just told us we were dealing with
+> CVS-brain-damaged corporate developers who can't be bothered to learn
+> about the fine points of using things the git way.
 
-On Thu, 25 Oct 2007, Karl Hasselström wrote:
+Ignore the corporate developers who use SCMs only because their company
+requires them to.  Git is not the right thing for them; some
+Eclipse-based monstrosity probably is.  It's like the horrendous
+Oracle-based expense-reporting thing we have to use at Novell; I use it
+because they make me, not because I'm particularly excited about
+reporting expenses :)
 
-> On 2007-10-25 07:32:36 -0700, Randal L. Schwartz wrote:
-> 
-> > And when are we gonna get "fast forward only" for git-merge?
-> 
-> I'd like that too. For cases when I know I don't have to do a merge,
-> and want git to yell at me if I'm mistaken. For example, in a
-> repository that tracks an upstream so I can build the latest version,
-> but where I don't normally do any development.
+However, *do think* of the free software developers who have been using
+CVS forever.  You won't make friends among them if you keep saying, "you
+use CVS?  You are brain-damaged, then."  CVS has been as good/bad to
+them as to anyone else, and they are probably delighted to get a better
+solution.  That solution needs to take into account the concepts to
+which they have been exposed for the past N years.  Just because your
+new concepts are better, doesn't mean that their old ones were wrong in
+their time.
 
-Isn't that called a remote branch that gets updated with "git fetch' ?
-You can even trick Git into not using the refs/remotes/ namespace for 
-them if you wish.
+You don't find quantum physicists saying, "... yeah, like Newton's
+brain-damaged followers" :)
 
-
-Nicolas
-
---Boundary_(ID_cJ7ONRU/Mx3Uu12/5iyPTA)--
+  Federico
