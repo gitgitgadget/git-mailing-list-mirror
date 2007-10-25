@@ -1,7 +1,13 @@
 From: Scott R Parish <srp@srparish.net>
 Subject: [PATCH 7/7] shell should call setup_path() instead of manually setting up its path
-Date: Wed, 24 Oct 2007 20:44:51 -0700
-Message-ID: <1193283892-26167-1-git-send-email-srp@srparish.net>
+Date: Wed, 24 Oct 2007 20:37:17 -0700
+Message-ID: <1193283437-1706-7-git-send-email-srp@srparish.net>
+References: <1193283437-1706-1-git-send-email-srp@srparish.net>
+ <1193283437-1706-2-git-send-email-srp@srparish.net>
+ <1193283437-1706-3-git-send-email-srp@srparish.net>
+ <1193283437-1706-4-git-send-email-srp@srparish.net>
+ <1193283437-1706-5-git-send-email-srp@srparish.net>
+ <1193283437-1706-6-git-send-email-srp@srparish.net>
 Cc: Scott R Parish <srp@srparish.net>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Oct 25 05:45:10 2007
@@ -9,27 +15,28 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iktee-000519-11
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 05:45:08 +0200
+	id 1Iktee-000519-Ls
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 05:45:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757061AbXJYDox (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 23:44:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757026AbXJYDox
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 23:44:53 -0400
-Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:36067 "EHLO
+	id S1757013AbXJYDoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Oct 2007 23:44:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757012AbXJYDoy
+	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 23:44:54 -0400
+Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:36074 "EHLO
 	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756956AbXJYDow (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1756977AbXJYDow (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 24 Oct 2007 23:44:52 -0400
 Received: from mailanyone.net
 	by smtp-gw51.mailanyone.net with esmtp (MailAnyone extSMTP quinn@srparish.net)
-	id 1IkteN-0007Qa-Lg; Wed, 24 Oct 2007 22:44:51 -0500
+	id 1IkteN-0007Qb-OK; Wed, 24 Oct 2007 22:44:51 -0500
 Received: by maple.srparish.net (Postfix, from userid 501)
-	id 23C1F4ECEF1; Wed, 24 Oct 2007 20:44:52 -0700 (PDT)
+	id 726324ECF0F; Wed, 24 Oct 2007 20:37:18 -0700 (PDT)
 X-Mailer: git-send-email gitgui.0.8.4.11178.g9a1bf-dirty
+In-Reply-To: <1193283437-1706-6-git-send-email-srp@srparish.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62267>
 
 Signed-off-by: Scott R Parish <srp@srparish.net>
 ---
