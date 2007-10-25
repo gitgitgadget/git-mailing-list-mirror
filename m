@@ -1,65 +1,64 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Fix generation of perl/perl.mak
-Date: Thu, 25 Oct 2007 23:21:29 +0200
-Message-ID: <20071025212129.GB11308@steel.home>
-References: <20071025201724.GA11308@steel.home> <Pine.LNX.4.64.0710252140500.4362@racer.site>
+Subject: Re: git apply fails to apply a renamed file in a new directory
+Date: Thu, 25 Oct 2007 23:30:38 +0200
+Message-ID: <20071025213038.GC11308@steel.home>
+References: <20071025180737.GA13829@uranus.ravnborg.org>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 25 23:21:46 2007
+Cc: git@vger.kernel.org
+To: Sam Ravnborg <sam@ravnborg.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 23:31:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlA9A-0001AE-QR
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 23:21:45 +0200
+	id 1IlAIR-0003Pn-Vu
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 23:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501AbXJYVVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 17:21:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752351AbXJYVVc
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 17:21:32 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:38477 "EHLO
+	id S1753480AbXJYVam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 17:30:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752972AbXJYVam
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 17:30:42 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:27452 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752227AbXJYVVb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 17:21:31 -0400
+	with ESMTP id S1753349AbXJYVal (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 17:30:41 -0400
 Received: from tigra.home (Fadec.f.strato-dslnet.de [195.4.173.236])
-	by post.webmailer.de (klopstock mo49) (RZmta 14.0)
-	with ESMTP id Y039a5j9PID9fl ; Thu, 25 Oct 2007 23:21:30 +0200 (MEST)
+	by post.webmailer.de (mrclete mo61) (RZmta 14.0)
+	with ESMTP id o01c41j9PL4Z6E ; Thu, 25 Oct 2007 23:30:39 +0200 (MEST)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id C5542277AE;
-	Thu, 25 Oct 2007 23:21:29 +0200 (CEST)
+	by tigra.home (Postfix) with ESMTP id 06080277AE;
+	Thu, 25 Oct 2007 23:30:39 +0200 (CEST)
 Received: by steel.home (Postfix, from userid 1000)
-	id 4509356D22; Thu, 25 Oct 2007 23:21:29 +0200 (CEST)
+	id BBD7056D22; Thu, 25 Oct 2007 23:30:38 +0200 (CEST)
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710252140500.4362@racer.site>
+In-Reply-To: <20071025180737.GA13829@uranus.ravnborg.org>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClJ2mEU=
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62376>
 
-Johannes Schindelin, Thu, Oct 25, 2007 22:42:07 +0200:
-> On Thu, 25 Oct 2007, Alex Riesen wrote:
+Sam Ravnborg, Thu, Oct 25, 2007 20:07:37 +0200:
+> I just stumbled on what looks like a simple bug in git apply.
+> I had following diff:
 > 
-> > Besides, a changed Git.pm is *NOT* a reason to rebuild all the perl 
-> > scripts, so remove the dependency too.
-> >
-> > [...]
-> > 
-> > -perl/Makefile: perl/Git.pm perl/Makefile.PL GIT-CFLAGS
-> > -	(cd perl && $(PERL_PATH) Makefile.PL \
-> > -		PREFIX='$(prefix_SQ)')
-> > -
+> diff --git a/arch/i386/defconfig b/arch/x86/configs/i386_defconfig
+> similarity index 100%
+> rename from arch/i386/defconfig
+> rename to arch/x86/configs/i386_defconfig
+> diff --git a/arch/x86_64/defconfig b/arch/x86/configs/x86_64_defconfig
+> similarity index 100%
+> rename from arch/x86_64/defconfig
+> rename to arch/x86/configs/x86_64_defconfig
+> -- 
+> 1.5.3.4.1157.g0e74-dirty
 > 
-> This is not really the dependency triggering a rebuild of all perl 
-> scripts, right?
+> When trying to apply this diff using:
+> git apply -p1 < .../patch
 
-In a way. This rebuilds perl/perl.mak which, in turn, can cause the
-rebuild of all perl scripts. The rule you replaced with "[...]" does
-the same, but uses perl/Makefile, which generates the perl.mak
- depending on the NO_PERL_MAKEMAKER setting.
+works here. Don't use -p1, it is assumed
