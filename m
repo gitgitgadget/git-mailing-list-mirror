@@ -1,69 +1,63 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Git and Windows
-Date: Thu, 25 Oct 2007 21:54:04 +0200
-Message-ID: <200710252154.04620.robin.rosenberg.lists@dewire.com>
-References: <47208817.60804@gmail.com> <Pine.LNX.4.64.0710251517350.25221@racer.site>
+From: Yann Dirson <ydirson@altern.org>
+Subject: stgit restrictions on patch names
+Date: Thu, 25 Oct 2007 21:48:08 +0200
+Message-ID: <20071025194808.GV26436@nan92-1-81-57-214-146.fbx.proxad.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Bo Yang <techrazy.yang@gmail.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Oct 25 21:52:10 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT list <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 21:53:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il8kO-0002C0-8d
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 21:52:04 +0200
+	id 1Il8lp-0002ZF-On
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 21:53:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758629AbXJYTvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 15:51:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754921AbXJYTvc
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 15:51:32 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:5039 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1758798AbXJYTvb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 15:51:31 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id D45068026C6;
-	Thu, 25 Oct 2007 21:42:45 +0200 (CEST)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 27422-06; Thu, 25 Oct 2007 21:42:45 +0200 (CEST)
-Received: from [10.9.0.5] (unknown [10.9.0.5])
-	by dewire.com (Postfix) with ESMTP id 8D8AE80266F;
-	Thu, 25 Oct 2007 21:42:45 +0200 (CEST)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0710251517350.25221@racer.site>
+	id S1754411AbXJYTxV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 15:53:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754453AbXJYTxV
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 15:53:21 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:54961 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754411AbXJYTxU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 15:53:20 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A617C17B5AA;
+	Thu, 25 Oct 2007 21:53:18 +0200 (CEST)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 7439E17B557;
+	Thu, 25 Oct 2007 21:53:18 +0200 (CEST)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id A6C741F0D5; Thu, 25 Oct 2007 21:48:08 +0200 (CEST)
 Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62363>
 
-torsdag 25 oktober 2007 skrev Johannes Schindelin:
-> Hi,
-> 
-> On Thu, 25 Oct 2007, Bo Yang wrote:
-> 
-> >   I am a new comer to this list but I have used git for two week 
-> > development control. I think it is a very cool tool, the only flaw is 
-> > that I have not found Windows version of it. Does git just aim at Linux 
-> > kernel development? Is there any plan or in the future to migrate it to 
-> > windows?
-> 
-> Funny.  The first three hits I get from Google are
-> 
-> 	Wikipedia,
-> 	GitWiki and
-> 	msysgit
-> 
-> The first two pointing to the third.  And happily enough, there is a 
-> Download page at the third site.  Oh, and it has a description what its 
-> affiliation with git is.
+Looks like stgit is now more picky on patch names than in used to be:
 
-The "featured download" is still not the one I'd recommend.
+$ stg branch --clone v2.0.6-debian
+Checking for changes in the working directory ... done
+Cloning current branch to "v2.0.6-debian" ...
+  No log for 01_springelectrical
+stg branch: Invalid patch name: "10_g++4.0_build_failures"
+$
 
--- robin
+
+=> the result of the cloning operation is a partial clone.  Do we want to:
+
+- implement a mechanism for checking beforehand that the operation
+will not fail ?  Seems awkward to duplicate checks already found
+elsewhere.
+
+- wait for proper transactions so we can rollback on error ?
+
+- on clone error, delete the newly-created stack ?  I'd vote for this
+one, until the previous one gets done.
+
+
+=> is there any particular reason why we would refuse "+" ?
