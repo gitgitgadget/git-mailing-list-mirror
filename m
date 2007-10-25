@@ -1,59 +1,76 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 5/6] Do linear-time/space rename logic for exact renames
-Date: Thu, 25 Oct 2007 17:37:07 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710251722290.7345@iabervon.org>
-References: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.or
- g> <alpine.LFD.0.999.0710251120590.30120@woody.linux-foundation.org>
- <Pine.LNX.4.64.0710251522190.7345@iabervon.org>
- <alpine.LFD.0.999.0710251317020.30120@woody.linux-foundation.org>
+From: Sam Ravnborg <sam@ravnborg.org>
+Subject: Re: git apply fails to apply a renamed file in a new directory
+Date: Thu, 25 Oct 2007 23:41:19 +0200
+Message-ID: <20071025214119.GC15292@uranus.ravnborg.org>
+References: <20071025180737.GA13829@uranus.ravnborg.org> <20071025213038.GC11308@steel.home> <20071025213523.GD11308@steel.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Oct 25 23:37:34 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 23:39:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlAOS-0004mS-3d
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 23:37:32 +0200
+	id 1IlAQo-0005NR-He
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 23:39:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753899AbXJYVhP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 17:37:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753953AbXJYVhO
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 17:37:14 -0400
-Received: from iabervon.org ([66.92.72.58]:45616 "EHLO iabervon.org"
+	id S1754169AbXJYVjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 17:39:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbXJYVjp
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 17:39:45 -0400
+Received: from pasmtpa.tele.dk ([80.160.77.114]:56948 "EHLO pasmtpA.tele.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003AbXJYVhN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 17:37:13 -0400
-Received: (qmail 5715 invoked by uid 1000); 25 Oct 2007 21:37:07 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 25 Oct 2007 21:37:07 -0000
-In-Reply-To: <alpine.LFD.0.999.0710251317020.30120@woody.linux-foundation.org>
+	id S1752650AbXJYVjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 17:39:44 -0400
+Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
+	by pasmtpA.tele.dk (Postfix) with ESMTP id 926A88013B8;
+	Thu, 25 Oct 2007 23:39:43 +0200 (CEST)
+Received: by ravnborg.org (Postfix, from userid 500)
+	id 03AB6580D2; Thu, 25 Oct 2007 23:41:20 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <20071025213523.GD11308@steel.home>
+User-Agent: Mutt/1.4.2.1i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62379>
 
-On Thu, 25 Oct 2007, Linus Torvalds wrote:
+On Thu, Oct 25, 2007 at 11:35:23PM +0200, Alex Riesen wrote:
+> Alex Riesen, Thu, Oct 25, 2007 23:30:38 +0200:
+> > Sam Ravnborg, Thu, Oct 25, 2007 20:07:37 +0200:
+> > > I just stumbled on what looks like a simple bug in git apply.
+> > > I had following diff:
+> > > 
+> > > diff --git a/arch/i386/defconfig b/arch/x86/configs/i386_defconfig
+> > > similarity index 100%
+> > > rename from arch/i386/defconfig
+> > > rename to arch/x86/configs/i386_defconfig
+> > > diff --git a/arch/x86_64/defconfig b/arch/x86/configs/x86_64_defconfig
+> > > similarity index 100%
+> > > rename from arch/x86_64/defconfig
+> > > rename to arch/x86/configs/x86_64_defconfig
+> > > -- 
+> > > 1.5.3.4.1157.g0e74-dirty
+> 
+> .1157...-dirty. Your git looks heavily modified. Could you try with a
+> something like master of kernel.org?
+I guess I still have Linus' rename stuff added - will update.
 
-> On Thu, 25 Oct 2007, Daniel Barkalow wrote:
+> 
+> Mine is based off d90a7fda355c251b8ffdd79617fb083c18245ec2
+> (builtin-fetch got merged).
+> 
+> > > When trying to apply this diff using:
+> > > git apply -p1 < .../patch
 > > 
-> > Creating a list of the pointers doesn't work correctly with the grow 
-> > implementation, because growing the hash may turn a collision into a 
-> > non-collision, at which point items other than the first cannot be found 
-> > (since they're listed inside a bucket that's now wrong for them). AFAIK, 
-> > resizing a hash table requires being able to figure out what happened with 
-> > collisions.
-> 
-> Nope. 
-> 
-> The hash algorithm is much smarter than that.
+> > works here. Don't use -p1, it is assumed
+> > 
 
-Ah, yes. I was just confused by the comment suggesting the possibility of 
-a collision when the only way to have two calls get the same bucket is 
-when the key that the library gets is actually identical.
+It seems to be a picnic[*] bug - at least I cannot reproduce it.
+Sorry for the noise but thanks for testing.
 
-	-Daniel
-*This .sig left intentionally blank*
+[*] Problem In Chair Not In Computer
+
+
+	Sam
