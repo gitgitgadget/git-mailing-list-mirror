@@ -1,40 +1,33 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Thu, 25 Oct 2007 22:18:08 +0200
-Message-ID: <4720FA00.1050805@op5.se>
-References: <20071024212854.GB6069@xp.machine.xx>	<05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>	<Pine.LNX.4.64.0710242258201.25221@racer.site>	<008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>	<Pine.LNX.4.64.0710250021430.25221@racer.site>	<47204297.5050109@op5.se>	<Pine.LNX.4.64.0710251112390.25221@racer.site>	<472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org>	<4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org>	<4720CCE0.2090007@op5.se> <7vejfj11tk.fsf@gitster.siamese.dyndns.org>
+Subject: Re: best git practices, was Re: Git User's Survey 2007	unfinishedsummary
+ continued
+Date: Thu, 25 Oct 2007 22:19:58 +0200
+Message-ID: <4720FA6E.9040805@op5.se>
+References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>	 <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>	 <Pine.LNX.4.64.0710231155321.25221@racer.site>	 <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de>	 <20071024194849.GH29830@fieldses.org>	 <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de>	 <20071024212854.GB6069@xp.machine.xx>	 <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>	 <Pine.LNX.4.64.0710242258201.25221@racer.site>	 <1193328386.4522.352.camel@cacharro.xalalinux.org>	 <20071025163835.GB31888@fieldses.org> <1193335562.4522.403.camel@cacharro.xalalinux.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Peter Baumann <waste.manager@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 22:18:34 2007
+Cc: "J. Bruce Fields" <bfields@fieldses.org>, git@vger.kernel.org
+To: Federico Mena Quintero <federico@novell.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 22:21:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il99x-00013N-DH
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:18:29 +0200
+	id 1Il9Cr-0001p8-Qa
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758117AbXJYUSP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 16:18:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757747AbXJYUSP
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:18:15 -0400
-Received: from mail.op5.se ([193.201.96.20]:52038 "EHLO mail.op5.se"
+	id S1756656AbXJYUVS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 16:21:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXJYUVQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:21:16 -0400
+Received: from mail.op5.se ([193.201.96.20]:52061 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752785AbXJYUSM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 16:18:12 -0400
+	id S1762679AbXJYUUD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 16:20:03 -0400
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 5CCEF17306F0;
-	Thu, 25 Oct 2007 22:18:04 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id 0F37C1730723;
+	Thu, 25 Oct 2007 22:19:24 +0200 (CEST)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
 X-Spam-Score: -2.499
@@ -43,94 +36,42 @@ X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
 	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dstfbdioNngi; Thu, 25 Oct 2007 22:18:03 +0200 (CEST)
+	with ESMTP id MaORbyZeCItq; Thu, 25 Oct 2007 22:19:23 +0200 (CEST)
 Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 688001730559;
-	Thu, 25 Oct 2007 22:18:02 +0200 (CEST)
+	by mail.op5.se (Postfix) with ESMTP id C9B43173071F;
+	Thu, 25 Oct 2007 22:19:22 +0200 (CEST)
 User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7vejfj11tk.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <1193335562.4522.403.camel@cacharro.xalalinux.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62367>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
+Federico Mena Quintero wrote:
+> On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
 > 
->> However, there's still this issue:
->> $ git checkout -b foo origin/pu
->> Branch foo set up to track remote branch refs/remotes/origin/pu.
->> Switched to a new branch "foo"
->>
->> git checkout will say that every time a branch is created from a
->> tracking branch, unless one tells it --no-track (which people don't
->> learn about unless they're really into git), so it's quite natural
->> that people think git will actually make sure, within reasonable
->> limits, that 'foo' is kept in sync with refs/remotes/origin/pu.
->> That's not the case, however.
->>
->> So we could either change the message to be:
->> "Branch foo set up to track remote branch refs/remotes/origin/pu,
->> provided you only ever issue git-pull while having branch foo
->> checked out."
->>
->> Or we could make 'git checkout -b' default to --no-track, perhaps
->> giving annoying messages everytime someone "git-checkout -b"'s a
->> remote tracking branch.
->> Or we could make git-pull keep git checkout's promises.
+>> It's definitely not a simple cut-and-paste--even with permission from
+>> the author of "Git for computer scientists", fitting this in would
+>> require rethinking the ordering of topics in the manual.
 > 
-> The thing is, if you have 200 local branches (because you
-> interact with 50 repositories with 4 primary branches each), you
-> do not constantly check all of them out anyway.  And the only
-> place that staleness of the local tracking fork matters is when
-> you check it out (that is, as long as you train your users that
-> the way to check differences with the upstream 'pu' in your case
-> is by doing operations with 'origin/pu' not with your local
-> 'foo').
+> Oh, that can be done.  It's easier to move text around than to
+> rearchitect code :)
 > 
 
-Probably, although I think the confusion of 'foo' being something
-else than 'origin/pu' after it's been checked out would be hard
-to explain. I'll see how the patch turns out. If it all goes tits
-up, I'll see if a post-checkout hook can solve it.
+It misses the point though. Machines should work while humans are
+lounging. If the humans have to read a lot to get the machines to
+work, there's less time for lounging ;-)
 
-> With that in mind, how about making "git checkout foo", after
-> foo is set up thusly, to show:
+>> Also, there's
+>> the restriction that we'd like to keep it looking good in plain ascii,
+>> so diagrams have to be done in ascii somehow.
 > 
-> 	git log --pretty=oneline --left-right origin/pu...foo
+> Hmm, what's the rationale for this?  I'd assume that most people read
+> the user's manual as a web page (or as bedside reading if they can print
+> a PDF thereof), where diagrams can be pretty.
 > 
-> if (and only if) they have diverged?  Then you can deal with the
-> staleness of local tracking fork 'foo' in any way you want.
-> 
-> You could even go one step further and make this "checkout foo",
-> in addition to or instead of showing the above left-right log,
-> 
->  - automatically run "git merge origin/pu" if it is a
->    fast-forward, and say it did _not_ run that merge if it is
->    not a fast-forward;
-> 
->  - automatically run "git merge origin/pu" always, even if it is
->    not a fast-forward;
-> 
->  - automatically run "git rebase origin/pu" always;
-> 
-> Would that make your life easier?
 
-That it would, except the confusion would then be that it's automatically
-rebased for the branches one currently hasn't got checked out while pulling,
-and the branch that *is* checked out gets merged (crazy, yes), so those
-who prefer the rebase would get what they want by doing something completely
-bonkers, such as:
-
-git checkout -b just-gonna-pull HEAD^
-git pull
-git checkout whatever-other-branch-they-were-on
-
-(yes, "aggresively ignorant", I think Ted said in an earlier mail)
-
-It'd probably be better to go with Dscho's suggestion, although I'm not quite
-sure what that was any more. It involved automagical rebasing on fetch or pull
-though.
+man pages.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
