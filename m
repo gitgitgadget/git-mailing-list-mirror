@@ -1,76 +1,78 @@
-From: Sam Ravnborg <sam@ravnborg.org>
-Subject: Re: git apply fails to apply a renamed file in a new directory
-Date: Thu, 25 Oct 2007 23:41:19 +0200
-Message-ID: <20071025214119.GC15292@uranus.ravnborg.org>
-References: <20071025180737.GA13829@uranus.ravnborg.org> <20071025213038.GC11308@steel.home> <20071025213523.GD11308@steel.home>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: git-svnimport
+Date: Thu, 25 Oct 2007 18:20:29 -0400
+Message-ID: <20071025222029.GA11677@dervierte>
+References: <31e679430710250225w39a876d0w738d819245e514e@mail.gmail.com> <Pine.LNX.4.64.0710251132580.25221@racer.site> <31e679430710250408g679538e7ha9e1e75507c2aac5@mail.gmail.com> <Pine.LNX.4.64.0710251403160.25221@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 25 23:39:59 2007
+Cc: Felipe Balbi <felipebalbi@users.sourceforge.net>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Oct 26 00:20:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlAQo-0005NR-He
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 23:39:58 +0200
+	id 1IlB4K-0006aN-4P
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 00:20:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754169AbXJYVjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 17:39:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752733AbXJYVjp
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 17:39:45 -0400
-Received: from pasmtpa.tele.dk ([80.160.77.114]:56948 "EHLO pasmtpA.tele.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752650AbXJYVjo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 17:39:44 -0400
-Received: from ravnborg.org (0x535d98d8.vgnxx8.adsl-dhcp.tele.dk [83.93.152.216])
-	by pasmtpA.tele.dk (Postfix) with ESMTP id 926A88013B8;
-	Thu, 25 Oct 2007 23:39:43 +0200 (CEST)
-Received: by ravnborg.org (Postfix, from userid 500)
-	id 03AB6580D2; Thu, 25 Oct 2007 23:41:20 +0200 (CEST)
+	id S1752514AbXJYWUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 18:20:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752644AbXJYWUg
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 18:20:36 -0400
+Received: from py-out-1112.google.com ([64.233.166.180]:8116 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752514AbXJYWUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 18:20:35 -0400
+Received: by py-out-1112.google.com with SMTP id u77so1037686pyb
+        for <git@vger.kernel.org>; Thu, 25 Oct 2007 15:20:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=dKDpGOXM6pr2jrc7cNZvmVD6CRpzUbssdP2MYkAUHVE=;
+        b=KixpRig0nLKS75hSXE9yE3ZEtP7bFQlKtkNN9DjetTTMHIqnZxq1r9ejs/d/lFElfpxsaqhka7y93X7ey6rIk3zc9cBL8kW4YuvR2thrJVT/+zA7rxDyXyS8DHlTQ4ixFpzpuz+LwmqE/kpHh8aDHcVQfmdOOCBut1LKNyg1Vo0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=nQxwignIeFft0yJQH0Jw4FNYLMx8cv7kl37mRd0MjhXCeLi07rlCysB1EwXM7hDW6vAqdQPtbCnnFiNyrZLLPdZFFWRjbwQ/FOGQzzKQnjkT8wduj8W8UQeOI9UyCVmvfA0aM3n2qUSiERQE8qu9sneAth3qJ8BsDXkjtXTTFnQ=
+Received: by 10.65.212.3 with SMTP id o3mr4989710qbq.1193350833909;
+        Thu, 25 Oct 2007 15:20:33 -0700 (PDT)
+Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
+        by mx.google.com with ESMTPS id 38sm2048152nzf.2007.10.25.15.20.31
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 25 Oct 2007 15:20:32 -0700 (PDT)
+Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
+	id 29C80C1EA4F; Thu, 25 Oct 2007 18:20:29 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <20071025213523.GD11308@steel.home>
-User-Agent: Mutt/1.4.2.1i
+In-Reply-To: <Pine.LNX.4.64.0710251403160.25221@racer.site>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62380>
 
-On Thu, Oct 25, 2007 at 11:35:23PM +0200, Alex Riesen wrote:
-> Alex Riesen, Thu, Oct 25, 2007 23:30:38 +0200:
-> > Sam Ravnborg, Thu, Oct 25, 2007 20:07:37 +0200:
-> > > I just stumbled on what looks like a simple bug in git apply.
-> > > I had following diff:
-> > > 
-> > > diff --git a/arch/i386/defconfig b/arch/x86/configs/i386_defconfig
-> > > similarity index 100%
-> > > rename from arch/i386/defconfig
-> > > rename to arch/x86/configs/i386_defconfig
-> > > diff --git a/arch/x86_64/defconfig b/arch/x86/configs/x86_64_defconfig
-> > > similarity index 100%
-> > > rename from arch/x86_64/defconfig
-> > > rename to arch/x86/configs/x86_64_defconfig
-> > > -- 
-> > > 1.5.3.4.1157.g0e74-dirty
+On Thu, Oct 25, 2007 at 02:04:29PM +0100, Johannes Schindelin wrote:
+> FYI you'll have to do something like this:
 > 
-> .1157...-dirty. Your git looks heavily modified. Could you try with a
-> something like master of kernel.org?
-I guess I still have Linus' rename stuff added - will update.
-
+> 	git svn init svn://busybox.net/trunk/busybox
+> 	git svn fetch
 > 
-> Mine is based off d90a7fda355c251b8ffdd79617fb083c18245ec2
-> (builtin-fetch got merged).
-> 
-> > > When trying to apply this diff using:
-> > > git apply -p1 < .../patch
-> > 
-> > works here. Don't use -p1, it is assumed
-> > 
+> to merge with current busybox (although I updated before I pushed).
 
-It seems to be a picnic[*] bug - at least I cannot reproduce it.
-Sorry for the noise but thanks for testing.
+More than that, you'll want to:
 
-[*] Problem In Chair Not In Computer
+    git svn init <foo>
+    cp .git/refs/remotes/origin/master .git/refs/remotes/git-svn
+    git svn fetch
 
+If git-svn doesn't find a remote named "git-svn" it will assume that it
+has no information about the repository and starting doing a full
+checkout.  By copying the ref, git-svn will see that there are already
+commits with git-svn-id lines and rebuild its "rev-db".  After that, it
+will incrementally update for newer revisions.
 
-	Sam
+That ought to save you a few precious minutes :)
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
+Freedom is the freedom to say that 2 + 2 = 4
+B2F1 0ECC E605 7321 E818  7A65 FC81 9777 DC28 9E8F 
