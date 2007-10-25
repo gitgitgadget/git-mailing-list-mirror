@@ -1,70 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] walk PATH to generate list of commands for "help -a"
-Date: Wed, 24 Oct 2007 21:42:42 -0700
-Message-ID: <7vve8v24al.fsf@gitster.siamese.dyndns.org>
-References: <1193283437-1706-1-git-send-email-srp@srparish.net>
-	<1193283437-1706-2-git-send-email-srp@srparish.net>
-	<1193283437-1706-3-git-send-email-srp@srparish.net>
-	<1193283437-1706-4-git-send-email-srp@srparish.net>
-	<1193283437-1706-5-git-send-email-srp@srparish.net>
-	<1193283437-1706-6-git-send-email-srp@srparish.net>
+From: Scott Parish <sRp@srparish.net>
+Subject: Re: [PATCH 1/7] "git" calls help_unknown_cmd(""); "git help" and
+	"git help -a" return 0
+Date: Wed, 24 Oct 2007 21:52:29 -0700
+Message-ID: <20071025045228.GE759@srparish.net>
+References: <1193283437-1706-1-git-send-email-srp@srparish.net> <7vd4v33iy0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Scott R Parish <srp@srparish.net>
-X-From: git-owner@vger.kernel.org Thu Oct 25 06:43:16 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 06:52:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IkuYk-0000CP-Hq
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 06:43:06 +0200
+	id 1Ikui1-0002FA-KS
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 06:52:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753112AbXJYEms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 00:42:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbXJYEms
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 00:42:48 -0400
-Received: from rune.pobox.com ([208.210.124.79]:45240 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752922AbXJYEmr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 00:42:47 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 09AB614BA6C;
-	Thu, 25 Oct 2007 00:43:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 66039147DF1;
-	Thu, 25 Oct 2007 00:43:06 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753228AbXJYEwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 00:52:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753177AbXJYEwc
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 00:52:32 -0400
+Received: from smtp-gw8.mailanyone.net ([208.70.128.73]:59621 "EHLO
+	smtp-gw8.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753135AbXJYEwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 00:52:31 -0400
+Received: from mailanyone.net
+	by smtp-gw8.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP quinn@srparish.net)
+	id 1Ikuho-0002g6-Vw; Wed, 24 Oct 2007 23:52:29 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 502
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Wed, 24 Oct 2007 21:52:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vd4v33iy0.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62272>
 
-Scott R Parish <srp@srparish.net> writes:
+On Wed, Oct 24, 2007 at 09:40:55PM -0700, Junio C Hamano wrote:
 
-> Signed-off-by: Scott R Parish <srp@srparish.net>
+> Sorry, but I fail to see why this is an improvement.
+> 
+> However, with the current implementation, these changes to
+> help.c also make "git<Enter>" to exit with 0 after it gives
+> help, which is not so nice (both "cvs" and "svn" without
+> parameter seem to exit with 1 and it sort of makes sense,
+> although I do not think it matters much).  As a few datapoints,
+> "cvs -H" exits with 1 and "svn help" exits with 0.
 
-Rationale?
+That's strange because when i run that patch on my system:
 
-There are two cases execv_git_cmd() runs "git-that" from a non
-standard place, if we take your [PATCH 4/7].
+  % ./git; echo $?
+  git: '' is not a git-command
+ 
+  <list of common commands>
+  1
+  % ./git help; echo $?
+  <list of common commands>
+  0
+  % ./git help -a; echo $?
+  <list of all commands>
+  0
 
- - If there is a directory that contains a location that used to
-   hold an old installation of git-* commands (some of which may
-   have been removed in the latest git) and if the user has that
-   directory on PATH, we would run obsolete git subcommand from
-   there.
+> So in short,
+> 
+>  - "git" should retain the current behaviour (both output and
+>    exit code).
+> 
+>  - "git help" should retain the current output but probably
+>    should exit with 0.
+> 
+>  - Ditto for "git help -a".
 
- - If the user has a custom command "git-that" in $HOME/bin/
-   that is outside GIT_EXEC_PATH, the new subcommand "that" can
-   be used as if it is part of the official git.  This is an
-   improvement [PATCH 4/7] would bring in.  We allow this
-   already for scripts anyway, and the patch is merely making
-   the behaviour of the execv_git_cmd() consistent with it.
+That's what i was hoping this patch did. I'm not entirely sure how
+its wrong as it seems to work for me.
 
-It may be nicer if the user can somehow tell from the output if
-each of the command is from the standard set (i.e. on
-GIT_EXEC_PATH or built-in), or from a non standard place (either
-custom command as intended, or an unintended obsolete leftover).
+Regarding "git: '' is not a git-command" the way i was seeing that
+is that git is usually only called with commands, and '' isn't a
+valid command, hence the reason to exit 1, the help is just a nice
+user experience.
+
+sRp
+
+-- 
+Scott Parish
+http://srparish.net/
