@@ -1,71 +1,171 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: best git practices, was Re: Git User's Survey 2007
-	unfinishedsummary continued
-Date: Thu, 25 Oct 2007 14:18:17 -0400
-Message-ID: <20071025181817.GD31888@fieldses.org>
-References: <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de> <Pine.LNX.4.64.0710250021430.25221@racer.site> <47204297.5050109@op5.se> <Pine.LNX.4.64.0710251112390.25221@racer.site> <472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org> <4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org> <1193335339.4522.398.camel@cacharro.xalalinux.org> <20071025180451.GA6349@glandium.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 3/6] Ref-count the filespecs used by diffcore
+Date: Thu, 25 Oct 2007 11:19:10 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710251117590.30120@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.or
+ g>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Federico Mena Quintero <federico@novell.com>,
-	Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Oct 25 20:18:51 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 20:21:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il7IA-00031o-OQ
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:18:51 +0200
+	id 1Il7Kd-0003kN-Ad
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:21:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754095AbXJYSSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 14:18:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752550AbXJYSSX
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:18:23 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:43899 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753823AbXJYSSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 14:18:22 -0400
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Il7He-0004l9-1N; Thu, 25 Oct 2007 14:18:18 -0400
-Content-Disposition: inline
-In-Reply-To: <20071025180451.GA6349@glandium.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753165AbXJYSVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 14:21:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753158AbXJYSVL
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:21:11 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:49303 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753124AbXJYSVK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2007 14:21:10 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PIJBTG018244
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 25 Oct 2007 11:19:12 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PIJAf1007674;
+	Thu, 25 Oct 2007 11:19:11 -0700
+In-Reply-To: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.919 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_64,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62347>
 
-On Thu, Oct 25, 2007 at 08:04:51PM +0200, Mike Hommey wrote:
-> On Thu, Oct 25, 2007 at 01:02:19PM -0500, Federico Mena Quintero wrote:
-> > On Thu, 2007-10-25 at 11:21 -0400, Theodore Tso wrote:
-> > 
-> > > And of course it's inelegant.  You just told us we were dealing with
-> > > CVS-brain-damaged corporate developers who can't be bothered to learn
-> > > about the fine points of using things the git way.
-> > 
-> > Ignore the corporate developers who use SCMs only because their company
-> > requires them to.  Git is not the right thing for them; some
-> > Eclipse-based monstrosity probably is.  It's like the horrendous
-> > Oracle-based expense-reporting thing we have to use at Novell; I use it
-> > because they make me, not because I'm particularly excited about
-> > reporting expenses :)
-> > 
-> > However, *do think* of the free software developers who have been using
-> > CVS forever.  You won't make friends among them if you keep saying, "you
-> > use CVS?  You are brain-damaged, then."  CVS has been as good/bad to
-> > them as to anyone else, and they are probably delighted to get a better
-> > solution.  That solution needs to take into account the concepts to
-> > which they have been exposed for the past N years.  Just because your
-> > new concepts are better, doesn't mean that their old ones were wrong in
-> > their time.
-> 
-> It's probably just a matter of writing a "git for CVS users" document.
 
-First google hit for "git for CVS users":
 
-	http://www.kernel.org/pub/software/scm/git/docs/cvs-migration.html
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 3/6] Ref-count the filespecs used by diffcore
 
-patches welcomed....
+Rather than copy the refcounts when introducing new versions of them
+(for rename or copy detection), use a refcount and increment the count
+when reusing the diff_filespec.
 
---b.
+This avoids unnecessary allocations, but the real reason behind this is
+a future enhancement: we will want to track shared data across the
+copy/rename detection.  In order to efficiently notice when a filespec
+is used by a rename, the rename machinery wants to keep track of a
+rename usage count which is shared across all different users of the
+filespec.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+---
+
+This was sent out in the original series as a fix on top of broken code. 
+Now it sets up the infrastructure so that the next patch won't be broken.
+
+ diff.c            |   15 +++++++++++----
+ diffcore-rename.c |   16 ++++++----------
+ diffcore.h        |    2 ++
+ 3 files changed, 19 insertions(+), 14 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index dfb8595..0b320f6 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1440,9 +1440,18 @@ struct diff_filespec *alloc_filespec(const char *path)
+ 	memset(spec, 0, sizeof(*spec));
+ 	spec->path = (char *)(spec + 1);
+ 	memcpy(spec->path, path, namelen+1);
++	spec->count = 1;
+ 	return spec;
+ }
+ 
++void free_filespec(struct diff_filespec *spec)
++{
++	if (!--spec->count) {
++		diff_free_filespec_data(spec);
++		free(spec);
++	}
++}
++
+ void fill_filespec(struct diff_filespec *spec, const unsigned char *sha1,
+ 		   unsigned short mode)
+ {
+@@ -2435,10 +2444,8 @@ struct diff_filepair *diff_queue(struct diff_queue_struct *queue,
+ 
+ void diff_free_filepair(struct diff_filepair *p)
+ {
+-	diff_free_filespec_data(p->one);
+-	diff_free_filespec_data(p->two);
+-	free(p->one);
+-	free(p->two);
++	free_filespec(p->one);
++	free_filespec(p->two);
+ 	free(p);
+ }
+ 
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 2077a9b..3da06b7 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -209,21 +209,19 @@ static int estimate_similarity(struct diff_filespec *src,
+ 
+ static void record_rename_pair(int dst_index, int src_index, int score)
+ {
+-	struct diff_filespec *one, *two, *src, *dst;
++	struct diff_filespec *src, *dst;
+ 	struct diff_filepair *dp;
+ 
+ 	if (rename_dst[dst_index].pair)
+ 		die("internal error: dst already matched.");
+ 
+ 	src = rename_src[src_index].one;
+-	one = alloc_filespec(src->path);
+-	fill_filespec(one, src->sha1, src->mode);
++	src->count++;
+ 
+ 	dst = rename_dst[dst_index].two;
+-	two = alloc_filespec(dst->path);
+-	fill_filespec(two, dst->sha1, dst->mode);
++	dst->count++;
+ 
+-	dp = diff_queue(NULL, one, two);
++	dp = diff_queue(NULL, src, dst);
+ 	dp->renamed_pair = 1;
+ 	if (!strcmp(src->path, dst->path))
+ 		dp->score = rename_src[src_index].score;
+@@ -526,10 +524,8 @@ void diffcore_rename(struct diff_options *options)
+ 		}
+ 	}
+ 
+-	for (i = 0; i < rename_dst_nr; i++) {
+-		diff_free_filespec_data(rename_dst[i].two);
+-		free(rename_dst[i].two);
+-	}
++	for (i = 0; i < rename_dst_nr; i++)
++		free_filespec(rename_dst[i].two);
+ 
+ 	free(rename_dst);
+ 	rename_dst = NULL;
+diff --git a/diffcore.h b/diffcore.h
+index eb618b1..30055ac 100644
+--- a/diffcore.h
++++ b/diffcore.h
+@@ -29,6 +29,7 @@ struct diff_filespec {
+ 	void *cnt_data;
+ 	const char *funcname_pattern_ident;
+ 	unsigned long size;
++	int count;               /* Reference count */
+ 	int xfrm_flags;		 /* for use by the xfrm */
+ 	unsigned short mode;	 /* file mode */
+ 	unsigned sha1_valid : 1; /* if true, use sha1 and trust mode;
+@@ -43,6 +44,7 @@ struct diff_filespec {
+ };
+ 
+ extern struct diff_filespec *alloc_filespec(const char *);
++extern void free_filespec(struct diff_filespec *);
+ extern void fill_filespec(struct diff_filespec *, const unsigned char *,
+ 			  unsigned short);
+ 
+-- 
+1.5.3.4.330.g1dec6
