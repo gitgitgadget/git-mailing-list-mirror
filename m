@@ -1,93 +1,54 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 5/6] Do linear-time/space rename logic for exact
- renames
-Date: Thu, 25 Oct 2007 13:25:34 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710251317020.30120@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.or
- g> <alpine.LFD.0.999.0710251120590.30120@woody.linux-foundation.org>
- <Pine.LNX.4.64.0710251522190.7345@iabervon.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: best git practices, was Re: Git User's Survey 2007
+	unfinishedsummary continued
+Date: Thu, 25 Oct 2007 16:27:44 -0400
+Message-ID: <20071025202744.GE31888@fieldses.org>
+References: <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024212854.GB6069@xp.machine.xx> <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de> <Pine.LNX.4.64.0710242258201.25221@racer.site> <1193328386.4522.352.camel@cacharro.xalalinux.org> <20071025163835.GB31888@fieldses.org> <1193335562.4522.403.camel@cacharro.xalalinux.org> <4720FA6E.9040805@op5.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Oct 25 22:26:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Federico Mena Quintero <federico@novell.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Oct 25 22:28:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il9Hf-0003Hx-Ae
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:26:27 +0200
+	id 1Il9JC-0003iW-Th
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 22:28:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752448AbXJYU0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 16:26:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751251AbXJYU0N
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:26:13 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:58742 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751116AbXJYU0M (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2007 16:26:12 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PKPZQN017345
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 25 Oct 2007 13:25:36 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9PKPYC6021763;
-	Thu, 25 Oct 2007 13:25:34 -0700
-In-Reply-To: <Pine.LNX.4.64.0710251522190.7345@iabervon.org>
-X-Spam-Status: No, hits=-3.221 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753769AbXJYU1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 16:27:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753232AbXJYU1t
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 16:27:49 -0400
+Received: from mail.fieldses.org ([66.93.2.214]:43755 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752785AbXJYU1s (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 16:27:48 -0400
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Il9Iu-0000iI-CM; Thu, 25 Oct 2007 16:27:44 -0400
+Content-Disposition: inline
+In-Reply-To: <4720FA6E.9040805@op5.se>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62371>
 
+On Thu, Oct 25, 2007 at 10:19:58PM +0200, Andreas Ericsson wrote:
+> Federico Mena Quintero wrote:
+>> On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
+>>> Also, there's
+>>> the restriction that we'd like to keep it looking good in plain ascii,
+>>> so diagrams have to be done in ascii somehow.
+>> Hmm, what's the rationale for this?  I'd assume that most people read
+>> the user's manual as a web page (or as bedside reading if they can print
+>> a PDF thereof), where diagrams can be pretty.
+>
+> man pages.
 
+I think he's talking about Documentation/user-manual.txt, which isn't
+turned into man pages.  (Might be nice if it could be though, I
+suppose.)
 
-On Thu, 25 Oct 2007, Daniel Barkalow wrote:
-> 
-> Creating a list of the pointers doesn't work correctly with the grow 
-> implementation, because growing the hash may turn a collision into a 
-> non-collision, at which point items other than the first cannot be found 
-> (since they're listed inside a bucket that's now wrong for them). AFAIK, 
-> resizing a hash table requires being able to figure out what happened with 
-> collisions.
-
-Nope. 
-
-The hash algorithm is much smarter than that.
-
-I *always* uses a full 32-bit hash, and no amount of resizing is ever 
-going to change that. The index into the hash-table is in fact entirely 
-unused.
-
-This has several good properties:
-
- - it means that hash-table resizing is a non-event
-
- - it means that you always have the full 32-bit hash, and a collision in 
-   the hash size never causes unnecessary work apart from the fact that 
-   the code walks the hash table a bit more.
-
- - because the hash is embedded in the table itself, it has relatively 
-   good cache behaviour when compared to something that needs to actually 
-   follow the pointer to validate the full data. So assuming that the full 
-   32-bit hash is good enough to effectively never have any collisions 
-   (or, assuming you don't even *care* about the collisions, which is the 
-   case when you're just generating content fingerprints for lines when 
-   comparing the data in two files), you never end up with unnecessarily 
-   following pointers to cachelines that you are not interested in.
-
-The last point at least somewhat mitigates the (inevitably) bad cache 
-behaviour that hash tables tend to have. It's not like it's going to be 
-wonderful in the cache, but at least it's less horrid than the more common 
-implementation that needs to follow the pointer to validate each hash 
-entry that may or may not be a collision.
-
-but the important part is #1, which is what allows the code to be a 
-generic hash algorithm that resizes the hash table without even 
-understanding or caring what is behind the pointer.
-
-		Linus
+--b.
