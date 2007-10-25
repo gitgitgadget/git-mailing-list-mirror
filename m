@@ -1,69 +1,64 @@
 From: Federico Mena Quintero <federico@novell.com>
 Subject: Re: best git practices, was Re: Git User's Survey 2007
 	unfinishedsummary continued
-Date: Thu, 25 Oct 2007 13:02:19 -0500
-Message-ID: <1193335339.4522.398.camel@cacharro.xalalinux.org>
-References: <20071024212854.GB6069@xp.machine.xx>
+Date: Thu, 25 Oct 2007 13:06:02 -0500
+Message-ID: <1193335562.4522.403.camel@cacharro.xalalinux.org>
+References: <8fe92b430710221635x752c561ejcee14e2526010cc9@mail.gmail.com>
+	 <92320AA3-6D23-4967-818D-F7FA3962E88D@zib.de>
+	 <Pine.LNX.4.64.0710231155321.25221@racer.site>
+	 <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de>
+	 <20071024194849.GH29830@fieldses.org>
+	 <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de>
+	 <20071024212854.GB6069@xp.machine.xx>
 	 <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>
 	 <Pine.LNX.4.64.0710242258201.25221@racer.site>
-	 <008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
-	 <Pine.LNX.4.64.0710250021430.25221@racer.site> <47204297.5050109@op5.se>
-	 <Pine.LNX.4.64.0710251112390.25221@racer.site> <472070E5.4090303@op5.se>
-	 <20071025132401.GA22103@thunk.org> <4720AF05.3050308@op5.se>
-	 <20071025152159.GB22103@thunk.org>
+	 <1193328386.4522.352.camel@cacharro.xalalinux.org>
+	 <20071025163835.GB31888@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Oct 25 20:00:30 2007
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Thu Oct 25 20:04:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Il70L-0006Hl-T2
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:00:26 +0200
+	id 1Il744-0007Sy-R6
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 20:04:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbXJYSAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Oct 2007 14:00:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751574AbXJYSAM
-	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:00:12 -0400
-Received: from jericho.provo.novell.com ([137.65.248.124]:27614 "EHLO
+	id S1753135AbXJYSED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 14:04:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752957AbXJYSED
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 14:04:03 -0400
+Received: from jericho.provo.novell.com ([137.65.248.124]:27760 "EHLO
 	jericho.provo.novell.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751812AbXJYSAK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Oct 2007 14:00:10 -0400
+	with ESMTP id S1752752AbXJYSEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Oct 2007 14:04:00 -0400
 Received: from [164.99.192.129] ([164.99.192.129])
-	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 12:00:01 -0600
-In-Reply-To: <20071025152159.GB22103@thunk.org>
+	by jericho.provo.novell.com with ESMTP; Thu, 25 Oct 2007 12:03:44 -0600
+In-Reply-To: <20071025163835.GB31888@fieldses.org>
 X-Mailer: Evolution 2.11.5 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62340>
 
-On Thu, 2007-10-25 at 11:21 -0400, Theodore Tso wrote:
+On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
 
-> And of course it's inelegant.  You just told us we were dealing with
-> CVS-brain-damaged corporate developers who can't be bothered to learn
-> about the fine points of using things the git way.
+> It's definitely not a simple cut-and-paste--even with permission from
+> the author of "Git for computer scientists", fitting this in would
+> require rethinking the ordering of topics in the manual.
 
-Ignore the corporate developers who use SCMs only because their company
-requires them to.  Git is not the right thing for them; some
-Eclipse-based monstrosity probably is.  It's like the horrendous
-Oracle-based expense-reporting thing we have to use at Novell; I use it
-because they make me, not because I'm particularly excited about
-reporting expenses :)
+Oh, that can be done.  It's easier to move text around than to
+rearchitect code :)
 
-However, *do think* of the free software developers who have been using
-CVS forever.  You won't make friends among them if you keep saying, "you
-use CVS?  You are brain-damaged, then."  CVS has been as good/bad to
-them as to anyone else, and they are probably delighted to get a better
-solution.  That solution needs to take into account the concepts to
-which they have been exposed for the past N years.  Just because your
-new concepts are better, doesn't mean that their old ones were wrong in
-their time.
+> Also, there's
+> the restriction that we'd like to keep it looking good in plain ascii,
+> so diagrams have to be done in ascii somehow.
 
-You don't find quantum physicists saying, "... yeah, like Newton's
-brain-damaged followers" :)
+Hmm, what's the rationale for this?  I'd assume that most people read
+the user's manual as a web page (or as bedside reading if they can print
+a PDF thereof), where diagrams can be pretty.
 
   Federico
