@@ -1,70 +1,56 @@
-From: Scott R Parish <srp@srparish.net>
-Subject: [PATCH 7/7] shell should call setup_path() instead of manually setting up its path
-Date: Wed, 24 Oct 2007 20:37:17 -0700
-Message-ID: <1193283437-1706-7-git-send-email-srp@srparish.net>
-References: <1193283437-1706-1-git-send-email-srp@srparish.net>
- <1193283437-1706-2-git-send-email-srp@srparish.net>
- <1193283437-1706-3-git-send-email-srp@srparish.net>
- <1193283437-1706-4-git-send-email-srp@srparish.net>
- <1193283437-1706-5-git-send-email-srp@srparish.net>
- <1193283437-1706-6-git-send-email-srp@srparish.net>
-Cc: Scott R Parish <srp@srparish.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 25 05:45:10 2007
+From: Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] git-cvsimport: Add -N option to force a new import
+Date: Thu, 25 Oct 2007 00:01:53 -0400
+Message-ID: <1193284913.2619.23.camel@mattlaptop2>
+References: <1193268519.8008.11.camel@mattlaptop2>
+	 <7vfxzz51d7.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 25 06:02:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iktee-000519-Ls
-	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 05:45:09 +0200
+	id 1Iktv6-00008T-9f
+	for gcvg-git-2@gmane.org; Thu, 25 Oct 2007 06:02:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757013AbXJYDoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Oct 2007 23:44:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757012AbXJYDoy
-	(ORCPT <rfc822;git-outgoing>); Wed, 24 Oct 2007 23:44:54 -0400
-Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:36074 "EHLO
-	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756977AbXJYDow (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Oct 2007 23:44:52 -0400
-Received: from mailanyone.net
-	by smtp-gw51.mailanyone.net with esmtp (MailAnyone extSMTP quinn@srparish.net)
-	id 1IkteN-0007Qb-OK; Wed, 24 Oct 2007 22:44:51 -0500
-Received: by maple.srparish.net (Postfix, from userid 501)
-	id 726324ECF0F; Wed, 24 Oct 2007 20:37:18 -0700 (PDT)
-X-Mailer: git-send-email gitgui.0.8.4.11178.g9a1bf-dirty
-In-Reply-To: <1193283437-1706-6-git-send-email-srp@srparish.net>
+	id S1751499AbXJYEB4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Oct 2007 00:01:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbXJYEB4
+	(ORCPT <rfc822;git-outgoing>); Thu, 25 Oct 2007 00:01:56 -0400
+Received: from sd-green-bigip-66.dreamhost.com ([208.97.132.66]:43994 "EHLO
+	jankymail-a2.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751485AbXJYEBz (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Oct 2007 00:01:55 -0400
+X-Greylist: delayed 16394 seconds by postgrey-1.27 at vger.kernel.org; Thu, 25 Oct 2007 00:01:55 EDT
+Received: from [129.2.207.218] (rmccutch.student.umd.edu [129.2.207.218])
+	by jankymail-a2.dreamhost.com (Postfix) with ESMTP id 835E0B6A67;
+	Wed, 24 Oct 2007 21:01:54 -0700 (PDT)
+In-Reply-To: <7vfxzz51d7.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.1 (2.12.1-3.matt1) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62268>
 
-Signed-off-by: Scott R Parish <srp@srparish.net>
----
- shell.c |    8 +-------
- 1 files changed, 1 insertions(+), 7 deletions(-)
+On Wed, 2007-10-24 at 20:17 -0700, Junio C Hamano wrote:
+> Matt McCutchen <matt@mattmccutchen.net> writes:
+> 
+> > I had a git repository for development of rsync and wanted to start
+> > importing the upstream CVS with git-cvsimport, but git-cvsimport saw
+> > that the git repository existed and insisted on updating a previous
+> > import.  This patch adds an -N option to git-cvsimport to force a new
+> > import and updates the documentation appropriately.
+> 
+> Sounds like a useful addition.  Tests?
 
-diff --git a/shell.c b/shell.c
-index cfe372b..9826109 100644
---- a/shell.c
-+++ b/shell.c
-@@ -24,17 +24,11 @@ static int do_cvs_cmd(const char *me, char *arg)
- 	const char *cvsserver_argv[3] = {
- 		"cvsserver", "server", NULL
- 	};
--	const char *oldpath = getenv("PATH");
--	struct strbuf newpath = STRBUF_INIT;
- 
- 	if (!arg || strcmp(arg, "server"))
- 		die("git-cvsserver only handles server: %s", arg);
- 
--	strbuf_addstr(&newpath, git_exec_path());
--	strbuf_addch(&newpath, ':');
--	strbuf_addstr(&newpath, oldpath);
--
--	setenv("PATH", strbuf_detach(&newpath, NULL), 1);
-+	setup_path(NULL);
- 
- 	return execv_git_cmd(cvsserver_argv);
- }
--- 
-gitgui.0.8.4.11176.gd9205-dirty
+Are there existing tests for git-cvsimport somewhere whose example I
+could follow?  (I didn't see any in t/ .)  If not, I suppose I will just
+write a simple script that runs git-cvsimport with and without -N and
+with and without an existing, empty git repository and checks that the
+right things happen.
+
+Matt
