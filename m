@@ -1,34 +1,38 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 1/2] Fix ugly magic special case in exact rename detection
-Date: Fri, 26 Oct 2007 16:51:28 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710261646230.30120@woody.linux-foundation.org>
+Subject: [PATCH 2/2] Do the fuzzy rename detection limits with the exact
+ renames removed
+Date: Fri, 26 Oct 2007 16:56:34 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710261654300.30120@woody.linux-foundation.org>
+References: <alpine.LFD.0.999.0710261646230.30120@woody.linux-foundation.or
+ g>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
 To: Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 27 01:51:49 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 01:57:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlYxx-0005fp-Ci
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 01:51:49 +0200
+	id 1IlZ3E-0006fG-Kf
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 01:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753076AbXJZXvh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 19:51:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753452AbXJZXvh
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 19:51:37 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50235 "EHLO
+	id S1757678AbXJZX5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 19:57:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753870AbXJZX5D
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 19:57:03 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:51400 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752403AbXJZXvg (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Oct 2007 19:51:36 -0400
+	by vger.kernel.org with ESMTP id S1752608AbXJZX5B (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Oct 2007 19:57:01 -0400
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNpTr1008560
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNuZrq008677
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Oct 2007 16:51:32 -0700
+	Fri, 26 Oct 2007 16:56:36 -0700
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNpSxT020783;
-	Fri, 26 Oct 2007 16:51:29 -0700
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNuY61020956;
+	Fri, 26 Oct 2007 16:56:35 -0700
+In-Reply-To: <alpine.LFD.0.999.0710261646230.30120@woody.linux-foundation.org>
 X-Spam-Status: No, hits=-3.235 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
@@ -36,102 +40,85 @@ X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62457>
 
 
-For historical reasons, the exact rename detection had populated the
-filespecs for the entries it compared, and the rest of the similarity
-analysis depended on that.  I hadn't even bothered to debug why that was
-the case when I re-did the rename detection, I just made the new one
-have the same broken behaviour, with a note about this special case.
+When we do the fuzzy rename detection, we don't care about the
+destinations that we already handled with the exact rename detector.
+And, in fact, the code already knew that - but the rename limiter, which
+used to run *before* exact renames were detected, did not.
 
-This fixes that fixme.  The reason the exact rename detector needed to
-fill in the file sizes of the files it checked was that the _inexact_
-rename detector was broken, and started comparing file sizes before it
-filled them in.
-
-Fixing that allows the exact phase to do the sane thing of never even
-caring (since all *it* cares about is really just the SHA1 itself, not
-the size nor the contents).
-
-It turns out that this also indirectly fixes a bug: trying to populate
-all the filespecs will run out of virtual memory if there is tons and
-tons of possible rename options.  The fuzzy similarity analysis does the
-right thing in this regard, and free's the blob info after it has
-generated the hash tables, so the special case code caused more trouble
-than just some extra illogical code.
+This fixes it so that the rename detection limiter now bases its
+decisions on the *remaining* rename counts, rather than the original
+ones.
 
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 ---
 
-Without this, when I try to do a "git commit --amend" on my 
-horror-repository with the commit that moved around a hundred thousand 
-files, I actually have "git runstatus" die() on me, because xmmap() fails 
-(mmap() returns NULL due to running out of vm mappings).
+Pretty obvious. It just moves the tests around a bit, and uses the updated 
+counters.
 
-Not to mention that this is "obviously correct" (tm) and the "right thing" 
-(tm)" to do (famous last words). It's wrong of estimate_similarity() to 
-try to compare the sizes of the filespec entries before they have been 
-filled in, and it really shouldn't expect the exact rename detection to 
-fill them in, since the exact rename detection doesn't even care!
+Works For Me(tm), although this isn't all that obviously testable (ie I 
+should find a test that is border-line, and triggers the rename detection 
+limits, but then has enough exact renames that the rename detection array 
+goes away).
 
- diffcore-rename.c |   27 ++++++++++++++-------------
- 1 files changed, 14 insertions(+), 13 deletions(-)
+ diffcore-rename.c |   32 ++++++++++++++++++--------------
+ 1 files changed, 18 insertions(+), 14 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 3946932..7ed5ef8 100644
+index 7ed5ef8..f9ebea5 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -144,6 +144,20 @@ static int estimate_similarity(struct diff_filespec *src,
- 	if (!S_ISREG(src->mode) || !S_ISREG(dst->mode))
- 		return 0;
+@@ -435,33 +435,37 @@ void diffcore_rename(struct diff_options *options)
+ 	 */
+ 	rename_count = find_exact_renames();
  
-+	/*
-+	 * Need to check that source and destination sizes are
-+	 * filled in before comparing them.
-+	 *
-+	 * If we already have "cnt_data" filled in, we know it's
-+	 * all good (avoid checking the size for zero, as that
-+	 * is a possible size - we really should have a flag to
-+	 * say whether the size is valid or not!)
-+	 */
-+	if (!src->cnt_data && diff_populate_filespec(src, 0))
-+		return 0;
-+	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
-+		return 0;
++	/* Did we only want exact renames? */
++	if (minimum_score == MAX_SCORE)
++		goto cleanup;
 +
- 	max_size = ((src->size > dst->size) ? src->size : dst->size);
- 	base_size = ((src->size < dst->size) ? src->size : dst->size);
- 	delta_size = max_size - base_size;
-@@ -159,11 +173,6 @@ static int estimate_similarity(struct diff_filespec *src,
- 	if (base_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
- 		return 0;
++	/*
++	 * Calculate how many renames are left (but all the source
++	 * files still remain as options for rename/copies!)
++	 */
++	num_create = (rename_dst_nr - rename_count);
++	num_src = rename_src_nr;
++
++	/* All done? */
++	if (!num_create)
++		goto cleanup;
++
+ 	/*
+ 	 * This basically does a test for the rename matrix not
+ 	 * growing larger than a "rename_limit" square matrix, ie:
+ 	 *
+-	 *    rename_dst_nr * rename_src_nr > rename_limit * rename_limit
++	 *    num_create * num_src > rename_limit * rename_limit
+ 	 *
+ 	 * but handles the potential overflow case specially (and we
+ 	 * assume at least 32-bit integers)
+ 	 */
+ 	if (rename_limit <= 0 || rename_limit > 32767)
+ 		rename_limit = 32767;
+-	if (rename_dst_nr > rename_limit && rename_src_nr > rename_limit)
++	if (num_create > rename_limit && num_src > rename_limit)
+ 		goto cleanup;
+-	if (rename_dst_nr * rename_src_nr > rename_limit * rename_limit)
++	if (num_create * num_src > rename_limit * rename_limit)
+ 		goto cleanup;
  
--	if ((!src->cnt_data && diff_populate_filespec(src, 0))
--		|| (!dst->cnt_data && diff_populate_filespec(dst, 0)))
--		return 0; /* error but caught downstream */
+-	/* Have we run out the created file pool?  If so we can avoid
+-	 * doing the delta matrix altogether.
+-	 */
+-	if (rename_count == rename_dst_nr)
+-		goto cleanup;
 -
+-	if (minimum_score == MAX_SCORE)
+-		goto cleanup;
 -
- 	delta_limit = (unsigned long)
- 		(base_size * (MAX_SCORE-minimum_score) / MAX_SCORE);
- 	if (diffcore_count_changes(src, dst,
-@@ -270,19 +279,11 @@ static int find_identical_files(struct file_similarity *src,
- 	return renames;
- }
- 
--/*
-- * Note: the rest of the rename logic depends on this
-- * phase also populating all the filespecs for any
-- * entry that isn't matched up with an exact rename.
-- */
- static void free_similarity_list(struct file_similarity *p)
- {
- 	while (p) {
- 		struct file_similarity *entry = p;
- 		p = p->next;
--
--		/* Stupid special case, see note above! */
--		diff_populate_filespec(entry->filespec, 0);
- 		free(entry);
- 	}
- }
+-	num_create = (rename_dst_nr - rename_count);
+-	num_src = rename_src_nr;
+ 	mx = xmalloc(sizeof(*mx) * num_create * num_src);
+ 	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+ 		int base = dst_cnt * num_src;
