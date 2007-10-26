@@ -1,102 +1,115 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
-Date: Fri, 26 Oct 2007 08:18:27 +0200
-Message-ID: <D38E4717-CF67-4897-983E-2B45CA217C11@zib.de>
-References: <20071024212854.GB6069@xp.machine.xx>	<05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>	<Pine.LNX.4.64.0710242258201.25221@racer.site>	<008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>	<Pine.LNX.4.64.0710250021430.25221@racer.site>	<47204297.5050109@op5.se>	<Pine.LNX.4.64.0710251112390.25221@racer.site>	<472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org>	<4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org>	<4720CCE0.2090007@op5.se> <7vejfj11tk.fsf@gitster.siamese.dyndns.org> <4720FA00.1050805@op5.se>
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH] Bisect run: "skip" current commit if script exit code is 125.
+Date: Fri, 26 Oct 2007 08:25:21 +0200
+Message-ID: <A43880E9-E496-48AA-BC1C-2C98DFD12370@lrde.epita.fr>
+References: <20071026053937.2831a89b.chriscool@tuxfamily.org>
 Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-1-324357038"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Baumann <waste.manager@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Oct 26 08:20:20 2007
+Cc: git list <git@vger.kernel.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 08:25:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlIYM-0001Pp-3x
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 08:20:18 +0200
+	id 1IlIda-0002Ix-FT
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 08:25:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752202AbXJZGUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 02:20:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbXJZGUE
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 02:20:04 -0400
-Received: from mailer.zib.de ([130.73.108.11]:41866 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752202AbXJZGUB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 02:20:01 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9Q6H5J4029047;
-	Fri, 26 Oct 2007 08:19:43 +0200 (CEST)
-Received: from [192.168.178.21] (brln-4db109f4.pool.einsundeins.de [77.177.9.244])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9Q6Gxqm001809
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 26 Oct 2007 08:17:04 +0200 (MEST)
-In-Reply-To: <4720FA00.1050805@op5.se>
+	id S1752202AbXJZGZ3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 02:25:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752448AbXJZGZ3
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 02:25:29 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:59915 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752202AbXJZGZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 02:25:28 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IlIdK-0002Bz-QN; Fri, 26 Oct 2007 08:25:26 +0200
+In-Reply-To: <20071026053937.2831a89b.chriscool@tuxfamily.org>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
 X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62394>
 
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-1-324357038
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Oct 25, 2007, at 10:18 PM, Andreas Ericsson wrote:
+On Oct 26, 2007, at 5:39 AM, Christian Couder wrote:
 
-> Junio C Hamano wrote:
->> Andreas Ericsson <ae@op5.se> writes:
+> This is incompatible with previous versions because an exit code
+> of 125 used to mark current commit as "bad". But hopefully this exit
+> code is not much used by test scripts or other programs. (126 and 127
+> are used by bash.)
 >
->> With that in mind, how about making "git checkout foo", after
->> foo is set up thusly, to show:
->> 	git log --pretty=oneline --left-right origin/pu...foo
->> if (and only if) they have diverged?  Then you can deal with the
->> staleness of local tracking fork 'foo' in any way you want.
->> You could even go one step further and make this "checkout foo",
->> in addition to or instead of showing the above left-right log,
->>  - automatically run "git merge origin/pu" if it is a
->>    fast-forward, and say it did _not_ run that merge if it is
->>    not a fast-forward;
->>  - automatically run "git merge origin/pu" always, even if it is
->>    not a fast-forward;
->>  - automatically run "git rebase origin/pu" always;
->> Would that make your life easier?
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  Documentation/git-bisect.txt |    8 ++++++--
+>  git-bisect.sh                |   11 ++++++++++-
+>  t/t6030-bisect-porcelain.sh  |   40 +++++++++++++++++++++++++++++++ 
+> +++++++++
+>  3 files changed, 56 insertions(+), 3 deletions(-)
 >
-> That it would, except the confusion would then be that it's  
-> automatically
-> rebased for the branches one currently hasn't got checked out while  
-> pulling,
-> and the branch that *is* checked out gets merged (crazy, yes), so  
-> those
-> who prefer the rebase would get what they want by doing something  
-> completely
-> bonkers, such as:
+> diff --git a/Documentation/git-bisect.txt b/Documentation/git- 
+> bisect.txt
+> index 785f381..14b7a95 100644
+> --- a/Documentation/git-bisect.txt
+> +++ b/Documentation/git-bisect.txt
+> @@ -183,13 +183,17 @@ $ git bisect run my_script
 >
-> git checkout -b just-gonna-pull HEAD^
-> git pull
-> git checkout whatever-other-branch-they-were-on
+>  Note that the "run" script (`my_script` in the above example) should
+>  exit with code 0 in case the current source code is good and with a
+> -code between 1 and 127 (included) in case the current source code is
+> -bad.
+> +code between 1 and 127 (included), except 125 that is special, in  
+> case
+> +the current source code is bad.
 >
-> (yes, "aggresively ignorant", I think Ted said in an earlier mail)
+>  Any other exit code will abort the automatic bisect process. (A
+>  program that does "exit(-1)" leaves $? = 255, see exit(3) manual  
+> page,
+>  the value is chopped with "& 0377".)
 >
-> It'd probably be better to go with Dscho's suggestion, although I'm  
-> not quite
-> sure what that was any more. It involved automagical rebasing on  
-> fetch or pull
-> though.
+> +The special exit code 125 should be used when the current source code
+> +cannot be tested. If the "run" script exits with this code, the  
+> current
+> +revision will be "skip"ped, see `git bisect skip` above.
+> +
+>  You may often find that during bisect you want to have near-constant
+>  tweaks (e.g., s/#define DEBUG 0/#define DEBUG 1/ in a header file, or
+>  "revision that does not have this commit needs this patch applied to
 
-git pull's automagic and the automatic behaviour of git checkout
-proposed by Junio should always do the same. git pull should
-be changed to act a if your three commands were fused into it
-(but obviously implemented differently).
+Since exit 77 is already used by automake to mean "skip", wouldn't it  
+be better to do the same thing here?
 
-I think teaching "git checkout" a dwim mode is quite
-interesting.  The required work to bring a local branch
-up-to-date with a remote branch is deferred until really needed.
-An then "git checkout" does the right thing. A lot of automagic
-but definitely intriguing.
+Cheers,
 
-	Steffen
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-1-324357038
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHIYhRwwE67wC8PUkRAtvUAJ9cb059aWjc6ROYCoU5T+NcAxnVLgCfcbJJ
+6XPWfQb9tVyo2Soc4iXOcEA=
+=X+Sc
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-1-324357038--
