@@ -1,79 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make rebase smarter
-Date: Fri, 26 Oct 2007 14:02:26 -0700
-Message-ID: <7vk5p9wpwd.fsf@gitster.siamese.dyndns.org>
-References: <1193328386.4522.352.camel@cacharro.xalalinux.org>
-	<1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: How to run git-gui always in English?
+Date: Fri, 26 Oct 2007 23:41:24 +0200
+Message-ID: <20071026214124.GB3062@steel.home>
+References: <CCAD0DE0-65D4-4FEC-B02F-658010FECD04@zib.de> <Pine.LNX.4.62.0710260857210.3542@perkele.intern.softwolves.pp.se>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, federico@novell.com
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 23:02:48 2007
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Peter Karlsson <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Fri Oct 26 23:41:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlWKL-00018d-Rw
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 23:02:46 +0200
+	id 1IlWvz-0002OB-J8
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 23:41:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753763AbXJZVCd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 17:02:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753785AbXJZVCd
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 17:02:33 -0400
-Received: from rune.pobox.com ([208.210.124.79]:52786 "EHLO rune.pobox.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753698AbXJZVCc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 17:02:32 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 4D7AE1509DA;
-	Fri, 26 Oct 2007 17:02:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F22414E4D7;
-	Fri, 26 Oct 2007 17:02:50 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753283AbXJZVl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 17:41:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754241AbXJZVl3
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 17:41:29 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:24732 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753184AbXJZVl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 17:41:28 -0400
+Received: from tigra.home (Fa859.f.strato-dslnet.de [195.4.168.89])
+	by post.webmailer.de (klopstock mo14) (RZmta 14.0)
+	with ESMTP id d038fcj9QHIGgX ; Fri, 26 Oct 2007 23:41:24 +0200 (MEST)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C20D9277AE;
+	Fri, 26 Oct 2007 23:41:24 +0200 (CEST)
+Received: by steel.home (Postfix, from userid 1000)
+	id 69CDF56D22; Fri, 26 Oct 2007 23:41:24 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.62.0710260857210.3542@perkele.intern.softwolves.pp.se>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Ccul2ggT2NGA==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62446>
 
-Steven Walter <stevenrwalter@gmail.com> writes:
+Peter Karlsson, Fri, Oct 26, 2007 10:00:32 +0200:
+> Steffen Prohaska:
+>
+>> There are a lot of efforts going on to localize git-gui, including 
+>> technical terms like "push". Personally I don't understand what this 
+>> should be useful for. The command is called "git push"s. So, why should it 
+>> be named differently in the gui.
+>
+> Not that I agree that "push" is a technical word, but perhaps you have a 
+> point. Why should there be such words in the GUI to start with? It's a GUI, 
+> trying to abstract away the command line. Why not have a button "Send" or a 
+> menu entry "Send changes to server", mimicing the "git push" command line 
+> option? Using command line names or showing protocol data directly in a 
+> user-oriented GUI is most often a bad idea.
+>
+> Or perhaps what we need is an actual translation from "gitish" to English, 
+> which would have
+>
+> msgid "Push"
+> msgstr "Send changes to server"
+>
 
-> It is a common workflow to run "git fetch; git rebase origin/<foo>" Where
-> foo is the remote tracking branch.  git-rebase should default to using
-> the remote tracking branch if no other ref is given.
-
-This would be a reasonable choice between refusing outright and
-picking one possible action.  I do not have a strong preference
-as to what that "one possible action" should be, but if people
-like to base on the remote tracking branch set to merge by
-default, I am fine with it.
-
-> +	curr_branch=$(git symbolic-ref -q HEAD)
-> +	curr_branch=${curr_branch//refs\/heads\//}
-> +	merge=$(git config branch.$curr_branch.merge)
-> +	remote=$(git config branch.$curr_branch.remote)
-> +	fetch=$(git config remote.$remote.fetch)
-> +
-> +	expanded=$(git fetch--tool expand-refs-wildcard "0000000000000000000000000000000000000000 $merge" "$remote" "$fetch")
-> +	upstream_name=${expanded/#*:/}
-> +fi
->  upstream=`git rev-parse --verify "${upstream_name}^0"` ||
->      die "invalid upstream $upstream_name"
-
- * How does this work if there is no such tracking configuration?
-
-   - branch.<curr>.merge may be missing;
-   - branch.<curr>.remote may be missing;
-   - remote.<remote>.fetch may be explicit, multiple and/or non-wildcard;
-
- * ${parameter/pattern/string} is a bashism we do not allow in
-   git scripts.
-
-Problems in the implementation aside, it probably makes sense to
-first have a helper function that takes a local branch name and
-computes the remote tracking branch that a given local branch is
-set to merge from, if exists, and use it here.  I suspect there
-are other places in the Porcelain that would benefit from such a
-helper function.
+Because you do not send changes to a _server_. There is no server.
+There is just another repo. Hence just "push"
