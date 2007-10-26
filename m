@@ -1,85 +1,102 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: [PATCH] Make rebase smarter
-Date: Fri, 26 Oct 2007 00:41:22 -0400
-Message-ID: <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
-References: <1193328386.4522.352.camel@cacharro.xalalinux.org>
-Cc: Steven Walter <stevenrwalter@gmail.com>
-To: git@vger.kernel.org, federico@novell.com
-X-From: git-owner@vger.kernel.org Fri Oct 26 06:42:00 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished summary continued
+Date: Fri, 26 Oct 2007 08:18:27 +0200
+Message-ID: <D38E4717-CF67-4897-983E-2B45CA217C11@zib.de>
+References: <20071024212854.GB6069@xp.machine.xx>	<05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>	<Pine.LNX.4.64.0710242258201.25221@racer.site>	<008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>	<Pine.LNX.4.64.0710250021430.25221@racer.site>	<47204297.5050109@op5.se>	<Pine.LNX.4.64.0710251112390.25221@racer.site>	<472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org>	<4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org>	<4720CCE0.2090007@op5.se> <7vejfj11tk.fsf@gitster.siamese.dyndns.org> <4720FA00.1050805@op5.se>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Baumann <waste.manager@gmx.de>,
+	"J. Bruce Fields" <bfields@fieldses.org>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Federico Mena Quintero <federico@novell.com>,
+	git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Oct 26 08:20:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlH0v-00032e-Jj
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 06:41:42 +0200
+	id 1IlIYM-0001Pp-3x
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 08:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751072AbXJZEl1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 00:41:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750719AbXJZEl1
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 00:41:27 -0400
-Received: from nz-out-0506.google.com ([64.233.162.226]:9712 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750959AbXJZEl0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 00:41:26 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so724558nze
-        for <git@vger.kernel.org>; Thu, 25 Oct 2007 21:41:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=yiJr5QLqBBjbGEj6tnWFvrCcZWj5QnOSWbO3dCuCC8A=;
-        b=speDeL8knm/bram4PFEYASX/2WwwBsHBXTI/C6AQIa1GVSepznfY5Ma0TX2EZBOMJjOiwIbP7eSBNJTdXeRLQjvrOlfmWAfusAM+QFvPF9I3SFUyKIoKfSxvYH03tg89k/0EAQ1IrzgQYqo5sGA/+Ji0I0RslCW9TP55N2c1vsg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=HRE6hbUQDYVC4V16OrTAuagYk9hmUynt4mcUw4jHFhTtClQnS9SUqzqouZSygikOIHqPhWZinZ9BjhEsRVulfYY0JM3lnIqlnySh7s1MhFUnoA/G2cd8Y5x9l28LS5tFjYe8NvNNlA3PJR8G7/T6r/gmf3uoLHn7tDjNZe7vHSo=
-Received: by 10.65.103.14 with SMTP id f14mr5543400qbm.1193373685368;
-        Thu, 25 Oct 2007 21:41:25 -0700 (PDT)
-Received: from dasbrennen.isa-geek.org ( [76.177.39.93])
-        by mx.google.com with ESMTPS id 40sm2230252nzf.2007.10.25.21.41.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 25 Oct 2007 21:41:24 -0700 (PDT)
-Received: by dasbrennen.isa-geek.org (Postfix, from userid 1000)
-	id 5804BCF2C5F; Fri, 26 Oct 2007 00:41:21 -0400 (EDT)
-X-Mailer: git-send-email 1.5.3.4.1.gb4ad62-dirty
-In-Reply-To: <1193328386.4522.352.camel@cacharro.xalalinux.org>
+	id S1752202AbXJZGUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 02:20:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752363AbXJZGUE
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 02:20:04 -0400
+Received: from mailer.zib.de ([130.73.108.11]:41866 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752202AbXJZGUB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 02:20:01 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9Q6H5J4029047;
+	Fri, 26 Oct 2007 08:19:43 +0200 (CEST)
+Received: from [192.168.178.21] (brln-4db109f4.pool.einsundeins.de [77.177.9.244])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9Q6Gxqm001809
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 26 Oct 2007 08:17:04 +0200 (MEST)
+In-Reply-To: <4720FA00.1050805@op5.se>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62393>
 
-It is a common workflow to run "git fetch; git rebase origin/<foo>" Where
-foo is the remote tracking branch.  git-rebase should default to using
-the remote tracking branch if no other ref is given.
 
-Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
----
- git-rebase.sh |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+On Oct 25, 2007, at 10:18 PM, Andreas Ericsson wrote:
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 058fcac..1a2b51b 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -261,8 +261,19 @@ case "$diff" in
- 	;;
- esac
- 
--# The upstream head must be given.  Make sure it is valid.
- upstream_name="$1"
-+# Default to the remote tracking branch if we have one
-+if [ -z "$upstream_name" ]
-+then
-+	curr_branch=$(git symbolic-ref -q HEAD)
-+	curr_branch=${curr_branch//refs\/heads\//}
-+	merge=$(git config branch.$curr_branch.merge)
-+	remote=$(git config branch.$curr_branch.remote)
-+	fetch=$(git config remote.$remote.fetch)
-+
-+	expanded=$(git fetch--tool expand-refs-wildcard "0000000000000000000000000000000000000000 $merge" "$remote" "$fetch")
-+	upstream_name=${expanded/#*:/}
-+fi
- upstream=`git rev-parse --verify "${upstream_name}^0"` ||
-     die "invalid upstream $upstream_name"
- 
--- 
-1.5.3.4.1.gb4ad62-dirty
+> Junio C Hamano wrote:
+>> Andreas Ericsson <ae@op5.se> writes:
+>
+>> With that in mind, how about making "git checkout foo", after
+>> foo is set up thusly, to show:
+>> 	git log --pretty=oneline --left-right origin/pu...foo
+>> if (and only if) they have diverged?  Then you can deal with the
+>> staleness of local tracking fork 'foo' in any way you want.
+>> You could even go one step further and make this "checkout foo",
+>> in addition to or instead of showing the above left-right log,
+>>  - automatically run "git merge origin/pu" if it is a
+>>    fast-forward, and say it did _not_ run that merge if it is
+>>    not a fast-forward;
+>>  - automatically run "git merge origin/pu" always, even if it is
+>>    not a fast-forward;
+>>  - automatically run "git rebase origin/pu" always;
+>> Would that make your life easier?
+>
+> That it would, except the confusion would then be that it's  
+> automatically
+> rebased for the branches one currently hasn't got checked out while  
+> pulling,
+> and the branch that *is* checked out gets merged (crazy, yes), so  
+> those
+> who prefer the rebase would get what they want by doing something  
+> completely
+> bonkers, such as:
+>
+> git checkout -b just-gonna-pull HEAD^
+> git pull
+> git checkout whatever-other-branch-they-were-on
+>
+> (yes, "aggresively ignorant", I think Ted said in an earlier mail)
+>
+> It'd probably be better to go with Dscho's suggestion, although I'm  
+> not quite
+> sure what that was any more. It involved automagical rebasing on  
+> fetch or pull
+> though.
+
+git pull's automagic and the automatic behaviour of git checkout
+proposed by Junio should always do the same. git pull should
+be changed to act a if your three commands were fused into it
+(but obviously implemented differently).
+
+I think teaching "git checkout" a dwim mode is quite
+interesting.  The required work to bring a local branch
+up-to-date with a remote branch is deferred until really needed.
+An then "git checkout" does the right thing. A lot of automagic
+but definitely intriguing.
+
+	Steffen
