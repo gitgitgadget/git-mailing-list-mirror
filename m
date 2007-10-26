@@ -1,64 +1,61 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Make rebase smarter
-Date: Fri, 26 Oct 2007 10:57:12 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710261054300.4362@racer.site>
-References: <1193328386.4522.352.camel@cacharro.xalalinux.org>
- <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
+From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
+Subject: stg branch --create test v2.6.24-rc1 doesn't work
+Date: Fri, 26 Oct 2007 16:12:53 +0530
+Message-ID: <cc723f590710260342t5fd0bdc3nc1ea5198cea1a604@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, federico@novell.com
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 11:58:10 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: catalin.marinas@gmail.com, kha@treskal.com,
+	"Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 12:43:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlLx6-0004Rr-Tw
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 11:58:05 +0200
+	id 1IlMf5-0005Lg-1w
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 12:43:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757636AbXJZJ5p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 05:57:45 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757670AbXJZJ5o
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 05:57:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51146 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756384AbXJZJ5n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 05:57:43 -0400
-Received: (qmail invoked by alias); 26 Oct 2007 09:57:42 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp015) with SMTP; 26 Oct 2007 11:57:42 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19COzIxbeFCk18NFGrxnLxRKhPmjlibrRZ2yCXhDi
-	nU0Spmf1iNOqh9
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752379AbXJZKm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 06:42:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbXJZKm4
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 06:42:56 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:14158 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752365AbXJZKmz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 06:42:55 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so970596wah
+        for <git@vger.kernel.org>; Fri, 26 Oct 2007 03:42:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=tK2TfwXor3fQfxv0tmgFHd2Fr5CQkWdaq+Oi4zW4d0U=;
+        b=fp14EWjGtW/KO3SFiNnUtxVZorxx2+xzs5w7iqzu1FwqanpDZZsKgxqLVB9slM8iQXdXQdJMgRBMLiwAQSEJnkiXbG/U4sg2FfcSxtwg2C0+ynXFP9kaPQXE78VChFOiw13SZXNXMcGk8kt0dqLMlcQkzivjl4LQsxDo8FrOJQo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=RxAQAhHZaOK9oDAaozdQY9drMnzRgt0dkzActQ14ek2uQMFHsheqNEsc3EfjZaeQE8zuh1vIlhdg41QuffGYCwWgNqflnA+MHPNsXfGJlR4ecyWsrTJfonrrzNHXi800RlKCkrHRoneZbGrzSpmGirVPsTZiwp5ckPYAEFHUGFU=
+Received: by 10.115.94.1 with SMTP id w1mr3290156wal.1193395373905;
+        Fri, 26 Oct 2007 03:42:53 -0700 (PDT)
+Received: by 10.115.48.11 with HTTP; Fri, 26 Oct 2007 03:42:53 -0700 (PDT)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62407>
 
-Hi,
+$ stg branch --create test v2.6.24-rc1
+Checking for changes in the working directory ... done
+Don't know how to determine parent branch from "v2.6.24-rc1"
+Branch "test" created
+[test@linux-review-ext]$ git log
 
-On Fri, 26 Oct 2007, Steven Walter wrote:
 
-> It is a common workflow to run "git fetch; git rebase origin/<foo>" 
-> Where foo is the remote tracking branch.  git-rebase should default to 
-> using the remote tracking branch if no other ref is given.
+Throws an error/warning in the above command.
 
-This is potentially dangerous, as git-rebase does not use a detached HEAD 
-to replay the operations.  Therefore you cannot go back easily when 
-you started "git rebase" just to see its usage, and instead it did 
-unwanted things.
+Also import then gives
 
-So I really think that you need a patch before this one, so that
-
-	git reset --hard <branchname>@{1}
-
-goes back to the pre-merge state after an inadvertent rebase.  (Note: this 
-behaviour is already implemented in rebase -i, because detached HEAD was 
-available at that time, as opposed to the time when git-rebase was 
-written.)
-
-Ciao,
-Dscho
+[test@linux-review-ext]$ stg import
+/home/opensource/patches/ext4-patch-queue/ext4_mballoc_freespace_accounting_fix.patch
+Checking for changes in the working directory ... done
+fatal: cebdeed27b068dcc3e7c311d7ec0d9c33b5138c2 is not a valid 'commit' object
+stg import: git-commit-tree failed with code 128
