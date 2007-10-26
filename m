@@ -1,57 +1,67 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinishedsummary continued
-Date: Fri, 26 Oct 2007 22:01:49 +0200
-Message-ID: <85r6jh3as2.fsf@lola.goethe.zz>
-References: <20071024212854.GB6069@xp.machine.xx>
-	<05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>
-	<Pine.LNX.4.64.0710242258201.25221@racer.site>
-	<008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>
-	<Pine.LNX.4.64.0710250021430.25221@racer.site>
-	<47204297.5050109@op5.se>
-	<Pine.LNX.4.64.0710251112390.25221@racer.site>
-	<472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org>
-	<4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org>
-	<1193335339.4522.398.camel@cacharro.xalalinux.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/9] git-cat-file: Make option parsing a little more flexible
+Date: Fri, 26 Oct 2007 13:56:10 -0700
+Message-ID: <7vlk9py4r9.fsf@gitster.siamese.dyndns.org>
+References: <1193307927-3592-1-git-send-email-aroben@apple.com>
+	<1193307927-3592-2-git-send-email-aroben@apple.com>
+	<1193307927-3592-3-git-send-email-aroben@apple.com>
+	<1193307927-3592-4-git-send-email-aroben@apple.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, git@vger.kernel.org
-To: Federico Mena Quintero <federico@novell.com>
-X-From: git-owner@vger.kernel.org Fri Oct 26 22:19:30 2007
+Cc: git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 22:56:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlVeT-0006F3-QC
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 22:19:30 +0200
+	id 1IlWEJ-0007t5-0E
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 22:56:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758244AbXJZUTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 16:19:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758009AbXJZUTN
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 16:19:13 -0400
-Received: from fencepost.gnu.org ([140.186.70.10]:48521 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757408AbXJZUTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 16:19:11 -0400
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IlVeA-0006Ra-H8; Fri, 26 Oct 2007 16:19:10 -0400
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B76F91C460DF; Fri, 26 Oct 2007 22:01:49 +0200 (CEST)
-In-Reply-To: <1193335339.4522.398.camel@cacharro.xalalinux.org> (Federico Mena Quintero's message of "Thu\, 25 Oct 2007 13\:02\:19 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1.50 (gnu/linux)
+	id S1754060AbXJZU4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 16:56:16 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXJZU4Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 16:56:16 -0400
+Received: from rune.pobox.com ([208.210.124.79]:52667 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753788AbXJZU4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 16:56:15 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 3FE641509FE;
+	Fri, 26 Oct 2007 16:56:36 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id A8F3A1509FC;
+	Fri, 26 Oct 2007 16:56:33 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62440>
 
-Federico Mena Quintero <federico@novell.com> writes:
+Adam Roben <aroben@apple.com> writes:
 
-> You don't find quantum physicists saying, "... yeah, like Newton's
-> brain-damaged followers" :)
+> This will make it easier to add newer options later.
 
-Oh, one does get this sort of comments.  Predominantly from those who
-understand neither theory.
+A good change in principle.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+> diff --git a/builtin-cat-file.c b/builtin-cat-file.c
+> index 34a63d1..3a0be4a 100644
+> --- a/builtin-cat-file.c
+> +++ b/builtin-cat-file.c
+> @@ -143,23 +143,41 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  	return 0;
+>  }
+>  
+> +static const char cat_file_usage[] = "git-cat-file [-t|-s|-e|-p|<type>] <sha1>";
+> +
+>  int cmd_cat_file(int argc, const char **argv, const char *prefix)
+>  {
+> -	int opt;
+> -	const char *exp_type, *obj_name;
+> +	int i, opt = 0;
+> +	const char *exp_type = 0, *obj_name = 0;
+
+NULL pointer constants in git sources are spelled "NULL", not
+"0".
