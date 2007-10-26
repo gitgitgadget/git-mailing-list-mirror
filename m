@@ -1,53 +1,73 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: git-svnimport
-Date: Fri, 26 Oct 2007 11:06:43 -0700
-Message-ID: <47222CB3.9070100@midwinter.com>
-References: <31e679430710250225w39a876d0w738d819245e514e@mail.gmail.com> <Pine.LNX.4.64.0710251132580.25221@racer.site> <20071026145520.2141.qmail@7a6a65599aed61.315fe32.mid.smarden.org> <Pine.LNX.4.64.0710261745110.4362@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: How to remove a specific hunk
+Date: Fri, 26 Oct 2007 19:19:32 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710261917270.4362@racer.site>
+References: <4722036E.5030204@wanadoo.fr> <472207AA.8030100@op5.se>
+ <47220A05.4040705@wanadoo.fr> <2669F76D-6FF2-4CCF-9337-639D84EE65E8@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Gerrit Pape <pape@smarden.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 26 20:07:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Pascal Obry <pascal.obry@wanadoo.fr>,
+	git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Fri Oct 26 20:20:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlTaM-000183-UW
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 20:07:07 +0200
+	id 1IlTnU-0005fV-Sl
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 20:20:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754932AbXJZSGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 14:06:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbXJZSGw
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 14:06:52 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:55977 "HELO midwinter.com"
+	id S1760288AbXJZSUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 14:20:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759406AbXJZSUI
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 14:20:08 -0400
+Received: from mail.gmx.net ([213.165.64.20]:59560 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753880AbXJZSGw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 14:06:52 -0400
-Received: (qmail 30735 invoked from network); 26 Oct 2007 18:06:51 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=unOaBobGxoyJlhAMY6uzIaSwzTJmOOge13YmYpuhlBtDItn99QieTg429FQYc7cZ  ;
-Received: from localhost (HELO sgrimm-mbp.lan) (koreth@127.0.0.1)
-  by localhost with SMTP; 26 Oct 2007 18:06:51 -0000
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <Pine.LNX.4.64.0710261745110.4362@racer.site>
+	id S1760121AbXJZSUG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 14:20:06 -0400
+Received: (qmail invoked by alias); 26 Oct 2007 18:20:03 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 26 Oct 2007 20:20:03 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19VsyxFDuxV50zuMhnkQWnZ2Ih3Y1gs/Huhanis2I
+	pLHM/5GsmoIVqU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <2669F76D-6FF2-4CCF-9337-639D84EE65E8@lrde.epita.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62435>
 
-Johannes Schindelin wrote:
->> I'm not sure these are worth fixing, I'd rather suggest to drop 
->> git-svnimport in favor of git-svn, and not installing it in future 
->> versions.
->>     
-> I already proposed this.  The outcome was... silent.
->   
+Hi,
 
-Me too, and same reaction.
+On Fri, 26 Oct 2007, Benoit SIGOURE wrote:
 
-So I vote we interpret that as, "No objections from anyone."
+> On Oct 26, 2007, at 5:38 PM, Pascal Obry wrote:
+> 
+> > Andreas,
+> > 
+> > > Once you've added the other two hunks, they'll no longer show up in
+> > > git-diff, so you can do something like this:
+> > > 
+> > > $ git-add -i; # add the other two hunks to commit
+> > > $ git-diff > middle-hunk.patch
+> > > $ git-apply -R middle-hunk.patch
+> > > test, test, test
+> > > $ git-apply middle-hunk.patch
+> > 
+> > Thanks, this will clearly work. I was expecting something more
+> > integrated like a "git reset --interactive" or something like that :)
+> 
+> That'd be great!  :)
 
--Steve
+I skipped over the beginnings of this thread because of time constraints, 
+but would "git reset HEAD^ && git add -i" not helped you?  git add -i 
+allows you to stage hunks, so by just _not_ staging _that_ hunk but 
+everything else, should have worked for you, right?
+
+There's also git-gui which does all that graphically for you (remember the 
+right mouse button).
+
+Ciao,
+Dscho
