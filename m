@@ -1,61 +1,57 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: stg branch --create test v2.6.24-rc1 doesn't work
-Date: Fri, 26 Oct 2007 16:12:53 +0530
-Message-ID: <cc723f590710260342t5fd0bdc3nc1ea5198cea1a604@mail.gmail.com>
+From: Jim Meyering <jim@meyering.net>
+Subject: [PATCH] hooks-pre-commit: use \t, rather than a literal TAB in regexp
+Date: Fri, 26 Oct 2007 12:48:41 +0200
+Message-ID: <87tzoei22e.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: catalin.marinas@gmail.com, kha@treskal.com,
-	"Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 26 12:43:33 2007
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 12:49:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlMf5-0005Lg-1w
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 12:43:31 +0200
+	id 1IlMkc-0006Yi-20
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 12:49:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752379AbXJZKm4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 06:42:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752364AbXJZKm4
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 06:42:56 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:14158 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752365AbXJZKmz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 06:42:55 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so970596wah
-        for <git@vger.kernel.org>; Fri, 26 Oct 2007 03:42:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=tK2TfwXor3fQfxv0tmgFHd2Fr5CQkWdaq+Oi4zW4d0U=;
-        b=fp14EWjGtW/KO3SFiNnUtxVZorxx2+xzs5w7iqzu1FwqanpDZZsKgxqLVB9slM8iQXdXQdJMgRBMLiwAQSEJnkiXbG/U4sg2FfcSxtwg2C0+ynXFP9kaPQXE78VChFOiw13SZXNXMcGk8kt0dqLMlcQkzivjl4LQsxDo8FrOJQo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=RxAQAhHZaOK9oDAaozdQY9drMnzRgt0dkzActQ14ek2uQMFHsheqNEsc3EfjZaeQE8zuh1vIlhdg41QuffGYCwWgNqflnA+MHPNsXfGJlR4ecyWsrTJfonrrzNHXi800RlKCkrHRoneZbGrzSpmGirVPsTZiwp5ckPYAEFHUGFU=
-Received: by 10.115.94.1 with SMTP id w1mr3290156wal.1193395373905;
-        Fri, 26 Oct 2007 03:42:53 -0700 (PDT)
-Received: by 10.115.48.11 with HTTP; Fri, 26 Oct 2007 03:42:53 -0700 (PDT)
-Content-Disposition: inline
+	id S1752089AbXJZKso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 06:48:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752159AbXJZKsn
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 06:48:43 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:53208 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751915AbXJZKsn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 06:48:43 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id ECD0817B566
+	for <git@vger.kernel.org>; Fri, 26 Oct 2007 12:48:41 +0200 (CEST)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id D5FE817B550
+	for <git@vger.kernel.org>; Fri, 26 Oct 2007 12:48:41 +0200 (CEST)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 7FA36335CA; Fri, 26 Oct 2007 12:48:41 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62407>
-
-$ stg branch --create test v2.6.24-rc1
-Checking for changes in the working directory ... done
-Don't know how to determine parent branch from "v2.6.24-rc1"
-Branch "test" created
-[test@linux-review-ext]$ git log
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62408>
 
 
-Throws an error/warning in the above command.
+Signed-off-by: Jim Meyering <meyering@redhat.com>
+---
+ templates/hooks--pre-commit |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Also import then gives
-
-[test@linux-review-ext]$ stg import
-/home/opensource/patches/ext4-patch-queue/ext4_mballoc_freespace_accounting_fix.patch
-Checking for changes in the working directory ... done
-fatal: cebdeed27b068dcc3e7c311d7ec0d9c33b5138c2 is not a valid 'commit' object
-stg import: git-commit-tree failed with code 128
+diff --git a/templates/hooks--pre-commit b/templates/hooks--pre-commit
+index 18b8730..a19279b 100644
+--- a/templates/hooks--pre-commit
++++ b/templates/hooks--pre-commit
+@@ -58,7 +58,7 @@ perl -e '
+ 	    if (/\s$/) {
+ 		bad_line("trailing whitespace", $_);
+ 	    }
+-	    if (/^\s* 	/) {
++	    if (/^\s* \t/) {
+ 		bad_line("indent SP followed by a TAB", $_);
+ 	    }
+ 	    if (/^(?:[<>=]){7}/) {
+-- 
+1.5.3.4.383.gd90a7
