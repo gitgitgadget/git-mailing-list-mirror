@@ -1,75 +1,60 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: recent change in git.git/master broke my repos
-Date: Fri, 26 Oct 2007 09:39:55 +0200
-Message-ID: <20071026073955.GB11286@diana.vm.bytemark.co.uk>
-References: <86oden6z97.fsf@blue.stonehenge.com> <20071025150107.GB31196@diana.vm.bytemark.co.uk> <alpine.LFD.0.9999.0710251344220.22100@xanadu.home>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Make rebase smarter
+Date: Fri, 26 Oct 2007 09:42:09 +0200
+Message-ID: <47219A51.9090001@op5.se>
+References: <1193328386.4522.352.camel@cacharro.xalalinux.org> <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Randal L. Schwartz" <merlyn@stonehenge.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Oct 26 09:40:46 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, federico@novell.com
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 09:43:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlJoB-0007M9-C5
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 09:40:43 +0200
+	id 1IlJrA-00084L-Jn
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 09:43:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110AbXJZHk3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Oct 2007 03:40:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752669AbXJZHk3
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 03:40:29 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3289 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752110AbXJZHk2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 03:40:28 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1IlJnQ-000317-00; Fri, 26 Oct 2007 08:39:56 +0100
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0710251344220.22100@xanadu.home>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754453AbXJZHmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 03:42:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753250AbXJZHmS
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 03:42:18 -0400
+Received: from mail.op5.se ([193.201.96.20]:45262 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754197AbXJZHmQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 03:42:16 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 25AB417306E6;
+	Fri, 26 Oct 2007 09:41:32 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8iKt+mT661nU; Fri, 26 Oct 2007 09:41:31 +0200 (CEST)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 771A217306D8;
+	Fri, 26 Oct 2007 09:41:30 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62399>
 
-On 2007-10-25 13:46:04 -0400, Nicolas Pitre wrote:
+Steven Walter wrote:
+> It is a common workflow to run "git fetch; git rebase origin/<foo>" Where
+> foo is the remote tracking branch.  git-rebase should default to using
+> the remote tracking branch if no other ref is given.
+> 
 
-> On Thu, 25 Oct 2007, Karl Hasselstr=F6m wrote:
->
-> > On 2007-10-25 07:32:36 -0700, Randal L. Schwartz wrote:
-> >
-> > > And when are we gonna get "fast forward only" for git-merge?
-> >
-> > I'd like that too. For cases when I know I don't have to do a
-> > merge, and want git to yell at me if I'm mistaken. For example, in
-> > a repository that tracks an upstream so I can build the latest
-> > version, but where I don't normally do any development.
->
-> Isn't that called a remote branch that gets updated with "git
-> fetch'?
+I like it. :)
 
-Sure, I could use a detached HEAD instead of a local branch. However,
-that'll still not warn me that merging in another branch won't be a
-fast-forward.
-
-> You can even trick Git into not using the refs/remotes/ namespace
-> for them if you wish.
-
-I'm not sure what'll happen if git fetch tries to update a branch that
-I've made local changes to, but I don't imagine it's anything
-productive. If not forced it'll fail, and if forced it'll lose my
-local commits. The former might actually be sort of what I want (git
-complains when I have local commits), but I'm rather fond of the
-refs/remotes/ stuff, so this solution sounds like a hack to me. What I
-really want is an "extra careful" merge that is guaranteed to do
-nothing but a fast-forward if it succeeds.
-
-As is, it's a two-line shell script, though, so it isn't that
-important.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
