@@ -1,78 +1,136 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: How to run git-gui always in English?
-Date: Fri, 26 Oct 2007 09:00:32 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.62.0710260857210.3542@perkele.intern.softwolves.pp.se>
-References: <CCAD0DE0-65D4-4FEC-B02F-658010FECD04@zib.de>
+From: Gerrit Pape <pape@smarden.org>
+Subject: [PATCH] git-fetch: print informative messages to stdout, not stderr
+Date: Fri, 26 Oct 2007 08:53:55 +0000
+Message-ID: <20071026085355.24930.qmail@2c06371a7c3ae6.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Oct 26 10:00:55 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 10:53:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlK7i-000392-Cy
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 10:00:54 +0200
+	id 1IlKwx-0006TB-Ux
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 10:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752130AbXJZIAm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 04:00:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751878AbXJZIAm
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 04:00:42 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:36550 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751425AbXJZIAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 04:00:41 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JQI0080XE93E300@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 26 Oct 2007 10:00:39 +0200 (CEST)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JQI00HHZE8TNW20@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Fri, 26 Oct 2007 10:00:29 +0200 (CEST)
-Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JQI00ELWE8TFAA0@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Fri, 26 Oct 2007 10:00:29 +0200 (CEST)
-Received: by perkele (Postfix, from userid 501)	id 4567A2FC18; Fri,
- 26 Oct 2007 10:00:32 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id 428802FC0C; Fri, 26 Oct 2007 09:00:32 +0100 (CET)
-In-reply-to: <CCAD0DE0-65D4-4FEC-B02F-658010FECD04@zib.de>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1753064AbXJZIxk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 04:53:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753020AbXJZIxk
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 04:53:40 -0400
+Received: from a.ns.smarden.org ([212.42.242.37]:59618 "HELO a.mx.smarden.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752957AbXJZIxj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 04:53:39 -0400
+Received: (qmail 24931 invoked by uid 1000); 26 Oct 2007 08:53:55 -0000
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62403>
 
-Steffen Prohaska:
+git-fetch writes informations about storing tags and the like to stderr,
+which should only be used for errors.  This patch changes it to use
+stdout instead.
 
-> There are a lot of efforts going on to localize git-gui, including 
-> technical terms like "push". Personally I don't understand what this 
-> should be useful for. The command is called "git push"s. So, why should it 
-> be named differently in the gui.
+This was noticed by Joey Hess and asked for through
+ http://bugs.debian.org/447395
 
-Not that I agree that "push" is a technical word, but perhaps you have a 
-point. Why should there be such words in the GUI to start with? It's a GUI, 
-trying to abstract away the command line. Why not have a button "Send" or a 
-menu entry "Send changes to server", mimicing the "git push" command line 
-option? Using command line names or showing protocol data directly in a 
-user-oriented GUI is most often a bad idea.
+Signed-off-by: Gerrit Pape <pape@smarden.org>
+---
+ builtin-fetch.c |   32 ++++++++++++--------------------
+ 1 files changed, 12 insertions(+), 20 deletions(-)
 
-Or perhaps what we need is an actual translation from "gitish" to English, 
-which would have
-
-msgid "Push"
-msgstr "Send changes to server"
-
-?
-
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index b9d2b0c..2dbfcb6 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -125,7 +125,7 @@ static struct ref *get_ref_map(struct transport *transport,
+ 
+ static void show_new(enum object_type type, unsigned char *sha1_new)
+ {
+-	fprintf(stderr, "  %s: %s\n", typename(type),
++	printf("  %s: %s\n", typename(type),
+ 		find_unique_abbrev(sha1_new, DEFAULT_ABBREV));
+ }
+ 
+@@ -165,7 +165,7 @@ static int update_local_ref(struct ref *ref,
+ 	if (!*ref->name) {
+ 		/* Not storing */
+ 		if (verbose) {
+-			fprintf(stderr, "* fetched %s\n", note);
++			printf("* fetched %s\n", note);
+ 			show_new(type, ref->new_sha1);
+ 		}
+ 		return 0;
+@@ -173,8 +173,7 @@ static int update_local_ref(struct ref *ref,
+ 
+ 	if (!hashcmp(ref->old_sha1, ref->new_sha1)) {
+ 		if (verbose) {
+-			fprintf(stderr, "* %s: same as %s\n",
+-				ref->name, note);
++			printf("* %s: same as %s\n", ref->name, note);
+ 			show_new(type, ref->new_sha1);
+ 		}
+ 		return 0;
+@@ -196,8 +195,7 @@ static int update_local_ref(struct ref *ref,
+ 
+ 	if (!is_null_sha1(ref->old_sha1) &&
+ 	    !prefixcmp(ref->name, "refs/tags/")) {
+-		fprintf(stderr, "* %s: updating with %s\n",
+-			ref->name, note);
++		printf("* %s: updating with %s\n", ref->name, note);
+ 		show_new(type, ref->new_sha1);
+ 		return s_update_ref("updating tag", ref, 0);
+ 	}
+@@ -210,8 +208,7 @@ static int update_local_ref(struct ref *ref,
+ 			msg = "storing tag";
+ 		else
+ 			msg = "storing head";
+-		fprintf(stderr, "* %s: storing %s\n",
+-			ref->name, note);
++		printf("* %s: storing %s\n", ref->name, note);
+ 		show_new(type, ref->new_sha1);
+ 		return s_update_ref(msg, ref, 0);
+ 	}
+@@ -220,23 +217,19 @@ static int update_local_ref(struct ref *ref,
+ 	strcpy(newh, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
+ 
+ 	if (in_merge_bases(current, &updated, 1)) {
+-		fprintf(stderr, "* %s: fast forward to %s\n",
+-			ref->name, note);
+-		fprintf(stderr, "  old..new: %s..%s\n", oldh, newh);
++		printf("* %s: fast forward to %s\n", ref->name, note);
++		printf("  old..new: %s..%s\n", oldh, newh);
+ 		return s_update_ref("fast forward", ref, 1);
+ 	}
+ 	if (!force && !ref->force) {
+-		fprintf(stderr,
+-			"* %s: not updating to non-fast forward %s\n",
++		printf("* %s: not updating to non-fast forward %s\n",
+ 			ref->name, note);
+-		fprintf(stderr,
+-			"  old...new: %s...%s\n", oldh, newh);
++		printf("  old...new: %s...%s\n", oldh, newh);
+ 		return 1;
+ 	}
+-	fprintf(stderr,
+-		"* %s: forcing update to non-fast forward %s\n",
++	printf("* %s: forcing update to non-fast forward %s\n",
+ 		ref->name, note);
+-	fprintf(stderr, "  old...new: %s...%s\n", oldh, newh);
++	printf("  old...new: %s...%s\n", oldh, newh);
+ 	return s_update_ref("forced-update", ref, 1);
+ }
+ 
+@@ -368,8 +361,7 @@ static struct ref *find_non_local_tags(struct transport *transport,
+ 		if (!path_list_has_path(&existing_refs, ref_name) &&
+ 		    !path_list_has_path(&new_refs, ref_name) &&
+ 		    lookup_object(ref->old_sha1)) {
+-			fprintf(stderr, "Auto-following %s\n",
+-				ref_name);
++			printf("Auto-following %s\n", ref_name);
+ 
+ 			path_list_insert(ref_name, &new_refs);
+ 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.5.3.4
