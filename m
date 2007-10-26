@@ -1,146 +1,123 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinished
- summary continued
-Date: Fri, 26 Oct 2007 09:53:33 +0200
-Message-ID: <47219CFD.3010409@op5.se>
-References: <20071024212854.GB6069@xp.machine.xx>	<05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>	<Pine.LNX.4.64.0710242258201.25221@racer.site>	<008A7EF9-6F58-47AE-9AA0-B466797F6B1D@zib.de>	<Pine.LNX.4.64.0710250021430.25221@racer.site>	<47204297.5050109@op5.se>	<Pine.LNX.4.64.0710251112390.25221@racer.site>	<472070E5.4090303@op5.se> <20071025132401.GA22103@thunk.org>	<4720AF05.3050308@op5.se> <20071025152159.GB22103@thunk.org>	<4720CCE0.2090007@op5.se> <7vejfj11tk.fsf@gitster.siamese.dyndns.org> <4720FA00.1050805@op5.se> <D38E4717-CF67-4897-983E-2B45CA217C11@zib.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: [PATCH] Fix regression in fast-import.c due to strbufs.
+Date: Fri, 26 Oct 2007 09:59:12 +0200
+Message-ID: <20071026075912.GA25365@artemis.corp>
+References: <de47e4420710251726nb45a19fk15b3105b735a74f8@mail.gmail.com> <de47e4420710251729j5858481cg69146385a2ed798d@mail.gmail.com> <20071026065301.GL14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Theodore Tso <tytso@mit.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Peter Baumann <waste.manager@gmx.de>,
-	"J. Bruce Fields" <bfields@fieldses.org>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Federico Mena Quintero <federico@novell.com>,
-	git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Oct 26 09:54:01 2007
+Content-Type: multipart/signed; boundary="opJtzjQTFsWo+cga";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: cpettitt <cpettitt@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 26 09:59:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlK11-0001pd-KN
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 09:54:00 +0200
+	id 1IlK6K-0002wp-Pk
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 09:59:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752066AbXJZHxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 03:53:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbXJZHxr
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 03:53:47 -0400
-Received: from mail.op5.se ([193.201.96.20]:47044 "EHLO mail.op5.se"
+	id S1752404AbXJZH7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 03:59:17 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751570AbXJZH7Q
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 03:59:16 -0400
+Received: from pan.madism.org ([88.191.52.104]:42015 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751500AbXJZHxq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 03:53:46 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 78AC817306E9;
-	Fri, 26 Oct 2007 09:53:15 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ap4-mDVIFk+4; Fri, 26 Oct 2007 09:53:14 +0200 (CEST)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 72D1F17306D8;
-	Fri, 26 Oct 2007 09:53:13 +0200 (CEST)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <D38E4717-CF67-4897-983E-2B45CA217C11@zib.de>
+	id S1752177AbXJZH7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 03:59:15 -0400
+Received: from madism.org (def92-2-81-57-219-236.fbx.proxad.net [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id DC08D26D34;
+	Fri, 26 Oct 2007 09:59:13 +0200 (CEST)
+Received: by madism.org (Postfix, from userid 1000)
+	id CEB08FA27; Fri, 26 Oct 2007 09:59:12 +0200 (CEST)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	cpettitt <cpettitt@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20071026065301.GL14735@spearce.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62401>
 
-Steffen Prohaska wrote:
-> 
-> On Oct 25, 2007, at 10:18 PM, Andreas Ericsson wrote:
-> 
->> Junio C Hamano wrote:
->>> Andreas Ericsson <ae@op5.se> writes:
->>
->>> With that in mind, how about making "git checkout foo", after
->>> foo is set up thusly, to show:
->>>     git log --pretty=oneline --left-right origin/pu...foo
->>> if (and only if) they have diverged?  Then you can deal with the
->>> staleness of local tracking fork 'foo' in any way you want.
->>> You could even go one step further and make this "checkout foo",
->>> in addition to or instead of showing the above left-right log,
->>>  - automatically run "git merge origin/pu" if it is a
->>>    fast-forward, and say it did _not_ run that merge if it is
->>>    not a fast-forward;
->>>  - automatically run "git merge origin/pu" always, even if it is
->>>    not a fast-forward;
->>>  - automatically run "git rebase origin/pu" always;
->>> Would that make your life easier?
->>
->> That it would, except the confusion would then be that it's automatically
->> rebased for the branches one currently hasn't got checked out while 
->> pulling,
->> and the branch that *is* checked out gets merged (crazy, yes), so those
->> who prefer the rebase would get what they want by doing something 
->> completely
->> bonkers, such as:
->>
->> git checkout -b just-gonna-pull HEAD^
->> git pull
->> git checkout whatever-other-branch-they-were-on
->>
->> (yes, "aggresively ignorant", I think Ted said in an earlier mail)
->>
->> It'd probably be better to go with Dscho's suggestion, although I'm 
->> not quite
->> sure what that was any more. It involved automagical rebasing on fetch 
->> or pull
->> though.
-> 
-> git pull's automagic and the automatic behaviour of git checkout
-> proposed by Junio should always do the same. git pull should
-> be changed to act a if your three commands were fused into it
-> (but obviously implemented differently).
-> 
 
-I think it would be better to implement it as a different command that
-would do all those weird and tedious dwim things that suit a particular
-kind of developer, but only so long as those operations succeed without
-conflicts.
+--opJtzjQTFsWo+cga
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So for example the flow could go something like this;
----
-read_branch_merge_config();
+Without this strbuf_release, it yields a double free later, the command is
+in fact stashed, and this is not a memory leak.
 
-git fetch
-
-if prefetch(local == remote_tracking)
-	set ref local to match ref remote_tracking;
-else if (--safe-rebase)
-	try_rebase local onto remote_tracking;
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
 
-It's such a common operation that I really do think it's worth
-having support for it. Perhaps with a "--try-rebase" option to
-git-pull.
+  On Fri, Oct 26, 2007 at 06:53:01AM +0000, Shawn O. Pearce wrote:
+  > cpettitt <cpettitt@gmail.com> wrote:
+  > > I'm seeing the following errors when I run git-fast-import (on Intel
+  > > OSX) with some data from a git-p4 import:
+  > ....
+  > > I believe these errors started showing up in commit
+  > > b449f4cfc972929b638b90d375b8960c37790618. I did a bisect on
+  > > fast-import.c and this was the first commit for that file that
+  > > exhibits this bug with the input.
+  > >=20
+  > > I thought I would check with the list to see if this is a known issue
+  > > before I spend time trying to dig into it.
+  >=20
+  > It is a known issue.  Someone else has reported the same thing,
+  > and bisecting pointed at the same commit.  But they weren't able
+  > to supply their input data for debugging by Pierre or myself as it
+  > was a private project and they haven't had a chance to attempt to
+  > debug it on their own.
+  >=20
+  > Any light you can shed on the problem would be most appreciated.
 
-If we then add a a "--push-after-pull" (to work on the current
-branch only) we have the "git sync" alias readily available to
-accommodate the average reluctant git user, and I'm sure gui
-hackers could do wonders with it, especially on windows, where
-people seem accustomed to a lot of things happening when clicking
-a single button.
+  Wait, I believe I found the problem thanks to the "free" that fails.
 
-> I think teaching "git checkout" a dwim mode is quite
-> interesting.  The required work to bring a local branch
-> up-to-date with a remote branch is deferred until really needed.
-> An then "git checkout" does the right thing. A lot of automagic
-> but definitely intriguing.
-> 
+  Could you please try that patch ? looking at the diff again, and
+  knowing the issue is with an rc->buf (which are old command_buf
+  stashed buffers) it looks like I migrated cmd_data improperly.
 
-Yup, and it can be done with a post-checkout hook (which I notice
-there are no examples for, so I've added that to my ever-growing
-todo).
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+ fast-import.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+diff --git a/fast-import.c b/fast-import.c
+index 6f888f6..f93d7d6 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1616,6 +1616,7 @@ static void cmd_data(struct strbuf *sb)
+ 		char *term =3D xstrdup(command_buf.buf + 5 + 2);
+ 		size_t term_len =3D command_buf.len - 5 - 2;
+=20
++		strbuf_detach(&command_buf, NULL);
+ 		for (;;) {
+ 			if (strbuf_getline(&command_buf, stdin, '\n') =3D=3D EOF)
+ 				die("EOF in data (terminator '%s' not found)", term);
+--=20
+1.5.3.4.1358.gfae55-dirty
+
+
+--opJtzjQTFsWo+cga
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHIZ5QvGr7W6HudhwRAgVIAKCgoescaL+ssUW460n0tNVD+BG4QACgpKMI
+gF6HSD7yqGdU8GkeBQRRQHA=
+=X+zg
+-----END PGP SIGNATURE-----
+
+--opJtzjQTFsWo+cga--
