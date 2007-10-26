@@ -1,143 +1,60 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 4/6] copy vs rename detection: avoid unnecessary O(n*m)
- loops
-Date: Fri, 26 Oct 2007 16:10:09 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710261600510.30120@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0710251112120.30120@woody.linux-foundation.or
- g> <alpine.LFD.0.999.0710251119120.30120@woody.linux-foundation.org>
- <7vabq5wkri.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Make rebase smarter
+Date: Sat, 27 Oct 2007 00:13:56 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710270013030.4362@racer.site>
+References: <1193328386.4522.352.camel@cacharro.xalalinux.org>
+ <1193373682-3608-1-git-send-email-stevenrwalter@gmail.com>
+ <7vk5p9wpwd.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steven Walter <stevenrwalter@gmail.com>, git@vger.kernel.org,
+	federico@novell.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 27 01:10:37 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 01:14:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlYK3-0005m0-Bh
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 01:10:35 +0200
+	id 1IlYO4-0006Vr-Ia
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 01:14:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752774AbXJZXKX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 19:10:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752801AbXJZXKX
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 19:10:23 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54494 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752651AbXJZXKW (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Oct 2007 19:10:22 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNAAhN006693
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Oct 2007 16:10:11 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9QNA9M5019258;
-	Fri, 26 Oct 2007 16:10:10 -0700
-In-Reply-To: <7vabq5wkri.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-3.234 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751596AbXJZXOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 19:14:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbXJZXOc
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 19:14:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:38399 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751507AbXJZXOc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 19:14:32 -0400
+Received: (qmail invoked by alias); 26 Oct 2007 23:14:29 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp012) with SMTP; 27 Oct 2007 01:14:29 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18uQCAweC4uzByY4fS0g4ZPpmrfSh/Txb6W3f3S28
+	dFSkootYScuVY2
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5p9wpwd.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62451>
 
-
+Hi,
 
 On Fri, 26 Oct 2007, Junio C Hamano wrote:
 
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> Steven Walter <stevenrwalter@gmail.com> writes:
 > 
-> > @@ -2640,27 +2640,21 @@ static void diff_resolve_rename_copy(void)
-> >  		 * either in-place edit or rename/copy edit.
-> >  		 */
-> >  		else if (DIFF_PAIR_RENAME(p)) {
-> > +			/*
-> > +			 * A rename might have re-connected a broken
-> > +			 * pair up, causing the pathnames to be the
-> > +			 * same again. If so, that's not a rename at
-> > +			 * all, just a modification..
-> > +			 *
-> > +			 * Otherwise, see if this source was used for
-> > +			 * multiple renames, in which case we decrement
-> > +			 * the count, and call it a copy.
-> >  			 */
-> > +			if (!strcmp(p->one->path, p->two->path))
-> > +				p->status = DIFF_STATUS_MODIFIED;
-> > +			else if (--p->one->rename_used > 0)
-> >  				p->status = DIFF_STATUS_COPIED;
-> > +			else
-> >  				p->status = DIFF_STATUS_RENAMED;
-> >  		}
-> >  		else if (hashcmp(p->one->sha1, p->two->sha1) ||
+> > It is a common workflow to run "git fetch; git rebase origin/<foo>" 
+> > Where foo is the remote tracking branch.  git-rebase should default to 
+> > using the remote tracking branch if no other ref is given.
 > 
-> The interaction between the above and ...
+> This would be a reasonable choice between refusing outright and
+> picking one possible action.
 
-Heh.
+Another sensible choice would be "git rebase FETCH_HEAD", at least just 
+after a "git fetch <nick> <branch>"...
 
-I'm pretty sure it's right, because:
-
-> > @@ -338,15 +320,25 @@ void diffcore_rename(struct diff_options *options)
-> >  				locate_rename_dst(p->two, 1);
-> >  		}
-> >  		else if (!DIFF_FILE_VALID(p->two)) {
-> > +			/*
-> > +			 * If the source is a broken "delete", and
-> >  			 * they did not really want to get broken,
-> >  			 * that means the source actually stays.
-> > +			 * So we increment the "rename_used" score
-> > +			 * by one, to indicate ourselves as a user
-> > +			 */
-> > +			if (p->broken_pair && !p->score)
-> > +				p->one->rename_used++;
-> > +			register_rename_src(p->one, p->score);
-> > +		}
-> > +		else if (detect_rename == DIFF_DETECT_COPY) {
-> > +			/*
-> > +			 * Increment the "rename_used" score by
-> > +			 * one, to indicate ourselves as a user.
-> >  			 */
-> > +			p->one->rename_used++;
-> > +			register_rename_src(p->one, p->score);
-> >  		}
-> >  	}
-> >  	if (rename_dst_nr == 0 || rename_src_nr == 0)
-> >  		goto cleanup; /* nothing to do */
-> 
-> ... this part feels a bit too subtle for a still-jet-lagged
-> brain to grok.  I wonder what happens if the preimage of a
-> broken pair is used as the rename source for more than two
-> postimages.
-
-The nice thing about the whole counting thing is that we really don't even 
-care. What happens is:
-
- - *if* any rename at all happens, the rename detection will increment the 
-   "rename_used" thing even more for the source (once for each rename)
-
- - so if the rename_used started out non-zero, it will never become zero 
-   in diff_resolve_rename_copy(), and every single detected "rename" will 
-   be considered a copy - exactly like we want.
-
- - in other words, a "rename_used++" before rename-detection guarantees 
-   that you never see a rename, only a copy of the source.
-
-The above is actually true *even*if* the 
-
-	if (!strcmp(p->one->path, p->two->path))
-
-code in diff_resolve_rename_copy() actually triggers, so we could have 
-(and at one point I did) done the "--p->one->rename_used > 0" test before 
-the strcmp() test, and it would all continue to work fine. However, the 
-reason that I put the strcmp() first is that it needs to be done whether 
-we decide to consider it a "copy" or a "rename" (so we cannot avoid it 
-anyway), and *if* it triggers, we actually want to avoid the rename_used 
-going down to zero anyway (not that it would, because I think it's bound 
-to be one of the cases where we pre-incremented the count), so not doing 
-the decrement there is equivalent to doing another pre-increment.
-
-So I think it's all right, and more obviously right than it used to be. 
-But hey, it's possible that I missed something.
-
-		Linus
+Ciao,
+Dscho
