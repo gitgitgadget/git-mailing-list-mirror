@@ -1,73 +1,114 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: best git practices, was Re: Git User's Survey 2007 unfinishedsummary continued
-Date: Fri, 26 Oct 2007 11:17:49 +0200
-Message-ID: <86fxzy2q0y.fsf@lola.quinscape.zz>
-References: <90325C2E-9AF4-40FB-9EFB-70B6D0174409@zib.de> <20071024194849.GH29830@fieldses.org> <86784BB7-076F-4504-BCE6-4580A7C68AAC@zib.de> <20071024212854.GB6069@xp.machine.xx> <05B279A2-98A3-45F1-9661-AB361F7CAA37@zib.de>  =?ISO-8859-1?Q?=20<?=
-	=?ISO-8859-1?Q?Pine.LNX.4.64.07?= =?ISO-8859-1?Q?10242258201=04.252?=
-	=?ISO-8859-1?Q?21@racer.site>?= <1193328386.4522.352.camel@cacharro.xalalinux.org> <20071025163835.GB31888@fieldses.org> <1193335562.4522.403.camel@cacharro.xalalinux.org> <4720FA6E.9040805@op5.se> <20071025202744.GE31888@fieldses.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Teach 'git pull' the '--rebase' option
+Date: Fri, 26 Oct 2007 10:52:26 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710261047450.4362@racer.site>
+References: <Pine.LNX.4.64.0710252351130.4362@racer.site>
+ <alpine.LFD.0.999.0710251602160.30120@woody.linux-foundation.org>
+ <Pine.LNX.4.64.0710260007450.4362@racer.site> <7v3avy21il.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 26 11:19:00 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 26 11:53:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlLLI-0003NQ-0U
-	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 11:19:00 +0200
+	id 1IlLsS-0003Aq-A5
+	for gcvg-git-2@gmane.org; Fri, 26 Oct 2007 11:53:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753393AbXJZJSr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 05:18:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753467AbXJZJSq
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 05:18:46 -0400
-Received: from main.gmane.org ([80.91.229.2]:37084 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753334AbXJZJSp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 05:18:45 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IlLKp-0005bn-Vf
-	for git@vger.kernel.org; Fri, 26 Oct 2007 09:18:32 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Oct 2007 09:18:31 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 26 Oct 2007 09:18:31 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:skMDGvbNkpHCRHF+6x8qDdPFptY=
+	id S1753827AbXJZJxD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 05:53:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753537AbXJZJxC
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 05:53:02 -0400
+Received: from mail.gmx.net ([213.165.64.20]:50313 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751331AbXJZJxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 05:53:00 -0400
+Received: (qmail invoked by alias); 26 Oct 2007 09:52:58 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp038) with SMTP; 26 Oct 2007 11:52:58 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Fr0AxoYjFB+7PLAYB6u6vd5ko7pySg+0JrSKwFL
+	O6D4FN74TpYiDP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v3avy21il.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62405>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
+Hi,
 
-> On Thu, Oct 25, 2007 at 10:19:58PM +0200, Andreas Ericsson wrote:
->> Federico Mena Quintero wrote:
->>> On Thu, 2007-10-25 at 12:38 -0400, J. Bruce Fields wrote:
->>>> Also, there's
->>>> the restriction that we'd like to keep it looking good in plain ascii,
->>>> so diagrams have to be done in ascii somehow.
->>> Hmm, what's the rationale for this?  I'd assume that most people read
->>> the user's manual as a web page (or as bedside reading if they can print
->>> a PDF thereof), where diagrams can be pretty.
->>
->> man pages.
->
-> I think he's talking about Documentation/user-manual.txt, which
-> isn't turned into man pages.  (Might be nice if it could be though,
-> I suppose.)
+On Thu, 25 Oct 2007, Junio C Hamano wrote:
 
-I think it would be nicer if the man pages could be turned into an
-appendix in the user manual.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Thu, 25 Oct 2007, Linus Torvalds wrote:
+> >
+> >> On Thu, 25 Oct 2007, Johannes Schindelin wrote:
+> >> > 
+> >> > This behavior is more desirable than fetch + pull when a topic 
+> >> > branch is ready to be submitted.
+> >> 
+> >> I'd like there to be some *big*warning* about how this destroys 
+> >> history and how you must not do this if you expose your history 
+> >> anywhere else.
+> >> 
+> >> I think it's a perfectly fine history, but if you have already pushed 
+> >> out your history somewhere else, you're now really screwed. In ways 
+> >> that a *real* merge will never screw you.
+> >> 
+> >> So the "--rebase" option really is only good for the lowest-level 
+> >> developers. And that should be documented.
+> >
+> > Fair enough.
+> >
+> > How about this in the man page:
+> >
+> > \--rebase::
+> > 	Instead of a merge, perform a rebase after fetching.
+> > 	*NOTE:* Never do this on branches you plan to publish!  This
+> > 	command will _destroy_ history, and is thus only suitable for
+> > 	topic branches to be submitted to another committer.
+> 
+> Nits.
+> 
+> (1) This "operation" will "rewrite"  history.
 
-I had no success in persuading the toolchain to do that, however.
-_WAY_ above my head to figure out the interaction of Docbook, Asciidoc
-and similar in order to achieve that effect.
+Okay.
 
--- 
-David Kastrup
+> (2) This is not suitable for people who publish their trees and
+>     let others fetch and work off of them.
+> 
+>     Rebase is fine for e-mail submitting contributors as your
+>     description above suggests, but as your proposed commit log
+>     message said, it is also perfectly appropriate if your
+>     interaction with the outside world is "fetch + rebase +
+>     push".  You are not limited to "submitted to another
+>     committer".
+
+Well, originally I did not want to document it at all.  But I already 
+heard the complaints about that in my inner ear.  So I documented it, 
+sparsely, in the hope that those who do not know the implications will not 
+dare to use it.  After Linus' complaint, I tried to make this shooing away 
+more explicit.
+
+I do not want to go into _that_ many details here, since the place to look 
+for it is git-rebase.txt.  Probably I should have done that in the first 
+place.
+
+So how about this instead:
+
+\--rebase::
+        Instead of a merge, perform a rebase after fetching.
+        *NOTE:* This is a potentially _dangerous_ mode of operation.  
+	It rewrites history, which does not bode well when you
+	published that history already.  Do _not_ use this option
+	unless you have	read gitlink:git-rebase[1] carefully.
+
+Hmm?
+
+Ciao,
+Dscho
