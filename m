@@ -1,70 +1,86 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 2/2] Do the fuzzy rename detection limits with the exact
- renames removed
-Date: Fri, 26 Oct 2007 17:12:59 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710261708520.30120@woody.linux-foundation.org>
-References: <alpine.LFD.0.999.0710261646230.30120@woody.linux-foundation.or
- g> <alpine.LFD.0.999.0710261654300.30120@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/9] git-hash-object: Add --stdin-paths option
+Date: Fri, 26 Oct 2007 18:02:05 -0700
+Message-ID: <7vlk9pv08i.fsf@gitster.siamese.dyndns.org>
+References: <1193307927-3592-1-git-send-email-aroben@apple.com>
+	<1193307927-3592-2-git-send-email-aroben@apple.com>
+	<1193307927-3592-3-git-send-email-aroben@apple.com>
+	<1193307927-3592-4-git-send-email-aroben@apple.com>
+	<1193307927-3592-5-git-send-email-aroben@apple.com>
+	<1193307927-3592-6-git-send-email-aroben@apple.com>
+	<1193307927-3592-7-git-send-email-aroben@apple.com>
+	<7vy7dpwpz4.fsf@gitster.siamese.dyndns.org>
+	<20071026231902.GC2519@lavos.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-To: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 27 02:13:44 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Adam Roben <aroben@apple.com>, git@vger.kernel.org
+To: bdowning@lavos.net (Brian Downing)
+X-From: git-owner@vger.kernel.org Sat Oct 27 03:02:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlZJ9-00019W-PY
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 02:13:44 +0200
+	id 1Ila4L-0000zl-Gn
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 03:02:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751640AbXJ0ANK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 20:13:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763904AbXJ0ANJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 20:13:09 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:32897 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751640AbXJ0ANI (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Oct 2007 20:13:08 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9R0D0Wj009149
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 26 Oct 2007 17:13:01 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9R0CxlV021491;
-	Fri, 26 Oct 2007 17:12:59 -0700
-In-Reply-To: <alpine.LFD.0.999.0710261654300.30120@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.235 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751973AbXJ0BCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Oct 2007 21:02:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbXJ0BCO
+	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 21:02:14 -0400
+Received: from rune.pobox.com ([208.210.124.79]:56023 "EHLO rune.pobox.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751432AbXJ0BCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Oct 2007 21:02:13 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id D32B014E99C;
+	Fri, 26 Oct 2007 21:02:33 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 26A3B14E780;
+	Fri, 26 Oct 2007 21:02:28 -0400 (EDT)
+In-Reply-To: <20071026231902.GC2519@lavos.net> (Brian Downing's message of
+	"Fri, 26 Oct 2007 18:19:02 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62459>
 
+bdowning@lavos.net (Brian Downing) writes:
 
-On Fri, 26 Oct 2007, Linus Torvalds wrote:
-> 
-> Works For Me(tm), although this isn't all that obviously testable (ie I 
-> should find a test that is border-line, and triggers the rename detection 
-> limits, but then has enough exact renames that the rename detection array 
-> goes away).
+> On Fri, Oct 26, 2007 at 02:00:47PM -0700, Junio C Hamano wrote:
+>> In addition, if you are enhancing cat-file to spew chunked
+>> output out, I suspect that there should be a mode of operation
+>> for hash-object that eats that data format.  IOW, this pipe
+>> 
+>> 	git-cat-file --batch <list-of-sha1 |
+>>         git-hash-object --batch
+>> 
+>> should be an intuitive no-op, shouldn't it?
+>
+> I think that's an obviously good thing to do.  However, given your
+> suggested output format (which I also like):
+>
+>>    * git-cat-file --batch <list-of-sha1
+>> 
+>>      outputs a record of this form
+>> 
+>>           <sha1> SP <type> SP <size> LF <contents> LF
+>> 
+>>      for each of the input lines.
+>
+> What should the input behavior be?  Obviously the sha1 will probably
+> not be known on the input side.  Should that simply be optional (i.e.
+> it will accept either "<sha1> SP <type> SP <size>" or "<type> SP <size>"
+> or should it only accept the latter, and a dummy sha1 will need to be
+> filled in if the sha1 is not known (presumably "000...000")?
 
-Actually, I just tested it. I used that same 100,000 file thing, but added 
-one more (larger) file, and did another commit that moved the 100,000 
-files exactly, and the one larger file with a small change.
+Yeah, you caught me ;-)
 
-The code before this patch (but with my linear-time rename changes) would 
-find the 100,000 exact renames, but would *not* find the one that had a 
-small change, because it would hit the rename limit, and wouldn't even 
-try.
+Either making it optional or requiring a dummy value would work.
+If a non-dummy value is given, we could use it to validate it.
 
-With these two patches in place, it finds all the exact renames, and once 
-it has done that, the resulting rename array is small enough (one single 
-unknown target remaining, even if there are 100,001 possible source files) 
-that it doesn't trigger the rename limit, and it now finds the remaining 
-non-exact rename too.
-
-So it not only looked obvious, it seems to work too.
-
-		Linus
+But that would not be a useful application anyway.  So perhaps
+just the sequence of "<type> SP <size> LF <contents> LF" would
+be the most sensible thing to do.
