@@ -1,96 +1,100 @@
 From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: merge vs rebase: Is visualization in gitk the only problem?
-Date: Sat, 27 Oct 2007 16:59:21 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710271609180.7345@iabervon.org>
-References: <8E86BDBA-A49A-49BB-8E00-8BF6DD7237E9@zib.de>
+Subject: Re: [PATCH 1/8] push: change push to fail if short ref name does
+ not exist
+Date: Sat, 27 Oct 2007 17:42:24 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710271716120.7345@iabervon.org>
+References: <119350380778-git-send-email-prohaska@zib.de>
+ <11935038081211-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Oct 27 22:59:44 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 23:42:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ilskv-0003vQ-PT
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 22:59:42 +0200
+	id 1IltQU-00059X-1M
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 23:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815AbXJ0U7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 16:59:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752810AbXJ0U7Y
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 16:59:24 -0400
-Received: from iabervon.org ([66.92.72.58]:60002 "EHLO iabervon.org"
+	id S1752105AbXJ0Vm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 17:42:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752030AbXJ0Vm0
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 17:42:26 -0400
+Received: from iabervon.org ([66.92.72.58]:40323 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752790AbXJ0U7X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 16:59:23 -0400
-Received: (qmail 24267 invoked by uid 1000); 27 Oct 2007 20:59:21 -0000
+	id S1752020AbXJ0VmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 17:42:25 -0400
+Received: (qmail 25428 invoked by uid 1000); 27 Oct 2007 21:42:24 -0000
 Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Oct 2007 20:59:21 -0000
-In-Reply-To: <8E86BDBA-A49A-49BB-8E00-8BF6DD7237E9@zib.de>
+  by localhost with SMTP; 27 Oct 2007 21:42:24 -0000
+In-Reply-To: <11935038081211-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62511>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62512>
 
 On Sat, 27 Oct 2007, Steffen Prohaska wrote:
 
-> There are some discussions going on about merge vs. rebase. The
-> suggestions by Dscho is to prefer rebase over merge in a
-> CVS-style workflow.
+> You can use a branch's shortname to push it. Push used to create
+> the branch on the remote side if it did not yet exist. If you
+> specified the wrong branch accidentally it was created. A safety
+> valve that pushes only existing branches may help to avoid
+> errors.
 > 
-> Rebase has definitely benefits but not all of its details
-> are obvious at a first glance. Tell a newbie to read the
-> git rebase man page and explain what git reabase does and
-> you know what I mean. Rebase definitely can help to create a
-> cleaner history. But it rewrites history and therefore destroys
-> information, for example information about the original code
-> base a patch was developed against, or merge conflicts that
-> were resolved. You also need to decide when to use rebase and
-> when to use merge. So you need to make a choice.
+> This commit changes push to fail if the remote ref does not yet
+> exist and the refspec does not start with refs/. Remote refs must
+> explicitly be created with their full name.
+
+I agree with the change (and I think it's appropriate for master or next), 
+but your implementation is a bit too clever for my tastes.
+
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+> ---
+>  remote.c              |    5 +++--
+>  t/t5516-fetch-push.sh |   34 ++++++++++++++++++++++++++++++++--
+>  2 files changed, 35 insertions(+), 4 deletions(-)
 > 
-> Why not always use git merge?
-> 
-> Is the only problem of git merge that it might create loops
-> in the history with potentially long running parallel lines
-> that are insufficiently visualized in gitk?
->
-> If so, why not improve the visualization?
-> 
-> Or is there any other deficiency of always using merge and
-> never using rebase that I don't see?
+> diff --git a/remote.c b/remote.c
+> index 170015a..ec992c9 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -611,6 +611,7 @@ static int match_explicit(struct ref *src, struct ref *dst,
+>  	struct ref *matched_src, *matched_dst;
+>  
+>  	const char *dst_value = rs->dst;
+> +	const char * const orig_dst_value = rs->dst ? rs->dst : rs->src;
 
-Not all possible upstream systems support non-linear history. If upstream 
-is actually svn or cvs, you need to rebase in order for the other system 
-to be able to represent the result.
+"lit_dst_value" would probably be a better description, and it might be 
+worth handling the rs->dst == NULL case where it's handled for dst_value. 
+Technically, this variable, when it doesn't match the final value of 
+dst_value, has a value that dst_value never had.
 
-I think it's easier for someone from the future trying to figure out the 
-historical reason for some code to be a certain way if that code isn't 
-touched by a merge conflict resolution. If there is a conflict, the 
-resulting content is most directly due to a commit that has no explanation 
-aside from a note that there was a conflict there; it's somewhat easier to 
-understand if the code is entirely attributable to the commit that 
-logically introduces the change. (Although maybe we could make the display 
-take care of this; linearize the history using the rerere info in the 
-merge commit, and show that as the history, annotated suitably to indicate 
-that the blame for some of it falls partially on the merge commit.)
+>  
+>  	if (rs->pattern)
+>  		return errs;
+> @@ -647,12 +648,12 @@ static int match_explicit(struct ref *src, struct ref *dst,
+>  	case 1:
+>  		break;
+>  	case 0:
+> -		if (!memcmp(dst_value, "refs/", 5))
+> +		if (!memcmp(orig_dst_value , "refs/", 5))
+>  			matched_dst = make_linked_ref(dst_value, dst_tail);
 
-It's also more familiar for many users to be asked to place their changes 
-after all other committed changes, rather than leaving the ancestry pegged 
-at the last time they updated before starting to work.
+This should also be orig_dst_value, too. I know that dst_value and 
+orig_dst_value must be the same in this case, but it takes a bunch of 
+analysis to demonstrate that, and it's more intuitive to use the value 
+you've just checked anyway, and also to have all of case 0 use the 
+differently-computed destination.
 
-> Obviously you can use git merge only if you want to have _all_
-> changes from the other branch. But this is often what you
-> want. In a CVS-style workflow you want to merge all changes
-> from the shared branch before pushing. Why going through the
-> hassel of git rebase?
+>  		else
+>  			error("dst refspec %s does not match any "
+>  			      "existing ref on the remote and does "
+> -			      "not start with refs/.", dst_value);
+> +			      "not start with refs/.", orig_dst_value);
 
-Unless you've got a series of changes to a section that the upstream also 
-changed, it's the same amount of resolution, but rebase lets you resolve 
-logical collections of conflicts (i.e., those due to a single one of your 
-commits) individually. IIRC, merging my builtin-fetch topic after 1.5.3 
-had 3 scattered conflicts, and rebasing had 4 conflicts, with no more than 
-one per commit (so that I could test the resolutions independantly), and 
-the rebase was easier.
+Maybe the error should provide a hint if dst_value is not the same as 
+orig_dst_value? (if (!rs->dst) error("Did you mean %s?\n", dst_value);)
 
 	-Daniel
 *This .sig left intentionally blank*
