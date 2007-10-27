@@ -1,14 +1,13 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 7/8] push: use same rules as git-rev-parse to resolve refspecs
-Date: Sat, 27 Oct 2007 18:50:06 +0200
-Message-ID: <11935038083116-git-send-email-prohaska@zib.de>
+Subject: [PATCH 6/8] add ref_cmp_full_short() comparing full ref name with a short name
+Date: Sat, 27 Oct 2007 18:50:05 +0200
+Message-ID: <11935038084130-git-send-email-prohaska@zib.de>
 References: <119350380778-git-send-email-prohaska@zib.de>
  <11935038081211-git-send-email-prohaska@zib.de>
  <11935038081650-git-send-email-prohaska@zib.de>
  <1193503808519-git-send-email-prohaska@zib.de>
  <11935038083369-git-send-email-prohaska@zib.de>
  <11935038084055-git-send-email-prohaska@zib.de>
- <11935038084130-git-send-email-prohaska@zib.de>
 Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Oct 27 18:51:06 2007
@@ -16,108 +15,82 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlosL-0004eP-Lu
+	id 1IlosM-0004eP-AJ
 	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 18:51:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754149AbXJ0QuY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 12:50:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXJ0QuX
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:50:23 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49614 "EHLO mailer.zib.de"
+	id S1754591AbXJ0Qu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 12:50:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXJ0Qu0
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:50:26 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49610 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754149AbXJ0QuL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754172AbXJ0QuL (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 27 Oct 2007 12:50:11 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9RGo8gY023489
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9RGo86L023480
 	for <git@vger.kernel.org>; Sat, 27 Oct 2007 18:50:08 +0200 (CEST)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9RGo7oN028374;
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9RGo7oM028374;
 	Sat, 27 Oct 2007 18:50:08 +0200 (MEST)
 X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11935038084130-git-send-email-prohaska@zib.de>
+In-Reply-To: <11935038084055-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62501>
 
-This commit changes the rules for resolving refspecs to match the
-rules for resolving refs in rev-parse. git-rev-parse uses clear rules
-to resolve a short ref to its full name, which are well documented.
-The rules for resolving refspecs documented in git-send-pack were
-less strict and harder to understand. This commit replaces them by
-the rules of git-rev-parse.
+ref_cmp_full_short(full_name, short_name) expands short_name according
+to the rules documented in git-rev-parse and compares the expanded
+name with full_name. It reports a match by returning 0.
 
-The unified rules are easier to understand and better resolve ambiguous
-cases. You can now push from a repository containing several branches
-ending on the same short name.
+This function makes the rules for resolving refs to sha1s available
+for string comparison. Before this change, the rules were buried in
+get_sha1*() and dwim_ref().
 
-Note, this breaks existing setups. For example "master" will no longer
-resolve to "origin/master".
+ref_cmp_full_short() will be used for matching refspecs in git-send-pack.
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- Documentation/git-send-pack.txt |    4 +++-
- remote.c                        |    5 +----
- t/t5516-fetch-push.sh           |   12 +++++++++++-
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ cache.h     |    1 +
+ sha1_name.c |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index 01495df..08bcc25 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -91,7 +91,9 @@ Each pattern pair consists of the source side (before the colon)
- and the destination side (after the colon).  The ref to be
- pushed is determined by finding a match that matches the source
- side, and where it is pushed is determined by using the
--destination side.
-+destination side. The rules used to match a ref are the same
-+rules used by gitlink:git-rev-parse[1] to resolve a symbolic ref
-+name.
+diff --git a/cache.h b/cache.h
+index 726948b..e1385ac 100644
+--- a/cache.h
++++ b/cache.h
+@@ -406,6 +406,7 @@ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
+ extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
+ extern int read_ref(const char *filename, unsigned char *sha1);
+ extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
++extern int ref_cmp_full_short(const char *full_name, const char *short_name);
+ extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
+ extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
  
-  - It is an error if <src> does not match exactly one of the
-    local refs.
-diff --git a/remote.c b/remote.c
-index 1c96659..176457c 100644
---- a/remote.c
-+++ b/remote.c
-@@ -519,10 +519,7 @@ static int count_refspec_match(const char *pattern,
- 		char *name = refs->name;
- 		int namelen = strlen(name);
+diff --git a/sha1_name.c b/sha1_name.c
+index b820909..2a1e093 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -249,6 +249,20 @@ static const char *ref_fmt[] = {
+ 	NULL
+ };
  
--		if (namelen < patlen ||
--		    memcmp(name + namelen - patlen, pattern, patlen))
--			continue;
--		if (namelen != patlen && name[namelen - patlen - 1] != '/')
-+		if (ref_cmp_full_short(name, pattern))
- 			continue;
- 
- 		/* A match is "weak" if it is with refs outside
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 0ff791a..9ec8216 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -183,11 +183,21 @@ test_expect_success 'push with no ambiguity (1)' '
- test_expect_success 'push with no ambiguity (2)' '
- 
- 	mk_test remotes/origin/master &&
--	git push testrepo master:master &&
-+	git push testrepo master:origin/master &&
- 	check_push_result $the_commit remotes/origin/master
- 
- '
- 
-+test_expect_success 'push with colon-less refspec, no ambiguity' '
++int ref_cmp_full_short(const char *full_name, const char *short_name)
++{
++	const char **p;
++	const int short_name_len = strlen(short_name);
 +
-+	mk_test heads/master heads/t/master &&
-+	git branch -f t/master master &&
-+	git push testrepo master &&
-+	check_push_result $the_commit heads/master &&
-+	check_push_result $the_first_commit heads/t/master
++	for (p = ref_fmt; *p; p++) {
++		if (strcmp(full_name, mkpath(*p, short_name_len, short_name)) == 0) {
++			return 0;
++		}
++	}
 +
-+'
++	return -1;
++}
 +
- test_expect_success 'push with weak ambiguity (1)' '
- 
- 	mk_test heads/master remotes/origin/master &&
+ int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
+ {
+ 	const char **p, *r;
 -- 
 1.5.3.4.1261.g626eb
