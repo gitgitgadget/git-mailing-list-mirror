@@ -1,86 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/9] git-hash-object: Add --stdin-paths option
-Date: Fri, 26 Oct 2007 18:02:05 -0700
-Message-ID: <7vlk9pv08i.fsf@gitster.siamese.dyndns.org>
-References: <1193307927-3592-1-git-send-email-aroben@apple.com>
-	<1193307927-3592-2-git-send-email-aroben@apple.com>
-	<1193307927-3592-3-git-send-email-aroben@apple.com>
-	<1193307927-3592-4-git-send-email-aroben@apple.com>
-	<1193307927-3592-5-git-send-email-aroben@apple.com>
-	<1193307927-3592-6-git-send-email-aroben@apple.com>
-	<1193307927-3592-7-git-send-email-aroben@apple.com>
-	<7vy7dpwpz4.fsf@gitster.siamese.dyndns.org>
-	<20071026231902.GC2519@lavos.net>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Bisect run: "skip" current commit if script exit code is 125.
+Date: Sat, 27 Oct 2007 07:02:31 +0200
+Message-ID: <200710270702.31923.chriscool@tuxfamily.org>
+References: <20071026053937.2831a89b.chriscool@tuxfamily.org> <A43880E9-E496-48AA-BC1C-2C98DFD12370@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Adam Roben <aroben@apple.com>, git@vger.kernel.org
-To: bdowning@lavos.net (Brian Downing)
-X-From: git-owner@vger.kernel.org Sat Oct 27 03:02:30 2007
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 27 06:55:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ila4L-0000zl-Gn
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 03:02:29 +0200
+	id 1Ildi8-0008Rp-JA
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 06:55:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751973AbXJ0BCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Oct 2007 21:02:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751950AbXJ0BCO
-	(ORCPT <rfc822;git-outgoing>); Fri, 26 Oct 2007 21:02:14 -0400
-Received: from rune.pobox.com ([208.210.124.79]:56023 "EHLO rune.pobox.com"
+	id S1751223AbXJ0Ezg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Oct 2007 00:55:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751138AbXJ0Ezg
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 00:55:36 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:40381 "EHLO smtp1-g19.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432AbXJ0BCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Oct 2007 21:02:13 -0400
-Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id D32B014E99C;
-	Fri, 26 Oct 2007 21:02:33 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 26A3B14E780;
-	Fri, 26 Oct 2007 21:02:28 -0400 (EDT)
-In-Reply-To: <20071026231902.GC2519@lavos.net> (Brian Downing's message of
-	"Fri, 26 Oct 2007 18:19:02 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1750812AbXJ0Ezf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Oct 2007 00:55:35 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 65A5C1AB2BC;
+	Sat, 27 Oct 2007 06:55:33 +0200 (CEST)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 49F1F1AB2B0;
+	Sat, 27 Oct 2007 06:55:33 +0200 (CEST)
+User-Agent: KMail/1.9.7
+In-Reply-To: <A43880E9-E496-48AA-BC1C-2C98DFD12370@lrde.epita.fr>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62460>
 
-bdowning@lavos.net (Brian Downing) writes:
-
-> On Fri, Oct 26, 2007 at 02:00:47PM -0700, Junio C Hamano wrote:
->> In addition, if you are enhancing cat-file to spew chunked
->> output out, I suspect that there should be a mode of operation
->> for hash-object that eats that data format.  IOW, this pipe
->> 
->> 	git-cat-file --batch <list-of-sha1 |
->>         git-hash-object --batch
->> 
->> should be an intuitive no-op, shouldn't it?
+Le vendredi 26 octobre 2007, Benoit SIGOURE a =E9crit :
+> On Oct 26, 2007, at 5:39 AM, Christian Couder wrote:
+> >
+> > +The special exit code 125 should be used when the current source c=
+ode
+> > +cannot be tested. If the "run" script exits with this code, the
+> > current
+> > +revision will be "skip"ped, see `git bisect skip` above.
+> > [...]
 >
-> I think that's an obviously good thing to do.  However, given your
-> suggested output format (which I also like):
->
->>    * git-cat-file --batch <list-of-sha1
->> 
->>      outputs a record of this form
->> 
->>           <sha1> SP <type> SP <size> LF <contents> LF
->> 
->>      for each of the input lines.
->
-> What should the input behavior be?  Obviously the sha1 will probably
-> not be known on the input side.  Should that simply be optional (i.e.
-> it will accept either "<sha1> SP <type> SP <size>" or "<type> SP <size>"
-> or should it only accept the latter, and a dummy sha1 will need to be
-> filled in if the sha1 is not known (presumably "000...000")?
+> Since exit 77 is already used by automake to mean "skip", wouldn't it
+> be better to do the same thing here?
 
-Yeah, you caught me ;-)
+I don't think 77 is better, first because for automake this is to ignor=
+e=20
+some non portable test results "in environments where they don't make=20
+sense", so if we "bisect run" the same test script and it returns 77 on=
+ce,=20
+it will probably returns 77 everytime because the environment will not =
+have=20
+changed after a new revision has been checked out.
 
-Either making it optional or requiring a dummy value would work.
-If a non-dummy value is given, we could use it to validate it.
+Also there is:
 
-But that would not be a useful application anyway.  So perhaps
-just the sequence of "<type> SP <size> LF <contents> LF" would
-be the most sensible thing to do.
+$ grep 77 /usr/include/sysexits.h
+#define EX_NOPERM       77      /* permission denied */
+
+and a search for "include <sysexits.h>" in http://www.google.com/codese=
+arch=20
+returns a lot of results.
+
+Christian.
