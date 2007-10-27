@@ -1,91 +1,102 @@
 From: Scott R Parish <srp@srparish.net>
-Subject: [PATCH 4/7] list_commands(): simplify code by using chdir()
-Date: Sat, 27 Oct 2007 01:36:52 -0700
-Message-ID: <1193474215-6728-4-git-send-email-srp@srparish.net>
-References: <1193474215-6728-1-git-send-email-srp@srparish.net>
- <1193474215-6728-2-git-send-email-srp@srparish.net>
- <1193474215-6728-3-git-send-email-srp@srparish.net>
+Subject: [PATCH 1/7] "git" returns 1; "git help" and "git help -a" return 0
+Date: Sat, 27 Oct 2007 01:36:49 -0700
+Message-ID: <1193474215-6728-1-git-send-email-srp@srparish.net>
 Cc: Scott R Parish <srp@srparish.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 27 10:37:15 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 10:37:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlhAQ-00083R-Nw
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 10:37:15 +0200
+	id 1IlhAU-00083R-0X
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 10:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839AbXJ0IhA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 04:37:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750893AbXJ0IhA
+	id S1751985AbXJ0IhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 04:37:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751955AbXJ0IhA
 	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 04:37:00 -0400
-Received: from smtp-gw5.mailanyone.net ([208.70.128.56]:45254 "EHLO
+Received: from smtp-gw5.mailanyone.net ([208.70.128.56]:45253 "EHLO
 	smtp-gw5.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751241AbXJ0Ig7 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1751300AbXJ0Ig7 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 27 Oct 2007 04:36:59 -0400
 Received: from mailanyone.net
 	by smtp-gw5.mailanyone.net with esmtp (MailAnyone extSMTP srp)
-	id 1IlhA9-00056Y-Tl; Sat, 27 Oct 2007 03:36:58 -0500
+	id 1IlhA9-00056U-Qm; Sat, 27 Oct 2007 03:36:57 -0500
 Received: by maple.srparish.net (Postfix, from userid 501)
-	id A140F4F21CE; Sat, 27 Oct 2007 01:36:56 -0700 (PDT)
+	id 265DA4F21C8; Sat, 27 Oct 2007 01:36:55 -0700 (PDT)
 X-Mailer: git-send-email gitgui.0.8.4.11179.g60ba
-In-Reply-To: <1193474215-6728-3-git-send-email-srp@srparish.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62471>
-
-The current code builds absolute path strings for each file to
-stat(), this can easily be avoided by chdir()ing into the directory.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62472>
 
 Signed-off-by: Scott R Parish <srp@srparish.net>
 ---
- help.c |   18 +++---------------
- 1 files changed, 3 insertions(+), 15 deletions(-)
+ builtin.h |    1 +
+ git.c     |    7 ++++---
+ help.c    |    6 +++---
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
+diff --git a/builtin.h b/builtin.h
+index 65cc0fb..9a6213a 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -6,6 +6,7 @@
+ extern const char git_version_string[];
+ extern const char git_usage_string[];
+ 
++extern void list_common_cmds_help(void);
+ extern void help_unknown_cmd(const char *cmd);
+ extern int write_tree(unsigned char *sha1, int missing_ok, const char *prefix);
+ extern void prune_packed_objects(int);
+diff --git a/git.c b/git.c
+index 23a430c..efed91c 100644
+--- a/git.c
++++ b/git.c
+@@ -450,9 +450,10 @@ int main(int argc, const char **argv)
+ 		if (!prefixcmp(argv[0], "--"))
+ 			argv[0] += 2;
+ 	} else {
+-		/* Default command: "help" */
+-		argv[0] = "help";
+-		argc = 1;
++		/* The user didn't specify a command; give them help */
++		printf("usage: %s\n\n", git_usage_string);
++		list_common_cmds_help();
++		exit(1);
+ 	}
+ 	cmd = argv[0];
+ 
 diff --git a/help.c b/help.c
-index b636774..ce3d795 100644
+index 1cd33ec..d4b1818 100644
 --- a/help.c
 +++ b/help.c
-@@ -96,36 +96,24 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
- static void list_commands(const char *exec_path)
- {
- 	unsigned int longest = 0;
--	char path[PATH_MAX];
- 	const char *prefix = "git-";
- 	int prefix_len = strlen(prefix);
--	int dirlen;
- 	DIR *dir = opendir(exec_path);
- 	struct dirent *de;
+@@ -147,7 +147,7 @@ static void list_commands(const char *exec_path, const char *pattern)
+ 	putchar('\n');
+ }
  
--	if (!dir) {
-+	if (!dir || chdir(exec_path)) {
- 		fprintf(stderr, "git: '%s': %s\n", exec_path, strerror(errno));
- 		exit(1);
+-static void list_common_cmds_help(void)
++void list_common_cmds_help(void)
+ {
+ 	int i, longest = 0;
+ 
+@@ -204,14 +204,14 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 	if (!help_cmd) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		list_common_cmds_help();
+-		exit(1);
++		exit(0);
  	}
  
--	dirlen = strlen(exec_path);
--	if (PATH_MAX - 20 < dirlen) {
--		fprintf(stderr, "git: insanely long exec-path '%s'\n",
--			exec_path);
+ 	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
+ 		printf("usage: %s\n\n", git_usage_string);
+ 		if(exec_path)
+ 			list_commands(exec_path, "git-*");
 -		exit(1);
--	}
--
--	memcpy(path, exec_path, dirlen);
--	path[dirlen++] = '/';
--
- 	while ((de = readdir(dir)) != NULL) {
- 		struct stat st;
- 		int entlen;
++		exit(0);
+ 	}
  
- 		if (prefixcmp(de->d_name, prefix))
- 			continue;
--		strcpy(path+dirlen, de->d_name);
--		if (stat(path, &st) || /* stat, not lstat */
-+
-+		if (stat(de->d_name, &st) || /* stat, not lstat */
- 		    !S_ISREG(st.st_mode) ||
- 		    !(st.st_mode & S_IXUSR))
- 			continue;
+ 	else
 -- 
 gitgui.0.8.4.11178.g9a1bf-dirty
