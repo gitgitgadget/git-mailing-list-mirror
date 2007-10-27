@@ -1,96 +1,183 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 6/8] add ref_cmp_full_short() comparing full ref name with a short name
-Date: Sat, 27 Oct 2007 18:50:05 +0200
-Message-ID: <11935038084130-git-send-email-prohaska@zib.de>
+Subject: [PATCH 3/8] add get_sha1_with_real_ref() returning full name of ref on demand
+Date: Sat, 27 Oct 2007 18:50:02 +0200
+Message-ID: <1193503808519-git-send-email-prohaska@zib.de>
 References: <119350380778-git-send-email-prohaska@zib.de>
  <11935038081211-git-send-email-prohaska@zib.de>
  <11935038081650-git-send-email-prohaska@zib.de>
- <1193503808519-git-send-email-prohaska@zib.de>
- <11935038083369-git-send-email-prohaska@zib.de>
- <11935038084055-git-send-email-prohaska@zib.de>
 Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 27 18:51:06 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 18:51:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlosM-0004eP-AJ
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 18:51:06 +0200
+	id 1IlosM-0004eP-WF
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 18:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754591AbXJ0Qu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 12:50:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXJ0Qu0
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:50:26 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49610 "EHLO mailer.zib.de"
+	id S1754335AbXJ0Qu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 12:50:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754611AbXJ0Qu3
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:50:29 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49609 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754172AbXJ0QuL (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754251AbXJ0QuL (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 27 Oct 2007 12:50:11 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9RGo86L023480
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9RGo8kB023471
 	for <git@vger.kernel.org>; Sat, 27 Oct 2007 18:50:08 +0200 (CEST)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9RGo7oM028374;
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9RGo7oJ028374;
 	Sat, 27 Oct 2007 18:50:08 +0200 (MEST)
 X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11935038084055-git-send-email-prohaska@zib.de>
+In-Reply-To: <11935038081650-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62502>
 
-ref_cmp_full_short(full_name, short_name) expands short_name according
-to the rules documented in git-rev-parse and compares the expanded
-name with full_name. It reports a match by returning 0.
+Deep inside get_sha1() the name of the requested ref is matched
+according to the rules documented in git-rev-parse. This patch
+introduces a function that returns the full name of the matched
+ref to the outside.
 
-This function makes the rules for resolving refs to sha1s available
-for string comparison. Before this change, the rules were buried in
-get_sha1*() and dwim_ref().
+For example 'master' is typically returned as 'refs/heads/master'.
 
-ref_cmp_full_short() will be used for matching refspecs in git-send-pack.
+The new function can be used by "git rev-parse" to print the full
+name of the matched ref and can be used by "git send-pack" to expand
+a local ref to its full name.
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
  cache.h     |    1 +
- sha1_name.c |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+ sha1_name.c |   38 +++++++++++++++++++++++++++-----------
+ 2 files changed, 28 insertions(+), 11 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 726948b..e1385ac 100644
+index 27485d3..726948b 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -406,6 +406,7 @@ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
+@@ -401,6 +401,7 @@ static inline unsigned int hexval(unsigned char c)
+ 
+ extern int get_sha1(const char *str, unsigned char *sha1);
+ extern int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode);
++extern int get_sha1_with_real_ref(const char *str, unsigned char *sha1, char **real_ref);
+ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
  extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
  extern int read_ref(const char *filename, unsigned char *sha1);
- extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
-+extern int ref_cmp_full_short(const char *full_name, const char *short_name);
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
- extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
- 
 diff --git a/sha1_name.c b/sha1_name.c
-index b820909..2a1e093 100644
+index 2d727d5..b820909 100644
 --- a/sha1_name.c
 +++ b/sha1_name.c
-@@ -249,6 +249,20 @@ static const char *ref_fmt[] = {
- 	NULL
- };
+@@ -306,7 +306,7 @@ int dwim_log(const char *str, int len, unsigned char *sha1, char **log)
+ 	return logs_found;
+ }
  
-+int ref_cmp_full_short(const char *full_name, const char *short_name)
-+{
-+	const char **p;
-+	const int short_name_len = strlen(short_name);
-+
-+	for (p = ref_fmt; *p; p++) {
-+		if (strcmp(full_name, mkpath(*p, short_name_len, short_name)) == 0) {
-+			return 0;
-+		}
+-static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
++static int get_sha1_basic(const char *str, int len, unsigned char *sha1, char **real_ref_out)
+ {
+ 	static const char *warning = "warning: refname '%.*s' is ambiguous.\n";
+ 	char *real_ref = NULL;
+@@ -378,17 +378,21 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
+ 		}
+ 	}
+ 
+-	free(real_ref);
++	if (real_ref_out) {
++		*real_ref_out = real_ref;
++	} else {
++		free(real_ref);
 +	}
+ 	return 0;
+ }
+ 
+-static int get_sha1_1(const char *name, int len, unsigned char *sha1);
++static int get_sha1_1(const char *name, int len, unsigned char *sha1, char **real_ref);
+ 
+ static int get_parent(const char *name, int len,
+ 		      unsigned char *result, int idx)
+ {
+ 	unsigned char sha1[20];
+-	int ret = get_sha1_1(name, len, sha1);
++	int ret = get_sha1_1(name, len, sha1, /*real_ref=*/ 0);
+ 	struct commit *commit;
+ 	struct commit_list *p;
+ 
+@@ -418,7 +422,7 @@ static int get_nth_ancestor(const char *name, int len,
+ 			    unsigned char *result, int generation)
+ {
+ 	unsigned char sha1[20];
+-	int ret = get_sha1_1(name, len, sha1);
++	int ret = get_sha1_1(name, len, sha1, /*real_ref=*/ 0);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -471,7 +475,7 @@ static int peel_onion(const char *name, int len, unsigned char *sha1)
+ 	else
+ 		return -1;
+ 
+-	if (get_sha1_1(name, sp - name - 2, outer))
++	if (get_sha1_1(name, sp - name - 2, outer, /*real_ref=*/ 0))
+ 		return -1;
+ 
+ 	o = parse_object(outer);
+@@ -531,7 +535,7 @@ static int get_describe_name(const char *name, int len, unsigned char *sha1)
+ 	return -1;
+ }
+ 
+-static int get_sha1_1(const char *name, int len, unsigned char *sha1)
++static int get_sha1_1(const char *name, int len, unsigned char *sha1, char **real_ref)
+ {
+ 	int ret, has_suffix;
+ 	const char *cp;
+@@ -569,7 +573,7 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1)
+ 	if (!ret)
+ 		return 0;
+ 
+-	ret = get_sha1_basic(name, len, sha1);
++	ret = get_sha1_basic(name, len, sha1, real_ref);
+ 	if (!ret)
+ 		return 0;
+ 
+@@ -651,14 +655,14 @@ int get_sha1(const char *name, unsigned char *sha1)
+ 	return get_sha1_with_mode(name, sha1, &unused);
+ }
+ 
+-int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
++int get_sha1_with_mode_real_ref(const char *name, unsigned char *sha1, unsigned *mode, char** real_ref)
+ {
+ 	int ret, bracket_depth;
+ 	int namelen = strlen(name);
+ 	const char *cp;
+ 
+ 	*mode = S_IFINVALID;
+-	ret = get_sha1_1(name, namelen, sha1);
++	ret = get_sha1_1(name, namelen, sha1, real_ref);
+ 	if (!ret)
+ 		return ret;
+ 	/* sha1:path --> object name of path in ent sha1
+@@ -709,9 +713,21 @@ int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
+ 	}
+ 	if (*cp == ':') {
+ 		unsigned char tree_sha1[20];
+-		if (!get_sha1_1(name, cp-name, tree_sha1))
++		if (!get_sha1_1(name, cp-name, tree_sha1, real_ref))
+ 			return get_tree_entry(tree_sha1, cp+1, sha1,
+ 					      mode);
+ 	}
+ 	return ret;
+ }
 +
-+	return -1;
++int get_sha1_with_mode(const char *name, unsigned char *sha1, unsigned *mode)
++{
++	return get_sha1_with_mode_real_ref(name, sha1, mode, 0);
 +}
 +
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
- 	const char **p, *r;
++int get_sha1_with_real_ref(const char *name, unsigned char *sha1, char **real_ref)
++{
++	unsigned unused;
++	return get_sha1_with_mode_real_ref(name, sha1, &unused, real_ref);
++}
++
 -- 
 1.5.3.4.1261.g626eb
