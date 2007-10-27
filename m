@@ -1,69 +1,82 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: Minor inconsistency: "git tag" requires space after -m.
-Date: Sat, 27 Oct 2007 17:14:03 +0400
-Message-ID: <ffvdir$g2n$1@ger.gmane.org>
-References: <ffv8ul$5a2$1@ger.gmane.org> <Pine.LNX.4.64.0710271347510.4362@racer.site>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [MinGW PATCH] spawnvppe_pipe: Don't overwrite argv[0]
+Date: Sat, 27 Oct 2007 20:26:31 +0700
+Message-ID: <20071027132631.GA32149@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 27 15:14:37 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sat Oct 27 15:26:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IllUn-0002MQ-QO
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:14:34 +0200
+	id 1Illgm-0005kG-LF
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753183AbXJ0NOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 09:14:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753082AbXJ0NOV
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:14:21 -0400
-Received: from main.gmane.org ([80.91.229.2]:50050 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752957AbXJ0NOU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 09:14:20 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IllUV-0004Fy-63
-	for git@vger.kernel.org; Sat, 27 Oct 2007 13:14:15 +0000
-Received: from 87.236.81.130 ([87.236.81.130])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 13:14:15 +0000
-Received: from osv by 87.236.81.130 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 13:14:15 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.236.81.130
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752795AbXJ0N0o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Oct 2007 09:26:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbXJ0N0o
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:26:44 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:64978 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752517AbXJ0N0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 09:26:43 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1071698rvb
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 06:26:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=6+an9nWw3fK0cy7XG5/J3j30hEYjFmEZ/k1cAbYYPJ0=;
+        b=FFPaiOGG01nP/CydW+guVQBw6gLJqvXliWycNRIwfLRI0+uknhYb4YzOiyEnySHAwf3vOkmgBH7XXFETRPGmvY+ZvNPD5i+u2XypQeKp6h2NO/O4cFVkzhMJtKG3AKKtszlVY3w8UzNpdZ2Lk0GW7FhJhYcNKFMEGqNVwv9vkl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=aYTsk+bBNNQZmZ2lZns/GsUjpfZBn0rt0NEu8VU68/iapoh8bHk2RsEHBNLt+lehXL+8DVrvW7UyYSulnncm/xsU/s2C4seipSp/odDf0KqEqEvgmFaFFdqq7Q8BnEVwB5qXfaD4b5bJ3rXPBq//tzWOvl/EnvDTjnrbk8LbfKU=
+Received: by 10.140.251.1 with SMTP id y1mr2004856rvh.1193491603279;
+        Sat, 27 Oct 2007 06:26:43 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.1.6])
+        by mx.google.com with ESMTPS id g22sm7542136rvb.2007.10.27.06.26.37
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 27 Oct 2007 06:26:40 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Oct 2007 20:26:31 +0700
+Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62491>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> Hi,
->
-> On Sat, 27 Oct 2007, Sergei Organov wrote:
->
->> It seems options parsing is somewhat broken in git-tag:
->> 
->> $ git tag -a -m"Annotated tag" annotated-tag
->> usage: git-tag [-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg> | -F <file>] <tagname> [<head>]
->> $ git tag -a -m "Annotated tag" annotated-tag
->> $ git --version
->> git version 1.5.3.4
->> 
->> This is inconsistent with, say, "git commit", that groks -m"Message"
->> (without space after -m) just fine.
->
-> As it happens, we are in the middle of adding our own option parser which 
-> probably solves the issue.  Can you please retest when we have that, and 
-> use it in builtin-tag?
+Because caller expects it so
 
-I'm 100% sure there will be no inconsistencies once you unify options
-parsing among the tools, but I won't refrain from re-testing this
-anyway.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ spawn-pipe.c |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
--- 
-Sergei.
+diff --git a/spawn-pipe.c b/spawn-pipe.c
+index c8f0452..3df7e22 100644
+--- a/spawn-pipe.c
++++ b/spawn-pipe.c
+@@ -123,6 +123,7 @@ int spawnvppe_pipe(const char *cmd, const char **ar=
+gv, const char **env,
+ 		  int pin[], int pout[])
+ {
+ 	const char *cmd_basename =3D strrchr(cmd, '/');
++	const char *argv0 =3D argv[0];
+ 	pid_t pid;
+=20
+ #ifdef __MINGW32__
+@@ -214,6 +215,8 @@ int spawnvppe_pipe(const char *cmd, const char **ar=
+gv, const char **env,
+ 	}
+ #endif
+=20
++	argv[0] =3D argv0;
++
+ 	return pid;
+ }
+=20
+--=20
+1.5.3.rc4.3.gab089
