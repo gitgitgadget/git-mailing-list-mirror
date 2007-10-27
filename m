@@ -1,72 +1,76 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [POSSIBLE BUG] 'git log' option --no-color adds bogus empty line
-Date: Sat, 27 Oct 2007 12:01:31 +0200
-Message-ID: <e5bfff550710270301j5b5bb946w3ab6dd89d0543171@mail.gmail.com>
-References: <e5bfff550710270210g6d363b40of597c3160124fb85@mail.gmail.com>
-	 <472306BA.5060409@hackvalue.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Add NEED_WORK_TREE for more commands
+Date: Sat, 27 Oct 2007 17:18:39 +0700
+Message-ID: <20071027101839.GA26043@laptop>
+References: <20071027081910.GA23381@laptop> <20071027090822.GA6789@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Gilger" <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Sat Oct 27 12:01:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Oct 27 12:19:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IliUJ-0007GY-Ov
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 12:01:52 +0200
+	id 1Iliky-0003fs-Ac
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 12:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582AbXJ0KBi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 06:01:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbXJ0KBi
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 06:01:38 -0400
-Received: from rv-out-0910.google.com ([209.85.198.185]:43981 "EHLO
+	id S1751572AbXJ0KSw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 06:18:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751468AbXJ0KSv
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 06:18:51 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:1304 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751300AbXJ0KBh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 06:01:37 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1030962rvb
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 03:01:37 -0700 (PDT)
+	with ESMTP id S1751425AbXJ0KSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 06:18:50 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1033871rvb
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 03:18:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RUFvtL6WxP6tUdzfbvrdlRV+dKvkJTcxaz+iMuoXfsg=;
-        b=s1sWpwgiQqCCVKlgu078BhxKJ7ZtzUQwu7gidbD7ajsNCB7cx+W+yuwnharkeTHqd/832LlcnARgYhNyiPiWtW6MWY17DBuAQVBiWS3ZOxmKZoKiHEIE5uDWPDEhtCD4jZtiL4tTMbjZwlCl0iCerqftCtGHSnSv1eEJ0UjiouU=
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=s4rkTtUhF6jKBvz8KyXTBRhVJQ2jCcq2EdGq/MT+t68=;
+        b=LJPSeqkWjrsZm85fXJZ9dx7nPeMXCU1dd/E3Zc7JItXIOu+MaGyVNzJHXZgEPDdv4UFkDfTJUIcxswBriJZk2Bmrnv5fcsgWOzI3Z80HIu2ksrEcQp3TnrVg+LEpuPkuyQVtcV2Y7PnU7qOub1fXSkIM7pHGLKqrBN6yVHXQYf0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Cgn9fKFeSO3y33kIkIa/ckcWeeL+Eug17H1pZdHqb3K0k6FTMPBPxMmJeOZ2mtuLroVjogbHsIBMCZfx7GvvZuAPRCD+GlSTH+9DIKACZAY+DuAzvscvvERPyCOk3pDR+0MwtOT+rXJO+QZJladLjI973+86CUCEiM84eY9bNOg=
-Received: by 10.140.126.14 with SMTP id y14mr1947234rvc.1193479296832;
-        Sat, 27 Oct 2007 03:01:36 -0700 (PDT)
-Received: by 10.141.203.3 with HTTP; Sat, 27 Oct 2007 03:01:31 -0700 (PDT)
-In-Reply-To: <472306BA.5060409@hackvalue.de>
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=WQa6MR0UoxfBVwX8y0SyqCTa6Ov+PS9ZLcdQrE94Df56Kez++0MY0/Qthn5ESxSAnHQemPGQJ9EAytpwkobN7hC78+oVS9Pzn2lfzLbgMxyuYz/P84p27yd9zXjb9/kkK1+uGPfw1Lc+OttoF5nkGS3Cy53MBTrpHtKVX71DyOI=
+Received: by 10.141.19.16 with SMTP id w16mr1935030rvi.1193480329826;
+        Sat, 27 Oct 2007 03:18:49 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.1.6])
+        by mx.google.com with ESMTPS id k14sm7322043rvb.2007.10.27.03.18.44
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 27 Oct 2007 03:18:48 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Oct 2007 17:18:39 +0700
 Content-Disposition: inline
+In-Reply-To: <20071027090822.GA6789@glandium.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62483>
 
-On 10/27/07, Johannes Gilger <heipei@hackvalue.de> wrote:
-> Marco Costalba wrote:
-> > Form git tree:
-> >
-> > $ git log -n 1 8d863c98b2f9b0d37 | wc
-> >       7      28     246
-> >
-> > $ git log --no-color -n 1 8d863c98b2f9b0d37 | wc
-> >       8      28     247
-> >
-> > $ git --version
-> > git version 1.5.3.2.124.g648db
->
-> Hi,
->
-> using git version 1.5.3.4.383.gd90a7 i can't confirm this, the two
-> outputs are of the same length here.
->
+On Sat, Oct 27, 2007 at 11:08:22AM +0200, Mike Hommey wrote:
+> On Sat, Oct 27, 2007 at 03:19:10PM +0700, Nguy???n Th??i Ng???c Duy wrote:
+> > 
+> > Signed-off-by: Nguy???n Th??i Ng???c Duy <pclouds@gmail.com>
+> > ---
+> >  git.c |   12 ++++++------
+> >  1 files changed, 6 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/git.c b/git.c
+> > index 23a430c..9db40b3 100644
+> > --- a/git.c
+> > +++ b/git.c
+> > +		{ "ls-files", cmd_ls_files, RUN_SETUP | NEED_WORK_TREE },
+> > +		{ "update-index", cmd_update_index, RUN_SETUP | NEED_WORK_TREE },
+> 
+> At least these two work very fine without a working tree (and I *do*
+> need them to work without a working tree).
 
-Yes. With the latest git everything works as expected.
+How can you do that while both need index and a working directory to
+operate?
 
-Sorry fo rthe noise!
+> Mike
 
-Marco
+-- 
+Duy
