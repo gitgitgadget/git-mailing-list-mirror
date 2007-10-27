@@ -1,145 +1,88 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 4/8] rev-parse: teach "git rev-parse --symbolic" to print the full ref name
-Date: Sat, 27 Oct 2007 18:50:03 +0200
-Message-ID: <11935038083369-git-send-email-prohaska@zib.de>
-References: <119350380778-git-send-email-prohaska@zib.de>
- <11935038081211-git-send-email-prohaska@zib.de>
- <11935038081650-git-send-email-prohaska@zib.de>
- <1193503808519-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <prohaska@zib.de>
+From: Dan McGee <dpmcgee@gmail.com>
+Subject: [PATCH] Remove outdated references to cogito in documentation
+Date: Sat, 27 Oct 2007 11:53:29 -0500
+Message-ID: <1193504009-30689-1-git-send-email-dpmcgee@gmail.com>
+Cc: Dan McGee <dpmcgee@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 27 18:51:10 2007
+X-From: git-owner@vger.kernel.org Sat Oct 27 18:54:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlosN-0004eP-Kr
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 18:51:08 +0200
+	id 1IlovN-0005ai-56
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 18:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754635AbXJ0Quc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 12:50:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754534AbXJ0Qua
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:50:30 -0400
-Received: from mailer.zib.de ([130.73.108.11]:49607 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754254AbXJ0QuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 12:50:11 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9RGo86n023476
-	for <git@vger.kernel.org>; Sat, 27 Oct 2007 18:50:08 +0200 (CEST)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9RGo7oK028374;
-	Sat, 27 Oct 2007 18:50:08 +0200 (MEST)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <1193503808519-git-send-email-prohaska@zib.de>
+	id S1756829AbXJ0Qxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 12:53:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753286AbXJ0Qxf
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 12:53:35 -0400
+Received: from py-out-1112.google.com ([64.233.166.181]:46022 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753473AbXJ0Qxe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 12:53:34 -0400
+Received: by py-out-1112.google.com with SMTP id u77so1997042pyb
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 09:53:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=TTbm8WG4CTUoWPD2mgBdMVil7oi2VLhb6jv0u4N/fbo=;
+        b=V3k5JVtFfT/E0OPVImyeyV8+9ZgHXbb1ZqVXELJPjaCfW2EeiuvsAiTRnmw79Tar7KWBxbK6qIn/Z+4yGXCekm7/iNfu4OKdlHhxeEz38CmS9Dz5hd4Sc1PJbKwkywOB6Hh6HpG59qRgreDDj7Az9UzMb6+GQj3vxaoK/i/Uw/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=RcwbWAs+DqrcOAwteCqqRiR20pMW1fPY/UEWc9KWfUYGoTEqV2IZWZbxQFfrcpSZ7SOvl6CraKudCZPZMhL0USfz4qUFe7t3kniuB5m/gsGl1jsnPWQt7GACDvcUCBAuPe3N6rpoW2K68YyS2NE/cEheRKOmHGtiWuhVSs2PXjU=
+Received: by 10.35.102.1 with SMTP id e1mr4983758pym.1193504013345;
+        Sat, 27 Oct 2007 09:53:33 -0700 (PDT)
+Received: from localhost ( [76.197.214.134])
+        by mx.google.com with ESMTPS id f6sm9657479pyh.2007.10.27.09.53.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 27 Oct 2007 09:53:31 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62505>
 
-"git rev-parse --symbolic" used to return the ref name as it was
-specified on the command line. This is changed to returning the
-full matched ref name, i.e. "git rev-parse --symbolic master"
-now typically returns "refs/heads/master".
-
-Note, this changes output of an established command. It might
-break existing setups. I checked that it does not break scripts
-in git.git.
-
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+Signed-off-by: Dan McGee <dpmcgee@gmail.com>
 ---
- builtin-rev-parse.c |   27 +++++++++++++++++----------
- 1 files changed, 17 insertions(+), 10 deletions(-)
+ Documentation/core-tutorial.txt |   10 ----------
+ Documentation/git-tools.txt     |    3 ++-
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
-index 8d78b69..e64abeb 100644
---- a/builtin-rev-parse.c
-+++ b/builtin-rev-parse.c
-@@ -93,7 +93,7 @@ static void show(const char *arg)
- }
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 6b2590d..58ac8c1 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -551,16 +551,6 @@ a bit more interesting.
+ With that, you should now be having some inkling of what git does, and
+ can explore on your own.
  
- /* Output a revision, only if filter allows it */
--static void show_rev(int type, const unsigned char *sha1, const char *name)
-+static void show_rev(int type, const unsigned char *sha1, const char *name, const char* real_name)
- {
- 	if (!(filter & DO_REVS))
- 		return;
-@@ -102,7 +102,9 @@ static void show_rev(int type, const unsigned char *sha1, const char *name)
+-[NOTE]
+-Most likely, you are not directly using the core
+-git Plumbing commands, but using Porcelain like Cogito on top
+-of it. Cogito works a bit differently and you usually do not
+-have to run `git-update-index` yourself for changed files (you
+-do tell underlying git about additions and removals via
+-`cg-add` and `cg-rm` commands). Just before you make a commit
+-with `cg-commit`, Cogito figures out which files you modified,
+-and runs `git-update-index` on them for you.
+-
  
- 	if (type != show_type)
- 		putchar('^');
--	if (symbolic && name)
-+	if (symbolic && real_name)
-+		show(real_name);
-+	else if (symbolic && name)
- 		show(name);
- 	else if (abbrev)
- 		show(find_unique_abbrev(sha1, abbrev));
-@@ -131,7 +133,7 @@ static void show_default(void)
+ Tagging a version
+ -----------------
+diff --git a/Documentation/git-tools.txt b/Documentation/git-tools.txt
+index 10653ff..480c557 100644
+--- a/Documentation/git-tools.txt
++++ b/Documentation/git-tools.txt
+@@ -20,7 +20,8 @@ Alternative/Augmentative Porcelains
+    Cogito is a version control system layered on top of the git tree history
+    storage system. It aims at seamless user interface and ease of use,
+    providing generally smoother user experience than the "raw" Core GIT
+-   itself and indeed many other version control systems.
++   itself and indeed many other version control systems. Cogito is no longer
++   maintained as most of its functionality is now in core GIT.
  
- 		def = NULL;
- 		if (!get_sha1(s, sha1)) {
--			show_rev(NORMAL, sha1, s);
-+			show_rev(NORMAL, sha1, s, 0);
- 			return;
- 		}
- 	}
-@@ -139,7 +141,7 @@ static void show_default(void)
  
- static int show_reference(const char *refname, const unsigned char *sha1, int flag, void *cb_data)
- {
--	show_rev(NORMAL, sha1, refname);
-+	show_rev(NORMAL, sha1, refname, 0);
- 	return 0;
- }
- 
-@@ -187,8 +189,8 @@ static int try_difference(const char *arg)
- 	if (dotdot == arg)
- 		this = "HEAD";
- 	if (!get_sha1(this, sha1) && !get_sha1(next, end)) {
--		show_rev(NORMAL, end, next);
--		show_rev(symmetric ? NORMAL : REVERSED, sha1, this);
-+		show_rev(NORMAL, end, next, 0);
-+		show_rev(symmetric ? NORMAL : REVERSED, sha1, this, 0);
- 		if (symmetric) {
- 			struct commit_list *exclude;
- 			struct commit *a, *b;
-@@ -198,7 +200,7 @@ static int try_difference(const char *arg)
- 			while (exclude) {
- 				struct commit_list *n = exclude->next;
- 				show_rev(REVERSED,
--					 exclude->item->object.sha1,NULL);
-+					 exclude->item->object.sha1, NULL, 0);
- 				free(exclude);
- 				exclude = n;
- 			}
-@@ -213,6 +215,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- {
- 	int i, as_is = 0, verify = 0;
- 	unsigned char sha1[20];
-+	char* real_name = 0;
- 
- 	git_config(git_default_config);
- 
-@@ -393,12 +396,16 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
- 		/* Not a flag argument */
- 		if (try_difference(arg))
- 			continue;
--		if (!get_sha1(arg, sha1)) {
--			show_rev(NORMAL, sha1, arg);
-+		if (!get_sha1_with_real_ref(arg, sha1, &real_name)) {
-+			show_rev(NORMAL, sha1, arg, real_name);
-+			if(real_name) {
-+				free(real_name);
-+				real_name = 0;
-+			}
- 			continue;
- 		}
- 		if (*arg == '^' && !get_sha1(arg+1, sha1)) {
--			show_rev(REVERSED, sha1, arg+1);
-+			show_rev(REVERSED, sha1, arg+1, 0);
- 			continue;
- 		}
- 		as_is = 1;
+    - *pg* (http://www.spearce.org/category/projects/scm/pg/)
 -- 
-1.5.3.4.1261.g626eb
+1.5.3.4
