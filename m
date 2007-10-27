@@ -1,111 +1,118 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: recent change in git.git/master broke my repos
-Date: Sat, 27 Oct 2007 16:06:37 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710271600440.7345@iabervon.org>
-References: <86oden6z97.fsf@blue.stonehenge.com> <20071025165633.GA24143@coredump.intra.peff.net>
- <Pine.LNX.4.64.0710251351330.7345@iabervon.org> <7vejfhulzn.fsf@gitster.siamese.dyndns.org>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: remote#branch
+Date: Sat, 27 Oct 2007 22:47:57 +0200
+Message-ID: <20071027204757.GA3058@efreet.light.src>
+References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz> <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src> <Pine.LNX.4.64.0710162228560.25221@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 27 22:06:52 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
+Cc: Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Oct 27 22:48:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ilrvn-0007bb-QX
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 22:06:52 +0200
+	id 1IlsaK-0001N2-47
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 22:48:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752927AbXJ0UGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 16:06:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752740AbXJ0UGj
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 16:06:39 -0400
-Received: from iabervon.org ([66.92.72.58]:53246 "EHLO iabervon.org"
+	id S1754974AbXJ0UsO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 16:48:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754195AbXJ0UsN
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 16:48:13 -0400
+Received: from ns1.bluetone.cz ([212.158.128.13]:55932 "EHLO ns1.bluetone.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752557AbXJ0UGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 16:06:38 -0400
-Received: (qmail 23170 invoked by uid 1000); 27 Oct 2007 20:06:37 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Oct 2007 20:06:37 -0000
-In-Reply-To: <7vejfhulzn.fsf@gitster.siamese.dyndns.org>
+	id S1754251AbXJ0UsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 16:48:11 -0400
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 8E04D57409;
+	Sat, 27 Oct 2007 22:48:09 +0200 (CEST)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id pD7SNJf89qB9; Sat, 27 Oct 2007 22:48:05 +0200 (CEST)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 3DC4B572F6;
+	Sat, 27 Oct 2007 22:48:05 +0200 (CEST)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IlsZZ-0001Es-Mw; Sat, 27 Oct 2007 22:47:57 +0200
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0710162228560.25221@racer.site>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62510>
 
-On Fri, 26 Oct 2007, Junio C Hamano wrote:
 
-> Daniel Barkalow <barkalow@iabervon.org> writes:
-> 
-> > On Thu, 25 Oct 2007, Jeff King wrote:
-> >
-> >> On Thu, Oct 25, 2007 at 07:32:36AM -0700, Randal L. Schwartz wrote:
-> >> 
-> >> > I have echo "ref: refs/remotes/origin/master" >.git/refs/heads/upstream
-> >> > so that my daily update script can go:
-> >> > 
-> >> >    git-fetch
-> >> >    if [ repo is on master, and is not dirty ];
-> >> >       git-merge upstream
-> >> >    fi
-> >> > 
-> >> > Yesterday that worked.
-> >> > 
-> >> > Today I get a rash of:
-> >> > 
-> >> >   fatal: Couldn't find remote ref refs/remotes/origin/master
-> >> > 
-> >> > from my git-fetch.
-> >> 
-> >> Randal and I discussed this a bit on IRC, and it turns out not to be
-> >> related to the 'upstream' symref. Instead, he had a broken
-> >> branch.master.merge config that pointed to "refs/remotes/origin/master"
-> >> (which you can see from his script above doesn't actually get used).
-> >> 
-> >> So presumably the old git-fetch didn't care that the contents of
-> >> branch.*.master didn't exist (it's just that nothing got marked for
-> >> merging), but the one just merged from the db/fetch-pack topic does.
-> >> 
-> >> Is this behavior change intentional?
-> >
-> > It's not exactly intentional; it's just that nobody seems to have tested 
-> > this particular misconfiguration. It should probably report an error 
-> > (since the configuration is, in fact, broken and potentially misleading), 
-> > but it probably shouldn't be fatal and certainly shouldn't be so 
-> > uninformative.
-> 
-> How would we proceed from here, then?
-> 
-> If you had "branch.master.merge = refs/heads/foobar", kept
-> running happily, and suddenly the remote stopped carrying that
-> foobar branch, you would get a configuration that uses
-> nonexistent remote branch name, so this is not purely a
-> configuration error on the fetcher's side.
+--Qxx1br4bt0+wmkIi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-True, although I'd consider that a matter of configuration rot rather than 
-it being an okay configuration; the user probably still needs to figure 
-out what happened to it and what to use instead. Maybe we want to output a 
-message to stderr (although higher than the die() used to be, so that we 
-can report the reason that it was looking for the missing remote ref).
+On Tue, Oct 16, 2007 at 22:35:25 +0100, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Tue, 16 Oct 2007, Jan Hudec wrote:
+>=20
+> > If it is a fragment, than "#" is the only correct separator and should=
+=20
+> > stay that way.
+>=20
+> You did not listen, did you?  '#' is allowed in ref names.  Therefore thi=
+s=20
+> character really would lock us in to only ever reference _one_ and _only_=
+=20
+> one remote branch at a time.  This might have worked for cogito, but it=
+=20
+> does not for git.
+>=20
+> So, I say it again, '#' is _out_.
 
-> Older git used to enumerate remote tracking branches explicitly,
-> and one of the remote.origin.fetch entries would have said
-> "refs/heads/foobar:refs/remotes/origin/foobar", and that would
-> have made git-fetch fail with the error, complaining that such a
-> branch does not exist.
-> 
-> You are suggesting that git-fetch should not fail if
-> remote.origin.fetch is refs/heads/*:refs/remotes/origin/*
-> wildcard, and I think I can agree with that; "git pull" however
-> should notice and and exit with an error.
-> 
-> Perhaps something like this?
+That does not imply it can't separate the ref from the repository...
 
-That looks like what I was going to write when I got to it (although I 
-would have had the flag inverted, which is less git style, I guess).
+> > If it is not a true fragment, than we might want to phase it out in=20
+> > favor of something else. But I would strongly prefer staying within=20
+> > characters allowed in URI (as per rfc2396).
+>=20
+> If you do that, "http://<xyz-with-branch>" would be ambiguous, wouldn't=
+=20
+> it?  This would already reference an HTTP resource, and you could not=20
+> embed refnames into the URL.
 
-Acked-By: Daniel Barkalow <barkalow@iabervon.org>
+=2E.. and because of this actually has to. You are right.
 
-	-Daniel
-*This .sig left intentionally blank*
+> > As for multiple branches, separating them with "," feels logical to me,=
+=20
+> > no matter what separates them from the repository path. On the other=20
+> > hand given that neither ":" nor "@" is allowed in refnames, reusing the=
+=20
+> > same separator would make sense especially if git switched to either of=
+=20
+> > those.
+>=20
+> ',' is allowed in ref names, so ',' is out.
+
+Actually since many characters that are allowed in ref name are not allowed
+in URL at all, the ref-name has to be url-escaped. Which brings all
+characters back in, because they can always be specified escaped.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--Qxx1br4bt0+wmkIi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHI6P9Rel1vVwhjGURAjylAJ9jJdE4F15QhkmOufvk8vMpGtcThQCg6YP3
+Ngv0l1w83g75aDYtsZmKpDQ=
+=0fgb
+-----END PGP SIGNATURE-----
+
+--Qxx1br4bt0+wmkIi--
