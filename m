@@ -1,98 +1,98 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add test case for running from a subdirectory with
- GIT_WORK_TREE
-Date: Sat, 27 Oct 2007 14:27:53 +0100 (BST)
-Message-ID: <Pine.LNX.4.64.0710271427020.4362@racer.site>
-References: <20071027081954.GA23406@laptop>  <Pine.LNX.4.64.0710271343270.4362@racer.site>
- <fcaeb9bf0710270557n48a01ba2w3a89f65680b946d@mail.gmail.com>
+From: Sergei Organov <osv@javad.com>
+Subject: git-show-branch doesn't work as advertised?
+Date: Sat, 27 Oct 2007 17:26:26 +0400
+Message-ID: <ffvea2$g2n$2@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-974408957-1193491673=:4362"
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 27 15:28:43 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 27 15:29:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlliU-0006C6-5o
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:28:42 +0200
+	id 1IlljG-0006O8-8w
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755503AbXJ0N2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 09:28:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755501AbXJ0N23
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:28:29 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41224 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752819AbXJ0N22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 09:28:28 -0400
-Received: (qmail invoked by alias); 27 Oct 2007 13:28:27 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp050) with SMTP; 27 Oct 2007 15:28:27 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19FVnM7VplFGi856vaPpXNdWYnmkB/RNKCU//I8ao
-	WhVhkiIPFl1vyd
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fcaeb9bf0710270557n48a01ba2w3a89f65680b946d@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1753472AbXJ0N3S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 09:29:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753193AbXJ0N3S
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:29:18 -0400
+Received: from main.gmane.org ([80.91.229.2]:44718 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752587AbXJ0N3R (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 09:29:17 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Illgw-0007um-BE
+	for git@vger.kernel.org; Sat, 27 Oct 2007 13:27:06 +0000
+Received: from 87.236.81.130 ([87.236.81.130])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 13:27:06 +0000
+Received: from osv by 87.236.81.130 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 13:27:06 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: 87.236.81.130
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62493>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hello,
 
---8323584-974408957-1193491673=:4362
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I'm rather new to git. I'm reading Documentation/core-tutorial.txt from
+git repository cloned yesterday [no, it's not the first git manual I
+read], and I'm stuck at the example beginning at line 938 of the
+tutorial:
 
-Hi,
+------------------------------------------------
+$ git show-branch --topo-order master mybranch
+* [master] Merge work in mybranch
+ ! [mybranch] Some work.
+--
+-  [master] Merge work in mybranch
+*+ [mybranch] Some work.
+------------------------------------------------
 
-On Sat, 27 Oct 2007, Nguyen Thai Ngoc Duy wrote:
+The problem is that even though the output of git matches the above
+output (after I've replayed all the commands to this point), both the
+state of the repo and the text below the example in the tutorial suggest
+that one commit is missing from the output. In particular, the tutorial
+says: "Three commits are shown along with their log messages." and
+later "'master~1' is the first parent of 'master' branch head.", while
+there are only 2 commits shown and there is no 'master~1' in the output.
 
-> On 10/27/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Sat, 27 Oct 2007, Nguyễn Thái Ngọc Duy wrote:
-> >
-> > > +mkdir -p work/sub/dir || exit 1
-> > > +mv .git work
-> > > +if test "$1" = --normal; then
-> > > +     say "Normal case"
-> > > +else
-> > > +     say "Worktree case"
-> > > +fi
-> > > +test "$1" = --normal || mv work/.git repo.git || exit 1
-> > > +
-> > > +test "$1" = --normal || export GIT_DIR=$(pwd)/repo.git
-> > > +export GIT_CONFIG="$(pwd)"/$GIT_DIR/config
-> > > +test "$1" = --normal || export GIT_WORK_TREE=$(pwd)/work
-> > > +
-> > > +cd work/sub || exit 1
-> >
-> > Why don't you put this block into a test_expect_success?  And then just
-> > make a
-> >
-> >         for mode in normal worktree
-> >         do
-> >
-> >         ...
-> >
-> >         done
-> >
-> > Hmm?  I would like to see this test case in the official git.git.
-> 
-> Because after normal iteration, the test repository is no longer in
-> clean state that the second iteration needs. Maybe I should just
-> create another repo then set parameters properly in test_expect_*
+The behavior is the same with git version 1.5.2.2 and 1.5.3.4.
 
-Yes, you can do that:
+For reference, from gitk output, the history looks like this:
 
-	test_create_repo other-repo
+.  [master]
+.  o Merge work in mybranch
+.  |\[mybranch]
+.  | o Some work
+.  | |
+.  o | Some fun
+.   \|
+.    o Commit message
+.    |
+.    o Initial commit
 
-Another option would be that you clean up at the end of the loop.
+Why "[master~1] Some fun." is not shown by git-show-branch?
 
-Ciao,
-Dscho
+Another issue. After above confusion I turned to the manual page and
+decided to try --independent option, expecting an output similar to the
+above, but missing all the common commits. However, to my surprise I've
+got just:
 
---8323584-974408957-1193491673=:4362--
+$ git show-branch --topo-order --independent master mybranch
+715ec06a744a801237c7233f3fb87ad583653c3a
+
+instead. Nowhere the manual page says that this particular option
+changes the format of the output so dramatically. And back to the first
+issue, there is still only 1 commit shown, while it seems there should
+be 2 of them, one from master, and one from mybranch.
+
+-- 
+Sergei.
