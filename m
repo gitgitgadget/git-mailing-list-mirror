@@ -1,71 +1,116 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: merge vs rebase: Is visualization in gitk the only problem?
-Date: Sat, 27 Oct 2007 18:16:08 +1000
-Message-ID: <ee77f5c20710270116g45a644bp2b6783310e16ff20@mail.gmail.com>
-References: <8E86BDBA-A49A-49BB-8E00-8BF6DD7237E9@zib.de>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [PATCH] Add NEED_WORK_TREE for more commands
+Date: Sat, 27 Oct 2007 15:19:10 +0700
+Message-ID: <20071027081910.GA23381@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Steffen Prohaska" <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Oct 27 10:16:24 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 27 10:19:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IlgqF-0004ZY-TO
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 10:16:24 +0200
+	id 1IlgtH-00054N-HB
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 10:19:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751616AbXJ0IQL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 04:16:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750972AbXJ0IQL
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 04:16:11 -0400
-Received: from rv-out-0910.google.com ([209.85.198.191]:33868 "EHLO
+	id S1751705AbXJ0ITU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Oct 2007 04:19:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751639AbXJ0ITT
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 04:19:19 -0400
+Received: from rv-out-0910.google.com ([209.85.198.191]:38061 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905AbXJ0IQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 04:16:08 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1013858rvb
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 01:16:08 -0700 (PDT)
+	with ESMTP id S1751485AbXJ0ITS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 04:19:18 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1014365rvb
+        for <git@vger.kernel.org>; Sat, 27 Oct 2007 01:19:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/6KeqRD7/EPsL7vIeHfdzAlIFcV6HI1UQc6eTDMeeaQ=;
-        b=L4ky78+bZb1pUMebkxlLjyham5YBTgtLC2mGzLryvw3SaVnzsK5fzgcFF704qmkFhud37kvKEA7Ae52wMebJy+OvVJoL8mKsNxkNVsam6WLRmNKTbyFuxkPHqZIp1/tzGYBAch2mEwFC39PNxVwfmlvaMIf/LGvUivSiqLGqrtY=
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=cXYiYGRemZEu82hSF/1h8m+8g8URDWU/mCG1JyRrU0A=;
+        b=OhWyv1nM3EujU1GD+lsHI23ynzbDoYFrMsAlOFbMtOLxpjmvPCEJPISDo6290Ne+S5N0FOiFu5GSFZjEqjf/JVpU7bwl+9hxWz3lTCp423ywyDq8eWWCB9KdXwxO6AWcyVNUXfgOyrZZOwkm+UccFrfnmRhM+4SF36zac0wH63s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uEF475OSWpl3t/YBCV+qImfTSO4k9d6Vxo5N5YKdAGgJpSaor5DqH8dhVmgMIqlaQle9Fw3UnPBu0deeFI27/CyVHY1kcedATjs3qX4xNMcuKzpbmo8mWcC7RWWwyKvC6LOck8Y3MoJrcNzQYjMNPfcivfXuRGhB5d5ss9WryVo=
-Received: by 10.141.48.10 with SMTP id a10mr1915413rvk.1193472968501;
-        Sat, 27 Oct 2007 01:16:08 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Sat, 27 Oct 2007 01:16:08 -0700 (PDT)
-In-Reply-To: <8E86BDBA-A49A-49BB-8E00-8BF6DD7237E9@zib.de>
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=LJErjkvCCkxAqLBJJ6L8K9Brx8hYQV/tPbP8/+usB59ih8lnubFB683qxok9gu432h955qNI0CBMyCh+WTDOaqa6/fAzZIgQ6kcsRHdOHfdZcH2jh25lE2+Fy47BadnG10Fx1jvoEP143JM8Vcdg1s0WBThWOREe0ga5l+TzQ/E=
+Received: by 10.141.161.6 with SMTP id n6mr1907289rvo.1193473157589;
+        Sat, 27 Oct 2007 01:19:17 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.1.6])
+        by mx.google.com with ESMTPS id l31sm8247327rvb.2007.10.27.01.19.13
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 27 Oct 2007 01:19:16 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Oct 2007 15:19:10 +0700
 Content-Disposition: inline
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62468>
-
-On 10/27/07, Steffen Prohaska <prohaska@zib.de> wrote:
->
-> Rebase has definitely benefits but not all of its details
-> are obvious at a first glance. Tell a newbie to read the
-> git rebase man page and explain what git reabase does and
-> you know what I mean. Rebase definitely can help to create a
-> cleaner history. But it rewrites history and therefore destroys
-> information, for example information about the original code
-> base a patch was developed against, or merge conflicts that
-> were resolved. You also need to decide when to use rebase and
-> when to use merge. So you need to make a choice.
->
-> Why not always use git merge?
-
-I'd use git-rebase for when I'm sending stuff upstream that I don't
-want to force the maintainer to merge, because I can probably do it
-better and quicker by rebasing. Once that's done, the upstream
-maintainer can just do a git-am (or similar), and it'll apply neatly
-on top of the current head. In other words, git-rebase allows the
-"merge effort" to be shifted to the brancher and away from the
-mainline maintainer/developer.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62469>
 
 
-Dave.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ git.c |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/git.c b/git.c
+index 23a430c..9db40b3 100644
+--- a/git.c
++++ b/git.c
+@@ -307,10 +307,10 @@ static void handle_internal_command(int argc, con=
+st char **argv)
+ 	const char *cmd =3D argv[0];
+ 	static struct cmd_struct commands[] =3D {
+ 		{ "add", cmd_add, RUN_SETUP | NEED_WORK_TREE },
+-		{ "annotate", cmd_annotate, RUN_SETUP },
++		{ "annotate", cmd_annotate, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "apply", cmd_apply },
+ 		{ "archive", cmd_archive },
+-		{ "blame", cmd_blame, RUN_SETUP },
++		{ "blame", cmd_blame, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "branch", cmd_branch, RUN_SETUP },
+ 		{ "bundle", cmd_bundle },
+ 		{ "cat-file", cmd_cat_file, RUN_SETUP },
+@@ -333,7 +333,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "fetch--tool", cmd_fetch__tool, RUN_SETUP },
+ 		{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
+ 		{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
+-		{ "format-patch", cmd_format_patch, RUN_SETUP },
++		{ "format-patch", cmd_format_patch, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "fsck", cmd_fsck, RUN_SETUP },
+ 		{ "fsck-objects", cmd_fsck, RUN_SETUP },
+ 		{ "gc", cmd_gc, RUN_SETUP },
+@@ -346,7 +346,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "init", cmd_init_db },
+ 		{ "init-db", cmd_init_db },
+ 		{ "log", cmd_log, RUN_SETUP | USE_PAGER },
+-		{ "ls-files", cmd_ls_files, RUN_SETUP },
++		{ "ls-files", cmd_ls_files, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "ls-tree", cmd_ls_tree, RUN_SETUP },
+ 		{ "mailinfo", cmd_mailinfo },
+ 		{ "mailsplit", cmd_mailsplit },
+@@ -363,7 +363,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "reflog", cmd_reflog, RUN_SETUP },
+ 		{ "repo-config", cmd_config },
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
+-		{ "reset", cmd_reset, RUN_SETUP },
++		{ "reset", cmd_reset, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "rev-list", cmd_rev_list, RUN_SETUP },
+ 		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
+ 		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+@@ -377,7 +377,7 @@ static void handle_internal_command(int argc, const=
+ char **argv)
+ 		{ "tag", cmd_tag, RUN_SETUP },
+ 		{ "tar-tree", cmd_tar_tree },
+ 		{ "unpack-objects", cmd_unpack_objects, RUN_SETUP },
+-		{ "update-index", cmd_update_index, RUN_SETUP },
++		{ "update-index", cmd_update_index, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "update-ref", cmd_update_ref, RUN_SETUP },
+ 		{ "upload-archive", cmd_upload_archive },
+ 		{ "verify-tag", cmd_verify_tag, RUN_SETUP },
+--=20
+1.5.3.rc4.3.gab089
