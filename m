@@ -1,57 +1,57 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Minor inconsistency: "git tag" requires space after -m.
-Date: Sat, 27 Oct 2007 15:55:01 +0400
-Message-ID: <ffv8ul$5a2$1@ger.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: merge vs rebase: Is visualization in gitk the only problem?
+Date: Sat, 27 Oct 2007 13:33:59 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710271332030.4362@racer.site>
+References: <8E86BDBA-A49A-49BB-8E00-8BF6DD7237E9@zib.de>
+ <ee77f5c20710270116g45a644bp2b6783310e16ff20@mail.gmail.com>
+ <CEA39C15-F9AE-46F5-BBE9-3F7AB0711494@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 27 14:16:42 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Symonds <dsymonds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sat Oct 27 14:34:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ilkan-0004p6-Ny
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 14:16:42 +0200
+	id 1IlksJ-0000Uz-81
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 14:34:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752282AbXJ0MPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Oct 2007 08:15:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752303AbXJ0MPI
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 08:15:08 -0400
-Received: from main.gmane.org ([80.91.229.2]:58787 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752220AbXJ0MPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 08:15:06 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IlkZC-0002U2-RX
-	for git@vger.kernel.org; Sat, 27 Oct 2007 12:15:02 +0000
-Received: from 87.236.81.130 ([87.236.81.130])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 12:15:02 +0000
-Received: from osv by 87.236.81.130 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 12:15:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 87.236.81.130
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752468AbXJ0Mef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 08:34:35 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752346AbXJ0Mef
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 08:34:35 -0400
+Received: from mail.gmx.net ([213.165.64.20]:51444 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752259AbXJ0Mee (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 08:34:34 -0400
+Received: (qmail invoked by alias); 27 Oct 2007 12:34:32 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp016) with SMTP; 27 Oct 2007 14:34:32 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19dPWBsF/ZdZQoto6Whvmkl21hvu7n1v7slMPFAKB
+	sGgi+8YBgLQ+vU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <CEA39C15-F9AE-46F5-BBE9-3F7AB0711494@zib.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62486>
 
-Hello,
+Hi,
 
-It seems options parsing is somewhat broken in git-tag:
+On Sat, 27 Oct 2007, Steffen Prohaska wrote:
 
-$ git tag -a -m"Annotated tag" annotated-tag
-usage: git-tag [-n [<num>]] -l [<pattern>] | [-a | -s | -u <key-id>] [-f | -d | -v] [-m <msg> | -F <file>] <tagname> [<head>]
-$ git tag -a -m "Annotated tag" annotated-tag
-$ git --version
-git version 1.5.3.4
+> Could we somehow send rerere information together with a patch? This 
+> would give the upstream maintainer (and everyone else who wants to test 
+> the patch) the help needed to do a merge.
 
-This is inconsistent with, say, "git commit", that groks -m"Message"
-(without space after -m) just fine.
+IMHO this is not sensible to send over email.  But think I that something 
+like this could be done for pullers: they fetch from somewhere, and then 
+recreate the rerere information from the merge commits they just got (this 
+would have to be a new option to git-rerere, methinks).
 
--- 
-Sergei.
+Ciao,
+Dscho
