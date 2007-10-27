@@ -1,82 +1,98 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [MinGW PATCH] spawnvppe_pipe: Don't overwrite argv[0]
-Date: Sat, 27 Oct 2007 20:26:31 +0700
-Message-ID: <20071027132631.GA32149@laptop>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add test case for running from a subdirectory with
+ GIT_WORK_TREE
+Date: Sat, 27 Oct 2007 14:27:53 +0100 (BST)
+Message-ID: <Pine.LNX.4.64.0710271427020.4362@racer.site>
+References: <20071027081954.GA23406@laptop>  <Pine.LNX.4.64.0710271343270.4362@racer.site>
+ <fcaeb9bf0710270557n48a01ba2w3a89f65680b946d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Sat Oct 27 15:26:58 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-974408957-1193491673=:4362"
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 27 15:28:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Illgm-0005kG-LF
-	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:26:57 +0200
+	id 1IlliU-0006C6-5o
+	for gcvg-git-2@gmane.org; Sat, 27 Oct 2007 15:28:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752795AbXJ0N0o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Oct 2007 09:26:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752587AbXJ0N0o
-	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:26:44 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:64978 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752517AbXJ0N0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Oct 2007 09:26:43 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1071698rvb
-        for <git@vger.kernel.org>; Sat, 27 Oct 2007 06:26:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        bh=6+an9nWw3fK0cy7XG5/J3j30hEYjFmEZ/k1cAbYYPJ0=;
-        b=FFPaiOGG01nP/CydW+guVQBw6gLJqvXliWycNRIwfLRI0+uknhYb4YzOiyEnySHAwf3vOkmgBH7XXFETRPGmvY+ZvNPD5i+u2XypQeKp6h2NO/O4cFVkzhMJtKG3AKKtszlVY3w8UzNpdZ2Lk0GW7FhJhYcNKFMEGqNVwv9vkl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
-        b=aYTsk+bBNNQZmZ2lZns/GsUjpfZBn0rt0NEu8VU68/iapoh8bHk2RsEHBNLt+lehXL+8DVrvW7UyYSulnncm/xsU/s2C4seipSp/odDf0KqEqEvgmFaFFdqq7Q8BnEVwB5qXfaD4b5bJ3rXPBq//tzWOvl/EnvDTjnrbk8LbfKU=
-Received: by 10.140.251.1 with SMTP id y1mr2004856rvh.1193491603279;
-        Sat, 27 Oct 2007 06:26:43 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.1.6])
-        by mx.google.com with ESMTPS id g22sm7542136rvb.2007.10.27.06.26.37
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 27 Oct 2007 06:26:40 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Oct 2007 20:26:31 +0700
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1755503AbXJ0N2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 27 Oct 2007 09:28:30 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755501AbXJ0N23
+	(ORCPT <rfc822;git-outgoing>); Sat, 27 Oct 2007 09:28:29 -0400
+Received: from mail.gmx.net ([213.165.64.20]:41224 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752819AbXJ0N22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Oct 2007 09:28:28 -0400
+Received: (qmail invoked by alias); 27 Oct 2007 13:28:27 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp050) with SMTP; 27 Oct 2007 15:28:27 +0200
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19FVnM7VplFGi856vaPpXNdWYnmkB/RNKCU//I8ao
+	WhVhkiIPFl1vyd
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fcaeb9bf0710270557n48a01ba2w3a89f65680b946d@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62492>
 
-Because caller expects it so
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- spawn-pipe.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+--8323584-974408957-1193491673=:4362
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/spawn-pipe.c b/spawn-pipe.c
-index c8f0452..3df7e22 100644
---- a/spawn-pipe.c
-+++ b/spawn-pipe.c
-@@ -123,6 +123,7 @@ int spawnvppe_pipe(const char *cmd, const char **ar=
-gv, const char **env,
- 		  int pin[], int pout[])
- {
- 	const char *cmd_basename =3D strrchr(cmd, '/');
-+	const char *argv0 =3D argv[0];
- 	pid_t pid;
-=20
- #ifdef __MINGW32__
-@@ -214,6 +215,8 @@ int spawnvppe_pipe(const char *cmd, const char **ar=
-gv, const char **env,
- 	}
- #endif
-=20
-+	argv[0] =3D argv0;
-+
- 	return pid;
- }
-=20
---=20
-1.5.3.rc4.3.gab089
+Hi,
+
+On Sat, 27 Oct 2007, Nguyen Thai Ngoc Duy wrote:
+
+> On 10/27/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Hi,
+> >
+> > On Sat, 27 Oct 2007, Nguyễn Thái Ngọc Duy wrote:
+> >
+> > > +mkdir -p work/sub/dir || exit 1
+> > > +mv .git work
+> > > +if test "$1" = --normal; then
+> > > +     say "Normal case"
+> > > +else
+> > > +     say "Worktree case"
+> > > +fi
+> > > +test "$1" = --normal || mv work/.git repo.git || exit 1
+> > > +
+> > > +test "$1" = --normal || export GIT_DIR=$(pwd)/repo.git
+> > > +export GIT_CONFIG="$(pwd)"/$GIT_DIR/config
+> > > +test "$1" = --normal || export GIT_WORK_TREE=$(pwd)/work
+> > > +
+> > > +cd work/sub || exit 1
+> >
+> > Why don't you put this block into a test_expect_success?  And then just
+> > make a
+> >
+> >         for mode in normal worktree
+> >         do
+> >
+> >         ...
+> >
+> >         done
+> >
+> > Hmm?  I would like to see this test case in the official git.git.
+> 
+> Because after normal iteration, the test repository is no longer in
+> clean state that the second iteration needs. Maybe I should just
+> create another repo then set parameters properly in test_expect_*
+
+Yes, you can do that:
+
+	test_create_repo other-repo
+
+Another option would be that you clean up at the end of the loop.
+
+Ciao,
+Dscho
+
+--8323584-974408957-1193491673=:4362--
