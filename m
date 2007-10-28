@@ -1,108 +1,123 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 06/10] add ref_abbrev_matches_full_with_rev_parse_rules() comparing abbrev with full ref name
-Date: Sun, 28 Oct 2007 18:46:17 +0100
-Message-ID: <11935935821136-git-send-email-prohaska@zib.de>
+Subject: [PATCH 04/10] push: add "git push HEAD" shorthand for 'push current branch to default repo'
+Date: Sun, 28 Oct 2007 18:46:15 +0100
+Message-ID: <11935935812185-git-send-email-prohaska@zib.de>
 References: <1193593581312-git-send-email-prohaska@zib.de>
  <11935935812741-git-send-email-prohaska@zib.de>
  <1193593581114-git-send-email-prohaska@zib.de>
  <1193593581486-git-send-email-prohaska@zib.de>
- <11935935812185-git-send-email-prohaska@zib.de>
- <11935935822846-git-send-email-prohaska@zib.de>
 Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 18:51:17 2007
+X-From: git-owner@vger.kernel.org Sun Oct 28 18:51:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImCI8-0000ou-DG
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:51:16 +0100
+	id 1ImCI9-0000ou-MB
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:51:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304AbXJ1RuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 13:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754957AbXJ1RuG
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:50:06 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63844 "EHLO mailer.zib.de"
+	id S1753047AbXJ1RuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 13:50:12 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755519AbXJ1RuL
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:50:11 -0400
+Received: from mailer.zib.de ([130.73.108.11]:63860 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754510AbXJ1Rtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 13:49:49 -0400
+	id S1754773AbXJ1Rtw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 13:49:52 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SHkM66016198
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SHkMsh016196
 	for <git@vger.kernel.org>; Sun, 28 Oct 2007 18:49:47 +0100 (CET)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SHkLsa019730;
-	Sun, 28 Oct 2007 18:46:22 +0100 (MET)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SHkLsY019730;
+	Sun, 28 Oct 2007 18:46:21 +0100 (MET)
 X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11935935822846-git-send-email-prohaska@zib.de>
+In-Reply-To: <1193593581486-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62582>
 
-ref_abbrev_matches_full_with_rev_parse_rules(abbrev_name, full_name)
-expands abbrev_name according to the rules documented in
-git-rev-parse and compares the expanded name with full_name. It
-reports a match by returning 0.
+Sometimes it is handy to push only the current branch to the
+default remote repository. For example, if you created a branch
+using the '--track' option git knows that the current branch
+is linked to a specific remote. But up to now you needed to say
+"git push <defaultremote> <thisbranch>", which was quite
+annoying.  You could have said "git push" but then _all_ branches
+would have been pushed to the default remote.
 
-This function makes the rules for resolving refs to sha1s available
-for string comparison. Before this change, the rules were buried in
-get_sha1*() and dwim_ref().
+This commit introduces "git push HEAD", which resolves HEAD to
+the current branch and pushes only the current branch to its
+default remote.
 
-The function name is very long to make the rule set used
-explicit. We have a different set of rules for matching refspecs.
-It would be a good thing to unify all different rule sets. But
-this commit doesn't address this challenge. It only makes the
-git-rev-parse rules available for string comparison.
-
-ref_abbrev_matches_full_with_rev_parse_rules() will be used for
-matching refspecs in git-send-pack.
-
-Thanks to Daniel Barkalow <barkalow@iabervon.org> for pointing
-out that ref_matches_abbrev in remote.c solves a similar problem
-and care should be take to avoid confusion.
+Setups that have a remote named HEAD will break. But such a setup
+if unlikely to exist; and is not very sensible anyway.
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- cache.h     |    1 +
- sha1_name.c |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 0 deletions(-)
+ Documentation/git-push.txt |    6 +++++-
+ builtin-push.c             |    2 ++
+ t/t5516-fetch-push.sh      |   12 ++++++++++++
+ 3 files changed, 19 insertions(+), 1 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index 27485d3..bb10ade 100644
---- a/cache.h
-+++ b/cache.h
-@@ -405,6 +405,7 @@ extern int get_sha1_hex(const char *hex, unsigned char *sha1);
- extern char *sha1_to_hex(const unsigned char *sha1);	/* static buffer result! */
- extern int read_ref(const char *filename, unsigned char *sha1);
- extern const char *resolve_ref(const char *path, unsigned char *sha1, int, int *);
-+extern int ref_abbrev_matches_full_with_rev_parse_rules(const char *abbrev_name, const char *full_name);
- extern int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref);
- extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index 67b354b..236898f 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git-push' [--all] [--dry-run] [--create] [--tags] [--receive-pack=<git-receive-pack>]
+-           [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
++           [--repo=all] [-f | --force] [-v] [HEAD | <repository> <refspec>...]
  
-diff --git a/sha1_name.c b/sha1_name.c
-index 2d727d5..944e318 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -249,6 +249,20 @@ static const char *ref_fmt[] = {
- 	NULL
- };
+ DESCRIPTION
+ -----------
+@@ -25,6 +25,10 @@ documentation for gitlink:git-receive-pack[1].
  
-+int ref_abbrev_matches_full_with_rev_parse_rules(const char *abbrev_name, const char *full_name)
-+{
-+	const char **p;
-+	const int abbrev_name_len = strlen(abbrev_name);
+ OPTIONS
+ -------
++HEAD::
++	Tells push to push the current branch to the default
++	remote repository.
 +
-+	for (p = ref_fmt; *p; p++) {
-+		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
-+			return 0;
-+		}
-+	}
+ <repository>::
+ 	The "remote" repository that is destination of a push
+ 	operation.  See the section <<URLS,GIT URLS>> below.
+diff --git a/builtin-push.c b/builtin-push.c
+index 2e3c8c6..7c08e19 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -102,6 +102,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		const char *arg = argv[i];
+ 
+ 		if (arg[0] != '-') {
++			if (!strcmp("HEAD", arg))
++				break;
+ 			repo = arg;
+ 			i++;
+ 			break;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 8becaf8..2650e36 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -291,6 +291,18 @@ test_expect_success 'push with HEAD' '
+ 
+ '
+ 
++test_expect_success 'push HEAD' '
 +
-+	return -1;
-+}
++	mk_test heads/track &&
++	git remote add test testrepo &&
++	git fetch test &&
++	git checkout -b track test/track &&
++	git reset --hard master &&
++	git push HEAD &&
++	check_push_result $the_commit heads/track
 +
- int dwim_ref(const char *str, int len, unsigned char *sha1, char **ref)
- {
- 	const char **p, *r;
++'
++
+ test_expect_success 'push with HEAD (--create)' '
+ 
+ 	mk_test &&
 -- 
 1.5.3.4.439.ge8b49
