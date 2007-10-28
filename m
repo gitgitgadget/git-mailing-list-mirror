@@ -1,57 +1,104 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: New features in gitk
-Date: Sun, 28 Oct 2007 19:38:19 +0100
-Organization: glandium.org
-Message-ID: <20071028183819.GA20541@glandium.org>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com> <20071028183216.GA4310@artemis.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/8] push, send-pack: support pushing HEAD to real ref name
+Date: Sun, 28 Oct 2007 13:58:19 -0700
+Message-ID: <7v1wbfufbo.fsf@gitster.siamese.dyndns.org>
+References: <119350380778-git-send-email-prohaska@zib.de>
+	<11935038081211-git-send-email-prohaska@zib.de>
+	<11935038081650-git-send-email-prohaska@zib.de>
+	<1193503808519-git-send-email-prohaska@zib.de>
+	<11935038083369-git-send-email-prohaska@zib.de>
+	<11935038084055-git-send-email-prohaska@zib.de>
+	<7vwst7wvdr.fsf@gitster.siamese.dyndns.org>
+	<722152C5-299C-435E-B720-D2D331D16249@zib.de>
+	<7vd4uzuu1g.fsf@gitster.siamese.dyndns.org>
+	<7v7il7usyx.fsf@gitster.siamese.dyndns.org>
+	<55CCFD12-C10F-46A6-8D65-544231DEBF3F@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 19:40:30 2007
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Oct 28 21:58:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImD3d-00058r-2o
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 19:40:21 +0100
+	id 1ImFDS-0005ri-6n
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 21:58:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752670AbXJ1Sjy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 14:39:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752359AbXJ1Sjx
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 14:39:53 -0400
-Received: from vawad.err.no ([85.19.200.177]:48382 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751969AbXJ1Sjw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 14:39:52 -0400
-Received: from aputeaux-153-1-93-248.w86-217.abo.wanadoo.fr ([86.217.55.248] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1ImD2p-0006DN-A5; Sun, 28 Oct 2007 19:39:33 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1ImD1g-0005Mw-14; Sun, 28 Oct 2007 19:38:20 +0100
-Content-Disposition: inline
-In-Reply-To: <20071028183216.GA4310@artemis.corp>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+	id S1752180AbXJ1U6Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 16:58:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbXJ1U6Z
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 16:58:25 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:38270 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751301AbXJ1U6Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 16:58:25 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 8F3792EF;
+	Sun, 28 Oct 2007 16:58:45 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B9BE8FB2C;
+	Sun, 28 Oct 2007 16:58:42 -0400 (EDT)
+In-Reply-To: <55CCFD12-C10F-46A6-8D65-544231DEBF3F@zib.de> (Steffen Prohaska's
+	message of "Sun, 28 Oct 2007 17:30:44 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62590>
 
-On Sun, Oct 28, 2007 at 07:32:16PM +0100, Pierre Habouzit wrote:
-> On dim, oct 28, 2007 at 01:39:34 +0000, Paul Mackerras wrote:
-> > I just pulled the dev branch of gitk into the master branch, so the
-> > master branch now has the new features and improvements that I have
-> > been working on, namely: [...]
-> 
-> As you seem to be the guy to ask for, I've a couple of requests wrt
-> gitk.
-(...)
-    * When running gitk --all, it would be nice if the current branch
-      was selected, instead of the topmost commit.
+Steffen Prohaska <prohaska@zib.de> writes:
 
-Mike
+> On Oct 28, 2007, at 5:03 PM, Junio C Hamano wrote:
+> ...
+>> An alternative, just to let me keep my nicer public image by
+>> pretending to be constructive ;-)
+>>
+>> Introduce a configuration "remote.$name.push_default" whose
+>> value can be a list of refs.  Teach the push command without
+>> refspecs:
+>>
+>> 	$ git push
+>> 	$ git push $remote
+>>
+>> to pretend as if the listed refspecs are given, instead of the
+>> traditional "matching branches" behaviour.
+>>
+>> Then, introduce another option
+>>
+>> 	$ git push --matching
+>> 	$ git push --matching $remote
+>>
+>> to override that configuration, if set, so that the user who
+>> usually pushes only the selected branches can use the "matching
+>> branches" behaviour when needed.
+>>
+>> Along with your earlier "git push $remote HEAD" patch, this will
+>> allow you to say:
+>>
+>> 	[remote "origin"]
+>>         	push_default = HEAD
+>>
+>> and your
+>>
+>> 	$ git push
+>>
+>> will push only the current branch.
+>
+> Sounds reasonable; but it is more work. I'm not starting to
+> implement this today.
+
+Take your time; nobody is in a hurry.
+
+If somebody usually uses "matching" behaviour, i.e. without
+remote.$name.push_default configuration, but wants to push only
+the current branch as a one-shot operation, we can obviously use
+"git push $remote HEAD".  But to be complete, it may make sense
+to have another option
+
+	$ git push --current
+
+that lets you omit $remote (and default to the value configured
+with branch.$name.remote).
