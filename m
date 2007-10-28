@@ -1,117 +1,76 @@
-From: "Guillaume Seguin" <guillaume@segu.in>
-Subject: [PATCH] gitweb : disambiguate heads and tags withs the same name
-Date: Sun, 28 Oct 2007 14:12:53 +0100
-Message-ID: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 4/8] rev-parse: teach "git rev-parse --symbolic" to print the full ref name
+Date: Sun, 28 Oct 2007 14:49:28 +0100
+Message-ID: <A4E7AC63-8EFF-4078-985D-4582BB8D528C@zib.de>
+References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <Pine.LNX.4.64.0710271748440.7345@iabervon.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: pasky@ucw.cz
-X-From: git-owner@vger.kernel.org Sun Oct 28 14:13:26 2007
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Oct 28 14:50:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im7xF-0004A1-5L
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 14:13:25 +0100
+	id 1Im8Wf-0004rr-8N
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 14:50:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753114AbXJ1NMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 09:12:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752655AbXJ1NMz
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 09:12:55 -0400
-Received: from rv-out-0910.google.com ([209.85.198.185]:61872 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752159AbXJ1NMy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 09:12:54 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1285802rvb
-        for <git@vger.kernel.org>; Sun, 28 Oct 2007 06:12:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        bh=IBmSCsRcXCm5Pwsq0rbKGdrWPhnw8NUsUMvgEEMS9I4=;
-        b=Z2KWzYggkyAEOMWov21P7GcfeMMNwu8wigs3ofSZpzjVwInzp+gOPzxhkdl1VVcw+ruzARtY2a5xbt0J1LWv1ooZjX/ih3O9NE3ZrZ5ErQ+wZ08WogsUBOuxRPgT8hWjabPukMy4Yw/FK/Eg/iwTEOuc1G8z9V/58YLKRm8vsWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition:x-google-sender-auth;
-        b=YgSToM23nirrrUFHiy47/M02nPzHDjmbsIsEW8+Xz4sdj44QzV4zErBRbGFnXky1Kttxsb3hDJKdxuuNYKnfktizup5WWTPcN+pAVByhOsdL4SinGU5mqOHJ7zzRhip2W3AxK1bj7A3XdRBVEbd6hUel+tP2KkY6FGhMixdw1us=
-Received: by 10.142.126.17 with SMTP id y17mr1132670wfc.1193577173714;
-        Sun, 28 Oct 2007 06:12:53 -0700 (PDT)
-Received: by 10.143.30.21 with HTTP; Sun, 28 Oct 2007 06:12:53 -0700 (PDT)
-Content-Disposition: inline
-X-Google-Sender-Auth: c8e117e024f4ddad
+	id S1751588AbXJ1Nts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 09:49:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751401AbXJ1Ntr
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 09:49:47 -0400
+Received: from mailer.zib.de ([130.73.108.11]:49321 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751588AbXJ1Ntr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 09:49:47 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SDm2X4001340;
+	Sun, 28 Oct 2007 14:49:42 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1072b.pool.einsundeins.de [77.177.7.43])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SDm11Y029218
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 28 Oct 2007 14:48:02 +0100 (MET)
+In-Reply-To: <Pine.LNX.4.64.0710271748440.7345@iabervon.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62561>
 
-Avoid wrong disambiguation that would link logs/trees of tags and heads which
-share the same name to the same page, leading to a disambiguation that would
-prefer the tag, thus making it impossible to access the corresponding
-head log and
-tree without hacking the url by hand.
 
----
- gitweb/gitweb.perl |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+On Oct 27, 2007, at 11:53 PM, Daniel Barkalow wrote:
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 48e21da..f918c00 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3534,6 +3534,7 @@ sub git_tags_body {
- 	for (my $i = $from; $i <= $to; $i++) {
- 		my $entry = $taglist->[$i];
- 		my %tag = %$entry;
-+		my $name = "refs/tags/$tag{'name'}";
- 		my $comment = $tag{'subject'};
- 		my $comment_short;
- 		if (defined $comment) {
-@@ -3570,8 +3571,8 @@ sub git_tags_body {
- 		      "<td class=\"link\">" . " | " .
- 		      $cgi->a({-href => href(action=>$tag{'reftype'},
-hash=>$tag{'refid'})}, $tag{'reftype'});
- 		if ($tag{'reftype'} eq "commit") {
--			print " | " . $cgi->a({-href => href(action=>"shortlog",
-hash=>$tag{'name'})}, "shortlog") .
--			      " | " . $cgi->a({-href => href(action=>"log",
-hash=>$tag{'name'})}, "log");
-+			print " | " . $cgi->a({-href => href(action=>"shortlog",
-hash=>$name)}, "shortlog") .
-+			      " | " . $cgi->a({-href => href(action=>"log", hash=>$name)}, "log");
- 		} elsif ($tag{'reftype'} eq "blob") {
- 			print " | " . $cgi->a({-href => href(action=>"blob_plain",
-hash=>$tag{'refid'})}, "raw");
- 		}
-@@ -3597,6 +3598,7 @@ sub git_heads_body {
- 	for (my $i = $from; $i <= $to; $i++) {
- 		my $entry = $headlist->[$i];
- 		my %ref = %$entry;
-+		my $name = "refs/heads/$ref{'name'}";
- 		my $curr = $ref{'id'} eq $head;
- 		if ($alternate) {
- 			print "<tr class=\"dark\">\n";
-@@ -3606,13 +3608,13 @@ sub git_heads_body {
- 		$alternate ^= 1;
- 		print "<td><i>$ref{'age'}</i></td>\n" .
- 		      ($curr ? "<td class=\"current_head\">" : "<td>") .
--		      $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'}),
-+		      $cgi->a({-href => href(action=>"shortlog", hash=>$name),
- 		               -class => "list name"},esc_html($ref{'name'})) .
- 		      "</td>\n" .
- 		      "<td class=\"link\">" .
--		      $cgi->a({-href => href(action=>"shortlog",
-hash=>$ref{'name'})}, "shortlog") . " | " .
--		      $cgi->a({-href => href(action=>"log", hash=>$ref{'name'})},
-"log") . " | " .
--		      $cgi->a({-href => href(action=>"tree", hash=>$ref{'name'},
-hash_base=>$ref{'name'})}, "tree") .
-+		      $cgi->a({-href => href(action=>"shortlog", hash=>$name)},
-"shortlog") . " | " .
-+		      $cgi->a({-href => href(action=>"log", hash=>$name)}, "log") . " | " .
-+		      $cgi->a({-href => href(action=>"tree", hash=>$name,
-hash_base=>$name)}, "tree") .
- 		      "</td>\n" .
- 		      "</tr>";
- 	}
--- 
-1.5.3.4.395.g85b0
+> On Sat, 27 Oct 2007, Steffen Prohaska wrote:
+>
+>> "git rev-parse --symbolic" used to return the ref name as it was
+>> specified on the command line. This is changed to returning the
+>> full matched ref name, i.e. "git rev-parse --symbolic master"
+>> now typically returns "refs/heads/master".
+>>
+>> Note, this changes output of an established command. It might
+>> break existing setups. I checked that it does not break scripts
+>> in git.git.
+>
+> I think this makes the --create option to push unnecessary, as  
+> interactive
+> users could use a suggested explicit value (or whatever they actually
+> meant), while scripts could replace $name with $(git rev-parse -- 
+> symbolic
+> $name) as easily as they could add --create, and by more explicit  
+> as to
+> what they're doing.
+
+I'll remove 4/8 (git rev-parse --symbolic) from the patch
+series. It is not directly related to the push behaviour
+and Junio pointed out that the old behavior of git rev-parse
+must be maintained as is.  I'm not particularly interested in
+modifying git rev-parse. If someone else is, feel free to take
+over my patch.
+
+I'll keep the '--create' flag. Its intention is obvious and easy
+to explain to users. Much easier than
+"git rev-parse --dwim_ref ..." or something similar.
+
+	Steffen
