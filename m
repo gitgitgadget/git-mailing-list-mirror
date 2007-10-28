@@ -1,58 +1,58 @@
-From: "Yin Ping" <pkufranky@gmail.com>
+From: Peter Baumann <waste.manager@gmx.de>
 Subject: Re: How to merge git://repo.or.cz/git-gui into git.git
-Date: Sun, 28 Oct 2007 19:00:54 +0800
-Message-ID: <46dff0320710280400v523e2130nd3286a88a4920a9c@mail.gmail.com>
-References: <46dff0320710280357u23927960hd204760b3d664ce2@mail.gmail.com>
+Date: Sun, 28 Oct 2007 12:14:43 +0100
+Message-ID: <20071028111443.GA29183@xp.machine.xx>
+References: <46dff0320710280357u23927960hd204760b3d664ce2@mail.gmail.com> <46dff0320710280400v523e2130nd3286a88a4920a9c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 12:01:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yin Ping <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 12:15:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im5tE-0007rZ-Bf
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 12:01:08 +0100
+	id 1Im66i-0002S7-Cp
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 12:15:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240AbXJ1LA4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 07:00:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbXJ1LA4
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 07:00:56 -0400
-Received: from py-out-1112.google.com ([64.233.166.179]:35143 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751168AbXJ1LAz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 07:00:55 -0400
-Received: by py-out-1112.google.com with SMTP id u77so2276210pyb
-        for <git@vger.kernel.org>; Sun, 28 Oct 2007 04:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=8PLTVRw/ivv/WN3LGBi+IvZSmhoSCzgLMzfr7Y2AHeI=;
-        b=cLaBviFvHiHrtyPMwlcCo26NraSfqYFl5yDvtcHte1UFK0poS1RivF3yK4BSmZ6qTD+Q0YtevRGVBH0QvGVeVcp9ZZz0JjME7P0whqcb+CcpGRIx4plOuifNvnhU6isEGwuSyJVdK6I15sUn6caMS5ZhBt2EiC+34XE1+s4WdMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=j9DCMWB8Kcjl8qBzs1t98mf3UmFxaQumWjcloWeo7TS1OXeJXxUkGTTeW5/YA0f4Jz0jgC/oRxMqKJxATxmjSUkBmKGHu78vIEE3EB3jBGyKzadQ5O5ueqvjbJ+Cl6uH+ag5ofRGkLWOPyDw+9/WDBKxDnoICmujwYnQ4WhERhM=
-Received: by 10.35.98.3 with SMTP id a3mr6001222pym.1193569254428;
-        Sun, 28 Oct 2007 04:00:54 -0700 (PDT)
-Received: by 10.35.108.1 with HTTP; Sun, 28 Oct 2007 04:00:54 -0700 (PDT)
-In-Reply-To: <46dff0320710280357u23927960hd204760b3d664ce2@mail.gmail.com>
+	id S1751330AbXJ1LOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 07:14:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751312AbXJ1LOv
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 07:14:51 -0400
+Received: from mail.gmx.net ([213.165.64.20]:56708 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751215AbXJ1LOu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 07:14:50 -0400
+Received: (qmail invoked by alias); 28 Oct 2007 11:14:48 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp034) with SMTP; 28 Oct 2007 12:14:48 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/w7x9VJx/w+wYusT3BugHT114dIzwEWKkUEqNRH1
+	lvMIy+3Deb1jdT
 Content-Disposition: inline
+In-Reply-To: <46dff0320710280400v523e2130nd3286a88a4920a9c@mail.gmail.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62552>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62553>
 
-On 10/28/07, Yin Ping <pkufranky@gmail.com> wrote:
+On Sun, Oct 28, 2007 at 07:00:54PM +0800, Yin Ping wrote:
+> On 10/28/07, Yin Ping <pkufranky@gmail.com> wrote:
+> 
+> > When I type
+> > gtlg --topo-order --pretty=oneline --abbrev-commit e92ea624 -p
+> Sorry, my fault. gtlg is an alias for git-log
+> 
+> > franky
+> >
+> 
 
-> When I type
-> gtlg --topo-order --pretty=oneline --abbrev-commit e92ea624 -p
-Sorry, my fault. gtlg is an alias for git-log
+Have a look at the subtree merge strategy [1] and at the following
+explanations how git-gui got initally merged.
 
-> franky
->
+-Peter
 
-
--- 
-franky
+[1]: http://www.gelato.unsw.edu.au/archives/git/0702/40139.html
+[2]: http://www.gelato.unsw.edu.au/archives/git/0702/39661.html
