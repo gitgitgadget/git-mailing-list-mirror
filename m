@@ -1,91 +1,75 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 4/8] rev-parse: teach "git rev-parse --symbolic" to print the full ref name
-Date: Sun, 28 Oct 2007 09:56:20 +0100
-Message-ID: <30641295-495B-4E5E-9D44-5CAF7C480DF2@zib.de>
-References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <7v3avvy9yc.fsf@gitster.siamese.dyndns.org> <79CE31EE-0975-48EB-8B3E-FC9D6A8EB3E4@zib.de> <20071028080654.GS14735@spearce.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 28 09:55:17 2007
+From: Scott Parish <sRp@srparish.net>
+Subject: Re: [PATCH 6/7] walk $PATH to generate list of commands for "help -a"
+Date: Sun, 28 Oct 2007 02:45:31 -0700
+Message-ID: <20071028094530.GA7749@srparish.net>
+References: <1193474215-6728-1-git-send-email-srp@srparish.net> <1193474215-6728-2-git-send-email-srp@srparish.net> <1193474215-6728-3-git-send-email-srp@srparish.net> <1193474215-6728-4-git-send-email-srp@srparish.net> <1193474215-6728-5-git-send-email-srp@srparish.net> <1193474215-6728-6-git-send-email-srp@srparish.net> <7vsl3vzrs5.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 10:45:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im3vQ-0006T4-0N
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 09:55:16 +0100
+	id 1Im4iO-0008Lk-21
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 10:45:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950AbXJ1Iy7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 04:54:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751127AbXJ1Iy7
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 04:54:59 -0400
-Received: from mailer.zib.de ([130.73.108.11]:33437 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750860AbXJ1Iy6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 04:54:58 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9S8ssd1015669;
-	Sun, 28 Oct 2007 09:54:54 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1072b.pool.einsundeins.de [77.177.7.43])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9S8srSu002644
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 28 Oct 2007 09:54:53 +0100 (MET)
-In-Reply-To: <20071028080654.GS14735@spearce.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1750945AbXJ1Jpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 05:45:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbXJ1Jpi
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 05:45:38 -0400
+Received: from smtp-gw6.mailanyone.net ([208.70.128.57]:39528 "EHLO
+	smtp-gw6.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750841AbXJ1Jph (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 05:45:37 -0400
+Received: from mailanyone.net
+	by smtp-gw6.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
+	(MailAnyone extSMTP srp)
+	id 1Im4i4-0007dL-Jz; Sun, 28 Oct 2007 04:45:35 -0500
+Received: by srparish.net (nbSMTP-1.00) for uid 501
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
+	srp@srparish.net; Sun, 28 Oct 2007 02:45:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vsl3vzrs5.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.12-2006-07-14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62543>
 
+On Sat, Oct 27, 2007 at 11:18:02PM -0700, Junio C Hamano wrote:
 
-On Oct 28, 2007, at 9:06 AM, Shawn O. Pearce wrote:
+> > We walk all the paths in $PATH collecting the names of "git-*"
+> > commands. To help distinguish between the main git commands
+> > and commands picked up elsewhere (probably extensions) we
+> > print them seperately. The main commands are the ones that
+> > are found in the first directory in $PATH that contains the
+> > "git" binary.
+> 
+> This is not right.  $(gitexecdir) in Makefile is designed to
+> allow distros to move git-* commands out of the primary user
+> $PATH directories and install only "git" wrapper in /usr/bin.
+> "Use the directory 'git' is in" rule breaks this.
+> 
+> The "main commands" should be the first of argv_exec_path,
+> EXEC_PATH_ENVIRONMENT or builtin_exec_path.
 
-> Steffen Prohaska <prohaska@zib.de> wrote:
->> On Oct 28, 2007, at 8:28 AM, Junio C Hamano wrote:
->>> Steffen Prohaska <prohaska@zib.de> writes:
->>>> @@ -213,6 +215,7 @@ int cmd_rev_parse(int argc, const char **argv,
->>>> const char *prefix)
->>>> {
->>>> 	int i, as_is = 0, verify = 0;
->>>> 	unsigned char sha1[20];
->>>> +	char* real_name = 0;
->>>
->>> Pointer sign '*' in git sources go next to the name not the
->>> type, as:
->>>
->>> 	char *real_name = NULL;
->>
->> I know and I tried hard to follow this convention, although
->> I think its the wrong choice ;)
->
-> Oh, hmm...
->
->   char* a, b;
->
-> What's the type of b?  If you said "char*" you're wrong.
+This is after we've already prepended the above three paths (if
+they're specified) to $PATH, so yes, generally they should be in
+one of those directories, but more generally, it will be in one of
+the directories in $PATH.
 
-I know. Obviously, you need a combination of conventions.
+Its not clear to me what exactly you're looking for me to change,
+just the wording i'm using in my comment? Or are you refering to
+the approach?
 
-- '*' is part of the type; put it there.
-- Only define a single variable per statement.
+When i email the changes, should i keep emailing the whole
+patch series, or just the few patches that have changed?
 
-My combined rule avoids your question. I typically use C++,
-which make the second rule easier to follow, because you
-defer defining variables until you really need them. There's
-no need to save space at the start of the function block by
-defining several variables in a single line.
+Thanks
+sRp
 
-
-> Git's style of putting the * next to the name makes it far easier to
-> spot these sort of typing problems.  At least that's my take on it.
-
-Let's stop this discussion here. I'm not proposing to change the
-rules. I'll follow the git coding conventions when submitting
-patches to git, even if it's sometimes hard for me. I already packed
-as much as possible in my editor configuration. Unfortunately,
-I can't teach vim to always place the '*' correctly. At least I
-don't know how to do this.
-
-	Steffen
+-- 
+Scott Parish
+http://srparish.net/
