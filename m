@@ -1,73 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/8] rev-parse: teach "git rev-parse --symbolic" to print the full ref name
-Date: Sun, 28 Oct 2007 04:06:55 -0400
-Message-ID: <20071028080654.GS14735@spearce.org>
-References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <7v3avvy9yc.fsf@gitster.siamese.dyndns.org> <79CE31EE-0975-48EB-8B3E-FC9D6A8EB3E4@zib.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Oct 28 09:07:28 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 8/8] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Sun, 28 Oct 2007 09:20:53 +0100
+Message-ID: <F12160CA-1778-499F-A3D7-42711FB8B2CC@zib.de>
+References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <11935038084055-git-send-email-prohaska@zib.de> <11935038084130-git-send-email-prohaska@zib.de> <11935038083116-git-send-email-prohaska@zib.de> <11935038083335-git-send-email-prohaska@zib.de> <7vfxzvwvde.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 28 09:20:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im3B9-000664-LH
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 09:07:28 +0100
+	id 1Im3NJ-0008KW-T2
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 09:20:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750950AbXJ1IHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 04:07:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750921AbXJ1IHN
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 04:07:13 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:53694 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750797AbXJ1IHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 04:07:08 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Im3Ad-0004lx-Kf; Sun, 28 Oct 2007 04:06:57 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 379D920FBAE; Sun, 28 Oct 2007 04:06:55 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <79CE31EE-0975-48EB-8B3E-FC9D6A8EB3E4@zib.de>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751031AbXJ1ITt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 04:19:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750997AbXJ1ITt
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 04:19:49 -0400
+Received: from mailer.zib.de ([130.73.108.11]:64636 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750795AbXJ1ITr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 04:19:47 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9S8JRIo014313;
+	Sun, 28 Oct 2007 09:19:42 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1072b.pool.einsundeins.de [77.177.7.43])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9S8JQi9026673
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 28 Oct 2007 09:19:27 +0100 (MET)
+In-Reply-To: <7vfxzvwvde.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62538>
 
-Steffen Prohaska <prohaska@zib.de> wrote:
-> On Oct 28, 2007, at 8:28 AM, Junio C Hamano wrote:
-> >Steffen Prohaska <prohaska@zib.de> writes:
-> >>@@ -213,6 +215,7 @@ int cmd_rev_parse(int argc, const char **argv,  
-> >>const char *prefix)
-> >> {
-> >> 	int i, as_is = 0, verify = 0;
-> >> 	unsigned char sha1[20];
-> >>+	char* real_name = 0;
-> >
-> >Pointer sign '*' in git sources go next to the name not the
-> >type, as:
-> >
-> >	char *real_name = NULL;
-> 
-> I know and I tried hard to follow this convention, although
-> I think its the wrong choice ;)
 
-Oh, hmm...
+On Oct 28, 2007, at 8:28 AM, Junio C Hamano wrote:
 
-  char* a, b;
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> git push reports errors if a remote ref is not a strict subset
+>> of a local ref. The push wouldn't be a fast-forward and is
+>> therefore refused. This is in general a good idea.
+>
+>> This commit teaches git push to be quiet if the local is a strict
+>> subset of the remote and no refspec is explicitly specified on
+>> the command line. If the --verbose flag is used a "note:" is
+>> printed for each ignored branch.
+>
+> What happens to the summary reporting after such a push?  Does
+> it say "branch foo was not pushed because you did not touch it
+> since you fetched and it is already stale with respect to the
+> remote side which has updates since then"?
 
-What's the type of b?  If you said "char*" you're wrong.
+It says nothing, it's quiet, as promised in the commit message ;)
+That's the point of this patch.
 
-Git's style of putting the * next to the name makes it far easier to
-spot these sort of typing problems.  At least that's my take on it.
+But I see your point. Maybe it should say something like
+"ignored 2 branches, which are strict subsets of remote."
+"use --verbose for details."
+?
 
--- 
-Shawn.
+> How does this interact with the "pretend we have fetched
+> immediately after we pushed by updating the corresponding remote
+> tracking branch" logic?
+
+I doesn't change a remote tracking branch. I'll add a test
+confirming this.
+
+	Steffen
