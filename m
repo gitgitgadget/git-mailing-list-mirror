@@ -1,75 +1,62 @@
-From: Scott Parish <sRp@srparish.net>
-Subject: Re: [PATCH 6/7] walk $PATH to generate list of commands for "help -a"
-Date: Sun, 28 Oct 2007 02:45:31 -0700
-Message-ID: <20071028094530.GA7749@srparish.net>
-References: <1193474215-6728-1-git-send-email-srp@srparish.net> <1193474215-6728-2-git-send-email-srp@srparish.net> <1193474215-6728-3-git-send-email-srp@srparish.net> <1193474215-6728-4-git-send-email-srp@srparish.net> <1193474215-6728-5-git-send-email-srp@srparish.net> <1193474215-6728-6-git-send-email-srp@srparish.net> <7vsl3vzrs5.fsf@gitster.siamese.dyndns.org>
+From: Alexandre Julliard <julliard@winehq.org>
+Subject: [PATCH] git.el: Fix typo in "Reverted file" message.
+Date: Sun, 28 Oct 2007 11:05:11 +0100
+Message-ID: <87hckbd06g.fsf@wine.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 28 10:45:54 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 28 11:05:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im4iO-0008Lk-21
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 10:45:52 +0100
+	id 1Im51e-0004kW-24
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 11:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750945AbXJ1Jpi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 05:45:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750952AbXJ1Jpi
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 05:45:38 -0400
-Received: from smtp-gw6.mailanyone.net ([208.70.128.57]:39528 "EHLO
-	smtp-gw6.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750841AbXJ1Jph (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 05:45:37 -0400
-Received: from mailanyone.net
-	by smtp-gw6.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1Im4i4-0007dL-Jz; Sun, 28 Oct 2007 04:45:35 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 501
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Sun, 28 Oct 2007 02:45:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsl3vzrs5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.12-2006-07-14
+	id S1751127AbXJ1KFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 06:05:22 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751121AbXJ1KFW
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 06:05:22 -0400
+Received: from mail.codeweavers.com ([216.251.189.131]:52168 "EHLO
+	mail.codeweavers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751093AbXJ1KFW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 06:05:22 -0400
+Received: from adsl-62-167-50-148.adslplus.ch ([62.167.50.148] helo=wine.dyndns.org)
+	by mail.codeweavers.com with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <julliard@winehq.org>)
+	id 1Im519-0005iH-1K
+	for git@vger.kernel.org; Sun, 28 Oct 2007 05:05:21 -0500
+Received: by wine.dyndns.org (Postfix, from userid 1000)
+	id DE97E1E7146; Sun, 28 Oct 2007 11:05:11 +0100 (CET)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+X-Spam-Score: -2.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62544>
 
-On Sat, Oct 27, 2007 at 11:18:02PM -0700, Junio C Hamano wrote:
+Signed-off-by: Alexandre Julliard <julliard@winehq.org>
+---
+ contrib/emacs/git.el |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-> > We walk all the paths in $PATH collecting the names of "git-*"
-> > commands. To help distinguish between the main git commands
-> > and commands picked up elsewhere (probably extensions) we
-> > print them seperately. The main commands are the ones that
-> > are found in the first directory in $PATH that contains the
-> > "git" binary.
-> 
-> This is not right.  $(gitexecdir) in Makefile is designed to
-> allow distros to move git-* commands out of the primary user
-> $PATH directories and install only "git" wrapper in /usr/bin.
-> "Use the directory 'git' is in" rule breaks this.
-> 
-> The "main commands" should be the first of argv_exec_path,
-> EXEC_PATH_ENVIRONMENT or builtin_exec_path.
-
-This is after we've already prepended the above three paths (if
-they're specified) to $PATH, so yes, generally they should be in
-one of those directories, but more generally, it will be in one of
-the directories in $PATH.
-
-Its not clear to me what exactly you're looking for me to change,
-just the wording i'm using in my comment? Or are you refering to
-the approach?
-
-When i email the changes, should i keep emailing the whole
-patch series, or just the few patches that have changed?
-
-Thanks
-sRp
+diff --git a/contrib/emacs/git.el b/contrib/emacs/git.el
+index 4286d16..8cfbdd7 100644
+--- a/contrib/emacs/git.el
++++ b/contrib/emacs/git.el
+@@ -955,7 +955,7 @@ Return the list of files that haven't been handled."
+       (when modified
+         (apply #'git-call-process-env nil nil "checkout" "HEAD" modified))
+       (git-update-status-files (append added modified) 'uptodate)
+-      (git-success-message "Reverted" files))))
++      (git-success-message "Reverted" (git-get-filenames files)))))
+ 
+ (defun git-resolve-file ()
+   "Resolve conflicts in marked file(s)."
+-- 
+1.5.3.4.404.g5a866
 
 -- 
-Scott Parish
-http://srparish.net/
+Alexandre Julliard
+julliard@winehq.org
