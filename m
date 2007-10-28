@@ -1,55 +1,60 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: New features in gitk
-Date: Sun, 28 Oct 2007 18:11:34 +1100
-Message-ID: <18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] add get_sha1_with_real_ref() returning full name of ref on demand
+Date: Sun, 28 Oct 2007 00:28:23 -0700
+Message-ID: <7v8x5ny9yg.fsf@gitster.siamese.dyndns.org>
+References: <119350380778-git-send-email-prohaska@zib.de>
+	<11935038081211-git-send-email-prohaska@zib.de>
+	<11935038081650-git-send-email-prohaska@zib.de>
+	<1193503808519-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Oct 28 08:11:57 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Oct 28 08:28:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im2JQ-0003ZO-F6
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 08:11:56 +0100
+	id 1Im2Zf-0006UH-QQ
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 08:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbXJ1HLo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 03:11:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750789AbXJ1HLo
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 03:11:44 -0400
-Received: from ozlabs.org ([203.10.76.45]:41383 "EHLO ozlabs.org"
+	id S1750795AbXJ1H23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 03:28:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbXJ1H23
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 03:28:29 -0400
+Received: from rune.pobox.com ([208.210.124.79]:46195 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750792AbXJ1HLn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 03:11:43 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id B82EBDDF44; Sun, 28 Oct 2007 18:11:42 +1100 (EST)
-In-Reply-To: <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1750762AbXJ1H22 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 03:28:28 -0400
+Received: from rune (localhost [127.0.0.1])
+	by rune.pobox.com (Postfix) with ESMTP id 8C3E2151704;
+	Sun, 28 Oct 2007 03:28:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 15C48151703;
+	Sun, 28 Oct 2007 03:28:46 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62527>
 
-Linus Torvalds writes:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> However, that crazy green bar chasing back-and-forth int he "reading" 
-> phase is really quite visually distracting. Maybe it looks better in 
-> Tk8.5, but it does look pretty annoying in the version I have. Can you 
-> tone that down a bit? 
+> The new function can be used by "git rev-parse" to print the full
+> name of the matched ref and can be used by "git send-pack" to expand
+> a local ref to its full name.
 
-Yeah.  Actually what I'd like is to know how many commits git log is
-going to give me, so that I can do a normal progress bar whose length
-is proportional to commits_read / total_commits.  With --topo-order
-(or --date-order) it has to get to the last commit before it outputs
-the first commit, doesn't it?  So could it print the total number of
-commits on a line by itself at the start of its output?  (Presumably
-it would need a --commit-count flag to enable that behaviour.)
+"can be"?  "will be used to implement git rev-parse --some-option"?
 
-Other than that, I could slow the progress bar down, or do a bar of
-moving diagonal stripes, or something.
+> +static int get_sha1_1(const char *name, int len, unsigned char *sha1, char **real_ref);
+>  
+>  static int get_parent(const char *name, int len,
+>  		      unsigned char *result, int idx)
+>  {
+>  	unsigned char sha1[20];
+> -	int ret = get_sha1_1(name, len, sha1);
+> +	int ret = get_sha1_1(name, len, sha1, /*real_ref=*/ 0);
 
-Paul.
+A null pointer constant in git sources is spelled as "NULL", not "0".
