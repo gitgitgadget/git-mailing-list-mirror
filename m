@@ -1,64 +1,63 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: tags disappear
-Date: Sun, 28 Oct 2007 01:05:46 -0400
-Message-ID: <20071028050546.GR14735@spearce.org>
-References: <C7372F7E-F29E-4E40-AE96-7AC8CB0EE0CE@nc.rr.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: New features in gitk
+Date: Sat, 27 Oct 2007 22:34:01 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: TEXT/PLAIN; charset=us-ascii
 Cc: git@vger.kernel.org
-To: James <jtp@nc.rr.com>
-X-From: git-owner@vger.kernel.org Sun Oct 28 06:06:12 2007
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Oct 28 06:34:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im0Lc-000286-Bs
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 06:06:04 +0100
+	id 1Im0n0-0005pt-Qk
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 06:34:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995AbXJ1FFv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 01:05:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbXJ1FFv
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 01:05:51 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:50088 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750752AbXJ1FFv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 01:05:51 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Im0LL-00081w-Q7; Sun, 28 Oct 2007 01:05:48 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 5EB2F20FBAE; Sun, 28 Oct 2007 01:05:46 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <C7372F7E-F29E-4E40-AE96-7AC8CB0EE0CE@nc.rr.com>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1750762AbXJ1FeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 01:34:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbXJ1FeJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 01:34:09 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:60696 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750740AbXJ1FeG (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Oct 2007 01:34:06 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9S5Y13u019001
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 27 Oct 2007 22:34:02 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9S5Y1ON018928;
+	Sat, 27 Oct 2007 22:34:01 -0700
+In-Reply-To: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=-2.736 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62522>
 
-James <jtp@nc.rr.com> wrote:
-> Sorry for the dumb question.  Hoping someone can lead me in the right  
-> direction.
-> 
-> I use git in a pretty basic setup.  One branch, I'm the only user,  
-> etc.  When I set up a tag (with a command like "git tag v1.1.6"), and  
-> then push the changes to the server, the tag doesn't remain when I  
-> clone the tree somewhere else.
-> 
-> Can anyone explain why, and possibly how to keep tags on a push/clone?
 
-You need to push the tag to the server with:
-  git push server tag v1.1.6
 
-But you should make such takes annotated with "git tag -a" so they
-are proper objects in their own right, rather than just refs pointing
-at commits.
+On Sun, 28 Oct 2007, Paul Mackerras wrote:
+>
+> I just pulled the dev branch of gitk into the master branch, so the
+> master branch now has the new features and improvements that I have
+> been working on, namely:
 
--- 
-Shawn.
+*Huge* improvements. It is now really nice to start up gitk even on the 
+full kernel history.
+
+However, that crazy green bar chasing back-and-forth int he "reading" 
+phase is really quite visually distracting. Maybe it looks better in 
+Tk8.5, but it does look pretty annoying in the version I have. Can you 
+tone that down a bit? 
+
+But this has both the layout performance improvements and the fixes to 
+only show selected files in the diff view by default, so I hope this gets 
+merged into standard git soon..
+
+		Linus
