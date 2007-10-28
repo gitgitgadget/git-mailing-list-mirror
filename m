@@ -1,46 +1,53 @@
-From: Steffen Prohaska <prohaska@zib.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 5/8] push, send-pack: support pushing HEAD to real ref name
-Date: Sun, 28 Oct 2007 16:59:37 +0100
-Message-ID: <EE8B843C-5276-4FEC-ABDD-FC456EFD3D75@zib.de>
-References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <11935038084055-git-send-email-prohaska@zib.de> <7vwst7wvdr.fsf@gitster.siamese.dyndns.org> <722152C5-299C-435E-B720-D2D331D16249@zib.de> <7vd4uzuu1g.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Sun, 28 Oct 2007 09:03:34 -0700
+Message-ID: <7v7il7usyx.fsf@gitster.siamese.dyndns.org>
+References: <119350380778-git-send-email-prohaska@zib.de>
+	<11935038081211-git-send-email-prohaska@zib.de>
+	<11935038081650-git-send-email-prohaska@zib.de>
+	<1193503808519-git-send-email-prohaska@zib.de>
+	<11935038083369-git-send-email-prohaska@zib.de>
+	<11935038084055-git-send-email-prohaska@zib.de>
+	<7vwst7wvdr.fsf@gitster.siamese.dyndns.org>
+	<722152C5-299C-435E-B720-D2D331D16249@zib.de>
+	<7vd4uzuu1g.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 28 16:59:00 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Oct 28 17:03:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImAXT-0005HQ-AB
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 16:58:59 +0100
+	id 1ImAcE-0006cs-JB
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 17:03:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290AbXJ1P6q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 11:58:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751097AbXJ1P6q
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 11:58:46 -0400
-Received: from mailer.zib.de ([130.73.108.11]:56953 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750749AbXJ1P6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 11:58:46 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SFwBOA009287;
-	Sun, 28 Oct 2007 16:58:12 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1072b.pool.einsundeins.de [77.177.7.43])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SFwAqx027333
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 28 Oct 2007 16:58:11 +0100 (MET)
-In-Reply-To: <7vd4uzuu1g.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751570AbXJ1QDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 12:03:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXJ1QDm
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 12:03:42 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:58943 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751072AbXJ1QDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 12:03:41 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 23F632EF;
+	Sun, 28 Oct 2007 12:04:00 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9587B8F92F;
+	Sun, 28 Oct 2007 12:03:57 -0400 (EDT)
+In-Reply-To: <7vd4uzuu1g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 28 Oct 2007 08:40:27 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62568>
 
-
-On Oct 28, 2007, at 4:40 PM, Junio C Hamano wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
 > Steffen Prohaska <prohaska@zib.de> writes:
 >
@@ -61,19 +68,39 @@ On Oct 28, 2007, at 4:40 PM, Junio C Hamano wrote:
 > Ugh, that looks way too magicky.  The first parameter to push if
 > one ever exists has _always_ been the remote, and the above
 > breaks it.
-
-Yes. It breaks setups that have a remote named HEAD.
-
-
+>
 > Please don't.
 
-I already did it -- it was too easy. But it's a separate patch.
-So it can easily be skipped.
+An alternative, just to let me keep my nicer public image by
+pretending to be constructive ;-)
 
-What would you propose for pushing only the current branch to
-its default remote repository? All information is there. Only
-a way to tell push to restrict push to the current branch
-is missing. Would you prefer something like
-"git push --only-current-branch"?
+Introduce a configuration "remote.$name.push_default" whose
+value can be a list of refs.  Teach the push command without
+refspecs:
 
-	Steffen
+	$ git push
+	$ git push $remote
+
+to pretend as if the listed refspecs are given, instead of the
+traditional "matching branches" behaviour.
+
+Then, introduce another option
+
+	$ git push --matching
+	$ git push --matching $remote
+
+to override that configuration, if set, so that the user who
+usually pushes only the selected branches can use the "matching
+branches" behaviour when needed.
+
+Along with your earlier "git push $remote HEAD" patch, this will
+allow you to say:
+
+	[remote "origin"]
+        	push_default = HEAD
+
+and your
+
+	$ git push
+
+will push only the current branch.
