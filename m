@@ -1,283 +1,287 @@
 From: Scott R Parish <srp@srparish.net>
-Subject: [PATCH 5/7] use only the $PATH for exec'ing git commands
-Date: Sun, 28 Oct 2007 04:17:20 -0700
-Message-ID: <1193570240-11629-1-git-send-email-srp@srparish.net>
-References: <1193474215-6728-5-git-send-email-srp@srparish.net>
+Subject: [PATCH 6/7] include $PATH in generating list of commands for "help -a"
+Date: Sun, 28 Oct 2007 04:18:49 -0700
+Message-ID: <1193570329-11656-1-git-send-email-srp@srparish.net>
+References: <1193474215-6728-6-git-send-email-srp@srparish.net>
 Cc: Scott R Parish <srp@srparish.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 12:17:38 2007
+X-From: git-owner@vger.kernel.org Sun Oct 28 12:19:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im69B-00031W-FC
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 12:17:38 +0100
+	id 1Im6AZ-0003L6-MG
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 12:19:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495AbXJ1LRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 07:17:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751422AbXJ1LRX
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 07:17:23 -0400
-Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:53416 "EHLO
+	id S1751004AbXJ1LSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 07:18:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751300AbXJ1LSv
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 07:18:51 -0400
+Received: from smtp-gw51.mailanyone.net ([208.70.128.77]:57777 "EHLO
 	smtp-gw51.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751495AbXJ1LRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 07:17:22 -0400
+	with ESMTP id S1750950AbXJ1LSu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 07:18:50 -0400
 Received: from mailanyone.net
 	by smtp-gw51.mailanyone.net with esmtp (MailAnyone extSMTP srp)
-	id 1Im68u-0000XK-HI; Sun, 28 Oct 2007 06:17:21 -0500
+	id 1Im6AL-0001vD-Hy; Sun, 28 Oct 2007 06:18:50 -0500
 Received: by maple.srparish.net (Postfix, from userid 501)
-	id 98FFF4F26ED; Sun, 28 Oct 2007 04:17:20 -0700 (PDT)
+	id D33B74F26F1; Sun, 28 Oct 2007 04:18:49 -0700 (PDT)
 X-Mailer: git-send-email 1.5.3.4.401.g19778-dirty
-In-Reply-To: <1193474215-6728-5-git-send-email-srp@srparish.net>
+In-Reply-To: <1193474215-6728-6-git-send-email-srp@srparish.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62556>
 
-We need to correctly set up $PATH for non-c based git commands.
-Since we already do this, we can just use that $PATH and execvp,
-instead of looping over the paths with execve.
+Git had previously been using the $PATH for scripts--a previous
+patch moved exec'ed commands to also use the $PATH. For consistency
+"help -a" should also list commands in the $PATH.
 
-This patch adds a setup_path() function to exec_cmd.c, which sets
-the $PATH order correctly for our search order. execv_git_cmd() is
-stripped down to setting up argv and calling execvp(). git.c's
-main() only only needs to call setup_path().
+The main commands are still listed from the git_exec_path(), but
+the $PATH is walked and other git commands (probably extensions) are
+listed.
 
 Signed-off-by: Scott R Parish <srp@srparish.net>
 ---
- exec_cmd.c |  121 ++++++++++++++++++++++++++----------------------------------
- exec_cmd.h |    1 +
- git.c      |   43 +++------------------
- 3 files changed, 60 insertions(+), 105 deletions(-)
+ help.c |  162 +++++++++++++++++++++++++++++++++++++++++++++++++---------------
+ 1 files changed, 124 insertions(+), 38 deletions(-)
 
-diff --git a/exec_cmd.c b/exec_cmd.c
-index 8b681d0..53d0f3c 100644
---- a/exec_cmd.c
-+++ b/exec_cmd.c
-@@ -29,85 +29,68 @@ const char *git_exec_path(void)
- 	return builtin_exec_path;
+diff --git a/help.c b/help.c
+index 34ac5db..2534bf0 100644
+--- a/help.c
++++ b/help.c
+@@ -37,24 +37,28 @@ static inline void mput_char(char c, unsigned int num)
+ 		putchar(c);
  }
  
-+static void add_path(struct strbuf *out, const char *path)
-+{
-+	if (path && *path) {
-+		if (is_absolute_path(path))
-+			strbuf_addstr(out, path);
-+		else
-+			strbuf_addstr(out, make_absolute_path(path));
+-static struct cmdname {
+-	size_t len;
+-	char name[1];
+-} **cmdname;
+-static int cmdname_alloc, cmdname_cnt;
+-
+-static void add_cmdname(const char *name, int len)
++static struct cmdnames {
++	int alloc;
++	int cnt;
++	struct cmdname {
++		size_t len;
++		char name[1];
++	} **names;
++} main_cmds, other_cmds;
 +
-+		strbuf_addch(out, ':');
++static void add_cmdname(struct cmdnames *cmds, const char *name, int len)
+ {
+ 	struct cmdname *ent;
+-	if (cmdname_alloc <= cmdname_cnt) {
+-		cmdname_alloc = cmdname_alloc + 200;
+-		cmdname = xrealloc(cmdname, cmdname_alloc * sizeof(*cmdname));
++	if (cmds->alloc <= cmds->cnt) {
++		cmds->alloc = cmds->alloc + 200;
++		cmds->names = xrealloc(cmds->names,
++				       cmds->alloc * sizeof(*cmds->names));
+ 	}
+ 	ent = xmalloc(sizeof(*ent) + len);
+ 	ent->len = len;
+ 	memcpy(ent->name, name, len);
+ 	ent->name[len] = 0;
+-	cmdname[cmdname_cnt++] = ent;
++	cmds->names[cmds->cnt++] = ent;
+ }
+ 
+ static int cmdname_compare(const void *a_, const void *b_)
+@@ -64,7 +68,44 @@ static int cmdname_compare(const void *a_, const void *b_)
+ 	return strcmp(a->name, b->name);
+ }
+ 
+-static void pretty_print_string_list(struct cmdname **cmdname, int longest)
++static void uniq(struct cmdnames *cmds)
++{
++	int i, j;
++
++	if (!cmds->cnt)
++		return;
++
++	for (i = j = 1; i < cmds->cnt; i++) {
++		if (strcmp(cmds->names[i]->name, cmds->names[i-1]->name)) {
++			cmds->names[j++] = cmds->names[i];
++		}
 +	}
++
++	cmds->cnt = j;
 +}
 +
-+void setup_path(const char *cmd_path)
-+{
-+	const char *old_path = getenv("PATH");
-+	struct strbuf new_path;
++static void subtract_cmds(struct cmdnames *a, struct cmdnames *b) {
++	int ai, aj, bi;
++	int cmp;
 +
-+	strbuf_init(&new_path, 0);
++	ai = aj = bi = 0;
++	while (ai < a->cnt && bi < b->cnt) {
++		cmp = strcmp(a->names[ai]->name, b->names[bi]->name);
++		if (cmp < 0)
++			a->names[aj++] = a->names[ai++];
++		else if (cmp == 0)
++			ai++, bi++;
++		else if (cmp > 0)
++			bi++;
++	}
 +
-+	add_path(&new_path, argv_exec_path);
-+	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
-+	add_path(&new_path, builtin_exec_path);
-+	add_path(&new_path, cmd_path);
++	while (ai < a->cnt)
++		a->names[aj++] = a->names[ai++];
 +
-+	if (old_path)
-+		strbuf_addstr(&new_path, old_path);
-+	else
-+		strbuf_addstr(&new_path, "/usr/local/bin:/usr/bin:/bin");
-+
-+	setenv("PATH", new_path.buf, 1);
-+
-+	strbuf_release(&new_path);
++	a->cnt = aj;
 +}
- 
- int execv_git_cmd(const char **argv)
++
++static void pretty_print_string_list(struct cmdnames *cmds, int longest)
  {
--	char git_command[PATH_MAX + 1];
--	int i;
--	const char *paths[] = { argv_exec_path,
--				getenv(EXEC_PATH_ENVIRONMENT),
--				builtin_exec_path };
+ 	int cols = 1, rows;
+ 	int space = longest + 1; /* min 1 SP between words */
+@@ -73,9 +114,7 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
+ 
+ 	if (space < max_cols)
+ 		cols = max_cols / space;
+-	rows = (cmdname_cnt + cols - 1) / cols;
 -
--	for (i = 0; i < ARRAY_SIZE(paths); ++i) {
--		size_t len;
--		int rc;
--		const char *exec_dir = paths[i];
--		const char *tmp;
--
--		if (!exec_dir || !*exec_dir) continue;
--
--		if (*exec_dir != '/') {
--			if (!getcwd(git_command, sizeof(git_command))) {
--				fprintf(stderr, "git: cannot determine "
--					"current directory: %s\n",
--					strerror(errno));
--				break;
--			}
--			len = strlen(git_command);
--
--			/* Trivial cleanup */
--			while (!prefixcmp(exec_dir, "./")) {
--				exec_dir += 2;
--				while (*exec_dir == '/')
--					exec_dir++;
--			}
--
--			rc = snprintf(git_command + len,
--				      sizeof(git_command) - len, "/%s",
--				      exec_dir);
--			if (rc < 0 || rc >= sizeof(git_command) - len) {
--				fprintf(stderr, "git: command name given "
--					"is too long.\n");
--				break;
--			}
--		} else {
--			if (strlen(exec_dir) + 1 > sizeof(git_command)) {
--				fprintf(stderr, "git: command name given "
--					"is too long.\n");
--				break;
--			}
--			strcpy(git_command, exec_dir);
--		}
--
--		len = strlen(git_command);
--		rc = snprintf(git_command + len, sizeof(git_command) - len,
--			      "/git-%s", argv[0]);
--		if (rc < 0 || rc >= sizeof(git_command) - len) {
--			fprintf(stderr,
--				"git: command name given is too long.\n");
--			break;
--		}
-+	struct strbuf cmd;
-+	const char *tmp;
+-	qsort(cmdname, cmdname_cnt, sizeof(*cmdname), cmdname_compare);
++	rows = (cmds->cnt + cols - 1) / cols;
  
--		/* argv[0] must be the git command, but the argv array
--		 * belongs to the caller, and my be reused in
--		 * subsequent loop iterations. Save argv[0] and
--		 * restore it on error.
--		 */
-+	strbuf_init(&cmd, 0);
-+	strbuf_addf(&cmd, "git-%s", argv[0]);
- 
--		tmp = argv[0];
--		argv[0] = git_command;
-+	/* argv[0] must be the git command, but the argv array
-+	 * belongs to the caller, and my be reused in
-+	 * subsequent loop iterations. Save argv[0] and
-+	 * restore it on error.
-+	 */
-+	tmp = argv[0];
-+	argv[0] = cmd.buf;
- 
--		trace_argv_printf(argv, -1, "trace: exec:");
-+	trace_argv_printf(argv, -1, "trace: exec:");
- 
--		/* execve() can only ever return if it fails */
--		execve(git_command, (char **)argv, environ);
-+	/* execvp() can only ever return if it fails */
-+	execvp(cmd.buf, (char **)argv);
- 
--		trace_printf("trace: exec failed: %s\n", strerror(errno));
-+	trace_printf("trace: exec failed: %s\n", strerror(errno));
- 
--		argv[0] = tmp;
--	}
--	return -1;
-+	argv[0] = tmp;
- 
-+	strbuf_release(&cmd);
-+
-+	return -1;
+ 	for (i = 0; i < rows; i++) {
+ 		printf("  ");
+@@ -83,31 +122,29 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
+ 		for (j = 0; j < cols; j++) {
+ 			int n = j * rows + i;
+ 			int size = space;
+-			if (n >= cmdname_cnt)
++			if (n >= cmds->cnt)
+ 				break;
+-			if (j == cols-1 || n + rows >= cmdname_cnt)
++			if (j == cols-1 || n + rows >= cmds->cnt)
+ 				size = 1;
+-			printf("%-*s", size, cmdname[n]->name);
++			printf("%-*s", size, cmds->names[n]->name);
+ 		}
+ 		putchar('\n');
+ 	}
  }
  
- 
-diff --git a/exec_cmd.h b/exec_cmd.h
-index da99287..a892355 100644
---- a/exec_cmd.h
-+++ b/exec_cmd.h
-@@ -3,6 +3,7 @@
- 
- extern void git_set_argv_exec_path(const char *exec_path);
- extern const char* git_exec_path(void);
-+extern void setup_path(const char *);
- extern int execv_git_cmd(const char **argv); /* NULL terminated */
- extern int execl_git_cmd(const char *cmd, ...);
- 
-diff --git a/git.c b/git.c
-index c7cabf5..4e10581 100644
---- a/git.c
-+++ b/git.c
-@@ -6,28 +6,6 @@
- const char git_usage_string[] =
- 	"git [--version] [--exec-path[=GIT_EXEC_PATH]] [-p|--paginate|--no-pager] [--bare] [--git-dir=GIT_DIR] [--work-tree=GIT_WORK_TREE] [--help] COMMAND [ARGS]";
- 
--static void prepend_to_path(const char *dir, int len)
--{
--	const char *old_path = getenv("PATH");
--	char *path;
--	int path_len = len;
--
--	if (!old_path)
--		old_path = "/usr/local/bin:/usr/bin:/bin";
--
--	path_len = len + strlen(old_path) + 1;
--
--	path = xmalloc(path_len + 1);
--
--	memcpy(path, dir, len);
--	path[len] = ':';
--	memcpy(path + len + 1, old_path, path_len - len);
--
--	setenv("PATH", path, 1);
--
--	free(path);
--}
--
- static int handle_options(const char*** argv, int* argc, int* envchanged)
+-static void list_commands(const char *exec_path)
++static unsigned int list_commands_in_dir(struct cmdnames *cmds, const char *dir)
  {
- 	int handled = 0;
-@@ -408,7 +386,7 @@ int main(int argc, const char **argv)
- {
- 	const char *cmd = argv[0] ? argv[0] : "git-help";
- 	char *slash = strrchr(cmd, '/');
--	const char *exec_path = NULL;
-+	const char *cmd_path = NULL;
- 	int done_alias = 0;
+ 	unsigned int longest = 0;
+ 	const char *prefix = "git-";
+ 	int prefix_len = strlen(prefix);
+-	DIR *dir = opendir(exec_path);
++	DIR *dirp = opendir(dir);
+ 	struct dirent *de;
++	struct stat st;
  
- 	/*
-@@ -418,10 +396,7 @@ int main(int argc, const char **argv)
- 	 */
- 	if (slash) {
- 		*slash++ = 0;
--		if (*cmd == '/')
--			exec_path = cmd;
--		else
--			exec_path = xstrdup(make_absolute_path(cmd));
-+		cmd_path = cmd;
- 		cmd = slash;
+-	if (!dir || chdir(exec_path)) {
+-		fprintf(stderr, "git: '%s': %s\n", exec_path, strerror(errno));
+-		exit(1);
+-	}
++	if (!dirp || chdir(dir))
++		return 0;
+ 
+-	while ((de = readdir(dir)) != NULL) {
+-		struct stat st;
++	while ((de = readdir(dirp)) != NULL) {
+ 		int entlen;
+ 
+ 		if (prefixcmp(de->d_name, prefix))
+@@ -125,16 +162,67 @@ static void list_commands(const char *exec_path)
+ 		if (longest < entlen)
+ 			longest = entlen;
+ 
+-		add_cmdname(de->d_name + prefix_len, entlen);
++		add_cmdname(cmds, de->d_name + prefix_len, entlen);
++	}
++	closedir(dirp);
++
++	return longest;
++}
++
++static void list_commands(void)
++{
++	unsigned int longest = 0;
++	unsigned int len;
++	const char *env_path = getenv("PATH");
++	char *paths, *path, *colon;
++	const char *exec_path = git_exec_path();
++
++	if (exec_path)
++		longest = list_commands_in_dir(&main_cmds, exec_path);
++
++	if (!env_path) {
++		fprintf(stderr, "PATH not set\n");
++		exit(1);
++	}
++
++	path = paths = xstrdup(env_path);
++	while (1) {
++		if ((colon = strchr(path, ':')))
++			*colon = 0;
++
++		len = list_commands_in_dir(&other_cmds, path);
++		longest = MAX(longest, len);
++
++		if (!colon)
++			break;
++		path = colon + 1;
++	}
++	free(paths);
++
++	qsort(main_cmds.names, main_cmds.cnt,
++	      sizeof(*main_cmds.names), cmdname_compare);
++	uniq(&main_cmds);
++
++	qsort(other_cmds.names, other_cmds.cnt,
++	      sizeof(*other_cmds.names), cmdname_compare);
++	uniq(&other_cmds);
++	subtract_cmds(&other_cmds, &main_cmds);
++
++	if (main_cmds.cnt) {
++		printf("available git commands in '%s'\n", exec_path);
++		printf("----------------------------");
++		mput_char('-', strlen(exec_path));
++		putchar('\n');
++		pretty_print_string_list(&main_cmds, longest);
++		putchar('\n');
++	}
++
++	if (other_cmds.cnt) {
++		printf("git commands available from elsewhere on your $PATH\n");
++		printf("---------------------------------------------------\n");
++		pretty_print_string_list(&other_cmds, longest);
++		putchar('\n');
+ 	}
+-	closedir(dir);
+-
+-	printf("git commands available in '%s'\n", exec_path);
+-	printf("----------------------------");
+-	mput_char('-', strlen(exec_path));
+-	putchar('\n');
+-	pretty_print_string_list(cmdname, longest);
+-	putchar('\n');
+ }
+ 
+ void list_common_cmds_help(void)
+@@ -188,7 +276,6 @@ int cmd_version(int argc, const char **argv, const char *prefix)
+ int cmd_help(int argc, const char **argv, const char *prefix)
+ {
+ 	const char *help_cmd = argc > 1 ? argv[1] : NULL;
+-	const char *exec_path = git_exec_path();
+ 
+ 	if (!help_cmd) {
+ 		printf("usage: %s\n\n", git_usage_string);
+@@ -198,8 +285,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
+ 
+ 	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
+ 		printf("usage: %s\n\n", git_usage_string);
+-		if(exec_path)
+-			list_commands(exec_path);
++		list_commands();
+ 		exit(0);
  	}
  
-@@ -458,16 +433,12 @@ int main(int argc, const char **argv)
- 	cmd = argv[0];
- 
- 	/*
--	 * We execute external git command via execv_git_cmd(),
--	 * which looks at "--exec-path" option, GIT_EXEC_PATH
--	 * environment, and $(gitexecdir) in Makefile while built,
--	 * in this order.  For scripted commands, we prepend
--	 * the value of the exec_path variable to the PATH.
-+	 * We use PATH to find git commands, but we prepend some higher
-+	 * precidence paths: the "--exec-path" option, the GIT_EXEC_PATH
-+	 * environment, and the $(gitexecdir) from the Makefile at build
-+	 * time.
- 	 */
--	if (exec_path)
--		prepend_to_path(exec_path, strlen(exec_path));
--	exec_path = git_exec_path();
--	prepend_to_path(exec_path, strlen(exec_path));
-+	setup_path(cmd_path);
- 
- 	while (1) {
- 		/* See if it's an internal command */
 -- 
 1.5.3.4.401.g19778-dirty
