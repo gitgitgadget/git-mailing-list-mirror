@@ -1,11 +1,12 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/8] add get_sha1_with_real_ref() returning full name of ref on demand
-Date: Sun, 28 Oct 2007 00:28:23 -0700
-Message-ID: <7v8x5ny9yg.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH 4/8] rev-parse: teach "git rev-parse --symbolic" to print the full ref name
+Date: Sun, 28 Oct 2007 00:28:27 -0700
+Message-ID: <7v3avvy9yc.fsf@gitster.siamese.dyndns.org>
 References: <119350380778-git-send-email-prohaska@zib.de>
 	<11935038081211-git-send-email-prohaska@zib.de>
 	<11935038081650-git-send-email-prohaska@zib.de>
 	<1193503808519-git-send-email-prohaska@zib.de>
+	<11935038083369-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
@@ -15,46 +16,68 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Im2Zf-0006UH-QQ
+	id 1Im2Zg-0006UH-Ep
 	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 08:28:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750795AbXJ1H23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 03:28:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750792AbXJ1H23
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 03:28:29 -0400
-Received: from rune.pobox.com ([208.210.124.79]:46195 "EHLO rune.pobox.com"
+	id S1750806AbXJ1H2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 03:28:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750797AbXJ1H2d
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 03:28:33 -0400
+Received: from rune.pobox.com ([208.210.124.79]:46197 "EHLO rune.pobox.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750762AbXJ1H22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 03:28:28 -0400
+	id S1750792AbXJ1H2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 03:28:32 -0400
 Received: from rune (localhost [127.0.0.1])
-	by rune.pobox.com (Postfix) with ESMTP id 8C3E2151704;
-	Sun, 28 Oct 2007 03:28:49 -0400 (EDT)
+	by rune.pobox.com (Postfix) with ESMTP id 1C9D9151705;
+	Sun, 28 Oct 2007 03:28:54 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 15C48151703;
-	Sun, 28 Oct 2007 03:28:46 -0400 (EDT)
+	by rune.sasl.smtp.pobox.com (Postfix) with ESMTP id 88F25151703;
+	Sun, 28 Oct 2007 03:28:51 -0400 (EDT)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62528>
 
 Steffen Prohaska <prohaska@zib.de> writes:
 
-> The new function can be used by "git rev-parse" to print the full
-> name of the matched ref and can be used by "git send-pack" to expand
-> a local ref to its full name.
+> "git rev-parse --symbolic" used to return the ref name as it was
+> specified on the command line. This is changed to returning the
+> full matched ref name, i.e. "git rev-parse --symbolic master"
+> now typically returns "refs/heads/master".
 
-"can be"?  "will be used to implement git rev-parse --some-option"?
+This is to expose "dwim_ref" logic, so it might be a good idea
+to introduce a new option --dwim-ref for this purpose.
 
-> +static int get_sha1_1(const char *name, int len, unsigned char *sha1, char **real_ref);
+	git rev-parse --symbolic master^2
+
+is designed to give "master^2" or fail if "master" is not a
+merge.  Similarly, you would diagnose a failure if somebody asks
+to show
+
+	git rev-parse --dwim-ref master~4
+
+instead of giving "refs/heads/master~4".
+
+> +static void show_rev(int type, const unsigned char *sha1, const char *name, const char* real_name)
+> @@ -131,7 +133,7 @@ static void show_default(void)
 >  
->  static int get_parent(const char *name, int len,
->  		      unsigned char *result, int idx)
->  {
->  	unsigned char sha1[20];
-> -	int ret = get_sha1_1(name, len, sha1);
-> +	int ret = get_sha1_1(name, len, sha1, /*real_ref=*/ 0);
+>  		def = NULL;
+>  		if (!get_sha1(s, sha1)) {
+> -			show_rev(NORMAL, sha1, s);
+> +			show_rev(NORMAL, sha1, s, 0);
 
-A null pointer constant in git sources is spelled as "NULL", not "0".
+A null pointer constant in git sources is spelled "NULL" not "0".
+
+> @@ -213,6 +215,7 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+>  {
+>  	int i, as_is = 0, verify = 0;
+>  	unsigned char sha1[20];
+> +	char* real_name = 0;
+
+Pointer sign '*' in git sources go next to the name not the
+type, as:
+
+	char *real_name = NULL;
