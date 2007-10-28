@@ -1,106 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/8] push, send-pack: support pushing HEAD to real ref name
-Date: Sun, 28 Oct 2007 09:03:34 -0700
-Message-ID: <7v7il7usyx.fsf@gitster.siamese.dyndns.org>
-References: <119350380778-git-send-email-prohaska@zib.de>
-	<11935038081211-git-send-email-prohaska@zib.de>
-	<11935038081650-git-send-email-prohaska@zib.de>
-	<1193503808519-git-send-email-prohaska@zib.de>
-	<11935038083369-git-send-email-prohaska@zib.de>
-	<11935038084055-git-send-email-prohaska@zib.de>
-	<7vwst7wvdr.fsf@gitster.siamese.dyndns.org>
-	<722152C5-299C-435E-B720-D2D331D16249@zib.de>
-	<7vd4uzuu1g.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFH] gcc constant expression warning...
+Date: Sun, 28 Oct 2007 12:28:59 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710281204350.7345@iabervon.org>
+References: <7vy7dnvd6w.fsf@gitster.siamese.dyndns.org> <87ir4rletv.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Oct 28 17:03:55 2007
+To: Florian Weimer <fw@deneb.enyo.de>
+X-From: git-owner@vger.kernel.org Sun Oct 28 17:29:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImAcE-0006cs-JB
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 17:03:55 +0100
+	id 1ImB0t-0004PB-5T
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 17:29:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751570AbXJ1QDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 12:03:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751425AbXJ1QDm
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 12:03:42 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:58943 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751072AbXJ1QDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 12:03:41 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 23F632EF;
-	Sun, 28 Oct 2007 12:04:00 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9587B8F92F;
-	Sun, 28 Oct 2007 12:03:57 -0400 (EDT)
-In-Reply-To: <7vd4uzuu1g.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 28 Oct 2007 08:40:27 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751506AbXJ1Q3D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 12:29:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751283AbXJ1Q3C
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 12:29:02 -0400
+Received: from iabervon.org ([66.92.72.58]:60780 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751097AbXJ1Q3B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 12:29:01 -0400
+Received: (qmail 12744 invoked by uid 1000); 28 Oct 2007 16:28:59 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 28 Oct 2007 16:28:59 -0000
+In-Reply-To: <87ir4rletv.fsf@mid.deneb.enyo.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62569>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, 28 Oct 2007, Florian Weimer wrote:
 
-> Steffen Prohaska <prohaska@zib.de> writes:
->
->> On Oct 28, 2007, at 8:28 AM, Junio C Hamano wrote:
->>
->>> Steffen Prohaska <prohaska@zib.de> writes:
->>>
->>>> This teaches "push <remote> HEAD" to resolve HEAD on the local
->>>> side to its real ref name, e.g. refs/heads/master, and then
->>>> use the real ref name on the remote side to search a matching
->>>> remote ref.
->>>
->>> This probably is a good idea.
->>
->> I'll add an even shorter shorthand: "git push HEAD" will push
->> the current branch to its default remote.
->
-> Ugh, that looks way too magicky.  The first parameter to push if
-> one ever exists has _always_ been the remote, and the above
-> breaks it.
->
-> Please don't.
+> * Junio C. Hamano:
+> 
+> > The offending lines are:
+> >
+> >         if (idx_size != min_size) {
+> >                 /* make sure we can deal with large pack offsets */
+> >                 off_t x = 0x7fffffffUL, y = 0xffffffffUL;
+> >                 if (x > (x + 1) || y > (y + 1)) {
+> >                         munmap(idx_map, idx_size);
+> 
+> x and y must be unsigned for this test to work (signed overflow is
+> undefined).
 
-An alternative, just to let me keep my nicer public image by
-pretending to be constructive ;-)
+I believe the test is trying to determine if signed addition on numbers of 
+a certain size is safe in this environment. Doing the test with unsigned 
+variables would cause the test to give a predictable but irrelevant 
+result. I think gcc is being annoying in assuming that signed overflow 
+doesn't occur (even when it must), rather than assuming that the result of 
+signed overflow is some arbitrary and likely not useful value. If we have 
+an overflow possible with off_t in the way we'd use it, then one of those 
+tests should be automatically true due to the limited size of the type 
+(except that I think the test should be >= instead of >). I think we 
+should be able to assume that the result of a signed overflow, whatever 
+undefined value it is, is a possible value of its type and therefore not 
+more than the maximum value of its type, but gcc may be screwing this up.
 
-Introduce a configuration "remote.$name.push_default" whose
-value can be a list of refs.  Teach the push command without
-refspecs:
+It's probably best just to test the size of off_t.
 
-	$ git push
-	$ git push $remote
-
-to pretend as if the listed refspecs are given, instead of the
-traditional "matching branches" behaviour.
-
-Then, introduce another option
-
-	$ git push --matching
-	$ git push --matching $remote
-
-to override that configuration, if set, so that the user who
-usually pushes only the selected branches can use the "matching
-branches" behaviour when needed.
-
-Along with your earlier "git push $remote HEAD" patch, this will
-allow you to say:
-
-	[remote "origin"]
-        	push_default = HEAD
-
-and your
-
-	$ git push
-
-will push only the current branch.
+	-Daniel
+*This .sig left intentionally blank*
