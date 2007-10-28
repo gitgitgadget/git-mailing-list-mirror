@@ -1,61 +1,83 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [RFH] gcc constant expression warning...
-Date: Sun, 28 Oct 2007 10:09:10 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710281000260.30120@woody.linux-foundation.org>
-References: <7vy7dnvd6w.fsf@gitster.siamese.dyndns.org>
- <slrnfi8pj7.mb4.antti-juhani@kukkaseppele.kaijanaho.fi>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Antti-Juhani Kaijanaho <antti-juhani@kaijanaho.fi>
-X-From: git-owner@vger.kernel.org Sun Oct 28 18:09:32 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [PATCH 05/10] rename ref_matches_abbrev() to ref_abbrev_matches_full_with_fetch_rules()
+Date: Sun, 28 Oct 2007 18:46:16 +0100
+Message-ID: <11935935822846-git-send-email-prohaska@zib.de>
+References: <1193593581312-git-send-email-prohaska@zib.de>
+ <11935935812741-git-send-email-prohaska@zib.de>
+ <1193593581114-git-send-email-prohaska@zib.de>
+ <1193593581486-git-send-email-prohaska@zib.de>
+ <11935935812185-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 28 18:50:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImBdj-0006Um-7L
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:09:31 +0100
+	id 1ImCH1-0000QQ-I2
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:50:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751097AbXJ1RJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 13:09:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751141AbXJ1RJR
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:09:17 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:47520 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750841AbXJ1RJQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Oct 2007 13:09:16 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9SH9BNn012716
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Sun, 28 Oct 2007 10:09:12 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9SH9AbS014255;
-	Sun, 28 Oct 2007 10:09:11 -0700
-In-Reply-To: <slrnfi8pj7.mb4.antti-juhani@kukkaseppele.kaijanaho.fi>
-X-Spam-Status: No, hits=-3.235 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752387AbXJ1Rty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 13:49:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754943AbXJ1Rtx
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:49:53 -0400
+Received: from mailer.zib.de ([130.73.108.11]:63829 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754214AbXJ1Rtt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Oct 2007 13:49:49 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SHkMc4016197
+	for <git@vger.kernel.org>; Sun, 28 Oct 2007 18:49:47 +0100 (CET)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SHkLsZ019730;
+	Sun, 28 Oct 2007 18:46:22 +0100 (MET)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <11935935812185-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62575>
 
+The new naming makes the order of the arguments and the rules used
+for matching more explicit. This will avoid confusion with
+ref_abbrev_matches_full_with_rev_parse_rules(), which will be
+introduced in a follow-up commit.
 
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ remote.c |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-On Sun, 28 Oct 2007, Antti-Juhani Kaijanaho wrote:
->
-> A correct fix would be to check for the size of off_t in some other (and
-> defined) manner, but I don't know off_t well enough to suggest one.
-
-In this case, it's trying to make sense that "off_t" can hold more than 32
-bits. So I think that test can just be rewritten as
-
-	if (sizeof(off_t) <= 4) {
-		munmap(idx_map, idx_size);
-		return error("pack too large for current definition of off_t in %s", path);
-	}
-
-instead.
-
-			Linus
+diff --git a/remote.c b/remote.c
+index 687eb8e..59e6485 100644
+--- a/remote.c
++++ b/remote.c
+@@ -421,7 +421,7 @@ int remote_has_url(struct remote *remote, const char *url)
+  * Returns true if, under the matching rules for fetching, name is the
+  * same as the given full name.
+  */
+-static int ref_matches_abbrev(const char *name, const char *full)
++static int ref_abbrev_matches_full_with_fetch_rules(const char *name, const char *full)
+ {
+ 	if (!prefixcmp(name, "refs/") || !strcmp(name, "HEAD"))
+ 		return !strcmp(name, full);
+@@ -820,7 +820,7 @@ int branch_merge_matches(struct branch *branch,
+ {
+ 	if (!branch || i < 0 || i >= branch->merge_nr)
+ 		return 0;
+-	return ref_matches_abbrev(branch->merge[i]->src, refname);
++	return ref_abbrev_matches_full_with_fetch_rules(branch->merge[i]->src, refname);
+ }
+ 
+ static struct ref *get_expanded_map(struct ref *remote_refs,
+@@ -859,7 +859,7 @@ static struct ref *find_ref_by_name_abbrev(struct ref *refs, const char *name)
+ {
+ 	struct ref *ref;
+ 	for (ref = refs; ref; ref = ref->next) {
+-		if (ref_matches_abbrev(name, ref->name))
++		if (ref_abbrev_matches_full_with_fetch_rules(name, ref->name))
+ 			return ref;
+ 	}
+ 	return NULL;
+-- 
+1.5.3.4.439.ge8b49
