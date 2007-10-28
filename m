@@ -1,394 +1,282 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 02/10] push: teach push new flag --create
-Date: Sun, 28 Oct 2007 18:46:13 +0100
-Message-ID: <1193593581114-git-send-email-prohaska@zib.de>
+Subject: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Sun, 28 Oct 2007 18:46:21 +0100
+Message-ID: <11935935821192-git-send-email-prohaska@zib.de>
 References: <1193593581312-git-send-email-prohaska@zib.de>
  <11935935812741-git-send-email-prohaska@zib.de>
+ <1193593581114-git-send-email-prohaska@zib.de>
+ <1193593581486-git-send-email-prohaska@zib.de>
+ <11935935812185-git-send-email-prohaska@zib.de>
+ <11935935822846-git-send-email-prohaska@zib.de>
+ <11935935821136-git-send-email-prohaska@zib.de>
+ <11935935823045-git-send-email-prohaska@zib.de>
+ <11935935821800-git-send-email-prohaska@zib.de>
+ <11935935823496-git-send-email-prohaska@zib.de>
 Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 28 18:50:11 2007
+X-From: git-owner@vger.kernel.org Sun Oct 28 18:50:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImCH2-0000QQ-7l
-	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:50:08 +0100
+	id 1ImCH0-0000QQ-SL
+	for gcvg-git-2@gmane.org; Sun, 28 Oct 2007 18:50:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755031AbXJ1Rt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 13:49:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754214AbXJ1Rtz
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:49:55 -0400
-Received: from mailer.zib.de ([130.73.108.11]:63831 "EHLO mailer.zib.de"
+	id S1754951AbXJ1Rtw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Oct 2007 13:49:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754531AbXJ1Rtv
+	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 13:49:51 -0400
+Received: from mailer.zib.de ([130.73.108.11]:63827 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754241AbXJ1Rtt (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752862AbXJ1Rtt (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 28 Oct 2007 13:49:49 -0400
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SHkMoY016194
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9SHkMFx016203
 	for <git@vger.kernel.org>; Sun, 28 Oct 2007 18:49:47 +0100 (CET)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SHkLsW019730;
-	Sun, 28 Oct 2007 18:46:21 +0100 (MET)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9SHkLse019730;
+	Sun, 28 Oct 2007 18:46:22 +0100 (MET)
 X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11935935812741-git-send-email-prohaska@zib.de>
+In-Reply-To: <11935935823496-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62577>
 
-If you want to push a branch that does not yet exist on the
-remote side you can push using a full refspec. For example you
-can "push origin refs/heads/master".
+git push reports errors if a remote ref is not a strict subset
+of a local ref. The push wouldn't be a fast-forward and is
+therefore refused. This is in general a good idea.
 
-This commit changes push such that refs that do not start with
-'refs/' will be created at the remote as the matching local ref
-if --create is used. If you want to create a new ref at the
-remote, you can now say "git push --create origin master".
+But these messages can be annoying if you work with a shared
+remote repository. Branches at the remote may have advanced and
+you haven't pulled to all of your local branches. In this
+situation, local branches may be strict subsets of the remote
+heads. Pushing such branches wouldn't add any information to the
+remote. It would only reset the remote to an ancestor. A merge
+between the remote and the local branch is not very interested
+either because it would just be a fast forward of the local
+branch. In these cases you're not interested in the error
+message.
+
+This commit teaches git push to be quiet for local refs that are
+strict subsets of the matching remote refs and no refspec is
+specified on the command line. If the --verbose flag is used a
+"note" is printed instead of silently ignoring the refs.
+If no notes have been printed the number of ignored refs will
+be reported in the final summary.
+
+If refs are ignored their matching remote tracking refs will not
+be changed.
+
+git push now allows you pushing a couple of branches that have
+advanced, while ignoring all branches that have no local changes,
+but are lagging behind their matching remote refs. This is done
+without reporting errors.
+
+Thanks to Junio C. Hamano <gitster@pobox.com> for suggesting to
+report in the summary that refs have been ignored.
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
 ---
- Documentation/git-http-push.txt |    6 ++++++
- Documentation/git-push.txt      |    8 +++++++-
- Documentation/git-send-pack.txt |   14 +++++++++++---
- builtin-push.c                  |    6 +++++-
- http-push.c                     |    9 +++++++--
- remote.c                        |   24 +++++++++++++++---------
- remote.h                        |    2 +-
- send-pack.c                     |    9 +++++++--
- t/t5516-fetch-push.sh           |    8 ++++++++
- transport.c                     |    8 ++++++--
- transport.h                     |    1 +
- 11 files changed, 74 insertions(+), 21 deletions(-)
+ send-pack.c           |   68 +++++++++++++++++++++++++++++++---------
+ t/t5516-fetch-push.sh |   84 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 137 insertions(+), 15 deletions(-)
 
-diff --git a/Documentation/git-http-push.txt b/Documentation/git-http-push.txt
-index 3a69b71..8753611 100644
---- a/Documentation/git-http-push.txt
-+++ b/Documentation/git-http-push.txt
-@@ -30,6 +30,12 @@ OPTIONS
- 	the remote repository can lose commits; use it with
- 	care.
- 
-+\--create::
-+	Usually, the command refuses to create a remote ref that is
-+	not specified by its full name, i.e. starting with 'refs/'.
-+	This flag tells the command to create the remote ref under
-+	the full name of the local matching ref.
-+
- --dry-run::
- 	Do everything except actually send the updates.
- 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index e5dd4c1..67b354b 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
- SYNOPSIS
- --------
- [verse]
--'git-push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-+'git-push' [--all] [--dry-run] [--create] [--tags] [--receive-pack=<git-receive-pack>]
-            [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]
- 
- DESCRIPTION
-@@ -86,6 +86,12 @@ the remote repository.
- 	This flag disables the check.  This can cause the
- 	remote repository to lose commits; use it with care.
- 
-+\--create::
-+	Usually, the command refuses to create a remote ref that is
-+	not specified by its full name, i.e. starting with 'refs/'.
-+	This flag tells the command to create the remote ref under
-+	the full name of the local matching ref.
-+
- \--repo=<repo>::
- 	When no repository is specified the command defaults to
- 	"origin"; this overrides it.
-diff --git a/Documentation/git-send-pack.txt b/Documentation/git-send-pack.txt
-index 2fa01d4..01495df 100644
---- a/Documentation/git-send-pack.txt
-+++ b/Documentation/git-send-pack.txt
-@@ -44,6 +44,12 @@ OPTIONS
- 	the remote repository can lose commits; use it with
- 	care.
- 
-+\--create::
-+	Usually, the command refuses to create a remote ref that is
-+	not specified by its full name, i.e. starting with 'refs/'.
-+	This flag tells the command to create the remote ref under
-+	the full name of the local matching ref.
-+
- \--verbose::
- 	Run verbosely.
- 
-@@ -97,9 +103,11 @@ destination side.
-    * it has to start with "refs/"; <dst> is used as the
-      destination literally in this case.
- 
--   * <src> == <dst> and the ref that matched the <src> must not
--     exist in the set of remote refs; the ref matched <src>
--     locally is used as the name of the destination.
-+   * Only <src> is specified and the ref that matched
-+     <src> must not exist in the set of remote refs;
-+     and the '--create' flag is used;
-+     the ref matched <src> locally is used as the name of
-+     the destination.
- 
- Without '--force', the <src> ref is stored at the remote only if
- <dst> does not exist, or <dst> is a proper subset (i.e. an
-diff --git a/builtin-push.c b/builtin-push.c
-index 4b39ef3..4ab1401 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -8,7 +8,7 @@
- #include "remote.h"
- #include "transport.h"
- 
--static const char push_usage[] = "git-push [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
-+static const char push_usage[] = "git-push [--all] [--dry-run] [--create] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]";
- 
- static int thin, verbose;
- static const char *receivepack;
-@@ -113,6 +113,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 			flags |= TRANSPORT_PUSH_DRY_RUN;
- 			continue;
- 		}
-+		if (!strcmp(arg, "--create")) {
-+			flags |= TRANSPORT_PUSH_CREATE;
-+			continue;
-+		}
- 		if (!strcmp(arg, "--tags")) {
- 			add_refspec("refs/tags/*");
- 			continue;
-diff --git a/http-push.c b/http-push.c
-index c02a3af..4ad9f26 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -13,7 +13,7 @@
- #include <expat.h>
- 
- static const char http_push_usage[] =
--"git-http-push [--all] [--dry-run] [--force] [--verbose] <remote> [<head>...]\n";
-+"git-http-push [--all] [--dry-run] [--create] [--force] [--verbose] <remote> [<head>...]\n";
- 
- #ifndef XML_STATUS_OK
- enum XML_Status {
-@@ -81,6 +81,7 @@ static int push_verbosely;
- static int push_all;
- static int force_all;
- static int dry_run;
-+static int create;
- 
- static struct object_list *objects;
- 
-@@ -2307,6 +2308,10 @@ int main(int argc, char **argv)
- 				dry_run = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--create")) {
-+				create = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--verbose")) {
- 				push_verbosely = 1;
- 				continue;
-@@ -2389,7 +2394,7 @@ int main(int argc, char **argv)
- 	if (!remote_tail)
- 		remote_tail = &remote_refs;
- 	if (match_refs(local_refs, remote_refs, &remote_tail,
--		       nr_refspec, refspec, push_all))
-+		       nr_refspec, refspec, push_all, create))
- 		return -1;
- 	if (!remote_refs) {
- 		fprintf(stderr, "No refs in common and none specified; doing nothing.\n");
-diff --git a/remote.c b/remote.c
-index cf6441a..687eb8e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -606,7 +606,7 @@ static struct ref *make_linked_ref(const char *name, struct ref ***tail)
- static int match_explicit(struct ref *src, struct ref *dst,
- 			  struct ref ***dst_tail,
- 			  struct refspec *rs,
--			  int errs)
-+			  int errs, int create)
- {
- 	struct ref *matched_src, *matched_dst;
- 
-@@ -653,13 +653,19 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 	case 0:
- 		if (!memcmp(lit_dst_value , "refs/", 5))
- 			matched_dst = make_linked_ref(lit_dst_value, dst_tail);
--		else {
-+		else if (!memcmp(search_dst_value, "refs/", 5))
-+			if (create)
-+				matched_dst = make_linked_ref(search_dst_value, dst_tail);
-+			else
-+				error("dst refspec %s does not match any "
-+				      "existing ref on the remote.\n"
-+				      "To create it use --create "
-+				      "or the full ref %s.",
-+				       lit_dst_value, search_dst_value);
-+		else
- 			error("dst refspec %s does not match any "
- 			      "existing ref on the remote and does "
- 			      "not start with refs/.", lit_dst_value);
--			if (!rs->dst)
--				error("Did you mean %s?\n", search_dst_value);
--		}
- 		break;
- 	default:
- 		matched_dst = NULL;
-@@ -683,11 +689,11 @@ static int match_explicit(struct ref *src, struct ref *dst,
- 
- static int match_explicit_refs(struct ref *src, struct ref *dst,
- 			       struct ref ***dst_tail, struct refspec *rs,
--			       int rs_nr)
-+			       int rs_nr, int create)
- {
- 	int i, errs;
- 	for (i = errs = 0; i < rs_nr; i++)
--		errs |= match_explicit(src, dst, dst_tail, &rs[i], errs);
-+		errs |= match_explicit(src, dst, dst_tail, &rs[i], errs, create);
- 	return -errs;
- }
- 
-@@ -717,12 +723,12 @@ static const struct refspec *check_pattern_match(const struct refspec *rs,
-  * without thinking.
-  */
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
--	       int nr_refspec, char **refspec, int all)
-+	       int nr_refspec, char **refspec, int all, int create)
- {
- 	struct refspec *rs =
- 		parse_ref_spec(nr_refspec, (const char **) refspec);
- 
--	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec))
-+	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec, create))
- 		return -1;
- 
- 	/* pick the remainder */
-diff --git a/remote.h b/remote.h
-index c62636d..7d731b1 100644
---- a/remote.h
-+++ b/remote.h
-@@ -57,7 +57,7 @@ void ref_remove_duplicates(struct ref *ref_map);
- struct refspec *parse_ref_spec(int nr_refspec, const char **refspec);
- 
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
--	       int nr_refspec, char **refspec, int all);
-+	       int nr_refspec, char **refspec, int all, int create);
- 
- /*
-  * Given a list of the remote refs and the specification of things to
 diff --git a/send-pack.c b/send-pack.c
-index e9b9a39..77acae1 100644
+index 77acae1..68a4692 100644
 --- a/send-pack.c
 +++ b/send-pack.c
-@@ -7,7 +7,7 @@
- #include "remote.h"
+@@ -187,6 +187,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 	int ask_for_status_report = 0;
+ 	int allow_deleting_refs = 0;
+ 	int expect_status_report = 0;
++	int ignored_refs = 0;
  
- static const char send_pack_usage[] =
--"git-send-pack [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-+"git-send-pack [--all] [--dry-run] [--create] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
- "  --all and explicit <ref> specification are mutually exclusive.";
- static const char *receivepack = "git-receive-pack";
- static int verbose;
-@@ -15,6 +15,7 @@ static int send_all;
- static int force_update;
- static int use_thin_pack;
- static int dry_run;
-+static int create;
- 
- /*
-  * Make a pack stream and spit it out into file descriptor fd
-@@ -201,7 +202,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 	if (!remote_tail)
- 		remote_tail = &remote_refs;
- 	if (match_refs(local_refs, remote_refs, &remote_tail,
--		       nr_refspec, refspec, send_all))
-+		       nr_refspec, refspec, send_all, create))
- 		return -1;
- 
- 	if (!remote_refs) {
-@@ -398,6 +399,10 @@ int main(int argc, char **argv)
- 				dry_run = 1;
+ 	/* No funny business with the matcher */
+ 	remote_tail = get_remote_heads(in, &remote_refs, 0, NULL, REF_NORMAL);
+@@ -259,24 +260,56 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 		    !will_delete_ref &&
+ 		    !is_null_sha1(ref->old_sha1) &&
+ 		    !ref->force) {
+-			if (!has_sha1_file(ref->old_sha1) ||
+-			    !ref_newer(ref->peer_ref->new_sha1,
+-				       ref->old_sha1)) {
+-				/* We do not have the remote ref, or
+-				 * we know that the remote ref is not
+-				 * an ancestor of what we are trying to
+-				 * push.  Either way this can be losing
+-				 * commits at the remote end and likely
+-				 * we were not up to date to begin with.
++			if (!has_sha1_file(ref->old_sha1)) {
++				/* We do not have the remote ref.
++				 * This can be losing commits at
++				 * the remote end.
+ 				 */
+-				error("remote '%s' is not a strict "
+-				      "subset of local ref '%s'. "
+-				      "maybe you are not up-to-date and "
+-				      "need to pull first?",
+-				      ref->name,
+-				      ref->peer_ref->name);
++				error("You don't have the commit"
++				      "for the remote ref '%s'."
++				      "This may cause losing commits"
++				      "that cannot be recovered.",
++				      ref->name);
+ 				ret = -2;
  				continue;
- 			}
-+			if (!strcmp(arg, "--create")) {
-+				create = 1;
++			} else if (!ref_newer(ref->peer_ref->new_sha1,
++			                      ref->old_sha1)) {
++				/* We know that the remote ref is not
++				 * an ancestor of what we are trying to
++				 * push. This can be losing commits at
++				 * the remote end and likely we were not
++				 * up to date to begin with.
++				 *
++				 * Therefore, we don't push.
++				 *
++				 * If no explicit refspec was passed on the
++				 * commandline, then we only report an error
++				 * if the local is not a strict subset of the
++				 * remote.  If the local is a strict subset we
++				 * don't have new commits for the remote.
++				 * Pulling and pushing wouldn't add anything to
++				 * the remote.
++				 *
++				 */
++				if (nr_refspec ||
++				    !ref_newer(ref->old_sha1, ref->peer_ref->new_sha1)) {
++					error("remote '%s' is not a strict "
++					      "subset of local ref '%s'. "
++					      "maybe you are not up-to-date and "
++					      "need to pull first?",
++					      ref->name,
++					      ref->peer_ref->name);
++					ret = -2;
++				} else if (verbose) {
++					fprintf(stderr,
++					        "note: ignoring local ref '%s' "
++					        "because it is a strict "
++					        "subset of remote '%s'.\n",
++					        ref->peer_ref->name,
++					        ref->name);
++				} else
++					ignored_refs++;
 +				continue;
-+			}
- 			if (!strcmp(arg, "--force")) {
- 				force_update = 1;
- 				continue;
+ 			}
+ 		}
+ 		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
+@@ -335,6 +368,11 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 			ret = -4;
+ 	}
+ 
++	if (ignored_refs)
++		fprintf(stderr,
++			"Ignored %d local refs that are strict subsets of matching remote ref. "
++			"Use --verbose for more details.\n",
++			ignored_refs);
+ 	if (!new_refs && ret == 0)
+ 		fprintf(stderr, "Everything up-to-date\n");
+ 	return ret;
 diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 5ba09e2..42ca0ff 100755
+index 6708ec1..1f740b2 100755
 --- a/t/t5516-fetch-push.sh
 +++ b/t/t5516-fetch-push.sh
-@@ -156,6 +156,14 @@ test_expect_success 'push nonexisting (3)' '
+@@ -56,6 +56,22 @@ check_push_result () {
+ 	)
+ }
  
++check_local_result () {
++	(
++		it="$1" &&
++		shift
++		for ref in "$@"
++		do
++			r=$(git show-ref -s --verify refs/$ref) &&
++			test "z$r" = "z$it" || {
++				echo "Oops, refs/$ref is wrong"
++				exit 1
++			}
++		done &&
++		git fsck --full
++	)
++}
++
+ test_expect_success setup '
+ 
+ 	: >path1 &&
+@@ -345,4 +361,72 @@ test_expect_success 'push with dry-run' '
+ 	check_push_result $old_commit heads/master
  '
  
-+test_expect_success 'push nonexisting (4)' '
++test_expect_success 'push with local is strict subset (must not report error)' '
 +
-+	mk_test &&
-+	git push testrepo --create master &&
-+	check_push_result $the_commit heads/master
++	mk_test heads/foo &&
++	git push testrepo $the_commit:refs/heads/foo &&
++	git branch -f foo $old_commit &&
++	if git push testrepo 2>&1 | grep ^error
++	then
++		echo "Oops, should not report error"
++		false
++	else
++		check_push_result $the_commit heads/foo
++	fi
 +
 +'
 +
- test_expect_success 'push with matching heads' '
- 
- 	mk_test heads/master &&
-diff --git a/transport.c b/transport.c
-index 400af71..fbdbd0d 100644
---- a/transport.c
-+++ b/transport.c
-@@ -385,7 +385,7 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 	int argc;
- 	int err;
- 
--	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
-+	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
- 	argv[0] = "http-push";
- 	argc = 1;
- 	if (flags & TRANSPORT_PUSH_ALL)
-@@ -394,6 +394,8 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 		argv[argc++] = "--force";
- 	if (flags & TRANSPORT_PUSH_DRY_RUN)
- 		argv[argc++] = "--dry-run";
-+	if (flags & TRANSPORT_PUSH_CREATE)
-+		argv[argc++] = "--create";
- 	argv[argc++] = transport->url;
- 	while (refspec_nr--)
- 		argv[argc++] = *refspec++;
-@@ -658,7 +660,7 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 	int argc;
- 	int err;
- 
--	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
-+	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
- 	argv[0] = "send-pack";
- 	argc = 1;
- 	if (flags & TRANSPORT_PUSH_ALL)
-@@ -667,6 +669,8 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 		argv[argc++] = "--force";
- 	if (flags & TRANSPORT_PUSH_DRY_RUN)
- 		argv[argc++] = "--dry-run";
-+	if (flags & TRANSPORT_PUSH_CREATE)
-+		argv[argc++] = "--create";
- 	if (data->receivepack) {
- 		char *rp = xmalloc(strlen(data->receivepack) + 16);
- 		sprintf(rp, "--receive-pack=%s", data->receivepack);
-diff --git a/transport.h b/transport.h
-index df12ea7..1d6a926 100644
---- a/transport.h
-+++ b/transport.h
-@@ -30,6 +30,7 @@ struct transport {
- #define TRANSPORT_PUSH_ALL 1
- #define TRANSPORT_PUSH_FORCE 2
- #define TRANSPORT_PUSH_DRY_RUN 4
-+#define TRANSPORT_PUSH_CREATE 8
- 
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
++test_expect_success 'push with local is strict subset (must not update remotes)' '
++
++	mk_test heads/foo &&
++	git push testrepo $the_commit:refs/heads/foo &&
++	git branch -f foo $old_commit &&
++	git fetch test &&
++	check_local_result $the_commit remotes/test/foo &&
++	if git push test 2>&1 | grep ^error
++	then
++		echo "Oops, should not report error"
++		false
++	else
++		check_push_result $the_commit heads/foo &&
++		check_local_result $the_commit remotes/test/foo
++	fi
++
++'
++
++test_expect_success 'push with explicit refname, local is strict subset (must report error)' '
++
++	mk_test heads/foo &&
++	git push testrepo $the_commit:refs/heads/foo &&
++	git branch -f foo $old_commit &&
++	if ! git push testrepo foo 2>&1 | grep ^error
++	then
++		echo "Oops, should have reported error"
++		false
++	else
++		check_push_result $the_commit heads/foo
++	fi
++
++'
++
++test_expect_success 'push with neither local nor remote is strict subset (must report error)' '
++
++	mk_test heads/foo &&
++	git push testrepo $the_commit:refs/heads/foo &&
++	git branch -f foo $old_commit &&
++	git checkout foo &&
++	: >path3 &&
++	git add path3 &&
++	test_tick &&
++	git commit -a -m branched &&
++	if ! git push testrepo 2>&1 | grep ^error
++	then
++		echo "Oops, should have reported error"
++		false
++	else
++		check_push_result $the_commit heads/foo
++	fi
++
++'
++
+ test_done
 -- 
 1.5.3.4.439.ge8b49
