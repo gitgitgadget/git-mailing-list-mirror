@@ -1,95 +1,71 @@
-From: Jan Hudec <bulb@ucw.cz>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: remote#branch
-Date: Mon, 29 Oct 2007 18:40:00 +0100
-Message-ID: <20071029174000.GA4449@efreet.light.src>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz> <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src> <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src> <Pine.LNX.4.64.0710280000240.4362@racer.site>
+Date: Mon, 29 Oct 2007 11:17:12 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
+References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
+ <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src>
+ <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src>
+ <Pine.LNX.4.64.0710280000240.4362@racer.site>
+ <20071029174000.GA4449@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="HcAYCG3uE/tztfnV"
-Cc: Petr Baudis <pasky@suse.cz>,
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
 	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
 	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Oct 29 18:48:20 2007
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Oct 29 19:18:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImYip-0007TW-5W
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 18:48:19 +0100
+	id 1ImZBz-0000kC-EM
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 19:18:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755534AbXJ2Rrm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 13:47:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755494AbXJ2Rrm
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 13:47:42 -0400
-Received: from ns1.bluetone.cz ([212.158.128.13]:50210 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755448AbXJ2Rrl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 13:47:41 -0400
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id A66DA57361;
-	Mon, 29 Oct 2007 18:47:39 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 6Lb1w5QZl-AH; Mon, 29 Oct 2007 18:47:36 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 9BD8257374;
-	Mon, 29 Oct 2007 18:47:35 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ImYam-0001AC-Lm; Mon, 29 Oct 2007 18:40:00 +0100
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710280000240.4362@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1753591AbXJ2SSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 14:18:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756874AbXJ2SSK
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 14:18:10 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:55002 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753066AbXJ2SSI (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2007 14:18:08 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9TIHNf4010423
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 29 Oct 2007 11:17:24 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9TIHCiJ016439;
+	Mon, 29 Oct 2007 11:17:15 -0700
+In-Reply-To: <20071029174000.GA4449@efreet.light.src>
+X-Spam-Status: No, hits=-2.436 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62623>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62624>
 
 
---HcAYCG3uE/tztfnV
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sun, Oct 28, 2007 at 00:01:57 +0100, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Sat, 27 Oct 2007, Jan Hudec wrote:
->=20
-> > On Tue, Oct 16, 2007 at 22:35:25 +0100, Johannes Schindelin wrote:
-> >
-> > > ',' is allowed in ref names, so ',' is out.
-> >=20
-> > Actually since many characters that are allowed in ref name are not=20
-> > allowed in URL at all, the ref-name has to be url-escaped. Which brings=
-=20
-> > all characters back in, because they can always be specified escaped.
->=20
-> No.  The URL part of it has to be encoded.  But the ref names do _not_. =
-=20
-> (If we really want to have a way to specify the remote URL and the=20
-> branch(es) we want to fetch _at the same time_.)
+On Mon, 29 Oct 2007, Jan Hudec wrote:
+> 
+> If the branch names are not url-escaped, than the result is not an URL. Which
+> is just ugly and confusing. If it looks like an URL, it should better be one.
 
-If the branch names are not url-escaped, than the result is not an URL. Whi=
-ch
-is just ugly and confusing. If it looks like an URL, it should better be on=
-e.
+Git remote names already aren't "url"s in the http sense. 
 
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+We say "master:some.host/file/goes here/without/any/stupid/web-escapes" 
+for the ssh names, and the same goes for "file:///name here" etc.
 
---HcAYCG3uE/tztfnV
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+People who think that git URL's are web-pages had better wake up and smell 
+the coffee. They aren't. They never were. They never *should* be.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+This whole argument is idiotic. The #branch format was a mistake of 
+cogito. Cogito is dead. Get over it already.
 
-iD8DBQFHJhrwRel1vVwhjGURAkXDAJ4gno+DGGilsGjOAiWBC3+XFismewCgt2lr
-uLO6pHPWKvXc24SGX3dZU/o=
-=PF+I
------END PGP SIGNATURE-----
+We have a format already, and it has nothing to do with '#' or any idiotic 
+web escape, or anything else.
 
---HcAYCG3uE/tztfnV--
+			Linus
