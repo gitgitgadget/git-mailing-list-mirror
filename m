@@ -1,59 +1,56 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: How to remove a specific hunk
-Date: Mon, 29 Oct 2007 16:03:23 +0900
-Message-ID: <buor6jeo11g.fsf@dhapc248.dev.necel.com>
-References: <4722036E.5030204@wanadoo.fr> <472207AA.8030100@op5.se>
-	<20071026164207.GB19673@coredump.intra.peff.net>
-	<20071026164926.GA21160@coredump.intra.peff.net>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [BUG?] git-pull and git-merge don't support option --ff as the document says
+Date: Mon, 29 Oct 2007 08:14:54 +0100
+Message-ID: <8c5c35580710290014o5750214te5b20eaf6127de9c@mail.gmail.com>
+References: <46dff0320710280936g4b1022fcpab02e72b99afa0f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, Pascal Obry <pascal.obry@wanadoo.fr>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Oct 29 08:04:16 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Yin Ping" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 08:15:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImOfW-0007Ns-RM
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 08:04:15 +0100
+	id 1ImOq6-0000qE-38
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 08:15:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752035AbXJ2HEB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 03:04:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751949AbXJ2HEA
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 03:04:00 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:51189 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751863AbXJ2HEA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 03:04:00 -0400
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id l9T73NN8002857;
-	Mon, 29 Oct 2007 16:03:25 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Mon, 29 Oct 2007 16:03:25 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Mon, 29 Oct 2007 16:03:24 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 92B034E0; Mon, 29 Oct 2007 16:03:23 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <20071026164926.GA21160@coredump.intra.peff.net> (Jeff King's message of "Fri\, 26 Oct 2007 12\:49\:26 -0400")
+	id S1751261AbXJ2HO4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 03:14:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbXJ2HOz
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 03:14:55 -0400
+Received: from wa-out-1112.google.com ([209.85.146.180]:29653 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751014AbXJ2HOz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 03:14:55 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1992681wah
+        for <git@vger.kernel.org>; Mon, 29 Oct 2007 00:14:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=/5GAbn6hP/5qe61pN93huz2L1TR82vv9wo/aco4FFwE=;
+        b=RheKnCQZj7XPX3MKDW97cqCpvzcPXhBTBpw/fTAuBrFaQ5axYxaYhnVol47OhAMneDsXmt4UncN03AQhl4hkhp43XSeD6tb/eKRE+uNboxQhOnjUoqEBuTyq4LB0lzpWiN2m+o5s+12FcqyE33rVyGnEO1okkmRdJ15dLu0O1wE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=aYmt9271cJ+mUy1QBbZqmhExP+3lyBmQt842jPveQ9vTRjEetwg1kQXb1Ipn5XCHAhf/shk1QN0WH012aF2HJC5TRFrM9pARi9jv8Nh3NcNdLj1NAieZ87u3whrbEY7tgwUk3kcW2wDkwEZNyXDUhzBRpfSeDsexxfq+aCqiSDo=
+Received: by 10.114.150.1 with SMTP id x1mr6658747wad.1193642094687;
+        Mon, 29 Oct 2007 00:14:54 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Mon, 29 Oct 2007 00:14:54 -0700 (PDT)
+In-Reply-To: <46dff0320710280936g4b1022fcpab02e72b99afa0f@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62607>
 
-Jeff King <peff@peff.net> writes:
-> BTW, since this is inherently a non-git operation, there are other tools
-> that some may find friendlier than an editor. Kompare will let you
-> unapply differences, for example, and I would be shocked if emacs didn't
-> have some tool for this.
+On 10/28/07, Yin Ping <pkufranky@gmail.com> wrote:
+> Released git version 1.5.3.4
 
-M-x diff-mode
-<move to bad hunk>
-C-u C-c C-a
-
--Miles
+--ff/--no-ff is not part of any released git version; you'll need to
+build the 'master' branch of git.git. And they're currently only
+supported by git-merge, not git-pull (the same goes for --no-squash).
 
 -- 
-Next to fried food, the South has suffered most from oratory.
-  			-- Walter Hines Page
+larsh
