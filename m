@@ -1,54 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Bug in git-show with "%ai" and "%ci" formats?
-Date: Mon, 29 Oct 2007 13:32:37 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710291331310.4362@racer.site>
-References: <4A647262-B69A-4DB6-942C-18C45458B169@wincent.com>
+From: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Subject: Re: New features in gitk
+Date: Mon, 29 Oct 2007 11:30:04 -0200
+Message-ID: <fg4nf6$tei$1@ger.gmane.org>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Mon Oct 29 14:33:40 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 29 14:34:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImUkI-0005M0-07
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 14:33:34 +0100
+	id 1ImUkk-0005X9-20
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 14:34:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbXJ2NdR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 09:33:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbXJ2NdR
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 09:33:17 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51134 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751863AbXJ2NdQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 09:33:16 -0400
-Received: (qmail invoked by alias); 29 Oct 2007 13:33:14 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp042) with SMTP; 29 Oct 2007 14:33:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/NDykdQWfNr+LcW/rrgELh9AUZxK9bLzUTGry/pG
-	qiginPwfvxv/Es
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4A647262-B69A-4DB6-942C-18C45458B169@wincent.com>
-X-Y-GMX-Trusted: 0
+	id S1752716AbXJ2Nds (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 09:33:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752500AbXJ2Nds
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 09:33:48 -0400
+Received: from main.gmane.org ([80.91.229.2]:34924 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751863AbXJ2Ndr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 09:33:47 -0400
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1ImUkN-0008Ia-6I
+	for git@vger.kernel.org; Mon, 29 Oct 2007 13:33:39 +0000
+Received: from c911d537.bhz.virtua.com.br ([201.17.213.55])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Oct 2007 13:33:39 +0000
+Received: from hanwen by c911d537.bhz.virtua.com.br with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 29 Oct 2007 13:33:39 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: c911d537.bhz.virtua.com.br
+User-Agent: Thunderbird 2.0.0.6 (X11/20070926)
+In-Reply-To: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62618>
 
-Hi,
+Paul Mackerras escreveu:
+> I just pulled the dev branch of gitk into the master branch, so the
+> master branch now has the new features and improvements that I have
+> been working on, namely:
+> 
+> * The find and highlight functions have been combined into a single
 
-On Mon, 29 Oct 2007, Wincent Colaiuta wrote:
+sound extremely cool; I didn't know someone was working on it actively.
 
-> Can anybody reproduce the following behaviour? Basically all the author and
-> committer date formats documented in the git-show man page work except for
-> "%ai" and "%ci". This is with Git 1.5.2.4 running on Darwin 9.0.0:
+Can I misuse this thread to bring a ancient bug under your attention? 
+It is affecting me regularly; see here for the report:
 
-It was added in v1.5.3-rc2~17.
+  http://article.gmane.org/gmane.comp.version-control.git/48789
 
-Usually, it is a good idea to use the documentation which corresponds with 
-the git version you are using ;-)
 
-Hth,
-Dscho
+-- 
+ Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
