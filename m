@@ -1,101 +1,51 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: remote#branch
-Date: Mon, 29 Oct 2007 17:49:25 -0400
-Message-ID: <20071029214925.GH21133@thunk.org>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz> <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src> <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src> <Pine.LNX.4.64.0710280000240.4362@racer.site> <20071029174000.GA4449@efreet.light.src> <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Speedup scanning for excluded files.
+Date: Mon, 29 Oct 2007 15:17:52 -0700
+Message-ID: <7v8x5ltvjj.fsf@gitster.siamese.dyndns.org>
+References: <200710290845.26727.lars@trolltech.com>
+	<20071029080234.GA22826@artemis.corp>
+	<200710290959.32538.lars@trolltech.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Mon Oct 29 22:50:49 2007
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Lars Knoll <lars@trolltech.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 23:19:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImcVM-0003DD-0E
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 22:50:40 +0100
+	id 1Imcwf-00031f-U7
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 23:18:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722AbXJ2Vu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 17:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbXJ2Vu0
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 17:50:26 -0400
-Received: from THUNK.ORG ([69.25.196.29]:40780 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752440AbXJ2VuZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 17:50:25 -0400
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1Imcep-0006jX-4Q; Mon, 29 Oct 2007 18:00:27 -0400
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1ImcU9-00006n-LZ; Mon, 29 Oct 2007 17:49:25 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1755429AbXJ2WSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 18:18:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755034AbXJ2WSF
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 18:18:05 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:48523 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254AbXJ2WSD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 18:18:03 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 104A52F0;
+	Mon, 29 Oct 2007 18:18:23 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9787090071;
+	Mon, 29 Oct 2007 18:18:19 -0400 (EDT)
+In-Reply-To: <200710290959.32538.lars@trolltech.com> (Lars Knoll's message of
+	"Mon, 29 Oct 2007 10:59:32 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62628>
 
-On Mon, Oct 29, 2007 at 11:17:12AM -0700, Linus Torvalds wrote:
-> Git remote names already aren't "url"s in the http sense. 
-> 
-> We say "master:some.host/file/goes here/without/any/stupid/web-escapes" 
-> for the ssh names, and the same goes for "file:///name here" etc.
-> 
-> People who think that git URL's are web-pages had better wake up and smell 
-> the coffee. They aren't. They never were. They never *should* be.
+Thanks.  This looks obviously correct and tempts me to apply
+directly to 'master'.
 
-Well, the confusion is that we refer to things that look like
-"git://git.kernel.org/pub/scm/git/git.git" as if it were a URL.  In
-fact, you did so yourself in the last paragraph above.  "People who
-think that git URL's"....  but in fact, whether or not Universal
-Resource Locators (URL's) in the RFC 3986 sense requires quoting
-doesn't matter whether or not they are web pages or not.  If they are
-formal URL's in the sense of RFC 3986, it doesn't matter whether they
-are http URL's, or ldap URL's, or telephone URL's, etc. they are
-supposed to be quoted whether or not they appear in a web form or not.
-The whole point of URL's is that they are *uniform*.
-
-So what that means is the much more correct statement is:
-
-"People who think the names that people specify that to git, which
-sometimes include names that look very much like URL's, especially
-when they begin 'git://' or 'http://', and they think they are really
-RFC 3986 URL's had better wake up and smell the coffee.  They aren't.
-They never were.  The they never *should* be.  
-
-The best that we can say given existing usage is that what git accepts
-is a superset of what is allowable by RFC 3986 syntactically, and that
-git in general doesn't do any URL-style quoting, even when given a
-name that looks syntactically like a http-style URL that begins
-'http://'."
-
-What this means in practice though is that people would be well
-advised not to pick locator names (NOT URL's) that contain characters
-that normally would require escaping by RFC 3986 rules, since the
-inconsistency of whether tools that expect URL-style quoting rules
-will probably cause user and tools confusion.  Hence, it would
-probably be a bad idea to place a directory pathname that included the
-'#' character on a web server and expect that resulting git:// and
-http:// names generated by an Apache web server and gitweb scripts to
-do sane things, not to mention direct access via git:// names used
-when you do a "git push" to said respository.  Sometimes the name will
-require RFC 3968 quoting, and sometimes it may not be quoted using RFC
-3968 rules, depending on which tool you are using.
-
-I do agree that the Cogito '#' notation makes things worse, not
-better, because it encourages a bigger separation between the RFC 3986
-rules, and what the git tool accepts in practice --- which are not
-URL's, no matter how much some of our git-style names superficially
-look like URL's.   
-
-							- Ted
+There are similar logic on the gitattributes side (attr.c) which
+might benefit from such an optimization as well.  In the longer
+run, we might even want to introduce 'ignored' attribute to the
+gitattributes mechanism and make the unified result to supersede
+gitignore.
