@@ -1,280 +1,56 @@
-From: Scott R Parish <srp@srparish.net>
-Subject: [PATCH 6/7] include $PATH in generating list of commands for "help -a"
-Date: Sun, 28 Oct 2007 20:30:52 -0700
-Message-ID: <1193628652-15647-1-git-send-email-srp@srparish.net>
-References: <1193474215-6728-6-git-send-email-srp@srparish.net>
-Cc: Scott R Parish <srp@srparish.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 29 04:31:10 2007
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect: add "skip" to the short usage string.
+Date: Mon, 29 Oct 2007 05:31:52 +0100
+Message-ID: <20071029053153.fe400886.chriscool@tuxfamily.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 05:25:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImLLJ-00051y-1U
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 04:31:09 +0100
+	id 1ImMBm-0005eF-2s
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 05:25:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861AbXJ2Daz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Oct 2007 23:30:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750946AbXJ2Daz
-	(ORCPT <rfc822;git-outgoing>); Sun, 28 Oct 2007 23:30:55 -0400
-Received: from smtp-gw7.mailanyone.net ([208.70.128.55]:34304 "EHLO
-	smtp-gw7.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750848AbXJ2Day (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Oct 2007 23:30:54 -0400
-Received: from mailanyone.net
-	by smtp-gw7.mailanyone.net with esmtp (MailAnyone extSMTP quinn@srparish.net)
-	id 1ImLL2-0006bf-H4; Sun, 28 Oct 2007 22:30:52 -0500
-Received: by maple.srparish.net (Postfix, from userid 501)
-	id E311F4F2C66; Sun, 28 Oct 2007 20:30:52 -0700 (PDT)
-X-Mailer: git-send-email 1.5.3.4.401.g19778-dirty
-In-Reply-To: <1193474215-6728-6-git-send-email-srp@srparish.net>
+	id S1750994AbXJ2EZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 00:25:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751013AbXJ2EZF
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 00:25:05 -0400
+Received: from smtp1-g19.free.fr ([212.27.42.27]:40306 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750952AbXJ2EZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 00:25:03 -0400
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id B63741AB2BA;
+	Mon, 29 Oct 2007 05:24:58 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 7BBA51AB2B2;
+	Mon, 29 Oct 2007 05:24:58 +0100 (CET)
+X-Mailer: Sylpheed 2.4.5 (GTK+ 2.10.13; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62597>
 
-Git had previously been using the $PATH for scripts--a previous
-patch moved exec'ed commands to also use the $PATH. For consistency
-"help -a" should also list commands in the $PATH.
-
-The main commands are still listed from the git_exec_path(), but
-the $PATH is walked and other git commands (probably extensions) are
-listed.
-
-Signed-off-by: Scott R Parish <srp@srparish.net>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- help.c |  157 +++++++++++++++++++++++++++++++++++++++++++++++++---------------
- 1 files changed, 120 insertions(+), 37 deletions(-)
+ git-bisect.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/help.c b/help.c
-index 34ac5db..855aeef 100644
---- a/help.c
-+++ b/help.c
-@@ -37,24 +37,25 @@ static inline void mput_char(char c, unsigned int num)
- 		putchar(c);
- }
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 180c6c2..f2bae53 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
  
--static struct cmdname {
--	size_t len;
--	char name[1];
--} **cmdname;
--static int cmdname_alloc, cmdname_cnt;
--
--static void add_cmdname(const char *name, int len)
-+static struct cmdnames {
-+	int alloc;
-+	int cnt;
-+	struct cmdname {
-+		size_t len;
-+		char name[1];
-+	} **names;
-+} main_cmds, other_cmds;
-+
-+static void add_cmdname(struct cmdnames *cmds, const char *name, int len)
- {
--	struct cmdname *ent;
--	if (cmdname_alloc <= cmdname_cnt) {
--		cmdname_alloc = cmdname_alloc + 200;
--		cmdname = xrealloc(cmdname, cmdname_alloc * sizeof(*cmdname));
--	}
--	ent = xmalloc(sizeof(*ent) + len);
-+	struct cmdname *ent = xmalloc(sizeof(*ent) + len);
-+
- 	ent->len = len;
- 	memcpy(ent->name, name, len);
- 	ent->name[len] = 0;
--	cmdname[cmdname_cnt++] = ent;
-+
-+	ALLOC_GROW(cmds->names, cmds->cnt + 1, cmds->alloc);
-+	cmds->names[cmds->cnt++] = ent;
- }
- 
- static int cmdname_compare(const void *a_, const void *b_)
-@@ -64,7 +65,42 @@ static int cmdname_compare(const void *a_, const void *b_)
- 	return strcmp(a->name, b->name);
- }
- 
--static void pretty_print_string_list(struct cmdname **cmdname, int longest)
-+static void uniq(struct cmdnames *cmds)
-+{
-+	int i, j;
-+
-+	if (!cmds->cnt)
-+		return;
-+
-+	for (i = j = 1; i < cmds->cnt; i++)
-+		if (strcmp(cmds->names[i]->name, cmds->names[i-1]->name))
-+			cmds->names[j++] = cmds->names[i];
-+
-+	cmds->cnt = j;
-+}
-+
-+static void exclude_cmds(struct cmdnames *cmds, struct cmdnames *excludes) {
-+	int ci, cj, ei;
-+	int cmp;
-+
-+	ci = cj = ei = 0;
-+	while (ci < cmds->cnt && ei < excludes->cnt) {
-+		cmp = strcmp(cmds->names[ci]->name, excludes->names[ei]->name);
-+		if (cmp < 0)
-+			cmds->names[cj++] = cmds->names[ci++];
-+		else if (cmp == 0)
-+			ci++, ei++;
-+		else if (cmp > 0)
-+			ei++;
-+	}
-+
-+	while (ci < cmds->cnt)
-+		cmds->names[cj++] = cmds->names[ci++];
-+
-+	cmds->cnt = cj;
-+}
-+
-+static void pretty_print_string_list(struct cmdnames *cmds, int longest)
- {
- 	int cols = 1, rows;
- 	int space = longest + 1; /* min 1 SP between words */
-@@ -73,9 +109,7 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
- 
- 	if (space < max_cols)
- 		cols = max_cols / space;
--	rows = (cmdname_cnt + cols - 1) / cols;
--
--	qsort(cmdname, cmdname_cnt, sizeof(*cmdname), cmdname_compare);
-+	rows = (cmds->cnt + cols - 1) / cols;
- 
- 	for (i = 0; i < rows; i++) {
- 		printf("  ");
-@@ -83,28 +117,27 @@ static void pretty_print_string_list(struct cmdname **cmdname, int longest)
- 		for (j = 0; j < cols; j++) {
- 			int n = j * rows + i;
- 			int size = space;
--			if (n >= cmdname_cnt)
-+			if (n >= cmds->cnt)
- 				break;
--			if (j == cols-1 || n + rows >= cmdname_cnt)
-+			if (j == cols-1 || n + rows >= cmds->cnt)
- 				size = 1;
--			printf("%-*s", size, cmdname[n]->name);
-+			printf("%-*s", size, cmds->names[n]->name);
- 		}
- 		putchar('\n');
- 	}
- }
- 
--static void list_commands(const char *exec_path)
-+static unsigned int list_commands_in_dir(struct cmdnames *cmds,
-+					 const char *path)
- {
- 	unsigned int longest = 0;
- 	const char *prefix = "git-";
- 	int prefix_len = strlen(prefix);
--	DIR *dir = opendir(exec_path);
-+	DIR *dir = opendir(path);
- 	struct dirent *de;
- 
--	if (!dir || chdir(exec_path)) {
--		fprintf(stderr, "git: '%s': %s\n", exec_path, strerror(errno));
--		exit(1);
--	}
-+	if (!dir || chdir(path))
-+		return 0;
- 
- 	while ((de = readdir(dir)) != NULL) {
- 		struct stat st;
-@@ -125,16 +158,68 @@ static void list_commands(const char *exec_path)
- 		if (longest < entlen)
- 			longest = entlen;
- 
--		add_cmdname(de->d_name + prefix_len, entlen);
-+		add_cmdname(cmds, de->d_name + prefix_len, entlen);
- 	}
- 	closedir(dir);
- 
--	printf("git commands available in '%s'\n", exec_path);
--	printf("----------------------------");
--	mput_char('-', strlen(exec_path));
--	putchar('\n');
--	pretty_print_string_list(cmdname, longest);
--	putchar('\n');
-+	return longest;
-+}
-+
-+static void list_commands(void)
-+{
-+	unsigned int longest = 0;
-+	unsigned int len;
-+	const char *env_path = getenv("PATH");
-+	char *paths, *path, *colon;
-+	const char *exec_path = git_exec_path();
-+
-+	if (exec_path)
-+		longest = list_commands_in_dir(&main_cmds, exec_path);
-+
-+	if (!env_path) {
-+		fprintf(stderr, "PATH not set\n");
-+		exit(1);
-+	}
-+
-+	path = paths = xstrdup(env_path);
-+	while (1) {
-+		if ((colon = strchr(path, ':')))
-+			*colon = 0;
-+
-+		len = list_commands_in_dir(&other_cmds, path);
-+		if (len > longest)
-+			longest = len;
-+
-+		if (!colon)
-+			break;
-+		path = colon + 1;
-+	}
-+	free(paths);
-+
-+	qsort(main_cmds.names, main_cmds.cnt,
-+	      sizeof(*main_cmds.names), cmdname_compare);
-+	uniq(&main_cmds);
-+
-+	qsort(other_cmds.names, other_cmds.cnt,
-+	      sizeof(*other_cmds.names), cmdname_compare);
-+	uniq(&other_cmds);
-+	exclude_cmds(&other_cmds, &main_cmds);
-+
-+	if (main_cmds.cnt) {
-+		printf("available git commands in '%s'\n", exec_path);
-+		printf("----------------------------");
-+		mput_char('-', strlen(exec_path));
-+		putchar('\n');
-+		pretty_print_string_list(&main_cmds, longest);
-+		putchar('\n');
-+	}
-+
-+	if (other_cmds.cnt) {
-+		printf("git commands available from elsewhere on your $PATH\n");
-+		printf("---------------------------------------------------\n");
-+		pretty_print_string_list(&other_cmds, longest);
-+		putchar('\n');
-+	}
- }
- 
- void list_common_cmds_help(void)
-@@ -188,7 +273,6 @@ int cmd_version(int argc, const char **argv, const char *prefix)
- int cmd_help(int argc, const char **argv, const char *prefix)
- {
- 	const char *help_cmd = argc > 1 ? argv[1] : NULL;
--	const char *exec_path = git_exec_path();
- 
- 	if (!help_cmd) {
- 		printf("usage: %s\n\n", git_usage_string);
-@@ -198,8 +282,7 @@ int cmd_help(int argc, const char **argv, const char *prefix)
- 
- 	else if (!strcmp(help_cmd, "--all") || !strcmp(help_cmd, "-a")) {
- 		printf("usage: %s\n\n", git_usage_string);
--		if(exec_path)
--			list_commands(exec_path);
-+		list_commands();
- 		exit(0);
- 	}
- 
+-USAGE='[start|bad|good|next|reset|visualize|replay|log|run]'
++USAGE='[start|bad|good|next|reset|visualize|replay|log|skip|run]'
+ LONG_USAGE='git bisect start [<bad> [<good>...]] [--] [<pathspec>...]
+         reset bisect state and start bisection.
+ git bisect bad [<rev>]
 -- 
-1.5.3.4.401.g19778-dirty
+1.5.3.4.1406.g1369
