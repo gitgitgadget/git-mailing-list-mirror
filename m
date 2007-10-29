@@ -1,73 +1,57 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: remote#branch
-Date: Mon, 29 Oct 2007 15:57:41 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
- <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src>
- <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src>
- <Pine.LNX.4.64.0710280000240.4362@racer.site> <20071029174000.GA4449@efreet.light.src>
- <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
- <20071029214925.GH21133@thunk.org>
+From: "Morten Welinder" <mwelinder@gmail.com>
+Subject: Re: [PATCH] Speedup scanning for excluded files.
+Date: Mon, 29 Oct 2007 18:59:00 -0400
+Message-ID: <118833cc0710291559kbd874a8o8111b9495090ef27@mail.gmail.com>
+References: <200710290845.26727.lars@trolltech.com>
+	 <20071029080234.GA22826@artemis.corp>
+	 <200710290959.32538.lars@trolltech.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Mon Oct 29 23:58:21 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Pierre Habouzit" <madcoder@debian.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Lars Knoll" <lars@trolltech.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 23:59:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImdYq-0006MI-Ry
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 23:58:21 +0100
+	id 1ImdZm-0006bp-Sh
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 23:59:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752515AbXJ2W6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 18:58:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752417AbXJ2W6G
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 18:58:06 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:57900 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751783AbXJ2W6E (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2007 18:58:04 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9TMvgTC027311
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 29 Oct 2007 15:57:43 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9TMvfli030189;
-	Mon, 29 Oct 2007 15:57:42 -0700
-In-Reply-To: <20071029214925.GH21133@thunk.org>
-X-Spam-Status: No, hits=-2.436 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1752419AbXJ2W7F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 18:59:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752403AbXJ2W7E
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 18:59:04 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:13980 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752221AbXJ2W7D (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 18:59:03 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1461812nfb
+        for <git@vger.kernel.org>; Mon, 29 Oct 2007 15:59:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=xHz76FFLBxkYJDifsmg0BZ8r0UWw36jUwPwpB5/f8Fw=;
+        b=HgS6FBZLl8TakLRlTpj7Zvp1wEm5mOiSBBWYrwVTTT1R4gXNm3V3tqWadjNgQW+l6z6OnzEYGfKG1mC5bND+R0xr2DKXl2jDqKgxJPHpI+SPeNNoDnuG0Mvpnjw1tTqUOQsXkUn4ka1J/IEch/0Ro3AFDS4fXh/qXt3Cixv0YFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VNpdqXDIQbOia1K04IIfvJnUJHr54ERy3upmsKYiCVDuAGStX1hCbe5BURiq1teJq6t3CfUlNzb240wj23hyr0LzOiBp4RPqbRVS+GCqxT8RTJ8+Eg6gDqt/D3ypNF4A+orzy/G9paRCWp8k7BSqvKInBBkeIvjo/nJfgfhfyzc=
+Received: by 10.86.97.7 with SMTP id u7mr5152594fgb.1193698740860;
+        Mon, 29 Oct 2007 15:59:00 -0700 (PDT)
+Received: by 10.86.29.17 with HTTP; Mon, 29 Oct 2007 15:59:00 -0700 (PDT)
+In-Reply-To: <200710290959.32538.lars@trolltech.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62630>
 
+> +                               } else if (x->flags & EXC_FLAG_ENDSWITH) {
+> +                                       if (!strcmp(exclude + 1, pathname + pathlen -x->patternlen + 1))
 
+Is there some guarantee that the result of that subtraction is still within
+the string?
 
-On Mon, 29 Oct 2007, Theodore Tso wrote:
-> 
-> Well, the confusion is that we refer to things that look like
-> "git://git.kernel.org/pub/scm/git/git.git" as if it were a URL.
-
-Sure, but "URL" in human-speak has nothing to do with an RFC.
-
-I dislike language-lawyerese. Why the hell do people think that human 
-language should follow the RFC's?
-
-Git addresses look like URL's, and they act like URL's, but dammit, git 
-isn't a web browser, and it's not interested in acting like one. 
-
-And "standards" are only as good as they are useful. XML is a piece of 
-crap despite being a standard because it makes no sense. Similarly, "URL 
-quoting" is a piece of crap when _it_ makes no sense. Having a RFC or an 
-ISO standard doesn't change anything, and doesn't imply that human 
-communication (or indeed, even machine communication) should care.
-
-			Linus
+Morten
