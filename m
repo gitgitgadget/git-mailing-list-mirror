@@ -1,75 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: remote#branch
-Date: Mon, 29 Oct 2007 18:32:56 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710291832290.4362@racer.site>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
- <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src>
- <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src>
- <Pine.LNX.4.64.0710280000240.4362@racer.site> <20071029174000.GA4449@efreet.light.src>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/7] include $PATH in generating list of commands for "help -a"
+Date: Mon, 29 Oct 2007 14:17:26 -0700
+Message-ID: <7vir4ptyc9.fsf@gitster.siamese.dyndns.org>
+References: <1193474215-6728-6-git-send-email-srp@srparish.net>
+	<1193628652-15647-1-git-send-email-srp@srparish.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Oct 29 19:34:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott R Parish <srp@srparish.net>
+X-From: git-owner@vger.kernel.org Mon Oct 29 22:17:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImZRD-0005pD-DW
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 19:34:11 +0100
+	id 1ImbzZ-0001Mr-PD
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 22:17:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753457AbXJ2Sd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 14:33:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753007AbXJ2Sd5
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 14:33:57 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39884 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753340AbXJ2Sd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 14:33:57 -0400
-Received: (qmail invoked by alias); 29 Oct 2007 18:33:33 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp005) with SMTP; 29 Oct 2007 19:33:33 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18GdlUvQN8Gwjfv0wdlakBQ7m0O0xIftvK6sadZjr
-	POFxI1aoPvD2Fh
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071029174000.GA4449@efreet.light.src>
-X-Y-GMX-Trusted: 0
+	id S1751790AbXJ2VRc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 17:17:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751773AbXJ2VRc
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 17:17:32 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:53479 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757AbXJ2VRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 17:17:32 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id AEC872F2;
+	Mon, 29 Oct 2007 17:17:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4698A90137;
+	Mon, 29 Oct 2007 17:17:50 -0400 (EDT)
+In-Reply-To: <1193628652-15647-1-git-send-email-srp@srparish.net> (Scott
+	R. Parish's message of "Sun, 28 Oct 2007 20:30:52 -0700")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62626>
 
-Hi,
+Scott R Parish <srp@srparish.net> writes:
 
-On Mon, 29 Oct 2007, Jan Hudec wrote:
+> Git had previously been using the $PATH for scripts--a previous
+> patch moved exec'ed commands to also use the $PATH. For consistency
+> "help -a" should also list commands in the $PATH.
+>
+> The main commands are still listed from the git_exec_path(), but
+> the $PATH is walked and other git commands (probably extensions) are
+> listed.
+>
+> Signed-off-by: Scott R Parish <srp@srparish.net>
+> ---
+>  help.c |  157 +++++++++++++++++++++++++++++++++++++++++++++++++---------------
+>  1 files changed, 120 insertions(+), 37 deletions(-)
 
-> On Sun, Oct 28, 2007 at 00:01:57 +0100, Johannes Schindelin wrote:
-> 
-> > On Sat, 27 Oct 2007, Jan Hudec wrote:
-> > 
-> > > On Tue, Oct 16, 2007 at 22:35:25 +0100, Johannes Schindelin wrote:
-> > >
-> > > > ',' is allowed in ref names, so ',' is out.
-> > > 
-> > > Actually since many characters that are allowed in ref name are not 
-> > > allowed in URL at all, the ref-name has to be url-escaped. Which 
-> > > brings all characters back in, because they can always be specified 
-> > > escaped.
-> > 
-> > No.  The URL part of it has to be encoded.  But the ref names do 
-> > _not_.  (If we really want to have a way to specify the remote URL and 
-> > the branch(es) we want to fetch _at the same time_.)
-> 
-> If the branch names are not url-escaped, than the result is not an URL. 
-> Which is just ugly and confusing. If it looks like an URL, it should 
-> better be one.
+Thanks.
 
-So all you're saying is: it is not possible.
-
-Well, discussion ended, I guess.
-
-Ciao,
-Dscho
+It's easier to read if you briefly describe the differences
+between the replacement patch and the previous version of the
+patch below the three-dash lines.  See for example Lars Knoll's
+patch from today <200710290959.32538.lars@trolltech.com>.
