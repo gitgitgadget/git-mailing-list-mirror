@@ -1,74 +1,78 @@
-From: Jonathan del Strother <maillist@steelskies.com>
-Subject: Re: New features in gitk
-Date: Mon, 29 Oct 2007 08:31:18 +0000
-Message-ID: <8E362637-5AE6-43DC-890D-78BC6B43BDA1@steelskies.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com> <20071028183216.GA4310@artemis.corp> <18213.6055.235067.730640@cargo.ozlabs.ibm.com> <20071029062000.GB4310@artemis.corp>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=UTF-8;
-	delsp=yes	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Oct 29 09:31:44 2007
+From: Lars Hjemli <hjemli@gmail.com>
+Subject: [PATCH] Teach git-pull about --[no-]ff, --no-squash and --commit
+Date: Mon, 29 Oct 2007 09:41:18 +0100
+Message-ID: <1193647278-2616-1-git-send-email-hjemli@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 29 09:41:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImQ2B-0001FS-8t
-	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 09:31:43 +0100
+	id 1ImQBA-0003Ou-GJ
+	for gcvg-git-2@gmane.org; Mon, 29 Oct 2007 09:41:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752451AbXJ2IbX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Oct 2007 04:31:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752386AbXJ2IbX
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 04:31:23 -0400
-Received: from smtp1.betherenow.co.uk ([87.194.0.68]:40990 "EHLO
-	smtp1.bethere.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752210AbXJ2IbW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Oct 2007 04:31:22 -0400
-Received: from [192.168.1.65] (87-194-43-188.bethere.co.uk [87.194.43.188])
-	by smtp1.bethere.co.uk (Postfix) with SMTP id B061D9803D;
-	Mon, 29 Oct 2007 08:31:20 +0000 (GMT)
-In-Reply-To: <20071029062000.GB4310@artemis.corp>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752149AbXJ2Ikr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 04:40:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbXJ2Ikr
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 04:40:47 -0400
+Received: from mail47.e.nsc.no ([193.213.115.47]:55173 "EHLO mail47.e.nsc.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752149AbXJ2Ikq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 04:40:46 -0400
+Received: from localhost.localdomain (ti231210a341-0189.bb.online.no [88.88.168.189])
+	by mail47.nsc.no (8.13.8/8.13.5) with ESMTP id l9T8eeKj012446;
+	Mon, 29 Oct 2007 09:40:41 +0100 (MET)
+X-Mailer: git-send-email 1.5.3.4.1404.g65af
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62611>
 
+These options are supported by git-merge, but git-pull didn't know about
+them.
 
-On 29 Oct 2007, at 06:20, Pierre Habouzit wrote:
+Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+---
+ git-pull.sh |   12 ++++++++++--
+ 1 files changed, 10 insertions(+), 2 deletions(-)
 
-> On Sun, Oct 28, 2007 at 11:13:43PM +0000, Paul Mackerras wrote:
->>>   * the 'sha1' input field is a major pain in the UI: the cut&paste
->>>     interaction is very poor. I don't know why, but it's often =20
->>> very very
->>>     hard to really copy the sha id, probably because it's =20
->>> selected by
->>>     default.
->>
->> It's selected so that the contents are in the cut buffer and you can
->> paste them in an xterm with middle-button.  Possibly I need to check
->> that control-C (or command-C under macos) is properly bound to copy.
->
->   Well, doing ^C doesn't always copy it (probably a glitch wrt which
-> input has the focus), and it certainly doesn't synchronize with the =20
-> cut
-> buffer for me. And it doesn't work for anyone at work either. I use =20
-> ion
-> with the KDE clipboard manager (klipper -- because I never managed to
-> find a clipboard manager that is as good yet, not depending upon KDE)=
-,
-> and at work most people use KDE, with the same klipper. Maybe it's =20
-> a bad
-> interaction, I should try to use it under gnome or so to see if it is=
-=2E
->
-
-=46WIW, I have exactly the same problem under OS X.  I've never figured=
- =20
-out a pattern that gives a guaranteed copy - I'll try playing around =20
-today and see what I can find.
-
-Actually, while I'm here, gitk semi-regularly ignores =E2=8C=98Q, which=
- =20
-ought to quit on OS X.
+diff --git a/git-pull.sh b/git-pull.sh
+index 74bfc16..39e5222 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -4,7 +4,7 @@
+ #
+ # Fetch one or more remote refs and merge it/them into the current HEAD.
+ 
+-USAGE='[-n | --no-summary] [--no-commit] [-s strategy]... [<fetch-options>] <repo> <head>...'
++USAGE='[-n | --no-summary] [--[no-]commit] [--[no-]squash] [--[no-]ff] [-s strategy]... [<fetch-options>] <repo> <head>...'
+ LONG_USAGE='Fetch one or more remote refs and merge it/them into the current HEAD.'
+ SUBDIRECTORY_OK=Yes
+ . git-sh-setup
+@@ -27,8 +27,16 @@ do
+ 		;;
+ 	--no-c|--no-co|--no-com|--no-comm|--no-commi|--no-commit)
+ 		no_commit=--no-commit ;;
++	--c|--co|--com|--comm|--commi|--commit)
++		no_commit=--commit ;;
+ 	--sq|--squ|--squa|--squas|--squash)
+ 		squash=--squash ;;
++	--no-sq|--no-squ|--no-squa|--no-squas|--no-squash)
++		squash=--no-squash ;;
++	--ff)
++		no_ff=--ff ;;
++	--no-ff)
++		no_ff=--no-ff ;;
+ 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
+ 		--strateg=*|--strategy=*|\
+ 	-s|--s|--st|--str|--stra|--strat|--strate|--strateg|--strategy)
+@@ -133,5 +141,5 @@ then
+ fi
+ 
+ merge_name=$(git fmt-merge-msg <"$GIT_DIR/FETCH_HEAD") || exit
+-exec git-merge $no_summary $no_commit $squash $strategy_args \
++exec git-merge $no_summary $no_commit $squash $no_ff $strategy_args \
+ 	"$merge_name" HEAD $merge_head
+-- 
+1.5.3.4.1404.g65af
