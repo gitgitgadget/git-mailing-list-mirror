@@ -1,58 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: remote#branch
-Date: Mon, 29 Oct 2007 23:49:28 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710292348540.4362@racer.site>
-References: <20071015233800.6306e414@paolo-desktop> <20071016021933.GH12156@machine.or.cz>
- <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src>
- <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src>
- <Pine.LNX.4.64.0710280000240.4362@racer.site> <20071029174000.GA4449@efreet.light.src>
- <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
- <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Speedup scanning for excluded files.
+Date: Mon, 29 Oct 2007 17:00:42 -0700
+Message-ID: <7vzly1sc7p.fsf@gitster.siamese.dyndns.org>
+References: <200710290845.26727.lars@trolltech.com>
+	<20071029080234.GA22826@artemis.corp>
+	<200710290959.32538.lars@trolltech.com>
+	<118833cc0710291559kbd874a8o8111b9495090ef27@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Theodore Tso <tytso@mit.edu>, Jan Hudec <bulb@ucw.cz>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 30 00:50:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: "Lars Knoll" <lars@trolltech.com>, git@vger.kernel.org,
+	"Pierre Habouzit" <madcoder@debian.org>,
+	"Junio C Hamano" <gitster@pobox.com>
+To: "Morten Welinder" <mwelinder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 01:01:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImeNH-0002qC-9F
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 00:50:27 +0100
+	id 1ImeXY-0005S4-E6
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 01:01:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752448AbXJ2XuM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 19:50:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbXJ2XuM
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 19:50:12 -0400
-Received: from mail.gmx.net ([213.165.64.20]:35969 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751923AbXJ2XuL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 19:50:11 -0400
-Received: (qmail invoked by alias); 29 Oct 2007 23:50:09 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp035) with SMTP; 30 Oct 2007 00:50:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18dHIweBIYdNIDdvielMuzgAgoTapFl82G3wNaBxG
-	enWRi10kNVXyLV
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
-X-Y-GMX-Trusted: 0
+	id S1752194AbXJ3AAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 20:00:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751361AbXJ3AAv
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 20:00:51 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:60865 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875AbXJ3AAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 20:00:50 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 628F02EF;
+	Mon, 29 Oct 2007 20:01:11 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C455B9020F;
+	Mon, 29 Oct 2007 20:01:05 -0400 (EDT)
+In-Reply-To: <118833cc0710291559kbd874a8o8111b9495090ef27@mail.gmail.com>
+	(Morten Welinder's message of "Mon, 29 Oct 2007 18:59:00 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62634>
 
-Hi,
+"Morten Welinder" <mwelinder@gmail.com> writes:
 
-On Mon, 29 Oct 2007, Linus Torvalds wrote:
+>> +                               } else if (x->flags & EXC_FLAG_ENDSWITH) {
+>> +                                       if (!strcmp(exclude + 1, pathname + pathlen -x->patternlen + 1))
+>
+> Is there some guarantee that the result of that subtraction is still within
+> the string?
 
-> And "standards" are only as good as they are useful. XML is a piece of 
-> crap despite being a standard because it makes no sense.
+Good eyes.
 
-To be fair, there are uses for XML.  On Halloween, for example.
+If pattern is "*.exe", patternlen is 5, and strcmp wants to
+compare 4 chars, so pathlen is better be at least that long, and
+we do allow that pattern to match a hidden file ".exe".
 
-Sorry, could not resist,
-Dscho
+Like this?
+
+	if (x->patternlen - 1 <= pathlen &&
+        	!strcmp(exclude + 1, pathname + pathlen - x->patternlen + 1))
+		return to_exclude;
