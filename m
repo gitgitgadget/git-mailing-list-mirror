@@ -1,104 +1,64 @@
-From: Christian Stimming <stimming@tuhh.de>
-Subject: Re: broken strings in localization (was: How to run git-gui always
-	in English?)
-Date: Tue, 30 Oct 2007 11:16:26 +0100
-Message-ID: <20071030111626.0mbeh417tw4wos0s@webmail.tu-harburg.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict
+ subset of remote ref
+Date: Tue, 30 Oct 2007 11:26:35 +0100
+Message-ID: <472706DB.1040106@op5.se>
+References: <1193593581312-git-send-email-prohaska@zib.de> <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org> <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
-	DelSp=Yes	format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: prohaska@tib.de, spearce@spearce.org, johannes.schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 11:18:33 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Tue Oct 30 11:26:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImoB3-0000te-PC
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 11:18:30 +0100
+	id 1ImoJD-0002sB-EG
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 11:26:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752489AbXJ3KRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 06:17:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbXJ3KRm
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 06:17:42 -0400
-Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45541 "EHLO
-	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752206AbXJ3KRl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 06:17:41 -0400
-Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
-	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9UAGR7W009551
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 30 Oct 2007 11:16:28 +0100
-Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
-	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9UAGR6V026170;
-	Tue, 30 Oct 2007 11:16:27 +0100
-Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
-	id ED32CE5034E; Tue, 30 Oct 2007 11:16:26 +0100 (CET)
-Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
-	webmail.tu-harburg.de (Horde MIME library) with HTTP; Tue, 30 Oct 2007
-	11:16:26 +0100
-Content-Disposition: inline
-User-Agent: Internet Messaging Program (IMP) H3 (4.1.5)
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
-X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
+	id S1751955AbXJ3K0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 06:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752035AbXJ3K0k
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 06:26:40 -0400
+Received: from mail.op5.se ([193.201.96.20]:34914 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751708AbXJ3K0k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 06:26:40 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id AECC31730577;
+	Tue, 30 Oct 2007 11:26:34 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id n2yneUX+BEdV; Tue, 30 Oct 2007 11:26:33 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 4962A1730575;
+	Tue, 30 Oct 2007 11:26:32 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
 Steffen Prohaska wrote:
-> And it's even worse. An error in the localization can completely
-> break git-gui. Apparently the German localization included in
-> msysgit's Git-1.5.3-preview20071019.exe _is_ broken (see
-> attached png).
->
-> Shouldn't the localization code be a bit more fault tolerant?
+> 
+> My strange rule 10/10 adds a check that verifies if the local
+> side has something interesting to push. Only in this case a
+> pull make sense. If you do not have something new, a pull will
+> be a fast-forward, and just a waste of time.
+> 
 
-Thanks for this error description. However, this isn't a fault of the  
-localization per se; rather, it's a bad side-effects of git-gui using  
-its own script po2msg.sh instead of gettext's msgfmt to prepare  
-translations for inclusion in the program - and additionally the fact  
-that this po2msg.sh script is used by the creator of the setup.exe,  
-whereas the translators use msgfmt which will not exhibit this error.
+Err... fast-forward pulls are not a waste of time. What a strange
+notion. Perhaps I misunderstood, but this sentence jumped out at
+me and immediately got filed under "decidedly odd".
 
-Here's what happened: The program code changed from using the string  
-"Prune from %s" to "Prune from" (just like program code changes  
-often). Before, the translation had a translation like this:
-
-msgid "Prune from %s"
-msgstr "Abschneiden von %s"
-
-or similar, in any case with the including "%s". After the string  
-changed in the program, the next update of the translation file will  
-record the fact that the original string changed by changing the  
-translation like this:
-
-#, fuzzy
-msgid "Prune from"
-msgstr "Abschneiden von %s"
-
-Note that the msgstr-translation has not been changed yet - this can  
-only be done by a human. For that reason, the update inserted the  
-"fuzzy" marker. Here's where the error came in: All strings marked as  
-"fuzzy" MUST NOT BE USED by msgfmt! And git-gui's script po2msg.sh  
-doesn't adhere to this rule. Boo, that's why such erroneous  
-translations made it into the msgcat catalog.
-
-In other words: The tcl msgcat procedure is the wrong end to deal with  
-that problem. Instead, those string argument checks should be done  
-when "compiling" the foo.po files into the foo.msg files. And that's  
-precisely what the msgfmt program is for: It correctly ignores all  
-"fuzzy" strings and it additionally checks the %s et al string formats  
-for correct translation (when used with the "-c" switch, as the  
-"shift-V" command in emacs po-mode or any other po file editor will  
-use).
-
-@Dscho: That's why I'm rather unhappy with the addition of the  
-po2msg.sh script. Not adhering to the "fuzzy" marker is clearly a bug  
-and needs to be fixed there, but additionally you lose all format  
-checking that msgfmt gives to you. Syntax errors in the translator's  
-foo.po file should really be dealt with at msgfmt compile time, not  
-later at runtime. That's the whole point of that compile step.
-
-Regards,
-
-Christian
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
