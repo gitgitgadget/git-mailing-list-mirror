@@ -1,77 +1,73 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: remote#branch
-Date: Tue, 30 Oct 2007 20:18:51 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4727839B.9070205@obry.net>
-References: <20071029174000.GA4449@efreet.light.src> <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org> <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org> <20071030030104.GK21133@thunk.org> <7vtzo9s221.fsf@gitster.siamese.dyndns.org> <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org> <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Recording merges after repo conversion
+Date: Tue, 30 Oct 2007 22:46:00 +0100
+Message-ID: <8c5c35580710301446y119f8199u8dce4b500316376a@mail.gmail.com>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+	 <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
+	 <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
+	 <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
+	 <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Tom Prince <tom.prince@ualberta.net>,
-	Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:43:52 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Benoit SIGOURE" <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: "Peter Karlsson" <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Oct 30 22:46:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImysI-0002G7-Ti
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 22:43:51 +0100
+	id 1Imyuf-000348-8p
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 22:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196AbXJ3Vnh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Oct 2007 17:43:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753157AbXJ3Vnh
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 17:43:37 -0400
-Received: from smtp19.orange.fr ([80.12.242.1]:50317 "EHLO smtp19.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752831AbXJ3Vng (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 17:43:36 -0400
-X-Greylist: delayed 8879 seconds by postgrey-1.27 at vger.kernel.org; Tue, 30 Oct 2007 17:43:36 EDT
-Received: from smtp19.orange.fr (mwinf1904 [172.22.129.26])
-	by mwinf1905.orange.fr (SMTP Server) with ESMTP id 0CA915C4B965
-	for <git@vger.kernel.org>; Tue, 30 Oct 2007 20:19:40 +0100 (CET)
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf1904.orange.fr (SMTP Server) with ESMTP id 0D0281C000B0
-	for <git@vger.kernel.org>; Tue, 30 Oct 2007 20:18:59 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-98-100.w90-35.abo.wanadoo.fr [90.35.16.100])
-	by mwinf1904.orange.fr (SMTP Server) with ESMTP id 44FBB1C00091;
-	Tue, 30 Oct 2007 20:18:58 +0100 (CET)
-X-ME-UUID: 20071030191858282.44FBB1C00091@mwinf1904.orange.fr
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
-X-Enigmail-Version: 0.95.5
+	id S1753882AbXJ3VqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 17:46:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbXJ3VqE
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 17:46:04 -0400
+Received: from rv-out-0910.google.com ([209.85.198.188]:20236 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753716AbXJ3VqB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 17:46:01 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so2000994rvb
+        for <git@vger.kernel.org>; Tue, 30 Oct 2007 14:46:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=hiQ8qsEUMh3NbH4eIqxL2MdDsc4LKx0o/yKDQlZ6gwo=;
+        b=Ev7SrVbvFGotJaW8QaRtlOPUqZBkowjeHN4TbH4iL1SwEMMM5P33djysYhb4f8fLw1yWy7GciRVq1w7J+mmRSyD+Cipm7QiEUF3PZGRhdkmwWUU2wEutR8Uw2FfmkmLJCV7+9f7AVYSE1ZuYx75PKgDta7AQIzFiYdGYOM2J5iY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=c8B6bwQz3wjq4sUxcOfDzTH1GXvk7gmXaej+dsQYCoJNYD8a+3jzu9VCBEJ67lq2+SAKCsYDaRp2OGXddqvIwK09ojExt6qYRN5BWdzd2Ki6au3MZdXxBn/9C7q4WjxFmHQAQF2tcAOBmUC7zWtEsEt2HavfdLdpPKITTH25n5g=
+Received: by 10.114.197.1 with SMTP id u1mr8729336waf.1193780760982;
+        Tue, 30 Oct 2007 14:46:00 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Tue, 30 Oct 2007 14:46:00 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62761>
 
-Linus Torvalds a =E9crit :
-> I keep talking about a web browser, because THE ONLY POINT of followi=
-ng a=20
-> standard is to interoperate.
+On Oct 30, 2007 10:06 PM, Peter Karlsson <peter@softwolves.pp.se> wrote:
+> Lars Hjemli:
+>
+> > No, the grafts file is purely local.
+>
+> Hmm, any chance that will change in a future version?
 
-Yes, and since URLs are not used for web browser only I do not see the
-point to concentrate all this discussion about a single possible usage.
+Not likely
 
-> Why is that so hard to understand?
+>
+> > To achieve your goal, you'd have to 'git filter-branch' before
+> > pushing/cloning. But beware: this _will_ rewrite your current branch(es).
+>
+> Ouch. I'll have to think about whether I want to do that, then...
 
-I'm thinking alike :)
+Well, it isn't dangerous, but if someone has already cloned your repo
+_and_ commited local changes they'll need to rebase their work onto
+the new branch(es). Basically, you'll want to inform these people that
+you're going to rewrite the branches.
 
-Pascal;
-
---=20
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+-- 
+larsh
