@@ -1,103 +1,83 @@
-From: Tom Prince <tom.prince@ualberta.net>
-Subject: Re: remote#branch
-Date: Tue, 30 Oct 2007 12:02:33 -0400
-Message-ID: <20071030160232.GB2640@hermes.priv>
-References: <20071029174000.GA4449@efreet.light.src> <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org> <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org> <20071030030104.GK21133@thunk.org> <7vtzo9s221.fsf@gitster.siamese.dyndns.org> <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gitweb : disambiguate heads and tags withs the same name
+Date: Tue, 30 Oct 2007 11:19:48 -0700
+Message-ID: <7v3avsmpmj.fsf@gitster.siamese.dyndns.org>
+References: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 30 17:00:00 2007
+Cc: pasky@ucw.cz, git@vger.kernel.org
+To: "Guillaume Seguin" <guillaume@segu.in>
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:20:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImtVV-0001Kl-UA
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 16:59:58 +0100
+	id 1ImvhB-0006Pw-JK
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 19:20:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754852AbXJ3P7n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 11:59:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753788AbXJ3P7n
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 11:59:43 -0400
-Received: from rv-out-0910.google.com ([209.85.198.191]:1644 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753762AbXJ3P7m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 11:59:42 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1917255rvb
-        for <git@vger.kernel.org>; Tue, 30 Oct 2007 08:59:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=GwKGJ6c7/UVNcaBdDHfAadfB4fbiYrzWd7jr6TRG/44=;
-        b=O/XZtxLURzEHExpi8RMs4Np+/ag4r/iyIoVXyNKc5HiFfcQhG9vfK3Q3iZBf0YRAtv8/yVdMC0e9HQrVbNFHv7F2nD+BMMeIvGzFlpD3vPNgxMyFUS9fNitzqGgxq1TEsYRhifzYdLDg3kZa3EFlqNYSTUQuABWBShK6i1gFL30=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=dQKH19cdlWS6Wtf87TsbDc/FfnPNDdegVg5OGvL46BCAOMwAfApIiGM1OhB5Z+8gDAFoLNbTk0awWaNPSUYaorqdTtILsI/Z7MAoXY0cthwPjDqA52QD9wOuywbc5UdDcwiZKTwsFrosDzxlQdm8lpZrrDKAtA3GnXHhaB+/vGY=
-Received: by 10.141.48.10 with SMTP id a10mr3412381rvk.1193759981903;
-        Tue, 30 Oct 2007 08:59:41 -0700 (PDT)
-Received: from hermes ( [70.54.7.143])
-        by mx.google.com with ESMTPS id f45sm18209898pyh.2007.10.30.08.59.39
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 30 Oct 2007 08:59:41 -0700 (PDT)
-Received: by hermes (nbSMTP-1.00) for uid 500
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	Tom; Tue, 30 Oct 2007 12:02:34 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753121AbXJ3ST4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 14:19:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbXJ3ST4
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 14:19:56 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:43369 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753111AbXJ3STz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 14:19:55 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 199932FA;
+	Tue, 30 Oct 2007 14:20:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E6299058C;
+	Tue, 30 Oct 2007 14:20:12 -0400 (EDT)
+In-Reply-To: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
+	(Guillaume Seguin's message of "Sun, 28 Oct 2007 14:12:53 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62724>
 
-On Tue, Oct 30, 2007 at 07:59:45AM -0700, Linus Torvalds wrote:
-> > Not that I care, but git should probably handle things consistently.
-> 
-> Git has been, and *is* entirely consistent. It uses convenient repo names. 
-> If you don't want to call them url's, then call them "repository name". 
-> Call them whatever. But they are 100% obvious, even if there are multiple 
-> forms of them (and *none* of the forms do any quoting at all):
-> 
->  - <remote shorthand> ("origin")
->  - <path> ("../git.git")
->  - <host>:<path> ("master.kernel.org:/pub/scm/...")
->  - <protocol>://<host>/<path> ("git://repo.or.cz/...")
-> 
-> See? We may not follow RFC's, but we follow "easy to use".
+"Guillaume Seguin" <guillaume@segu.in> writes:
 
-Well, only the last one actually looks like a URL, so that is the only this
-discussion is about. I don't think anyone is suggesting that the first three
-be changed at all. So, to use your terminology, git has a variety of ways to
-specify a repo name, one of which happens to be a URL (or looks like one). The
-suggestion is that we should make that way (and only that way) behave like a
-RFC URL.
+> Avoid wrong disambiguation that would link logs/trees of tags and heads which
+> share the same name to the same page, leading to a disambiguation that would
+> prefer the tag, thus making it impossible to access the corresponding
+> head log and
+> tree without hacking the url by hand.
+>
+> ---
+>  gitweb/gitweb.perl |   14 ++++++++------
+>  1 files changed, 8 insertions(+), 6 deletions(-)
+>
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 48e21da..f918c00 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3534,6 +3534,7 @@ sub git_tags_body {
+>  	for (my $i = $from; $i <= $to; $i++) {
+>  		my $entry = $taglist->[$i];
+>  		my %tag = %$entry;
+> +		my $name = "refs/tags/$tag{'name'}";
+>  		my $comment = $tag{'subject'};
+>  		my $comment_short;
+>  		if (defined $comment) {
+> @@ -3570,8 +3571,8 @@ sub git_tags_body {
+>  		      "<td class=\"link\">" . " | " .
+>  		      $cgi->a({-href => href(action=>$tag{'reftype'},
+> hash=>$tag{'refid'})}, $tag{'reftype'});
+>  		if ($tag{'reftype'} eq "commit") {
+> -			print " | " . $cgi->a({-href => href(action=>"shortlog",
+> hash=>$tag{'name'})}, "shortlog") .
+> -			      " | " . $cgi->a({-href => href(action=>"log",
+> hash=>$tag{'name'})}, "log");
+> +			print " | " . $cgi->a({-href => href(action=>"shortlog",
+> hash=>$name)}, "shortlog") .
+> ...
 
-And git should be consistent with web browsers, automatically quoting things
-it gets passed. I think the only point of contention is probably how to deal
-with URLs that git receives that are already quoted.
+Just in case anybody is wondering, the patch is whitespace
+mangled and lacks a sign-off.
 
-1. We ignore the quoting and re-encode everything for the http transport.
-2. We honour the encoding and decode everything for the git transport.
-3. We handle git:// and http:// different, so that the three git:// URLs below
-refer to different repositories, while the three http:// URLs give refer to
-the same repository.
-
-> > git://repo.or.cz/linux-2.6/linux acpi-2.6/ibm-acpi-2.6.git
-> > git://repo.or.cz/linux-2.6/linux+acpi-2.6/ibm-acpi-2.6.git
-> > git://repo.or.cz/linux-2.6/linux%20acpi-2.6/ibm-acpi-2.6.git
-> 
-> > http://repo.or.cz/linux-2.6/linux acpi-2.6/ibm-acpi-2.6.git
-> > http://repo.or.cz/linux-2.6/linux+acpi-2.6/ibm-acpi-2.6.git
-> > http://repo.or.cz/linux-2.6/linux%20acpi-2.6/ibm-acpi-2.6.git
-
-The third possibility is probably what we do now, which is why I am suggesting
-git is inconsistent. The first will fall down when using a repository that is
-colocated, and somebody copies a URL from the web browsers location bar (which
-will be properly encoded). Which leaves the second.
-
-  Tom
+I suspect what the patch does may be a good idea, although I
+haven't followed the existing code closely to verify it.
