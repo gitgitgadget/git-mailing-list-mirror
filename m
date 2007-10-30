@@ -1,66 +1,90 @@
-From: Scott Parish <sRp@srparish.net>
-Subject: Re: [PATCH 6/7] include $PATH in generating list of commands for
-	"help -a"
-Date: Mon, 29 Oct 2007 20:00:24 -0700
-Message-ID: <20071030030022.GA2906@srparish.net>
-References: <1193474215-6728-6-git-send-email-srp@srparish.net> <1193628652-15647-1-git-send-email-srp@srparish.net> <7vir4ptyc9.fsf@gitster.siamese.dyndns.org>
+From: Theodore Tso <tytso@mit.edu>
+Subject: Re: remote#branch
+Date: Mon, 29 Oct 2007 23:01:04 -0400
+Message-ID: <20071030030104.GK21133@thunk.org>
+References: <20071016021933.GH12156@machine.or.cz> <Pine.LNX.4.64.0710161139530.25221@racer.site> <20071016210904.GI26127@efreet.light.src> <Pine.LNX.4.64.0710162228560.25221@racer.site> <20071027204757.GA3058@efreet.light.src> <Pine.LNX.4.64.0710280000240.4362@racer.site> <20071029174000.GA4449@efreet.light.src> <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org> <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 04:00:44 2007
+Cc: Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Oct 30 04:02:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImhLL-0007YW-Om
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 04:00:40 +0100
+	id 1ImhMp-0007rg-Mx
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 04:02:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751574AbXJ3DA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Oct 2007 23:00:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751861AbXJ3DA1
-	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 23:00:27 -0400
-Received: from smtp-gw6.mailanyone.net ([208.70.128.57]:47205 "EHLO
-	smtp-gw6.mailanyone.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751544AbXJ3DA0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Oct 2007 23:00:26 -0400
-Received: from mailanyone.net
-	by smtp-gw6.mailanyone.net with esmtps (TLSv1:AES256-SHA:256)
-	(MailAnyone extSMTP srp)
-	id 1ImhL5-0004Du-Bw; Mon, 29 Oct 2007 22:00:24 -0500
-Received: by srparish.net (nbSMTP-1.00) for uid 502
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256/256 bits))
-	srp@srparish.net; Mon, 29 Oct 2007 20:00:25 -0700 (PDT)
+	id S1752442AbXJ3DBx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Oct 2007 23:01:53 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751905AbXJ3DBx
+	(ORCPT <rfc822;git-outgoing>); Mon, 29 Oct 2007 23:01:53 -0400
+Received: from THUNK.ORG ([69.25.196.29]:57975 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751889AbXJ3DBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Oct 2007 23:01:52 -0400
+Received: from root (helo=closure.thunk.org)
+	by thunker.thunk.org with local-esmtps 
+	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
+	id 1ImhWT-0007qs-Qs; Mon, 29 Oct 2007 23:12:10 -0400
+Received: from tytso by closure.thunk.org with local (Exim 4.67)
+	(envelope-from <tytso@thunk.org>)
+	id 1ImhLk-0002Q9-PU; Mon, 29 Oct 2007 23:01:04 -0400
 Content-Disposition: inline
-In-Reply-To: <7vir4ptyc9.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+In-Reply-To: <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62652>
 
-On Mon, Oct 29, 2007 at 02:17:26PM -0700, Junio C Hamano wrote:
+On Mon, Oct 29, 2007 at 03:57:41PM -0700, Linus Torvalds wrote:
+> Sure, but "URL" in human-speak has nothing to do with an RFC.
+> 
+> I dislike language-lawyerese. Why the hell do people think that human 
+> language should follow the RFC's?
+> 
+> Git addresses look like URL's, and they act like URL's, but dammit, git 
+> isn't a web browser, and it's not interested in acting like one. 
 
-> It's easier to read if you briefly describe the differences
-> between the replacement patch and the previous version of the
-> patch below the three-dash lines.  See for example Lars Knoll's
-> patch from today <200710290959.32538.lars@trolltech.com>.
+The quoting rules aren't specific to a web browser; the whole point of
+URL's is that they are uniform so that programs know how to handle
+them without needing information specific to the URL type.  Hence the
+quoting rules apply to all applications using URL's, whether it's CUPS
+using a url such as: ipp://example.com/printer/tiger/bob or LDAP using
+a url such as: ldap://ldap.example.com/dc=example,dc=com?postalAddress.
 
-Oh, that's useful information!
+It's just git which is different here.  Having a uniform set of
+processing rules are *useful* for applications and libraries that are
+parsing URL's, not just for language-lawyer wanking.  Not that git
+addresses that are layered on top of http is all that well supported
+any more, but in that case we really are using an http-style URL ---
+but yet git doesn't do URL quoting, because, well, it doesn't.  Yet in
+that case it's very clear the http address is really a URL, and it's
+arguably a defect that git doesn't handle an http address the way all
+other applications handle http URL's.
 
-For the above patch, were basically what Johannes Schindelin suggested:
+At the very least, if we aren't going to change git, we should hang a
+big fat sign in the documentation saying that although git location
+names that begin git:// look like URL's, and smell like URL's, they
+aren't treated the same way that all other applications treat URL's,
+and the user shouldn't be surprised by this.  Furthermore, choosing
+pathnames so that git:// and gitweb http:// addresses don't require
+URL-style quoting, will probably save the user a fair amount of pain
+and confusion because git refuses to treat git addresses as URL's.
 
- + add_cmdname() now uses ALLOC_GROW and has its lines reordered to be
-   somewhat cleanre
- + uniq() has lost the curly brackets
- + s/subtract_cmds/exclude_cmds/
- + exclude_cmds() uses an arg name of "path" instead of "dir"
- + exclude_cmd() no longer renames "dir" to "dirp"
- + exclude_cmds() an earlier patch moved the "struct stat" declaration
-   for no-longer relevant reasons. change removed.
+It would probably also be a good idea to expurgate URL's from the
+documentations, because, well, they aren't URL's.  Git doesn't treat
+them like URL's, and you've said you aren't interested in changing git
+to treat them like URL's, and finally git:// isn't a registered URL
+scheme name with the IANA registration authority.  So let's not call
+them URL's, since they're clearly not.
 
-sRp
-
--- 
-Scott Parish
-http://srparish.net/
+    	      	      	  	     - Ted
