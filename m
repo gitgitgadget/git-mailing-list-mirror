@@ -1,386 +1,324 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH/RFC 2/3] introduce generic similarity library
-Date: Tue, 30 Oct 2007 00:24:07 -0400
-Message-ID: <20071030042407.GB14954@sigill.intra.peff.net>
+Subject: [PATCH/RFC 3/3] handle renames using similarity engine
+Date: Tue, 30 Oct 2007 00:24:42 -0400
+Message-ID: <20071030042442.GC14954@sigill.intra.peff.net>
 References: <20071030042118.GA14729@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Andy C <andychup@gmail.com>, Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 30 05:24:34 2007
+X-From: git-owner@vger.kernel.org Tue Oct 30 05:25:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImieS-00078A-RR
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 05:24:29 +0100
+	id 1Imiex-0007Fw-7p
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 05:24:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752525AbXJ3EYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 00:24:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750992AbXJ3EYM
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 00:24:12 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1283 "EHLO
+	id S1752995AbXJ3EYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 00:24:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752945AbXJ3EYq
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 00:24:46 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1288 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750953AbXJ3EYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 00:24:11 -0400
-Received: (qmail 29734 invoked by uid 111); 30 Oct 2007 04:24:08 -0000
+	id S1752845AbXJ3EYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 00:24:45 -0400
+Received: (qmail 29761 invoked by uid 111); 30 Oct 2007 04:24:43 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Oct 2007 00:24:08 -0400
-Received: (qmail 14989 invoked by uid 1000); 30 Oct 2007 04:24:07 -0000
+    by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 30 Oct 2007 00:24:43 -0400
+Received: (qmail 15004 invoked by uid 1000); 30 Oct 2007 04:24:42 -0000
 Content-Disposition: inline
 In-Reply-To: <20071030042118.GA14729@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62658>
 
-This library attempts to find similarities among items
-efficiently. It treats items as opaque pointers; callers are
-responsible for providing an item along with its contents.
-
-The algorithm is roughly:
-
-  1. for each item, create a set of fingerprints for each
-     chunk of the item (where each chunk is either delimited
-     by a newline or is 64 characters, whichever is smaller
-     -- this is the same fingerprint code from
-     diffcore-delta.c). A hash stores a mapping of
-     fingerprints to items, with each fingerprint having at
-     most one 'source' item and one 'dest' item.
-
-  2. for each fingerprint with a source and dest item,
-     find the entry with key (source, dest) in a hash table
-     and increment its value by the value of the fingerprint
-
-  3. for each (source, dest) pair that had non-zero
-     similarity, report the pair to the caller
-
-The program test-similarity is a simple demonstration of the
-code. It takes two list of files on stdin, with each file
-separated by newlines and the two lists separated by a blank
-line. It prints the similarity score of each non-zero pair
-on stdout.
-
-There are a few "interesting" design decisions, which should
-probably be tweaked:
-
-  - we store only one source and dest for each fingerprint
-    item. We need to bound this list so that we don't get
-    O(n^2) behavior for common fingerprints. This means that
-    some files won't get "credit" for common fingerprints,
-    which is probably OK, since those fingerprints are
-    probably uninteresting. We could bound at some small
-    number greater than one; one was chosen for speed and
-    simplicity of implementation. We also don't store any
-    overflow bit, so commonly used fingerprints will get
-    assigned to whatever file is found with them last.
-
-  - the similarity engine hands back absolute,
-    non-normalized scores. That means that bigger items will
-    have bigger scores, and the caller is responsible for
-    normalizing. This also means that the engine cannot
-    adjust normalization to account for chunks which are
-    thrown out by the bounding mentioned above (i.e., if a
-    file is 80 bytes, 64 of which are ignored as "common",
-    then it can at most have 20% similarity (16/80) with
-    another file. This means our normalized rename values
-    (i.e., percentage similarity) will be lower than other
-    algorithms.
+This changes diffcore-rename to use the engine in
+similarity.c rather than doing an O(m*n) loop around
+diffcore_count_changes.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- .gitignore        |    1 +
- Makefile          |    4 +-
- similarity.c      |  152 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- similarity.h      |   24 ++++++++
- test-similarity.c |   54 +++++++++++++++++++
- 5 files changed, 233 insertions(+), 2 deletions(-)
- create mode 100644 similarity.c
- create mode 100644 similarity.h
- create mode 100644 test-similarity.c
+ diffcore-rename.c |  215 +++++++++++++++++++----------------------------------
+ 1 files changed, 76 insertions(+), 139 deletions(-)
 
-diff --git a/.gitignore b/.gitignore
-index 62afef2..8ce6026 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -155,6 +155,7 @@ test-dump-cache-tree
- test-genrandom
- test-match-trees
- test-sha1
-+test-similarity
- common-cmds.h
- *.tar.gz
- *.dsc
-diff --git a/Makefile b/Makefile
-index 2e6fd8f..0568d0d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -300,7 +300,7 @@ DIFF_OBJS = \
- LIB_OBJS = \
- 	blob.o commit.o connect.o csum-file.o cache-tree.o base85.o \
- 	date.o diff-delta.o entry.o exec_cmd.o ident.o \
--	interpolate.o hash.o \
-+	interpolate.o hash.o similarity.o \
- 	lockfile.o \
- 	patch-ids.o \
- 	object.o pack-check.o pack-write.o patch-delta.o path.o pkt-line.o \
-@@ -975,7 +975,7 @@ endif
- 
- ### Testing rules
- 
--TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X test-absolute-path$X
-+TEST_PROGRAMS = test-chmtime$X test-genrandom$X test-date$X test-delta$X test-sha1$X test-match-trees$X test-absolute-path$X test-similarity$X
- 
- all:: $(TEST_PROGRAMS)
- 
-diff --git a/similarity.c b/similarity.c
-new file mode 100644
-index 0000000..0bd135c
---- /dev/null
-+++ b/similarity.c
-@@ -0,0 +1,152 @@
-+#include "cache.h"
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index ba038af..6c0d2d0 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -5,12 +5,21 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "hash.h"
 +#include "similarity.h"
-+
-+struct fingerprint_entry {
-+	void *src;
-+	void *dst;
-+	unsigned weight;
-+};
-+
-+struct score_entry {
-+	void *src;
-+	void *dst;
+ 
+-/* Table of rename/copy destinations */
++/* Table of rename/copy src files */
++static struct diff_rename_src {
++	struct diff_filespec *one;
++	unsigned short score; /* to remember the break score */
++} *rename_src;
++static int rename_src_nr, rename_src_alloc;
+ 
++/* Table of rename/copy destinations */
+ static struct diff_rename_dst {
+ 	struct diff_filespec *two;
+ 	struct diff_filepair *pair;
++	struct diff_rename_src *best_match;
 +	unsigned score;
-+	struct score_entry *next;
-+};
-+
-+void similarity_init(struct similarity *s)
+ } *rename_dst;
+ static int rename_dst_nr, rename_dst_alloc;
+ 
+@@ -49,16 +58,11 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
+ 	rename_dst[first].two = alloc_filespec(two->path);
+ 	fill_filespec(rename_dst[first].two, two->sha1, two->mode);
+ 	rename_dst[first].pair = NULL;
++	rename_dst[first].best_match = NULL;
++	rename_dst[first].score = 0;
+ 	return &(rename_dst[first]);
+ }
+ 
+-/* Table of rename/copy src files */
+-static struct diff_rename_src {
+-	struct diff_filespec *one;
+-	unsigned short score; /* to remember the break score */
+-} *rename_src;
+-static int rename_src_nr, rename_src_alloc;
+-
+ static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
+ 						   unsigned short score)
+ {
+@@ -109,88 +113,6 @@ static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
+ 		(!dst_len || dst->path[dst_len - 1] == '/');
+ }
+ 
+-struct diff_score {
+-	int src; /* index in rename_src */
+-	int dst; /* index in rename_dst */
+-	int score;
+-	int name_score;
+-};
+-
+-static int estimate_similarity(struct diff_filespec *src,
+-			       struct diff_filespec *dst,
+-			       int minimum_score)
+-{
+-	/* src points at a file that existed in the original tree (or
+-	 * optionally a file in the destination tree) and dst points
+-	 * at a newly created file.  They may be quite similar, in which
+-	 * case we want to say src is renamed to dst or src is copied into
+-	 * dst, and then some edit has been applied to dst.
+-	 *
+-	 * Compare them and return how similar they are, representing
+-	 * the score as an integer between 0 and MAX_SCORE.
+-	 *
+-	 * When there is an exact match, it is considered a better
+-	 * match than anything else; the destination does not even
+-	 * call into this function in that case.
+-	 */
+-	unsigned long max_size, delta_size, base_size, src_copied, literal_added;
+-	unsigned long delta_limit;
+-	int score;
+-
+-	/* We deal only with regular files.  Symlink renames are handled
+-	 * only when they are exact matches --- in other words, no edits
+-	 * after renaming.
+-	 */
+-	if (!S_ISREG(src->mode) || !S_ISREG(dst->mode))
+-		return 0;
+-
+-	/*
+-	 * Need to check that source and destination sizes are
+-	 * filled in before comparing them.
+-	 *
+-	 * If we already have "cnt_data" filled in, we know it's
+-	 * all good (avoid checking the size for zero, as that
+-	 * is a possible size - we really should have a flag to
+-	 * say whether the size is valid or not!)
+-	 */
+-	if (!src->cnt_data && diff_populate_filespec(src, 0))
+-		return 0;
+-	if (!dst->cnt_data && diff_populate_filespec(dst, 0))
+-		return 0;
+-
+-	max_size = ((src->size > dst->size) ? src->size : dst->size);
+-	base_size = ((src->size < dst->size) ? src->size : dst->size);
+-	delta_size = max_size - base_size;
+-
+-	/* We would not consider edits that change the file size so
+-	 * drastically.  delta_size must be smaller than
+-	 * (MAX_SCORE-minimum_score)/MAX_SCORE * min(src->size, dst->size).
+-	 *
+-	 * Note that base_size == 0 case is handled here already
+-	 * and the final score computation below would not have a
+-	 * divide-by-zero issue.
+-	 */
+-	if (base_size * (MAX_SCORE-minimum_score) < delta_size * MAX_SCORE)
+-		return 0;
+-
+-	delta_limit = (unsigned long)
+-		(base_size * (MAX_SCORE-minimum_score) / MAX_SCORE);
+-	if (diffcore_count_changes(src, dst,
+-				   &src->cnt_data, &dst->cnt_data,
+-				   delta_limit,
+-				   &src_copied, &literal_added))
+-		return 0;
+-
+-	/* How similar are they?
+-	 * what percentage of material in dst are from source?
+-	 */
+-	if (!dst->size)
+-		score = 0; /* should not happen */
+-	else
+-		score = (int)(src_copied * MAX_SCORE / max_size);
+-	return score;
+-}
+-
+ static void record_rename_pair(int dst_index, int src_index, int score)
+ {
+ 	struct diff_filespec *src, *dst;
+@@ -215,20 +137,6 @@ static void record_rename_pair(int dst_index, int src_index, int score)
+ 	rename_dst[dst_index].pair = dp;
+ }
+ 
+-/*
+- * We sort the rename similarity matrix with the score, in descending
+- * order (the most similar first).
+- */
+-static int score_compare(const void *a_, const void *b_)
+-{
+-	const struct diff_score *a = a_, *b = b_;
+-
+-	if (a->score == b->score)
+-		return b->name_score - a->name_score;
+-
+-	return b->score - a->score;
+-}
+-
+ struct file_similarity {
+ 	int src_dst, index;
+ 	struct diff_filespec *filespec;
+@@ -376,6 +284,67 @@ static int find_exact_renames(void)
+ 	return i;
+ }
+ 
++static void record_similarity(void *vsrc, void *vdst, unsigned score)
 +{
-+	init_hash(&s->fingerprints);
-+	init_hash(&s->scores);
-+}
++	struct diff_rename_src *src = vsrc;
++	struct diff_rename_dst *dst = vdst;
++	unsigned max_size = (src->one->size > dst->two->size) ?
++				src->one->size : dst->two->size;
 +
-+static int free_one_fingerprint(void *ve, void *data)
-+{
-+	struct fingerprint_entry *e = ve;
-+	free(e);
-+	return 0;
-+}
++	score = (dst->two->size != 0) ? (score * MAX_SCORE / max_size) : 0;
 +
-+static int free_one_score(void *ve, void *data)
-+{
-+	struct score_entry *e = ve;
-+	while (e) {
-+		struct score_entry *next = e->next;
-+		free(e);
-+		e = next;
++	/* Is there a match already that is better than we are? */
++	if (dst->best_match) {
++		if (score < dst->score)
++			return;
++		if (score == dst->score && !basename_same(src->one, dst->two))
++			return;
 +	}
-+	return 0;
++
++	dst->best_match = src;
++	dst->score = score;
 +}
 +
-+void similarity_free(struct similarity *s)
-+{
-+	for_each_hash(&s->fingerprints, free_one_fingerprint, NULL);
-+	free_hash(&s->fingerprints);
-+	for_each_hash(&s->scores, free_one_score, NULL);
-+	free_hash(&s->scores);
-+}
-+
-+static void add_fingerprint(struct hash_table *h, unsigned int fp,
-+		int type, void *data, unsigned weight)
-+{
-+	void **pos;
-+	struct fingerprint_entry *e;
-+
-+	pos = insert_hash(fp, h);
-+	if (!*pos) {
-+		e = xmalloc(sizeof(*e));
-+		e->weight = weight;
-+		e->src = e->dst = NULL;
-+		*pos = e;
-+	}
-+	else
-+		e = *pos;
-+
-+	if (type == SIMILARITY_SOURCE)
-+		e->src = data;
-+	else
-+		e->dst = data;
-+}
-+
-+void similarity_add(struct similarity *sim, int type, void *data,
-+		const char *buf, unsigned long sz, int is_text)
-+{
-+	int n;
-+	unsigned int accum1, accum2, hashval;
-+
-+	n = 0;
-+	accum1 = accum2 = 0;
-+	while (sz) {
-+		unsigned int c = *buf++;
-+		unsigned int old_1 = accum1;
-+		sz--;
-+
-+		/* Ignore CR in CRLF sequence if text */
-+		if (!is_text && c == '\r' && sz && *buf == '\n')
-+			continue;
-+
-+		accum1 = (accum1 << 7) ^ (accum2 >> 25);
-+		accum2 = (accum2 << 7) ^ (old_1 >> 25);
-+		accum1 += c;
-+		if (++n < 64 && c != '\n')
-+			continue;
-+		hashval = accum1 + accum2 * 0x61;
-+		add_fingerprint(&sim->fingerprints, hashval, type, data, n);
-+		n = 0;
-+		accum1 = accum2 = 0;
-+	}
-+}
-+
-+static unsigned hash_void_pair(void *a, void *b)
-+{
-+	return (unsigned)a + (unsigned)b;
-+}
-+
-+static int score_one_entry(void *vfp, void *vsim)
-+{
-+	struct fingerprint_entry *fp = vfp;
-+	struct similarity *sim = vsim;
-+	struct score_entry *score;
-+	void **pos;
-+
-+	if (!fp->src || !fp->dst)
-+		return 0;
-+
-+	pos = insert_hash(hash_void_pair(fp->src, fp->dst), &sim->scores);
-+	for (score = *pos; score; score = score->next) {
-+		if (score->src == fp->src && score->dst == fp->dst) {
-+			score->score += fp->weight;
-+			return 0;
-+		}
-+	}
-+
-+	score = xmalloc(sizeof(*score));
-+	score->src = fp->src;
-+	score->dst = fp->dst;
-+	score->score = fp->weight;
-+	score->next = *pos;
-+	*pos = score;
-+
-+	return 0;
-+}
-+
-+void similarity_score(struct similarity *s)
-+{
-+	for_each_hash(&s->fingerprints, score_one_entry, s);
-+}
-+
-+static int report_one_score(void *ve, void *vdata)
-+{
-+	struct score_entry *e;
-+	void (*fn)(void *, void *, unsigned) = vdata;
-+
-+	for (e = ve; e; e = e->next)
-+		fn(e->src, e->dst, e->score);
-+	return 1;
-+}
-+
-+void similarity_report(struct similarity *s,
-+		void (*fn)(void *, void *, unsigned))
-+{
-+	for_each_hash(&s->scores, report_one_score, fn);
-+}
-diff --git a/similarity.h b/similarity.h
-new file mode 100644
-index 0000000..6409ab8
---- /dev/null
-+++ b/similarity.h
-@@ -0,0 +1,24 @@
-+#ifndef SIMILARITY_H
-+#define SIMILARITY_H
-+
-+#include "hash.h"
-+
-+#define SIMILARITY_SOURCE 0
-+#define SIMILARITY_DEST   1
-+
-+struct similarity {
-+	struct hash_table fingerprints;
-+	struct hash_table scores;
-+};
-+
-+void similarity_init(struct similarity *s);
-+void similarity_free(struct similarity *s);
-+
-+void similarity_add(struct similarity *s, int type, void *data,
-+		const char *buf, unsigned long sz, int is_text);
-+
-+void similarity_score(struct similarity *s);
-+void similarity_report(struct similarity *s,
-+		void (*fn)(void *, void *, unsigned));
-+
-+#endif /* SIMILARITY_H */
-diff --git a/test-similarity.c b/test-similarity.c
-new file mode 100644
-index 0000000..5947420
---- /dev/null
-+++ b/test-similarity.c
-@@ -0,0 +1,54 @@
-+#include <string.h>
-+#include <stdio.h>
-+#include <errno.h>
-+
-+#include "git-compat-util.h"
-+#include "similarity.h"
-+#include "strbuf.h"
-+#include "xdiff-interface.h"
-+
-+static void print_rename(void *vone, void *vtwo, unsigned score) {
-+	const char *one = vone, *two = vtwo;
-+	printf("%u %s -> %s\n", score, one, two);
-+}
-+
-+static void add_file(struct similarity *sim, int type, const char *fn)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	int len;
-+
-+	len = strbuf_read_file(&sb, fn, 0);
-+	if (len < 0)
-+		die("unable to read %s: %s\n", fn, strerror(errno));
-+
-+	similarity_add(sim, type, strdup(fn),
-+			sb.buf, sb.len, buffer_is_binary(sb.buf, sb.len));
-+
-+	strbuf_release(&sb);
-+}
-+
-+int main(int argc, char **argv)
++static void find_approximate_renames(int minimum_score)
 +{
 +	struct similarity sim;
-+	struct strbuf line;
++	int i;
 +
 +	similarity_init(&sim);
-+	strbuf_init(&line, 0);
 +
-+	while (strbuf_getline(&line, stdin, '\n') != EOF) {
-+		if (!line.len)
-+			break;
-+		add_file(&sim, SIMILARITY_SOURCE, line.buf);
++	for (i = 0; i < rename_src_nr; i++) {
++		struct diff_rename_src *s = &rename_src[i];
++		diff_populate_filespec(s->one, 0);
++		similarity_add(&sim, SIMILARITY_SOURCE, s,
++				s->one->data, s->one->size,
++				diff_filespec_is_binary(s->one));
++		diff_free_filespec_data(s->one);
 +	}
-+	while (strbuf_getline(&line, stdin, '\n') != EOF)
-+		add_file(&sim, SIMILARITY_DEST, line.buf);
 +
-+	strbuf_release(&line);
++	for (i = 0; i < rename_dst_nr; i++) {
++		struct diff_rename_dst *d = &rename_dst[i];
++		if (d->pair)
++			continue;
++		diff_populate_filespec(d->two, 0);
++		similarity_add(&sim, SIMILARITY_DEST, d,
++				d->two->data, d->two->size,
++				diff_filespec_is_binary(d->two));
++		diff_free_filespec_data(d->two);
++	}
 +
 +	similarity_score(&sim);
-+	similarity_report(&sim, print_rename);
++	similarity_report(&sim, record_similarity);
 +
-+	similarity_free(&sim);
-+
-+	return 0;
++	for (i = 0 ; i < rename_dst_nr; i++) {
++		struct diff_rename_dst *d = &rename_dst[i];
++		if (d->pair)
++			continue;
++		if (d->score < minimum_score)
++			continue;
++		record_rename_pair(i, d->best_match - rename_src, d->score);
++	}
 +}
++
+ void diffcore_rename(struct diff_options *options)
+ {
+ 	int detect_rename = options->detect_rename;
+@@ -383,9 +352,8 @@ void diffcore_rename(struct diff_options *options)
+ 	int rename_limit = options->rename_limit;
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	struct diff_queue_struct outq;
+-	struct diff_score *mx;
+-	int i, j, rename_count;
+-	int num_create, num_src, dst_cnt;
++	int num_create, num_src;
++	int i, rename_count;
+ 
+ 	if (!minimum_score)
+ 		minimum_score = DEFAULT_RENAME_SCORE;
+@@ -462,38 +430,7 @@ void diffcore_rename(struct diff_options *options)
+ 	if (num_create * num_src > rename_limit * rename_limit)
+ 		goto cleanup;
+ 
+-	mx = xmalloc(sizeof(*mx) * num_create * num_src);
+-	for (dst_cnt = i = 0; i < rename_dst_nr; i++) {
+-		int base = dst_cnt * num_src;
+-		struct diff_filespec *two = rename_dst[i].two;
+-		if (rename_dst[i].pair)
+-			continue; /* dealt with exact match already. */
+-		for (j = 0; j < rename_src_nr; j++) {
+-			struct diff_filespec *one = rename_src[j].one;
+-			struct diff_score *m = &mx[base+j];
+-			m->src = j;
+-			m->dst = i;
+-			m->score = estimate_similarity(one, two,
+-						       minimum_score);
+-			m->name_score = basename_same(one, two);
+-			diff_free_filespec_blob(one);
+-		}
+-		/* We do not need the text anymore */
+-		diff_free_filespec_blob(two);
+-		dst_cnt++;
+-	}
+-	/* cost matrix sorted by most to least similar pair */
+-	qsort(mx, num_create * num_src, sizeof(*mx), score_compare);
+-	for (i = 0; i < num_create * num_src; i++) {
+-		struct diff_rename_dst *dst = &rename_dst[mx[i].dst];
+-		if (dst->pair)
+-			continue; /* already done, either exact or fuzzy. */
+-		if (mx[i].score < minimum_score)
+-			break; /* there is no more usable pair. */
+-		record_rename_pair(mx[i].dst, mx[i].src, mx[i].score);
+-		rename_count++;
+-	}
+-	free(mx);
++	find_approximate_renames(minimum_score);
+ 
+  cleanup:
+ 	/* At this point, we have found some renames and copies and they
 -- 
 1.5.3.4
