@@ -1,112 +1,104 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Tue, 30 Oct 2007 11:15:59 +0100
-Message-ID: <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
-References: <1193593581312-git-send-email-prohaska@zib.de> <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 11:16:21 2007
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: broken strings in localization (was: How to run git-gui always
+	in English?)
+Date: Tue, 30 Oct 2007 11:16:26 +0100
+Message-ID: <20071030111626.0mbeh417tw4wos0s@webmail.tu-harburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: prohaska@tib.de, spearce@spearce.org, johannes.schindelin@gmx.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 30 11:18:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Imo8q-0000O9-BV
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 11:16:12 +0100
+	id 1ImoB3-0000te-PC
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 11:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992AbXJ3KP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 06:15:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752017AbXJ3KP6
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 06:15:58 -0400
-Received: from mailer.zib.de ([130.73.108.11]:47058 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751551AbXJ3KP6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 06:15:58 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9UAEXW7007588;
-	Tue, 30 Oct 2007 11:14:34 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9UAEXrU008980
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 30 Oct 2007 11:14:33 +0100 (MET)
-In-Reply-To: <7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752489AbXJ3KRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 06:17:43 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752379AbXJ3KRm
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 06:17:42 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:45541 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752206AbXJ3KRl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 06:17:41 -0400
+Received: from mail2.rz.tu-harburg.de (mail2.rz.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9UAGR7W009551
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 30 Oct 2007 11:16:28 +0100
+Received: from webmail.tu-harburg.de (ocs3.rz.tu-harburg.de [134.28.202.66])
+	by mail2.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id l9UAGR6V026170;
+	Tue, 30 Oct 2007 11:16:27 +0100
+Received: by webmail.tu-harburg.de (Postfix, from userid 1001)
+	id ED32CE5034E; Tue, 30 Oct 2007 11:16:26 +0100 (CET)
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [62.180.123.245]) by
+	webmail.tu-harburg.de (Horde MIME library) with HTTP; Tue, 30 Oct 2007
+	11:16:26 +0100
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.5)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-
-On Oct 30, 2007, at 9:29 AM, Junio C Hamano wrote:
-
-> Steffen Prohaska <prohaska@zib.de> writes:
+Steffen Prohaska wrote:
+> And it's even worse. An error in the localization can completely
+> break git-gui. Apparently the German localization included in
+> msysgit's Git-1.5.3-preview20071019.exe _is_ broken (see
+> attached png).
 >
->> git push now allows you pushing a couple of branches that have
->> advanced, while ignoring all branches that have no local changes,
->> but are lagging behind their matching remote refs. This is done
->> without reporting errors.
->>
->> Thanks to Junio C. Hamano <gitster@pobox.com> for suggesting to
->> report in the summary that refs have been ignored.
->
-> I do not think this is a good idea at all.  Furthermore, I never
-> suggested anything about summary.
+> Shouldn't the localization code be a bit more fault tolerant?
 
-Yeah, sorry. You only asked if the summary does mention
-something; not suggesting it should do so.
+Thanks for this error description. However, this isn't a fault of the  
+localization per se; rather, it's a bad side-effects of git-gui using  
+its own script po2msg.sh instead of gettext's msgfmt to prepare  
+translations for inclusion in the program - and additionally the fact  
+that this po2msg.sh script is used by the creator of the setup.exe,  
+whereas the translators use msgfmt which will not exhibit this error.
 
+Here's what happened: The program code changed from using the string  
+"Prune from %s" to "Prune from" (just like program code changes  
+often). Before, the translation had a translation like this:
 
-> You are robbing the
-> information from the pusher which ones are pushed and which ones
-> are left behind.
+msgid "Prune from %s"
+msgstr "Abschneiden von %s"
 
-Absolutely; because the branches left behind are not
-interesting. The remote already is ahead of the local
-branches. The local branches are just left were they are. They
-have no new information on them.  Forcing an push would _rewind_
-the remote without adding anything to it.
+or similar, in any case with the including "%s". After the string  
+changed in the program, the next update of the translation file will  
+record the fact that the original string changed by changing the  
+translation like this:
 
-If you really intended to do a rewind you should have passed
-'--force' in the first place and my report would never be
-printed.
+#, fuzzy
+msgid "Prune from"
+msgstr "Abschneiden von %s"
 
+Note that the msgstr-translation has not been changed yet - this can  
+only be done by a human. For that reason, the update inserted the  
+"fuzzy" marker. Here's where the error came in: All strings marked as  
+"fuzzy" MUST NOT BE USED by msgfmt! And git-gui's script po2msg.sh  
+doesn't adhere to this rule. Boo, that's why such erroneous  
+translations made it into the msgcat catalog.
 
-> It simply is insane to make this strange rule 10/10 introduces
-> the default behaviour.  It is too specific to a particular
-> workflow (that is, working with a shared central repository,
-> having many locally tracking branches that are not often used
-> and become stale, and working on only things to completion
-> between pushes).
+In other words: The tcl msgcat procedure is the wrong end to deal with  
+that problem. Instead, those string argument checks should be done  
+when "compiling" the foo.po files into the foo.msg files. And that's  
+precisely what the msgfmt program is for: It correctly ignores all  
+"fuzzy" strings and it additionally checks the %s et al string formats  
+for correct translation (when used with the "-c" switch, as the  
+"shift-V" command in emacs po-mode or any other po file editor will  
+use).
 
-I don't think its very strange behaviour if you see it in the
-light of what the user wants to achieve. We are talking about
-the case were only fast forward pushes are allowed. So, we
-only talk about a push that has the goal of adding new local
-changes to the remote. The user says "git push" and means
-push my new local changes to the remote.
+@Dscho: That's why I'm rather unhappy with the addition of the  
+po2msg.sh script. Not adhering to the "fuzzy" marker is clearly a bug  
+and needs to be fixed there, but additionally you lose all format  
+checking that msgfmt gives to you. Syntax errors in the translator's  
+foo.po file should really be dealt with at msgfmt compile time, not  
+later at runtime. That's the whole point of that compile step.
 
-Unfortunately, the remote may have advanced differently from
-the local branch, and the push must fail because someone needs
-to merge first. git push recommends to do a pull and retry, which
-is the right thing to do.
+Regards,
 
-My strange rule 10/10 adds a check that verifies if the local
-side has something interesting to push. Only in this case a
-pull make sense. If you do not have something new, a pull will
-be a fast-forward, and just a waste of time.
-
-In this light I think the current behaviour is insane, because
-it asks the user to spend time on things that do not add any
-value. No new commits, no new information, no need to merge, no
-need to push again, no need to report errors ...
-
-> I think we could live with an optional behaviour, in addition to
-> the current "matching refs" behaviour, that is "matching refs,
-> ignoring strict ancestors", though, but I doubt it is worth the
-> addition.
-
-... just ignore strict ancestors by default.
-
-	Steffen
+Christian
