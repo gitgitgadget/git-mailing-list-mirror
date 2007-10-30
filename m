@@ -1,118 +1,63 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] no longer install git-svnimport, move to contrib/examples
-Date: Tue, 30 Oct 2007 14:24:27 +0000
-Message-ID: <20071030142427.6467.qmail@76c770d547b63d.315fe32.mid.smarden.org>
-References: <31e679430710250225w39a876d0w738d819245e514e@mail.gmail.com> <Pine.LNX.4.64.0710251132580.25221@racer.site> <20071026145520.2141.qmail@7a6a65599aed61.315fe32.mid.smarden.org> <Pine.LNX.4.64.0710261745110.4362@racer.site> <47222CB3.9070100@midwinter.com> <7vy7dpy8qf.fsf@gitster.siamese.dyndns.org>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Recording merges after repo conversion
+Date: Tue, 30 Oct 2007 15:29:44 +0100
+Message-ID: <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+	 <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
+	 <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 15:24:25 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Benoit SIGOURE" <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: "Peter Karlsson" <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Tue Oct 30 15:30:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ims12-00053a-P7
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 15:24:25 +0100
+	id 1Ims6T-000748-W0
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 15:30:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036AbXJ3OYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 10:24:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752750AbXJ3OYK
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 10:24:10 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:56620 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751251AbXJ3OYJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 10:24:09 -0400
-Received: (qmail 6468 invoked by uid 1000); 30 Oct 2007 14:24:27 -0000
+	id S1753126AbXJ3O3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 10:29:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753155AbXJ3O3s
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 10:29:48 -0400
+Received: from nz-out-0506.google.com ([64.233.162.239]:2056 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938AbXJ3O3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 10:29:48 -0400
+Received: by nz-out-0506.google.com with SMTP id s18so1459270nze
+        for <git@vger.kernel.org>; Tue, 30 Oct 2007 07:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=h/7OI+n5kdwEZtRU3NZWPlMwZIlis2lIU6EXYJeEmLE=;
+        b=IM2QQ8Sd+Mr4hC1MBY8jvvlEgvAFmlrAwlnSKMIkV6hFYyO4HD+Dl5wsIUKlhW+S7z4yn5G7E3nWnXGKlLQOtQDjy5EHpehAxfFu6DK9cr9pz8YcUt6i10HptxRaDnYcOWFpGAMPK3eDil01K/pggCWbxXNiKVThmxq7UVy455c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QdAHWTTNAtUZE7h5sKt2NTeEIVDTBaWntU3aVRVhm1523ICK+CxTg88rT1MaXyshvF8T2ng8MPT1On7v8ZQqeSGnL/th2jgKPXEImUh9Kmjp5GoFLhWJFXhk3dgLwbs++nVh7H9XXkjd20lv0AJMnaUKimtawAzJNyFaH5PmPmg=
+Received: by 10.114.103.1 with SMTP id a1mr4143567wac.1193754584421;
+        Tue, 30 Oct 2007 07:29:44 -0700 (PDT)
+Received: by 10.114.235.4 with HTTP; Tue, 30 Oct 2007 07:29:44 -0700 (PDT)
+In-Reply-To: <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
 Content-Disposition: inline
-In-Reply-To: <7vy7dpy8qf.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2007 at 12:30:16PM -0700, Junio C Hamano wrote:
-> Steven Grimm <koreth@midwinter.com> writes:
-> > Johannes Schindelin wrote:
-> >>> I'm not sure these are worth fixing, I'd rather suggest to drop
-> >>> git-svnimport in favor of git-svn, and not installing it in future
-> >>> versions.
-> >>>
-> >> I already proposed this.  The outcome was... silent.
-> >
-> > Me too, and same reaction.
-> >
-> > So I vote we interpret that as, "No objections from anyone."
+On 10/30/07, Peter Karlsson <peter@softwolves.pp.se> wrote:
+> Benoit SIGOURE:
 >
-> Likewise.
+> > I think you can use grafts do achieve this.
+>
+> That seems to work, but the grafts list doesn't seem to propagate when I
+> push/pull/clone. Is it possible to get that to work?
+>
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- .gitignore                                         |    1 -
- Documentation/cmd-list.perl                        |    1 -
- Makefile                                           |    3 +--
- contrib/completion/git-completion.bash             |    1 -
- .../examples/git-svnimport.perl                    |    0 
- .../examples}/git-svnimport.txt                    |    0 
- 6 files changed, 1 insertions(+), 5 deletions(-)
- rename git-svnimport.perl => contrib/examples/git-svnimport.perl (100%)
- rename {Documentation => contrib/examples}/git-svnimport.txt (100%)
+No, the grafts file is purely local. To achieve your goal, you'd have
+to 'git filter-branch' before pushing/cloning. But beware: this _will_
+rewrite your current branch(es).
 
-diff --git a/.gitignore b/.gitignore
-index 62afef2..8670081 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -128,7 +128,6 @@ git-status
- git-stripspace
- git-submodule
- git-svn
--git-svnimport
- git-symbolic-ref
- git-tag
- git-tar-tree
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 1061fd8..8d21d42 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -185,7 +185,6 @@ git-status                              mainporcelain
- git-stripspace                          purehelpers
- git-submodule                           mainporcelain
- git-svn                                 foreignscminterface
--git-svnimport                           foreignscminterface
- git-symbolic-ref                        plumbingmanipulators
- git-tag                                 mainporcelain
- git-tar-tree                            plumbinginterrogators
-diff --git a/Makefile b/Makefile
-index 72f5ef4..eb98d91 100644
---- a/Makefile
-+++ b/Makefile
-@@ -225,8 +225,7 @@ SCRIPT_SH = \
- SCRIPT_PERL = \
- 	git-add--interactive.perl \
- 	git-archimport.perl git-cvsimport.perl git-relink.perl \
--	git-cvsserver.perl git-remote.perl \
--	git-svnimport.perl git-cvsexportcommit.perl \
-+	git-cvsserver.perl git-remote.perl git-cvsexportcommit.perl \
- 	git-send-email.perl git-svn.perl
- 
- SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index e760930..599b2fc 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -346,7 +346,6 @@ __git_commands ()
- 		ssh-*)            : transport;;
- 		stripspace)       : plumbing;;
- 		svn)              : import export;;
--		svnimport)        : import;;
- 		symbolic-ref)     : plumbing;;
- 		tar-tree)         : deprecated;;
- 		unpack-file)      : plumbing;;
-diff --git a/git-svnimport.perl b/contrib/examples/git-svnimport.perl
-similarity index 100%
-rename from git-svnimport.perl
-rename to contrib/examples/git-svnimport.perl
-diff --git a/Documentation/git-svnimport.txt b/contrib/examples/git-svnimport.txt
-similarity index 100%
-rename from Documentation/git-svnimport.txt
-rename to contrib/examples/git-svnimport.txt
--- 
-1.5.3.4
+--
+larsh
