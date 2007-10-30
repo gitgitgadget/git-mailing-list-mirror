@@ -1,65 +1,56 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [PATCH 0/4] Build in some more things
-Date: Tue, 30 Oct 2007 12:49:13 -0400 (EDT)
-Message-ID: <Pine.LNX.4.64.0710301237490.7357@iabervon.org>
-References: <Pine.LNX.4.64.0710292049450.7357@iabervon.org>
- <4726DC3D.2030202@viscovery.net>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] add throughput to progress display
+Date: Tue, 30 Oct 2007 08:07:31 +0100
+Message-ID: <4726D833.90800@viscovery.net>
+References: <alpine.LFD.0.9999.0710291904190.22100@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Oct 30 17:49:39 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Oct 30 08:07:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImuHY-0000Q9-Oq
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 17:49:37 +0100
+	id 1ImlCb-0003Ng-Aw
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 08:07:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752638AbXJ3QtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 12:49:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752354AbXJ3QtW
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 12:49:22 -0400
-Received: from iabervon.org ([66.92.72.58]:56122 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752448AbXJ3QtV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 12:49:21 -0400
-Received: (qmail 28780 invoked by uid 1000); 30 Oct 2007 16:49:13 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 30 Oct 2007 16:49:13 -0000
-In-Reply-To: <4726DC3D.2030202@viscovery.net>
+	id S1752996AbXJ3HHi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 03:07:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbXJ3HHi
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 03:07:38 -0400
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:11165 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752928AbXJ3HHh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 03:07:37 -0400
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1ImlBu-0004zh-Ip; Tue, 30 Oct 2007 08:07:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id B62D7546; Tue, 30 Oct 2007 08:07:31 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <alpine.LFD.0.9999.0710291904190.22100@xanadu.home>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62668>
 
-On Tue, 30 Oct 2007, Johannes Sixt wrote:
+Nicolas Pitre schrieb:
+> diff --git a/progress.h b/progress.h
+> index 07b56bd..eba457f 100644
+> --- a/progress.h
+> +++ b/progress.h
+> @@ -1,6 +1,21 @@
+>  #ifndef PROGRESS_H
+>  #define PROGRESS_H
+>  
+> +#include <sys/time.h>
 
-> Daniel Barkalow schrieb:
-> > The main effect of this series is removing the fork/exec from pushing via
-> > the git protocol (aside from the later fork/exec in connect.c of course).
-> > 
-> > It also heads off some tempting transport-related fetch bugs, which I will
-> > not introduce in a later patch.
-> > 
-> > * Miscellaneous const changes and utilities
-> >   Adds two small utility functions, and marks a bunch of stuff as const; the
-> >   const stuff is to keep builtin-fetch from getting messed up without a
-> >   warning, because it wants some lists not to change.
-> > 
-> > * Build-in peek-remote, using transport infrastructure.
-> > * Build-in send-pack, with an API for other programs to call.
-> > * Use built-in send-pack.
-> 
-> I assume this goes on top of current master or db/fetch-pack. The patches have
-> some conflicts with js/forkexec (nothing serious, though). Maybe it makes
-> sense to rebase on top of that.
+System headers should be taken care of by git-compat-util.h. In fact, it 
+already pulls in <sys/time.h>, hence, it shouldn't be necessary here.
 
-Current master. As I said to Junio a moment ago (and forgot to cc you, 
-oops), I think 1/4 should go before js/forkexec, being trivial, and 2/4 
-should also, since it simply removes duplicate code that js/forkexec 
-updates; I should redo 3/4 after the code settles down, and 4/4 is trivial 
-but depends on 3/4.
-
-	-Daniel
-*This .sig left intentionally blank*
+-- Hannes
