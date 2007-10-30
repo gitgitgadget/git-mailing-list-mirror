@@ -1,83 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] gitweb : disambiguate heads and tags withs the same name
-Date: Tue, 30 Oct 2007 11:19:48 -0700
-Message-ID: <7v3avsmpmj.fsf@gitster.siamese.dyndns.org>
-References: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: remote#branch
+Date: Tue, 30 Oct 2007 11:19:11 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710301100470.30120@woody.linux-foundation.org>
+References: <20071029174000.GA4449@efreet.light.src>
+ <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
+ <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
+ <20071030030104.GK21133@thunk.org> <7vtzo9s221.fsf@gitster.siamese.dyndns.org>
+ <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org>
+ <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>
+ <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org>
+ <vpq8x5kh4rr.fsf@bauges.imag.fr>
+ <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: pasky@ucw.cz, git@vger.kernel.org
-To: "Guillaume Seguin" <guillaume@segu.in>
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:20:10 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Tom Prince <tom.prince@ualberta.net>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:21:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImvhB-0006Pw-JK
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 19:20:10 +0100
+	id 1Imvhv-0006dx-Fc
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 19:20:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbXJ3ST4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 14:19:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753120AbXJ3ST4
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 14:19:56 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:43369 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753111AbXJ3STz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 14:19:55 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 199932FA;
-	Tue, 30 Oct 2007 14:20:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7E6299058C;
-	Tue, 30 Oct 2007 14:20:12 -0400 (EDT)
-In-Reply-To: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
-	(Guillaume Seguin's message of "Sun, 28 Oct 2007 14:12:53 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753069AbXJ3SUm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 14:20:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752969AbXJ3SUl
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 14:20:41 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:34098 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751808AbXJ3SUk (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 14:20:40 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9UIJD2Z028114
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 30 Oct 2007 11:19:14 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9UIJBU3020959;
+	Tue, 30 Oct 2007 11:19:11 -0700
+In-Reply-To: <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
+X-Spam-Status: No, hits=-2.432 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62725>
 
-"Guillaume Seguin" <guillaume@segu.in> writes:
 
-> Avoid wrong disambiguation that would link logs/trees of tags and heads which
-> share the same name to the same page, leading to a disambiguation that would
-> prefer the tag, thus making it impossible to access the corresponding
-> head log and
-> tree without hacking the url by hand.
->
-> ---
->  gitweb/gitweb.perl |   14 ++++++++------
->  1 files changed, 8 insertions(+), 6 deletions(-)
->
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 48e21da..f918c00 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3534,6 +3534,7 @@ sub git_tags_body {
->  	for (my $i = $from; $i <= $to; $i++) {
->  		my $entry = $taglist->[$i];
->  		my %tag = %$entry;
-> +		my $name = "refs/tags/$tag{'name'}";
->  		my $comment = $tag{'subject'};
->  		my $comment_short;
->  		if (defined $comment) {
-> @@ -3570,8 +3571,8 @@ sub git_tags_body {
->  		      "<td class=\"link\">" . " | " .
->  		      $cgi->a({-href => href(action=>$tag{'reftype'},
-> hash=>$tag{'refid'})}, $tag{'reftype'});
->  		if ($tag{'reftype'} eq "commit") {
-> -			print " | " . $cgi->a({-href => href(action=>"shortlog",
-> hash=>$tag{'name'})}, "shortlog") .
-> -			      " | " . $cgi->a({-href => href(action=>"log",
-> hash=>$tag{'name'})}, "log");
-> +			print " | " . $cgi->a({-href => href(action=>"shortlog",
-> hash=>$name)}, "shortlog") .
-> ...
 
-Just in case anybody is wondering, the patch is whitespace
-mangled and lacks a sign-off.
+On Tue, 30 Oct 2007, Linus Torvalds wrote:
+> 
+> So if you want to make that RFC have any relevance what-so-ever, then show 
+> some interoperability issue. Which is why I'm bringing up a web browser: 
+> that interop issue simply *does*not*exist*.
 
-I suspect what the patch does may be a good idea, although I
-haven't followed the existing code closely to verify it.
+Btw, the reason I care is that the whole ".. but it's a standard" thinking 
+really is dangerous. It's how you create absolute and utter crap.
+
+It's why I have also brought up XML in this discussion, because XML is a 
+classic example of something where this ".. but it's a standard" thinking 
+has resulted in really bad solutions. It's pushed as a way to 
+"interoperate", but then, since everybody does different things, the only 
+thing you can actually interoperate with is by having a common parsing 
+library for a REALLY HORRIBLY BAD FORMAT!
+
+The same is true of a URL. What is there to interoperate with? The whole 
+(and only) point of the git remote URL is to point git to a different git 
+repository. There's no other reason to use it. So the only possible case 
+we care about interoperability is with other git uses.
+
+And those other git uses are not RFC1738-quoted, are they? 
+
+			Linus
