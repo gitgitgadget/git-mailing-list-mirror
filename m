@@ -1,62 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 0/3] faster inexact rename handling
-Date: Tue, 30 Oct 2007 01:29:22 -0700
-Message-ID: <7vlk9lm2e5.fsf@gitster.siamese.dyndns.org>
-References: <20071030042118.GA14729@sigill.intra.peff.net>
-	<alpine.LFD.0.999.0710292156580.30120@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Andy C <andychup@gmail.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Oct 30 09:30:00 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 07/10] push: use same rules as git-rev-parse to resolve refspecs
+Date: Tue, 30 Oct 2007 09:49:23 +0100
+Message-ID: <13414001-D708-41E2-A35B-FDBB1103F1AC@zib.de>
+References: <1193593581312-git-send-email-prohaska@zib.de> <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <7v3avtngzc.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 09:51:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImmTx-0001eS-6R
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 09:29:53 +0100
+	id 1Immoi-0005yY-Gt
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 09:51:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276AbXJ3I3d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 04:29:33 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751262AbXJ3I3c
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 04:29:32 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:45574 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751198AbXJ3I3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 04:29:31 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 7B6392F0;
-	Tue, 30 Oct 2007 04:29:52 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2BB798E67B;
-	Tue, 30 Oct 2007 04:29:47 -0400 (EDT)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752459AbXJ3IvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 04:51:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752375AbXJ3IvF
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 04:51:05 -0400
+Received: from mailer.zib.de ([130.73.108.11]:39381 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752175AbXJ3IvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 04:51:04 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9U8lv9s028868;
+	Tue, 30 Oct 2007 09:49:42 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9U8luVU016749
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Tue, 30 Oct 2007 09:47:57 +0100 (MET)
+In-Reply-To: <7v3avtngzc.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> On Tue, 30 Oct 2007, Jeff King wrote:
+On Oct 30, 2007, at 9:28 AM, Junio C Hamano wrote:
+
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> This commit changes the rules for resolving refspecs to match the
+>> rules for resolving refs in rev-parse. git-rev-parse uses clear rules
+>> to resolve a short ref to its full name, which are well documented.
+>> The rules for resolving refspecs documented in git-send-pack were
+>> less strict and harder to understand. This commit replaces them by
+>> the rules of git-rev-parse.
 >>
->>   - no improvement on smaller datasets. Running "git-whatchanged -M
->>     --raw -l0" on the linux-2.6 repo takes about the same time with the
->>     old and new code (presumably the algorithmic savings of the new code
->>     are lost in a higher constant factor, so when n is small, it is a
->>     wash).
+>> The unified rules are easier to understand and better resolve  
+>> ambiguous
+>> cases. You can now push from a repository containing several branches
+>> ending on the same short name.
 >
-> Have you compared the results? IOW, does it find the *same* renames?
->
-> I'm a bit worried about the fact that you just pick a single (arbitrary) 
-> src/dst per fingerprint. Yes, it should be limited, but that seems to be a 
-> bit too *extremely* limited. But if it gives the same results in practice, 
-> maybe nobody cares?
+> As you introduced long names around 5/10 to have two different
+> ones for clarity with the goal of unifying them, so once you
+> unified the rules, it probably is a good idea to rename the long
+> "do_this_with_X_rule()" and "do_this_with_Y_rule()" functions
+> back to "do_this()", isn't it?
 
-If it always gives the same results in practice, obviously
-nobody can even notice.
+Absolutely.
 
-However, merging this series to 'pu' breaks rebase-merge test
-t3402 among other things.
+But I'm not sure if I'm the one who unifies them.
+
+	Steffen
