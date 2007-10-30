@@ -1,73 +1,69 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: Recording merges after repo conversion
-Date: Tue, 30 Oct 2007 22:46:00 +0100
-Message-ID: <8c5c35580710301446y119f8199u8dce4b500316376a@mail.gmail.com>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
-	 <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
-	 <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
-	 <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
-	 <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
+From: Jeff King <peff@peff.net>
+Subject: Re: remote#branch
+Date: Tue, 30 Oct 2007 19:58:23 -0400
+Message-ID: <20071030235823.GA22747@coredump.intra.peff.net>
+References: <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org> <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Benoit SIGOURE" <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Oct 30 22:46:19 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pascal Obry <pascal@obry.net>, Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Tom Prince <tom.prince@ualberta.net>,
+	Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 00:58:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Imyuf-000348-8p
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 22:46:17 +0100
+	id 1In0z2-0006aG-5W
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 00:58:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753882AbXJ3VqE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 17:46:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753875AbXJ3VqE
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 17:46:04 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:20236 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753716AbXJ3VqB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 17:46:01 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so2000994rvb
-        for <git@vger.kernel.org>; Tue, 30 Oct 2007 14:46:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hiQ8qsEUMh3NbH4eIqxL2MdDsc4LKx0o/yKDQlZ6gwo=;
-        b=Ev7SrVbvFGotJaW8QaRtlOPUqZBkowjeHN4TbH4iL1SwEMMM5P33djysYhb4f8fLw1yWy7GciRVq1w7J+mmRSyD+Cipm7QiEUF3PZGRhdkmwWUU2wEutR8Uw2FfmkmLJCV7+9f7AVYSE1ZuYx75PKgDta7AQIzFiYdGYOM2J5iY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=c8B6bwQz3wjq4sUxcOfDzTH1GXvk7gmXaej+dsQYCoJNYD8a+3jzu9VCBEJ67lq2+SAKCsYDaRp2OGXddqvIwK09ojExt6qYRN5BWdzd2Ki6au3MZdXxBn/9C7q4WjxFmHQAQF2tcAOBmUC7zWtEsEt2HavfdLdpPKITTH25n5g=
-Received: by 10.114.197.1 with SMTP id u1mr8729336waf.1193780760982;
-        Tue, 30 Oct 2007 14:46:00 -0700 (PDT)
-Received: by 10.114.235.4 with HTTP; Tue, 30 Oct 2007 14:46:00 -0700 (PDT)
-In-Reply-To: <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
+	id S1753923AbXJ3X62 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 19:58:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753198AbXJ3X62
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 19:58:28 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2479 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754022AbXJ3X61 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 19:58:27 -0400
+Received: (qmail 6056 invoked by uid 111); 30 Oct 2007 23:58:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 30 Oct 2007 19:58:25 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2007 19:58:23 -0400
 Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62762>
 
-On Oct 30, 2007 10:06 PM, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> Lars Hjemli:
->
-> > No, the grafts file is purely local.
->
-> Hmm, any chance that will change in a future version?
+On Tue, Oct 30, 2007 at 12:38:27PM -0700, Linus Torvalds wrote:
 
-Not likely
+> So if you want to follow the RFC, you'd better give a real reason. And no, 
+> the existence of an RFC, and the fact that people use the same name for 
+> things that superficially _look_ the same is not a reason in itself.
+> 
+> So hands up, people. Anybody who asked for RFC quoting. Give a damn 
+> *reason* already!
 
->
-> > To achieve your goal, you'd have to 'git filter-branch' before
-> > pushing/cloning. But beware: this _will_ rewrite your current branch(es).
->
-> Ouch. I'll have to think about whether I want to do that, then...
+I didn't ask for RFC quoting, but a nice side effect of URL syntax is
+that they are machine parseable. If you wanted to write a tool to pick
+the URLs out of this email and clone them as git repos, then how do you
+find the end of:
 
-Well, it isn't dangerous, but if someone has already cloned your repo
-_and_ commited local changes they'll need to rebase their work onto
-the new branch(es). Basically, you'll want to inform these people that
-you're going to rewrite the branches.
+  http://host/git repo with spaces in the path
 
--- 
-larsh
+compared to:
+
+  http://host/git+repo+with+spaces+in+the+path
+
+I don't know if that's worth changing anything in git (in fact, I'm not
+even clear on _what_ people want to change; the point of this discussion
+seems to be to argue about terminology). But you did ask for any reason
+for quoting URLs.
+
+-Peff
