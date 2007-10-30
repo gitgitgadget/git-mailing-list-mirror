@@ -1,85 +1,81 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: remote#branch
-Date: Tue, 30 Oct 2007 10:58:30 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
-References: <20071029174000.GA4449@efreet.light.src>
- <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
- <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
- <20071030030104.GK21133@thunk.org> <7vtzo9s221.fsf@gitster.siamese.dyndns.org>
- <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org>
- <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>
- <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org>
- <vpq8x5kh4rr.fsf@bauges.imag.fr>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict
+ subset of remote ref
+Date: Tue, 30 Oct 2007 14:00:22 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710301306210.7357@iabervon.org>
+References: <1193593581312-git-send-email-prohaska@zib.de>
+ <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de>
+ <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de>
+ <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de>
+ <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de>
+ <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de>
+ <7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Tom Prince <tom.prince@ualberta.net>, Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 30 19:00:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 30 19:01:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ImvNP-0008CD-Kg
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 18:59:44 +0100
+	id 1ImvP9-0000eI-4R
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 19:01:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755297AbXJ3R7a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 13:59:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754906AbXJ3R73
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 13:59:29 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38701 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754565AbXJ3R72 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 13:59:28 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9UHwVLA026864
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Oct 2007 10:58:32 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9UHwUD3020166;
-	Tue, 30 Oct 2007 10:58:30 -0700
-In-Reply-To: <vpq8x5kh4rr.fsf@bauges.imag.fr>
-X-Spam-Status: No, hits=-2.432 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754328AbXJ3SA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 14:00:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754620AbXJ3SA0
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 14:00:26 -0400
+Received: from iabervon.org ([66.92.72.58]:50136 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754267AbXJ3SAY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 14:00:24 -0400
+Received: (qmail 30746 invoked by uid 1000); 30 Oct 2007 18:00:22 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 30 Oct 2007 18:00:22 -0000
+In-Reply-To: <7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62719>
 
+On Tue, 30 Oct 2007, Junio C Hamano wrote:
 
-
-On Tue, 30 Oct 2007, Matthieu Moy wrote:
->
-> Linus Torvalds <torvalds@linux-foundation.org> writes:
+> Steffen Prohaska <prohaska@zib.de> writes:
 > 
-> > Nobody cares about git being consistent with a web browser.
+> > git push now allows you pushing a couple of branches that have
+> > advanced, while ignoring all branches that have no local changes,
+> > but are lagging behind their matching remote refs. This is done
+> > without reporting errors.
+> >
+> > Thanks to Junio C. Hamano <gitster@pobox.com> for suggesting to
+> > report in the summary that refs have been ignored.
 > 
-> Why do you keep talking about web browser?
-> 
-> URLs are _not_ a web-browser thing. A web browser is just _one_
-> example of program which uses URLs.
+> I do not think this is a good idea at all.  Furthermore, I never
+> suggested anything about summary.  You are robbing the
+> information from the pusher which ones are pushed and which ones
+> are left behind.
 
-I keep talking about a web browser, because THE ONLY POINT of following a 
-standard is to interoperate.
+I think this case should be a warning rather than an error, though. It is 
+certainly true that the user isn't intending to update those remote refs, 
+because there is no local change to update them with. And it is also true 
+that those local refs being stale is no impediment to updating the refs 
+which are not stale, which is what the user does intend to do. I can't see 
+a workflow which would be hurt by this change, because we know that, if 
+the user follows the instructions and then tries the push again, it will 
+have no effect.
 
-So if you cannot find something to interoperate with, why the hell would 
-you care about the standard?
+If the concern is robbing the user of information, we should simply 
+provide the information, rather than interrupting the user's work to make 
+them act on the information before completing the essentially independant 
+operation they're attempting.
 
-So here's a question: why do people bother to quote irrelevant RFC's?
+In any case, it's misleading to suggest that the user "pull first", 
+because we know that there would be no effect to pushing again after 
+merging. In this case, it would be more accurate to suggest that the user 
+"pull instead". Perhaps the message should be
+"%s: nothing to push to %s, but you are not up-to-date and may want to 
+pull"
 
-Following those RFC's would make git not interoperate WITH ITSELF, and use 
-illogically different formats for the same things.
-
-So if you want to make that RFC have any relevance what-so-ever, then show 
-some interoperability issue. Which is why I'm bringing up a web browser: 
-that interop issue simply *does*not*exist*.
-
-Why is that so hard to understand?
-
-			Linus
+	-Daniel
+*This .sig left intentionally blank*
