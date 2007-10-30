@@ -1,80 +1,65 @@
-From: "Aneesh Kumar" <aneesh.kumar@gmail.com>
-Subject: Re: stg branch --create test v2.6.24-rc1 doesn't work
-Date: Tue, 30 Oct 2007 10:20:05 +0530
-Message-ID: <cc723f590710292150y752034c7x5642758eb51a7ed6@mail.gmail.com>
-References: <cc723f590710260342t5fd0bdc3nc1ea5198cea1a604@mail.gmail.com>
-	 <b0943d9e0710291011p11bd8901udeb758fa653610bc@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: remote#branch
+Date: Mon, 29 Oct 2007 21:50:02 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710292147080.30120@woody.linux-foundation.org>
+References: <20071016021933.GH12156@machine.or.cz> <Pine.LNX.4.64.0710161139530.25221@racer.site>
+ <20071016210904.GI26127@efreet.light.src> <Pine.LNX.4.64.0710162228560.25221@racer.site>
+ <20071027204757.GA3058@efreet.light.src> <Pine.LNX.4.64.0710280000240.4362@racer.site>
+ <20071029174000.GA4449@efreet.light.src> <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org>
+ <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org>
+ <20071030030104.GK21133@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: kha@treskal.com, "Git Mailing List" <git@vger.kernel.org>
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 30 05:50:22 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: Theodore Tso <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Tue Oct 30 05:50:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Imj3V-0003Vi-NN
-	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 05:50:22 +0100
+	id 1Imj3o-0003a7-Kv
+	for gcvg-git-2@gmane.org; Tue, 30 Oct 2007 05:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752412AbXJ3EuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 00:50:07 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751871AbXJ3EuH
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 00:50:07 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:6376 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751051AbXJ3EuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 00:50:05 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so2360225wah
-        for <git@vger.kernel.org>; Mon, 29 Oct 2007 21:50:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=bnMRabdMqjsRd/GvVJpHt2L5tKEB3oiWpGD5I2kvnJg=;
-        b=tKkvtNgDEK6rydrm2+SHB7M2ySDMUrwJwcAGvH+xOE1aHaibAOAgkn+9wIWajFCFcESmYWldh597Zz6Irf6X6OYxcDAsZDd4EcUBdXHQm25qoRZJN1TNhb2+OZ0PRxJSW4FSAGEVSNBK5fjKogq+uadXMFH72g/EGNr5CwlZyis=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Ke1L1p+jqz6mg/N1DW02NMBe5CuSAZTNtUlTwqMxcGqubNCrahmc0O7MhUbrgfHJPK2xWsRUSHJeAbLbZle9c8Oj7YBdVGS/Gy0vU6Q106EgswyiL2/a5ZcTRCzgYk/fhARI//3IAFjErXrMNf+YBeybHVHdosgsDVkoXftLNUk=
-Received: by 10.114.175.16 with SMTP id x16mr4659295wae.1193719805079;
-        Mon, 29 Oct 2007 21:50:05 -0700 (PDT)
-Received: by 10.115.48.11 with HTTP; Mon, 29 Oct 2007 21:50:05 -0700 (PDT)
-In-Reply-To: <b0943d9e0710291011p11bd8901udeb758fa653610bc@mail.gmail.com>
-Content-Disposition: inline
+	id S1752828AbXJ3Eu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 00:50:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752819AbXJ3Eu0
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 00:50:26 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:45113 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752534AbXJ3EuZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 00:50:25 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9U4o3m5011953
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 29 Oct 2007 21:50:04 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9U4o2Ii009587;
+	Mon, 29 Oct 2007 21:50:03 -0700
+In-Reply-To: <20071030030104.GK21133@thunk.org>
+X-Spam-Status: No, hits=-2.436 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62661>
-
-On 10/29/07, Catalin Marinas <catalin.marinas@gmail.com> wrote:
-> On 26/10/2007, Aneesh Kumar <aneesh.kumar@gmail.com> wrote:
-> > $ stg branch --create test v2.6.24-rc1
-> > Checking for changes in the working directory ... done
-> > Don't know how to determine parent branch from "v2.6.24-rc1"
-> > Branch "test" created
-> > [test@linux-review-ext]$ git log
-> >
-> >
-> > Throws an error/warning in the above command.
-> >
-> > Also import then gives
-> >
-> > [test@linux-review-ext]$ stg import
-> > /home/opensource/patches/ext4-patch-queue/ext4_mballoc_freespace_accounting_fix.patch
-> > Checking for changes in the working directory ... done
-> > fatal: cebdeed27b068dcc3e7c311d7ec0d9c33b5138c2 is not a valid 'commit' object
-> > stg import: git-commit-tree failed with code 128
->
-> What version of StGIT are you using?
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62662>
 
 
-Latest stgit.  d4356ac6143757131b58c95ca5c6a7b386cc6087
 
+On Mon, 29 Oct 2007, Theodore Tso wrote:
+> 
+> So let's not call them URL's, since they're clearly not.
 
-> You could try 'stg branch --create test v2.6.24-rc1^{commit} but I
-> thought latest StGIT adds this by default.
->
+Hey, you go ahead.
 
+Me, I'll refuse to make up a new name just because somebody thinks they 
+"own" the concept of URL's.
 
--aneesh
+Let's face it, nobody really cares.
+
+		Linus
