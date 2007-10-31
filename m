@@ -1,60 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
-Date: Wed, 31 Oct 2007 15:31:20 -0700
-Message-ID: <7vzlxygblz.fsf@gitster.siamese.dyndns.org>
-References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de>
-	<7vodefj2lk.fsf@gitster.siamese.dyndns.org>
-	<20071031055303.GB3326@atjola.homenet>
-	<20071031134358.GD15182@dpotapov.dyndns.org>
-	<20071031140028.GA30207@diana.vm.bytemark.co.uk>
-	<20071031143641.GF15182@dpotapov.dyndns.org>
-	<20071031180557.GA12211@coredump.intra.peff.net>
-	<7v8x5jgdck.fsf@gitster.siamese.dyndns.org>
-	<20071031215625.GC14211@coredump.intra.peff.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: Newbie: report of first experience with git-rebase.
+Date: Wed, 31 Oct 2007 18:35:39 -0400 (EDT)
+Message-ID: <Pine.LNX.4.64.0710311823070.7357@iabervon.org>
+References: <87d4uv3wh1.fsf@osv.gnss.ru> <20071031195702.GB24332@atjola.homenet>
+ <874pg73u6h.fsf@osv.gnss.ru> <Pine.LNX.4.64.0710312111170.4362@racer.site>
+ <20071031212923.GL4569@fieldses.org> <4728FC5C.30709@midwinter.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dmitry Potapov <dpotapov@gmail.com>,
-	Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
-	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 23:31:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sergei Organov <osv@javad.com>, git@vger.kernel.org
+To: Steven Grimm <koreth@midwinter.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 23:35:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InM6B-00066a-NV
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 23:31:44 +0100
+	id 1InMAE-0006z4-TE
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 23:35:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221AbXJaWba (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 18:31:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753260AbXJaWba
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 18:31:30 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:46828 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750879AbXJaWb3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 18:31:29 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 186C92EF;
-	Wed, 31 Oct 2007 18:31:51 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4E41690D19;
-	Wed, 31 Oct 2007 18:31:44 -0400 (EDT)
-In-Reply-To: <20071031215625.GC14211@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 31 Oct 2007 17:56:26 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753700AbXJaWfl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 18:35:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753750AbXJaWfl
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 18:35:41 -0400
+Received: from iabervon.org ([66.92.72.58]:38635 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752940AbXJaWfk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 18:35:40 -0400
+Received: (qmail 17746 invoked by uid 1000); 31 Oct 2007 22:35:39 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 31 Oct 2007 22:35:39 -0000
+In-Reply-To: <4728FC5C.30709@midwinter.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62892>
 
-Jeff King <peff@peff.net> writes:
+On Wed, 31 Oct 2007, Steven Grimm wrote:
 
-> ... I had one concern that
-> I was tracking down: is the author name encoding necessarily the same as
-> the commit text encoding?
+> J. Bruce Fields wrote:
+> > I ran into the same confusion as the original poster when starting to
+> > use rebase, so I suspect it's common.
+> >   
+> 
+> I've been using rebase just about every day for close to a year and it *still*
+> annoys me when it happens. Especially the "Did you forget to git add?" part of
+> the message. The thought that always goes through my head is, "No, Mr. Rebase,
+> I did NOT forget to git add. I remembered to git add, then you were too stupid
+> to do the right thing after that."
+> 
+> Just happened to me this morning, in fact: I had a quick hack in place to work
+> around a bug, the bug got fixed for real, and I rebased. In the process of
+> conflict resolution I saw that my workaround wasn't needed any more and
+> accepted the upstream version of that particular part of the file. Ran git-add
+> on it, then rebase --continue, and boom, was accused of forgetting to run
+> git-add.
+> 
+> It is a minor annoyance and nowadays I just sigh a bit and run --skip instead,
+> but it'd be nice if it didn't happen. I don't like having to care whether or
+> not I happened to change other files in a particular commit after I resolve
+> conflicts in one file in favor of the upstream version.
 
-The user is screwing himself already if that is the case and
-uses -s to format-patch, isn't he?
+I think it's worth requiring you to say --skip in order to acknowledge 
+that you won't have as many commits and you'll lose the commit message. On 
+the other hand, the message should probably suggest that you might want to 
+skip this commit instead of suggesting that you come up with some other 
+change to include in it.
+
+Certainly, if "git diff" returns no changes, "git add" is a bad 
+suggestion, and it would be nicer to suggest something possibly correct.
+
+	-Daniel
+*This .sig left intentionally blank*
