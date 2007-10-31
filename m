@@ -1,219 +1,217 @@
-From: Baz <brian.ewins@gmail.com>
-Subject: Re: [PATCH] Implement sending mails over TLS in git-send-email.
-Date: Wed, 31 Oct 2007 21:45:42 +0000
-Message-ID: <2faad3050710311445l51d1152cs6761803e2f3a77d3@mail.gmail.com>
-References: <1193845859-1788-1-git-send-email-Simon.Sasburg@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
+Date: Wed, 31 Oct 2007 14:53:47 -0700
+Message-ID: <7v8x5jgdck.fsf@gitster.siamese.dyndns.org>
+References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de>
+	<7vodefj2lk.fsf@gitster.siamese.dyndns.org>
+	<20071031055303.GB3326@atjola.homenet>
+	<20071031134358.GD15182@dpotapov.dyndns.org>
+	<20071031140028.GA30207@diana.vm.bytemark.co.uk>
+	<20071031143641.GF15182@dpotapov.dyndns.org>
+	<20071031180557.GA12211@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Simon Sasburg" <simon.sasburg@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:46:12 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:54:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InLNu-0002q4-W9
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:45:59 +0100
+	id 1InLWM-0004vu-MR
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312AbXJaVpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:45:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753750AbXJaVpp
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:45:45 -0400
-Received: from rn-out-0910.google.com ([64.233.170.191]:33540 "EHLO
-	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751775AbXJaVpp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 17:45:45 -0400
-Received: by rn-out-0102.google.com with SMTP id s46so380852rnb
-        for <git@vger.kernel.org>; Wed, 31 Oct 2007 14:45:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=TriHyKfwo6nOw6+mp06q37A1f5V1Ym9mItij9+XhKJI=;
-        b=p64H0k0xUBpX2GG9NLYIo0+iNSdRT6zPGfR3y3Ca6GFC+Jn0LgVh0o9Y90ApioIULr+MQ6HRQg6zMFCq89gXO0OZBhM8AyB5yx3GhSux7lb7eFPicFACNQG4mUD62SrdDjMBoddkm+g+oVuLhB+f5dHEFtkdxIhYeMN6tAKprfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mmEpwb+8kx/m+38KVdZ7x2o06J1k8+MWFb9iqJAGRE+ihIBI1H7k66o0EWqXcNGN2owX3fHOGoqT00Ts/2wWI6M+tHfVbBLyQvtn14O+eQ7sBvUEkc3EAemVZxJt28ZvRDhHMJCoPj3YrbjzrYgtNKOjACYnwGkkHLafDBKr4xw=
-Received: by 10.142.232.20 with SMTP id e20mr2249912wfh.1193867142571;
-        Wed, 31 Oct 2007 14:45:42 -0700 (PDT)
-Received: by 10.142.43.18 with HTTP; Wed, 31 Oct 2007 14:45:42 -0700 (PDT)
-In-Reply-To: <1193845859-1788-1-git-send-email-Simon.Sasburg@gmail.com>
-Content-Disposition: inline
+	id S1755774AbXJaVx6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:53:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751705AbXJaVx6
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:53:58 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:42448 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751935AbXJaVx5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 17:53:57 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 27AA22EF;
+	Wed, 31 Oct 2007 17:54:18 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 21CFF90CDA;
+	Wed, 31 Oct 2007 17:54:11 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62885>
 
-On 31/10/2007, Simon Sasburg <simon.sasburg@gmail.com> wrote:
-> Signed-off-by: Simon Sasburg <Simon.Sasburg@gmail.com>
-> ---
->
-> With this patch I was able to use git-send-email to send mail through gmail's
-> smpt server, which uses TLS.
+Jeff King <peff@peff.net> writes:
 
-Net::SMTP::SSL handles this just fine.
+> It is our old friend vger adding the iso-8859-1 header, I think, since
+> no encoding was specified.
+>
+> I think the problem is that git-format-patch only decides whether to
+> append a MIME header based on the commit message contents; it does not
+> take the Signed-Off-By into account. This may also be the cause of the
+> recent complaints from Matti Aarnio.
 
-> Net::SMTP::TLS apparently doesn't do proper error handling, so the TLS
-> codepath is essentially not checked for errors. I'm not really happy with this.
+I agree.  "Signed-off-by" as part of the existing commit message
+should be fine, but with "format-patch -s" the code needs to be
+careful.
 
-Net::SMTP::TLS is a bit ugly. It seems unable to do any checking of
-the server certificate, a limitation its inherited from the original
-script it was hacked from. I suspect some people wouldn't touch this
-option if that's the case (although I doubt any tin-foil hatters use
-gmail anyway, and we don't use this check for SSL either).
+The following is on top of 'master'.  I haven't tested it.  If it
+works, great.  If it doesn't, at least it should illustrate what
+needs to be touched.
 
-Secondly, Net::SMTP::SSL has no problem connecting to gmail - it does
-everything Net::SMTP::TLS does and more; you can use all of the
-options of IO::Socket::SSL with it. A common problem seems to be not
-having Authen::SASL installed (this is required to authenticate with
-gmail) - the one thing Net::SMTP::TLS *does* do is auth without using
-that module.
+Ideally a fix to 'maint' is needed --- the pretty-print
+infrastructure on the 'master' side has strbuf changes and the
+patch may have conflicts at the textual level, but it should be
+straightforward to adjust to it by anybody so inclined (hint,
+hint).
 
-In other words, this patch should be entirely unnecessary if you have
-Authen::SASL installed - could you try this? (I've checked for myself,
-git-send-email sends me mail fine via gmail without this patch)
+---
 
-> The Net::SMTP::TLS docs say this about error handling:
-> >ERROR HANDLING:
-> >This module will croak in the event of an SMTP error. Should you wish to handle this gracefully in your application, you may wrap your mail transmission in an eval {} block and check $@ afterward.
->
-> But my perl knowledge is way too limited for me to know if/how that helps.
-> (This patch was just made by copying existing code and fiddling with it untill it did what i wanted)
->
-> Maybe someone who knows more about perl than I do can finish this?
+ builtin-branch.c      |    2 +-
+ builtin-log.c         |    2 +-
+ builtin-rev-list.c    |    3 ++-
+ builtin-show-branch.c |    2 +-
+ commit.c              |    5 ++---
+ commit.h              |    4 +++-
+ log-tree.c            |   15 ++++++++++++++-
+ 7 files changed, 24 insertions(+), 9 deletions(-)
 
-My perl knowledge is a also bit stale, havent had to use it in anger
-for a few years; your code looks ok to me, its the dodgy module I'm
-worried about :)
-
-> Or give an estimate how difficult it would be for me to fix after pointing me in the right direction?
-> (I'm willing to learn a little perl for this, but not too much :-p)
-> ---
->  git-send-email.perl |   64 +++++++++++++++++++++++++++++++++-----------------
->  1 files changed, 42 insertions(+), 22 deletions(-)
->
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 96051bc..5cf220f 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -88,6 +88,9 @@ Options:
->
->     --smtp-ssl     If set, connects to the SMTP server using SSL.
->
-> +   --smtp-tls     If set, connects to the SMTP server using TLS.
-> +                  Overrides --smtp-ssl.
-> +
->     --suppress-from Suppress sending emails to yourself if your address
->                    appears in a From: line. Defaults to off.
->
-> @@ -175,7 +178,7 @@ my ($quiet, $dry_run) = (0, 0);
->
->  # Variables with corresponding config settings
->  my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
-> -my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl);
-> +my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl, $smtp_tls);
->  my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
->
->  my %config_bool_settings = (
-> @@ -184,6 +187,7 @@ my %config_bool_settings = (
->      "suppressfrom" => [\$suppress_from, 0],
->      "signedoffcc" => [\$signed_off_cc, 1],
->      "smtpssl" => [\$smtp_ssl, 0],
-> +    "smtptls" => [\$smtp_tls, 0],
->  );
->
->  my %config_settings = (
-> @@ -213,6 +217,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
->                     "smtp-user=s" => \$smtp_authuser,
->                     "smtp-pass=s" => \$smtp_authpass,
->                     "smtp-ssl!" => \$smtp_ssl,
-> +                   "smtp-tls!" => \$smtp_tls,
->                     "identity=s" => \$identity,
->                     "compose" => \$compose,
->                     "quiet" => \$quiet,
-> @@ -613,31 +618,46 @@ X-Mailer: git-send-email $gitversion
->                         die "The required SMTP server is not properly defined."
->                 }
->
-> -               if ($smtp_ssl) {
-> -                       $smtp_server_port ||= 465; # ssmtp
-> -                       require Net::SMTP::SSL;
-> -                       $smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
-> +               if ($smtp_tls) {
-> +                       require Net::SMTP::TLS;
-> +                       $smtp ||= Net::SMTP::TLS->new(
-> +                               $smtp_server,
-> +                               Port => $smtp_server_port,
-> +                               User => $smtp_authuser,
-> +                               Password=> $smtp_authpass);
-> +
-> +                       $smtp->mail( $raw_from );
-> +                       $smtp->to( @recipients );
-> +                       $smtp->data;
-> +                       $smtp->datasend("$header\n$message");
-> +                       $smtp->dataend();
->                 }
->                 else {
-> -                       require Net::SMTP;
-> -                       $smtp ||= Net::SMTP->new((defined $smtp_server_port)
-> -                                                ? "$smtp_server:$smtp_server_port"
-> -                                                : $smtp_server);
-> -               }
-> +                       if ($smtp_ssl) {
-> +                               require Net::SMTP::SSL;
-> +                               $smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
-> +                       }
-> +                       else {
-> +                               require Net::SMTP;
-> +                               $smtp ||= Net::SMTP->new((defined $smtp_server_port)
-> +                                                        ? "$smtp_server:$smtp_server_port"
-> +                                                        : $smtp_server);
-> +                       }
->
-> -               if (!$smtp) {
-> -                       die "Unable to initialize SMTP properly.  Is there something wrong with your config?";
-> -               }
-> +                       if (!$smtp) {
-> +                               die "Unable to initialize SMTP properly.  Is there something wrong with your config?";
-> +                       }
->
-> -               if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
-> -                       $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
-> +                       if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
-> +                               $smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
-> +                       }
-> +                       $smtp->mail( $raw_from ) or die $smtp->message;
-> +                       $smtp->to( @recipients ) or die $smtp->message;
-> +                       $smtp->data or die $smtp->message;
-> +                       $smtp->datasend("$header\n$message") or die $smtp->message;
-> +                       $smtp->dataend() or die $smtp->message;
-> +                       $smtp->ok or die "Failed to send $subject\n".$smtp->message;
->                 }
-> -               $smtp->mail( $raw_from ) or die $smtp->message;
-> -               $smtp->to( @recipients ) or die $smtp->message;
-> -               $smtp->data or die $smtp->message;
-> -               $smtp->datasend("$header\n$message") or die $smtp->message;
-> -               $smtp->dataend() or die $smtp->message;
-> -               $smtp->ok or die "Failed to send $subject\n".$smtp->message;
->         }
->         if ($quiet) {
->                 printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
-> @@ -651,7 +671,7 @@ X-Mailer: git-send-email $gitversion
->                         print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
->                 }
->                 print "From: $sanitized_sender\nSubject: $subject\nCc: $cc\nTo: $to\n\n";
-> -               if ($smtp) {
-> +               if ($smtp && !$smtp_tls) {
->                         print "Result: ", $smtp->code, ' ',
->                                 ($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
->                 } else {
-> --
-> 1.5.3.4.498.g9c514
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+diff --git a/builtin-branch.c b/builtin-branch.c
+index 3da8b55..3e020cc 100644
+--- a/builtin-branch.c
++++ b/builtin-branch.c
+@@ -276,7 +276,7 @@ static void print_ref_item(struct ref_item *item, int maxwidth, int verbose,
+ 		commit = lookup_commit(item->sha1);
+ 		if (commit && !parse_commit(commit)) {
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-					    &subject, 0, NULL, NULL, 0);
++					    &subject, 0, NULL, NULL, 0, 0);
+ 			sub = subject.buf;
+ 		}
+ 		printf("%c %s%-*s%s %s %s\n", c, branch_get_color(color),
+diff --git a/builtin-log.c b/builtin-log.c
+index e8b982d..8b2bf63 100644
+--- a/builtin-log.c
++++ b/builtin-log.c
+@@ -787,7 +787,7 @@ int cmd_cherry(int argc, const char **argv, const char *prefix)
+ 			struct strbuf buf;
+ 			strbuf_init(&buf, 0);
+ 			pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-			                    &buf, 0, NULL, NULL, 0);
++			                    &buf, 0, NULL, NULL, 0, 0);
+ 			printf("%c %s %s\n", sign,
+ 			       sha1_to_hex(commit->object.sha1), buf.buf);
+ 			strbuf_release(&buf);
+diff --git a/builtin-rev-list.c b/builtin-rev-list.c
+index 4439332..6970467 100644
+--- a/builtin-rev-list.c
++++ b/builtin-rev-list.c
+@@ -86,7 +86,8 @@ static void show_commit(struct commit *commit)
+ 		struct strbuf buf;
+ 		strbuf_init(&buf, 0);
+ 		pretty_print_commit(revs.commit_format, commit,
+-					&buf, revs.abbrev, NULL, NULL, revs.date_mode);
++				    &buf, revs.abbrev, NULL, NULL,
++				    revs.date_mode, 0);
+ 		if (buf.len)
+ 			printf("%s%c", buf.buf, hdr_termination);
+ 		strbuf_release(&buf);
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 07a0c23..6dc835d 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -266,7 +266,7 @@ static void show_one_commit(struct commit *commit, int no_name)
+ 	strbuf_init(&pretty, 0);
+ 	if (commit->object.parsed) {
+ 		pretty_print_commit(CMIT_FMT_ONELINE, commit,
+-					&pretty, 0, NULL, NULL, 0);
++				    &pretty, 0, NULL, NULL, 0, 0);
+ 		pretty_str = pretty.buf;
+ 	}
+ 	if (!prefixcmp(pretty_str, "[PATCH] "))
+diff --git a/commit.c b/commit.c
+index ac24266..8262f6a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -479,7 +479,7 @@ static int get_one_line(const char *msg)
+ }
+ 
+ /* High bit set, or ISO-2022-INT */
+-static int non_ascii(int ch)
++int non_ascii(int ch)
+ {
+ 	ch = (ch & 0xff);
+ 	return ((ch & 0x80) || (ch == 0x1b));
+@@ -1046,12 +1046,11 @@ static void pp_remainder(enum cmit_fmt fmt,
+ void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
+ 				  struct strbuf *sb, int abbrev,
+ 				  const char *subject, const char *after_subject,
+-				  enum date_mode dmode)
++				  enum date_mode dmode, int plain_non_ascii)
+ {
+ 	unsigned long beginning_of_body;
+ 	int indent = 4;
+ 	const char *msg = commit->buffer;
+-	int plain_non_ascii = 0;
+ 	char *reencoded;
+ 	const char *encoding;
+ 
+diff --git a/commit.h b/commit.h
+index b779de8..678c62b 100644
+--- a/commit.h
++++ b/commit.h
+@@ -61,13 +61,15 @@ enum cmit_fmt {
+ 	CMIT_FMT_UNSPECIFIED,
+ };
+ 
++extern int non_ascii(int);
+ extern enum cmit_fmt get_commit_format(const char *arg);
+ extern void format_commit_message(const struct commit *commit,
+                                   const void *format, struct strbuf *sb);
+ extern void pretty_print_commit(enum cmit_fmt fmt, const struct commit*,
+                                 struct strbuf *,
+                                 int abbrev, const char *subject,
+-                                const char *after_subject, enum date_mode);
++                                const char *after_subject, enum date_mode,
++				int non_ascii_present);
+ 
+ /** Removes the first commit from a list sorted by date, and adds all
+  * of its parents.
+diff --git a/log-tree.c b/log-tree.c
+index 3763ce9..a34beb0 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -125,6 +125,18 @@ static unsigned int digits_in_number(unsigned int number)
+ 	return result;
+ }
+ 
++static int has_non_ascii(const char *s)
++{
++	int ch;
++	if (!s)
++		return 0;
++	while ((ch = *s++) != '\0') {
++		if (non_ascii(ch))
++			return 1;
++	}
++	return 0;
++}
++
+ void show_log(struct rev_info *opt, const char *sep)
+ {
+ 	struct strbuf msgbuf;
+@@ -273,7 +285,8 @@ void show_log(struct rev_info *opt, const char *sep)
+ 	 */
+ 	strbuf_init(&msgbuf, 0);
+ 	pretty_print_commit(opt->commit_format, commit, &msgbuf,
+-				  abbrev, subject, extra_headers, opt->date_mode);
++			    abbrev, subject, extra_headers, opt->date_mode,
++			    has_non_ascii(opt->add_signoff));
+ 
+ 	if (opt->add_signoff)
+ 		append_signoff(&msgbuf, opt->add_signoff);
