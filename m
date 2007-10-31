@@ -1,79 +1,181 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 09:35:06 +0100
-Organization: glandium.org
-Message-ID: <20071031083506.GA23316@glandium.org>
-References: <20071030053732.GA16963@hermes.priv> <fg8h9l$b4n$1@ger.gmane.org> <20071031013856.GA23274@coredump.intra.peff.net> <200710310249.17233.jnareb@gmail.com> <20071031015708.GA24403@coredump.intra.peff.net> <47282A0D.9010400@op5.se>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: Possible bug: git-svn leaves broken tree in case of error
+Date: Wed, 31 Oct 2007 01:42:57 -0700
+Message-ID: <20071031084257.GA2911@mayonaise>
+References: <1193729426.30755.32.camel@asl.dorms.spbu.ru> <20071031075524.GB7798@muzzle>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Wed Oct 31 09:37:29 2007
+Cc: git@vger.kernel.org
+To: Anton Korobeynikov <asl@math.spbu.ru>
+X-From: git-owner@vger.kernel.org Wed Oct 31 09:43:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In94o-0003oN-V0
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:37:27 +0100
+	id 1In9Au-0004ib-HW
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:43:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098AbXJaIhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 04:37:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752978AbXJaIhN
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:37:13 -0400
-Received: from vawad.err.no ([85.19.200.177]:36711 "EHLO vawad.err.no"
+	id S1753333AbXJaInC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 04:43:02 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753303AbXJaInC
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:43:02 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44640 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752636AbXJaIhL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 04:37:11 -0400
-Received: from aputeaux-153-1-85-235.w86-205.abo.wanadoo.fr ([86.205.43.235] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1In94G-0004yw-U0; Wed, 31 Oct 2007 09:36:58 +0100
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1In92Y-00065F-TC; Wed, 31 Oct 2007 09:35:07 +0100
+	id S1751210AbXJaInA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 04:43:00 -0400
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id 54B897DC0FE;
+	Wed, 31 Oct 2007 01:42:58 -0700 (PDT)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 01:42:58 -0700
 Content-Disposition: inline
-In-Reply-To: <47282A0D.9010400@op5.se>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+In-Reply-To: <20071031075524.GB7798@muzzle>
 User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 31, 2007 at 08:09:01AM +0100, Andreas Ericsson <ae@op5.se> wrote:
-> Jeff King wrote:
-> >On Wed, Oct 31, 2007 at 02:49:16AM +0100, Jakub Narebski wrote:
-> >
-> >>>...which is a quoting mechanism, and it's not even one commonly used in
-> >>>emails (i.e., people have written "parse a URL from this text" scripts
-> >>>for RFC-encoded URLs, but _not_ for shell quoting).
-> >>I don't think RFC-encoding is quoting mechanism used in emails, either.
-> >
-> >That's funny, because I have hundreds of mails where that is the case,
-> >and none where people used shell-quoting.  Most URLs don't _need_ any
-> >encoding, so we don't notice either way. But are you honestly telling me
-> >that if you needed to communicate a URL with a space via email, you
-> >would write:
-> >
-> >  'http://foo.tld/url with a space'
-> >
-> >rather than:
-> >
-> >  http://foo.tld/url+with+a+space
-> >
-> >?
-> >
+Eric Wong <normalperson@yhbt.net> wrote:
+> Anton Korobeynikov <asl@math.spbu.ru> wrote:
+> > Hello, Everyone.
+> > 
+> > I noticed this bug several times. Consider the following conditions are
+> > met:
+> > - We're syncing from svn using git-svn :)
+> > - We have authors file provided
+> > - We have a changeset with author unlisted in the authors file.
+> > 
+> > git-svn dies due to the following code:
+> > sub check_author {
+> >         my ($author) = @_;
+> >         if (!defined $author || length $author == 0) {
+> >                 $author = '(no author)';
+> >         }
+> >         if (defined $::_authors && ! defined $::users{$author}) {
+> >                 die "Author: $author not defined in $::_authors file\n";
+> >         }
+> >         $author;
+> > }
+> > 
+> > Unfortunately it leaves repository in some middle state: git-svn itself
+> > thinks, that it synced with everything, but git itself doesn't "see" any
+> > changesets anymore. I found no way to repair tree after such situation,
+> > so I had to repull from scratch.
+> > 
+> > I found myself, that this should be warning (and fix in this case is
+> > trivial), not error (maybe some commandline switch to control behaviour,
+> > etc). It can be even error, but breaking tree is definitely bug in this
+> > case.
 > 
-> I think 99% of all URL's communicated via email are copy-pasted from a
-> webbrowsers location bar. I believe most git urls (or grls, or whatever
-> you wanna call them) communicated via email are copy-pasted from ones
-> config, or written out manually.
+> You should be able to change the numbers in *-maxRev back to
+> an old revision in .git/svn/.metadata.  Does that fix things for you
+> so you can resume synching again?
+> 
+> I'll have to investigate the die()-ing of check_authors since
+> that should cause git-svn to quit before the maxRev numbers
+> get incremented.
 
-Or copied from gitweb.
+With the following test case, I'm not able to reproduce what you're
+describing.
 
-Mike
+But yes, die-ing here and not being able to gracefully recover is a
+nasty bug...
+
+Warning instead of die-ing here is not a good option, because it can
+lead to inconsistent author data inside populating history.  I believe
+it's better to error out immediately so the user can fix their authors
+file.
+
+diff --git a/t/t9117-git-svn-authors-file.sh b/t/t9117-git-svn-authors-file.sh
+new file mode 100755
+index 0000000..4566307
+--- /dev/null
++++ b/t/t9117-git-svn-authors-file.sh
+@@ -0,0 +1,85 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Eric Wong
++#
++
++test_description='git-svn authors file tests'
++
++. ./lib-git-svn.sh
++
++cat > svn-authors <<EOF
++aa = AAAAAAA AAAAAAA <aa@example.com>
++bb = BBBBBBB BBBBBBB <bb@example.com>
++EOF
++
++test_expect_success 'setup svnrepo' "
++	svn mkdir -m aa --username aa $svnrepo/aa &&
++	svn mkdir -m bb --username bb $svnrepo/bb &&
++	svn mkdir -m cc --username cc $svnrepo/cc &&
++	svn mkdir -m dd --username dd $svnrepo/dd
++	"
++
++test_expect_failure 'start import with incomplete authors file' "
++	git-svn clone --authors-file=svn-authors $svnrepo x
++	"
++
++test_expect_success 'imported 2 revisions successfully' "
++	cd x &&
++		test \`git rev-list refs/remotes/git-svn | wc -l\` -eq 2 &&
++		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
++		  grep '^author BBBBBBB BBBBBBB <bb@example\.com> ' &&
++		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
++		  grep '^author AAAAAAA AAAAAAA <aa@example\.com> ' &&
++		cd ..
++	"
++
++cat >> svn-authors <<EOF
++cc = CCCCCCC CCCCCCC <cc@example.com>
++dd = DDDDDDD DDDDDDD <dd@example.com>
++EOF
++
++test_expect_success 'continues to import once authors have been added' "
++	cd x &&
++		git-svn fetch --authors-file=../svn-authors &&
++		test \`git rev-list refs/remotes/git-svn | wc -l\` -eq 4 &&
++		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
++		  grep '^author DDDDDDD DDDDDDD <dd@example\.com> ' &&
++		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
++		  grep '^author CCCCCCC CCCCCCC <cc@example\.com> ' &&
++		cd ..
++	"
++
++test_expect_success 'authors-file against globs' "
++	svn mkdir -m globs --username aa \
++	  $svnrepo/aa/trunk $svnrepo/aa/branches $svnrepo/aa/tags &&
++	git-svn clone --authors-file=svn-authors -s $svnrepo/aa aa-work &&
++	svn mkdir -m aa/branches/bb --username bb $svnrepo/aa/branches/bb &&
++	svn mkdir -m aa/branches/ee --username ee $svnrepo/aa/branches/ee &&
++	svn mkdir -m aa/branches/cc --username cc $svnrepo/aa/branches/cc
++	"
++
++test_expect_failure 'fetch fails on ee' "
++	cd aa-work &&
++		git-svn fetch --authors-file=../svn-authors
++	"
++
++tmp_config_get () {
++	GIT_CONFIG=.git/svn/.metadata git config --get "$1"
++}
++
++test_expect_success 'failure happened without negative side effects' "
++	test 6 -eq \"\`tmp_config_get svn-remote.svn.branches-maxRev\`\" &&
++	test 6 -eq \"\`tmp_config_get svn-remote.svn.tags-maxRev\`\"
++	"
++
++cat >> ../svn-authors <<EOF
++ee = EEEEEEE EEEEEEE <ee@example.com>
++EOF
++
++test_expect_success 'fetch continues after authors-file is fixed' "
++	git-svn fetch --authors-file=../svn-authors &&
++	test 8 -eq \"\`tmp_config_get svn-remote.svn.branches-maxRev\`\" &&
++	test 8 -eq \"\`tmp_config_get svn-remote.svn.tags-maxRev\`\"
++	"
++
++test_done
+
+-- 
+Eric Wong
