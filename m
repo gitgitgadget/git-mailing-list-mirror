@@ -1,62 +1,116 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
-Date: Wed, 31 Oct 2007 17:36:41 +0300
-Message-ID: <20071031143641.GF15182@dpotapov.dyndns.org>
-References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org> <20071031055303.GB3326@atjola.homenet> <20071031134358.GD15182@dpotapov.dyndns.org> <20071031140028.GA30207@diana.vm.bytemark.co.uk>
+From: Johan Herland <johan@herland.net>
+Subject: Re: Recording merges after repo conversion
+Date: Wed, 31 Oct 2007 15:37:26 +0100
+Message-ID: <200710311537.30384.johan@herland.net>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se> <200710311343.58414.johan@herland.net> <Pine.LNX.4.64.0710311340500.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 15:37:07 2007
+Content-Type: multipart/signed;
+  boundary="nextPart19580535.Hxp9lTjWbq";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 31 15:38:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InEgn-0007DG-58
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 15:37:01 +0100
+	id 1InEiC-0007dZ-Jt
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 15:38:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755564AbXJaOgq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 10:36:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756188AbXJaOgq
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 10:36:46 -0400
-Received: from smtp03.mtu.ru ([62.5.255.50]:55272 "EHLO smtp03.mtu.ru"
+	id S1756728AbXJaOiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 10:38:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbXJaOiL
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 10:38:11 -0400
+Received: from sam.opera.com ([213.236.208.81]:60065 "EHLO sam.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752357AbXJaOgp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 10:36:45 -0400
-Received: from potapov.private (ppp85-141-239-252.pppoe.mtu-net.ru [85.141.239.252])
-	by smtp03.mtu.ru (Postfix) with ESMTP id EA412467165;
-	Wed, 31 Oct 2007 17:36:41 +0300 (MSK)
-Received: from dpotapov by potapov.private with local (Exim 4.63)
-	(envelope-from <dpotapov@gmail.com>)
-	id 1InEgT-0006Wt-LP; Wed, 31 Oct 2007 17:36:41 +0300
-Content-Disposition: inline
-In-Reply-To: <20071031140028.GA30207@diana.vm.bytemark.co.uk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756551AbXJaOiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 10:38:09 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l9VEbUIQ004295
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 31 Oct 2007 14:37:30 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0710311340500.4362@racer.site>
+X-Virus-Scanned: ClamAV 0.91.1/4647/Wed Oct 31 12:43:08 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62840>
 
-On Wed, Oct 31, 2007 at 03:00:28PM +0100, Karl Hasselstr=F6m wrote:
-> On 2007-10-31 16:43:58 +0300, Dmitry Potapov wrote:
+--nextPart19580535.Hxp9lTjWbq
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+
+On Wednesday 31 October 2007, Johannes Schindelin wrote:
+> On Wed, 31 Oct 2007, Johan Herland wrote:
+> > On Wednesday 31 October 2007, Johannes Schindelin wrote:
+> > > On Wed, 31 Oct 2007, Peter Karlsson wrote:
+> > > > Johannes Schindelin:
+> > > > > Why should it?  This would contradict the whole "a commit sha1=20
+> > > > > hashes the commit, and by inference the _whole_ history"=20
+> > > > > principle.
+> > > >=20
+> > > > Does it?
+> > >=20
+> > > Yes!  Of course!  If what you want becomes possible, I could make an=
+=20
+> > > evil change in history long gone, and slip it by you.  You could not=
+=20
+> > > even see the history which changed.
+> >=20
+> > Well, technically, if the grafts file was part of the repo, you wouldn'=
+t=20
+> > be able to change the (in-tree) grafts file without affecting the SHA1=
+=20
+> > of HEAD. In other words, given a commit SHA1 sum, you can be sure that=
+=20
+> > someone else who checks out the same commit (and has no local=20
+> > modification to their grafts file) will see exactly the same history as=
+=20
+> > you do.
 >=20
-> > I believe that the issue is with Junio's mail client. Indeed, the
-> > context encoding for the mail *body* was specified as 8859-1, but
-> > that should have none effect on fields in the mail header, because
-> > any field is the header should be either printable ASCII or encoded
-> > to contain only ASCII characters as specified in RFC 1522:
->=20
-> Yes. But it's the body that's been mangled -- specifically, the
-> Sign-off line.
+> All this does not change the fact that installing a graft and 'git gc=20
+> --prune'ing gets rid of the old history.  D'oh.
 
-Hmm... I looked at the mail again and I cannot see where 8859-1 is
-specified. It seems that context encoding is not specified at all.
-Of course, it is incorrect to use non ASCII characters in a mail
-without specifying encoding. Apparently, because I use utf-8 in the
-terminal, the Sign-off line displays correctly for me, so I did not
-notice the problem. Sorry for the noise...
+So will rebasing and --prune'ing, or pulling a rebased branch and --prune'i=
+ng.=20
+Git already gives you _plenty_ of different ropes to hang yourself with. Th=
+e=20
+question is whether adding yet another one is worth it.
 
-Dmitry
+> Automatically installing grafts is wrong.
+
+I tend to agree with you here, because the possibility for massive confusio=
+n=20
+is huge, but that doesn't deny the fact that, if used properly (and that's =
+a=20
+_big_ 'if'), this is a very powerful feature.
+
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart19580535.Hxp9lTjWbq
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7-ecc0.1.6 (GNU/Linux)
+
+iD8DBQBHKJMmBHj4kl4fT1wRAq0zAJ9ZIAubnmnGHYX3gZ8IN2wkXDBaPgCgnxHv
+Rj5Vdtsi2EciChphvDIjAhs=
+=PWy2
+-----END PGP SIGNATURE-----
+
+--nextPart19580535.Hxp9lTjWbq--
