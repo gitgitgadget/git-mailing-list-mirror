@@ -1,86 +1,64 @@
-From: Alejandro Martinez Ruiz <alex@flawedcode.org>
-Subject: Re: unmerging feature branches
-Date: Wed, 31 Oct 2007 22:16:58 +0100
-Message-ID: <20071031211658.GA5430@inspiron>
-References: <20071023152445.GA10070@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org> <20071023171611.GA18783@piper.oerlikon.madduck.net> <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org>
+From: "Jonas Fonseca" <jonas.fonseca@gmail.com>
+Subject: Re: cogito and remote#branch, was Re: [PATCH] Git homepage: remove all the references to Cogito
+Date: Wed, 31 Oct 2007 22:17:10 +0100
+Message-ID: <2c6b72b30710311417i255df44eue7eb9d63ea9fcd9@mail.gmail.com>
+References: <20071015233800.6306e414@paolo-desktop>
+	 <20071016021933.GH12156@machine.or.cz>
+	 <Pine.LNX.4.64.0710161139530.25221@racer.site>
+	 <2c6b72b30710161516j5c029847r1acb3ce2d88344a1@mail.gmail.com>
+	 <20071031170951.GR18279@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: martin f krafft <madduck@madduck.net>,
-	git discussion list <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:16:26 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Paolo Ciarrocchi" <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: "Petr Baudis" <pasky@suse.cz>
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:18:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InKvJ-0002nT-Q4
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:16:26 +0100
+	id 1InKxT-0003J0-Oz
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:18:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760592AbXJaVP5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:15:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760580AbXJaVP5
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:15:57 -0400
-Received: from ug-out-1314.google.com ([66.249.92.171]:50306 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760558AbXJaVPz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 17:15:55 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so383068ugc
-        for <git@vger.kernel.org>; Wed, 31 Oct 2007 14:15:52 -0700 (PDT)
+	id S1760856AbXJaVRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:17:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760851AbXJaVRM
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:17:12 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:50005 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760517AbXJaVRL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 17:17:11 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so256283rvb
+        for <git@vger.kernel.org>; Wed, 31 Oct 2007 14:17:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        bh=EqP60S2Fv47RTY0kMPwBdajweBpJFyg9/DRBeP3JSLg=;
-        b=jhwDtIwKdIJ0/cpSakwnViUhdoQ4F/OXf5X1UfKD6hO9IDe6j/Bu1OD1opye9ZN6XBVb07meCLNMNlwcFKKTeJHDDeWGUOxH30An0HNLrcBHZ+Vt9Tfla3X9dnG9Aqa5TgFanHnhT2Aehsce6FysEv07IoGhHgaDVGJRUD6nnwg=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nWx5DVGQPw3uYbAigz0dt4c3pPhPhewpFYN/G/JLz5U=;
+        b=noPdhB88wmFTlGENlnKe8dAgJDGAeXH29urmf0lHP/uYa/Hbb98QuUki24Yk5piLKSEwyQu40gn8vYccj+xIYbLsBQs0VcAEp8ZLoqqPJGyPs6Lja88YiydEFkGBC4n0koQKSQGK1bUWB8kLE64I5KdkdP+nG7L8Dg8eaT7yDk8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:mail-followup-to:references:mime-version:content-type:content-disposition:in-reply-to:user-agent:sender;
-        b=GXH2M2qpAw4ClGYq9P11sO2ghY0VCzJgHlNoIdpMwXcgjA/wMW/nZ6qjGVZ4SmyzLIMxmuzxa9ixg5pNeUDs4iTIUXDCYWSfw8Zwf0nmWtbTTRK001JlsakK7qKX5mA3GTvE3y5wZXxhaq4aRpbCFDLTsz2j9nnkJy26ZS/7HIA=
-Received: by 10.67.20.11 with SMTP id x11mr244491ugi.1193865352799;
-        Wed, 31 Oct 2007 14:15:52 -0700 (PDT)
-Received: from unleashed.kicks-ass.org ( [89.129.136.193])
-        by mx.google.com with ESMTPS id 18sm4445174ugk.2007.10.31.14.15.47
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Wed, 31 Oct 2007 14:15:50 -0700 (PDT)
-Received: by unleashed.kicks-ass.org (nbSMTP-1.00) for uid 1000
-	(using TLSv1/SSLv3 with cipher DES-CBC3-SHA (168/168 bits))
-	alex@flawedcode.org; Wed, 31 Oct 2007 22:17:01 +0100 (CET)
-Mail-Followup-To: Linus Torvalds <torvalds@linux-foundation.org>,
-	martin f krafft <madduck@madduck.net>,
-	git discussion list <git@vger.kernel.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=c0c+dQd9uW4lU8eeW+AV4K7kwJgtD2r58XbdDLOD56SD7pRisfFoCk5QVPCNC6efdzoupc6p+vvwXa773PhuMpdCgKQFqhn8pp+YUuFE0kN6KAS4K8yzNqavjEXEQFCEVBh0s2T/PvMV1G1YPCZhKEbGNr2RHV8WpuQy2JqFlCk=
+Received: by 10.141.37.8 with SMTP id p8mr4202742rvj.1193865430970;
+        Wed, 31 Oct 2007 14:17:10 -0700 (PDT)
+Received: by 10.141.5.5 with HTTP; Wed, 31 Oct 2007 14:17:10 -0700 (PDT)
+In-Reply-To: <20071031170951.GR18279@machine.or.cz>
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62873>
 
-On Tue 23 Oct 2007, 10:40, Linus Torvalds wrote:
-> 
-> So a "revert" is fundamentally different from a "undo". Most of the time 
-> 
-> [cut]
-> 
-> So sometimes the behaviour of "git revert" will be exactly what people 
-> expected and wanted ("good, I'll never get that commit again when I pull, 
-> because I told git that I don't want that commit"), and sometimes it will 
-> _not_ be what people expected and wanted ("oh, I didn't get that commit, 
-> even though I was now ready for it - because I had reverted it back when I 
-> was *not* ready for it").
-> 
-> See? The logic is exactly the same in both cases, but one was good, the 
-> other bad, and the only difference was really the mindset of the user.
-> 
-> A tool can't ever get "mindset of the user" differences right. At least 
-> not until we add the "esp option" ;)
-> 
-> So I really don't want to push this as a problem or deficiency, I think 
-> it's a good thing. But it's a good thing only when people are *aware* of 
-> what "revert" really means.
+On Oct 31, 2007 6:09 PM, Petr Baudis <pasky@suse.cz> wrote:
+> And some command in Git to easily get the equivalent of cg-status -g
+> output is something I probably miss the most in Git now. (Originally I
+> was about to say that I just miss an equivalent of cg-status, but
+> thinking about it, most of the time I'm interested only in either -g
+> (long branch info) or -w (git status output)).
 
-So how about an "undo" command or a switch for revert with a special
-meaning like "hey, this one is a nice commit, but it ain't ready yet,
-I'd like you to ignore I ever committed the thing when merging or
-rebasing again, thanks"?
+Try `git branch -v` ... maybe with an added -a.
 
-Alex
+-- 
+Jonas Fonseca
