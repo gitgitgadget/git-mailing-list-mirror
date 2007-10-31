@@ -1,71 +1,83 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Recording merges after repo conversion
-Date: Wed, 31 Oct 2007 10:50:02 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
- <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
- <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
- <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
- <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710310227340.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 10:50:25 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: How to remove a specific hunk
+Date: Wed, 31 Oct 2007 11:10:34 +0100
+Message-ID: <13D08D3F-3647-4E20-AF80-8EC6FD14E66A@lrde.epita.fr>
+References: <4722036E.5030204@wanadoo.fr> <20071026192034.GA3062@steel.home>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-34-769869878"
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 11:11:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InADQ-0008J6-19
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 10:50:24 +0100
+	id 1InAXM-0003ZT-Af
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 11:11:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754694AbXJaJuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 05:50:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754667AbXJaJuI
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 05:50:08 -0400
-Received: from smtp.getmail.no ([84.208.20.33]:41272 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754670AbXJaJuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 05:50:05 -0400
-Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
- no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- id <0JQR00F0XSNGN200@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 31 Oct 2007 10:50:04 +0100 (CET)
-Received: from smtp.getmail.no ([10.5.16.1])
- by no-osl-m323-srv-009-z2.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JQR00KOUSN8CYA0@no-osl-m323-srv-009-z2.isp.get.no> for
- git@vger.kernel.org; Wed, 31 Oct 2007 10:49:56 +0100 (CET)
-Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
- (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JQR004Q4SN8VX40@no-osl-m323-srv-009-z1.isp.get.no> for
- git@vger.kernel.org; Wed, 31 Oct 2007 10:49:56 +0100 (CET)
-Received: by perkele (Postfix, from userid 501)	id C2D5C2FC18; Wed,
- 31 Oct 2007 10:50:02 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id BCFFE2FC0C; Wed, 31 Oct 2007 10:50:02 +0100 (CET)
-In-reply-to: <Pine.LNX.4.64.0710310227340.4362@racer.site>
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1755080AbXJaKKp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 06:10:45 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753819AbXJaKKo
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 06:10:44 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:55889 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757964AbXJaKKn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 06:10:43 -0400
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1InAX3-0002OK-5o; Wed, 31 Oct 2007 11:10:41 +0100
+In-Reply-To: <20071026192034.GA3062@steel.home>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-34-769869878
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> Why should it?  This would contradict the whole "a commit sha1 hashes the
-> commit, and by inference the _whole_ history" principle.
+On Oct 26, 2007, at 9:20 PM, Alex Riesen wrote:
 
-Does it? Why can't the grafts file itself be committed to the repository and 
-live in the history?
+> Pascal Obry, Fri, Oct 26, 2007 17:10:38 +0200:
+>>
+>> I'm very new to Git... but start to love it :)
+>>
+>> Before committing sometimes I want to remove a specific hunk. Say in
+>> file a.txt I have in the diff 3 hunks, I want to revert/delete/remove
+>> the second one. Is there a way to do that ?
+>
+> Take a look at git-gui. Try right-clicking in the diff pane at the
+> bottom.
 
-Well, yeah, the SHA1 hashing is one of Git's main strengths, but it also 
-opens up some weaknesses.
+This only allows you to stage a given hunk, not to remove one.  Right  
+now I'm in a situation where I need to remove a specific hunk to  
+compile and it's sad that git-gui doesn't provide an option so that  
+you can right-click -> revert hunk.
 
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-34-769869878
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHKFSbwwE67wC8PUkRAreFAJ9eiM1fMUEYiRsK8tha5wsXxliHWwCfQbZH
+WpjHFoRR+kFAYoTufu4MwsI=
+=uHuh
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-34-769869878--
