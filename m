@@ -1,127 +1,92 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Newbie: report of first experience with git-rebase.
-Date: Wed, 31 Oct 2007 22:25:23 +0100
-Message-ID: <20071031212523.GB4255@steel.home>
-References: <87d4uv3wh1.fsf@osv.gnss.ru>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: remote#branch
+Date: Wed, 31 Oct 2007 17:26:55 -0400
+Message-ID: <20071031212655.GB13823@coredump.intra.peff.net>
+References: <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org> <20071030235823.GA22747@coredump.intra.peff.net> <fg8h9l$b4n$1@ger.gmane.org> <85lk9jzsxb.fsf@lola.goethe.zz> <alpine.LFD.0.999.0710310816180.30120@woody.linux-foundation.org> <20071031204729.GB13300@coredump.intra.peff.net> <alpine.LFD.0.999.0710311350100.3342@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:25:57 2007
+Cc: David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:27:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InL4G-00057s-Oi
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:25:41 +0100
+	id 1InL5j-0005Yx-Rf
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:27:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824AbXJaVZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:25:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754707AbXJaVZ0
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:25:26 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:10757 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754483AbXJaVZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 17:25:26 -0400
-Received: from tigra.home (Fadfc.f.strato-dslnet.de [195.4.173.252])
-	by post.webmailer.de (klopstock mo20) (RZmta 14.0)
-	with ESMTP id z0391ej9VI4b8n ; Wed, 31 Oct 2007 22:25:24 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 20B75277AE;
-	Wed, 31 Oct 2007 22:25:24 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id F3AFF56D22; Wed, 31 Oct 2007 22:25:23 +0100 (CET)
+	id S1754326AbXJaV06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:26:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754149AbXJaV06
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:26:58 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2613 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752759AbXJaV05 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 17:26:57 -0400
+Received: (qmail 23664 invoked by uid 111); 31 Oct 2007 21:26:56 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 31 Oct 2007 17:26:56 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 17:26:55 -0400
 Content-Disposition: inline
-In-Reply-To: <87d4uv3wh1.fsf@osv.gnss.ru>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClJwDS0=
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <alpine.LFD.0.999.0710311350100.3342@woody.linux-foundation.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62876>
 
-Sergei Organov, Wed, Oct 31, 2007 20:39:06 +0100:
-> $ git rebase --continue
-> You must edit all merge conflicts and then
-> mark them as resolved using git add
+On Wed, Oct 31, 2007 at 02:01:54PM -0700, Linus Torvalds wrote:
+
+> > Yes, this means that if you have a bizarre repo name, you can't
+> > necessarily switch between host:file syntax and git:// syntax by simple
+> > cut and paste. But you really can't _anyway_, since there is no
+> > guarantee that they are rooted at the same location, or have the same
+> > view of the filesystem.
 > 
-> me> Nice helpful message, -- need to do git-add
-> 
-> $ git add Documentation/core-tutorial.txt
-> $ git rebase --continue
-> 
-> Applying Use new syntax (-m option) for git-merge.
-> 
-> No changes - did you forget to use 'git add'?
+> .. but in practice it works fine, especially for something like kernel.org 
+> where it really *is* the same filesystem, just mirrored out.
 
-This "No changes" was meant as a hint
+Yes, and in practice, it works with or without URL encoding, since
+people aren't using names that need encoded.
 
-> When you have resolved this problem run "git rebase --continue".
-> If you would prefer to skip this patch, instead run "git rebase --skip".
-> To restore the original branch and stop rebasing run "git rebase --abort".
-> 
-> me> What?! I just did the git-add! Moreover, before I did git-add, the
-> me> error was different and helpful. Something went wrong? 
+> Also, more importantly, I think the quoting is *stupid*. It adds pointless 
+> code for absolutely zero gain. Are you going to unquote '/'? Or how about 
+> '~'?
 
-Well, you edited you tree to look exactly like it already is.
+I don't think it's zero gain; I think it's exactly what users who use
+repos with characters that need quoting will expect to happen. That
+being said, _I_ don't personally care that much since I think spaces in
+filenames are the work of the devil, and I will never use them. And as a
+result, I'm not going to implement the code to do it.
 
-> me> No luck :( A few seconds of thinking... Hmm... no-op patch, do I
-> me> need to skip it? Let's try the --skip:
-> 
-> $ git rebase --skip
+But I do think your argument that there is no value in the URL syntax is
+just wrong.
 
-Exactly.
+I don't understand your mention of '~' and '/'; they don't need quoted
+in URLs, and generally are not (though of course they can be).
 
-> Applying Fix SYNOPSIS.
-> 
-> error: patch failed: Documentation/git-merge.txt:10
-> error: Documentation/git-merge.txt: patch does not apply
-> Using index info to reconstruct a base tree...
-> Falling back to patching base and 3-way merge...
-> Auto-merged Documentation/git-merge.txt
-> CONFLICT (content): Merge conflict in Documentation/git-merge.txt
-> Failed to merge in the changes.
-> Patch failed at 0003.
-> 
-> When you have resolved this problem run "git rebase --continue".
-> If you would prefer to skip this patch, instead run "git rebase --skip".
-> To restore the original branch and stop rebasing run "git rebase --abort".
-> 
-> me> Aha, that's it! But why git didn't just skip the no-op patch
-> me> automatically? Well, anyway , now I have a new expected conflict,
+> .. because it's a simple format, and it *works*. The same way INI config 
+> files are simple and *work*.
 
-it was not a noop patch before you resolved the conflict.
+But if you wrote a bunch of documentation referring to the git config
+file as an INI file, would you expect people to complain when it
+_didn't_ follow the usual expectation for INI files?
 
-> me> and I'm sure I just want to skip this patch, so let's try exactly
-> me> that:
-> 
-> $ git rebase --skip
-> Dirty index: cannot apply patches (dirty: Documentation/git-merge.txt)
 
-Well... This one kind of hard: git-rebase _cannot_ know whether it is
-safe to just drop all changes in the index and work tree (you could
-have made the changes on purpose). It was decided not to drop
-anything. You always can do
+OK, this discussion is just getting nowhere, and there is useful git
+work I could be doing, so let me sum up my position:
 
-    $ git reset --hard # kills all changes in index and work tree
-    $ git rebase --skip
+  - We should either resolve that some repo specifiers are URLs, or we
+    should resolve that they are not. I think they are.
+  - If they are URLs, then we should treat them like URLs, and not
+    handling quoting is probably a bug. I refuse to accept that it is an
+    _important_ bug until somebody actually has a repo that needs
+    quoting, finds that git is substandard, and provides a patch.
+  - If they are not URLs, then we should probably stop calling them that
+    in the documentation.
 
-(or maybe git-rebase is just too careful...)
+And with that, I shall say no more on the subject. In the spirit of not
+saying "oh, I don't want to talk about it anymore, you don't get to say
+anything else," I invite you to respond to any of my comments above.
 
-> me> No luck :( Well, let's go the long way, -- edit conflicting
-> me> Documentation/git-merge.txt (so that it matches upstream),
-> 
-> $ git add Documentation/git-merge.txt
-> $ git rebase --skip
-> Nothing to do.
-> 
-> me> Well, I already knew this will work, but why should I edit the file
-> me> and then git-add it just to skip the patch? Is there better way?
-> me> Anyway, the "Nothing to do." above is slightly confusing, -- did it
-> me> actually skip the patch? So let's check the result:
-
-Yes. It was the last commit. You were just too unlucky to hit all the
-hard cases your first day.
+-Peff
