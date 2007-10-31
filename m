@@ -1,111 +1,79 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-diff.txt: add section "output format" describing the diff formats
-Date: Wed, 31 Oct 2007 13:59:16 +0000
-Message-ID: <20071031135916.5625.qmail@134c5e95d8ec4d.315fe32.mid.smarden.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: cpio command not found
+Date: Thu, 1 Nov 2007 01:00:18 +1100
+Message-ID: <ee77f5c20710310700jf5e4aa4waede0da924d38adc@mail.gmail.com>
+References: <18216.31314.990545.518458@lisa.zopyra.com>
+	 <20071031133039.GA29065@diana.vm.bytemark.co.uk>
+	 <18216.35066.259686.376571@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 14:59:22 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>,
+	git@vger.kernel.org
+To: "Bill Lear" <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 15:00:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InE6B-0003y8-IQ
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 14:59:11 +0100
+	id 1InE7W-0004OZ-Ii
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 15:00:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753002AbXJaN65 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 09:58:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbXJaN65
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 09:58:57 -0400
-Received: from a.ns.smarden.org ([212.42.242.37]:33938 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753002AbXJaN64 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 09:58:56 -0400
-Received: (qmail 5626 invoked by uid 1000); 31 Oct 2007 13:59:16 -0000
+	id S1753882AbXJaOAV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 10:00:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754286AbXJaOAU
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 10:00:20 -0400
+Received: from rv-out-0910.google.com ([209.85.198.184]:57389 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753770AbXJaOAT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2007 10:00:19 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so136162rvb
+        for <git@vger.kernel.org>; Wed, 31 Oct 2007 07:00:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=BLRWCdhBeUxQlYke4PDTLa005dRCD1VZgaurmUDgv3U=;
+        b=uXJanKTneKPXp4pBjksJsU9xdkYuvOyamXvuPNIYiJVC4fzkr0HGM+eeYAYiS9rP1ySHXpCmwzU9ehB8ioe/QEtXwF7bkUMuHa+kXghT3UxhMrogfJ2K40XlyZOywb84L1w97giM4mrhf/h8FeZiRpdt1ZtlcqNalukXyVr17f4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=f8iaulfj3TyjfAFCtr2aNbhI7GDVG1oZmGSzcazSpEuKGuuzgEHI3gpi5iwEdP9j4JYwCkakC2QcBMYiVb8tnDqM3vbdKv5Jn2/DqxjhhmK+Sq7NzlA5RS2NFmcxOteluTi4oWQMHn38/vnBZJQxhYtO85pPcpKIr0oERMnfDNU=
+Received: by 10.141.179.5 with SMTP id g5mr3949234rvp.1193839218840;
+        Wed, 31 Oct 2007 07:00:18 -0700 (PDT)
+Received: by 10.141.115.4 with HTTP; Wed, 31 Oct 2007 07:00:18 -0700 (PDT)
+In-Reply-To: <18216.35066.259686.376571@lisa.zopyra.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62832>
 
-git-diff.txt includes diff-options.txt which for the -p option refers
-to a section "generating patches.." which is missing from the git-diff
-documentation.  This patch adapts diff-format.txt to additionally
-mention the git-diff program, and includes diff-format.txt into
-git-diff.txt.
+On 11/1/07, Bill Lear <rael@zopyra.com> wrote:
+> On Wednesday, October 31, 2007 at 14:30:39 (+0100) Karl Hasselstr=F6m=
+ writes:
+> >On 2007-10-31 06:51:30 -0600, Bill Lear wrote:
+> >
+> >> I don't remember this dependence from earlier versions of git. I
+> >> have been running git 1.4.xx on this machine for a while...
+> >
+> >When you clone with -l, git uses cpio to hardlink to the original
+> >repository. What has changed is that -l is now used by default when
+> >cloning a repository that's accessed via the file system (as opposed
+> >to over some network protocol).
+> >
+> >To work around this, specify the repository location with file://, a=
+nd
+> >git won't try to hardlink (and hence won't try to use cpio).
+>
+> Hmm, thanks for the workaround, but I don't altogether like leaving
+> things like this.
+>
+> If the system does not have cpio, I think the build of git should
+> complain and fail, or it should activate code that treats any
+> repository accessed over the file system as it would file://.
 
-Tino Keitel noticed this problem.
+Something like this could be done at run-time instead. You might
+install cpio, but shouldn't require a rebuild of git just to use it.
 
-Signed-off-by: Gerrit Pape <pape@smarden.org>
----
- Documentation/diff-format.txt |   22 +++++++++++-----------
- Documentation/git-diff.txt    |    3 +++
- 2 files changed, 14 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-index 0015032..a580f18 100644
---- a/Documentation/diff-format.txt
-+++ b/Documentation/diff-format.txt
-@@ -1,5 +1,5 @@
--The output format from "git-diff-index", "git-diff-tree" and
--"git-diff-files" are very similar.
-+The output format from "git-diff-index", "git-diff-tree",
-+"git-diff-files" and "git diff --raw" are very similar.
- 
- These commands all compare two sets of things; what is
- compared differs:
-@@ -62,9 +62,9 @@ respectively.
- diff format for merges
- ----------------------
- 
--"git-diff-tree" and "git-diff-files" can take '-c' or '--cc' option
--to generate diff output also for merge commits.  The output differs
--from the format described above in the following way:
-+"git-diff-tree", "git-diff-files" and "git-diff" can take '-c' or
-+'--cc' option to generate diff output also for merge commits.  The
-+output differs from the format described above in the following way:
- 
- . there is a colon for each parent
- . there are more "src" modes and "src" sha1
-@@ -86,10 +86,10 @@ Generating patches with -p
- --------------------------
- 
- When "git-diff-index", "git-diff-tree", or "git-diff-files" are run
--with a '-p' option, they do not produce the output described above;
--instead they produce a patch file.  You can customize the creation
--of such patches via the GIT_EXTERNAL_DIFF and the GIT_DIFF_OPTS
--environment variables.
-+with a '-p' option, or "git diff" without the '--raw' option, they
-+do not produce the output described above; instead they produce a
-+patch file.  You can customize the creation of such patches via the
-+GIT_EXTERNAL_DIFF and the GIT_DIFF_OPTS environment variables.
- 
- What the -p option produces is slightly different from the traditional
- diff format.
-@@ -137,8 +137,8 @@ file made it into the new one.
- combined diff format
- --------------------
- 
--git-diff-tree and git-diff-files can take '-c' or '--cc' option
--to produce 'combined diff', which looks like this:
-+"git-diff-tree", "git-diff-files" and "git-diff" can take '-c' or
-+'--cc' option to produce 'combined diff', which looks like this:
- 
- ------------
- diff --combined describe.c
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index ce0f502..11c4216 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -82,6 +82,9 @@ include::diff-options.txt[]
- 	the diff to the named paths (you can give directory
- 	names and get diff for all files under them).
- 
-+Output format
-+-------------
-+include::diff-format.txt[]
- 
- EXAMPLES
- --------
--- 
-1.5.3.4
+Dave.
