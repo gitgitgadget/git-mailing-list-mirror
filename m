@@ -1,181 +1,137 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Possible bug: git-svn leaves broken tree in case of error
-Date: Wed, 31 Oct 2007 01:42:57 -0700
-Message-ID: <20071031084257.GA2911@mayonaise>
-References: <1193729426.30755.32.camel@asl.dorms.spbu.ru> <20071031075524.GB7798@muzzle>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Wed, 31 Oct 2007 01:45:42 -0700
+Message-ID: <7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
+References: <1193593581312-git-send-email-prohaska@zib.de>
+	<11935935812741-git-send-email-prohaska@zib.de>
+	<1193593581114-git-send-email-prohaska@zib.de>
+	<1193593581486-git-send-email-prohaska@zib.de>
+	<11935935812185-git-send-email-prohaska@zib.de>
+	<11935935822846-git-send-email-prohaska@zib.de>
+	<11935935821136-git-send-email-prohaska@zib.de>
+	<11935935823045-git-send-email-prohaska@zib.de>
+	<11935935821800-git-send-email-prohaska@zib.de>
+	<11935935823496-git-send-email-prohaska@zib.de>
+	<11935935821192-git-send-email-prohaska@zib.de>
+	<7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
+	<52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
+	<7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
+	<F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Anton Korobeynikov <asl@math.spbu.ru>
-X-From: git-owner@vger.kernel.org Wed Oct 31 09:43:51 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 09:46:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In9Au-0004ib-HW
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:43:44 +0100
+	id 1In9DA-00056H-DH
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:46:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753333AbXJaInC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 04:43:02 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753303AbXJaInC
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:43:02 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:44640 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751210AbXJaInA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 04:43:00 -0400
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 54B897DC0FE;
-	Wed, 31 Oct 2007 01:42:58 -0700 (PDT)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 01:42:58 -0700
-Content-Disposition: inline
-In-Reply-To: <20071031075524.GB7798@muzzle>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753342AbXJaIpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 04:45:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbXJaIpt
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:45:49 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:39781 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753303AbXJaIps (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 04:45:48 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 082FB2EF;
+	Wed, 31 Oct 2007 04:46:09 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A4148F9B1;
+	Wed, 31 Oct 2007 04:46:06 -0400 (EDT)
+In-Reply-To: <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> (Steffen Prohaska's
+	message of "Wed, 31 Oct 2007 08:53:06 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Anton Korobeynikov <asl@math.spbu.ru> wrote:
-> > Hello, Everyone.
-> > 
-> > I noticed this bug several times. Consider the following conditions are
-> > met:
-> > - We're syncing from svn using git-svn :)
-> > - We have authors file provided
-> > - We have a changeset with author unlisted in the authors file.
-> > 
-> > git-svn dies due to the following code:
-> > sub check_author {
-> >         my ($author) = @_;
-> >         if (!defined $author || length $author == 0) {
-> >                 $author = '(no author)';
-> >         }
-> >         if (defined $::_authors && ! defined $::users{$author}) {
-> >                 die "Author: $author not defined in $::_authors file\n";
-> >         }
-> >         $author;
-> > }
-> > 
-> > Unfortunately it leaves repository in some middle state: git-svn itself
-> > thinks, that it synced with everything, but git itself doesn't "see" any
-> > changesets anymore. I found no way to repair tree after such situation,
-> > so I had to repull from scratch.
-> > 
-> > I found myself, that this should be warning (and fix in this case is
-> > trivial), not error (maybe some commandline switch to control behaviour,
-> > etc). It can be even error, but breaking tree is definitely bug in this
-> > case.
-> 
-> You should be able to change the numbers in *-maxRev back to
-> an old revision in .git/svn/.metadata.  Does that fix things for you
-> so you can resume synching again?
-> 
-> I'll have to investigate the die()-ing of check_authors since
-> that should cause git-svn to quit before the maxRev numbers
-> get incremented.
+Steffen Prohaska <prohaska@zib.de> writes:
 
-With the following test case, I'm not able to reproduce what you're
-describing.
+> Would it be acceptable if the error was less severe in the
+> case of local being a strict subset of remote?
+> Daniel proposed
+> "%s: nothing to push to %s, but you are not up-to-date and
+> may want to pull"
+> It would still be an error, but a less severe one.
 
-But yes, die-ing here and not being able to gracefully recover is a
-nasty bug...
+I am not convinced there is one true total order of "error
+severity" that applies uniformly across different workflows, so
+I would not immediately agree if you are suggesting to introduce
+"severity levels".  But it certainly makes a lot of sense to be
+able to _differentiate_ kinds of errors, and to have the calling
+scripts and the push command itself react to them.
 
-Warning instead of die-ing here is not a good option, because it can
-lead to inconsistent author data inside populating history.  I believe
-it's better to error out immediately so the user can fix their authors
-file.
+What are the possible error conditions?
 
-diff --git a/t/t9117-git-svn-authors-file.sh b/t/t9117-git-svn-authors-file.sh
-new file mode 100755
-index 0000000..4566307
---- /dev/null
-+++ b/t/t9117-git-svn-authors-file.sh
-@@ -0,0 +1,85 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 Eric Wong
-+#
-+
-+test_description='git-svn authors file tests'
-+
-+. ./lib-git-svn.sh
-+
-+cat > svn-authors <<EOF
-+aa = AAAAAAA AAAAAAA <aa@example.com>
-+bb = BBBBBBB BBBBBBB <bb@example.com>
-+EOF
-+
-+test_expect_success 'setup svnrepo' "
-+	svn mkdir -m aa --username aa $svnrepo/aa &&
-+	svn mkdir -m bb --username bb $svnrepo/bb &&
-+	svn mkdir -m cc --username cc $svnrepo/cc &&
-+	svn mkdir -m dd --username dd $svnrepo/dd
-+	"
-+
-+test_expect_failure 'start import with incomplete authors file' "
-+	git-svn clone --authors-file=svn-authors $svnrepo x
-+	"
-+
-+test_expect_success 'imported 2 revisions successfully' "
-+	cd x &&
-+		test \`git rev-list refs/remotes/git-svn | wc -l\` -eq 2 &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-+		  grep '^author BBBBBBB BBBBBBB <bb@example\.com> ' &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
-+		  grep '^author AAAAAAA AAAAAAA <aa@example\.com> ' &&
-+		cd ..
-+	"
-+
-+cat >> svn-authors <<EOF
-+cc = CCCCCCC CCCCCCC <cc@example.com>
-+dd = DDDDDDD DDDDDDD <dd@example.com>
-+EOF
-+
-+test_expect_success 'continues to import once authors have been added' "
-+	cd x &&
-+		git-svn fetch --authors-file=../svn-authors &&
-+		test \`git rev-list refs/remotes/git-svn | wc -l\` -eq 4 &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn | \
-+		  grep '^author DDDDDDD DDDDDDD <dd@example\.com> ' &&
-+		git rev-list -1 --pretty=raw refs/remotes/git-svn~1 | \
-+		  grep '^author CCCCCCC CCCCCCC <cc@example\.com> ' &&
-+		cd ..
-+	"
-+
-+test_expect_success 'authors-file against globs' "
-+	svn mkdir -m globs --username aa \
-+	  $svnrepo/aa/trunk $svnrepo/aa/branches $svnrepo/aa/tags &&
-+	git-svn clone --authors-file=svn-authors -s $svnrepo/aa aa-work &&
-+	svn mkdir -m aa/branches/bb --username bb $svnrepo/aa/branches/bb &&
-+	svn mkdir -m aa/branches/ee --username ee $svnrepo/aa/branches/ee &&
-+	svn mkdir -m aa/branches/cc --username cc $svnrepo/aa/branches/cc
-+	"
-+
-+test_expect_failure 'fetch fails on ee' "
-+	cd aa-work &&
-+		git-svn fetch --authors-file=../svn-authors
-+	"
-+
-+tmp_config_get () {
-+	GIT_CONFIG=.git/svn/.metadata git config --get "$1"
-+}
-+
-+test_expect_success 'failure happened without negative side effects' "
-+	test 6 -eq \"\`tmp_config_get svn-remote.svn.branches-maxRev\`\" &&
-+	test 6 -eq \"\`tmp_config_get svn-remote.svn.tags-maxRev\`\"
-+	"
-+
-+cat >> ../svn-authors <<EOF
-+ee = EEEEEEE EEEEEEE <ee@example.com>
-+EOF
-+
-+test_expect_success 'fetch continues after authors-file is fixed' "
-+	git-svn fetch --authors-file=../svn-authors &&
-+	test 8 -eq \"\`tmp_config_get svn-remote.svn.branches-maxRev\`\" &&
-+	test 8 -eq \"\`tmp_config_get svn-remote.svn.tags-maxRev\`\"
-+	"
-+
-+test_done
+ 1. Error on the sending side.  The ref parameters given to
+    git-push were bogus, or they were good commits but they were
+    not fully connected to the commits the other side has
+    (i.e. local repository corruption).  pack-objects will abort
+    and no remote (nor local tracking ref that tracks what we
+    pushed to the remote) would be updated.  This should be
+    "most severe" in _any_ workflow, so I do not mind calling
+    this "fatal".
 
--- 
-Eric Wong
+ 2. Push to a ref does fast forward, but the update hook on the
+    remote side declines.  The ref on the remote nor the
+    corresponding local tracking ref would not be updated, and
+    the command would fail.
+
+For all the other classes of errors, the ref on the remote nor
+the corresponding local tracking ref would not be updated, and
+by default, an error on any ref causes the command to error out.
+For each of these classes of errors, we _could_ have an option
+to let you tell the command not to error out because of it.
+
+ 3. Push to a ref does not fast forward and --force is not
+    given, but you can prove the remote is strict subset of
+    local (what your 10/10 wants to do).
+
+ 4. Same as #3 but you cannot prove the remote is strict subset
+    of local.
+
+Any other classes?
+
+It might be a good idea to generalize 3 & 4, by the way.  The
+remote being a strict descendant of what is being pushed might
+be something you happened to want today, but somebody else may
+come up with a different rule tomorrow.  So, 
+
+ 3'. Push to a ref does not fast forward and --force is not
+     given, but there is a configuration (would this be per
+     remote?, per remote branch?, or per local branch?) that
+     tells git-push to call a hook on the local side that takes
+     <ref being pushed, ref on the remote> as its parameter.
+     The result from the hook does not change the fact that this
+     is still an error, but it can instruct git-push not to
+     error out due to this condition.
+
+In some other workflows, it might make sense to maybe even
+making 2. not to cause the error from git-push.  I dunno.
+
+> It could also be a good idea to teach git push transactional
+> behaviour.
+
+That is certainly true.  I am not sure about other transports,
+but it should be a relatively straightforward protocol extension
+for the git native transport.
+
+> - git push can be configuration to push only the current
+>   branch, as outlined below. This would certainly work. What
+>   I do not like is that you first need to do some configuration
+>   before you get a safe working environment.
+
+I would not doubt it would be safer for _your_ workflow, but you
+should consider the risk of making things more cumbersome for
+workflows of others by enforcing that policy.
+
+In other words, don't change anything unless you have a very
+good reason to convince everybody else that it is universally
+a good change to the default.
