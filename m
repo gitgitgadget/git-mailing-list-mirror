@@ -1,145 +1,78 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
-Date: Wed, 31 Oct 2007 06:53:03 +0100
-Message-ID: <20071031055303.GB3326@atjola.homenet>
-References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn and auto crlf convertion.
+Date: Tue, 30 Oct 2007 23:30:12 -0700
+Message-ID: <20071031063012.GA7798@muzzle>
+References: <200710311049.43861.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 06:53:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Litvinov <litvinov2004@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 07:30:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In6W2-0006V2-Sk
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 06:53:23 +0100
+	id 1In76C-00030J-Sp
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 07:30:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752730AbXJaFxJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 01:53:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752678AbXJaFxJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 01:53:09 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37836 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752446AbXJaFxH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 01:53:07 -0400
-Received: (qmail invoked by alias); 31 Oct 2007 05:53:04 -0000
-Received: from i577B89A4.versanet.de (EHLO localhost) [87.123.137.164]
-  by mail.gmx.net (mp049) with SMTP; 31 Oct 2007 06:53:04 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19sk2lPH01sP4iqnl9l8XGqX6vYL9B61d3jAJJ2v+
-	WinycaOKRAdocl
+	id S1753358AbXJaGaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 02:30:18 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753348AbXJaGaQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 02:30:16 -0400
+Received: from hand.yhbt.net ([66.150.188.102]:44525 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753294AbXJaGaO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 02:30:14 -0400
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id A21657DC0FE;
+	Tue, 30 Oct 2007 23:30:13 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7vodefj2lk.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <200710311049.43861.litvinov2004@gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62794>
 
-On 2007.10.30 22:05:27 -0700, Junio C Hamano wrote:
-> Your MUA seems to mark the UTF-8 message you are sending out as
-> 8859-1, which means your name in the message gets corrupt.
+Alexander Litvinov <litvinov2004@gmail.com> wrote:
+> Hello.
+> 
+> I have private svn repo with cpp source file in windows encoding (\r\n line 
+> ending). I am tring to import it into git using git-svn. To make correct crlf 
+> convertion I have made git svn init first then create 
+> correct .git/info/attributes file and import repo using git svn fetch 
+> command. But after import done I have strange situation: after git 
+> checkout -f master git status show that almost all text files are modified.
+> 
+> As I understand situation git-svn put \r\n encoded files into repo without 
+> convertng them to \n notation. git-checkout,git-status does the job right and 
+> found 'modification' as far as they do the needed convertion.
 
-Hm, that would be git-send-email then, anything I need to configure?
-(Actually I don't see it marking the message as anything)
+Disclaimer: I'm not yet familiar with git attributes, having never used them.
 
-> Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
->=20
-> > By default, rebase will take all commits from the branch that is to=
- be
-> > rebased which are missing in upstream. The new --first-parent optio=
-n
-> > allows to just follow the first parent and thus completely ignore
-> > merges.
-> >
-> > Additionally, when used together with --preserve-merges (which is t=
-he
-> > more useful use-case) it will no longer rebase the commits from the
-> > merged-in branches, but instead redo the merge with the original
-> > parents.
-> >
-> > That means that:
+> Is there any way to configure git-svn to make proper convertion or it is 
+> broken and need to be fixed ?
 
-Given this situation:
+As far as I can tell, SVN itself will store files with either LF or CRLF
+in the repository when the file is created/updated and applies the line
+conversion properties only to the working tree upon checkout.  This
+means that the SVN repository can have a file that's LF but only
+converted to CRLF when checked out and vice-versa.
 
-> >      ---H------I topicB
-> >     /    \      \
-> > ...
-> > does no longer become:
+git-svn takes and imports whatever raw data SVN gives it, ignoring any
+properties set in SVN.  This is very important because SVN transfers
+deltas for updating files, and if we change the base file; we can't
+apply the delta SVN gives us.
 
-Which results in:
+If we converted the newlines in the raw data that SVN gave us, we would
+need to store what format the original data we got from SVN was in
+because of the delta.
 
-> >                 -H'--------I'
-> >                /  \         \
-> >               D'---E'---F'---G' topicA
-> >              /
-> >     A---B---C master
-> >      \
-> >       H---I topicB
+What I assume svn does is it either:
 
-When you do "git-rebase -p -i master topicA"
+a) reconverts before doing `svn update' or `svn switch'
+b) it ignores newline-only changes when running `svn status' or `svn diff'
 
-You can now also get:
+git (as far as I know, and hope) does neither.
 
-> >     A---B---C master
-> > ...
-> >         ---------H---------I topicB
-
-When you do "git-rebase -p -i --first-parent master topicA"
-
-
-That's better, right?
-
-> And crucially, you forgot to say "... when you do X".
->=20
-> I am assuming that you meant:
->=20
->     This (picture) becomes this (picture) instead of this (picture)
->     when you run "git rebase -p -m master topicA".
->=20
-> but without it, the nice ASCII drawings loses their value.
-
-:-/
-
-> It is somewhat disturbing that this treats the first parent too
-> special.
-
-The original use-case for the "-p -i --first-parent" case was a questio=
-n
-on #git, where someone had sth. like this:
-
-   o---o---o---o---o remote/branch
-        \           \
-     o---o---o---o---o topicA
-    /
-   o---o---o master trunk
-
-Now that guy was using git-svn to dcommit into svn from master. To
-dcommit the changes from topicA he had to have that based on master, an=
-d
-he wanted to preserve the merges from remote/branch to have them
-squashed when dcommitted to svn. So what he wanted was:
-
-
-     ...---o---o---o---o---o remote/branch
-                \           \
-             o---o---o---o---o topicA
-            /
-   o---o---o master trunk
-
-The default behaviour of rebase would totally flat out the history and
-instead of two sqaush merges (which he wanted), svn would've seen a hug=
-e
-amount of commits comning from remote/branch. And the plain -p behaviou=
-r
-would have duplicated all those branches from remote/branch for no good
-reason, so I came up with that --first-parent thing.
-
-Better ideas are welcome, I just don't know git well enough to come up
-with anything better...
-
-Thanks,
-Bj=F6rn
+-- 
+Eric Wong
