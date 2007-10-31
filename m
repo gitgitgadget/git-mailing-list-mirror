@@ -1,91 +1,60 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Bug in git-show-branch, or in core-tutorial?
-Date: Wed, 31 Oct 2007 23:17:39 +0300
-Message-ID: <878x5j3uos.fsf@osv.gnss.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Get rid of cpio in git-clone (was: Re: cpio command
+	not found)
+Date: Wed, 31 Oct 2007 16:22:21 -0400
+Message-ID: <20071031202220.GA13300@coredump.intra.peff.net>
+References: <18216.31314.990545.518458@lisa.zopyra.com> <20071031133039.GA29065@diana.vm.bytemark.co.uk> <20071031140655.GA8802@gateway.home> <Pine.LNX.4.64.0710311420330.4362@racer.site> <20071031201425.GA29332@gateway.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 31 21:18:03 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Karl Hasselstr?m <kha@treskal.com>,
+	Bill Lear <rael@zopyra.com>, git@vger.kernel.org
+To: Erik Mouw <mouw@nl.linux.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 21:22:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InK0o-0004Bf-7A
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 21:18:02 +0100
+	id 1InK5H-0005JT-O1
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 21:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753782AbXJaURr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 16:17:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752287AbXJaURr
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 16:17:47 -0400
-Received: from javad.com ([216.122.176.236]:2559 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752155AbXJaURr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 16:17:47 -0400
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id l9VKHjm87924
-	for <git@vger.kernel.org>; Wed, 31 Oct 2007 20:17:45 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1InK0R-000080-ME
-	for git@vger.kernel.org; Wed, 31 Oct 2007 23:17:39 +0300
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1754061AbXJaUWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 16:22:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754040AbXJaUWY
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 16:22:24 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4212 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753825AbXJaUWX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 16:22:23 -0400
+Received: (qmail 22893 invoked by uid 111); 31 Oct 2007 20:22:22 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 31 Oct 2007 16:22:22 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 16:22:21 -0400
+Content-Disposition: inline
+In-Reply-To: <20071031201425.GA29332@gateway.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62863>
 
-Or is it me who needs a fix?
+On Wed, Oct 31, 2007 at 09:14:25PM +0100, Erik Mouw wrote:
 
-[Sorry, this is roughly a repeat of my earlier post
-<http://permalink.gmane.org/gmane.comp.version-control.git/62493>
-I didn't get any answer to, and I'm trying once more to attract
-your attention to the issue.]
+> > Patch, please?
+> 
+> Here you go.
 
-Please consider the following quote starting at core-tutorial.txt:933
-(emphasis is mine):
+Good, now we have something to critique. :)
 
-<quote>
-------------------------------------------------
-$ git show-branch --topo-order master mybranch
-* [master] Merge work in mybranch
- ! [mybranch] Some work.
---
--  [master] Merge work in mybranch
-*+ [mybranch] Some work.
-------------------------------------------------
+> -		find objects -depth -print | cpio -pumd$l "$GIT_DIR/" || exit 1
+> +		cp -Rp$l objects/ "$GIT_DIR/" || exit 1
 
-The first two lines indicate that it is showing the two branches
-and the first line of the commit log message from their
-top-of-the-tree commits, you are currently on `master` branch
-(notice the asterisk `\*` character), and the first column for
-the later output lines is used to show commits contained in the
-`master` branch, and the second column for the `mybranch`
-branch. *Three* commits are shown along with their log messages.
-All of them have non blank characters in the first column (`*`
-shows an ordinary commit on the current branch, `-` is a merge commit), which
-means they are now part of the `master` branch. Only the "Some
-work" commit has the plus `+` character in the second column,
-because `mybranch` has not been merged to incorporate these
-commits from the master branch.  The string inside brackets
-before the commit log message is a short name you can use to
-name the commit.  In the above example, 'master' and 'mybranch'
-are branch heads.  '*master~1*' is the first parent of 'master'
-branch head.
-</quote>
+cp -l isn't even close to portable. It's not in POSIX, and doesn't work
+on (at least) Solaris.
 
-You see, there are only *two* commits shown by git-show-branch while
-description mentions *three* of them, and there is no 'master~1' commit
-in the git-show-branch output while description does mention it.
+I think Mike's patch (cpio if available, copy otherwise) is a reasonable
+approach. If there are other methods (and I think cp -l is not
+unreasonable for systems where it is supported and cpio is unavailable),
+then perhaps it is worth trying them one by one and dropping back to
+full copy if all fail.
 
-I've replayed all the tutorial up to this point, and the git-show-branch
-output matches those in the tutorial exactly, but then the explanation
-text makes little sense? On the other hand, the state of the repo
-suggests that there should be 'master~1' commit in the git-show-branch
-output in accordance with the explanation, so it's git-show-branch that
-is buggy? I'm totally confused :(
-
-Please, help!
-
--- 
-Sergei.
+-Peff
