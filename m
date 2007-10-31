@@ -1,77 +1,65 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Recording merges after repo conversion
-Date: Wed, 31 Oct 2007 13:43:17 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710311340500.4362@racer.site>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
- <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710311059020.4362@racer.site> <200710311343.58414.johan@herland.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
+Date: Wed, 31 Oct 2007 16:43:58 +0300
+Message-ID: <20071031134358.GD15182@dpotapov.dyndns.org>
+References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org> <20071031055303.GB3326@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>
-To: Johan Herland <johan@herland.net>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes.Schindelin@gmx.de,
+	git@vger.kernel.org
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
 X-From: git-owner@vger.kernel.org Wed Oct 31 14:44:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InDrp-0007QZ-8n
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 14:44:21 +0100
+	id 1InDrp-0007QZ-TY
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 14:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756615AbXJaNoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 09:44:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756532AbXJaNoB
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 09:44:01 -0400
-Received: from mail.gmx.net ([213.165.64.20]:37854 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755020AbXJaNoB (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1756532AbXJaNoF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 09:44:05 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755536AbXJaNoE
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 09:44:04 -0400
+Received: from smtp03.mtu.ru ([62.5.255.50]:60648 "EHLO smtp03.mtu.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755628AbXJaNoB (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 31 Oct 2007 09:44:01 -0400
-Received: (qmail invoked by alias); 31 Oct 2007 13:43:59 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp045) with SMTP; 31 Oct 2007 14:43:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18rUfwzShor9UD47JEUQJtja3lhn7HqAUI+YVdYP2
-	/x10/VNiAJVhsU
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710311343.58414.johan@herland.net>
-X-Y-GMX-Trusted: 0
+Received: from potapov.private (ppp85-141-239-252.pppoe.mtu-net.ru [85.141.239.252])
+	by smtp03.mtu.ru (Postfix) with ESMTP id 214B646ABAF;
+	Wed, 31 Oct 2007 16:43:58 +0300 (MSK)
+Received: from dpotapov by potapov.private with local (Exim 4.63)
+	(envelope-from <dpotapov@gmail.com>)
+	id 1InDrS-0006Oz-T4; Wed, 31 Oct 2007 16:43:58 +0300
+Content-Disposition: inline
+In-Reply-To: <20071031055303.GB3326@atjola.homenet>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62828>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62829>
 
-Hi,
+On Wed, Oct 31, 2007 at 06:53:03AM +0100, Bj=F6rn Steinbrink wrote:
+> On 2007.10.30 22:05:27 -0700, Junio C Hamano wrote:
+> > Your MUA seems to mark the UTF-8 message you are sending out as
+> > 8859-1, which means your name in the message gets corrupt.
+>=20
+> Hm, that would be git-send-email then, anything I need to configure?
+> (Actually I don't see it marking the message as anything)
 
-On Wed, 31 Oct 2007, Johan Herland wrote:
+I believe that the issue is with Junio's mail client. Indeed, the
+context encoding for the mail *body* was specified as 8859-1, but
+that should have none effect on fields in the mail header, because
+any field is the header should be either printable ASCII or encoded
+to contain only ASCII characters as specified in RFC 1522:
 
-> On Wednesday 31 October 2007, Johannes Schindelin wrote:
-> 
-> > On Wed, 31 Oct 2007, Peter Karlsson wrote:
-> > 
-> > > Johannes Schindelin:
-> > > 
-> > > > Why should it?  This would contradict the whole "a commit sha1 
-> > > > hashes the commit, and by inference the _whole_ history" 
-> > > > principle.
-> > > 
-> > > Does it?
-> > 
-> > Yes!  Of course!  If what you want becomes possible, I could make an 
-> > evil change in history long gone, and slip it by you.  You could not 
-> > even see the history which changed.
-> 
-> Well, technically, if the grafts file was part of the repo, you wouldn't 
-> be able to change the (in-tree) grafts file without affecting the SHA1 
-> of HEAD. In other words, given a commit SHA1 sum, you can be sure that 
-> someone else who checks out the same commit (and has no local 
-> modification to their grafts file) will see exactly the same history as 
-> you do.
+encoded-word =3D "=3D?" charset "?" encoding "?" encoded-text "?=3D"
 
-All this does not change the fact that installing a graft and 'git gc 
---prune'ing gets rid of the old history.  D'oh.
+Here is the From field from the mail:
 
-Automatically installing grafts is wrong.
+=46rom:	=3D?utf-8?q?Bj=3DC3=3DB6rn=3D20Steinbrink?=3D <B.Steinbrink@gmx=
+=2Ede>
 
-Ciao,
-Dscho
+So, as far as I can tell, it is encoded properly using utf-8.
+
+Dmitry
