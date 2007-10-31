@@ -1,128 +1,109 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
-Date: Wed, 31 Oct 2007 05:17:51 +0100
-Message-ID: <20071031041751.GA3326@atjola.homenet>
-References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <Pine.LNX.4.64.0710310329520.4362@racer.site>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Problem with git-cvsimport
+Date: Wed, 31 Oct 2007 05:42:09 +0100
+Message-ID: <472807A1.8030804@alum.mit.edu>
+References: <470B491F.9020306@jentro.com>	 <200710091447.50501.wielemak@science.uva.nl>	 <470B8049.1090308@samba.org>	 <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>	 <470C3A3A.2070809@alum.mit.edu>	 <F1176033-1C6E-43F3-9F47-3BDD5EC88A14@orakel.ntnu.no> <170fa0d20710301306o6b3798f9k72615eb811d871f2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 05:18:10 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In51s-0001mx-NF
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 05:18:09 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750879AbXJaERz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 00:17:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751275AbXJaERz
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 00:17:55 -0400
-Received: from mail.gmx.net ([213.165.64.20]:41954 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750879AbXJaERy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 00:17:54 -0400
-Received: (qmail invoked by alias); 31 Oct 2007 04:17:52 -0000
-Received: from i577B89A4.versanet.de (EHLO localhost) [87.123.137.164]
-  by mail.gmx.net (mp048) with SMTP; 31 Oct 2007 05:17:52 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/pPQlEj8bpSeHoCS7Ub2bJIQRyHHdXLfjIMy0z8D
-	C9et1Adkqi7p4U
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0710310329520.4362@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
-Sender: git-owner@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>,
+        Thomas Pasch <thomas.pasch@jentro.com>, git@vger.kernel.org,
+        Jan Wielemaker <wielemak@science.uva.nl>,
+        "Gerald (Jerry) Carter" <jerry@samba.org>,
+        dev <dev@cvs2svn.tigris.org>
+To: Mike Snitzer <snitzer@gmail.com>
+X-From: dev-return-2110-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Wed Oct 31 05:42:24 2007
+Return-path: <dev-return-2110-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
+Envelope-to: gcvscd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1In5PM-0004qE-An
+	for gcvscd-dev@gmane.org; Wed, 31 Oct 2007 05:42:24 +0100
+Received: (qmail 5018 invoked by uid 5000); 31 Oct 2007 04:42:13 -0000
+Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62789>
+list-help: <mailto:dev-help@cvs2svn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
+list-post: <mailto:dev@cvs2svn.tigris.org>
+Delivered-To: mailing list dev@cvs2svn.tigris.org
+Received: (qmail 5008 invoked from network); 31 Oct 2007 04:42:13 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAAH6kJ0fAbSoIh2dsb2JhbACOZQIBCAop
+X-IronPort-AV: E=Sophos;i="4.21,349,1188802800"; 
+   d="scan'208";a="88428741"
+X-IRONPORT: SCANNED
+X-Envelope-From: mhagger@alum.mit.edu
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13pre) Gecko/20071023 Thunderbird/1.5.0.14pre Mnenhy/0.7.5.666
+In-Reply-To: <170fa0d20710301306o6b3798f9k72615eb811d871f2@mail.gmail.com>
+X-Enigmail-Version: 0.94.2.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62790>
 
-On 2007.10.31 03:34:47 +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Wed, 31 Oct 2007, Bj=F6rn Steinbrink wrote:
->=20
-> > @@ -246,6 +292,13 @@ OPTIONS
-> >  	Instead of ignoring merges, try to recreate them.  This option
-> >  	only works in interactive mode.
-> > =20
-> > +\--first-parent::
-> > +	Only follow the first parent commits in merge commits when lookin=
-g
-> > +	for the commits that are to be rebased. This is most useful with =
--p
-> > +	as it will cause rebase to recreate the merges against the origin=
-al
-> > +	branches instead of rebasing those branches as well. This option
-> > +	only works in interactive mode.
-> > +
->=20
-> Hmm.  I had to read this several times to understand it.  Maybe somet=
-hing=20
-> like this instead?
->=20
-> \--first-parent::
-> 	When you want to preserve merges, this option allows you to rebase=20
-> 	only the commits which were not merged in, i.e. which are in the
-> 	first parent ancestry of the current HEAD.
-> +
-> This option only makes sense together with --preserve-merges.
+Mike Snitzer wrote:
+> On 10/10/07, Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no> wrote:
+> ...
+>> Thanks for making cvs2svn the best CVS-to-git conversion tool :)  Now
+>> if it would only support incremental importing...
+> 
+> I second this question: is there any chance incremental importing will
+> be implemented in cvs2svn?
 
-Hm, I think that it might make might sense without -p. Say that your
-topic branch is following two other branches like this:
+Unfortunately, no, there is not much chance that I will implement this.
+ I wouldn't be interested in a works-most-of-the-time solution, and a
+reliable solution would take weeks to implement.
 
----o---o---o--------o topicB
-            \        \
---o---A---o---o---o---o---B topicA
-         /       /
-o---o---o---o---o master
+If somebody else wants to implement this feature, I would be happy to
+help him get started, answer questions, discuss the design, etc.  Or if
+somebody wants to sponsor the work, I might be able to justify working
+on it myself.  But otherwise, I'm afraid it is unlikely to happen.
 
-topicB branched off from master earlier than topicA and you currently
-require stuff from master..topicB _and_ topicB..master, so AFAICT, you
-need sth. like the above.
+> I've not used cvs2svn much and when I did it was for svn not git; but
+> given that git-cvsimport is known to mess up your git repo (as Eyvind
+> pointed out earlier) there doesn't appear to be any reliable tools to
+> allow for incrementally importing from cvs to git.
 
-Let's say that topicB simplifies some internal API and you desperately
-wanted to use that, while master introduced some new stuff that you als=
-o
-use. Now your stuff is finished, but it becomes obvious that topicB is
-still too broken to go into master any time soon. Then you could do:
+That's because it is quite a tricky problem, especially since CVS allows
+history to be changed retroactively; for example,
 
-git rebase -i --first-parent master topicA
+- shift a tag to a different file revision
 
-to get:
+- add an existing tag to a new file or remove it from an old file
 
---o---o---o topicB (branched from master somewhere to the left)
+- delete ("obsolete") old revisions
 
-             o---o---o---A---B topicA
-            /
----o---o---o master
+- change files from vendor branches to main line of development
 
-Depending on how much topicA really depends on topicB, you might need t=
-o
-fix a bunch of stuff, but it might be worth it.
+- even nastier server-side repository manipulations like deleting an RCS
+file, renaming a file, etc.
 
-How about:
-\--first-parent::
-	When this option is given and --preserve-merges is not, then
-	merge commits are completely ignored and only commits from the
-	first parent ancestry are rebased. This allows to pretend that
-	merges never happened.
+These things really happen in the topsy-turvy CVS world; indeed, they
+are a part of many organizations' standard workflow.
 
-	If --preserve-merges is also given, the merge commits are
-	preserved, but only their first parent is rebased as opposed to
-	the default behaviour which would rebase all parents.
+cvs2svn uses repository-wide information in the heuristics that it uses
+to determine changesets, choose branch parents, fix clock skew, etc.
+Therefore the naive approach of running a full conversion a second time
+and just skipping over the revisions that were handled during the first
+conversion would not even begin to work.  (I believe that this is the
+approach of cvsps, which uses mostly local information to determine
+changesets.)
 
-> Also, could you please add a test case to make sure that your patch w=
-orks=20
-> as advertised (and that this functionality will not be broken in futu=
-re=20
-> commits)?
+I think the correct approach would involve recording the "frontier" of
+the CVS repository, then at the next incremental conversion:
 
-Ok, might take some time, as I currently have no clue how the test stuf=
-f
-for git works :-/ Well, I'm sure #git will be helpful :-)
+1. compare the current CVS repository to the recorded information
 
-Thanks,
-Bj=F6rn
+2. emit "fixup" changesets to reflect any CVS changes that happened
+behind the previous "frontier".
+
+3. emit changesets to reflect CVS changes beyond the frontier.
+
+It is step 2 that is IMO the trickiest because it is so open-ended, and
+modern SCMs don't allow all of the corresponding operations in any
+straightforward way.  Presumably one would have to prohibit some of the
+nastier CVS tricks and abort the incremental conversion if any are detected.
+
+Furthermore, for many use-cases of incremental conversion the conversion
+would have to run quickly.  Therefore, the incremental conversion code
+should be written with a strong emphasis on achieving good performance.
+
+Michael
