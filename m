@@ -1,62 +1,163 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Recording merges after repo conversion
-Date: Wed, 31 Oct 2007 15:03:59 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710311503120.4362@racer.site>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
- <200710311343.58414.johan@herland.net> <Pine.LNX.4.64.0710311340500.4362@racer.site>
- <200710311537.30384.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
-	Lars Hjemli <hjemli@gmail.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 16:05:04 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 5/8] push, send-pack: support pushing HEAD to real ref name
+Date: Wed, 31 Oct 2007 16:08:37 +0100
+Message-ID: <104D272D-AD9E-49D7-A503-E9402766CF6F@zib.de>
+References: <119350380778-git-send-email-prohaska@zib.de> <11935038081211-git-send-email-prohaska@zib.de> <11935038081650-git-send-email-prohaska@zib.de> <1193503808519-git-send-email-prohaska@zib.de> <11935038083369-git-send-email-prohaska@zib.de> <11935038084055-git-send-email-prohaska@zib.de> <7vwst7wvdr.fsf@gitster.siamese.dyndns.org> <722152C5-299C-435E-B720-D2D331D16249@zib.de> <7vd4uzuu1g.fsf@gitster.siamese.dyndns.org> <7v7il7usyx.fsf@gitster.siamese.dyndns.org> <55CCFD12-C10F-46A6-8D65-544231DEBF3F@zib.de> <7v1wbfufbo.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 16:08:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InF7s-0007Yu-9w
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 16:05:00 +0100
+	id 1InFB6-0008VE-Dt
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 16:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756960AbXJaPEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 11:04:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756648AbXJaPEn
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 11:04:43 -0400
-Received: from mail.gmx.net ([213.165.64.20]:33091 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755985AbXJaPEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 11:04:43 -0400
-Received: (qmail invoked by alias); 31 Oct 2007 15:04:41 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 31 Oct 2007 16:04:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19eR3pAvFFeP8JvHdFbvdyKWnlwlsEU2dxIYngDIE
-	HVov4ib3p4Ve0T
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200710311537.30384.johan@herland.net>
-X-Y-GMX-Trusted: 0
+	id S1759166AbXJaPIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 11:08:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756322AbXJaPIG
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 11:08:06 -0400
+Received: from mailer.zib.de ([130.73.108.11]:39282 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759372AbXJaPIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 11:08:04 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9VF7Gs9025524;
+	Wed, 31 Oct 2007 16:07:16 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9VF7Cv1007353
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 31 Oct 2007 16:07:12 +0100 (MET)
+In-Reply-To: <7v1wbfufbo.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62842>
 
-Hi,
 
-On Wed, 31 Oct 2007, Johan Herland wrote:
+On Oct 28, 2007, at 9:58 PM, Junio C Hamano wrote:
 
-> On Wednesday 31 October 2007, Johannes Schindelin wrote:
+> Steffen Prohaska <prohaska@zib.de> writes:
 >
-> > All this does not change the fact that installing a graft and 'git gc 
-> > --prune'ing gets rid of the old history.  D'oh.
-> 
-> So will rebasing and --prune'ing, or pulling a rebased branch and 
-> --prune'ing. Git already gives you _plenty_ of different ropes to hang 
-> yourself with. The question is whether adding yet another one is worth 
-> it.
+>> On Oct 28, 2007, at 5:03 PM, Junio C Hamano wrote:
+>> ...
+>>> An alternative, just to let me keep my nicer public image by
+>>> pretending to be constructive ;-)
+>>>
+>>> Introduce a configuration "remote.$name.push_default" whose
+>>> value can be a list of refs.  Teach the push command without
+>>> refspecs:
+>>>
+>>> 	$ git push
+>>> 	$ git push $remote
+>>>
+>>> to pretend as if the listed refspecs are given, instead of the
+>>> traditional "matching branches" behaviour.
+>>>
+>>> Then, introduce another option
+>>>
+>>> 	$ git push --matching
+>>> 	$ git push --matching $remote
+>>>
+>>> to override that configuration, if set, so that the user who
+>>> usually pushes only the selected branches can use the "matching
+>>> branches" behaviour when needed.
+>>>
+>>> Along with your earlier "git push $remote HEAD" patch, this will
+>>> allow you to say:
+>>>
+>>> 	[remote "origin"]
+>>>         	push_default = HEAD
+>>>
+>>> and your
+>>>
+>>> 	$ git push
+>>>
+>>> will push only the current branch.
+>>
+>> Sounds reasonable; but it is more work. I'm not starting to
+>> implement this today.
+>
+> Take your time; nobody is in a hurry.
+>
+> If somebody usually uses "matching" behaviour, i.e. without
+> remote.$name.push_default configuration, but wants to push only
+> the current branch as a one-shot operation, we can obviously use
+> "git push $remote HEAD".  But to be complete, it may make sense
+> to have another option
+>
+> 	$ git push --current
+>
+> that lets you omit $remote (and default to the value configured
+> with branch.$name.remote).
 
-But that is not the question here.  The question here is: are users 
-allowed to hang _others_?  I say: no.
+Here is an alternative proposal.
 
-Ciao,
-Dscho
+The idea is that in a workflow based on a shared repository
+git pull and git push should be 'more' symmetric than they are
+in a pull-only based workflow. The integration of changes is
+'more' direct. Working against a shared repository may require
+to integrate new changes before pushing. Changes are also
+pushed directly to the remote branch you originally branched
+off. Both is different from a pull-only workflow, where I first
+push my changes to a privately owned but publicly readable repo
+and someone else does the integration by pulling from there.
+
+The branch in the shared repository serves as the single
+'integration' branch. One can use 'git branch --track' to set
+up local branches that automatically merge changes from the
+shared 'integration' branch. That is git pull without further
+arguments is the right command to integrate changes from the
+shared branch to the local branch. (git provides more advanced
+ways, but git pull is simple and in principle does the right
+thing.)
+
+What is missing is a simple way to 'push' local changes back
+to shared integration branch in the remote repository. This
+can be seen as a 'symmetric' operation to pulling. So, git push
+should do the right thing. And the right thing is pushing the
+current branch to the shared 'integration' branch.
+
+The automerge behaviour stores information in branch.$name.remote
+and branch.$name.merge that provide sufficient information to
+make "git pull" the equivalent of
+
+    git pull <remoteURL> <remoteref>
+
+where <remoteURL> is the full URL of the remote stored in
+branch.$name.remote, and <remoteref> is the value of
+branch.$name.merge.
+
+A 'symmetric' push command would push the current branch to the
+remote head it originally was branched off, that is
+
+    git push <remoteURL> <currentbranch>:<remoteref>
+
+Now, the proposal is
+
+- add a configuration variable branch.$name.push
+
+- change git push to check if the push configuration variable
+   is set for the current branch $name, and if so run the
+   equivalent of
+
+     git push branch.$name.remote $name:branch.$name.push
+
+
+- teach git branch a flag --push/--no-push that sets up
+   branch.$name.push. Add branch.autosetuppush configuration
+   flag to configure if --push or --no-push is the default.
+   (maybe we need better names here).
+
+
+This breaks the symmetry between git fetch/git push and
+replaces it with a symmetry between git pull/git push for some
+branches. I believe this might be the right thing to do for
+a workflow based on shared repos.
+
+	Steffen
