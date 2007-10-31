@@ -1,88 +1,91 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 14:01:54 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710311350100.3342@woody.linux-foundation.org>
-References: <20071030160232.GB2640@hermes.priv>
- <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org>
- <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
- <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org>
- <20071030235823.GA22747@coredump.intra.peff.net> <fg8h9l$b4n$1@ger.gmane.org>
- <85lk9jzsxb.fsf@lola.goethe.zz> <alpine.LFD.0.999.0710310816180.30120@woody.linux-foundation.org>
- <20071031204729.GB13300@coredump.intra.peff.net>
+Date: Wed, 31 Oct 2007 22:07:33 +0100
+Message-ID: <4728EE95.1020004@op5.se>
+References: <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org> <20071030235823.GA22747@coredump.intra.peff.net> <fg8h9l$b4n$1@ger.gmane.org> <85lk9jzsxb.fsf@lola.goethe.zz> <alpine.LFD.0.999.0710310816180.30120@woody.linux-foundation.org> <20071031204729.GB13300@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
 	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:02:37 2007
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:08:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InKhp-0007eA-EP
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:02:29 +0100
+	id 1InKn6-0000bO-Ok
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:07:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754661AbXJaVCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:02:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754035AbXJaVCL
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:02:11 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:43002 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754373AbXJaVCK (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2007 17:02:10 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VL1ts7027909
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 31 Oct 2007 14:01:56 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VL1sTV027881;
-	Wed, 31 Oct 2007 14:01:55 -0700
+	id S1754916AbXJaVHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:07:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbXJaVHl
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:07:41 -0400
+Received: from mail.op5.se ([193.201.96.20]:54321 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752435AbXJaVHl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 17:07:41 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 745F9173072B;
+	Wed, 31 Oct 2007 22:07:17 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id laaCDddwhALX; Wed, 31 Oct 2007 22:07:16 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id D4B7D1730729;
+	Wed, 31 Oct 2007 22:07:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
 In-Reply-To: <20071031204729.GB13300@coredump.intra.peff.net>
-X-Spam-Status: No, hits=-1.833 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_15,J_CHICKENPOX_44,J_CHICKENPOX_66
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62869>
 
-
-
-On Wed, 31 Oct 2007, Jeff King wrote:
+Jeff King wrote:
+> On Wed, Oct 31, 2007 at 08:28:36AM -0700, Linus Torvalds wrote:
 > 
-> Yes, this means that if you have a bizarre repo name, you can't
-> necessarily switch between host:file syntax and git:// syntax by simple
-> cut and paste. But you really can't _anyway_, since there is no
-> guarantee that they are rooted at the same location, or have the same
-> view of the filesystem.
-
-.. but in practice it works fine, especially for something like kernel.org 
-where it really *is* the same filesystem, just mirrored out.
-
-Also, more importantly, I think the quoting is *stupid*. It adds pointless 
-code for absolutely zero gain. Are you going to unquote '/'? Or how about 
-'~'?
-
-It's much nicer to just not have the quoting issue at all. Repo names are 
-names. Straight up.
-
-> > Personally, I think it's a much better idea to just be git-specific. 
+>> Because we don't care! This is *exactly* why I brought up the whole 
+>> discussion about "interoperability with a web browser", and pointed out 
+>> that there is no such thing *anyway*, since a GIT URL is generally not 
+>> suitable for browsing _regardless_ of any encoding issues!
+>>
+>> So it doesn't matter one whit if a mail client recognizes GIT URL's or 
+>> not! Because the mail client cannot do the right thing with them anyway, 
+>> and would generally think that it's something that it should highlight so 
+>> that you can browse it!
 > 
-> Then why in the world did you choose a specifier syntax that looks
-> _exactly_ like a URL?
+> Two points:
+> 
+>  1. Just because _your_ mail client can't do anything useful with git
+>     URLs^H^H^H^H repo specifications, doesn't mean that others can't.
+> 
+>  2. You are conflating syntax and semantics. Think of the task I
+>     mentioned as two subtasks: pulling the location specifier from the
+>     email, and then doing something useful with it (in this case,
+>     git-cloning it it). The first subtask depends _only_ on a parseable
+>     syntax. The user can provide the context necessary for accomplishing
+>     the second subtask.
+> 
+> For example, consider a terminal that, upon pressing some keyboard
+> combination, will highlight the first URL-ish looking blob on the
+> screen, prompt you for a command, and then execute '$command $url'.  The
+> terminal doesn't have to know the semantics of the blob, but it has to
+> know the syntax. The user provides the semantics.
+> 
+> And yes, such a terminal exists, and I'm using it right now.
+> 
 
-.. because it's a simple format, and it *works*. The same way INI config 
-files are simple and *work*.
+Great. Now you just need a git-repo with an url that needs quoting, and
+this discussion could at least potentially solve a real problem for someone.
 
-And because I didn't think I'd have to care about people who like f*cking 
-around with idiotic details, rather than just get something that is useful 
-and works!
-
-If you don't like the fact that git doesn't quote, just don't use the 
-magic characters. It's that easy. And if somebody quotes the '/', just 
-tell him off for being an ass.
-
-But git can and should do the *sane* thing.
-
-			Linus
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
