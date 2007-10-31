@@ -1,75 +1,97 @@
-From: Peter Karlsson <peter@softwolves.pp.se>
-Subject: Re: Recording merges after repo conversion
-Date: Wed, 31 Oct 2007 13:07:51 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <Pine.LNX.4.64.0710311305290.16298@ds9.cixit.se>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
- <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
- <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
- <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
- <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710310227340.4362@racer.site>
- <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710311059020.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 13:08:20 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: remote#branch
+Date: Wed, 31 Oct 2007 09:16:01 +0100
+Message-ID: <1D1C13E6-EC4C-4C2E-BDA1-F04CAA23A3CC@wincent.com>
+References: <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org> <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org> <20071030235823.GA22747@coredump.intra.peff.net> <85pryvzt1h.fsf@lola.goethe.zz>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Pascal Obry <pascal@obry.net>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Tom Prince <tom.prince@ualberta.net>,
+	Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Petr Baudis <pasky@suse.cz>,
+	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
+	git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 09:17:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InCMt-0007IP-3H
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 13:08:19 +0100
+	id 1In8lE-0000p8-TV
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:17:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754349AbXJaMIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 08:08:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753481AbXJaMID
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 08:08:03 -0400
-Received: from ds9.cixit.se ([193.15.169.228]:44255 "EHLO ds9.cixit.se"
+	id S1753391AbXJaIQ5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 04:16:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753249AbXJaIQ4
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:16:56 -0400
+Received: from wincent.com ([72.3.236.74]:59166 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754495AbXJaMIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 08:08:01 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9VC7qnQ019285
-	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
-	Wed, 31 Oct 2007 13:07:52 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9VC7p7W019275;
-	Wed, 31 Oct 2007 13:07:51 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <Pine.LNX.4.64.0710311059020.4362@racer.site>
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 31 Oct 2007 13:07:52 +0100 (CET)
+	id S1753132AbXJaIQy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2007 04:16:54 -0400
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id l9V8G2fY020870;
+	Wed, 31 Oct 2007 03:16:03 -0500
+In-Reply-To: <85pryvzt1h.fsf@lola.goethe.zz>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62801>
 
-> Yes!  Of course!  If what you want becomes possible, I could make an
-> evil change in history long gone, and slip it by you. You could not
-> even see the history which changed.
+El 31/10/2007, a las 7:39, David Kastrup escribi=F3:
 
-I would see the grafts file being changed, which would alert me (the
-problem I have with graft is that it *replaces* history information for
-an element, not just *add* to it, which threw me off at my first
-attempt at creating one).
+> Jeff King <peff@peff.net> writes:
+>
+>> I didn't ask for RFC quoting, but a nice side effect of URL syntax i=
+s
+>> that they are machine parseable. If you wanted to write a tool to =20
+>> pick
+>> the URLs out of this email and clone them as git repos, then how do =
+=20
+>> you
+>> find the end of:
+>>
+>>  http://host/git repo with spaces in the path
+>>
+>> compared to:
+>>
+>>  http://host/git+repo+with+spaces+in+the+path
+>
+> You just write <URL:http://host/git repo with spaces in the path> and
+> have a good chance it will work.
 
-> You can do that already.  But you have to ask the people at the other
-> end to actually apply the graft.
+As a data point, my email client correctly highlights only this one as =
+=20
+a URL:
 
-Last time I tried, git would not add files that was in the ".git"
-subdirectory to version control. I might have done something
-incorrectly, though, so I'll see if it works now.
+http://host/git+repo+with+spaces+in+the+path
 
-> If you really think that, I doubt you understood the issues at hand.
+Both of these are incorrectly highlighted:
 
-I have, I'm just thinking of the issues that are created by solving the
-issues it does solve.
+http://host/git repo with spaces in the path
+<URL:http://host/git repo with spaces in the path>
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+And this one too:
+
+<http://host/git repo with spaces in the path>
+
+So what does this mean in practice? I can right-click on the first one =
+=20
+and choose "Copy". All the other ones I have to left-click and drag, =20
+being careful to limit the selection to the appropriate left and right =
+=20
+boundaries.
+
+Whether or not this is a big enough deal to actually care about is =20
+open to debate (obviously). Personally, I don't care too much seeing =20
+as I never use paths with spaces in them for this kind of thing.
+
+Cheers,
+Wincent
