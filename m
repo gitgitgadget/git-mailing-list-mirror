@@ -1,85 +1,63 @@
-From: Erik Mouw <mouw@nl.linux.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: cpio command not found
-Date: Wed, 31 Oct 2007 15:06:55 +0100
-Organization: Eric Conspiracy Secret Labs
-Message-ID: <20071031140655.GA8802@gateway.home>
-References: <18216.31314.990545.518458@lisa.zopyra.com> <20071031133039.GA29065@diana.vm.bytemark.co.uk>
+Date: Wed, 31 Oct 2007 14:20:47 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0710311420330.4362@racer.site>
+References: <18216.31314.990545.518458@lisa.zopyra.com>
+ <20071031133039.GA29065@diana.vm.bytemark.co.uk> <20071031140655.GA8802@gateway.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="PEIAKu/WMn1b1Hv9"
-Cc: Bill Lear <rael@zopyra.com>, git@vger.kernel.org
-To: Karl Hasselstr?m <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 15:17:20 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Karl Hasselstr?m <kha@treskal.com>, Bill Lear <rael@zopyra.com>,
+	git@vger.kernel.org
+To: Erik Mouw <mouw@nl.linux.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 15:21:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InENY-00012M-5J
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 15:17:08 +0100
+	id 1InES2-0002SE-9o
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 15:21:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754625AbXJaOQy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 10:16:54 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbXJaOQy
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 10:16:54 -0400
-Received: from smtp-vbr6.xs4all.nl ([194.109.24.26]:2512 "EHLO
-	smtp-vbr6.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753743AbXJaOQx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 10:16:53 -0400
-X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Wed, 31 Oct 2007 10:16:53 EDT
-Received: from gateway.home (a82-92-155-199.adsl.xs4all.nl [82.92.155.199])
-	by smtp-vbr6.xs4all.nl (8.13.8/8.13.8) with ESMTP id l9VE6uIq016535;
-	Wed, 31 Oct 2007 15:07:05 +0100 (CET)
-	(envelope-from mouw@nl.linux.org)
-Received: from erik by gateway.home with local (Exim 3.36 #1 (Debian))
-	id 1InEDf-000491-00; Wed, 31 Oct 2007 15:06:55 +0100
-Content-Disposition: inline
-In-Reply-To: <20071031133039.GA29065@diana.vm.bytemark.co.uk>
-X-Eric-Conspiracy: There is no conspiracy!
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Virus-Scanned: by XS4ALL Virus Scanner
+	id S1756141AbXJaOVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 10:21:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755917AbXJaOVc
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 10:21:32 -0400
+Received: from mail.gmx.net ([213.165.64.20]:36216 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755303AbXJaOVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 10:21:31 -0400
+Received: (qmail invoked by alias); 31 Oct 2007 14:21:29 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp031) with SMTP; 31 Oct 2007 15:21:29 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19H2tBCHKlHRjJkZQPrb+Rnk/Z3H69f53r9S+aby9
+	szdzGZfRvyBPim
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071031140655.GA8802@gateway.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62836>
 
+Hi,
 
---PEIAKu/WMn1b1Hv9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 31 Oct 2007, Erik Mouw wrote:
 
-On Wed, Oct 31, 2007 at 02:30:39PM +0100, Karl Hasselstr?m wrote:
-> On 2007-10-31 06:51:30 -0600, Bill Lear wrote:
->=20
-> > I don't remember this dependence from earlier versions of git. I
-> > have been running git 1.4.xx on this machine for a while...
->=20
-> When you clone with -l, git uses cpio to hardlink to the original
-> repository. What has changed is that -l is now used by default when
-> cloning a repository that's accessed via the file system (as opposed
-> to over some network protocol).
+> On Wed, Oct 31, 2007 at 02:30:39PM +0100, Karl Hasselstr?m wrote:
+> > On 2007-10-31 06:51:30 -0600, Bill Lear wrote:
+> > 
+> > > I don't remember this dependence from earlier versions of git. I 
+> > > have been running git 1.4.xx on this machine for a while...
+> > 
+> > When you clone with -l, git uses cpio to hardlink to the original 
+> > repository. What has changed is that -l is now used by default when 
+> > cloning a repository that's accessed via the file system (as opposed 
+> > to over some network protocol).
+> 
+> Why cpio? What is wrong with ln(1) (every Unix should have one) or
+> link(2) ?
 
-Why cpio? What is wrong with ln(1) (every Unix should have one) or
-link(2) ?
+Patch, please?
 
-
-Erik
-
---=20
-They're all fools. Don't worry. Darwin may be slow, but he'll
-eventually get them. -- Matthew Lammers in alt.sysadmin.recovery
-
---PEIAKu/WMn1b1Hv9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHKIv//PlVHJtIto0RAit8AJ9w65EvHUzpVpsAa9rwpH8PP4oxGQCcCkwA
-d/WVxtyyrpn2TiC3j/+rV9s=
-=OQTH
------END PGP SIGNATURE-----
-
---PEIAKu/WMn1b1Hv9--
+Ciao,
+Dscho
