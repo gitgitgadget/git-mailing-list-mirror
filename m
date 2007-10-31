@@ -1,82 +1,63 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Wed, 31 Oct 2007 11:50:01 +0100
-Message-ID: <B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de>
-References: <1193593581312-git-send-email-prohaska@zib.de> <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org> <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de> <7vejfcl8aj.fsf@gitster.siamese.dyndns.org> <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> <7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 11:50:31 2007
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Recording merges after repo conversion
+Date: Wed, 31 Oct 2007 13:17:13 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.64.0710311315250.16298@ds9.cixit.se>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+ <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
+ <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
+ <Pine.LNX.4.64.0710301504270.4362@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 13:17:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InB9Y-000241-AR
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 11:50:28 +0100
+	id 1InCW6-0000i1-Kr
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 13:17:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755786AbXJaKtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 06:49:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755711AbXJaKtu
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 06:49:50 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55424 "EHLO mailer.zib.de"
+	id S1755558AbXJaMRU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 08:17:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755516AbXJaMRU
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 08:17:20 -0400
+Received: from ds9.cixit.se ([193.15.169.228]:39607 "EHLO ds9.cixit.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755032AbXJaKtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 06:49:50 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9VAmcdO006932;
-	Wed, 31 Oct 2007 11:49:44 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9VAmbW5011919
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Wed, 31 Oct 2007 11:48:37 +0100 (MET)
-In-Reply-To: <7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1755385AbXJaMRT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 08:17:19 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9VCHEnQ025228
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 31 Oct 2007 13:17:14 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.12.3/8.12.3/Debian-7.2) with ESMTP id l9VCHDlr025223;
+	Wed, 31 Oct 2007 13:17:13 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <Pine.LNX.4.64.0710301504270.4362@racer.site>
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (ds9.cixit.se [127.0.0.1]); Wed, 31 Oct 2007 13:17:14 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62817>
 
+Johannes Schindelin:
 
-On Oct 31, 2007, at 9:45 AM, Junio C Hamano wrote:
+> No.  Use filter-branch, and publish the cleaned up history (possibly as a 
+> new branch/repo).
 
->> - git push can be configuration to push only the current
->>   branch, as outlined below. This would certainly work. What
->>   I do not like is that you first need to do some configuration
->>   before you get a safe working environment.
->
-> I would not doubt it would be safer for _your_ workflow, but you
-> should consider the risk of making things more cumbersome for
-> workflows of others by enforcing that policy.
+I'm considering doing this, and just replace the published repository
+with the "fixed" one (and fix-up all my clonings of it). I'm having
+some problems digesting the git-filter-branch manual page though--is
+there an easy way of automating the process, given that I now have a
+"grafts" file that expresses what I would like git-filter-branch to do
+(I guess it would have to work backwards changing the merge points, to
+be able to find all the revisions under the names I've used in the
+grafts file)?
 
-Together with the '--create' flag it would be safer in all
-cases, because it would always do _less_ than what git push
-currently does. The safest choice would be if "git push"
-refused to do anything until configured appropriately.
-
-"safer" is independent of the workflow.
-
-But I see that it may be more cumbersome depending on the
-workflow.
-
-I'm mainly interested in using git against a shared repo,
-and make it as simple and as safe as possible to use in
-such a setup. I suspect that git is more optimized for the
-workflow used for the Linux kernel and for developing git,
-which heavily rely on sending patches to mailing lists and
-pulling fro read-only repos.
-
-
-> In other words, don't change anything unless you have a very
-> good reason to convince everybody else that it is universally
-> a good change to the default.
-
-What I can imagine would not be universally better, but it
-would be universally safer. You'd need to either explicitly
-tell git push how to act (e.g. '--current' or '--matching'
-flags), or you could explicitly configure git to always act in
-a specific way. But it would only start to act this way _after_
-being configured appropriately.
-
-	Steffen
+-- 
+\\// Peter - http://www.softwolves.pp.se/
