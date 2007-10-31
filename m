@@ -1,53 +1,77 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: cpio command not found
-Date: Wed, 31 Oct 2007 14:30:39 +0100
-Message-ID: <20071031133039.GA29065@diana.vm.bytemark.co.uk>
-References: <18216.31314.990545.518458@lisa.zopyra.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Recording merges after repo conversion
+Date: Wed, 31 Oct 2007 13:43:17 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0710311340500.4362@racer.site>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+ <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
+ <Pine.LNX.4.64.0710311059020.4362@racer.site> <200710311343.58414.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 14:31:17 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Peter Karlsson <peter@softwolves.pp.se>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Oct 31 14:44:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InDfB-0002fE-EB
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 14:31:17 +0100
+	id 1InDrp-0007QZ-8n
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 14:44:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755732AbXJaNbB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 09:31:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754803AbXJaNbA
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 09:31:00 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4265 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754843AbXJaNbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 09:31:00 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1InDea-0007jl-00; Wed, 31 Oct 2007 13:30:40 +0000
-Content-Disposition: inline
-In-Reply-To: <18216.31314.990545.518458@lisa.zopyra.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1756615AbXJaNoE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 09:44:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756532AbXJaNoB
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 09:44:01 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37854 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755020AbXJaNoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 09:44:01 -0400
+Received: (qmail invoked by alias); 31 Oct 2007 13:43:59 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 31 Oct 2007 14:43:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18rUfwzShor9UD47JEUQJtja3lhn7HqAUI+YVdYP2
+	/x10/VNiAJVhsU
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200710311343.58414.johan@herland.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62828>
 
-On 2007-10-31 06:51:30 -0600, Bill Lear wrote:
+Hi,
 
-> I don't remember this dependence from earlier versions of git. I
-> have been running git 1.4.xx on this machine for a while...
+On Wed, 31 Oct 2007, Johan Herland wrote:
 
-When you clone with -l, git uses cpio to hardlink to the original
-repository. What has changed is that -l is now used by default when
-cloning a repository that's accessed via the file system (as opposed
-to over some network protocol).
+> On Wednesday 31 October 2007, Johannes Schindelin wrote:
+> 
+> > On Wed, 31 Oct 2007, Peter Karlsson wrote:
+> > 
+> > > Johannes Schindelin:
+> > > 
+> > > > Why should it?  This would contradict the whole "a commit sha1 
+> > > > hashes the commit, and by inference the _whole_ history" 
+> > > > principle.
+> > > 
+> > > Does it?
+> > 
+> > Yes!  Of course!  If what you want becomes possible, I could make an 
+> > evil change in history long gone, and slip it by you.  You could not 
+> > even see the history which changed.
+> 
+> Well, technically, if the grafts file was part of the repo, you wouldn't 
+> be able to change the (in-tree) grafts file without affecting the SHA1 
+> of HEAD. In other words, given a commit SHA1 sum, you can be sure that 
+> someone else who checks out the same commit (and has no local 
+> modification to their grafts file) will see exactly the same history as 
+> you do.
 
-To work around this, specify the repository location with file://, and
-git won't try to hardlink (and hence won't try to use cpio).
+All this does not change the fact that installing a graft and 'git gc 
+--prune'ing gets rid of the old history.  D'oh.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Automatically installing grafts is wrong.
+
+Ciao,
+Dscho
