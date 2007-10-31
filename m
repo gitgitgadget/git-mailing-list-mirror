@@ -1,91 +1,131 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 22:07:33 +0100
-Message-ID: <4728EE95.1020004@op5.se>
-References: <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org> <20071030235823.GA22747@coredump.intra.peff.net> <fg8h9l$b4n$1@ger.gmane.org> <85lk9jzsxb.fsf@lola.goethe.zz> <alpine.LFD.0.999.0710310816180.30120@woody.linux-foundation.org> <20071031204729.GB13300@coredump.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Wed, 31 Oct 2007 22:09:21 +0100
+Message-ID: <B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de>
+References: <1193593581312-git-send-email-prohaska@zib.de> <11935935812741-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org> <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de> <7vejfcl8aj.fsf@gitster.siamese.dyndns.org> <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> <7v8x5jiseh.fsf@gitster.siamese.dyndns.org> <B3C76DB8-076D-4C43-AC28-99119A05325C@z
+ ib.de> <7vve8nglrt.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	David Kastrup <dak@gnu.org>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:08:15 2007
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:09:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InKn6-0000bO-Ok
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:07:57 +0100
+	id 1InKoS-0000wM-6J
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:09:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754916AbXJaVHm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:07:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbXJaVHl
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:07:41 -0400
-Received: from mail.op5.se ([193.201.96.20]:54321 "EHLO mail.op5.se"
+	id S1754885AbXJaVJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:09:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754925AbXJaVJF
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:09:05 -0400
+Received: from mailer.zib.de ([130.73.108.11]:65085 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752435AbXJaVHl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 17:07:41 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 745F9173072B;
-	Wed, 31 Oct 2007 22:07:17 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[AWL=0.000, BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id laaCDddwhALX; Wed, 31 Oct 2007 22:07:16 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id D4B7D1730729;
-	Wed, 31 Oct 2007 22:07:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071031204729.GB13300@coredump.intra.peff.net>
+	id S1754054AbXJaVJE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 17:09:04 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id l9VL8BoG023511;
+	Wed, 31 Oct 2007 22:08:19 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1be2b.pool.einsundeins.de [77.177.190.43])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id l9VL7vhj022525
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Wed, 31 Oct 2007 22:07:57 +0100 (MET)
+In-Reply-To: <7vve8nglrt.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62870>
 
-Jeff King wrote:
-> On Wed, Oct 31, 2007 at 08:28:36AM -0700, Linus Torvalds wrote:
-> 
->> Because we don't care! This is *exactly* why I brought up the whole 
->> discussion about "interoperability with a web browser", and pointed out 
->> that there is no such thing *anyway*, since a GIT URL is generally not 
->> suitable for browsing _regardless_ of any encoding issues!
+
+On Oct 31, 2007, at 7:51 PM, Junio C Hamano wrote:
+
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> On Oct 31, 2007, at 9:45 AM, Junio C Hamano wrote:
 >>
->> So it doesn't matter one whit if a mail client recognizes GIT URL's or 
->> not! Because the mail client cannot do the right thing with them anyway, 
->> and would generally think that it's something that it should highlight so 
->> that you can browse it!
-> 
-> Two points:
-> 
->  1. Just because _your_ mail client can't do anything useful with git
->     URLs^H^H^H^H repo specifications, doesn't mean that others can't.
-> 
->  2. You are conflating syntax and semantics. Think of the task I
->     mentioned as two subtasks: pulling the location specifier from the
->     email, and then doing something useful with it (in this case,
->     git-cloning it it). The first subtask depends _only_ on a parseable
->     syntax. The user can provide the context necessary for accomplishing
->     the second subtask.
-> 
-> For example, consider a terminal that, upon pressing some keyboard
-> combination, will highlight the first URL-ish looking blob on the
-> screen, prompt you for a command, and then execute '$command $url'.  The
-> terminal doesn't have to know the semantics of the blob, but it has to
-> know the syntax. The user provides the semantics.
-> 
-> And yes, such a terminal exists, and I'm using it right now.
-> 
+>>> I would not doubt it would be safer for _your_ workflow, but you
+>>> should consider the risk of making things more cumbersome for
+>>> workflows of others by enforcing that policy.
+>>
+>> Together with the '--create' flag it would be safer in all
+>> cases, because it would always do _less_ than what git push
+>> currently does. The safest choice would be if "git push"
+>> refused to do anything until configured appropriately.
+>>
+>> "safer" is independent of the workflow.
+>
+> By your definition, a command that does not do anything by
+> default is safer regardless of the workflow.
+>
+> That may be theoretically true --- it cannot do any harm by
+> default.  But that is not useful.
 
-Great. Now you just need a git-repo with an url that needs quoting, and
-this discussion could at least potentially solve a real problem for someone.
+If different workflows have contradicting needs, doing nothing
+by default might be a good choice. Not theoretically, but in
+practice.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+>> I'm mainly interested in using git against a shared repo,
+>> and make it as simple and as safe as possible to use in
+>> such a setup. I suspect that git is more optimized for the
+>> workflow used for the Linux kernel and for developing git,
+>> which heavily rely on sending patches to mailing lists and
+>> pulling from read-only repos.
+>>
+>
+> You forgot a lot more important part.  Pushing into publishing
+> repositories.  And the discussion is about git-push command.
+
+Exactly, here are two examples:
+
+If you push only to publishing repositories that are read
+only by others, you'll never encounter the problem that
+10/10 tried to solve. The publishing repository is never
+changed by others. You are the only one who pushes to this
+repository. Therefore the remote never advances unexpectedly.
+
+A shared repository behaves differently. Others push to the
+repository as well. Hence, branches can advance unexpectedly.
+
+
+Another difference is the way changes are integrated. In
+a workflow without shared repositories, only pull is used
+for integration, while push in only used for publishing the
+changes. After a push you always need to request someone else
+to pull. For example:
+
+- Alice publishes branch foo.
+- Bob clones Alice's repository and checks out foo as his
+   local branch bar.
+- Bob later publishes his branch by pushing bar to his
+   public repository and asks Alice to pull.
+- Alice pulls bar from Bobs public repository and merges
+   with foo. She then publishes the integrated changes
+   by pushing foo to her public repository.
+
+My point is: there is no need to push from branch bar to
+branch foo. Alice and Bob both push to branches that are named
+identical in their private and their public repositories.
+Only pull is used to merge changes from the branch named bar
+to the branch named foo.
+
+This is different if you work with a shared repository. Bob
+checks out the shared branch foo to his local branch bar and
+later he needs to push bar back to the shared branch foo. Bob
+needs to push changes from his local branch bar to the branch
+foo in the remote repository, a branch with a different name.
+This need does not emerge when working with two publishing
+repositories, as described above.
+
+
+This was the extended version of what I meant above. The
+workflow used for the Linux kernel and for developing git is
+focused on pull. Push is normally only used for publishing
+branches under identical name. The interesting stuff happens
+during the pull.
+
+	Steffen
