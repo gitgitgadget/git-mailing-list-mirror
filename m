@@ -1,68 +1,71 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 10:34:59 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <47284C43.1030007@obry.net>
-References: <20071030044026.GA9600@thunk.org>	<alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org>	<20071030053732.GA16963@hermes.priv>	<alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>	<20071030160232.GB2640@hermes.priv>	<alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org>	<vpq8x5kh4rr.fsf@bauges.imag.fr>	<alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>	<4727839B.9070205@obry.net>	<alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org>	<20071030235823.GA22747@coredump.intra.peff.net> <85pryvzt1h.fsf@lola.goethe.zz>
+From: Peter Karlsson <peter@softwolves.pp.se>
+Subject: Re: Recording merges after repo conversion
+Date: Wed, 31 Oct 2007 10:50:02 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
+ <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
+ <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
+ <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
+ <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
+ <Pine.LNX.4.64.0710310227340.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Tom Prince <tom.prince@ualberta.net>,
-	Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Petr Baudis <pasky@suse.cz>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 31 10:35:28 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Lars Hjemli <hjemli@gmail.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 10:50:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In9yw-0005kC-TX
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 10:35:27 +0100
+	id 1InADQ-0008J6-19
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 10:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753994AbXJaJfK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 31 Oct 2007 05:35:10 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753940AbXJaJfJ
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 05:35:09 -0400
-Received: from smtp27.orange.fr ([80.12.242.95]:15883 "EHLO smtp27.orange.fr"
+	id S1754694AbXJaJuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 05:50:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754667AbXJaJuI
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 05:50:08 -0400
+Received: from smtp.getmail.no ([84.208.20.33]:41272 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753871AbXJaJfI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 05:35:08 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2713.orange.fr (SMTP Server) with ESMTP id 5004C1C000BA
-	for <git@vger.kernel.org>; Wed, 31 Oct 2007 10:35:07 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-98-100.w90-35.abo.wanadoo.fr [90.35.16.100])
-	by mwinf2713.orange.fr (SMTP Server) with ESMTP id 993751C00092;
-	Wed, 31 Oct 2007 10:35:06 +0100 (CET)
-X-ME-UUID: 20071031093506627.993751C00092@mwinf2713.orange.fr
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <85pryvzt1h.fsf@lola.goethe.zz>
-X-Enigmail-Version: 0.95.5
+	id S1754670AbXJaJuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 05:50:05 -0400
+Received: from pmxchannel-daemon.no-osl-m323-srv-009-z2.isp.get.no by
+ no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ id <0JQR00F0XSNGN200@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 31 Oct 2007 10:50:04 +0100 (CET)
+Received: from smtp.getmail.no ([10.5.16.1])
+ by no-osl-m323-srv-009-z2.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JQR00KOUSN8CYA0@no-osl-m323-srv-009-z2.isp.get.no> for
+ git@vger.kernel.org; Wed, 31 Oct 2007 10:49:56 +0100 (CET)
+Received: from perkele ([84.215.146.18]) by no-osl-m323-srv-009-z1.isp.get.no
+ (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
+ with ESMTP id <0JQR004Q4SN8VX40@no-osl-m323-srv-009-z1.isp.get.no> for
+ git@vger.kernel.org; Wed, 31 Oct 2007 10:49:56 +0100 (CET)
+Received: by perkele (Postfix, from userid 501)	id C2D5C2FC18; Wed,
+ 31 Oct 2007 10:50:02 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id BCFFE2FC0C; Wed, 31 Oct 2007 10:50:02 +0100 (CET)
+In-reply-to: <Pine.LNX.4.64.0710310227340.4362@racer.site>
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-David Kastrup a =E9crit :
-> You just write <URL:http://host/git repo with spaces in the path> and
-> have a good chance it will work.
+Johannes Schindelin:
 
-Well "good chance" is not an option for reliable software :)
+> Why should it?  This would contradict the whole "a commit sha1 hashes the
+> commit, and by inference the _whole_ history" principle.
 
-Pascal.
+Does it? Why can't the grafts file itself be committed to the repository and 
+live in the history?
 
---=20
+Well, yeah, the SHA1 hashing is one of Git's main strengths, but it also 
+opens up some weaknesses.
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+-- 
+\\// Peter - http://www.softwolves.pp.se/
