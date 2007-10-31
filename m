@@ -1,113 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Wed, 31 Oct 2007 14:31:05 -0700
-Message-ID: <7vlk9jgeee.fsf@gitster.siamese.dyndns.org>
-References: <1193593581312-git-send-email-prohaska@zib.de>
-	<11935935812741-git-send-email-prohaska@zib.de>
-	<1193593581114-git-send-email-prohaska@zib.de>
-	<1193593581486-git-send-email-prohaska@zib.de>
-	<11935935812185-git-send-email-prohaska@zib.de>
-	<11935935822846-git-send-email-prohaska@zib.de>
-	<11935935821136-git-send-email-prohaska@zib.de>
-	<11935935823045-git-send-email-prohaska@zib.de>
-	<11935935821800-git-send-email-prohaska@zib.de>
-	<11935935823496-git-send-email-prohaska@zib.de>
-	<11935935821192-git-send-email-prohaska@zib.de>
-	<7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
-	<52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
-	<7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
-	<F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
-	<7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-	<B3C76DB8-076D-4C43-AC28-99119A05325C@z ib.de>
-	<7vve8nglrt.fsf@gitster.siamese.dyndns.org>
-	<B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: unmerging feature branches
+Date: Wed, 31 Oct 2007 14:34:45 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0710311429080.3342@woody.linux-foundation.org>
+References: <20071023152445.GA10070@piper.oerlikon.madduck.net>
+ <alpine.LFD.0.999.0710230922240.30120@woody.linux-foundation.org>
+ <20071023171611.GA18783@piper.oerlikon.madduck.net>
+ <alpine.LFD.0.999.0710231026011.30120@woody.linux-foundation.org>
+ <20071031211658.GA5430@inspiron>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 22:32:39 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: martin f krafft <madduck@madduck.net>,
+	git discussion list <git@vger.kernel.org>
+To: Alejandro Martinez Ruiz <alex@flawedcode.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 22:35:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InLA6-0006xS-T1
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:31:43 +0100
+	id 1InLDe-0008KP-4O
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 22:35:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755252AbXJaVbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 17:31:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbXJaVbN
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:31:13 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:39710 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755059AbXJaVbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 17:31:12 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id E33CF2F0;
-	Wed, 31 Oct 2007 17:31:31 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 453D690CB2;
-	Wed, 31 Oct 2007 17:31:29 -0400 (EDT)
-In-Reply-To: <B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de> (Steffen Prohaska's
-	message of "Wed, 31 Oct 2007 22:09:21 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753891AbXJaVfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 17:35:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753310AbXJaVfH
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 17:35:07 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:43575 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751219AbXJaVfF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2007 17:35:05 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VLYk02000432
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 31 Oct 2007 14:34:47 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VLYj18029896;
+	Wed, 31 Oct 2007 14:34:45 -0700
+In-Reply-To: <20071031211658.GA5430@inspiron>
+X-Spam-Status: No, hits=-2.732 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62882>
 
-Steffen Prohaska <prohaska@zib.de> writes:
 
->> You forgot a lot more important part.  Pushing into publishing
->> repositories.  And the discussion is about git-push command.
->
-> Exactly, here are two examples:
->
-> If you push only to publishing repositories that are read
-> only by others, you'll never encounter the problem that
-> 10/10 tried to solve. The publishing repository is never
-> changed by others. You are the only one who pushes to this
-> repository. Therefore the remote never advances unexpectedly.
 
-Wrong.
+On Wed, 31 Oct 2007, Alejandro Martinez Ruiz wrote:
+> 
+> So how about an "undo" command or a switch for revert with a special
+> meaning like "hey, this one is a nice commit, but it ain't ready yet,
+> I'd like you to ignore I ever committed the thing when merging or
+> rebasing again, thanks"?
 
-People can and do work from more than one private repositories
-(I do).  In a sense, that is sharing the repository with
-oneself.
+There is only one undo command, and that one we've had since day 1:
 
-I may do an emergency patch to fix breakage on 'maint' (and
-'maint' only) from a location that is not my primary development
-box and push the fix out.  I fully expect that the push will
-push out 'maint' and expect the other branches such as 'master'
-on the remote side to stay the same, as I haven't touched
-'master' on that box for quite a while and it is now stale.  In
-that situation, I _want_ the "git push" itself to report failure
-to notify me that it did not push what _I_ asked it to push out,
-so that I can be reminded that I'd better do "git push $remote
-maint" the next time.  In the meantime, even though it reports
-a failure, 'master' on the remote side is _not_ updated, so the
-behaviour is still _safe_.
+	git reset --hard <state-you-want-to-go-back-to>
 
-> Another difference is the way changes are integrated. In
-> a workflow without shared repositories, only pull is used
-> for integration, while push in only used for publishing the
-> changes.
+will happily undo anything at all (including an earlier undo, apart from 
+uncommitted dirty tree state, which is gone, gone, gone after that 
+"undo" and can not be retrieved).
 
-Wrong.  push is a mirror of fetch and does not do _any_
-integration.  It is just a safe (because it insists on
-fast-forward) propagation mechanism.  Your integration still
-happens with pull (actually, shared repository people seem to
-prefer "fetch + rebase" over "pull" which is "fetch + merge").
+That's the only real true "undo" with clear semantics - it actually does 
+undo the whole history.
 
-> This is different if you work with a shared repository. Bob
-> checks out the shared branch foo to his local branch bar and
-> later he needs to push bar back to the shared branch foo. Bob
-> needs to push changes from his local branch bar to the branch
-> foo in the remote repository, a branch with a different name.
-> This need does not emerge when working with two publishing
-> repositories, as described above.
+But the kind of "undo" you wish for is not really possible. It implies a 
+level of semantics that the system just doesn't know or care about. It 
+also implies that anything else than the shape of history would matter for 
+merging, which is just anathema to everything that makes git good in the 
+first place.
 
-So you do "git push $remote bar:foo".  If you do that regulary,
-there are configuration mechanisms to help you reduce your
-keyboard wear.  What's the problem?
+That said, in practice, this really seldom does come up. You can often use 
+"git revert" as that kind of undo, and when you later do the merge, and 
+the other side has fixed up the code, it's (a) likely going to be obvious 
+in the conflicts and (b) if the fixes were to infrastructure and you had 
+no conflicts, it's really easy to just revert the revert too!
+
+			Linus
