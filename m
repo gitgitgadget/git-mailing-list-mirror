@@ -1,116 +1,185 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 08:28:36 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710310816180.30120@woody.linux-foundation.org>
-References: <20071030044026.GA9600@thunk.org>
- <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org>
- <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org>
- <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org>
- <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org>
- <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org>
- <20071030235823.GA22747@coredump.intra.peff.net> <fg8h9l$b4n$1@ger.gmane.org>
- <85lk9jzsxb.fsf@lola.goethe.zz>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Oct 31 16:32:52 2007
+From: Simon Sasburg <simon.sasburg@gmail.com>
+Subject: [PATCH] Implement sending mails over TLS in git-send-email.
+Date: Wed, 31 Oct 2007 16:50:59 +0100
+Message-ID: <1193845859-1788-1-git-send-email-Simon.Sasburg@gmail.com>
+Cc: Simon Sasburg <Simon.Sasburg@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 31 16:51:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InFYp-00080q-Tm
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 16:32:52 +0100
+	id 1InFqq-0005xI-Ub
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 16:51:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760921AbXJaP3V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 11:29:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760926AbXJaP3U
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 11:29:20 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:50745 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760921AbXJaP3T (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 31 Oct 2007 11:29:19 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VFSbfN025727
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 31 Oct 2007 08:28:38 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9VFSaIp009567;
-	Wed, 31 Oct 2007 08:28:37 -0700
-In-Reply-To: <85lk9jzsxb.fsf@lola.goethe.zz>
-X-Spam-Status: No, hits=-2.431 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_66
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756159AbXJaPvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 11:51:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755929AbXJaPvH
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 11:51:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.172]:23334 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754192AbXJaPvE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 11:51:04 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so324998ugc
+        for <git@vger.kernel.org>; Wed, 31 Oct 2007 08:51:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=+lTiYebIYEtb1p7uvrr7+UWGruySr76cMVs3DAB9vgQ=;
+        b=dXxZkqq7rIm5FF/YVK14Lb7IOnUbbjl66goIZBTnv5AGLcdw96Frd1qNNZ+UA6qvSeaWJZTrSSlAbUgpQdOxzwGQbNz2Ph1vpUht7VuUrFtk9VjN04QsiexhcNNUDk9i9PDMd629ZGztxUDbnkhwmw4yt6TgnlHVk7UUQBIC3fw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:date:message-id:x-mailer:from;
+        b=WRT7RlCjaYS3IXQtLABjiwmkuiRl5A5Uu1++UcZaEgmFn/K7TOX/kq1U6TfIA2rRNTDxMZ3T1+UGwItJhnuKaS58xxWMQAMPNMHK/04zIOnZTM11eJWJAHfcuCF8TZTyxcf4/AABNZwhB3kIHi1ZEDJyePKG76zP6pLfJJg8QWY=
+Received: by 10.67.196.4 with SMTP id y4mr213546ugp.1193845862705;
+        Wed, 31 Oct 2007 08:51:02 -0700 (PDT)
+Received: from localhost ( [86.85.232.104])
+        by mx.google.com with ESMTPS id 6sm1460427ugc.2007.10.31.08.51.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Wed, 31 Oct 2007 08:51:01 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.4.498.g9c514
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62845>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62846>
 
+Signed-off-by: Simon Sasburg <Simon.Sasburg@gmail.com>
+---
 
+With this patch I was able to use git-send-email to send mail through gmail's
+smpt server, which uses TLS.
 
-On Wed, 31 Oct 2007, David Kastrup wrote:
-> 
-> I can click on links in my mail reader, and the above is not recognized
-> as one.  <URL:http://host/git repo with spaces in the path> would likely
-> work.
+Net::SMTP::TLS apparently doesn't do proper error handling, so the TLS
+codepath is essentially not checked for errors. I'm not really happy with this.
 
-I don't think this whole discussion is relevant at all.
+The Net::SMTP::TLS docs say this about error handling:
+>ERROR HANDLING:
+>This module will croak in the event of an SMTP error. Should you wish to handle this gracefully in your application, you may wrap your mail transmission in an eval {} block and check $@ afterward.
 
-Why?
+But my perl knowledge is way too limited for me to know if/how that helps.
+(This patch was just made by copying existing code and fiddling with it untill it did what i wanted)
 
-Because we don't care! This is *exactly* why I brought up the whole 
-discussion about "interoperability with a web browser", and pointed out 
-that there is no such thing *anyway*, since a GIT URL is generally not 
-suitable for browsing _regardless_ of any encoding issues!
+Maybe someone who knows more about perl than I do can finish this?
+Or give an estimate how difficult it would be for me to fix after pointing me in the right direction?
+(I'm willing to learn a little perl for this, but not too much :-p)
+---
+ git-send-email.perl |   64 +++++++++++++++++++++++++++++++++-----------------
+ 1 files changed, 42 insertions(+), 22 deletions(-)
 
-So it doesn't matter one whit if a mail client recognizes GIT URL's or 
-not! Because the mail client cannot do the right thing with them anyway, 
-and would generally think that it's something that it should highlight so 
-that you can browse it!
-
-Besides, you generally shouldn't use http for git URL's in the first 
-place, and they are very much a secondary citizen. Yes, some people use 
-them because they have firewall issues, and they *work*, but giving them 
-as examples of GIT URL's and discussing them as it they were a big deal is 
-just *stupid* when no other - more realistic - git url works that way 
-anyway.
-
-This was the whole and only point of my "interoperability" thing. The GIT 
-URL's - even when they are perfectly well-formed URL's (which is basically 
-100% of the time, since no current git server tends to put things like 
-spaces in the path anyway) - are simply in a different "space" than most 
-other URL's.
-
-You cannot feed them to a web browser or a file browser anyway, since the 
-URL is actually mal-formed (on purpose) in *another* and more fundamental 
-way: it doesn't say what the "application domain" is, since it basically 
-just assumes that the application domain is git, and the "scheme" part of 
-the URL really talks only about the _protocol_, not about the fact that 
-it's a git thing.
-
-So if you wanted to be inter-operable, you'd have add the "git" part to 
-the scheme, and do the (insane, in my opinion) cogito thing with 
-"git+http://xyz.hjashja/" thing!
-
-See? Otherwise no non-git program could understand *anyway* that it's a 
-git address, and not meant to be some html thing.
-
-So to summarise:
-
- - the only way to make git interoperate would be to be user-UNfriendly 
-   with stupid markers that no git program really needs or wants, and by 
-   making the escaping depend on the form of the GIT URL.
-
-But hey, if people want to screw up git even more, and make the "git+" 
-crap also encode the address, I don't care. I would never *ever* use the 
-"git+xyz://" forms anyway. They're stupid and useless, but if you want to 
-have programs automatically do something magical about git url's, you'd 
-need that "git+" thing.
-
-Personally, I think it's a much better idea to just be git-specific. 
-Because realistically, nobody is ever going to really be anything else 
-anyway. There is nothing you can sanely do with a git link, unless it's 
-something very git specific and conscious in the first place!
-
-			Linus
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 96051bc..5cf220f 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -88,6 +88,9 @@ Options:
+ 
+    --smtp-ssl     If set, connects to the SMTP server using SSL.
+ 
++   --smtp-tls     If set, connects to the SMTP server using TLS.
++                  Overrides --smtp-ssl.
++
+    --suppress-from Suppress sending emails to yourself if your address
+                   appears in a From: line. Defaults to off.
+ 
+@@ -175,7 +178,7 @@ my ($quiet, $dry_run) = (0, 0);
+ 
+ # Variables with corresponding config settings
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_cc, $cc_cmd);
+-my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl);
++my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_authpass, $smtp_ssl, $smtp_tls);
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts);
+ 
+ my %config_bool_settings = (
+@@ -184,6 +187,7 @@ my %config_bool_settings = (
+     "suppressfrom" => [\$suppress_from, 0],
+     "signedoffcc" => [\$signed_off_cc, 1],
+     "smtpssl" => [\$smtp_ssl, 0],
++    "smtptls" => [\$smtp_tls, 0],
+ );
+ 
+ my %config_settings = (
+@@ -213,6 +217,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "smtp-user=s" => \$smtp_authuser,
+ 		    "smtp-pass=s" => \$smtp_authpass,
+ 		    "smtp-ssl!" => \$smtp_ssl,
++		    "smtp-tls!" => \$smtp_tls,
+ 		    "identity=s" => \$identity,
+ 		    "compose" => \$compose,
+ 		    "quiet" => \$quiet,
+@@ -613,31 +618,46 @@ X-Mailer: git-send-email $gitversion
+ 			die "The required SMTP server is not properly defined."
+ 		}
+ 
+-		if ($smtp_ssl) {
+-			$smtp_server_port ||= 465; # ssmtp
+-			require Net::SMTP::SSL;
+-			$smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
++		if ($smtp_tls) {
++			require Net::SMTP::TLS;
++			$smtp ||= Net::SMTP::TLS->new(
++				$smtp_server,
++				Port => $smtp_server_port,
++				User => $smtp_authuser,
++				Password=> $smtp_authpass);
++
++			$smtp->mail( $raw_from );
++			$smtp->to( @recipients );
++			$smtp->data;
++			$smtp->datasend("$header\n$message");
++			$smtp->dataend();
+ 		}
+ 		else {
+-			require Net::SMTP;
+-			$smtp ||= Net::SMTP->new((defined $smtp_server_port)
+-						 ? "$smtp_server:$smtp_server_port"
+-						 : $smtp_server);
+-		}
++			if ($smtp_ssl) {
++				require Net::SMTP::SSL;
++				$smtp ||= Net::SMTP::SSL->new($smtp_server, Port => $smtp_server_port);
++			}
++			else {
++				require Net::SMTP;
++				$smtp ||= Net::SMTP->new((defined $smtp_server_port)
++							 ? "$smtp_server:$smtp_server_port"
++							 : $smtp_server);
++			}
+ 
+-		if (!$smtp) {
+-			die "Unable to initialize SMTP properly.  Is there something wrong with your config?";
+-		}
++			if (!$smtp) {
++				die "Unable to initialize SMTP properly.  Is there something wrong with your config?";
++			}
+ 
+-		if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
+-			$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
++			if ((defined $smtp_authuser) && (defined $smtp_authpass)) {
++				$smtp->auth( $smtp_authuser, $smtp_authpass ) or die $smtp->message;
++			}
++			$smtp->mail( $raw_from ) or die $smtp->message;
++			$smtp->to( @recipients ) or die $smtp->message;
++			$smtp->data or die $smtp->message;
++			$smtp->datasend("$header\n$message") or die $smtp->message;
++			$smtp->dataend() or die $smtp->message;
++			$smtp->ok or die "Failed to send $subject\n".$smtp->message;
+ 		}
+-		$smtp->mail( $raw_from ) or die $smtp->message;
+-		$smtp->to( @recipients ) or die $smtp->message;
+-		$smtp->data or die $smtp->message;
+-		$smtp->datasend("$header\n$message") or die $smtp->message;
+-		$smtp->dataend() or die $smtp->message;
+-		$smtp->ok or die "Failed to send $subject\n".$smtp->message;
+ 	}
+ 	if ($quiet) {
+ 		printf (($dry_run ? "Dry-" : "")."Sent %s\n", $subject);
+@@ -651,7 +671,7 @@ X-Mailer: git-send-email $gitversion
+ 			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n";
+ 		}
+ 		print "From: $sanitized_sender\nSubject: $subject\nCc: $cc\nTo: $to\n\n";
+-		if ($smtp) {
++		if ($smtp && !$smtp_tls) {
+ 			print "Result: ", $smtp->code, ' ',
+ 				($smtp->message =~ /\n([^\n]+\n)$/s), "\n";
+ 		} else {
+-- 
+1.5.3.4.498.g9c514
