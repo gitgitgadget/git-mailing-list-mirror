@@ -1,77 +1,138 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Johan Herland <johan@herland.net>
 Subject: Re: Recording merges after repo conversion
-Date: Wed, 31 Oct 2007 12:32:01 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0710311229560.4362@racer.site>
-References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se>
- <13D1D3DD-9652-4097-8364-DEF4F26540D3@lrde.epita.fr>
- <Pine.LNX.4.62.0710301433150.652@perkele.intern.softwolves.pp.se>
- <8c5c35580710300729t4a7b375dud01253d9b4ef7196@mail.gmail.com>
- <Pine.LNX.4.62.0710302204590.6976@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710310227340.4362@racer.site>
- <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se>
- <Pine.LNX.4.64.0710311059020.4362@racer.site> <Pine.LNX.4.64.0710311305290.16298@ds9.cixit.se>
+Date: Wed, 31 Oct 2007 13:43:54 +0100
+Message-ID: <200710311343.58414.johan@herland.net>
+References: <Pine.LNX.4.64.0710090807060.26773@ds9.cixit.se> <Pine.LNX.4.62.0710311048450.13264@perkele.intern.softwolves.pp.se> <Pine.LNX.4.64.0710311059020.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	Benoit SIGOURE <tsuna@lrde.epita.fr>, git@vger.kernel.org
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Wed Oct 31 13:33:09 2007
+Content-Type: multipart/signed;
+  boundary="nextPart1250356.KC47SMdzCU";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Peter Karlsson <peter@softwolves.pp.se>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Benoit SIGOURE <tsuna@lrde.epita.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 31 13:45:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InCkl-00049e-Up
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 13:33:00 +0100
+	id 1InCwX-0006eN-AS
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 13:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755161AbXJaMcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 08:32:46 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754908AbXJaMcq
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 08:32:46 -0400
-Received: from mail.gmx.net ([213.165.64.20]:60866 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754521AbXJaMcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 08:32:45 -0400
-Received: (qmail invoked by alias); 31 Oct 2007 12:32:43 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp044) with SMTP; 31 Oct 2007 13:32:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/3ZJxuBhv3wBNud3iX4swPMTJWrzuv6uRngF+Lia
-	gfTcbLsIB4dTp/
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0710311305290.16298@ds9.cixit.se>
-X-Y-GMX-Trusted: 0
+	id S1755821AbXJaMow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 08:44:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755850AbXJaMow
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 08:44:52 -0400
+Received: from sam.opera.com ([213.236.208.81]:56147 "EHLO sam.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755797AbXJaMov (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 08:44:51 -0400
+Received: from pc107.coreteam.oslo.opera.com (pat-tdc.opera.com [213.236.208.22])
+	by sam.opera.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id l9VChwnd032400
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 31 Oct 2007 12:43:59 GMT
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0710311059020.4362@racer.site>
+X-Virus-Scanned: ClamAV 0.91.1/4646/Wed Oct 31 10:41:08 2007 on sam.opera.com
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62824>
 
-Hi,
+--nextPart1250356.KC47SMdzCU
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-On Wed, 31 Oct 2007, Peter Karlsson wrote:
+On Wednesday 31 October 2007, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Wed, 31 Oct 2007, Peter Karlsson wrote:
+>=20
+> > Johannes Schindelin:
+> >=20
+> > > Why should it?  This would contradict the whole "a commit sha1 hashes=
+=20
+> > > the commit, and by inference the _whole_ history" principle.
+> >=20
+> > Does it?
+>=20
+> Yes!  Of course!  If what you want becomes possible, I could make an evil=
+=20
+> change in history long gone, and slip it by you.  You could not even see=
+=20
+> the history which changed.
 
-> > Yes!  Of course!  If what you want becomes possible, I could make an 
-> > evil change in history long gone, and slip it by you. You could not 
-> > even see the history which changed.
-> 
-> I would see the grafts file being changed, which would alert me (the 
-> problem I have with graft is that it *replaces* history information for 
-> an element, not just *add* to it, which threw me off at my first attempt 
-> at creating one).
+Well, technically, if the grafts file was part of the repo, you wouldn't be=
+=20
+able to change the (in-tree) grafts file without affecting the SHA1 of HEAD=
+=2E=20
+In other words, given a commit SHA1 sum, you can be sure that someone else=
+=20
+who checks out the same commit (and has no local modification to their graf=
+ts=20
+file) will see exactly the same history as you do.
 
-The thing is: it is too easy to overlook a tiny change like this.  And it 
-is very, very difficult to see what it _really_ changed.
+To a certain degree, this is actually "safer" than today's (out-of-tree)=20
+solution, where one can change the grafts file _without_ affecting the=20
+current HEAD (SHA1 sum), and thus will not see the same history as someone=
+=20
+else who checks out the same HEAD. This is of course _intended_ to a certai=
+n=20
+degree by the current implementation, but can easily cause confusion if=20
+people lose track of what's in their respective grafts files.
 
-Therefore I am _strongly_ opposed to changing the current behaviour.
+Of course, this is both a blessing and a curse: Say, for example, we have=20
+three commits:
 
-> > You can do that already.  But you have to ask the people at the other 
-> > end to actually apply the graft.
-> 
-> Last time I tried, git would not add files that was in the ".git" 
-> subdirectory to version control. I might have done something 
-> incorrectly, though, so I'll see if it works now.
+=2E.. --> A --> B --> C
 
-Well, I was not explicit enough.  You can check in the grafts file _under 
-a different name_.  Outside of .git/.
+and commit B changes the (in-tree) grafts file. Now if I have HEAD @ A, I w=
+ill=20
+see a different history than if I have HEAD @ C. Worse: If one person has=20
+HEAD @ A, and another person has HEAD @ C, and neither is aware of the graf=
+ts=20
+file change in B, there is _plenty_ of room for getting confused if the two=
+=20
+persons start discussing the repo history. Note, however, that similar=20
+confusement can be achieved today if one of the persons forgets having=20
+changed his out-of-tree grafts file
 
-Hth,
-Dscho
+
+The grafts file concept is very powerful, but can also be extremely confusi=
+ng.=20
+Adding in-tree versioning of the grafts file will make it more powerful=20
+(since we can now easily share and update "errata" to the repo history), bu=
+t=20
+it might also make things _orders_of_magnitude_ more confusing (as=20
+demonstrated in the above example, although to be fair, similar confusement=
+=20
+can be had in today's out-of-tree solution). At some point things may becom=
+e=20
+so confusing that we'd rather drop the feature instead.
+
+
+=2E..Johan
+
+=2D-=20
+Johan Herland, <johan@herland.net>
+www.herland.net
+
+--nextPart1250356.KC47SMdzCU
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7-ecc0.1.6 (GNU/Linux)
+
+iD8DBQBHKHiLBHj4kl4fT1wRAgDVAJ0dsIAed8peoSKXJ2b8/EYOAzQzyACgjg8f
+/tb5xQBFCI2/MQh/mFB9H20=
+=zMK6
+-----END PGP SIGNATURE-----
+
+--nextPart1250356.KC47SMdzCU--
