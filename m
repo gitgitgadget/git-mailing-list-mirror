@@ -1,63 +1,47 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: remote#branch
-Date: Tue, 30 Oct 2007 21:57:08 -0400
-Message-ID: <20071031015708.GA24403@coredump.intra.peff.net>
-References: <20071030053732.GA16963@hermes.priv> <fg8h9l$b4n$1@ger.gmane.org> <20071031013856.GA23274@coredump.intra.peff.net> <200710310249.17233.jnareb@gmail.com>
+Date: Tue, 30 Oct 2007 21:59:38 -0400
+Message-ID: <20071031015938.GB24403@coredump.intra.peff.net>
+References: <alpine.LFD.0.999.0710291112590.30120@woody.linux-foundation.org> <20071029214925.GH21133@thunk.org> <alpine.LFD.0.999.0710291545250.30120@woody.linux-foundation.org> <20071030030104.GK21133@thunk.org> <7vtzo9s221.fsf@gitster.siamese.dyndns.org> <20071030044026.GA9600@thunk.org> <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <46a038f90710301741n67526976vda1cd131270aa7f@mail.gmail.com> <20071031014347.GB23274@coredump.intra.peff.net> <46a038f90710301849h1c31736an1ec163aa1e274577@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 02:58:00 2007
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 02:59:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In2qE-0003BF-B4
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 02:57:58 +0100
+	id 1In2s7-0003e2-W0
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 02:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbXJaB5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 21:57:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752229AbXJaB5L
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 21:57:11 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2202 "EHLO
+	id S1752498AbXJaB7l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 21:59:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751776AbXJaB7l
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 21:59:41 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2206 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752205AbXJaB5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Oct 2007 21:57:11 -0400
-Received: (qmail 6635 invoked by uid 111); 31 Oct 2007 01:57:10 -0000
+	id S1751344AbXJaB7l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 21:59:41 -0400
+Received: (qmail 6656 invoked by uid 111); 31 Oct 2007 01:59:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 30 Oct 2007 21:57:10 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2007 21:57:08 -0400
+    by peff.net (qpsmtpd/0.32) with SMTP; Tue, 30 Oct 2007 21:59:39 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Tue, 30 Oct 2007 21:59:38 -0400
 Content-Disposition: inline
-In-Reply-To: <200710310249.17233.jnareb@gmail.com>
+In-Reply-To: <46a038f90710301849h1c31736an1ec163aa1e274577@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62778>
 
-On Wed, Oct 31, 2007 at 02:49:16AM +0100, Jakub Narebski wrote:
+On Wed, Oct 31, 2007 at 02:49:49PM +1300, Martin Langhoff wrote:
 
-> > ...which is a quoting mechanism, and it's not even one commonly used in
-> > emails (i.e., people have written "parse a URL from this text" scripts
-> > for RFC-encoded URLs, but _not_ for shell quoting).
-> 
-> I don't think RFC-encoding is quoting mechanism used in emails, either.
+> > Actually, IIRC it won't fetch any of the non 'blue' refs.
+> You recall correctly, and that was a cogito misfeature. I don't think
+> git should follow that part of the spec ;-)
 
-That's funny, because I have hundreds of mails where that is the case,
-and none where people used shell-quoting.  Most URLs don't _need_ any
-encoding, so we don't notice either way. But are you honestly telling me
-that if you needed to communicate a URL with a space via email, you
-would write:
-
-  'http://foo.tld/url with a space'
-
-rather than:
-
-  http://foo.tld/url+with+a+space
-
-?
-
-I think the latter is much more common, if only because of the fact that
-copy and paste from most browsers' location bars gives the encoded
-version.
+I'm not so sure. Junio keeps unrelated branches in git.git like 'html'
+and 'todo'. Is it unreasonable to say "clone git.git, but only the todo
+branch" and expect it _not_ to download the entire git history?
 
 -Peff
