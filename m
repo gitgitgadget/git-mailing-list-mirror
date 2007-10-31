@@ -1,64 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: 1.5.3.5 will be out tomorrow
-Date: Tue, 30 Oct 2007 17:16:23 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0710301712240.30120@woody.linux-foundation.org>
-References: <7vfxzsjgos.fsf@gitster.siamese.dyndns.org>
+From: "Andy C" <andychup@gmail.com>
+Subject: Re: [PATCH/RFC 0/3] faster inexact rename handling
+Date: Tue, 30 Oct 2007 17:27:10 -0700
+Message-ID: <596909b30710301727o72770d51jfa519d858203480f@mail.gmail.com>
+References: <20071030042118.GA14729@sigill.intra.peff.net>
+	 <alpine.LFD.0.999.0710292156580.30120@woody.linux-foundation.org>
+	 <20071030134355.GA21342@coredump.intra.peff.net>
+	 <alpine.LFD.0.999.0710300818390.30120@woody.linux-foundation.org>
+	 <20071030202014.GA22733@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 01:16:53 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 31 01:27:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In1GH-0002r5-GM
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 01:16:45 +0100
+	id 1In1Qc-0005YZ-Ui
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 01:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753183AbXJaAQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Oct 2007 20:16:32 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752415AbXJaAQc
-	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 20:16:32 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:48743 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751983AbXJaAQb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Oct 2007 20:16:31 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9V0GOmZ015803
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 30 Oct 2007 17:16:25 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id l9V0GOnT002916;
-	Tue, 30 Oct 2007 17:16:24 -0700
-In-Reply-To: <7vfxzsjgos.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-2.731 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1753299AbXJaA1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Oct 2007 20:27:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753068AbXJaA1M
+	(ORCPT <rfc822;git-outgoing>); Tue, 30 Oct 2007 20:27:12 -0400
+Received: from el-out-1112.google.com ([209.85.162.176]:12155 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752379AbXJaA1M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Oct 2007 20:27:12 -0400
+Received: by el-out-1112.google.com with SMTP id j27so564187elf
+        for <git@vger.kernel.org>; Tue, 30 Oct 2007 17:27:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4KKS853ypklQEedoDoBbMPSlKiZhP5XUQXyC3mct8MY=;
+        b=PXPxKNMdO1HXbE8tK5/G7hkuJ4T6QSUu/k2TX7VtVTMhbrh/+78HzY8VQ3h43E8/by0qGVl+kIIrfexKX+dyvZoUpsPYXXXlViPj5JtL3847KXMH9O7UmBVVhEtE66grrz/O+tC0x2LB7euUxgZ3i5a8esUFREiCoKER/JBZ5R0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KkUodNNc7+nDJ3+mBVdqA/HtcA0YZF2d6Z1DFUU7EnBFRMmXIxWv4o8RRehuecvjlS4/FuP9V0jxM3hbtUATDwryHSCCOHubzytrITL1FP+AonTfh2FsJ6X/UrrJAEzt33MaPDRSfPUnEeJu9EizxTmJtablGzjx5dWSLb+SZ8s=
+Received: by 10.142.154.20 with SMTP id b20mr985974wfe.1193790430226;
+        Tue, 30 Oct 2007 17:27:10 -0700 (PDT)
+Received: by 10.142.203.3 with HTTP; Tue, 30 Oct 2007 17:27:10 -0700 (PDT)
+In-Reply-To: <20071030202014.GA22733@coredump.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62769>
 
-
-
-On Tue, 30 Oct 2007, Junio C Hamano wrote:
+On 10/30/07, Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 30, 2007 at 08:38:24AM -0700, Linus Torvalds wrote:
 >
-> A fix for a segfaulting bug warrants a new maintenance release,
-> so 1.5.3.5 will be out tomorrow.
+> > > with the old and new code. Pairs like Documentation/git-add-script.txt
+> > > -> Documentation/git-add.txt are not found, because the file is composed
+> > > almost entirely of boilerplate.
+> >
+> > Ok, that does imply to me that we cannot just drop boilerplate text,
+> > because the fact is, lots of files contain boilerplate, but people still
+> > think they are "similar".
+>
+> Well, the problem is that instead of just "dropping" boilerplate text,
+> we fail to count it as a similarity, but it still counts towards the
+> file size. It may be that just dropping it totally is the right thing
+> (in which case those renames _will_ turn up, because they will be filled
+> with identical non-boilerplate goodness).
 
-Is the 
+Right, in the demo I make an extra pass after the inverted indexing
+step to prune the index -- which means eliminating the common lines
+*entirely* from the index (so they don't get attributed to a random
+file) *and* decrementing all the file sizes by 1.  That way the
+similarity scores shouldn't get skewed.
 
-	"Make merge-recursive honor diff.renamelimit"
+And as you mentioned we could bump the threshold from 1 to some other
+small integer.  Intuitively I guess you could say it is common to copy
+a file to 2 places or 3 places, and you don't want all the lines to
+get thrown out because of that.  But usually you don't copy a file to
+10 or 50 places.
 
-commit in the maintenance series?
-
-If not, I'd suggest merging it.
-
-The lack of this fix bit us during the kernel x86 merge, where there was 
-no way for people using stable git versions to make their merges take 
-renames into account, because there were too many of them..
-
-It's commit df3a02f6125f7ac82b6e81e3e32cd7ca3c7905ee by Lars Hjemli.
-
-		Linus
+Andy
