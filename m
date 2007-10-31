@@ -1,51 +1,56 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: cpio command not found
-Date: Wed, 31 Oct 2007 06:51:30 -0600
-Message-ID: <18216.31314.990545.518458@lisa.zopyra.com>
+From: Aidan Van Dyk <aidan@highrise.ca>
+Subject: Re: Problem with git-cvsimport
+Date: Wed, 31 Oct 2007 08:40:29 -0400
+Organization: Highrise Community Network
+Message-ID: <fg9t3t$kc3$1@ger.gmane.org>
+References: <470B491F.9020306@jentro.com> <F1176033-1C6E-43F3-9F47-3BDD5EC88A14@orakel.ntnu.no> <170fa0d20710301306o6b3798f9k72615eb811d871f2@mail.gmail.com> <200710302244.50034.robin.rosenberg.lists@dewire.com>
+Reply-To: dev@rapidsvn.tigris.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 31 13:52:00 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
-	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InD31-00086k-6x
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 13:51:51 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035AbXJaMvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 08:51:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756088AbXJaMvf
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 08:51:35 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:61782 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756064AbXJaMve (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 08:51:34 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id l9VCpXb02693;
-	Wed, 31 Oct 2007 06:51:33 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
-Sender: git-owner@vger.kernel.org
+Content-Transfer-Encoding: 7Bit
+Cc: git@vger.kernel.org
+To: dev@rapidsvn.tigris.org
+X-From: dev-return-1233-gcvsrd-dev=m.gmane.org@rapidsvn.tigris.org Wed Oct 31 14:15:18 2007
+Return-path: <dev-return-1233-gcvsrd-dev=m.gmane.org@rapidsvn.tigris.org>
+Envelope-to: gcvsrd-dev@gmane.org
+Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
+	by lo.gmane.org with smtp (Exim 4.50)
+	id 1InDPi-0005o8-3e
+	for gcvsrd-dev@gmane.org; Wed, 31 Oct 2007 14:15:18 +0100
+Received: (qmail 19886 invoked by uid 5000); 31 Oct 2007 13:15:06 -0000
+Mailing-List: contact dev-help@rapidsvn.tigris.org; run by ezmlm
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62825>
+list-help: <mailto:dev-help@rapidsvn.tigris.org>
+list-unsubscribe: <mailto:dev-unsubscribe@rapidsvn.tigris.org>
+list-post: <mailto:dev@rapidsvn.tigris.org>
+Delivered-To: mailing list dev@rapidsvn.tigris.org
+Received: (qmail 19876 invoked from network); 31 Oct 2007 13:15:06 -0000
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AgAAADscKEdQW+UCh2dsb2JhbACOZAIBCAop
+X-IronPort-AV: E=Sophos;i="4.21,351,1188802800"; 
+   d="scan'208";a="72020699"
+X-IRONPORT: SCANNED
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: trb229.travel-net.com
+User-Agent: KNode/0.10.5
+Sender: news <news@ger.gmane.org>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62826>
 
-I just cloned the latest git and it builds ok, but fails when I clone:
+Robin Rosenberg wrote:
 
-% uname -a
-Linux gronk.zopyra.com 2.4.9-21 #1 Thu Jan 17 14:16:30 EST 2002 i686 unknown
+> I use fromcvs which is *very* fast, and quite memory conservative compared
+> to the others and seems reliable so far (six months). It probably breaks
+> on exotic variants of branches though, but I don't have those / don't care
+> about them.
 
-% git --version
-git version gitgui.0.8.4.g9c514
+I actually use fromcvs for a few repositories, and actually started using it
+on repositories where cvsps (and git-cvsimport) fail.
 
-% git clone --bare ~/my_repo
-Initialized empty Git repository in /repos/git/my_repo/
-/opt/git/bin/git-clone: line 297: cpio: command not found
+> Drawbacks, more dependencies and access to the rcs files is required and
+> tags are not converted.
 
-So, should git not check this when it is building?  I don't remember
-this dependence from earlier versions of git.  I have been running git
-1.4.xx on this machine for a while...
-
-
-Bill
+Most projects have "rsyncs" or "tarballs" of their CVS repository available,
+making fromcvs possible on most of them.  And CVS tags, well they are about
+as good as CVS $Keywords$.
