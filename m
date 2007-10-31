@@ -1,57 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
-Date: Wed, 31 Oct 2007 14:05:57 -0400
-Message-ID: <20071031180557.GA12211@coredump.intra.peff.net>
-References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org> <20071031055303.GB3326@atjola.homenet> <20071031134358.GD15182@dpotapov.dyndns.org> <20071031140028.GA30207@diana.vm.bytemark.co.uk> <20071031143641.GF15182@dpotapov.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Wed, 31 Oct 2007 11:51:50 -0700
+Message-ID: <7vve8nglrt.fsf@gitster.siamese.dyndns.org>
+References: <1193593581312-git-send-email-prohaska@zib.de>
+	<11935935812741-git-send-email-prohaska@zib.de>
+	<1193593581114-git-send-email-prohaska@zib.de>
+	<1193593581486-git-send-email-prohaska@zib.de>
+	<11935935812185-git-send-email-prohaska@zib.de>
+	<11935935822846-git-send-email-prohaska@zib.de>
+	<11935935821136-git-send-email-prohaska@zib.de>
+	<11935935823045-git-send-email-prohaska@zib.de>
+	<11935935821800-git-send-email-prohaska@zib.de>
+	<11935935823496-git-send-email-prohaska@zib.de>
+	<11935935821192-git-send-email-prohaska@zib.de>
+	<7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
+	<52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
+	<7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
+	<F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
+	<7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
+	<B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
-	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes.Schindelin@gmx.de, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 19:06:45 2007
+Cc: git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Oct 31 19:52:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InHxL-0001ja-3e
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 19:06:19 +0100
+	id 1InIfj-0007Wm-5Y
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 19:52:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753525AbXJaSGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 14:06:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbXJaSGD
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 14:06:03 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2366 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753230AbXJaSGB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 14:06:01 -0400
-Received: (qmail 18063 invoked by uid 111); 31 Oct 2007 18:05:59 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 31 Oct 2007 14:05:59 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 14:05:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20071031143641.GF15182@dpotapov.dyndns.org>
+	id S1754038AbXJaSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 14:51:57 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbXJaSv5
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 14:51:57 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:39774 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147AbXJaSv4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 14:51:56 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id ECBA02F2;
+	Wed, 31 Oct 2007 14:52:16 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7402590B9B;
+	Wed, 31 Oct 2007 14:52:14 -0400 (EDT)
+In-Reply-To: <B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de> (Steffen Prohaska's
+	message of "Wed, 31 Oct 2007 11:50:01 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62853>
 
-On Wed, Oct 31, 2007 at 05:36:41PM +0300, Dmitry Potapov wrote:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> Hmm... I looked at the mail again and I cannot see where 8859-1 is
-> specified. It seems that context encoding is not specified at all.
-> Of course, it is incorrect to use non ASCII characters in a mail
-> without specifying encoding. Apparently, because I use utf-8 in the
-> terminal, the Sign-off line displays correctly for me, so I did not
-> notice the problem. Sorry for the noise...
+> On Oct 31, 2007, at 9:45 AM, Junio C Hamano wrote:
+>
+>> I would not doubt it would be safer for _your_ workflow, but you
+>> should consider the risk of making things more cumbersome for
+>> workflows of others by enforcing that policy.
+>
+> Together with the '--create' flag it would be safer in all
+> cases, because it would always do _less_ than what git push
+> currently does. The safest choice would be if "git push"
+> refused to do anything until configured appropriately.
+>
+> "safer" is independent of the workflow.
 
-It is our old friend vger adding the iso-8859-1 header, I think, since
-no encoding was specified.
+By your definition, a command that does not do anything by
+default is safer regardless of the workflow.
 
-I think the problem is that git-format-patch only decides whether to
-append a MIME header based on the commit message contents; it does not
-take the Signed-Off-By into account. This may also be the cause of the
-recent complaints from Matti Aarnio.
+That may be theoretically true --- it cannot do any harm by
+default.  But that is not useful.
 
--Peff
+> I'm mainly interested in using git against a shared repo,
+> and make it as simple and as safe as possible to use in
+> such a setup. I suspect that git is more optimized for the
+> workflow used for the Linux kernel and for developing git,
+> which heavily rely on sending patches to mailing lists and
+> pulling fro read-only repos.
+
+You forgot a lot more important part.  Pushing into publishing
+repositories.  And the discussion is about git-push command.
