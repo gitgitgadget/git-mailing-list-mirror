@@ -1,58 +1,57 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: remote#branch
-Date: Wed, 31 Oct 2007 18:13:08 +0100
-Message-ID: <20071031171308.GS18279@machine.or.cz>
-References: <alpine.LFD.0.999.0710292150400.30120@woody.linux-foundation.org> <20071030053732.GA16963@hermes.priv> <alpine.LFD.0.999.0710300738550.30120@woody.linux-foundation.org> <20071030160232.GB2640@hermes.priv> <alpine.LFD.0.999.0710301037120.30120@woody.linux-foundation.org> <vpq8x5kh4rr.fsf@bauges.imag.fr> <alpine.LFD.0.999.0710301056070.30120@woody.linux-foundation.org> <4727839B.9070205@obry.net> <alpine.LFD.0.999.0710301232000.30120@woody.linux-foundation.org> <20071030235823.GA22747@coredump.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
+Date: Wed, 31 Oct 2007 14:05:57 -0400
+Message-ID: <20071031180557.GA12211@coredump.intra.peff.net>
+References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org> <20071031055303.GB3326@atjola.homenet> <20071031134358.GD15182@dpotapov.dyndns.org> <20071031140028.GA30207@diana.vm.bytemark.co.uk> <20071031143641.GF15182@dpotapov.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Pascal Obry <pascal@obry.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Tom Prince <tom.prince@ualberta.net>,
-	Theodore Tso <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>, Jan Hudec <bulb@ucw.cz>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Paolo Ciarrocchi <paolo.ciarrocchi@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 31 18:14:00 2007
+Cc: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 31 19:06:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InH8h-0008Pu-SN
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 18:14:00 +0100
+	id 1InHxL-0001ja-3e
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 19:06:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757339AbXJaRNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 13:13:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756917AbXJaRNM
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 13:13:12 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:38731 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756881AbXJaRNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 13:13:10 -0400
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id E98A15A30E; Wed, 31 Oct 2007 18:13:08 +0100 (CET)
+	id S1753525AbXJaSGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 14:06:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbXJaSGD
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 14:06:03 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2366 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753230AbXJaSGB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 14:06:01 -0400
+Received: (qmail 18063 invoked by uid 111); 31 Oct 2007 18:05:59 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 31 Oct 2007 14:05:59 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 14:05:57 -0400
 Content-Disposition: inline
-In-Reply-To: <20071030235823.GA22747@coredump.intra.peff.net>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+In-Reply-To: <20071031143641.GF15182@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62852>
 
-On Tue, Oct 30, 2007 at 07:58:23PM -0400, Jeff King wrote:
->   http://host/git repo with spaces in the path
-> 
-> compared to:
-> 
->   http://host/git+repo+with+spaces+in+the+path
+On Wed, Oct 31, 2007 at 05:36:41PM +0300, Dmitry Potapov wrote:
 
-Just pedantic side-note: these two URLs are not equivalent. '+' is valid
-substitute for a space only in query string part of URL. In path you
-have to use %20.
+> Hmm... I looked at the mail again and I cannot see where 8859-1 is
+> specified. It seems that context encoding is not specified at all.
+> Of course, it is incorrect to use non ASCII characters in a mail
+> without specifying encoding. Apparently, because I use utf-8 in the
+> terminal, the Sign-off line displays correctly for me, so I did not
+> notice the problem. Sorry for the noise...
 
--- 
-				Petr "Pasky" Baudis
-We don't know who it was that discovered water, but we're pretty sure
-that it wasn't a fish.		-- Marshall McLuhan
+It is our old friend vger adding the iso-8859-1 header, I think, since
+no encoding was specified.
+
+I think the problem is that git-format-patch only decides whether to
+append a MIME header based on the commit message contents; it does not
+take the Signed-Off-By into account. This may also be the cause of the
+recent complaints from Matti Aarnio.
+
+-Peff
