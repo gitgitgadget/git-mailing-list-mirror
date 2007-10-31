@@ -1,137 +1,92 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Wed, 31 Oct 2007 01:45:42 -0700
-Message-ID: <7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-References: <1193593581312-git-send-email-prohaska@zib.de>
-	<11935935812741-git-send-email-prohaska@zib.de>
-	<1193593581114-git-send-email-prohaska@zib.de>
-	<1193593581486-git-send-email-prohaska@zib.de>
-	<11935935812185-git-send-email-prohaska@zib.de>
-	<11935935822846-git-send-email-prohaska@zib.de>
-	<11935935821136-git-send-email-prohaska@zib.de>
-	<11935935823045-git-send-email-prohaska@zib.de>
-	<11935935821800-git-send-email-prohaska@zib.de>
-	<11935935823496-git-send-email-prohaska@zib.de>
-	<11935935821192-git-send-email-prohaska@zib.de>
-	<7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
-	<52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
-	<7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
-	<F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: remote#branch
+Date: Wed, 31 Oct 2007 10:03:16 +0100
+Message-ID: <472844D4.8050306@op5.se>
+References: <20071030053732.GA16963@hermes.priv> <fg8h9l$b4n$1@ger.gmane.org> <20071031013856.GA23274@coredump.intra.peff.net> <200710310249.17233.jnareb@gmail.com> <20071031015708.GA24403@coredump.intra.peff.net> <47282A0D.9010400@op5.se> <20071031083506.GA23316@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 09:46:09 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 10:03:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1In9DA-00056H-DH
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 09:46:04 +0100
+	id 1In9UC-0000AW-Hc
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 10:03:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753342AbXJaIpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 04:45:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753336AbXJaIpt
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 04:45:49 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:39781 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753303AbXJaIps (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 04:45:48 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 082FB2EF;
-	Wed, 31 Oct 2007 04:46:09 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A4148F9B1;
-	Wed, 31 Oct 2007 04:46:06 -0400 (EDT)
-In-Reply-To: <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> (Steffen Prohaska's
-	message of "Wed, 31 Oct 2007 08:53:06 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753643AbXJaJD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 05:03:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753611AbXJaJD0
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 05:03:26 -0400
+Received: from mail.op5.se ([193.201.96.20]:56292 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753404AbXJaJDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 05:03:25 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 96B04173065F;
+	Wed, 31 Oct 2007 10:03:21 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id gM+YrVyWR4ER; Wed, 31 Oct 2007 10:03:19 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id CA7EA1730593;
+	Wed, 31 Oct 2007 10:03:17 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <20071031083506.GA23316@glandium.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Mike Hommey wrote:
+> On Wed, Oct 31, 2007 at 08:09:01AM +0100, Andreas Ericsson <ae@op5.se> wrote:
+>> Jeff King wrote:
+>>> On Wed, Oct 31, 2007 at 02:49:16AM +0100, Jakub Narebski wrote:
+>>>
+>>>>> ...which is a quoting mechanism, and it's not even one commonly used in
+>>>>> emails (i.e., people have written "parse a URL from this text" scripts
+>>>>> for RFC-encoded URLs, but _not_ for shell quoting).
+>>>> I don't think RFC-encoding is quoting mechanism used in emails, either.
+>>> That's funny, because I have hundreds of mails where that is the case,
+>>> and none where people used shell-quoting.  Most URLs don't _need_ any
+>>> encoding, so we don't notice either way. But are you honestly telling me
+>>> that if you needed to communicate a URL with a space via email, you
+>>> would write:
+>>>
+>>>  'http://foo.tld/url with a space'
+>>>
+>>> rather than:
+>>>
+>>>  http://foo.tld/url+with+a+space
+>>>
+>>> ?
+>>>
+>> I think 99% of all URL's communicated via email are copy-pasted from a
+>> webbrowsers location bar. I believe most git urls (or grls, or whatever
+>> you wanna call them) communicated via email are copy-pasted from ones
+>> config, or written out manually.
+> 
+> Or copied from gitweb.
+> 
 
-> Would it be acceptable if the error was less severe in the
-> case of local being a strict subset of remote?
-> Daniel proposed
-> "%s: nothing to push to %s, but you are not up-to-date and
-> may want to pull"
-> It would still be an error, but a less severe one.
+Perhaps, but I've never seen that done. Partly because you can't be sure
+the HTTP url is the same as the git address (perhaps people are used to
+this from CVS and the likes), and partly because you'd, for most cases,
+want to use git:// or ssh transport instead of http.
 
-I am not convinced there is one true total order of "error
-severity" that applies uniformly across different workflows, so
-I would not immediately agree if you are suggesting to introduce
-"severity levels".  But it certainly makes a lot of sense to be
-able to _differentiate_ kinds of errors, and to have the calling
-scripts and the push command itself react to them.
+It might be nifty to have gitweb print some git-valid locator for a repo
+though, or even a full copy-pastable "git clone git://host/path/to/repo.git"
+command-line thingie. I'll look into it when I have leisure.
 
-What are the possible error conditions?
-
- 1. Error on the sending side.  The ref parameters given to
-    git-push were bogus, or they were good commits but they were
-    not fully connected to the commits the other side has
-    (i.e. local repository corruption).  pack-objects will abort
-    and no remote (nor local tracking ref that tracks what we
-    pushed to the remote) would be updated.  This should be
-    "most severe" in _any_ workflow, so I do not mind calling
-    this "fatal".
-
- 2. Push to a ref does fast forward, but the update hook on the
-    remote side declines.  The ref on the remote nor the
-    corresponding local tracking ref would not be updated, and
-    the command would fail.
-
-For all the other classes of errors, the ref on the remote nor
-the corresponding local tracking ref would not be updated, and
-by default, an error on any ref causes the command to error out.
-For each of these classes of errors, we _could_ have an option
-to let you tell the command not to error out because of it.
-
- 3. Push to a ref does not fast forward and --force is not
-    given, but you can prove the remote is strict subset of
-    local (what your 10/10 wants to do).
-
- 4. Same as #3 but you cannot prove the remote is strict subset
-    of local.
-
-Any other classes?
-
-It might be a good idea to generalize 3 & 4, by the way.  The
-remote being a strict descendant of what is being pushed might
-be something you happened to want today, but somebody else may
-come up with a different rule tomorrow.  So, 
-
- 3'. Push to a ref does not fast forward and --force is not
-     given, but there is a configuration (would this be per
-     remote?, per remote branch?, or per local branch?) that
-     tells git-push to call a hook on the local side that takes
-     <ref being pushed, ref on the remote> as its parameter.
-     The result from the hook does not change the fact that this
-     is still an error, but it can instruct git-push not to
-     error out due to this condition.
-
-In some other workflows, it might make sense to maybe even
-making 2. not to cause the error from git-push.  I dunno.
-
-> It could also be a good idea to teach git push transactional
-> behaviour.
-
-That is certainly true.  I am not sure about other transports,
-but it should be a relatively straightforward protocol extension
-for the git native transport.
-
-> - git push can be configuration to push only the current
->   branch, as outlined below. This would certainly work. What
->   I do not like is that you first need to do some configuration
->   before you get a safe working environment.
-
-I would not doubt it would be safer for _your_ workflow, but you
-should consider the risk of making things more cumbersome for
-workflows of others by enforcing that policy.
-
-In other words, don't change anything unless you have a very
-good reason to convince everybody else that it is universally
-a good change to the default.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
