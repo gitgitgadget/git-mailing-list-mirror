@@ -1,73 +1,66 @@
-From: "Simon Sasburg" <simon.sasburg@gmail.com>
-Subject: Re: [PATCH] Implement sending mails over TLS in git-send-email.
-Date: Wed, 31 Oct 2007 23:04:59 +0100
-Message-ID: <981e6de60710311504v666943beve3b87c6a713fb18c@mail.gmail.com>
-References: <1193845859-1788-1-git-send-email-Simon.Sasburg@gmail.com>
-	 <2faad3050710311445l51d1152cs6761803e2f3a77d3@mail.gmail.com>
+From: Steven Grimm <koreth@midwinter.com>
+Subject: Re: Newbie: report of first experience with git-rebase.
+Date: Wed, 31 Oct 2007 15:06:20 -0700
+Message-ID: <4728FC5C.30709@midwinter.com>
+References: <87d4uv3wh1.fsf@osv.gnss.ru> <20071031195702.GB24332@atjola.homenet> <874pg73u6h.fsf@osv.gnss.ru> <Pine.LNX.4.64.0710312111170.4362@racer.site> <20071031212923.GL4569@fieldses.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Baz <brian.ewins@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 31 23:06:49 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sergei Organov <osv@javad.com>, git@vger.kernel.org
+To: "J. Bruce Fields" <bfields@fieldses.org>
+X-From: git-owner@vger.kernel.org Wed Oct 31 23:09:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InLhk-00005X-IO
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 23:06:29 +0100
+	id 1InLkP-0000pu-MM
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 23:09:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761301AbXJaWFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 18:05:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761278AbXJaWFL
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 18:05:11 -0400
-Received: from nz-out-0506.google.com ([64.233.162.225]:26576 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761554AbXJaWFJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 18:05:09 -0400
-Received: by nz-out-0506.google.com with SMTP id s18so241595nze
-        for <git@vger.kernel.org>; Wed, 31 Oct 2007 15:05:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=3xpK7LXZKspK7VonGZ+MuABqVRgACUMZNOMEPbkueCs=;
-        b=P+N5sYL15Hpa+wHdVzoHJO122ik+J5Z4gups3T0JzjF1A/a09vStM/3m8DJaSeEJTx4EBCtffk1G9s50R2FeGBK+WVl9US6suf5d+v8QAQcL/19NCgP+da6Juk33SdKAaxz48igXQdd2La7Cg7N7DmX1m9I0pbQLONJx2mUnh9s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=t/+F6dztCp3GhA+qpzwgkQY4FS+8lL1LdmzapEtnPIs3DhXwZ2SJT94v+RNLopMTs0nFTqHu0T8ZctA3mn7y5gU5uJ9XS+MDPwkXMYWV3ecTBbR1q4CZ2Y8WEtcy+ELZG03Ah4VfFHZM9zFpr/wVdlKZcwsx3dDTUi37h6bw/48=
-Received: by 10.115.88.1 with SMTP id q1mr3715684wal.1193868299759;
-        Wed, 31 Oct 2007 15:04:59 -0700 (PDT)
-Received: by 10.114.124.16 with HTTP; Wed, 31 Oct 2007 15:04:59 -0700 (PDT)
-In-Reply-To: <2faad3050710311445l51d1152cs6761803e2f3a77d3@mail.gmail.com>
-Content-Disposition: inline
+	id S1761607AbXJaWG0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 18:06:26 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761632AbXJaWGY
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 18:06:24 -0400
+Received: from tater.midwinter.com ([216.32.86.90]:50336 "HELO midwinter.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761550AbXJaWGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 18:06:22 -0400
+Received: (qmail 20557 invoked from network); 31 Oct 2007 22:06:21 -0000
+Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=200606; d=midwinter.com;
+  b=o800kUzH5jV8+fMf0GlTa9O+kFu8JXBu3Gncy8LQU4VQFUSLc5IpQ2+QsOK2RZPl  ;
+Received: from localhost (HELO sgrimm-mbp.lan) (koreth@127.0.0.1)
+  by localhost with SMTP; 31 Oct 2007 22:06:21 -0000
+User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
+In-Reply-To: <20071031212923.GL4569@fieldses.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62888>
 
-> Secondly, Net::SMTP::SSL has no problem connecting to gmail - it does
-> everything Net::SMTP::TLS does and more; you can use all of the
-> options of IO::Socket::SSL with it. A common problem seems to be not
-> having Authen::SASL installed (this is required to authenticate with
-> gmail) - the one thing Net::SMTP::TLS *does* do is auth without using
-> that module.
+J. Bruce Fields wrote:
+> I ran into the same confusion as the original poster when starting to
+> use rebase, so I suspect it's common.
+>   
 
-Ah, yes, i got the Authen::SASL errors at first, but even after
-resolving all missing module dependencies,
-the --smpt-ssl still did not work for me, so i started looking at
-other solutions and found Net::SMTP::TLS.
+I've been using rebase just about every day for close to a year and it 
+*still* annoys me when it happens. Especially the "Did you forget to git 
+add?" part of the message. The thought that always goes through my head 
+is, "No, Mr. Rebase, I did NOT forget to git add. I remembered to git 
+add, then you were too stupid to do the right thing after that."
 
-> In other words, this patch should be entirely unnecessary if you have
-> Authen::SASL installed - could you try this? (I've checked for myself,
-> git-send-email sends me mail fine via gmail without this patch)
+Just happened to me this morning, in fact: I had a quick hack in place 
+to work around a bug, the bug got fixed for real, and I rebased. In the 
+process of conflict resolution I saw that my workaround wasn't needed 
+any more and accepted the upstream version of that particular part of 
+the file. Ran git-add on it, then rebase --continue, and boom, was 
+accused of forgetting to run git-add.
 
-Well, it fails here, maybe maybe you can show me exactly what you did
-(configuration/parameters etc)?
+It is a minor annoyance and nowadays I just sigh a bit and run --skip 
+instead, but it'd be nice if it didn't happen. I don't like having to 
+care whether or not I happened to change other files in a particular 
+commit after I resolve conflicts in one file in favor of the upstream 
+version.
 
-This is what i do now:
-> git-send-email testfile.patch -to simon.sasburg@gmail.com --chain-reply-to --smtp-server smtp.gmail.com --smtp-user simon.sasburg --smtp-pass secret --smtp-ssl --smtp-server-port 587
-and it fails, while the same line using --smtp-tls instead of
---smtp-ssl with my patch applied works.
-
-What am i missing?
+-Steve
