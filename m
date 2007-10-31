@@ -1,87 +1,159 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Wed, 31 Oct 2007 11:51:50 -0700
-Message-ID: <7vve8nglrt.fsf@gitster.siamese.dyndns.org>
-References: <1193593581312-git-send-email-prohaska@zib.de>
-	<11935935812741-git-send-email-prohaska@zib.de>
-	<1193593581114-git-send-email-prohaska@zib.de>
-	<1193593581486-git-send-email-prohaska@zib.de>
-	<11935935812185-git-send-email-prohaska@zib.de>
-	<11935935822846-git-send-email-prohaska@zib.de>
-	<11935935821136-git-send-email-prohaska@zib.de>
-	<11935935823045-git-send-email-prohaska@zib.de>
-	<11935935821800-git-send-email-prohaska@zib.de>
-	<11935935823496-git-send-email-prohaska@zib.de>
-	<11935935821192-git-send-email-prohaska@zib.de>
-	<7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
-	<52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de>
-	<7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
-	<F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
-	<7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-	<B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de>
+From: Sergei Organov <osv@javad.com>
+Subject: Newbie: report of first experience with git-rebase.
+Date: Wed, 31 Oct 2007 22:39:06 +0300
+Message-ID: <87d4uv3wh1.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Oct 31 19:52:21 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 31 20:39:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InIfj-0007Wm-5Y
-	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 19:52:11 +0100
+	id 1InJPS-0002Yf-7m
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 20:39:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754038AbXJaSv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 14:51:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753653AbXJaSv5
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 14:51:57 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:39774 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147AbXJaSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 14:51:56 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id ECBA02F2;
-	Wed, 31 Oct 2007 14:52:16 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7402590B9B;
-	Wed, 31 Oct 2007 14:52:14 -0400 (EDT)
-In-Reply-To: <B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de> (Steffen Prohaska's
-	message of "Wed, 31 Oct 2007 11:50:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753917AbXJaTjP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 15:39:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753325AbXJaTjO
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 15:39:14 -0400
+Received: from javad.com ([216.122.176.236]:3599 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753770AbXJaTjN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 15:39:13 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id l9VJdBm83414
+	for <git@vger.kernel.org>; Wed, 31 Oct 2007 19:39:12 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1InJP8-0008Ce-6i
+	for git@vger.kernel.org; Wed, 31 Oct 2007 22:39:06 +0300
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62854>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Hello,
 
-> On Oct 31, 2007, at 9:45 AM, Junio C Hamano wrote:
->
->> I would not doubt it would be safer for _your_ workflow, but you
->> should consider the risk of making things more cumbersome for
->> workflows of others by enforcing that policy.
->
-> Together with the '--create' flag it would be safer in all
-> cases, because it would always do _less_ than what git push
-> currently does. The safest choice would be if "git push"
-> refused to do anything until configured appropriately.
->
-> "safer" is independent of the workflow.
+I've made my first attempt at tracking my changes to upstream git
+repository using git-fetch/git-rebase workflow. I did three commits to
+my master branch, and then upstream incorporated two of them in slightly
+modified form, so that some conflicts are to be expected. I did
+git-fetch followed by git-rebase, and finally have got the end result I
+hoped for, but there were some confusion along the way. I think I'd post
+the log of the session here along with my thoughts so that an interested
+person could see how it works for a newbie (my thoughts and non-git
+actions at the time of rebasing are marked with 'me>' prefix):
 
-By your definition, a command that does not do anything by
-default is safer regardless of the workflow.
+$ git fetch
+[...]
+$ git rebase origin
+First, rewinding head to replay your work on top of it...
+HEAD is now at 9c51414... Merge branch 'maint' into HEAD
 
-That may be theoretically true --- it cannot do any harm by
-default.  But that is not useful.
+Applying Fix a typo.
 
-> I'm mainly interested in using git against a shared repo,
-> and make it as simple and as safe as possible to use in
-> such a setup. I suspect that git is more optimized for the
-> workflow used for the Linux kernel and for developing git,
-> which heavily rely on sending patches to mailing lists and
-> pulling fro read-only repos.
+Wrote tree f5b2feefc021486eae9d2d84c69e0d6ead027a9d
+Committed: 983e907b1360c17c7ac925d6035d82cc7243f406
 
-You forgot a lot more important part.  Pushing into publishing
-repositories.  And the discussion is about git-push command.
+Applying Use new syntax (-m option) for git-merge.
+
+error: patch failed: Documentation/core-tutorial.txt:878
+error: Documentation/core-tutorial.txt: patch does not apply
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merged Documentation/core-tutorial.txt
+CONFLICT (content): Merge conflict in Documentation/core-tutorial.txt
+Failed to merge in the changes.
+Patch failed at 0002.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+me> Nice, this conflict is expected.
+me> Editing Documentation/core-tutorial.txt to resolve the
+me> conflict... Conflict is resolved so that the working file matches
+me> upstream version.
+
+$ git rebase --continue
+You must edit all merge conflicts and then
+mark them as resolved using git add
+
+me> Nice helpful message, -- need to do git-add
+
+$ git add Documentation/core-tutorial.txt
+$ git rebase --continue
+
+Applying Use new syntax (-m option) for git-merge.
+
+No changes - did you forget to use 'git add'?
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+me> What?! I just did the git-add! Moreover, before I did git-add, the
+me> error was different and helpful. Something went wrong? 
+me> Well, it's unlikely, but maybe I made a mistake of not specifying
+me> the 'origin'?
+
+$ git rebase --continue origin
+
+Applying Use new syntax (-m option) for git-merge.
+
+No changes - did you forget to use 'git add'?
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+me> No luck :( A few seconds of thinking... Hmm... no-op patch, do I
+me> need to skip it? Let's try the --skip:
+
+$ git rebase --skip
+
+Applying Fix SYNOPSIS.
+
+error: patch failed: Documentation/git-merge.txt:10
+error: Documentation/git-merge.txt: patch does not apply
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merged Documentation/git-merge.txt
+CONFLICT (content): Merge conflict in Documentation/git-merge.txt
+Failed to merge in the changes.
+Patch failed at 0003.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To restore the original branch and stop rebasing run "git rebase --abort".
+
+me> Aha, that's it! But why git didn't just skip the no-op patch
+me> automatically? Well, anyway , now I have a new expected conflict,
+me> and I'm sure I just want to skip this patch, so let's try exactly
+me> that:
+
+$ git rebase --skip
+Dirty index: cannot apply patches (dirty: Documentation/git-merge.txt)
+
+me> No luck :( Well, let's go the long way, -- edit conflicting
+me> Documentation/git-merge.txt (so that it matches upstream),
+
+$ git add Documentation/git-merge.txt
+$ git rebase --skip
+Nothing to do.
+
+me> Well, I already knew this will work, but why should I edit the file
+me> and then git-add it just to skip the patch? Is there better way?
+me> Anyway, the "Nothing to do." above is slightly confusing, -- did it
+me> actually skip the patch? So let's check the result:
+
+$ gitk
+
+me> The result is as expected, -- the only patch on top of current origin
+me> HEAD, -- nice.
+
+-- 
+Sergei.
