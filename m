@@ -1,109 +1,65 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: Problem with git-cvsimport
-Date: Wed, 31 Oct 2007 05:42:09 +0100
-Message-ID: <472807A1.8030804@alum.mit.edu>
-References: <470B491F.9020306@jentro.com>	 <200710091447.50501.wielemak@science.uva.nl>	 <470B8049.1090308@samba.org>	 <47065A5D-D170-4D11-A802-85376F97F8D2@orakel.ntnu.no>	 <470C3A3A.2070809@alum.mit.edu>	 <F1176033-1C6E-43F3-9F47-3BDD5EC88A14@orakel.ntnu.no> <170fa0d20710301306o6b3798f9k72615eb811d871f2@mail.gmail.com>
+From: Alexander Litvinov <litvinov2004@gmail.com>
+Subject: git-svn and auto crlf convertion.
+Date: Wed, 31 Oct 2007 10:49:43 +0600
+Organization: AcademSoft Ltd.
+Message-ID: <200710311049.43861.litvinov2004@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no>,
-        Thomas Pasch <thomas.pasch@jentro.com>, git@vger.kernel.org,
-        Jan Wielemaker <wielemak@science.uva.nl>,
-        "Gerald (Jerry) Carter" <jerry@samba.org>,
-        dev <dev@cvs2svn.tigris.org>
-To: Mike Snitzer <snitzer@gmail.com>
-X-From: dev-return-2110-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org Wed Oct 31 05:42:24 2007
-Return-path: <dev-return-2110-gcvscd-dev=m.gmane.org@cvs2svn.tigris.org>
-Envelope-to: gcvscd-dev@gmane.org
-Received: from sc157.sjc.collab.net ([204.16.104.146] helo=tigris.org)
-	by lo.gmane.org with smtp (Exim 4.50)
-	id 1In5PM-0004qE-An
-	for gcvscd-dev@gmane.org; Wed, 31 Oct 2007 05:42:24 +0100
-Received: (qmail 5018 invoked by uid 5000); 31 Oct 2007 04:42:13 -0000
-Mailing-List: contact dev-help@cvs2svn.tigris.org; run by ezmlm
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 31 05:50:10 2007
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@gmane.org
+Received: from vger.kernel.org ([209.132.176.167])
+	by lo.gmane.org with esmtp (Exim 4.50)
+	id 1In5Wr-000606-Mc
+	for gcvg-git-2@gmane.org; Wed, 31 Oct 2007 05:50:10 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752264AbXJaEt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 00:49:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752373AbXJaEt4
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 00:49:56 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:42866 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752223AbXJaEtz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 00:49:55 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so246176ugc
+        for <git@vger.kernel.org>; Tue, 30 Oct 2007 21:49:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=eamuWzafrFopUvIiipQwt1uQi2dozR1byFzVGRg/tlU=;
+        b=TDiWGiBjv8kHDK7BuZP3XqzojrRQhu19TV6i1xsjH7Di8f5yY9wWLNRy8JpHfjlt80QHR0E1qElxJCrl5d4f7rOp1gMH1muiLBfWEOWSkFmqzDhgiQAr0+Ti2GqBomwagJAlyTSJIKrNPiBdr3A5LAshPoUpPVNzmepPuws6HPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:organization:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=m+rBR7kdJELcM+DHW9ZlxvrDAiIT0BoZWKVQAxZxMVHugIJ39pNW1ujT2qjpctsKmmcE6J6KGbV456uTDLCheRS/4Hjch+Vpoj+v8ePyFlLptOD5/R2cVaPmroXOf1AtrQ5pIrnPyhltWtcUZA5Q49Wwe1/yOcafHkh3XyZ1JFQ=
+Received: by 10.67.195.14 with SMTP id x14mr295100ugp.1193806194178;
+        Tue, 30 Oct 2007 21:49:54 -0700 (PDT)
+Received: from lan.ac-sw.lcl ( [81.1.223.2])
+        by mx.google.com with ESMTPS id l22sm1097257uga.2007.10.30.21.49.52
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 30 Oct 2007 21:49:52 -0700 (PDT)
+User-Agent: KMail/1.9.5
+Content-Disposition: inline
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-list-help: <mailto:dev-help@cvs2svn.tigris.org>
-list-unsubscribe: <mailto:dev-unsubscribe@cvs2svn.tigris.org>
-list-post: <mailto:dev@cvs2svn.tigris.org>
-Delivered-To: mailing list dev@cvs2svn.tigris.org
-Received: (qmail 5008 invoked from network); 31 Oct 2007 04:42:13 -0000
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AgAAAH6kJ0fAbSoIh2dsb2JhbACOZQIBCAop
-X-IronPort-AV: E=Sophos;i="4.21,349,1188802800"; 
-   d="scan'208";a="88428741"
-X-IRONPORT: SCANNED
-X-Envelope-From: mhagger@alum.mit.edu
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.0.13pre) Gecko/20071023 Thunderbird/1.5.0.14pre Mnenhy/0.7.5.666
-In-Reply-To: <170fa0d20710301306o6b3798f9k72615eb811d871f2@mail.gmail.com>
-X-Enigmail-Version: 0.94.2.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62790>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62791>
 
-Mike Snitzer wrote:
-> On 10/10/07, Eyvind Bernhardsen <eyvind-git-list@orakel.ntnu.no> wrote:
-> ...
->> Thanks for making cvs2svn the best CVS-to-git conversion tool :)  Now
->> if it would only support incremental importing...
-> 
-> I second this question: is there any chance incremental importing will
-> be implemented in cvs2svn?
+Hello.
 
-Unfortunately, no, there is not much chance that I will implement this.
- I wouldn't be interested in a works-most-of-the-time solution, and a
-reliable solution would take weeks to implement.
+I have private svn repo with cpp source file in windows encoding (\r\n line 
+ending). I am tring to import it into git using git-svn. To make correct crlf 
+convertion I have made git svn init first then create 
+correct .git/info/attributes file and import repo using git svn fetch 
+command. But after import done I have strange situation: after git 
+checkout -f master git status show that almost all text files are modified.
 
-If somebody else wants to implement this feature, I would be happy to
-help him get started, answer questions, discuss the design, etc.  Or if
-somebody wants to sponsor the work, I might be able to justify working
-on it myself.  But otherwise, I'm afraid it is unlikely to happen.
+As I understand situation git-svn put \r\n encoded files into repo without 
+convertng them to \n notation. git-checkout,git-status does the job right and 
+found 'modification' as far as they do the needed convertion.
 
-> I've not used cvs2svn much and when I did it was for svn not git; but
-> given that git-cvsimport is known to mess up your git repo (as Eyvind
-> pointed out earlier) there doesn't appear to be any reliable tools to
-> allow for incrementally importing from cvs to git.
-
-That's because it is quite a tricky problem, especially since CVS allows
-history to be changed retroactively; for example,
-
-- shift a tag to a different file revision
-
-- add an existing tag to a new file or remove it from an old file
-
-- delete ("obsolete") old revisions
-
-- change files from vendor branches to main line of development
-
-- even nastier server-side repository manipulations like deleting an RCS
-file, renaming a file, etc.
-
-These things really happen in the topsy-turvy CVS world; indeed, they
-are a part of many organizations' standard workflow.
-
-cvs2svn uses repository-wide information in the heuristics that it uses
-to determine changesets, choose branch parents, fix clock skew, etc.
-Therefore the naive approach of running a full conversion a second time
-and just skipping over the revisions that were handled during the first
-conversion would not even begin to work.  (I believe that this is the
-approach of cvsps, which uses mostly local information to determine
-changesets.)
-
-I think the correct approach would involve recording the "frontier" of
-the CVS repository, then at the next incremental conversion:
-
-1. compare the current CVS repository to the recorded information
-
-2. emit "fixup" changesets to reflect any CVS changes that happened
-behind the previous "frontier".
-
-3. emit changesets to reflect CVS changes beyond the frontier.
-
-It is step 2 that is IMO the trickiest because it is so open-ended, and
-modern SCMs don't allow all of the corresponding operations in any
-straightforward way.  Presumably one would have to prohibit some of the
-nastier CVS tricks and abort the incremental conversion if any are detected.
-
-Furthermore, for many use-cases of incremental conversion the conversion
-would have to run quickly.  Therefore, the incremental conversion code
-should be written with a strong emphasis on achieving good performance.
-
-Michael
+Is there any way to configure git-svn to make proper convertion or it is 
+broken and need to be fixed ?
