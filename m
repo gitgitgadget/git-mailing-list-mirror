@@ -1,83 +1,71 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Newbie: report of first experience with git-rebase.
-Date: Thu, 1 Nov 2007 11:10:16 -0400
-Message-ID: <20071101151016.GA26103@fieldses.org>
-References: <87d4uv3wh1.fsf@osv.gnss.ru> <20071031195702.GB24332@atjola.homenet> <874pg73u6h.fsf@osv.gnss.ru> <Pine.LNX.4.64.0710312111170.4362@racer.site> <7vhck7gdzs.fsf@gitster.siamese.dyndns.org> <87ve8m2mfn.fsf@osv.gnss.ru> <Pine.LNX.4.64.0711011423440.4362@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Document that using -M without other diff options is
+ not a good idea
+Date: Thu, 1 Nov 2007 15:09:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711011508490.4362@racer.site>
+References: <1193929060-6183-1-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergei Organov <osv@javad.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 01 16:10:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Miklos Vajna <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Thu Nov 01 16:10:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inbh0-0008JA-8S
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:10:46 +0100
+	id 1Inbgi-0008Bt-9j
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:10:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754675AbXKAPKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 11:10:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753500AbXKAPKY
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:10:24 -0400
-Received: from mail.fieldses.org ([66.93.2.214]:39545 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752229AbXKAPKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 11:10:23 -0400
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1InbgW-0006zD-A6; Thu, 01 Nov 2007 11:10:16 -0400
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711011423440.4362@racer.site>
-User-Agent: Mutt/1.5.16 (2007-06-11)
+	id S1754235AbXKAPKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 11:10:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753974AbXKAPKN
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:10:13 -0400
+Received: from mail.gmx.net ([213.165.64.20]:48990 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751389AbXKAPKM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 11:10:12 -0400
+Received: (qmail invoked by alias); 01 Nov 2007 15:10:09 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp055) with SMTP; 01 Nov 2007 16:10:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/A4AUoJLnApFBEf46uK8S7/yhkyr8Tebljs6ulKN
+	40Iwk2fpe83LYf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1193929060-6183-1-git-send-email-vmiklos@frugalware.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62972>
 
-On Thu, Nov 01, 2007 at 02:24:37PM +0000, Johannes Schindelin wrote:
-> Hi,
+Hi,
+
+On Thu, 1 Nov 2007, Miklos Vajna wrote:
+
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
 > 
-> On Thu, 1 Nov 2007, Sergei Organov wrote:
+> I just noticed that I used 'git log -M' in some scripts which is obviously bad.
+> People should not use that option without other diff options.
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> > 
-> > > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> > >
-> > >> On Wed, 31 Oct 2007, Sergei Organov wrote:
-> > >>
-> > >>> Yes, and that's the problem. Why 'git --continue' didn't just skip this 
-> > >>> patch that *already became no-op* after conflict resolution and forced 
-> > >>> me to explicitly use 'git --skip' instead?
-> > >>
-> > >> Isn't that obvious?  To prevent you from accidentally losing a commit.
-> > >
-> > > In case it is not obvious...
-> > >
-> > > A rebase conflict resolution that results in emptiness is a
-> > > rather rare event (especially because rebase drops upfront the
-> > > identical changes from the set of commits to be replayed), but
-> > > it does happen.
-> > 
-> > Funny how 2 of my first 3 commits suffer from this "rather rare event",
-> > and it was not Friday, 13 ;)
+>  Documentation/diff-options.txt |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
 > 
-> They are rare events.  In your case I guess that subtly different versions 
-> were _actually_ applied (such as white space fixes),
+> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+> index b1f528a..ed827f8 100644
+> --- a/Documentation/diff-options.txt
+> +++ b/Documentation/diff-options.txt
+> @@ -92,7 +92,9 @@
+>  	Break complete rewrite changes into pairs of delete and create.
+>  
+>  -M::
+> -	Detect renames.
+> +	Detect renames. It's no good using this option if you don't use diff
+> +	options like `--name-status`, `-p` or `--stat` as it will just slow
+> +	down the revision walker.
 
-That's actually pretty common, in my experience.
+As I remarked on IRC earlier, this will also show up in the man page of 
+git-diff, too.  Rather funny, no?
 
-> which is why such a rare event hit you.
-
-I'm using git to track some changes I submitted to a project that's
-mainly text, and that I only get release tarballs of.  On my most recent
-rebase all my patches got applied, but the text also got re-wrapped and
-re-indented at the same time.  So all but I think one or two of a dozen
-patches ended up with a conflict resolution and then --skip.
-
-Which may not be a case git's really intended for--fair enough.  But
-I've found it's pretty common in my kernel work too.  Either I'm
-rebasing against changes I made myself, or else a maintainer took my
-changes but fixed up some minor style problems along the way.
-
---b.
+Ciao,
+Dscho
