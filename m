@@ -1,67 +1,76 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: Newbie: report of first experience with git-rebase.
-Date: Thu, 01 Nov 2007 15:13:32 +0300
-Message-ID: <87ve8m2mfn.fsf@osv.gnss.ru>
-References: <87d4uv3wh1.fsf@osv.gnss.ru>
-	<20071031195702.GB24332@atjola.homenet> <874pg73u6h.fsf@osv.gnss.ru>
-	<Pine.LNX.4.64.0710312111170.4362@racer.site>
-	<7vhck7gdzs.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 13:14:30 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Update config file example for snapshot feature in gitweb/INSTALL
+Date: Thu,  1 Nov 2007 13:45:33 +0100
+Message-ID: <1193921133-17022-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 01 13:43:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InYwM-0002oR-96
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 13:14:26 +0100
+	id 1InZOK-0004ux-Ul
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 13:43:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756118AbXKAMOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 08:14:12 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753513AbXKAMOL
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 08:14:11 -0400
-Received: from javad.com ([216.122.176.236]:4639 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753415AbXKAMOL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 08:14:11 -0400
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lA1CDcm37776;
-	Thu, 1 Nov 2007 12:13:38 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1InYvU-0000zW-2G; Thu, 01 Nov 2007 15:13:32 +0300
-In-Reply-To: <7vhck7gdzs.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 31 Oct 2007 14\:39\:51 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1756212AbXKAMnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 08:43:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756106AbXKAMnF
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 08:43:05 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:22501 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755733AbXKAMnD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 08:43:03 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so459698ugc
+        for <git@vger.kernel.org>; Thu, 01 Nov 2007 05:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer;
+        bh=hY4vfjV/c6PctnKXll5YkJ28qsFz9sKqS4nWnwFKneI=;
+        b=YbCTc/ncxdD1URKtUVZqcIfsvPjnqRVeZxCDNSNguPSaTrstWMO+/aXe6eLdB0i8EIpxw8peetcLyoio4Esfm9dgEtQYsTJlmNkLS4gb4cLrGN1MhKxHTN+bnHhmQsB9y8YVep5nHGSeSL+JjKK9S8+5dEZXvJc18mKuNrM0gBU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:cc:subject:date:message-id:x-mailer;
+        b=cR9cPOaim7mR8aIO9U6o8fbrvgAOUI+H8AcSUnyB0U672qRIPZqsSiDdOUOh3BqDBav967HHxFBhabAlqCdhg6X4mK+rZnGGLriVJ7OHOvmK1Ol3Mfre4Msc7/xCeye9FHkIsnt1mCTt6eWS0NsEYVx4Aexxm1WE16pr9ZU8Juw=
+Received: by 10.67.32.14 with SMTP id k14mr78227ugj.1193920982284;
+        Thu, 01 Nov 2007 05:43:02 -0700 (PDT)
+Received: from roke.D-201 ( [83.8.199.125])
+        by mx.google.com with ESMTPS id 23sm2235465ugf.2007.11.01.05.43.00
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 01 Nov 2007 05:43:01 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lA1CjXds017037;
+	Thu, 1 Nov 2007 13:45:34 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id lA1CjXOQ017036;
+	Thu, 1 Nov 2007 13:45:33 +0100
+X-Mailer: git-send-email 1.5.3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62948>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Commit a3c8ab30a54c30a6a434760bedf04548425416ef by Matt McCutchen
+  "gitweb: snapshot cleanups & support for offering multiple formats"
+introduced new format of $feature{'snapshot'}{'default'} value. Update
+"Config file example" in gitweb/INSTALL accordingly.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> On Wed, 31 Oct 2007, Sergei Organov wrote:
->>
->>> Yes, and that's the problem. Why 'git --continue' didn't just skip this 
->>> patch that *already became no-op* after conflict resolution and forced 
->>> me to explicitly use 'git --skip' instead?
->>
->> Isn't that obvious?  To prevent you from accidentally losing a commit.
->
-> In case it is not obvious...
->
-> A rebase conflict resolution that results in emptiness is a
-> rather rare event (especially because rebase drops upfront the
-> identical changes from the set of commits to be replayed), but
-> it does happen.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+ gitweb/INSTALL |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Funny how 2 of my first 3 commits suffer from this "rather rare event",
-and it was not Friday, 13 ;)
-
+diff --git a/gitweb/INSTALL b/gitweb/INSTALL
+index 6328e26..9cd5b0a 100644
+--- a/gitweb/INSTALL
++++ b/gitweb/INSTALL
+@@ -116,7 +116,7 @@ GITWEB_CONFIG file:
+ 	$feature{'pickaxe'}{'default'} = [1];
+ 	$feature{'pickaxe'}{'override'} = 1;
+ 
+-	$feature{'snapshot'}{'default'} = ['x-gzip', 'gz', 'gzip'];
++	$feature{'snapshot'}{'default'} = ['zip', 'tgz'];
+ 	$feature{'snapshot'}{'override'} = 1;
+ 
+ 
 -- 
-Sergei.
+1.5.3.5
