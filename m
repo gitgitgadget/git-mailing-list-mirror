@@ -1,71 +1,66 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: New features in gitk
-Date: Thu, 1 Nov 2007 22:37:36 +1100
-Message-ID: <18217.47744.621850.100789@cargo.ozlabs.ibm.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
-	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 12:38:06 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/3] gitweb: Simplify some gitweb URLs generation
+Date: Thu,  1 Nov 2007 13:06:25 +0100
+Message-ID: <1193918789-16421-1-git-send-email-jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 01 13:04:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InYNB-0001mH-DP
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 12:38:05 +0100
+	id 1InYml-0008UE-9A
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 13:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756728AbXKALhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 07:37:52 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756769AbXKALhw
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 07:37:52 -0400
-Received: from ozlabs.org ([203.10.76.45]:45691 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756339AbXKALhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 07:37:51 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id ECE28DDDF6; Thu,  1 Nov 2007 22:37:49 +1100 (EST)
-In-Reply-To: <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1754988AbXKAMEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 08:04:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755126AbXKAMEH
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 08:04:07 -0400
+Received: from ug-out-1314.google.com ([66.249.92.170]:33802 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754413AbXKAMEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 08:04:01 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so453890ugc
+        for <git@vger.kernel.org>; Thu, 01 Nov 2007 05:03:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:received:from:to:subject:date:message-id:x-mailer;
+        bh=xRppMSJBle6DLm//+a/Jm416pc7PCW/fp3zSaTQOXMM=;
+        b=fwWWk7prta8PF4Az9ANTiIH2Nwd0l1+3QzBf19dMwaw6+zL3zh9qfGVc0B9hpPtb7L/kjk+eE7kgkk2FlU9bqOwkGhpYBj6eu/tuwlsxXXiDa2H1PWm8AO3z2kz3KqgaT10+Gnk2F1ewhzkUAOJJhFKIumqsfuJE0s84sIk8O7o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:message-id:x-mailer;
+        b=Gfg3aS0fXcdjF848sTf0eJqnNvDHnczuXRunr/6M3goAxwOycl0nsLrM2bQG2uK3d0GpuDNQCsXqbyE3qMYRC3oUVc39vBPmIuyNypxkkHthrwZQ5F7azAIk7+yleS4cdEhBRTom6qS7SsRsGrNjn7Zg/2JeeZt5PlFwstjT+XI=
+Received: by 10.67.19.17 with SMTP id w17mr3184123ugi.1193918639716;
+        Thu, 01 Nov 2007 05:03:59 -0700 (PDT)
+Received: from roke.D-201 ( [83.8.199.125])
+        by mx.google.com with ESMTPS id j34sm2193061ugc.2007.11.01.05.03.57
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 01 Nov 2007 05:03:58 -0700 (PDT)
+Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
+	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lA1C6UuP016526
+	for <git@vger.kernel.org>; Thu, 1 Nov 2007 13:06:31 +0100
+Received: (from jnareb@localhost)
+	by roke.D-201 (8.13.4/8.13.4/Submit) id lA1C6USG016525
+	for git@vger.kernel.org; Thu, 1 Nov 2007 13:06:30 +0100
+X-Mailer: git-send-email 1.5.3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62940>
 
-Linus Torvalds writes:
+This series of patches simplifies some gitweb URLs generation by
+providing -replay option to href() subroutine, and then using this
+feature in gitweb code.
 
-> The cost is not generally in outputting the commits. The real cost is in 
-> traversing them in the first place. 
+Shortlog:
+ gitweb: Easier adding/changing parameters to current URL
+ gitweb: Use href(-replay=>1, page=>...) to generate pagination links
+ gitweb: Use href(-replay=>1, action=>...) to generate alternate views
 
-Actually, the biggest cost is still gitk reading in the commits from
-git log and doing the processing that gitk needs to do on each commit
-(which I have tried to minimize, and is way smaller than it used to
-be, but is still significant).
+Diffstat:
+ gitweb/gitweb.perl |   82 ++++++++++++++++++++++-----------------------------
+ 1 files changed, 35 insertions(+), 47 deletions(-)
 
-In fact that would go significantly faster if git log could output the
-data for each commit in a slightly different format.  What would be
-good is to get one header line for each commit in the form:
-
-id flag {parent parent parent...} length
-
-where:
-
-id is the 40-char SHA1 for the commit
-flag is normally 1, but is 0 for "boundary" commits, 2 for "left-side"
-    commits (with --merge), or 3 for "right-side" commits
-length is the number of characters of commit data that follow
-    (which may differ from the number of bytes, so there would need
-     to be agreement on the encoding)
-
-followed by the body of the commit (with no null or other separator
-character between commits).
-
-That would be easier to parse in Tcl, and looks like it would knock
-another 1.5 seconds off the gitk startup time (for the kernel
-repository on my G5).
-
-Paul.
+-- 
+Jakub Narebski
+Poland
