@@ -1,57 +1,75 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: New features in gitk
-Date: Thu, 1 Nov 2007 08:16:25 -0700 (PDT)
-Message-ID: <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
- <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
- <18212.13862.637991.30536@cargo.ozlabs.ibm.com>
- <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
- <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Document that using -M without other diff options is
+	not a good idea
+Date: Thu, 1 Nov 2007 16:24:51 +0100
+Message-ID: <20071101152451.GI27987@genesis.frugalware.org>
+References: <1193929060-6183-1-git-send-email-vmiklos@frugalware.org> <Pine.LNX.4.64.0711011508490.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 16:17:12 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="xkXJwpr35CY/Lc3I"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 01 16:25:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InbnC-0002BB-Ux
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:17:11 +0100
+	id 1Inbus-0003H0-OK
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:25:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978AbXKAPQ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 11:16:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754625AbXKAPQ4
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:16:56 -0400
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51757 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753717AbXKAPQz (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Nov 2007 11:16:55 -0400
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA1FGPLG004429
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 1 Nov 2007 08:16:26 -0700
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA1FGPxa002233;
-	Thu, 1 Nov 2007 08:16:25 -0700
-In-Reply-To: <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-X-Spam-Status: No, hits=-2.732 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1754567AbXKAPYz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 11:24:55 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754138AbXKAPYy
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:24:54 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:55162 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753848AbXKAPYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 11:24:53 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 5D32F1B2502;
+	Thu,  1 Nov 2007 16:24:52 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 8D64F44659;
+	Thu,  1 Nov 2007 16:24:25 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id C9B4D13A40D4; Thu,  1 Nov 2007 16:24:51 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711011508490.4362@racer.site>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62974>
 
 
+--xkXJwpr35CY/Lc3I
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 1 Nov 2007, Paul Mackerras wrote:
-> 
-> The other thing --topo-order does is reorder the commits so that
-> related commits come together.
+On Thu, Nov 01, 2007 at 03:09:25PM +0000, Johannes Schindelin <Johannes.Sch=
+indelin@gmx.de> wrote:
+> As I remarked on IRC earlier, this will also show up in the man page of=
+=20
+> git-diff, too.  Rather funny, no?
 
-If that's the only reason for using it, then please stop, and use 
-"--first-parent" instead.
+ah, then i misunderstood you. so the correct way would be to juse ignore
+the -M switch if it's useless? my problem is that if you use git log -M
+then it's a pointless slowdown and you can't find this in the doc :s
 
-		Linus
+thanks,
+- VMiklos
+
+--xkXJwpr35CY/Lc3I
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHKe/De81tAgORUJYRAoElAKCgb3dzyjIvi6KWYsWuOHAHh6gCDQCgpp3a
+TXXG2oHUCLAEHPCriu8j1kQ=
+=g9dz
+-----END PGP SIGNATURE-----
+
+--xkXJwpr35CY/Lc3I--
