@@ -1,98 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 01 Nov 2007 22:57:38 +0100
-Message-ID: <20071101215738.GE7161@artemis.corp>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org>
+Date: Thu, 1 Nov 2007 15:05:44 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0711011459490.3342@woody.linux-foundation.org>
+References: <20071022063222.GS14735@spearce.org> <916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com>
+ <7v4pg5btis.fsf@gitster.siamese.dyndns.org> <200711012232.57286.johan@herland.net>
+ <7v8x5hab3d.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="OZkY3AIuv2LYvjdk";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:57:56 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Geert Bosch <bosch@adacore.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 01 23:07:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ini32-0000g4-5x
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:57:56 +0100
+	id 1IniC1-0003Er-B9
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 23:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754039AbXKAV5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:57:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753894AbXKAV5l
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:57:41 -0400
-Received: from pan.madism.org ([88.191.52.104]:55162 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753855AbXKAV5k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 17:57:40 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 3750527F9F;
-	Thu,  1 Nov 2007 22:57:39 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id D8D362E062D; Thu,  1 Nov 2007 22:57:38 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754220AbXKAWG7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 18:06:59 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754215AbXKAWG6
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 18:06:58 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:44577 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753817AbXKAWG6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Nov 2007 18:06:58 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA1M5i0e026190
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 1 Nov 2007 15:05:45 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA1M5i1e017773;
+	Thu, 1 Nov 2007 15:05:44 -0700
+In-Reply-To: <7v8x5hab3d.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-2.431 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_33
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63021>
 
 
---OZkY3AIuv2LYvjdk
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Nov 01, 2007 at 06:33:13PM +0000, Linus Torvalds wrote:
->=20
->=20
-> On Wed, 31 Oct 2007, Junio C Hamano wrote:
-> >=20
-> > * ph/parseopt (Tue Oct 30 14:15:21 2007 -0500) 23 commits
-> >  + ...
-> >=20
-> > It appears 1.5.4 will be, to a certain extent, a "Let's clean up
-> > the internal implementation" release.  This series should become
-> > part of it.  Hopefully will merge to 'master' soon, but I
-> > haven't looked this series very closely yet.
->=20
-> I certainly think this should go in, but it does make one deficiency=20
-> painfully clear: the remaining shell scripts end up having all the old=20
-> flags behaviour.
+On Thu, 1 Nov 2007, Junio C Hamano wrote:
+> 
+> "git clean" is about things that git usually do not care about
+> (i.e. things not in .gitignore, or even in .gitignore when -x is
+> given).  Everything else including "git stash" is all about what
+> git cares about (i.e. tracked paths).
 
-  Those are not the only commands with issues: not all builtins are
-migrated on the new option parser, and those with recursive options (I
-mean the ones that use diff options e.g.) are not migrated yet either,
-because the option parser does not supports a mechanism to deal with
-them.
+Right. I *love* "git clean". Real men have everything they care about 
+tracked by git, and thus by definition "git clean" is the safest operation 
+possible. I don't understand how anybody can call it "unsafe".
 
-  The issue is not to let parse_option recurse into anoter option
-structure, it's that if you do so, you want to express the address of
-the "options" to patch in a relative and not absolute way, and I've not
-decided myself mind about a way to do that yet.
+I just wish it was quiet by default - right now it takes a _loong_ time to 
+clean out your crud just because it scrolls forever talking about all 
+those girly files you don't want to keep - and that it had -x and -d on by 
+default, so that us *real* men wouldn't have to type so much.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+But making it accept combined options, so that you can do "git clean -xdq" 
+would certainly already be a huge improvement.
 
---OZkY3AIuv2LYvjdk
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+But yeah, I guess we could make the "clean.Imagirlyman" option (or however 
+the "please-don't-hurt-me-by-default" option is spelled) the default. That 
+way I'd just feel *extra* manly for immediately disabling it, and laughing 
+at you wimps.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHKkvSvGr7W6HudhwRAvZMAKCbvHzjhFic9+sSeKuJV0/jb5vrkgCdFTQo
-QgKdnIZ+CUwrYT6WWeWeEck=
-=Xy7g
------END PGP SIGNATURE-----
-
---OZkY3AIuv2LYvjdk--
+			Linus
