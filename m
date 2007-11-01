@@ -1,82 +1,89 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/5] prune-packed: don't call display_progress() for every file
-Date: Wed, 31 Oct 2007 22:58:30 -0400
-Message-ID: <20071101025830.GX14735@spearce.org>
-References: <1193770655-20492-1-git-send-email-nico@cam.org> <1193770655-20492-2-git-send-email-nico@cam.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
+Date: Wed, 31 Oct 2007 23:23:03 -0400
+Message-ID: <20071101032303.GA14495@coredump.intra.peff.net>
+References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de> <7vodefj2lk.fsf@gitster.siamese.dyndns.org> <20071031055303.GB3326@atjola.homenet> <20071031134358.GD15182@dpotapov.dyndns.org> <20071031140028.GA30207@diana.vm.bytemark.co.uk> <20071031143641.GF15182@dpotapov.dyndns.org> <20071031180557.GA12211@coredump.intra.peff.net> <7v8x5jgdck.fsf@gitster.siamese.dyndns.org> <20071031215625.GC14211@coredump.intra.peff.net> <7vzlxygblz.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 03:58:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 01 04:23:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InQGl-00040T-T6
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 03:58:56 +0100
+	id 1InQeQ-0007uN-O2
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 04:23:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753192AbXKAC6k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 22:58:40 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752880AbXKAC6k
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 22:58:40 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:44464 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752723AbXKAC6j (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 22:58:39 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1InQGD-00037N-6R; Wed, 31 Oct 2007 22:58:21 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 47C7020FBAE; Wed, 31 Oct 2007 22:58:31 -0400 (EDT)
+	id S1753043AbXKADXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 23:23:07 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbXKADXH
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 23:23:07 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3414 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753009AbXKADXG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 23:23:06 -0400
+Received: (qmail 2646 invoked by uid 111); 1 Nov 2007 03:23:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Wed, 31 Oct 2007 23:23:05 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Wed, 31 Oct 2007 23:23:03 -0400
 Content-Disposition: inline
-In-Reply-To: <1193770655-20492-2-git-send-email-nico@cam.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+In-Reply-To: <7vzlxygblz.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62909>
 
-Nicolas Pitre <nico@cam.org> wrote:
-> The progress count is per fanout directory, so it is useless to call
-> it for every file as the count doesn't change that often.
+On Wed, Oct 31, 2007 at 03:31:20PM -0700, Junio C Hamano wrote:
 
-If you go back into the history and look at the commit message for
-when I introduced this per-object display_progress() call we find
-the following:
+> > ... I had one concern that
+> > I was tracking down: is the author name encoding necessarily the same as
+> > the commit text encoding?
+> 
+> The user is screwing himself already if that is the case and
+> uses -s to format-patch, isn't he?
 
- commit b5d72f0a4cd3cce945ca0d37e4fa0ebbfcdcdb52
- Author: Shawn O. Pearce <spearce@spearce.org>
- Date:   Fri Oct 19 00:08:37 2007 -0400
+Hrm, they probably _should_ be the same in the output. It's not clear to
+me what encoding we assume the name comes in (utf-8, I guess). Looks
+like we don't touch it at all when putting it in the signoff. I think we
+should just be able to reencode when appending the signoff; patch is
+below.
 
-[...snip...]
-    We perform the display_progress() call from within the very innermost
-    loop in case we spend more than 1 second within any single object
-    directory.  This ensures that a progress_update event from the
-    timer will still trigger in a timely fashion and allow the user to
-    see the progress meter.
+I'm sure there are other weird interactions lurking. For example, do we
+correctly detect an existing signoff if we are storing in a non-utf8
+encoding? I must admit to being a little ignorant to some of the
+encoding magic of git, having a us-ascii name myself.
 
-During my testing with a 40,000 loose object case (yea, I fully
-unpacked a git.git clone I had laying around) my system stalled
-hard in the first object directory.  A *lot* longer than 1 second.
-So I got no progress meter for a long time, and then a progress
-meter appeared on the second directory.
+---
 
-The display_progress() call already does a reasonably cheap
-comparsion to see if the timer has tripped or if the percent complete
-has changed.  So I figured it was more useful to get feedback to
-the user that we were working, but were going to take a while,
-than it was to optimize a few machine instructions out of that
-inner-most per-object loop.
-
-So I'm a little against this patch.  But I think I understand why
-you think its worth doing.  I just consider the progress feedback
-more important than the few machine cycles avoiding it saves.
+diff --git a/log-tree.c b/log-tree.c
+index 3763ce9..906942d 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -3,6 +3,7 @@
+ #include "commit.h"
+ #include "log-tree.h"
+ #include "reflog-walk.h"
++#include "utf8.h"
  
--- 
-Shawn.
+ struct decoration name_decoration = { "object names" };
+ 
+@@ -111,7 +112,14 @@ static void append_signoff(struct strbuf *sb, const char *signoff)
+ 		strbuf_addch(sb, '\n');
+ 
+ 	strbuf_addstr(sb, signed_off_by);
+-	strbuf_add(sb, signoff, signoff_len);
++	if (git_log_output_encoding) {
++		char *encoded_name = reencode_string(signoff,
++				git_log_output_encoding, "utf-8");
++		strbuf_addstr(sb, encoded_name);
++		free(encoded_name);
++	}
++	else
++		strbuf_add(sb, signoff, signoff_len);
+ 	strbuf_addch(sb, '\n');
+ }
+ 
