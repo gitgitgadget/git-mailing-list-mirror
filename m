@@ -1,64 +1,62 @@
-From: "Simon Sasburg" <simon.sasburg@gmail.com>
-Subject: Re: [PATCH] Make git-mailinfo strip whitespace from the start of the mail file.
-Date: Thu, 1 Nov 2007 22:41:01 +0100
-Message-ID: <981e6de60711011441n5bef772cuda381c539c0a2603@mail.gmail.com>
-References: <1193951139-2312-1-git-send-email-Simon.Sasburg@gmail.com>
-	 <7vd4utabx0.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 01 Nov 2007 14:51:18 -0700
+Message-ID: <7v8x5hab3d.fsf@gitster.siamese.dyndns.org>
+References: <20071022063222.GS14735@spearce.org>
+	<916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com>
+	<7v4pg5btis.fsf@gitster.siamese.dyndns.org>
+	<200711012232.57286.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:41:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Geert Bosch <bosch@adacore.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Nov 01 22:51:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inhn4-0004RA-IG
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:41:27 +0100
+	id 1Inhx3-0007Mn-ND
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:51:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753121AbXKAVlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:41:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753102AbXKAVlE
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:41:04 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:44623 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753079AbXKAVlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 17:41:02 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so718370wah
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 14:41:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=aKroAGysy09/YHVKGC7s41XEqbzgueas5geynE8PA6A=;
-        b=i4mPU6WojDMg1RVYDaEdrFXskzqJgdSPTah4KdtGZhN91VAZW1f1zB+Ql7APdG4qlDIMBGVoLWCkSDw8sW2IOmo6BgTE6aUiVqESO5PtE0B1fHfyn1gen019ZdnKH3UHefsztWZDvHGXy4zvj1VhbvQ2hmfYWGyZm4rRT11Kplk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=doZ248p0jKvlm+may6s0FSV9EKCoYtACvSFkLnv/3dCOTuBLbeC2eOO/b4R6PxdtbWx25NPHfDlxNq1VOnL2DrIcDJxjXXCSERH1mhFo6jMmzf9O+jolg1A0d7viLK3KX01n/iHxxDcMlMGfzUh2kq0l9dDvK6yv+Njhb6k5flk=
-Received: by 10.114.199.1 with SMTP id w1mr1115557waf.1193953261083;
-        Thu, 01 Nov 2007 14:41:01 -0700 (PDT)
-Received: by 10.114.124.16 with HTTP; Thu, 1 Nov 2007 14:41:01 -0700 (PDT)
-In-Reply-To: <7vd4utabx0.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754099AbXKAVv3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 17:51:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754033AbXKAVv3
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:51:29 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:34956 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753296AbXKAVv2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 17:51:28 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 3771D2F0;
+	Thu,  1 Nov 2007 17:51:49 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 929C691285;
+	Thu,  1 Nov 2007 17:51:43 -0400 (EDT)
+In-Reply-To: <200711012232.57286.johan@herland.net> (Johan Herland's message
+	of "Thu, 01 Nov 2007 22:32:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63019>
 
-> Just to help me understand why this change is needed...
+Johan Herland <johan@herland.net> writes:
+
+> What about making "git clean" _stash_ your changes instead of deleting them 
+> (so that you can undo the clean)? Preferably they should be stashed 
+> somewhere _other_ than where "git stash" does its thing. "git clean" could 
+> even delete the stash immediately, but keep the reflog around so that 
+> the "clean" at least could be undone within 30 days (or whatever is the 
+> current default).
 >
-> Are you using mailinfo directly without splitting with mailsplit
-> first?
+> Thoughts?
 
-Well, when using gmail's web interface, when reading a mail, there is
-this option to show the raw mail text (headers+body) with the 'show
-original' option.
+Unthoughts.  That does not mesh with the way how world works.
 
-If you do 'save as..' in your browser to save what you get with that,
-and try to do git-am on that file, it fails because it starts with
-some whitespace.
-
-With this patch git-am works on these files.
-
-So, i'm not using mailsplit or any other mail tools at all, just my
-browser and git.
+"git clean" is about things that git usually do not care about
+(i.e. things not in .gitignore, or even in .gitignore when -x is
+given).  Everything else including "git stash" is all about what
+git cares about (i.e. tracked paths).
