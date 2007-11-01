@@ -1,65 +1,82 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: [PATCH 2/3] make sure throughput display gets updated even if progress
- doesn't move
-Date: Thu, 01 Nov 2007 16:59:56 -0400
-Message-ID: <1193950797-29631-3-git-send-email-nico@cam.org>
-References: <1193950797-29631-1-git-send-email-nico@cam.org>
- <1193950797-29631-2-git-send-email-nico@cam.org>
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:00:53 2007
+From: Simon Sasburg <simon.sasburg@gmail.com>
+Subject: [PATCH] Make git-mailinfo strip whitespace from the start of the mail file.
+Date: Thu,  1 Nov 2007 22:05:39 +0100
+Message-ID: <1193951139-2312-1-git-send-email-Simon.Sasburg@gmail.com>
+Cc: gitster@pobox.com, Simon Sasburg <Simon.Sasburg@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 01 22:06:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inh9b-0000yZ-Jy
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:00:40 +0100
+	id 1InhFB-0002aE-E1
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:06:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753972AbXKAVAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:00:03 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXKAVAB
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:00:01 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:31466 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753752AbXKAU77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 16:59:59 -0400
-Received: from localhost.localdomain ([74.56.106.175])
- by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQU002D3IBX07M0@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 01 Nov 2007 16:59:58 -0400 (EDT)
-X-Mailer: git-send-email 1.5.3.4.279.gb2d9d-dirty
-In-reply-to: <1193950797-29631-2-git-send-email-nico@cam.org>
+	id S1753455AbXKAVGL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 17:06:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753477AbXKAVGK
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:06:10 -0400
+Received: from hu-out-0506.google.com ([72.14.214.236]:7532 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753331AbXKAVGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 17:06:09 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so264527hue
+        for <git@vger.kernel.org>; Thu, 01 Nov 2007 14:06:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:to:cc:subject:date:message-id:x-mailer:from;
+        bh=EPyDO/zf/4qm0wIhR+zGa3BYYY6UROC1+PB/8aUh/JE=;
+        b=aW3pPLgSwkxbboc9DvGDjXnEzJ30EHf3Vm+H+Fyn7maD3LDQhHMGjPsx+Unae3j7MTOGi2iK+s4G00mIURVm7uapwAGvT2erkCvj9yLLgerlhKRzbWsxcWV2znW7+gKrI2XzNWhBGgcXe+0ezEDRRpobCJMgQuNyC6eR7m/pC8U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:to:cc:subject:date:message-id:x-mailer:from;
+        b=g4GsuhNh8+qppkVEuitCHEgap/JOkx7U+Zg2TP5Xrt1AwzSmpiqBWR5WzDBvKqbip5JPoXefslWIC8ogrMqpAxDHyXkaRfwvPNTkCtIiU3bZQ4EooNnGEQzzjhHE11peK590hAVp5ShQ36jQqVYcLfHBLrw3Ly1dBt/6Q5IoXr4=
+Received: by 10.78.107.8 with SMTP id f8mr834579huc.1193951167051;
+        Thu, 01 Nov 2007 14:06:07 -0700 (PDT)
+Received: from localhost ( [86.85.232.104])
+        by mx.google.com with ESMTPS id d24sm2008528nfh.2007.11.01.14.05.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 01 Nov 2007 14:06:06 -0700 (PDT)
+X-Mailer: git-send-email 1.5.3.4.503.gbcee6f4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63001>
 
-Currently the progress/throughput display update happens only through
-display_progress().  If the progress based on object count remains
-unchanged because a large object is being received, the latest throughput
-won't be displayed.  The display update should occur through
-display_throughput() as well.
+This allows you to use files gotten through gmail's web interface via its 'Show original' option.
 
-Signed-off-by: Nicolas Pitre <nico@cam.org>
+Signed-off-by: Simon Sasburg <Simon.Sasburg@gmail.com>
 ---
- progress.c |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+Note that this doesn't exactly follow RFC 2822 as far as i can see, but i don't know if git prefers to be strict or tolerant in these cases, so i'm sending the patch anyway.
 
-diff --git a/progress.c b/progress.c
-index 34a5961..39d5d2c 100644
---- a/progress.c
-+++ b/progress.c
-@@ -160,6 +160,9 @@ void display_throughput(struct progress *progress, unsigned long n)
- 		tp->last_misecs[tp->idx] = misecs;
- 		tp->idx = (tp->idx + 1) % TP_IDX_MAX;
- 		tp->count = 0;
-+
-+		if (progress->last_value != -1 && progress_update)
-+			display(progress, progress->last_value, 0);
- 	}
- }
+It certaily helps me, even if just a little bit.
+
+ builtin-mailinfo.c |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
+
+diff --git a/builtin-mailinfo.c b/builtin-mailinfo.c
+index fb12248..5d4b6bf 100644
+--- a/builtin-mailinfo.c
++++ b/builtin-mailinfo.c
+@@ -915,6 +915,7 @@ static void handle_info(void)
+ static int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
+ 		    const char *msg, const char *patch)
+ {
++	int peek;
+ 	keep_subject = ks;
+ 	metainfo_charset = encoding;
+ 	fin = in;
+@@ -935,6 +936,11 @@ static int mailinfo(FILE *in, FILE *out, int ks, const char *encoding,
+ 	p_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(char *));
+ 	s_hdr_data = xcalloc(MAX_HDR_PARSED, sizeof(char *));
  
++	do {
++		peek = fgetc(in);
++	} while (peek == ' ' || peek == '\r' || peek == '\n');
++	ungetc(peek, in);
++
+ 	/* process the email header */
+ 	while (read_one_header_line(line, sizeof(line), fin))
+ 		check_header(line, sizeof(line), p_hdr_data, 1);
 -- 
-1.5.3.4.279.gb2d9d-dirty
+1.5.3.4.502.g37c97
