@@ -1,96 +1,81 @@
-From: Baz <brian.ewins@gmail.com>
-Subject: Re: [PATCH] Implement sending mails over TLS in git-send-email.
-Date: Wed, 31 Oct 2007 23:59:24 +0000
-Message-ID: <2faad3050710311659s10cab8fbj45bac505b22bb0c2@mail.gmail.com>
-References: <1193845859-1788-1-git-send-email-Simon.Sasburg@gmail.com>
-	 <2faad3050710311445l51d1152cs6761803e2f3a77d3@mail.gmail.com>
-	 <981e6de60710311504v666943beve3b87c6a713fb18c@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: remote#branch
+Date: Thu, 1 Nov 2007 01:22:33 +0100
+Message-ID: <200711010122.34190.jnareb@gmail.com>
+References: <20071030053732.GA16963@hermes.priv> <472844D4.8050306@op5.se> <20071031091529.GA25025@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Simon Sasburg" <simon.sasburg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 00:59:41 2007
+Cc: Andreas Ericsson <ae@op5.se>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Nov 01 01:20:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InNTI-00087m-L9
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 00:59:41 +0100
+	id 1InNnU-0003LW-Vb
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 01:20:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754133AbXJaX71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 19:59:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753969AbXJaX71
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 19:59:27 -0400
-Received: from an-out-0708.google.com ([209.85.132.242]:46015 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497AbXJaX70 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 19:59:26 -0400
-Received: by an-out-0708.google.com with SMTP id b36so48380ana
-        for <git@vger.kernel.org>; Wed, 31 Oct 2007 16:59:25 -0700 (PDT)
+	id S1753484AbXKAAUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 31 Oct 2007 20:20:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753095AbXKAAUN
+	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 20:20:13 -0400
+Received: from ug-out-1314.google.com ([66.249.92.169]:30201 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860AbXKAAUL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 31 Oct 2007 20:20:11 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so406975ugc
+        for <git@vger.kernel.org>; Wed, 31 Oct 2007 17:20:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ULiuw2QWI33Czhq3jsNDNRHexQn6qEcenWGiVQw6pyQ=;
-        b=B6SpKQAlEoD9wr5iGOqjhFAv7EtSqx7PmAQcrviBQRoC6eF99LiX5ungYpFyNLfJ6b+HrTkpYwTWDuoRmiyb8S5Xxp7gthG99p/XLwxLlXNofUB5odiEddkNq5cDyZsKjZP9cOISyD17t6sK1QlVkEZZ9Dem/4ifPdFCGoMZs1c=
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=FuBdI0o7MCk+WmwZ9D5gIJR5L3u1O70NGJhWK41KPDs=;
+        b=rJPbCgRG+ccwwTl302GCTgDMdZviJDkFdjR/L/S9C2bK3SWvOQAZtrzNu//oq/Lj0ZrebT589CubLoYjRq2hBAMN2YRPQvdb/nGIj+7kmvs8CM0ytNUYMWWdPmn5uMxG7pitcUsHUpJ+dFDsnwad3G1pfCHFXESaDk+uyIFBml4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uhTZGe5LLnU9OxhAqWjekxid3bEEqxu0qsFM+yoE/v8W8VYEBAjbw8iQ2w2HUuQ7BYrDJ5HBDsG2Hd5eRxknOil1jgJhLdS1XYlewu+EiTVMVd5TFUaanUYCSeOeAAITQwUlW5tsAOByt6NpomrKseD01ZUkYuiefz0fyyO9+T4=
-Received: by 10.142.212.19 with SMTP id k19mr2257212wfg.1193875164506;
-        Wed, 31 Oct 2007 16:59:24 -0700 (PDT)
-Received: by 10.142.43.18 with HTTP; Wed, 31 Oct 2007 16:59:24 -0700 (PDT)
-In-Reply-To: <981e6de60710311504v666943beve3b87c6a713fb18c@mail.gmail.com>
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=QD7ozzN7Q71fSe+Hlwyp87JgJbyduuKNbbT0iC9VIZBShQmAJp/Uxt0MaP65L48KxcfRid2uySJFad8oUmNk7NycepYcclKqrgKKhGxLo56FnbtL3I0/61MAnYSNTd+VkR3Vx2BlnPjja1cGyzv1qgWdzHRZyiJejlrgiCCRPO0=
+Received: by 10.67.27.16 with SMTP id e16mr1511478ugj.1193876410303;
+        Wed, 31 Oct 2007 17:20:10 -0700 (PDT)
+Received: from ?192.168.1.11? ( [83.8.199.125])
+        by mx.google.com with ESMTPS id i7sm2583732nfh.2007.10.31.17.20.07
+        (version=SSLv3 cipher=OTHER);
+        Wed, 31 Oct 2007 17:20:08 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20071031091529.GA25025@glandium.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62898>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62899>
 
-On 31/10/2007, Simon Sasburg <simon.sasburg@gmail.com> wrote:
-> > In other words, this patch should be entirely unnecessary if you have
-> > Authen::SASL installed - could you try this? (I've checked for myself,
-> > git-send-email sends me mail fine via gmail without this patch)
->
-> Well, it fails here, maybe maybe you can show me exactly what you did
-> (configuration/parameters etc)?
->
-> This is what i do now:
-> > git-send-email testfile.patch -to simon.sasburg@gmail.com --chain-reply-to --smtp-server smtp.gmail.com --smtp-user simon.sasburg --smtp-pass secret --smtp-ssl --smtp-server-port 587
-> and it fails, while the same line using --smtp-tls instead of
-> --smtp-ssl with my patch applied works.
->
-> What am i missing?
->
+Mike Hommey wrote:
+> On Wed, Oct 31, 2007 at 10:03:16AM +0100, Andreas Ericsson <ae@op5.se> wrote:
+>>>
+>>>Or copied from gitweb.
+>>>
+>> Perhaps, but I've never seen that done. Partly because you can't be sure
+>> the HTTP url is the same as the git address (perhaps people are used to
+>> this from CVS and the likes), and partly because you'd, for most cases,
+>> want to use git:// or ssh transport instead of http.
+>> 
+>> It might be nifty to have gitweb print some git-valid locator for a repo
+>> though, or even a full copy-pastable "git clone git://host/path/to/repo.git"
+>> command-line thingie. I'll look into it when I have leisure.
+> 
+> Hum... it already does print http and git "Mirror URL"s which are ready to
+> be copy/pasted to feed git clone arguments.
 
-ok I'm going to downgrade what I said to 'it works fine with gmail' -
-it just doesnt do starttls, your code does.
+The only thing to add (for absolutely no gain IMHO) would be code
+which would add quotes (single or double) around URL/path which
+contain spaces:
+  
+  Mirror URL    'git://repo.or.cz/repo with spaces.git'
+                'http://repo.or.cz/r/repo with spaces.git'
+  Push URL      'repo.or.cz:/srv/git/repo with spaces.git'  
 
-git-send-email --from 'brian.ewins@gmail.com' --to
-'brian.ewins@gmail.com' --smtp-server smtp.gmail.com  --smtp-user
-'brian.ewins@gmail.com' --smtp-pass 'secret' --smtp-ssl
-0001-the-patch-goes-here
-
-That's using SSL on port 465, not TLS. Did this not work for you? I
-thought Net::SMTP passed its constructor options to IO::Socket, but
-no. An alternate way of getting starttls to work, without using
-Net::SMTP::TLS, is this:
-
-#connect with Net::SMTP - not ::SSL or the connect will fail
-$smtp = Net::SMTP->new('smtp.gmail.com',
-                                 Port => 587,
-                                 Debug => 1) or die "Could not connect
-to server\n";
-#issue the starttls command, assuming user asked for this
-$smtp->command('STARTTLS');
-$smtp->response();
-#if server says 220, then go ahead and convert the socket. Bless as
-Net::SMTP::SSL
-# - necessary to inherit both IO::Socket::SSL and Net::SMTP
-#start_SSL has been renamed, twice. Nice stable api :)
-#extra args for checking server cert etc can be passed to start_SSL.
-$smtp->code() == 220 and $smtp = Net::SMTP::SSL->start_SSL($smtp) or
-die "STARTTLS failed! ".$smtp->message;
-# say hello again to get server features (including auth)
-$smtp->hello();
-# now continue as before, with $smtp->auth()...
+-- 
+Jakub Narebski
+Poland
