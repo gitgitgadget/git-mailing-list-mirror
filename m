@@ -1,71 +1,54 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Question on git-filter-branch
-Date: Thu, 1 Nov 2007 07:54:56 -0600
-Message-ID: <18217.55984.327062.84306@lisa.zopyra.com>
-References: <18217.52425.655322.52338@lisa.zopyra.com>
-	<20071101125845.GA27567@glandium.org>
-	<18217.53833.710503.667761@lisa.zopyra.com>
-	<20071101133440.GA17239@glandium.org>
+From: Sergei Organov <osv@javad.com>
+Subject: Where man git-format-patch sends me?
+Date: Thu, 01 Nov 2007 16:58:43 +0300
+Message-ID: <87lk9i2hkc.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 14:55:30 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 01 14:59:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InaW9-0007uf-4q
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:55:29 +0100
+	id 1InaZd-0000kQ-HK
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:59:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566AbXKANzO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 09:55:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753717AbXKANzO
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:55:14 -0400
-Received: from mail.zopyra.com ([65.68.225.25]:60595 "EHLO zopyra.com"
+	id S1753541AbXKAN6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 09:58:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbXKAN6v
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:58:51 -0400
+Received: from javad.com ([216.122.176.236]:4718 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753551AbXKANzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 09:55:13 -0400
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id lA1Dt2B16608;
-	Thu, 1 Nov 2007 07:55:02 -0600
-In-Reply-To: <20071101133440.GA17239@glandium.org>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1753419AbXKAN6u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 09:58:50 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lA1Dwmm50339
+	for <git@vger.kernel.org>; Thu, 1 Nov 2007 13:58:49 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1InaZH-00023A-6Z
+	for git@vger.kernel.org; Thu, 01 Nov 2007 16:58:43 +0300
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62960>
 
-On Thursday, November 1, 2007 at 14:34:41 (+0100) Mike Hommey writes:
->On Thu, Nov 01, 2007 at 07:19:05AM -0600, Bill Lear wrote:
->> >Just remove .git/refs/original/
->> 
->> Ok, thanks.  But, how do I remove the subdirectory?
->> 
->> % rm -rf .git/refs/original
->> % git filter-branch --index-filter 'git update-index --remove sensitive_stuff' HEAD
->> Rewrite 6711f6a50605918326f67ca0c3402eab9a4c8571 (8/8)
->> WARNING: Ref 'refs/heads/master' is unchanged
->
->git-update-index --remove will remove files, not trees, so you need to
->use something like
->git-ls-files ensitive_stuff | xargs -d "\n" git-update-index --remove
->instead.
+$ man git-format-patch
+[...]
+OPTIONS
+       -p     Generate patch (see section on generating patches)
 
-Oh yeah, now we're cookin' with gas:
+       -u     Synonym for "-p".
+[...]
+$
 
-% git filter-branch --index-filter 'git-ls-files sensitive_stuff | xargs -d "\n" git-update-index --remove' HEAD
-Rewrite 6711f6a50605918326f67ca0c3402eab9a4c8571 (8/8)
-Ref 'refs/heads/master' was rewritten
+1. Saying "-p generates patch" suggests that without -p git-format-patch
+   will generate something else. It's rather confusing.
 
-These refs were rewritten:
-blake^master ~*/sensitive.clone ls
-B  D
+2. Where is this "section on generating patches"? I thought it could be
+   in man git-diff, but it is not.
 
-Excellent.
-
-Thanks for the help.
-
-
-Bill
+-- 
+Sergei.
