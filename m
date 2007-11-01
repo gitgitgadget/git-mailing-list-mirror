@@ -1,64 +1,91 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Managing /etc with git: Store ownership and time in git?
-Date: Thu, 1 Nov 2007 09:10:44 -0400
-Message-ID: <20071101131043.GA19914@coredump.intra.peff.net>
-References: <loom.20071101T123817-247@post.gmane.org>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Question on git-filter-branch
+Date: Thu, 1 Nov 2007 07:19:05 -0600
+Message-ID: <18217.53833.710503.667761@lisa.zopyra.com>
+References: <18217.52425.655322.52338@lisa.zopyra.com>
+	<20071101125845.GA27567@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Alexander Skwar <listen@alexander.skwar.name>
-X-From: git-owner@vger.kernel.org Thu Nov 01 14:11:00 2007
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Thu Nov 01 14:19:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InZp4-0007B7-Uu
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:10:59 +0100
+	id 1InZxS-00022v-SD
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758509AbXKANKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 09:10:47 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbXKANKr
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:10:47 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3411 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755026AbXKANKq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 09:10:46 -0400
-Received: (qmail 5784 invoked by uid 111); 1 Nov 2007 13:10:45 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
-    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 01 Nov 2007 09:10:45 -0400
-Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Nov 2007 09:10:44 -0400
-Content-Disposition: inline
-In-Reply-To: <loom.20071101T123817-247@post.gmane.org>
+	id S1755295AbXKANTZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 09:19:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754297AbXKANTZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:19:25 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:60512 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754159AbXKANTY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 09:19:24 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id lA1DJAH13769;
+	Thu, 1 Nov 2007 07:19:10 -0600
+In-Reply-To: <20071101125845.GA27567@glandium.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62955>
 
-On Thu, Nov 01, 2007 at 12:55:57PM +0000, Alexander Skwar wrote:
+On Thursday, November 1, 2007 at 13:58:45 (+0100) Mike Hommey writes:
+>On Thu, Nov 01, 2007 at 06:55:37AM -0600, Bill Lear wrote:
+>> In my repo, I have sensitive files A, C, and a directory full of
+>> sensitive stuff I want to remove forever from the git repository.
+>> 
+>> % ls
+>> A B C D sensitive_stuff
+>> 
+>> % git --version
+>> git version 1.5.3.5
+>> 
+>> % git filter-branch --index-filter 'git update-index --remove A' HEAD
+>> Rewrite 5dd7d5f2d7d3a5f43c242188ac96294628267673 (7/7)
+>> Ref 'refs/heads/master' was rewritten
+>> 
+>> These refs were rewritten:
+>> % ls
+>> B  C  D  sensitive_stuff
+>> 
+>> % git status
+>> # On branch master
+>> nothing to commit (working directory clean)
+>> 
+>> Ok, so I guess it has done what I wanted.  So, I try to remove the
+>> next file that has sensitive information in it:
+>> 
+>> % git filter-branch --index-filter 'git update-index --remove C' HEAD
+>> Namespace refs/original/ not empty
+>
+>Just remove .git/refs/original/
 
-> I'd like to use git to manage the /etc directories of some servers.
-> What's quite nice with git (in comparison to svn) is, that it
-> out-of-the-box stores the permissions of a file. But it doesn't seem
+Ok, thanks.  But, how do I remove the subdirectory?
 
-It doesn't; git stores only the executable bit.
+% rm -rf .git/refs/original
+% git filter-branch --index-filter 'git update-index --remove sensitive_stuff' HEAD
+Rewrite 6711f6a50605918326f67ca0c3402eab9a4c8571 (8/8)
+WARNING: Ref 'refs/heads/master' is unchanged
 
-> like it stores the ownership (ie. user/group) of tracked content.
-> Does anyone know how to cope with that "problem"?
+% ls sensitive_stuff
+E  F  G
+% git filter-branch --index-filter 'git update-index --remove sensitive_stuff/*' HEAD
+Rewrite 6711f6a50605918326f67ca0c3402eab9a4c8571 (8/8)
+WARNING: Ref 'refs/heads/master' is unchanged
 
-Yes, convert your file metadata into a text format in a file in the
-repository, and commit that.
+% ls sensitive_stuff
+E  F  G
 
-> Oh, and it also seems that Git doesn't store the time information of
-> files, does it? For tracking /etc, this would be very useful. Would
-> anyone have a solution for this as well?
+% cd sensitive_stuff
+% git filter-branch --index-filter 'git update-index --remove E F G' HEAD
+fatal: Not a git repository: '.git'
+You need to run this command from the toplevel of the working tree.
 
-Same as above.
 
-> What I'm thinking about right now is, to write a "hook" script which
-> "dumps" the stats of the to-be added files in some "index" file. But
-> that seems like a rather clumsy soltion...
-
-That's more or less the solution that has been advocated. Search in the
-list archives for /etc solutions; this topic comes up every few months.
-
--Peff
+Bill
