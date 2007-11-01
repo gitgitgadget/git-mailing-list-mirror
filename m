@@ -1,54 +1,62 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Where man git-format-patch sends me?
-Date: Thu, 01 Nov 2007 16:58:43 +0300
-Message-ID: <87lk9i2hkc.fsf@osv.gnss.ru>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Do no colorify test output if stdout is not a terminal
+Date: Thu, 1 Nov 2007 15:01:58 +0100
+Message-ID: <20071101140158.GA14475@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 14:59:07 2007
+X-From: git-owner@vger.kernel.org Thu Nov 01 15:02:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InaZd-0000kQ-HK
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:59:05 +0100
+	id 1Inaci-0001kH-HS
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 15:02:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753541AbXKAN6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 09:58:51 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753421AbXKAN6v
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:58:51 -0400
-Received: from javad.com ([216.122.176.236]:4718 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753419AbXKAN6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 09:58:50 -0400
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lA1Dwmm50339
-	for <git@vger.kernel.org>; Thu, 1 Nov 2007 13:58:49 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1InaZH-00023A-6Z
-	for git@vger.kernel.org; Thu, 01 Nov 2007 16:58:43 +0300
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1756701AbXKAOCD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 10:02:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbXKAOCD
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 10:02:03 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:46946 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756680AbXKAOCB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 10:02:01 -0400
+Received: from tigra.home (Fc985.f.strato-dslnet.de [195.4.201.133])
+	by post.webmailer.de (mrclete mo56) (RZmta 14.0)
+	with ESMTP id 501c34jA1B42hP ; Thu, 1 Nov 2007 15:01:59 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E57C1277AE;
+	Thu,  1 Nov 2007 15:01:58 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 4834256D22; Thu,  1 Nov 2007 15:01:58 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzATv+k0=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62960>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62961>
 
-$ man git-format-patch
-[...]
-OPTIONS
-       -p     Generate patch (see section on generating patches)
+like when the output is redirected into a file in a cron job.
+---
+ t/test-lib.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-       -u     Synonym for "-p".
-[...]
-$
-
-1. Saying "-p generates patch" suggests that without -p git-format-patch
-   will generate something else. It's rather confusing.
-
-2. Where is this "section on generating patches"? I thought it could be
-   in man git-diff, but it is not.
-
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 714de6e..603a8cd 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -60,6 +60,7 @@ esac
+ # . ./test-lib.sh
+ 
+ [ "x$TERM" != "xdumb" ] &&
++	[ -t 1 ] &&
+ 	tput bold >/dev/null 2>&1 &&
+ 	tput setaf 1 >/dev/null 2>&1 &&
+ 	tput sgr0 >/dev/null 2>&1 &&
 -- 
-Sergei.
+1.5.3.4.549.g2789
