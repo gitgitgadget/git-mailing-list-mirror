@@ -1,60 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Managing /etc with git: Store ownership and time in git?
-Date: Thu, 01 Nov 2007 16:42:02 +0100
-Organization: At home
-Message-ID: <fgcrvd$s03$1@ger.gmane.org>
-References: <loom.20071101T123817-247@post.gmane.org> <20071101130928.GH27987@genesis.frugalware.org>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Where man git-format-patch sends me?
+Date: Thu, 01 Nov 2007 18:47:42 +0300
+Message-ID: <877il22cip.fsf@osv.gnss.ru>
+References: <87lk9i2hkc.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0711011437440.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 16:40:46 2007
+Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 01 16:49:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inc9D-0001dn-1e
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:39:55 +0100
+	id 1IncI7-0005Bq-Lh
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 16:49:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716AbXKAPjj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 11:39:39 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756600AbXKAPjj
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:39:39 -0400
-Received: from main.gmane.org ([80.91.229.2]:42954 "EHLO ciao.gmane.org"
+	id S1757764AbXKAPry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 11:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753621AbXKAPrx
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 11:47:53 -0400
+Received: from javad.com ([216.122.176.236]:2338 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755832AbXKAPji (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 11:39:38 -0400
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Inc8t-0003Ol-4D
-	for git@vger.kernel.org; Thu, 01 Nov 2007 15:39:35 +0000
-Received: from abvb125.neoplus.adsl.tpnet.pl ([83.8.199.125])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 15:39:35 +0000
-Received: from jnareb by abvb125.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 15:39:35 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvb125.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752496AbXKAPrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 11:47:52 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lA1Flmm62636;
+	Thu, 1 Nov 2007 15:47:48 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1IncGk-00037Q-KL; Thu, 01 Nov 2007 18:47:42 +0300
+In-Reply-To: <Pine.LNX.4.64.0711011437440.4362@racer.site> (Johannes Schindelin's message of "Thu\, 1 Nov 2007 14\:38\:41 +0000 \(GMT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62975>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62976>
 
-Miklos Vajna wrote:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Thu, Nov 01, 2007 at 12:55:57PM +0000, Alexander Skwar <listen@alexander.skwar.name> wrote:
->> I'd like to use git to manage the /etc directories of some servers.
-> 
-> http://git.or.cz/gitwiki/GitFaq#head-7e70881352ec207609dc4d7eedbd0532946a5825
+> Hi,
+>
+> On Thu, 1 Nov 2007, Sergei Organov wrote:
+>
+>> $ man git-format-patch
+>> [...]
+>> OPTIONS
+>>        -p     Generate patch (see section on generating patches)
+>> 
+>>        -u     Synonym for "-p".
+>
+> As you can easily see from Documentation/git-format-patch.txt, this part 
+> is generated from the file Documentation/diff-options.txt.
 
-http://git.or.cz/gitwiki/InterfacesFrontendsAndTools
-search for Metastore
+Sorry, I did saw that, but it doesn't change anything.
+
+1. As a user reading man git-format-patch, where do I find this "section
+   on generating patches"? In another man-page? In the html
+   documentation? On the moon?
+
+2. I can't find "section on generating patches" in the man git-diff
+   either, and I did say this in the part of my original message you've
+   snipped.
+
+So the main question remains: could you please point me to the exact
+place in 'Documentation/' directory where this "section on generating
+patches" resides?
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Sergei.
