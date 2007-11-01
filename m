@@ -1,58 +1,56 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: New features in gitk
-Date: Thu, 1 Nov 2007 21:00:11 +1100
-Message-ID: <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
-	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Don't use cpio in git-clone when not installed
+Date: Thu, 1 Nov 2007 11:53:18 +0100
+Organization: glandium.org
+Message-ID: <20071101105318.GA4744@glandium.org>
+References: <1193861145-20357-1-git-send-email-mh@glandium.org> <fcaeb9bf0710311809o41703bc5hda36a9d44a538eeb@mail.gmail.com> <7vejfag40g.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 11:11:47 2007
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 01 11:55:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InX1b-0008Sc-51
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 11:11:43 +0100
+	id 1InXhg-0000kU-NB
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 11:55:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757535AbXKAKL2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 06:11:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757063AbXKAKL2
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 06:11:28 -0400
-Received: from ozlabs.org ([203.10.76.45]:52147 "EHLO ozlabs.org"
+	id S1757423AbXKAKyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 06:54:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757356AbXKAKyl
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 06:54:41 -0400
+Received: from vawad.err.no ([85.19.200.177]:34582 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756704AbXKAKL1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 06:11:27 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 94268DDE1F; Thu,  1 Nov 2007 21:11:26 +1100 (EST)
-In-Reply-To: <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1756346AbXKAKyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 06:54:40 -0400
+Received: from aputeaux-153-1-31-123.w82-124.abo.wanadoo.fr ([82.124.1.123] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1InXgw-0004xw-3r; Thu, 01 Nov 2007 11:54:28 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1InXfq-0001cA-5p; Thu, 01 Nov 2007 11:53:18 +0100
+Content-Disposition: inline
+In-Reply-To: <7vejfag40g.fsf@gitster.siamese.dyndns.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62934>
 
-Linus Torvalds writes:
+On Wed, Oct 31, 2007 at 06:15:27PM -0700, Junio C Hamano wrote:
+> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+> 
+> > BTW, you have workaround for git-merge also? It uses cpio to save/restore state.
+> 
+> Why do people want "workaround"?  Is installing cpio such a
+> hassle?
 
-> (And as mentioned many times earlier - if you can avoid topo-order and 
-> date-order entirely, you are going to perform a million times better at 
-> startup for the cold-cache case. Since you seem to be doing the graph 
-> layout lazily now, maybe you could aim for that some day? It does mean 
-> that you might - occasionally - end up having to add a commit to 
-> *before* one you already laid out).
+Note that to do what git-merge does with cpio, i wonder if it wouldn't
+be sensible to use git stash, now.
 
-The other thing --topo-order does is reorder the commits so that
-related commits come together.  So far, doing that in Tcl has turned
-out to be much slower than having it done in C (within git log) for
-the hot-cache case (which I expect is the common case).
-
-I'm now thinking that the best approach would be to have gitk cache
-the topology, and on startup only read in the part of the graph that
-isn't in the cache.  Mostly that will be small and so git log should
-be fast even in the cold-cache case with --topo-order.
-
-Paul.
+Mike
