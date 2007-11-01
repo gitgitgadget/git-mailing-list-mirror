@@ -1,70 +1,79 @@
 From: Simon Sasburg <simon.sasburg@gmail.com>
-Subject: [PATCH 2/3] Implement --dirty for git-rebase--interactive.
-Date: Thu,  1 Nov 2007 22:30:23 +0100
-Message-ID: <1193952624-608-3-git-send-email-Simon.Sasburg@gmail.com>
+Subject: [PATCH 1/3] Introduce --dirty option to git-rebase, allowing you to start from a dirty state.
+Date: Thu,  1 Nov 2007 22:30:22 +0100
+Message-ID: <1193952624-608-2-git-send-email-Simon.Sasburg@gmail.com>
 References: <1193952624-608-1-git-send-email-Simon.Sasburg@gmail.com>
- <1193952624-608-2-git-send-email-Simon.Sasburg@gmail.com>
 Cc: git@vger.kernel.org, Simon Sasburg <Simon.Sasburg@gmail.com>
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:33:17 2007
+X-From: git-owner@vger.kernel.org Thu Nov 01 22:33:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InhfA-0001oX-M1
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:33:17 +0100
+	id 1InhfA-0001oX-1E
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924AbXKAVcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:32:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753821AbXKAVcn
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:32:43 -0400
-Received: from hu-out-0506.google.com ([72.14.214.236]:16289 "EHLO
-	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621AbXKAVcm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 17:32:42 -0400
-Received: by hu-out-0506.google.com with SMTP id 19so265852hue
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 14:32:39 -0700 (PDT)
+	id S1753889AbXKAVcd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 17:32:33 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753621AbXKAVcd
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:32:33 -0400
+Received: from ug-out-1314.google.com ([66.249.92.175]:23844 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753313AbXKAVcc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 17:32:32 -0400
+Received: by ug-out-1314.google.com with SMTP id z38so551264ugc
+        for <git@vger.kernel.org>; Thu, 01 Nov 2007 14:32:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        bh=fgbdYIjiSEYEZoGBLi859vQJhpf8ssZrf0eiySFZ2nw=;
-        b=fUV94rZo8QCTiaoUJ3cUwflA+n7oDyLvvKwX88f/QgPw1JvYRB6N+VC5kwcBtxsPxQ1H5lgt/L6tTW5UXDo8nD8QQPOEZPqAli5usX1IsmEei1ajY8SE/rGcaM4iWtv0BOle5okY4DaayUPLERyF2b6HYfQuLwDB9YBWtmROr4w=
+        bh=Ll1suMghnuQ+Z7BRiPP7hLOO4xF1jsIuouCXbgmbkO8=;
+        b=sxbguX4/xJA0BPW1fhFX4YVmziaYD/LCIVU6rQBl2BG63VgpYGvGQhkuvMdekFwzRZatX/n5K7m379HSGiP0dQBH34JXqKw1Frzffv7xzOZ2ZQc6rJqBoj8uS7oAXWhBRru7+BgKAswOIP7TzJ+Cx4Dh1xmfQ7CPBpthDtvNjDM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:to:cc:subject:date:message-id:x-mailer:in-reply-to:references:from;
-        b=R4vh0+wTNaeUSK36cP6h2B358wCf4ePplstjFca9hDPsDtnHnCNYjuFLOn8/oxQ/o5MK3Ud3UmYcHUCYjZxX+2TF+sYe989E+meU8qPug0NRoDOybkkYTiOCjr3EXtWVq2zWlWvTV/nMJSIF+N3iZTM4wphTNqWKpTSnjBzCayA=
-Received: by 10.82.175.17 with SMTP id x17mr2201359bue.1193952759585;
-        Thu, 01 Nov 2007 14:32:39 -0700 (PDT)
+        b=Jdos+pBlZhF6VKZ5+Nw2XUOaWpSGpMo7AaGvbIN3tJBA7oMoa55/B5VLE7ME7XjUhcJJ0eRjvDTql7KpeRZ4EpavvHswz0zH5bTIOKhsKl3PgzC9aPO7CdvgwFNhXjNAXImvO1sMw6toGASsw01hW1pvh2wZub13flh88vsmOIs=
+Received: by 10.78.201.15 with SMTP id y15mr857135huf.1193952749826;
+        Thu, 01 Nov 2007 14:32:29 -0700 (PDT)
 Received: from localhost ( [86.85.232.104])
-        by mx.google.com with ESMTPS id f3sm2302439nfh.2007.11.01.14.32.29
+        by mx.google.com with ESMTPS id f3sm2302439nfh.2007.11.01.14.32.25
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 01 Nov 2007 14:32:38 -0700 (PDT)
+        Thu, 01 Nov 2007 14:32:29 -0700 (PDT)
 X-Mailer: git-send-email 1.5.3.4.503.gbcee6f4
-In-Reply-To: <1193952624-608-2-git-send-email-Simon.Sasburg@gmail.com>
+In-Reply-To: <1193952624-608-1-git-send-email-Simon.Sasburg@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63009>
+
+This will store the difference between HEAD and the index into a commit,
+and the difference between the index and the working tree into a commit.
+
+When the rebase is done, it restores the index and the working tree
+by undoing these commits with git-reset.
 
 Signed-off-by: Simon Sasburg <Simon.Sasburg@gmail.com>
 ---
- git-rebase--interactive.sh |   42 ++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 40 insertions(+), 2 deletions(-)
+ git-rebase.sh |   63 ++++++++++++++++++++++++++++++++++++++++++++++++--------
+ 1 files changed, 54 insertions(+), 9 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 76dc679..326076b 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -25,6 +25,7 @@ REWRITTEN="$DOTEST"/rewritten
- PRESERVE_MERGES=
- STRATEGY=
- VERBOSE=
-+FIX_DIRTY=
- test -d "$REWRITTEN" && PRESERVE_MERGES=t
- test -f "$DOTEST"/strategy && STRATEGY="$(cat "$DOTEST"/strategy)"
- test -f "$DOTEST"/verbose && VERBOSE=t
-@@ -56,6 +57,35 @@ require_clean_work_tree () {
- 	die "Working tree is dirty"
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 224cca9..c923c3b 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -42,6 +42,7 @@ To restore the original branch and stop rebasing run \"git rebase --abort\".
+ unset newbase
+ strategy=recursive
+ do_merge=
++fix_dirty=
+ dotest=$GIT_DIR/.dotest-merge
+ prec=4
+ verbose=
+@@ -117,9 +118,39 @@ call_merge () {
+ 
+ finish_rb_merge () {
+ 	rm -r "$dotest"
++	restore_dirty_state
+ 	echo "All done."
  }
  
 +store_dirty_state () {
@@ -96,57 +105,68 @@ index 76dc679..326076b 100755
 +	fi
 +}
 +
- ORIG_REFLOG_ACTION="$GIT_REFLOG_ACTION"
- 
- comment_for_reflog () {
-@@ -329,6 +359,7 @@ do_next () {
- 		test ! -f "$DOTEST"/verbose ||
- 			git diff-tree --stat $(cat "$DOTEST"/head)..HEAD
- 	} &&
-+	restore_dirty_state &&
- 	rm -rf "$DOTEST" &&
- 	git gc --auto &&
- 	warn "Successfully rebased and updated $HEADNAME."
-@@ -378,6 +409,7 @@ do
- 			;;
- 		esac &&
- 		output git reset --hard $HEAD &&
-+		restore_dirty_state &&
- 		rm -rf "$DOTEST"
+ is_interactive () {
+ 	test -f "$dotest"/interactive ||
+ 	while :; do case $#,"$1" in 0,|*,-i|*,--interactive) break ;; esac
+@@ -156,6 +187,10 @@ do
+ 		git am --resolved --3way --resolvemsg="$RESOLVEMSG"
  		exit
  		;;
-@@ -417,6 +449,9 @@ do
- 	''|-h)
- 		usage
- 		;;
 +	--dirty)
-+		FIX_DIRTY=t
++		do_merge=t
++		fix_dirty=t
 +		;;
- 	*)
- 		test -d "$DOTEST" &&
- 			die "Interactive rebase already started"
-@@ -435,7 +470,7 @@ do
- 			;;
- 		esac
- 
--		require_clean_work_tree
-+		test "$FIX_DIRTY" = "t" || require_clean_work_tree
- 
- 		if test ! -z "$2"
+ 	--skip)
+ 		if test -d "$dotest"
  		then
-@@ -445,9 +480,12 @@ do
- 				die "Could not checkout $2"
+@@ -188,6 +223,7 @@ do
+ 			die "No rebase in progress?"
  		fi
+ 		git reset --hard ORIG_HEAD
++		restore_dirty_state
+ 		exit
+ 		;;
+ 	--onto)
+@@ -253,15 +289,19 @@ else
+ 	fi
+ fi
  
--		HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
- 		UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
+-# The tree must be really really clean.
+-git update-index --refresh || exit
+-diff=$(git diff-index --cached --name-status -r HEAD)
+-case "$diff" in
+-?*)	echo "cannot rebase: your index is not up-to-date"
+-	echo "$diff"
+-	exit 1
+-	;;
+-esac
++# The tree must be really really clean, unless --dirty is given.
++if test "$fix_dirty" = ""
++then
++	git update-index --refresh || exit
++	diff=$(git diff-index --cached --name-status -r HEAD)
++	case "$diff" in
++	?*)	echo "cannot rebase: your index is not up-to-date"
++		echo "$diff"
++		exit 1
++		;;
++	esac
++	
++fi
  
-+		test "$FIX_DIRTY" = "t" && store_dirty_state
+ # The upstream head must be given.  Make sure it is valid.
+ upstream_name="$1"
+@@ -318,6 +358,11 @@ then
+ 	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
+ fi
+ 
++if test "$fix_dirty" = "t"
++then
++	store_dirty_state
++fi
 +
-+		HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
-+
- 		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
- 
- 		test -z "$ONTO" && ONTO=$UPSTREAM
+ # Rewind the head to "$onto"; this saves our current head in ORIG_HEAD.
+ echo "First, rewinding head to replay your work on top of it..."
+ git-reset --hard "$onto"
 -- 
 1.5.3.4.502.g37c97
