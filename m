@@ -1,87 +1,64 @@
-From: Alexander Skwar <listen@alexander.skwar.name>
-Subject: Re: [PATCH] Don't use cpio in git-clone when not installed
-Date: Thu, 1 Nov 2007 13:06:54 +0000 (UTC)
-Message-ID: <loom.20071101T130539-416@post.gmane.org>
-References: 18216.31314.990545.518458@lisa.zopyra.com <1193861145-20357-1-git-send-email-mh@glandium.org> <alpine.LFD.0.999.0710311742170.3342@woody.linux-foundation.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: Managing /etc with git: Store ownership and time in git?
+Date: Thu, 1 Nov 2007 09:10:44 -0400
+Message-ID: <20071101131043.GA19914@coredump.intra.peff.net>
+References: <loom.20071101T123817-247@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 14:10:23 2007
+Cc: git@vger.kernel.org
+To: Alexander Skwar <listen@alexander.skwar.name>
+X-From: git-owner@vger.kernel.org Thu Nov 01 14:11:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InZoU-0006xa-Uo
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:10:23 +0100
+	id 1InZp4-0007B7-Uu
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:10:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555AbXKANKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 09:10:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755717AbXKANKH
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:10:07 -0400
-Received: from main.gmane.org ([80.91.229.2]:59718 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753373AbXKANKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 09:10:05 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1InZoA-00053J-RU
-	for git@vger.kernel.org; Thu, 01 Nov 2007 13:10:02 +0000
-Received: from zy-rieter.cyberlink.ch ([212.55.215.153])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 13:10:02 +0000
-Received: from listen by zy-rieter.cyberlink.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 13:10:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.55.215.153 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.8.1.8) Gecko/20071023 Firefox/2.0.0.8)
+	id S1758509AbXKANKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 09:10:47 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756913AbXKANKr
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:10:47 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3411 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755026AbXKANKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 09:10:46 -0400
+Received: (qmail 5784 invoked by uid 111); 1 Nov 2007 13:10:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+    by peff.net (qpsmtpd/0.32) with SMTP; Thu, 01 Nov 2007 09:10:45 -0400
+Received: by coredump.intra.peff.net (sSMTP sendmail emulation); Thu, 01 Nov 2007 09:10:44 -0400
+Content-Disposition: inline
+In-Reply-To: <loom.20071101T123817-247@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62954>
 
-Linus Torvalds <torvalds <at> linux-foundation.org> writes:
+On Thu, Nov 01, 2007 at 12:55:57PM +0000, Alexander Skwar wrote:
 
-> 
-> 
-> On Wed, 31 Oct 2007, Mike Hommey wrote:
-> > +	if type cpio > /dev/null 2>&1; then
-> > +		local=yes
-> > +	fi
-> 
-> Isn't "type" a bashism?
+> I'd like to use git to manage the /etc directories of some servers.
+> What's quite nice with git (in comparison to svn) is, that it
+> out-of-the-box stores the permissions of a file. But it doesn't seem
 
-ksh also has type. But SUS states, that "command -v" can be used.
+It doesn't; git stores only the executable bit.
 
-   Options
+> like it stores the ownership (ie. user/group) of tracked content.
+> Does anyone know how to cope with that "problem"?
 
-[...]
+Yes, convert your file metadata into a text format in a file in the
+repository, and commit that.
 
-   -v
-       (On systems supporting the User Portability Utilities option.)
-       Write a string to standard output that indicates the pathname or
-       command that will be used by the shell, in the current shell
-       execution environment (see Shell Execution Environment ), to
-       invoke command_name, but do not invoke command_name.
+> Oh, and it also seems that Git doesn't store the time information of
+> files, does it? For tracking /etc, this would be very useful. Would
+> anyone have a solution for this as well?
 
-           * Utilities, regular built-in utilities, command_names
-             including a slash character, and any implementation-defined
-             functions that are found using the PATH variable (as
-             described in Command Search and Execution ), shall be
-             written as absolute pathnames.
+Same as above.
 
-           * Shell functions, special built-in utilities, regular
-             built-in utilities not associated with a PATH search, and
-             shell reserved words shall be written as just their names.
+> What I'm thinking about right now is, to write a "hook" script which
+> "dumps" the stats of the to-be added files in some "index" file. But
+> that seems like a rather clumsy soltion...
 
-           * An alias shall be written as a command line that represents
-             its alias definition.
+That's more or less the solution that has been advocated. Search in the
+list archives for /etc solutions; this topic comes up every few months.
 
-           * Otherwise, no output shall be written and the exit status
-             shall reflect that the name was not found.
-
-Regards,
-Alexander
+-Peff
