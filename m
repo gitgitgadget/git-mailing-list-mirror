@@ -1,64 +1,67 @@
-From: Alexander Skwar <listen@alexander.skwar.name>
-Subject: Managing /etc with git: Store ownership and time in git?
-Date: Thu, 1 Nov 2007 12:55:57 +0000 (UTC)
-Message-ID: <loom.20071101T123817-247@post.gmane.org>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: Managing /etc with git: Store ownership and time in git?
+Date: Thu, 1 Nov 2007 14:09:28 +0100
+Message-ID: <20071101130928.GH27987@genesis.frugalware.org>
+References: <loom.20071101T123817-247@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 14:05:56 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="Ns7jmDPpOpCD+GE/"
+Cc: git@vger.kernel.org
+To: Alexander Skwar <listen@alexander.skwar.name>
+X-From: git-owner@vger.kernel.org Thu Nov 01 14:09:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InZjo-0004zw-Pz
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:05:52 +0100
+	id 1InZnu-0006ig-Tg
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 14:09:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756794AbXKANFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 09:05:17 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753749AbXKANFR
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:05:17 -0400
-Received: from main.gmane.org ([80.91.229.2]:33875 "EHLO ciao.gmane.org"
+	id S1755491AbXKANJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 09:09:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753373AbXKANJc
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 09:09:32 -0400
+Received: from virgo.iok.hu ([193.202.89.103]:54992 "EHLO virgo.iok.hu"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756794AbXKANFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 09:05:16 -0400
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1InZjK-0004Dj-7r
-	for git@vger.kernel.org; Thu, 01 Nov 2007 13:05:02 +0000
-Received: from zy-rieter.cyberlink.ch ([212.55.215.153])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 13:05:02 +0000
-Received: from listen by zy-rieter.cyberlink.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 13:05:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: main.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 212.55.215.153 (Mozilla/5.0 (X11; U; Linux i686; de; rv:1.8.1.8) Gecko/20071023 Firefox/2.0.0.8)
+	id S1755181AbXKANJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 09:09:31 -0400
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id 2CAC01B2502;
+	Thu,  1 Nov 2007 14:09:29 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 9C6FE4465B;
+	Thu,  1 Nov 2007 14:09:02 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id DBA2913A405F; Thu,  1 Nov 2007 14:09:28 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <loom.20071101T123817-247@post.gmane.org>
+User-Agent: Mutt/1.5.13cvs-muttng-frugalware (2007-01-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62952>
 
-Hello.
 
-I'd like to use git to manage the /etc directories of some servers.
-What's quite nice with git (in comparison to svn) is, that it
-out-of-the-box stores the permissions of a file. But it doesn't seem
-like it stores the ownership (ie. user/group) of tracked content.
-Does anyone know how to cope with that "problem"?
+--Ns7jmDPpOpCD+GE/
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Oh, and it also seems that Git doesn't store the time information of
-files, does it? For tracking /etc, this would be very useful. Would
-anyone have a solution for this as well?
+On Thu, Nov 01, 2007 at 12:55:57PM +0000, Alexander Skwar <listen@alexander.skwar.name> wrote:
+> I'd like to use git to manage the /etc directories of some servers.
 
-What I'm thinking about right now is, to write a "hook" script which
-"dumps" the stats of the to-be added files in some "index" file. But
-that seems like a rather clumsy soltion...
+http://git.or.cz/gitwiki/GitFaq#head-7e70881352ec207609dc4d7eedbd0532946a5825
 
-It would be great of someone could maybe share his solution!
+- VMiklos
 
-Thanks a lot,
-Alexander
+--Ns7jmDPpOpCD+GE/
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHKdAIe81tAgORUJYRAhHLAKCLAipXFxFhvPaJwgv/EcdxKGR/gwCfa+rP
+DqFmBkrFXpW1HNRRlpVzQYo=
+=9GY1
+-----END PGP SIGNATURE-----
+
+--Ns7jmDPpOpCD+GE/--
