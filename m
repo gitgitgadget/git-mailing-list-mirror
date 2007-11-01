@@ -1,71 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make git-mailinfo strip whitespace from the start of the mail file.
-Date: Thu, 01 Nov 2007 15:26:34 -0700
-Message-ID: <7vr6j98uw5.fsf@gitster.siamese.dyndns.org>
-References: <1193951139-2312-1-git-send-email-Simon.Sasburg@gmail.com>
-	<7vd4utabx0.fsf@gitster.siamese.dyndns.org>
-	<981e6de60711011441n5bef772cuda381c539c0a2603@mail.gmail.com>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 1 Nov 2007 16:26:54 -0600
+Message-ID: <18218.21166.697179.422630@lisa.zopyra.com>
+References: <20071022063222.GS14735@spearce.org>
+	<916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com>
+	<7v4pg5btis.fsf@gitster.siamese.dyndns.org>
+	<200711012232.57286.johan@herland.net>
+	<7v8x5hab3d.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0711011459490.3342@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Simon Sasburg" <simon.sasburg@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 23:27:00 2007
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Geert Bosch <bosch@adacore.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 01 23:28:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IniV9-0000EL-C4
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 23:26:59 +0100
+	id 1IniWA-0000Wg-AM
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 23:28:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760046AbXKAW0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 18:26:42 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760027AbXKAW0m
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 18:26:42 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:47887 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760055AbXKAW0l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 18:26:41 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 090132F0;
-	Thu,  1 Nov 2007 18:27:02 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7A32F912D7;
-	Thu,  1 Nov 2007 18:26:58 -0400 (EDT)
-In-Reply-To: <981e6de60711011441n5bef772cuda381c539c0a2603@mail.gmail.com>
-	(Simon Sasburg's message of "Thu, 1 Nov 2007 22:41:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755757AbXKAW1O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 18:27:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755713AbXKAW1N
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 18:27:13 -0400
+Received: from mail.zopyra.com ([65.68.225.25]:60360 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752930AbXKAW1N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 18:27:13 -0400
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id lA1MQt319272;
+	Thu, 1 Nov 2007 16:26:55 -0600
+In-Reply-To: <alpine.LFD.0.999.0711011459490.3342@woody.linux-foundation.org>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63024>
 
-"Simon Sasburg" <simon.sasburg@gmail.com> writes:
+On Thursday, November 1, 2007 at 15:05:44 (-0700) Linus Torvalds writes:
+>...
+>But yeah, I guess we could make the "clean.Imagirlyman" option (or however 
+>the "please-don't-hurt-me-by-default" option is spelled) the default. That 
+>way I'd just feel *extra* manly for immediately disabling it, and laughing 
+>at you wimps.
 
->> Just to help me understand why this change is needed...
->>
->> Are you using mailinfo directly without splitting with mailsplit
->> first?
->
-> Well, when using gmail's web interface, when reading a mail, there is
-> this option to show the raw mail text (headers+body) with the 'show
-> original' option.
->
-> If you do 'save as..' in your browser to save what you get with that,
-> and try to do git-am on that file, it fails because it starts with
-> some whitespace.
->
-> With this patch git-am works on these files.
->
-> So, i'm not using mailsplit or any other mail tools at all, just my
-> browser and git.
+Precisely my sentiments.
 
-Ah, I meant "git-mailsplit", which is the command internally run
-by "git-am" to preprocess the file and to split it into
-individual mail pieces to be fed to "git-mailinfo".
 
-That may suggest the change is better done in git-mailsplit not
-git-mailinfo.
-
-Or perhaps both.
+Bill
