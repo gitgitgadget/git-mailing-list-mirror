@@ -1,82 +1,74 @@
-From: "Francesco Pretto" <ceztkoml@gmail.com>
-Subject: Gitweb is preprocessing content when it shouldn't
-Date: Thu, 1 Nov 2007 22:36:27 +0100
-Message-ID: <b13782500711011436g4d0d78f2y76e19e04ff207f2@mail.gmail.com>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: What's cooking in git.git (topics)
+Date: Thu, 1 Nov 2007 16:41:31 -0500
+Message-ID: <20071101214131.GF4099@lavos.net>
+References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:38:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 01 22:42:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inhjz-0003T2-F0
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:38:15 +0100
+	id 1Inhne-0004bv-Px
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:42:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759013AbXKAVge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:36:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758982AbXKAVgd
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:36:33 -0400
-Received: from el-out-1112.google.com ([209.85.162.181]:38788 "EHLO
-	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758870AbXKAVga (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 17:36:30 -0400
-Received: by el-out-1112.google.com with SMTP id j27so193018elf
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 14:36:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=hZ+u1LpwOV6/qn5GcPZv4LfhX74bf/sEIJRzS+4nH5A=;
-        b=nhcgYwSbt8G6O6V7P0mIEaOdhViinbOJJHeF0PsQWf2P1rzBb4wJyqDg1+DQosv1uj/vxZo0zwJca2hHLNZ0+FLp6R4Lde71PESB95T7kYDYulKF+1d3C/5ayllbGikoYOnKlHrlPdqDgrBKFggo6DQGGngE4mbHMlhiPOZ5p+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=EeSwLHJ/lQtK9UGdPv7QFX5L2R9WND9jElY7eJp5KvaYb5OO63z3UwFQuLHVopHmt7W9kv2xW7NVAImE6wpv3c3amLv8tjqLTDi2os3mfimwgXQmtto4hFrHEd7CE/3bhg/6vOsVUMWVrsAFRglJLHjymRoo3EAoKug6kPnuBH4=
-Received: by 10.142.239.11 with SMTP id m11mr354781wfh.1193952988001;
-        Thu, 01 Nov 2007 14:36:28 -0700 (PDT)
-Received: by 10.142.50.2 with HTTP; Thu, 1 Nov 2007 14:36:27 -0700 (PDT)
+	id S1753102AbXKAVle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 17:41:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXKAVle
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:41:34 -0400
+Received: from mxsf08.insightbb.com ([74.128.0.78]:25315 "EHLO
+	mxsf08.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbXKAVld (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 17:41:33 -0400
+X-IronPort-AV: E=Sophos;i="4.21,360,1188792000"; 
+   d="scan'208";a="118010329"
+Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
+  by mxsf08.insightbb.com with ESMTP; 01 Nov 2007 17:41:31 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAMrkKUdKhvkY/2dsb2JhbACBW45a
+X-IronPort-AV: E=Sophos;i="4.21,360,1188792000"; 
+   d="scan'208";a="90817455"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav01.insightbb.com with ESMTP; 01 Nov 2007 17:41:31 -0400
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id 401A7309F21; Thu,  1 Nov 2007 16:41:31 -0500 (CDT)
 Content-Disposition: inline
+In-Reply-To: <7vmytycykt.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63014>
 
-I was trying to follow the gitweb/README [1] to obtain http URLs that
-were valid both as cloneable GIT URL and as browseable gitweb
-interfaces. Unfortunately, gitweb is preprocessing all the content
-inside http://domain/repo.dir/ , so the command:
+On Wed, Oct 31, 2007 at 10:41:06PM -0700, Junio C Hamano wrote:
+> * jc/spht (Tue Oct 2 18:00:27 2007 -0700) 1 commit
+>  - git-diff: complain about >=8 consecutive spaces in initial indent
+> 
+> This is a counterpart of an earlier patch from J. Bruce Fields
+> to change "git-apply --whitespace" to make SP{8,} at the
+> beginning of line a whitespace error.
+> 
+> Personally, I am in favor of the stricter check, but I had to
+> reject the "git-apply" patch because there was no way to disable
+> the additional check without disabling the existing check for
+> trailing whitespaces.  We probably would want to revisit that
+> one (perhaps with a new option and/or config to selectively
+> enable different kinds of whitespace check).
 
-    git clone http://git.vpsaruba.homeunix.org/bproofs.git
+Just to throw in my two cents, I would be strongly opposed to this
+going in without some form of configuration to make it work for
+spaces-only-indent projects.  I appreciate having whitespace checking,
+and I think trailing whitespace and tabs-following-spaces are obviously
+bad enough that they should always be flagged.  But flagging leading
+spaces makes a legitimate and common coding style yield incredibly
+obnoxious-looking diffs.
 
-fails while trying to read XHTML generated pages.
+I don't want to get into another stupid holy war about the superiority
+of indent styles (the last one was quite enough, thank you), but there
+are real projects out there that have a spaces-only-indent policy and
+use Git, and this change as is isn't good for them.
 
-I'm not yet sure if this is behaviour recently changed in gitweb but I
-suppose this "hack" once worked (otherwise it wouldn't have been
-documented).
-
-My apache/vhost configuration follows:
-
-ScriptAlias /cgi-bin/ "/var/www/cgi-bin/"
-
-<Directory "/var/www/cgi-bin">
-    Options Indexes FollowSymlinks ExecCGI
-    AllowOverride None
-    Order allow,deny
-    Allow from all
-</Directory>
-
-<VirtualHost 62.149.168.100:80>
-    ServerName git.vpsaruba.homeunix.org:80
-    DocumentRoot /var/git
-    RewriteEngine on
-    RewriteRule ^/(.*\.git/(?!/?(info|objects|refs)).*)?$
-/cgi-bin/gitweb.cgi%{REQUEST_URI}  [L,PT]
-</VirtualHost>
-
-Any consideration is appreciated.
-
-Thanks,
-Francesco
-
-[1] http://git.kernel.org/?p=git/git.git;a=blob_plain;f=gitweb/README;hb=HEAD
+-bcd
