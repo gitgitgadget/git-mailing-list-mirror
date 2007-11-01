@@ -1,74 +1,101 @@
-From: bdowning@lavos.net (Brian Downing)
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: What's cooking in git.git (topics)
-Date: Thu, 1 Nov 2007 16:41:31 -0500
-Message-ID: <20071101214131.GF4099@lavos.net>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org>
+Date: Thu, 01 Nov 2007 22:42:57 +0100
+Message-ID: <20071101214257.GB7161@artemis.corp>
+References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org> <916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com> <7v4pg5btis.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; boundary="oLBj+sq0vYjzfsbl";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Geert Bosch <bosch@adacore.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 01 22:42:03 2007
+X-From: git-owner@vger.kernel.org Thu Nov 01 22:43:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inhne-0004bv-Px
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:42:03 +0100
+	id 1Inhos-0004vg-8p
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 22:43:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753102AbXKAVle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 17:41:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXKAVle
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:41:34 -0400
-Received: from mxsf08.insightbb.com ([74.128.0.78]:25315 "EHLO
-	mxsf08.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753005AbXKAVld (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 17:41:33 -0400
-X-IronPort-AV: E=Sophos;i="4.21,360,1188792000"; 
-   d="scan'208";a="118010329"
-Received: from unknown (HELO asav01.insightbb.com) ([172.31.249.124])
-  by mxsf08.insightbb.com with ESMTP; 01 Nov 2007 17:41:31 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAMrkKUdKhvkY/2dsb2JhbACBW45a
-X-IronPort-AV: E=Sophos;i="4.21,360,1188792000"; 
-   d="scan'208";a="90817455"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav01.insightbb.com with ESMTP; 01 Nov 2007 17:41:31 -0400
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 401A7309F21; Thu,  1 Nov 2007 16:41:31 -0500 (CDT)
+	id S1753331AbXKAVnD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 17:43:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753282AbXKAVnC
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 17:43:02 -0400
+Received: from pan.madism.org ([88.191.52.104]:47657 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752771AbXKAVnA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 17:43:00 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 8581327F93;
+	Thu,  1 Nov 2007 22:42:58 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id C454B32BA04; Thu,  1 Nov 2007 22:42:57 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Geert Bosch <bosch@adacore.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vmytycykt.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7v4pg5btis.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63015>
 
-On Wed, Oct 31, 2007 at 10:41:06PM -0700, Junio C Hamano wrote:
-> * jc/spht (Tue Oct 2 18:00:27 2007 -0700) 1 commit
->  - git-diff: complain about >=8 consecutive spaces in initial indent
-> 
-> This is a counterpart of an earlier patch from J. Bruce Fields
-> to change "git-apply --whitespace" to make SP{8,} at the
-> beginning of line a whitespace error.
-> 
-> Personally, I am in favor of the stricter check, but I had to
-> reject the "git-apply" patch because there was no way to disable
-> the additional check without disabling the existing check for
-> trailing whitespaces.  We probably would want to revisit that
-> one (perhaps with a new option and/or config to selectively
-> enable different kinds of whitespace check).
 
-Just to throw in my two cents, I would be strongly opposed to this
-going in without some form of configuration to make it work for
-spaces-only-indent projects.  I appreciate having whitespace checking,
-and I think trailing whitespace and tabs-following-spaces are obviously
-bad enough that they should always be flagged.  But flagging leading
-spaces makes a legitimate and common coding style yield incredibly
-obnoxious-looking diffs.
+--oLBj+sq0vYjzfsbl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't want to get into another stupid holy war about the superiority
-of indent styles (the last one was quite enough, thank you), but there
-are real projects out there that have a spaces-only-indent policy and
-use Git, and this change as is isn't good for them.
+On Thu, Nov 01, 2007 at 08:27:55PM +0000, Junio C Hamano wrote:
+> Geert Bosch <bosch@adacore.com> writes:
+>=20
+> > I often type "make clean" as well many "git xyz" commands
+> > during development, and so it happens that at times, I type
+> > "git clean" by accident.
+>=20
+> Happened to me once.  I hate that command.
+>=20
+> > So, I propose *not* converting git clean to a C builtin,
+> > but instead adding --untracked and --ignored options to
+> > git-rm.
+>=20
+> I think what you are trying to do is to deprecate or remove "git
+> clean".
+>=20
+> I do not know where "git clean" came from.  I am suspecting that
+> it was to give counterparts to some other SCMs, but do not know
+> which ones.  Some people wanted to have it --- so you need to
+> convince them that it is a bad idea first.  Adding an equivalent
+> options to "git rm" alone does not solve that issue.
 
--bcd
+  FWIW I do use git clean a _lot_. I don't mind if it's doable from
+another kind of command, but I do use git clean and even git clean -x a
+lot, because it achives cleansing my repository faster (and sometimes
+faster) than a `make distclean` would do.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--oLBj+sq0vYjzfsbl
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHKkhhvGr7W6HudhwRAvF7AJ0bYU06IzPNKUtaeTBddOn1gUNNDwCgoGog
+6inY1/35dCz+7RxNZUp4rCg=
+=Pvik
+-----END PGP SIGNATURE-----
+
+--oLBj+sq0vYjzfsbl--
