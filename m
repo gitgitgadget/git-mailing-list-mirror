@@ -1,144 +1,76 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH] Show total transferred as part of throughput progress display
-Date: Wed, 31 Oct 2007 23:57:04 -0400
-Message-ID: <20071101035704.GA4518@spearce.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] Add --first-parent support to interactive rebase.
+Date: Wed, 31 Oct 2007 21:10:30 -0700
+Message-ID: <7vabpyfvwp.fsf@gitster.siamese.dyndns.org>
+References: <1193797309-1161-1-git-send-email-B.Steinbrink@gmx.de>
+	<7vodefj2lk.fsf@gitster.siamese.dyndns.org>
+	<20071031055303.GB3326@atjola.homenet>
+	<20071031134358.GD15182@dpotapov.dyndns.org>
+	<20071031140028.GA30207@diana.vm.bytemark.co.uk>
+	<20071031143641.GF15182@dpotapov.dyndns.org>
+	<20071031180557.GA12211@coredump.intra.peff.net>
+	<7v8x5jgdck.fsf@gitster.siamese.dyndns.org>
+	<20071031215625.GC14211@coredump.intra.peff.net>
+	<7vzlxygblz.fsf@gitster.siamese.dyndns.org>
+	<20071101032303.GA14495@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>, Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Nov 01 04:57:39 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Dmitry Potapov <dpotapov@gmail.com>,
+	Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Johannes.Schindelin@gmx.de, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 01 05:11:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InRBa-0004J6-Oh
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 04:57:39 +0100
+	id 1InROU-000705-7l
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 05:10:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021AbXKAD5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 31 Oct 2007 23:57:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753069AbXKAD5W
-	(ORCPT <rfc822;git-outgoing>); Wed, 31 Oct 2007 23:57:22 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:45822 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752993AbXKAD5W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 31 Oct 2007 23:57:22 -0400
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1InRAs-0005Hv-FA; Wed, 31 Oct 2007 23:56:54 -0400
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 49F1120FBAE; Wed, 31 Oct 2007 23:57:05 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751851AbXKAEKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 00:10:42 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbXKAEKl
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 00:10:41 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:50069 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311AbXKAEKl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 00:10:41 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id BC9D52F9;
+	Thu,  1 Nov 2007 00:11:01 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1708D8DBA3;
+	Thu,  1 Nov 2007 00:10:55 -0400 (EDT)
+In-Reply-To: <20071101032303.GA14495@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 31 Oct 2007 23:23:03 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62910>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62911>
 
-Right now it is infeasible to offer to the user a reasonable concept
-of when a clone will be complete as we aren't able to come up with
-the final pack size until after we have actually transferred the
-entire thing to the client.  However in many cases users can work
-with a rough rule-of-thumb; for example it is somewhat well known
-that git.git is about 16 MiB today and that linux-2.6.git is over
-120 MiB.
+Jeff King <peff@peff.net> writes:
 
-We now show the total amount of data we have transferred over
-the network as part of the throughput meter, organizing it in
-"human friendly" terms like `ls -h` would do.  Users can glance at
-this, see that the total transferred size is about 3 MiB, see the
-throughput of X KiB/sec, and determine a reasonable figure of about
-when the clone will be complete, assuming they know the rough size
-of the source repository or are able to obtain it.
+> On Wed, Oct 31, 2007 at 03:31:20PM -0700, Junio C Hamano wrote:
+>
+>> > ... I had one concern that
+>> > I was tracking down: is the author name encoding necessarily the same as
+>> > the commit text encoding?
+>> 
+>> The user is screwing himself already if that is the case and
+>> uses -s to format-patch, isn't he?
+>
+> Hrm, they probably _should_ be the same in the output. It's not clear to
+> me what encoding we assume the name comes in (utf-8, I guess). Looks
+> like we don't touch it at all when putting it in the signoff. I think we
+> should just be able to reencode when appending the signoff; patch is
+> below.
 
-This is also a helpful indicator that there is progress being made
-even if we stall on a very large object.  The thoughput meter may
-remain relatively constant and the percentage complete and object
-count won't be changing, but the total transferred will be increasing
-as additional data is received for this object.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
-
- This follows on top of Nico's 5 patch series to add the thoughput
- meter.  I think its a useful addition.
-
- progress.c |   32 +++++++++++++++++++++++++++++---
- 1 files changed, 29 insertions(+), 3 deletions(-)
-
-diff --git a/progress.c b/progress.c
-index 23ee9f3..5c95091 100644
---- a/progress.c
-+++ b/progress.c
-@@ -11,7 +11,11 @@ struct throughput {
- 	unsigned int avg_misecs;
- 	unsigned int last_misecs[TP_IDX_MAX];
- 	unsigned int idx;
--	char display[20];
-+	unsigned int unit_size;
-+	unsigned int unit_index;
-+	unsigned int total_units;
-+	unsigned int curr_bytes;
-+	char display[40];
- };
- 
- struct progress {
-@@ -24,6 +28,7 @@ struct progress {
- 	struct throughput *throughput;
- };
- 
-+static const char *units[] = {"bytes", "KiB", "MiB", "GiB"};
- static volatile sig_atomic_t progress_update;
- 
- static void progress_interval(int signum)
-@@ -113,12 +118,27 @@ void display_throughput(struct progress *progress, unsigned long n)
- 
- 	if (!tp) {
- 		progress->throughput = tp = calloc(1, sizeof(*tp));
--		if (tp)
-+		if (tp) {
- 			tp->prev_tv = tv;
-+			tp->unit_size = 1;
-+		}
- 		return;
- 	}
- 
- 	tp->count += n;
-+	tp->curr_bytes += n;
-+	if (tp->curr_bytes > tp->unit_size) {
-+		tp->total_units += tp->curr_bytes / tp->unit_size;
-+		tp->curr_bytes = tp->curr_bytes % tp->unit_size;
-+
-+		while (tp->total_units >= 1024
-+			&& tp->unit_index < ARRAY_SIZE(units)) {
-+			tp->curr_bytes += (tp->total_units % 1024) * tp->unit_size;
-+			tp->total_units = tp->total_units / 1024;
-+			tp->unit_size *= 1024;
-+			tp->unit_index++;
-+		}
-+	}
- 
- 	/*
- 	 * We have x = bytes and y = microsecs.  We want z = KiB/s:
-@@ -143,7 +163,13 @@ void display_throughput(struct progress *progress, unsigned long n)
- 		tp->avg_bytes += tp->count;
- 		tp->avg_misecs += misecs;
- 		snprintf(tp->display, sizeof(tp->display),
--			 ", %lu KiB/s", tp->avg_bytes / tp->avg_misecs);
-+			 ", %3u.%2.2u %s     %lu KiB/s",
-+			 tp->total_units,
-+			 tp->unit_size > 1
-+				? tp->curr_bytes / (tp->unit_size / 100)
-+				: 0,
-+			 units[tp->unit_index],
-+			 tp->avg_bytes / tp->avg_misecs);
- 		tp->avg_bytes -= tp->last_bytes[tp->idx];
- 		tp->avg_misecs -= tp->last_misecs[tp->idx];
- 		tp->last_bytes[tp->idx] = tp->count;
--- 
-1.5.3.4.1481.g854da
+I think assuming utf-8 and reencoding is actively wrong.
+Existing setups of people with names that cannot be expressed in
+ASCII would already have the commit encoding specified in the
+configuration and user.name stored in that encoding, so passing
+things through as we have always done is the right thing to do.
