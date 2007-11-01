@@ -1,261 +1,280 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 31 Oct 2007 22:39:29 -0700
-Message-ID: <7vodeecyni.fsf@gitster.siamese.dyndns.org>
-References: <20071022061115.GR14735@spearce.org>
+Subject: What's cooking in git.git (topics)
+Date: Wed, 31 Oct 2007 22:41:06 -0700
+Message-ID: <7vmytycykt.fsf@gitster.siamese.dyndns.org>
+References: <20071022063222.GS14735@spearce.org>
+	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 01 06:39:58 2007
+X-From: git-owner@vger.kernel.org Thu Nov 01 06:41:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InSma-0003qy-UL
-	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 06:39:57 +0100
+	id 1InSo4-000486-W1
+	for gcvg-git-2@gmane.org; Thu, 01 Nov 2007 06:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753517AbXKAFjf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 1 Nov 2007 01:39:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753367AbXKAFjf
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 01:39:35 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:42089 "EHLO
+	id S1753264AbXKAFlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 01:41:13 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753315AbXKAFlN
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 01:41:13 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:42146 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753312AbXKAFje convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Nov 2007 01:39:34 -0400
+	with ESMTP id S1752873AbXKAFlM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 01:41:12 -0400
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 68A912EF;
-	Thu,  1 Nov 2007 01:39:55 -0400 (EDT)
+	by sceptre.pobox.com (Postfix) with ESMTP id 06E4B2F0;
+	Thu,  1 Nov 2007 01:41:34 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 60ACE8DDC5;
-	Thu,  1 Nov 2007 01:39:53 -0400 (EDT)
-X-maint-at: 3f2a7ae2c84c921e11041a5edc2522964fc1cce5
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 004BB8EEB1;
+	Thu,  1 Nov 2007 01:41:31 -0400 (EDT)
 X-master-at: afc05f9f13beded8caf15d8e58d06fd64e0f7808
-In-Reply-To: <20071022061115.GR14735@spearce.org> (Shawn O. Pearce's message
-	of "Mon, 22 Oct 2007 02:11:15 -0400")
+X-next-at: f8c835e2fa59ebe9e2038e9d2fdde0ae27c12505
+In-Reply-To: <7vzly84qwf.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 24 Oct 2007 05:51:28 -0700")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/62920>
 
-* The 'maint' branch has just produced the 1.5.3.5 release.
+Here are the topics that have been cooking.  Commits prefixed
+with '-' are only in 'pu' while commits prefixed with '+' are
+in 'next'.  The topics list the commits in reverse chronological
+order.
 
-* The 'master' branch has these since the last announcement
-  in addition to what's in 1.5.3.5.
+I think it is time to plan freezing for 1.5.4 and this list is a
+good place to start.
 
-  - git-bisect enhancements to support "git bisect skip".
-  - git-fetch rewritten in C for performance and portability.
-  - git-svnimport is no more --- use git-svn.
-  - git-send-pack does not update the tracking ref on the local
-    side for failed push (needs cherry-picking to 'maint').
-  - git-rebase does not choke when $GIT_DIR has whitespace in it
-    (needs cherry-picking to 'maint').
-  - optimize rename detection.
-  - comes with updated gitk.
+* js/forkexec (Fri Oct 19 21:48:06 2007 +0200) 14 commits
+ + Use the asyncronous function infrastructure to run the content
+   filter.
+ + Avoid a dup2(2) in apply_filter() - start_command() can do it for
+   us.
+ + t0021-conversion.sh: Test that the clean filter really cleans
+   content.
+ + upload-pack: Run rev-list in an asynchronous function.
+ + upload-pack: Move the revision walker into a separate function.
+ + Use the asyncronous function infrastructure in builtin-fetch-
+   pack.c.
+ + Add infrastructure to run a function asynchronously.
+ + upload-pack: Use start_command() to run pack-objects in
+   create_pack_file().
+ + Have start_command() create a pipe to read the stderr of the
+   child.
+ + Use start_comand() in builtin-fetch-pack.c instead of explicit
+   fork/exec.
+ + Use run_command() to spawn external diff programs instead of
+   fork/exec.
+ + Use start_command() to run content filters instead of explicit
+   fork/exec.
+ + Use start_command() in git_connect() instead of explicit
+   fork/exec.
+ + Change git_connect() to return a struct child_process instead of a
+   pid_t.
 
-  The above list makes me realize that it probably is a good
-  time to start freezing things for 1.5.4.  Tonight's "What's
-  cooking" will talk about what other topics should graduate to
-  'master' before that happens.
+I haven't seen anything wrong with this series and we haven't
+heard breakages from people on 'next' who have been running with
+this for the past ten days.  Will merge to 'master'.
 
-Alex Riesen (1):
-  Fix a crash in ls-remote when refspec expands into nothing
+* db/remote-builtin (Mon Oct 29 22:03:42 2007 -0400) 4 commits
+ - Use built-in send-pack.
+ - Build-in send-pack, with an API for other programs to call.
+ - Build-in peek-remote, using transport infrastructure.
+ - Miscellaneous const changes and utilities
 
-Alexandre Julliard (4):
-  git.el: Fix typo in "Reverted file" message.
-  git.el: Fix typo in git-update-saved-file error handling.
-  git.el: Refresh only the changed file marks when marking/unmarking
-      all.
-  git.el: Run git-gc --auto after commits.
+Will be in 'next' soon after reviewing it again; hopefully in
+'master' before 1.5.4.
 
-Benoit Sigoure (1):
-  core-tutorial: Catch up with current Git
+* ph/parseopt (Tue Oct 30 14:15:21 2007 -0500) 23 commits
+ + Fixed a command line option type for builtin-fsck.c
+ + Make builtin-pack-refs.c use parse_options.
+ + Make builtin-name-rev.c use parse_options.
+ + Make builtin-count-objects.c use parse_options.
+ + Make builtin-fsck.c use parse_options.
+ + Update manpages to reflect new short and long option aliases
+ + Make builtin-for-each-ref.c use parse-opts.
+ + Make builtin-symbolic-ref.c use parse_options.
+ + Make builtin-update-ref.c use parse_options
+ + Make builtin-revert.c use parse_options.
+ + Make builtin-describe.c use parse_options
+ + Make builtin-branch.c use parse_options.
+ + Make builtin-mv.c use parse-options
+ + Make builtin-rm.c use parse_options.
+ + Port builtin-add.c to use the new option parser.
+ + parse-options: allow callbacks to take no arguments at all.
+ + parse-options: Allow abbreviated options when unambiguous
+ + Add shortcuts for very often used options.
+ + parse-options: make some arguments optional, add callbacks.
+ + Rework make_usage to print the usage message immediately
+ + Add tests for parse-options.c
+ + parse-options: be able to generate usages automatically
+ + Add a simple option parser.
 
-Christian Couder (12):
-  Test suite: reset TERM to its previous value after testing.
-  rev-list: implement --bisect-all
-  rev-list documentation: add "--bisect-all".
-  Bisect: fix some white spaces and empty lines breakages.
-  Bisect: implement "bisect skip" to mark untestable revisions.
-  Bisect: refactor "bisect_write_*" functions.
-  Bisect: refactor some logging into "bisect_write".
-  Bisect: refactor "bisect_{bad,good,skip}" into "bisect_state".
-  Bisect: add "bisect skip" to the documentation.
-  Bisect: add a "bisect replay" test case.
-  Bisect run: "skip" current commit if script exit code is 125.
-  Bisect: add "skip" to the short usage string.
+It appears 1.5.4 will be, to a certain extent, a "Let's clean up
+the internal implementation" release.  This series should become
+part of it.  Hopefully will merge to 'master' soon, but I
+haven't looked this series very closely yet.
 
-Dan McGee (1):
-  Remove outdated references to cogito in documentation
+* kh/commit (Mon Sep 17 20:06:47 2007 -0400) 4 commits
+ + Export rerere() and launch_editor().
+ + Introduce entry point add_interactive and add_files_to_cache
+ + Enable wt-status to run against non-standard index file.
+ + Enable wt-status output to a given FILE pointer.
 
-Daniel Barkalow (15):
-  Refactor http.h USE_CURL_MULTI fill_active_slots().
-  Make function to refill http queue a callback
-  Remove obsolete commit-walkers
-  Modularize commit-walker
-  Add uploadpack configuration info to remote.
-  Report information on branches from remote.h
-  Make fetch-pack a builtin with an internal API
-  Push code for transport library
-  Add matching and parsing for fetch-side refspec rules
-  Add fetch methods to transport library.
-  Make fetch a builtin
-  Allow abbreviations in the first refspec to be merged
-  Restore default verbosity for http fetches.
-  Remove duplicate ref matches in fetch
-  Correct handling of upload-pack in builtin-fetch-pack
+These four alone do not change anything user visible, as the
+final goal of this series which is "git-commit in C" is not here
+yet.  But with the other topics touching internal API left and
+right that is understandable.  Will merge to 'master'.
 
-David Symonds (3):
-  gitweb: Provide title attributes for abbreviated author names.
-  gitweb: Refactor abbreviation-with-title-attribute code.
-  gitweb: Use chop_and_escape_str in more places.
+* sp/help (Sat Oct 27 01:36:55 2007 -0700) 7 commits
+ + shell should call the new setup_path() to setup $PATH
+ + include $PATH in generating list of commands for "help -a"
+ + use only the $PATH for exec'ing git commands
+ + list_commands(): simplify code by using chdir()
+ + "current_exec_path" is a misleading name, use "argv_exec_path"
+ + remove unused/unneeded "pattern" argument of list_commands
+ + "git" returns 1; "git help" and "git help -a" return 0
 
-Gerrit Pape (1):
-  No longer install git-svnimport, move to contrib/examples
+Will merge to 'master'.
 
-Jakub Narebski (1):
-  gitweb: Fix and simplify "split patch" detection
+* sp/mergetool (Thu Oct 18 12:25:34 2007 +0200) 3 commits
+ + mergetool: avoid misleading message "Resetting to default..."
+ + mergetool: add support for ECMerge
+ + mergetool: use path to mergetool in config var
+   mergetool.<tool>.path
 
-Jari Aalto (1):
-  On error, do not list all commands, but point to --help option
+Will merge to 'master'.
 
-Jeff King (2):
-  send-pack: don't update tracking refs on error
-  t5516: test update of local refs on push
+* jc/stash-create (Mon Jul 9 00:51:23 2007 -0700) 2 commits
+ + rebase: allow starting from a dirty tree.
+ + stash: implement "stash create"
 
-Jim Meyering (1):
-  hooks-pre-commit: use \t, rather than a literal TAB in regexp
+Will revert at least the latter one, but perhaps both, from
+'next'.  The traditional behaviour of refusing to work in a
+dirty tree is much safer, as the tool cannot decide where to
+unstash for you.
 
-Johannes Schindelin (6):
-  Move bundle specific stuff into bundle.[ch]
-  Add bundle transport
-  Introduce remove_dir_recursively()
-  fetch/push: readd rsync support
-  Fix compilation when NO_CURL is defined
-  fetch: if not fetching from default remote, ignore default merge
+* js/reflog-delete (Wed Oct 17 02:50:45 2007 +0100) 1 commit
+ + Teach "git reflog" a subcommand to delete single entries
 
-Jonathan del Strother (1):
-  Fixing path quoting in git-rebase
+This by itself is not useful; will stay in 'next' until it is
+used by selective clearing of stash or something else.
 
-Junio C Hamano (5):
-  bundle transport: fix an alloc_ref() call
-  k.org git toppage: Add link to 1.5.3 release notes.
-  help: remove extra blank line after "See 'git --help'" message
-  git-fetch: do not fail when remote branch disappears
-  RelNotes-1.5.4: describe recent updates
+* jc/revert-merge (Tue Oct 23 13:33:26 2007 -0700) 1 commit
+ + revert/cherry-pick: work on merge commits as well
 
-Lars Hjemli (1):
-  Teach git-pull about --[no-]ff, --no-squash and --commit
+This allows cherry-pick and revert to act on a merge commit if
+you specify which parent to pick the changes from.  I think it
+would probably be handy when the need arises, but I suspect such
+a need is felt only occasionally.  I haven't heard any comment
+on the list since it was posted.  I am somewhat tempted to merge
+this, but I am not in a hurry.
 
-Lars Knoll (1):
-  Speedup scanning for excluded files.
+* np/progress (Wed Oct 31 23:57:04 2007 -0400) 17 commits
+ . Show total transferred as part of throughput progress display
+ - add throughput display to git-push
+ - add some copyright notice to the progress display code
+ - add throughput display to index-pack
+ - add throughput to progress display
+ - relax usage of the progress API
+ - make struct progress an opaque type
+ - prune-packed: don't call display_progress() for every file
+ + Stop displaying "Pack pack-$ID created." during git-gc
+ + Teach prune-packed to use the standard progress meter
+ + Change 'Deltifying objects' to 'Compressing objects'
+ + fix for more minor memory leaks
+ + fix const issues with some functions
+ + pack-objects.c: fix some global variable abuse and memory leaks
+ + pack-objects: no delta possible with only one object in the list
+ + cope with multiple line breaks within sideband progress messages
+ + more compact progress display
 
-Linus Torvalds (8):
-  Add 'diffcore.h' to LIB_H
-  Split out "exact content match" phase of rename detection
-  Ref-count the filespecs used by diffcore
-  copy vs rename detection: avoid unnecessary O(n*m) loops
-  Do linear-time/space rename logic for exact renames
-  Do exact rename detection regardless of rename limits
-  Fix ugly magic special case in exact rename detection
-  Do the fuzzy rename detection limits with the exact renames removed
+This would give us a good usability enhancement.  Will merge the
+first half to 'master', cook the rest in 'next' and aim to merge
+the whole thing before 1.5.4.
 
-Miklos Vajna (1):
-  git-send-email: add a new sendemail.to configuration variable
+* jc/format-patch-encoding (Wed Oct 31 14:55:17 2007 -0700) 1 commit
+ - format-patch -s: add MIME encoding header if signer's name
+   requires so
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
-  git-sh-setup.sh: use "git rev-parse --show-cdup" to check for
-      SUBDIRECTORY_OK
+Topic appeared today.  I think this is a safe and sane
+fix to a real problem.  Needs cherry-pick to 'maint'.
 
-Paul Mackerras (34):
-  gitk: Establish and use global left-to-right ordering for commits
-  gitk: Improve the drawing of links to parent lines
-  gitk: Eliminate diagonal arrows
-  gitk: Get rid of idrowranges and rowrangelist
-  gitk: Get rid of idinlist array
-  gitk: Fix some problems with the display of ids as links
-  gitk: Get rid of the rowchk array
-  gitk: Do only the parts of the layout that are needed
-  gitk: Fix bug causing incorrect ref list contents when switching
-      view
-  gitk: Fix bug causing undefined variable error when cherry-picking
-  gitk: Add a cache for the topology info
-  gitk: Make it possible to lay out all the rows we have received so
-      far
-  gitk: Fix bugs in setting rowfinal
-  gitk: Get rid of lookingforhead, use commitinterest instead
-  gitk: Fix bug in generating patches
-  gitk: Simplify highlighting interface and combine with Find
-      function
-  gitk: Fix a couple of bugs
-  gitk: Add progress bars for reading in stuff and for finding
-  gitk: Fix the tab setting in the diff display window
-  gitk: Fix bug causing Tcl error when changing find match type
-  gitk: Use named fonts instead of the font specification
-  gitk: Keep track of font attributes ourselves instead of using font
-      actual
-  gitk: Add a font chooser
-  gitk: Fix bug where the last few commits would sometimes not be
-      visible
-  gitk: Get rid of the diffopts variable
-  gitk: Fix Tcl error: can't unset findcurline
-  gitk: Limit diff display to listed paths by default
-  gitk: Ensure tabstop setting gets restored by Cancel button
-  gitk: Integrate the reset progress bar in the main frame
-  gitk: Use the status window for other functions
-  gitk: Fix some bugs with path limiting in the diff display
-  gitk: Fix a couple more bugs in the path limiting
-  gitk: Simplify the code for finding commits
-  gitk: Use the UI font for the diff/old version/new version radio
-      buttons
+* jc/spht (Tue Oct 2 18:00:27 2007 -0700) 1 commit
+ - git-diff: complain about >=8 consecutive spaces in initial indent
 
-Pierre Habouzit (3):
-  Add some fancy colors in the test library when terminal supports
-      it.
-  Support a --quiet option in the test-suite.
-  fast-import.c: fix regression due to strbuf conversion
+This is a counterpart of an earlier patch from J. Bruce Fields
+to change "git-apply --whitespace" to make SP{8,} at the
+beginning of line a whitespace error.
 
-Shawn O. Pearce (37):
-  Correct builtin-fetch to handle + in refspecs
-  Fix off by one bug in reflog messages written by builtin-fetch
-  Remove unnecessary debugging from builtin-fetch
-  Remove unused unpacklimit variable from builtin-fetch
-  Replace custom memory growth allocator with ALLOC_GROW
-  Simplify fetch transport API to just one function
-  Refactor index-pack "keep $sha1" handling for reuse
-  Remove pack.keep after ref updates in git-fetch
-  Always ensure the pack.keep file is removed by git-fetch
-  Fix builtin-fetch memory corruption by not overstepping array
-  Backup the array passed to fetch_pack so we can free items
-  Properly cleanup in http_cleanup so builtin-fetch does not segfault
-  Don't bother passing ref log details to walker in builtin-fetch
-  Cleanup duplicate initialization code in transport_get
-  Add transport.h to LIB_H as transport.o is in LIB_OBJS
-  Remove unnecessary 'fetch' argument from transport_get API
-  Allow builtin-fetch to work on a detached HEAD
-  Don't configure remote "." to fetch everything to itself
-  Remove more debugging from builtin-fetch
-  builtin-fetch: Don't segfault on "fetch +foo"
-  Don't attempt to merge non-existant remotes in t5515
-  Correct handling of branch.$name.merge in builtin-fetch
-  Avoid printing unnecessary warnings during fetch and push
-  Use 'unsigned:1' when we mean boolean options
-  Rename remote.uri to remote.url within remote handling internals
-  Refactor struct transport_ops inlined into struct transport
-  Always obtain fetch-pack arguments from struct fetch_pack_args
-  Ensure builtin-fetch honors {fetch,transfer}.unpackLimit
-  Fix memory leaks when disconnecting transport instances
-  Cleanup style nit of 'x =3D=3D NULL' in remote.c
-  Cleanup unnecessary break in remote.c
-  Prevent send-pack from segfaulting when a branch doesn't match
-  Fix 'push --all branch...' error handling
-  Support 'push --dry-run' for rsync transport
-  Support 'push --dry-run' for http transport
-  Avoid scary errors about tagged trees/blobs during git-fetch
-  Define compat version of mkdtemp for systems lacking it
+Personally, I am in favor of the stricter check, but I had to
+reject the "git-apply" patch because there was no way to disable
+the additional check without disabling the existing check for
+trailing whitespaces.  We probably would want to revisit that
+one (perhaps with a new option and/or config to selectively
+enable different kinds of whitespace check).
 
-V=C3=A4in=C3=B6 J=C3=A4rvel=C3=A4 (1):
-  Added a test for fetching remote tags when there is not tags.
+* dz/color-addi (Tue Oct 16 21:42:23 2007 -0400) 1 commit
+ - Add color support to git-add--interactive
+
+I am not a big fan of color, and Shawn's "What's cooking"
+mentioned issues with the implementation.  Will not merge to
+'next'.
+
+* sp/push-refspec (Sun Oct 28 18:46:20 2007 +0100) 6 commits
+ - push: teach push to pass --verbose option to transport layer
+ - push: teach push to accept --verbose option
+ - push: use same rules as git-rev-parse to resolve refspecs
+ - add ref_abbrev_matches_full_with_rev_parse_rules() comparing
+   abbrev with full ref name
+ - rename ref_matches_abbrev() to
+   ref_abbrev_matches_full_with_fetch_rules()
+ - push: support pushing HEAD to real branch name
+
+I have been meaning to review these again and merge to 'next'
+but it seems I've been spending more time discussing the ones I
+did not even pick up for 'pu'.  Will try to find time to do so.
+
+* jk/terse-fetch (Fri Oct 19 03:40:57 2007 -0400) 2 commits
+ - park
+ - git-fetch: mega-terse fetch output
+
+No change ;-)
+
+* jc/nu (Sun Oct 14 22:07:34 2007 -0700) 3 commits
+ - merge-nu: a new merge backend without using unpack_trees()
+ - read_tree: take an explicit index structure
+ - gcc 4.2.1 -Werror -Wall -ansi -pedantic -std=c99: minimum fix
+
+I was hoping that I can work on this series while in Japan, but
+attending funeral and helping others to deal with the fallout
+sucked all my energy and time.  This is still a wip and not
+progressing.
+
+* jc/pathspec (Thu Sep 13 13:38:19 2007 -0700) 3 commits
+ - pathspec_can_match(): move it from builtin-ls-tree.c to tree.c
+ - ls-tree.c: refactor show_recursive() and rename it.
+ - tree-diff.c: split out a function to match a single pattern.
+
+My pet project to unify the pathspec handling between tree-diff
+family and ls-files family (one side only knows "in this
+directory" match, and the other knows how to handle fnmatch
+globs as well).  Stalled.
+
+* jk/rename (Tue Oct 30 00:24:42 2007 -0400) 3 commits
+ . handle renames using similarity engine
+ . introduce generic similarity library
+ . change hash table calling conventions
+
+Aiming for a worthy goal, but not merged to 'pu' yet.
+
+* tf/afs (Fri Oct 19 07:38:16 2007 -0500) 1 commit
+ . Better support AFS hardlinking across object directories
+
+Will drop from topic queue.  This is labelled as "AFS hack", but
+it hacks around a problem AFS has by breaking the safety we had
+from very early days of git for everybody else.
