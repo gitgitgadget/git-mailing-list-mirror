@@ -1,92 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/3] gitweb: Simplify some gitweb URLs generation
-Date: Fri, 2 Nov 2007 01:18:43 +0100
-Message-ID: <200711020118.44015.jnareb@gmail.com>
-References: <1193918789-16421-1-git-send-email-jnareb@gmail.com> <7v1wb98twi.fsf@gitster.siamese.dyndns.org>
+From: Julian Phillips <julian@quantumfyre.co.uk>
+Subject: Re: Debugging corrupt object generation
+Date: Fri, 2 Nov 2007 00:26:34 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711020018400.18429@beast.quantumfyre.co.uk>
+References: <Pine.LNX.4.64.0711012256080.17812@beast.quantumfyre.co.uk>
+ <alpine.LFD.0.9999.0711011947220.21255@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 01:19:10 2007
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 01:26:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InkFh-0000L3-0j
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:19:09 +0100
+	id 1InkNB-0001jN-U5
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754191AbXKBASz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 20:18:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXKBASz
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:18:55 -0400
-Received: from ug-out-1314.google.com ([66.249.92.175]:11283 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753337AbXKBASy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 20:18:54 -0400
-Received: by ug-out-1314.google.com with SMTP id z38so565440ugc
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 17:18:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=InbMSAruo15YflTCYmEsjiyil3CBkbbl1gP/KfF3v6Y=;
-        b=IrQBXLdaDOPzdaEe6nVIv4bFVE9IKoKLpw5H1uuNiSbXeSD9/z8EUdiFtriS0ZskBkYCcJRAbpKYsYW1haVbsep6RjYL98qaISrz6gwU3gTjZmHY2ZI8S7AUZ37oueBEK/MkMbRoTOwomLq2GzmNqTyJAEwy5ipipmuGi5Qr43s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=Du2fsSExqjrlHks5lFTyK+cQ87RAbFIBcf9fqKh/55LEJmrK387HdgtVe9Tl8WKTqFnnvx8K7xTLKCvqZUXMwis5bdueouP3CrD+kerNy5hkJ/UVTmvqtor4/f7MJ5q8DTFHbYPfXnXTE0WSQyIK9c0XZg57QPxlr0ZjczejbmM=
-Received: by 10.67.19.17 with SMTP id w17mr365724ugi.1193962732430;
-        Thu, 01 Nov 2007 17:18:52 -0700 (PDT)
-Received: from ?192.168.1.11? ( [83.8.214.154])
-        by mx.google.com with ESMTPS id y7sm6954586ugc.2007.11.01.17.18.50
-        (version=SSLv3 cipher=OTHER);
-        Thu, 01 Nov 2007 17:18:51 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7v1wb98twi.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754589AbXKBA0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 20:26:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754733AbXKBA0k
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:26:40 -0400
+Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35141 "EHLO
+	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754375AbXKBA0j (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 1 Nov 2007 20:26:39 -0400
+Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
+	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 662B9C61D4
+	for <git@vger.kernel.org>; Fri,  2 Nov 2007 00:26:38 +0000 (GMT)
+Received: (qmail 20114 invoked by uid 103); 2 Nov 2007 00:26:37 +0000
+Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
+ (clamdscan: 0.91.2/4654. spamassassin: 3.2.1. perlscan: 1.25st.  
+ Clear:RC:1(192.168.0.7):. 
+ Processed in 0.030306 secs); 02 Nov 2007 00:26:37 -0000
+Received: from beast.quantumfyre.co.uk (192.168.0.7)
+  by neutron.datavampyre.co.uk with SMTP; 2 Nov 2007 00:26:37 +0000
+X-X-Sender: jp3@beast.quantumfyre.co.uk
+In-Reply-To: <alpine.LFD.0.9999.0711011947220.21255@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63041>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
-> 
->> This series of patches simplifies some gitweb URLs generation by
->> providing -replay option to href() subroutine, and then using this
->> feature in gitweb code.
->>
->> Shortlog:
->>  gitweb: Easier adding/changing parameters to current URL
->>  gitweb: Use href(-replay=>1, page=>...) to generate pagination links
->>  gitweb: Use href(-replay=>1, action=>...) to generate alternate views
->>
->> Diffstat:
->>  gitweb/gitweb.perl |   82 ++++++++++++++++++++++-----------------------------
->>  1 files changed, 35 insertions(+), 47 deletions(-)
-> 
-> If this "-replay" is used carelessly, it could add parameters
-> that were passed to the page that the original code stripped
-> away from passing on purpose.  Have you checked if the
-> conversion done with 2/3 and 3/3 are correct (I haven't)?
+On Thu, 1 Nov 2007, Nicolas Pitre wrote:
 
-First, I guess that I should have marked this series of patches as
-an RFC, but not for the reason you mentioned. This series changes
-somewhat gitweb behaviour (patches 2/3 and 3/3 to be more exact) in
-a way that before gitweb passed 'expanded' hashes to page / alternate
-view links. For example before this series link to second page for
-shortlog view starting from 'HEAD' passed literal sha1 for 'h' parameter,
-ans second page started where first page ended. After this patch, if
-refs have changed between viewing first page and clicking on the link
-to second page, the resulting view would be second page of _new_ 'HEAD',
-not of old (shown) 'HEAD'.
+> On Thu, 1 Nov 2007, Julian Phillips wrote:
+>
+>> After a certain commit, and attempt to use that commit generates a "fatal:
+>> unable to apply delta".  This appears to be coming from unpack_delta_entry
+>> in sha1_file.c.
+>
+> I suppose you mean "fatal: failed to apply delta", because "unable to
+> apply delta" doesn't appear anywhere in the current source tree.
 
-Second, you do not need to worry about adding parameters, because in 2/3
-and 3/3 -replay is used to change view to the one which differs from
-current by one parameter. Please take into account that some parameters
-are just not important.
+I did indeed.  Read 'n' type never seems to be as reliable as copy 'n' 
+paste ...
+
+>> Can anyone give me any hints as to how I find out what is causing the
+>> problem?  I'm not even sure what it is that isn't working ... and all
+>> attempts to replicate the problem with my test repository have failed.
+>
+> Well, something is screwed for sure.  Some object you're requesting is
+> made of a delta, and that delta is bad, therefore patch_delta() returns
+> NULL (you could instrument it to determine exactly why).
+
+Ah, ok - that sounds like it might be useful.  I guess that looking at the 
+opposite side where fast-import is creating the data might also prove 
+fruitful.
+
+> Maybe fast-import hasn't flushed the needed data to the pack yet?
+
+Well, fast-import completes quite happily and outputs the normal summary 
+status.  I can look at logs and trees etc provided that I don't try and 
+look at one particular part of the tree on one particular commit.  I 
+think the problem is that I've managed to do something inside fast-import 
+that corrupts one particular tree object (though I've no idea what that 
+might be).
+
+I shall have to start instrumenting and try again.
+
+Thanks.
 
 -- 
-Jakub Narebski
-Poland
+Julian
+
+  ---
+Many changes of mind and mood; do not hesitate too long.
