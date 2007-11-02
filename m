@@ -1,92 +1,107 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 02 Nov 2007 10:39:14 +0100
-Message-ID: <472AF042.5080208@op5.se>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org> <916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com> <7v4pg5btis.fsf@gitster.siamese.dyndns.org> <20071101214257.GB7161@artemis.corp>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 2 Nov 2007 10:39:35 +0100
+Message-ID: <B858412A-853A-4660-BA4B-F9751E4AAEAE@lrde.epita.fr>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com> <7v4pg55893.fsf@gitster.siamese.dyndns.org> <20071102093028.GA29699@glandium.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-52-940811109"
 Content-Transfer-Encoding: 7bit
-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Geert Bosch <bosch@adacore.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:39:37 2007
+Cc: git list <git@vger.kernel.org>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 10:40:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Int04-0003Gx-C9
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:39:36 +0100
+	id 1Int0W-0003O8-7z
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:40:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858AbXKBJjW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 05:39:22 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXKBJjW
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:39:22 -0400
-Received: from mail.op5.se ([193.201.96.20]:45542 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752831AbXKBJjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 05:39:21 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B82071730731;
-	Fri,  2 Nov 2007 10:38:25 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id DZmKKNolMZ6g; Fri,  2 Nov 2007 10:38:24 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 6A0541730746;
-	Fri,  2 Nov 2007 10:38:23 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071101214257.GB7161@artemis.corp>
+	id S1752870AbXKBJju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 05:39:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752852AbXKBJjt
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:39:49 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:53834 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752860AbXKBJjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 05:39:49 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1Int0C-0003te-VH; Fri, 02 Nov 2007 10:39:45 +0100
+In-Reply-To: <20071102093028.GA29699@glandium.org>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63088>
 
-Pierre Habouzit wrote:
-> On Thu, Nov 01, 2007 at 08:27:55PM +0000, Junio C Hamano wrote:
->> Geert Bosch <bosch@adacore.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-52-940811109
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+
+On Nov 2, 2007, at 10:30 AM, Mike Hommey wrote:
+
+> On Fri, Nov 02, 2007 at 02:03:52AM -0700, Junio C Hamano  
+> <gitster@pobox.com> wrote:
+>> Blake Ramsdell <blaker@gmail.com> writes:
 >>
->>> I often type "make clean" as well many "git xyz" commands
->>> during development, and so it happens that at times, I type
->>> "git clean" by accident.
->> Happened to me once.  I hate that command.
+>>> Signed-off-by: Blake Ramsdell <blaker@gmail.com>
+>>> ---
+>>>  Makefile |    4 +++-
+>>>  1 files changed, 3 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/Makefile b/Makefile
+>>> index 71479a2..5d83756 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -401,7 +401,9 @@ endif
+>>>  ifeq ($(uname_S),Darwin)
+>>>  	NEEDS_SSL_WITH_CRYPTO = YesPlease
+>>>  	NEEDS_LIBICONV = YesPlease
+>>> -	OLD_ICONV = UnfortunatelyYes
+>>> +	ifneq ($(uname_R),9.0.0)
+>>> +		OLD_ICONV = UnfortunatelyYes
+>>> +	endif
+>>>  	NO_STRLCPY = YesPlease
+>>>  	NO_MEMMEM = YesPlease
+>>>  endif
 >>
->>> So, I propose *not* converting git clean to a C builtin,
->>> but instead adding --untracked and --ignored options to
->>> git-rm.
->> I think what you are trying to do is to deprecate or remove "git
->> clean".
->>
->> I do not know where "git clean" came from.  I am suspecting that
->> it was to give counterparts to some other SCMs, but do not know
->> which ones.  Some people wanted to have it --- so you need to
->> convince them that it is a bad idea first.  Adding an equivalent
->> options to "git rm" alone does not solve that issue.
-> 
->   FWIW I do use git clean a _lot_. I don't mind if it's doable from
-> another kind of command, but I do use git clean and even git clean -x a
-> lot, because it achives cleansing my repository faster (and sometimes
-> faster) than a `make distclean` would do.
-> 
+>> I do not have an access to a Darwin box, but do you mean 10.5
+>> gives 9.0.0 as uname_R?
+>
+> Be it that or not, it looks wrong to me to check the Darwin version to
+> know what to use. Do you rely on the Linux kernel version to know  
+> whether
+> iconv is present ?
 
-I'm of two minds about this. On the one hand, it's incredibly useful to
-clear out an imported repository where distlcean doesn't quite distclean.
-We also use it for our autobuild tools (although that's just us being lazy).
-
-On the other hand, I've been bit by the brain-bug once and done a git clean
-when I really meant make clean.
-
-Changing it to the wimpy 'rm -i' equivalent would reduce risk substantially
-while maintaining its usefulness, so +1 to Junio's patch, I guess.
+It's very different, on OSX you don't change your own kernel as you  
+want, the kernel isn't a standalone component, it comes packaged with  
+the entire system of MacOSX.  When you do an update to 10.5 (aka  
+Leopard) you will have a new version of iconv so you're guaranteed  
+that someone with 10.5 has a system-wide iconv that is not OLD_ICONV.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-52-940811109
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHKvBXwwE67wC8PUkRAsCEAJ9ksAaAPCfUHytaltg69MFrTo2ExQCeJfsy
+av+t+U91JTQnJPe5kdDiANs=
+=ra8w
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-52-940811109--
