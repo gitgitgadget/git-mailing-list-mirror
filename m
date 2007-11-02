@@ -1,66 +1,78 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Fri, 2 Nov 2007 11:26:43 +0100
-Message-ID: <87F9D7C1-8E4D-4F74-B514-EF128189CB8A@wincent.com>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <20071101214131.GF4099@lavos.net>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:27:17 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 02 Nov 2007 03:33:07 -0700
+Message-ID: <7vbqad3pjw.fsf@gitster.siamese.dyndns.org>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
+	<7v4pg55893.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Blake Ramsdell" <blaker@gmail.com>, git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:33:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IntkB-0005nZ-4g
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:27:15 +0100
+	id 1IntqN-00079N-Aq
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:33:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753226AbXKBK1A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 06:27:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753247AbXKBK1A
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:27:00 -0400
-Received: from wincent.com ([72.3.236.74]:37008 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753069AbXKBK07 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 06:26:59 -0400
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA2AQj9Y027936;
-	Fri, 2 Nov 2007 05:26:46 -0500
-In-Reply-To: <20071101214131.GF4099@lavos.net>
-X-Mailer: Apple Mail (2.912)
+	id S1753204AbXKBKdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 06:33:19 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753057AbXKBKdT
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:33:19 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:51111 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753005AbXKBKdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 06:33:18 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 102FF2F0;
+	Fri,  2 Nov 2007 06:33:37 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 79EF5904AC;
+	Fri,  2 Nov 2007 06:33:32 -0400 (EDT)
+In-Reply-To: <ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
+	(David Symonds's message of "Fri, 2 Nov 2007 21:19:31 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63098>
 
-El 1/11/2007, a las 22:41, Brian Downing escribi=F3:
+"David Symonds" <dsymonds@gmail.com> writes:
 
-> On Wed, Oct 31, 2007 at 10:41:06PM -0700, Junio C Hamano wrote:
->> * jc/spht (Tue Oct 2 18:00:27 2007 -0700) 1 commit
->> - git-diff: complain about >=3D8 consecutive spaces in initial inden=
-t
+> On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+>> Blake Ramsdell <blaker@gmail.com> writes:
 >>
->> This is a counterpart of an earlier patch from J. Bruce Fields
->> to change "git-apply --whitespace" to make SP{8,} at the
->> beginning of line a whitespace error.
+>> > Signed-off-by: Blake Ramsdell <blaker@gmail.com>
+>> > ---
+>> >  Makefile |    4 +++-
+>> >  1 files changed, 3 insertions(+), 1 deletions(-)
+>> >
+>> > diff --git a/Makefile b/Makefile
+>> > index 71479a2..5d83756 100644
+>> > --- a/Makefile
+>> > +++ b/Makefile
+>> > @@ -401,7 +401,9 @@ endif
+>> >  ifeq ($(uname_S),Darwin)
+>> >       NEEDS_SSL_WITH_CRYPTO = YesPlease
+>> >       NEEDS_LIBICONV = YesPlease
+>> > -     OLD_ICONV = UnfortunatelyYes
+>> > +     ifneq ($(uname_R),9.0.0)
+>> > +             OLD_ICONV = UnfortunatelyYes
+>> > +     endif
+>> >       NO_STRLCPY = YesPlease
+>> >       NO_MEMMEM = YesPlease
+>> >  endif
 >>
->> Personally, I am in favor of the stricter check, but I had to
->> reject the "git-apply" patch because there was no way to disable
->> the additional check without disabling the existing check for
->> trailing whitespaces.  We probably would want to revisit that
->> one (perhaps with a new option and/or config to selectively
->> enable different kinds of whitespace check).
+>> I do not have an access to a Darwin box, but do you mean 10.5
+>> gives 9.0.0 as uname_R?
 >
-> Just to throw in my two cents, I would be strongly opposed to this
-> going in without some form of configuration to make it work for
-> spaces-only-indent projects.
+> Further, that comparison is going to fail as soon as the next revision
+> of Darwin (9.0.1, etc.) is released.
 
-Ditto, I also work on some projects which have a spaces-only policy, =20
-and the proposed change would be quite painful when working on those =20
-projects, so configurability would be very important to me.
-
-Cheers,
-Wincent
+Can we do something intelligent with $(shell iconv --version)
+there instead, I wonder, then?
