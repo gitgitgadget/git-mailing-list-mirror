@@ -1,89 +1,66 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Newbie: report of first experience with git-rebase.
-Date: Fri, 02 Nov 2007 11:13:20 +0100
-Message-ID: <472AF840.1070609@op5.se>
-References: <87d4uv3wh1.fsf@osv.gnss.ru>	<20071031195702.GB24332@atjola.homenet> <874pg73u6h.fsf@osv.gnss.ru>	<Pine.LNX.4.64.0710312111170.4362@racer.site>	<7vhck7gdzs.fsf@gitster.siamese.dyndns.org>	<87ve8m2mfn.fsf@osv.gnss.ru>	<Pine.LNX.4.64.0711011423440.4362@racer.site>	<20071101151016.GA26103@fieldses.org> <7v8x5hbtvv.fsf@gitster.siamese.dyndns.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH 1/2] War on whitespace: first, a bit of retreat.
+Date: Fri, 2 Nov 2007 21:14:23 +1100
+Message-ID: <ee77f5c20711020314h43290dbs8141cb3905c867@mail.gmail.com>
+References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "J. Bruce Fields" <bfields@fieldses.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Sergei Organov <osv@javad.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:13:44 2007
+Cc: git@vger.kernel.org, "Brian Downing" <bdowning@lavos.net>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:14:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IntX5-0003IQ-O6
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:13:44 +0100
+	id 1IntXz-0003RQ-F1
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:14:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752917AbXKBKN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 06:13:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbXKBKN1
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:13:27 -0400
-Received: from mail.op5.se ([193.201.96.20]:38486 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752894AbXKBKN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 06:13:26 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B61EF173071C;
-	Fri,  2 Nov 2007 11:12:53 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id lUuQKqGT9T38; Fri,  2 Nov 2007 11:12:52 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.77.30])
-	by mail.op5.se (Postfix) with ESMTP id 868E317306F2;
-	Fri,  2 Nov 2007 11:12:51 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7v8x5hbtvv.fsf@gitster.siamese.dyndns.org>
+	id S1752969AbXKBKOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 06:14:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbXKBKOZ
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:14:25 -0400
+Received: from rv-out-0910.google.com ([209.85.198.184]:10498 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752905AbXKBKOY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 06:14:24 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so763748rvb
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 03:14:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=+J3vfV8vu1jYspSncKJutJsNEY7gCTv/+zYvqro8VDo=;
+        b=Fz78zyPPqVIooL2SPr9SZHuvF3N3CMbtAnkjKxD28wSY5dOXkRIjoj+JO6/wnaniPZgiK0wLOpeqOzGrfFY127rvLRNfFz2pqi39FzyFohcmCWg4/mM+b0rDxejed49k6lDurhxGRlWOpdQP7PKXdJmdIf7QSB1hD49KgFjRvjY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=W4IxOdY4Z2iT/gk6I5H8LlUehphcstMLFb2a1Ng+QDFs+SafqeNld3y3/d/GEA522IMpgO4ueCkUoLBwScsjvFrodDmEWKMy0SZPAQJHQM+vHHrnozDEh9r6Ckh0iOiSZoFFCtIlOq9QGh6EXo8OsW/20wY/bReuO8EdAHAXANA=
+Received: by 10.141.178.5 with SMTP id f5mr781401rvp.1193998463947;
+        Fri, 02 Nov 2007 03:14:23 -0700 (PDT)
+Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 03:14:23 -0700 (PDT)
+In-Reply-To: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63095>
 
-Junio C Hamano wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
->> On Thu, Nov 01, 2007 at 02:24:37PM +0000, Johannes Schindelin wrote:
->>> They are rare events.  In your case I guess that subtly different versions 
->>> were _actually_ applied (such as white space fixes),
->> That's actually pretty common, in my experience.
->>
->>> which is why such a rare event hit you.
->> I'm using git to track some changes I submitted to a project that's
->> mainly text, and that I only get release tarballs of.  On my most recent
->> rebase all my patches got applied, but the text also got re-wrapped and
->> re-indented at the same time.  So all but I think one or two of a dozen
->> patches ended up with a conflict resolution and then --skip.
->>
->> Which may not be a case git's really intended for--fair enough.  But
->> I've found it's pretty common in my kernel work too.  Either I'm
->> rebasing against changes I made myself, or else a maintainer took my
->> changes but fixed up some minor style problems along the way.
-> 
-> Ok, so I retract that "rare" comment.
-> 
-> Now, we have established that this is a real problem worth
-> solving, what's next?
+On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+> This introduces core.whitespace configuration variable that lets
+> you specify the definition of "whitespace error".
+>
+> Currently there are two kinds of whitespace errors defined:
+>
+>  * trailing-space: trailing whitespaces at the end of the line.
+>
+>  * space-before-tab: a SP appears immediately before HT in the
+>    indent part of the line.
 
-Make "git rebase --skip" skip patches regardless of tree and index state,
-but still refuse to *start* with dirty tree or index. That way, there's
-no risk of losing anything that can't be re-created unless the user asks
-for it.
+>         [core]
+>                 whitespace = -trailing-space
 
-To be really anal, stash the current mess somewhere, re-apply the same
-patch and diff the two states. If they're identical, do "git reset --hard"
-and hop to next patch in rebase-series. If they're not, ask user to say
-"--force-skip" instead.
+Could I suggest naming the option 'whitespaceError', so it's clearer
+that it's a negative setting?
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+
+Dave.
