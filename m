@@ -1,101 +1,80 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: New features in gitk
-Date: Fri, 2 Nov 2007 13:44:05 +0100
-Message-ID: <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
-	 <18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-	 <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
-	 <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
+Date: Fri, 2 Nov 2007 13:48:47 +0100
+Message-ID: <A862668C-7895-489A-B13B-597084CAEE11@zib.de>
+References: <1193593581312-git-send-email-prohaska@zib.de> <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de> <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org> <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de> <7vejfcl8aj.fsf@gitster.siamese.dyndns.org> <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> <7v8x5jiseh.fsf@gitster.siamese.dyndns.org> <B3C76DB8-076D-4C43-AC28-99119A05325C@z ib.de> <7vve8nglrt.fsf@gitster.siamese.dyndns.o
+ rg> <B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de> <7vlk9jgeee.fsf@gitster.siamese.dyndns.org> <0C176853-8848-46C8-AD7A-97F73274DC29@wincent.com> <Pine.LNX.4.64.0711021213370.4362@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Nov 02 13:46:49 2007
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 02 13:50:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Invv7-0005bG-8e
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 13:46:41 +0100
+	id 1Invyo-0006uF-Ky
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 13:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753495AbXKBMoI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 08:44:08 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753413AbXKBMoH
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 08:44:07 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:39025 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753270AbXKBMoG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 08:44:06 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so792717rvb
-        for <git@vger.kernel.org>; Fri, 02 Nov 2007 05:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=gDAkcke31nORJIQA4RIY27qyfnxhBq7gc24XVsw7hQc=;
-        b=iq+ZjS9gSvdF+X2gWA+Y6uM/hme4u2jALYPfvQkWI8YMqCPp/18tiHpU1+uG/JPsQSASHqQy/hcikLjmnX8sqlbcgbWiqWT+f5VhkqjKRwNeplmahp7KoRP6S0Q/8Ts0PupIrLOB5BocBog1zJl2rPFprdphGhWSlUoP5Fo00vo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=I27j1zZyI5Wm8mmFclpFI0mDnLtBU/j3zRNK7xgJCIQS4yMFQRB2Q0GpEdY0RJJ2IoI1x5BgF1UJHjCrU8kz/Hh49DdYIaJUnfFqDVe9q16sRQb953FdLmFw+8KBVTn6XhoqVVEv20cPlkHOlvQYRe9tKoyxf/3dUle2rg6qx2M=
-Received: by 10.140.251.1 with SMTP id y1mr848751rvh.1194007445647;
-        Fri, 02 Nov 2007 05:44:05 -0700 (PDT)
-Received: by 10.141.203.3 with HTTP; Fri, 2 Nov 2007 05:44:05 -0700 (PDT)
-In-Reply-To: <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1754533AbXKBMuO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 08:50:14 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754256AbXKBMuN
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 08:50:13 -0400
+Received: from mailer.zib.de ([130.73.108.11]:35195 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754097AbXKBMuM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 08:50:12 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA2ClPfL027949;
+	Fri, 2 Nov 2007 13:49:42 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA2ClPp9023479
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Fri, 2 Nov 2007 13:47:25 +0100 (MET)
+In-Reply-To: <Pine.LNX.4.64.0711021213370.4362@racer.site>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63112>
 
-On 11/2/07, Paul Mackerras <paulus@samba.org> wrote:
+
+On Nov 2, 2007, at 1:14 PM, Johannes Schindelin wrote:
+
+> Hi,
 >
-> In any case, no that's not the only reason.  The main reason is that
-> it (i.e. --topo-order) spits out the commits in exactly the order that
-> gitk wants to display them (of which the bit about parents coming
-> after all their children is a part), and thus reduces the amount of
-> processing I need to do in Tcl.
+> On Fri, 2 Nov 2007, Wincent Colaiuta wrote:
 >
+>> Of course, it's too late too change now, but it would be nice if the
+>> mirror of "fetch" were "send". (I know it's been commented in the  
+>> past
+>> that the fact that "push" and "pull" aren't mirror operations has
+>> surprised quite a few people.)
+>
+> Could you please just do
+>
+> 	git config --global alias.send push
+>
+> and be done with it?
 
-I have tried to overcome --topo-order in qgit but I found it very
-difficult, too much for me.
+This would certainly be the easiest. But I think the following
+is probably more in line with Wincent's comment:
 
-Lazily drawing the layout it doesn't mean that you lazy load the data
-from git, indeed you load all the git-log output as soon as it
-arrives.
+	Makefile builds git-send instead of git-push
+	git config --global alias.push send
+	[ wait some time ]
+	git config --unset alias.push
 
-And if the revisions arrive "in order", i.e. if revision A arrive
-before revision B it means that A is NOT an ancestor of B, this is of
-great help.
+The comment was about how to avoid surprises for people that
+are new to git, not how to let long-time users have an alias
+for push.
 
-When drawing the graph assuming that the vector/list of the arrived
-sha is already ordered greatly simplify the whole thing, if we relax
-this hypothesis then a lot of work should be done before to draw a
-graph chunk, essentially the GUI tool needs to walk the _entire_  list
-and reorder it by itself _before_ to draw any graph chunk also if very
-small.
+The _only_ real solution I see right now, is to stop the
+discussion and leave "git push" as is. I strongly believe that
+the git community in its majority will refuse to rename push;
+though I have no evidence for this.
 
-So at the end you end up transferring the complete revision walk from
-git-log to the GUI tool, and (this is the important thing) to be sure
-graph is always correct you need to perform the walk _before_ drawing
-any stuff.
-
-The only possible _trick_ I was able to find is to optimistically draw
-the graph chunk _assuming_ that it is ordered.
-
-Then reorder the list in the background and finally check if the graph
-is correct, if not redraw with correct data.
-
-If the out of order revisions are rare you end up mimic a fast correct
-drawing. If are not user will see some flickering at the end of the
-load.
-
-IMHO the above scheme is very complicated and fragile.
-
-Just my two cents.
-
-Marco
+	Steffen
