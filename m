@@ -1,56 +1,67 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] Remove unecessary hard-coding of EDITOR=':' VISUAL=':' in some test suites.
-Date: Fri, 02 Nov 2007 13:09:56 -0700
-Message-ID: <7vtzo41ka3.fsf@gitster.siamese.dyndns.org>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com>
-	<1194017589-4669-2-git-send-email-krh@redhat.com>
+Subject: Re: [PATCH] git-rev-list.txt: rev stands for revision, not reverse.
+Date: Fri, 02 Nov 2007 13:12:37 -0700
+Message-ID: <7vprys1k5m.fsf@gitster.siamese.dyndns.org>
+References: <20071101084552.GA4934@ins.uni-bonn.de>
+	<7vr6j9bv80.fsf@gitster.siamese.dyndns.org>
+	<20071102185509.GA5242@ins.uni-bonn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 21:10:43 2007
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 02 21:13:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io2qn-00050k-BF
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 21:10:41 +0100
+	id 1Io2t1-0005i1-Gi
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 21:12:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757603AbXKBUKF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 16:10:05 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757158AbXKBUKE
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 16:10:04 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:46497 "EHLO
+	id S1756950AbXKBUMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 16:12:44 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756709AbXKBUMo
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 16:12:44 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:50068 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752582AbXKBUKC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 16:10:02 -0400
+	with ESMTP id S1754209AbXKBUMn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 16:12:43 -0400
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 7CA202EF;
-	Fri,  2 Nov 2007 16:10:23 -0400 (EDT)
+	by sceptre.pobox.com (Postfix) with ESMTP id 463BB2F0;
+	Fri,  2 Nov 2007 16:13:04 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1787A90593;
-	Fri,  2 Nov 2007 16:10:20 -0400 (EDT)
-In-Reply-To: <1194017589-4669-2-git-send-email-krh@redhat.com> (Kristian
-	=?utf-8?Q?H=C3=B8gsberg's?= message of "Fri, 2 Nov 2007 11:33:07 -0400")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C3B6191756;
+	Fri,  2 Nov 2007 16:13:01 -0400 (EDT)
+In-Reply-To: <20071102185509.GA5242@ins.uni-bonn.de> (Ralf Wildenhues's
+	message of "Fri, 2 Nov 2007 19:55:10 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63167>
 
-Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
 
-> Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
-> ---
->  t/t3501-revert-cherry-pick.sh |    4 ++--
->  t/t3901-i18n-patch.sh         |    8 ++++----
->  2 files changed, 6 insertions(+), 6 deletions(-)
+> Hello Junio,
+>
+> * Junio C Hamano wrote on Thu, Nov 01, 2007 at 08:51:11PM CET:
+>> Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
+>> 
+>> > Yes, believe it or not, but I stumbled over the synopsis
+>> >
+>> > | git-rev-list - Lists commit objects in reverse chronological order
+>> >
+>> > asking myself whether rev could possibly mean "reverse".
+>> > I hope this helps avoid this pitfall for others.
+>> 
+>> In addition to your patch,
+>> 
+>> 	git-rev-list - List commits from most recent to older
+>> 
+>> might be a good rewording?
+>
+> Is the reverse chronological order the primary sorting key at all?
 
-This is a good patch, but a real commit message that says why
-they are unnecessary is lacking.  Something like...
-
-        Sourcing of ./test-lib.sh at the very beginning of test scripts
-        already define and export them.
+It is mostly chrono but there is a topo element as well.  You
+would never see a parent none of whose child is shown.
