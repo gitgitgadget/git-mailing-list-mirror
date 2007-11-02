@@ -1,67 +1,70 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Debugging corrupt object generation
-Date: Thu, 01 Nov 2007 19:57:00 -0400 (EDT)
-Message-ID: <alpine.LFD.0.9999.0711011947220.21255@xanadu.home>
-References: <Pine.LNX.4.64.0711012256080.17812@beast.quantumfyre.co.uk>
+From: "Jonas Fonseca" <fonseca@diku.dk>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 2 Nov 2007 01:00:56 +0100
+Message-ID: <2c6b72b30711011700t7a9d4027k39e61ac472253cc3@mail.gmail.com>
+References: <20071022063222.GS14735@spearce.org>
+	 <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+	 <7vmytycykt.fsf@gitster.siamese.dyndns.org>
+	 <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org>
+	 <916BE4AD-5BD9-48E6-8026-B1AC7387E28D@adacore.com>
+	 <7v4pg5btis.fsf@gitster.siamese.dyndns.org>
+	 <DB2DC59C-8580-4AFE-860F-6E7C4A47499E@adacore.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: Julian Phillips <julian@quantumfyre.co.uk>
-X-From: git-owner@vger.kernel.org Fri Nov 02 00:57:23 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Geert Bosch" <bosch@adacore.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 01:01:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InjuW-0004jR-6V
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 00:57:16 +0100
+	id 1InjyL-0005af-M3
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:01:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757993AbXKAX5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 19:57:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753678AbXKAX5E
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 19:57:04 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:31665 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759315AbXKAX5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 19:57:03 -0400
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR003.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JQU00KS8QJ06P80@VL-MO-MR003.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 01 Nov 2007 19:57:01 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <Pine.LNX.4.64.0711012256080.17812@beast.quantumfyre.co.uk>
+	id S1756669AbXKBAA6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 20:00:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756530AbXKBAA6
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:00:58 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:32530 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756228AbXKBAA5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 20:00:57 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so641084rvb
+        for <git@vger.kernel.org>; Thu, 01 Nov 2007 17:00:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=rXAvsezsOBqCdUdnSY4FU9Rsri4Ux+72KRALVLyDf48=;
+        b=qhAAiqzFPn9AGQhdT1GdQOUIx2XOo2npUIxuxe0m9vwO1kLUKb+uAz9pqxgM3hVtwv6okJbKxLJrn/KXV6HfJvEMoNf9nbs70KH4r5uP9EUJNinnSAbT00S6TNEqlZwpfxXfd8kHJ5dBCz4xXPUDkhbOUjM0xp6mQVOag00yhHo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=hYGGnbrJHEDjoAsdw4ZFY4Mg4ZNMWFUPzXg3WG0fNmF+OBusHBvOsMFjPlUW0j8/wClcbsqBk5Pea1w+WXaCwidPhdVc5qEZ4OwOcE3WMLziALMIRWIHLXlN+WkCTXRUv859AIuPfouUhaQJqOd755fXQzy2kkX0zAPXKMm1dhs=
+Received: by 10.141.169.9 with SMTP id w9mr590745rvo.1193961656538;
+        Thu, 01 Nov 2007 17:00:56 -0700 (PDT)
+Received: by 10.141.5.5 with HTTP; Thu, 1 Nov 2007 17:00:56 -0700 (PDT)
+In-Reply-To: <DB2DC59C-8580-4AFE-860F-6E7C4A47499E@adacore.com>
+Content-Disposition: inline
+X-Google-Sender-Auth: 6ec9de30d7f82558
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63038>
 
-On Thu, 1 Nov 2007, Julian Phillips wrote:
+On Nov 1, 2007 10:17 PM, Geert Bosch <bosch@adacore.com> wrote:
+> On Nov 1, 2007, at 16:27, Junio C Hamano wrote:
+> > I think what you are trying to do is to deprecate or remove "git
+> > clean".
+>
+> Yes, and in the meantime I'd like to discourage people
+> from spending time and effort to upgrade it to first
+> class built-in status.
 
-> I have been trying to import a repository using fast-import, and as part of
-> this I have extended fast-import to support copying a path from any arbitrary
-> commit.  This works fine on my small test repository.
-> 
-> However, when I run against my (vastly more complicated) real work repository
-> things don't go so well.  I get a few thousand commits in, and then it breaks.
-> It appears that I have somehow managed to create a corrupt object or
-> something.
-> 
-> After a certain commit, and attempt to use that commit generates a "fatal:
-> unable to apply delta".  This appears to be coming from unpack_delta_entry
-> in sha1_file.c.
+If you search the archive you will find that a builtin-clean.c has already
+been offered.
 
-I suppose you mean "fatal: failed to apply delta", because "unable to 
-apply delta" doesn't appear anywhere in the current source tree.
-
-> Can anyone give me any hints as to how I find out what is causing the
-> problem?  I'm not even sure what it is that isn't working ... and all
-> attempts to replicate the problem with my test repository have failed.
-
-Well, something is screwed for sure.  Some object you're requesting is 
-made of a delta, and that delta is bad, therefore patch_delta() returns 
-NULL (you could instrument it to determine exactly why).
-
-Maybe fast-import hasn't flushed the needed data to the pack yet?
-
-
-Nicolas
+-- 
+Jonas Fonseca
