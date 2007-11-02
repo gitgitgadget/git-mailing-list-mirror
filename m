@@ -1,98 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] post-update hook: update working copy
-Date: Thu, 01 Nov 2007 18:02:15 -0700
-Message-ID: <7vd4ut7948.fsf@gitster.siamese.dyndns.org>
-References: <1193964304-10847-1-git-send-email-sam.vilain@catalyst.net.nz>
+From: James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH] gc: use parse_options
+Date: Thu, 1 Nov 2007 21:02:27 -0400
+Message-ID: <20071102010226.GC3282@crux.yyz.redhat.com>
+References: <7vhck579pm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sam Vilain <sam.vilain@catalyst.net.nz>
-X-From: git-owner@vger.kernel.org Fri Nov 02 02:03:00 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 02:03:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inkw5-0007qL-Vm
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 02:02:58 +0100
+	id 1Inkwe-0007xs-1G
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 02:03:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757239AbXKBBC1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 21:02:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXKBBC0
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 21:02:26 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:37298 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754872AbXKBBC0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 21:02:26 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id C39A72EF;
-	Thu,  1 Nov 2007 21:02:46 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 422D2913E9;
-	Thu,  1 Nov 2007 21:02:44 -0400 (EDT)
-In-Reply-To: <1193964304-10847-1-git-send-email-sam.vilain@catalyst.net.nz>
-	(Sam Vilain's message of "Fri, 2 Nov 2007 13:45:04 +1300")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760204AbXKBBDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 21:03:11 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760151AbXKBBDL
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 21:03:11 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:43862 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759595AbXKBBDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 21:03:09 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA212WYv017063;
+	Thu, 1 Nov 2007 21:02:32 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA212TYt001641;
+	Thu, 1 Nov 2007 21:02:29 -0400
+Received: from crux (crux.yyz.redhat.com [10.15.16.85])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA212S2l027524;
+	Thu, 1 Nov 2007 21:02:29 -0400
+Content-Disposition: inline
+In-Reply-To: <7vhck579pm.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63047>
 
-Sam Vilain <sam.vilain@catalyst.net.nz> writes:
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+---
 
-> Now that git-stash is available, it is not so unsafe to push to a
-> non-bare repository, but care needs to be taken to preserve any dirty
-> working copy or index state.  This hook script does that, using
-> git-stash.
+Junio C Hamano <gitster@pobox.com> writes:
+> Now, what makes the command report error when the user says:
+>
+>	$ git gc unwanted parameter
 
-Honestly, I am reluctant to do things that _encourages_ pushing
-into a live tree.
+Ah yes. I forgot about that :)
 
- - Who guarantees that the reflog is enabled for the HEAD?
+This version of the patch errors out with extra args, and calls them
+'unreferenced loose objects' rather than unused.
 
- - Who guarantees that a human user is not actively editing the
-   work tree files without saving?  You would not see "dirty
-   state", the editor would notice "the file was modified since
-   you started editing it" and tell so to the user, but the user
-   cannot recover from the situation without knowing to do the
-   three-way merge between HEAD@{1}, HEAD and the index _anyway_.
+-James
 
-> +update_wc() {
-> +	ref=$1
-> +	echo "Push to checked out branch $ref" >&2
-> +	if (cd $GIT_WORK_TREE; git-diff-files -q --exit-code >/dev/null)
-> +	then
-> +		wc_dirty=0
-> +	else
-> +		echo "W:unstaged changes found in working copy" >&2
-> +		wc_dirty=1
-> +		desc="working copy"
-> +	fi
-> +	if git diff-index HEAD@{1} >/dev/null
+ builtin-gc.c |   44 ++++++++++++++++++++++----------------------
+ 1 files changed, 22 insertions(+), 22 deletions(-)
 
-Are you missing "--cached" here?
-
-> +	if [ "$wc_dirty" -ne 0 -o "$index_dirty" -ne 0 ]
-> +	then
-> +		new=$(git rev-parse HEAD)
-> +		git-update-ref --no-deref HEAD HEAD@{1}
-> +		echo "W:stashing dirty $desc - see git-stash(1)" >&2
-> +		(cd $GIT_WORK_TREE
-> +		git stash save "dirty $desc before update to $new")
-> +		git-symbolic-ref HEAD "$ref"
-
-This part feels somewhat dangerous.  What happens if we are
-interrupted in the middle of these commands?
-
-> +	fi
-> +
-> +	# eye candy - show the WC updates :)
-> +	echo "Updating working copy" >&2
-> +	(cd $GIT_WORK_TREE
-> +	git-diff-index -R --name-status HEAD >&2
-> +	git-reset --hard HEAD)
-> +}
-
-And I would have expected you would unstash the dirty state here.
-Are there any reason not to?
+diff --git a/builtin-gc.c b/builtin-gc.c
+index 3a2ca4f..c5bce89 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -12,11 +12,15 @@
+ 
+ #include "builtin.h"
+ #include "cache.h"
++#include "parse-options.h"
+ #include "run-command.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+-static const char builtin_gc_usage[] = "git-gc [--prune] [--aggressive]";
++static const char * const builtin_gc_usage[] = {
++	"git-gc [options]",
++	NULL
++};
+ 
+ static int pack_refs = 1;
+ static int aggressive_window = -1;
+@@ -165,38 +169,34 @@ static int need_to_gc(void)
+ 
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
+ 	int prune = 0;
++	int aggressive = 0;
+ 	int auto_gc = 0;
+ 	char buf[80];
+ 
++	struct option builtin_gc_options[] = {
++		OPT_BOOLEAN(0, "prune", &prune, "prune unreferenced loose objects"),
++		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
++		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
++		OPT_END()
++	};
++
+ 	git_config(gc_config);
+ 
+ 	if (pack_refs < 0)
+ 		pack_refs = !is_bare_repository();
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-		if (!strcmp(arg, "--prune")) {
+-			prune = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--aggressive")) {
+-			append_option(argv_repack, "-f", MAX_ADD);
+-			if (aggressive_window > 0) {
+-				sprintf(buf, "--window=%d", aggressive_window);
+-				append_option(argv_repack, buf, MAX_ADD);
+-			}
+-			continue;
+-		}
+-		if (!strcmp(arg, "--auto")) {
+-			auto_gc = 1;
+-			continue;
++	argc = parse_options(argc, argv, builtin_gc_options, builtin_gc_usage, 0);
++	if (argc > 0)
++		usage_with_options(builtin_gc_usage, builtin_gc_options);
++
++	if (aggressive) {
++		append_option(argv_repack, "-f", MAX_ADD);
++		if (aggressive_window > 0) {
++			sprintf(buf, "--window=%d", aggressive_window);
++			append_option(argv_repack, buf, MAX_ADD);
+ 		}
+-		break;
+ 	}
+-	if (i != argc)
+-		usage(builtin_gc_usage);
+ 
+ 	if (auto_gc) {
+ 		/*
+-- 
+1.5.3.4.1481.g854da
