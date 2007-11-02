@@ -1,77 +1,67 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Mention that git-branch -M can cause problems for tracking branches
-Date: Fri, 2 Nov 2007 10:17:34 +0100
-Message-ID: <20071102091734.GC10141@diku.dk>
+From: "Blake Ramsdell" <blaker@gmail.com>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 2 Nov 2007 02:20:21 -0700
+Message-ID: <985966520711020220q5d0b0481r9b95f4429f8680c6@mail.gmail.com>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
+	 <7v4pg55893.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:17:58 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 10:20:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Insf1-0007Vv-UI
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:17:52 +0100
+	id 1Inshg-00085T-HD
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752644AbXKBJRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 05:17:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751795AbXKBJRi
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:17:38 -0400
-Received: from mgw2.diku.dk ([130.225.96.92]:57102 "EHLO mgw2.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750797AbXKBJRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 05:17:37 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id 4D53A19BCBA;
-	Fri,  2 Nov 2007 10:17:36 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 26387-19; Fri,  2 Nov 2007 10:17:34 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id 8BEAF19BD51;
-	Fri,  2 Nov 2007 10:17:34 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id D5D4F6DF893; Fri,  2 Nov 2007 10:17:22 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 76E935B8001; Fri,  2 Nov 2007 10:17:34 +0100 (CET)
+	id S1752414AbXKBJUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 05:20:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752080AbXKBJUX
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:20:23 -0400
+Received: from wa-out-1112.google.com ([209.85.146.181]:38137 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876AbXKBJUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 05:20:22 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so885278wah
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 02:20:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Qm4TXYx6aMerfRpLf8eQpu/0IfymBgMLuNVxsmXtI7U=;
+        b=R5ziiVN5p8thdwLggBahLJFr8kaIoKg+oE6yl7nGmCBAhb+EbPRyeASF2NfIo2S7rmDMbjP5H5rVgHFSkM5mgo367PEsS5s4bFcdis3BifxKv0XSoHxseHMzu+C7nD6YXyCPJ3+3D435lGnQ8grZ5plerMHeKH1hsjKkPBr2WFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GJI2PZMn9lOxP+bKP39tNB9ytuFNe+J37hkTPJd2HRUP7LaxyxRbX/LMkJmzUvUF03uxhdQCn4UYwm4CnHxxmqjCP2uyncU9ogBzZlAcPRCuthzxuDEe/Dass49YpQpqQZ3y6aRj10ItczLJOVgLwt8ODty4PyYVl4wws9VuS6o=
+Received: by 10.114.150.1 with SMTP id x1mr1631252wad.1193995221340;
+        Fri, 02 Nov 2007 02:20:21 -0700 (PDT)
+Received: by 10.114.176.14 with HTTP; Fri, 2 Nov 2007 02:20:21 -0700 (PDT)
+In-Reply-To: <7v4pg55893.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63081>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/git-branch.txt |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+> I do not have an access to a Darwin box, but do you mean 10.5
+> gives 9.0.0 as uname_R?
 
- I made a patch to discard the overwritten branch's configuration
- section, which Spearce felt was too lossy a behaviour. However, since
- it confused me, I think it should at least be mentioned in the manpage.
- Maybe the warning message from git should also be added to improve its
- "googlability".
+Yeah, apparently that's how they roll.
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 5e81aa4..def4e85 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -165,6 +165,11 @@ If you are creating a branch that you want to immediately checkout, it's
- easier to use the git checkout command with its `-b` option to create
- a branch and check it out with a single command.
- 
-+When a branch is renamed so that it overwrites an existing branch unintended
-+problems can arise. This is because git refuses to discard the configuration
-+section of the overwritten branch. As a result git can become confused if, for
-+example, the branches involved were used for tracking two different remote
-+branches. The only way to fix this is to edit the configuration file manually.
- 
- Author
- ------
+~/Source/OpenSource/git$ uname -r
+9.0.0
+~/Source/OpenSource/git$ system_profiler SPSoftwareDataType
+Software:
+
+    System Software Overview:
+
+      System Version: Mac OS X 10.5 (9A581)
+      Kernel Version: Darwin 9.0.0
+
+Blake
 -- 
-1.5.3.4.1481.g854da-dirty
-
--- 
-Jonas Fonseca
+Blake Ramsdell | http://www.blakeramsdell.com
