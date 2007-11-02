@@ -1,139 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Fri, 02 Nov 2007 12:42:33 -0700
-Message-ID: <7vfxzo3046.fsf@gitster.siamese.dyndns.org>
-References: <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de>
-	<7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
-	<B3C76DB8-076D-4C43-AC28-99119A05325C@zib.de>
-	<7vve8nglrt.fsf@gitster.siamese.dyndns.org>
-	<B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de>
-	<7vlk9jgeee.fsf@gitster.siamese.dyndns.org>
-	<6B0CD829-A964-410B-8C23-74D26BD2C0FA@zib.de>
-	<!47299855.9010204@op5.se>
-	<3550D197-CA8C-4B06-9A95-3C7F18EBEFA7@zib.de> <472AF5F8.40208@op5.se>
-	<20071102132446.GA31758@hermes.priv> <472B2B8F.1060203@op5.se>
+Subject: Re: [PATCH 1/2] Implement parsing for new core.whitespace.* options.
+Date: Fri, 02 Nov 2007 13:02:30 -0700
+Message-ID: <7v3avo2z6x.fsf@gitster.siamese.dyndns.org>
+References: <11940160932021-git-send-email-dsymonds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Tom Prince <tom.prince@ualberta.net>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Nov 02 20:43:00 2007
+Cc: git@vger.kernel.org, Andreas Ericsson <ae@op5.se>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 21:03:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io2Pw-0005wO-Nl
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 20:42:57 +0100
+	id 1Io2jF-0002Z4-Bw
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 21:02:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754071AbXKBTmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 15:42:43 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753698AbXKBTmn
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 15:42:43 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:47893 "EHLO
+	id S1754148AbXKBUCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 16:02:38 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754039AbXKBUCi
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 16:02:38 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:47230 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752648AbXKBTmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 15:42:42 -0400
+	with ESMTP id S1753407AbXKBUCh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 16:02:37 -0400
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 0E8672EF;
-	Fri,  2 Nov 2007 15:43:03 -0400 (EDT)
+	by sceptre.pobox.com (Postfix) with ESMTP id 224152EF;
+	Fri,  2 Nov 2007 16:02:58 -0400 (EDT)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 1EED191196;
-	Fri,  2 Nov 2007 15:42:56 -0400 (EDT)
-In-Reply-To: <472B2B8F.1060203@op5.se> (Andreas Ericsson's message of "Fri, 02
-	Nov 2007 14:52:15 +0100")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 98361912D5;
+	Fri,  2 Nov 2007 16:02:54 -0400 (EDT)
+In-Reply-To: <11940160932021-git-send-email-dsymonds@gmail.com> (David
+	Symonds's message of "Sat, 3 Nov 2007 02:08:12 +1100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63162>
 
-Andreas Ericsson <ae@op5.se> writes:
+David Symonds <dsymonds@gmail.com> writes:
 
-> Tom Prince wrote:
->>
->> I haven't had occasion to use git-bisect much, but I was under the
->> impression that bisect could already handle merges, or any other shaped
->> history just fine.
->
-> It appears the code supports your statement. I started writing on my
-> hack-around about a year ago, and the merge-handling code got in with
-> 1c4fea3a40e836dcee2f16091bf7bfba96c924d0 at Wed Mar 21 22:16:24 2007.
-> Perhaps I shouldn't be so paranoid about useless merges anymore then.
-> Hmm. I shall have to look into it. Perhaps Junio can clarify how it
-> works? The man-page was terribly silent about how git-bisect handles
-> merges.
+> Each of the new core.whitespace.* options (enumerated below) can be set to one
+> of:
+> 	* okay (default): Whitespace of this type is okay
+> 	* warn: Whitespace of this type should be warned about
+> 	* error: Whitespace of this type should raise an error
+> 	* autofix: Whitespace of this type should be automatically fixed
 
-Bisecting through merge is not a problem.  Not at all, from the
-very beginning of the bisect command.
+Many problems at the conceptual level (I haven't look at the
+patch yet).
 
-	Side note.  The commit you quote does not change (let
-	alone fix) the semantics at all.  It is a pure
-	optimization.  The theory behind how bisect works, see
-	my OLS presentation (reachable from the gitwiki).
+We call these options (nowarn,warn,error,strip) in
+apply.whitespace.  "strip" is a bit of misnomer, as we only
+handled the trailing whitespace initially.  We should add "fix"
+as a synonym to "strip".
 
-The real problem is what to do when the culprit turns out to be
-a merge commit.  How to spot what really is wrong, and figure
-out how to fix.  The problem is not for the tool but for the
-human, and it is real.
+The intention is to define what is an anomaly with
+core.whitespace and then define what to do with it with
+apply.whitespace.
 
-Imagine this history.
+And that is a good distinction.  You may usually use "fix", but
+occasionally you would want to override it one-shot (when you do
+want to have byte-to-byte identical application of the patch),
+and the command line option "--whitespace=" lets you do so.
+At least you need to extend --whitespace command line option
+handling to allow these overridden.
 
-      ---Z---o---X---...---o---A---C---D
-          \                       /
-           o---o---Y---...---o---B
+Adding the "error" and "fix" to "diff" is a mistake --- there is
+no error condition nor fixing there.  That shows how the
+approach of your patch is inappropriate by trying to mix what
+core.whitespace (give the definition of what is an error) and
+apply.whitespace (specify what to do with an error) are designed
+to do.
 
-Suppose that on the upper development line, the meaning of one
-of the functions existed at Z was changed at commit X.  The
-commits from Z leading to A change both the function's
-implementation and all calling sites that existed at Z, as well
-as new calling sites they add, to be consistent.  There is no
-bug at A.
-
-Suppose in the meantime the lower development line somebody
-added a new calling site for that function at commit Y.  The
-commits from Z leading to B all assume the old semantics of that
-function and the callers and the callee are consistent with each
-other.  There is no bug at B, either.
-
-You merge to create C.  There is no textual conflict with this
-three way merge, and the result merges cleanly.  You bisect
-this, because you found D is bad and you know Z was good.  Your
-bisect will find that C (merge) is broken.  Understandably so,
-as at C, the new calling site of the function added by the lower
-branch is not converted to the new semantics, while all the
-other calling sites that already existed at Z would have been
-converted by the merge.  The new calling site has semantic
-adjustment needed, but you do not know that yet.  You need to
-find out that is the cause of the breakage by looking at the
-merge commit C and the history leading to it.
-
-How would you do that?
-
-Both "git diff A C" and "git diff B C" would be an enormous patch.
-Each of them essentially shows the whole change on each branch
-since they diverged.  The developers may have well behaved to
-create good commits that follow the "commit small, commit often,
-commit well contained units" mantra, and each individual commit
-leading from Z to A and from Z to B may be easy to review and
-understand, but looking at these small and easily reviewable
-steps alone would not let you spot the breakage.  You need to
-have a global picture of what the upper branch did (and
-among many, one of them is to change the semantics of that
-particular function) and look first at the huge "diff A C"
-(which shows the change the lower branch introduces), and see if
-that huge change is consistent with what have been done between
-Z and A.
-
-If you linearlize the history by rebasing the lower branch on
-top of upper, instead of merging, the bug becomes much easier to
-find and understand.  Your history would instead be:
-
-    ---Z---o---X'--...---o---A---o---o---Y'--...---o---B'--D'
-
-and there is a single commit Y' between A and B' that introduced
-the new calling site that still uses the new semantics of the
-function that was already in A.  "git show Y'" will be a much
-smaller patch than "git diff A C" and it is much easier to deal
-with.
+Defaulting to "nowarn" is wrong.  Trailing whitespace errors and
+space before tab errors should be turned on by default as
+before.
