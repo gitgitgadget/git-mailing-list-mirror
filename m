@@ -1,135 +1,89 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict subset of remote ref
-Date: Fri, 2 Nov 2007 11:03:45 +0100
-Message-ID: <417C801B-5DFF-4753-AB32-0FA1EB30C8E2@zib.de>
-References: <1193593581312-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de> <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de> <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de> <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org> <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de> <7vejfcl8aj.fsf@gitster.siamese.dyndns.org> <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> <7v8x5jiseh.fsf@gitster.siamese.dyndns.org> <B3C76DB8-076D-4C43-AC28-99119A05325C@z ib.de> <7vve8nglrt.fsf@gitster.siamese.dyndns.org> <B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de> <7vlk9jgeee.fsf@gitster.siamese.dyndns.org> <6B0CD829-A964-410B-8C23-74D26BD2C0FA@zib.de> <!
-  47299855.9010204@op5.se> <3550D197-CA8C-4B06-9A95-3C7F18EBEFA7@zib.de> <7vfxzpbtxv.fsf@gitste! r.siamese.dyndns.org> <63FCD695-B952-4624-854C-0F1C662D94D1@zib.de> <7vk5p15bkv.fsf@gitster.s!
- iamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Newbie: report of first experience with git-rebase.
+Date: Fri, 02 Nov 2007 11:13:20 +0100
+Message-ID: <472AF840.1070609@op5.se>
+References: <87d4uv3wh1.fsf@osv.gnss.ru>	<20071031195702.GB24332@atjola.homenet> <874pg73u6h.fsf@osv.gnss.ru>	<Pine.LNX.4.64.0710312111170.4362@racer.site>	<7vhck7gdzs.fsf@gitster.siamese.dyndns.org>	<87ve8m2mfn.fsf@osv.gnss.ru>	<Pine.LNX.4.64.0711011423440.4362@racer.site>	<20071101151016.GA26103@fieldses.org> <7v8x5hbtvv.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+Cc: "J. Bruce Fields" <bfields@fieldses.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Sergei Organov <osv@javad.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:05:59 2007
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:13:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IntOg-00018v-9z
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:05:03 +0100
+	id 1IntX5-0003IQ-O6
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:13:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945AbXKBKEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 06:04:48 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752947AbXKBKEs
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:04:48 -0400
-Received: from mailer.zib.de ([130.73.108.11]:55721 "EHLO mailer.zib.de"
+	id S1752917AbXKBKN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 06:13:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752905AbXKBKN1
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:13:27 -0400
+Received: from mail.op5.se ([193.201.96.20]:38486 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752941AbXKBKEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 06:04:47 -0400
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA2A2Ole014881;
-	Fri, 2 Nov 2007 11:04:41 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA2A2Nc2012192
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Fri, 2 Nov 2007 11:02:23 +0100 (MET)
-In-Reply-To: <7vk5p15bkv.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752894AbXKBKN0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 06:13:26 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id B61EF173071C;
+	Fri,  2 Nov 2007 11:12:53 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id lUuQKqGT9T38; Fri,  2 Nov 2007 11:12:52 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 868E317306F2;
+	Fri,  2 Nov 2007 11:12:51 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <7v8x5hbtvv.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63094>
 
+Junio C Hamano wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
+> 
+>> On Thu, Nov 01, 2007 at 02:24:37PM +0000, Johannes Schindelin wrote:
+>>> They are rare events.  In your case I guess that subtly different versions 
+>>> were _actually_ applied (such as white space fixes),
+>> That's actually pretty common, in my experience.
+>>
+>>> which is why such a rare event hit you.
+>> I'm using git to track some changes I submitted to a project that's
+>> mainly text, and that I only get release tarballs of.  On my most recent
+>> rebase all my patches got applied, but the text also got re-wrapped and
+>> re-indented at the same time.  So all but I think one or two of a dozen
+>> patches ended up with a conflict resolution and then --skip.
+>>
+>> Which may not be a case git's really intended for--fair enough.  But
+>> I've found it's pretty common in my kernel work too.  Either I'm
+>> rebasing against changes I made myself, or else a maintainer took my
+>> changes but fixed up some minor style problems along the way.
+> 
+> Ok, so I retract that "rare" comment.
+> 
+> Now, we have established that this is a real problem worth
+> solving, what's next?
 
-On Nov 2, 2007, at 8:52 AM, Junio C Hamano wrote:
+Make "git rebase --skip" skip patches regardless of tree and index state,
+but still refuse to *start* with dirty tree or index. That way, there's
+no risk of losing anything that can't be re-created unless the user asks
+for it.
 
-> ... it still holds that what the developer wants to do is not
-> just "to push", but "to push after making sure what he is going
-> to push is in a good enough shape to be pushed".  Your _workflow_
-> is forcing to integrate right away before pushing; don't blame
-> git for this.
+To be really anal, stash the current mess somewhere, re-apply the same
+patch and diff the two states. If they're identical, do "git reset --hard"
+and hop to next patch in rebase-series. If they're not, ask user to say
+"--force-skip" instead.
 
-I don't blame git for forcing the developers to merge. I blame
-git for not supporting this workflow well enough.
-
-I still believe that
-
-- in a pull-oriented workflow (Linux kernel, git) there's less
-   need to handle unexpected changes on the remote you want to
-   push to. There's maybe also less need to push to heads named
-   differently on the local and the remote (though I'm not sure
-   if this really true).
-
-- in a workflow that is base on shared branches (CVS-style),
-   the remote heads certainly will advance unexpectedly, and
-   git push should support developers to cope with this situation.
-   In addition push should push back to the remote branch a local
-   topic was originally branched off. This makes the need for
-   pushing to a branch named differently on the remote side more
-   likely than in a pull-oriented workflow, where you would
-   publish under your local branch name and ask someone else
-   to pull.
-
-[...]
-
->
->> We haven't figured out much more of our workflow. The first
->> milestone is to migrate from CVS to git continuing to use a
->> CVS-style workflow.
->
-> I think that is an interesting admission.  As somebody else on
-> the thread already said, if you are sticking to CVS workflow,
-> there are things that can and cannot be naturally done with
-> git.  Don't break git when you hit the situation in the latter
-> category without understanding how the world works.
-
-Fair enough. I absolutely agree that it will never be a design
-goal of git to directly support a CVS workflow ;)
-
-But I strongly believe that there is a more universal question
-behind. It makes sense to have good support for a workflow
-that is based on a shared repository. A shared repository
-can be a way
-- to make it easy for the average developer to get started.
-   Only clone to a local working repository is needed, but no
-   publishing repository.
-- to facilitate that commits will be pushed to at a central
-   place. The default is to push back to the shared repository
-   (btw, it's easy to setup hooks to do some access control to
-   avoid havoc). This may increase visibility of changes. It may
-   help doing backups. It may be easy to encourage early integration.
-
-For small projects with developers available for direct
-communication it may even be an option to have just this single
-shared branch.
-
-For larger project a better infrastructure and more control
-over the changes is certainly a good idea. And git greatly
-supports more complex workflows. That's the main reason why
-I decided to choose git in the first place.
-
-But for me the question is how can git be efficiently used to
-support a workflow based on a shared repository. It should be
-easy and safe to use and only few commands should be needed
-to get started.
-
-
->> error: remote 'refs/heads/master' is ahead of local 'refs/heads/
->> master'. Use --verbose for more details.
->
-> I'd rather have "Read section XXX of the user's guide".
-
-Ok; do I need to write the section first or is there? ;)
-
-
-And maybe we could do two things (at least for msysgit):
-
-- Rename or link user-manual.html to git-user-manual.html,
-   which would allow saying "git help user-manual".
-
-- Support HTML anchors, such that
-   "git help user-manual#section5" would open the user manual
-   and jump to the right section.
-	
-	Steffen
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
