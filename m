@@ -1,63 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Bring parse_options to the shell
-Date: Fri,  2 Nov 2007 16:09:18 +0100
-Message-ID: <1194016162-23599-1-git-send-email-madcoder@debian.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: What's cooking in git.git (topics)
+Date: Sat, 03 Nov 2007 00:13:36 +0900
+Message-ID: <87d4usaden.fsf@catnip.gol.com>
+References: <20071022063222.GS14735@spearce.org>
+	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+	<7vmytycykt.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org>
+	<buofxzp18qp.fsf@dhapc248.dev.necel.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:09:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:14:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iny9Z-0004YH-9P
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:09:45 +0100
+	id 1InyDj-0005iJ-6m
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226AbXKBPJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 11:09:26 -0400
-X-Warning: Original message contained 8-bit characters, however during
-	   the SMTP transport session the receiving system did not announce
-	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
-	   message does not have MIME headers (RFC 2045-2049) to enable
-	   encoding change, we had very little choice.
-X-Warning: We ASSUME it is less harmful to add the MIME headers, and
-	   convert the text to Quoted-Printable, than not to do so,
-	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
-X-Warning: We don't know what character set the user used, thus we had to
-	   write these MIME-headers with our local system default value.
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbXKBPJ0
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:09:26 -0400
-Received: from pan.madism.org ([88.191.52.104]:50884 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754217AbXKBPJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 11:09:25 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 8495F28147;
-	Fri,  2 Nov 2007 16:09:23 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 7C71F347A4B; Fri,  2 Nov 2007 16:09:22 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.5.1458.g2aa13-dirty
-In-Reply-To: alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org
-References: alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org
+	id S1754163AbXKBPNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 11:13:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753964AbXKBPNt
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:13:49 -0400
+Received: from smtp02.dentaku.gol.com ([203.216.5.72]:51721 "EHLO
+	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753924AbXKBPNs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 11:13:48 -0400
+Received: from 203-216-97-240.dsl.gol.ne.jp ([203.216.97.240] helo=catnip.gol.com)
+	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
+	id 1InyDL-0002zy-3D; Sat, 03 Nov 2007 00:13:39 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 369822F4C; Sat,  3 Nov 2007 00:13:36 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+In-Reply-To: <buofxzp18qp.fsf@dhapc248.dev.necel.com> (Miles Bader's message of "Fri\, 02 Nov 2007 15\:06\:54 +0900")
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63128>
 
-This is also something that itches me, so here is a proposal for a
-git-parseopt helper that can be used in shell scripts as an option
-normalizer like getopt(1) does.
+I previously wrote:
+> Indeed... but for my personal shell scripts I like to use a construct
+> like the following for parsing args:
 
-I migrated the discussed git-clean.sh to use it as a proof of concept.
+In a little more detail, the arg-splitting case:
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@d=
-ebian.org
-OOO                                                http://www.madism.or=
-g
+>        -[!-]?*)
+>          # split concatenated single-letter options apart
+>          FIRST="$1"; shift
+>          set -- `echo $FIRST | $SED 's/-\(.\)\(.*\)/-\1 -\2/'` "$@"
+>          ;;
+
+Just strips off the first short option and stuffs it back into the list
+of args to parse, so "-xyz" becomes "-x -yz".  That way short args get
+split by default, but short-args with an appended value still work
+correctly.
+
+So, for instance, if in the above example, "-y" takes an argument, then
+there'd be a switch case case for "-y*") which would consume the "-yz"
+before it reached the arg-splitting case; if "-y" _doesn't_ take an
+argument, then "-yz" would get split in turn, becoming "-y -z".
+
+-Miles
+
+-- 
+/\ /\
+(^.^)
+(")")
+*This is the cute kitty virus, please copy this into your sig so it can spread.
