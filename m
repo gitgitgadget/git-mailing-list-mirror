@@ -1,64 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Fixed a gcc 4.0.1 complaint about an uninitialized variable
-Date: Thu, 01 Nov 2007 22:37:47 -0700
-Message-ID: <7v8x5h6wd0.fsf@gitster.siamese.dyndns.org>
-References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
-	<1193971102-61907-2-git-send-email-blaker@gmail.com>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: What's cooking in git.git (topics)
+Date: Fri, 02 Nov 2007 15:06:54 +0900
+Message-ID: <buofxzp18qp.fsf@dhapc248.dev.necel.com>
+References: <20071022063222.GS14735@spearce.org>
+	<7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+	<7vmytycykt.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Blake Ramsdell <blaker@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 06:38:15 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 02 07:08:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InpEU-0007Le-FC
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 06:38:14 +0100
+	id 1InphF-0002Vj-4J
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 07:07:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750999AbXKBFh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 01:37:59 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751037AbXKBFh7
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 01:37:59 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:44906 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750953AbXKBFh7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 01:37:59 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id D70112EF;
-	Fri,  2 Nov 2007 01:38:19 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 346C08F558;
-	Fri,  2 Nov 2007 01:38:16 -0400 (EDT)
-In-Reply-To: <1193971102-61907-2-git-send-email-blaker@gmail.com> (Blake
-	Ramsdell's message of "Thu, 1 Nov 2007 19:38:22 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752028AbXKBGHk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 02:07:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbXKBGHk
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 02:07:40 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:63621 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751775AbXKBGHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 02:07:39 -0400
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lA266tHm001765;
+	Fri, 2 Nov 2007 15:06:55 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Fri, 2 Nov 2007 15:06:55 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Fri, 2 Nov 2007 15:06:54 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id A3C61437; Fri,  2 Nov 2007 15:06:54 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org> (Linus Torvalds's message of "Thu\, 1 Nov 2007 11\:33\:13 -0700 \(PDT\)")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63065>
 
-Blake Ramsdell <blaker@gmail.com> writes:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
+> So while you can combine flags for *most* programs, you still won't 
+> be able to say things like
+>
+> 	git clean -qdx
+>
+> just because that's still a shellscript, and doing any fancy argument 
+> parsing in shell is just painful.
 
-> diff --git a/transport.c b/transport.c
-> index 400af71..cac1870 100644
-> --- a/transport.c
-> +++ b/transport.c
-> @@ -107,7 +107,7 @@ static void insert_packed_refs(const char *packed_refs, struct ref **list)
->  		return;
->  
->  	for (;;) {
-> -		int cmp, len;
-> +		int cmp = 0, len;
+Indeed... but for my personal shell scripts I like to use a construct
+like the following for parsing args:
 
-Yeah, if you follow the logic, it is clear that the variable is
-never used while unset, but gcc is not careful enough to see it.
+   while :; do
+     case "$1" in
+        ... lots of cases to handle normal args ...
 
-It is customary to use
+       -[!-]?*)
+         # split concatenated single-letter options apart
+         FIRST="$1"; shift
+         set -- `echo $FIRST | $SED 's/-\(.\)\(.*\)/-\1 -\2/'` "$@"
+         ;;
 
-	int cmp = cmp;
+       -*)
+         # unrecognized option
+         unrec_opt "$1"; exit 1;;
+       *)
+         # non-option
+         break;
+     esac
+   done
 
-for something like this.  There are already other instances of
-such phony initializations in the code elsewhere.
+I'm sure there are problems with it, but it generally seems to work
+pretty reasonably for short options.
+
+-Miles
+-- 
+97% of everything is grunge
