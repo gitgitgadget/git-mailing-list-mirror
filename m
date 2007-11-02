@@ -1,36 +1,36 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 1/3] Introduce --dirty option to git-rebase, allowing you to start from a dirty state.
-Date: Fri, 2 Nov 2007 01:08:30 -0400
-Message-ID: <20071102050830.GA14735@spearce.org>
-References: <1193952624-608-1-git-send-email-Simon.Sasburg@gmail.com> <1193952624-608-2-git-send-email-Simon.Sasburg@gmail.com> <7vmytx8upi.fsf@gitster.siamese.dyndns.org> <7vir4l8ug4.fsf@gitster.siamese.dyndns.org>
+Subject: Re: Debugging corrupt object generation
+Date: Fri, 2 Nov 2007 01:15:55 -0400
+Message-ID: <20071102051555.GB14735@spearce.org>
+References: <Pine.LNX.4.64.0711012256080.17812@beast.quantumfyre.co.uk> <alpine.LFD.0.9999.0711011947220.21255@xanadu.home> <Pine.LNX.4.64.0711020018400.18429@beast.quantumfyre.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Simon Sasburg <simon.sasburg@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 06:08:52 2007
+Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Fri Nov 02 06:17:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inom3-0003Ux-7M
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 06:08:51 +0100
+	id 1Inotx-0004Va-Ph
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 06:17:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751893AbXKBFIi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 01:08:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbXKBFIi
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 01:08:38 -0400
-Received: from corvette.plexpod.net ([64.38.20.226]:39842 "EHLO
+	id S1752141AbXKBFQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 01:16:06 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752077AbXKBFQF
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 01:16:05 -0400
+Received: from corvette.plexpod.net ([64.38.20.226]:40017 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918AbXKBFIh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 01:08:37 -0400
+	with ESMTP id S1752131AbXKBFQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 01:16:04 -0400
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1Inolj-0005E9-TA; Fri, 02 Nov 2007 01:08:32 -0400
+	id 1Inosu-0006Vz-Q8; Fri, 02 Nov 2007 01:15:56 -0400
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 760BF20FBAE; Fri,  2 Nov 2007 01:08:30 -0400 (EDT)
+	id 975EF20FBAE; Fri,  2 Nov 2007 01:15:55 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <7vir4l8ug4.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <Pine.LNX.4.64.0711020018400.18429@beast.quantumfyre.co.uk>
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
 X-AntiAbuse: Primary Hostname - corvette.plexpod.net
@@ -40,27 +40,37 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63063>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Julian Phillips <julian@quantumfyre.co.uk> wrote:
+> On Thu, 1 Nov 2007, Nicolas Pitre wrote:
+> >
+> >Maybe fast-import hasn't flushed the needed data to the pack yet?
 > 
-> > Doesn't this have the exact same problem with the one in 'next'
-> > that uses "git-stash create", which Shawn said he was upset
-> > about, and I said I will revert?
-> 
-> Sorry, --dirty is not the default, which changes everything.
-> Forget what I said, sorry for the noise.
+> Well, fast-import completes quite happily and outputs the normal summary 
+> status.  I can look at logs and trees etc provided that I don't try and 
+> look at one particular part of the tree on one particular commit.  I 
+> think the problem is that I've managed to do something inside fast-import 
+> that corrupts one particular tree object (though I've no idea what that 
+> might be).
 
-I'm happy with having --dirty, but AS AN OPTION.  Heck, I'd probably
-use it sometimes, but only if it also reapplies the stash after
-the rebase is complete.  But doing that stash/apply automatically
-is really freaking annoying.
+Ahhh.  I'm betting you messed up the version 0 and version 1 arrays
+inside of the struct tree_entry.  This could cause the delta
+generator to look at the wrong base information when it creates
+the delta, thus causing the delta to be created for a different
+base than what the object is actually using in the packfile.
 
-For the same reasons why I like git-checkout not defaulting to -m.
-I want Git to stop by default if I'm about to possibly go into a
-command that is going to cause conflicts, as I may not be ready to
-deal with them right now.
+The version[0] is meant to hold the mode and SHA-1 of the tree_entry
+in the base object.  The version[1] is meant to hold the current
+mode and SHA-1 of the tree_entry in the new object.  A mode of 0
+means the entry doesn't exist in that particular tree; so an add
+is shown as "version[0].mode = 0; version[1].mode = 0100644".
+
+Look at the store_tree function, this is where we regenerate the
+canonical representation of both the version[0] and the version[1]
+trees so the store_object function can generate a delta.  Note that
+we assume the base object name is root->versions[0].sha1.  Maybe the
+version[0] array doesn't actually match the tree named by that sha1?
 
 -- 
 Shawn.
