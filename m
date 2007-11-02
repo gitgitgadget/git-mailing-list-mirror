@@ -1,56 +1,92 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [PATCH] Implement git commit as a builtin command.
-Date: Fri, 2 Nov 2007 10:42:49 +0100
-Message-ID: <20071102094249.GB30468@diana.vm.bytemark.co.uk>
-References: <1193944163-22892-1-git-send-email-krh@redhat.com> <fgdc3m$miq$1@ger.gmane.org> <20071102092720.GA30468@diana.vm.bytemark.co.uk> <7vsl3p3s48.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 2 Nov 2007 10:45:08 +0100
+Organization: glandium.org
+Message-ID: <20071102094508.GA29828@glandium.org>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com> <7v4pg55893.fsf@gitster.siamese.dyndns.org> <20071102093028.GA29699@glandium.org> <B858412A-853A-4660-BA4B-F9751E4AAEAE@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:43:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git list <git@vger.kernel.org>
+To: Benoit SIGOURE <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Fri Nov 02 10:46:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Int3l-000460-4E
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:43:25 +0100
+	id 1Int6j-0004mR-Em
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:46:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752534AbXKBJnJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 05:43:09 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752589AbXKBJnI
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:43:08 -0400
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3276 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752275AbXKBJnI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 05:43:08 -0400
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Int3B-0008EU-00; Fri, 02 Nov 2007 09:42:49 +0000
+	id S1752687AbXKBJqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 05:46:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbXKBJqP
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:46:15 -0400
+Received: from vawad.err.no ([85.19.200.177]:40640 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752627AbXKBJqO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 05:46:14 -0400
+Received: from aputeaux-153-1-66-112.w81-249.abo.wanadoo.fr ([81.249.52.112] helo=vaio.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1Int6N-0007Tk-UU; Fri, 02 Nov 2007 10:46:12 +0100
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1Int5Q-0007pB-P0; Fri, 02 Nov 2007 10:45:08 +0100
 Content-Disposition: inline
-In-Reply-To: <7vsl3p3s48.fsf@gitster.siamese.dyndns.org>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <B858412A-853A-4660-BA4B-F9751E4AAEAE@lrde.epita.fr>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63090>
 
-On 2007-11-02 02:37:43 -0700, Junio C Hamano wrote:
+On Fri, Nov 02, 2007 at 10:39:35AM +0100, Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
+> On Nov 2, 2007, at 10:30 AM, Mike Hommey wrote:
+> 
+> >On Fri, Nov 02, 2007 at 02:03:52AM -0700, Junio C Hamano  
+> ><gitster@pobox.com> wrote:
+> >>Blake Ramsdell <blaker@gmail.com> writes:
+> >>
+> >>>Signed-off-by: Blake Ramsdell <blaker@gmail.com>
+> >>>---
+> >>> Makefile |    4 +++-
+> >>> 1 files changed, 3 insertions(+), 1 deletions(-)
+> >>>
+> >>>diff --git a/Makefile b/Makefile
+> >>>index 71479a2..5d83756 100644
+> >>>--- a/Makefile
+> >>>+++ b/Makefile
+> >>>@@ -401,7 +401,9 @@ endif
+> >>> ifeq ($(uname_S),Darwin)
+> >>> 	NEEDS_SSL_WITH_CRYPTO = YesPlease
+> >>> 	NEEDS_LIBICONV = YesPlease
+> >>>-	OLD_ICONV = UnfortunatelyYes
+> >>>+	ifneq ($(uname_R),9.0.0)
+> >>>+		OLD_ICONV = UnfortunatelyYes
+> >>>+	endif
+> >>> 	NO_STRLCPY = YesPlease
+> >>> 	NO_MEMMEM = YesPlease
+> >>> endif
+> >>
+> >>I do not have an access to a Darwin box, but do you mean 10.5
+> >>gives 9.0.0 as uname_R?
+> >
+> >Be it that or not, it looks wrong to me to check the Darwin version to
+> >know what to use. Do you rely on the Linux kernel version to know  
+> >whether
+> >iconv is present ?
+> 
+> It's very different, on OSX you don't change your own kernel as you  
+> want, the kernel isn't a standalone component, it comes packaged with  
+> the entire system of MacOSX.  When you do an update to 10.5 (aka  
+> Leopard) you will have a new version of iconv so you're guaranteed  
+> that someone with 10.5 has a system-wide iconv that is not OLD_ICONV.
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> > I wonder if it would be such a bad idea to make this the default.
-> > It seems like _everyone_ who should be using it forget it. And the
-> > number of patches made for human or git consumption is probably
-> > vastly larger than the number of patches made for consumption by
-> > other tools.
->
-> On this mailing list, we can pretty much assume that renaming diff
-> can be applied by people. But outside world is a different story.
+The fact is you can also use Darwin without OSX...
 
-So I guess a prerequisite for this is to get git patch format support
-into GNU patch, then? :-)
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Mike
