@@ -1,79 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Implement parsing for new core.whitespace.* options.
-Date: Fri, 02 Nov 2007 13:02:30 -0700
-Message-ID: <7v3avo2z6x.fsf@gitster.siamese.dyndns.org>
-References: <11940160932021-git-send-email-dsymonds@gmail.com>
+From: "Blake Ramsdell" <blaker@gmail.com>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 2 Nov 2007 13:03:05 -0700
+Message-ID: <985966520711021303g905f638y2056219c22e5edeb@mail.gmail.com>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
+	 <7v4pg55893.fsf@gitster.siamese.dyndns.org>
+	 <ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
+	 <7vbqad3pjw.fsf@gitster.siamese.dyndns.org>
+	 <ee77f5c20711020423t6ce58818gcc5220b6427ded1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Andreas Ericsson <ae@op5.se>
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 21:03:06 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "David Symonds" <dsymonds@gmail.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 21:03:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io2jF-0002Z4-Bw
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 21:02:53 +0100
+	id 1Io2jk-0002jI-6s
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 21:03:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754148AbXKBUCi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 16:02:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754039AbXKBUCi
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 16:02:38 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:47230 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753407AbXKBUCh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 16:02:37 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 224152EF;
-	Fri,  2 Nov 2007 16:02:58 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 98361912D5;
-	Fri,  2 Nov 2007 16:02:54 -0400 (EDT)
-In-Reply-To: <11940160932021-git-send-email-dsymonds@gmail.com> (David
-	Symonds's message of "Sat, 3 Nov 2007 02:08:12 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754476AbXKBUDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 16:03:09 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754194AbXKBUDI
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 16:03:08 -0400
+Received: from wa-out-1112.google.com ([209.85.146.183]:30964 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754039AbXKBUDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 16:03:06 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1054347wah
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 13:03:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=lMiqAQM3HhN8Smg5TYpW670tNgNA7xnbDNOmsSDKTt8=;
+        b=RDzsTjwM+hGcI1L4S/3BaI/9IytEGJCeFFzQbAw/BWpBXPwAUFw1Rbvu75gmyan2MF8dIU3JyB5jvZ2amvvRJMwGowqCXogtju4Z17aJZGwRgLFsBi+cVzWnZ8QkimnxEmofYKPaqEdVdLk2zv9X5oTs2OVw7lLM1gep2P0m5KE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lkwfI7ZUXNwTC944apRVypHRaV7JGhH+ik369cRPyFwzIowZTWb+g4s2A7pRTajqqsCZ1KaRLPpRKAcd7wNdJ0YJfdB2FEHfL2mvtPDNKb6/pPx4RvpFmljQuPSyDepBy99R8M4C613yVtncdQzOCHni0KeeKSGSaO6UUTkY1SE=
+Received: by 10.114.127.1 with SMTP id z1mr2276397wac.1194033785841;
+        Fri, 02 Nov 2007 13:03:05 -0700 (PDT)
+Received: by 10.114.176.14 with HTTP; Fri, 2 Nov 2007 13:03:05 -0700 (PDT)
+In-Reply-To: <ee77f5c20711020423t6ce58818gcc5220b6427ded1@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63163>
 
-David Symonds <dsymonds@gmail.com> writes:
+On 11/2/07, David Symonds <dsymonds@gmail.com> wrote:
+> It would probably be most appropriate for the autoconf script. Now
+> that I look at configure.ac, there's already a test for iconv in
+> there; is it not used?
 
-> Each of the new core.whitespace.* options (enumerated below) can be set to one
-> of:
-> 	* okay (default): Whitespace of this type is okay
-> 	* warn: Whitespace of this type should be warned about
-> 	* error: Whitespace of this type should raise an error
-> 	* autofix: Whitespace of this type should be automatically fixed
+The crux of this problem is that the prototype for iconv in
+/usr/include/iconv.h is different between OS X 10.4 and OS X 10.5. So
+the "right thing" is definitely to determine what is in the function
+prototype, and then act accordingly.
 
-Many problems at the conceptual level (I haven't look at the
-patch yet).
+>From OS X 10.4.10:
 
-We call these options (nowarn,warn,error,strip) in
-apply.whitespace.  "strip" is a bit of misnomer, as we only
-handled the trailing whitespace initially.  We should add "fix"
-as a synonym to "strip".
+#define _LIBICONV_VERSION 0x0109    /* version number: (major<<8) + minor */
+...
+extern size_t iconv (iconv_t cd, const char* * inbuf, size_t
+*inbytesleft, char* * outbuf, size_t *outbytesleft);
 
-The intention is to define what is an anomaly with
-core.whitespace and then define what to do with it with
-apply.whitespace.
+>From OS X 10.5:
 
-And that is a good distinction.  You may usually use "fix", but
-occasionally you would want to override it one-shot (when you do
-want to have byte-to-byte identical application of the patch),
-and the command line option "--whitespace=" lets you do so.
-At least you need to extend --whitespace command line option
-handling to allow these overridden.
+#define _LIBICONV_VERSION 0x010B    /* version number: (major<<8) + minor */
+...
+size_t iconv (iconv_t /*cd*/,
+        char ** __restrict /*inbuf*/,  size_t * __restrict /*inbytesleft*/,
+        char ** __restrict /*outbuf*/, size_t * __restrict /*outbytesleft*/);
 
-Adding the "error" and "fix" to "diff" is a mistake --- there is
-no error condition nor fixing there.  That shows how the
-approach of your patch is inappropriate by trying to mix what
-core.whitespace (give the definition of what is an error) and
-apply.whitespace (specify what to do with an error) are designed
-to do.
+So what happened in git is that someone put in OLD_ICONV to
+dynamically adjust the const-ness of parameter 2 to the iconv
+function, and the way they chose to do that is to identify the OS
+(more accurately, the kernel), and then I went and furthered that by
+identifying the version.
 
-Defaulting to "nowarn" is wrong.  Trailing whitespace errors and
-space before tab errors should be turned on by default as
-before.
+Now that I look at it further, it seems that yanking OLD_ICONV
+altogether is a better approach, and to just check _LIBICONV_VERSION
+to make sure it's "new enough". Now, I'm not sure what that comparison
+would be, but we know that "later than 0x0109" is a good start. Based
+on the version difference between OS X 10.4 and 10.5 I note that there
+is only 0x010A intervening.
+
+This strategy presumes that this const parameter was const all the way
+up to a particular point, and then stopped being const, which is
+probably a reasonable assumption.
+
+Blake
+-- 
+Blake Ramsdell | http://www.blakeramsdell.com
