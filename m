@@ -1,92 +1,84 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
-Date: Fri, 2 Nov 2007 10:45:08 +0100
-Organization: glandium.org
-Message-ID: <20071102094508.GA29828@glandium.org>
-References: <1193971102-61907-1-git-send-email-blaker@gmail.com> <7v4pg55893.fsf@gitster.siamese.dyndns.org> <20071102093028.GA29699@glandium.org> <B858412A-853A-4660-BA4B-F9751E4AAEAE@lrde.epita.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Benoit SIGOURE <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Fri Nov 02 10:46:30 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Where man git-format-patch sends me?
+Date: Fri, 2 Nov 2007 11:03:46 +0100
+Message-ID: <2A9EA819-C27A-4538-A9ED-B5281D137B94@wincent.com>
+References: <87lk9i2hkc.fsf@osv.gnss.ru> <Pine.LNX.4.64.0711011437440.4362@racer.site> <877il22cip.fsf@osv.gnss.ru>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:05:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Int6j-0004mR-Em
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 10:46:29 +0100
+	id 1IntNw-0000rj-OJ
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:04:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752687AbXKBJqP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 05:46:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752641AbXKBJqP
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 05:46:15 -0400
-Received: from vawad.err.no ([85.19.200.177]:40640 "EHLO vawad.err.no"
+	id S1752939AbXKBKD4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 06:03:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbXKBKD4
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:03:56 -0400
+Received: from wincent.com ([72.3.236.74]:36951 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627AbXKBJqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 05:46:14 -0400
-Received: from aputeaux-153-1-66-112.w81-249.abo.wanadoo.fr ([81.249.52.112] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1Int6N-0007Tk-UU; Fri, 02 Nov 2007 10:46:12 +0100
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1Int5Q-0007pB-P0; Fri, 02 Nov 2007 10:45:08 +0100
-Content-Disposition: inline
-In-Reply-To: <B858412A-853A-4660-BA4B-F9751E4AAEAE@lrde.epita.fr>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+	id S1752905AbXKBKDz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 06:03:55 -0400
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA2A3ljc027291;
+	Fri, 2 Nov 2007 05:03:48 -0500
+In-Reply-To: <877il22cip.fsf@osv.gnss.ru>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63091>
 
-On Fri, Nov 02, 2007 at 10:39:35AM +0100, Benoit SIGOURE <tsuna@lrde.epita.fr> wrote:
-> On Nov 2, 2007, at 10:30 AM, Mike Hommey wrote:
-> 
-> >On Fri, Nov 02, 2007 at 02:03:52AM -0700, Junio C Hamano  
-> ><gitster@pobox.com> wrote:
-> >>Blake Ramsdell <blaker@gmail.com> writes:
-> >>
-> >>>Signed-off-by: Blake Ramsdell <blaker@gmail.com>
-> >>>---
-> >>> Makefile |    4 +++-
-> >>> 1 files changed, 3 insertions(+), 1 deletions(-)
-> >>>
-> >>>diff --git a/Makefile b/Makefile
-> >>>index 71479a2..5d83756 100644
-> >>>--- a/Makefile
-> >>>+++ b/Makefile
-> >>>@@ -401,7 +401,9 @@ endif
-> >>> ifeq ($(uname_S),Darwin)
-> >>> 	NEEDS_SSL_WITH_CRYPTO = YesPlease
-> >>> 	NEEDS_LIBICONV = YesPlease
-> >>>-	OLD_ICONV = UnfortunatelyYes
-> >>>+	ifneq ($(uname_R),9.0.0)
-> >>>+		OLD_ICONV = UnfortunatelyYes
-> >>>+	endif
-> >>> 	NO_STRLCPY = YesPlease
-> >>> 	NO_MEMMEM = YesPlease
-> >>> endif
-> >>
-> >>I do not have an access to a Darwin box, but do you mean 10.5
-> >>gives 9.0.0 as uname_R?
-> >
-> >Be it that or not, it looks wrong to me to check the Darwin version to
-> >know what to use. Do you rely on the Linux kernel version to know  
-> >whether
-> >iconv is present ?
-> 
-> It's very different, on OSX you don't change your own kernel as you  
-> want, the kernel isn't a standalone component, it comes packaged with  
-> the entire system of MacOSX.  When you do an update to 10.5 (aka  
-> Leopard) you will have a new version of iconv so you're guaranteed  
-> that someone with 10.5 has a system-wide iconv that is not OLD_ICONV.
+El 1/11/2007, a las 16:47, Sergei Organov escribi=F3:
 
-The fact is you can also use Darwin without OSX...
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>> Hi,
+>>
+>> On Thu, 1 Nov 2007, Sergei Organov wrote:
+>>
+>>> $ man git-format-patch
+>>> [...]
+>>> OPTIONS
+>>>       -p     Generate patch (see section on generating patches)
+>>>
+>>>       -u     Synonym for "-p".
+>>
+>> As you can easily see from Documentation/git-format-patch.txt, this =
+=20
+>> part
+>> is generated from the file Documentation/diff-options.txt.
+>
+> Sorry, I did saw that, but it doesn't change anything.
+>
+> 1. As a user reading man git-format-patch, where do I find this =20
+> "section
+>   on generating patches"? In another man-page? In the html
+>   documentation? On the moon?
+>
+> 2. I can't find "section on generating patches" in the man git-diff
+>   either, and I did say this in the part of my original message you'v=
+e
+>   snipped.
+>
+> So the main question remains: could you please point me to the exact
+> place in 'Documentation/' directory where this "section on generating
+> patches" resides?
 
-Mike
+I believe the section in question is in Documentation/diff-format.txt
+
+But you've basically found a documentation bug. Someone invoking "man =20
+git-format-patch" shouldn't be expected to have to grep the source =20
+tree in order to find out where the referenced documentation is. =20
+Especially given that he/she may not even have the source.
+
+Cheers,
+Wincent
