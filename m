@@ -1,66 +1,80 @@
 From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH 1/2] War on whitespace: first, a bit of retreat.
-Date: Fri, 2 Nov 2007 21:14:23 +1100
-Message-ID: <ee77f5c20711020314h43290dbs8141cb3905c867@mail.gmail.com>
-References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
+Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
+Date: Fri, 2 Nov 2007 21:19:31 +1100
+Message-ID: <ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
+References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
+	 <7v4pg55893.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Brian Downing" <bdowning@lavos.net>
+Cc: "Blake Ramsdell" <blaker@gmail.com>, git@vger.kernel.org
 To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:14:39 2007
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:19:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IntXz-0003RQ-F1
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:14:39 +0100
+	id 1Intd3-0004Lj-1t
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752969AbXKBKOZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 06:14:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752984AbXKBKOZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:14:25 -0400
-Received: from rv-out-0910.google.com ([209.85.198.184]:10498 "EHLO
+	id S1754394AbXKBKTe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 06:19:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754098AbXKBKTd
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:19:33 -0400
+Received: from rv-out-0910.google.com ([209.85.198.189]:18434 "EHLO
 	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752905AbXKBKOY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 06:14:24 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so763748rvb
-        for <git@vger.kernel.org>; Fri, 02 Nov 2007 03:14:23 -0700 (PDT)
+	with ESMTP id S1753727AbXKBKTc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 06:19:32 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so764729rvb
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 03:19:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+J3vfV8vu1jYspSncKJutJsNEY7gCTv/+zYvqro8VDo=;
-        b=Fz78zyPPqVIooL2SPr9SZHuvF3N3CMbtAnkjKxD28wSY5dOXkRIjoj+JO6/wnaniPZgiK0wLOpeqOzGrfFY127rvLRNfFz2pqi39FzyFohcmCWg4/mM+b0rDxejed49k6lDurhxGRlWOpdQP7PKXdJmdIf7QSB1hD49KgFjRvjY=
+        bh=CXIvl+9RFd0B/fDMkBbyWPACv3Lu4qax1EBkKbZ999U=;
+        b=MRDSv3htQEfOGYhv5bb8ahdF0lRxEt78MxxmLOsTlTHfMN+PEl8Tq8rIH8AJpFmaMLGh4LJ3ew2CKRRc82rE4Dw3Nlz5BNzZffnhCnCEJxLDmBv87vmORQQQstUNaOfIf6sdKUND76IUcg3U0L3xOmEX4rQw+ZlofE2MHZ5Fy1E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=W4IxOdY4Z2iT/gk6I5H8LlUehphcstMLFb2a1Ng+QDFs+SafqeNld3y3/d/GEA522IMpgO4ueCkUoLBwScsjvFrodDmEWKMy0SZPAQJHQM+vHHrnozDEh9r6Ckh0iOiSZoFFCtIlOq9QGh6EXo8OsW/20wY/bReuO8EdAHAXANA=
-Received: by 10.141.178.5 with SMTP id f5mr781401rvp.1193998463947;
-        Fri, 02 Nov 2007 03:14:23 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 03:14:23 -0700 (PDT)
-In-Reply-To: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
+        b=N+12i39NIniTbAoPYtR23RkBuSnrBVBVlpSTq9wBz39aygQnh1aVGmEDjBYpHTFHwrNBn7yWw2HiBVsKLN1yE7XImP5CgXC61LQVFfhY/mARXVLPBGZozWFcaVTLqeoKjU1LmnoK70jLLCFalTahgZgy9UJWZikmewVORAe/5RA=
+Received: by 10.141.141.3 with SMTP id t3mr782890rvn.1193998771841;
+        Fri, 02 Nov 2007 03:19:31 -0700 (PDT)
+Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 03:19:31 -0700 (PDT)
+In-Reply-To: <7v4pg55893.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63096>
 
 On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
-> This introduces core.whitespace configuration variable that lets
-> you specify the definition of "whitespace error".
+> Blake Ramsdell <blaker@gmail.com> writes:
 >
-> Currently there are two kinds of whitespace errors defined:
+> > Signed-off-by: Blake Ramsdell <blaker@gmail.com>
+> > ---
+> >  Makefile |    4 +++-
+> >  1 files changed, 3 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/Makefile b/Makefile
+> > index 71479a2..5d83756 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -401,7 +401,9 @@ endif
+> >  ifeq ($(uname_S),Darwin)
+> >       NEEDS_SSL_WITH_CRYPTO = YesPlease
+> >       NEEDS_LIBICONV = YesPlease
+> > -     OLD_ICONV = UnfortunatelyYes
+> > +     ifneq ($(uname_R),9.0.0)
+> > +             OLD_ICONV = UnfortunatelyYes
+> > +     endif
+> >       NO_STRLCPY = YesPlease
+> >       NO_MEMMEM = YesPlease
+> >  endif
 >
->  * trailing-space: trailing whitespaces at the end of the line.
->
->  * space-before-tab: a SP appears immediately before HT in the
->    indent part of the line.
+> I do not have an access to a Darwin box, but do you mean 10.5
+> gives 9.0.0 as uname_R?
 
->         [core]
->                 whitespace = -trailing-space
-
-Could I suggest naming the option 'whitespaceError', so it's clearer
-that it's a negative setting?
+Further, that comparison is going to fail as soon as the next revision
+of Darwin (9.0.1, etc.) is released.
 
 
 Dave.
