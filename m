@@ -1,61 +1,97 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH 3/3] Act on WS_WARN for ws_mode_trailing.
-Date: Sat, 3 Nov 2007 02:07:28 +1100
-Message-ID: <ee77f5c20711020807i542071c0h70166cc0e32bd0ab@mail.gmail.com>
-References: <11940104611948-git-send-email-dsymonds@gmail.com>
-	 <11940104621856-git-send-email-dsymonds@gmail.com>
-	 <1194010463982-git-send-email-dsymonds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Andreas Ericsson" <ae@op5.se>,
-	"David Symonds" <dsymonds@gmail.com>
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH 2/2] git-diff: Respect core.whitespace.{space-indent,space-before-tab,trailing}.
+Date: Sat,  3 Nov 2007 02:08:13 +1100
+Message-ID: <11940160942802-git-send-email-dsymonds@gmail.com>
+References: <11940160932021-git-send-email-dsymonds@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	David Symonds <dsymonds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:07:56 2007
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:08:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iny7b-00041T-Qo
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:07:44 +0100
+	id 1Iny8V-0004Go-U6
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:08:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754193AbXKBPH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 11:07:29 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKBPH3
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:07:29 -0400
-Received: from rv-out-0910.google.com ([209.85.198.191]:10690 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754152AbXKBPH2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 11:07:28 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so828218rvb
-        for <git@vger.kernel.org>; Fri, 02 Nov 2007 08:07:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wZ+8eLTHHNsGPLPPUan2yZHVsy65Xqob+frPjeWn6uQ=;
-        b=Of+qxpZQDv9lxX3veyo87WHa7LTVzV+qyZDCicleH+YBAbUHPKOXPXGCqSkD3DAn1w5gv93qOBDd6hdmHcADH+CsUFELOOKl6M+64ZdVyLSOe7CLN0V1/od+OtX10FAx3LKtixwbpO1edMpBsJ1ED8xewyU705Nz6///AjLQ07w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Kl2wXji+o+EtlO309hoGm7vhvaKLkBoCSMaZ0uDg2lznSnZ6vQVpVOCuP/zOsmmhXegEp+znjFyhbbJl/sNd2hSYXq/UZbqsuPqFPLwMAItTjL6BRPRFhC9PxWYFDbUZcEVLaOAd5x+oc4GZAN2DivTzOc7OGZ39ouAO16cv1yw=
-Received: by 10.141.68.12 with SMTP id v12mr928058rvk.1194016048075;
-        Fri, 02 Nov 2007 08:07:28 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 08:07:28 -0700 (PDT)
-In-Reply-To: <1194010463982-git-send-email-dsymonds@gmail.com>
-Content-Disposition: inline
+	id S1754198AbXKBPIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 11:08:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKBPIV
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:08:21 -0400
+Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:53508 "EHLO
+	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754122AbXKBPIU (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 11:08:20 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq4HAMfYKkd5LCBH/2dsb2JhbACBW45c
+X-IronPort-AV: E=Sophos;i="4.21,363,1188743400"; 
+   d="scan'208";a="180068628"
+Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
+  by ipmail03.adl2.internode.on.net with ESMTP; 03 Nov 2007 01:38:17 +1030
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <11940160932021-git-send-email-dsymonds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63124>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63125>
 
-On 11/3/07, David Symonds <dsymonds@gmail.com> wrote:
-> Signed-off-by: David Symonds <dsymonds@gmail.com>
-> ---
->  diff.c |   21 +++++++++++++--------
->  1 files changed, 13 insertions(+), 8 deletions(-)
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ diff.c |   24 ++++++++++++++++++------
+ 1 files changed, 18 insertions(+), 6 deletions(-)
 
-Silly me; I somehow forgot I was only in diff.c. I'll fix and repost the series.
-
-
-Dave.
+diff --git a/diff.c b/diff.c
+index a6aaaf7..aa86fa1 100644
+--- a/diff.c
++++ b/diff.c
+@@ -503,12 +503,15 @@ static void emit_line_with_ws(int nparents,
+ 	int tail = len;
+ 	int need_highlight_leading_space = 0;
+ 	/* The line is a newly added line.  Does it have funny leading
+-	 * whitespaces?  In indent, SP should never precede a TAB.
++	 * whitespaces?  In indent, SP should never precede a TAB. In
++	 * addition, under "indent with non tab" rule, there should not
++	 * be 8 or more consecutive spaces.
+ 	 */
+ 	for (i = col0; i < len; i++) {
+ 		if (line[i] == '\t') {
+ 			last_tab_in_indent = i;
+-			if (0 <= last_space_in_indent)
++			if ((ws_mode_space_before_tab != WS_OKAY) &&
++			    (0 <= last_space_in_indent))
+ 				need_highlight_leading_space = 1;
+ 		}
+ 		else if (line[i] == ' ')
+@@ -516,6 +519,13 @@ static void emit_line_with_ws(int nparents,
+ 		else
+ 			break;
+ 	}
++	if ((ws_mode_space_indent != WS_OKAY) &&
++	    (0 <= last_space_in_indent) &&
++	    (last_tab_in_indent < 0) &&
++	    (8 <= (i - col0))) {
++		last_tab_in_indent = i;
++		need_highlight_leading_space = 1;
++	}
+ 	fputs(set, stdout);
+ 	fwrite(line, col0, 1, stdout);
+ 	fputs(reset, stdout);
+@@ -540,10 +550,12 @@ static void emit_line_with_ws(int nparents,
+ 	tail = len - 1;
+ 	if (line[tail] == '\n' && i < tail)
+ 		tail--;
+-	while (i < tail) {
+-		if (!isspace(line[tail]))
+-			break;
+-		tail--;
++	if (ws_mode_trailing != WS_OKAY) {
++		while (i < tail) {
++			if (!isspace(line[tail]))
++				break;
++			tail--;
++		}
+ 	}
+ 	if ((i < tail && line[tail + 1] != '\n')) {
+ 		/* This has whitespace between tail+1..len */
+-- 
+1.5.3.1
