@@ -1,135 +1,75 @@
-From: Sam Vilain <sam.vilain@catalyst.net.nz>
-Subject: [PATCH] post-update hook: update working copy
-Date: Fri,  2 Nov 2007 13:45:04 +1300
-Message-ID: <1193964304-10847-1-git-send-email-sam.vilain@catalyst.net.nz>
-Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 01:45:37 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] gc: use parse_options
+Date: Thu, 01 Nov 2007 17:49:25 -0700
+Message-ID: <7vhck579pm.fsf@gitster.siamese.dyndns.org>
+References: <20071102002856.GB3282@crux.yyz.redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: James Bowes <jbowes@dangerouslyinc.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 01:49:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InkfH-0004yp-3s
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:45:35 +0100
+	id 1InkjN-0005gu-3C
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:49:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754476AbXKBApU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 20:45:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753817AbXKBApU
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:45:20 -0400
-Received: from godel.catalyst.net.nz ([202.78.240.40]:49118 "EHLO
-	mail1.catalyst.net.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754482AbXKBApT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 20:45:19 -0400
-Received: from leibniz.catalyst.net.nz ([202.78.240.7] helo=wilber.wgtn.cat-it.co.nz)
-	by mail1.catalyst.net.nz with esmtp (Exim 4.63)
-	(envelope-from <samv@wilber.wgtn.cat-it.co.nz>)
-	id 1Inken-0001Ww-8H; Fri, 02 Nov 2007 13:45:05 +1300
-Received: by wilber.wgtn.cat-it.co.nz (Postfix, from userid 1000)
-	id 125982C4E9; Fri,  2 Nov 2007 13:45:05 +1300 (NZDT)
-X-Mailer: git-send-email 1.5.3.2.3.g2f2dcc-dirty
+	id S1754663AbXKBAte (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 20:49:34 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754526AbXKBAte
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:49:34 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:44168 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754482AbXKBAte (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 20:49:34 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id C72DE2EF;
+	Thu,  1 Nov 2007 20:49:52 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 495179035B;
+	Thu,  1 Nov 2007 20:49:49 -0400 (EDT)
+In-Reply-To: <20071102002856.GB3282@crux.yyz.redhat.com> (James Bowes's
+	message of "Thu, 1 Nov 2007 20:28:57 -0400")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63045>
 
-Now that git-stash is available, it is not so unsafe to push to a
-non-bare repository, but care needs to be taken to preserve any dirty
-working copy or index state.  This hook script does that, using
-git-stash.
+James Bowes <jbowes@dangerouslyinc.com> writes:
 
-Signed-off-by: Sam Vilain <sam.vilain@catalyst.net.nz>
----
- templates/hooks--post-update |   76 ++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 73 insertions(+), 3 deletions(-)
- mode change 100644 => 100755 templates/hooks--post-update
+> +	struct option builtin_gc_options[] = {
+> +		OPT_BOOLEAN(0, "prune", &prune, "prune unused objects"),
 
-diff --git a/templates/hooks--post-update b/templates/hooks--post-update
-old mode 100644
-new mode 100755
-index bcba893..352a432
---- a/templates/hooks--post-update
-+++ b/templates/hooks--post-update
-@@ -1,8 +1,78 @@
- #!/bin/sh
- #
--# An example hook script to prepare a packed repository for use over
--# dumb transports.
-+# This hook does two things:
-+#
-+#  1. update the "info" files that allow the list of references to be
-+#     queries over dumb transports such as http
-+#
-+#  2. if this repository looks like it is a non-bare repository, and
-+#     the checked-out branch is pushed to, then update the working copy.
-+#     This makes "push" function somewhat similarly to darcs and bzr.
- #
- # To enable this hook, make this file executable by "chmod +x post-update".
- 
--exec git-update-server-info
-+git-update-server-info
-+
-+is_bare=$(git-config --get --bool core.bare)
-+
-+if [ -z "$is_bare" ]
-+then
-+	# for compatibility's sake, guess
-+	git_dir_full=$(cd $GIT_DIR; pwd)
-+	case $git_dir_full in */.git) is_bare=false;; *) is_bare=true;; esac
-+fi
-+
-+update_wc() {
-+	ref=$1
-+	echo "Push to checked out branch $ref" >&2
-+	if (cd $GIT_WORK_TREE; git-diff-files -q --exit-code >/dev/null)
-+	then
-+		wc_dirty=0
-+	else
-+		echo "W:unstaged changes found in working copy" >&2
-+		wc_dirty=1
-+		desc="working copy"
-+	fi
-+	if git diff-index HEAD@{1} >/dev/null
-+	then
-+		index_dirty=0
-+	else
-+		echo "W:uncommitted, staged changes found" >&2
-+		index_dirty=1
-+		if [ -n "$desc" ]
-+		then
-+			desc="$desc and index"
-+		else
-+			desc="index"
-+		fi
-+	fi
-+	if [ "$wc_dirty" -ne 0 -o "$index_dirty" -ne 0 ]
-+	then
-+		new=$(git rev-parse HEAD)
-+		git-update-ref --no-deref HEAD HEAD@{1}
-+		echo "W:stashing dirty $desc - see git-stash(1)" >&2
-+		(cd $GIT_WORK_TREE
-+		git stash save "dirty $desc before update to $new")
-+		git-symbolic-ref HEAD "$ref"
-+	fi
-+
-+	# eye candy - show the WC updates :)
-+	echo "Updating working copy" >&2
-+	(cd $GIT_WORK_TREE
-+	git-diff-index -R --name-status HEAD >&2
-+	git-reset --hard HEAD)
-+}
-+
-+if [ "$is_bare" = "false" ]
-+then
-+	active_branch=`git-symbolic-ref HEAD`
-+	export GIT_DIR=$(cd $GIT_DIR; pwd)
-+	GIT_WORK_TREE=${GIT_WORK_TREE-..}
-+	for ref
-+	do
-+		if [ "$ref" = "$active_branch" ]
-+		then
-+			update_wc $ref
-+		fi
-+	done
-+fi
--- 
-1.5.3.2.3.g2f2dcc-dirty
+I would write "unreferenced loose" instead of "unused" here...
+
+> +		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
+> +		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
+> +		OPT_END()
+> +	};
+> +
+>  	git_config(gc_config);
+>  
+>  	if (pack_refs < 0)
+>  		pack_refs = !is_bare_repository();
+>  
+> +	parse_options(argc, argv, builtin_gc_options, builtin_gc_usage, 0);
+> +
+> +	if (aggressive) {
+> +		append_option(argv_repack, "-f", MAX_ADD);
+> +		if (aggressive_window > 0) {
+> +			sprintf(buf, "--window=%d", aggressive_window);
+> +			append_option(argv_repack, buf, MAX_ADD);
+>  		}
+>  	}
+> -	if (i != argc)
+> -		usage(builtin_gc_usage);
+
+Now, what makes the command report error when the user says:
+
+	$ git gc unwanted parameter
+
+Other than that, this is a good thing to have, I think.
