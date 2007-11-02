@@ -1,78 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
-Date: Fri, 02 Nov 2007 03:33:07 -0700
-Message-ID: <7vbqad3pjw.fsf@gitster.siamese.dyndns.org>
-References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
-	<7v4pg55893.fsf@gitster.siamese.dyndns.org>
-	<ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] post-update hook: update working copy
+Date: Fri, 02 Nov 2007 11:34:33 +0100
+Message-ID: <472AFD39.6000006@op5.se>
+References: <1193964304-10847-1-git-send-email-sam.vilain@catalyst.net.nz> <7vd4ut7948.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Blake Ramsdell" <blaker@gmail.com>, git@vger.kernel.org
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 11:33:40 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Sam Vilain <sam.vilain@catalyst.net.nz>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 11:35:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IntqN-00079N-Aq
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:33:39 +0100
+	id 1Intrg-0007UM-91
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 11:35:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204AbXKBKdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 06:33:19 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753057AbXKBKdT
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:33:19 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:51111 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753005AbXKBKdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 06:33:18 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 102FF2F0;
-	Fri,  2 Nov 2007 06:33:37 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 79EF5904AC;
-	Fri,  2 Nov 2007 06:33:32 -0400 (EDT)
-In-Reply-To: <ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
-	(David Symonds's message of "Fri, 2 Nov 2007 21:19:31 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753463AbXKBKek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 06:34:40 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753457AbXKBKek
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 06:34:40 -0400
+Received: from mail.op5.se ([193.201.96.20]:44051 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753247AbXKBKej (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 06:34:39 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 942DA17306E2;
+	Fri,  2 Nov 2007 11:34:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id UlDzfckcBVmc; Fri,  2 Nov 2007 11:34:34 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.77.30])
+	by mail.op5.se (Postfix) with ESMTP id 3219D17306D9;
+	Fri,  2 Nov 2007 11:34:34 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <7vd4ut7948.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63099>
 
-"David Symonds" <dsymonds@gmail.com> writes:
+Junio C Hamano wrote:
+> Sam Vilain <sam.vilain@catalyst.net.nz> writes:
+> 
+>> Now that git-stash is available, it is not so unsafe to push to a
+>> non-bare repository, but care needs to be taken to preserve any dirty
+>> working copy or index state.  This hook script does that, using
+>> git-stash.
+> 
+> Honestly, I am reluctant to do things that _encourages_ pushing
+> into a live tree.
+> 
 
-> On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
->> Blake Ramsdell <blaker@gmail.com> writes:
->>
->> > Signed-off-by: Blake Ramsdell <blaker@gmail.com>
->> > ---
->> >  Makefile |    4 +++-
->> >  1 files changed, 3 insertions(+), 1 deletions(-)
->> >
->> > diff --git a/Makefile b/Makefile
->> > index 71479a2..5d83756 100644
->> > --- a/Makefile
->> > +++ b/Makefile
->> > @@ -401,7 +401,9 @@ endif
->> >  ifeq ($(uname_S),Darwin)
->> >       NEEDS_SSL_WITH_CRYPTO = YesPlease
->> >       NEEDS_LIBICONV = YesPlease
->> > -     OLD_ICONV = UnfortunatelyYes
->> > +     ifneq ($(uname_R),9.0.0)
->> > +             OLD_ICONV = UnfortunatelyYes
->> > +     endif
->> >       NO_STRLCPY = YesPlease
->> >       NO_MEMMEM = YesPlease
->> >  endif
->>
->> I do not have an access to a Darwin box, but do you mean 10.5
->> gives 9.0.0 as uname_R?
->
-> Further, that comparison is going to fail as soon as the next revision
-> of Darwin (9.0.1, etc.) is released.
+"Live" and "living" are perhaps two different things here. I for one have
+something similar, but only for repositories residing on certain servers,
+where there really must be zero local changes to the working tree.
 
-Can we do something intelligent with $(shell iconv --version)
-there instead, I wonder, then?
+>  - Who guarantees that the reflog is enabled for the HEAD?
+> 
+
+I disable reflogs on that server. There's (hardly ever) any human interaction
+with the scripts in that repo, so I really, really don't care about reflogs.
+
+>  - Who guarantees that a human user is not actively editing the
+>    work tree files without saving?
+
+There are times when one simply doesn't care.
+
+I realize that for my situation, a much simpler script can (and is) used, so
+I agree with your concerns. The idea that every git repo has a human hacking
+on it isn't true though, so doing things like this are sometimes useful,
+timesaving and a real help.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
