@@ -1,120 +1,69 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] git-rev-list.txt: rev stands for revision, not reverse.
-Date: Fri, 2 Nov 2007 19:55:10 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071102185509.GA5242@ins.uni-bonn.de>
-References: <20071101084552.GA4934@ins.uni-bonn.de> <7vr6j9bv80.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow git-instaweb to be run from bare repositories
+Date: Fri, 02 Nov 2007 12:11:27 -0700
+Message-ID: <7vodec31k0.fsf@gitster.siamese.dyndns.org>
+References: <20071102090922.GA10141@diku.dk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 19:55:55 2007
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Nov 02 20:11:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io1gI-00027Z-Sg
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 19:55:47 +0100
+	id 1Io1vn-0006fZ-04
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 20:11:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757526AbXKBSzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 14:55:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757427AbXKBSzP
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 14:55:15 -0400
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:44906 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757526AbXKBSzN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 14:55:13 -0400
-Received: from localhost.localdomain (xdsl-87-78-90-64.netcologne.de [87.78.90.64])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 322A84000048D;
-	Fri,  2 Nov 2007 19:55:11 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1Io1fi-0001Mq-5D; Fri, 02 Nov 2007 19:55:10 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vr6j9bv80.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1756573AbXKBTLc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 15:11:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756599AbXKBTLc
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 15:11:32 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:48003 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756383AbXKBTLb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 15:11:31 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 5EE4C2FB;
+	Fri,  2 Nov 2007 15:11:53 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B54AA9093F;
+	Fri,  2 Nov 2007 15:11:50 -0400 (EDT)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63156>
 
-Hello Junio,
+Jonas Fonseca <fonseca@diku.dk> writes:
 
-* Junio C Hamano wrote on Thu, Nov 01, 2007 at 08:51:11PM CET:
-> Ralf Wildenhues <Ralf.Wildenhues@gmx.de> writes:
-> 
-> > Yes, believe it or not, but I stumbled over the synopsis
-> >
-> > | git-rev-list - Lists commit objects in reverse chronological order
-> >
-> > asking myself whether rev could possibly mean "reverse".
-> > I hope this helps avoid this pitfall for others.
-> 
-> In addition to your patch,
-> 
-> 	git-rev-list - List commits from most recent to older
-> 
-> might be a good rewording?
+> Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
+> ---
+>  git-instaweb.sh |    1 +
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>
+>  On IRC yesterday, two were asking for this and it seems simply enough.
+>  Apparently, git-instaweb is a great way to see if you've set up a
+>  remote repository correctly.
+>
+> diff --git a/git-instaweb.sh b/git-instaweb.sh
+> index 95c3e5a..14917ac 100755
+> --- a/git-instaweb.sh
+> +++ b/git-instaweb.sh
+> @@ -6,6 +6,7 @@ USAGE='[--start] [--stop] [--restart]
+>    [--local] [--httpd=<httpd>] [--port=<port>] [--browser=<browser>]
+>    [--module-path=<path> (for Apache2 only)]'
+>  
+> +SUBDIRECTORY_OK=Yes
+>  . git-sh-setup
+>  
+>  fqgitdir="$GIT_DIR"
 
-Is the reverse chronological order the primary sorting key at all?
-My clone of the git repo gives me
+I'd agree with the goal of the patch, and I would not doubt the
+patch worked for you, but it somewhat feels wrong that you can
+say "It is Ok to run this script from a subdirectory" and that
+is the magic to allow something to work in a bare repository.
 
-$ git rev-list --pretty=format:%ct master | grep -v ^commit >A
-$ sort -k1nr A | diff -u - A
---- -   2007-11-02 18:06:00.115804000 +0100
-+++ A   2007-11-02 18:05:37.000000000 +0100
-@@ -8162,8 +8162,8 @@
- 1141461106
- 1141461098
- 1141461088
--1141457404
- 1141457396
-+1141457404
- 1141453772
- 1141453757
- 1141453684
-
-Interestingly, --date-order shows another inconsistency:
-
-$ git rev-list --date-order --pretty=format:%ct master | grep -v ^commit >Ad
-$ sort -k1nr Ad | diff -u - Ad
---- -   2007-11-02 18:27:18.091006000 +0100
-+++ Ad  2007-11-02 18:25:46.000000000 +0100
-@@ -653,8 +653,8 @@
- 1188812406
- 1188808117
- 1188770606
--1188716400
- 1188716027
-+1188716400
- 1188677727
- 1188668216
- 1188644991
-@@ -8162,8 +8162,8 @@
- 1141461106
- 1141461098
- 1141461088
--1141457404
- 1141457396
-+1141457404
- 1141453772
- 1141453757
- 1141453684
-
-This is "git version 1.5.3.5.474.g3e4bb", both repo and executables.
-
-It looks like there is either a bug or the sorting criterion is subtly
-different.
-
-> "rev-list --reverse" reverses that usual order and we end up
-> explaining double reversal if we use the phrase "reverse chronological
-> order" to describe the normal order.
-
-Well, I'd say the current synopsis would be fine if the default ordering
-really were the commit date.  The synopsis should be concise, it's good
-enough if the Description clears potential doubts.
-
-Cheers,
-Ralf
+Care to share your insights on what is going on?
