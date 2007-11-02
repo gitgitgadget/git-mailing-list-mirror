@@ -1,8 +1,7 @@
 From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH 2/2] git-diff: Respect core.whitespace.{space-indent,space-before-tab,trailing}.
-Date: Sat,  3 Nov 2007 02:08:13 +1100
-Message-ID: <11940160942802-git-send-email-dsymonds@gmail.com>
-References: <11940160932021-git-send-email-dsymonds@gmail.com>
+Subject: [PATCH 1/2] Implement parsing for new core.whitespace.* options.
+Date: Sat,  3 Nov 2007 02:08:12 +1100
+Message-ID: <11940160932021-git-send-email-dsymonds@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
 	David Symonds <dsymonds@gmail.com>
 To: git@vger.kernel.org
@@ -11,87 +10,138 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iny8V-0004Go-U6
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:08:40 +0100
+	id 1Iny8V-0004Go-96
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:08:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754198AbXKBPIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 11:08:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKBPIV
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:08:21 -0400
+	id S1754177AbXKBPIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 11:08:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKBPIU
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:08:20 -0400
 Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:53508 "EHLO
 	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754122AbXKBPIU (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 11:08:20 -0400
+	by vger.kernel.org with ESMTP id S1754157AbXKBPIT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 11:08:19 -0400
 X-IronPort-Anti-Spam-Filtered: true
 X-IronPort-Anti-Spam-Result: Aq4HAMfYKkd5LCBH/2dsb2JhbACBW45c
 X-IronPort-AV: E=Sophos;i="4.21,363,1188743400"; 
-   d="scan'208";a="180068628"
+   d="scan'208";a="180068624"
 Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
-  by ipmail03.adl2.internode.on.net with ESMTP; 03 Nov 2007 01:38:17 +1030
+  by ipmail03.adl2.internode.on.net with ESMTP; 03 Nov 2007 01:38:16 +1030
 X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <11940160932021-git-send-email-dsymonds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63126>
+
+Each of the new core.whitespace.* options (enumerated below) can be set to one
+of:
+	* okay (default): Whitespace of this type is okay
+	* warn: Whitespace of this type should be warned about
+	* error: Whitespace of this type should raise an error
+	* autofix: Whitespace of this type should be automatically fixed
+
+The initial options are:
+	* trailing: Whitespace at the end of a line
+	* space-before-tab: SP HT sequence in the initial whitespace of a line
+	* space-indent: At least 8 spaces in a row at the start of a line
+
+Example usage:
+	[core "whitespace"]
+		trailing = autofix
+		space-before-tab = error
+		space-indent = warn
 
 Signed-off-by: David Symonds <dsymonds@gmail.com>
 ---
- diff.c |   24 ++++++++++++++++++------
- 1 files changed, 18 insertions(+), 6 deletions(-)
+ cache.h       |   16 ++++++++++++++++
+ config.c      |   28 ++++++++++++++++++++++++++++
+ environment.c |    3 +++
+ 3 files changed, 47 insertions(+), 0 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index a6aaaf7..aa86fa1 100644
---- a/diff.c
-+++ b/diff.c
-@@ -503,12 +503,15 @@ static void emit_line_with_ws(int nparents,
- 	int tail = len;
- 	int need_highlight_leading_space = 0;
- 	/* The line is a newly added line.  Does it have funny leading
--	 * whitespaces?  In indent, SP should never precede a TAB.
-+	 * whitespaces?  In indent, SP should never precede a TAB. In
-+	 * addition, under "indent with non tab" rule, there should not
-+	 * be 8 or more consecutive spaces.
- 	 */
- 	for (i = col0; i < len; i++) {
- 		if (line[i] == '\t') {
- 			last_tab_in_indent = i;
--			if (0 <= last_space_in_indent)
-+			if ((ws_mode_space_before_tab != WS_OKAY) &&
-+			    (0 <= last_space_in_indent))
- 				need_highlight_leading_space = 1;
- 		}
- 		else if (line[i] == ' ')
-@@ -516,6 +519,13 @@ static void emit_line_with_ws(int nparents,
- 		else
- 			break;
+diff --git a/cache.h b/cache.h
+index bfffa05..51e3982 100644
+--- a/cache.h
++++ b/cache.h
+@@ -602,4 +602,20 @@ extern int diff_auto_refresh_index;
+ /* match-trees.c */
+ void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
+ 
++/*
++ * whitespace rules.
++ * used by both diff and apply
++ */
++enum whitespace_mode {
++	WS_OKAY = 0,
++	WS_WARN,
++	WS_ERROR,
++	WS_AUTOFIX
++};
++extern enum whitespace_mode ws_mode_trailing;
++extern enum whitespace_mode ws_mode_space_before_tab;
++extern enum whitespace_mode ws_mode_space_indent;
++extern enum whitespace_mode git_config_whitespace_mode(const char *, const char *);
++
++
+ #endif /* CACHE_H */
+diff --git a/config.c b/config.c
+index dc3148d..8e6f252 100644
+--- a/config.c
++++ b/config.c
+@@ -297,6 +297,19 @@ int git_config_bool(const char *name, const char *value)
+ 	return git_config_int(name, value) != 0;
+ }
+ 
++enum whitespace_mode git_config_whitespace_mode(const char *name, const char *value)
++{
++	if (!strcasecmp(value, "okay"))
++		return WS_OKAY;
++	if (!strcasecmp(value, "warn"))
++		return WS_WARN;
++	if (!strcasecmp(value, "error"))
++		return WS_ERROR;
++	if (!strcasecmp(value, "autofix"))
++		return WS_AUTOFIX;
++	die("bad config value for '%s' in %s", name, config_file_name);
++}
++
+ int git_default_config(const char *var, const char *value)
+ {
+ 	/* This needs a better name */
+@@ -431,6 +444,21 @@ int git_default_config(const char *var, const char *value)
+ 		return 0;
  	}
-+	if ((ws_mode_space_indent != WS_OKAY) &&
-+	    (0 <= last_space_in_indent) &&
-+	    (last_tab_in_indent < 0) &&
-+	    (8 <= (i - col0))) {
-+		last_tab_in_indent = i;
-+		need_highlight_leading_space = 1;
+ 
++	if (!strcmp(var, "core.whitespace.trailing")) {
++		ws_mode_trailing = git_config_whitespace_mode(var, value);
++		return 0;
 +	}
- 	fputs(set, stdout);
- 	fwrite(line, col0, 1, stdout);
- 	fputs(reset, stdout);
-@@ -540,10 +550,12 @@ static void emit_line_with_ws(int nparents,
- 	tail = len - 1;
- 	if (line[tail] == '\n' && i < tail)
- 		tail--;
--	while (i < tail) {
--		if (!isspace(line[tail]))
--			break;
--		tail--;
-+	if (ws_mode_trailing != WS_OKAY) {
-+		while (i < tail) {
-+			if (!isspace(line[tail]))
-+				break;
-+			tail--;
-+		}
- 	}
- 	if ((i < tail && line[tail + 1] != '\n')) {
- 		/* This has whitespace between tail+1..len */
++
++	if (!strcmp(var, "core.whitespace.space-before-tab")) {
++		ws_mode_space_before_tab = git_config_whitespace_mode(var, value);
++		return 0;
++	}
++
++	if (!strcmp(var, "core.whitespace.space-indent")) {
++		ws_mode_space_indent = git_config_whitespace_mode(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return 0;
+ }
+diff --git a/environment.c b/environment.c
+index b5a6c69..71502fc 100644
+--- a/environment.c
++++ b/environment.c
+@@ -35,6 +35,9 @@ int pager_in_use;
+ int pager_use_color = 1;
+ char *editor_program;
+ int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
++enum whitespace_mode ws_mode_trailing = WS_OKAY;
++enum whitespace_mode ws_mode_space_before_tab = WS_OKAY;
++enum whitespace_mode ws_mode_space_indent = WS_OKAY;
+ 
+ /* This is set by setup_git_dir_gently() and/or git_default_config() */
+ char *git_work_tree_cfg;
 -- 
 1.5.3.1
