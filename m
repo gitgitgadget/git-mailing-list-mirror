@@ -1,94 +1,67 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 1/4] Add testcase for ammending and fixing author in
-	git commit.
-Date: Fri, 02 Nov 2007 17:13:50 -0400
-Message-ID: <1194038030.25288.20.camel@hinata.boston.redhat.com>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com>
-	 <7vy7dg1kdg.fsf@gitster.siamese.dyndns.org>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH 2/2] Support "history replay" for git log commands
+Date: Fri, 2 Nov 2007 14:17:26 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0711021416450.3342@woody.linux-foundation.org>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+ <18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+ <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+ <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+ <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+ <alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021333050.3342@woody.linux-foundation.org>
+ <7v4pg41hq0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 22:15:22 2007
+X-From: git-owner@vger.kernel.org Fri Nov 02 22:18:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io3rD-00054t-Dc
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 22:15:11 +0100
+	id 1Io3uN-0005qe-QY
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 22:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303AbXKBVO5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 17:14:57 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752272AbXKBVO4
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 17:14:56 -0400
-Received: from mx1.redhat.com ([66.187.233.31]:35035 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752111AbXKBVO4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 17:14:56 -0400
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA2LDvDI011481;
-	Fri, 2 Nov 2007 17:13:57 -0400
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA2LDupw007224;
-	Fri, 2 Nov 2007 17:13:56 -0400
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA2LDt9W007974;
-	Fri, 2 Nov 2007 17:13:55 -0400
-In-Reply-To: <7vy7dg1kdg.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1754048AbXKBVSA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 17:18:00 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752410AbXKBVSA
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 17:18:00 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:50870 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753702AbXKBVR7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 17:17:59 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA2LHRjx031773
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 2 Nov 2007 14:17:28 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA2LHQim011367;
+	Fri, 2 Nov 2007 14:17:26 -0700
+In-Reply-To: <7v4pg41hq0.fsf@gitster.siamese.dyndns.org>
+X-Spam-Status: No, hits=-3.231 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63177>
 
-On Fri, 2007-11-02 at 13:07 -0700, Junio C Hamano wrote:
-> Kristian H=C3=B8gsberg <krh@redhat.com> writes:
->=20
-> > Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
-> > ---
-> >  t/t7501-commit.sh |   10 ++++++++++
-> >  1 files changed, 10 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-> > index b151b51..3f2112a 100644
-> > --- a/t/t7501-commit.sh
-> > +++ b/t/t7501-commit.sh
-> > @@ -163,4 +163,14 @@ test_expect_success 'partial commit that invol=
-ves removal (3)' '
-> > =20
-> >  '
-> > =20
-> > +author=3D"The Real Author <someguy@his.email.org>"
-> > +test_expect_success 'amend commit to fix author' '
-> > +
-> > +	git reset --hard
-> > +	git cat-file -p HEAD | sed -e "s/author.*>/author $author/" > exp=
-ected &&
-> > +	git commit --amend --author=3D"$author" &&
-> > +	git cat-file -p HEAD > current &&
-> > +	diff expected current
-> > +=09
-> > +'
-> >  test_done
->=20
-> This can't be right.  How are you ignoring the differences in
-> committer dates?
 
-t/test-lib.sh fixes GIT_COMMITTER_DATE so all commits have the date
 
-committer C O Mitter <committer@example.com> 1112911993 -0700
+On Fri, 2 Nov 2007, Junio C Hamano wrote:
+> 
+> Can one iteration of loop in log_tree_commit() smudge more
+> than one commits with FORCE_REPLAY?  Maybe make the
+> trigger_replay a counter and count down in this loop until we
+> find that many commits that have the FORCE_REPLAY flag?
 
-unless you use test_tick.
+Good point, and yes, that sounds like the right thing to do.
 
-> By the way, I _think_ git-commit.sh allows fixing author name/email
-> without molesting the author timestamp (i.e. takes it from the
-> amended commit).  That should probably be checked with the test
-> as well.
-
-You're right, I need to pick GIT_AUTHOR_DATE from the ammended commit.
-Ok, I'll need to rewrite determine_author_info() a little bit.  I might
-get an update patch out this weekend.
-
-cheers,
-Kristian
+		Linus
