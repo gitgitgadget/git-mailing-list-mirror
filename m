@@ -1,65 +1,92 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Mac OS X 10.5 does not require the OLD_ICONV flag set
-Date: Fri, 2 Nov 2007 22:23:51 +1100
-Message-ID: <ee77f5c20711020423t6ce58818gcc5220b6427ded1@mail.gmail.com>
-References: <1193971102-61907-1-git-send-email-blaker@gmail.com>
-	 <7v4pg55893.fsf@gitster.siamese.dyndns.org>
-	 <ee77f5c20711020319l26b4a8c1r99576dc29ea504d8@mail.gmail.com>
-	 <7vbqad3pjw.fsf@gitster.siamese.dyndns.org>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Where man git-format-patch sends me?
+Date: Fri, 02 Nov 2007 14:25:52 +0300
+Message-ID: <87odec28jj.fsf@osv.gnss.ru>
+References: <87lk9i2hkc.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0711011437440.4362@racer.site>
+	<877il22cip.fsf@osv.gnss.ru>
+	<2A9EA819-C27A-4538-A9ED-B5281D137B94@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Blake Ramsdell" <blaker@gmail.com>, git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 02 12:24:09 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 12:26:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InudD-0001ZM-V9
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 12:24:08 +0100
+	id 1InufO-00021T-Bk
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 12:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753325AbXKBLXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 07:23:53 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753290AbXKBLXx
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 07:23:53 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:47201 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753270AbXKBLXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 07:23:52 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so776956rvb
-        for <git@vger.kernel.org>; Fri, 02 Nov 2007 04:23:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=VXc2NJi7D8NlQBe4Wqrp6lfYEFs/+WXBcf6Gh+0r2Sw=;
-        b=YSvS48a9uJunv1M/W5ZJfcZm1icXtg901rbTjwm+ACcm+/VYc55emisuBVTqzfl7Ru+JmV8sZI7XgmLfk+NUaL2jqKA+CzGMx0smEE06Xx/DyI/y6lW+xDWzpAFGbpgf3bj+PVQBt2X5U6I2/e101G9oJ+p05ONXCa3yhFNnSmw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=L6cLVDFeI1pPhPK06qcff3lwBO3TxB5twKBVVRU/F0Gq9slVC7eaq95irdJ1sUVbFkHlIB5rse8gqe8CgCmXcX9aFIXn1QgS2hMay5fD7HsuWCAjrubGR9gnIRg2kK3dRstGdPrvXXMyZ+E6cA6e7Nf1n+1PEAozRJ/E6z5LqmY=
-Received: by 10.141.90.17 with SMTP id s17mr801138rvl.1194002631586;
-        Fri, 02 Nov 2007 04:23:51 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 04:23:51 -0700 (PDT)
-In-Reply-To: <7vbqad3pjw.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753290AbXKBL0I convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 2 Nov 2007 07:26:08 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753018AbXKBL0H
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 07:26:07 -0400
+Received: from javad.com ([216.122.176.236]:3422 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751168AbXKBL0G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 07:26:06 -0400
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lA2BPxm86907;
+	Fri, 2 Nov 2007 11:26:00 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1Inueu-0006Nn-Oc; Fri, 02 Nov 2007 14:25:52 +0300
+In-Reply-To: <2A9EA819-C27A-4538-A9ED-B5281D137B94@wincent.com> (Wincent Colaiuta's message of "Fri\, 2 Nov 2007 11\:03\:46 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63105>
 
-On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
-> "David Symonds" <dsymonds@gmail.com> writes:
+Wincent Colaiuta <win@wincent.com> writes:
+
+> El 1/11/2007, a las 16:47, Sergei Organov escribi=C3=B3:
 >
-> > Further, that comparison is going to fail as soon as the next revision
-> > of Darwin (9.0.1, etc.) is released.
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>> Hi,
+>>>
+>>> On Thu, 1 Nov 2007, Sergei Organov wrote:
+>>>
+>>>> $ man git-format-patch
+>>>> [...]
+>>>> OPTIONS
+>>>>       -p     Generate patch (see section on generating patches)
+>>>>
+>>>>       -u     Synonym for "-p".
+>>>
+>>> As you can easily see from Documentation/git-format-patch.txt, this=
+ =20
+>>> part
+>>> is generated from the file Documentation/diff-options.txt.
+>>
+>> Sorry, I did saw that, but it doesn't change anything.
+>>
+>> 1. As a user reading man git-format-patch, where do I find this =20
+>> "section
+>>   on generating patches"? In another man-page? In the html
+>>   documentation? On the moon?
+>>
+>> 2. I can't find "section on generating patches" in the man git-diff
+>>   either, and I did say this in the part of my original message you'=
+ve
+>>   snipped.
+>>
+>> So the main question remains: could you please point me to the exact
+>> place in 'Documentation/' directory where this "section on generatin=
+g
+>> patches" resides?
 >
-> Can we do something intelligent with $(shell iconv --version)
-> there instead, I wonder, then?
+> I believe the section in question is in Documentation/diff-format.txt
 
-It would probably be most appropriate for the autoconf script. Now
-that I look at configure.ac, there's already a test for iconv in
-there; is it not used?
+Ah, thank you! Now, diff-format.txt is included by
+git-diff-index/git-diff-files/git-diff-tree, but not by git-diff and
+git-format-patch. Do you think it is the right thing for the latter two
+to include diff-format as well?
 
-
-Dave.
+--=20
+Sergei.
