@@ -1,158 +1,91 @@
-From: Chris Pettitt <cpettitt@gmail.com>
-Subject: [PATCH] git-p4: Detect changes to executable bit and include them in p4 submit.
-Date: Thu,  1 Nov 2007 20:43:14 -0700
-Message-ID: <1193974994-19211-2-git-send-email-cpettitt@gmail.com>
-References: <1193974994-19211-1-git-send-email-cpettitt@gmail.com>
-Cc: Chris Pettitt <cpettitt@gmail.com>
-To: Simon Hausmann <simon@lst.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 04:43:57 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] pack-objects: get rid of an ugly cast
+Date: Thu, 01 Nov 2007 23:43:24 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0711012340330.21255@xanadu.home>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 04:44:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InnRr-0000Ey-R2
+	id 1InnRs-0000Ey-FS
 	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 04:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752486AbXKBDnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752510AbXKBDn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 23:43:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbXKBDn1
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 23:43:27 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:42498 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752461AbXKBDnY (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 1 Nov 2007 23:43:24 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752476AbXKBDnY
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 23:43:24 -0400
-Received: from wa-out-1112.google.com ([209.85.146.176]:60425 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752336AbXKBDnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 1 Nov 2007 23:43:23 -0400
-Received: by wa-out-1112.google.com with SMTP id v27so805091wah
-        for <git@vger.kernel.org>; Thu, 01 Nov 2007 20:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=4FbKkfiMnYGIlWMDNudpF07MmVSr9l9soIs5zpKZWYk=;
-        b=tUT9VB5zTLAGYFF9qE2cavMgEXhbSDM9SfhKG/JwtgeHPcZhUEDtCCPPCItrXoh7oS7c7Gcfmgb3Mn0Q/UFeY/So7er7goYsKV8Pu65XuulWFi7vATt5d8QtHPJp7Hwige7WtlGzmwixeOE91sedenTz2eyB6Fnqvq9BKNuEp2A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=P7o5n8ZZ0FOKfJIlI8zH+i3+Feby2i85rK5WXlUTqOg/ut41pXAA6OBN3ddMN7KYpEr/Uz7YbiVOAyjqkJrR156f+25wAtCYKRnS7yARqipIE1vwtMv18R/qWI3es+RdnB/3qj3V+ZNxRQr7My0X/Yn9Ah2gCclUf/jkv2kff3A=
-Received: by 10.115.58.1 with SMTP id l1mr1376481wak.1193975003446;
-        Thu, 01 Nov 2007 20:43:23 -0700 (PDT)
-Received: from localhost ( [76.236.71.63])
-        by mx.google.com with ESMTPS id n30sm3416476wag.2007.11.01.20.43.20
-        (version=SSLv3 cipher=OTHER);
-        Thu, 01 Nov 2007 20:43:21 -0700 (PDT)
-X-Mailer: git-send-email 1.5.3.4.498.g9c514
-In-Reply-To: <1193974994-19211-1-git-send-email-cpettitt@gmail.com>
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JQV00IGO10CSYF0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 01 Nov 2007 23:43:24 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63057>
 
-This changeset takes advantage of the new parseDiffTreeEntry(...) function to
-detect changes to the execute bit in the git repository.  During submit, git-p4
-now looks for changes to the executable bit and if it finds them it "reopens"
-the file in perforce, which allows it to change the file type.
+... when calling write_idx_file().
 
-The logic for adding the executable bit in perforce is straightforward: the +x
-modifier can be used. Removing the executable bit in perforce requires that the
-entire filetype be redefined (there is no way to join remove the bit with a -x
-modifier, for example). This changeset includes logic to remove the executable
-bit from the full file type while preserving the base file type and other
-modifiers.
-
-Signed-off-by: Chris Pettitt <cpettitt@gmail.com>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
- contrib/fast-import/git-p4 |   44 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 44 insertions(+), 0 deletions(-)
-
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index c7fc564..c148b5a 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -71,6 +71,31 @@ def isP4Exec(kind):
-     a plus sign, it is also executable"""
-     return (re.search(r"(^[cku]?x)|\+.*x", kind) != None)
+diff --git a/builtin-pack-objects.c b/builtin-pack-objects.c
+index 25ec65d..a9d7633 100644
+--- a/builtin-pack-objects.c
++++ b/builtin-pack-objects.c
+@@ -57,7 +57,7 @@ struct object_entry {
+  * nice "minimum seek" order.
+  */
+ static struct object_entry *objects;
+-static struct object_entry **written_list;
++static struct pack_idx_entry **written_list;
+ static uint32_t nr_objects, nr_alloc, nr_result, nr_written;
  
-+def setP4ExecBit(file, mode):
-+    # Reopens an already open file and changes the execute bit to match
-+    # the execute bit setting in the passed in mode.
-+
-+    p4Type = "+x"
-+
-+    if not isModeExec(mode):
-+        p4Type = getP4OpenedType(file)
-+        p4Type = re.sub('^([cku]?)x(.*)', '\\1\\2', p4Type)
-+        p4Type = re.sub('(.*?\+.*?)x(.*?)', '\\1\\2', p4Type)
-+        if p4Type[-1] == "+":
-+            p4Type = p4Type[0:-1]
-+
-+    system("p4 reopen -t %s %s" % (p4Type, file))
-+
-+def getP4OpenedType(file):
-+    # Returns the perforce file type for the given file.
-+
-+    result = read_pipe("p4 opened %s" % file)
-+    match = re.match(".*\((.+)\)$", result)
-+    if match:
-+        return match.group(1)
-+    else:
-+        die("Could not determine file type for %s" % file)
-+
- def diffTreePattern():
-     # This is a simple generator for the diff tree regex pattern. This could be
-     # a class variable if this and parseDiffTreeEntry were a part of a class.
-@@ -111,6 +136,14 @@ def parseDiffTreeEntry(entry):
-         }
-     return None
+ static int non_empty;
+@@ -577,7 +577,7 @@ static off_t write_one(struct sha1file *f,
+ 		e->idx.offset = 0;
+ 		return 0;
+ 	}
+-	written_list[nr_written++] = e;
++	written_list[nr_written++] = &e->idx;
  
-+def isModeExec(mode):
-+    # Returns True if the given git mode represents an executable file,
-+    # otherwise False.
-+    return mode[-3:] == "755"
-+
-+def isModeExecChanged(src_mode, dst_mode):
-+    return isModeExec(src_mode) != isModeExec(dst_mode)
-+
- def p4CmdList(cmd, stdin=None, stdin_mode='w+b'):
-     cmd = "p4 -G %s" % cmd
-     if verbose:
-@@ -538,15 +571,19 @@ class P4Submit(Command):
-         filesToAdd = set()
-         filesToDelete = set()
-         editedFiles = set()
-+        filesToChangeExecBit = {}
-         for line in diff:
-             diff = parseDiffTreeEntry(line)
-             modifier = diff['status']
-             path = diff['src']
-             if modifier == "M":
-                 system("p4 edit \"%s\"" % path)
-+                if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
-+                    filesToChangeExecBit[path] = diff['dst_mode']
-                 editedFiles.add(path)
-             elif modifier == "A":
-                 filesToAdd.add(path)
-+                filesToChangeExecBit[path] = diff['dst_mode']
-                 if path in filesToDelete:
-                     filesToDelete.remove(path)
-             elif modifier == "D":
-@@ -557,6 +594,8 @@ class P4Submit(Command):
-                 src, dest = diff['src'], diff['dst']
-                 system("p4 integrate -Dt \"%s\" \"%s\"" % (src, dest))
-                 system("p4 edit \"%s\"" % (dest))
-+                if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
-+                    filesToChangeExecBit[dest] = diff['dst_mode']
-                 os.unlink(dest)
-                 editedFiles.add(dest)
-                 filesToDelete.add(src)
-@@ -609,6 +648,11 @@ class P4Submit(Command):
-             system("p4 revert \"%s\"" % f)
-             system("p4 delete \"%s\"" % f)
+ 	/* make sure off_t is sufficiently large not to wrap */
+ 	if (offset > offset + size)
+@@ -599,7 +599,7 @@ static void write_pack_file(void)
  
-+        # Set/clear executable bits
-+        for f in filesToChangeExecBit.keys():
-+            mode = filesToChangeExecBit[f]
-+            setP4ExecBit(f, mode)
-+
-         logMessage = ""
-         if not self.directSubmit:
-             logMessage = extractLogMessageFromGitCommit(id)
--- 
-1.5.3.4.498.g9c514
+ 	if (do_progress)
+ 		progress_state = start_progress("Writing objects", nr_result);
+-	written_list = xmalloc(nr_objects * sizeof(struct object_entry *));
++	written_list = xmalloc(nr_objects * sizeof(*written_list));
+ 
+ 	do {
+ 		unsigned char sha1[20];
+@@ -651,9 +651,8 @@ static void write_pack_file(void)
+ 			umask(mode);
+ 			mode = 0444 & ~mode;
+ 
+-			idx_tmp_name = write_idx_file(NULL,
+-					(struct pack_idx_entry **) written_list,
+-					nr_written, sha1);
++			idx_tmp_name = write_idx_file(NULL, written_list,
++						      nr_written, sha1);
+ 			snprintf(tmpname, sizeof(tmpname), "%s-%s.pack",
+ 				 base_name, sha1_to_hex(sha1));
+ 			if (adjust_perm(pack_tmp_name, mode))
+@@ -677,7 +676,7 @@ static void write_pack_file(void)
+ 
+ 		/* mark written objects as written to previous pack */
+ 		for (j = 0; j < nr_written; j++) {
+-			written_list[j]->idx.offset = (off_t)-1;
++			written_list[j]->offset = (off_t)-1;
+ 		}
+ 		nr_remaining -= nr_written;
+ 	} while (nr_remaining && i < nr_objects);
