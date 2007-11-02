@@ -1,147 +1,63 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH 1/2] Implement parsing for new core.whitespace.* options.
-Date: Sat,  3 Nov 2007 02:08:12 +1100
-Message-ID: <11940160932021-git-send-email-dsymonds@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	David Symonds <dsymonds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:08:40 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Bring parse_options to the shell
+Date: Fri,  2 Nov 2007 16:09:18 +0100
+Message-ID: <1194016162-23599-1-git-send-email-madcoder@debian.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: gitster@pobox.com, torvalds@linux-foundation.org
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:09:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iny8V-0004Go-96
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:08:39 +0100
+	id 1Iny9Z-0004YH-9P
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754177AbXKBPIU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 11:08:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754169AbXKBPIU
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:08:20 -0400
-Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:53508 "EHLO
-	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754157AbXKBPIT (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 2 Nov 2007 11:08:19 -0400
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4HAMfYKkd5LCBH/2dsb2JhbACBW45c
-X-IronPort-AV: E=Sophos;i="4.21,363,1188743400"; 
-   d="scan'208";a="180068624"
-Received: from ppp121-44-32-71.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.32.71])
-  by ipmail03.adl2.internode.on.net with ESMTP; 03 Nov 2007 01:38:16 +1030
-X-Mailer: git-send-email 1.5.3.1
+	id S1754226AbXKBPJ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 11:09:26 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754163AbXKBPJ0
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:09:26 -0400
+Received: from pan.madism.org ([88.191.52.104]:50884 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754217AbXKBPJZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 11:09:25 -0400
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 8495F28147;
+	Fri,  2 Nov 2007 16:09:23 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 7C71F347A4B; Fri,  2 Nov 2007 16:09:22 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.5.1458.g2aa13-dirty
+In-Reply-To: alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org
+References: alpine.LFD.0.999.0711011129460.3342@woody.linux-foundation.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63127>
 
-Each of the new core.whitespace.* options (enumerated below) can be set to one
-of:
-	* okay (default): Whitespace of this type is okay
-	* warn: Whitespace of this type should be warned about
-	* error: Whitespace of this type should raise an error
-	* autofix: Whitespace of this type should be automatically fixed
+This is also something that itches me, so here is a proposal for a
+git-parseopt helper that can be used in shell scripts as an option
+normalizer like getopt(1) does.
 
-The initial options are:
-	* trailing: Whitespace at the end of a line
-	* space-before-tab: SP HT sequence in the initial whitespace of a line
-	* space-indent: At least 8 spaces in a row at the start of a line
+I migrated the discussed git-clean.sh to use it as a proof of concept.
 
-Example usage:
-	[core "whitespace"]
-		trailing = autofix
-		space-before-tab = error
-		space-indent = warn
-
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- cache.h       |   16 ++++++++++++++++
- config.c      |   28 ++++++++++++++++++++++++++++
- environment.c |    3 +++
- 3 files changed, 47 insertions(+), 0 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index bfffa05..51e3982 100644
---- a/cache.h
-+++ b/cache.h
-@@ -602,4 +602,20 @@ extern int diff_auto_refresh_index;
- /* match-trees.c */
- void shift_tree(const unsigned char *, const unsigned char *, unsigned char *, int);
- 
-+/*
-+ * whitespace rules.
-+ * used by both diff and apply
-+ */
-+enum whitespace_mode {
-+	WS_OKAY = 0,
-+	WS_WARN,
-+	WS_ERROR,
-+	WS_AUTOFIX
-+};
-+extern enum whitespace_mode ws_mode_trailing;
-+extern enum whitespace_mode ws_mode_space_before_tab;
-+extern enum whitespace_mode ws_mode_space_indent;
-+extern enum whitespace_mode git_config_whitespace_mode(const char *, const char *);
-+
-+
- #endif /* CACHE_H */
-diff --git a/config.c b/config.c
-index dc3148d..8e6f252 100644
---- a/config.c
-+++ b/config.c
-@@ -297,6 +297,19 @@ int git_config_bool(const char *name, const char *value)
- 	return git_config_int(name, value) != 0;
- }
- 
-+enum whitespace_mode git_config_whitespace_mode(const char *name, const char *value)
-+{
-+	if (!strcasecmp(value, "okay"))
-+		return WS_OKAY;
-+	if (!strcasecmp(value, "warn"))
-+		return WS_WARN;
-+	if (!strcasecmp(value, "error"))
-+		return WS_ERROR;
-+	if (!strcasecmp(value, "autofix"))
-+		return WS_AUTOFIX;
-+	die("bad config value for '%s' in %s", name, config_file_name);
-+}
-+
- int git_default_config(const char *var, const char *value)
- {
- 	/* This needs a better name */
-@@ -431,6 +444,21 @@ int git_default_config(const char *var, const char *value)
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "core.whitespace.trailing")) {
-+		ws_mode_trailing = git_config_whitespace_mode(var, value);
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, "core.whitespace.space-before-tab")) {
-+		ws_mode_space_before_tab = git_config_whitespace_mode(var, value);
-+		return 0;
-+	}
-+
-+	if (!strcmp(var, "core.whitespace.space-indent")) {
-+		ws_mode_space_indent = git_config_whitespace_mode(var, value);
-+		return 0;
-+	}
-+
- 	/* Add other config variables here and to Documentation/config.txt. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index b5a6c69..71502fc 100644
---- a/environment.c
-+++ b/environment.c
-@@ -35,6 +35,9 @@ int pager_in_use;
- int pager_use_color = 1;
- char *editor_program;
- int auto_crlf = 0;	/* 1: both ways, -1: only when adding git objects */
-+enum whitespace_mode ws_mode_trailing = WS_OKAY;
-+enum whitespace_mode ws_mode_space_before_tab = WS_OKAY;
-+enum whitespace_mode ws_mode_space_indent = WS_OKAY;
- 
- /* This is set by setup_git_dir_gently() and/or git_default_config() */
- char *git_work_tree_cfg;
--- 
-1.5.3.1
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
