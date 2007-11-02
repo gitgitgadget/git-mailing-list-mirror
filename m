@@ -1,87 +1,121 @@
-From: Julian Phillips <julian@quantumfyre.co.uk>
-Subject: Re: Debugging corrupt object generation
-Date: Fri, 2 Nov 2007 00:26:34 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711020018400.18429@beast.quantumfyre.co.uk>
-References: <Pine.LNX.4.64.0711012256080.17812@beast.quantumfyre.co.uk>
- <alpine.LFD.0.9999.0711011947220.21255@xanadu.home>
+From: James Bowes <jbowes@dangerouslyinc.com>
+Subject: [PATCH] gc: use parse_options
+Date: Thu, 1 Nov 2007 20:28:57 -0400
+Message-ID: <20071102002856.GB3282@crux.yyz.redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Fri Nov 02 01:26:57 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Nov 02 01:29:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InkNB-0001jN-U5
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:26:54 +0100
+	id 1InkPx-0002Em-GL
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 01:29:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754589AbXKBA0l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 1 Nov 2007 20:26:41 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754733AbXKBA0k
-	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:26:40 -0400
-Received: from electron.quantumfyre.co.uk ([87.106.55.16]:35141 "EHLO
-	electron.quantumfyre.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754375AbXKBA0j (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 1 Nov 2007 20:26:39 -0400
-Received: from neutron.quantumfyre.co.uk (neutron.datavampyre.co.uk [212.159.54.235])
-	by electron.quantumfyre.co.uk (Postfix) with ESMTP id 662B9C61D4
-	for <git@vger.kernel.org>; Fri,  2 Nov 2007 00:26:38 +0000 (GMT)
-Received: (qmail 20114 invoked by uid 103); 2 Nov 2007 00:26:37 +0000
-Received: from 192.168.0.7 by neutron.quantumfyre.co.uk (envelope-from <julian@quantumfyre.co.uk>, uid 201) with qmail-scanner-1.25st 
- (clamdscan: 0.91.2/4654. spamassassin: 3.2.1. perlscan: 1.25st.  
- Clear:RC:1(192.168.0.7):. 
- Processed in 0.030306 secs); 02 Nov 2007 00:26:37 -0000
-Received: from beast.quantumfyre.co.uk (192.168.0.7)
-  by neutron.datavampyre.co.uk with SMTP; 2 Nov 2007 00:26:37 +0000
-X-X-Sender: jp3@beast.quantumfyre.co.uk
-In-Reply-To: <alpine.LFD.0.9999.0711011947220.21255@xanadu.home>
+	id S1754968AbXKBA3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 1 Nov 2007 20:29:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754872AbXKBA3b
+	(ORCPT <rfc822;git-outgoing>); Thu, 1 Nov 2007 20:29:31 -0400
+Received: from mx1.redhat.com ([66.187.233.31]:44973 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754819AbXKBA3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 1 Nov 2007 20:29:30 -0400
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA20SxAH007289;
+	Thu, 1 Nov 2007 20:28:59 -0400
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA20Sxnf013627;
+	Thu, 1 Nov 2007 20:28:59 -0400
+Received: from crux (crux.yyz.redhat.com [10.15.16.85])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA20SwkL021239;
+	Thu, 1 Nov 2007 20:28:59 -0400
+Content-Disposition: inline
+User-Agent: Mutt/1.5.14 (2007-02-12)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63042>
 
-On Thu, 1 Nov 2007, Nicolas Pitre wrote:
+Signed-off-by: James Bowes <jbowes@dangerouslyinc.com>
+---
+ builtin-gc.c |   42 ++++++++++++++++++++----------------------
+ 1 files changed, 20 insertions(+), 22 deletions(-)
 
-> On Thu, 1 Nov 2007, Julian Phillips wrote:
->
->> After a certain commit, and attempt to use that commit generates a "fatal:
->> unable to apply delta".  This appears to be coming from unpack_delta_entry
->> in sha1_file.c.
->
-> I suppose you mean "fatal: failed to apply delta", because "unable to
-> apply delta" doesn't appear anywhere in the current source tree.
-
-I did indeed.  Read 'n' type never seems to be as reliable as copy 'n' 
-paste ...
-
->> Can anyone give me any hints as to how I find out what is causing the
->> problem?  I'm not even sure what it is that isn't working ... and all
->> attempts to replicate the problem with my test repository have failed.
->
-> Well, something is screwed for sure.  Some object you're requesting is
-> made of a delta, and that delta is bad, therefore patch_delta() returns
-> NULL (you could instrument it to determine exactly why).
-
-Ah, ok - that sounds like it might be useful.  I guess that looking at the 
-opposite side where fast-import is creating the data might also prove 
-fruitful.
-
-> Maybe fast-import hasn't flushed the needed data to the pack yet?
-
-Well, fast-import completes quite happily and outputs the normal summary 
-status.  I can look at logs and trees etc provided that I don't try and 
-look at one particular part of the tree on one particular commit.  I 
-think the problem is that I've managed to do something inside fast-import 
-that corrupts one particular tree object (though I've no idea what that 
-might be).
-
-I shall have to start instrumenting and try again.
-
-Thanks.
-
+diff --git a/builtin-gc.c b/builtin-gc.c
+index 3a2ca4f..7bb873c 100644
+--- a/builtin-gc.c
++++ b/builtin-gc.c
+@@ -12,11 +12,15 @@
+ 
+ #include "builtin.h"
+ #include "cache.h"
++#include "parse-options.h"
+ #include "run-command.h"
+ 
+ #define FAILED_RUN "failed to run %s"
+ 
+-static const char builtin_gc_usage[] = "git-gc [--prune] [--aggressive]";
++static const char * const builtin_gc_usage[] = {
++	"git-gc [options]",
++	NULL
++};
+ 
+ static int pack_refs = 1;
+ static int aggressive_window = -1;
+@@ -165,38 +169,32 @@ static int need_to_gc(void)
+ 
+ int cmd_gc(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
+ 	int prune = 0;
++	int aggressive = 0;
+ 	int auto_gc = 0;
+ 	char buf[80];
+ 
++	struct option builtin_gc_options[] = {
++		OPT_BOOLEAN(0, "prune", &prune, "prune unused objects"),
++		OPT_BOOLEAN(0, "aggressive", &aggressive, "be more thorough (increased runtime)"),
++		OPT_BOOLEAN(0, "auto", &auto_gc, "enable auto-gc mode"),
++		OPT_END()
++	};
++
+ 	git_config(gc_config);
+ 
+ 	if (pack_refs < 0)
+ 		pack_refs = !is_bare_repository();
+ 
+-	for (i = 1; i < argc; i++) {
+-		const char *arg = argv[i];
+-		if (!strcmp(arg, "--prune")) {
+-			prune = 1;
+-			continue;
+-		}
+-		if (!strcmp(arg, "--aggressive")) {
+-			append_option(argv_repack, "-f", MAX_ADD);
+-			if (aggressive_window > 0) {
+-				sprintf(buf, "--window=%d", aggressive_window);
+-				append_option(argv_repack, buf, MAX_ADD);
+-			}
+-			continue;
+-		}
+-		if (!strcmp(arg, "--auto")) {
+-			auto_gc = 1;
+-			continue;
++	parse_options(argc, argv, builtin_gc_options, builtin_gc_usage, 0);
++
++	if (aggressive) {
++		append_option(argv_repack, "-f", MAX_ADD);
++		if (aggressive_window > 0) {
++			sprintf(buf, "--window=%d", aggressive_window);
++			append_option(argv_repack, buf, MAX_ADD);
+ 		}
+-		break;
+ 	}
+-	if (i != argc)
+-		usage(builtin_gc_usage);
+ 
+ 	if (auto_gc) {
+ 		/*
 -- 
-Julian
-
-  ---
-Many changes of mind and mood; do not hesitate too long.
+1.5.3.4.1481.g854da
