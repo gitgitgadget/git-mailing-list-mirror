@@ -1,79 +1,63 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: Bring parse_options to the shell
-Date: Fri, 02 Nov 2007 16:14:53 +0100
-Message-ID: <20071102151453.GB27505@artemis.corp>
-References: <1194016162-23599-1-git-send-email-madcoder@debian.org>
+From: Baz <brian.ewins@gmail.com>
+Subject: Re: [PATCH 1/3] Implement parsing for new core.whitespace.* options.
+Date: Fri, 2 Nov 2007 15:25:53 +0000
+Message-ID: <2faad3050711020825y7d3ddc1et8d913e44d85ab989@mail.gmail.com>
+References: <11940104611948-git-send-email-dsymonds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="yNb1oOkm5a9FJOVX";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: gitster@pobox.com, torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Fri Nov 02 16:15:39 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>,
+	"Andreas Ericsson" <ae@op5.se>
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 16:27:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1InyFE-00066Q-Ep
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:15:36 +0100
+	id 1InyQA-0000zu-K2
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 16:26:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754620AbXKBPOz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 11:14:55 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754458AbXKBPOz
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:14:55 -0400
-Received: from pan.madism.org ([88.191.52.104]:52138 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753911AbXKBPOy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 11:14:54 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 6AA052814B;
-	Fri,  2 Nov 2007 16:14:53 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 0E5872892; Fri,  2 Nov 2007 16:14:53 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	torvalds@linux-foundation.org, git@vger.kernel.org
+	id S1753584AbXKBPZ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 11:25:56 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753529AbXKBPZ4
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 11:25:56 -0400
+Received: from rn-out-0910.google.com ([64.233.170.191]:34223 "EHLO
+	rn-out-0102.google.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753584AbXKBPZz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 11:25:55 -0400
+Received: by rn-out-0102.google.com with SMTP id s46so961167rnb
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 08:25:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=wq4rPjsG7asmNKUq95ui7XJLx3Yjz7DAb4aKNdeBoN4=;
+        b=KVeuAK6/DQfsnrtsKnsqW3svI1SVdjXJ1ZJVOJU7pQTiFMdZCdRd6dRgqliWl+t4ZW/if70Ejif7yV9Df+8gq0Eaw2xfyLnDJLeH1rYoLjGJn9Evwdr28SNDSAbaIb2X3QDeh7smYw/cQIoc3KHPuejlLKdTIBY9w5/dXG0KOFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=t9XKxUxovVq2uMSa5g1do5g542ZYAVn1fC0y+dEpDsJwg3ymQSu01i8EZY9DBVoKpE6VkNdbn+/41r5QL+9AD8F1xMxBJiRZj/49aKaPhx3ZgMp9TyVO5asdWEmT9LS7ZQN5j1GtQiMTvVf7pD2pxEfPuN9BE/aa/A7oeXjv09U=
+Received: by 10.142.158.17 with SMTP id g17mr507996wfe.1194017153562;
+        Fri, 02 Nov 2007 08:25:53 -0700 (PDT)
+Received: by 10.142.43.18 with HTTP; Fri, 2 Nov 2007 08:25:53 -0700 (PDT)
+In-Reply-To: <11940104611948-git-send-email-dsymonds@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <1194016162-23599-1-git-send-email-madcoder@debian.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63130>
 
+On 02/11/2007, David Symonds <dsymonds@gmail.com> wrote:
+> Each of the new core.whitespace.* options (enumerated below) can be set to one
+> of:
+>         * okay (default): Whitespace of this type is okay
+>         * warn: Whitespace of this type should be warned about
+>         * error: Whitespace of this type should raise an error
+>         * autofix: Whitespace of this type should be automatically fixed
 
---yNb1oOkm5a9FJOVX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Sorry, this is a bit bikesheddy, but shouldn't that be 'fix' rather
+than autofix? Otherwise you might want to rename the others
+'autowarn', 'autookay' etc... since the computer does them
+automatically too.
 
-On Fri, Nov 02, 2007 at 03:09:18PM +0000, Pierre Habouzit wrote:
-> This is also something that itches me, so here is a proposal for a
-> git-parseopt helper that can be used in shell scripts as an option
-> normalizer like getopt(1) does.
->=20
-> I migrated the discussed git-clean.sh to use it as a proof of concept.
-
-  Needless to say, this is fetchable from
-git://git.madism.org/git.git#ph/parseopt
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---yNb1oOkm5a9FJOVX
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHKz7tvGr7W6HudhwRAvbBAJ4zEfYTGM1zgZy+sEcCXrN1iCvUTACfQlEc
-LyddBL4tA9EeRfACPzSpc7E=
-=giwm
------END PGP SIGNATURE-----
-
---yNb1oOkm5a9FJOVX--
+Cheers,
+Baz
