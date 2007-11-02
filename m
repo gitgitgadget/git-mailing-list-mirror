@@ -1,86 +1,68 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH 1/2] War on whitespace: first, a bit of retreat.
-Date: Fri, 2 Nov 2007 22:50:36 +1100
-Message-ID: <ee77f5c20711020450hdfe064fsace9349fe6494ec9@mail.gmail.com>
-References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
-	 <ee77f5c20711020314h43290dbs8141cb3905c867@mail.gmail.com>
-	 <472AFFE4.9060004@op5.se>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 10/10] push: teach push to be quiet if local ref is strict
+ subset of remote ref
+Date: Fri, 2 Nov 2007 12:14:04 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711021213370.4362@racer.site>
+References: <1193593581312-git-send-email-prohaska@zib.de>
+ <1193593581114-git-send-email-prohaska@zib.de> <1193593581486-git-send-email-prohaska@zib.de>
+ <11935935812185-git-send-email-prohaska@zib.de> <11935935822846-git-send-email-prohaska@zib.de>
+ <11935935821136-git-send-email-prohaska@zib.de> <11935935823045-git-send-email-prohaska@zib.de>
+ <11935935821800-git-send-email-prohaska@zib.de> <11935935823496-git-send-email-prohaska@zib.de>
+ <11935935821192-git-send-email-prohaska@zib.de> <7vfxztm2dx.fsf@gitster.siamese.dyndns.org>
+ <52171BF7-50E2-473E-A0BD-CB64D38FD502@zib.de> <7vejfcl8aj.fsf@gitster.siamese.dyndns.org>
+ <F5F68690-68A3-4AFC-A79C-FF02910F0359@zib.de> <7v8x5jiseh.fsf@gitster.siamese.dyndns.org>
+ <B3C76DB8-076D-4C43-AC28-99119A05325C@z ib.de> <7vve8nglrt.fsf@gitster.siamese.dyndns.org>
+ <B16F7DA1-E3E5-47A4-AFD3-6680741F38F1@zib.de> <7vlk9jgeee.fsf@gitster.siamese.dyndns.org>
+ <0C176853-8848-46C8-AD7A-97F73274DC29@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Brian Downing" <bdowning@lavos.net>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Nov 02 12:51:02 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Nov 02 13:15:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Inv33-0007Gh-R3
-	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 12:50:50 +0100
+	id 1InvQb-00044R-JU
+	for gcvg-git-2@gmane.org; Fri, 02 Nov 2007 13:15:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754748AbXKBLui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 07:50:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754762AbXKBLui
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 07:50:38 -0400
-Received: from rv-out-0910.google.com ([209.85.198.188]:23421 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753247AbXKBLuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 07:50:37 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so782027rvb
-        for <git@vger.kernel.org>; Fri, 02 Nov 2007 04:50:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=qGfkTXDb11TpuGJDtxsiPitAUC5LRMzI5qqdlT7hwfU=;
-        b=nR86SlHQmMbAtJdN7Aw9knD2iDDafDbXfDYw9v7OuhgIHr3O5SB8k+lzH+LX6UL6D30Gx5+jLTAp04CbxUcjV5UTICq0VQw0d6NtM53W+MIxMitcxwpJy3sOS0GqQWeFsN5Ae/d/UF8OEf52re09KtDj6lAaz3UWi0Y+oSjzs/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mAm9zxMmg1WIWf2fI3ZCtANWaToGNSGm9VLxv7cJq6mdFKunH19yGwVVVJUwusUnrnVbZM1NzJ1B1VZCI/hDQ7fyRw8b1XH2rXA5YSdQROmefo7n38b/FMaiSbhntgccPFqc/Y3XS14ZGjCJEyka1FqjUlynyFuafsRYF2czHgY=
-Received: by 10.141.20.7 with SMTP id x7mr825809rvi.1194004236732;
-        Fri, 02 Nov 2007 04:50:36 -0700 (PDT)
-Received: by 10.141.115.4 with HTTP; Fri, 2 Nov 2007 04:50:36 -0700 (PDT)
-In-Reply-To: <472AFFE4.9060004@op5.se>
-Content-Disposition: inline
+	id S1753045AbXKBMOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 08:14:52 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753506AbXKBMOw
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 08:14:52 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37373 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753018AbXKBMOv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 08:14:51 -0400
+Received: (qmail invoked by alias); 02 Nov 2007 12:14:49 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp052) with SMTP; 02 Nov 2007 13:14:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18GQuhbrKoGOspHzfxj15MO0S3d1VHizz6aDHKgMN
+	oNi8qu39wO+xAh
+X-X-Sender: gene099@racer.site
+In-Reply-To: <0C176853-8848-46C8-AD7A-97F73274DC29@wincent.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63108>
 
-On 11/2/07, Andreas Ericsson <ae@op5.se> wrote:
-> David Symonds wrote:
-> > On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
-> >> This introduces core.whitespace configuration variable that lets
-> >> you specify the definition of "whitespace error".
-> >>
-> >> Currently there are two kinds of whitespace errors defined:
-> >>
-> >>  * trailing-space: trailing whitespaces at the end of the line.
-> >>
-> >>  * space-before-tab: a SP appears immediately before HT in the
-> >>    indent part of the line.
-> >
-> >>         [core]
-> >>                 whitespace = -trailing-space
-> >
-> > Could I suggest naming the option 'whitespaceError', so it's clearer
-> > that it's a negative setting?
-> >
->
-> Which would also open the window for "WhitespaceWarning" and "WhitespaceAutofix"
-> later on, using the same semantics.
+Hi,
 
-Maybe cut straight to the chase:
+On Fri, 2 Nov 2007, Wincent Colaiuta wrote:
 
-[core]
-        whitespace.trailing = error
-        whitespace.space-before-tab = error
-        whitespace.8-spaces = warn
+> Of course, it's too late too change now, but it would be nice if the 
+> mirror of "fetch" were "send". (I know it's been commented in the past 
+> that the fact that "push" and "pull" aren't mirror operations has 
+> surprised quite a few people.)
 
-There'd be at least "error", "warn"; "okay" and "autofix" would be
-other sensible values. I'm willing to help code this up if this sounds
-good.
+Could you please just do
 
+	git config --global alias.send push
 
-Dave.
+and be done with it?
+
+Hth,
+Dscho
