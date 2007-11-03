@@ -1,106 +1,76 @@
 From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Reuse previous annotation when overwriting a tag
-Date: Sat, 3 Nov 2007 13:10:02 +0100
+Subject: Re: [PATCH] Don't require working tree for git-rm
+Date: Sat, 3 Nov 2007 13:11:50 +0100
 Organization: glandium.org
-Message-ID: <20071103121002.GA4295@glandium.org>
-References: <1194082273-19486-1-git-send-email-mh@glandium.org> <Pine.LNX.4.64.0711031148460.4362@racer.site>
+Message-ID: <20071103121150.GB4295@glandium.org>
+References: <1194084521-12962-1-git-send-email-mh@glandium.org> <Pine.LNX.4.64.0711031155070.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 03 13:11:47 2007
+X-From: git-owner@vger.kernel.org Sat Nov 03 13:13:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoHqp-0004cB-DQ
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:11:43 +0100
+	id 1IoHsf-000508-C0
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:13:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753306AbXKCMLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 08:11:25 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbXKCMLZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:11:25 -0400
-Received: from vawad.err.no ([85.19.200.177]:36264 "EHLO vawad.err.no"
+	id S1752975AbXKCMND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 08:13:03 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXKCMND
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:13:03 -0400
+Received: from vawad.err.no ([85.19.200.177]:36336 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838AbXKCMLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 08:11:24 -0400
+	id S1752279AbXKCMNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 08:13:01 -0400
 Received: from aputeaux-153-1-33-156.w82-124.abo.wanadoo.fr ([82.124.3.156] helo=namakemono.glandium.org)
 	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.62)
 	(envelope-from <mh@glandium.org>)
-	id 1IoHqO-0001cz-S4; Sat, 03 Nov 2007 13:11:19 +0100
+	id 1IoHs1-0001mG-0Z; Sat, 03 Nov 2007 13:12:59 +0100
 Received: from mh by namakemono.glandium.org with local (Exim 4.68)
 	(envelope-from <mh@glandium.org>)
-	id 1IoHpC-0001CR-F2; Sat, 03 Nov 2007 13:10:02 +0100
+	id 1IoHqw-0001DT-Ml; Sat, 03 Nov 2007 13:11:50 +0100
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711031148460.4362@racer.site>
+In-Reply-To: <Pine.LNX.4.64.0711031155070.4362@racer.site>
 X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
 User-Agent: Mutt/1.5.16 (2007-06-11)
 X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63248>
 
-On Sat, Nov 03, 2007 at 11:54:38AM +0000, Johannes Schindelin wrote:
-> > +{
-> > +	int i;
-> > +	unsigned long size;
-> > +	enum object_type type;
-> > +	char *buf, *sp, *eol;
-> > +	size_t len;
-> > +
-> > +	sp = buf = read_sha1_file(sha1, &type, &size);
-> > +	if (!buf)
-> > +		return;
-> > +	if (!size || (type != OBJ_TAG)) {
+On Sat, Nov 03, 2007 at 11:56:17AM +0000, Johannes Schindelin wrote:
+> Hi,
 > 
-> Please lose the extra parents.
-
-What do you mean ?
-
-(...)
-> This can be done much easier with 'sp = strstr(buf, "\n\n");'.  You can 
-> even do that before the previous if(), to free() && return if there is no 
-> body.
-(...)
-> This can be done much easier with 'eob = strstr(sp, "\n" PGP_SIGNATURE 
-> "\n");'.
-
-I must say I just stole most of it in show_reference() in the same file.
-
-> > +}
-> > +
-> >  static void create_tag(const unsigned char *object, const char *tag,
-> >  		       struct strbuf *buf, int message, int sign,
-> > -			   unsigned char *result)
-> > +			unsigned char *prev, unsigned char *result)
+> On Sat, 3 Nov 2007, Mike Hommey wrote:
 > 
-> This changes indentation.
-
-I'll fix this.
-
-> > @@ -282,6 +315,10 @@ static void create_tag(const unsigned char *object, const char *tag,
-> >  		if (fd < 0)
-> >  			die("could not create file '%s': %s",
-> >  						path, strerror(errno));
-> > +
-> > +		if (prev)
-> > +			write_annotation(fd, prev);
-> > +
-> >  		write_or_die(fd, tag_template, strlen(tag_template));
+> > This allows to do git rm --cached -r directory, instead of
+> > git ls-files -z directory | git update-index --remove -z --stdin.
+> > This can be particularly useful for git-filter-branch users.
+> > 
+> > Signed-off-by: Mike Hommey <mh@glandium.org>
+> > ---
+> >  git.c |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> > 
+> > diff --git a/git.c b/git.c
+> > index 4e10581..01dcb6a 100644
+> > --- a/git.c
+> > +++ b/git.c
+> > @@ -345,7 +345,7 @@ static void handle_internal_command(int argc, const char **argv)
+> >  		{ "rev-list", cmd_rev_list, RUN_SETUP },
+> >  		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
+> >  		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+> > -		{ "rm", cmd_rm, RUN_SETUP | NEED_WORK_TREE },
+> > +		{ "rm", cmd_rm, RUN_SETUP },
 > 
-> Isn't an "else" missing before the write_or_die() here?
+> Just removing this is wrong!
+> 
+> You have to test for a working tree if "--cached" was _not_ given.  
 
-You're obviously right.
-
-(...)
-> Why not teach write_annotations() (or write_tag_body() like I would prefer 
-> it to be called) to grok a null_sha1?  It's not like we care for 
-> performance here, but rather for readability and ease of use.
-
-I would have if I had looked up for is_null_sha1() earlier ;)
-
-Cheers,
+See the other patch I sent a bit later.
 
 Mike
