@@ -1,112 +1,82 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Strange git-show-branch behavior.
-Date: Sat, 03 Nov 2007 20:46:39 +0300
-Message-ID: <871wb79q80.fsf@osv.gnss.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: *[PATCH 2/2] Let git-add--interactive read colors from .gitconfig
+Date: Sat, 03 Nov 2007 11:11:13 -0700
+Message-ID: <7vpryrxkqm.fsf@gitster.siamese.dyndns.org>
+References: <471045DA.5050902@gmail.com>
+	<19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
+	<20071013172745.GA2624@coredump.intra.peff.net>
+	<20071013175127.GA3183@coredump.intra.peff.net>
+	<47112491.8070309@gmail.com>
+	<20071015034338.GA4844@coredump.intra.peff.net>
+	<20071016194709.3c1cb3a8@danzwell.com>
+	<20071017015152.GN13801@spearce.org>
+	<20071022164048.71a3dceb@danzwell.com>
+	<20071023042702.GB28312@coredump.intra.peff.net>
+	<20071023035221.66ea537f@danzwell.com>
+	<20071102224111.7f7e165c@paradox.zwell.net>
+	<7vy7dfyl33.fsf_-_@gitster.siamese.dyndns.org>
+	<20071103022626.253dcd93@paradox.zwell.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 03 18:47:09 2007
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Dan Zwell <dzwell@zwell.net>
+X-From: git-owner@vger.kernel.org Sat Nov 03 19:11:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoN5R-0000R6-FD
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 18:47:09 +0100
+	id 1IoNTB-0007NA-Um
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 19:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbXKCRqt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 13:46:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752141AbXKCRqt
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 13:46:49 -0400
-Received: from javad.com ([216.122.176.236]:3491 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752540AbXKCRqt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 13:46:49 -0400
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lA3Hkjm73766
-	for <git@vger.kernel.org>; Sat, 3 Nov 2007 17:46:48 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1IoN4x-0007zW-NL
-	for git@vger.kernel.org; Sat, 03 Nov 2007 20:46:39 +0300
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1755070AbXKCSL1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 14:11:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755257AbXKCSL1
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 14:11:27 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:60299 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755070AbXKCSL0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 14:11:26 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DD0AD2F0;
+	Sat,  3 Nov 2007 14:11:46 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0954490E1D;
+	Sat,  3 Nov 2007 14:11:38 -0400 (EDT)
+In-Reply-To: <20071103022626.253dcd93@paradox.zwell.net> (Dan Zwell's message
+	of "Sat, 3 Nov 2007 02:26:26 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63295>
 
-Hello,
+Dan Zwell <dzwell@zwell.net> writes:
 
-I need to ask about git-show-branch once again as I really can't
-understand its behavior myself. Could please anybody either confirm bug(s) in
-git-show-branch, or explain why does it work this way.
+> Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> In addition to a small matter of testing, a more practical issue
+>> would be to add PAGER support there, I think.
+>
+> You mean in general, so that users can view a hunk in the PAGER, then
+> be prompted for what to do with it? (Because it doesn't solve the color
+> problems, because calling "diff --color" here creates other problems.)
 
-Consider its invocation in a toy repository that has total 6 commits, as
-can be seen from this output:
+Yes.  I see it a much bigger problem that we let a long hunk
+scroll off the top of the screen then ask the user what to do
+with it, than any coloring of diff.
 
-$ git branch
-* master
-  mybranch
-$ git rev-list master mybranch --pretty=oneline
-e9217caffebd6311073867d410f0c6e46910a13d Go to sleep
-5f19837be87493e9b284fe7db03f00f23d006d2e Merged mybranch
-2e2a4956db9737faf5f4f296b895500fafab7350 Some fun.
-6478a15c48b0a7ce28069310ff5e51f95b250c7c Some work.
-48d3660dc2005471c27f1d5b09d334885b612380 Commit message
-2c14c05709bde3c1a7bbdd7effbf73a5667fa265 Initial commit
-$
+> ... but it does not highlight
+> whitespace at the end of lines or space/tab errors.
 
-Or, using git-show-branch itself:
+No, but you can make it so if you want.
 
-$ git-show-branch --more=9 master
-[master] Go to sleep
-[master^] Merged mybranch
-[master^^2] Some work.
-[master~2] Some fun.
-[master~3] Commit message
-[master~4] Initial commit
-$
-
-[NOTE: the format of this output contradicts the manual page, but it's
- not the topic of this post]
-
-Now comes the confusion:
-
-$ git-show-branch --more=9 master mybranch
-* [master] Go to sleep
- ! [mybranch] Some work.
---
-*  [master] Go to sleep
-*+ [mybranch] Some work.
-*  [master~2] Some fun.
-*+ [master~3] Commit message
-*+ [master~4] Initial commit
-$
-
-In this output, why git doesn't show the merge commit having "Merged
-mybranch" commit message?
-
-Yet another confusion: 
-
-$ git-show-branch master mybranch
-* [master] Go to sleep
- ! [mybranch] Some work.
---
-*  [master] Go to sleep
-*+ [mybranch] Some work.
-$
-
-Why does it stop at "Some work." commit? The manual page says: "Usually
-the command stops output upon showing the commit that is the common
-ancestor of all the branches.", so I'd expect it should go down to
-"Commit message" commit that is the fork point.
-
-$ git --version
-git version 1.5.3.5.529.ge3d6d
-$
-
-[The version is from today's master, but I tried with git version 1.5.3.4
-as well, and with the same result]
-
--- 
-Sergei.
+Personally, I think it is not so useful for "add -i" to do so,
+as it is too late in the workflow, unless you add it ways to let
+you edit and fix the whitespace errors.
