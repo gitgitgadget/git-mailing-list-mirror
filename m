@@ -1,70 +1,62 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Git-windows and git-svn?
-Date: Sat, 03 Nov 2007 09:23:20 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <472C2FF8.2000603@obry.net>
-References: <fgg6cd$3ep$1@ger.gmane.org> <472BABFA.6030200@obry.net> <A35C7C2D-A829-4A16-B81B-8A6DE01FE5DB@zib.de> <472C211C.90907@obry.net> <EE16FE19-8C6C-4438-8E6E-EA6B87A898A7@zib.de> <72D5CB06-9067-47C4-ABDF-4E1F6F4A679D@zib.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] New script: git-changelog.perl - revised
+Date: Sat, 03 Nov 2007 09:36:25 +0100
+Message-ID: <472C3309.70109@op5.se>
+References: <67837cd60711021303q488e0873lea363b93fc90d591@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Abdelrazak Younes <younes.a@free.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sat Nov 03 09:23:43 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ronald Landheer-Cieslak <ronald@landheer-cieslak.com>
+X-From: git-owner@vger.kernel.org Sat Nov 03 09:36:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoEIA-0004w2-Io
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 09:23:43 +0100
+	id 1IoEUo-0006o8-OS
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 09:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757024AbXKCIX2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 04:23:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757063AbXKCIX2
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 04:23:28 -0400
-Received: from smtp27.orange.fr ([80.12.242.95]:61866 "EHLO smtp27.orange.fr"
+	id S1756701AbXKCIgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 04:36:32 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756313AbXKCIgb
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 04:36:31 -0400
+Received: from mail.op5.se ([193.201.96.20]:48315 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756937AbXKCIX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 04:23:27 -0400
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2712.orange.fr (SMTP Server) with ESMTP id 655031C0008A
-	for <git@vger.kernel.org>; Sat,  3 Nov 2007 09:23:26 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-56-12.w82-120.abo.wanadoo.fr [82.120.25.12])
-	by mwinf2712.orange.fr (SMTP Server) with ESMTP id 157AD1C00087;
-	Sat,  3 Nov 2007 09:23:26 +0100 (CET)
-X-ME-UUID: 20071103082326880.157AD1C00087@mwinf2712.orange.fr
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <72D5CB06-9067-47C4-ABDF-4E1F6F4A679D@zib.de>
-X-Enigmail-Version: 0.95.5
+	id S1755463AbXKCIgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 04:36:31 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 8590F17306D1;
+	Sat,  3 Nov 2007 09:36:26 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HjvVKgXzlfqg; Sat,  3 Nov 2007 09:36:25 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id A9BE017306B9;
+	Sat,  3 Nov 2007 09:36:24 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <67837cd60711021303q488e0873lea363b93fc90d591@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63219>
 
-Steffen Prohaska a =E9crit :
-> "What crappy tool are you suggesting to use. It's not
-> even capable of cloning it's own development repository.
-> I'll not use that tool. Don't steal my time."
+Ronald Landheer-Cieslak wrote:
+>
+> This is also available through git at
+> git://vlinder.landheer-cieslak.com/git/git.git#topic/git-log-changelog
+> 
 
-Well it's not because people don't understand how Cygwin is working tha=
-t
-it is to be taken for granted that Cygwin/Git is crap! As I said git sv=
-n
-is only working on Cywgin AFAIK. I'm using Cygwin/Git on many
-repositories without problem. So experience may vary :)
+This mode of specifying a repository + branch was just thoroughly shot
+down in a list discussion, and git certainly doesn't grok it. I'd be a
+happier fella if you didn't use it.
 
-Cygwin is by far the best toolset for Windows developers who don't want
-to mess with plain (read very limited) Windows environment.
-
-Pascal.
-
---=20
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
