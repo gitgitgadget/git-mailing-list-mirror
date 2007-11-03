@@ -1,50 +1,56 @@
-From: Jim Meyering <jim@meyering.net>
-Subject: why the 'g' prefix on the SHA1 in git-describe output?
-Date: Sat, 03 Nov 2007 13:25:26 +0100
-Message-ID: <871wb7a53d.fsf@rho.meyering.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Reuse previous annotation when overwriting a tag
+Date: Sat, 3 Nov 2007 13:27:07 +0100
+Organization: glandium.org
+Message-ID: <20071103122707.GA7227@glandium.org>
+References: <1194082273-19486-1-git-send-email-mh@glandium.org> <Pine.LNX.4.64.0711031148460.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 03 13:25:45 2007
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 03 13:28:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoI4O-0007R4-AV
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:25:44 +0100
+	id 1IoI7A-00083I-Pg
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:28:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485AbXKCMZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 08:25:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbXKCMZ2
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:25:28 -0400
-Received: from smtp3-g19.free.fr ([212.27.42.29]:60500 "EHLO smtp3-g19.free.fr"
+	id S1753519AbXKCM2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 08:28:21 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753514AbXKCM2V
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:28:21 -0400
+Received: from vawad.err.no ([85.19.200.177]:49594 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753199AbXKCMZ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 08:25:27 -0400
-Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id C98B417B544
-	for <git@vger.kernel.org>; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
-Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
-	by smtp3-g19.free.fr (Postfix) with ESMTP id B631517B552
-	for <git@vger.kernel.org>; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
-Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
-	id 9571228740; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
+	id S1753474AbXKCM2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 08:28:21 -0400
+Received: from aputeaux-153-1-33-156.w82-124.abo.wanadoo.fr ([82.124.3.156] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IoI6n-0002JX-Qy; Sat, 03 Nov 2007 13:28:16 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IoI5j-0001uc-F4; Sat, 03 Nov 2007 13:27:07 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711031148460.4362@racer.site>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63256>
 
-Hello,
+On Sat, Nov 03, 2007 at 11:54:38AM +0000, Johannes Schindelin wrote:
+> Why not teach write_annotations() (or write_tag_body() like I would prefer 
+> it to be called) to grok a null_sha1?  It's not like we care for 
+> performance here, but rather for readability and ease of use.
 
-Can anyone tell me what motivated adding the 'g' prefix on the SHA1 in
-git-describe output?  Is there some version-parsing/comparing tool that
-misbehaves on a component like the SHA1 that would otherwise start with a
-digit but contain non-numeric bytes, too?
+By the way, I think it would be much better if this function was made
+more generic and would not write, but return an strbuf containing the
+object body. It could also be used by e.g. git-commit --amend.
 
-Why do I ask?  Because I'm using a bastardized version of GIT-VERSION-GEN
-in coreutils' build-aux/git-version-gen, and removed the 'g' to shorten
-the string by a byte.  If there's a good reason (i.e., other than vanity :-)
-for the 'g', I'll propose comments for GIT-VERSION-GEN, so others
-don't do what I've done.
+What would be the best suited place for such a function ?
 
-Jim
+Mike
