@@ -1,92 +1,50 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Reuse previous annotation when overwriting a tag
-Date: Sat, 3 Nov 2007 12:23:55 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711031219530.4362@racer.site>
-References: <1194082273-19486-1-git-send-email-mh@glandium.org>
- <Pine.LNX.4.64.0711031148460.4362@racer.site> <20071103121002.GA4295@glandium.org>
+From: Jim Meyering <jim@meyering.net>
+Subject: why the 'g' prefix on the SHA1 in git-describe output?
+Date: Sat, 03 Nov 2007 13:25:26 +0100
+Message-ID: <871wb7a53d.fsf@rho.meyering.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat Nov 03 13:25:01 2007
+Content-Type: text/plain; charset=us-ascii
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 03 13:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoI3f-0007G6-NH
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:25:00 +0100
+	id 1IoI4O-0007R4-AV
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:25:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506AbXKCMYo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 08:24:44 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753503AbXKCMYo
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:24:44 -0400
-Received: from mail.gmx.net ([213.165.64.20]:39293 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753374AbXKCMYn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 08:24:43 -0400
-Received: (qmail invoked by alias); 03 Nov 2007 12:24:41 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp054) with SMTP; 03 Nov 2007 13:24:41 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18TnYILvKwTIbZkqHeaMLMPblGuCRPtcLTfrPvIyQ
-	T8FUh2h/uMeM+K
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071103121002.GA4295@glandium.org>
-X-Y-GMX-Trusted: 0
+	id S1753485AbXKCMZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 08:25:28 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753474AbXKCMZ2
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:25:28 -0400
+Received: from smtp3-g19.free.fr ([212.27.42.29]:60500 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753199AbXKCMZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 08:25:27 -0400
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id C98B417B544
+	for <git@vger.kernel.org>; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
+Received: from mx.meyering.net (mx.meyering.net [82.230.74.64])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id B631517B552
+	for <git@vger.kernel.org>; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
+Received: by rho.meyering.net (Acme Bit-Twister, from userid 1000)
+	id 9571228740; Sat,  3 Nov 2007 13:25:26 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63255>
 
-Hi,
+Hello,
 
-On Sat, 3 Nov 2007, Mike Hommey wrote:
+Can anyone tell me what motivated adding the 'g' prefix on the SHA1 in
+git-describe output?  Is there some version-parsing/comparing tool that
+misbehaves on a component like the SHA1 that would otherwise start with a
+digit but contain non-numeric bytes, too?
 
-> On Sat, Nov 03, 2007 at 11:54:38AM +0000, Johannes Schindelin wrote:
-> > > +{
-> > > +	int i;
-> > > +	unsigned long size;
-> > > +	enum object_type type;
-> > > +	char *buf, *sp, *eol;
-> > > +	size_t len;
-> > > +
-> > > +	sp = buf = read_sha1_file(sha1, &type, &size);
-> > > +	if (!buf)
-> > > +		return;
-> > > +	if (!size || (type != OBJ_TAG)) {
-> > 
-> > Please lose the extra parents.
-> 
-> What do you mean ?
+Why do I ask?  Because I'm using a bastardized version of GIT-VERSION-GEN
+in coreutils' build-aux/git-version-gen, and removed the 'g' to shorten
+the string by a byte.  If there's a good reason (i.e., other than vanity :-)
+for the 'g', I'll propose comments for GIT-VERSION-GEN, so others
+don't do what I've done.
 
-Typo.  I meant the parens, and my fingers typed parents. D'oh.
-
-> (...)
-> > This can be done much easier with 'sp = strstr(buf, "\n\n");'.  You can 
-> > even do that before the previous if(), to free() && return if there is no 
-> > body.
-> (...)
-> > This can be done much easier with 'eob = strstr(sp, "\n" PGP_SIGNATURE 
-> > "\n");'.
-> 
-> I must say I just stole most of it in show_reference() in the same file.
-
-I agree for the "\n\n"; this was my mistake (IOW it should be fixed both 
-in show_reference() as well as in your code).
-
-But for the signature, show_reference() _has_ to go line by line, because 
-the user is allowed to specify a maximal line count.  This does not apply 
-for your function.
-
-> (...)
-> > Why not teach write_annotations() (or write_tag_body() like I would prefer 
-> > it to be called) to grok a null_sha1?  It's not like we care for 
-> > performance here, but rather for readability and ease of use.
-> 
-> I would have if I had looked up for is_null_sha1() earlier ;)
-
-Hehe.  This is what I really like about git's mailing list: it is a place 
-where you learn something new every day.
-
-Ciao,
-Dscho
+Jim
