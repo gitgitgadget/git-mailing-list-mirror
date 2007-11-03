@@ -1,69 +1,76 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: sort the options in the --help message.
-Date: Sat, 3 Nov 2007 12:42:12 -0700
-Message-ID: <20071103194212.GA28755@muzzle>
-References: <1194116014-13964-1-git-send-email-tsuna@lrde.epita.fr>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: Re: [REPLACEMENT PATCH 2/2] Add "--early-output" log flag for interactive GUI use
+Date: Sat, 3 Nov 2007 20:52:40 +0100
+Message-ID: <e5bfff550711031252g448fd886s2bd3903318829e2b@mail.gmail.com>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	 <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	 <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	 <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	 <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	 <alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Sat Nov 03 20:42:28 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Paul Mackerras" <paulus@samba.org>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sat Nov 03 20:52:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoOt2-0005vu-2P
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 20:42:28 +0100
+	id 1IoP39-0008Vi-TX
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 20:52:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756447AbXKCTmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 15:42:14 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755442AbXKCTmO
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 15:42:14 -0400
-Received: from hand.yhbt.net ([66.150.188.102]:49070 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756143AbXKCTmN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 15:42:13 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 1179F7DC0FE;
-	Sat,  3 Nov 2007 12:42:13 -0700 (PDT)
+	id S1755914AbXKCTwl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 15:52:41 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbXKCTwl
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 15:52:41 -0400
+Received: from rv-out-0910.google.com ([209.85.198.187]:52598 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754067AbXKCTwk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 15:52:40 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1118949rvb
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 12:52:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=jEmXA5ZazPtlWvRefNhYuDZvX2d3sDh9WEU31HthyFs=;
+        b=ekZcGCJkz9Eb3ONH2PS6NzK0UKBRjfjk+Hwl8xFppRq2DOJtq9JuLu9ClAgGsMWUwnHjoXvE68ImMdMqFjVtigFK5Xc6kQCKV5WK6345lOew0TX8c1Pt0OwwrXbP4EE7ffUH1gl0ipfDEoNqpzFsqX8oCzRbXaVB+i+hANARlpw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QDZJmzSu1RNQmoP+v09Cm92L6w6Pq5RdKHgNXMHwPyLZKoCB5MXDXciRrlahMqvDYF1A1rweXxbGLghCahk5IGdS9l+4Xpo55DKbnxaXJondBUmz9/BrXn2kwL/1BjAUgn7WV2XJwAmBHP9WV6f+36H+L97svnVsNAo2K4mR9+U=
+Received: by 10.140.188.10 with SMTP id l10mr1562906rvf.1194119560463;
+        Sat, 03 Nov 2007 12:52:40 -0700 (PDT)
+Received: by 10.141.203.3 with HTTP; Sat, 3 Nov 2007 12:52:40 -0700 (PDT)
+In-Reply-To: <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
 Content-Disposition: inline
-In-Reply-To: <1194116014-13964-1-git-send-email-tsuna@lrde.epita.fr>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63305>
 
-Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
-> 	* git-svn.perl (&usage): Sort the various options.
-> 
-> Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
-> ---
-> It always annoys me when I read the output of git svn <cmd> --help that the
-> options are printed in no particular order.
+On 11/3/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> Try it out, with
+>
+>         git log --early-output=2
+>
+> and look at what happens
 
-The above sentence belongs in the commit message.
+It works for me! tomorrow I will try to teach qgit to play with this new toy.
 
-Thanks,
+BTW there are some warning around that disappear adding
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+extern void sort_in_topological_order(struct commit_list ** list, int lifo);
 
->  git-svn.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index 22bb47b..4900f57 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -252,7 +252,7 @@ Usage: $0 <command> [options] [arguments]\n
->  		next if $cmd && $cmd ne $_;
->  		next if /^multi-/; # don't show deprecated commands
->  		print $fd '  ',pack('A17',$_),$cmd{$_}->[1],"\n";
-> -		foreach (keys %{$cmd{$_}->[2]}) {
-> +		foreach (sort keys %{$cmd{$_}->[2]}) {
->  			# mixed-case options are for .git/config only
->  			next if /[A-Z]/ && /^[a-z]+$/i;
->  			# prints out arguments as they should be passed:
+somewhere in commit.h
 
--- 
-Eric Wong
+Marco
