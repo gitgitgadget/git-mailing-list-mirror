@@ -1,118 +1,106 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: That new progress meter
-Date: Sat, 03 Nov 2007 13:09:53 +0100
-Message-ID: <20071103120953.GC13417@artemis.corp>
-References: <Pine.LNX.4.64.0711021836000.4362@racer.site>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] Reuse previous annotation when overwriting a tag
+Date: Sat, 3 Nov 2007 13:10:02 +0100
+Organization: glandium.org
+Message-ID: <20071103121002.GA4295@glandium.org>
+References: <1194082273-19486-1-git-send-email-mh@glandium.org> <Pine.LNX.4.64.0711031148460.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="QRj9sO5tAVLaXnSD";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 03 13:10:55 2007
+X-From: git-owner@vger.kernel.org Sat Nov 03 13:11:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoHq0-0004Sn-UZ
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:10:53 +0100
+	id 1IoHqp-0004cB-DQ
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 13:11:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753305AbXKCMJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 08:09:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753254AbXKCMJ4
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:09:56 -0400
-Received: from pan.madism.org ([88.191.52.104]:46376 "EHLO hermes.madism.org"
+	id S1753306AbXKCMLZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 08:11:25 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbXKCMLZ
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 08:11:25 -0400
+Received: from vawad.err.no ([85.19.200.177]:36264 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753241AbXKCMJy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 08:09:54 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 9D20B27EBA;
-	Sat,  3 Nov 2007 13:09:53 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 2F2118550; Sat,  3 Nov 2007 13:09:53 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org
+	id S1752838AbXKCMLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 08:11:24 -0400
+Received: from aputeaux-153-1-33-156.w82-124.abo.wanadoo.fr ([82.124.3.156] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IoHqO-0001cz-S4; Sat, 03 Nov 2007 13:11:19 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IoHpC-0001CR-F2; Sat, 03 Nov 2007 13:10:02 +0100
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711021836000.4362@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <Pine.LNX.4.64.0711031148460.4362@racer.site>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63246>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63247>
 
+On Sat, Nov 03, 2007 at 11:54:38AM +0000, Johannes Schindelin wrote:
+> > +{
+> > +	int i;
+> > +	unsigned long size;
+> > +	enum object_type type;
+> > +	char *buf, *sp, *eol;
+> > +	size_t len;
+> > +
+> > +	sp = buf = read_sha1_file(sha1, &type, &size);
+> > +	if (!buf)
+> > +		return;
+> > +	if (!size || (type != OBJ_TAG)) {
+> 
+> Please lose the extra parents.
 
---QRj9sO5tAVLaXnSD
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What do you mean ?
 
-On Fri, Nov 02, 2007 at 06:36:35PM +0000, Johannes Schindelin wrote:
-> Hi Nico,
->=20
-> that new progress meter sure is amazing and useful!
+(...)
+> This can be done much easier with 'sp = strstr(buf, "\n\n");'.  You can 
+> even do that before the previous if(), to free() && return if there is no 
+> body.
+(...)
+> This can be done much easier with 'eob = strstr(sp, "\n" PGP_SIGNATURE 
+> "\n");'.
 
-  I do agree. There seems to be some glitches though, here is how my
-output looks after a git fetch I just did on git.git:
+I must say I just stole most of it in show_reference() in the same file.
 
-    remote: Generating pack...
-    remote: Done counting 310 objects.
-    remote: Deltifying 310 objects...           | Here we have a glitch |
-    remote:  100% (310/310) done                 `-------vvvv----------'
-    remote: Total 310 (delta 160), reused 178 (delta 112)iB/s
-    Receiving objects: 100% (310/310), 379.98 KiB | 136 KiB/s, done.
-    Resolving deltas: 100% (160/160), done.
-    * refs/remotes/origin/html: fast forward to branch 'html' of git://git.=
-kernel.org/pub/scm/git/git
-      old..new: 1c70883..7ae0ab2
-    * refs/remotes/origin/maint: fast forward to branch 'maint' of git://gi=
-t.kernel.org/pub/scm/git/git
-      old..new: 136e631..f45e867
-    * refs/remotes/origin/man: fast forward to branch 'man' of git://git.ke=
-rnel.org/pub/scm/git/git
-      old..new: 9850e2e..44dd7e0
-    * refs/remotes/origin/master: fast forward to branch 'master' of git://=
-git.kernel.org/pub/scm/git/git
-      old..new: 3e4bb08..e3d6d56
-    * refs/remotes/origin/next: fast forward to branch 'next' of git://git.=
-kernel.org/pub/scm/git/git
-      old..new: a93d0b0..536f64a
-    * refs/remotes/origin/pu: forcing update to non-fast forward branch 'pu=
-' of git://git.kernel.org/pub/scm/git/git
-      old...new: eb57be8...bf1284a
+> > +}
+> > +
+> >  static void create_tag(const unsigned char *object, const char *tag,
+> >  		       struct strbuf *buf, int message, int sign,
+> > -			   unsigned char *result)
+> > +			unsigned char *prev, unsigned char *result)
+> 
+> This changes indentation.
 
-FWIW, maybe instead using spaces to erase lines we could use minimal
-vt100 codes[0] like:
+I'll fix this.
 
-Erase End of Line       <ESC>[K
-    Erases from the current cursor position to the end of the current line.=
-=20
-Erase Start of Line     <ESC>[1K
-    Erases from the current cursor position to the start of the current lin=
-e.=20
-Erase Line              <ESC>[2K
-    Erases the entire current line.
+> > @@ -282,6 +315,10 @@ static void create_tag(const unsigned char *object, const char *tag,
+> >  		if (fd < 0)
+> >  			die("could not create file '%s': %s",
+> >  						path, strerror(errno));
+> > +
+> > +		if (prev)
+> > +			write_annotation(fd, prev);
+> > +
+> >  		write_or_die(fd, tag_template, strlen(tag_template));
+> 
+> Isn't an "else" missing before the write_or_die() here?
 
-  [0] http://www.termsys.demon.co.uk/vtansi.htm
+You're obviously right.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+(...)
+> Why not teach write_annotations() (or write_tag_body() like I would prefer 
+> it to be called) to grok a null_sha1?  It's not like we care for 
+> performance here, but rather for readability and ease of use.
 
---QRj9sO5tAVLaXnSD
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+I would have if I had looked up for is_null_sha1() earlier ;)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Cheers,
 
-iD8DBQBHLGURvGr7W6HudhwRAvySAJ4iRs5f1UGHJgI4b2uZevytm1UzLQCdFVSD
-O2X/d4S+qPtFUYgYpA8kJ8M=
-=8Jiu
------END PGP SIGNATURE-----
-
---QRj9sO5tAVLaXnSD--
+Mike
