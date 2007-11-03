@@ -1,74 +1,62 @@
-From: Abdelrazak Younes <younes.a@free.fr>
-Subject: Re: Git-windows and git-svn?
-Date: Sat, 03 Nov 2007 10:33:45 +0100
-Message-ID: <fghf9u$kc3$1@ger.gmane.org>
-References: <fgg6cd$3ep$1@ger.gmane.org> <472BABFA.6030200@obry.net> <A35C7C2D-A829-4A16-B81B-8A6DE01FE5DB@zib.de> <472C211C.90907@obry.net> <EE16FE19-8C6C-4438-8E6E-EA6B87A898A7@zib.de> <72D5CB06-9067-47C4-ABDF-4E1F6F4A679D@zib.de> <472C2FF8.2000603@obry.net>
+From: Remi Vanicat <remi.vanicat@laposte.net>
+Subject: Re: git rm --cached
+Date: Sat, 03 Nov 2007 10:39:17 +0100
+Organization: none
+Message-ID: <87d4uris6y.dlv@vanicat.homelinux.org>
+References: <20071102021711.GA28703@fawkes.hq.digizenstudio.com> <87mytwiq1f.dlv@vanicat.homelinux.org> <20071102174140.vobtdjxfwsgoc040@intranet.digizenstudio.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 03 10:37:36 2007
+X-From: git-owner@vger.kernel.org Sat Nov 03 10:40:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoFRf-0008EZ-BJ
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 10:37:35 +0100
+	id 1IoFU0-0000K2-Cv
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 10:40:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769AbXKCJhU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 05:37:20 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753748AbXKCJhU
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 05:37:20 -0400
-Received: from main.gmane.org ([80.91.229.2]:44049 "EHLO ciao.gmane.org"
+	id S1753912AbXKCJjq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 05:39:46 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753850AbXKCJjq
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 05:39:46 -0400
+Received: from main.gmane.org ([80.91.229.2]:44405 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753535AbXKCJhT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 05:37:19 -0400
+	id S1752556AbXKCJjp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 05:39:45 -0400
 Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IoFOy-0001oI-5u
-	for git@vger.kernel.org; Sat, 03 Nov 2007 09:34:48 +0000
-Received: from gre92-5-82-237-199-162.fbx.proxad.net ([82.237.199.162])
+	id 1IoFTQ-0003D0-MP
+	for git@vger.kernel.org; Sat, 03 Nov 2007 09:39:24 +0000
+Received: from 77.193.75.123 ([77.193.75.123])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Nov 2007 09:34:48 +0000
-Received: from younes.a by gre92-5-82-237-199-162.fbx.proxad.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 09:39:24 +0000
+Received: from remi.vanicat by 77.193.75.123 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 03 Nov 2007 09:34:48 +0000
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 09:39:24 +0000
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: gre92-5-82-237-199-162.fbx.proxad.net
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <472C2FF8.2000603@obry.net>
+X-Gmane-NNTP-Posting-Host: 77.193.75.123
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+Cancel-Lock: sha1:nyY6sb89ZPeU5e64fxAMVYBKrI8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63222>
 
-Pascal Obry wrote:
-> Steffen Prohaska a =E9crit :
->> "What crappy tool are you suggesting to use. It's not
->> even capable of cloning it's own development repository.
->> I'll not use that tool. Don't steal my time."
->=20
-> Well it's not because people don't understand how Cygwin is working t=
-hat
-> it is to be taken for granted that Cygwin/Git is crap! As I said git =
-svn
-> is only working on Cywgin AFAIK. I'm using Cygwin/Git on many
-> repositories without problem. So experience may vary :)
+Jing Xue <jingxue@digizenstudio.com> writes:
 
-OK, thanks for the info.
+> 2. The FAQ entry "Why 'git rm' is not inverse of 'git add'" says "a
+> natural inverse of 'add' is 'un-add', and that operation is called 'r=
+m
+> --cached',..."  Now I realize that only applies to adding a new file,
+> but not changes on an existing file.
 
->=20
-> Cygwin is by far the best toolset for Windows developers who don't wa=
-nt
-> to mess with plain (read very limited) Windows environment.
+Well, so it seem that to think of "git rm --cached" as inverse to=20
+"git add" is also confusing. The FAQ entry should probably be
+rewrite. Or at least clarified.
 
-Well some people (including unix people) prefer GUI and context menus=20
-instead of command-line. I must say that I am quite used to TortoiseSVN=
 =20
-and I like it. Never had to do anything at the command-line in order to=
-=20
-use svn. Hum, I am not sure this is the right forum to say this... :-)
 
-Abdel.
+--=20
+R=C3=A9mi Vanicat
