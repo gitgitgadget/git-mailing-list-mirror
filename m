@@ -1,72 +1,89 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: [StGit RFC] A more structured way of calling git
-Date: Sat, 3 Nov 2007 10:56:36 +0000
-Message-ID: <b0943d9e0711030356j4dcd31cbl54d838107240b3d0@mail.gmail.com>
-References: <20071026192418.GA19774@diana.vm.bytemark.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Yann Dirson" <ydirson@altern.org>
-To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 11:57:00 2007
+From: Benoit SIGOURE <tsuna@lrde.epita.fr>
+Subject: Re: git-svn questions: how to clone/init non-standard layout branches/tags?
+Date: Sat, 3 Nov 2007 11:56:35 +0100
+Message-ID: <87597D7C-60FB-4CD8-BB27-7E870001A899@lrde.epita.fr>
+References: <756D5EE2-FB2C-48DB-8242-14E154E34A9C@vicaya.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-73-1031830690"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Sat Nov 03 11:57:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoGgT-0006Rq-Vs
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 11:56:58 +0100
+	id 1IoGgk-0006Vn-GC
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 11:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752403AbXKCK4i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 06:56:38 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752782AbXKCK4i
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 06:56:38 -0400
-Received: from rv-out-0910.google.com ([209.85.198.190]:44576 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752349AbXKCK4h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 3 Nov 2007 06:56:37 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1026796rvb
-        for <git@vger.kernel.org>; Sat, 03 Nov 2007 03:56:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=eRgHo3cAIQ7G6d37XRZhpQyjC4zxQzkvWXUj2O7QGdI=;
-        b=ID3qnrEYQqseqgrrO0BDzTdTRg2YkAeuGlkNurKz39oUi1N82wtjGpctCFeb5RCgj10Kgsiu7XdRRDeX5uhp+OQd0044aPTY7PZ9Md2K3+Uc9+PDo4RCmyuP6k5/BCpeDTGJ8b/GFZB14Qa6VhjZ+N1GZkoUdgLNVImsy15vFTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=t6XMKrIlHOik60V2AYKRixIfqe4NSWgOOUGotpZ9d4kz6AUsq+DHC5MHnqfxI5uSditptfBlaUxKdA99K5F2fJxWznt8TNq/9RY/NBbkf6a6QdrUF3A2bSz9thHsTXnfWJ7hkW2rUV9rcYlH/K5pbRBfGRm7MllE2jSNarNF9w8=
-Received: by 10.141.23.7 with SMTP id a7mr1382547rvj.1194087396657;
-        Sat, 03 Nov 2007 03:56:36 -0700 (PDT)
-Received: by 10.140.158.1 with HTTP; Sat, 3 Nov 2007 03:56:36 -0700 (PDT)
-In-Reply-To: <20071026192418.GA19774@diana.vm.bytemark.co.uk>
-Content-Disposition: inline
+	id S1752944AbXKCK4t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 06:56:49 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752952AbXKCK4t
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 06:56:49 -0400
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:54559 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935AbXKCK4s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 06:56:48 -0400
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IoGgH-00077S-7I; Sat, 03 Nov 2007 11:56:45 +0100
+In-Reply-To: <756D5EE2-FB2C-48DB-8242-14E154E34A9C@vicaya.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63230>
 
-On 26/10/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
-> I wanted to build an StGit command that coalesced adjacent patches to
-> a single patch. Because the end result tree would still be the same,
-> this should be doable without ever involving HEAD, the index, or the
-> worktree.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-73-1031830690
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Wouldn't HEAD need to be modified since the commit log changes
-slightly, even though the tree is the same. Or am I misunderstanding
-this?
+On Nov 3, 2007, at 9:19 AM, Luke Lu wrote:
 
-> StGit's existing infrastructure for manipulating patches
-> didn't lend itself to doing this kind of thing, though: it's not
-> modular enough. So I started to design a replacement low-level
-> interface to git, and things got slightly out of hand ... and I ended
-> up with a much bigger refactoring than I'd planned.
+> There are a few svn repositories that use non-standard layout like  
+> this:
+>
+> <path_to_project>/trunk
+> <path_to_project>/production
+> <path_to_project>/some_branch
+>
+> production and some_branch are indeed branched from trunk.
+>
+> 1. How do you init/clone svn repositories like that?
 
-Thanks for this. I'll need a bit of time to read it all and give
-feedback. In general, I welcome this refactoring.
+I seem to remember that you can pass more than one `-b' option to git- 
+svn clone, so I'd basically do (untested):
+git svn clone <url> -T trunk -b production -b some_branch
 
-I'll go through the whole e-mail in the next days and get back to you.
+> 2. Is there a way to add a new svn branch like that (say production  
+> or some_branch) to an existing git-svn repository that has trunk  
+> cloned?
 
---=20
-Catalin
+I don't know, but that'd be great indeed.
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-73-1031830690
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHLFPjwwE67wC8PUkRAnPjAJ4m4fw+iBNtCTt5pq/MDAZXshrDxgCgjtcl
+7lX61tcAq7C3K8tSXVpJSMU=
+=oUto
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-73-1031830690--
