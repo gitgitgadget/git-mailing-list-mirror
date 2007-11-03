@@ -1,205 +1,253 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: *[PATCH 2/2] Let git-add--interactive read colors from .gitconfig
-Date: Fri, 02 Nov 2007 22:06:08 -0700
-Message-ID: <7vy7dfyl33.fsf_-_@gitster.siamese.dyndns.org>
-References: <471045DA.5050902@gmail.com>
-	<19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
-	<20071013172745.GA2624@coredump.intra.peff.net>
-	<20071013175127.GA3183@coredump.intra.peff.net>
-	<47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224111.7f7e165c@paradox.zwell.net>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] git-fetch: more terse fetch output
+Date: Sat, 03 Nov 2007 01:32:48 -0400 (EDT)
+Message-ID: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Sat Nov 03 06:06:40 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 03 06:33:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoBDR-0005sd-Vp
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 06:06:38 +0100
+	id 1IoBdh-0000nm-3d
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 06:33:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754515AbXKCFGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 01:06:23 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754225AbXKCFGX
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 01:06:23 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:55174 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753032AbXKCFGW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 01:06:22 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 494CC2EF;
-	Sat,  3 Nov 2007 01:06:42 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 43AF38FA03;
-	Sat,  3 Nov 2007 01:06:33 -0400 (EDT)
-In-Reply-To: <20071102224111.7f7e165c@paradox.zwell.net> (Dan Zwell's message
-	of "Fri, 2 Nov 2007 22:41:11 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755729AbXKCFcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 01:32:51 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755851AbXKCFcv
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 01:32:51 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:20136 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755648AbXKCFcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 01:32:50 -0400
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JQX00IGN0QOQ8C0@VL-MO-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 03 Nov 2007 01:32:49 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63205>
 
-Dan Zwell <dzwell@zwell.net> writes:
 
-> One thought is that is seems a bit sloppy to call "require Term::ANSIColor"
-> within color_to_ansi_code(), but I can't really see a better way. After all,
-> that is where the methods from that library are really needed. And I don't
-> know why Git.pm should need to know whether color will end up being used.
+This makes the fetch output much more terse and prettier on a 80 column 
+display, based on a consensus reached on the mailing list.  Here's an 
+example output:
 
-How big is Term::ANSIColor, and how universally available is it?
-Implementing the ANSI "ESC [ %d m" arithmetic color.c in Perl
-ourselves does not feel too much effort, compared to the
-potential hassle of dealing with extra dependencies and
-potential drift between scripts and C implementation.
+Receiving objects: 100% (5439/5439), 1.60 MiB | 636 KiB/s, done.
+Resolving deltas: 100% (4604/4604), done.
+From git://git.kernel.org/pub/scm/git/git
+ ! [rejected]        html -> origin/html  (non fast forward)
+   136e631..f45e867  maint -> origin/maint  (fast forward)
+   9850e2e..44dd7e0  man -> origin/man  (fast forward)
+   3e4bb08..e3d6d56  master -> origin/master  (fast forward)
+   fa3665c..536f64a  next -> origin/next  (fast forward)
+ + 4f6d9d6...768326f pu -> origin/pu  (forced update)
+ * [new branch]      todo -> origin/todo
 
-We may later want to update the C side to take colors from
-terminfo, but that is a separate topic ;-)
+Some portions of this patch have been extracted from earlier proposals
+by Jeff King and Shawn Pearce.
 
-Since your 2/2 updates on your 1/2, the diff is difficult to
-comment on, so I'll comment on the combined effects.
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index ac598f8..2bce5a1 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1,6 +1,44 @@
- #!/usr/bin/perl -w
- 
- use strict;
-+use Git;
-+
-+my ($use_color, $prompt_color, $header_color, $help_color, $normal_color);
-+my $color_config = qx(git config --get color.interactive);
-+if ($color_config=~/true|always/ || -t STDOUT && $color_config=~/auto/) {
-+	$use_color = "true";
-+	# Grab the 3 main colors in git color string format, with sane
-+	# (visible) defaults:
-+	my $repo = Git->repository();
-+	my $git_prompt_color =
-+		Git::config($repo, "color.interactive.prompt")||"bold blue";
-+	my $git_header_color =
-+		Git::config($repo, "color.interactive.header")||"bold";
-+	my $git_help_color =
-+		Git::config($repo, "color.interactive.help")||"red bold";
-+
-+	$prompt_color = Git::color_to_ansi_code($git_prompt_color);
-+	$header_color = Git::color_to_ansi_code($git_header_color);
-+	$help_color   = Git::color_to_ansi_code($git_help_color);
-+	$normal_color = Git::color_to_ansi_code("normal");
-+}
-
-If we are to still use Term::ANSIColor, then we might want to
-protect ourselves from a broken installation:
-
-        if ($color_config =~ /true|always/ ||
-            -t STDOUT && $color_config =~ /auto/) {
-                eval { require Term::ANSIColor; };
-                if (!$@) {
-                        $use_color = 1;
-                        ... set up the colors ...
-                }
-                else {
-                        $use_color = 0;
-                }
-        }
-
-Then you can remove the require from Git::color_to_ansi_code().
-Your current calling convention is to require the calling site
-to be sure the module is availble; the suggested change merely
-makes it responsible to also make sure the module is loaded.
-
-Hmm?
-
-By the way, coloring the diff text itself may be just the matter
-of doing something like this (except that you now need to snarf
-OLD, NEW, METAINFO and FRAGINFO colors for diff configuration as
-well.
-
-In addition to a small matter of testing, a more practical issue
-would be to add PAGER support there, I think.
-
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
 
- git-add--interactive.perl |   32 ++++++++++++++++++++++++--------
- 1 files changed, 24 insertions(+), 8 deletions(-)
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 2bce5a1..1063a34 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -388,6 +388,27 @@ sub parse_diff {
- 	return @hunk;
+diff --git a/builtin-fetch.c b/builtin-fetch.c
+index 003ed76..960b1da 100644
+--- a/builtin-fetch.c
++++ b/builtin-fetch.c
+@@ -131,12 +131,6 @@ static struct ref *get_ref_map(struct transport *transport,
+ 	return ref_map;
  }
  
-+sub print_diff_hunk {
-+	my ($text) = @_;
-+	for (@$text) {
-+		if (!$use_color) {
-+			print;
-+			next;
-+		}
-+		if (/^\+/) {
-+			print_colored $new_color, $_;
-+		} elsif (/^\-/) {
-+			print_colored $old_color, $_;
-+		} elsif (/^\@/) {
-+			print_colored $fraginfo_color, $_;
-+		} elsif (/^ /) {
-+			print_colored $normal_color, $_;
-+		} else {
-+			print_colored $metainfo_color, $_;
-+		}
-+	}
-+}
+-static void show_new(enum object_type type, unsigned char *sha1_new)
+-{
+-	fprintf(stderr, "  %s: %s\n", typename(type),
+-		find_unique_abbrev(sha1_new, DEFAULT_ABBREV));
+-}
+-
+ static int s_update_ref(const char *action,
+ 			struct ref *ref,
+ 			int check_old)
+@@ -157,34 +151,38 @@ static int s_update_ref(const char *action,
+ 	return 0;
+ }
+ 
++#define SUMMARY_WIDTH (2 * DEFAULT_ABBREV + 3)
 +
- sub hunk_splittable {
- 	my ($text) = @_;
+ static int update_local_ref(struct ref *ref,
+-			    const char *note,
+-			    int verbose)
++			    const char *remote,
++			    int verbose,
++			    char *display)
+ {
+-	char oldh[41], newh[41];
+ 	struct commit *current = NULL, *updated;
+ 	enum object_type type;
+ 	struct branch *current_branch = branch_get(NULL);
++	const char *pretty_ref = ref->name + (
++		!prefixcmp(ref->name, "refs/heads/") ? 11 :
++		!prefixcmp(ref->name, "refs/tags/") ? 10 :
++		!prefixcmp(ref->name, "refs/remotes/") ? 13 :
++		0);
  
-@@ -610,9 +631,7 @@ sub patch_update_cmd {
- 	my ($ix, $num);
- 	my $path = $it->{VALUE};
- 	my ($head, @hunk) = parse_diff($path);
--	for (@{$head->{TEXT}}) {
--		print;
--	}
-+	print_diff_hunk($head->{TEXT});
- 	$num = scalar @hunk;
- 	$ix = 0;
++	*display = 0;
+ 	type = sha1_object_info(ref->new_sha1, NULL);
+ 	if (type < 0)
+ 		die("object %s not found", sha1_to_hex(ref->new_sha1));
  
-@@ -654,9 +673,7 @@ sub patch_update_cmd {
- 		if (hunk_splittable($hunk[$ix]{TEXT})) {
- 			$other .= '/s';
- 		}
--		for (@{$hunk[$ix]{TEXT}}) {
--			print;
+ 	if (!*ref->name) {
+ 		/* Not storing */
+-		if (verbose) {
+-			fprintf(stderr, "* fetched %s\n", note);
+-			show_new(type, ref->new_sha1);
 -		}
-+		print_diff_hunk($hunk[$ix]{TEXT});
- 		print_colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
- 		my $line = <STDIN>;
- 		if ($line) {
-@@ -794,8 +811,7 @@ sub diff_cmd {
- 				     HEADER => $status_head, },
- 				   @mods);
- 	return if (!@them);
--	system(qw(git diff-index -p --cached HEAD --),
--	       map { $_->{VALUE} } @them);
-+	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
++		if (verbose)
++			sprintf(display, "* branch %s -> FETCH_HEAD", remote);
+ 		return 0;
+ 	}
+ 
+ 	if (!hashcmp(ref->old_sha1, ref->new_sha1)) {
+-		if (verbose) {
+-			fprintf(stderr, "* %s: same as %s\n",
+-				ref->name, note);
+-			show_new(type, ref->new_sha1);
+-		}
++		if (verbose)
++			sprintf(display, "= %-*s %s -> %s", SUMMARY_WIDTH,
++				"[up to date]", remote, pretty_ref);
+ 		return 0;
+ 	}
+ 
+@@ -196,63 +194,65 @@ static int update_local_ref(struct ref *ref,
+ 		 * If this is the head, and it's not okay to update
+ 		 * the head, and the old value of the head isn't empty...
+ 		 */
+-		fprintf(stderr,
+-			" * %s: Cannot fetch into the current branch.\n",
+-			ref->name);
++		sprintf(display, "! %-*s %s -> %s  (can't  fetch in current branch)",
++			SUMMARY_WIDTH, "[rejected]", remote, pretty_ref);
+ 		return 1;
+ 	}
+ 
+ 	if (!is_null_sha1(ref->old_sha1) &&
+ 	    !prefixcmp(ref->name, "refs/tags/")) {
+-		fprintf(stderr, "* %s: updating with %s\n",
+-			ref->name, note);
+-		show_new(type, ref->new_sha1);
++		sprintf(display, "- %-*s %s -> %s",
++			SUMMARY_WIDTH, "[tag update]", remote, pretty_ref);
+ 		return s_update_ref("updating tag", ref, 0);
+ 	}
+ 
+ 	current = lookup_commit_reference_gently(ref->old_sha1, 1);
+ 	updated = lookup_commit_reference_gently(ref->new_sha1, 1);
+ 	if (!current || !updated) {
+-		char *msg;
+-		if (!strncmp(ref->name, "refs/tags/", 10))
++		const char *msg;
++		const char *what;
++		if (!strncmp(ref->name, "refs/tags/", 10)) {
+ 			msg = "storing tag";
+-		else
++			what = "[new tag]";
++		}
++		else {
+ 			msg = "storing head";
+-		fprintf(stderr, "* %s: storing %s\n",
+-			ref->name, note);
+-		show_new(type, ref->new_sha1);
++			what = "[new branch]";
++		}
++
++		sprintf(display, "* %-*s %s -> %s",
++			SUMMARY_WIDTH, what, remote, pretty_ref);
+ 		return s_update_ref(msg, ref, 0);
+ 	}
+ 
+-	strcpy(oldh, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
+-	strcpy(newh, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
+-
+ 	if (in_merge_bases(current, &updated, 1)) {
+-		fprintf(stderr, "* %s: fast forward to %s\n",
+-			ref->name, note);
+-		fprintf(stderr, "  old..new: %s..%s\n", oldh, newh);
++		char quickref[83];
++		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
++		strcat(quickref, "..");
++		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		sprintf(display, "  %-*s %s -> %s  (fast forward)",
++			SUMMARY_WIDTH, quickref, remote, pretty_ref);
+ 		return s_update_ref("fast forward", ref, 1);
+-	}
+-	if (!force && !ref->force) {
+-		fprintf(stderr,
+-			"* %s: not updating to non-fast forward %s\n",
+-			ref->name, note);
+-		fprintf(stderr,
+-			"  old...new: %s...%s\n", oldh, newh);
++	} else if (force || ref->force) {
++		char quickref[84];
++		strcpy(quickref, find_unique_abbrev(current->object.sha1, DEFAULT_ABBREV));
++		strcat(quickref, "...");
++		strcat(quickref, find_unique_abbrev(ref->new_sha1, DEFAULT_ABBREV));
++		sprintf(display, "+ %-*s %s -> %s  (forced update)",
++			SUMMARY_WIDTH, quickref, remote, pretty_ref);
++		return s_update_ref("forced-update", ref, 1);
++	} else {
++		sprintf(display, "! %-*s %s -> %s  (non fast forward)",
++			SUMMARY_WIDTH, "[rejected]", remote, pretty_ref);
+ 		return 1;
+ 	}
+-	fprintf(stderr,
+-		"* %s: forcing update to non-fast forward %s\n",
+-		ref->name, note);
+-	fprintf(stderr, "  old...new: %s...%s\n", oldh, newh);
+-	return s_update_ref("forced-update", ref, 1);
  }
  
- sub quit_cmd {
+ static void store_updated_refs(const char *url, struct ref *ref_map)
+ {
+ 	FILE *fp;
+ 	struct commit *commit;
+-	int url_len, i, note_len;
++	int url_len, i, note_len, shown_url = 0;
+ 	char note[1024];
+ 	const char *what, *kind;
+ 	struct ref *rm;
+@@ -315,8 +315,17 @@ static void store_updated_refs(const char *url, struct ref *ref_map)
+ 			rm->merge ? "" : "not-for-merge",
+ 			note);
+ 
+-		if (ref)
+-			update_local_ref(ref, note, verbose);
++		if (ref) {
++			update_local_ref(ref, what, verbose, note);
++			if (*note) {
++				if (!shown_url) {
++					fprintf(stderr, "From %.*s\n",
++							url_len, url);
++					shown_url = 1;
++				}
++				fprintf(stderr, " %s\n", note);
++			}
++		}
+ 	}
+ 	fclose(fp);
+ }
+@@ -376,9 +385,6 @@ static struct ref *find_non_local_tags(struct transport *transport,
+ 		if (!path_list_has_path(&existing_refs, ref_name) &&
+ 		    !path_list_has_path(&new_refs, ref_name) &&
+ 		    lookup_object(ref->old_sha1)) {
+-			fprintf(stderr, "Auto-following %s\n",
+-				ref_name);
+-
+ 			path_list_insert(ref_name, &new_refs);
+ 
+ 			rm = alloc_ref(strlen(ref_name) + 1);
