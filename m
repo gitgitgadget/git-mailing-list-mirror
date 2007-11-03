@@ -1,61 +1,77 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 5/5] Migrate git-am.sh to use git-rev-parse --parseopt
-Date: Sat, 3 Nov 2007 10:55:56 +0100
-Message-ID: <20071103095556.GB2853@steel.home>
-References: <1194043193-29601-1-git-send-email-madcoder@debian.org> <1194043193-29601-2-git-send-email-madcoder@debian.org> <1194043193-29601-3-git-send-email-madcoder@debian.org> <1194043193-29601-4-git-send-email-madcoder@debian.org> <1194043193-29601-5-git-send-email-madcoder@debian.org> <1194043193-29601-6-git-send-email-madcoder@debian.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: [PATCH] Add missing inside_work_tree setting in
+	setup_git_directory_gently
+Date: Sat, 3 Nov 2007 17:03:23 +0700
+Message-ID: <20071103100323.GA25305@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, torvalds@linux-foundation.org,
-	git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sat Nov 03 10:56:18 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 03 11:03:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoFjl-0003Bc-PD
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 10:56:18 +0100
+	id 1IoFr2-0004K3-5R
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 11:03:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753563AbXKCJ4B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 05:56:01 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbXKCJ4A
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 05:56:00 -0400
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:38787 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752188AbXKCJ4A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 05:56:00 -0400
-Received: from tigra.home (Fcb01.f.strato-dslnet.de [195.4.203.1])
-	by post.webmailer.de (mrclete mo37) (RZmta 14.0)
-	with ESMTP id 401b9fjA35qN8S ; Sat, 3 Nov 2007 10:55:56 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 97CB5277AE;
-	Sat,  3 Nov 2007 10:55:56 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3CE9056D22; Sat,  3 Nov 2007 10:55:56 +0100 (CET)
+	id S1759046AbXKCKDg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 06:03:36 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759032AbXKCKDg
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 06:03:36 -0400
+Received: from rv-out-0910.google.com ([209.85.198.190]:40521 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758977AbXKCKDe (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 06:03:34 -0400
+Received: by rv-out-0910.google.com with SMTP id k20so1018392rvb
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 03:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        bh=FBiU7Abph+9QqGfkUIpoqfMGQ3PyeVCg/KBsFcEjuB8=;
+        b=ZHJ9fhMx3mOa7pXrzJbDkzNLaAkjafO2n0HhZL5pIV51zsVj4iBYUUgB2xUWH/5e2xNsxEgIrA0gsWEGdr5GAj5c72xpDa9sz4bxH2zSs9zlmIV3wEnfJ95IGWtve85OFXk/zjofFkzPo0fY1C2ttBNbtGq8zlGTPWHvkw/aeso=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:subject:message-id:mime-version:content-type:content-disposition:content-transfer-encoding:user-agent;
+        b=Mtn0iRcimni3bG+iTWkFrvee4EhcKhi+V7vkm0jAGk6nIIEvwxq7wfrX50VbfP4dSQtS9N5mwtnttlXkr2x7Uwv1Dpv4AYeq0wvYwDnZdh6iO0fVIyDtWLn4Tpjv5x5EngBg3+y0jJLov71G3HHC0GqUuos5fb15My4ZqfmevpY=
+Received: by 10.141.50.17 with SMTP id c17mr1367647rvk.1194084214432;
+        Sat, 03 Nov 2007 03:03:34 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.0.14])
+        by mx.google.com with ESMTPS id l21sm7340602rvb.2007.11.03.03.03.30
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 03 Nov 2007 03:03:33 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat,  3 Nov 2007 17:03:24 +0700
 Content-Disposition: inline
-In-Reply-To: <1194043193-29601-6-git-send-email-madcoder@debian.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBtu
-X-RZG-CLASS-ID: mo07
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63226>
 
-Pierre Habouzit, Fri, Nov 02, 2007 23:39:52 +0100:
-> diff --git a/git-am.sh b/git-am.sh
-> index 2514d07..e5ed6a7 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-...
-> -	usage ;;
-> -	*)
-> -	break ;;
-> +		-i|--interactive)
-> +			interactive=t ;;
-> +		-b|--binary)
-> +			binary=t ;;
+Without this, work_tree handling code in setup_git_directory
+will be activated. If you stay in root work tree (no prefix),
+it does not harm. It does if you work from a subdirectory though.
 
-Did you really have to change the indentation?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Turns out my patch on NEED_WORK_TREE is fixing a wrong place.
+
+ setup.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/setup.c b/setup.c
+index 145eca5..6f8f769 100644
+--- a/setup.c
++++ b/setup.c
+@@ -240,6 +240,7 @@ const char *setup_git_directory_gently(int *nongit_=
+ok)
+ 			if (chdir(work_tree_env) < 0)
+ 				die ("Could not chdir to %s", work_tree_env);
+ 			strcat(buffer, "/");
++			inside_work_tree =3D 1;
+ 			return retval;
+ 		}
+ 		if (nongit_ok) {
+--=20
+1.5.3.rc4.3.gab089
