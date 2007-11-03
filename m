@@ -1,7 +1,7 @@
-From: Dan Zwell <dzwell@zwell.net>
-Subject: [PATCH 1/2] Added basic color support to git add --interactive
-Date: Fri, 2 Nov 2007 22:41:00 -0500
-Message-ID: <20071102224100.71665182@paradox.zwell.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: *[PATCH 2/2] Let git-add--interactive read colors from .gitconfig
+Date: Fri, 02 Nov 2007 22:06:08 -0700
+Message-ID: <7vy7dfyl33.fsf_-_@gitster.siamese.dyndns.org>
 References: <471045DA.5050902@gmail.com>
 	<19271E58-5C4F-41AF-8F9D-F114F36A34AC@wincent.com>
 	<20071013172745.GA2624@coredump.intra.peff.net>
@@ -13,338 +13,193 @@ References: <471045DA.5050902@gmail.com>
 	<20071022164048.71a3dceb@danzwell.com>
 	<20071023042702.GB28312@coredump.intra.peff.net>
 	<20071023035221.66ea537f@danzwell.com>
+	<20071102224111.7f7e165c@paradox.zwell.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=MP_PPvYPEyTj2rZcHem.rG.SkY
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
 	Wincent Colaiuta <win@wincent.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Jonathan del Strother <maillist@steelskies.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Frank Lichtenheld <frank@lichtenheld.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Nov 03 04:41:48 2007
+To: Dan Zwell <dzwell@zwell.net>
+X-From: git-owner@vger.kernel.org Sat Nov 03 06:06:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io9tJ-00049Y-Sf
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 04:41:46 +0100
+	id 1IoBDR-0005sd-Vp
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 06:06:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756752AbXKCDl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 23:41:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756526AbXKCDl2
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 23:41:28 -0400
-Received: from gator290.hostgator.com ([74.53.26.226]:49339 "EHLO
-	gator290.hostgator.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754864AbXKCDl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 23:41:27 -0400
-Received: from [143.44.70.185] (port=59543 helo=paradox.zwell.net)
-	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.66)
-	(envelope-from <dzwell@zwell.net>)
-	id 1Io9sr-0007Kv-RL; Fri, 02 Nov 2007 22:41:20 -0500
-In-Reply-To: <20071023035221.66ea537f@danzwell.com>
-X-Mailer: Claws Mail 3.0.0 (GTK+ 2.10.14; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator290.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - zwell.net
+	id S1754515AbXKCFGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 01:06:23 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754225AbXKCFGX
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 01:06:23 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:55174 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753032AbXKCFGW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 01:06:22 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 494CC2EF;
+	Sat,  3 Nov 2007 01:06:42 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 43AF38FA03;
+	Sat,  3 Nov 2007 01:06:33 -0400 (EDT)
+In-Reply-To: <20071102224111.7f7e165c@paradox.zwell.net> (Dan Zwell's message
+	of "Fri, 2 Nov 2007 22:41:11 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63204>
 
---MP_PPvYPEyTj2rZcHem.rG.SkY
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Dan Zwell <dzwell@zwell.net> writes:
 
-=46rom 29b34bb32846921c9432bf1b74c93d06a0667a44 Mon Sep 17 00:00:00 2001
-From: Dan Zwell <dzwell@zwell.net>
-Date: Mon, 22 Oct 2007 15:55:20 -0500
-Subject: [PATCH] Added basic color support to git add --interactive
+> One thought is that is seems a bit sloppy to call "require Term::ANSIColor"
+> within color_to_ansi_code(), but I can't really see a better way. After all,
+> that is where the methods from that library are really needed. And I don't
+> know why Git.pm should need to know whether color will end up being used.
 
-Added function "print_colored" that prints text with a color that
-is passed in. Converted many calls to "print" to being calls to
-"print_colored".
+How big is Term::ANSIColor, and how universally available is it?
+Implementing the ANSI "ESC [ %d m" arithmetic color.c in Perl
+ourselves does not feel too much effort, compared to the
+potential hassle of dealing with extra dependencies and
+potential drift between scripts and C implementation.
 
-The prompt, the header, and the help output are the 3 types of
-colorized output, and each has its own color.
+We may later want to update the C side to take colors from
+terminfo, but that is a separate topic ;-)
 
-Colorization is done through Term::ANSIColor, which is included
-with modern versions of perl. This is optional, and should not
-need to be present if color.interactive is not turned on.
+Since your 2/2 updates on your 1/2, the diff is difficult to
+comment on, so I'll comment on the combined effects.
 
-Signed-off-by: Dan Zwell <dzwell@zwell.net>
----
-I believe this version takes care of the complaints people had
-with this patch. I hope this is helpful.
-
- Documentation/config.txt  |    6 ++++++
- git-add--interactive.perl |   42 ++++++++++++++++++++++++++++++++++++------
- 2 files changed, 42 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index edf50cd..2fd783f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -382,6 +382,12 @@ color.diff.<slot>::
- 	whitespace).  The values of these variables may be specified as
- 	in color.branch.<slot>.
-=20
-+color.interactive::
-+	When true (or `always`), always use colors in `git add
-+	--interactive`.  When false (or `never`), never.  When set to
-+	`auto`, use colors only when the output is to the
-+	terminal. Defaults to false.
-+
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
 diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index ac598f8..16dc7b0 100755
+index ac598f8..2bce5a1 100755
 --- a/git-add--interactive.perl
 +++ b/git-add--interactive.perl
-@@ -2,6 +2,36 @@
-=20
- use strict;
-=20
-+my ($use_color, $prompt_color, $header_color, $help_color, $normal_color);
-+my $color_config =3D qx(git config --get color.interactive);
-+if ($color_config=3D~/true|always/ || -t STDOUT && $color_config=3D~/auto/=
-) {
-+	require Term::ANSIColor;
-+
-+	$use_color =3D "true";
-+	# Sane (visible) defaults:
-+	$prompt_color =3D Term::ANSIColor::color("blue bold");
-+	$header_color =3D Term::ANSIColor::color("bold");
-+	$help_color   =3D Term::ANSIColor::color("red bold");
-+	$normal_color =3D Term::ANSIColor::color("reset");
-+}
-+
-+sub print_colored {
-+	my $color =3D shift;
-+	my $string =3D join("", @_);
-+
-+	if ($use_color) {
-+		# Put a color code at the beginning of each line, a reset at the end
-+		# color after newlines that are not at the end of the string
-+		$string =3D~ s/(\n+)(.)/$1$color$2/g;
-+		# reset before newlines
-+		$string =3D~ s/(\n+)/$normal_color$1/g;
-+		# codes at beginning and end (if necessary):
-+		$string =3D~ s/^/$color/;
-+		$string =3D~ s/$/$normal_color/ unless $string =3D~ /\n$/;
-+	}
-+	print $string;
-+}
-+
- sub run_cmd_pipe {
- 	if ($^O eq 'MSWin32') {
- 		my @invalid =3D grep {m/[":*]/} @_;
-@@ -175,7 +205,7 @@ sub list_and_choose {
- 			if (!$opts->{LIST_FLAT}) {
- 				print "     ";
- 			}
--			print "$opts->{HEADER}\n";
-+			print_colored $header_color, "$opts->{HEADER}\n";
- 		}
- 		for ($i =3D 0; $i < @stuff; $i++) {
- 			my $chosen =3D $chosen[$i] ? '*' : ' ';
-@@ -205,7 +235,7 @@ sub list_and_choose {
-=20
- 		return if ($opts->{LIST_ONLY});
-=20
--		print $opts->{PROMPT};
-+		print_colored $prompt_color, $opts->{PROMPT};
- 		if ($opts->{SINGLETON}) {
- 			print "> ";
- 		}
-@@ -544,7 +574,7 @@ sub coalesce_overlapping_hunks {
- }
-=20
- sub help_patch_cmd {
--	print <<\EOF ;
-+	print_colored $help_color, <<\EOF ;
- y - stage this hunk
- n - do not stage this hunk
- a - stage this and all the remaining hunks
-@@ -619,7 +649,7 @@ sub patch_update_cmd {
- 		for (@{$hunk[$ix]{TEXT}}) {
- 			print;
- 		}
--		print "Stage this hunk [y/n/a/d$other/?]? ";
-+		print_colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
- 		my $line =3D <STDIN>;
- 		if ($line) {
- 			if ($line =3D~ /^y/i) {
-@@ -673,7 +703,7 @@ sub patch_update_cmd {
- 			elsif ($other =3D~ /s/ && $line =3D~ /^s/) {
- 				my @split =3D split_hunk($hunk[$ix]{TEXT});
- 				if (1 < @split) {
--					print "Split into ",
-+					print_colored $header_color, "Split into ",
- 					scalar(@split), " hunks.\n";
- 				}
- 				splice(@hunk, $ix, 1,
-@@ -766,7 +796,7 @@ sub quit_cmd {
- }
-=20
- sub help_cmd {
--	print <<\EOF ;
-+	print_colored $help_color, <<\EOF ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
---=20
-1.5.3.5.474.g3e4bb
-
-
---MP_PPvYPEyTj2rZcHem.rG.SkY
-Content-Type: text/x-patch;
- name=0001-Added-basic-color-support-to-git-add-interactive.patch
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment;
- filename=0001-Added-basic-color-support-to-git-add-interactive.patch
-
->From 29b34bb32846921c9432bf1b74c93d06a0667a44 Mon Sep 17 00:00:00 2001
-From: Dan Zwell <dzwell@zwell.net>
-Date: Mon, 22 Oct 2007 15:55:20 -0500
-Subject: [PATCH] Added basic color support to git add --interactive
-
-Added function "print_colored" that prints text with a color that
-is passed in. Converted many calls to "print" to being calls to
-"print_colored".
-
-The prompt, the header, and the help output are the 3 types of
-colorized output, and each has its own color.
-
-Colorization is done through Term::ANSIColor, which is included
-with modern versions of perl. This is optional, and should not
-need to be present if color.interactive is not turned on.
-
-Signed-off-by: Dan Zwell <dzwell@zwell.net>
----
- Documentation/config.txt  |    6 ++++++
- git-add--interactive.perl |   42 ++++++++++++++++++++++++++++++++++++------
- 2 files changed, 42 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index edf50cd..2fd783f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -382,6 +382,12 @@ color.diff.<slot>::
- 	whitespace).  The values of these variables may be specified as
- 	in color.branch.<slot>.
- 
-+color.interactive::
-+	When true (or `always`), always use colors in `git add
-+	--interactive`.  When false (or `never`), never.  When set to
-+	`auto`, use colors only when the output is to the
-+	terminal. Defaults to false.
-+
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index ac598f8..16dc7b0 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -2,6 +2,36 @@
+@@ -1,6 +1,44 @@
+ #!/usr/bin/perl -w
  
  use strict;
- 
++use Git;
++
 +my ($use_color, $prompt_color, $header_color, $help_color, $normal_color);
 +my $color_config = qx(git config --get color.interactive);
 +if ($color_config=~/true|always/ || -t STDOUT && $color_config=~/auto/) {
-+	require Term::ANSIColor;
-+
 +	$use_color = "true";
-+	# Sane (visible) defaults:
-+	$prompt_color = Term::ANSIColor::color("blue bold");
-+	$header_color = Term::ANSIColor::color("bold");
-+	$help_color   = Term::ANSIColor::color("red bold");
-+	$normal_color = Term::ANSIColor::color("reset");
++	# Grab the 3 main colors in git color string format, with sane
++	# (visible) defaults:
++	my $repo = Git->repository();
++	my $git_prompt_color =
++		Git::config($repo, "color.interactive.prompt")||"bold blue";
++	my $git_header_color =
++		Git::config($repo, "color.interactive.header")||"bold";
++	my $git_help_color =
++		Git::config($repo, "color.interactive.help")||"red bold";
++
++	$prompt_color = Git::color_to_ansi_code($git_prompt_color);
++	$header_color = Git::color_to_ansi_code($git_header_color);
++	$help_color   = Git::color_to_ansi_code($git_help_color);
++	$normal_color = Git::color_to_ansi_code("normal");
 +}
-+
-+sub print_colored {
-+	my $color = shift;
-+	my $string = join("", @_);
-+
-+	if ($use_color) {
-+		# Put a color code at the beginning of each line, a reset at the end
-+		# color after newlines that are not at the end of the string
-+		$string =~ s/(\n+)(.)/$1$color$2/g;
-+		# reset before newlines
-+		$string =~ s/(\n+)/$normal_color$1/g;
-+		# codes at beginning and end (if necessary):
-+		$string =~ s/^/$color/;
-+		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
-+	}
-+	print $string;
-+}
-+
- sub run_cmd_pipe {
- 	if ($^O eq 'MSWin32') {
- 		my @invalid = grep {m/[":*]/} @_;
-@@ -175,7 +205,7 @@ sub list_and_choose {
- 			if (!$opts->{LIST_FLAT}) {
- 				print "     ";
- 			}
--			print "$opts->{HEADER}\n";
-+			print_colored $header_color, "$opts->{HEADER}\n";
- 		}
- 		for ($i = 0; $i < @stuff; $i++) {
- 			my $chosen = $chosen[$i] ? '*' : ' ';
-@@ -205,7 +235,7 @@ sub list_and_choose {
- 
- 		return if ($opts->{LIST_ONLY});
- 
--		print $opts->{PROMPT};
-+		print_colored $prompt_color, $opts->{PROMPT};
- 		if ($opts->{SINGLETON}) {
- 			print "> ";
- 		}
-@@ -544,7 +574,7 @@ sub coalesce_overlapping_hunks {
+
+If we are to still use Term::ANSIColor, then we might want to
+protect ourselves from a broken installation:
+
+        if ($color_config =~ /true|always/ ||
+            -t STDOUT && $color_config =~ /auto/) {
+                eval { require Term::ANSIColor; };
+                if (!$@) {
+                        $use_color = 1;
+                        ... set up the colors ...
+                }
+                else {
+                        $use_color = 0;
+                }
+        }
+
+Then you can remove the require from Git::color_to_ansi_code().
+Your current calling convention is to require the calling site
+to be sure the module is availble; the suggested change merely
+makes it responsible to also make sure the module is loaded.
+
+Hmm?
+
+By the way, coloring the diff text itself may be just the matter
+of doing something like this (except that you now need to snarf
+OLD, NEW, METAINFO and FRAGINFO colors for diff configuration as
+well.
+
+In addition to a small matter of testing, a more practical issue
+would be to add PAGER support there, I think.
+
+---
+
+ git-add--interactive.perl |   32 ++++++++++++++++++++++++--------
+ 1 files changed, 24 insertions(+), 8 deletions(-)
+
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index 2bce5a1..1063a34 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -388,6 +388,27 @@ sub parse_diff {
+ 	return @hunk;
  }
  
- sub help_patch_cmd {
--	print <<\EOF ;
-+	print_colored $help_color, <<\EOF ;
- y - stage this hunk
- n - do not stage this hunk
- a - stage this and all the remaining hunks
-@@ -619,7 +649,7 @@ sub patch_update_cmd {
- 		for (@{$hunk[$ix]{TEXT}}) {
- 			print;
++sub print_diff_hunk {
++	my ($text) = @_;
++	for (@$text) {
++		if (!$use_color) {
++			print;
++			next;
++		}
++		if (/^\+/) {
++			print_colored $new_color, $_;
++		} elsif (/^\-/) {
++			print_colored $old_color, $_;
++		} elsif (/^\@/) {
++			print_colored $fraginfo_color, $_;
++		} elsif (/^ /) {
++			print_colored $normal_color, $_;
++		} else {
++			print_colored $metainfo_color, $_;
++		}
++	}
++}
++
+ sub hunk_splittable {
+ 	my ($text) = @_;
+ 
+@@ -610,9 +631,7 @@ sub patch_update_cmd {
+ 	my ($ix, $num);
+ 	my $path = $it->{VALUE};
+ 	my ($head, @hunk) = parse_diff($path);
+-	for (@{$head->{TEXT}}) {
+-		print;
+-	}
++	print_diff_hunk($head->{TEXT});
+ 	$num = scalar @hunk;
+ 	$ix = 0;
+ 
+@@ -654,9 +673,7 @@ sub patch_update_cmd {
+ 		if (hunk_splittable($hunk[$ix]{TEXT})) {
+ 			$other .= '/s';
  		}
--		print "Stage this hunk [y/n/a/d$other/?]? ";
-+		print_colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
+-		for (@{$hunk[$ix]{TEXT}}) {
+-			print;
+-		}
++		print_diff_hunk($hunk[$ix]{TEXT});
+ 		print_colored $prompt_color, "Stage this hunk [y/n/a/d$other/?]? ";
  		my $line = <STDIN>;
  		if ($line) {
- 			if ($line =~ /^y/i) {
-@@ -673,7 +703,7 @@ sub patch_update_cmd {
- 			elsif ($other =~ /s/ && $line =~ /^s/) {
- 				my @split = split_hunk($hunk[$ix]{TEXT});
- 				if (1 < @split) {
--					print "Split into ",
-+					print_colored $header_color, "Split into ",
- 					scalar(@split), " hunks.\n";
- 				}
- 				splice(@hunk, $ix, 1,
-@@ -766,7 +796,7 @@ sub quit_cmd {
+@@ -794,8 +811,7 @@ sub diff_cmd {
+ 				     HEADER => $status_head, },
+ 				   @mods);
+ 	return if (!@them);
+-	system(qw(git diff-index -p --cached HEAD --),
+-	       map { $_->{VALUE} } @them);
++	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
  }
  
- sub help_cmd {
--	print <<\EOF ;
-+	print_colored $help_color, <<\EOF ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
--- 
-1.5.3.5.474.g3e4bb
-
-
---MP_PPvYPEyTj2rZcHem.rG.SkY--
+ sub quit_cmd {
