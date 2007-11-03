@@ -1,74 +1,55 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] git-format-patch: Number patches when there are more
-	than one
-Date: Sat, 3 Nov 2007 17:03:23 +0100
-Organization: glandium.org
-Message-ID: <20071103160323.GA13284@glandium.org>
-References: <Pine.LNX.4.64.0710221044080.25221@racer.site> <1194104694-12530-1-git-send-email-mh@glandium.org> <472C9AFC.3000509@op5.se>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: That new progress meter
+Date: Sat, 3 Nov 2007 17:09:50 +0100
+Message-ID: <20071103160950.GB3175@steel.home>
+References: <Pine.LNX.4.64.0711021836000.4362@racer.site> <20071103120953.GC13417@artemis.corp> <alpine.LFD.0.9999.0711031042390.21255@xanadu.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
+Cc: Pierre Habouzit <madcoder@debian.org>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	spearce@spearce.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Nov 03 17:05:53 2007
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sat Nov 03 17:10:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoLVP-0000er-0q
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 17:05:51 +0100
+	id 1IoLZa-0001xU-8i
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 17:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756195AbXKCQFA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 12:05:00 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756186AbXKCQFA
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 12:05:00 -0400
-Received: from vawad.err.no ([85.19.200.177]:57137 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754919AbXKCQE6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 12:04:58 -0400
-Received: from aputeaux-153-1-38-67.w82-124.abo.wanadoo.fr ([82.124.130.67] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IoLUU-0006wd-Qg; Sat, 03 Nov 2007 17:04:57 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1IoLT1-0003Sl-Kp; Sat, 03 Nov 2007 17:03:23 +0100
+	id S1754718AbXKCQJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 12:09:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754595AbXKCQJy
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 12:09:54 -0400
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:29908 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754006AbXKCQJx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 12:09:53 -0400
+Received: from tigra.home (Fc897.f.strato-dslnet.de [195.4.200.151])
+	by post.webmailer.de (mrclete mo33) (RZmta 14.0)
+	with ESMTP id c01b90jA3EM3kz ; Sat, 3 Nov 2007 17:09:51 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C408E277AE;
+	Sat,  3 Nov 2007 17:09:50 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 42A5956D22; Sat,  3 Nov 2007 17:09:50 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <472C9AFC.3000509@op5.se>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+In-Reply-To: <alpine.LFD.0.9999.0711031042390.21255@xanadu.home>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWo+a6ls=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63288>
 
-On Sat, Nov 03, 2007 at 04:59:56PM +0100, Andreas Ericsson wrote:
-> Mike Hommey wrote:
->> Automagically enable numbering if we output more than one patch.
->> Signed-off-by: Mike Hommey <mh@glandium.org>
->> ---
->> On Mon, Oct 22, 2007 at 10:44:12AM +0100, Johannes Schindelin wrote:
->>> Hi,
->>>
->>> On Sun, 21 Oct 2007, Andreas Ericsson wrote:
->>>
->>>> [PATCH 1/1] looks a bit silly, and automagically handling this in 
->>>> git-format-patch makes some scripting around it a lot more pleasant.
->>> I think you should not use "-n" if you do not want to have the numbers.  
->>> In circumstances as yours, where you can have patch series larger than 
->>> one, I imagine that the "[PATCH 1/1]" bears an important information, 
->>> which is not present in "[PATCH]": this patch series contains only one 
->>> patch.
->>>
->>> IOW I do not like your patch: too much DWIDNS (Do What I Did NOT Say) for 
->>> me.
->> How about the contrary ?
->
-> Works for me. How does one turn it off?
+Nicolas Pitre, Sat, Nov 03, 2007 15:53:25 +0100:
+> The other solution is to make the remote object summary line a bit 
+> longer, but this will be effective only when remote servers are 
+> upgraded.  Might that be good enough?
 
-Does it make sense to turn it off ?
-
-Mike
+How about keeping track of the length of the last lines the remote end
+sent (recv_sideband in sideband.c)? So that we always know how much
+spaces to add to clear up to the end of line.
