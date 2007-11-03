@@ -1,82 +1,113 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-fetch: more terse fetch output
-Date: Sat, 03 Nov 2007 22:46:02 +0100
-Message-ID: <20071103214602.GF13417@artemis.corp>
-References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home> <alpine.LFD.0.999.0711031229470.15101@woody.linux-foundation.org> <alpine.LFD.0.9999.0711031627000.21255@xanadu.home> <20071103204000.GA24959@glandium.org> <alpine.LFD.0.9999.0711031645350.21255@xanadu.home> <20071103210321.GA25685@glandium.org>
+From: Guillaume Seguin <guillaume@segu.in>
+Subject: [PATCH] gitweb : disambiguate heads and tags withs the same name
+Date: Sat, 03 Nov 2007 22:40:32 +0100
+Message-ID: <1194126032.15420.4.camel@ed3n-m>
+References: <e877c31c0710280612l5d783ab0o50ce00c70b3311db@mail.gmail.com>
+	 <7v3avsmpmj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="i3lJ51RuaGWuFYNw";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Sat Nov 03 22:46:32 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: pasky@ucw.cz
+X-From: git-owner@vger.kernel.org Sat Nov 03 22:49:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoQp4-0000lV-FO
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 22:46:30 +0100
+	id 1IoQs2-0001Ru-Al
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 22:49:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754885AbXKCVqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 17:46:11 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754708AbXKCVqL
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 17:46:11 -0400
-Received: from pan.madism.org ([88.191.52.104]:46970 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754280AbXKCVqK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 17:46:10 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id B5353258FA;
-	Sat,  3 Nov 2007 22:46:08 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 65C471E420; Sat,  3 Nov 2007 22:46:02 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Mike Hommey <mh@glandium.org>, Nicolas Pitre <nico@cam.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-Content-Disposition: inline
-In-Reply-To: <20071103210321.GA25685@glandium.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1756456AbXKCVtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 17:49:20 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756258AbXKCVtU
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 17:49:20 -0400
+Received: from hu-out-0506.google.com ([72.14.214.229]:47426 "EHLO
+	hu-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756138AbXKCVtT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 17:49:19 -0400
+Received: by hu-out-0506.google.com with SMTP id 19so491000hue
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 14:49:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding:sender;
+        bh=X0qHA7LxVY29DKsRVhxoNBJqHF5JWsaMLipn8wZ50kw=;
+        b=CEdMSOSmroXOAA7mFOEjwHQpx3s8wXKkEoD9QfdRgAfy0+kXM1e7+xiSuajlmnCZAAxX4zHGZIwNjdLvLqn2CEBwBaSVgrgZgTvsBnafWNudyDVhCYga5sImk9vl2cd+T/v587qa22A06M9hF6Pnt9Ze3aXNWOOsA9DkYzNBkoQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:subject:from:to:cc:in-reply-to:references:content-type:date:message-id:mime-version:x-mailer:content-transfer-encoding:sender;
+        b=o6AsnZFCpWK7fl1rI5YsSxbwtyB6uA4C9sAxP7BjH5ecSGWpnILyucNKGskJRZQZkzspA5rj+scPlkxNbbBKSWGxMRa3oxhtVwqO0niiHTImwaaydWkim4K8asTorbb8TTTGBdA5krh9+Di7OMCW6H5VnVzUdFRholDJCDX2ZGU=
+Received: by 10.78.168.1 with SMTP id q1mr2530230hue.1194126555733;
+        Sat, 03 Nov 2007 14:49:15 -0700 (PDT)
+Received: from ?127.0.0.1? ( [195.114.19.35])
+        by mx.google.com with ESMTPS id g17sm4679397nfd.2007.11.03.14.49.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 03 Nov 2007 14:49:14 -0700 (PDT)
+In-Reply-To: <7v3avsmpmj.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.1 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63317>
 
+   Avoid wrong disambiguation that would link logs/trees of tags and heads which 
+   share the same name to the same page, leading to a disambiguation that would
+   prefer the tag, thus making it impossible to access the corresponding
+   head log and tree without hacking the url by hand.
 
---i3lJ51RuaGWuFYNw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+   Signed-off-by: Guillaume Seguin <guillaume@segu.in>
 
-On Sat, Nov 03, 2007 at 09:03:21PM +0000, Mike Hommey wrote:
-> Those who made this big mess are the ones who decided a KB was 1024
-> bytes, not the others.
+---
+ gitweb/gitweb.perl |   14 ++++++++------
+ 1 files changed, 8 insertions(+), 6 deletions(-)
 
-  Oooh noes, we already had that discussion on debian-devel@ a few month
-ago, could we _please_ spare it :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---i3lJ51RuaGWuFYNw
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHLOwavGr7W6HudhwRAn2TAJ0RAan31bq0u8M+AcINJK95qZZG3QCgmHn5
-PW3EhCefuMrcn15WVfgLa+s=
-=QjD7
------END PGP SIGNATURE-----
-
---i3lJ51RuaGWuFYNw--
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl 
+index 48e21da..f918c00 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3534,6 +3534,7 @@ sub git_tags_body {
+     for (my $i = $from; $i <= $to; $i++) {
+         my $entry = $taglist->[$i]; 
+         my %tag = %$entry;
++        my $name = "refs/tags/$tag{'name'}";
+         my $comment = $tag{'subject'};
+         my $comment_short;
+         if (defined $comment) {
+@@ -3570,8 +3571,8 @@ sub git_tags_body { 
+               "<td class=\"link\">" . " | " .
+               $cgi->a({-href => href(action=>$tag{'reftype'}, hash=>$tag{'refid'})}, $tag{'reftype'}); 
+         if ($tag{'reftype'} eq "commit") {
+-            print " | " . $cgi->a({-href => href(action=>"shortlog", hash=>$tag{'name'})}, "shortlog") . 
+-                  " | " . $cgi->a({-href => href(action=>"log", hash=>$tag{'name'})}, "log");
++            print " | " . $cgi->a({-href => href(action=>"shortlog", hash=>$name)}, "shortlog") . 
++                  " | " . $cgi->a({-href => href(action=>"log", hash=>$name)}, "log");
+         } elsif ($tag{'reftype'} eq "blob") {
+             print " | " . $cgi->a({-href => href(action=>"blob_plain", hash=>$tag{'refid'})}, "raw"); 
+         }
+@@ -3597,6 +3598,7 @@ sub git_heads_body {
+     for (my $i = $from; $i <= $to; $i++) {
+         my $entry = $headlist->[$i];
+         my %ref = %$entry;
++        my $name = "refs/heads/$ref{'name'}"; 
+         my $curr = $ref{'id'} eq $head;
+         if ($alternate) {
+             print "<tr class=\"dark\">\n";
+@@ -3606,13 +3608,13 @@ sub git_heads_body {
+         $alternate ^= 1; 
+         print "<td><i>$ref{'age'}</i></td>\n" .
+               ($curr ? "<td class=\"current_head\">" : "<td>") .
+-              $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'}), 
++              $cgi->a({-href => href(action=>"shortlog", hash=>$name),
+                        -class => "list name"},esc_html($ref{'name'})) .
+               "</td>\n" . 
+               "<td class=\"link\">" .
+-              $cgi->a({-href => href(action=>"shortlog", hash=>$ref{'name'})}, "shortlog") . " | " . 
+-              $cgi->a({-href => href(action=>"log", hash=>$ref{'name'})}, "log") . " | " .
+-              $cgi->a({-href => href(action=>"tree", hash=>$ref{'name'}, hash_base=>$ref{'name'})}, "tree") . 
++              $cgi->a({-href => href(action=>"shortlog", hash=>$name)}, "shortlog") . " | " .
++              $cgi->a({-href => href(action=>"log", hash=>$name)}, "log") . " | " . 
++              $cgi->a({-href => href(action=>"tree", hash=>$name, hash_base=>$name)}, "tree") .
+               "</td>\n" .
+               "</tr>"; 
+     }
+-- 
+1.5.3.4.395.g85b0
