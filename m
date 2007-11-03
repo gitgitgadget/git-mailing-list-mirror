@@ -1,124 +1,77 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 0/2] History replay support
-Date: Sat, 3 Nov 2007 08:56:35 +0100
-Message-ID: <e5bfff550711030056m5f62eb21k4972e1340f7d6e6c@mail.gmail.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-	 <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
-	 <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
-	 <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
-	 <alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Paul Mackerras" <paulus@samba.org>, git@vger.kernel.org
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sat Nov 03 08:56:56 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: Git-windows and git-svn?
+Date: Sat, 3 Nov 2007 09:02:31 +0100
+Message-ID: <72D5CB06-9067-47C4-ABDF-4E1F6F4A679D@zib.de>
+References: <fgg6cd$3ep$1@ger.gmane.org> <472BABFA.6030200@obry.net> <A35C7C2D-A829-4A16-B81B-8A6DE01FE5DB@zib.de> <472C211C.90907@obry.net> <EE16FE19-8C6C-4438-8E6E-EA6B87A898A7@zib.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Abdelrazak Younes <younes.a@free.fr>,
+	Git Mailing List <git@vger.kernel.org>
+To: Pascal Obry <pascal@obry.net>
+X-From: git-owner@vger.kernel.org Sat Nov 03 09:05:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoDsG-0000yH-Fh
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 08:56:56 +0100
+	id 1IoE0B-000247-Sh
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 09:05:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756745AbXKCH4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 03:56:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755900AbXKCH4h
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 03:56:37 -0400
-Received: from rv-out-0910.google.com ([209.85.198.189]:16296 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755804AbXKCH4g (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 03:56:36 -0400
-Received: by rv-out-0910.google.com with SMTP id k20so1000690rvb
-        for <git@vger.kernel.org>; Sat, 03 Nov 2007 00:56:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=uk8ZgYsKRj7XqSrlMuY1C1LhVtG7I8ppcVhoWmtsI5s=;
-        b=M+I1yPuHDjNU2nT9W+YmvM5BXbu0z8MjqyIyMboDfHaunSF5ncwRbN7ZQsDI0Ed1eUvRuaL5lD3lxgIp1sOkzq6kEZrLry+i0F0Yi0PxMhbjLAaSSDlRhxgiMvp7doRlkRfD5gheMFolyQmv7zrwtquG8QJKhjoSWL2JZHBmnuA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gQNyFT3vDvPJFPXTHHlUu6CXuUhH6da5rO6RWe6p4dPuOOBMaE94r0rCvqlZg6MPaS2K8b124l3Db/75dXgS61uHFLZSy/nYbxiW7ipdQJlqduS5Oo+WVHoE37tiAKy3i90x+6t93C9DWY7ImSBBjom2OlRj5eV3ociJ4r7k8R8=
-Received: by 10.141.159.13 with SMTP id l13mr1330542rvo.1194076595829;
-        Sat, 03 Nov 2007 00:56:35 -0700 (PDT)
-Received: by 10.141.203.3 with HTTP; Sat, 3 Nov 2007 00:56:35 -0700 (PDT)
-In-Reply-To: <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1756907AbXKCIEs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 04:04:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756885AbXKCIEr
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 04:04:47 -0400
+Received: from mailer.zib.de ([130.73.108.11]:44433 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756844AbXKCIEp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 3 Nov 2007 04:04:45 -0400
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA381AK3019247;
+	Sat, 3 Nov 2007 09:04:43 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1075c.pool.einsundeins.de [77.177.7.92])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA3819hD005898
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 3 Nov 2007 09:01:09 +0100 (MET)
+In-Reply-To: <EE16FE19-8C6C-4438-8E6E-EA6B87A898A7@zib.de>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63216>
 
-On 11/3/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+
+On Nov 3, 2007, at 8:57 AM, Steffen Prohaska wrote:
+
+> On Nov 3, 2007, at 8:19 AM, Pascal Obry wrote:
 >
+>> Steffen Prohaska a =E9crit :
+>>>> The best Git port on Windows is the Cygwin one. I'm using git-svn
+>>>> without trouble.
+>>>
+>>> But you _MUST NOT_ use Cygwin's textmode.
+>>
+>> Yes, of course! Who would use Cygwin's textmode :) ?
 >
-> On Fri, 2 Nov 2007, Linus Torvalds wrote:
-> >
-> > The bad news is that it doesn't work well in this simplistic form, because
-> > there is a O(n**2) behaviour when replays *do* happen, ie we end up having
-> > replays within replays [..]
+> People who I'm working with. Cygwin's converts CVS working
+> copies to Windows line endings if you use textmode. And this
+> is what they want.
 >
-> Gaah. the more I look at this, the more I think the topo sort should be
-> done at the visualization side.
+> And as long as textmode is an option in Cygwin's installer
+> user will select this option. And after it was removed from
+> the installer it will still be there for a couple of years,
+> until all existing installations finally disappear.
 >
-> It's really quite cheap to do the topo sort, *and* it's really quite cheap
-> to do the tests that trigger the topo sort, but what's expensive is to
-> re-output all the data again!
->
-> The silly thing is, I think I've come up with an "almost optimal"
-> solution, but it's so ugly that I'm a bit ashamed of it.
->
-> That almost optimal solution is simply:
->  - get the first <n> (say: 100) commits, and topo-sort just them. Feed it
->    to the visualizer.
->  - the visualizer will now have enough to work with in order to show the
->    starting screen and set the cursor to the hourglass or whatever the
->    "wait for it" thing is.
->  - get the rest of the commits at our normal leisurely pace (whether it
->    is one second of 17).
->  - output the total number of commits (so that the visualizer can re-size
->    the slider and/or allocate some big array just once), topo-sort it all,
->    and output the full thing.
->
-> It's disgusting. But it avoids the unnecessary data transfer - except for
-> just the first 100 commits that get sent twice. And it gets what *I* look
-> for, namely that "immediate" feel to the initial pop-up of the history.
->
+> Because of this situation, I started to work on msysgit.
+> I need git without Cygwin.
 
-It's not disgusting is human perception oriented !
+And btw, no one told me that git is only working in Cygwin if
+Cygwin is configured the right way. So I started to advertise
+git on Cygwin and people came back to me and told me:
 
-All this stuff is not needed to get the sha faster, but to let think
-the user that are faster. It's for strictly human consumption, so I
-would say your "ugly" solution is the best for me.
+"What crappy tool are you suggesting to use. It's not
+even capable of cloning it's own development repository.
+I'll not use that tool. Don't steal my time."
 
-A bunch of revisions, just to let user eyes to re-focus on new stuff
-(and some hundredths of milliseconds are already elapsed after this)
-while in the background the real, shadowed, work goes on.
-
-It's also easy on the client GUI side, simply discard all and reload
-as soon _correct_ data arrives.
-
-So the new option could became:
-
-git log --fast-output 100 500 --topo-order <...whatever...>
-
-where git log outputs as soon as it can 100 commits and feeds it to
-the visualizer. If the _normal_ commits are still not ready after 500
-ms are elapsed then git log spits out another 100 commits chunk and so
-on at 500ms intervals until good commits are ready. Then outputs the
-full thing.
-
-It is very user perception oriented, but hey, so is a GUI!
-
-Marco
-
-P.S: A little optimization for small repositories would be that git
-log *waits* at maximum 500ms before to output the first 100 commits
-chunk, so that in case of small repos (thousands of revisions) or in
-case of warmed up cache the commits in output are already the good
-ones, no need for fakes!
+	Steffen
