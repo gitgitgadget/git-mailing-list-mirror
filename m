@@ -1,70 +1,63 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: "Blake Ramsdell" <blaker@gmail.com>
 Subject: Re: [PATCH] Removed OLD_ICONV in favor of checking _LIBICONV_VERSION directly
-Date: Fri, 02 Nov 2007 17:07:22 -0700
-Message-ID: <7vbqacyyx1.fsf@gitster.siamese.dyndns.org>
+Date: Fri, 2 Nov 2007 17:21:48 -0700
+Message-ID: <985966520711021721i6345e4bfv8a016a1528ee4e23@mail.gmail.com>
 References: <985966520711021303g905f638y2056219c22e5edeb@mail.gmail.com>
-	<1194048010-65955-1-git-send-email-blaker@gmail.com>
+	 <1194048010-65955-1-git-send-email-blaker@gmail.com>
+	 <7vbqacyyx1.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Blake Ramsdell <blaker@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 01:08:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 03 01:23:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Io6YX-00048Q-Lb
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 01:08:06 +0100
+	id 1Io6nN-00077L-EC
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 01:23:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762826AbXKCAHf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 2 Nov 2007 20:07:35 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762829AbXKCAHe
-	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 20:07:34 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:38381 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762826AbXKCAHd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 2 Nov 2007 20:07:33 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id D4C3C2F9;
-	Fri,  2 Nov 2007 20:07:54 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 50EC891934;
-	Fri,  2 Nov 2007 20:07:51 -0400 (EDT)
-In-Reply-To: <1194048010-65955-1-git-send-email-blaker@gmail.com> (Blake
-	Ramsdell's message of "Fri, 2 Nov 2007 17:00:10 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1762449AbXKCAVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 2 Nov 2007 20:21:50 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762392AbXKCAVu
+	(ORCPT <rfc822;git-outgoing>); Fri, 2 Nov 2007 20:21:50 -0400
+Received: from wa-out-1112.google.com ([209.85.146.176]:39313 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762066AbXKCAVs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 2 Nov 2007 20:21:48 -0400
+Received: by wa-out-1112.google.com with SMTP id v27so1117347wah
+        for <git@vger.kernel.org>; Fri, 02 Nov 2007 17:21:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=U/QpXhbzSDdrNCtoRDsxLOT/oIhrBw8VNqKFhHS9Eeo=;
+        b=F83anAk/4hdVVGcowSZuB9XadmTMFkRW/9gRVAKvMI1Zv9KqvcUDjOFlCHXF19mKPvmSOe5Gt+TWPhOdQHsf3QY3MwXIXzEGTkhjHBaQoj6ldqTYxa2/PWVPxlKwOVjLGihCrxbzaLCxrO4jkMiLWvdNQ6RZuCEXBLpKtokKzJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=QUAhj02V0wkOQMfNERbhx14PIGTt1UudgQOwG3eiL3Rj/cwrSupeKb/Ub/HcU/W4gwVA9+1a9bYSaeAzmVKJrYLvX6v/+FskUtBP7iWZP1a/zPXpyCV7OBFyqxjU7bOxAdUkvMnf/O8MMJzYH/vcXdRfAhgmaMuGoU1aRcYyRlA=
+Received: by 10.114.89.1 with SMTP id m1mr2461195wab.1194049308071;
+        Fri, 02 Nov 2007 17:21:48 -0700 (PDT)
+Received: by 10.114.176.14 with HTTP; Fri, 2 Nov 2007 17:21:48 -0700 (PDT)
+In-Reply-To: <7vbqacyyx1.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63197>
 
-Blake Ramsdell <blaker@gmail.com> writes:
+On 11/2/07, Junio C Hamano <gitster@pobox.com> wrote:
+> Does everybody's iconv use the same _LIBICONV_VERSION scheme?
 
-> diff --git a/utf8.c b/utf8.c
-> index 4efef6f..a7feb4f 100644
-> --- a/utf8.c
-> +++ b/utf8.c
-> @@ -300,7 +300,7 @@ int is_encoding_utf8(const char *name)
->   * with iconv.  If the conversion fails, returns NULL.
->   */
->  #ifndef NO_ICONV
-> -#ifdef OLD_ICONV
-> +#if _LIBICONV_VERSION <= 0x0109
->  	typedef const char * iconv_ibp;
->  #else
->  	typedef char * iconv_ibp;
+Apparently not. And furthermore, my assumption about the version
+number being tied to the function prototype was not valid -- I have a
+DarwinPorts iconv.h that is version 0x010B but uses const for the
+second parameter.
 
-Does everybody's iconv use the same _LIBICONV_VERSION scheme?
+Sorry for the mess. Let me try and come up with another plan. That
+Darwin version check doesn't seem so bad now ;).
 
-Compiling this:
-
-        #include <iconv.h>
-        int i = _LIBICONV_VERSION;
-
-on a Linux box with GNU C library gives:
-
-	i.c:3: error: '_LIBICONV_VERSION' undeclared here (not in a function)
-
-here.
+Blake
+-- 
+Blake Ramsdell | http://www.blakeramsdell.com
