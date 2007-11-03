@@ -1,96 +1,146 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 5/5] Migrate git-am.sh to use git-rev-parse --parseopt
-Date: Sat, 03 Nov 2007 12:54:45 +0100
-Message-ID: <20071103115445.GA13417@artemis.corp>
-References: <1194043193-29601-1-git-send-email-madcoder@debian.org> <1194043193-29601-2-git-send-email-madcoder@debian.org> <1194043193-29601-3-git-send-email-madcoder@debian.org> <1194043193-29601-4-git-send-email-madcoder@debian.org> <1194043193-29601-5-git-send-email-madcoder@debian.org> <1194043193-29601-6-git-send-email-madcoder@debian.org> <20071103095556.GB2853@steel.home>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Reuse previous annotation when overwriting a tag
+Date: Sat, 3 Nov 2007 11:54:38 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711031148460.4362@racer.site>
+References: <1194082273-19486-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="Dxnq1zWXvFF0Q93v";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: gitster@pobox.com, torvalds@linux-foundation.org,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 12:55:11 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Nov 03 12:55:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoHag-0000yN-EO
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 12:55:02 +0100
+	id 1IoHbJ-0001CD-CL
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 12:55:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753110AbXKCLyt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 07:54:49 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752975AbXKCLyt
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 07:54:49 -0400
-Received: from pan.madism.org ([88.191.52.104]:39417 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752838AbXKCLys (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 07:54:48 -0400
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 69FF2283B4;
-	Sat,  3 Nov 2007 12:54:46 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8589778A4; Sat,  3 Nov 2007 12:54:45 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Alex Riesen <raa.lkml@gmail.com>, gitster@pobox.com,
-	torvalds@linux-foundation.org, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071103095556.GB2853@steel.home>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753065AbXKCLz1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 07:55:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753153AbXKCLz1
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 07:55:27 -0400
+Received: from mail.gmx.net ([213.165.64.20]:34916 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752975AbXKCLz0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 07:55:26 -0400
+Received: (qmail invoked by alias); 03 Nov 2007 11:55:24 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp039) with SMTP; 03 Nov 2007 12:55:24 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18bpgore4YbQowvLa3r5ftKNprszZZr+zy7dsPJis
+	iAJA1EQliScnMY
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194082273-19486-1-git-send-email-mh@glandium.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63241>
 
+Hi,
 
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Sat, 3 Nov 2007, Mike Hommey wrote:
 
-On Sat, Nov 03, 2007 at 09:55:56AM +0000, Alex Riesen wrote:
-> Pierre Habouzit, Fri, Nov 02, 2007 23:39:52 +0100:
-> > diff --git a/git-am.sh b/git-am.sh
-> > index 2514d07..e5ed6a7 100755
-> > --- a/git-am.sh
-> > +++ b/git-am.sh
-> ....
-> > -	usage ;;
-> > -	*)
-> > -	break ;;
-> > +		-i|--interactive)
-> > +			interactive=3Dt ;;
-> > +		-b|--binary)
-> > +			binary=3Dt ;;
->=20
-> Did you really have to change the indentation?
+> diff --git a/builtin-tag.c b/builtin-tag.c
+> index 66e5a58..cfd8017 100644
+> --- a/builtin-tag.c
+> +++ b/builtin-tag.c
+> @@ -247,9 +247,42 @@ static int git_tag_config(const char *var, const char *value)
+>  	return git_default_config(var, value);
+>  }
+>  
+> +static void write_annotation(int fd, const unsigned char *sha1)
 
-  Well, I'm unsure what the standard is for git, I gladly use any
-indentation, I don't really care. I assumed that it wasn't indented
-before becauuse instead of -i|--interactive you had:
+Technically, it is the "body".
 
-  -i|--in|--int|....|--interactive which took a lot of space, as it
-seemed to me that the case ".." in foo) esac construction in git had the
-cases indented in most places. But I may be wrong.
+> +{
+> +	int i;
+> +	unsigned long size;
+> +	enum object_type type;
+> +	char *buf, *sp, *eol;
+> +	size_t len;
+> +
+> +	sp = buf = read_sha1_file(sha1, &type, &size);
+> +	if (!buf)
+> +		return;
+> +	if (!size || (type != OBJ_TAG)) {
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+Please lose the extra parents.
 
---Dxnq1zWXvFF0Q93v
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> +		free(buf);
+> +		return;
+> +	}
+> +	/* skip header */
+> +	while (sp + 1 < buf + size &&
+> +			!(sp[0] == '\n' && sp[1] == '\n'))
+> +		sp++;
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+This can be done much easier with 'sp = strstr(buf, "\n\n");'.  You can 
+even do that before the previous if(), to free() && return if there is no 
+body.
 
-iD8DBQBHLGGFvGr7W6HudhwRAhMLAJ9xJVeBQo4ct1eFxT+sLifvCXXrxQCeK+2q
-O/8fLGpfj37puVvEdCxBNHc=
-=huRG
------END PGP SIGNATURE-----
+> +	/* strip the signature */
+> +	for (i = 0, sp += 2; sp < buf + size &&
+> +			prefixcmp(sp, PGP_SIGNATURE "\n");
+> +			i++) {
+> +		eol = memchr(sp, '\n', size - (sp - buf));
+> +		len = eol ? eol - sp : size - (sp - buf);
+> +		write_or_die(fd, sp, len + 1);
+> +		if (!eol)
+> +			break;
+> +		sp = eol + 1;
+> +	}
+> +	free(buf);
 
---Dxnq1zWXvFF0Q93v--
+This can be done much easier with 'eob = strstr(sp, "\n" PGP_SIGNATURE 
+"\n");'.
+
+> +}
+> +
+>  static void create_tag(const unsigned char *object, const char *tag,
+>  		       struct strbuf *buf, int message, int sign,
+> -			   unsigned char *result)
+> +			unsigned char *prev, unsigned char *result)
+
+This changes indentation.
+
+> @@ -282,6 +315,10 @@ static void create_tag(const unsigned char *object, const char *tag,
+>  		if (fd < 0)
+>  			die("could not create file '%s': %s",
+>  						path, strerror(errno));
+> +
+> +		if (prev)
+> +			write_annotation(fd, prev);
+> +
+>  		write_or_die(fd, tag_template, strlen(tag_template));
+
+Isn't an "else" missing before the write_or_die() here?
+
+> @@ -308,7 +345,8 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct strbuf buf;
+>  	unsigned char object[20], prev[20];
+> -	int annotate = 0, sign = 0, force = 0, lines = 0, message = 0;
+> +	int annotate = 0, sign = 0, force = 0, lines = 0,
+> +	    message = 0, existed = 0;
+>  	char ref[PATH_MAX];
+>  	const char *object_ref, *tag;
+>  	int i;
+> @@ -417,9 +455,12 @@ int cmd_tag(int argc, const char **argv, const char *prefix)
+>  		hashclr(prev);
+>  	else if (!force)
+>  		die("tag '%s' already exists", tag);
+> +	else
+> +		existed = 1;
+>  
+>  	if (annotate)
+> -		create_tag(object, tag, &buf, message, sign, object);
+> +		create_tag(object, tag, &buf, message, sign,
+> +			   existed ? prev : NULL, object);
+
+Why not teach write_annotations() (or write_tag_body() like I would prefer 
+it to be called) to grok a null_sha1?  It's not like we care for 
+performance here, but rather for readability and ease of use.
+
+Ciao,
+Dscho
