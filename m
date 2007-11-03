@@ -1,65 +1,73 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add missing inside_work_tree setting in setup_git_directory_gently
-Date: Sat, 3 Nov 2007 13:25:24 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711031325150.4362@racer.site>
-References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
+From: "Ronald Landheer-Cieslak" <ronald@landheer-cieslak.com>
+Subject: Re: [PATCH] New script: git-changelog.perl - revised
+Date: Sat, 3 Nov 2007 09:46:27 -0400
+Message-ID: <67837cd60711030646p6d7dc8e3t8a5f5f336e8bbad6@mail.gmail.com>
+References: <67837cd60711021303q488e0873lea363b93fc90d591@mail.gmail.com>
+	 <472C3309.70109@op5.se>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1143090864-1194096324=:4362"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 14:26:38 2007
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat Nov 03 14:46:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoJ1B-0004PA-0S
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 14:26:29 +0100
+	id 1IoJKp-00018d-E6
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 14:46:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753933AbXKCN0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 09:26:15 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753849AbXKCN0P
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 09:26:15 -0400
-Received: from mail.gmx.net ([213.165.64.20]:42942 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753841AbXKCN0O (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 09:26:14 -0400
-Received: (qmail invoked by alias); 03 Nov 2007 13:26:10 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp034) with SMTP; 03 Nov 2007 14:26:10 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/3KIc1+fj3tHNtL6QExNuHjZFUU7pXhEcUWa0JTK
-	KF2erHS3bFwBZ3
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071103131806.GA25109@laptop>
-X-Y-GMX-Trusted: 0
+	id S1754084AbXKCNqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 09:46:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753964AbXKCNqb
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 09:46:31 -0400
+Received: from nf-out-0910.google.com ([64.233.182.186]:21184 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753920AbXKCNqa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 09:46:30 -0400
+Received: by nf-out-0910.google.com with SMTP id g13so1022004nfb
+        for <git@vger.kernel.org>; Sat, 03 Nov 2007 06:46:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=ESIls7OHbUlnb4MfdW66VzGVbzYQwIF9nng/e9zM6h8=;
+        b=Ri82SUvA4kbFJHy8VxkYaede1qAH1Do+OTCdyeHojQtPyZVDRRW3CEKmbsCllAIWVOKDO1SIWUe1qReXvhU4hdcohplkQeAc21QsPp49+8jJjhlqOk3lxi2uUM5uOoqXqg2JWxM/RI2g0cNfLonj5Ik+/HAZ29HDQM7GptRC5z0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=Xw8QGWpKLuFSGnGz6VPd8d0njIKrw0d/Or5yf/Th4Hl1AM8QgWv/V+0TPBYsc44fhHF13JgVIy3ygbCL0cTJRXYtLoxzx8y8h+0QZ1F7IaHk/XQX7ZYnfD+nS0ToT5LLgZvxe0X8WVj9OzrOOk6r8EJYtncmX0PAbS6v1CmPmII=
+Received: by 10.78.131.8 with SMTP id e8mr2113262hud.1194097587992;
+        Sat, 03 Nov 2007 06:46:27 -0700 (PDT)
+Received: by 10.78.39.14 with HTTP; Sat, 3 Nov 2007 06:46:27 -0700 (PDT)
+In-Reply-To: <472C3309.70109@op5.se>
+Content-Disposition: inline
+X-Google-Sender-Auth: 60926ffc8dd70b7a
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63267>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63268>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Nov 3, 2007 4:36 AM, Andreas Ericsson <ae@op5.se> wrote:
+> Ronald Landheer-Cieslak wrote:
+> >
+> > This is also available through git at
+> > git://vlinder.landheer-cieslak.com/git/git.git#topic/git-log-changelog
+> >
+>
+> This mode of specifying a repository + branch was just thoroughly shot
+> down in a list discussion, and git certainly doesn't grok it. I'd be a
+> happier fella if you didn't use it.
+>
+Is there a canonical way to specify both the location and the branch
+in one shot, then? I must admit that this is the way I've always seen
+it specified, so I assumed that this is the way it was done
+"canonically". If it isn't, please forgive my ignorance.
 
---8323584-1143090864-1194096324=:4362
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+rlc
 
-Hi,
 
-On Sat, 3 Nov 2007, Nguyễn Thái Ngọc Duy wrote:
-
-> When both GIT_DIR and GIT_WORK_TREE are set, and
-> setup_git_directory_gently() changes the current working
-> directory accordingly, it should also set inside_work_tree = 1.
-> 
-> Without this, work_tree handling code in setup_git_directory()
-> will be activated. If you stay in root work tree (no prefix),
-> it does not harm. It does if you work from a subdirectory though.
-> 
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  Updated commit message accordingly
-
-Thanks,
-Dscho
---8323584-1143090864-1194096324=:4362--
+-- 
+Ronald Landheer-Cieslak
+Software Architect
+http://www.landheer-cieslak.com/
+New White Paper: "Three Good Reasons to Plan Ahead"
