@@ -1,126 +1,107 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Strange git-show-branch behavior.
-Date: Sat, 3 Nov 2007 19:22:24 +0100
-Message-ID: <20071103182224.GA16345@atjola.homenet>
-References: <871wb79q80.fsf@osv.gnss.ru>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] Reuse previous annotation when overwriting a tag
+Date: Sat, 03 Nov 2007 11:47:44 -0700
+Message-ID: <7vlk9fxj1r.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711031219530.4362@racer.site>
+	<1194095285-18651-1-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Sat Nov 03 19:23:35 2007
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sat Nov 03 19:48:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoNef-0002H9-Tc
-	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 19:23:34 +0100
+	id 1IoO2U-0000bN-MF
+	for gcvg-git-2@gmane.org; Sat, 03 Nov 2007 19:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758152AbXKCSWa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 14:22:30 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758136AbXKCSWa
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 14:22:30 -0400
-Received: from mail.gmx.net ([213.165.64.20]:51099 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756269AbXKCSW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 14:22:28 -0400
-Received: (qmail invoked by alias); 03 Nov 2007 18:22:25 -0000
-Received: from i577BAA93.versanet.de (EHLO localhost) [87.123.170.147]
-  by mail.gmx.net (mp056) with SMTP; 03 Nov 2007 19:22:25 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19Zp3c3dJRZT/+zFpkoeTMwZV9rIezhv5RRexkgTk
-	2d9bSwEId9d0PU
-Content-Disposition: inline
-In-Reply-To: <871wb79q80.fsf@osv.gnss.ru>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S1755257AbXKCSry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 14:47:54 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755232AbXKCSry
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 14:47:54 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:36951 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755173AbXKCSrx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 14:47:53 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 9C99E2EF;
+	Sat,  3 Nov 2007 14:48:14 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 12DFA91C95;
+	Sat,  3 Nov 2007 14:48:11 -0400 (EDT)
+In-Reply-To: <1194095285-18651-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Sat, 3 Nov 2007 14:08:04 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63298>
 
-On 2007.11.03 20:46:39 +0300, Sergei Organov wrote:
-> Hello,
->=20
-> I need to ask about git-show-branch once again as I really can't
-> understand its behavior myself. Could please anybody either confirm b=
-ug(s) in
-> git-show-branch, or explain why does it work this way.
->=20
-> Consider its invocation in a toy repository that has total 6 commits,=
- as
-> can be seen from this output:
->=20
-> $ git branch
-> * master
->   mybranch
-> $ git rev-list master mybranch --pretty=3Doneline
-> e9217caffebd6311073867d410f0c6e46910a13d Go to sleep
-> 5f19837be87493e9b284fe7db03f00f23d006d2e Merged mybranch
-> 2e2a4956db9737faf5f4f296b895500fafab7350 Some fun.
-> 6478a15c48b0a7ce28069310ff5e51f95b250c7c Some work.
-> 48d3660dc2005471c27f1d5b09d334885b612380 Commit message
-> 2c14c05709bde3c1a7bbdd7effbf73a5667fa265 Initial commit
-> $
->=20
-> Or, using git-show-branch itself:
->=20
-> $ git-show-branch --more=3D9 master
-> [master] Go to sleep
-> [master^] Merged mybranch
-> [master^^2] Some work.
-> [master~2] Some fun.
-> [master~3] Commit message
-> [master~4] Initial commit
-> $
->=20
-> [NOTE: the format of this output contradicts the manual page, but it'=
-s
->  not the topic of this post]
->=20
-> Now comes the confusion:
->=20
-> $ git-show-branch --more=3D9 master mybranch
-> * [master] Go to sleep
->  ! [mybranch] Some work.
-> --
-> *  [master] Go to sleep
-> *+ [mybranch] Some work.
-> *  [master~2] Some fun.
-> *+ [master~3] Commit message
-> *+ [master~4] Initial commit
-> $
->=20
-> In this output, why git doesn't show the merge commit having "Merged
-> mybranch" commit message?
+Mike Hommey <mh@glandium.org> writes:
 
-Because you didn't pass --sparse.
+> +static void write_tag_body(int fd, const unsigned char *sha1)
+> +{
+> ...
+> +	sp = buf = read_sha1_file(sha1, &type, &size);
+> +	if (!buf)
+> +		return;
+> +	/* skip header */
+> +	sp = strstr(buf, "\n\n");
 
->=20
-> Yet another confusion:=20
->=20
-> $ git-show-branch master mybranch
-> * [master] Go to sleep
->  ! [mybranch] Some work.
-> --
-> *  [master] Go to sleep
-> *+ [mybranch] Some work.
-> $
->=20
-> Why does it stop at "Some work." commit? The manual page says: "Usual=
-ly
-> the command stops output upon showing the commit that is the common
-> ancestor of all the branches.", so I'd expect it should go down to
-> "Commit message" commit that is the fork point.
+I was relieved to see this second assignment to "sp" here.
 
-Common ancestor means, that the commit is reachable through all refs.
-Let's take a look at your history:
+Why?
 
-         .-F-.  mybranch
-        /     \
-   A---B---C---D---E  master
+Because I wanted to say something about the first assignment to
+it, that is done this way:
 
-There you can see that mybranch can of course reach F, and that master
-can reach it, too. E -> D -> F. So the output stops at F, not at B.
+> +	sp = buf = read_sha1_file(sha1, &type, &size);
 
-Bj=F6rn
+The original git codebase, as it came from Linus, tends to avoid
+assignment to multiple variables in a single statement like this
+(and that style is written down in the kernel coding style
+document).  As I do not have a strong opinion against that
+coding style, I've tried to follow it myself.  However, I do not
+personaly have a strong argument to support enforcing the style
+to others.
+
+But in this case, as the variable "sp" is never used before it
+is reassigned, I can easily say "drop the useless assignment to
+sp there". ;-)
+
+> +
+> +	if (!sp || !size || type != OBJ_TAG) {
+> +		free(buf);
+> +		return;
+> +	}
+> +	sp += 2; /* skip the 2 CRs */
+
+You are not skipping carriage returns.  You are skipping line
+feeds (i.e. s/CRs/LFs/).
+
+> @@ -282,7 +313,11 @@ static void create_tag(const unsigned char *object, const char *tag,
+>  		if (fd < 0)
+>  			die("could not create file '%s': %s",
+>  						path, strerror(errno));
+> -		write_or_die(fd, tag_template, strlen(tag_template));
+> +
+> +		if (prev)
+> +			write_tag_body(fd, prev);
+> +		else
+> +			write_or_die(fd, tag_template, strlen(tag_template));
+>  		close(fd);
+
+When prev is not NULL but points at a null_sha1 nobody writes
+anything out.  Is this intended?
+
+        In fact, the calling site always passes prev which is
+        prev[] in cmd_tag() and cannot be non-NULL.
+
+Why is there "else" in the first place?  Even if you start with
+the previous tag's message, you are launching the editor for the
+user to further edit it, and you would want to give some
+instructions, wouldn't you?
+        
