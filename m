@@ -1,111 +1,93 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH] errors: "strict subset" -> "ancestor"
-Date: Mon, 5 Nov 2007 00:13:26 +0100
-Message-ID: <E7C9B9EC-F7DA-4A27-823B-5435161CBFB5@zib.de>
-References: <20071103023944.GA15379@fieldses.org> <3F4A5458-AB2F-40C7-AA0E-9D26981BCE9D@zib.de> <20071104220810.GC22762@fieldses.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 00:12:30 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 01/10] Add a parseopt mode to git-rev-parse to bring parse-options to shell scripts.
+Date: Mon, 05 Nov 2007 00:14:16 +0100
+Message-ID: <20071104231416.GF4207@artemis.corp>
+References: <1194172262-1563-1-git-send-email-madcoder@debian.org> <1194172262-1563-2-git-send-email-madcoder@debian.org> <7v8x5dsjne.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="V4b9U9vrdWczvw78";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 00:14:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ioodo-0007AC-Gt
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:12:28 +0100
+	id 1Ioofp-0007el-2k
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:14:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936AbXKDXMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 18:12:14 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753110AbXKDXMO
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:12:14 -0500
-Received: from mailer.zib.de ([130.73.108.11]:51701 "EHLO mailer.zib.de"
+	id S1753581AbXKDXOT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 18:14:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753679AbXKDXOS
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:14:18 -0500
+Received: from pan.madism.org ([88.191.52.104]:48341 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751729AbXKDXMM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 18:12:12 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA4NC66O015782;
-	Mon, 5 Nov 2007 00:12:06 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db1be86.pool.einsundeins.de [77.177.190.134])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA4NC56U004813
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 5 Nov 2007 00:12:06 +0100 (MET)
-In-Reply-To: <20071104220810.GC22762@fieldses.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753551AbXKDXOS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 18:14:18 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 1472C25E02;
+	Mon,  5 Nov 2007 00:14:16 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 44AAB435A19; Mon,  5 Nov 2007 00:14:16 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v8x5dsjne.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63456>
 
 
-On Nov 4, 2007, at 11:08 PM, J. Bruce Fields wrote:
+--V4b9U9vrdWczvw78
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Sat, Nov 03, 2007 at 08:51:29AM +0100, Steffen Prohaska wrote:
->>
->> On Nov 3, 2007, at 3:39 AM, J. Bruce Fields wrote:
->>
->>> From: J. Bruce Fields <bfields@citi.umich.edu>
->>>
->>> The term "ancestor" is a bit more intuitive (and more consistent  
->>> with
->>> the documentation) than the term "strict subset".
->>>
->>> Also, remove superfluous "ref", capitalize, and add some carriage
->>> returns, changing:
->>>
->>> 	error: remote 'refs/heads/master' is not a strict subset of  
->>> local ref
->>> 'refs/heads/master'. maybe you are not up-to-date and need to  
->>> pull first?
->>> 	error: failed to push to 'ssh://linux-nfs.org/~bfields/exports/ 
->>> git.git'
->>>
->>> to:
->>>
->>> 	error: remote 'refs/heads/master' is not an ancestor of
->>> 	 local 'refs/heads/master'.
->>> 	 Maybe you are not up-to-date and need to pull first?
->>> 	error: failed to push to 'ssh://linux-nfs.org/~bfields/exports/ 
->>> git.git'
->>
->>
->> Junio suggested in [1] (see also earlier messages in that
->> thread) to replace the recommendation to pull with a hint
->> where to look in the user manual.
->>
->> [1] http://marc.info/?l=git&m=119398999317677&w=2
->>
->>
->> The point is, there are various ways to resolve the problem.
->> pull is not necessarily the right solution. At least, you should
->> consider to rebase. Or maybe just something else went wrong.
->
-> Yeah, actually in my case I usually want to force....
->
-> So I think it's a good suggestion, but I'm putting it off for now  
-> as I'm
-> not sure yet where to refer people to, and don't like making the  
-> error a
-> lot longer.
+On Sun, Nov 04, 2007 at 10:58:13PM +0000, Junio C Hamano wrote:
+> Two comments.
+>=20
+>  * I have updated 1/10 with typo and indentation fixes.
+>=20
+>  * I see you changed 2/10 to use OPTIONS_KEEPDASHDASH instead of
+>    PARSEOPT_OPTS, but the scripts that do not want the --keep
+>    behaviour do not set OPTIONS_KEEPDASHDASH to empty, so I do
+>    not see how this updatet would make _any_ difference.  The
+>    user can still screw up by having OPTIONS_KEEPDASHDASH in
+>    their environments by mistake, curiosity or just plain
+>    stupidity.
 
-I agree. And it's probably a waste of time anyway, because
-sooner or later the mega-terse fetch output will be extended
-to push.
+  Hmmm right, I was worried by the fact that the old PARSEOPT_OPTS was
+being possibly diverted to inject malicious commands. I tend to find the
+forced `OPTIONS_KEEPDASHDASH=3D` thing quite painful, but indeed it is
+probably the sole way to guard ourselves against user stupidity (or more
+likely unclean environments).
 
+  Do you mind adding: OPTIONS_KEEPDASHDASH=3D front to the 8 patches that
+needs it, or should I send an updated series ? (actually it's more like
+the 7 that needs it as git-clean has been rewritten as a builtin if I'm
+correct).
 
-> Hm.  I wonder if extra "help" commandline flags would be a way to get
-> people extra guidance on particular situations without cluttering  
-> up the
-> default messages ("not sure what to try next?  Try -h  
-> notanancestor..."
-> Maybe not.)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-The first step would be to describe the error messages in the
-manual (or the man pages), and provide hints how to resolve
-them. Currently we have no place we could link to, even if we
-had a mechanism to do so.
+--V4b9U9vrdWczvw78
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-	Steffen
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLlJIvGr7W6HudhwRAtWkAJ41LCJzCwzK1RYb0cZSVq7ZD8bNhQCfXpV/
+VvbI1yZEAvvfozQ9pby+/j0=
+=OJ7V
+-----END PGP SIGNATURE-----
+
+--V4b9U9vrdWczvw78--
