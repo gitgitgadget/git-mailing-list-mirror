@@ -1,120 +1,86 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Added basic color support to git add --interactive
-Date: Sat, 03 Nov 2007 22:36:00 -0700
-Message-ID: <7v640ivagv.fsf@gitster.siamese.dyndns.org>
-References: <20071013172745.GA2624@coredump.intra.peff.net>
-	<20071013175127.GA3183@coredump.intra.peff.net>
-	<47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [REPLACEMENT PATCH 2/2] Add "--early-output" log flag for
+ interactive GUI use
+Date: Sat, 3 Nov 2007 22:38:18 -0700 (PDT)
+Message-ID: <alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+ <18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+ <18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+ <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+ <18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+ <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+ <alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+ <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+ <18221.14113.498416.396006@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dan Zwell <dzwell@zwell.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 04 06:36:31 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 06:38:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoY9u-00066W-AZ
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 06:36:30 +0100
+	id 1IoYC5-0006Nd-3q
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 06:38:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751176AbXKDFgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 01:36:13 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751292AbXKDFgN
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 01:36:13 -0400
-Received: from sceptre.pobox.com ([207.106.133.20]:55588 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750913AbXKDFgM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 01:36:12 -0400
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id DBAB22EF;
-	Sun,  4 Nov 2007 01:36:32 -0400 (EDT)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2436A900B6;
-	Sun,  4 Nov 2007 01:36:24 -0400 (EDT)
-In-Reply-To: <20071104045735.GA12359@segfault.peff.net> (Jeff King's message
-	of "Sun, 4 Nov 2007 00:57:35 -0400")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751729AbXKDFib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 01:38:31 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751418AbXKDFib
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 01:38:31 -0400
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:59546 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751371AbXKDFia (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2007 01:38:30 -0400
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA45cIMh010514
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sat, 3 Nov 2007 22:38:20 -0700
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA45cIUE018089;
+	Sat, 3 Nov 2007 22:38:18 -0700
+In-Reply-To: <18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+X-Spam-Status: No, hits=-3.235 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63352>
 
-Jeff King <peff@peff.net> writes:
 
-> On Fri, Nov 02, 2007 at 10:41:00PM -0500, Dan Zwell wrote:
+
+On Sun, 4 Nov 2007, Paul Mackerras wrote:
 >
->> +sub print_colored {
->> +	my $color = shift;
->> +	my $string = join("", @_);
->> +
->> +	if ($use_color) {
->> +		# Put a color code at the beginning of each line, a reset at the end
->> +		# color after newlines that are not at the end of the string
->> +		$string =~ s/(\n+)(.)/$1$color$2/g;
->> +		# reset before newlines
->> +		$string =~ s/(\n+)/$normal_color$1/g;
->> +		# codes at beginning and end (if necessary):
->> +		$string =~ s/^/$color/;
->> +		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
->> +	}
->> +	print $string;
->> +}
->
-> This would probably be a bit more readable by marking the regex as
-> multline using /m. Something like:
->
->   $string =~ s/^/$color/mg;
->   $string =~ s/.$/$&$normal_color/mg;
->
-> which covers both the "start/end of line" and "start/end" of string
-> cases.
+> Linus Torvalds writes:
+> 
+> > When the full list is generated, there will be a "Final output:" string
+> > prepended to it, regardless of whether any early commits were shown or
+> > not, so that the consumer can always know the difference between early
+> > output and the final list.
+> 
+> How hard would it be to put the total number of commits on that "Final
+> output" line?  That would be useful for me.
 
-I think you would end up spitting out:
+Not hard. I think we basically have it anyway. The reason I didn't do it 
+is that there's actually multiple numbers: there's the number of primary 
+("interesting") commits, and then there are the "others", ie the edge 
+things etc. So the number I'd pick would be the number of actual 
+interesting commits, no edges, no nothing. Or what?
 
-        COLOR something RESET LF COLOR RESET LF
+One other thing I was thinking of was also to perhaps allow multiple 
+partial early-output things, in case we get just 5 commits in the first 
+0.1 seconds, then 50 in the first second, and 200 after 2 seconds.. I can 
+well imagine getting the full list taking a long time over a network 
+filesystem (somebody mentioned samba), and maybe having just a single 
+trigger is too inflexible.
 
-instead of:
-
-	COLOR something RESET LF LF
-
-when you get "something\n\n" if you did that.  Not a big deal,
-though, as at this point we would be human I/O bound.
-
-> Also, if there is to be pager support for showing diffs, perhaps
-> print_colored needs to take a filehandle argument (or, even simpler,
-> change "print_colored(...)" to "print color(...), so the caller can use
-> print as usual).
-
-Making it take a FH would be useful.  With that, my
-proof-of-concept patch to add print_diff_hunk would become:
-
-	sub print_diff_hunk {
-        	my ($text) = @_;
-		my $pager;
-
-                if ($use_pager) {
-	                open($pager, "| less");
-		} else {
-                	$pager = \*STDOUT;
-		}
-                for (@$text) {
-			print_colored $pager $color ...
-		}
-                close($pager);
-	}
+			Linus
