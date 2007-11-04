@@ -1,117 +1,61 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Warning: cvsexportcommit considered dangerous
-Date: Mon, 5 Nov 2007 00:05:28 +0100
-Message-ID: <200711050005.28561.robin.rosenberg.lists@dewire.com>
-References: <Pine.LNX.4.64.0711041638270.4362@racer.site> <623F4AFA-FE43-4046-9D3F-435396BBE17D@zib.de> <Pine.LNX.4.64.0711042133330.4362@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fix display overlap between remote and local progress
+Date: Sun, 04 Nov 2007 15:11:12 -0800
+Message-ID: <7v4pg1sj1r.fsf@gitster.siamese.dyndns.org>
+References: <alpine.LFD.0.9999.0711032328490.21255@xanadu.home>
+	<Pine.LNX.4.64.0711041331520.4362@racer.site>
+	<alpine.LFD.0.9999.0711041610520.21255@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Alex Bennee <kernel-hacker@bennee.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 05 00:03:49 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 00:11:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IooVO-00050n-MC
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:03:47 +0100
+	id 1Iood5-0006ye-MB
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:11:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753214AbXKDXDd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 18:03:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752983AbXKDXDd
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:03:33 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:26096 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1752807AbXKDXDc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 18:03:32 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id BE0908026EB;
-	Sun,  4 Nov 2007 23:54:34 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 07604-01; Sun,  4 Nov 2007 23:54:34 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 459C88026D1;
-	Sun,  4 Nov 2007 23:54:34 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <Pine.LNX.4.64.0711042133330.4362@racer.site>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1753206AbXKDXL3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 18:11:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752936AbXKDXL3
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:11:29 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:37601 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480AbXKDXL2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 18:11:28 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id A408B2EF;
+	Sun,  4 Nov 2007 18:11:49 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EAFF6923EE;
+	Sun,  4 Nov 2007 18:11:45 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0711041610520.21255@xanadu.home> (Nicolas
+	Pitre's message of "Sun, 04 Nov 2007 16:19:52 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63454>
 
-s=F6ndag 04 november 2007 skrev Johannes Schindelin:
-> Hi,
->=20
-> On Sun, 4 Nov 2007, Steffen Prohaska wrote:
->=20
-> > On Nov 4, 2007, at 5:41 PM, Johannes Schindelin wrote:
-> >=20
-> > > ever since the up-to-date check was changed to use just one call =
-to=20
-> > > "cvs status", a bug was present.  Now cvsexportcommit expects "cv=
-s=20
-> > > status" to return the results in the same order as the file names=
- were=20
-> > > passed.
-> > >=20
-> > > This is not true, as I had to realise with one of my projects on=20
-> > > sourceforge.
-> > >=20
-> > > Since time is so scarce on my side, I will not have time to fix t=
-his=20
-> > > bug, but will instead return to my old "commit by hand" procedure=
-=2E
-> >=20
-> > I introduced this 'optimization', which turned out to be a bug. So,=
- I=20
-> > feel responsible. Sorry for the trouble.
-> >=20
-> > In August this was already recognized and a patch submitted:
-> >=20
-> > http://marc.info/?t=3D118718458000004&r=3D1&w=3D2
-> >=20
-> > I do not know why it wasn't applied. I forgot re-checking after my=20
-> > vacation.
->=20
-> It slipped by me, because of holiday, too.  (I was on my well needed=20
-> holiday then.)
->=20
-> But that patch really seems like a step back to me.  The line "File: =
-=2E..=20
-> Status: ..." should be parsable enough to fix the bug properly, inste=
-ad of=20
-> undoing the optimisation.
-Unfortunately it's not that easy to parse. It *can* be done by looking =
-at the
-repository path, and the CVS/Root etc, but it's not nice.=20
+Nicolas Pitre <nico@cam.org> writes:
 
->=20
-> AFAICS Robin replied with a "let's see if a proper fix materialises",=
- and=20
-> I kind of hope that it will materialise soon.
+> On Sun, 4 Nov 2007, Johannes Schindelin wrote:
+>
+>> On Sun, 4 Nov 2007, Nicolas Pitre wrote:
+>> 
+>> > +#define SUFFIX "\e[K"  /* change to "        " if ANSI sequences don't work */ 
+>> 
+>> I am almost certain (without even testing) that cmd.exe has problems with 
+>> that.  It does not even understand colorisation.
+>
+> That's what I was expecting.  This is why I suggested an alternative in 
+> the comment.
 
-Still hoping :). BTW, wouldn't this err on the right side anyway, i.e. =
-if an
-existing file was not up to date and was wrongly thought to not exist o=
-r a new=20
-file was thought to be up-to-date, I would get an error and would not b=
-e able
-to commit. I've never seen it though and I always have a clean CVS chec=
-kout
-so the potential bug seems unlikely to me.
+That's fine --- cmd.exe weenies can patch it away ;-).
 
-The command I always use is.
-
-	git cvsexportcommit -u -c -w /my/cvs/checkout
-
-Never bitten me yet (touch wood).
-
-My real worry is on the other side, with bad conversion from CVS to git=
-=2E
-
--- robin
+The compiler at k.org complains of "\e" being non ISO-C, though.
