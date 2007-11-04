@@ -1,68 +1,62 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [PATCH] git-fetch: more terse fetch output
-Date: Sun, 4 Nov 2007 03:14:34 +0100
-Message-ID: <200711040314.36668.robin.rosenberg@dewire.com>
-References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home> <7v1wb6yg8d.fsf@gitster.siamese.dyndns.org> <20071104014930.GA27392@old.davidb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Nicolas Pitre <nico@cam.org>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
-To: David Brown <git@davidb.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 03:12:55 2007
+From: "Michael J. Cohen" <michaeljosephcohen@mac.com>
+Subject: Re: [RFC PATCH] Make gitk use --early-output
+Date: Sat, 3 Nov 2007 22:07:57 -0400
+Message-ID: <00989975-E385-4208-9E7E-1A2A3C737F61@mac.com>
+References: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Paul Mackerras <paulus@samba.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 03:13:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoUyr-0007GI-Nj
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 03:12:54 +0100
+	id 1IoUzg-0007Mj-1T
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 03:13:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757121AbXKDCMe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 3 Nov 2007 22:12:34 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756930AbXKDCMe
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 22:12:34 -0400
-Received: from [83.140.172.130] ([83.140.172.130]:16198 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1756824AbXKDCMd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 22:12:33 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 16B8380265C;
-	Sun,  4 Nov 2007 03:03:37 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 28910-04; Sun,  4 Nov 2007 03:03:34 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 8F047800782;
-	Sun,  4 Nov 2007 03:03:32 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <20071104014930.GA27392@old.davidb.org>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1757577AbXKDCN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 22:13:29 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757539AbXKDCN2
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 22:13:28 -0400
+Received: from smtpoutm.mac.com ([17.148.16.82]:64597 "EHLO smtpoutm.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757361AbXKDCN2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 22:13:28 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Sat, 03 Nov 2007 22:13:28 EDT
+Received: from mac.com (asmtp010-s [10.150.69.73])
+	by smtpoutm.mac.com (Xserve/smtpout019/MantshX 4.0) with ESMTP id lA4280HG027359;
+	Sat, 3 Nov 2007 19:08:00 -0700 (PDT)
+Received: from mac-pro.lan (c-71-196-112-35.hsd1.fl.comcast.net [71.196.112.35])
+	(authenticated bits=0)
+	by mac.com (Xserve/asmtp010/MantshX 4.0) with ESMTP id lA427v5W012826
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 3 Nov 2007 19:07:58 -0700 (PDT)
+In-Reply-To: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63335>
 
-s=F6ndag 04 november 2007 skrev David Brown:
-> On Sat, Nov 03, 2007 at 06:03:14PM -0700, Junio C Hamano wrote:
->=20
-> >I wonder if 700MB CD-ROM and 4.7GB DVD-R are also in decimal
-> >bytes.  I am too lazy to check ;-)
->=20
-> Of course.  A certain magneto optical manufacturer created a 605MB dr=
-ive,
-> which they marked as 640MB, trying to make it sound like it had the s=
-ame
-> capacity as a CD.  Even with 1,000 bytes 634,388,480 is quite a stret=
-ch to
-> call 640MB.  I never found the footnote "____ defines megabyte to be =
-991232
-> bytes".
+On Nov 3, 2007, at 7:49 PM, Paul Mackerras wrote:
 
-They may have used the term "unformatted" capacity.
+> This makes gitk use the --early-output flag on the git log command.
 
--- robin
+
+On Nov 3, 2007, at 2:11 PM, Linus Torvalds wrote:
+
+> Try it out, with
+>
+> 	git log --early-output=2
+>
+> and look at what happens
+
+This is awesome, guys.
+
+I was initially doing some research to see what makes gitk/qgit slow  
+over samba, but this seems to have solved it. :P
+
+-mjc
