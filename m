@@ -1,172 +1,67 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] format-patch: Add configuration and off switch for
-	--numbered
-Date: Sat, 3 Nov 2007 23:38:24 -0400
-Message-ID: <20071104033824.GA56097@Hermes.local>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Why is --pretty=format: so slow?
+Date: Sun, 4 Nov 2007 14:42:54 +1100
+Message-ID: <18221.16318.785162.44769@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 04:38:47 2007
+Content-Transfer-Encoding: 7bit
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 04:43:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoWJy-0000zh-R9
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 04:38:47 +0100
+	id 1IoWOX-0001Z7-Em
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 04:43:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756671AbXKDDi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 23:38:27 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756821AbXKDDi1
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 23:38:27 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:37483 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756343AbXKDDi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 23:38:26 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by silverinsanity.com (Postfix) with ESMTP id C90001FFC12F
-	for <git@vger.kernel.org>; Sun,  4 Nov 2007 03:38:25 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1756891AbXKDDnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 23:43:15 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756930AbXKDDnP
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 23:43:15 -0400
+Received: from ozlabs.org ([203.10.76.45]:37988 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755750AbXKDDnP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 23:43:15 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 2DE44DDE1D; Sun,  4 Nov 2007 14:43:13 +1100 (EST)
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63339>
 
-format.numbered is a tri-state variable.  Boolean values enable or
-disable numbering by default and "auto" enables number when outputting
-more than one patch.
+For some reason, using --pretty=format:... with git log is much slower
+than other formats.  For example, on the kernel tree (on my quad G5):
 
---no-numbered (short: -N) will disable numbering.
+$ time git log --pretty=oneline >/dev/null
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
+real    0m2.165s
+user    0m2.092s
+sys     0m0.070s
 
- Pick your own numbering adventure.  Should make everyone happy, but
- will probably do the exact opposite.  So it goes.
+$ time git log --pretty=raw >/dev/null
 
- Documentation/config.txt           |    6 ++++++
- Documentation/git-format-patch.txt |   12 ++++++++----
- builtin-log.c                      |   19 ++++++++++++++++++-
- 3 files changed, 32 insertions(+), 5 deletions(-)
+real    0m2.426s
+user    0m2.358s
+sys     0m0.068s
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index edf50cd..c2f9f14 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -432,6 +432,12 @@ fetch.unpackLimit::
- 	pack from a push can make the push operation complete faster,
- 	especially on slow filesystems.
- 
-+format.numbered::
-+	A boolean which can enable sequence numbers in patch subjects.
-+	Seting this option to "auto" will enable it only if there is
-+	more than one patch.  See --numbered option in
-+	gitlink:git-format-patch[1].
-+
- format.headers::
- 	Additional email headers to include in a patch to be submitted
- 	by mail.  See gitlink:git-format-patch[1].
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index f0617ef..92c0ab6 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e-mail submission
- SYNOPSIS
- --------
- [verse]
--'git-format-patch' [-n | -k] [-o <dir> | --stdout] [--thread]
-+'git-format-patch' [-n | -N | -k] [-o <dir> | --stdout] [--thread]
-                    [--attach[=<boundary>] | --inline[=<boundary>]]
-                    [-s | --signoff] [<common diff options>]
-                    [--start-number <n>] [--numbered-files]
-@@ -77,6 +77,9 @@ include::diff-options.txt[]
- -n|--numbered::
- 	Name output in '[PATCH n/m]' format.
- 
-+-N|--no-numbered::
-+	Name output in '[PATCH]' format.
-+
- --start-number <n>::
- 	Start numbering the patches at <n> instead of 1.
- 
-@@ -142,15 +145,16 @@ not add any suffix.
- 
- CONFIGURATION
- -------------
--You can specify extra mail header lines to be added to each
--message in the repository configuration.  You can also specify
--new defaults for the subject prefix and file suffix.
-+You can specify extra mail header lines to be added to each message
-+in the repository configuration, new defaults for the subject prefix
-+and file suffix, and number patches when outputting more than one.
- 
- ------------
- [format]
-         headers = "Organization: git-foo\n"
-         subjectprefix = CHANGE
-         suffix = .txt
-+        numbered = auto
- ------------
- 
- 
-diff --git a/builtin-log.c b/builtin-log.c
-index e8b982d..22afa1a 100644
---- a/builtin-log.c
-+++ b/builtin-log.c
-@@ -273,6 +273,8 @@ static int istitlechar(char c)
- static char *extra_headers = NULL;
- static int extra_headers_size = 0;
- static const char *fmt_patch_suffix = ".patch";
-+static int numbered = 0;
-+static int auto_number = 0;
- 
- static int git_format_config(const char *var, const char *value)
- {
-@@ -297,6 +299,15 @@ static int git_format_config(const char *var, const char *value)
- 	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
- 		return 0;
- 	}
-+	if (!strcmp(var, "format.numbered")) {
-+		if (!strcasecmp(value, "auto")) {
-+			auto_number = 1;
-+			return 0;
-+		}
-+
-+		numbered = git_config_bool(var, value);
-+		return 0;
-+	}
- 
- 	return git_log_config(var, value);
- }
-@@ -466,7 +477,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct rev_info rev;
- 	int nr = 0, total, i, j;
- 	int use_stdout = 0;
--	int numbered = 0;
- 	int start_number = -1;
- 	int keep_subject = 0;
- 	int numbered_files = 0;		/* _just_ numbers */
-@@ -503,6 +513,11 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		else if (!strcmp(argv[i], "-n") ||
- 				!strcmp(argv[i], "--numbered"))
- 			numbered = 1;
-+		else if (!strcmp(argv[i], "-N") ||
-+				!strcmp(argv[i], "--no-numbered")) {
-+			numbered = 0;
-+			auto_number = 0;
-+		}
- 		else if (!prefixcmp(argv[i], "--start-number="))
- 			start_number = strtol(argv[i] + 15, NULL, 10);
- 		else if (!strcmp(argv[i], "--numbered-files"))
-@@ -642,6 +657,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		list[nr - 1] = commit;
- 	}
- 	total = nr;
-+	if (!keep_subject && auto_number && total > 1)
-+		numbered = 1;
- 	if (numbered)
- 		rev.total = total + start_number - 1;
- 	rev.add_signoff = add_signoff;
--- 
-1.5.3.5.529.ge3d6d-dirty
+$ time git log --pretty="format:%H" >/dev/null
+
+real    0m7.843s
+user    0m6.282s
+sys     0m1.557s
+
+$ time git log --pretty="format:%H {%P} %ct" >/dev/null
+
+real    0m7.950s
+user    0m6.374s
+sys     0m1.573s
+
+Strace seems to indicate that git log is doing at least one sequence
+of open, fstat64, fcntl64, getdents64 and close for each line of
+output in the --pretty=format: cases, but not in the other cases.
+This seems rather unnecessary - could it be fixed?  I'd like to use
+the last format listed above with gitk, but not if it is going to make
+things 3 times slower.
+
+Paul.
