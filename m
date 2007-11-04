@@ -1,100 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 04 Nov 2007 10:43:02 +0100
-Organization: At home
-Message-ID: <fgk476$lha$1@ger.gmane.org>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] git-format-patch: Number patches when there are more
+ than one
+Date: Sun, 04 Nov 2007 10:49:23 +0100
+Message-ID: <472D95A3.3030108@op5.se>
+References: <Pine.LNX.4.64.0710221044080.25221@racer.site> <1194104694-12530-1-git-send-email-mh@glandium.org> <Pine.LNX.4.64.0711031631020.4362@racer.site> <472CA301.50508@op5.se> <Pine.LNX.4.64.0711040023000.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 10:43:45 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org,
+	spearce@spearce.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 04 10:49:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ioc1B-0008Nd-2t
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 10:43:45 +0100
+	id 1Ioc6z-0001yu-1n
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 10:49:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754123AbXKDJnb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 04:43:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbXKDJnb
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 04:43:31 -0500
-Received: from main.gmane.org ([80.91.229.2]:51721 "EHLO ciao.gmane.org"
+	id S1753935AbXKDJta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 04:49:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753952AbXKDJt3
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 04:49:29 -0500
+Received: from mail.op5.se ([193.201.96.20]:44872 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751195AbXKDJn3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 04:43:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ioc0k-0001D0-D4
-	for git@vger.kernel.org; Sun, 04 Nov 2007 09:43:18 +0000
-Received: from abvk230.neoplus.adsl.tpnet.pl ([83.8.208.230])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Nov 2007 09:43:18 +0000
-Received: from jnareb by abvk230.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 04 Nov 2007 09:43:18 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvk230.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753671AbXKDJt2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 04:49:28 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id B0DE11730686;
+	Sun,  4 Nov 2007 10:48:13 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YIU8f2JEiDNY; Sun,  4 Nov 2007 10:48:12 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id 3C1F31730681;
+	Sun,  4 Nov 2007 10:48:12 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0711040023000.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63372>
 
-[Cc: Junio C Hamano <gitster@pobox.com>, git @vger.kernel.org]
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Sat, 3 Nov 2007, Andreas Ericsson wrote:
+> 
+>> Every piece of DWIM can be translated as "do what I didn't say". If you 
+>> had to say it, it wouldn't be DWIM after all.
+> 
+> At some point, though, it becomes a "Do what _I_ (and nobody else does, or 
+> at least what a substantial part of the rest of the world did not) mean", 
+> and that point is reached here and now.
+> 
 
-Junio C Hamano wrote:
+Every piece of dwimmery is suggested by someone and usually backed by a few,
+so it's likely wanted by many. Your ultra-conserative "works for *me*, so
+shut up and stop trying to change things" means git really has to be flawless.
+For you, that is. For others, there are still things to improve. I'd
+appreciate if you could losen the "MY playpen" a little though, as it takes
+an awful lot of energy from the constructive discussions.
 
-> * jn/gitweb (Sat Nov 3 00:41:20 2007 +0100) 9 commits
+> Wow.  I did not think I had to explain _that_.
+> 
 
-Now that I have sned those patches ;-) I have a few doubts about them
+Dito.
 
-> =A0+ gitweb: Use config file for repository description and URLs
-> =A0+ gitweb: Read repo config using 'git config -z -l'
-
-I'd like some comments on that series, preferably by someone better=20
-with Perl than me, but I think this is a good change performance wise.
-
-> =A0+ gitweb: Add tests for overriding gitweb config with repo config
-
-More tests is always good.
-
-> =A0+ gitweb: Use href(-replay=3D>1, action=3D>...) to generate altern=
-ate
-> =A0 =A0views
-> =A0+ gitweb: Use href(-replay=3D>1, page=3D>...) to generate paginati=
-on
-> =A0 =A0links
-> =A0+ gitweb: Easier adding/changing parameters to current URL
-
-Now I'm not so sure about this, because it changes semantics of "next p=
-age"
-and alternate view links: after this series they count from current
-version, not from the displayed version.
-
-But perhaps those doubts are unnecessary...
-
-> =A0+ gitweb: Remove CGI::Carp::set_programname() call from t9500 gitw=
-eb
-> =A0 =A0test
-
-This removes unnecessary code, which can cause mysterious errors.
-
-> =A0+ gitweb: Add 'status_str' to parse_difftree_raw_line output
-> =A0+ gitweb: Always set 'from_file' and 'to_file' in
-> =A0 =A0parse_difftree_raw_line
-
-This simplifies gitweb code, and I think there aren't any issues with t=
-hose
-patches.
-=20
-> Will push these out to 'master' over the weekend.
-
-Thanks.
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
