@@ -1,77 +1,109 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] Allow 'git blame rev path' to work on bare repository
-Date: Sun, 4 Nov 2007 09:26:23 +0100
-Organization: glandium.org
-Message-ID: <20071104082623.GA3514@glandium.org>
-References: <1194092575-7133-1-git-send-email-mh@glandium.org> <1194092575-7133-2-git-send-email-mh@glandium.org> <7vabpuvb4e.fsf@gitster.siamese.dyndns.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] fix comment in strbuf.h to use correct name strbuf_avail()
+Date: Sun, 04 Nov 2007 09:56:51 +0100
+Message-ID: <20071104085651.GA26269@artemis.corp>
+References: <11941633412454-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; boundary="J/dobhs11T7y2rNN";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 09:28:00 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Nov 04 09:57:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ioapr-00049c-HV
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 09:27:59 +0100
+	id 1IobIB-0000EK-NH
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 09:57:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753147AbXKDI1g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 03:27:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753088AbXKDI1g
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 03:27:36 -0500
-Received: from vawad.err.no ([85.19.200.177]:33059 "EHLO vawad.err.no"
+	id S1753338AbXKDI45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 03:56:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753522AbXKDI45
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 03:56:57 -0500
+Received: from pan.madism.org ([88.191.52.104]:36431 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752912AbXKDI1f (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 03:27:35 -0500
-Received: from aputeaux-153-1-38-67.w82-124.abo.wanadoo.fr ([82.124.130.67] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IoapE-0000KE-UW; Sun, 04 Nov 2007 09:27:23 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1IoaoJ-0001nn-US; Sun, 04 Nov 2007 09:26:23 +0100
+	id S1753088AbXKDI44 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 03:56:56 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 9C49328494;
+	Sun,  4 Nov 2007 09:56:55 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id AF9A71FED2; Sun,  4 Nov 2007 09:56:51 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vabpuvb4e.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+In-Reply-To: <11941633412454-git-send-email-prohaska@zib.de>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63363>
 
-On Sat, Nov 03, 2007 at 10:21:53PM -0700, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > While 'git blame rev -- path' works, 'git blame rev path' didn't.
-> >
-> > Signed-off-by: Mike Hommey <mh@glandium.org>
-> > ---
-> >  builtin-blame.c |    4 ----
-> >  1 files changed, 0 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/builtin-blame.c b/builtin-blame.c
-> > index aedc294..141287e 100644
-> > --- a/builtin-blame.c
-> > +++ b/builtin-blame.c
-> > @@ -2294,10 +2294,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
-> >  			}
-> >  			else if (i != argc - 1)
-> >  				usage(blame_usage); /* garbage at end */
-> > -
-> > -			if (!has_path_in_work_tree(path))
-> > -				die("cannot stat path %s: %s",
-> > -				    path, strerror(errno));
-> >  		}
-> >  	}
-> >  
-> 
-> Sorry but a NAK; at least limit the removal of the test only to a bare
-> repository case.
 
-I fail to see why this test is necessary here. The lack of file in the
-working tree is caught in fake_working_tree_commit() anyways.
+--J/dobhs11T7y2rNN
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Mike
+On Sun, Nov 04, 2007 at 08:02:21AM +0000, Steffen Prohaska wrote:
+>=20
+> Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+  Acked-By: Pierre Habouzit <madcoder@debian.org>
+> ---
+>  strbuf.h |    6 +++---
+>  1 files changed, 3 insertions(+), 3 deletions(-)
+>=20
+> Note, the patch is against Junio's pu.
+>=20
+>     Steffen
+>=20
+> diff --git a/strbuf.h b/strbuf.h
+> index 9720826..e5cdd1e 100644
+> --- a/strbuf.h
+> +++ b/strbuf.h
+> @@ -24,11 +24,11 @@
+>   *
+>   *    strbuf_grow(sb, SOME_SIZE);
+>   *    // ... here the memory areay starting at sb->buf, and of length
+> - *    // sb_avail(sb) is all yours, and you are sure that sb_avail(sb) i=
+s at
+> - *    // least SOME_SIZE
+> + *    // strbuf_avail(sb) is all yours, and you are sure that strbuf_ava=
+il(sb)
+> + *    // is at least SOME_SIZE
+>   *    strbuf_setlen(sb, sb->len + SOME_OTHER_SIZE);
+>   *
+> - *    Of course, SOME_OTHER_SIZE must be smaller or equal to sb_avail(sb=
+).
+> + *    Of course, SOME_OTHER_SIZE must be smaller or equal to strbuf_avai=
+l(sb).
+>   *
+>   *    Doing so is safe, though if it has to be done in many places, addi=
+ng the
+>   *    missing API to the strbuf module is the way to go.
+> --=20
+> 1.5.3.4.464.ge1bc2
+>=20
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--J/dobhs11T7y2rNN
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLYlTvGr7W6HudhwRAqERAJ9TMIk1tvnYeFEi3WFMTZKw78W48wCeKlwq
+ZL10J201HQmNfO4epBZHlPQ=
+=NSPz
+-----END PGP SIGNATURE-----
+
+--J/dobhs11T7y2rNN--
