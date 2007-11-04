@@ -1,74 +1,74 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 04/10] Migrate git-clone to use git-rev-parse --parseopt
-Date: Sun, 04 Nov 2007 15:49:18 +0100
-Message-ID: <20071104144918.GI26269@artemis.corp>
-References: <1194172262-1563-1-git-send-email-madcoder@debian.org> <1194172262-1563-2-git-send-email-madcoder@debian.org> <1194172262-1563-3-git-send-email-madcoder@debian.org> <1194172262-1563-4-git-send-email-madcoder@debian.org> <1194172262-1563-5-git-send-email-madcoder@debian.org>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/5] pretty describe: move library functions to the new
+ file describe.c
+Date: Sun, 04 Nov 2007 15:56:00 +0100
+Message-ID: <472DDD80.2010203@lsrfire.ath.cx>
+References: <472DB199.2040305@lsrfire.ath.cx> <Pine.LNX.4.64.0711041435540.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="VkVuOCYP9O7H3CXI";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Nov 04 15:49:47 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <junkio@cox.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 04 15:56:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IognD-0005YA-QI
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 15:49:40 +0100
+	id 1Iogtz-0007ps-K6
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 15:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755932AbXKDOtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 09:49:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbXKDOtU
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 09:49:20 -0500
-Received: from pan.madism.org ([88.191.52.104]:53686 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755892AbXKDOtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 09:49:20 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 08737285DB;
-	Sun,  4 Nov 2007 15:49:18 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 7B14A83EF; Sun,  4 Nov 2007 15:49:18 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1194172262-1563-5-git-send-email-madcoder@debian.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1758968AbXKDO4V convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 09:56:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759102AbXKDO4V
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 09:56:21 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:46675
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758968AbXKDO4U (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2007 09:56:20 -0500
+Received: from [10.0.1.201] (p57B7F8A7.dip.t-dialin.net [87.183.248.167])
+	by neapel230.server4you.de (Postfix) with ESMTP id F0A8A873BA;
+	Sun,  4 Nov 2007 15:56:17 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0711041435540.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63414>
 
+Johannes Schindelin schrieb:
+> Hi,
+>=20
+> On Sun, 4 Nov 2007, Ren? Scharfe wrote:
+>=20
+>>  Makefile           |    2 +-
+>>  builtin-describe.c |  202 -----------------------------------------=
+----------
+>>  cache.h            |    5 ++
+>>  describe.c         |  204 +++++++++++++++++++++++++++++++++++++++++=
++++++++++++
+>>  4 files changed, 210 insertions(+), 203 deletions(-)
+>>  create mode 100644 describe.c
+>=20
+> Would not "format-patch -C -C" have given a nicer output?
 
---VkVuOCYP9O7H3CXI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, it would have been shorter, but it looks a bit strange, because it=
+'s
+deleting stuff from the new file describe.c (i.e. all the things left i=
+n
+builtin-describe.c):
 
-  Note: this patch now conflicts with a recent patch to make git clone
-grok `--`. As git rev-parse --parseopt does that as a side effect, you
-can force the update to the parseopt version without functionality loss.
+ Makefile                         |    2 +-
+ builtin-describe.c               |  202 ------------------------------=
+--------
+ cache.h                          |    5 +
+ builtin-describe.c =3D> describe.c |   85 ----------------
+ 4 files changed, 6 insertions(+), 288 deletions(-)
+ copy builtin-describe.c =3D> describe.c (66%)
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+That's 367 lines of patch + stat vs. 470 lines for the one I sent.  Wil=
+l
+use next time.
 
---VkVuOCYP9O7H3CXI
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHLdvuvGr7W6HudhwRAs4mAJsGCFsQG7Imnu82lwBFndF4v/VWuQCgpaML
-6BIzNU9ZWdS9YAReRfTu6Qs=
-=JOqC
------END PGP SIGNATURE-----
-
---VkVuOCYP9O7H3CXI--
+Thanks,
+Ren=E9
