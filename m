@@ -1,66 +1,71 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [RFC PATCH] Make gitk use --early-output
-Date: Sun, 04 Nov 2007 19:28:39 +0100
-Message-ID: <85fxzlrhk8.fsf@lola.goethe.zz>
-References: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit RFC] A more structured way of calling git
+Date: Sun, 4 Nov 2007 19:34:57 +0100
+Message-ID: <20071104183457.GA6032@diana.vm.bytemark.co.uk>
+References: <20071026192418.GA19774@diana.vm.bytemark.co.uk> <b0943d9e0711030356j4dcd31cbl54d838107240b3d0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 19:28:09 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
+	Git Mailing List <git@vger.kernel.org>,
+	Yann Dirson <ydirson@altern.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 19:35:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IokCd-0001K6-RY
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 19:28:08 +0100
+	id 1IokK0-0003HE-G2
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 19:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753803AbXKDS1a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 13:27:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753657AbXKDS1a
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 13:27:30 -0500
-Received: from fencepost.gnu.org ([140.186.70.10]:40432 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753393AbXKDS13 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 13:27:29 -0500
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IokBx-00006n-Ms; Sun, 04 Nov 2007 13:27:25 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id B13E71C464E3; Sun,  4 Nov 2007 19:28:39 +0100 (CET)
-In-Reply-To: <18221.2285.259487.655684@cargo.ozlabs.ibm.com> (Paul Mackerras's
-	message of "Sun, 4 Nov 2007 10:49:01 +1100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1753993AbXKDSfa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 13:35:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753801AbXKDSfa
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 13:35:30 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2479 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753788AbXKDSf3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 13:35:29 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IokJF-0001nF-00; Sun, 04 Nov 2007 18:34:57 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0711030356j4dcd31cbl54d838107240b3d0@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63426>
 
-Paul Mackerras <paulus@samba.org> writes:
+On 2007-11-03 10:56:36 +0000, Catalin Marinas wrote:
 
-> This makes gitk use the --early-output flag on the git log command.
+> On 26/10/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
 >
-> When gitk sees the "Final output:" line from git log, it goes into a
-> mode where it basically just checks that it is getting the commits
-> again in the same order as before.  If they are, well and good; if
-> not, it truncates its internal list at the point of difference and
-> proceeds to read in the commits in the new order from there on, and
-> re-does the graph layout if necessary.
+> > I wanted to build an StGit command that coalesced adjacent patches
+> > to a single patch. Because the end result tree would still be the
+> > same, this should be doable without ever involving HEAD, the
+> > index, or the worktree.
 >
-> This gives a much more immediate feel to the startup; gitk shows its
-> window with the first screenful of commits displayed very quickly this
-> way.
+> Wouldn't HEAD need to be modified since the commit log changes
+> slightly, even though the tree is the same. Or am I misunderstanding
+> this?
 
-This is not strictly related with the patch: would it be possible to let
-gitk just stall reading from git-rev-list if it has rendered enough
-content on-screen?  The behavior I have with gitk on enormous
-repositories now is that it starts up reasonably fast and nice and then
-proceeds to suck up all memory in the background.
+I'm refering to the HEAD tree. The HEAD commit will of course change.
 
-Particularly annoying is that closing its window appears to work, but
-wish will still proceed sucking up all the pending git-rev-list output
-and allocating memory for it before it will actually exit.
+> > StGit's existing infrastructure for manipulating patches didn't
+> > lend itself to doing this kind of thing, though: it's not modular
+> > enough. So I started to design a replacement low-level interface
+> > to git, and things got slightly out of hand ... and I ended up
+> > with a much bigger refactoring than I'd planned.
+>
+> Thanks for this. I'll need a bit of time to read it all and give
+> feedback. In general, I welcome this refactoring.
+>
+> I'll go through the whole e-mail in the next days and get back to
+> you.
 
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Thanks, I appreciate it.
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
