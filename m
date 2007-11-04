@@ -2,205 +2,294 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=0.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.4 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 16108 invoked by uid 111); 4 Nov 2007 09:12:20 -0000
+Received: (qmail 16551 invoked by uid 111); 4 Nov 2007 10:31:27 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 04 Nov 2007 04:12:17 -0500
+    by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 04 Nov 2007 05:31:24 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116AbXKDJMH (ORCPT <rfc822;peff@peff.net>);
-	Sun, 4 Nov 2007 04:12:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754123AbXKDJMF
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 04:12:05 -0500
-Received: from pan.madism.org ([88.191.52.104]:34041 "EHLO hermes.madism.org"
+	id S1754777AbXKDKbR (ORCPT <rfc822;peff@peff.net>);
+	Sun, 4 Nov 2007 05:31:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754310AbXKDKbO
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 05:31:14 -0500
+Received: from pan.madism.org ([88.191.52.104]:42914 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753977AbXKDJMA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 04:12:00 -0500
+	id S1755498AbXKDKbE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 05:31:04 -0500
 Received: from madism.org (olympe.madism.org [82.243.245.108])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 99AC2233F1;
-	Sun,  4 Nov 2007 10:11:58 +0100 (CET)
+	by hermes.madism.org (Postfix) with ESMTP id 765482860C;
+	Sun,  4 Nov 2007 11:31:03 +0100 (CET)
 Received: by madism.org (Postfix, from userid 1000)
-	id 0D2202001E; Sun,  4 Nov 2007 10:11:56 +0100 (CET)
+	id 624711E45C; Sun,  4 Nov 2007 11:31:02 +0100 (CET)
 From:	Pierre Habouzit <madcoder@debian.org>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-Subject: [UPDATED PATCH 9/5] Migrate git-checkout.sh to use git-rev-parse --parseopt --keep-dashdash
-Date:	Sun,  4 Nov 2007 10:11:55 +0100
-Message-Id: <1194167515-30378-3-git-send-email-madcoder@debian.org>
-X-Mailer: git-send-email 1.5.3.5.1498.g0a37d
-In-Reply-To: <1194167515-30378-2-git-send-email-madcoder@debian.org>
-References: <7vd4uqtpza.fsf@gitster.siamese.dyndns.org>
- <1194167515-30378-1-git-send-email-madcoder@debian.org>
- <1194167515-30378-2-git-send-email-madcoder@debian.org>
+Subject: [PATCH 01/10] Add a parseopt mode to git-rev-parse to bring parse-options to shell scripts.
+Date:	Sun,  4 Nov 2007 11:30:53 +0100
+Message-Id: <1194172262-1563-2-git-send-email-madcoder@debian.org>
+X-Mailer: git-send-email 1.5.3.5.1498.g0c64
+In-Reply-To: <1194172262-1563-1-git-send-email-madcoder@debian.org>
+References: <1194172262-1563-1-git-send-email-madcoder@debian.org>
 To:	Junio C Hamano <gitster@pobox.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List:	git@vger.kernel.org
 
-Also fix some space versus tabs issues.
+Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- git-checkout.sh |   99 +++++++++++++++++++++++++++----------------------------
- 1 files changed, 49 insertions(+), 50 deletions(-)
+ Documentation/git-rev-parse.txt |   75 ++++++++++++++++++++++-
+ builtin-rev-parse.c             |  126 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 199 insertions(+), 2 deletions(-)
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 8993920..f99f0d5 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -1,8 +1,18 @@
- #!/bin/sh
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index 4758c33..6811656 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -23,6 +23,13 @@ distinguish between them.
  
--USAGE='[-q] [-f] [-b <new_branch>] [-m] [<branch>] [<paths>...]'
-+OPTIONS_SPEC="\
-+git-branch [options] [<branch>] [<paths>...]
+ OPTIONS
+ -------
++--parseopt::
++        Use `git-rev-parse` in option parsing mode (see PARSEOPT section below).
++
++--keep-dash-dash::
++	Only meaningful in `--parseopt` mode. Tells the option parser to echo
++        out the first `--` met instead of skipping it.
++
+ --revs-only::
+ 	Do not output flags and parameters not meant for
+ 	`git-rev-list` command.
+@@ -288,10 +295,74 @@ Here are a handful examples:
+    C^@              I J F
+    F^! D            G H D F
+ 
++PARSEOPT
++--------
++
++In `--parseopt` mode, `git-rev-parse` helps massaging options to bring to shell
++scripts the same facilities C builtins have. It works as an option normalizer
++(e.g. splits single switches aggregate values), a bit like `getopt(1)` does.
++
++It takes on the standard input the specification of the options to parse and
++understand, and echoes on the standard ouput a line suitable for `sh(1)` `eval`
++to replace the arguments with normalized ones.  In case of error, it ouputs
++usage on the standard error stream, and exits with code 129.
++
++Input Format
++~~~~~~~~~~~~
++
++`git-ref-parse --parseopt` input format is fully text based. It has two parts,
++separated by a line that contains only `--`. The lines before (should be more
++than one) are used for the usage. The lines after describe the options.
++
++Each line of options has this format:
++
++------------
++<opt_spec><arg_spec>? SP+ help LF
++------------
++
++`<opt_spec>`::
++	its format is the short option character, then the long option name
++        separated by a comma. Both parts are not required, though at least one
++        is necessary. `h,help`, `dry-run` and `f` are all three correct
++        `<opt_spec>`.
++
++`<arg_spec>`::
++	an `<arg_spec>` tells the option parser if the option has an argument
++        (`=`), an optionnal one (`?` though its use is discouraged) or none
++        (no `<arg_spec>` in that case).
++
++The rest of the line after as many spaces up to the ending line feed is used
++as the help associated to the option.
++
++Blank lines are ignored, and lines that don't match this specification are used
++as option group headers (start the line with a space to purposely create such
++lines).
++
++Example
++~~~~~~~
++
++------------
++OPTS_SPEC="\
++some-command [options] <args>...
++
++some-command does foo and bar !
 +--
-+b=          create a new branch started at <branch>
-+l           create the new branchs reflog
-+track       tells if the new branch should track the remote branch
-+f           proceed even if the index or working tree is not HEAD
-+m           performa  three-way merge on local modifications if needed
-+q,quiet     be quiet
-+"
- SUBDIRECTORY_OK=Sometimes
- . git-sh-setup
-+PARSEOPT_OPTS=--keep-dashdash
- require_work_tree
- 
- old_name=HEAD
-@@ -20,13 +30,12 @@ quiet=
- v=-v
- LF='
- '
--while [ "$#" != "0" ]; do
--    arg="$1"
--    shift
--    case "$arg" in
--	"-b")
--		newbranch="$1"
++h,help    show the help
 +
-+while test $# != 0; do
-+	case "$1" in
-+	-b)
- 		shift
-+		newbranch="$1"
- 		[ -z "$newbranch" ] &&
- 			die "git checkout: -b needs a branch name"
- 		git show-ref --verify --quiet -- "refs/heads/$newbranch" &&
-@@ -34,64 +43,54 @@ while [ "$#" != "0" ]; do
- 		git check-ref-format "heads/$newbranch" ||
- 			die "git checkout: we do not like '$newbranch' as a branch name."
- 		;;
--	"-l")
-+	-l)
- 		newbranch_log=-l
- 		;;
--	"--track"|"--no-track")
--		track="$arg"
-+	--track|--no-track)
-+		track="$1"
- 		;;
--	"-f")
-+	-f)
- 		force=1
- 		;;
- 	-m)
- 		merge=1
- 		;;
--	"-q")
-+	-q|--quiet)
- 		quiet=1
- 		v=
- 		;;
- 	--)
-+		shift
- 		break
- 		;;
--	-*)
--		usage
--		;;
- 	*)
--		if rev=$(git rev-parse --verify "$arg^0" 2>/dev/null)
--		then
--			if [ -z "$rev" ]; then
--				echo "unknown flag $arg"
--				exit 1
--			fi
--			new_name="$arg"
--			if git show-ref --verify --quiet -- "refs/heads/$arg"
--			then
--				rev=$(git rev-parse --verify "refs/heads/$arg^0")
--				branch="$arg"
--			fi
--			new="$rev"
--		elif rev=$(git rev-parse --verify "$arg^{tree}" 2>/dev/null)
--		then
--			# checking out selected paths from a tree-ish.
--			new="$rev"
--			new_name="$arg^{tree}"
--			branch=
--		else
--			new=
--			new_name=
--			branch=
--			set x "$arg" "$@"
--			shift
--		fi
--		case "$1" in
--		--)
--			shift ;;
--		esac
--		break
-+		usage
- 		;;
--    esac
-+	esac
-+	shift
- done
- 
-+arg="$1"
-+if rev=$(git rev-parse --verify "$arg^0" 2>/dev/null)
-+then
-+	[ -z "$rev" ] && die "unknown flag $arg"
-+	new_name="$arg"
-+	if git show-ref --verify --quiet -- "refs/heads/$arg"
-+	then
-+		rev=$(git rev-parse --verify "refs/heads/$arg^0")
-+		branch="$arg"
-+	fi
-+	new="$rev"
-+	shift
-+elif rev=$(git rev-parse --verify "$arg^{tree}" 2>/dev/null)
-+then
-+	# checking out selected paths from a tree-ish.
-+	new="$rev"
-+	new_name="$arg^{tree}"
-+	shift
-+fi
-+[ "$1" = "--" ] && shift
++foo       some nifty option --foo
++bar=      some cool option --bar with an argument
 +
- case "$newbranch,$track" in
- ,--*)
- 	die "git checkout: --track and --no-track require -b"
-@@ -138,8 +137,8 @@ Did you intend to checkout '$@' which can not be resolved as commit?"
- 	git ls-files -- "$@" |
- 	git checkout-index -f -u --stdin
++  An option group Header
++C?        option C with an optionnal argument"
++
++eval `echo "$OPTS_SPEC" | git-rev-parse --parseopt -- "$@" || echo exit $?`
++------------
++
++
+ Author
+ ------
+-Written by Linus Torvalds <torvalds@osdl.org> and
+-Junio C Hamano <junkio@cox.net>
++Written by Linus Torvalds <torvalds@osdl.org> .
++Junio C Hamano <junkio@cox.net> and Pierre Habouzit <madcoder@debian.org>
  
--        # Run a post-checkout hook -- the HEAD does not change so the
--        # current HEAD is passed in for both args
-+	# Run a post-checkout hook -- the HEAD does not change so the
-+	# current HEAD is passed in for both args
- 	if test -x "$GIT_DIR"/hooks/post-checkout; then
- 	    "$GIT_DIR"/hooks/post-checkout $old $old 0
- 	fi
-@@ -294,5 +293,5 @@ fi
+ Documentation
+ --------------
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 8d78b69..054519b 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -8,6 +8,7 @@
+ #include "refs.h"
+ #include "quote.h"
+ #include "builtin.h"
++#include "parse-options.h"
  
- # Run a post-checkout hook
- if test -x "$GIT_DIR"/hooks/post-checkout; then
--        "$GIT_DIR"/hooks/post-checkout $old $new 1
-+	"$GIT_DIR"/hooks/post-checkout $old $new 1
- fi
+ #define DO_REVS		1
+ #define DO_NOREV	2
+@@ -209,6 +210,128 @@ static int try_difference(const char *arg)
+ 	return 0;
+ }
+ 
++static int parseopt_dump(const struct option *o, const char *arg, int unset)
++{
++	struct strbuf *parsed = o->value;
++	if (unset)
++		strbuf_addf(parsed, " --no-%s", o->long_name);
++	else if (o->short_name)
++		strbuf_addf(parsed, " -%c", o->short_name);
++	else
++		strbuf_addf(parsed, " --%s", o->long_name);
++	if (arg) {
++		strbuf_addch(parsed, ' ');
++		sq_quote_buf(parsed, arg);
++	}
++	return 0;
++}
++
++static const char *skipspaces(const char *s)
++{
++	while (isspace(*s))
++		s++;
++	return s;
++}
++
++static int cmd_parseopt(int argc, const char **argv, const char *prefix)
++{
++	static int keep_dashdash = 0;
++	static char const * const parseopt_usage[] = {
++		"git-rev-parse --parseopt [options] -- [<args>...]",
++		NULL
++	};
++	static struct option parseopt_opts[] = {
++		OPT_BOOLEAN(0, "keep-dashdash", &keep_dashdash,
++					"keep the `--` passed as an arg"),
++		OPT_END(),
++	};
++
++	struct strbuf sb, parsed;
++	const char **usage = NULL;
++	struct option *opts = NULL;
++	int onb = 0, osz = 0, unb = 0, usz = 0;
++
++	strbuf_init(&parsed, 0);
++	strbuf_addstr(&parsed, "set --");
++	argc = parse_options(argc, argv, parseopt_opts, parseopt_usage,
++	                     PARSE_OPT_KEEP_DASHDASH);
++	if (argc < 1 || strcmp(argv[0], "--"))
++		usage_with_options(parseopt_usage, parseopt_opts);
++
++	strbuf_init(&sb, 0);
++	/* get the usage up to the first line with a -- on it */
++	for (;;) {
++		if (strbuf_getline(&sb, stdin, '\n') == EOF)
++			die("premature end of input");
++		ALLOC_GROW(usage, unb + 1, usz);
++		if (!strcmp("--", sb.buf)) {
++			if (unb < 1)
++				die("no usage string given before the `--' separator");
++			usage[unb] = NULL;
++			break;
++		}
++		usage[unb++] = strbuf_detach(&sb, NULL);
++	}
++
++	/* parse: (<short>|<short>,<long>|<long>)[=?]? SP+ <help> */
++	while (strbuf_getline(&sb, stdin, '\n') != EOF) {
++		const char *s;
++		struct option *o;
++
++		if (!sb.len)
++			continue;
++
++		ALLOC_GROW(opts, onb + 1, osz);
++		memset(opts + onb, 0, sizeof(opts[onb]));
++
++		o = &opts[onb++];
++		s = strchr(sb.buf, ' ');
++		if (!s || *sb.buf == ' ') {
++			o->type = OPTION_GROUP;
++			o->help = xstrdup(skipspaces(s));
++			continue;
++		}
++
++		o->type = OPTION_CALLBACK;
++		o->help = xstrdup(skipspaces(s));
++		o->value = &parsed;
++		o->callback = &parseopt_dump;
++		switch (s[-1]) {
++		case '=':
++			s--;
++			break;
++		case '?':
++			o->flags = PARSE_OPT_OPTARG;
++			s--;
++			break;
++		default:
++			o->flags = PARSE_OPT_NOARG;
++			break;
++		}
++
++		if (s - sb.buf == 1) /* short option only */
++			o->short_name = *sb.buf;
++		else if (sb.buf[1] != ',') /* long option only */
++			o->long_name = xmemdupz(sb.buf, s - sb.buf);
++		else {
++			o->short_name = *sb.buf;
++			o->long_name = xmemdupz(sb.buf + 2, s - sb.buf - 2);
++		}
++	}
++	strbuf_release(&sb);
++
++	/* put an OPT_END() */
++	ALLOC_GROW(opts, onb + 1, osz);
++	memset(opts + onb, 0, sizeof(opts[onb]));
++	argc = parse_options(argc, argv, opts, usage,
++	                     keep_dashdash ? PARSE_OPT_KEEP_DASHDASH : 0);
++
++	strbuf_addf(&parsed, " --");
++	sq_quote_argv(&parsed, argv, argc, 0);
++	puts(parsed.buf);
++	return 0;
++}
++
+ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ {
+ 	int i, as_is = 0, verify = 0;
+@@ -216,6 +339,9 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 
+ 	git_config(git_default_config);
+ 
++	if (argc > 1 && !strcmp("--parseopt", argv[1]))
++		return cmd_parseopt(argc - 1, argv + 1, prefix);
++
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
 -- 
-1.5.3.5.1498.g0a37d
+1.5.3.5.1509.g66d41
 
