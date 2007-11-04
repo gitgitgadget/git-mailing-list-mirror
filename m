@@ -1,180 +1,232 @@
 From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 4/5] pretty describe: de-const'ify struct commit arg of format_commit_message()
-Date: Sun, 04 Nov 2007 12:48:49 +0100
-Message-ID: <472DB1A1.6020208@lsrfire.ath.cx>
+Subject: [PATCH 5/5] pretty describe: add %ds, %dn, %dd placeholders
+Date: Sun, 04 Nov 2007 12:49:04 +0100
+Message-ID: <472DB1B0.1050904@lsrfire.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Sun Nov 04 12:49:30 2007
+X-From: git-owner@vger.kernel.org Sun Nov 04 12:49:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iodym-0001E7-JK
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:49:25 +0100
+	id 1Iodz1-0001JM-UR
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:49:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757250AbXKDLtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 06:49:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756245AbXKDLtJ
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:49:09 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:43781
+	id S1757269AbXKDLtV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 06:49:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757048AbXKDLtV
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:49:21 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:43787
 	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757249AbXKDLtI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2007 06:49:08 -0500
+	by vger.kernel.org with ESMTP id S1756245AbXKDLtU (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2007 06:49:20 -0500
 Received: from [10.0.1.201] (p57B7FCFB.dip.t-dialin.net [87.183.252.251])
-	by neapel230.server4you.de (Postfix) with ESMTP id E820C873BA;
-	Sun,  4 Nov 2007 12:49:06 +0100 (CET)
+	by neapel230.server4you.de (Postfix) with ESMTP id 41D34873BA;
+	Sun,  4 Nov 2007 12:49:19 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63392>
 
-As a preparation to use describe_commit() in format_commit_message(),
-the const attribute of the struct commit parameter must go, as
-describe_commit() needs to change the name related members in order
-to do its work.
+The new placeholders %ds (description string, git-describe style), %dn
+(the name part) and %dd (the depth part) are added.
 
-This change requires changes in other places, too -- those that call
-format_commit_message() with a const struct commit, and the places
-calling those places.
+To avoid imposing the significant cost of running describe_commit() on
+every format string, even if none of the new placeholders are used, a
+new function, interp_count(), is introduced.  It is a stripped down
+version of interpolate(), that simply counts the placeholders in a
+format string.  If the describe placeholders are not found, setting up
+the corresponding replacements is skipped.
 
 Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
 ---
- archive-tar.c     |    2 +-
- archive-zip.c     |    2 +-
- archive.h         |    4 ++--
- builtin-archive.c |    8 ++++----
- commit.c          |    4 ++--
- commit.h          |    4 ++--
- 6 files changed, 12 insertions(+), 12 deletions(-)
+ Documentation/pretty-formats.txt |    3 +++
+ commit.c                         |   38 ++++++++++++++++++++++++++++++++++++++
+ interpolate.c                    |   36 ++++++++++++++++++++++++++++++++++++
+ interpolate.h                    |    2 ++
+ t/t6120-describe.sh              |   22 ++++++++++++++++++++++
+ 5 files changed, 101 insertions(+), 0 deletions(-)
 
-diff --git a/archive-tar.c b/archive-tar.c
-index e1bced5..792462c 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -16,7 +16,7 @@ static unsigned long offset;
- static time_t archive_time;
- static int tar_umask = 002;
- static int verbose;
--static const struct commit *commit;
-+static struct commit *commit;
- 
- /* writes out the whole block, but only if it is full */
- static void write_if_needed(void)
-diff --git a/archive-zip.c b/archive-zip.c
-index 74e30f6..ed0918e 100644
---- a/archive-zip.c
-+++ b/archive-zip.c
-@@ -12,7 +12,7 @@
- static int verbose;
- static int zip_date;
- static int zip_time;
--static const struct commit *commit;
-+static struct commit *commit;
- 
- static unsigned char *zip_dir;
- static unsigned int zip_dir_size;
-diff --git a/archive.h b/archive.h
-index 5791e65..7fb69c4 100644
---- a/archive.h
-+++ b/archive.h
-@@ -8,7 +8,7 @@ struct archiver_args {
- 	const char *base;
- 	struct tree *tree;
- 	const unsigned char *commit_sha1;
--	const struct commit *commit;
-+	struct commit *commit;
- 	time_t time;
- 	const char **pathspec;
- 	unsigned int verbose : 1;
-@@ -43,6 +43,6 @@ extern int write_tar_archive(struct archiver_args *);
- extern int write_zip_archive(struct archiver_args *);
- extern void *parse_extra_zip_args(int argc, const char **argv);
- 
--extern void *sha1_file_to_archive(const char *path, const unsigned char *sha1, unsigned int mode, enum object_type *type, unsigned long *size, const struct commit *commit);
-+extern void *sha1_file_to_archive(const char *path, const unsigned char *sha1, unsigned int mode, enum object_type *type, unsigned long *size, struct commit *commit);
- 
- #endif	/* ARCHIVE_H */
-diff --git a/builtin-archive.c b/builtin-archive.c
-index 14a1b30..759f265 100644
---- a/builtin-archive.c
-+++ b/builtin-archive.c
-@@ -79,7 +79,7 @@ static int run_remote_archiver(const char *remote, int argc,
- 	return !!rv;
- }
- 
--static void format_subst(const struct commit *commit,
-+static void format_subst(struct commit *commit,
-                          const char *src, size_t len,
-                          struct strbuf *buf)
- {
-@@ -115,7 +115,7 @@ static void format_subst(const struct commit *commit,
- static int convert_to_archive(const char *path,
-                               const void *src, size_t len,
-                               struct strbuf *buf,
--                              const struct commit *commit)
-+                              struct commit *commit)
- {
- 	static struct git_attr *attr_export_subst;
- 	struct git_attr_check check[1];
-@@ -139,7 +139,7 @@ static int convert_to_archive(const char *path,
- void *sha1_file_to_archive(const char *path, const unsigned char *sha1,
-                            unsigned int mode, enum object_type *type,
-                            unsigned long *sizep,
--                           const struct commit *commit)
-+                           struct commit *commit)
- {
- 	void *buffer;
- 
-@@ -188,7 +188,7 @@ void parse_treeish_arg(const char **argv, struct archiver_args *ar_args,
- 	const unsigned char *commit_sha1;
- 	time_t archive_time;
- 	struct tree *tree;
--	const struct commit *commit;
-+	struct commit *commit;
- 	unsigned char sha1[20];
- 
- 	if (get_sha1(name, sha1))
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 0193c3c..ec86415 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -100,6 +100,9 @@ The placeholders are:
+ - '%t': abbreviated tree hash
+ - '%P': parent hashes
+ - '%p': abbreviated parent hashes
++- '%ds': description
++- '%dn': tag name part of the description
++- '%dd': depth part of the description
+ - '%an': author name
+ - '%ae': author email
+ - '%ad': author date
 diff --git a/commit.c b/commit.c
-index 24b7268..2e52a2f 100644
+index 2e52a2f..06d5cec 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -771,7 +771,7 @@ static void fill_person(struct interp *table, const char *msg, int len)
- 	interp_set_entry(table, 6, show_date(date, tz, DATE_ISO8601));
+@@ -781,6 +781,9 @@ void format_commit_message(struct commit *commit,
+ 		{ "%t" },	/* abbreviated tree hash */
+ 		{ "%P" },	/* parent hashes */
+ 		{ "%p" },	/* abbreviated parent hashes */
++		{ "%ds" },	/* description */
++		{ "%dn" },	/* tag name part of the description */
++		{ "%dd" },	/* depth part of the description */
+ 		{ "%an" },	/* author name */
+ 		{ "%ae" },	/* author email */
+ 		{ "%ad" },	/* author date */
+@@ -809,6 +812,7 @@ void format_commit_message(struct commit *commit,
+ 		IHASH = 0, IHASH_ABBREV,
+ 		ITREE, ITREE_ABBREV,
+ 		IPARENTS, IPARENTS_ABBREV,
++		IDESC, IDESC_NAME, IDESC_DEPTH,
+ 		IAUTHOR_NAME, IAUTHOR_EMAIL,
+ 		IAUTHOR_DATE, IAUTHOR_DATE_RFC2822, IAUTHOR_DATE_RELATIVE,
+ 		IAUTHOR_TIMESTAMP, IAUTHOR_ISO8601,
+@@ -829,10 +833,13 @@ void format_commit_message(struct commit *commit,
+ 	int i;
+ 	enum { HEADER, SUBJECT, BODY } state;
+ 	const char *msg = commit->buffer;
++	unsigned long occurs[ARRAY_SIZE(table)];
+ 
+ 	if (ILEFT_RIGHT + 1 != ARRAY_SIZE(table))
+ 		die("invalid interp table!");
+ 
++	interp_count(occurs, format, table, ARRAY_SIZE(table));
++
+ 	/* these are independent of the commit */
+ 	interp_set_entry(table, IRED, "\033[31m");
+ 	interp_set_entry(table, IGREEN, "\033[32m");
+@@ -875,6 +882,37 @@ void format_commit_message(struct commit *commit,
+ 				DEFAULT_ABBREV));
+ 	interp_set_entry(table, IPARENTS_ABBREV, parents + 1);
+ 
++	if (occurs[IDESC] || occurs[IDESC_DEPTH] || occurs[IDESC_NAME]) {
++		struct strbuf desc;
++		char *name;
++		int depth = 0;
++		char *depthstr;
++		const char *abbr;
++
++		load_commit_names(2);
++		name = describe_commit(commit, 10, 0, &depth);
++		clear_commit_name_flags(commit);
++		abbr = find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV);
++
++		strbuf_init(&desc, 32);
++		strbuf_addstr(&desc, name ? name + 5 : abbr);
++		interp_set_entry(table, IDESC_NAME, desc.buf);
++		if (name) {
++			if (depth) {
++				strbuf_addch(&desc, '-');
++				depthstr = desc.buf + desc.len;
++				strbuf_addf(&desc, "%d", depth);
++				interp_set_entry(table, IDESC_DEPTH, depthstr);
++				strbuf_addstr(&desc, "-g");
++				strbuf_addstr(&desc, abbr);
++			} else {
++				interp_set_entry(table, IDESC_DEPTH, "0");
++			}
++		}
++		interp_set_entry(table, IDESC, desc.buf);
++		strbuf_release(&desc);
++	}
++
+ 	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
+ 		int eol;
+ 		for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
+diff --git a/interpolate.c b/interpolate.c
+index 6ef53f2..8f51649 100644
+--- a/interpolate.c
++++ b/interpolate.c
+@@ -102,3 +102,39 @@ unsigned long interpolate(char *result, unsigned long reslen,
+ 		*dest = '\0';
+ 	return newlen;
+ }
++
++/*
++ * interp_count - count occurences of placeholders
++ */
++void interp_count(unsigned long *result, const char *orig,
++                  const struct interp *interps, int ninterps)
++{
++	const char *src = orig;
++	const char *name;
++	unsigned long namelen;
++	int i;
++	char c;
++
++	for (i = 0; i < ninterps; i++)
++		result[i] = 0;
++
++	while ((c = *src)) {
++		if (c == '%') {
++			/* Try to match an interpolation string. */
++			for (i = 0; i < ninterps; i++) {
++				name = interps[i].name;
++				namelen = strlen(name);
++				if (strncmp(src, name, namelen) == 0)
++					break;
++			}
++
++			/* Check for valid interpolation. */
++			if (i < ninterps) {
++				result[i]++;
++				src += namelen;
++				continue;
++			}
++		}
++		src++;
++	}
++}
+diff --git a/interpolate.h b/interpolate.h
+index 77407e6..c41ea18 100644
+--- a/interpolate.h
++++ b/interpolate.h
+@@ -22,5 +22,7 @@ extern void interp_clear_table(struct interp *table, int ninterps);
+ extern unsigned long interpolate(char *result, unsigned long reslen,
+ 				 const char *orig,
+ 				 const struct interp *interps, int ninterps);
++extern void interp_count(unsigned long *result, const char *orig,
++                         const struct interp *interps, int ninterps);
+ 
+ #endif /* INTERPOLATE_H */
+diff --git a/t/t6120-describe.sh b/t/t6120-describe.sh
+index ae8ee11..3be43c4 100755
+--- a/t/t6120-describe.sh
++++ b/t/t6120-describe.sh
+@@ -23,6 +23,28 @@ check_describe () {
+ 		false ;;
+ 	esac
+ 	'
++
++	# %ds, %dn and %dd don't work with --tags or --all
++	case "$@" in
++	*--tags*|*--all*) return ;;
++	esac
++
++	R=$(git log -n 1 --pretty=format:%ds "$@") &&
++	test_expect_success "log --pretty=format:%ds $*" '
++	case "$R" in
++	$expect)	echo happy ;;
++	*)	echo "Oops - $R is not $expect";
++		false ;;
++	esac
++	'
++	R=$(git log -n 1 --pretty=format:%dn-%dd-g%h "$@" | sed 's/-0-g.*//') &&
++	test_expect_success "log --pretty=format:%dn-%dd-g%h $*" '
++	case "$R" in
++	$expect)	echo happy ;;
++	*)	echo "Oops - $R is not $expect";
++		false ;;
++	esac
++	'
  }
  
--void format_commit_message(const struct commit *commit,
-+void format_commit_message(struct commit *commit,
-                            const void *format, struct strbuf *sb)
- {
- 	struct interp table[] = {
-@@ -1064,7 +1064,7 @@ static void pp_remainder(enum cmit_fmt fmt,
- 	}
- }
- 
--void pretty_print_commit(enum cmit_fmt fmt, const struct commit *commit,
-+void pretty_print_commit(enum cmit_fmt fmt, struct commit *commit,
- 				  struct strbuf *sb, int abbrev,
- 				  const char *subject, const char *after_subject,
- 				  enum date_mode dmode)
-diff --git a/commit.h b/commit.h
-index 80e94b9..d74859e 100644
---- a/commit.h
-+++ b/commit.h
-@@ -65,9 +65,9 @@ enum cmit_fmt {
- };
- 
- extern enum cmit_fmt get_commit_format(const char *arg);
--extern void format_commit_message(const struct commit *commit,
-+extern void format_commit_message(struct commit *commit,
-                                   const void *format, struct strbuf *sb);
--extern void pretty_print_commit(enum cmit_fmt fmt, const struct commit*,
-+extern void pretty_print_commit(enum cmit_fmt fmt, struct commit*,
-                                 struct strbuf *,
-                                 int abbrev, const char *subject,
-                                 const char *after_subject, enum date_mode);
+ test_expect_success setup '
 -- 
 1.5.3.5.529.ge3d6d
