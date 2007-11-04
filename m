@@ -1,58 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-fetch: more terse fetch output
-Date: Sun, 4 Nov 2007 00:58:00 -0400
-Message-ID: <20071104045800.GB12359@segfault.peff.net>
-References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Allow 'git blame rev path' to work on bare repository
+Date: Sat, 03 Nov 2007 22:21:53 -0700
+Message-ID: <7vabpuvb4e.fsf@gitster.siamese.dyndns.org>
+References: <1194092575-7133-1-git-send-email-mh@glandium.org>
+	<1194092575-7133-2-git-send-email-mh@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 05:58:24 2007
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 06:22:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoXYw-0001mA-Us
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 05:58:19 +0100
+	id 1IoXw4-0004Sj-KO
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 06:22:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833AbXKDE6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 00:58:04 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbXKDE6D
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 00:58:03 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4550 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752559AbXKDE6B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 00:58:01 -0400
-Received: (qmail 12393 invoked by uid 1000); 4 Nov 2007 04:58:00 -0000
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
+	id S1752863AbXKDFV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 01:21:58 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752513AbXKDFV6
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 01:21:58 -0400
+Received: from sceptre.pobox.com ([207.106.133.20]:53048 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751458AbXKDFV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 01:21:58 -0400
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 297D52F0;
+	Sun,  4 Nov 2007 01:22:19 -0400 (EDT)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B695E90031;
+	Sun,  4 Nov 2007 01:22:16 -0400 (EDT)
+In-Reply-To: <1194092575-7133-2-git-send-email-mh@glandium.org> (Mike Hommey's
+	message of "Sat, 3 Nov 2007 13:22:54 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63349>
 
-On Sat, Nov 03, 2007 at 01:32:48AM -0400, Nicolas Pitre wrote:
+Mike Hommey <mh@glandium.org> writes:
 
-> This makes the fetch output much more terse and prettier on a 80 column 
-> display, based on a consensus reached on the mailing list.  Here's an 
-> example output:
+> While 'git blame rev -- path' works, 'git blame rev path' didn't.
+>
+> Signed-off-by: Mike Hommey <mh@glandium.org>
+> ---
+>  builtin-blame.c |    4 ----
+>  1 files changed, 0 insertions(+), 4 deletions(-)
+>
+> diff --git a/builtin-blame.c b/builtin-blame.c
+> index aedc294..141287e 100644
+> --- a/builtin-blame.c
+> +++ b/builtin-blame.c
+> @@ -2294,10 +2294,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+>  			}
+>  			else if (i != argc - 1)
+>  				usage(blame_usage); /* garbage at end */
+> -
+> -			if (!has_path_in_work_tree(path))
+> -				die("cannot stat path %s: %s",
+> -				    path, strerror(errno));
+>  		}
+>  	}
+>  
 
-Thank you for this; it was at the end of a very long todo list for me.
-
-> Receiving objects: 100% (5439/5439), 1.60 MiB | 636 KiB/s, done.
-> Resolving deltas: 100% (4604/4604), done.
-> From git://git.kernel.org/pub/scm/git/git
->  ! [rejected]        html -> origin/html  (non fast forward)
->    136e631..f45e867  maint -> origin/maint  (fast forward)
->    9850e2e..44dd7e0  man -> origin/man  (fast forward)
->    3e4bb08..e3d6d56  master -> origin/master  (fast forward)
->    fa3665c..536f64a  next -> origin/next  (fast forward)
->  + 4f6d9d6...768326f pu -> origin/pu  (forced update)
->  * [new branch]      todo -> origin/todo
-
-One nice thing about this format is that it works equally well for
-"push" (changing "From" to "To" and reversing the order of the
-branches). Comments?
-
--Peff
+Sorry but a NAK; at least limit the removal of the test only to a bare
+repository case.
