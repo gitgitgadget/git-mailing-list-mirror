@@ -1,84 +1,80 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [REPLACEMENT PATCH 2/2] Add "--early-output" log flag for
- interactive GUI use
-Date: Sun, 4 Nov 2007 18:10:00 +1100
-Message-ID: <18221.28744.805398.598809@cargo.ozlabs.ibm.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
-	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
-	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
-	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
-	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
-	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] Update git-sh-setup(1) to allow transparent use of git-rev-parse --parseopt
+Date: Sun, 04 Nov 2007 00:43:53 -0700
+Message-ID: <7vd4uqtpza.fsf@gitster.siamese.dyndns.org>
+References: <1194043193-29601-1-git-send-email-madcoder@debian.org>
+	<1194043193-29601-2-git-send-email-madcoder@debian.org>
+	<1194043193-29601-3-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 08:10:39 2007
+Cc: gitster@pobox.com, torvalds@linux-foundation.org,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 08:44:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoZcv-0001WD-1Z
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 08:10:33 +0100
+	id 1Ioa9t-0006EB-K4
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 08:44:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753499AbXKDHKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 02:10:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbXKDHKR
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 02:10:17 -0500
-Received: from ozlabs.org ([203.10.76.45]:49879 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753417AbXKDHKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 02:10:16 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 73C16DDE37; Sun,  4 Nov 2007 18:10:14 +1100 (EST)
-In-Reply-To: <alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1753239AbXKDHoG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 02:44:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750913AbXKDHoF
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 02:44:05 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57773 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750802AbXKDHoE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 02:44:04 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D11E22EF;
+	Sun,  4 Nov 2007 02:44:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 48A5690E26;
+	Sun,  4 Nov 2007 02:44:18 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63358>
 
-Linus Torvalds writes:
+Pierre Habouzit <madcoder@debian.org> writes:
 
-> > How hard would it be to put the total number of commits on that "Final
-> > output" line?  That would be useful for me.
-> 
-> Not hard. I think we basically have it anyway. The reason I didn't do it 
-> is that there's actually multiple numbers: there's the number of primary 
-> ("interesting") commits, and then there are the "others", ie the edge 
-> things etc. So the number I'd pick would be the number of actual 
-> interesting commits, no edges, no nothing. Or what?
+> If you set OPTIONS_SPEC, git-sh-setups uses git-rev-parse --parseopt
+> automatically.
+>
+> It also diverts usage to re-exec $0 with the -h option as parse-options.c
+> will catch that.
+>
+> PARSEOPT_OPTS can also be used to pass options git git-rev-parse --parseopt
+> mode (like --keep-dashdash).
+>
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> ...
+> +if test -n "$OPTIONS_SPEC"; then
+> +	usage() {
+> +		exec "$0" -h
+> +	}
+> +
+> +	eval `echo "$OPTIONS_SPEC" | git rev-parse --parseopt $PARSEOPT_OPTS -- "$@" || echo exit $?`
 
-Any of those numbers is probably good enough for a progress bar, but
-ideally it would be the total number that you are going to output.
-So, with --boundary it would include the edge commits, otherwise it
-would just be the interesting commits, I think.
+I do not quite get why you use $PARSEOPT_OPTS without setting
+any yourself, which means that the users can screw themselves by
+having something random and insane in their environments.
 
-> One other thing I was thinking of was also to perhaps allow multiple 
-> partial early-output things, in case we get just 5 commits in the first 
-> 0.1 seconds, then 50 in the first second, and 200 after 2 seconds.. I can 
-> well imagine getting the full list taking a long time over a network 
-> filesystem (somebody mentioned samba), and maybe having just a single 
-> trigger is too inflexible.
+Trust me that this kind of backdoor, especially when the
+intended uses of the backdoor is not documented well, will be
+abused by (perhaps clueless, perhaps curious, perhaps fearless)
+users and you will get blamed.
 
-In fact gitk won't mind if you give it multiple occurrences of "Final
-output", as long as you start from the beginning again after each
-occurrence.  So having multiple triggers is certainly doable as far as
-gitk is concerned.  Later on we could optimize that by having git log
-match up how many initial commits are the same in both the new list
-and the old list, and have it output that rather than the N commits
-that were the same as last time.
+So I'd rather (1) first find out what _you_ wanted to use this
+backdoor for, (2) see if that is a useful feature to share with
+others instead of keeping that to yourself, and (3) if so to
+have a much narrower interface to allow such an option that
+cannot be abused.
 
-Paul.
+The same comment applies to the git-clone one which has a
+similar invocation of "rev-parse --parseopt" because it cannot
+source git-sh-setup.
