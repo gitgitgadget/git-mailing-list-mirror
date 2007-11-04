@@ -1,79 +1,73 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] user-manual: add advanced topic "bisecting merges"
-Date: Sun, 4 Nov 2007 12:23:02 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071104112302.GA2119@ins.uni-bonn.de>
-References: <11941677732664-git-send-email-prohaska@zib.de>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [RFC PATCH] Make gitk use --early-output
+Date: Sun, 4 Nov 2007 22:04:09 +1100
+Message-ID: <18221.42793.38389.359621@cargo.ozlabs.ibm.com>
+References: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
+	<e5bfff550711040237s250bcec0iddf1ebdc616e0bbf@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Nov 04 12:23:23 2007
+Content-Transfer-Encoding: 7bit
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
+	git@vger.kernel.org
+To: "Marco Costalba" <mcostalba@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 12:29:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IodZZ-0003sS-GV
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:23:21 +0100
+	id 1IodfW-0005Hz-H7
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:29:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756848AbXKDLXH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 06:23:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756637AbXKDLXH
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:23:07 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:45154 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755847AbXKDLXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 06:23:05 -0500
-Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id DEDA7400004AE;
-	Sun,  4 Nov 2007 12:23:03 +0100 (CET)
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <11941677732664-git-send-email-prohaska@zib.de>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1755754AbXKDL3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 06:29:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbXKDL3Q
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:29:16 -0500
+Received: from ozlabs.org ([203.10.76.45]:35866 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755754AbXKDL3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 06:29:15 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 24A5EDDE24; Sun,  4 Nov 2007 22:29:13 +1100 (EST)
+In-Reply-To: <e5bfff550711040237s250bcec0iddf1ebdc616e0bbf@mail.gmail.com>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63381>
 
-Hello Steffen,
+Marco Costalba writes:
 
-A couple of language nits:
+> On 11/4/07, Paul Mackerras <paulus@samba.org> wrote:
+> >
+> >      set vnextroot($view) 0
+> > -    set order "--topo-order"
+> > +    set order "--early-output=50"
+> 
+> But --early-output does not imply --topo-order, I guess...
 
-* Steffen Prohaska wrote on Sun, Nov 04, 2007 at 10:16:13AM CET:
-> +Suppose that on the upper development line, the meaning of one
-> +of the functions existed at Z was changed at commit X.  The
+Look here in Linus' patch:
 
-s/functions/& that/
++			if (!prefixcmp(arg, "--early-output")) {
++				int count = 100;
++				switch (arg[14]) {
++				case '=':
++					count = atoi(arg+15);
++					/* Fallthrough */
++				case 0:
++					revs->topo_order = 1;
++					revs->early_output = count;
++					continue;
++				}
++			}
 
-> +commits from Z leading to A change both the function's
-> +implementation and all calling sites that existed at Z, as well
-> +as new calling sites they add, to be consistent.  There is no
-> +bug at A.
-[...]
-> +You merge to create C.  There is no textual conflict with this
-> +three way merge, and the result merges cleanly.  You bisect
-> +this, because you found D is bad and you know Z was good.  Your
-> +bisect will find that C (merge) is broken.  Understandably so,
-> +as at C, the new calling site of the function added by the lower
-> +branch is not converted to the new semantics, while all the
-> +other calling sites that already existed at Z would have been
-> +converted by the merge.  The new calling site has semantic
-> +adjustment needed, but you do not know that yet.  You need to
-> +find out that is the cause of the breakage by looking at the
+So yes, --early-output does imply --topo-order.
 
-s/that/that that/
+> P.S: Why did you choose not let git log (i.e. Linus) to handle the
+> default number of commits?
+> 
+> "--early-output=50" instead of just "--early-output"
 
-> +merge commit C and the history leading to it.
-[...]
-> +If you linearlize the history by rebasing the lower branch on
-> +top of upper, instead of merging, the bug becomes much easier to
+Because I was thinking of adding a control in the edit/preferences
+window for it later on.
 
-s/upper/the &/
-
-> +find and understand.  Your history would instead be:
-[...]
-
-Cheers,
-Ralf
+Paul.
