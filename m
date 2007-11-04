@@ -1,257 +1,76 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: [RFC PATCH] Make gitk use --early-output
-Date: Sun, 4 Nov 2007 10:49:01 +1100
-Message-ID: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 00:49:46 2007
+From: Mike Hommey <mh@glandium.org>
+Subject: [PATCH 2/2] Add tests for git tag
+Date: Sun,  4 Nov 2007 01:11:15 +0100
+Message-ID: <1194135075-28706-2-git-send-email-mh@glandium.org>
+References: <7vlk9fxj1r.fsf@gitster.siamese.dyndns.org>
+ <1194135075-28706-1-git-send-email-mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 01:12:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoSkJ-0001Of-Ea
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 00:49:44 +0100
+	id 1IoT6H-0005R1-5d
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 01:12:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756767AbXKCXt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 19:49:28 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756552AbXKCXt2
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 19:49:28 -0400
-Received: from ozlabs.org ([203.10.76.45]:52218 "EHLO ozlabs.org"
+	id S1757794AbXKDAMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 20:12:10 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757575AbXKDAMK
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 20:12:10 -0400
+Received: from vawad.err.no ([85.19.200.177]:41835 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755213AbXKCXt1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 19:49:27 -0400
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 1A0FDDDE3D; Sun,  4 Nov 2007 10:49:25 +1100 (EST)
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1757361AbXKDAMJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 20:12:09 -0400
+Received: from aputeaux-153-1-38-67.w82-124.abo.wanadoo.fr ([82.124.130.67] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IoT5v-0007ma-Me; Sun, 04 Nov 2007 01:12:07 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IoT59-0007Tu-AY; Sun, 04 Nov 2007 01:11:15 +0100
+X-Mailer: git-send-email 1.5.3.5
+In-Reply-To: <1194135075-28706-1-git-send-email-mh@glandium.org>
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63325>
 
-This makes gitk use the --early-output flag on the git log command.
+These tests check whether git-tag properly sends a comment into the
+editor, and whether it reuses previous annotation when overwriting
+an existing tag.
 
-When gitk sees the "Final output:" line from git log, it goes into a
-mode where it basically just checks that it is getting the commits
-again in the same order as before.  If they are, well and good; if
-not, it truncates its internal list at the point of difference and
-proceeds to read in the commits in the new order from there on, and
-re-does the graph layout if necessary.
-
-This gives a much more immediate feel to the startup; gitk shows its
-window with the first screenful of commits displayed very quickly this
-way.
-
-Signed-off-by: Paul Mackerras <paulus@samba.org>
+Signed-off-by: Mike Hommey <mh@glandium.org>
 ---
-diff --git a/gitk b/gitk
-index 1da0b0a..7d9a2f2 100755
---- a/gitk
-+++ b/gitk
-@@ -84,25 +84,27 @@ proc start_rev_list {view} {
-     global commfd leftover tclencoding datemode
-     global viewargs viewfiles commitidx viewcomplete vnextroot
-     global showlocalchanges commitinterest mainheadid
--    global progressdirn progresscoords proglastnc curview
-+    global progressdirn progresscoords proglastnc curview rereading
+ t/t7004-tag.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
+index 0d07bc3..096fe33 100755
+--- a/t/t7004-tag.sh
++++ b/t/t7004-tag.sh
+@@ -1004,4 +1004,20 @@ test_expect_failure \
+ 	'verify signed tag fails when public key is not present' \
+ 	'git-tag -v signed-tag'
  
-     set startmsecs [clock clicks -milliseconds]
-     set commitidx($view) 0
-     set viewcomplete($view) 0
-     set vnextroot($view) 0
--    set order "--topo-order"
-+    set order "--early-output=50"
-     if {$datemode} {
--	set order "--date-order"
-+	lappend order "--date-order"
-     }
-     if {[catch {
--	set fd [open [concat | git log --no-color -z --pretty=raw $order --parents \
--			 --boundary $viewargs($view) "--" $viewfiles($view)] r]
-+	set fd [open [concat | git log --no-color -z --pretty=raw \
-+			  $order --parents --boundary \
-+			  $viewargs($view) "--" $viewfiles($view)] r]
-     } err]} {
- 	error_popup "Error executing git rev-list: $err"
- 	exit 1
-     }
-     set commfd($view) $fd
-     set leftover($view) {}
-+    set rereading($view) -1
-     if {$showlocalchanges} {
- 	lappend commitinterest($mainheadid) {dodiffindex}
-     }
-@@ -161,6 +163,7 @@ proc getcommitlines {fd view}  {
-     global parentlist children curview hlview
-     global vparentlist vdisporder vcmitlisted
-     global ordertok vnextroot idpending
-+    global rereading nullid nullid2
- 
-     set stuff [read $fd 500000]
-     # git log doesn't terminate the last commit with a null...
-@@ -236,6 +239,15 @@ proc getcommitlines {fd view}  {
- 	}
- 	set start [expr {$i + 1}]
- 	set j [string first "\n" $cmit]
-+	if {$j >= 0 && [string match "Final output:*" $cmit]} {
-+	    set rereading($view) 0
-+	    set cmit [string range $cmit [expr {$j + 1}] end]
-+	    set j [string first "\n" $cmit]
-+	    if {$view == $curview} {
-+		layoutmore
-+		update
-+	    }
-+	}
- 	set ok 0
- 	set listed 1
- 	if {$j >= 0 && [string match "commit *" $cmit]} {
-@@ -255,6 +267,7 @@ proc getcommitlines {fd view}  {
- 		    break
- 		}
- 	    }
-+	    set cmit [string range $cmit [expr {$j + 1}] end]
- 	}
- 	if {!$ok} {
- 	    set shortcmit $cmit
-@@ -265,13 +278,31 @@ proc getcommitlines {fd view}  {
- 	    exit 1
- 	}
- 	set id [lindex $ids 0]
-+	if {$rereading($view) >= 0} {
-+	    set r $rereading($view)
-+	    set oldid [lindex $displayorder $r]
-+	    while {$oldid eq $nullid || $oldid eq $nullid2} {
-+		set oldid [lindex $displayorder [incr r]]
-+	    }
-+	    if {$oldid eq $id} {
-+		# commits are still in the same order; just skip to the next
-+		set rereading($view) [expr {$r + 1}]
-+		continue
-+	    }
-+	    if {$r < $commitidx($view)} {
-+		# commits are in a different order now;
-+		# truncate the list and redisplay
-+		truncate_view $view $r
-+	    }
-+	    set rereading($view) -1
-+	}
- 	if {![info exists ordertok($view,$id)]} {
- 	    set otok "o[strrep $vnextroot($view)]"
- 	    incr vnextroot($view)
- 	    set ordertok($view,$id) $otok
- 	} else {
- 	    set otok $ordertok($view,$id)
--	    unset idpending($view,$id)
-+	    catch {unset idpending($view,$id)}
- 	}
- 	if {$listed} {
- 	    set olds [lrange $ids 1 end]
-@@ -301,7 +332,7 @@ proc getcommitlines {fd view}  {
- 	if {![info exists children($view,$id)]} {
- 	    set children($view,$id) {}
- 	}
--	set commitdata($id) [string range $cmit [expr {$j + 1}] end]
-+	set commitdata($id) $cmit
- 	set commitrow($view,$id) $commitidx($view)
- 	incr commitidx($view)
- 	if {$view == $curview} {
-@@ -323,7 +354,7 @@ proc getcommitlines {fd view}  {
-     }
-     if {$gotsome} {
- 	run chewcommits $view
--	if {$view == $curview} {
-+	if {0 && $view == $curview} {
- 	    # update progress bar
- 	    global progressdirn progresscoords proglastnc
- 	    set inc [expr {($commitidx($view) - $proglastnc) * 0.0002}]
-@@ -354,6 +385,43 @@ proc getcommitlines {fd view}  {
-     return 2
- }
- 
-+proc truncate_view {view row} {
-+    global curview commitidx displayorder parentlist commitlisted
-+    global vdisporder vparentlist vcmitlisted commitrow children
-+    global numcommits localfrow localirow
++test_expect_success \
++	'message in editor has initial comment' '
++	GIT_EDITOR=cat git tag -a initial-comment > actual || true &&
++	test $(sed -n "/^\(#\|\$\)/p" actual | wc -l) -gt 0
++'
 +
-+    set rm1 [expr {$row - 1}]
-+    if {$view == $curview} {
-+	set disporder $displayorder
-+	set displayorder [lrange $disporder 0 $rm1]
-+	set parents $parentlist
-+	set parentlist [lrange $parents 0 $rm1]
-+	set commitlisted [lrange $commitlisted 0 $rm1]
-+    } else {
-+	set disporder $vdisporder($view)
-+	set vdisporder($view) [lrange $disporder 0 $rm1]
-+	set parents $vparentlist($view)
-+	set vparentlist($view) [lrange $parents 0 $rm1]
-+	set vcmitlisted($view) [lrange $vcmitlisted($view) 0 $rm1]
-+    }
-+    for {set r $commitidx($view)} {[incr r -1] >= $row} {} {
-+	set id [lindex $disporder $r]
-+	foreach p [lindex $parents $r] {
-+	    if {[lindex $children($view,$p) end] eq $id} {
-+		set children($view,$p) [lrange $children($view,$p) 0 end-1]
-+	    }
-+	}
-+	unset commitrow($view,$id)
-+    }
-+    set commitidx($view) $row
-+    if {$view == $curview} {
-+	truncate_localchanges $row
-+	if {$row < $numcommits} {
-+	    undolayout $row
-+	}
-+    }
-+}
++get_tag_header reuse $commit commit $time >expect
++echo "An annotation to be reused" >> expect
++test_expect_success \
++	'overwriting an annoted tag should use its previous body' '
++	git tag -a -m "An annotation to be reused" reuse &&
++	GIT_EDITOR=true git tag -f -a reuse &&
++	get_tag_msg reuse >actual &&
++	git diff expect actual
++'
 +
- proc chewcommits {view} {
-     global curview hlview viewcomplete
-     global selectedline pending_select
-@@ -2843,6 +2911,20 @@ proc dohidelocalchanges {} {
-     incr lserial
- }
- 
-+proc truncate_localchanges {row} {
-+    global localfrow localirow
-+
-+    if {$localfrow >= $row} {
-+	set localfrow -1
-+    }
-+    if {$localirow >= $row} {
-+	set localirow -1
-+    }
-+    if {$localfrow == $row - 1 || $localirow == $row - 1} {
-+	dohidelocalchanges
-+    }
-+}
-+
- # spawn off a process to do git diff-index --cached HEAD
- proc dodiffindex {} {
-     global localirow localfrow lserial showlocalchanges
-@@ -3840,6 +3922,23 @@ proc drawcommits {row {endrow {}}} {
-     }
- }
- 
-+proc undolayout {row} {
-+    global uparrowlen mingaplen downarrowlen
-+    global rowidlist rowisopt rowfinal need_redisplay
-+
-+    set r [expr {$row - ($uparrowlen + $mingaplen + $downarrowlen)}]
-+    if {$r < 0} {
-+	set r 0
-+    }
-+    if {[llength $rowidlist] > $r} {
-+	set rowidlist [lrange $rowidlist 0 $r]
-+	set rowfinal [lrange $rowfinal 0 $r]
-+	set rowisopt [lrange $rowisopt 0 $r]
-+	set need_redisplay 1
-+	run drawvisible
-+    }
-+}
-+
- proc drawfrac {f0 f1} {
-     global canv linespc
- 
+ test_done
+-- 
+1.5.3.5
