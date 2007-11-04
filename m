@@ -1,72 +1,58 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] Added basic color support to git add --interactive
-Date: Sun, 4 Nov 2007 00:57:35 -0400
-Message-ID: <20071104045735.GA12359@segfault.peff.net>
-References: <20071013172745.GA2624@coredump.intra.peff.net> <20071013175127.GA3183@coredump.intra.peff.net> <47112491.8070309@gmail.com> <20071015034338.GA4844@coredump.intra.peff.net> <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022164048.71a3dceb@danzwell.com> <20071023042702.GB28312@coredump.intra.peff.net> <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net>
+Subject: Re: [PATCH] git-fetch: more terse fetch output
+Date: Sun, 4 Nov 2007 00:58:00 -0400
+Message-ID: <20071104045800.GB12359@segfault.peff.net>
+References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Sun Nov 04 05:57:54 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 05:58:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoXYW-0001jH-9V
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 05:57:52 +0100
+	id 1IoXYw-0001mA-Us
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 05:58:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbXKDE5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 00:57:37 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752559AbXKDE5h
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 00:57:37 -0400
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4542 "EHLO
+	id S1752833AbXKDE6E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 00:58:04 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbXKDE6D
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 00:58:03 -0400
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4550 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752168AbXKDE5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 00:57:37 -0400
-Received: (qmail 12366 invoked by uid 1000); 4 Nov 2007 04:57:35 -0000
+	id S1752559AbXKDE6B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 00:58:01 -0400
+Received: (qmail 12393 invoked by uid 1000); 4 Nov 2007 04:58:00 -0000
 Content-Disposition: inline
-In-Reply-To: <20071102224100.71665182@paradox.zwell.net>
+In-Reply-To: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63348>
 
-On Fri, Nov 02, 2007 at 10:41:00PM -0500, Dan Zwell wrote:
+On Sat, Nov 03, 2007 at 01:32:48AM -0400, Nicolas Pitre wrote:
 
-> +sub print_colored {
-> +	my $color = shift;
-> +	my $string = join("", @_);
-> +
-> +	if ($use_color) {
-> +		# Put a color code at the beginning of each line, a reset at the end
-> +		# color after newlines that are not at the end of the string
-> +		$string =~ s/(\n+)(.)/$1$color$2/g;
-> +		# reset before newlines
-> +		$string =~ s/(\n+)/$normal_color$1/g;
-> +		# codes at beginning and end (if necessary):
-> +		$string =~ s/^/$color/;
-> +		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
-> +	}
-> +	print $string;
-> +}
+> This makes the fetch output much more terse and prettier on a 80 column 
+> display, based on a consensus reached on the mailing list.  Here's an 
+> example output:
 
-This would probably be a bit more readable by marking the regex as
-multline using /m. Something like:
+Thank you for this; it was at the end of a very long todo list for me.
 
-  $string =~ s/^/$color/mg;
-  $string =~ s/.$/$&$normal_color/mg;
+> Receiving objects: 100% (5439/5439), 1.60 MiB | 636 KiB/s, done.
+> Resolving deltas: 100% (4604/4604), done.
+> From git://git.kernel.org/pub/scm/git/git
+>  ! [rejected]        html -> origin/html  (non fast forward)
+>    136e631..f45e867  maint -> origin/maint  (fast forward)
+>    9850e2e..44dd7e0  man -> origin/man  (fast forward)
+>    3e4bb08..e3d6d56  master -> origin/master  (fast forward)
+>    fa3665c..536f64a  next -> origin/next  (fast forward)
+>  + 4f6d9d6...768326f pu -> origin/pu  (forced update)
+>  * [new branch]      todo -> origin/todo
 
-which covers both the "start/end of line" and "start/end" of string
-cases.
-
-Also, if there is to be pager support for showing diffs, perhaps
-print_colored needs to take a filehandle argument (or, even simpler,
-change "print_colored(...)" to "print color(...), so the caller can use
-print as usual).
+One nice thing about this format is that it works equally well for
+"push" (changing "From" to "To" and reversing the order of the
+branches). Comments?
 
 -Peff
