@@ -1,90 +1,103 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: What's cooking in git.git (topics)
-Date: Sun, 04 Nov 2007 12:38:52 +0100
-Message-ID: <20071104113852.GE26269@artemis.corp>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] status&commit: Teach them to show commits of modified submodules.
+Date: Sun, 04 Nov 2007 03:41:08 -0800
+Message-ID: <7vmytus0ff.fsf@gitster.siamese.dyndns.org>
+References: <1194004427-26934-1-git-send-email-pkufranky@gmail.com>
+	<7vd4us1jds.fsf@gitster.siamese.dyndns.org>
+	<46dff0320711021650q4e56d025q63a961176c682a14@mail.gmail.com>
+	<7vfxzoyz7f.fsf@gitster.siamese.dyndns.org>
+	<46dff0320711040125v111c75davb49e9822537f4b19@mail.gmail.com>
+	<46dff0320711040145k1edb1fcaq1daa5469c1158e81@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="lteA1dqeVaWQ9QQl";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 12:39:09 2007
+To: "Yin Ping" <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 12:41:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iodor-0007Le-2G
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:39:09 +0100
+	id 1Iodr7-0007s8-F5
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754349AbXKDLiz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 06:38:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753411AbXKDLiz
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:38:55 -0500
-Received: from pan.madism.org ([88.191.52.104]:56106 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753355AbXKDLiy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 06:38:54 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 7287328642;
-	Sun,  4 Nov 2007 12:38:52 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 795353F28A; Sun,  4 Nov 2007 12:38:52 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754998AbXKDLlP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 06:41:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754355AbXKDLlP
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:41:15 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:48960 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753848AbXKDLlO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 06:41:14 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 1C8AB2F0;
+	Sun,  4 Nov 2007 06:41:35 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 723788FF4F;
+	Sun,  4 Nov 2007 06:41:32 -0500 (EST)
+In-Reply-To: <46dff0320711040145k1edb1fcaq1daa5469c1158e81@mail.gmail.com>
+	(Yin Ping's message of "Sun, 4 Nov 2007 17:45:41 +0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63386>
 
+"Yin Ping" <pkufranky@gmail.com> writes:
 
---lteA1dqeVaWQ9QQl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> In both case, i think the user should be notified about the inconsistence.
+> My patch given in the first letter handles this by two warning messages as
+> follows (where $name is module name)
+>
+> +                       cd $name >&/dev/null || { echo "  Warning: fail to
+> chdir to $name" && exit; }
 
-On Sun, Nov 04, 2007 at 04:14:19AM +0000, Junio C Hamano wrote:
-> * ph/parseopt-sh (Fri Nov 2 23:39:52 2007 +0100) 5 commits
->  - Migrate git-am.sh to use git-rev-parse --parseopt
->  - Migrate git-clone to use git-rev-parse --parseopt
->  - Migrate git-clean.sh to use git-rev-parse --parseopt.
->  - Update git-sh-setup(1) to allow transparent use of git-rev-parse -
->    -parseopt
->  - Add a parseopt mode to git-rev-parse to bring parse-options to
->    shell scripts.
->=20
-> Together with today's batch which is missing from the above
-> list, hopefully merge to 'next' over the weekend.
+My point was that it is wrong to make this "you do not have that
+submodule checked out" a warning.
 
-  Please note that the last resend has the issues you raised fixed and
-that it modifies git-clone and git-sh-setup commits from above.
+Think about somebody who does _not_ care about that particular
+submodule.  He is working on one branch, and tries to merge
+another branch that has some interesting changes outside the
+submodule, but that branch also has updates to the submodule.
 
-  Someone proposed many fixes in the documentation too, I wont do it
-because (again) I'm not a native speaker so I let that ungrateful job to
-someone actually able to do it.
+As he is _not_ interested in the submodule, he does not have it
+checked out.  He has not changed the commit bound in his index
+with 160000 mode bits for that submodule since the common
+ancestor, either (that's what "he does not care about the
+submodule" means).
 
-Cheers,
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+The merge will take the submodule commit object name from the
+other branches change, just like the ordinary three-way merge
+rule would do (one side changed, the other did not do anything,
+so take the change).  Suppose some files in the project proper,
+outside the submodule, had conflicts.  He has an unmerged index,
+that has the submodule already correctly merged.  But other
+parts of his index are unmerged.  git-status would guide him
+what are conflicting, and git-commit would show him what he
+would be committing.
 
---lteA1dqeVaWQ9QQl
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+In that situation, all he needs to know, with respect to the
+submodule, is that the submodule has been updated since his HEAD
+(and that is given by the runstatus output).  He does not _care_
+about what the individual commits in the submodule were.  It is
+not an error that the information from the submodule cannot be
+shown to him.  He _chose_ to ignore the details of that
+submodule by not checking it out to begin with.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Something like this, to be totally quiet, would be more
+appropriate.
 
-iD8DBQBHLa9MvGr7W6HudhwRAmrGAJ9mrZokTEix/qlrQwe0nCegtoB7qQCbB2R6
-Z7gynrXa+YO1gZ0+rhTtSqY=
-=vdDo
------END PGP SIGNATURE-----
+	for name in $modules
+        do
+                (
+                	... do the range, indexone, headone stuff
+                        cd "$name" 2>/dev/null || exit 0
+                	echo "* $name $headone...$indexone:"
+			... whatever log you show
+		) | sed ...
+	done
 
---lteA1dqeVaWQ9QQl--
+By the way, I do not know about the quoting issues with $modules
+variable in the above illustration, as I am not (yet) discussing
+about the implementation level of details.
