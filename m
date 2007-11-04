@@ -1,95 +1,59 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Add more tests for git-clean
-Date: Mon, 05 Nov 2007 00:46:17 +0100
-Message-ID: <20071104234617.GG4207@artemis.corp>
-References: <1194202941253-git-send-email-shawn.bohrer@gmail.com> <11942029442710-git-send-email-shawn.bohrer@gmail.com> <7vve8hr3ch.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Warning: cvsexportcommit considered dangerous
+Date: Sun, 4 Nov 2007 23:46:43 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711042345260.4362@racer.site>
+References: <Pine.LNX.4.64.0711041638270.4362@racer.site>
+ <623F4AFA-FE43-4046-9D3F-435396BBE17D@zib.de> <Pine.LNX.4.64.0711042133330.4362@racer.site>
+ <200711050005.28561.robin.rosenberg.lists@dewire.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="1giRMj6yz/+FOIRq";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 00:46:34 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Alex Bennee <kernel-hacker@bennee.com>
+To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 00:47:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IopAo-0006AB-2Q
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:46:34 +0100
+	id 1IopC0-0006Rc-SB
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:47:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753817AbXKDXqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 18:46:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753836AbXKDXqU
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:46:20 -0500
-Received: from pan.madism.org ([88.191.52.104]:50163 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753726AbXKDXqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 18:46:19 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id E2F7B25E02;
-	Mon,  5 Nov 2007 00:46:17 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 5AECF4359E6; Mon,  5 Nov 2007 00:46:17 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vve8hr3ch.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753897AbXKDXrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 18:47:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753837AbXKDXre
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:47:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56828 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753318AbXKDXre (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 18:47:34 -0500
+Received: (qmail invoked by alias); 04 Nov 2007 23:47:32 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp031) with SMTP; 05 Nov 2007 00:47:32 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+03GJaA4i0AFpsfdpf6yhyQGKJrRjGpbI0fenoTu
+	RWmM5ia+GDp4R5
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200711050005.28561.robin.rosenberg.lists@dewire.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63460>
 
+Hi,
 
---1giRMj6yz/+FOIRq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 5 Nov 2007, Robin Rosenberg wrote:
 
-On Sun, Nov 04, 2007 at 11:35:42PM +0000, Junio C Hamano wrote:
-> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
->=20
-> > +test_expect_success 'git-clean with prefix' '
-> > +
-> > +	mkdir -p build docs &&
-> > +	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-> > +	cd src/ &&
-> > +	git-clean &&
-> > +	cd - &&
->=20
-> This is wrong for two reasons.
->=20
->  - Is "cd -" portable?
+> BTW, wouldn't this err on the right side anyway, i.e. if an existing 
+> file was not up to date and was wrongly thought to not exist or a new 
+> file was thought to be up-to-date, I would get an error and would not be 
+> able to commit. I've never seen it though and I always have a clean CVS 
+> checkout so the potential bug seems unlikely to me.
 
-  this is POSIX:
+The problem is that it can err.  For example when I have new files, it 
+says that the files were already added by someone else.  And then it 
+refuses to do anything.
 
-8910 =E2=88=92 When a hyphen is used as the operand, this shall be equivale=
-nt to the command:
-8911   cd "$OLDPWD" && pwd
-8912   which changes to the previous working directory and then writes its =
-name.
-
-  Meaning that cd $OLDPWD should work, and won't print $OLDPWD.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---1giRMj6yz/+FOIRq
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHLlnJvGr7W6HudhwRArJ+AKCM3tFn0sxHZI9CtgGZoJQHGAgHywCgkseP
-Np/1Ng4PCC/5StcmxszD+68=
-=A9mp
------END PGP SIGNATURE-----
-
---1giRMj6yz/+FOIRq--
+Ciao,
+Dscho
