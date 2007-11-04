@@ -1,104 +1,84 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Add missing inside_work_tree setting in
-	setup_git_directory_gently
-Date: Sun, 4 Nov 2007 14:03:07 +0700
-Message-ID: <20071104070307.GA26071@laptop>
-References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop> <7vir4ivdcr.fsf@gitster.siamese.dyndns.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [REPLACEMENT PATCH 2/2] Add "--early-output" log flag for
+ interactive GUI use
+Date: Sun, 4 Nov 2007 18:10:00 +1100
+Message-ID: <18221.28744.805398.598809@cargo.ozlabs.ibm.com>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 04 08:03:42 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 08:10:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoZWG-0000Mx-RU
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 08:03:41 +0100
+	id 1IoZcv-0001WD-1Z
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 08:10:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753410AbXKDHDU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 02:03:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbXKDHDU
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 02:03:20 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:3565 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753360AbXKDHDT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 02:03:19 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1210030rvb
-        for <git@vger.kernel.org>; Sun, 04 Nov 2007 00:03:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        bh=lES7+pujBh0AqFJOEVePdxXw1SomCW0CBTA4EZ480Vg=;
-        b=kiIpVoJ0yeFRRUHAJL/zvaDpT7xGkzQjH4vqpK6qpd0Mcipm2zqe2LYkPrJmtyg7iyQULKm+Rl6JDcXOD4MYv4rv3dICqIp9SxvQcnLYrFWHw2WxsQP2u/Yd0CNAIdPmSIsoK62LmylmJJkjb+i6CCHkmXnBKZ1fJM2BUhHXin0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
-        b=i4k5FSLzbZp9bcO9FlqYp3jFyNKXgVkdWGkTFrXcMsCgpphuasU4Xj7yzqX2IS9Ycq7RkDf1jeWE68TdKJU7BQuR3heBhrk692gY5SuH0TRcZq4HTgc7Dcf93s9i/jFpcw4kUCGbS/QsXGLO3NWi81sJAuZjncvfx65wfdnzyZ0=
-Received: by 10.140.251.1 with SMTP id y1mr1743362rvh.1194159798963;
-        Sun, 04 Nov 2007 00:03:18 -0700 (PDT)
-Received: from pclouds@gmail.com ( [117.5.0.14])
-        by mx.google.com with ESMTPS id b24sm10842430rvf.2007.11.04.00.03.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sun, 04 Nov 2007 00:03:18 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  4 Nov 2007 14:03:07 +0700
-Content-Disposition: inline
-In-Reply-To: <7vir4ivdcr.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1753499AbXKDHKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 02:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753479AbXKDHKR
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 02:10:17 -0500
+Received: from ozlabs.org ([203.10.76.45]:49879 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753417AbXKDHKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 02:10:16 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 73C16DDE37; Sun,  4 Nov 2007 18:10:14 +1100 (EST)
+In-Reply-To: <alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63357>
 
-On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
->=20
-> > When both GIT_DIR and GIT_WORK_TREE are set, and
-> > setup_git_directory_gently() changes the current working
-> > directory accordingly, it should also set inside_work_tree =3D 1.
-> >
-> > Without this, work_tree handling code in setup_git_directory()
-> > will be activated. If you stay in root work tree (no prefix),
-> > it does not harm. It does if you work from a subdirectory though.
->=20
-> Please add automated test script for this, thanks.
->=20
+Linus Torvalds writes:
 
-Thank you for reminding.  I tried to put a test in
-t1501-worktree.sh and found out core.worktree can override
-inside_work_tree previously set by setup_git_directory_gently(),
-activating the worktree code in setup_git_directory() again.
+> > How hard would it be to put the total number of commits on that "Final
+> > output" line?  That would be useful for me.
+> 
+> Not hard. I think we basically have it anyway. The reason I didn't do it 
+> is that there's actually multiple numbers: there's the number of primary 
+> ("interesting") commits, and then there are the "others", ie the edge 
+> things etc. So the number I'd pick would be the number of actual 
+> interesting commits, no edges, no nothing. Or what?
 
-This made me think setup_git_directory_gently() should use
-get_git_work_tree() instead. But then git_work_tree_cfg may not be
-initialized when get_git_work_tree() is called (starting from
-setup_git_directory(), git_work_tree_cfg is initialized in
-check_repository_format_version(), which is called _after_
-setup_git_directory_gently()).
+Any of those numbers is probably good enough for a progress bar, but
+ideally it would be the total number that you are going to output.
+So, with --boundary it would include the edge commits, otherwise it
+would just be the interesting commits, I think.
 
-The interaction between these variables and functions is really beyond
-my knowledge. Johannes, can you have a look at this? In theory the
-following test should pass:
+> One other thing I was thinking of was also to perhaps allow multiple 
+> partial early-output things, in case we get just 5 commits in the first 
+> 0.1 seconds, then 50 in the first second, and 200 after 2 seconds.. I can 
+> well imagine getting the full list taking a long time over a network 
+> filesystem (somebody mentioned samba), and maybe having just a single 
+> trigger is too inflexible.
 
-diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 7ee3820..bdb7720 100755
---- a/t/t1501-worktree.sh
-+++ b/t/t1501-worktree.sh
-@@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from=
- work tree, too' '
- 	 test sub/dir/tracked =3D "$(git ls-files)")
- '
-=20
-+test_expect_success 'Try a command from subdir in worktree' '
-+	(cd repo.git/work/sub &&
-+	GIT_DIR=3D../.. GIT_WORK_TREE=3D.. git blame dir/tracked)
-+'
-+
- test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE'=
- '
- 	cd repo.git/work/sub/dir &&
- 	GIT_DIR=3D../../.. GIT_WORK_TREE=3D../.. GIT_PAGER=3D \
---=20
-Duy
+In fact gitk won't mind if you give it multiple occurrences of "Final
+output", as long as you start from the beginning again after each
+occurrence.  So having multiple triggers is certainly doable as far as
+gitk is concerned.  Later on we could optimize that by having git log
+match up how many initial commits are the same in both the new list
+and the old list, and have it output that rather than the N commits
+that were the same as last time.
+
+Paul.
