@@ -1,169 +1,104 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH 2/1] format-patch: Test --[no-]numbered and format.numbered
-Date: Sun, 4 Nov 2007 01:50:23 -0400
-Message-ID: <20071104055023.GA46329@Hermes.local>
-References: <C9FC46B6-AF2E-4E61-A272-2C46BFA33641@silverinsanity.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Add missing inside_work_tree setting in
+	setup_git_directory_gently
+Date: Sun, 4 Nov 2007 14:03:07 +0700
+Message-ID: <20071104070307.GA26071@laptop>
+References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop> <7vir4ivdcr.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 06:50:41 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 04 08:03:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoYNc-0007xp-8H
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 06:50:40 +0100
+	id 1IoZWG-0000Mx-RU
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 08:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752959AbXKDFu0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 01:50:26 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752255AbXKDFu0
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 01:50:26 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:39804 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752041AbXKDFu0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 01:50:26 -0400
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by silverinsanity.com (Postfix) with ESMTP id 0BD4A1FFC229
-	for <git@vger.kernel.org>; Sun,  4 Nov 2007 05:50:24 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
+	id S1753410AbXKDHDU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 02:03:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753414AbXKDHDU
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 02:03:20 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:3565 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753360AbXKDHDT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 02:03:19 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1210030rvb
+        for <git@vger.kernel.org>; Sun, 04 Nov 2007 00:03:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
+        bh=lES7+pujBh0AqFJOEVePdxXw1SomCW0CBTA4EZ480Vg=;
+        b=kiIpVoJ0yeFRRUHAJL/zvaDpT7xGkzQjH4vqpK6qpd0Mcipm2zqe2LYkPrJmtyg7iyQULKm+Rl6JDcXOD4MYv4rv3dICqIp9SxvQcnLYrFWHw2WxsQP2u/Yd0CNAIdPmSIsoK62LmylmJJkjb+i6CCHkmXnBKZ1fJM2BUhHXin0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:content-transfer-encoding:in-reply-to:user-agent;
+        b=i4k5FSLzbZp9bcO9FlqYp3jFyNKXgVkdWGkTFrXcMsCgpphuasU4Xj7yzqX2IS9Ycq7RkDf1jeWE68TdKJU7BQuR3heBhrk692gY5SuH0TRcZq4HTgc7Dcf93s9i/jFpcw4kUCGbS/QsXGLO3NWi81sJAuZjncvfx65wfdnzyZ0=
+Received: by 10.140.251.1 with SMTP id y1mr1743362rvh.1194159798963;
+        Sun, 04 Nov 2007 00:03:18 -0700 (PDT)
+Received: from pclouds@gmail.com ( [117.5.0.14])
+        by mx.google.com with ESMTPS id b24sm10842430rvf.2007.11.04.00.03.12
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 04 Nov 2007 00:03:18 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun,  4 Nov 2007 14:03:07 +0700
 Content-Disposition: inline
-In-Reply-To: <C9FC46B6-AF2E-4E61-A272-2C46BFA33641@silverinsanity.com>
+In-Reply-To: <7vir4ivdcr.fsf@gitster.siamese.dyndns.org>
 User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63356>
 
-Just because there wasn't a test for --numbered isn't a good reason
-not to test format.numbered.  So now we test both.
+On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+>=20
+> > When both GIT_DIR and GIT_WORK_TREE are set, and
+> > setup_git_directory_gently() changes the current working
+> > directory accordingly, it should also set inside_work_tree =3D 1.
+> >
+> > Without this, work_tree handling code in setup_git_directory()
+> > will be activated. If you stay in root work tree (no prefix),
+> > it does not harm. It does if you work from a subdirectory though.
+>=20
+> Please add automated test script for this, thanks.
+>=20
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
+Thank you for reminding.  I tried to put a test in
+t1501-worktree.sh and found out core.worktree can override
+inside_work_tree previously set by setup_git_directory_gently(),
+activating the worktree code in setup_git_directory() again.
 
- And here's that something I hacked up.  Hmm... that doesn't sound
- sanitary.
+This made me think setup_git_directory_gently() should use
+get_git_work_tree() instead. But then git_work_tree_cfg may not be
+initialized when get_git_work_tree() is called (starting from
+setup_git_directory(), git_work_tree_cfg is initialized in
+check_repository_format_version(), which is called _after_
+setup_git_directory_gently()).
 
- As a side note, send-email is hard to troubleshoot.  Is there a way to
- get it to give more than "your setup doesn't work"?  And is the pile of
- warnings (mostly "Use of uninitialized value") in Term::Readline just a
- problem in my setup?  I tried to use it instead of mutt and did not
- have a happy experience.
+The interaction between these variables and functions is really beyond
+my knowledge. Johannes, can you have a look at this? In theory the
+following test should pass:
 
- t/t4021-format-patch-numbered.sh |  106 ++++++++++++++++++++++++++++++++++++++
- 1 files changed, 106 insertions(+), 0 deletions(-)
- create mode 100755 t/t4021-format-patch-numbered.sh
-
-diff --git a/t/t4021-format-patch-numbered.sh b/t/t4021-format-patch-numbered.sh
-new file mode 100755
-index 0000000..43d64bb
---- /dev/null
-+++ b/t/t4021-format-patch-numbered.sh
-@@ -0,0 +1,106 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2006 Brian C Gernhardt
-+#
-+
-+test_description='Format-patch numbering options'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	echo A > file &&
-+	git add file &&
-+	git commit -m First &&
-+
-+	echo B >> file &&
-+	git commit -a -m Second &&
-+
-+	echo C >> file &&
-+	git commit -a -m Third
-+
+diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+index 7ee3820..bdb7720 100755
+--- a/t/t1501-worktree.sh
++++ b/t/t1501-worktree.sh
+@@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from=
+ work tree, too' '
+ 	 test sub/dir/tracked =3D "$(git ls-files)")
+ '
+=20
++test_expect_success 'Try a command from subdir in worktree' '
++	(cd repo.git/work/sub &&
++	GIT_DIR=3D../.. GIT_WORK_TREE=3D.. git blame dir/tracked)
 +'
 +
-+# Each of these gets used multiple times.
-+
-+test_num_no_numbered() {
-+	cnt=$(grep "^Subject: \[PATCH\]" $1 | wc -l) &&
-+	test $cnt = $2
-+}
-+
-+test_single_no_numbered() {
-+	test_num_no_numbered $1 1
-+}
-+
-+test_no_numbered() {
-+	test_num_no_numbered $1 2
-+}
-+
-+test_single_numbered() {
-+	grep "^Subject: \[PATCH 1/1\]" $1
-+}
-+
-+test_numbered() {
-+	grep "^Subject: \[PATCH 1/2\]" $1 &&
-+	grep "^Subject: \[PATCH 2/2\]" $1
-+}
-+
-+test_expect_success 'Default: no numbered' '
-+
-+	git format-patch --stdout HEAD~2 >patch0 &&
-+	test_no_numbered patch0
-+
-+'
-+
-+test_expect_success 'Use --numbered' '
-+
-+	git format-patch --numbered --stdout HEAD~2 >patch1 &&
-+	test_numbered patch1
-+
-+'
-+
-+test_expect_success 'format.numbered = true' '
-+
-+	git config format.numbered true &&
-+	git format-patch --stdout HEAD~2 >patch2 &&
-+	test_numbered patch2
-+
-+'
-+
-+test_expect_success 'format.numbered && single patch' '
-+
-+	git format-patch --stdout HEAD^ > patch3 &&
-+	test_single_numbered patch3
-+
-+'
-+
-+test_expect_success 'format.numbered && --no-numbered' '
-+
-+	git format-patch --no-numbered --stdout HEAD~2 >patch4 &&
-+	test_no_numbered patch4
-+
-+'
-+
-+test_expect_success 'format.numbered = auto' '
-+
-+	git config format.numbered auto
-+	git format-patch --stdout HEAD~2 > patch5 &&
-+	test_numbered patch5
-+
-+'
-+
-+test_expect_success 'format.numbered = auto && single patch' '
-+
-+	git format-patch --stdout HEAD^ > patch6 &&
-+	test_single_no_numbered patch6
-+
-+'
-+
-+test_expect_success 'format.numbered = auto && --no-numbered' '
-+
-+	git format-patch --no-numbered --stdout HEAD~2 > patch7 &&
-+	test_no_numbered patch7
-+
-+'
-+
-+test_done
--- 
-1.5.3.5.530.gcd7a
+ test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE'=
+ '
+ 	cd repo.git/work/sub/dir &&
+ 	GIT_DIR=3D../../.. GIT_WORK_TREE=3D../.. GIT_PAGER=3D \
+--=20
+Duy
