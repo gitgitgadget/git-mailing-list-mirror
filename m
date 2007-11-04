@@ -1,85 +1,50 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: [PATCH] t3502: Disambiguate between file and rev by adding --
-Date: Sun, 4 Nov 2007 10:31:26 -0500
-Message-ID: <20071104153126.GA61398@173.242.249.10.in-addr.arpa>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Warning: cvsexportcommit considered dangerous
+Date: Sun, 4 Nov 2007 16:41:12 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711041638270.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 16:31:46 2007
+X-From: git-owner@vger.kernel.org Sun Nov 04 17:42:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IohRw-0000uW-0C
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 16:31:44 +0100
+	id 1IoiYF-0004b2-1E
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 17:42:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751300AbXKDPb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 10:31:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751005AbXKDPb3
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 10:31:29 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:50456 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750999AbXKDPb2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 10:31:28 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by silverinsanity.com (Postfix) with ESMTP id 9F7441FFC12F
-	for <git@vger.kernel.org>; Sun,  4 Nov 2007 15:31:27 +0000 (UTC)
-Received: from Mutt by mutt-smtp-wrapper.pl 1.2  (www.zdo.com/articles/mutt-smtp-wrapper.shtml)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751893AbXKDQmF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 11:42:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752393AbXKDQmE
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 11:42:04 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43354 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751037AbXKDQmD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 11:42:03 -0500
+Received: (qmail invoked by alias); 04 Nov 2007 16:42:00 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp034) with SMTP; 04 Nov 2007 17:42:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jXA57F/RjBEQ7EfeaaS++Y+A7/EOtXzpRnqC4C7
+	mZGfMbTb8VO08t
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63418>
 
-This test failed because git-diff didn't know if it was asking for the
-file "a" or the branch "a".  Adding "--" at the end of the ambiguous
-commands allows the test to finish properly.
+Hi,
 
-Signed-off-by: Brian Gernhardt <benji@silverinsanity.com>
----
- t/t3502-cherry-pick-merge.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ever since the up-to-date check was changed to use just one call to "cvs 
+status", a bug was present.  Now cvsexportcommit expects "cvs status" to 
+return the results in the same order as the file names were passed.
 
-diff --git a/t/t3502-cherry-pick-merge.sh b/t/t3502-cherry-pick-merge.sh
-index 3274c61..7c92e26 100755
---- a/t/t3502-cherry-pick-merge.sh
-+++ b/t/t3502-cherry-pick-merge.sh
-@@ -36,7 +36,7 @@ test_expect_success 'cherry-pick a non-merge with -m should fail' '
- 	git reset --hard &&
- 	git checkout a^0 &&
- 	! git cherry-pick -m 1 b &&
--	git diff --exit-code a
-+	git diff --exit-code a --
- 
- '
- 
-@@ -45,7 +45,7 @@ test_expect_success 'cherry pick a merge without -m should fail' '
- 	git reset --hard &&
- 	git checkout a^0 &&
- 	! git cherry-pick c &&
--	git diff --exit-code a
-+	git diff --exit-code a --
- 
- '
- 
-@@ -98,7 +98,7 @@ test_expect_success 'revert a merge (1)' '
- 	git reset --hard &&
- 	git checkout c^0 &&
- 	git revert -m 1 c &&
--	git diff --exit-code a
-+	git diff --exit-code a --
- 
- '
- 
-@@ -107,7 +107,7 @@ test_expect_success 'revert a merge (2)' '
- 	git reset --hard &&
- 	git checkout c^0 &&
- 	git revert -m 2 c &&
--	git diff --exit-code b
-+	git diff --exit-code b --
- 
- '
- 
--- 
-1.5.3.5.530.gcd7a
+This is not true, as I had to realise with one of my projects on 
+sourceforge.
+
+Since time is so scarce on my side, I will not have time to fix this bug, 
+but will instead return to my old "commit by hand" procedure.
+
+Ciao,
+Dscho
