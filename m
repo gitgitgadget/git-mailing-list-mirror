@@ -1,66 +1,91 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: Advanced aliases with arguments (?)
-Date: Sun, 4 Nov 2007 01:45:51 +0100
-Organization: glandium.org
-Message-ID: <20071104004551.GA30927@glandium.org>
-References: <20071104004020.GA30487@glandium.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-fetch: more terse fetch output
+Date: Sun, 4 Nov 2007 00:54:55 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711040050430.4362@racer.site>
+References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
+ <alpine.LFD.0.999.0711031229470.15101@woody.linux-foundation.org>
+ <alpine.LFD.0.9999.0711031627000.21255@xanadu.home> <20071103204000.GA24959@glandium.org>
+ <alpine.LFD.0.9999.0711031645350.21255@xanadu.home> <20071103210321.GA25685@glandium.org>
+ <alpine.LFD.0.999.0711031546110.15101@woody.linux-foundation.org>
+ <20071103233144.GA16734@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 01:46:39 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>, Jeff King <peff@peff.net>
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 01:56:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoTdN-0002jM-SE
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 01:46:38 +0100
+	id 1IoTmU-0004A6-KH
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 01:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756841AbXKDAqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 20:46:21 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756801AbXKDAqV
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 20:46:21 -0400
-Received: from vawad.err.no ([85.19.200.177]:54935 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755894AbXKDAqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 20:46:20 -0400
-Received: from aputeaux-153-1-38-67.w82-124.abo.wanadoo.fr ([82.124.130.67] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IoTd3-0000dM-Am
-	for git@vger.kernel.org; Sun, 04 Nov 2007 01:46:19 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1IoTcd-00083H-0b
-	for git@vger.kernel.org; Sun, 04 Nov 2007 01:45:51 +0100
-Content-Disposition: inline
-In-Reply-To: <20071104004020.GA30487@glandium.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+	id S1756801AbXKDAzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 20:55:48 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756510AbXKDAzr
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 20:55:47 -0400
+Received: from mail.gmx.net ([213.165.64.20]:37112 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755537AbXKDAzr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 20:55:47 -0400
+Received: (qmail invoked by alias); 04 Nov 2007 00:55:45 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp021) with SMTP; 04 Nov 2007 01:55:45 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1++kl9NZAK+lnYRv4uJwwjpvz7XYzWJ3NV8uHRbVK
+	qJ6pazegnanIYu
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071103233144.GA16734@glandium.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63331>
 
-On Sun, Nov 04, 2007 at 01:40:20AM +0100, Mike Hommey wrote:
-> Hi,
-> 
-> I read on http://git.or.cz/gitwiki/Aliases that
-> 
->         Starting with version 1.5.3, git supports appending the
->         arguments to commands prefixed with "!", too. If you need to
->         perform a reordering, or to use an argument twice, you can use
->         this trick:
-> 
->         [alias]
->                 example = !sh -c "ls $1 $0"
-> 
-> 
-> AFAICT, it doesn't work with the 1.5.3.5 I use. Is it false advertising
-> or was there some regression ?
+Hi,
 
-Aaaah it does work, but you need to use single quotes, not double
-quotes.
+On Sun, 4 Nov 2007, Mike Hommey wrote:
 
-Mike
+> On Sat, Nov 03, 2007 at 03:48:42PM -0700, Linus Torvalds wrote:
+> > 
+> > 
+> > On Sat, 3 Nov 2007, Mike Hommey wrote:
+> > > 
+> > > How many grams in a kilogram ? How many meters in a kilometer ? How many
+> > > joule in a kilojoule ? ... How many bytes in a kilobyte ? Oh wait...
+> > 
+> > How many 'u's in the word "colour"?
+> > 
+> > Oh, wait - it depends on context, doesn't it?
+> > 
+> > kB is 1024 bytes. The fact that "k" means something else in other 
+> > contexts is simply irrelevant.
+> 
+> What about the fact that "kB" means different things depending whether 
+> it's used for bandwidth or memory capacity ?
+>
+> Does your brain have base 2 hard-coded so that you instantly know 
+> 50000000 bytes are 47.68MB ? Are people unable to do so pondscum ?
+
+Get over it.  kB is not the same as km.  It really means something 
+different.  And all all people who actually _understand_ something of the 
+matter know what a kilobyte is.
+
+Just because some _wankers_^Wbureaucrats decided to make life hard on 
+those people who have actually a _clue_ on real life, does not mean that 
+we have to accept it.
+
+1kB = 1024 bytes.
+
+1MB = 1024*1024 bytes.
+
+Everybody who claims anything else is just an annoyance to the rest of the 
+world, who is not clueless, thank you very much.
+
+And hard disk manufacturers be damned, and should burn in hell.
+
+Ciao,
+Dscho
