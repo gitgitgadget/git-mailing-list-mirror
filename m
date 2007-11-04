@@ -1,182 +1,74 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 5/5] pretty describe: add %ds, %dn, %dd placeholders
-Date: Sun, 04 Nov 2007 15:42:03 +0100
-Message-ID: <472DDA3B.4090100@lsrfire.ath.cx>
-References: <472DB1B0.1050904@lsrfire.ath.cx> <Pine.LNX.4.64.0711041356330.4362@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 04/10] Migrate git-clone to use git-rev-parse --parseopt
+Date: Sun, 04 Nov 2007 15:49:18 +0100
+Message-ID: <20071104144918.GI26269@artemis.corp>
+References: <1194172262-1563-1-git-send-email-madcoder@debian.org> <1194172262-1563-2-git-send-email-madcoder@debian.org> <1194172262-1563-3-git-send-email-madcoder@debian.org> <1194172262-1563-4-git-send-email-madcoder@debian.org> <1194172262-1563-5-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <junkio@cox.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 04 15:42:37 2007
+Content-Type: multipart/signed; boundary="VkVuOCYP9O7H3CXI";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Nov 04 15:49:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoggO-0003hA-01
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 15:42:36 +0100
+	id 1IognD-0005YA-QI
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 15:49:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755364AbXKDOmW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 09:42:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755836AbXKDOmV
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 09:42:21 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:42029
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755098AbXKDOmV (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 4 Nov 2007 09:42:21 -0500
-Received: from [10.0.1.201] (p57B7F8A7.dip.t-dialin.net [87.183.248.167])
-	by neapel230.server4you.de (Postfix) with ESMTP id BB348873BA;
-	Sun,  4 Nov 2007 15:42:19 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711041356330.4362@racer.site>
+	id S1755932AbXKDOtU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 09:49:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755901AbXKDOtU
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 09:49:20 -0500
+Received: from pan.madism.org ([88.191.52.104]:53686 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755892AbXKDOtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 09:49:20 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 08737285DB;
+	Sun,  4 Nov 2007 15:49:18 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 7B14A83EF; Sun,  4 Nov 2007 15:49:18 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1194172262-1563-5-git-send-email-madcoder@debian.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63412>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63413>
 
-Johannes Schindelin schrieb:
-> Hi,
->=20
-> On Sun, 4 Nov 2007, Ren? Scharfe wrote:
->=20
->> The new placeholders %ds (description string, git-describe style), %=
-dn=20
->> (the name part) and %dd (the depth part) are added.
->>
->> To avoid imposing the significant cost of running describe_commit() =
-on=20
->> every format string, even if none of the new placeholders are used, =
-a=20
->> new function, interp_count(), is introduced.  It is a stripped down=20
->> version of interpolate(), that simply counts the placeholders in a=20
->> format string.  If the describe placeholders are not found, setting =
-up=20
->> the corresponding replacements is skipped.
->=20
-> The way I read this, those are two really quite independent patches=20
-> squashed into one.
 
-Busted!  I didn't want to introduce a performance regression with the
-%ds parsing code, but I also didn't want to add a function without
-users.  Patch 6 was then glued on as an afterthought -- the rest of the
-series was ready when I saw Paul's mail.
+--VkVuOCYP9O7H3CXI
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-So, a better way might be to move patch 6 to the head of the series and
-introduce interp_count() in it, too.
+  Note: this patch now conflicts with a recent patch to make git clone
+grok `--`. As git rev-parse --parseopt does that as a side effect, you
+can force the update to the parseopt version without functionality loss.
 
->> +	unsigned long occurs[ARRAY_SIZE(table)];
->=20
-> You do not ever use the counts.  So, longs are overkill.  Even ints m=
-ight=20
-> be overkill, but probably the most convenient.  I would have gone wit=
-h=20
-> chars.  If I knew how to memset() an array of unsigned:1 entries to a=
-ll=20
-> zero, I would even have gone with that, but the runtime cost of this =
-is=20
-> probably higher than the chars.
+Cheers,
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-Well, it isn't used in format_commit_message() currently, but it could
-be.  Multiply the count and and the length of each substitution (minus
-the length of the placeholder) and you get the number of bytes you need
-to allocate.  interpolate() wouldn't need to be called twice anymore.
+--VkVuOCYP9O7H3CXI
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-> But the even more fundamental problem is that you count the needed=20
-> interpolations _every_ single time you output a commit message.
->=20
-> A much better place would be get_commit_format().  Yes that means=20
-> restructuring the code a bit more, but I would say that this definite=
-ly=20
-> would help.  My preference would even be introducing a new source fil=
-e for=20
-> the user format handling (commit-format.[ch]).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
 
-Counting the interpolations is easier than actually interpolating.
-Wherever the code goes, the calls to interpolate() and interp_count()
-should stay together.
+iD8DBQBHLdvuvGr7W6HudhwRAs4mAJsGCFsQG7Imnu82lwBFndF4v/VWuQCgpaML
+6BIzNU9ZWdS9YAReRfTu6Qs=
+=JOqC
+-----END PGP SIGNATURE-----
 
->> +
->> +/*
->> + * interp_count - count occurences of placeholders
->> + */
->> +void interp_count(unsigned long *result, const char *orig,
->> +                  const struct interp *interps, int ninterps)
->> +{
->> +	const char *src =3D orig;
->=20
-> You do not ever use orig again.  So why not just use that variable in=
-stead=20
-> of introducing a new one?
-
-I simply copied interpolate() and then chopped off the parts not needed
-for counting, to make it easy to see that this is the smaller brother.
-
->=20
->> +	const char *name;
->> +	unsigned long namelen;
->> +	int i;
->> +	char c;
->> +
->> +	for (i =3D 0; i < ninterps; i++)
->> +		result[i] =3D 0;
->=20
-> memset()?
-
-In earlier versions there was a memset() there.  I replaced it to make
-the intent even more clear, but I guess not using memset() is simply
-superstition..
-
->=20
->> +
->> +	while ((c =3D *src)) {
->> +		if (c =3D=3D '%') {
->> +			/* Try to match an interpolation string. */
->> +			for (i =3D 0; i < ninterps; i++) {
->> +				name =3D interps[i].name;
->> +				namelen =3D strlen(name);
->> +				if (strncmp(src, name, namelen) =3D=3D 0)
->=20
-> prefixcmp()?
-
-Copied from interpolate()..
-
->> +					break;
->> +			}
->> +
->> +			/* Check for valid interpolation. */
->> +			if (i < ninterps) {
->=20
-> This is ugly.  You already had a successful if() for that case earlie=
-r.
-
-Dito..
-
->=20
->> +				result[i]++;
->> +				src +=3D namelen;
->> +				continue;
->> +			}
->> +		}
->> +		src++;
->> +	}
->> +}
->=20
-> I'd rewrite this whole loop as
->=20
-> 	while ((c =3D *(orig++)))
-> 		if (c =3D=3D '%')
-> 			/* Try to match an interpolation string. */
-> 			for (i =3D 0; i < ninterps; i++)
-> 				if (prefixcmp(orig, interps[i].name)) {
-> 					result[i] =3D 1;
-> 					orig +=3D strlen(interps[i].name);
-> 					break;
-> 				}
-
-Cleanups are sure possible, but they should be done on top, and to both
-interpolate() and interp_count().  Let's first see how far we get with
-dumb code-copying and reusing the result in new ways. :)
-
-Thanks,
-Ren=E9
+--VkVuOCYP9O7H3CXI--
