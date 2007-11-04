@@ -1,54 +1,77 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH 01/10] Add a parseopt mode to git-rev-parse to bring
-	parse-options to shell scripts.
-Date: Sun, 4 Nov 2007 12:31:30 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071104113130.GC2119@ins.uni-bonn.de>
-References: <1194172262-1563-1-git-send-email-madcoder@debian.org> <1194172262-1563-2-git-send-email-madcoder@debian.org> <20071104112931.GB2119@ins.uni-bonn.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 12:31:49 2007
+From: David D Kilzer <ddkilzer@kilzer.net>
+Subject: [PATCH] RelNotes-1.5.3.5: fix typos
+Date: Sun,  4 Nov 2007 03:33:10 -0800
+Message-ID: <1194175990-76335-1-git-send-email-ddkilzer@kilzer.net>
+Cc: David D Kilzer <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 04 12:33:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iodhj-0005m7-Hg
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:31:47 +0100
+	id 1IodjJ-00065A-Dl
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:33:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756851AbXKDLbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 06:31:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756812AbXKDLbd
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:31:33 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:43688 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756524AbXKDLbd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 06:31:33 -0500
-Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id DFBD64000048A;
-	Sun,  4 Nov 2007 12:31:31 +0100 (CET)
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071104112931.GB2119@ins.uni-bonn.de>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1757225AbXKDLdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 06:33:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756979AbXKDLdK
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:33:10 -0500
+Received: from mail-out4.apple.com ([17.254.13.23]:53876 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756959AbXKDLdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 06:33:09 -0500
+Received: from relay11.apple.com (relay11.apple.com [17.128.113.48])
+	by mail-out4.apple.com (Postfix) with ESMTP id 8CDB217E0048;
+	Sun,  4 Nov 2007 03:33:08 -0800 (PST)
+Received: from relay11.apple.com (unknown [127.0.0.1])
+	by relay11.apple.com (Symantec Mail Security) with ESMTP id 7588F281CE;
+	Sun,  4 Nov 2007 03:33:08 -0800 (PST)
+X-AuditID: 11807130-a23bfbb000004daf-82-472dadf3fc24
+Received: from localhost.localdomain (unknown [17.151.119.102])
+	by relay11.apple.com (Apple SCV relay) with ESMTP id C0117281C5;
+	Sun,  4 Nov 2007 03:33:07 -0800 (PST)
+X-Mailer: git-send-email 1.5.3.5
+In-Reply-To: 1194098692-7623-1-git-send-email-ddkilzer@kilzer.net
+References: 1194098692-7623-1-git-send-email-ddkilzer@kilzer.net
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63384>
 
-* Ralf Wildenhues wrote on Sun, Nov 04, 2007 at 12:29:31PM CET:
-> A couple of language nits:
-> 
-> * Pierre Habouzit wrote on Sun, Nov 04, 2007 at 11:30:53AM CET:
-[...]
-> > +It takes on the standard input the specification of the options to parse and
-> > +understand, and echoes on the standard ouput a line suitable for `sh(1)` `eval`
+Signed-off-by: David D Kilzer <ddkilzer@kilzer.net>
+---
 
-Missed another  s/ouput/output/  here.
+On Sat, 3 Nov 2007 at 06:56:36 -0700, David D. Kilzer wrote:
+> Documentation/RelNotes-1.5.3.5.txt |    4 ++--
+> 1 files changed, 2 insertions(+), 2 deletions(-)
 
-> > +to replace the arguments with normalized ones.  In case of error, it ouputs
-> 
-> s/ouputs/outputs/
+Oops.  Found another typo.
+
+ Documentation/RelNotes-1.5.3.5.txt |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/RelNotes-1.5.3.5.txt b/Documentation/RelNotes-1.5.3.5.txt
+index 4e46d2c..7ff1d5d 100644
+--- a/Documentation/RelNotes-1.5.3.5.txt
++++ b/Documentation/RelNotes-1.5.3.5.txt
+@@ -63,8 +63,8 @@ Fixes since v1.5.3.4
+ 
+  * Git segfaulted when reading an invalid .gitattributes file.  Fixed.
+ 
+- * post-receive-email example hook fixed was fixed for
+-   non-fast-forward updates.
++ * post-receive-email example hook was fixed for non-fast-forward
++   updates.
+ 
+  * Documentation updates for supported (but previously undocumented)
+    options of "git-archive" and "git-reflog".
+@@ -90,5 +90,5 @@ Fixes since v1.5.3.4
+  * "git-send-pack $remote frotz" segfaulted when there is nothing
+    named 'frotz' on the local end.
+ 
+- * "git-rebase -interactive" did not handle its "--strategy" option
++ * "git-rebase --interactive" did not handle its "--strategy" option
+    properly.
+-- 
+1.5.3.5
