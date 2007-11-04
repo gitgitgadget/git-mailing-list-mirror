@@ -1,158 +1,112 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/3] pretty=format: Avoid some expensive calculations when
- not needed
-Date: Sun, 4 Nov 2007 19:15:44 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711041915290.4362@racer.site>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Sun, 04 Nov 2007 20:41:29 +0100
+Message-ID: <20071104194129.GA4207@artemis.corp>
+References: <1194202941253-git-send-email-shawn.bohrer@gmail.com> <11942029442710-git-send-email-shawn.bohrer@gmail.com> <11942029474058-git-send-email-shawn.bohrer@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sun Nov 04 20:16:54 2007
+Content-Type: multipart/signed; boundary="VS++wcV0S1rZb1Fb";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 20:41:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iokxk-0006Et-QM
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 20:16:49 +0100
+	id 1IolLv-0004EI-Di
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 20:41:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753553AbXKDTQe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 14:16:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753542AbXKDTQe
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 14:16:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46254 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753372AbXKDTQd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 14:16:33 -0500
-Received: (qmail invoked by alias); 04 Nov 2007 19:16:31 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp005) with SMTP; 04 Nov 2007 20:16:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/w9ThF+vLwTRQDUhdQQiSx4ktcmhOzd5lbpLsAA/
-	gJxcSdSy22Cgk8
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0711041912190.4362@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1753733AbXKDTlc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 14:41:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753704AbXKDTlc
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 14:41:32 -0500
+Received: from pan.madism.org ([88.191.52.104]:45726 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753627AbXKDTlb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 14:41:31 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 114312874F;
+	Sun,  4 Nov 2007 20:41:29 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 31C3C3F65B; Sun,  4 Nov 2007 20:41:29 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+Content-Disposition: inline
+In-Reply-To: <11942029474058-git-send-email-shawn.bohrer@gmail.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63435>
 
 
-Use the new function interp_find_active() to avoid calculating the
-unique hash names, and other things, when they are not even asked for.
+--VS++wcV0S1rZb1Fb
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Unfortunately, we cannot reuse the result of that function, which
-would be cleaner: there are more users than just git log.  Most
-notably, git-archive with "$Format:...$" substitution.
+On Sun, Nov 04, 2007 at 07:02:21PM +0000, Shawn Bohrer wrote:
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-	So I found another reason why the function has to be called
-	everytime.  But this reason appeals to me much more.
+> +	for (i =3D 1; i < argc; i++) {
+> +		const char *arg =3D argv[i];
+> +
+> +		if (arg[0] !=3D '-')
+> +			break;
+> +		if (!strcmp(arg, "--")) {
+> +			i++;
+> +			break;
+> +		}
+> +		if (!strcmp(arg, "-n")) {
+> +			show_only =3D 1;
+> +			disabled =3D 0;
+> +			continue;
+> +		}
+> +		if (!strcmp(arg, "-f")) {
+> +			disabled =3D 0;
+> +			continue;
+> +		}
+> +		if (!strcmp(arg, "-d")) {
+> +			remove_directories =3D 1;
+> +			continue;
+> +		}
+> +		if (!strcmp(arg, "-q")) {
+> +			quiet =3D 1;
+> +			continue;
+> +		}
+> +		if (!strcmp(arg, "-x")) {
+> +			ignored =3D 1;
+> +			continue;
+> +		}
+> +		if (!strcmp(arg, "-X")) {
+> +			ignored_only =3D 1;
+> +			dir.show_ignored =3D1;
+> +			dir.exclude_per_dir =3D ".gitignore";
+> +			continue;
+> +		}
+> +		usage(builtin_clean_usage);
 
-	Originally, I wanted to do this differently, by providing a
-	function which generates the substitutions, but the header
-	parsing makes that infeasible.
+  Please, parse-options.c is now in next, please use it.
 
- pretty.c |   55 ++++++++++++++++++++++++++++++++++---------------------
- 1 files changed, 34 insertions(+), 21 deletions(-)
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-diff --git a/pretty.c b/pretty.c
-index 490cede..241e91c 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -393,6 +393,7 @@ void format_commit_message(const struct commit *commit,
- 	int i;
- 	enum { HEADER, SUBJECT, BODY } state;
- 	const char *msg = commit->buffer;
-+	char *active = interp_find_active(format, table, ARRAY_SIZE(table));
- 
- 	if (ILEFT_RIGHT + 1 != ARRAY_SIZE(table))
- 		die("invalid interp table!");
-@@ -407,12 +408,18 @@ void format_commit_message(const struct commit *commit,
- 	/* these depend on the commit */
- 	if (!commit->object.parsed)
- 		parse_object(commit->object.sha1);
--	interp_set_entry(table, IHASH, sha1_to_hex(commit->object.sha1));
--	interp_set_entry(table, IHASH_ABBREV,
-+	if (active[IHASH])
-+		interp_set_entry(table, IHASH,
-+				sha1_to_hex(commit->object.sha1));
-+	if (active[IHASH_ABBREV])
-+		interp_set_entry(table, IHASH_ABBREV,
- 			find_unique_abbrev(commit->object.sha1,
- 				DEFAULT_ABBREV));
--	interp_set_entry(table, ITREE, sha1_to_hex(commit->tree->object.sha1));
--	interp_set_entry(table, ITREE_ABBREV,
-+	if (active[ITREE])
-+		interp_set_entry(table, ITREE,
-+				sha1_to_hex(commit->tree->object.sha1));
-+	if (active[ITREE_ABBREV])
-+		interp_set_entry(table, ITREE_ABBREV,
- 			find_unique_abbrev(commit->tree->object.sha1,
- 				DEFAULT_ABBREV));
- 	interp_set_entry(table, ILEFT_RIGHT,
-@@ -422,22 +429,27 @@ void format_commit_message(const struct commit *commit,
- 			 ? "<"
- 			 : ">");
- 
--	parents[1] = 0;
--	for (i = 0, p = commit->parents;
--			p && i < sizeof(parents) - 1;
--			p = p->next)
--		i += snprintf(parents + i, sizeof(parents) - i - 1, " %s",
--			sha1_to_hex(p->item->object.sha1));
--	interp_set_entry(table, IPARENTS, parents + 1);
--
--	parents[1] = 0;
--	for (i = 0, p = commit->parents;
--			p && i < sizeof(parents) - 1;
--			p = p->next)
--		i += snprintf(parents + i, sizeof(parents) - i - 1, " %s",
--			find_unique_abbrev(p->item->object.sha1,
--				DEFAULT_ABBREV));
--	interp_set_entry(table, IPARENTS_ABBREV, parents + 1);
-+	if (active[IPARENTS]) {
-+		parents[1] = 0;
-+		for (i = 0, p = commit->parents;
-+				p && i < sizeof(parents) - 1;
-+				p = p->next)
-+			i += snprintf(parents + i, sizeof(parents) - i - 1,
-+				" %s", sha1_to_hex(p->item->object.sha1));
-+		interp_set_entry(table, IPARENTS, parents + 1);
-+	}
-+
-+	if (active[IPARENTS_ABBREV]) {
-+		parents[1] = 0;
-+		for (i = 0, p = commit->parents;
-+				p && i < sizeof(parents) - 1;
-+				p = p->next)
-+			i += snprintf(parents + i, sizeof(parents) - i - 1,
-+				" %s",
-+				find_unique_abbrev(p->item->object.sha1,
-+					DEFAULT_ABBREV));
-+		interp_set_entry(table, IPARENTS_ABBREV, parents + 1);
-+	}
- 
- 	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
- 		int eol;
-@@ -464,7 +476,7 @@ void format_commit_message(const struct commit *commit,
- 				xmemdupz(msg + i + 9, eol - i - 9);
- 		i = eol;
- 	}
--	if (msg[i])
-+	if (active[IBODY] && msg[i])
- 		table[IBODY].value = xstrdup(msg + i);
- 
- 	len = interpolate(sb->buf + sb->len, strbuf_avail(sb),
-@@ -476,6 +488,7 @@ void format_commit_message(const struct commit *commit,
- 	}
- 	strbuf_setlen(sb, sb->len + len);
- 	interp_clear_table(table, ARRAY_SIZE(table));
-+	free(active);
- }
- 
- static void pp_header(enum cmit_fmt fmt,
--- 
-1.5.3.5.1549.g91a3
+--VS++wcV0S1rZb1Fb
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLiBpvGr7W6HudhwRAm6UAJ9GG41U+zFfBbjfWDwKbXveuxwR7wCgoCLx
+JhTWfOwuFneQGoYS0n/GXso=
+=cHcK
+-----END PGP SIGNATURE-----
+
+--VS++wcV0S1rZb1Fb--
