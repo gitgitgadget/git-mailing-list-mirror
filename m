@@ -1,81 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Warning: cvsexportcommit considered dangerous
-Date: Sun, 4 Nov 2007 21:35:41 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711042133330.4362@racer.site>
-References: <Pine.LNX.4.64.0711041638270.4362@racer.site>
- <623F4AFA-FE43-4046-9D3F-435396BBE17D@zib.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Fix an infinite loop in sq_quote_buf().
+Date: Sun, 04 Nov 2007 22:37:59 +0100
+Message-ID: <20071104213759.GD4207@artemis.corp>
+References: <200711042126.22512.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Alex Bennee <kernel-hacker@bennee.com>,
-	Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Sun Nov 04 22:37:27 2007
+Content-Type: multipart/signed; boundary="iVCmgExH7+hIHJ1A";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Sun Nov 04 22:38:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ion9n-0007yU-UK
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 22:37:24 +0100
+	id 1IonAg-0008B5-0T
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 22:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752936AbXKDVhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 16:37:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752867AbXKDVhE
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 16:37:04 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49566 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752045AbXKDVhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 16:37:03 -0500
-Received: (qmail invoked by alias); 04 Nov 2007 21:37:00 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp010) with SMTP; 04 Nov 2007 22:37:00 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/vTXgri0bv+Wyugd3eEqNyessKn2E+orsSk0bium
-	h6D2DmxXR2XpEq
-X-X-Sender: gene099@racer.site
-In-Reply-To: <623F4AFA-FE43-4046-9D3F-435396BBE17D@zib.de>
-X-Y-GMX-Trusted: 0
+	id S1752959AbXKDViE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 16:38:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752867AbXKDViC
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 16:38:02 -0500
+Received: from pan.madism.org ([88.191.52.104]:47333 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751480AbXKDViA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 16:38:00 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id C0D8825E02;
+	Sun,  4 Nov 2007 22:37:59 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 566123F6A1; Sun,  4 Nov 2007 22:37:59 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Sixt <johannes.sixt@telecom.at>,
+	Junio Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <200711042126.22512.johannes.sixt@telecom.at>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63447>
 
-Hi,
 
-On Sun, 4 Nov 2007, Steffen Prohaska wrote:
+--iVCmgExH7+hIHJ1A
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Nov 4, 2007, at 5:41 PM, Johannes Schindelin wrote:
-> 
-> > ever since the up-to-date check was changed to use just one call to 
-> > "cvs status", a bug was present.  Now cvsexportcommit expects "cvs 
-> > status" to return the results in the same order as the file names were 
-> > passed.
-> > 
-> > This is not true, as I had to realise with one of my projects on 
-> > sourceforge.
-> > 
-> > Since time is so scarce on my side, I will not have time to fix this 
-> > bug, but will instead return to my old "commit by hand" procedure.
-> 
-> I introduced this 'optimization', which turned out to be a bug. So, I 
-> feel responsible. Sorry for the trouble.
-> 
-> In August this was already recognized and a patch submitted:
-> 
-> http://marc.info/?t=118718458000004&r=1&w=2
-> 
-> I do not know why it wasn't applied. I forgot re-checking after my 
-> vacation.
+On Sun, Nov 04, 2007 at 08:26:22PM +0000, Johannes Sixt wrote:
+> sq_quote_buf() treats single-quotes and exclamation marks specially, but
+> it incorrectly parsed the input for single-quotes and backslashes.
+>=20
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+>  quote.c          |    2 +-
+>  t/t5510-fetch.sh |    7 +++++++
+>  2 files changed, 8 insertions(+), 1 deletions(-)
+>=20
+> diff --git a/quote.c b/quote.c
+> index 482be05..919d092 100644
+> --- a/quote.c
+> +++ b/quote.c
+> @@ -26,7 +26,7 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
+> =20
+>  	strbuf_addch(dst, '\'');
+>  	while (*src) {
+> -		size_t len =3D strcspn(src, "'\\");
+> +		size_t len =3D strcspn(src, "'!");
+>  		strbuf_add(dst, src, len);
+>  		src +=3D len;
+>  		while (need_bs_quote(*src)) {
 
-It slipped by me, because of holiday, too.  (I was on my well needed 
-holiday then.)
+  Ouch, good catch :/ sorry about that.
 
-But that patch really seems like a step back to me.  The line "File: ... 
-Status: ..." should be parsable enough to fix the bug properly, instead of 
-undoing the optimisation.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
-AFAICS Robin replied with a "let's see if a proper fix materialises", and 
-I kind of hope that it will materialise soon.
+--iVCmgExH7+hIHJ1A
+Content-Type: application/pgp-signature
+Content-Disposition: inline
 
-Ciao,
-Dscho
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLju3vGr7W6HudhwRAiQtAJ4m6z5gRDzfaMNw3AnzhVL7m/Z52wCdH1eF
+8/0dOlilOb549Zhr4nfMdyM=
+=a5i2
+-----END PGP SIGNATURE-----
+
+--iVCmgExH7+hIHJ1A--
