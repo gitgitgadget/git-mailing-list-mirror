@@ -1,79 +1,110 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH] Fix an infinite loop in sq_quote_buf().
-Date: Sun, 4 Nov 2007 21:26:22 +0100
-Message-ID: <200711042126.22512.johannes.sixt@telecom.at>
+From: "Marco Costalba" <mcostalba@gmail.com>
+Subject: [PATCH qgit] Update to latest --early-output git log patch
+Date: Sun, 4 Nov 2007 21:50:35 +0100
+Message-ID: <e5bfff550711041250p1c48910fqa631cd7fd3c505f8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 21:26:43 2007
+Cc: "Linus Torvalds" <torvalds@linux-foundation.org>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 21:50:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iom3L-0007LY-Tz
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 21:26:40 +0100
+	id 1IomQr-0004bd-GM
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 21:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752823AbXKDU0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 15:26:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXKDU0Z
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 15:26:25 -0500
-Received: from smtp1.srv.eunet.at ([193.154.160.119]:35303 "EHLO
-	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752706AbXKDU0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 15:26:25 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp1.srv.eunet.at (Postfix) with ESMTP id 8565134487;
-	Sun,  4 Nov 2007 21:26:23 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id BA7DA58C46;
-	Sun,  4 Nov 2007 21:26:22 +0100 (CET)
-User-Agent: KMail/1.9.3
+	id S1751893AbXKDUug (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 15:50:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751463AbXKDUug
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 15:50:36 -0500
+Received: from rv-out-0910.google.com ([209.85.198.190]:8383 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751387AbXKDUuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 15:50:35 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1332800rvb
+        for <git@vger.kernel.org>; Sun, 04 Nov 2007 12:50:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=6n5FYawks47pavvwYPxhVHGA4DHG2UXy6cww6GsJa80=;
+        b=N3671SBd7lF9T3mRAITpSewuq9Em7/VPcQ1xeCmtXMDT8q5RWDVWhZZWvVZpB0NowLqt0cP0ZJ6hgzaMZ3Dy1b9J40Jkmef1XglwGf1MEaNlm74X1HAI7hfA1HpjTXfFjwoRCNXseXMVrvfzvXTeIlDQdBRFGmQ+BAnCxiPV0c8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=fnxff15sLjcOXoxx5RTiKtF26OKAdzI1vboHxw/iuBy3cm8zjSgmsGhXeJk0Pivkx6Kc7NlcmwFe74ufPSnNRK8ObbN+lULKot1WLIAiKte/hs6arQJzqnfPzByCJoRFfPDuIZXG0krxm9R0/YEtArn7isbSEOVlniugtncPT5s=
+Received: by 10.141.123.4 with SMTP id a4mr31577rvn.1194209435280;
+        Sun, 04 Nov 2007 12:50:35 -0800 (PST)
+Received: by 10.141.203.3 with HTTP; Sun, 4 Nov 2007 12:50:35 -0800 (PST)
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63440>
 
-sq_quote_buf() treats single-quotes and exclamation marks specially, but
-it incorrectly parsed the input for single-quotes and backslashes.
+Fix broken implementation after Linus updated his
+early output patch to version with improve output format.
 
-Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+Signed-off-by: Marco Costalba <mcostalba@gmail.com>
 ---
- quote.c          |    2 +-
- t/t5510-fetch.sh |    7 +++++++
- 2 files changed, 8 insertions(+), 1 deletions(-)
+ src/git.h           |    2 +-
+ src/git_startup.cpp |   10 +++++-----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/quote.c b/quote.c
-index 482be05..919d092 100644
---- a/quote.c
-+++ b/quote.c
-@@ -26,7 +26,7 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
- 
- 	strbuf_addch(dst, '\'');
- 	while (*src) {
--		size_t len = strcspn(src, "'\\");
-+		size_t len = strcspn(src, "'!");
- 		strbuf_add(dst, src, len);
- 		src += len;
- 		while (need_bs_quote(*src)) {
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index d217657..aad863d 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -208,4 +208,11 @@ test_expect_success 'fetch with a non-applying branch.<name>.merge' '
- 	git fetch blub
- '
- 
-+# the strange name is: a\!'b
-+test_expect_success 'quoting of a strangely named repo' '
-+	! git fetch "a\\!'\''b" > result 2>&1 &&
-+	cat result &&
-+	grep "fatal: '\''a\\\\!'\''b'\''" result
-+'
-+
- test_done
+diff --git a/src/git.h b/src/git.h
+index 92879fb..789fea4 100644
+--- a/src/git.h
++++ b/src/git.h
+@@ -251,7 +251,7 @@ private:
+ 	bool startParseProc(SCList initCmd, FileHistory* fh, SCRef buf);
+ 	bool tryFollowRenames(FileHistory* fh);
+ 	bool populateRenamedPatches(SCRef sha, SCList nn, FileHistory* fh,
+QStringList* on, bool bt);
+-	void doEarlyOutput(Rev* rev, int* start);
++	void doEarlyOutput(Rev* rev, const QByteArray& ba, int* start);
+ 	int addChunk(FileHistory* fh, const QByteArray& ba, int ofs);
+ 	void parseDiffFormat(RevFile& rf, SCRef buf);
+ 	void parseDiffFormatLine(RevFile& rf, SCRef line, int parNum);
+diff --git a/src/git_startup.cpp b/src/git_startup.cpp
+index df272fc..090d5f9 100644
+--- a/src/git_startup.cpp
++++ b/src/git_startup.cpp
+@@ -841,10 +841,10 @@ void Git::loadFileNames() {
+ 	indexTree();
+ }
+
+-void Git::doEarlyOutput(Rev* rev, int* start) {
++void Git::doEarlyOutput(Rev* rev, const QByteArray& ba, int* start) {
+
+ 	delete rev;
+-	*start += QString("Final output:\n").length();
++	*start = ba.indexOf('\n', *start) + 1;
+
+ 	Rev* cl = NULL;
+ 	const Rev* r = revLookup(ZERO_SHA);
+@@ -870,7 +870,7 @@ int Git::addChunk(FileHistory* fh, const
+QByteArray& ba, int start) {
+ 		rev = new Rev(ba, start, fh->revOrder.count(), &nextStart,
+!isMainHistory(fh));
+
+ 		if (nextStart == -2)
+-			doEarlyOutput(rev, &start);
++			doEarlyOutput(rev, ba, &start);
+
+ 	} while (nextStart == -2);
+
+@@ -1377,8 +1377,8 @@ int Rev::indexData(bool quick, bool withDiff) const {
+ 	if (start > last) // offset 'start' points to the char after "commit "
+ 		return -1;
+
+-	if (uint(ba.at(start) == 'u'))
+-		return -2; // "Final output:", let caller handle this
++	if (uint(ba.at(start) == 'u')) // "Final output:", let caller handle this
++		return (ba.indexOf('\n', start) != -1 ? -2 : -1);
+
+ 	// take in account --boundary and --left-right options
+ 	startOfs = uint(ba.at(start) == '-' || ba.at(start) == '<' ||
+ba.at(start) == '>');
 -- 
-1.5.3.4.315.g2ce38
+1.5.3.5.565.g985b6
