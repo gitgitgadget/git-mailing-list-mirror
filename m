@@ -1,72 +1,105 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-fetch: more terse fetch output
-Date: Sun, 4 Nov 2007 13:13:40 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711041313020.4362@racer.site>
-References: <alpine.LFD.0.9999.0711030101340.21255@xanadu.home>
- <20071104045800.GB12359@segfault.peff.net>
+From: "Yin Ping" <pkufranky@gmail.com>
+Subject: Re: [PATCH] status&commit: Teach them to show commits of modified submodules.
+Date: Sun, 4 Nov 2007 21:17:58 +0800
+Message-ID: <46dff0320711040517r6da5d7aaid849ff06df1b5bb6@mail.gmail.com>
+References: <1194004427-26934-1-git-send-email-pkufranky@gmail.com>
+	 <7vd4us1jds.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320711021650q4e56d025q63a961176c682a14@mail.gmail.com>
+	 <7vfxzoyz7f.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320711040125v111c75davb49e9822537f4b19@mail.gmail.com>
+	 <46dff0320711040145k1edb1fcaq1daa5469c1158e81@mail.gmail.com>
+	 <7vmytus0ff.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 04 14:14:50 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 14:18:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IofJQ-00058Z-DE
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 14:14:48 +0100
+	id 1IofMj-00060p-1G
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 14:18:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755642AbXKDNOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 08:14:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755513AbXKDNOd
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 08:14:33 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46989 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755150AbXKDNOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 08:14:32 -0500
-Received: (qmail invoked by alias); 04 Nov 2007 13:14:30 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp045) with SMTP; 04 Nov 2007 14:14:30 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19w9e4XjZlwIQ+Lu2PkqntXJt79oVlaFru6qjgBGE
-	HVZI5OvlU7gzlk
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071104045800.GB12359@segfault.peff.net>
-X-Y-GMX-Trusted: 0
+	id S1755338AbXKDNR7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 08:17:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755261AbXKDNR7
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 08:17:59 -0500
+Received: from py-out-1112.google.com ([64.233.166.178]:55750 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755150AbXKDNR6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 08:17:58 -0500
+Received: by py-out-1112.google.com with SMTP id u77so2457260pyb
+        for <git@vger.kernel.org>; Sun, 04 Nov 2007 05:17:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=HlkuHY5OAe9zWiZ6LMGYxtwYm4+Aw8ChPU5gIms9QW4=;
+        b=gX+x/0Y1De1cro+Q9rPKxTSKVEZgmHi6+025zzhm7mKW6i+JBXaQ4HZzW5rTEZqblflS7YfYObTRuDGqtNIo9a4Tn93k/q7bNxomtZ4lRYdyH40Q2Z34SCFXcByUCFnT7gy6OAzRe9q6td/cmWySlKrlAegWyt67rgoHmbubZIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mbzg79YFACBGgpHQof1f0amZNsIg2x0eUTh0cynC3G7fbGVpKgmCKDoHFpyAHdSE8sOvkViIk/t04H0Of0KuqZ5FkP2c12sjyCSBjmIIw/4gaAqZW/fjwEdpOpqx//VzAkVfgdSEIbqoBRClpwj3qRM8ppqJOZXdhgqefHnGpdE=
+Received: by 10.35.90.1 with SMTP id s1mr4740082pyl.1194182278065;
+        Sun, 04 Nov 2007 05:17:58 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Sun, 4 Nov 2007 05:17:58 -0800 (PST)
+In-Reply-To: <7vmytus0ff.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63397>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63398>
 
-Hi,
+On 11/4/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Yin Ping" <pkufranky@gmail.com> writes:
+>
+> > In both case, i think the user should be notified about the inconsistence.
+> > My patch given in the first letter handles this by two warning messages as
+> > follows (where $name is module name)
+> >
+> > +                       cd $name >&/dev/null || { echo "  Warning: fail to
+> > chdir to $name" && exit; }
+>
+> In that situation, all he needs to know, with respect to the
+> submodule, is that the submodule has been updated since his HEAD
+> (and that is given by the runstatus output).  He does not _care_
+> about what the individual commits in the submodule were.  It is
+> not an error that the information from the submodule cannot be
+> shown to him.  He _chose_ to ignore the details of that
+> submodule by not checking it out to begin with.
+>
+> Something like this, to be totally quiet, would be more
+> appropriate.
+>
+>        for name in $modules
+>        do
+>                (
+>                        ... do the range, indexone, headone stuff
+>                        cd "$name" 2>/dev/null || exit 0
+>                        echo "* $name $headone...$indexone:"
+>                        ... whatever log you show
+>                ) | sed ...
+>        done
+>
+Your point is in some cases people think the warning messages are
+annoying because they don't care the change details for submodules.
+However, in some cases these messages are helpful. And a third kind of
+cases is that people care about only part of all submodules.
 
-On Sun, 4 Nov 2007, Jeff King wrote:
+So, maybe some an switch can be used to turn this on or off (default
+off)? For example
+# only sm1 and sm2 are cared
+git commit --submodule=sm1,sm2
 
-> On Sat, Nov 03, 2007 at 01:32:48AM -0400, Nicolas Pitre wrote:
-> 
-> > This makes the fetch output much more terse and prettier on a 80 column 
-> > display, based on a consensus reached on the mailing list.  Here's an 
-> > example output:
-> 
-> Thank you for this; it was at the end of a very long todo list for me.
-> 
-> > Receiving objects: 100% (5439/5439), 1.60 MiB | 636 KiB/s, done.
-> > Resolving deltas: 100% (4604/4604), done.
-> > From git://git.kernel.org/pub/scm/git/git
-> >  ! [rejected]        html -> origin/html  (non fast forward)
-> >    136e631..f45e867  maint -> origin/maint  (fast forward)
-> >    9850e2e..44dd7e0  man -> origin/man  (fast forward)
-> >    3e4bb08..e3d6d56  master -> origin/master  (fast forward)
-> >    fa3665c..536f64a  next -> origin/next  (fast forward)
-> >  + 4f6d9d6...768326f pu -> origin/pu  (forced update)
-> >  * [new branch]      todo -> origin/todo
-> 
-> One nice thing about this format is that it works equally well for
-> "push" (changing "From" to "To" and reversing the order of the
-> branches). Comments?
+# all submodules are cared
+git commit --submodule='*'
 
-I would like that, too.
+> By the way, I do not know about the quoting issues with $modules
+> variable in the above illustration, as I am not (yet) discussing
+> about the implementation level of details.
+>
 
-Ciao,
-Dscho
+
+-- 
+franky
