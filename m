@@ -1,183 +1,79 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 3/2] Use parse-options in builtin-clean
-Date: Sun, 4 Nov 2007 20:24:31 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711042023440.4362@racer.site>
-References: <1194202941253-git-send-email-shawn.bohrer@gmail.com>
- <11942029442710-git-send-email-shawn.bohrer@gmail.com>
- <11942029474058-git-send-email-shawn.bohrer@gmail.com> <20071104194129.GA4207@artemis.corp>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] Fix an infinite loop in sq_quote_buf().
+Date: Sun, 4 Nov 2007 21:26:22 +0100
+Message-ID: <200711042126.22512.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 04 21:26:08 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 04 21:26:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iom2o-0007BU-Iq
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 21:26:07 +0100
+	id 1Iom3L-0007LY-Tz
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 21:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703AbXKDUZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 15:25:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXKDUZw
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 15:25:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60023 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751387AbXKDUZv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 15:25:51 -0500
-Received: (qmail invoked by alias); 04 Nov 2007 20:25:49 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp053) with SMTP; 04 Nov 2007 21:25:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18vEA100PYvSE7kbjhV+uuzkDlWeOj08+ND8HoXnm
-	GCgWRH/lcoqYTb
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071104194129.GA4207@artemis.corp>
-X-Y-GMX-Trusted: 0
+	id S1752823AbXKDU0Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 15:26:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752538AbXKDU0Z
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 15:26:25 -0500
+Received: from smtp1.srv.eunet.at ([193.154.160.119]:35303 "EHLO
+	smtp1.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752706AbXKDU0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 15:26:25 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp1.srv.eunet.at (Postfix) with ESMTP id 8565134487;
+	Sun,  4 Nov 2007 21:26:23 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id BA7DA58C46;
+	Sun,  4 Nov 2007 21:26:22 +0100 (CET)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63439>
 
+sq_quote_buf() treats single-quotes and exclamation marks specially, but
+it incorrectly parsed the input for single-quotes and backslashes.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
+ quote.c          |    2 +-
+ t/t5510-fetch.sh |    7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
 
-	On Sun, 4 Nov 2007, Pierre Habouzit wrote:
-
-	> On Sun, Nov 04, 2007 at 07:02:21PM +0000, Shawn Bohrer wrote:
-	> 
-	> > +	for (i = 1; i < argc; i++) {
-	> > +		const char *arg = argv[i];
-	> > [...]
-	> 
-	>   Please, parse-options.c is now in next, please use it.
-
-	Something like this?
-
- builtin-clean.c |   71 ++++++++++++++++++++----------------------------------
- 1 files changed, 26 insertions(+), 45 deletions(-)
-
-diff --git a/builtin-clean.c b/builtin-clean.c
-index 4141eb4..d6fc2ad 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -9,81 +9,62 @@
- #include "builtin.h"
- #include "cache.h"
- #include "dir.h"
-+#include "parse-options.h"
+diff --git a/quote.c b/quote.c
+index 482be05..919d092 100644
+--- a/quote.c
++++ b/quote.c
+@@ -26,7 +26,7 @@ void sq_quote_buf(struct strbuf *dst, const char *src)
  
--static int disabled = 1;
-+static int force = 0;
- static int show_only = 0;
- static int remove_directories = 0;
- static int quiet = 0;
- static int ignored = 0;
- static int ignored_only = 0;
+ 	strbuf_addch(dst, '\'');
+ 	while (*src) {
+-		size_t len = strcspn(src, "'\\");
++		size_t len = strcspn(src, "'!");
+ 		strbuf_add(dst, src, len);
+ 		src += len;
+ 		while (need_bs_quote(*src)) {
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index d217657..aad863d 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -208,4 +208,11 @@ test_expect_success 'fetch with a non-applying branch.<name>.merge' '
+ 	git fetch blub
+ '
  
--static const char builtin_clean_usage[] =
--"git-clean [-d] [-f] [-n] [-q] [-x | -X] [--] <paths>...";
-+static const char *const builtin_clean_usage[] = {
-+	"git-clean [-d] [-f] [-n] [-q] [-x | -X] [--] <paths>...",
-+	NULL
-+};
- 
- static int git_clean_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "clean.requireforce")) {
--		disabled = git_config_bool(var, value);
-+		force = !git_config_bool(var, value);
- 	}
- 	return 0;
- }
- 
- int cmd_clean(int argc, const char **argv, const char *prefix)
- {
--	int i, j;
-+	int j;
- 	struct strbuf directory;
- 	struct dir_struct dir;
- 	const char *path = ".";
- 	const char *base = "";
- 	int baselen = 0;
- 	static const char **pathspec;
-+	struct option options[] = {
-+		OPT__QUIET(&quiet),
-+		OPT__DRY_RUN(&show_only),
-+		OPT_BOOLEAN('f', NULL, &force, "force"),
-+		OPT_BOOLEAN('d', NULL, &remove_directories,
-+				"remove whole directories"),
-+		OPT_BOOLEAN('x', NULL, &ignored, "remove ignored files, too"),
-+		OPT_BOOLEAN('X', NULL, &ignored_only,
-+				"remove only ignored files"),
-+		OPT_END()
-+	};
- 
--	memset(&dir, 0, sizeof(dir));
- 	git_config(git_clean_config);
-+	argc = parse_options(argc, argv, options, builtin_clean_usage, 0);
- 
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--
--		if (arg[0] != '-')
--			break;
--		if (!strcmp(arg, "--")) {
--			i++;
--			break;
--		}
--		if (!strcmp(arg, "-n")) {
--			show_only = 1;
--			disabled = 0;
--			continue;
--		}
--		if (!strcmp(arg, "-f")) {
--			disabled = 0;
--			continue;
--		}
--		if (!strcmp(arg, "-d")) {
--			remove_directories = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-q")) {
--			quiet = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-x")) {
--			ignored = 1;
--			continue;
--		}
--		if (!strcmp(arg, "-X")) {
--			ignored_only = 1;
--			dir.show_ignored =1;
--			dir.exclude_per_dir = ".gitignore";
--			continue;
--		}
--		usage(builtin_clean_usage);
-+	memset(&dir, 0, sizeof(dir));
-+	if (ignored_only) {
-+		dir.show_ignored =1;
-+		dir.exclude_per_dir = ".gitignore";
- 	}
- 
- 	if (ignored && ignored_only)
- 		die("-x and -X cannot be used together");
- 
--	if (disabled)
-+	if (!show_only && !force)
- 		die("clean.requireForce set and -n or -f not given; refusing to clean");
- 
- 	dir.show_other_directories = 1;
-@@ -96,7 +77,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	pathspec = get_pathspec(prefix, argv + i);
-+	pathspec = get_pathspec(prefix, argv);
- 	read_cache();
- 	read_directory(&dir, path, base, baselen, pathspec);
- 	strbuf_init(&directory, 0);
++# the strange name is: a\!'b
++test_expect_success 'quoting of a strangely named repo' '
++	! git fetch "a\\!'\''b" > result 2>&1 &&
++	cat result &&
++	grep "fatal: '\''a\\\\!'\''b'\''" result
++'
++
+ test_done
 -- 
-1.5.3.5.1549.g91a3
+1.5.3.4.315.g2ce38
