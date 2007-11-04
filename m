@@ -1,73 +1,131 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [RFC PATCH] Make gitk use --early-output
-Date: Sun, 4 Nov 2007 22:04:09 +1100
-Message-ID: <18221.42793.38389.359621@cargo.ozlabs.ibm.com>
-References: <18221.2285.259487.655684@cargo.ozlabs.ibm.com>
-	<e5bfff550711040237s250bcec0iddf1ebdc616e0bbf@mail.gmail.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: Re: [PATCH 01/10] Add a parseopt mode to git-rev-parse to bring
+	parse-options to shell scripts.
+Date: Sun, 4 Nov 2007 12:29:31 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071104112931.GB2119@ins.uni-bonn.de>
+References: <1194172262-1563-1-git-send-email-madcoder@debian.org> <1194172262-1563-2-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	git@vger.kernel.org
-To: "Marco Costalba" <mcostalba@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 04 12:29:32 2007
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 12:29:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IodfW-0005Hz-H7
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:29:30 +0100
+	id 1Iodfq-0005MD-AU
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 12:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755754AbXKDL3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 06:29:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755905AbXKDL3Q
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:29:16 -0500
-Received: from ozlabs.org ([203.10.76.45]:35866 "EHLO ozlabs.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755754AbXKDL3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 06:29:15 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id 24A5EDDE24; Sun,  4 Nov 2007 22:29:13 +1100 (EST)
-In-Reply-To: <e5bfff550711040237s250bcec0iddf1ebdc616e0bbf@mail.gmail.com>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1756637AbXKDL3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 06:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755869AbXKDL3e
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 06:29:34 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:43541 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755136AbXKDL3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 06:29:34 -0500
+Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id B84B5400004AE;
+	Sun,  4 Nov 2007 12:29:32 +0100 (CET)
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Pierre Habouzit <madcoder@debian.org>, gitster@pobox.com,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <1194172262-1563-2-git-send-email-madcoder@debian.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63381>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63382>
 
-Marco Costalba writes:
+Hello Pierre,
 
-> On 11/4/07, Paul Mackerras <paulus@samba.org> wrote:
-> >
-> >      set vnextroot($view) 0
-> > -    set order "--topo-order"
-> > +    set order "--early-output=50"
-> 
-> But --early-output does not imply --topo-order, I guess...
+A couple of language nits:
 
-Look here in Linus' patch:
+* Pierre Habouzit wrote on Sun, Nov 04, 2007 at 11:30:53AM CET:
+> +PARSEOPT
+> +--------
+> +
+> +In `--parseopt` mode, `git-rev-parse` helps massaging options to bring to shell
+> +scripts the same facilities C builtins have. It works as an option normalizer
+> +(e.g. splits single switches aggregate values), a bit like `getopt(1)` does.
+> +
+> +It takes on the standard input the specification of the options to parse and
+> +understand, and echoes on the standard ouput a line suitable for `sh(1)` `eval`
+> +to replace the arguments with normalized ones.  In case of error, it ouputs
 
-+			if (!prefixcmp(arg, "--early-output")) {
-+				int count = 100;
-+				switch (arg[14]) {
-+				case '=':
-+					count = atoi(arg+15);
-+					/* Fallthrough */
-+				case 0:
-+					revs->topo_order = 1;
-+					revs->early_output = count;
-+					continue;
-+				}
-+			}
+s/ouputs/outputs/
 
-So yes, --early-output does imply --topo-order.
+> +usage on the standard error stream, and exits with code 129.
+> +
+> +Input Format
+> +~~~~~~~~~~~~
+> +
+> +`git-ref-parse --parseopt` input format is fully text based. It has two parts,
 
-> P.S: Why did you choose not let git log (i.e. Linus) to handle the
-> default number of commits?
-> 
-> "--early-output=50" instead of just "--early-output"
+s/^/The /
+s/git-ref-parse/git-rev-parse/
 
-Because I was thinking of adding a control in the edit/preferences
-window for it later on.
+> +separated by a line that contains only `--`. The lines before (should be more
+> +than one) are used for the usage. The lines after describe the options.
 
-Paul.
+I would write
+  s/before/& the `--`/
+  s/after/& the `--`/
+
+or maybe write "separator" instead of `--`.
+
+[...]
+> +`<opt_spec>`::
+> +	its format is the short option character, then the long option name
+> +        separated by a comma. Both parts are not required, though at least one
+> +        is necessary. `h,help`, `dry-run` and `f` are all three correct
+> +        `<opt_spec>`.
+> +
+> +`<arg_spec>`::
+> +	an `<arg_spec>` tells the option parser if the option has an argument
+> +        (`=`), an optionnal one (`?` though its use is discouraged) or none
+
+s/optionnal/optional/
+
+> +        (no `<arg_spec>` in that case).
+> +
+> +The rest of the line after as many spaces up to the ending line feed is used
+> +as the help associated to the option.
+
+I'd write (in case that is technically correct):
+  After following white space, the rest of the line after is used as the
+  help associated to the option.
+
+> +Blank lines are ignored, and lines that don't match this specification are used
+> +as option group headers (start the line with a space to purposely create such
+> +lines).
+
+I'd write:
+  ... to create such lines on purpose.
+
+> +Example
+> +~~~~~~~
+> +
+> +------------
+> +OPTS_SPEC="\
+> +some-command [options] <args>...
+> +
+> +some-command does foo and bar !
+
+Please no white space before "!".
+
+> +--
+> +h,help    show the help
+> +
+> +foo       some nifty option --foo
+> +bar=      some cool option --bar with an argument
+> +
+> +  An option group Header
+> +C?        option C with an optionnal argument"
+
+s/optionnal/optional/
+
+Cheers,
+Ralf
