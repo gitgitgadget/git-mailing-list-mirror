@@ -1,54 +1,61 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: [PATCH] builtin-fetch: Add "-q" as a synonym for "--quiet"
-Date: Sat,  3 Nov 2007 19:26:54 -0700
-Message-ID: <1194143214-25980-1-git-send-email-koreth@midwinter.com>
-Cc: Steven Grimm <koreth@midwinter.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 04 03:27:24 2007
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [REPLACEMENT PATCH 2/2] Add "--early-output" log flag for interactive
+ GUI use
+Date: Sun, 4 Nov 2007 14:06:09 +1100
+Message-ID: <18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Sun Nov 04 04:06:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoVCq-0000kV-OR
-	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 03:27:21 +0100
+	id 1IoVoz-0005iv-DN
+	for gcvg-git-2@gmane.org; Sun, 04 Nov 2007 04:06:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756890AbXKDC04 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 3 Nov 2007 22:26:56 -0400
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757539AbXKDC04
-	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 22:26:56 -0400
-Received: from tater.midwinter.com ([216.32.86.90]:33503 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756343AbXKDC0z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 3 Nov 2007 22:26:55 -0400
-Received: (qmail 20087 invoked from network); 4 Nov 2007 02:26:55 -0000
-Received: from out031.sctm.tfbnw.net (HELO localhost.localdomain) (koreth@204.15.20.158)
-  by tater.midwinter.com with SMTP; 4 Nov 2007 02:26:55 -0000
-X-Mailer: git-send-email 1.5.3.5.529.ge3d6d-dirty
+	id S1756084AbXKDDG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 3 Nov 2007 23:06:27 -0400
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755750AbXKDDG1
+	(ORCPT <rfc822;git-outgoing>); Sat, 3 Nov 2007 23:06:27 -0400
+Received: from ozlabs.org ([203.10.76.45]:34349 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753294AbXKDDG0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 3 Nov 2007 23:06:26 -0400
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 4BBFEDDE33; Sun,  4 Nov 2007 14:06:25 +1100 (EST)
+In-Reply-To: <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63336>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63337>
 
-"-q" is the very first option described in the git-fetch manpage, and it
-isn't supported.
+Linus Torvalds writes:
 
-Signed-off-by: Steven Grimm <koreth@midwinter.com>
----
- builtin-fetch.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> When the full list is generated, there will be a "Final output:" string
+> prepended to it, regardless of whether any early commits were shown or
+> not, so that the consumer can always know the difference between early
+> output and the final list.
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 003ed76..8e79055 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -517,7 +517,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 			depth = argv[i];
- 			continue;
- 		}
--		if (!strcmp(arg, "--quiet")) {
-+		if (!strcmp(arg, "--quiet") || !strcmp(arg, "-q")) {
- 			quiet = 1;
- 			continue;
- 		}
--- 
-1.5.3.5.529.ge3d6d-dirty
+How hard would it be to put the total number of commits on that "Final
+output" line?  That would be useful for me.
+
+Paul.
