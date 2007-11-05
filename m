@@ -1,122 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [Patch] Documentation: enhanced "git for CVS users" doc about shared repositories
-Date: Mon, 05 Nov 2007 15:52:28 -0800
-Message-ID: <7v8x5cmern.fsf@gitster.siamese.dyndns.org>
-References: <472F99F8.4010904@gmail.com>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: [BUG] git grep broken on master - won't work when merging
+Date: Tue, 6 Nov 2007 12:53:21 +1300
+Message-ID: <46a038f90711051553p6202cc62wfda6b45ff7769984@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Francesco Pretto <ceztkoml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 00:52:47 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 00:53:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpBkN-0004m1-GP
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:52:47 +0100
+	id 1IpBlC-0004wt-Un
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:53:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755066AbXKEXwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 18:52:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755039AbXKEXwf
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:52:35 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:37722 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751327AbXKEXwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 18:52:34 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 93D042F9;
-	Mon,  5 Nov 2007 18:52:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E825892551;
-	Mon,  5 Nov 2007 18:52:52 -0500 (EST)
-In-Reply-To: <472F99F8.4010904@gmail.com> (Francesco Pretto's message of "Mon,
-	05 Nov 2007 23:32:24 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753715AbXKEXxY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 18:53:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754631AbXKEXxY
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:53:24 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:4130 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753715AbXKEXxX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 18:53:23 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1012799ugc
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 15:53:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=smwIPJD++N6GE4CDKTA445uetauOhhPMew7xW9JTgIQ=;
+        b=bwB8wYPrUeLLTz0+YuPPOgIFFreOhc5bJtKNRdDg+XcUnERVSJ/r7t3uph4CmkpxWnlf+XVzBHpBKtXQ1s8Wdk7pQC3YKnhs1ljMW3uW+AC+wCoJmSsEswdx7zKu+TGtrjexSMgKi7/QkUaJo2xrrP0J2eOdOnnpy4UTIMrTLbg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=mw+fjJSvVkIi+oY+w+4eNlZ63QWLK/BRRbhx31iFtvYmddDSZqydHYmSeo6xsR/FyUIONJ3NkWHJ6mXqQqDuZY3LcXCcxJBOjV373b+58cIhKkXKOWndwOsbHLQptzv/KL2iNC3DBlO1qPs1JWzwHxzkwjGI5uXgrgGW1pmqY2Y=
+Received: by 10.66.220.17 with SMTP id s17mr2022618ugg.1194306801272;
+        Mon, 05 Nov 2007 15:53:21 -0800 (PST)
+Received: by 10.66.250.13 with HTTP; Mon, 5 Nov 2007 15:53:21 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63592>
 
-Francesco Pretto <ceztkoml@gmail.com> writes:
+Strange behaviour of git grep on one of the projects I hack on...
 
-> More detailed instructions on how to set up shared repositories.
-> Added a reference to "git for CVS users" doc in git-init manual.
->
-> Signed-off-by: Francesco Pretto <ceztkoml@gmail.com>
-> ---
->  Documentation/cvs-migration.txt |   72 ++++++++++++++++++++++++++++++--------
->  Documentation/git-init.txt      |    7 ++++
->  2 files changed, 64 insertions(+), 15 deletions(-)
->
-> diff --git a/Documentation/cvs-migration.txt b/Documentation/cvs-migration.txt
-> index 3b6b494..c92ed49 100644
-> --- a/Documentation/cvs-migration.txt
-> +++ b/Documentation/cvs-migration.txt
-> @@ -13,12 +13,12 @@ link:tutorial.html[tutorial introduction to git] should be sufficient.
->  Developing against a shared repository
->  --------------------------------------
->  
-> -Suppose a shared repository is set up in /pub/repo.git on the host
-> +Suppose a shared repository is set up in /pub/scm/repo.git on the host
->  foo.com.  Then as an individual committer you can clone the shared
->  repository over ssh with:
->  
->  ------------------------------------------------
-> -$ git clone foo.com:/pub/repo.git/ my-project
-> +$ git clone foo.com:/pub/scm/repo.git/ my-project
->  $ cd my-project
->  ------------------------------------------------
+  $ git --version
+  git version 1.5.3.5.561.g140d
 
-This part seems an unnecessary change.
+  $ git grep LOB lib
+  fatal: insanely many options to grep
 
-> @@ -68,37 +68,79 @@ other than `master`.
->  Setting Up a Shared Repository
->  ------------------------------
->  
-> -We assume you have already created a git repository for your project,
-> -possibly created from scratch or from a tarball (see the
-> -link:tutorial.html[tutorial]), or imported from an already existing CVS
-> -repository (see the next section).
-> +We assume you have admin privilege on the remote machine. Moreover, we assume
-> +you have already created a git repository for your project, possibly created
-> +from scratch or from a tarball (see the link:tutorial.html[tutorial]),or
-> +imported  from an already existing CVS repository (see the next section).
+After a bit of head-scratching I realised I was in the middle of a
+merge, with some unresolved paths in the lib directory. A bit of
+testing shows that the unresolved index is probably the problem:
 
-Don't assume the "admin privilege" part, as you do not have to.
+  $ git grep LOB lib
+  fatal: insanely many options to grep
 
-You are newly hired to work on project-X, and the sysadm throws
-you into projectx group.  Thesysadm further prepares a directory
-'/pub/project-X' and makes it mode 2775 (aka ug=rwx,o=rx,g+s).
+  # an unresolved file
+  $ git grep  LOB lib/accesslib.php
+  fatal: insanely many options to grep
 
-Do you want to create a new repository for projext-X group's
-use?  You do:
 
-	$ cd /pub/project-X
-        $ GIT_DIR=mine.git git init --shared
+  $ git grep --cached LOB lib
+  (... expected grep output...)
 
-and you now have a usable /pub/project-X/mine.git repository for
-project members.  I do not think you would need any chmod/chgrp
-after this step.
+  $ git reset --hard
+  $ git grep LOB lib
+  (... expected grep output...)
 
-> +First, let's create a common directory for all the projects you'll want to
-> +track with git:
-> +
-> +-----------------------------------------------
-> +$ mkdir -p /pub/scm
-> +-----------------------------------------------
+... not sure what the correct behaviour should be -- I guess the most
+reasonable action would be to grep the files on disk for those
+unresolved paths. In any case, the error message is insanely many
+confusing to user! ;-)
 
-An organization may use different SCM depending on the projects'
-needs, and there is no reason members of projects A and B should
-be in the same group 'git' while having members of project C in
-group 'hg' only because A and B happen to use git.  It would
-make more sense to either (1) make members of all three projects
-belong to 'src' group, or (2) make three groups, one for each
-project.
+Probably whitespace damaged...
 
-IOW, I do not think the above is a good suggestion.
+diff --git a/builtin-grep.c b/builtin-grep.c
+index c7b45c4..1831ef0 100644
+--- a/builtin-grep.c
++++ b/builtin-grep.c
+@@ -213,7 +213,7 @@ static int flush_grep(struct grep_opt *opt,
+                 * arguments even for the call in the main loop.
+                 */
+                if (kept)
+-                       die("insanely many options to grep");
++                       die("Unresolved index or too many options to grep");
 
-Also with the "create new --shared repository for the project in
-a group's directory that has mode 2755" approach, I do not think
-there is any need to muck with umask either.
+                /*
+                 * If we have two or more paths, we do not have to do
+
+
+cheers,
+
+
+martin
