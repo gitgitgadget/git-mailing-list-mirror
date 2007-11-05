@@ -1,135 +1,80 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 2/3] parseopt: introduce OPT_RECURSE to specify shared  options
-Date: Mon, 05 Nov 2007 17:53:59 +0100
-Message-ID: <20071105165359.GC6205@artemis.corp>
-References: <1194264204-3475-1-git-send-email-madcoder@debian.org> <1194264204-3475-2-git-send-email-madcoder@debian.org> <Pine.LNX.4.64.0711051230020.4362@racer.site> <Pine.LNX.4.64.0711051237420.4362@racer.site> <Pine.LNX.4.64.0711051315300.4362@racer.site> <Pine.LNX.4.64.0711051340490.4362@racer.site> <alpine.LFD.0.999.0711050755340.15101@woody.linux-foundation.org> <Pine.LNX.4.64.0711051623450.4362@racer.site>
+From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+Subject: Re: [PATCH] Use parseopts in builtin-fetch
+Date: Mon, 05 Nov 2007 12:02:54 -0500
+Message-ID: <1194282174.13968.8.camel@hinata.boston.redhat.com>
+References: <Pine.LNX.4.64.0711042233590.7357@iabervon.org>
+	 <20071105085513.GB25574@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="8X7/QrJGcKSMr1RN";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 05 17:54:31 2007
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 18:03:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip5DQ-00043m-7v
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 17:54:20 +0100
+	id 1Ip5MA-0007WV-QX
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 18:03:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753738AbXKEQyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 11:54:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbXKEQyD
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 11:54:03 -0500
-Received: from pan.madism.org ([88.191.52.104]:33288 "EHLO hermes.madism.org"
+	id S1753729AbXKERDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 12:03:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753778AbXKERDJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 12:03:09 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:54630 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753632AbXKEQyC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 11:54:02 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 0597728939;
-	Mon,  5 Nov 2007 17:53:59 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 541229BE8; Mon,  5 Nov 2007 17:53:59 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711051623450.4362@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753729AbXKERDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 12:03:08 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA5H31CY018538;
+	Mon, 5 Nov 2007 12:03:01 -0500
+Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA5H31iH032496;
+	Mon, 5 Nov 2007 12:03:01 -0500
+Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA5H2xYN032585;
+	Mon, 5 Nov 2007 12:03:00 -0500
+In-Reply-To: <20071105085513.GB25574@artemis.corp>
+X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63527>
 
+On Mon, 2007-11-05 at 09:55 +0100, Pierre Habouzit wrote:
+> On Mon, Nov 05, 2007 at 03:35:34AM +0000, Daniel Barkalow wrote:
+> > I mostly did this and the next one for practice with the API. I'm 
+> > impressed that "git fetch -vv" is even handled correctly without anything 
+> > special.
+> 
+>   About that: OPTION_BOOLEAN increments the associated variable, to
+> support this case specifically.
+> 
+>   The last thing that really miss in parse-options is a way to recurse
+> into a sub-array of struct option, to be able to port the generic diff
+> and revision arguments.
+> 
+>   Though, there is a difficulty here that I've not yet found how to
+> circumvent tastefully: right now options take an absolute pointer to
+> _the_ variable that will be filled with values. I need to be able to
+> relocate such a structure for sub-arrays for quite obvious reasons, and
+> that is quite hard to achieve without hazardous APIs. I currently lean
+> in the direction of simply memdup-ing the array and do fix-ups on
+> *values pointers. Though how to do that in a graceful way is not obvious
+> to me yet :)
 
---8X7/QrJGcKSMr1RN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What about requiring sub-arrays entries to take a pointer to a struct as
+their 'value' and requiring that all value pointers in the sub-array be
+relative to this struct, ie
 
-On Mon, Nov 05, 2007 at 04:29:43PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Mon, 5 Nov 2007, Linus Torvalds wrote:
->=20
-> > On Mon, 5 Nov 2007, Johannes Schindelin wrote:
-> > >=20
-> > > After kicking this around a bit more on IRC, we had another idea. =20
-> > > Instead of introducing OPT_RECURSE(), do something like OPT__QUIET(),=
-=20
-> > > only this time in diff.h: ....
-> >=20
-> > I think the preprocessor approach would tend to be simpler, which is an=
-=20
-> > advantage. But whichever approach is chosen, I think one important issu=
-e=20
-> > is to make sure that options that *hide* other options are correctly=20
-> > handled in the help printout..
->=20
-> Yep. See my patch 3/3, which just used a char[256] for the short names,=
-=20
-> and a path-list for the long names.
->=20
-> > But that's an implementation issue. The same certainly *can* be done=20
-> > with a recursive setup, just passing a linked list of what the earlier=
-=20
-> > levels were (which is what we do in other places). And it's not like th=
-e=20
-> > recursion is going to be very deep or complex.
->=20
-> Exactly.
->=20
-> The more pressing issue is that we have pointers in the option structure,=
-=20
-> which point back to the variables expected to hold the option values.
->=20
-> The recurse approach would need fixing up those (or some ugly copying of=
-=20
-> a struct diff_options).
->=20
-> But the preprocessor approach means wasting space (since we basically hav=
-e=20
-> the same options in different builtins),
+  (void *) offsetof(struct diff_options, detect_rename)
 
-The "lost" space is the number of options x sizeof(struct option), the
-latter being (if I'm correct):
+Then you can have something like
 
-on i386:  9 * 4 =3D 36 octets
-on amd64: 4 x 2 + 8 * 4 + 8 (padding) + 8 * 2 =3D 64 octets.
+   OPT__SUBARRAY(diff_options, &rev.diff_opt);
 
-It's not even near being an issue :)
+in your options array and it will fill out the specified my_diff_opts.
 
->                                          and it means that the callback=
-=20
-> functions needed to parse e.g. the diff colour names need to be public. =
-=20
-> Which is not the worst thing, of course.
-
-  Well it's certainly less ugly than copying the diff_options or
-reseting it or anything like that. I don't care if we need to make a
-couple of opt-parsing function public more than what we could have
-needed.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---8X7/QrJGcKSMr1RN
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHL0qnvGr7W6HudhwRAllSAKCaK5iu8CeQyeO6JXS1xmOZvh81OQCfZQKE
-K414e9REGiwXgrteKv1P1gs=
-=Jde7
------END PGP SIGNATURE-----
-
---8X7/QrJGcKSMr1RN--
+cheers,
+Kristian
