@@ -1,56 +1,89 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Implement selectable group ownership in git-init
-Date: Mon, 5 Nov 2007 14:49:17 +0100
-Message-ID: <8EF5148D-C1F0-4329-A221-82D0B7E9932C@wincent.com>
-References: <472CC676.3000603@gmail.com> <7vabpvx8uu.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Francesco Pretto <ceztkoml@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 14:50:38 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] parseopt: introduce OPT_RECURSE to specify shared options
+Date: Mon, 05 Nov 2007 14:53:19 +0100
+Message-ID: <20071105135319.GA6205@artemis.corp>
+References: <Pine.LNX.4.64.0711051209061.4362@racer.site> <20071105123923.GC25574@artemis.corp>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="u3/rZRmxL6MmkK24";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 05 14:53:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip2LW-0005Hw-NQ
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 14:50:31 +0100
+	id 1Ip2OX-00067p-Lj
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 14:53:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755524AbXKENuP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 08:50:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755428AbXKENuP
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 08:50:15 -0500
-Received: from wincent.com ([72.3.236.74]:44989 "EHLO s69819.wincent.com"
+	id S1755677AbXKENxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 08:53:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755676AbXKENxW
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 08:53:22 -0500
+Received: from pan.madism.org ([88.191.52.104]:60176 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755402AbXKENuO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2007 08:50:14 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA5DnICR006600;
-	Mon, 5 Nov 2007 07:49:19 -0600
-In-Reply-To: <7vabpvx8uu.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.912)
+	id S1755647AbXKENxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 08:53:21 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A1843285DB;
+	Mon,  5 Nov 2007 14:53:20 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id CF5EA8525; Mon,  5 Nov 2007 14:53:19 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+Content-Disposition: inline
+In-Reply-To: <20071105123923.GC25574@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63519>
 
-El 3/11/2007, a las 23:27, Junio C Hamano escribi=F3:
 
-> I think what the patch attempts to achieve may be good, but only
-> to reduce a few keystrokes of doing the "chgrp".  Is it really
-> worth it, I have to wonder...
+--u3/rZRmxL6MmkK24
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think this proposal adds unnecessary clutter to the codebase for =20
-something that can easily be achieved (and *should*) using chown, =20
-chgrp, or "sudo -u" etc.
+On Mon, Nov 05, 2007 at 12:39:23PM +0000, Pierre Habouzit wrote:
+>   I like the kind of code that I allow to write better (I tend to
+> dislike big fat global variables), though it's obvious that Johannes
+> patch is a lot simpler and I like that.
 
-The permissions of your Git installation and your repositories are =20
-completely outside of the domain of Git itself, and should be =20
-controlled using the administration tools designed for managing =20
-access, just like every other SCM (and every server, and every piece =20
-of software which can be accessed by many on a multi-user system).
+  We discussed it further, and what came out is that instead of
+supporting quite complicated recursion mechanisms (or even a non so
+complicated one), we can just define an
+OPT__DIFFOPTIONS(diffopts)/OPT__REVOPTIONS(rev) macro that would inline
+the needed options.
 
-Cheers,
-Wincent
+  That's an idea I had but dismissed. Though, maybe it's not _that_
+ugly, is clearly simpler, and one can argue that it's in the logical
+continuation of OPT__QUIET and friends. What do you think ?
+
+  If it's the road we decide to take, then my documentation patch (2/4),
+the parseopt fix (my 1/4 or johannes 1/3) and Johannes usage generator
+enhancement (his 3/3) are still to be taken.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--u3/rZRmxL6MmkK24
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLyBPvGr7W6HudhwRAjKQAJ9tioOnfKLX6lFj3b7UsNlLZLkX2wCfRY5M
+hn+P6Zks45FHRbl5TXbCIkk=
+=INOB
+-----END PGP SIGNATURE-----
+
+--u3/rZRmxL6MmkK24--
