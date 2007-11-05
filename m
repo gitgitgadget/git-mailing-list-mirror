@@ -1,73 +1,60 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations when not needed
-Date: Mon, 05 Nov 2007 11:51:15 -0800
-Message-ID: <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site>
-	<Pine.LNX.4.64.0711041915290.4362@racer.site>
+Subject: Re: [PATCH] upload-pack: Use finish_{command,async}() instead of waitpid().
+Date: Mon, 05 Nov 2007 12:05:40 -0800
+Message-ID: <7v3avkqwyz.fsf@gitster.siamese.dyndns.org>
+References: <200711042046.48257.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Rene Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 05 20:51:45 2007
+Cc: git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Nov 05 21:06:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip7z0-0004lw-BD
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:51:38 +0100
+	id 1Ip8Cw-0000q9-1R
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 21:06:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752467AbXKETvX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 14:51:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbXKETvX
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:51:23 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50950 "EHLO
+	id S1752208AbXKEUFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 15:05:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752096AbXKEUFq
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 15:05:46 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:39315 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938AbXKETvX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 14:51:23 -0500
+	with ESMTP id S1751887AbXKEUFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 15:05:45 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B4CAA2F9;
-	Mon,  5 Nov 2007 14:51:43 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 5DD402F9;
+	Mon,  5 Nov 2007 15:06:06 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2C09F92851;
-	Mon,  5 Nov 2007 14:51:39 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711041915290.4362@racer.site> (Johannes
-	Schindelin's message of "Sun, 4 Nov 2007 19:15:44 +0000 (GMT)")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id ECCA4927A9;
+	Mon,  5 Nov 2007 15:06:03 -0500 (EST)
+In-Reply-To: <200711042046.48257.johannes.sixt@telecom.at> (Johannes Sixt's
+	message of "Sun, 4 Nov 2007 20:46:48 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63545>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> Unfortunately, we cannot reuse the result of that function, which
-> would be cleaner: there are more users than just git log.  Most
-> notably, git-archive with "$Format:...$" substitution.
+> - If pack-objects sees an error, it terminates with failure. Since this
+>   breaks the pipe to rev-list, rev-list is killed with SIGPIPE.
 
-That makes sense.
+I was a bit uneasy about this part.  We do not explicitly tell
+rev-list not to ignore SIGPIPE, so it could spin fruitlessly
+listing revs and calling write(2).  But the error from that
+write should already be handled correctly anyway, so this should
+be Ok.
 
+> 	The test case checks for failures in rev-list (a missing
+> 	object). Any hints how to trigger a failure in pack-objects
+> 	that does not also trigger in rev-list would be welcome.
 
-> diff --git a/pretty.c b/pretty.c
-> index 490cede..241e91c 100644
-> --- a/pretty.c
-> +++ b/pretty.c
-> @@ -393,6 +393,7 @@ void format_commit_message(const struct commit *commit,
->  	int i;
->  	enum { HEADER, SUBJECT, BODY } state;
->  	const char *msg = commit->buffer;
-> +	char *active = interp_find_active(format, table, ARRAY_SIZE(table));
-> ...
-> +	if (active[IHASH])
-> +		interp_set_entry(table, IHASH,
-> +				sha1_to_hex(commit->object.sha1));
-> +	if (active[IHASH_ABBREV])
-> +		interp_set_entry(table, IHASH_ABBREV,
->  			find_unique_abbrev(commit->object.sha1,
->  				DEFAULT_ABBREV));
-
-Instead of allocating a separate array and freeing at the end,
-wouldn't it make more sense to have a bitfield that records what
-is used by the format string inside the array elements?
+How about removing a blob from the test repository  to corrupt
+it?  rev-list --objects I think would happily list the blob
+because it sees its name in its containing tree without checking
+its existence.
