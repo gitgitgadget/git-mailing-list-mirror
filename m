@@ -1,79 +1,130 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [RFC PATCH] OSX Mail.app IMAP cache support for git-mailsplit?
-Date: Mon, 5 Nov 2007 10:39:27 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711051034060.4362@racer.site>
-References: <06FE21A2-20D0-4AAA-B0C7-35783C604B68@mac.com>
- <7B209F05-B720-41D6-AE98-39FAFF04B9F6@mac.com>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: [ANNOUNCE] cgit v0.7
+Date: Mon, 5 Nov 2007 11:59:09 +0100
+Message-ID: <8c5c35580711050259p2ec24318r3babf53688b180e6@mail.gmail.com>
+References: <8c5c35580711030408n658eb11fk19d554f0fa3b17@mail.gmail.com>
+	 <1194222569-13948-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Michael Cohen <michaeljosephcohen@mac.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 11:42:14 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "git list" <git@vger.kernel.org>
+To: "Jakub Narebski" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 11:59:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IozP9-0004ep-2x
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 11:42:03 +0100
+	id 1Iozg0-0000fp-HQ
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 11:59:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973AbXKEKkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 05:40:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753889AbXKEKkU
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 05:40:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53272 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753507AbXKEKkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 05:40:19 -0500
-Received: (qmail invoked by alias); 05 Nov 2007 10:40:17 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp003) with SMTP; 05 Nov 2007 11:40:17 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18DYSxT5H4DpaCPKCkJVxAsN5Q2+11WR7bMc5fWel
-	2CVQfeHS6PKI+a
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7B209F05-B720-41D6-AE98-39FAFF04B9F6@mac.com>
-X-Y-GMX-Trusted: 0
+	id S1754431AbXKEK7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 05:59:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309AbXKEK7M
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 05:59:12 -0500
+Received: from nz-out-0506.google.com ([64.233.162.235]:32238 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754141AbXKEK7L (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 05:59:11 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so990762nze
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 02:59:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=EFctBj1ObRbU+BodsqkYFJJPaWDgW/GkvaHLFfMH8iI=;
+        b=lY7Vj15/SzCsF+AIz4tBXAE3PsNoFXeyEYz4acXDmjinkwqhd8IyphhJY1+HMuy7rLOI9GXaAbqXBeeO4aUQ37o/AD541Qk16XVpskJu6A97abVqq/ScVbPVVK51y0nPzjA/fevXArs4Av70gAKT7sRM1M/nFmXSWtWUsAkbU9Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=lNWGN7Cuv3oGjSrEWsOEu9Nf5jHIjAbdCgoOhoeIcW1h1q4ZCwipTsXGYRZQc2R5m/dCxrQn+tpXpjil0MK7tbwezry0PBEf5CqVrImx4poRK+lB2Uq/rRGg/BjAqjFla5H0mlzu5c8CrIKP6CucgWUGg9GonG3P8mF1Ahd78P4=
+Received: by 10.114.200.2 with SMTP id x2mr5003728waf.1194260349726;
+        Mon, 05 Nov 2007 02:59:09 -0800 (PST)
+Received: by 10.114.235.4 with HTTP; Mon, 5 Nov 2007 02:59:09 -0800 (PST)
+In-Reply-To: <1194222569-13948-1-git-send-email-jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63495>
 
-Hi,
+On Nov 5, 2007 1:29 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Lars Hjemli wrote:
+> > cgit v0.7 (a fast webinterface for git) is now available
+>
+>  * Very nice cgit logo,
 
-you have a very weird mail setting; I had to add the git list back to the 
-Cc.  This is just annoying enough for me to write an extra paragraph to 
-annoy you back ;-)
+Thanks!
 
-On Mon, 5 Nov 2007, Michael Cohen wrote:
+> but no favicon. Perhaps pacman head and G,
+>    or pacman head (like in logo) and +/-...
 
-> On Nov 4, 2007, at 1:49 AM, Michael J. Cohen wrote:
-> 
-> > Trivially, adding support for checking for Messages/ inside the specified
-> > Maildir after cur/ is found not to exist would be enough to make this work.
-> 
-> my repo at git://home.325i.org/git-osxmail.git should have that portion.
-> 
-> unsure as to whether to make it an option, a fallback, a config value, or
-> whatever...
+I've never cared much about favicons, but I guess cgit could provide one.
 
-A fallback would be sufficient.
+>
+>  * Providing reference with full sha1 of referenced object for tags
+>    list is not IMVHO a good design: what is interesting is type of
+>    tag, if it is signed it's first line, and if it is lightweight
+>    pointing to tag then perhaps commit subject.
 
-Several comments (your patch not inlined, since you did not inline it 
-either):
+Yes, the full sha1 is not very interesting. But I'm not sure what to
+replace it with: the first line of annotated tags is very often
+identical to tag name. Maybe it should just abbreviate the sha1?
 
-- there needs to be a space between the ) and the { in the first if line.
+>
+>  * Nice diffstat in commit view; the diff view is better, although I
+>    wouldn't lump from-file / to-file diff header together with git
+>    diff header and extended git diff header.
 
-- you probably forgot to remove the original "if (populate...)...".  That 
-  means that populate would be called _twice_, even if successful.
+I've tried to make the diff look similar to 'git log -p' output, but I
+agree the first line per file is probably overkill.
 
-- git is written in C.  Therefore, "//" as a way to comment out is wrong.
+>
+>  * I like the sidebar very much, although I'm not sure how it would
+>    work for larger projects (more branches, much more tags).
 
-- if you still return -1 when the dir could not be opened, I wonder what 
-  the rationale is to comment the error out.
+How do you think it works out with http://hjemli.net/git/xorg/xserver/
+? It's got an impressive number of branches and tags ;-)
 
-Ciao,
-Dscho
+> Also the
+>    search textbox is not very visible; I'd rather it have "groove"
+>    view.
 
-P.S.: You might want to send patches as these right away, without asking 
-if anybody cares (you'll see that very soon), but rather in accord with 
-Documentation/SubmittingPatches.
+Agreed, it's probably useless trying to style input-controls: the
+result is heavily browser/platform dependent.
+
+
+>  * I like separate 'mirrors' section, although I think it rather
+>    clashes badly with notion of forks (alternates).
+
+Well, it's only a section header, i.e. a parameter in cgitrc
+
+
+>  * I'm not sure if it wouln't be beter to provide -n/+m lines changed
+>    instead of nn likes changed column.
+
+Maybe. I think it used to be -n/+m, but then I changed it; don't
+remember why...
+
+>
+>  * Nice submodule support!
+
+Heh, it's a simple hack, but thanks anyway. It probably needs to be
+configurable per repo though.
+
+>
+> By the way, Freedesktop provides besides standard gitweb interface
+> also cgit interface at
+>   http://cgit.freedesktop.org/
+> Take a look at how such site looks like with large number of projects
+> (perhaps sidebar is noot such a good idea then?), and with large
+> projects.
+
+Actually, the filtered branch/tag lists was done partly because of
+freedesktop.org. I think it has worked out nicely (but
+cgit.freedesktop.org needs to run the latest cgit). Also, the width of
+project descriptions is configurable, so it can take up much less
+space and leave room for the sidebar.
+
+Thanks for the comments, you've made my day!
+
+-- 
+larsh
