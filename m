@@ -1,78 +1,169 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: [StGit PATCH] Cogito is deprecated, so don't point to it
-Date: Mon, 05 Nov 2007 13:21:13 +0100
-Message-ID: <87zlxsannq.fsf@lysator.liu.se>
-References: <20071105030608.6033.35208.stgit@yoghurt>
-	<vpqejf510ci.fsf@bauges.imag.fr>
-	<20071105120014.GA17406@diana.vm.bytemark.co.uk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] parse-options: abbreviation engine fix.
+Date: Mon, 5 Nov 2007 12:34:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711051230020.4362@racer.site>
+References: <1194264204-3475-1-git-send-email-madcoder@debian.org>
+ <1194264204-3475-2-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Catalin Marinas <catalin.marinas@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Karl =?utf-8?Q?Hasselstr=C3=B6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 13:21:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 13:35:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip0xK-0006zq-ME
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:21:27 +0100
+	id 1Ip1Ab-0002M3-0K
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:35:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754627AbXKEMVM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 07:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754368AbXKEMVM
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:21:12 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:37067 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754575AbXKEMVL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2007 07:21:11 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id ACE73200A239;
-	Mon,  5 Nov 2007 13:21:10 +0100 (CET)
-Received: from mail.lysator.liu.se ([127.0.0.1])
-	by localhost (lenin.lysator.liu.se [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 24631-01-47; Mon, 5 Nov 2007 13:21:10 +0100 (CET)
-Received: from krank (c83-253-242-75.bredband.comhem.se [83.253.242.75])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 46D02200A229;
-	Mon,  5 Nov 2007 13:21:10 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id C14677B4095; Mon,  5 Nov 2007 13:21:13 +0100 (CET)
-In-Reply-To: <20071105120014.GA17406@diana.vm.bytemark.co.uk> ("Karl
- =?utf-8?Q?Hasselstr=C3=B6m=22's?= message of "Mon\, 5 Nov 2007 13\:00\:14
- +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Virus-Scanned: by amavisd-new-20030616-p10 (Debian) at lysator.liu.se
+	id S1754791AbXKEMew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 07:34:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbXKEMew
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:34:52 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48093 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753522AbXKEMev (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 07:34:51 -0500
+Received: (qmail invoked by alias); 05 Nov 2007 12:34:49 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp040) with SMTP; 05 Nov 2007 13:34:49 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19F4M8HnBlF1B5wM3xQtQabT0crD7cwozLcU9Ezfj
+	EqhVeMD3tqLVEl
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194264204-3475-2-git-send-email-madcoder@debian.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63505>
 
-Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
 
-> On 2007-11-05 10:57:17 +0100, Matthieu Moy wrote:
->
->> Karl Hasselstr=C3=B6m <kha@treskal.com> writes:
->>
->> > -directly). For standard SCM operations, either use plain GIT comm=
-ands
->> > -or the Cogito tool but it is not recommended to mix them with the
->> > -StGIT commands.
->> > +directly). For standard SCM operations, use plain GIT commands.
->>
->> Doesn't the "but it is not recommended to mix them with the StGIT
->> commands." part still hold?
->
-> I'm not sure it ever held. Except possibly during merge resolution,
-> but that mismatch is going away with the patch series by David K=C3=A5=
-gedal
-> that's sitting in kha/experimental (which changes StGit to use exactl=
-y
-> the same conflict representation as git).
+When an option could be an ambiguous abbreviation of two options, the code 
+used to error out.  Even if an exact match would have occured later.
 
-Don't forget your new assimilate implementation.
+Test and original patch by Pierre Habouzit.
 
---=20
-David K=C3=A5gedal
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+---
+
+	On Mon, 5 Nov 2007, Pierre Habouzit wrote:
+
+	> When we had at least two long option then followed by another 
+	> one that was a prefix of both of them, then the abbreviation 
+	> detector failed.
+
+	Yeah, I assumed that you would never do such a thing, but I agree 
+	that with recursing option parsing it is much more likely.
+
+	It took me some time to understand your patch, and that the moving 
+	of the UNSET handling was unnecessary.
+
+	IMHO this patch is easier to read.
+
+ parse-options.c          |   33 +++++++++++++++++++++------------
+ t/t0040-parse-options.sh |   13 +++++++++++++
+ test-parse-options.c     |    1 +
+ 3 files changed, 35 insertions(+), 12 deletions(-)
+
+diff --git a/parse-options.c b/parse-options.c
+index cc09c98..15b32f7 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -119,8 +119,8 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+                           const struct option *options)
+ {
+ 	const char *arg_end = strchr(arg, '=');
+-	const struct option *abbrev_option = NULL;
+-	int abbrev_flags = 0;
++	const struct option *abbrev_option = NULL, *ambiguous_option = NULL;
++	int abbrev_flags = 0, ambiguous_flags = 0;
+ 
+ 	if (!arg_end)
+ 		arg_end = arg + strlen(arg);
+@@ -137,16 +137,16 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 			/* abbreviated? */
+ 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
+ is_abbreviated:
+-				if (abbrev_option)
+-					return error("Ambiguous option: %s "
+-						"(could be --%s%s or --%s%s)",
+-						arg,
+-						(flags & OPT_UNSET) ?
+-							"no-" : "",
+-						options->long_name,
+-						(abbrev_flags & OPT_UNSET) ?
+-							"no-" : "",
+-						abbrev_option->long_name);
++				if (abbrev_option) {
++					/*
++					 * If this is abbreviated, it is
++					 * ambiguous. So when there is no
++					 * exact match later, we need to
++					 * error out.
++					 */
++					ambiguous_option = abbrev_option;
++					ambiguous_flags = abbrev_flags;
++				}
+ 				if (!(flags & OPT_UNSET) && *arg_end)
+ 					p->opt = arg_end + 1;
+ 				abbrev_option = options;
+@@ -176,6 +176,15 @@ is_abbreviated:
+ 		}
+ 		return get_value(p, options, flags);
+ 	}
++
++	if (ambiguous_option)
++		return error("Ambiguous option: %s "
++			"(could be --%s%s or --%s%s)",
++			arg,
++			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
++			ambiguous_option->long_name,
++			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
++			abbrev_option->long_name);
+ 	if (abbrev_option)
+ 		return get_value(p, abbrev_option, abbrev_flags);
+ 	return error("unknown option `%s'", arg);
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index ae49424..ee758e5 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -18,6 +18,7 @@ string options
+     -s, --string <string>
+                           get a string
+     --string2 <str>       get another string
++    --st <st>             get another string (pervert ordering)
+ 
+ EOF
+ 
+@@ -90,4 +91,16 @@ test_expect_failure 'ambiguously abbreviated option' '
+         test $? != 129
+ '
+ 
++cat > expect << EOF
++boolean: 0
++integer: 2
++string: 123
++EOF
++
++test_expect_failure 'non ambiguous option (after two options it abbreviates)' '
++	test-parse-options --st 123 &&
++	test ! -s output.err &&
++	git diff expect output
++'
++
+ test_done
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 277cfe4..4d3e2ec 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -18,6 +18,7 @@ int main(int argc, const char **argv)
+ 		OPT_GROUP("string options"),
+ 		OPT_STRING('s', "string", &string, "string", "get a string"),
+ 		OPT_STRING(0, "string2", &string, "str", "get another string"),
++		OPT_STRING(0, "st", &string, "st", "get another string (pervert ordering)"),
+ 		OPT_END(),
+ 	};
+ 	int i;
+-- 
+1.5.3.5.1549.g91a3
