@@ -1,71 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Add more tests for git-clean
-Date: Sun, 4 Nov 2007 23:49:50 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711042348540.4362@racer.site>
+Date: Sun, 04 Nov 2007 16:17:47 -0800
+Message-ID: <7vr6j5r1ec.fsf@gitster.siamese.dyndns.org>
 References: <1194202941253-git-send-email-shawn.bohrer@gmail.com>
- <11942029442710-git-send-email-shawn.bohrer@gmail.com>
- <7vve8hr3ch.fsf@gitster.siamese.dyndns.org>
+	<11942029442710-git-send-email-shawn.bohrer@gmail.com>
+	<7vve8hr3ch.fsf@gitster.siamese.dyndns.org>
+	<20071104234617.GG4207@artemis.corp>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=us-ascii
 Cc: Shawn Bohrer <shawn.bohrer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 00:50:55 2007
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 01:18:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IopF0-0007Be-9P
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 00:50:54 +0100
+	id 1IopfP-0004t1-LD
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 01:18:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753971AbXKDXuk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 18:50:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753972AbXKDXuk
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 18:50:40 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46652 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753837AbXKDXuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 18:50:40 -0500
-Received: (qmail invoked by alias); 04 Nov 2007 23:50:38 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp047) with SMTP; 05 Nov 2007 00:50:38 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18PbLt7haMPXKXF1mTjE6B8rzgGX0bzf+9L0+FM6j
-	3Waozibk2A2DMB
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vve8hr3ch.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1752168AbXKEAR5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 19:17:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752807AbXKEAR5
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 19:17:57 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:49662 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751729AbXKEAR4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 19:17:56 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 17FD12EF;
+	Sun,  4 Nov 2007 19:18:15 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 939CC921DF;
+	Sun,  4 Nov 2007 19:18:11 -0500 (EST)
+In-Reply-To: <20071104234617.GG4207@artemis.corp> (Pierre Habouzit's message
+	of "Mon, 05 Nov 2007 00:46:17 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63462>
 
-Hi,
+Pierre Habouzit <madcoder@debian.org> writes:
 
-On Sun, 4 Nov 2007, Junio C Hamano wrote:
+> On Sun, Nov 04, 2007 at 11:35:42PM +0000, Junio C Hamano wrote:
+>> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
+>> 
+>> > +test_expect_success 'git-clean with prefix' '
+>> > +
+>> > +	mkdir -p build docs &&
+>> > +	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+>> > +	cd src/ &&
+>> > +	git-clean &&
+>> > +	cd - &&
+>> 
+>> This is wrong for two reasons.
+>> 
+>>  - Is "cd -" portable?
+>
+>   this is POSIX:
 
-> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
-> 
-> > +test_expect_success 'git-clean with prefix' '
-> > +
-> > +	mkdir -p build docs &&
-> > +	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-> > +	cd src/ &&
-> > +	git-clean &&
-> > +	cd - &&
-> 
-> This is wrong for two reasons.
-> 
->  - Is "cd -" portable?
-> 
->  - What happens when git-clean fails?  This test fails, and then
->    it goes on to the next test without cd'ing back.
+That actually doesn't matter.  What the real world shells do
+matters more.
 
-So it should be
+In addition, "cd -" is a nice shorthand for interactive use but
+it is a bad discipline to use it in a script anyway.
 
-	(cd src/ && git clean) &&
+	...
+	( cd src && git-clean ) &&
+	...
 
-right?  (Note that I also removed the dash, since it will be a builtin 
-after the next commit.)
-
-Ciao,
-Dscho
+would be the best way to write this.
