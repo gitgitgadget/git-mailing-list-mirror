@@ -1,66 +1,65 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [bug in next ?] git-fetch/git-push issue
-Date: Mon, 05 Nov 2007 15:22:17 -0800
-Message-ID: <7vhck0mg5y.fsf@gitster.siamese.dyndns.org>
-References: <20071105175654.GD6205@artemis.corp>
-	<Pine.LNX.4.64.0711051259580.7357@iabervon.org>
-	<20071105210711.GA9176@sigill.intra.peff.net>
-	<Pine.LNX.4.64.0711051620230.7357@iabervon.org>
-	<20071105225540.GA10988@sigill.intra.peff.net>
+Subject: Re: git pull opinion
+Date: Mon, 05 Nov 2007 15:33:31 -0800
+Message-ID: <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Nicolas Pitre <nico@cam.org>, Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 06 00:22:47 2007
+Cc: git@vger.kernel.org
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 00:33:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpBHH-0005Oo-7p
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:22:43 +0100
+	id 1IpBS6-0008EV-FH
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:33:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754832AbXKEXW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 18:22:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754741AbXKEXW2
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:22:28 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:38568 "EHLO
+	id S1752700AbXKEXdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 18:33:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753374AbXKEXdk
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:33:40 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:51203 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754803AbXKEXW2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 18:22:28 -0500
+	with ESMTP id S1750950AbXKEXdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 18:33:40 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B800E2EF;
-	Mon,  5 Nov 2007 18:22:48 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id 1AA1E2F0;
+	Mon,  5 Nov 2007 18:33:57 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 177DB92880;
-	Mon,  5 Nov 2007 18:22:42 -0500 (EST)
-In-Reply-To: <20071105225540.GA10988@sigill.intra.peff.net> (Jeff King's
-	message of "Mon, 5 Nov 2007 17:55:41 -0500")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A70DB929DA;
+	Mon,  5 Nov 2007 18:33:54 -0500 (EST)
+In-Reply-To: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
+	(aghilesk@gmail.com's message of "Mon, 5 Nov 2007 16:52:12 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63586>
 
-Jeff King <peff@peff.net> writes:
+Aghiles <aghilesk@gmail.com> writes:
 
-> Which I guess is what you were trying to accomplish by removing the
-> peer_ref, though I think that doesn't distinguish between "didn't match
-> a remote ref" and "had an error." Perhaps we just need an error flag in
-> the ref struct?
+> Is there an "easier" way to pull into a dirty directory ? I am
+> asking this to make sure I understand the problem and not
+> because I find it annoying to type those 4 commands to perform
+> a pull (although some of my colleagues do find that annoying :).
 
-I agree that makes the most sense.
+You need to switch your mindset from centralized SVN workflow.
 
-As Steffen has been advocating on another thread, depending on
-your workflow, you do not care about some classes of push errors
-per pushed refs.  The update of the remote and local tracking
-refs should be done in sync (i.e. if the remote wasn't updated,
-never update the corresponding local), but it can depend on the
-nature of the failure if a failure to update a remote ref should
-result in the non-zero exit status from git-push as a whole.
+The beauty of distributedness is that it redefines the meaning
+of "to commit".  In distributed systems, the act of committing
+is purely checkpointing and it is not associated with publishing
+the result to others as centralized systems force you to.
 
-And to implement that, per-ref error flag would be a good way to
-go, methinks.
+Stop thinking like "I need to integrate the changes from
+upstream into my WIP to keep up to date."  You first finish what
+you are currently doing, at least to the point that it is
+stable, make a commit to mark that state, and then start
+thinking about what other people did.  You may most likely do a
+"git fetch" followed by "git rebase" to update your WIP on top
+of the updated work by others.
+
+Once you get used to that, you would not have "a dirty
+directory" problem.
