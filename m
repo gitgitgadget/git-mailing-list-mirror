@@ -1,176 +1,93 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: [PATCH] Use parseopts in builtin-fetch
-Date: Sun, 4 Nov 2007 22:35:34 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0711042233590.7357@iabervon.org>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] remove dead code from the csum-file interface
+Date: Sun, 04 Nov 2007 22:54:50 -0500 (EST)
+Message-ID: <alpine.LFD.0.9999.0711042244310.21255@xanadu.home>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 Cc: git@vger.kernel.org
-To: Junio C Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Mon Nov 05 04:35:53 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 04:55:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ioski-00067k-Gu
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 04:35:52 +0100
+	id 1Iot3K-0000Wp-7G
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 04:55:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753733AbXKEDfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 22:35:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753378AbXKEDfh
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 22:35:37 -0500
-Received: from iabervon.org ([66.92.72.58]:44085 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753305AbXKEDfg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 22:35:36 -0500
-Received: (qmail 19840 invoked by uid 1000); 5 Nov 2007 03:35:34 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 5 Nov 2007 03:35:34 -0000
+	id S1753959AbXKEDyw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 22:54:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753933AbXKEDyw
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 22:54:52 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:57814 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753931AbXKEDyv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 22:54:51 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JR000CNULJEJGG0@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 04 Nov 2007 22:54:51 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63481>
 
-Signed-off-by: Daniel Barkalow <barkalow@iabervon.org>
+The provided name argument is always constant and valid in every 
+caller's context, so no need to have an array of PATH_MAX chars to copy 
+it into when a simple pointer will do.  Unfortunately that means getting 
+rid of wascally wabbits too.
+
+The 'error' field is also unused.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
-I mostly did this and the next one for practice with the API. I'm 
-impressed that "git fetch -vv" is even handled correctly without anything 
-special. Now that I've done it, assuming I did it right, it might as well 
-get added to the series.
-
- builtin-fetch.c |   95 +++++++++++++++---------------------------------------
- 1 files changed, 27 insertions(+), 68 deletions(-)
-
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 6b1750d..a079cb0 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -8,8 +8,12 @@
- #include "path-list.h"
- #include "remote.h"
- #include "transport.h"
-+#include "parse-options.h"
+diff --git a/csum-file.c b/csum-file.c
+index b445e6a..9728a99 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -88,22 +88,12 @@ struct sha1file *sha1fd(int fd, const char *name)
  
--static const char fetch_usage[] = "git-fetch [-a | --append] [--upload-pack <upload-pack>] [-f | --force] [--no-tags] [-t | --tags] [-k | --keep] [-u | --update-head-ok] [--depth <depth>] [-v | --verbose] [<repository> <refspec>...]";
-+static const char * const fetch_usage[] = {
-+	"git-fetch [option] [<repository> <refspec>...]",
-+	NULL
-+};
- 
- static int append, force, tags, no_tags, update_head_ok, verbose, quiet;
- static char *default_rla = NULL;
-@@ -470,71 +474,21 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	int cmd_len = 0;
- 	const char *depth = NULL, *upload_pack = NULL;
- 	int keep = 0;
+ struct sha1file *sha1fd_throughput(int fd, const char *name, struct progress *tp)
+ {
+-	struct sha1file *f;
+-	unsigned len;
 -
--	for (i = 1; i < argc; i++) {
--		const char *arg = argv[i];
--		cmd_len += strlen(arg);
+-	f = xmalloc(sizeof(*f));
 -
--		if (arg[0] != '-')
--			break;
--		if (!strcmp(arg, "--append") || !strcmp(arg, "-a")) {
--			append = 1;
--			continue;
--		}
--		if (!prefixcmp(arg, "--upload-pack=")) {
--			upload_pack = arg + 14;
--			continue;
--		}
--		if (!strcmp(arg, "--upload-pack")) {
--			i++;
--			if (i == argc)
--				usage(fetch_usage);
--			upload_pack = argv[i];
--			continue;
--		}
--		if (!strcmp(arg, "--force") || !strcmp(arg, "-f")) {
--			force = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--no-tags")) {
--			no_tags = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--tags") || !strcmp(arg, "-t")) {
--			tags = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--keep") || !strcmp(arg, "-k")) {
--			keep = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--update-head-ok") || !strcmp(arg, "-u")) {
--			update_head_ok = 1;
--			continue;
--		}
--		if (!prefixcmp(arg, "--depth=")) {
--			depth = arg + 8;
--			continue;
--		}
--		if (!strcmp(arg, "--depth")) {
--			i++;
--			if (i == argc)
--				usage(fetch_usage);
--			depth = argv[i];
--			continue;
--		}
--		if (!strcmp(arg, "--quiet") || !strcmp(arg, "-q")) {
--			quiet = 1;
--			continue;
--		}
--		if (!strcmp(arg, "--verbose") || !strcmp(arg, "-v")) {
--			verbose++;
--			continue;
--		}
--		usage(fetch_usage);
--	}
+-	len = strlen(name);
+-	if (len >= PATH_MAX)
+-		die("you wascally wabbit, you");
+-	f->namelen = len;
+-	memcpy(f->name, name, len+1);
 -
--	for (j = i; j < argc; j++)
-+	struct option options[] = {
-+		OPT__VERBOSE(&verbose),
-+		OPT_BOOLEAN('a', "append", &append, "append fetched data to exisitng FETCH_HEAD"),
-+		OPT_BOOLEAN('f', "force", &force, "force"),
-+		OPT_BOOLEAN( 0 , "no-tags", &no_tags, "don't fetch tags"),
-+		OPT_BOOLEAN('t', "tags", &tags, "fetch all tags"),
-+		OPT_BOOLEAN('k', "keep", &keep, "keep pack file"),
-+		OPT_STRING( 0, "depth", &depth, "depth", "deepen the repository by <depth> commits"),
-+		OPT_BOOLEAN('u', "update-head-ok", &update_head_ok, "allow updating head"),
-+		OPT_BOOLEAN('q', "quiet", &quiet, "fetch silently"),
-+		OPT_STRING( 0 , "upload-pack", &upload_pack, "upload-pack", "remote executable for git-upload-pack"),
-+		OPT_END(),
-+	};
-+
-+	for (j = 1; j < argc; j++)
- 		cmd_len += strlen(argv[j]);
++	struct sha1file *f = xmalloc(sizeof(*f));
+ 	f->fd = fd;
+-	f->error = 0;
+ 	f->offset = 0;
+ 	f->total = 0;
+ 	f->tp = tp;
++	f->name = name;
+ 	f->do_crc = 0;
+ 	SHA1_Init(&f->ctx);
+ 	return f;
+diff --git a/csum-file.h b/csum-file.h
+index a38cc3a..1af7656 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -5,12 +5,12 @@ struct progress;
  
- 	default_rla = xmalloc(cmd_len + 5 + argc + 1);
-@@ -545,12 +499,16 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		rla_offset += strlen(argv[j]) + 1;
- 	}
- 
--	if (i == argc)
-+	argc = parse_options(argc, argv, options, fetch_usage, 0);
-+
-+	if (argc == 0)
- 		remote = remote_get(NULL);
- 	else
--		remote = remote_get(argv[i++]);
-+		remote = remote_get(argv[0]);
- 
- 	transport = transport_get(remote, remote->url[0]);
-+	if (!transport)
-+		die("couldn't get transport");
- 	if (verbose >= 2)
- 		transport->verbose = 1;
- 	if (quiet)
-@@ -565,6 +523,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	if (!transport->url)
- 		die("Where do you want to fetch from today?");
- 
-+	i = 1;
- 	if (i < argc) {
- 		int j = 0;
- 		refs = xcalloc(argc - i + 1, sizeof(const char *));
--- 
-1.5.3.5.1528.gb6568-dirty
+ /* A SHA1-protected file */
+ struct sha1file {
+-	int fd, error;
+-	unsigned int offset, namelen;
++	int fd;
++	unsigned int offset;
+ 	SHA_CTX ctx;
+ 	off_t total;
+ 	struct progress *tp;
+-	char name[PATH_MAX];
++	const char *name;
+ 	int do_crc;
+ 	uint32_t crc32;
+ 	unsigned char buffer[8192];
