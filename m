@@ -1,70 +1,67 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
-Date: Mon, 05 Nov 2007 23:06:25 +0100
-Message-ID: <85sl3kny8u.fsf@lola.goethe.zz>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
-	<CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com>
-	<20071105215433.GA12827@inspiron>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Mon, 5 Nov 2007 23:10:13 +0100
+Message-ID: <1b46aba20711051410h370072e7he9cbebb54a789dac@mail.gmail.com>
+References: <1194202941253-git-send-email-shawn.bohrer@gmail.com>
+	 <11942029442710-git-send-email-shawn.bohrer@gmail.com>
+	 <11942029474058-git-send-email-shawn.bohrer@gmail.com>
+	 <7vejf4pf7r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steven Grimm <koreth@midwinter.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 23:06:30 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn Bohrer" <shawn.bohrer@gmail.com>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 23:10:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpA4e-0007KE-0g
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 23:05:47 +0100
+	id 1IpA9Q-0000vK-EW
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 23:10:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753221AbXKEWFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 17:05:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753110AbXKEWFU
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 17:05:20 -0500
-Received: from fencepost.gnu.org ([140.186.70.10]:55277 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830AbXKEWFS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 17:05:18 -0500
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1IpA4J-0000nu-4J; Mon, 05 Nov 2007 17:05:15 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id BC9E21C464E3; Mon,  5 Nov 2007 23:06:25 +0100 (CET)
-In-Reply-To: <20071105215433.GA12827@inspiron> (Alejandro Martinez Ruiz's
-	message of "Mon, 5 Nov 2007 22:54:33 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1753110AbXKEWKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 17:10:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751938AbXKEWKR
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 17:10:17 -0500
+Received: from el-out-1112.google.com ([209.85.162.178]:42258 "EHLO
+	el-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750741AbXKEWKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 17:10:15 -0500
+Received: by el-out-1112.google.com with SMTP id j27so366590elf
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 14:10:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=odVXkY1PFhOtCudgq8b7a+orRoAlU4yDunsDxKOPW7s=;
+        b=bzF0236YyAMwNuAie1jWyTplh4xZyk84lPS+yFW0eu/QrLU3PsTTHcwWymd867YaKuUX/CRHfAj0mgOQWqcFSuM9/CTter8SRr/5Hda1lmH29ooe7arBuezhy5N6sV+6O8DcXGC4g7mRs/1tdvrKpiDUB10ezymvhb/1pErsx20=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZsRvvyW+TBUAg1lWKcNBAKSv7atfJcW6Hu4mZAdcNVHbslZyD2e8JhlJxzT+R2FhXtpFD8/b8xGubxeGSQpN9h6Qs6tu/u0Iha6Gq4r8ky/op4h6YkM7kB3KKBs/B//pOXIDWvTTa8/HpK0wpwjjK1H/6ECOk2EK0iqqKmWxZak=
+Received: by 10.142.52.9 with SMTP id z9mr1328834wfz.1194300613866;
+        Mon, 05 Nov 2007 14:10:13 -0800 (PST)
+Received: by 10.142.99.13 with HTTP; Mon, 5 Nov 2007 14:10:13 -0800 (PST)
+In-Reply-To: <7vejf4pf7r.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63569>
 
-Alejandro Martinez Ruiz <alex@flawedcode.org> writes:
-
-> On Mon 05 Nov 2007, 11:28, Steven Grimm wrote:
->>
->> But that suggested command is not going to convince anyone they were wrong 
->> about git being hard to learn. I wonder if instead of saying, "I know what 
->> you meant, but I'm going to make you type a different command," we should 
->> make git revert just do what the user meant.
+2007/11/5, Junio C Hamano <gitster@pobox.com>:
+> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
 >
-> I think that would just add to confusion.  "revert" applies to full
-> changesets, not single files, plus it creates a new commit, which is
-> probably not what the user wants.  Most of them just want to revert some
-> local changes to some random files, so teach them what they need, if
-> anything.
+> > +static int show_only = 0;
+> > +static int remove_directories = 0;
+> > +static int quiet = 0;
+> > +static int ignored = 0;
+> > +static int ignored_only = 0;
 >
->> There is already precedent for that kind of mixed-mode UI:
->>
->> git checkout my-branch
->> vs.
->> git checkout my/source/file.c
->
-> This is a different case: you're basically performing the same
-> operation, with the second line applying just to a subset of files.
+> Please do not explicitly initialize static variables to zero.
 
-Huh?  The first one moves HEAD.  The second one doesn't.
-
--- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Is it really needed to declare those variables outside of a function
+in this case? This scheme makes difficult reusing the code from other
+builtins, rewriting it for libification, calling it many times, or
+even understand if they were declared that way with a purpose or not.
+I just don't know why they are that way in this case, is there a
+reason for it?
