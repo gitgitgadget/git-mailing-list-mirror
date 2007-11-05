@@ -1,62 +1,69 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
-Date: Mon, 5 Nov 2007 11:28:03 -0800
-Message-ID: <CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 20:28:44 2007
+From: =?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
+Subject: [PATCH] git-commit.sh: Fix usage checks regarding paths given when they do not make sense
+Date: Mon,  5 Nov 2007 20:36:33 +0100
+Message-ID: <1194291393-1067-1-git-send-email-B.Steinbrink@gmx.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: paolo.bonzini@lu.unisi.ch, krh@redhat.com, git@vger.kernel.org,
+	=?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 05 20:36:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip7cW-0005vm-Lh
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:28:25 +0100
+	id 1Ip7kh-0000Hk-C9
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753768AbXKET2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 14:28:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753525AbXKET2H
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:28:07 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:49485 "HELO midwinter.com"
+	id S1751887AbXKETgh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 14:36:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752082AbXKETgh
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:36:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52718 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753501AbXKET2F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 14:28:05 -0500
-Received: (qmail 30923 invoked from network); 5 Nov 2007 19:28:04 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=BraE9Zeb5fmwKKWy/oiekQahHop2QYHTnnRDW8WmOsYsMa9Pj8O4PONbdr6Cexw0  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 5 Nov 2007 19:28:04 -0000
-In-Reply-To: <1194289301-7800-1-git-send-email-madcoder@debian.org>
-X-Mailer: Apple Mail (2.912)
+	id S1751037AbXKETgg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 14:36:36 -0500
+Received: (qmail invoked by alias); 05 Nov 2007 19:36:34 -0000
+Received: from i577BBDA2.versanet.de (EHLO localhost) [87.123.189.162]
+  by mail.gmx.net (mp049) with SMTP; 05 Nov 2007 20:36:34 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX18Xqas5CVkX4YSHhb0TEpyhybscCGD7Q/rnl4LYSP
+	Uy3uyzzzCM9fdF
+X-Mailer: git-send-email 1.5.3.5.561.g140d-dirty
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63541>
 
-On Nov 5, 2007, at 11:01 AM, Pierre Habouzit wrote:
-> When git-revert has a file argument then redirect the user to what he
-> probably meant.
+The checks that looked for paths given to git-commit in addition to
+--all or --interactive expected only 3 values, while the case statement
+actually provides 4, so the check was never triggered.
 
-That's a big improvement. Basically everyone I show git to gets  
-"revert" wrong at first.
+The bug was introduced in 6cbf07efc5702351897dee4742525c9b9f7828ac when
+the case statement was extended to handle --interactive.
 
-> +			die("Cannot find commit '%s', did you meant: "
-> +				"git checkout HEAD -- '%s'", arg, arg);
+Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+ git-commit.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-But that suggested command is not going to convince anyone they were  
-wrong about git being hard to learn. I wonder if instead of saying, "I  
-know what you meant, but I'm going to make you type a different  
-command," we should make git revert just do what the user meant.
-
-There is already precedent for that kind of mixed-mode UI:
-
-git checkout my-branch
-vs.
-git checkout my/source/file.c
-
--Steve
+diff --git a/git-commit.sh b/git-commit.sh
+index fcb8443..d4471ff 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -282,9 +282,9 @@ unset only
+ case "$all,$interactive,$also,$#" in
+ *t,*t,*)
+ 	die "Cannot use -a, --interactive or -i at the same time." ;;
+-t,,[1-9]*)
++t,,,[1-9]*)
+ 	die "Paths with -a does not make sense." ;;
+-,t,[1-9]*)
++,t,,[1-9]*)
+ 	die "Paths with --interactive does not make sense." ;;
+ ,,t,0)
+ 	die "No paths with -i does not make sense." ;;
+--=20
+1.5.3.5.561.g140d-dirty
