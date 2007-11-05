@@ -1,61 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Use parseopts in builtin-fetch
-Date: Mon, 05 Nov 2007 11:13:33 -0800
-Message-ID: <7vir4gqzdu.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711042233590.7357@iabervon.org>
-	<20071105085513.GB25574@artemis.corp>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin
+	commands.
+Date: Mon, 5 Nov 2007 20:23:47 +0100
+Message-ID: <20071105192347.GA29997@atjola.homenet>
+References: <1194017589-4669-1-git-send-email-krh@redhat.com> <1194017589-4669-2-git-send-email-krh@redhat.com> <1194017589-4669-3-git-send-email-krh@redhat.com> <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet> <1194289073.13968.16.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 20:13:57 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 20:24:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip7OV-0001HG-VI
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:13:56 +0100
+	id 1Ip7YU-0004X2-F6
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:24:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139AbXKETNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 14:13:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXKETNk
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:13:40 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:59261 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751330AbXKETNk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 14:13:40 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id CF4182EF;
-	Mon,  5 Nov 2007 14:14:00 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 525DC927C7;
-	Mon,  5 Nov 2007 14:13:57 -0500 (EST)
-In-Reply-To: <20071105085513.GB25574@artemis.corp> (Pierre Habouzit's message
-	of "Mon, 05 Nov 2007 09:55:13 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754383AbXKETX5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 14:23:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754223AbXKETX4
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:23:56 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46790 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753793AbXKETXz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 14:23:55 -0500
+Received: (qmail invoked by alias); 05 Nov 2007 19:23:49 -0000
+Received: from i577BBDA2.versanet.de (EHLO localhost) [87.123.189.162]
+  by mail.gmx.net (mp002) with SMTP; 05 Nov 2007 20:23:49 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19aCRxgKHBa6bD/LSvlAZ2RZZLJA4eBGss8cz1W9G
+	H0eby2mwmklXPp
+Content-Disposition: inline
+In-Reply-To: <1194289073.13968.16.camel@hinata.boston.redhat.com>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63539>
 
-Pierre Habouzit <madcoder@debian.org> writes:
+On 2007.11.05 13:57:53 -0500, Kristian H=F8gsberg wrote:
+> On Sat, 2007-11-03 at 16:06 +0100, Bj=F6rn Steinbrink wrote:
+> > On 2007.11.02 11:33:09 -0400, Kristian H=F8gsberg wrote:
+> > > +	if (all && interactive)
+> > > +		die("Cannot use -a, --interactive or -i at the same time.");
+> >=20
+> > Shouldn't that be "if (all && (interactive || also))"?
 
-> On Mon, Nov 05, 2007 at 03:35:34AM +0000, Daniel Barkalow wrote:
->> I mostly did this and the next one for practice with the API. I'm 
->> impressed that "git fetch -vv" is even handled correctly without anything 
->> special.
->
->   About that: OPTION_BOOLEAN increments the associated variable, to
-> support this case specifically.
->
->   The last thing that really miss in parse-options is a way to recurse
-> into a sub-array of struct option, to be able to port the generic diff
-> and revision arguments.
+Ah, damn. I (obviously) misread the error message as:
+	foo and (bar or bar2)
 
-Another micronit is I found lacking is that it is a bit too
-cumbersome to accept only a subset of integer as a value
-(e.g. "this option takes a positive integer, not zero nor
-negative").  The caller can set up a callback to handle that,
-though.
+IOW "and" instead of the first comma.
+
+Actually it should be:
+	if ((all && (interactive || also)) || (interactive && also))
+
+(or whatever more simple version you come up with)
+
+> The shell script just has
+>=20
+> case "$all,$interactive,$also,$#" in
+> *t,*t,*)
+>         die "Cannot use -a, --interactive or -i at the same time." ;;
+>=20
+> which doesn't seem to care about the value of $also.  As far as I
+> understand git commit, it doesn't make sense to pass any of -a, -i, -=
+o
+> or --interactive at the same time so I guess I could join the checks
+
+Note that there are only two commas. The asterisks catch everything and
+$# won't be "t", so that catches anything with at least two t's.
+
+Also note, that the two checks after that one in git-commit.sh as of th=
+e
+current master (140dd77a5cb2e61dcb942e245a2474fae95e42a5) are broken
+(I'll send a patch in a separate mail).
+
+>         if (also && only)
+>                 die("Only one of --include/--only can be used.");
+>         if (all && interactive)
+>                 die("Cannot use -a, --interactive or -i at the same
+> time.");
+>=20
+> into something like
+>=20
+> 	if (also + only + all + interactive > 1)             =20
+> 		die("Only one of --include/--only/--all/--interactive can be used."=
+);
+>=20
+> Does that sound right?
+
+--include is not in the manpage, and I only glanced over git-commit.sh,
+but yeah, at least to me, that sounds right.
+
+Bj=F6rn
