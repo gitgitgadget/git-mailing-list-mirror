@@ -1,169 +1,137 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] parse-options: abbreviation engine fix.
-Date: Mon, 5 Nov 2007 12:34:00 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711051230020.4362@racer.site>
-References: <1194264204-3475-1-git-send-email-madcoder@debian.org>
- <1194264204-3475-2-git-send-email-madcoder@debian.org>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] parseopt: introduce OPT_RECURSE to specify shared options
+Date: Mon, 05 Nov 2007 13:39:23 +0100
+Message-ID: <20071105123923.GC25574@artemis.corp>
+References: <Pine.LNX.4.64.0711051209061.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 13:35:09 2007
+Content-Type: multipart/signed; boundary="Izn7cH1Com+I3R9J";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 05 13:39:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip1Ab-0002M3-0K
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:35:09 +0100
+	id 1Ip1Ey-0003a9-95
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:39:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754791AbXKEMew (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 07:34:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754787AbXKEMew
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:34:52 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48093 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753522AbXKEMev (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 07:34:51 -0500
-Received: (qmail invoked by alias); 05 Nov 2007 12:34:49 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp040) with SMTP; 05 Nov 2007 13:34:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19F4M8HnBlF1B5wM3xQtQabT0crD7cwozLcU9Ezfj
-	EqhVeMD3tqLVEl
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1194264204-3475-2-git-send-email-madcoder@debian.org>
-X-Y-GMX-Trusted: 0
+	id S1754661AbXKEMj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 07:39:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754673AbXKEMj0
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:39:26 -0500
+Received: from pan.madism.org ([88.191.52.104]:56658 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754307AbXKEMjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 07:39:25 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 21E7D2889C;
+	Mon,  5 Nov 2007 13:39:24 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id BAAC5A007; Mon,  5 Nov 2007 13:39:23 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org, gitster@pobox.com
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711051209061.4362@racer.site>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63506>
 
 
-When an option could be an ambiguous abbreviation of two options, the code 
-used to error out.  Even if an exact match would have occured later.
+--Izn7cH1Com+I3R9J
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Test and original patch by Pierre Habouzit.
+On Mon, Nov 05, 2007 at 12:09:41PM +0000, Johannes Schindelin wrote:
+>=20
+> The diff options should not need to be defined in every user of the
+> diffcore.  This provides the framework:
+>=20
+> 	extern struct option *diff_options;
+>=20
+> 	struct option options[] =3D {
+> 		OPT_RECURSE(diff_options),
+> 		...
+> 		OPT_END(),
+> 	};
+>=20
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>=20
+> 	This is not yet clever enough to show the correct usage when
+> 	some sub option uses the same short or long name as one that
+> 	has already been printed.
+>=20
+> 	Add the superlevel options struct as another parameter to
+> 	usage_show_options(), and write an unset_option() function
+> 	which takes a short name, a long name, and that superlevel
+> 	options struct, and unsets all options which match.
 
-Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
----
+  Alternatively you can have a 256-bit bitfield to mark short options
+that have already been seen and a hashtable of long options already
+printed out, and while outputting an option, one should check that
+either the short option or the long option is new.
 
-	On Mon, 5 Nov 2007, Pierre Habouzit wrote:
+  This is nicer as some of the struct option may live in .rodata
 
-	> When we had at least two long option then followed by another 
-	> one that was a prefix of both of them, then the abbreviation 
-	> detector failed.
+>  parse-options.c          |   68 +++++++++++++++++++++++++++++++++++-----=
+------
+>  parse-options.h          |    2 +
+>  t/t0040-parse-options.sh |   24 ++++++++++++++++
+>  test-parse-options.c     |   10 +++++++
+>  4 files changed, 88 insertions(+), 16 deletions(-)
 
-	Yeah, I assumed that you would never do such a thing, but I agree 
-	that with recursing option parsing it is much more likely.
+  Okay, we discussed this with Johannes on IRC. I came up with the
+relocation thing because I feared that the msys port (and maybe other ?)
+that are about to use (or already do) threads would step on each other
+toes while recursing into a sub-array of options.
 
-	It took me some time to understand your patch, and that the moving 
-	of the UNSET handling was unnecessary.
+  Johannes thinks that this never happens in our codebase, hence that my
+patches are an overkill.
 
-	IMHO this patch is easier to read.
+  The likely users of this feature are currently diff options (diff.c
+diff_opt_parse) and revisions (builtin-log.c setup_revisions).
 
- parse-options.c          |   33 +++++++++++++++++++++------------
- t/t0040-parse-options.sh |   13 +++++++++++++
- test-parse-options.c     |    1 +
- 3 files changed, 35 insertions(+), 12 deletions(-)
+  Using Johannes patch, we will have to export a global struct
+diff_option (resp. struct rev_info) from diff.c (resp. revisions.c) and
+no function (or almost) would take struct diff_option (resp struct
+rev_info) as an argument because everyone would work on the global
+variable[0].
 
-diff --git a/parse-options.c b/parse-options.c
-index cc09c98..15b32f7 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -119,8 +119,8 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
-                           const struct option *options)
- {
- 	const char *arg_end = strchr(arg, '=');
--	const struct option *abbrev_option = NULL;
--	int abbrev_flags = 0;
-+	const struct option *abbrev_option = NULL, *ambiguous_option = NULL;
-+	int abbrev_flags = 0, ambiguous_flags = 0;
- 
- 	if (!arg_end)
- 		arg_end = arg + strlen(arg);
-@@ -137,16 +137,16 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
- 			/* abbreviated? */
- 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
- is_abbreviated:
--				if (abbrev_option)
--					return error("Ambiguous option: %s "
--						"(could be --%s%s or --%s%s)",
--						arg,
--						(flags & OPT_UNSET) ?
--							"no-" : "",
--						options->long_name,
--						(abbrev_flags & OPT_UNSET) ?
--							"no-" : "",
--						abbrev_option->long_name);
-+				if (abbrev_option) {
-+					/*
-+					 * If this is abbreviated, it is
-+					 * ambiguous. So when there is no
-+					 * exact match later, we need to
-+					 * error out.
-+					 */
-+					ambiguous_option = abbrev_option;
-+					ambiguous_flags = abbrev_flags;
-+				}
- 				if (!(flags & OPT_UNSET) && *arg_end)
- 					p->opt = arg_end + 1;
- 				abbrev_option = options;
-@@ -176,6 +176,15 @@ is_abbreviated:
- 		}
- 		return get_value(p, options, flags);
- 	}
-+
-+	if (ambiguous_option)
-+		return error("Ambiguous option: %s "
-+			"(could be --%s%s or --%s%s)",
-+			arg,
-+			(ambiguous_flags & OPT_UNSET) ?  "no-" : "",
-+			ambiguous_option->long_name,
-+			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
-+			abbrev_option->long_name);
- 	if (abbrev_option)
- 		return get_value(p, abbrev_option, abbrev_flags);
- 	return error("unknown option `%s'", arg);
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index ae49424..ee758e5 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -18,6 +18,7 @@ string options
-     -s, --string <string>
-                           get a string
-     --string2 <str>       get another string
-+    --st <st>             get another string (pervert ordering)
- 
- EOF
- 
-@@ -90,4 +91,16 @@ test_expect_failure 'ambiguously abbreviated option' '
-         test $? != 129
- '
- 
-+cat > expect << EOF
-+boolean: 0
-+integer: 2
-+string: 123
-+EOF
-+
-+test_expect_failure 'non ambiguous option (after two options it abbreviates)' '
-+	test-parse-options --st 123 &&
-+	test ! -s output.err &&
-+	git diff expect output
-+'
-+
- test_done
-diff --git a/test-parse-options.c b/test-parse-options.c
-index 277cfe4..4d3e2ec 100644
---- a/test-parse-options.c
-+++ b/test-parse-options.c
-@@ -18,6 +18,7 @@ int main(int argc, const char **argv)
- 		OPT_GROUP("string options"),
- 		OPT_STRING('s', "string", &string, "string", "get a string"),
- 		OPT_STRING(0, "string2", &string, "str", "get another string"),
-+		OPT_STRING(0, "st", &string, "st", "get another string (pervert ordering)"),
- 		OPT_END(),
- 	};
- 	int i;
--- 
-1.5.3.5.1549.g91a3
+  With my patches, we can work like we do now, with a more functional
+approach.
+
+  I like the kind of code that I allow to write better (I tend to
+dislike big fat global variables), though it's obvious that Johannes
+patch is a lot simpler and I like that.
+
+
+  [0] actually we don't *need* to remove the struct diff_options argument
+      from many functions except from diff_opt_parse, it's just that for
+      real, everybody will work on the same global structure anyway.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--Izn7cH1Com+I3R9J
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHLw77vGr7W6HudhwRAgCWAJ4meBdvvhhRNzIomUmsbr20YVw3rwCfVxpM
+Ziw9JW2A38Hd8DIMC8As1qo=
+=IyHD
+-----END PGP SIGNATURE-----
+
+--Izn7cH1Com+I3R9J--
