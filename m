@@ -1,75 +1,130 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations
- when not needed
-Date: Mon, 05 Nov 2007 21:21:03 +0100
-Message-ID: <472F7B2F.4050608@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site>	<Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/2] Enhance --early-output format
+Date: Mon, 05 Nov 2007 12:24:10 -0800
+Message-ID: <7vsl3kphjp.fsf@gitster.siamese.dyndns.org>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710272229430.30120@woody.linux-foundation.org>
+	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 21:21:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Paul Mackerras <paulus@samba.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 21:24:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip8S1-0005wP-PA
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 21:21:38 +0100
+	id 1Ip8Ur-0006m8-FV
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 21:24:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752700AbXKEUVX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 15:21:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752576AbXKEUVX
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 15:21:23 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:40674
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752467AbXKEUVX (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2007 15:21:23 -0500
-Received: from [10.0.1.201] (p57B7D49E.dip.t-dialin.net [87.183.212.158])
-	by neapel230.server4you.de (Postfix) with ESMTP id 9F3E6873BA;
-	Mon,  5 Nov 2007 21:21:20 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org>
+	id S1753551AbXKEUYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 15:24:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753009AbXKEUYT
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 15:24:19 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:33428 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751327AbXKEUYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 15:24:18 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D4E4D2EF;
+	Mon,  5 Nov 2007 15:24:38 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id C3D6F92881;
+	Mon,  5 Nov 2007 15:24:33 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Sun, 4 Nov 2007 12:12:05 -0800 (PST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63547>
 
-Junio C Hamano schrieb:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
->> Unfortunately, we cannot reuse the result of that function, which
->> would be cleaner: there are more users than just git log.  Most
->> notably, git-archive with "$Format:...$" substitution.
-> 
-> That makes sense.
-> 
-> 
->> diff --git a/pretty.c b/pretty.c
->> index 490cede..241e91c 100644
->> --- a/pretty.c
->> +++ b/pretty.c
->> @@ -393,6 +393,7 @@ void format_commit_message(const struct commit *commit,
->>  	int i;
->>  	enum { HEADER, SUBJECT, BODY } state;
->>  	const char *msg = commit->buffer;
->> +	char *active = interp_find_active(format, table, ARRAY_SIZE(table));
->> ...
->> +	if (active[IHASH])
->> +		interp_set_entry(table, IHASH,
->> +				sha1_to_hex(commit->object.sha1));
->> +	if (active[IHASH_ABBREV])
->> +		interp_set_entry(table, IHASH_ABBREV,
->>  			find_unique_abbrev(commit->object.sha1,
->>  				DEFAULT_ABBREV));
-> 
-> Instead of allocating a separate array and freeing at the end,
-> wouldn't it make more sense to have a bitfield that records what
-> is used by the format string inside the array elements?
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-How about (ab)using the value field?  Let interp_find_active() mark
-unneeded entries with NULL, and the rest with some cookie.  All table
-entries with non-NULL values need to be initialized.  interp_set_entry()
-needs to be aware of this cookie, as it mustn't free() it.  The cookie
-could be the address of a static char* in interpolate.c.
+> It wasn't totally trivial, but it doesn't seem to be excessively subtle 
+> either. About half the patch is moving around some code to look at whether 
+> the commit is interesting or not and rewriting the parents, so that it can 
+> be shared with the revision walker.
+
+Very nicely done.
+
+> +	while (list) {
+> +		struct commit *commit = list->item;
+> +		unsigned int flags = commit->object.flags;
+> +
+> +		list = list->next;
+> +		if (flags & UNINTERESTING)
+> +			continue;
+> +		if (rev->prune_fn && rev->dense && !(flags & TREECHANGE)) {
+> +			if (commit->parents && !commit->parents->next)
+> +				continue;
+> +		}
+
+When looking at:
+
+	if (A && B && C) {
+        	if (D && E)
+                	continue;
+	}
+
+an uninitiated might say "Huh?  Why use nested 'if'?", but to
+somebody who knows how revision traversal works, the above split
+is a more logical way to test this condition.  Maybe one liner
+comment is in order?
+
+> +static void show_early_header(struct rev_info *rev, const char *stage, int nr)
+> +{
+> +	if (rev->shown_one) {
+> +		rev->shown_one = 0;
+> +		if (rev->commit_format != CMIT_FMT_ONELINE)
+> +			putchar(rev->diffopt.line_termination);
+> +	}
+> +	printf("Final output: %d %s\n", nr, stage);
+> +}
+
+As you noted, this is more like "Partial output" now.
+How about painting the bikeshed pink by saying:
+
+	Partial output: 20
+        Partial output: 70
+        Final output: 70000
+
+> +	/* Did we already get enough commits for the early output? */
+> +	if (!i)
+> +		return;
+> +
+> +	/*
+> +	 * ..if no, then repeat it twice a second until we
+> +	 * do.
+> +	 *
+> +	 * NOTE! We don't use "it_interval", because if the
+> +	 * reader isn't listening, we want our output to be
+> +	 * throttled by the writing, and not have the timer
+> +	 * trigger every second even if we're blocked on a
+> +	 * reader!
+> +	 */
+
+A comment like this is very much appreciated.
+
+> +	early_output_timer.it_value.tv_sec = 0;
+> +	early_output_timer.it_value.tv_usec = 500000;
+> +	setitimer(ITIMER_REAL, &early_output_timer, NULL);
+>  }
