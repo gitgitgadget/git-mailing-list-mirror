@@ -1,71 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin commands.
-Date: Mon, 5 Nov 2007 23:18:36 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711052317170.4362@racer.site>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com>
- <1194017589-4669-2-git-send-email-krh@redhat.com>
- <1194017589-4669-3-git-send-email-krh@redhat.com>
- <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet>
- <1194289073.13968.16.camel@hinata.boston.redhat.com> <20071105192347.GA29997@atjola.homenet>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [bug in next ?] git-fetch/git-push issue
+Date: Mon, 05 Nov 2007 15:22:17 -0800
+Message-ID: <7vhck0mg5y.fsf@gitster.siamese.dyndns.org>
+References: <20071105175654.GD6205@artemis.corp>
+	<Pine.LNX.4.64.0711051259580.7357@iabervon.org>
+	<20071105210711.GA9176@sigill.intra.peff.net>
+	<Pine.LNX.4.64.0711051620230.7357@iabervon.org>
+	<20071105225540.GA10988@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 06 00:19:48 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Nicolas Pitre <nico@cam.org>, Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 06 00:22:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpBER-0004YA-AX
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:19:47 +0100
+	id 1IpBHH-0005Oo-7p
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 00:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755925AbXKEXTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 18:19:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755920AbXKEXTa
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:19:30 -0500
-Received: from mail.gmx.net ([213.165.64.20]:44672 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755786AbXKEXT3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 18:19:29 -0500
-Received: (qmail invoked by alias); 05 Nov 2007 23:19:27 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp016) with SMTP; 06 Nov 2007 00:19:27 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19iGZx8KhRiCVFQTxdL4x07tNcszGswUJHdqf5l8h
-	4krEqDidvL5h1K
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071105192347.GA29997@atjola.homenet>
-X-Y-GMX-Trusted: 0
+	id S1754832AbXKEXW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 18:22:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754741AbXKEXW2
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 18:22:28 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:38568 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754803AbXKEXW2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 18:22:28 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id B800E2EF;
+	Mon,  5 Nov 2007 18:22:48 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 177DB92880;
+	Mon,  5 Nov 2007 18:22:42 -0500 (EST)
+In-Reply-To: <20071105225540.GA10988@sigill.intra.peff.net> (Jeff King's
+	message of "Mon, 5 Nov 2007 17:55:41 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63585>
 
-Hi,
+Jeff King <peff@peff.net> writes:
 
-On Mon, 5 Nov 2007, Bj?rn Steinbrink wrote:
+> Which I guess is what you were trying to accomplish by removing the
+> peer_ref, though I think that doesn't distinguish between "didn't match
+> a remote ref" and "had an error." Perhaps we just need an error flag in
+> the ref struct?
 
-> On 2007.11.05 13:57:53 -0500, Kristian H?gsberg wrote:
->
-> > The shell script just has
-> > 
-> > case "$all,$interactive,$also,$#" in
-> > *t,*t,*)
-> >         die "Cannot use -a, --interactive or -i at the same time." ;;
-> > 
-> > which doesn't seem to care about the value of $also.  As far as I 
-> > understand git commit, it doesn't make sense to pass any of -a, -i, -o 
-> > or --interactive at the same time so I guess I could join the checks
-> 
-> Note that there are only two commas. The asterisks catch everything and
-> $# won't be "t", so that catches anything with at least two t's.
+I agree that makes the most sense.
 
-So shouldn't it be
+As Steffen has been advocating on another thread, depending on
+your workflow, you do not care about some classes of push errors
+per pushed refs.  The update of the remote and local tracking
+refs should be done in sync (i.e. if the remote wasn't updated,
+never update the corresponding local), but it can depend on the
+nature of the failure if a failure to update a remote ref should
+result in the non-zero exit status from git-push as a whole.
 
-	if (!!all + !!interactive + !!also > 1)
-
-Hmm?
-
-Ciao,
-Dscho
+And to implement that, per-ref error flag would be a good way to
+go, methinks.
