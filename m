@@ -1,60 +1,64 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: gitk graph routing problem
-Date: Mon, 5 Nov 2007 01:53:49 +0100
-Message-ID: <20071105005349.GA5355@steel.home>
-References: <20071104104618.GA3078@steel.home> <18222.15870.945694.238217@cargo.ozlabs.ibm.com> <7vzlxtr4bu.fsf@gitster.siamese.dyndns.org>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: [PATCH] fix display overlap between remote and local progress
+Date: Sun, 04 Nov 2007 20:07:29 -0500 (EST)
+Message-ID: <alpine.LFD.0.9999.0711041955400.21255@xanadu.home>
+References: <alpine.LFD.0.9999.0711032328490.21255@xanadu.home>
+ <Pine.LNX.4.64.0711041331520.4362@racer.site>
+ <alpine.LFD.0.9999.0711041610520.21255@xanadu.home>
+ <7v4pg1sj1r.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 01:54:17 2007
+X-From: git-owner@vger.kernel.org Mon Nov 05 02:07:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoqEK-0003ma-St
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 01:54:17 +0100
+	id 1IoqRN-0006P9-Tv
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 02:07:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168AbXKEAx7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 19:53:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752168AbXKEAx6
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 19:53:58 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:32486 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893AbXKEAx6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 19:53:58 -0500
-Received: from tigra.home (Faa53.f.strato-dslnet.de [195.4.170.83])
-	by post.webmailer.de (klopstock mo42) (RZmta 14.0)
-	with ESMTP id J03989jA4LxCta ; Mon, 5 Nov 2007 01:53:52 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 4509B277AE;
-	Mon,  5 Nov 2007 01:53:50 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id B843F56D22; Mon,  5 Nov 2007 01:53:49 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vzlxtr4bu.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtoAaXg==
-X-RZG-CLASS-ID: mo07
+	id S1754192AbXKEBHb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 4 Nov 2007 20:07:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753754AbXKEBHb
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 20:07:31 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:46057 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753168AbXKEBHa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 20:07:30 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JR0007AADSHUF10@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 04 Nov 2007 20:07:30 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v4pg1sj1r.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63465>
 
-Junio C Hamano, Mon, Nov 05, 2007 00:14:29 +0100:
-> Paul Mackerras <paulus@samba.org> writes:
-> 
-> > Alex Riesen writes:
-> >
-> >> To reproduce, try running in git repo:
-> >> 
-> >>     gitk 02f630448e5d48e..06ea6ba9cf46ef5
-> >
-> > I can't reproduce it here, as my clone of the git repo doesn't have
-> > 02f630448e5d48e in it, even after updating...
-> 
-> Heh, me neither ;-).
+On Sun, 4 Nov 2007, Junio C Hamano wrote:
 
-Stupid me. Will follow up with a link to the archived repo in private mail.
+> The compiler at k.org complains of "\e" being non ISO-C, though.
+
+Bummer.
+
+...
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/sideband.c b/sideband.c
+index 58edea6..756bbc2 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -13,7 +13,7 @@
+  */
+ 
+ #define PREFIX "remote:"
+-#define SUFFIX "\e[K"  /* change to "        " if ANSI sequences don't work */
++#define SUFFIX "\033[K"  /* change to "        " if ANSI sequences don't work */
+ 
+ int recv_sideband(const char *me, int in_stream, int out, int err)
+ {
