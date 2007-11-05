@@ -2,289 +2,398 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=0.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=0.5 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no
 	autolearn=unavailable autolearn_force=no version=3.4.0
-Received: (qmail 22603 invoked by uid 111); 5 Nov 2007 12:03:44 -0000
+Received: (qmail 22616 invoked by uid 111); 5 Nov 2007 12:03:48 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 Nov 2007 07:03:41 -0500
+    by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 Nov 2007 07:03:45 -0500
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754703AbXKEMDc (ORCPT <rfc822;peff@peff.net>);
-	Mon, 5 Nov 2007 07:03:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbXKEMDc
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:03:32 -0500
-Received: from pan.madism.org ([88.191.52.104]:52838 "EHLO hermes.madism.org"
+	id S1754307AbXKEMDf (ORCPT <rfc822;peff@peff.net>);
+	Mon, 5 Nov 2007 07:03:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754565AbXKEMDf
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:03:35 -0500
+Received: from pan.madism.org ([88.191.52.104]:52839 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754458AbXKEMD1 (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754593AbXKEMD1 (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 5 Nov 2007 07:03:27 -0500
 Received: from madism.org (unknown [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 9B8B42888B;
+	by hermes.madism.org (Postfix) with ESMTP id 9F9952888C;
 	Mon,  5 Nov 2007 13:03:25 +0100 (CET)
 Received: by madism.org (Postfix, from userid 1000)
-	id 7404186BB; Mon,  5 Nov 2007 13:03:24 +0100 (CET)
+	id 7AB6B8AD4; Mon,  5 Nov 2007 13:03:24 +0100 (CET)
 From:	Pierre Habouzit <madcoder@debian.org>
 To:	gitster@pobox.com
 Cc:	git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH 3/4] Add OPTION_BASEOFFSET/OPTION_SUBARRAY.
-Date:	Mon,  5 Nov 2007 13:03:23 +0100
-Message-Id: <1194264204-3475-4-git-send-email-madcoder@debian.org>
+Subject: [PATCH 4/4] Implement OPTION_SUBARRAY handling.
+Date:	Mon,  5 Nov 2007 13:03:24 +0100
+Message-Id: <1194264204-3475-5-git-send-email-madcoder@debian.org>
 X-Mailer: git-send-email 1.5.3.5.1531.g59008
-In-Reply-To: <1194264204-3475-3-git-send-email-madcoder@debian.org>
+In-Reply-To: <1194264204-3475-4-git-send-email-madcoder@debian.org>
 References: <1194264204-3475-1-git-send-email-madcoder@debian.org>
  <1194264204-3475-2-git-send-email-madcoder@debian.org>
  <1194264204-3475-3-git-send-email-madcoder@debian.org>
+ <1194264204-3475-4-git-send-email-madcoder@debian.org>
 To:	Junio C Hamano <gitster@pobox.com>
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List:	git@vger.kernel.org
 
-Currently make the implementation die() if SUBARRAYs are encountered.
-Refactor the rest of the code to be ready for recursion.
+Basically, an OPTION_SUBARRAY is a pointer to a new `struct option` array.
+This array should start with an OPTION_BASEOFFSET used to relocate ->value
+pointers.
+
+The sizeof() of the struct used for the BASEOFFSET entry is also stored so
+that a subarray can also have global side effects (->values pointers that
+are not in the memory range of the BASE struct are not relocated).
+
+Arbitrary nesting of subarrays is supported, though no checks that there is
+a subarray loop is performed.
 
 Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 ---
- parse-options.c |  114 ++++++++++++++++++++++++++++++++++++++-----------------
- parse-options.h |    6 +++
- 2 files changed, 85 insertions(+), 35 deletions(-)
+ parse-options.c          |   78 +++++++++++++++++++++++++++++++++++++++------
+ parse-options.h          |    5 +++
+ t/t0040-parse-options.sh |   31 +++++++++++++++++-
+ test-parse-options.c     |   25 ++++++++++++++-
+ 4 files changed, 126 insertions(+), 13 deletions(-)
 
 diff --git a/parse-options.c b/parse-options.c
-index d2e32c1..5cea511 100644
+index 5cea511..001d1e5 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -8,6 +8,9 @@ struct optparse_t {
+@@ -4,6 +4,12 @@
+ #define OPT_SHORT 1
+ #define OPT_UNSET 2
+ 
++struct optreloc_t {
++	const char *base;
++	const char *end;
++	intptr_t offs;
++};
++
+ struct optparse_t {
  	const char **argv;
  	int argc;
- 	const char *opt;
+@@ -11,6 +17,8 @@ struct optparse_t {
+ 
+ 	const struct option *abbrev_option, *conflict_option;
+ 	int abbrev_flags, conflict_flags;
 +
-+	const struct option *abbrev_option, *conflict_option;
-+	int abbrev_flags, conflict_flags;
++	struct optreloc_t reloc;
  };
  
  static inline const char *get_arg(struct optparse_t *p)
-@@ -104,23 +107,35 @@ static int get_value(struct optparse_t *p,
- 	}
+@@ -39,10 +47,32 @@ static int opterror(const struct option *opt, const char *reason, int flags)
+ 	return error("option `%s' %s", opt->long_name, reason);
  }
  
--static int parse_short_opt(struct optparse_t *p, const struct option *options)
-+static int parse_short_opt(struct optparse_t *p, const struct option *options,
-+                           int level)
- {
--	for (; options->type != OPTION_END; options++) {
--		if (options->short_name == *p->opt) {
-+	for (;; options++) {
-+		switch (options->type) {
-+		case OPTION_END:
-+			return level > 0 ? -1 : error("unknown switch `%c'", *p->opt);
-+		case OPTION_GROUP:
-+		case OPTION_BASEOFFSET:
-+			continue;
-+		case OPTION_SUBARRAY:
-+			die("unsupported yet");
-+			break;
-+		default:
-+			if (options->short_name != *p->opt)
-+				continue;
- 			p->opt = p->opt[1] ? p->opt + 1 : NULL;
- 			return get_value(p, options, OPT_SHORT);
- 		}
- 	}
--	return error("unknown switch `%c'", *p->opt);
- }
- 
- static int parse_long_opt(struct optparse_t *p, const char *arg,
--                          const struct option *options)
-+                          const struct option *options, int level)
- {
- 	const char *arg_end = strchr(arg, '=');
--	const struct option *abbrev_option = NULL, *conflict_option = NULL;
--	int abbrev_flags = 0, conflict_flags = 0;
-+
-+	if (level == 0)
-+		p->conflict_option = p->abbrev_option = NULL;
- 
- 	if (!arg_end)
- 		arg_end = arg + strlen(arg);
-@@ -129,6 +144,17 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
- 		const char *rest;
- 		int flags = 0;
- 
-+		switch (options->type) {
-+		case OPTION_GROUP:
-+		case OPTION_BASEOFFSET:
-+			continue;
-+		case OPTION_SUBARRAY:
-+			die("unsupported yet");
-+			break;
-+		default:
-+			break;
-+		}
-+
- 		if (!options->long_name)
- 			continue;
- 
-@@ -138,13 +164,16 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
- 
- 		rest = skip_prefix(arg, options->long_name);
- 		if (!rest) {
-+			/* negated and abbreviated very much? */
-+			if (!prefixcmp("no-", arg))
-+				die("--n,--no,--no- are never proper abbreviated options");
- 			/* abbreviated? */
- 			if (!strncmp(options->long_name, arg, arg_end - arg)) {
- is_abbreviated:
--				conflict_option = abbrev_option;
--				conflict_flags = abbrev_flags;
--				abbrev_option = options;
--				abbrev_flags = flags;
-+				p->conflict_option = p->abbrev_option;
-+				p->conflict_flags = p->abbrev_flags;
-+				p->abbrev_option = options;
-+				p->abbrev_flags = flags;
- 				continue;
- 			}
- 			/* negated? */
-@@ -167,16 +196,18 @@ is_abbreviated:
- 		}
- 		return get_value(p, options, flags);
- 	}
--	if (conflict_option)
-+	if (level > 0)
-+		return -1;
-+	if (p->conflict_option)
- 		return error("Ambiguous option: %s (could be --%s%s or --%s%s)",
--			arg, (conflict_flags & OPT_UNSET) ?  "no-" : "",
--			conflict_option->long_name,
--			(abbrev_flags & OPT_UNSET) ?  "no-" : "",
--			abbrev_option->long_name);
--	if (abbrev_option) {
--		if (!(abbrev_flags & OPT_UNSET) && *arg_end)
-+			arg, (p->conflict_flags & OPT_UNSET) ?  "no-" : "",
-+			p->conflict_option->long_name,
-+			(p->abbrev_flags & OPT_UNSET) ?  "no-" : "",
-+			p->abbrev_option->long_name);
-+	if (p->abbrev_option) {
-+		if (!(p->abbrev_flags & OPT_UNSET) && *arg_end)
- 			p->opt = arg_end + 1;
--		return get_value(p, abbrev_option, abbrev_flags);
-+		return get_value(p, p->abbrev_option, p->abbrev_flags);
- 	}
- 	return error("unknown option `%s'", arg);
- }
-@@ -200,7 +231,7 @@ int parse_options(int argc, const char **argv, const struct option *options,
- 			do {
- 				if (*args.opt == 'h')
- 					usage_with_options(usagestr, options);
--				if (parse_short_opt(&args, options) < 0)
-+				if (parse_short_opt(&args, options, 0) < 0)
- 					usage_with_options(usagestr, options);
- 			} while (args.opt);
- 			continue;
-@@ -216,7 +247,7 @@ int parse_options(int argc, const char **argv, const struct option *options,
- 
- 		if (!strcmp(arg + 2, "help"))
- 			usage_with_options(usagestr, options);
--		if (parse_long_opt(&args, arg + 2, options))
-+		if (parse_long_opt(&args, arg + 2, options, 0))
- 			usage_with_options(usagestr, options);
- 	}
- 
-@@ -228,27 +259,27 @@ int parse_options(int argc, const char **argv, const struct option *options,
- #define USAGE_OPTS_WIDTH 24
- #define USAGE_GAP         2
- 
--void usage_with_options(const char * const *usagestr,
--                        const struct option *opts)
-+static void dump_options(const struct option *opts)
- {
--	fprintf(stderr, "usage: %s\n", *usagestr++);
--	while (*usagestr && **usagestr)
--		fprintf(stderr, "   or: %s\n", *usagestr++);
--	while (*usagestr)
--		fprintf(stderr, "    %s\n", *usagestr++);
--
--	if (opts->type != OPTION_GROUP)
--		fputc('\n', stderr);
--
--	for (; opts->type != OPTION_END; opts++) {
-+	for (;; opts++) {
- 		size_t pos;
- 		int pad;
- 
--		if (opts->type == OPTION_GROUP) {
-+		switch (opts->type) {
-+		case OPTION_END:
-+			return;
-+		case OPTION_GROUP:
- 			fputc('\n', stderr);
- 			if (*opts->help)
- 				fprintf(stderr, "%s\n", opts->help);
- 			continue;
-+		case OPTION_BASEOFFSET:
-+			continue;
-+		case OPTION_SUBARRAY:
-+			dump_options((struct option *)opts->defval);
-+			continue;
-+		default:
-+			break;
- 		}
- 
- 		pos = fprintf(stderr, "    ");
-@@ -295,8 +326,21 @@ void usage_with_options(const char * const *usagestr,
- 		}
- 		fprintf(stderr, "%*s%s\n", pad + USAGE_GAP, "", opts->help);
- 	}
--	fputc('\n', stderr);
-+}
- 
-+void usage_with_options(const char * const *usagestr,
-+                        const struct option *opts)
++static void *reloc_value(struct optparse_t *p, const struct option *opt)
 +{
-+	fprintf(stderr, "usage: %s\n", *usagestr++);
-+	while (*usagestr && **usagestr)
-+		fprintf(stderr, "   or: %s\n", *usagestr++);
-+	while (*usagestr)
-+		fprintf(stderr, "    %s\n", *usagestr++);
++	char *value = opt->value;
++	if (value >= p->reloc.base && value < p->reloc.end)
++		return value + p->reloc.offs;
++	return value;
++}
 +
-+	if (opts->type != OPTION_GROUP)
-+		fputc('\n', stderr);
-+	dump_options(opts);
-+	fputc('\n', stderr);
- 	exit(129);
++static const struct option *reloc_option(struct optparse_t *p,
++                                         const struct option *opt,
++                                         struct option *buf)
++{
++	char *value = opt->value;
++	if (value >= p->reloc.base && value < p->reloc.end) {
++		*buf = *opt;
++		buf->value = value + p->reloc.offs;
++		return buf;
++	}
++	return opt;
++}
++
+ static int get_value(struct optparse_t *p,
+                      const struct option *opt, int flags)
+ {
+ 	const char *s, *arg;
++	struct option tmp;
+ 	arg = p->opt ? p->opt : (p->argc > 1 ? p->argv[1] : NULL);
+ 
+ 	if (p->opt && (flags & OPT_UNSET))
+@@ -53,26 +83,27 @@ static int get_value(struct optparse_t *p,
+ 		if (!(flags & OPT_SHORT) && p->opt)
+ 			return opterror(opt, "takes no value", flags);
+ 		if (flags & OPT_UNSET)
+-			*(int *)opt->value = 0;
++			*(int *)reloc_value(p, opt) = 0;
+ 		else
+-			(*(int *)opt->value)++;
++			(*(int *)reloc_value(p, opt))++;
+ 		return 0;
+ 
+ 	case OPTION_STRING:
+ 		if (flags & OPT_UNSET) {
+-			*(const char **)opt->value = (const char *)NULL;
++			*(const char **)reloc_value(p, opt) = (const char *)NULL;
+ 			return 0;
+ 		}
+ 		if (opt->flags & PARSE_OPT_OPTARG && (!arg || *arg == '-')) {
+-			*(const char **)opt->value = (const char *)opt->defval;
++			*(const char **)reloc_value(p, opt) = (const char *)opt->defval;
+ 			return 0;
+ 		}
+ 		if (!arg)
+ 			return opterror(opt, "requires a value", flags);
+-		*(const char **)opt->value = get_arg(p);
++		*(const char **)reloc_value(p, opt) = get_arg(p);
+ 		return 0;
+ 
+ 	case OPTION_CALLBACK:
++		opt = reloc_option(p, opt, &tmp);
+ 		if (flags & OPT_UNSET)
+ 			return (*opt->callback)(opt, NULL, 1);
+ 		if (opt->flags & PARSE_OPT_NOARG) {
+@@ -88,16 +119,16 @@ static int get_value(struct optparse_t *p,
+ 
+ 	case OPTION_INTEGER:
+ 		if (flags & OPT_UNSET) {
+-			*(int *)opt->value = 0;
++			*(int *)reloc_value(p, opt) = 0;
+ 			return 0;
+ 		}
+ 		if (opt->flags & PARSE_OPT_OPTARG && (!arg || !isdigit(*arg))) {
+-			*(int *)opt->value = opt->defval;
++			*(int *)reloc_value(p, opt) = opt->defval;
+ 			return 0;
+ 		}
+ 		if (!arg)
+ 			return opterror(opt, "requires a value", flags);
+-		*(int *)opt->value = strtol(get_arg(p), (char **)&s, 10);
++		*(int *)reloc_value(p, opt) = strtol(get_arg(p), (char **)&s, 10);
+ 		if (*s)
+ 			return opterror(opt, "expects a numerical value", flags);
+ 		return 0;
+@@ -107,9 +138,24 @@ static int get_value(struct optparse_t *p,
+ 	}
  }
  
++static const struct option *prepare_recursion(struct optparse_t *p,
++                                              const struct option *opt)
++{
++	const struct option *subarray = (const struct option *)opt->defval;
++	if (subarray->type != OPTION_BASEOFFSET)
++		die("subarray does not begins with a relocation stanza");
++	p->reloc.base = subarray->value;
++	p->reloc.end  = p->reloc.base + subarray->defval;
++	p->reloc.offs = (const char *)opt->value - p->reloc.base;
++	return ++subarray;
++}
++
+ static int parse_short_opt(struct optparse_t *p, const struct option *options,
+                            int level)
+ {
++	struct optreloc_t reloc;
++	int res;
++
+ 	for (;; options++) {
+ 		switch (options->type) {
+ 		case OPTION_END:
+@@ -118,7 +164,11 @@ static int parse_short_opt(struct optparse_t *p, const struct option *options,
+ 		case OPTION_BASEOFFSET:
+ 			continue;
+ 		case OPTION_SUBARRAY:
+-			die("unsupported yet");
++			reloc = p->reloc;
++			res = parse_short_opt(p, prepare_recursion(p, options), level + 1);
++			p->reloc = reloc;
++			if (!res)
++				return 0;
+ 			break;
+ 		default:
+ 			if (options->short_name != *p->opt)
+@@ -141,15 +191,21 @@ static int parse_long_opt(struct optparse_t *p, const char *arg,
+ 		arg_end = arg + strlen(arg);
+ 
+ 	for (; options->type != OPTION_END; options++) {
++		struct optreloc_t reloc;
+ 		const char *rest;
+-		int flags = 0;
++		int res, flags = 0;
+ 
+ 		switch (options->type) {
+ 		case OPTION_GROUP:
+ 		case OPTION_BASEOFFSET:
+ 			continue;
+ 		case OPTION_SUBARRAY:
+-			die("unsupported yet");
++			reloc = p->reloc;
++			res = parse_long_opt(p, arg, prepare_recursion(p, options),
++			                     level + 1);
++			p->reloc = reloc;
++			if (!res)
++				return 0;
+ 			break;
+ 		default:
+ 			break;
 diff --git a/parse-options.h b/parse-options.h
-index 65bce6e..6668924 100644
+index 6668924..4f5a241 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -4,6 +4,8 @@
- enum parse_opt_type {
- 	OPTION_END,
- 	OPTION_GROUP,
-+	OPTION_BASEOFFSET,
-+	OPTION_SUBARRAY,
- 	OPTION_BOOLEAN,
- 	OPTION_STRING,
- 	OPTION_INTEGER,
-@@ -35,6 +37,7 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
-  *
-  * `value`::
-  *   stores pointers to the values to be filled.
-+ *   BASEOFFSET use it to store the offset wrt which the struct was filled.
-  *
-  * `argh`::
-  *   token to explain the kind of argument this option wants. Keep it
-@@ -56,6 +59,9 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
-  * `defval`::
-  *   default value to fill (*->value) with for PARSE_OPT_OPTARG.
-  *   CALLBACKS can use it like they want.
-+ *   SUBARRAYs use it to store the subarray address.
-+ *   BASEOFFSET use it to store the sizeof the struct used to fill the array.
-+ *              Any `value` that does not points into it is not relocated.
-  */
- struct option {
- 	enum parse_opt_type type;
+@@ -84,6 +84,11 @@ struct option {
+ #define OPT_CALLBACK(s, l, v, a, h, f) \
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), 0, (f) }
+ 
++#define OPT_BASEOFFS(v)                 \
++	{ OPTION_BASEOFFSET, 0, NULL, (v), NULL, NULL, 0, NULL, sizeof(*(v)) }
++#define OPT_SUBARRAY(v, sub)            \
++	{ OPTION_SUBARRAY, 0, NULL, (v), NULL, NULL, 0, NULL, (intptr_t)sub }
++
+ /* parse_options() will filter out the processed options and leave the
+  * non-option argments in argv[].
+  * Returns the number of arguments left in argv[].
+diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
+index ee758e5..c7a754e 100755
+--- a/t/t0040-parse-options.sh
++++ b/t/t0040-parse-options.sh
+@@ -20,6 +20,10 @@ string options
+     --string2 <str>       get another string
+     --st <st>             get another string (pervert ordering)
+ 
++test subarray
++    --incr-reloc          increment a relocated integer
++    --incr-fixed          increment a fixed integer
++
+ EOF
+ 
+ test_expect_success 'test help' '
+@@ -32,6 +36,8 @@ cat > expect << EOF
+ boolean: 2
+ integer: 1729
+ string: 123
++diverted i: 0
++fixed i: 0
+ EOF
+ 
+ test_expect_success 'short options' '
+@@ -43,6 +49,8 @@ cat > expect << EOF
+ boolean: 2
+ integer: 1729
+ string: 321
++diverted i: 0
++fixed i: 0
+ EOF
+ 
+ test_expect_success 'long options' '
+@@ -56,6 +64,8 @@ cat > expect << EOF
+ boolean: 1
+ integer: 13
+ string: 123
++diverted i: 0
++fixed i: 0
+ arg 00: a1
+ arg 01: b1
+ arg 02: --boolean
+@@ -72,6 +82,8 @@ cat > expect << EOF
+ boolean: 0
+ integer: 2
+ string: (not set)
++diverted i: 0
++fixed i: 0
+ EOF
+ 
+ test_expect_success 'unambiguously abbreviated option' '
+@@ -93,11 +105,28 @@ test_expect_failure 'ambiguously abbreviated option' '
+ 
+ cat > expect << EOF
+ boolean: 0
++integer: 0
++string: (not set)
++diverted i: 1
++fixed i: 2
++EOF
++
++test_expect_success 'subarrays and partial relocation of options' '
++	test-parse-options --incr-reloc --incr-fixed --incr-fixed > output 2> output.err &&
++	test ! -s output.err &&
++	git diff expect output
++'
++
++test_done
++cat > expect << EOF
++boolean: 0
+ integer: 2
+ string: 123
++diverted i: 0
++fixed i: 0
+ EOF
+ 
+-test_expect_failure 'non ambiguous option (after two options it abbreviates)' '
++test_expect_failure 'non ambiguous option (after two options it abbreviates, across subarray)' '
+ 	test-parse-options --st 123 &&
+ 	test ! -s output.err &&
+ 	git diff expect output
+diff --git a/test-parse-options.c b/test-parse-options.c
+index 4d3e2ec..5f740da 100644
+--- a/test-parse-options.c
++++ b/test-parse-options.c
+@@ -1,16 +1,34 @@
+ #include "cache.h"
+ #include "parse-options.h"
+ 
++struct reloc_me_please {
++	int integer;
++};
++
+ static int boolean = 0;
+ static int integer = 0;
+ static char *string = NULL;
+ 
++static int reloc_integer = 0;
++static int fixed_integer = 0;
++
++static const struct option subopts[] = {
++	OPT_BASEOFFS(&reloc_integer),
++	OPT_STRING(0, "st", &string, "st", "get another string (pervert ordering)"),
++	OPT_GROUP("test subarray"),
++	OPT_BOOLEAN(0, "incr-reloc", &reloc_integer, "increment a relocated integer"),
++	OPT_BOOLEAN(0, "incr-fixed", &fixed_integer, "increment a fixed integer"),
++	OPT_END(),
++};
++
+ int main(int argc, const char **argv)
+ {
+ 	const char *usage[] = {
+ 		"test-parse-options <options>",
+ 		NULL
+ 	};
++	int diverted_integer = 0;
++
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('b', "boolean", &boolean, "get a boolean"),
+ 		OPT_INTEGER('i', "integer", &integer, "get a integer"),
+@@ -18,7 +36,7 @@ int main(int argc, const char **argv)
+ 		OPT_GROUP("string options"),
+ 		OPT_STRING('s', "string", &string, "string", "get a string"),
+ 		OPT_STRING(0, "string2", &string, "str", "get another string"),
+-		OPT_STRING(0, "st", &string, "st", "get another string (pervert ordering)"),
++		OPT_SUBARRAY(&diverted_integer, subopts),
+ 		OPT_END(),
+ 	};
+ 	int i;
+@@ -28,9 +46,14 @@ int main(int argc, const char **argv)
+ 	printf("boolean: %d\n", boolean);
+ 	printf("integer: %d\n", integer);
+ 	printf("string: %s\n", string ? string : "(not set)");
++	printf("diverted i: %d\n", diverted_integer);
++	printf("fixed i: %d\n", fixed_integer);
+ 
+ 	for (i = 0; i < argc; i++)
+ 		printf("arg %02d: %s\n", i, argv[i]);
+ 
++	if (reloc_integer)
++		die("reloc_integer should not ever change");
++
+ 	return 0;
+ }
 -- 
 1.5.3.5.1531.g59008
 
