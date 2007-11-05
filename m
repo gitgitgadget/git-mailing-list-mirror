@@ -1,188 +1,88 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: [PATCH] Add more tests for git-clean
-Date: Sun,  4 Nov 2007 22:28:12 -0600
-Message-ID: <11942368921792-git-send-email-shawn.bohrer@gmail.com>
-Cc: madcoder@debian.org, git@vger.kernel.org,
-	Shawn Bohrer <shawn.bohrer@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Nov 05 05:28:16 2007
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] more terse push output
+Date: Mon, 5 Nov 2007 00:05:17 -0500
+Message-ID: <20071105050517.GA6244@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 06:05:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IotZK-0005DU-Qz
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 05:28:11 +0100
+	id 1Iou9e-0001WX-9a
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 06:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753385AbXKEE14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 4 Nov 2007 23:27:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753196AbXKEE1z
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 23:27:55 -0500
-Received: from an-out-0708.google.com ([209.85.132.241]:9958 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752861AbXKEE1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 23:27:54 -0500
-Received: by an-out-0708.google.com with SMTP id b36so170495ana
-        for <git@vger.kernel.org>; Sun, 04 Nov 2007 20:27:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=7ZuGcdoTCThyOAtjiPTu8crYfnneLDT4dXCeO6u+zTk=;
-        b=sZ5I9xHXReubZXkjCCUl524hCTb19hgl7YZ+9T7Uqz3c2HrY1qTzr8F0S9LBraBuH3gPZc4FEc4yNqff4exOPpnzjjOelWYHssSpr6sRuLjFUEiqke2gNH6kwNUsHeBB1U1IwEk57lk9ph89hDvS8Ls5fXxs7pYJhKXFQ0grws0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KEnUQRQ0oxo4E3/bnl/wTpyrilGlrtBsUS4xMpbCp7Ra30hf4GyyMASB3TnMfPd9Hbo7dcOp/C1nIs8mRM3uXYVJnsp+uQtva2dV6ejUUMS5LmPCZlokAkcoIFtT3Lbpm+8Y3h5/W59j0+TkxnmegWJzib9HNFLTMLyJhfefSGE=
-Received: by 10.100.201.16 with SMTP id y16mr5581713anf.1194236873945;
-        Sun, 04 Nov 2007 20:27:53 -0800 (PST)
-Received: from mediacenter ( [70.112.149.232])
-        by mx.google.com with ESMTPS id q30sm4273902wrq.2007.11.04.20.27.51
-        (version=SSLv3 cipher=OTHER);
-        Sun, 04 Nov 2007 20:27:52 -0800 (PST)
-Received: by mediacenter (sSMTP sendmail emulation); Sun,  4 Nov 2007 22:28:12 -0600
-X-Mailer: git-send-email 1.5.3.GIT
-In-Reply-To: 7vr6j5r1ec.fsf@gitster.siamese.dyndns.org
-References: 7vr6j5r1ec.fsf@gitster.siamese.dyndns.org
+	id S1750887AbXKEFFW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 00:05:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750877AbXKEFFV
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 00:05:21 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1552 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750786AbXKEFFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 00:05:21 -0500
+Received: (qmail 21051 invoked by uid 111); 5 Nov 2007 05:05:19 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 Nov 2007 00:05:19 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Nov 2007 00:05:17 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63483>
 
-Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
----
- t/t7300-clean.sh |  105 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 105 insertions(+), 0 deletions(-)
+Here are some patches to match push output to the new fetch output. The
+entire output of "git-push" for my test repo now looks like this:
 
-On Sun, Nov 04, 2007 at 04:17:47PM -0800, Junio C Hamano wrote:
->       ...
->       ( cd src && git-clean ) &&
->       ...
->
-> would be the best way to write this.
+To file:///tmp/parent
+ + f3325dc...3b91d1c hasforce -> mirror/hasforce (forced update)
+   f3325dc..bb022dc  master -> mirror/master
+ ! [rejected]        needsforce -> mirror/needsforce (non-fast forward)
+ * [new branch]      newbranch -> mirror/newbranch
+ * [new tag]         v1.0 -> v1.0
+Counting objects: 5, done.
+Writing objects: 100% (3/3), done.
+Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
 
-Agreed here is an updated patch that does this.
+(where I'm mirroring the heads in refs/heads/mirror/* to show off the name
+mapping).
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index 8697213..25d3102 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -39,6 +39,93 @@ test_expect_success 'git-clean' '
- 
- '
- 
-+test_expect_success 'git-clean src/' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-+	git-clean src/ &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f src/part3.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git-clean src/ src/' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-+	git-clean src/ src/ &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f src/part3.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git-clean with prefix' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-+	(cd src/ && git-clean) &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f src/part3.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+test_expect_success 'git-clean -d with prefix and path' '
-+
-+	mkdir -p build docs src/feature &&
-+	touch a.out src/part3.c src/feature/file.c docs/manual.txt obj.o build/lib.so &&
-+	(cd src/ && git-clean -d feature/) &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test -f src/part3.c &&
-+	test ! -f src/feature/file.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
-+test_expect_success 'git-clean symbolic link' '
-+
-+	mkdir -p build docs &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
-+	ln -s docs/manual.txt src/part4.c
-+	git-clean &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test ! -f a.out &&
-+	test ! -f src/part3.c &&
-+	test ! -f src/part4.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
- test_expect_success 'git-clean -n' '
- 
- 	mkdir -p build docs &&
-@@ -73,6 +160,24 @@ test_expect_success 'git-clean -d' '
- 
- '
- 
-+test_expect_success 'git-clean -d src/ examples/' '
-+
-+	mkdir -p build docs examples &&
-+	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so examples/1.c &&
-+	git-clean -d src/ examples/ &&
-+	test -f Makefile &&
-+	test -f README &&
-+	test -f src/part1.c &&
-+	test -f src/part2.c &&
-+	test -f a.out &&
-+	test ! -f src/part3.c &&
-+	test ! -f examples/1.c &&
-+	test -f docs/manual.txt &&
-+	test -f obj.o &&
-+	test -f build/lib.so
-+
-+'
-+
- test_expect_success 'git-clean -x' '
- 
- 	mkdir -p build docs &&
--- 
-1.5.3.GIT
+The interesting part is in the first patch; the other two are just
+removing clutter on stderr. The patches are based on 'next' to follow
+Daniel's send-pack work. I'm happy to hold on to them and rebase once
+things settle down in this area.
+
+A few caveats:
+
+  - the output is generated by send-pack, so it's actually "here's what
+    I'm about to do" rather than "here's what has happened or is
+    happening." receive-pack could generate more accurate results
+    (including marking rejections based on hooks), but it has no
+    knowledge of the name mapping (so it can't say "foo -> other/foo").
+    Right now receive-pack generates 'error: blah blah blah' as it
+    always has.
+
+  - the name mapping is perhaps superfluous here, since most of the time
+    people are just pushing using the same branch name. But it matches
+    the new fetch output, and if you do use a refspec, it's a lot more
+    clear.
+
+  - this only covers send-pack, since that is where we do the ref
+    matching. Presumably it would be possible to cover pushing over http
+    and rsync, but it would have to be totally separate code.
+
+  - no code is shared with the git-fetch implementation (they just
+    happen to use the same format). The code is short enough that I
+    think it would just end up more confusing to try to factor out the
+    commonality.
+
+  - the 'ref is not up-to-date, maybe you need to push' message has gone
+    away in favor of the terse '[rejected] ... (non-fast forward)'. I
+    know there was some discussion recently of enhancing that message.
+    Is this perhaps too terse?
+
+-Peff
