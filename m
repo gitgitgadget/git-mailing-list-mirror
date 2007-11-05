@@ -1,60 +1,51 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit PATCH] Cogito is deprecated, so don't point to it
-Date: Mon, 5 Nov 2007 13:00:14 +0100
-Message-ID: <20071105120014.GA17406@diana.vm.bytemark.co.uk>
-References: <20071105030608.6033.35208.stgit@yoghurt> <vpqejf510ci.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org,
-	David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 05 13:01:02 2007
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: proposal for an OPTION_SUBARRAY (recursive parser)
+Date: Mon,  5 Nov 2007 13:03:20 +0100
+Message-ID: <1194264204-3475-1-git-send-email-madcoder@debian.org>
+Cc: git@vger.kernel.org
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 05 13:03:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip0dV-0001OJ-7M
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:00:57 +0100
+	id 1Ip0gB-0002EE-Js
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756656AbXKEMAj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 07:00:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756659AbXKEMAj
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:00:39 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:2493 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756656AbXKEMAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 07:00:38 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Ip0co-0004Z4-00; Mon, 05 Nov 2007 12:00:14 +0000
-Content-Disposition: inline
-In-Reply-To: <vpqejf510ci.fsf@bauges.imag.fr>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+	id S1754661AbXKEMD1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 07:03:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754643AbXKEMD1
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:03:27 -0500
+Received: from pan.madism.org ([88.191.52.104]:52831 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752881AbXKEMD0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 07:03:26 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 4E5CF28874;
+	Mon,  5 Nov 2007 13:03:25 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 61B787D21; Mon,  5 Nov 2007 13:03:24 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.5.1531.g59008
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63500>
 
-On 2007-11-05 10:57:17 +0100, Matthieu Moy wrote:
+While working on OPTION_SUBARRAY I noticed a quite bad bug in how
+abbrevations are dealt with, here is the fix, should be applied to next:
+  [PATCH 1/4] parse-options: abbreviation engine fix.
 
-> Karl Hasselstr=F6m <kha@treskal.com> writes:
->
-> > -directly). For standard SCM operations, either use plain GIT comma=
-nds
-> > -or the Cogito tool but it is not recommended to mix them with the
-> > -StGIT commands.
-> > +directly). For standard SCM operations, use plain GIT commands.
->
-> Doesn't the "but it is not recommended to mix them with the StGIT
-> commands." part still hold?
+Here is a better documentation of the struct option, only touch
+comments, safe for next:
+  [PATCH 2/4] Some better parse-options documentation.
 
-I'm not sure it ever held. Except possibly during merge resolution,
-but that mismatch is going away with the patch series by David K=E5geda=
-l
-that's sitting in kha/experimental (which changes StGit to use exactly
-the same conflict representation as git).
+Here is a 2 patch series that implement recursion and option relocation
+of struct options when nested:
+  [PATCH 3/4] Add OPTION_BASEOFFSET/OPTION_SUBARRAY.
+  [PATCH 4/4] Implement OPTION_SUBARRAY handling.
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+Those two patch have nor real reason to go anywhere else than pu yet, I
+post them for review and comments, and will probably base diff/log
+migration on those soon.
