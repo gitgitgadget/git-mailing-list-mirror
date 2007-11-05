@@ -1,128 +1,73 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: [PATCH] git-mailsplit: with maildirs try to process new/ if cur/ is empty
-Date: Mon, 5 Nov 2007 12:49:20 +0000
-Message-ID: <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org>
-References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org> <20071026160118.GA5076@ferdyx.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: "Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 13:49:19 2007
+From: "Michael J. Cohen" <michaeljosephcohen@mac.com>
+Subject: [PATCH] Add support for Apple Mail's Maildir format to builtin-mailsplit.
+Date: Mon, 5 Nov 2007 07:57:15 -0500
+Message-ID: <B702E75B-6002-440E-91B5-0E52E16BCCF0@mac.com>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 13:57:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip1OI-0006BG-8F
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:49:18 +0100
+	id 1Ip1WH-0008Il-JL
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 13:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754854AbXKEMtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 07:49:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754847AbXKEMtC
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:49:02 -0500
-Received: from a.ns.smarden.org ([212.42.242.37]:59647 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754791AbXKEMtB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 07:49:01 -0500
-Received: (qmail 17727 invoked by uid 1000); 5 Nov 2007 12:49:20 -0000
-Content-Disposition: inline
-In-Reply-To: <20071026160118.GA5076@ferdyx.org>
+	id S1754575AbXKEM5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 07:57:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754184AbXKEM5T
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 07:57:19 -0500
+Received: from smtpoutm.mac.com ([17.148.16.67]:52400 "EHLO smtpoutm.mac.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753889AbXKEM5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 07:57:18 -0500
+Received: from mac.com (asmtp010-s [10.150.69.73])
+	by smtpoutm.mac.com (Xserve/smtpout004/MantshX 4.0) with ESMTP id lA5CvIvJ010729
+	for <git@vger.kernel.org>; Mon, 5 Nov 2007 04:57:18 -0800 (PST)
+Received: from mac-pro.lan (c-71-196-112-35.hsd1.fl.comcast.net [71.196.112.35])
+	(authenticated bits=0)
+	by mac.com (Xserve/asmtp010/MantshX 4.0) with ESMTP id lA5CvFJj016713
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Mon, 5 Nov 2007 04:57:17 -0800 (PST)
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63509>
 
-When saving patches to a maildir with e.g. mutt, the files are put into
-the new/ subdirectory of the maildir, not cur/.  This makes git-am state
-"Nothing to do.".  This patch lets git-mailsplit additional check new/
-after reading cur/.
+  Add support for Apple Mail's Maildir format to builtin-mailsplit.
+  Currently, mailsplit only checks for the directory 'cur' inside of the
+  specified directory, whereas Apple Mail's Maildirs have a Messages  
+directory.
 
-This was reported by Joey Hess through
- http://bugs.debian.org/447396
-
-Signed-off-by: Gerrit Pape <pape@smarden.org>
+Signed-off-by: Michael Cohen <mjc@kernel.org>
 ---
 
-On Fri, Oct 26, 2007 at 06:01:18PM +0200, Fernando J. Pereda wrote:
-> By that reasoning, you should make it parse both cur/ and new/.
-Okay.
+Another patch will follow to allow builtin-mailinfo to parse Apple  
+Mail's extra header and footers.
 
- builtin-mailsplit.c |   36 ++++++++++++++++++++----------------
- 1 files changed, 20 insertions(+), 16 deletions(-)
+  builtin-mailsplit.c |    7 +++++--
+  1 files changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/builtin-mailsplit.c b/builtin-mailsplit.c
-index 74b0470..79e8ee0 100644
+index 74b0470..6256351 100644
 --- a/builtin-mailsplit.c
 +++ b/builtin-mailsplit.c
-@@ -101,19 +101,26 @@ static int populate_maildir_list(struct path_list *list, const char *path)
- {
- 	DIR *dir;
- 	struct dirent *dent;
-+	char name[PATH_MAX];
-+	char *sub[] = { "cur", "new" };
-+	int i;
- 
--	if ((dir = opendir(path)) == NULL) {
--		error("cannot opendir %s (%s)", path, strerror(errno));
--		return -1;
--	}
-+	for (i = 0; i < 2; ++i) {
-+		snprintf(name, sizeof(name), "%s/%s", path, sub[i]);
-+		if ((dir = opendir(name)) == NULL) {
-+			error("cannot opendir %s (%s)", name, strerror(errno));
-+			return -1;
-+		}
- 
--	while ((dent = readdir(dir)) != NULL) {
--		if (dent->d_name[0] == '.')
--			continue;
--		path_list_insert(dent->d_name, list);
--	}
-+		while ((dent = readdir(dir)) != NULL) {
-+			if (dent->d_name[0] == '.')
-+				continue;
-+			snprintf(name, sizeof(name), "%s/%s", sub[i], dent->d_name);
-+			path_list_insert(name, list);
-+		}
- 
--	closedir(dir);
-+		closedir(dir);
-+	}
- 
- 	return 0;
- }
-@@ -122,19 +129,17 @@ static int split_maildir(const char *maildir, const char *dir,
- 	int nr_prec, int skip)
- {
- 	char file[PATH_MAX];
--	char curdir[PATH_MAX];
- 	char name[PATH_MAX];
- 	int ret = -1;
- 	int i;
- 	struct path_list list = {NULL, 0, 0, 1};
- 
--	snprintf(curdir, sizeof(curdir), "%s/cur", maildir);
+@@ -129,8 +129,11 @@ static int split_maildir(const char *maildir,  
+const char *dir,
+  	struct path_list list = {NULL, 0, 0, 1};
+
+  	snprintf(curdir, sizeof(curdir), "%s/cur", maildir);
 -	if (populate_maildir_list(&list, curdir) < 0)
-+	if (populate_maildir_list(&list, maildir) < 0)
- 		goto out;
- 
- 	for (i = 0; i < list.nr; i++) {
- 		FILE *f;
--		snprintf(file, sizeof(file), "%s/%s", curdir, list.items[i].path);
-+		snprintf(file, sizeof(file), "%s/%s", maildir, list.items[i].path);
- 		f = fopen(file, "r");
- 		if (!f) {
- 			error("cannot open mail %s (%s)", file, strerror(errno));
-@@ -152,10 +157,9 @@ static int split_maildir(const char *maildir, const char *dir,
- 		fclose(f);
- 	}
- 
--	path_list_clear(&list, 1);
--
- 	ret = skip;
- out:
-+	path_list_clear(&list, 1);
- 	return ret;
- }
- 
+-		goto out;
++	if (populate_maildir_list(&list, curdir) < 0) {
++		snprintf(curdir, sizeof(curdir), "%s/Messages", maildir);
++		if (populate_maildir_list(&list, curdir) < 0)
++			goto out;
++	}
+
+  	for (i = 0; i < list.nr; i++) {
+  		FILE *f;
 -- 
-1.5.3.5
+1.5.3.5.562.g45f4-dirty
