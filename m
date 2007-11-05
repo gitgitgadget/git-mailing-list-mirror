@@ -1,118 +1,75 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: [PATCH 1/2] git-svn: fix dcommit clobbering when committing a
-	series of diffs
-Date: Mon, 5 Nov 2007 15:22:54 +0100
-Message-ID: <20071105142254.GA20277@xp.machine.xx>
-References: <1194261708-32256-1-git-send-email-normalperson@yhbt.net>
+From: Francesco Pretto <ceztkoml@gmail.com>
+Subject: Re: [PATCH] Implement selectable group ownership in git-init
+Date: Mon, 05 Nov 2007 16:09:06 +0100
+Message-ID: <472F3212.4090800@gmail.com>
+References: <472CC676.3000603@gmail.com> <7vabpvx8uu.fsf@gitster.siamese.dyndns.org> <8EF5148D-C1F0-4329-A221-82D0B7E9932C@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Nov 05 15:23:15 2007
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 16:09:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip2rC-0005r0-7e
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 15:23:14 +0100
+	id 1Ip3aH-0003El-TF
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 16:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754854AbXKEOW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 09:22:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754895AbXKEOW7
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 09:22:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:42839 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754365AbXKEOW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 09:22:58 -0500
-Received: (qmail invoked by alias); 05 Nov 2007 14:22:56 -0000
-Received: from p54AAB8C3.dip0.t-ipconnect.de (EHLO localhost) [84.170.184.195]
-  by mail.gmx.net (mp017) with SMTP; 05 Nov 2007 15:22:56 +0100
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX19tPpkIH+htxmH/uIA+Q8xH1MLsDqn4i9ZlmopTrh
-	TXAcu8nROVobeI
-Content-Disposition: inline
-In-Reply-To: <1194261708-32256-1-git-send-email-normalperson@yhbt.net>
-User-Agent: Mutt/1.5.16 (2007-06-11)
-X-Y-GMX-Trusted: 0
+	id S1756937AbXKEPJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 10:09:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756936AbXKEPJO
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 10:09:14 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:50451 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756050AbXKEPJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 10:09:11 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so915331ugc
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 07:09:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=oHtWBTSst0c72S62Iyxghpm9ixNYHpWhzwAlNDVTb2I=;
+        b=NG6Z961fkY+Co31JZYcHkC9CvF6eeHEfOpHqiroAuSVd3Miw2FU/AF8phoVnVbTuonsBKDi+RVy6nh0PMR0QTPmx077kcuDSXiZFnjuH8X2GuO2NTQT3opxjfnvCyR428Hj55gNxYbhq374O7wrQkdY6Xxn6yrej89hy3Xc8/Ks=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=TGipjeuM7mxj2Jdp3bae+CnerxVthKf38bw1uQ/AkvrbbynNNiVYOjTZnTz5SaFxP9ZpU5NJtUHQVZUS5B1f9KMDygjN6FjN5USfgRtzWLO9SmEC1rgUDWTEA0I+Ho7Zdf8CNRGKOLIHNzR9/3Us13BDASS3S3ubvTtFKM+72Wk=
+Received: by 10.66.219.11 with SMTP id r11mr471497ugg.1194275350177;
+        Mon, 05 Nov 2007 07:09:10 -0800 (PST)
+Received: from ?192.168.1.14? ( [87.0.185.143])
+        by mx.google.com with ESMTPS id s8sm5425618uge.2007.11.05.07.09.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 05 Nov 2007 07:09:09 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <8EF5148D-C1F0-4329-A221-82D0B7E9932C@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63521>
 
-On Mon, Nov 05, 2007 at 03:21:47AM -0800, Eric Wong wrote:
-> Our revision number sent to SVN is set to the last revision we
-> committed if we've made any previous commits in a dcommit
-> invocation.
+Wincent Colaiuta ha scritto:
 > 
-> Although our SVN Editor code uses the delta of two (old) trees
-> to generate information to send upstream, it'll still send
-> complete resultant files upstream; even if the tree they're
-> based against is out-of-date.
-> 
-> The combination of sending a file that does not include the
-> latest changes, but set with a revision number of a commit we
-> just made will cause SVN to accept the resultant file even if it
-> was generated against an old tree.
-> 
-> More trouble was caused when fixing this because we were
-> rebasing uncessarily at times.  We used git-diff-tree to check
-> the imported SVN revision against our HEAD, not the last tree we
-> committed to SVN.  The unnecessary rebasing caused merge commits
-> upstream to SVN to fail.
-> 
-> Signed-off-by: Eric Wong <normalperson@yhbt.net>
-> ---
+> using the administration tools designed for managing access, just like
+> every other SCM (and every server, and every piece of software which can
+> be accessed by many on a multi-user system).
 > 
 
-[...]
+I don't agree in general: in SCMs and other multi-user softwares, the access
+control configuration can be safely postponed just because it's in their
+standard usage pattern that the access should be conditioned by a daemon
+to be configured later. It's not the case of git, just because git is very
+tied to *nix permissions.
+But as it is now, it could seems that it's good to put committers in the (for
+example) git group, just because you have a git administrative account
+git:git . This is caused, imo, by the fact that the flow of creating a shared
+repository for a specific work/project group with git-init run by an
+administrative user (as it should be) is something like this:
 
-> diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9106-git-svn-dcommit-clobber-series.sh
-> new file mode 100755
-> index 0000000..4216a88
-> --- /dev/null
-> +++ b/t/t9106-git-svn-dcommit-clobber-series.sh
-> @@ -0,0 +1,56 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2007 Eric Wong
-> +test_description='git-svn dcommit clobber series'
-> +. ./lib-git-svn.sh
-> +
-> +test_expect_success 'initialize repo' "
-> +	mkdir import &&
-> +	cd import &&
-> +	awk 'BEGIN { for (i = 1; i < 64; i++) { print i } }' > file
-> +	svn import -m 'initial' . $svnrepo &&
-> +	cd .. &&
-> +	git svn init $svnrepo &&
-> +	git svn fetch &&
-> +	test -e file
-> +	"
-> +
-> +test_expect_success '(supposedly) non-conflicting change from SVN' "
-> +	test x\"\`sed -n -e 58p < file\`\" = x58 &&
-> +	test x\"\`sed -n -e 61p < file\`\" = x61 &&
-> +	svn co $svnrepo tmp &&
-> +	cd tmp &&
-> +		perl -i -p -e 's/^58\$/5588/' file &&
-> +		perl -i -p -e 's/^61\$/6611/' file &&
-> +		test x\"\`sed -n -e 58p < file\`\" = x5588 &&
-> +		test x\"\`sed -n -e 61p < file\`\" = x6611 &&
-> +		svn commit -m '58 => 5588, 61 => 6611' &&
-> +		cd ..
-> +	"
-> +
-> +test_expect_success 'unrelated some unrelated changes to git' "
+	- Do it wrong;
+	- Fix it immediately.
 
-The first unrelated seems odd here.
-
--Peter
-
-> +	echo hi > life &&
-> +	git update-index --add life &&
-> +	git commit -m hi-life &&
-> +	echo bye >> life &&
-> +	git commit -m bye-life life
-> +	"
-> +
-[...] 
+I don't like the "Do it wrong" part. I'm trying to produce a sane and
+transparent patch to implement the selectable group just in case of repository
+first initialization. Why do I care so much of first time users? Dunno, but
+I think it's important.
