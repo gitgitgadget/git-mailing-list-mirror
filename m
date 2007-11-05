@@ -1,130 +1,204 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [ANNOUNCE] cgit v0.7
-Date: Mon, 5 Nov 2007 11:59:09 +0100
-Message-ID: <8c5c35580711050259p2ec24318r3babf53688b180e6@mail.gmail.com>
-References: <8c5c35580711030408n658eb11fk19d554f0fa3b17@mail.gmail.com>
-	 <1194222569-13948-1-git-send-email-jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 11:59:31 2007
+From: Eric Wong <normalperson@yhbt.net>
+Subject: [PATCH 1/2] git-svn: fix dcommit clobbering when committing a series of diffs
+Date: Mon,  5 Nov 2007 03:21:47 -0800
+Message-ID: <1194261708-32256-1-git-send-email-normalperson@yhbt.net>
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 12:22:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iozg0-0000fp-HQ
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 11:59:28 +0100
+	id 1Ip01v-0006xA-66
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 12:22:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431AbXKEK7N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 05:59:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754309AbXKEK7M
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 05:59:12 -0500
-Received: from nz-out-0506.google.com ([64.233.162.235]:32238 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754141AbXKEK7L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 05:59:11 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so990762nze
-        for <git@vger.kernel.org>; Mon, 05 Nov 2007 02:59:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=EFctBj1ObRbU+BodsqkYFJJPaWDgW/GkvaHLFfMH8iI=;
-        b=lY7Vj15/SzCsF+AIz4tBXAE3PsNoFXeyEYz4acXDmjinkwqhd8IyphhJY1+HMuy7rLOI9GXaAbqXBeeO4aUQ37o/AD541Qk16XVpskJu6A97abVqq/ScVbPVVK51y0nPzjA/fevXArs4Av70gAKT7sRM1M/nFmXSWtWUsAkbU9Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lNWGN7Cuv3oGjSrEWsOEu9Nf5jHIjAbdCgoOhoeIcW1h1q4ZCwipTsXGYRZQc2R5m/dCxrQn+tpXpjil0MK7tbwezry0PBEf5CqVrImx4poRK+lB2Uq/rRGg/BjAqjFla5H0mlzu5c8CrIKP6CucgWUGg9GonG3P8mF1Ahd78P4=
-Received: by 10.114.200.2 with SMTP id x2mr5003728waf.1194260349726;
-        Mon, 05 Nov 2007 02:59:09 -0800 (PST)
-Received: by 10.114.235.4 with HTTP; Mon, 5 Nov 2007 02:59:09 -0800 (PST)
-In-Reply-To: <1194222569-13948-1-git-send-email-jnareb@gmail.com>
-Content-Disposition: inline
+	id S1754226AbXKELVv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 06:21:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754014AbXKELVv
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 06:21:51 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:51090 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753519AbXKELVu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 06:21:50 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id AF3107DC0FE;
+	Mon,  5 Nov 2007 03:21:48 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Mon, 05 Nov 2007 03:21:48 -0800
+X-Mailer: git-send-email 1.5.3.5.566.gc207
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63496>
 
-On Nov 5, 2007 1:29 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Lars Hjemli wrote:
-> > cgit v0.7 (a fast webinterface for git) is now available
->
->  * Very nice cgit logo,
+Our revision number sent to SVN is set to the last revision we
+committed if we've made any previous commits in a dcommit
+invocation.
 
-Thanks!
+Although our SVN Editor code uses the delta of two (old) trees
+to generate information to send upstream, it'll still send
+complete resultant files upstream; even if the tree they're
+based against is out-of-date.
 
-> but no favicon. Perhaps pacman head and G,
->    or pacman head (like in logo) and +/-...
+The combination of sending a file that does not include the
+latest changes, but set with a revision number of a commit we
+just made will cause SVN to accept the resultant file even if it
+was generated against an old tree.
 
-I've never cared much about favicons, but I guess cgit could provide one.
+More trouble was caused when fixing this because we were
+rebasing uncessarily at times.  We used git-diff-tree to check
+the imported SVN revision against our HEAD, not the last tree we
+committed to SVN.  The unnecessary rebasing caused merge commits
+upstream to SVN to fail.
 
->
->  * Providing reference with full sha1 of referenced object for tags
->    list is not IMVHO a good design: what is interesting is type of
->    tag, if it is signed it's first line, and if it is lightweight
->    pointing to tag then perhaps commit subject.
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
 
-Yes, the full sha1 is not very interesting. But I'm not sure what to
-replace it with: the first line of annotated tags is very often
-identical to tag name. Maybe it should just abbreviate the sha1?
+ Junio: please apply this to maint, thanks.
 
->
->  * Nice diffstat in commit view; the diff view is better, although I
->    wouldn't lump from-file / to-file diff header together with git
->    diff header and extended git diff header.
+ git-svn.perl                              |   47 ++++++++++++++++++++++--
+ t/t9106-git-svn-dcommit-clobber-series.sh |   56 +++++++++++++++++++++++++++++
+ 2 files changed, 99 insertions(+), 4 deletions(-)
+ create mode 100755 t/t9106-git-svn-dcommit-clobber-series.sh
 
-I've tried to make the diff look similar to 'git log -p' output, but I
-agree the first line per file is probably overkill.
-
->
->  * I like the sidebar very much, although I'm not sure how it would
->    work for larger projects (more branches, much more tags).
-
-How do you think it works out with http://hjemli.net/git/xorg/xserver/
-? It's got an impressive number of branches and tags ;-)
-
-> Also the
->    search textbox is not very visible; I'd rather it have "groove"
->    view.
-
-Agreed, it's probably useless trying to style input-controls: the
-result is heavily browser/platform dependent.
-
-
->  * I like separate 'mirrors' section, although I think it rather
->    clashes badly with notion of forks (alternates).
-
-Well, it's only a section header, i.e. a parameter in cgitrc
-
-
->  * I'm not sure if it wouln't be beter to provide -n/+m lines changed
->    instead of nn likes changed column.
-
-Maybe. I think it used to be -n/+m, but then I changed it; don't
-remember why...
-
->
->  * Nice submodule support!
-
-Heh, it's a simple hack, but thanks anyway. It probably needs to be
-configurable per repo though.
-
->
-> By the way, Freedesktop provides besides standard gitweb interface
-> also cgit interface at
->   http://cgit.freedesktop.org/
-> Take a look at how such site looks like with large number of projects
-> (perhaps sidebar is noot such a good idea then?), and with large
-> projects.
-
-Actually, the filtered branch/tag lists was done partly because of
-freedesktop.org. I think it has worked out nicely (but
-cgit.freedesktop.org needs to run the latest cgit). Also, the width of
-project descriptions is configurable, so it can take up much less
-space and leave room for the sidebar.
-
-Thanks for the comments, you've made my day!
-
+diff --git a/git-svn.perl b/git-svn.perl
+index 4900f57..62a4a69 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -406,7 +406,8 @@ sub cmd_dcommit {
+ 		     "If these changes depend on each other, re-running ",
+ 		     "without --no-rebase will be required."
+ 	}
+-	foreach my $d (@$linear_refs) {
++	while (1) {
++		my $d = shift @$linear_refs or last;
+ 		unless (defined $last_rev) {
+ 			(undef, $last_rev, undef) = cmt_metadata("$d~1");
+ 			unless (defined $last_rev) {
+@@ -439,14 +440,14 @@ sub cmd_dcommit {
+ 
+ 			# we always want to rebase against the current HEAD,
+ 			# not any head that was passed to us
+-			my @diff = command('diff-tree', 'HEAD',
++			my @diff = command('diff-tree', $d,
+ 			                   $gs->refname, '--');
+ 			my @finish;
+ 			if (@diff) {
+ 				@finish = rebase_cmd();
+-				print STDERR "W: HEAD and ", $gs->refname,
++				print STDERR "W: $d and ", $gs->refname,
+ 				             " differ, using @finish:\n",
+-				             "@diff";
++				             join("\n", @diff), "\n";
+ 			} else {
+ 				print "No changes between current HEAD and ",
+ 				      $gs->refname,
+@@ -455,6 +456,45 @@ sub cmd_dcommit {
+ 				@finish = qw/reset --mixed/;
+ 			}
+ 			command_noisy(@finish, $gs->refname);
++			if (@diff) {
++				@refs = ();
++				my ($url_, $rev_, $uuid_, $gs_) =
++				              working_head_info($head, \@refs);
++				my ($linear_refs_, $parents_) =
++				              linearize_history($gs_, \@refs);
++				if (scalar(@$linear_refs) !=
++				    scalar(@$linear_refs_)) {
++					fatal "# of revisions changed ",
++					  "\nbefore:\n",
++					  join("\n", @$linear_refs),
++					  "\n\nafter:\n",
++					  join("\n", @$linear_refs_), "\n",
++					  'If you are attempting to commit ',
++					  "merges, try running:\n\t",
++					  'git rebase --interactive',
++					  '--preserve-merges ',
++					  $gs->refname,
++					  "\nBefore dcommitting";
++				}
++				if ($url_ ne $url) {
++					fatal "URL mismatch after rebase: ",
++					      "$url_ != $url";
++				}
++				if ($uuid_ ne $uuid) {
++					fatal "uuid mismatch after rebase: ",
++					      "$uuid_ != $uuid";
++				}
++				# remap parents
++				my (%p, @l, $i);
++				for ($i = 0; $i < scalar @$linear_refs; $i++) {
++					my $new = $linear_refs_->[$i] or next;
++					$p{$new} =
++						$parents->{$linear_refs->[$i]};
++					push @l, $new;
++				}
++				$parents = \%p;
++				$linear_refs = \@l;
++			}
+ 			$last_rev = $cmt_rev;
+ 		}
+ 	}
+diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9106-git-svn-dcommit-clobber-series.sh
+new file mode 100755
+index 0000000..4216a88
+--- /dev/null
++++ b/t/t9106-git-svn-dcommit-clobber-series.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 Eric Wong
++test_description='git-svn dcommit clobber series'
++. ./lib-git-svn.sh
++
++test_expect_success 'initialize repo' "
++	mkdir import &&
++	cd import &&
++	awk 'BEGIN { for (i = 1; i < 64; i++) { print i } }' > file
++	svn import -m 'initial' . $svnrepo &&
++	cd .. &&
++	git svn init $svnrepo &&
++	git svn fetch &&
++	test -e file
++	"
++
++test_expect_success '(supposedly) non-conflicting change from SVN' "
++	test x\"\`sed -n -e 58p < file\`\" = x58 &&
++	test x\"\`sed -n -e 61p < file\`\" = x61 &&
++	svn co $svnrepo tmp &&
++	cd tmp &&
++		perl -i -p -e 's/^58\$/5588/' file &&
++		perl -i -p -e 's/^61\$/6611/' file &&
++		test x\"\`sed -n -e 58p < file\`\" = x5588 &&
++		test x\"\`sed -n -e 61p < file\`\" = x6611 &&
++		svn commit -m '58 => 5588, 61 => 6611' &&
++		cd ..
++	"
++
++test_expect_success 'unrelated some unrelated changes to git' "
++	echo hi > life &&
++	git update-index --add life &&
++	git commit -m hi-life &&
++	echo bye >> life &&
++	git commit -m bye-life life
++	"
++
++test_expect_success 'change file but in unrelated area' "
++	test x\"\`sed -n -e 4p < file\`\" = x4 &&
++	test x\"\`sed -n -e 7p < file\`\" = x7 &&
++	perl -i -p -e 's/^4\$/4444/' file &&
++	perl -i -p -e 's/^7\$/7777/' file &&
++	test x\"\`sed -n -e 4p < file\`\" = x4444 &&
++	test x\"\`sed -n -e 7p < file\`\" = x7777 &&
++	git commit -m '4 => 4444, 7 => 7777' file &&
++	git svn dcommit &&
++	svn up tmp &&
++	cd tmp &&
++		test x\"\`sed -n -e 4p < file\`\" = x4444 &&
++		test x\"\`sed -n -e 7p < file\`\" = x7777 &&
++		test x\"\`sed -n -e 58p < file\`\" = x5588 &&
++		test x\"\`sed -n -e 61p < file\`\" = x6611
++	"
++
++test_done
 -- 
-larsh
+1.5.3.5.566.gc207
