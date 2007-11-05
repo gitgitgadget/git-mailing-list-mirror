@@ -1,86 +1,62 @@
-From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-Subject: [PATCH] t7501-commit.sh: Add test case for fixing author in amend commit.
-Date: Sun,  4 Nov 2007 22:42:45 -0500
-Message-ID: <1194234165-9498-1-git-send-email-krh@redhat.com>
+From: Karl =?utf-8?q?Hasselstr=C3=B6m?= <kha@treskal.com>
+Subject: [StGit PATCH] Cogito is deprecated, so don't point to it
+Date: Mon, 05 Nov 2007 04:07:57 +0100
+Message-ID: <20071105030608.6033.35208.stgit@yoghurt>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Nov 05 03:50:44 2007
+Cc: git@vger.kernel.org
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 04:08:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ios2z-0007A5-5q
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 03:50:41 +0100
+	id 1IosKF-0001hZ-Bq
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 04:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480AbXKECuV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 21:50:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752608AbXKECuV
-	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 21:50:21 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:42473 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751005AbXKECuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 4 Nov 2007 21:50:20 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA52o6FK024414;
-	Sun, 4 Nov 2007 21:50:06 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA52o5qE010885;
-	Sun, 4 Nov 2007 21:50:05 -0500
-Received: from localhost.localdomain (sebastian-int.corp.redhat.com [172.16.52.221])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA52o3h2019332;
-	Sun, 4 Nov 2007 21:50:03 -0500
-X-Mailer: git-send-email 1.5.3.5.1527.g6161-dirty
-In-Reply-To: 7vy7dg1kdg.fsf@gitster.siamese.dyndns.org
-References: 7vy7dg1kdg.fsf@gitster.siamese.dyndns.org
+	id S1752947AbXKEDIR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 4 Nov 2007 22:08:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752582AbXKEDIQ
+	(ORCPT <rfc822;git-outgoing>); Sun, 4 Nov 2007 22:08:16 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:4826 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751480AbXKEDIQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 4 Nov 2007 22:08:16 -0500
+Received: from localhost ([127.0.0.1] helo=[127.0.1.1])
+	by diana.vm.bytemark.co.uk with esmtp (Exim 3.36 #1 (Debian))
+	id 1IosJh-0003E2-00; Mon, 05 Nov 2007 03:07:57 +0000
+User-Agent: StGIT/0.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63471>
 
-Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+Signed-off-by: Karl Hasselstr=C3=B6m <kha@treskal.com>
+
 ---
- t/t7501-commit.sh |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index b151b51..7a37c13 100644
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -151,6 +151,7 @@ test_expect_success 'partial commit that involves r=
-emoval (2)' '
- 	diff expected current
+Also available from
+
+  git://repo.or.cz/stgit/kha.git safe
+
+ README |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
+
+
+diff --git a/README b/README
+index 0e648f5..4f20154 100644
+--- a/README
++++ b/README
+@@ -6,9 +6,7 @@ other repositories using standard GIT functionality.
 =20
- '
-+test_tick
+ Note that StGIT is not an SCM interface on top of GIT and it expects a
+ previously initialised GIT repository (unless it is cloned using StGIT
+-directly). For standard SCM operations, either use plain GIT commands
+-or the Cogito tool but it is not recommended to mix them with the
+-StGIT commands.
++directly). For standard SCM operations, use plain GIT commands.
 =20
- test_expect_success 'partial commit that involves removal (3)' '
-=20
-@@ -163,4 +164,19 @@ test_expect_success 'partial commit that involves =
-removal (3)' '
-=20
- '
-=20
-+oldtick=3D$GIT_AUTHOR_DATE
-+test_tick
-+
-+author=3D"The Real Author <someguy@his.email.org>"
-+committer=3D"$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER=
-_DATE"
-+
-+test_expect_success 'amend commit to fix author' '
-+
-+	git reset --hard
-+	git cat-file -p HEAD | sed -e "s/author.*/author $author $oldtick/" -=
-e "s/committer.*/committer $committer/" > expected &&
-+	git commit --amend --author=3D"$author" &&
-+	git cat-file -p HEAD > current &&
-+	diff expected current
-+=09
-+'
- test_done
---=20
-1.5.3.5.1527.g6161-dirty
+ For the latest version see http://www.procode.org/stgit/
+ For a tutorial see http://wiki.procode.org/cgi-bin/wiki.cgi/StGIT_Tuto=
+rial
