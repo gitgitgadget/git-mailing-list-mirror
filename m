@@ -1,108 +1,79 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [bug in next ?] git-fetch/git-push issue
-Date: Mon, 5 Nov 2007 17:55:41 -0500
-Message-ID: <20071105225540.GA10988@sigill.intra.peff.net>
-References: <20071105175654.GD6205@artemis.corp> <Pine.LNX.4.64.0711051259580.7357@iabervon.org> <20071105210711.GA9176@sigill.intra.peff.net> <Pine.LNX.4.64.0711051620230.7357@iabervon.org>
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH] Rearrange git-format-patch synopsis to improve clarity.
+Date: Tue, 6 Nov 2007 09:56:36 +1100
+Message-ID: <ee77f5c20711051456i1bbd0d58j43490c55e0be9664@mail.gmail.com>
+References: <119421522591-git-send-email-dsymonds@gmail.com>
+	 <ee77f5c20711051432w284cf22dx71192c145d25dced@mail.gmail.com>
+	 <472F9DC6.8020607@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	Nicolas Pitre <nico@cam.org>, Git ML <git@vger.kernel.org>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 23:56:00 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Andreas Ericsson" <ae@op5.se>
+X-From: git-owner@vger.kernel.org Mon Nov 05 23:56:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpArP-00062W-RC
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 23:56:00 +0100
+	id 1IpAsF-0006ER-8v
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 23:56:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754521AbXKEWzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 17:55:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754509AbXKEWzp
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 17:55:45 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2976 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754483AbXKEWzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 17:55:44 -0500
-Received: (qmail 25869 invoked by uid 111); 5 Nov 2007 22:55:42 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Mon, 05 Nov 2007 17:55:42 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 05 Nov 2007 17:55:41 -0500
+	id S1752700AbXKEW4i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 17:56:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752045AbXKEW4i
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 17:56:38 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:56536 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750830AbXKEW4h (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 17:56:37 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1659142rvb
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 14:56:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=vxp5koSaJEBs/9/j7NSGCq5E9w/zDyZBmsb+jZ8Vb/M=;
+        b=PSR0YBaBouGQb27gbpElXDRjPVhXa8i3hpbbuUwouyjPUsI9A4Gtl6XfUD5QfVFEx7fzFCFx7Lz71IzHl6xa6UDUd7b8I3378E3wz51yPK2fuHf1XpN7WHIUBFvafAZKppy+tGCkhaqll7tQ8MJJqpJiI6fDrc2x8nW87rlqosY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=i5/sBV8OoZxMIKBs1ZsbaZFK63pyzsS057spz8VInPp5hYWC72k9398xRTzKSOgpgZqRXkyMtRhNj2lSnJQsrFbr1VMwCvpkPRDlnSSOUH6/aw7CSozi6wD6s1u9NgEV2wHX9HHeK203Ivn+GSPkMUcXnczcCvokMcDVgD8fu0M=
+Received: by 10.141.20.7 with SMTP id x7mr2672263rvi.1194303396731;
+        Mon, 05 Nov 2007 14:56:36 -0800 (PST)
+Received: by 10.141.115.4 with HTTP; Mon, 5 Nov 2007 14:56:36 -0800 (PST)
+In-Reply-To: <472F9DC6.8020607@op5.se>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711051620230.7357@iabervon.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63581>
 
-On Mon, Nov 05, 2007 at 04:41:37PM -0500, Daniel Barkalow wrote:
+On 11/6/07, Andreas Ericsson <ae@op5.se> wrote:
+> David Symonds wrote:
+> > On 11/5/07, David Symonds <dsymonds@gmail.com> wrote:
+> >>                     [-s | --signoff] [<common diff options>]
+> >> -                   [--start-number <n>] [--numbered-files]
+> >> +                   [-n | --numbered-files | -N | --no-numbered]
+> >> +                   [--start-number <n>]
+> >
+> > Now that I look at it again, it seems the long options look quite
+> > inconsistent. I think it should be either
+> > --numbered-files/--no-numbered-files or --numbered/--no-numbered. My
+> > preference is with the latter (for brevity), but that breaks
+> > backward-compatibility.
+> >
+> > Would you accept a patch that changed --numbered-files to --numbered,
+> > and kept the former as a synonym?
+> >
+>
+> I thought files were always numbered, but the [PATCH m/n] wasn't. Have I
+> missed something?
+>
+> If your --numbered-files is supposed to affect only file-numbering, I'd
+> suggest *not* using --numbered, as it's ambiguous with "number-subject".
 
-> > Nope, that's not the problem. We _only_ update any tracking refs at all
-> > if ret == 0, and if we fail to push, then we are setting ret to -2.
-> 
-> That's an odd combination of behavior: we update some of the refs, leave 
-> the ones that didn't work alone, report success on the ones that worked, 
-> but then we forget that some things worked?
+You're right. There's both --numbered ([PATCH n/m] stuff) and
+--numbered-files (0001.patch instead of 0001-subject-line.patch). I'll
+revise my patch to clarify this.
 
-I think the current behavior is more odd. We mark some errors, and then
-if there were any possible pushes, we replace the marked errors with the
-status of the actual push, forgetting about the previous errors. Thus
-the behavior where if 'next' needs pushing, then we don't mark any errors
-at all (even though we spewed an error to stderr), but if it doesn't,
-then we return an error.
 
-I don't mind being conservative with updating tracking refs; they really
-are just an optimization to avoid an extra git-fetch. But the most
-sensible behavior would be to mark errors for _each_ ref individually,
-try to push or update tracking branches where appropriate, and then
-return an error status based on all refs (whether they had an error in
-prep time or at push time).
-
-Which I guess is what you were trying to accomplish by removing the
-peer_ref, though I think that doesn't distinguish between "didn't match
-a remote ref" and "had an error." Perhaps we just need an error flag in
-the ref struct?
-
-> If we're going to refuse to update local tracking refs, whose state 
-> doesn't matter much, we should certainly refuse to update the remote refs, 
-> which are probably public and extremely important. If we just pushed and 
-
-I would also be fine with that: if your intended push has _any_
-problems, then abort the push.
-
-> we fetch, we should see exclusively changes that somebody else (including 
-> hooks remotely) did, not anything that we ourselves did.
-
-I don't necessarily agree, just because the notion of "we" and "somebody
-else" is sort of pointless in a distributed system. I consider local
-tracking ref updates to be a "best guess" attempt to optimize and avoid
-a fetch (but one that will always be overwritten by the _actual_
-contents when you do fetch).
-
-> I'd guess -2 is supposed to indicate that there were some errors but some 
-> things may have worked. If pack_objects() or receive_status() fails, we 
-
-In that case, I think the simple fix is:
-
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 947c42b..f773dc8 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -338,7 +338,7 @@ static int do_send_pack(int in, int out, struct remote *remote, int nr_refspec,
- 
- 	packet_flush(out);
- 	if (new_refs && !args.dry_run)
--		ret = pack_objects(out, remote_refs);
-+		ret |= pack_objects(out, remote_refs);
- 	close(out);
- 
- 	if (expect_status_report) {
-
-and then we accept that we don't know _which_ refs shouldn't have their
-tracking branches updated (and we don't update any). But at least we
-don't forget that the error occured.
-
-And the better solution is an error flag (or bitfield) in struct ref.
-
--Peff
+Dave.
