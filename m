@@ -1,74 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/3] parseopt: introduce OPT_RECURSE to specify shared
- options
-Date: Mon, 5 Nov 2007 13:46:20 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711051340490.4362@racer.site>
-References: <1194264204-3475-1-git-send-email-madcoder@debian.org>
- <1194264204-3475-2-git-send-email-madcoder@debian.org>
- <Pine.LNX.4.64.0711051230020.4362@racer.site> <Pine.LNX.4.64.0711051237420.4362@racer.site>
- <Pine.LNX.4.64.0711051315300.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 05 14:47:41 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Implement selectable group ownership in git-init
+Date: Mon, 5 Nov 2007 14:49:17 +0100
+Message-ID: <8EF5148D-C1F0-4329-A221-82D0B7E9932C@wincent.com>
+References: <472CC676.3000603@gmail.com> <7vabpvx8uu.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Francesco Pretto <ceztkoml@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 14:50:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip2Il-0004UH-1l
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 14:47:39 +0100
+	id 1Ip2LW-0005Hw-NQ
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 14:50:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755469AbXKENrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 08:47:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755440AbXKENrM
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 08:47:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:34067 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755149AbXKENrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 08:47:11 -0500
-Received: (qmail invoked by alias); 05 Nov 2007 13:47:09 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp051) with SMTP; 05 Nov 2007 14:47:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/oa1JmIEboJ3k1DtwKC8YS64ve/lNkPQIsyhyYs/
-	6uUFZMPl+RZZ5g
-X-X-Sender: gene099@racer.site
-In-Reply-To: <Pine.LNX.4.64.0711051315300.4362@racer.site>
-X-Y-GMX-Trusted: 0
+	id S1755524AbXKENuP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 08:50:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755428AbXKENuP
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 08:50:15 -0500
+Received: from wincent.com ([72.3.236.74]:44989 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755402AbXKENuO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2007 08:50:14 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA5DnICR006600;
+	Mon, 5 Nov 2007 07:49:19 -0600
+In-Reply-To: <7vabpvx8uu.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63518>
 
-Hi,
+El 3/11/2007, a las 23:27, Junio C Hamano escribi=F3:
 
-On Mon, 5 Nov 2007, Johannes Schindelin wrote:
+> I think what the patch attempts to achieve may be good, but only
+> to reduce a few keystrokes of doing the "chgrp".  Is it really
+> worth it, I have to wonder...
 
-> The diff options should not need to be defined in every user of the
-> diffcore.  This provides the framework:
-> 
-> 	extern struct option *diff_options;
-> 
-> 	struct option options[] = {
-> 		OPT_RECURSE(diff_options),
-> 		...
-> 		OPT_END(),
-> 	};
+I think this proposal adds unnecessary clutter to the codebase for =20
+something that can easily be achieved (and *should*) using chown, =20
+chgrp, or "sudo -u" etc.
 
-After kicking this around a bit more on IRC, we had another idea.  Instead 
-of introducing OPT_RECURSE(), do something like OPT__QUIET(), only this 
-time in diff.h:
+The permissions of your Git installation and your repositories are =20
+completely outside of the domain of Git itself, and should be =20
+controlled using the administration tools designed for managing =20
+access, just like every other SCM (and every server, and every piece =20
+of software which can be accessed by many on a multi-user system).
 
-#define OPT__DIFF(opt) \
-	OPT_BOOLEAN('p', NULL, &opt.format_patch, "show a patch"), \
-	...
-
-Pierre said this feels a bit "80s", so I'd like to hear other people's 
-opinions.
-
-Hmm?
-
-Ciao,
-Dscho
+Cheers,
+Wincent
