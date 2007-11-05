@@ -1,64 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [StGit PATCH] Cogito is deprecated, so don't point to it
-Date: Mon, 05 Nov 2007 10:57:17 +0100
-Message-ID: <vpqejf510ci.fsf@bauges.imag.fr>
-References: <20071105030608.6033.35208.stgit@yoghurt>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t7501-commit.sh: Add test case for fixing author in
+ amend commit.
+Date: Mon, 5 Nov 2007 10:24:58 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711051020330.4362@racer.site>
+References: 7vy7dg1kdg.fsf@gitster.siamese.dyndns.org
+ <1194234165-9498-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
-To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-X-From: git-owner@vger.kernel.org Mon Nov 05 10:58:43 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-336584528-1194258298=:4362"
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Mon Nov 05 11:26:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IoyjA-0001PJ-Jc
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 10:58:41 +0100
+	id 1Ioz9i-0000YD-5c
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 11:26:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753519AbXKEJ6V convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 5 Nov 2007 04:58:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753382AbXKEJ6V
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 04:58:21 -0500
-Received: from imag.imag.fr ([129.88.30.1]:40895 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753333AbXKEJ6U (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 04:58:20 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lA59vcpR016229
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 5 Nov 2007 10:57:38 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Ioyhp-0002n2-F2; Mon, 05 Nov 2007 10:57:17 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Ioyhp-0004oO-CW; Mon, 05 Nov 2007 10:57:17 +0100
-In-Reply-To: <20071105030608.6033.35208.stgit@yoghurt> ("Karl
- =?iso-8859-1?Q?Hasselstr=F6m=22's?= message of "Mon\, 05 Nov 2007
- 04\:07\:57 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 05 Nov 2007 10:57:39 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753803AbXKEKZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 05:25:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753804AbXKEKZu
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 05:25:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51913 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753632AbXKEKZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 05:25:50 -0500
+Received: (qmail invoked by alias); 05 Nov 2007 10:25:47 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp021) with SMTP; 05 Nov 2007 11:25:47 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+0/UlUxi+0+SUNCpdlqtgDL/zAyypETlW/Il05lY
+	agBBe5guUflMFP
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194234165-9498-1-git-send-email-krh@redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63492>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63493>
 
-Karl Hasselstr=F6m <kha@treskal.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> -directly). For standard SCM operations, either use plain GIT command=
-s
-> -or the Cogito tool but it is not recommended to mix them with the
-> -StGIT commands.
-> +directly). For standard SCM operations, use plain GIT commands.
+--8323584-336584528-1194258298=:4362
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-Doesn't the "but it is not recommended to mix them with the StGIT
-commands." part still hold?
+Hi,
 
---=20
-Matthieu
+On Sun, 4 Nov 2007, Kristian Høgsberg wrote:
+
+> +test_tick
+>  
+>  test_expect_success 'partial commit that involves removal (3)' '
+
+We usually put the test_tick into the test case.  IOW
+
+	test_expect_success 'message' '
+		test_tick &&
+		...
+
+>  '
+>  
+> +oldtick=$GIT_AUTHOR_DATE
+> +test_tick
+> +
+> +author="The Real Author <someguy@his.email.org>"
+> +committer="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE"
+> +
+> +test_expect_success 'amend commit to fix author' '
+
+Same here.
+
+BTW: is this committer mangling really necessary? I thought only 
+GIT_COMMITTER_DATE was relevant.  And that is easily replaced by
+
+	sed -e "s/^\(committer.* \)[0-9][0-9]*$/\1$GIT_COMMITTER_DATE/"
+
+Ciao,
+Dscho
+
+--8323584-336584528-1194258298=:4362--
