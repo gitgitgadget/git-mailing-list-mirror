@@ -1,84 +1,61 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in  git, help users out.
-Date: Mon, 05 Nov 2007 20:10:04 +0100
-Message-ID: <20071105191004.GH6205@artemis.corp>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <20071105190411.GG6205@artemis.corp> <20071105190556.GG22767@fieldses.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Use parseopts in builtin-fetch
+Date: Mon, 05 Nov 2007 11:13:33 -0800
+Message-ID: <7vir4gqzdu.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711042233590.7357@iabervon.org>
+	<20071105085513.GB25574@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="wj9ZLJVQDRFjGSdK";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Nov 05 20:10:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 05 20:13:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ip7L5-0000DW-0Q
-	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:10:23 +0100
+	id 1Ip7OV-0001HG-VI
+	for gcvg-git-2@gmane.org; Mon, 05 Nov 2007 20:13:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696AbXKETKH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 14:10:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754483AbXKETKH
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:10:07 -0500
-Received: from pan.madism.org ([88.191.52.104]:38074 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753690AbXKETKF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 14:10:05 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id A06FE2894C;
-	Mon,  5 Nov 2007 20:10:04 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 51EAE20E809; Mon,  5 Nov 2007 20:10:04 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	"J. Bruce Fields" <bfields@fieldses.org>, gitster@pobox.com,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071105190556.GG22767@fieldses.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1754139AbXKETNl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 14:13:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754137AbXKETNk
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 14:13:40 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:59261 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751330AbXKETNk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 14:13:40 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id CF4182EF;
+	Mon,  5 Nov 2007 14:14:00 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 525DC927C7;
+	Mon,  5 Nov 2007 14:13:57 -0500 (EST)
+In-Reply-To: <20071105085513.GB25574@artemis.corp> (Pierre Habouzit's message
+	of "Mon, 05 Nov 2007 09:55:13 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63538>
 
+Pierre Habouzit <madcoder@debian.org> writes:
 
---wj9ZLJVQDRFjGSdK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Mon, Nov 05, 2007 at 03:35:34AM +0000, Daniel Barkalow wrote:
+>> I mostly did this and the next one for practice with the API. I'm 
+>> impressed that "git fetch -vv" is even handled correctly without anything 
+>> special.
+>
+>   About that: OPTION_BOOLEAN increments the associated variable, to
+> support this case specifically.
+>
+>   The last thing that really miss in parse-options is a way to recurse
+> into a sub-array of struct option, to be able to port the generic diff
+> and revision arguments.
 
-On Mon, Nov 05, 2007 at 07:05:56PM +0000, J. Bruce Fields wrote:
-> On Mon, Nov 05, 2007 at 08:04:11PM +0100, Pierre Habouzit wrote:
-> > On Mon, Nov 05, 2007 at 07:01:41PM +0000, Pierre Habouzit wrote:
-> > > +		if (!lstat(name, &st)) {
-> > > +			die("Cannot find commit '%s', did you meant: "
->=20
-> s/meant/mean/
-
-Yeah I wrote that out of the iritation of the 192812948th question about
-that on #git, I should have read my patch it seems :)
-
-Though, if there will be a new maint release, I do believe that this
-patch is maint material.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---wj9ZLJVQDRFjGSdK
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHL2qMvGr7W6HudhwRAnqIAKCAuvCNZgptLeEAjaM5RLx2dvn5ygCeP0q/
-tYp6ub0HUdpyBkwuWyruYQU=
-=O07a
------END PGP SIGNATURE-----
-
---wj9ZLJVQDRFjGSdK--
+Another micronit is I found lacking is that it is a bit too
+cumbersome to accept only a subset of integer as a value
+(e.g. "this option takes a positive integer, not zero nor
+negative").  The caller can set up a callback to handle that,
+though.
