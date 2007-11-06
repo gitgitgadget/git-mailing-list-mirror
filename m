@@ -1,71 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] git-mailsplit: with maildirs try to process new/ if
-	cur/ is empty
-Date: Tue, 6 Nov 2007 08:28:31 +0100
-Message-ID: <20071106072831.GA3021@steel.home>
-References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org> <20071026160118.GA5076@ferdyx.org> <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org> <20071105225258.GC4208@steel.home> <635FFEC2-2489-443B-8425-DF2B58BE23C2@mac.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: Re: git pull opinion
+Date: Tue, 6 Nov 2007 08:34:55 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071106073455.GA19106@ins.uni-bonn.de>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <20071105234049.GA31277@genesis.frugalware.org> <3abd05a90711052016s615cd66cy5a5f932900d89143@mail.gmail.com> <176851C5-D735-4DDC-B799-A5106CD03989@lrde.epita.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Gerrit Pape <pape@smarden.org>,
-	"Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael Cohen <michaeljosephcohen@mac.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 08:28:52 2007
+Cc: Aghiles <aghilesk@gmail.com>, git list <git@vger.kernel.org>
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 06 08:35:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpIrj-0000KS-Lh
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 08:28:52 +0100
+	id 1IpIxv-0001zn-R5
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 08:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754237AbXKFH2h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 02:28:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753410AbXKFH2h
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 02:28:37 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:40725 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752605AbXKFH2g (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 02:28:36 -0500
-Received: from tigra.home (Facbb.f.strato-dslnet.de [195.4.172.187])
-	by post.webmailer.de (fruni mo41) (RZmta 14.0)
-	with ESMTP id i02208jA66KXBt ; Tue, 6 Nov 2007 08:28:32 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 89B94277AE;
-	Tue,  6 Nov 2007 08:28:32 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id D925156D22; Tue,  6 Nov 2007 08:28:31 +0100 (CET)
+	id S1751320AbXKFHfB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 02:35:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750878AbXKFHfB
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 02:35:01 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:47838 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750825AbXKFHfA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 02:35:00 -0500
+Received: from ins.uni-bonn.de (gibraltar [192.168.193.254])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 8B122400013E0;
+	Tue,  6 Nov 2007 08:34:56 +0100 (CET)
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>, Aghiles <aghilesk@gmail.com>,
+	git list <git@vger.kernel.org>
 Content-Disposition: inline
-In-Reply-To: <635FFEC2-2489-443B-8425-DF2B58BE23C2@mac.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzzcFz5CxQ=
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <176851C5-D735-4DDC-B799-A5106CD03989@lrde.epita.fr>
+User-Agent: Mutt/1.5.17 (2007-11-04)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63632>
 
-Michael Cohen, Tue, Nov 06, 2007 02:41:56 +0100:
-> On Nov 5, 2007, at 5:52 PM, Alex Riesen wrote:
+Hello,
+
+* Benoit Sigoure wrote on Tue, Nov 06, 2007 at 06:29:58AM CET:
+> On Nov 6, 2007, at 5:16 AM, Aghiles wrote:
 >
->> Gerrit Pape, Mon, Nov 05, 2007 13:49:20 +0100:
->>> +	for (i = 0; i < 2; ++i) {
->>> +		snprintf(name, sizeof(name), "%s/%s", path, sub[i]);
->>> +		if ((dir = opendir(name)) == NULL) {
->>> +			error("cannot opendir %s (%s)", name, strerror(errno));
->>> +			return -1;
->>> +		}
+>>> who will run git stash clear? :)
 >>
->> Why is missing "cur" (or "new", for that matter) a fatal error?
->> Why is it error at all? How about just ignoring the fact?
-> In Maildir format, cur and new hold the mails. :P
+>> Yes you are right. By the way, in the context of merging into a
+>> dirty tree, "git stash clear" seems to be a dangerous command:
+>> there is a risk of loosing all your changes without a question
+>> asked!
 
-So? Why *STOP* reading the mails if just one of the directories could
-not be opened? IOW, I suggest:
+I would love it if for once in the git world, there were a pair of
+commands that would do the exact opposite of each other and where the
+naive newbie (me) would immediately recognize that from their names:
+  git stash push
+  git stash pop
 
-+	for (i = 0; i < 2; ++i) {
-+		snprintf(name, sizeof(name), "%s/%s", path, sub[i]);
-+		dir = opendir(name);
-+		if (!dir)
-+			continue;
+Both applied in this order should be a no-op on both the working tree,
+the index, and also the stash.  There's room for extensions (pop
+--keep-stash to not remove the stashed information), explicit naming of
+stashes, doing multiple pops at once, and so on.  Please don't add more
+of the git-push/git-pull, git-add/git-rm unsymmetrical interfaces.
+Even if they're perfectly clear to git intimates, each one of them
+takes precious extra time to learn due to this lack of symmetry.
+
+Since I simply don't have the time resources to just implement that,
+I'll thank you for your attention and go back to lurking mode now.
+
+Thanks,
+Ralf
