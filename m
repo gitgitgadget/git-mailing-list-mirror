@@ -1,93 +1,106 @@
-From: Steven Grimm <koreth@midwinter.com>
+From: Pierre Habouzit <madcoder@debian.org>
 Subject: Re: git pull opinion
-Date: Mon, 5 Nov 2007 16:37:50 -0800
-Message-ID: <1922673A-C57E-4C10-BAB0-5853B8499164@midwinter.com>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Aghiles <aghilesk@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 01:38:08 2007
+Date: Tue, 06 Nov 2007 01:46:01 +0100
+Message-ID: <20071106004601.GS8939@artemis.corp>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <7vd4uomfn8.fsf@gitster.siamese.dyndns.org> <18223.46848.109961.552827@lisa.zopyra.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; boundary="sLx0z+5FKKtIVDwd";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, Aghiles <aghilesk@gmail.com>,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 01:46:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpCSF-0007Yb-0Z
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 01:38:07 +0100
+	id 1IpCaB-0000ua-Tx
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 01:46:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755458AbXKFAhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 19:37:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755319AbXKFAhw
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 19:37:52 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:47288 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755268AbXKFAhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 19:37:51 -0500
-Received: (qmail 23068 invoked from network); 6 Nov 2007 00:37:50 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=vjDaV6JBt4eXoBZKmF3KYQHudJCoTo92ynVaA/IMATlJk2Msy0t8p40iYekecynq  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 6 Nov 2007 00:37:50 -0000
-In-Reply-To: <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.912)
+	id S1753999AbXKFAqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 19:46:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754887AbXKFAqF
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 19:46:05 -0500
+Received: from pan.madism.org ([88.191.52.104]:51191 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753574AbXKFAqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 19:46:03 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id B2BAA27053;
+	Tue,  6 Nov 2007 01:46:01 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 50BA3746B7; Tue,  6 Nov 2007 01:46:01 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Bill Lear <rael@zopyra.com>, Junio C Hamano <gitster@pobox.com>,
+	Aghiles <aghilesk@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <18223.46848.109961.552827@lisa.zopyra.com>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63603>
 
-On Nov 5, 2007, at 3:33 PM, Junio C Hamano wrote:
 
-> Aghiles <aghilesk@gmail.com> writes:
->
->> Is there an "easier" way to pull into a dirty directory ? I am
->> asking this to make sure I understand the problem and not
->> because I find it annoying to type those 4 commands to perform
->> a pull (although some of my colleagues do find that annoying :).
->
-> You need to switch your mindset from centralized SVN workflow.
+--sLx0z+5FKKtIVDwd
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't think wanting to pull in the middle of one's work has anything  
-to do with centralized vs. decentralized, actually, though I do agree  
-that it's a question of workflow.
+On Tue, Nov 06, 2007 at 12:36:16AM +0000, Bill Lear wrote:
+> On Monday, November 5, 2007 at 15:33:31 (-0800) Junio C Hamano writes:
+> > Stop thinking like "I need to integrate the changes from upstream
+> > into my WIP to keep up to date."
+> >
+> > [...]
+> >
+> > Once you get used to that, you would not have "a dirty directory"
+> > problem.
+>=20
+> I respectfully beg to differ.  I think it is entirely reasonable, and
+> not a sign of "centralized" mindset, to want to pull changes others
+> have made into your dirty repository with a single command.
 
-For maybe 80% of my work, I do things "the git way" (lots of little  
-local commits) and only sync up with other people when I've reached a  
-good stopping point. Those are cases where I'm working in isolation on  
-a new feature or a fix and will publish it as a whole unit when I'm  
-done.
+  I agree, I have such needs at work.  Here is how we (very informally)
+work: people push things that they believe could help other (a new
+helper function, a new module, a bug fix) in our master ASAP, but
+develop big complex feature in their repository and merge into master
+when it's ready.
 
-But the other 20% of the time, I'm working closely with another  
-person. For example, I might be working with a front-end developer who  
-is writing some nice snazzy JavaScript or Flash UI code to talk to my  
-server-side code. And in that case, I really do want to be able to  
-pull down his latest changes while I'm still in the middle of working  
-on my own stuff, not least because it's only by testing with the real  
-client -- where the button to invoke a particular piece of code on my  
-side has just been added in the last 2 minutes -- that I can decide  
-whether my work in progress is actually functional or not. (Unit tests  
-only get you partway there.)
+  Very often we discuss some bugfix that is impeding people, or a
+most-wanted-API. Someone does the work, commits, I often want to merge
+master _directly_ into my current work-branch, because I want the
+fix/new-API/... whatever.
 
-In other words, for traditional open-source-style distributed  
-development where each repository is an isolated island that goes off  
-and does its own thing, ignoring the outside world, the recommended  
-git workflow is totally appropriate. It's also appropriate for a lot  
-of in-house non-distributed development.
+  I don't believe it's because we have a centralized repository that I
+have those needs, I would have the very same if I pulled changes
+directly from my colleagues repository. The reason why I need it at work
+is because there are some very vivid kind of changes, that only takes a
+couple of diff lines, and that you _need_ for your work to be completed.
+It's not really a matter of being fully up-to-date.
 
-But for some classes of collaboration, where two or more people are  
-essentially editing the same code base to work on the same feature and  
-their changes are highly interdependent, that workflow is next to  
-useless. There *is* no "I've gotten my code working and am ready to  
-look at other people's changes now" stage until pretty late in the  
-game. This kind of workflow happens a lot in commercial development in  
-my experience.
+  Though to my delight, with the current tip-of-next git, I noticed that
+many rebase and pull work in a dirty tree now :)
 
-Before git-stash, I did a lot of "commit; fetch; rebase; reset"  
-sequences to support this kind of tight collaboration. Now it's  
-"stash; fetch; rebase; unstash" which is the same number of commands  
-but is semantically clearer. "fetch; rebase --dirty" or "pull --dirty - 
-s rebase" will be nicer.
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
--Steve
+--sLx0z+5FKKtIVDwd
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHL7lJvGr7W6HudhwRAsZoAJ9LA6onmigDyYJpSfVGbSnprK4kgACfYvZf
+kMZARe1+qwR5z9+pV0ovxSU=
+=/jwF
+-----END PGP SIGNATURE-----
+
+--sLx0z+5FKKtIVDwd--
