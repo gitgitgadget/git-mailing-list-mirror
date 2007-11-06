@@ -1,60 +1,118 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in
- git, help users out.
-Date: Tue, 6 Nov 2007 22:25:48 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711062225090.4362@racer.site>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
- <200711062106.57083.robin.rosenberg.lists@dewire.com> <20071106201324.GA30262@glandium.org>
- <200711062221.58475.robin.rosenberg.lists@dewire.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations
+ when not needed
+Date: Tue, 06 Nov 2007 23:31:42 +0100
+Message-ID: <4730EB4E.4080903@lsrfire.ath.cx>
+References: <Pine.LNX.4.64.0711041912190.4362@racer.site>	<Pine.LNX.4.64.0711041915290.4362@racer.site>	<7v8x5cqxn0.fsf@gitster.siamese.dyndns.org>	<472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 23:27:04 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 23:32:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpWsv-0004wY-7E
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 23:27:01 +0100
+	id 1IpWy3-0006U0-2S
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 23:32:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754389AbXKFW0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 17:26:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754505AbXKFW0p
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 17:26:45 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45234 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754332AbXKFW0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 17:26:45 -0500
-Received: (qmail invoked by alias); 06 Nov 2007 22:26:43 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp012) with SMTP; 06 Nov 2007 23:26:43 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+ir88Tnmaiu3jEPEq2dVOA2NkpTJ3ZfrbQVEdfDf
-	2TUkmdZ3UOhuVX
-X-X-Sender: gene099@racer.site
-In-Reply-To: <200711062221.58475.robin.rosenberg.lists@dewire.com>
-X-Y-GMX-Trusted: 0
+	id S1754716AbXKFWcF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 17:32:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754690AbXKFWcE
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 17:32:04 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:37698
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754573AbXKFWcB (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2007 17:32:01 -0500
+Received: from [10.0.1.201] (p57B7F84D.dip.t-dialin.net [87.183.248.77])
+	by neapel230.server4you.de (Postfix) with ESMTP id 4D3AF873BA;
+	Tue,  6 Nov 2007 23:31:59 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vejf4kwry.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63740>
 
-Hi,
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> Junio C Hamano schrieb: ...
+>>> Instead of allocating a separate array and freeing at the end,=20
+>>> wouldn't it make more sense to have a bitfield that records what=20
+>>> is used by the format string inside the array elements?
+>> How about (ab)using the value field?  Let interp_find_active() mark
+>>  unneeded entries with NULL, and the rest with some cookie.  All
+>> table entries with non-NULL values need to be initialized.
+>> interp_set_entry() needs to be aware of this cookie, as it mustn't
+>> free() it.  The cookie could be the address of a static char* in
+>> interpolate.c.
+>=20
+> Sorry, where is this aversion to making the struct a bit larger=20
+> coming from?
 
-On Tue, 6 Nov 2007, Robin Rosenberg wrote:
+Not from the rational part of my brain, for sure.  The following on
+top of Dscho's second patch?  (A char would be smaller, but a bitfield
+documents the intent better.)
 
-> tisdag 06 november 2007 skrev Mike Hommey:
-> > Maybe the documentation could emphasise on how to undo things when the
-> > user makes mistakes.
-> > Sometimes, saving your repo can be as simple as git reset --hard HEAD@{1}.
-> > This is not, unfortunately, a works-for-all-cases command.
-> 
-> Yea, git-undo(7). 
 
-In related news, I know a few users who need an un-rm-rf.  Anyone?
-
-Ciao,
-Dscho
+diff --git a/interpolate.c b/interpolate.c
+index 80eeb36..1e4ccaf 100644
+--- a/interpolate.c
++++ b/interpolate.c
+@@ -103,22 +103,21 @@ unsigned long interpolate(char *result, unsigned =
+long reslen,
+ 	return newlen;
+ }
+=20
+-char *interp_find_active(const char *orig,
+-		const struct interp *interps, int ninterps)
++void interp_find_active(const char *orig, struct interp *interps, int =
+ninterps)
+ {
+-	char *result =3D xcalloc(1, ninterps);
+ 	char c;
+ 	int i;
+=20
++	for (i =3D 0; i < ninterps; i++)
++		interps[i].active =3D 0;
++
+ 	while ((c =3D *(orig++)))
+ 		if (c =3D=3D '%')
+ 			/* Try to match an interpolation string. */
+ 			for (i =3D 0; i < ninterps; i++)
+ 				if (!prefixcmp(orig, interps[i].name + 1)) {
+-					result[i] =3D 1;
++					interps[i].active =3D 1;
+ 					orig +=3D strlen(interps[i].name + 1);
+ 					break;
+ 				}
+-
+-	return result;
+ }
+diff --git a/interpolate.h b/interpolate.h
+index 2d197c5..a8ee6b9 100644
+--- a/interpolate.h
++++ b/interpolate.h
+@@ -14,6 +14,7 @@
+ struct interp {
+ 	const char *name;
+ 	char *value;
++	unsigned active:1;
+ };
+=20
+ extern void interp_set_entry(struct interp *table, int slot, const cha=
+r *value);
+@@ -22,7 +23,6 @@ extern void interp_clear_table(struct interp *table, =
+int ninterps);
+ extern unsigned long interpolate(char *result, unsigned long reslen,
+ 				 const char *orig,
+ 				 const struct interp *interps, int ninterps);
+-extern char *interp_find_active(const char *orig,
+-				const struct interp *interps, int ninterps);
++extern void interp_find_active(const char *orig, struct interp *interp=
+s, int ninterps);
+=20
+ #endif /* INTERPOLATE_H */
