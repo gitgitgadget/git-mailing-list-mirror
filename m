@@ -1,99 +1,62 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Give git-am back the ability to add Signed-off-by lines.
-Date: Tue, 06 Nov 2007 23:35:17 +0100
-Message-ID: <20071106223517.GC4382@artemis.corp>
-References: <200711062133.58903.johannes.sixt@telecom.at>
+From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+Subject: git-log -p --raw broken?
+Date: Tue, 6 Nov 2007 19:48:43 -0300
+Message-ID: <f329bf540711061448iab9d4a9q37e13b846dbc5ff1@mail.gmail.com>
+Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="PuGuTyElPB9bOcsM";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Tue Nov 06 23:35:36 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 06 23:49:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpX1D-0007Q5-Aa
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 23:35:35 +0100
+	id 1IpXEC-00035M-TS
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 23:49:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754749AbXKFWfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 17:35:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754593AbXKFWfV
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 17:35:21 -0500
-Received: from pan.madism.org ([88.191.52.104]:44241 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754166AbXKFWfU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 17:35:20 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 9A99B26487;
-	Tue,  6 Nov 2007 23:35:18 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id C14801DF84; Tue,  6 Nov 2007 23:35:17 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <johannes.sixt@telecom.at>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1754281AbXKFWsq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 17:48:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754205AbXKFWsp
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 17:48:45 -0500
+Received: from nz-out-0506.google.com ([64.233.162.228]:20345 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751079AbXKFWsp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 17:48:45 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so1493882nze
+        for <git@vger.kernel.org>; Tue, 06 Nov 2007 14:48:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=Kumtyn9y+MY5PM+h8bc7fPdGc3KRz+DwlEQgxwler0Q=;
+        b=ggdwLYJD/LdxuF8lMXQbW6I3kBZQDouWbXJmqU1vdDRV5zoDA5gbuDrs7yx8LvAUeZzXFLuRKxjz7kw7BGK1nI8jQQE+Dsyl8W2QFbM8a8A5XqLV3HZT+dy9QCVyhkYpOJ/9fysU4kFXpO3UL1crkM7jBHX38vwjAhHhuvAwzX0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:reply-to:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=gDpco0gPRrpo0HQseqJuRXD00wUbVB+3BK4gWy+jlMy9Ln3Sdeqe1jv16bbvCcu2bupfEZRFL0dcgHd9aslSnCL0gjZiLPPTOKOaPAziCan3DlY3ryL9EtjewooEyJNZTjg1QeHAVN1so6RWays3Sj4xQxPcXvFd5YEXC5X7/80=
+Received: by 10.115.90.1 with SMTP id s1mr1287162wal.1194389323535;
+        Tue, 06 Nov 2007 14:48:43 -0800 (PST)
+Received: by 10.114.76.4 with HTTP; Tue, 6 Nov 2007 14:48:43 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <200711062133.58903.johannes.sixt@telecom.at>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63742>
 
+Hi,
 
---PuGuTyElPB9bOcsM
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm trying to get a list of
 
-On Tue, Nov 06, 2007 at 08:33:58PM +0000, Johannes Sixt wrote:
-> This was lost in the migration to git-rev-parse --parseopt by commit
-> 78443d90491c1b82afdffc3d5d2ab8c1a58928b5.
->=20
-> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
-> ---
->  git-am.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/git-am.sh b/git-am.sh
-> index 876b973..e5af955 100755
-> --- a/git-am.sh
-> +++ b/git-am.sh
-> @@ -131,7 +131,7 @@ do
->  		binary=3Dt ;;
->  	-3|--3way)
->  		threeway=3Dt ;;
-> -	-s--signoff)
-> +	-s|--signoff)
+  git diff-tree -t -r --raw COMMITTISH
 
-  Gaaaah. One more case of t/f finger-slip
+where COMMITTISH comes from git-rev-list, using a limited number of
+processes. The manual page suggests that I should be able to do
 
->  		sign=3Dt ;;
->  	-u|--utf8)
->  		utf8=3Dt ;; # this is now default
-> --=20
-> 1.5.3.4.315.g2ce38
->=20
+ git log -p --raw COMMIT-RANGE
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+however, when I try that, I get always get the same style output,
+which is the (to me: useless) human readable output.
 
---PuGuTyElPB9bOcsM
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHMOwlvGr7W6HudhwRAvuFAKCex3YQj86P8N8YfQCYnG4dG+8FwgCePcxi
-t7xohV/0eTtaPjpMExk5byI=
-=8SSe
------END PGP SIGNATURE-----
-
---PuGuTyElPB9bOcsM--
+Am I missing something?
+-- 
+Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
