@@ -1,105 +1,81 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin commands.
-Date: Tue, 06 Nov 2007 10:26:48 +0100
-Message-ID: <20071106092648.GG4435@artemis.corp>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com> <1194017589-4669-2-git-send-email-krh@redhat.com> <1194017589-4669-3-git-send-email-krh@redhat.com> <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet> <1194289073.13968.16.camel@hinata.boston.redhat.com> <20071105192347.GA29997@atjola.homenet> <Pine.LNX.4.64.0711052317170.4362@racer.site> <20071106091222.GE4435@artemis.corp> <4730314A.9010403@viscovery.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
+Date: Tue, 6 Nov 2007 10:29:42 +0100
+Organization: glandium.org
+Message-ID: <20071106092942.GB3197@glandium.org>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com> <7vlk9cmiyq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711052325090.4362@racer.site> <7vsl3kjdct.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711060317220.4362@racer.site> <7vode8j7o5.fsf@gitster.siamese.dyndns.org> <20071106084925.GC4435@artemis.corp>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="f5QefDQHtn8hx44O";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 06 10:27:07 2007
+Content-Type: text/plain; charset=us-ascii
+To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 06 10:32:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpKiA-0000d8-N1
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 10:27:07 +0100
+	id 1IpKn4-0001wB-2d
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 10:32:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753478AbXKFJ0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 04:26:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbXKFJ0v
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 04:26:51 -0500
-Received: from pan.madism.org ([88.191.52.104]:50960 "EHLO hermes.madism.org"
+	id S1753751AbXKFJb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 04:31:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753383AbXKFJb4
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 04:31:56 -0500
+Received: from vawad.err.no ([85.19.200.177]:35623 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751991AbXKFJ0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 04:26:50 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 5857928B17;
-	Tue,  6 Nov 2007 10:26:49 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id BB3DB383A; Tue,  6 Nov 2007 10:26:48 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
-	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	id S1752585AbXKFJbz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 04:31:55 -0500
+Received: from aputeaux-153-1-9-88.w82-124.abo.wanadoo.fr ([82.124.55.88] helo=vaio.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IpKmV-0003IE-Nm; Tue, 06 Nov 2007 10:31:38 +0100
+Received: from mh by vaio.glandium.org with local (Exim 4.63)
+	(envelope-from <mh@glandium.org>)
+	id 1IpKkg-0000rg-Kr; Tue, 06 Nov 2007 10:29:42 +0100
 Content-Disposition: inline
-In-Reply-To: <4730314A.9010403@viscovery.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+In-Reply-To: <20071106084925.GC4435@artemis.corp>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: mh@glandium.org
+X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
+X-Spam-Status: (score 5.0): Status=No hits=4.9 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63651>
 
+On Tue, Nov 06, 2007 at 09:49:25AM +0100, Pierre Habouzit <madcoder@debian.org> wrote:
+> On Tue, Nov 06, 2007 at 04:54:02AM +0000, Junio C Hamano wrote:
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> > 
+> > > On Mon, 5 Nov 2007, Junio C Hamano wrote:
+> > >
+> > >> Allowing people to revert or cherry pick partially by using paths 
+> > >> limiter is a very good idea; the whole "it comes from a commit so we 
+> > >> also commit" feels an utter nonsense, though.
+> > >
+> > > No.
+> > >
+> > > When "git revert <commit>" commits the result, "git revert <commit> -- 
+> > > <file>" should, too.
+> > 
+> > I was not questioning about that part.  "If 'git revert <some
+> > other form> foo' does not talk about commit, it should not
+> > commit" was what I was referring to.
+> 
+>   Well, I don't really know how closely you read #git, but I'd say that
+> "how do I undo my local changes in a git repository" is among the top 3
+> questions. There _IS_ an UI issue for that.
+> 
+> If git revert <commitish> -- path1 path2 path3 is going to work at some
+> point, I see no harm in saying that git revert HEAD -- path1 path2 path3
+> work. We can also in that case spit an error message:
 
---f5QefDQHtn8hx44O
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+It seems to me git revert HEAD -- path1 path2 path3 should revert the changes
+made in the commit pointed to by HEAD, not revert the changes in the working
+tree or the index...
 
-On Tue, Nov 06, 2007 at 09:18:02AM +0000, Johannes Sixt wrote:
-> Pierre Habouzit schrieb:
-> >Btw, I'm starting to work slowly on the diff_opt_parse conversion to the
-> >macro we discussed, and the need for new option parsing callbacks
-> >arised, and I've created a:
-> >  parse_opt_mask_{or,and,xor} commands that you declare this way:
-> >    OPT_MASK_OR('a', "all",         &mode, "...", MASK_ALL),
-> >    OPT_MASK_OR('i', "interactive", &mode, "...", MASK_INTERACTIVE),
-> >    ...
-> >And if you chose MASK_ALL/INTERACTIVE/.. to be single bits,
-> >    if (!!all + !!interactive ... > 1)
-> >becomes[0]:
-> >    if (mode & (mode - 1)) {
-> >    }
->=20
-> This goes too far, IMHO. That's unnecessary cleverness/microoptimization=
-=20
-> at the expense of readability.
-
-The reason why I did that is not to be able to do mode & (mode - 1).
-Have a look at diff.c, imagine the insane amount of intermediate
-variables we would need, and now understand why I introduced that :)
-
-I'm not sure it's useful for git-commit, I was mentioning it just in case.
-
-Note: the fact that an OPT_BOOLEAN when you repeat it increments the
-      value isn't always a good thing, and is the reason why you need
-      the (quite ugly) double bangs.
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---f5QefDQHtn8hx44O
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHMDNYvGr7W6HudhwRApEHAJ4uM2jzd21mKo+1pJLIH+qkdToHxwCfUrwc
-huvF1l6y1RFV6gzhL6vLXiI=
-=ZKYu
------END PGP SIGNATURE-----
-
---f5QefDQHtn8hx44O--
+Mike
