@@ -1,59 +1,101 @@
-From: Aghiles <aghilesk@gmail.com>
-Subject: Re: git pull opinion
-Date: Tue, 6 Nov 2007 01:30:23 -0500
-Message-ID: <3abd05a90711052230y4d6151c6o3e7985a0c8e18161@mail.gmail.com>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
-	 <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
-	 <18223.46848.109961.552827@lisa.zopyra.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin
+	commands.
+Date: Tue, 6 Nov 2007 07:59:41 +0100
+Message-ID: <20071106065941.GA6423@atjola.homenet>
+References: <1194017589-4669-1-git-send-email-krh@redhat.com> <1194017589-4669-2-git-send-email-krh@redhat.com> <1194017589-4669-3-git-send-email-krh@redhat.com> <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet> <1194289073.13968.16.camel@hinata.boston.redhat.com> <20071105192347.GA29997@atjola.homenet> <Pine.LNX.4.64.0711052317170.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Bill Lear" <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 07:30:42 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 06 08:00:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpHxQ-000619-Fg
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 07:30:40 +0100
+	id 1IpIPu-0002Vm-Hq
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 08:00:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754410AbXKFGa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 01:30:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754284AbXKFGa0
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 01:30:26 -0500
-Received: from nf-out-0910.google.com ([64.233.182.184]:23103 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754390AbXKFGa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 01:30:26 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1592364nfb
-        for <git@vger.kernel.org>; Mon, 05 Nov 2007 22:30:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=0p9DL2s05yAQuAYqYLFQU/dMdv/QFNVEMUqOSlKCgNA=;
-        b=E8nwR/CItwExIoVzY7Lrm5zqhnm8sYTvwV4L5cgqx17NEndNHsEG/pLbwrhYNXIA/f3RP3jQFElOuZ97yPdb67ikDv7tiUijMzNqAScvtxsEGrcmEgqaiFnjSYkl93XrwwdZxd9mGOoaqZ+jQyykh0j/MiOnsU7mtlmbo/TE02M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=czvMzkFBegDFQNYcicx87TLzQUwMQacgfx5iwQDaIXDv8W9UmMg1jUNK4inWvwhELtLPZ0O8hFZdpxfAC8ses7KfsZarMkzWazRYNkzN0OuYnta0SREzI37qj4iYuN9treex3Yl0bZBeIsoMHQVxxJAMIBxU4ltgwixXaST8BQ4=
-Received: by 10.78.149.15 with SMTP id w15mr4490456hud.1194330623841;
-        Mon, 05 Nov 2007 22:30:23 -0800 (PST)
-Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 22:30:23 -0800 (PST)
-In-Reply-To: <18223.46848.109961.552827@lisa.zopyra.com>
+	id S1755974AbXKFG7r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 01:59:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755919AbXKFG7r
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 01:59:47 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58789 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755601AbXKFG7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 01:59:46 -0500
+Received: (qmail invoked by alias); 06 Nov 2007 06:59:43 -0000
+Received: from i577BBDA2.versanet.de (EHLO localhost) [87.123.189.162]
+  by mail.gmx.net (mp003) with SMTP; 06 Nov 2007 07:59:43 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19GXV8BitlGBSckRS5C5Dq4AoZ3lAhDzuSwNbqE2B
+	kP1D0MjRr/uFF/
 Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711052317170.4362@racer.site>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63630>
 
-> I respectfully beg to differ.  I think it is entirely reasonable, and
-> not a sign of "centralized" mindset, to want to pull changes others
-> have made into your dirty repository with a single command.
+On 2007.11.05 23:18:36 +0000, Johannes Schindelin wrote:
+> Hi,
+>=20
+> On Mon, 5 Nov 2007, Bj?rn Steinbrink wrote:
+>=20
+> > On 2007.11.05 13:57:53 -0500, Kristian H?gsberg wrote:
+> >
+> > > The shell script just has
+> > >=20
+> > > case "$all,$interactive,$also,$#" in
+> > > *t,*t,*)
+> > >         die "Cannot use -a, --interactive or -i at the same time.=
+" ;;
+> > >=20
+> > > which doesn't seem to care about the value of $also.  As far as I=
+=20
+> > > understand git commit, it doesn't make sense to pass any of -a, -=
+i, -o=20
+> > > or --interactive at the same time so I guess I could join the che=
+cks
+> >=20
+> > Note that there are only two commas. The asterisks catch everything=
+ and
+> > $# won't be "t", so that catches anything with at least two t's.
+>=20
+> So shouldn't it be
+>=20
+> 	if (!!all + !!interactive + !!also > 1)
+>=20
+> Hmm?
 
-BitKeeper, for example, does a merge with a "dirty" directory.
-I am not saying that git should behave the same way but I think
-that this argument strengthens the point that it is not a
-"centralized repository" mindset.
+Ah, yeah, that's the short and sweet version, I always forget about the
+conversion to bool giving you 0/1 values... ;-)
 
-- Aghiles.
+Note though, that Kristian had a similar check at the end of his email,
+that included "only" (but lacked the bool conversion). The original
+reason why I thought that it would be better was that for example
+"git commit --all --only foo" didn't care about "only" at all. But that
+actually was because the --all + paths usage check was broken. So the
+fixed version actually refuses to use accept that, but with a (IMHO) no=
+t
+so good error message:
+
+$ git commit -a -o file
+Paths with -a does not make sense.
+
+Given that some people are used to just pass -a all the time, they migh=
+t
+just automatically pass it together with -o. And I think that we
+actually want to tell them that -a + -o makes no sense instead. Just
+like we do for -a + -i, which is kind of the complementary usage error.
+
+So I'd go for a correct version of Kristian's suggestion:
+
+if (!!also + !!only + !!all + !!interactive > 1)
+	die("Only one of --include/--only/--all/--interactive can be used.");
+
+Bj=F6rn
