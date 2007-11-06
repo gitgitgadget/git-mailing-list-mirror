@@ -1,91 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
-Date: Tue, 06 Nov 2007 03:08:53 -0800
-Message-ID: <7vk5oviqbe.fsf@gitster.siamese.dyndns.org>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
-	<CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com>
-	<7vlk9cmiyq.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711052325090.4362@racer.site>
-	<7vsl3kjdct.fsf@gitster.siamese.dyndns.org>
+From: Francesco Pretto <ceztkoml@gmail.com>
+Subject: Re: [Patch] Documentation: enhanced "git for CVS users" doc about
+ shared repositories
+Date: Tue, 06 Nov 2007 12:14:29 +0100
+Message-ID: <47304C95.5090208@gmail.com>
+References: <472F99F8.4010904@gmail.com> <7v8x5cmern.fsf@gitster.siamese.dyndns.org> <47303C2E.2070103@gmail.com> <Pine.LNX.4.64.0711061052570.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 06 12:09:25 2007
+X-From: git-owner@vger.kernel.org Tue Nov 06 12:14:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpMJ8-00026b-1d
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 12:09:22 +0100
+	id 1IpMOT-0003f4-9q
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 12:14:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756035AbXKFLJE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 06:09:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756025AbXKFLJE
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 06:09:04 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:41004 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755197AbXKFLJC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 06:09:02 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 91FBC2EF;
-	Tue,  6 Nov 2007 06:09:23 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E723A91BAE;
-	Tue,  6 Nov 2007 06:09:16 -0500 (EST)
-In-Reply-To: <7vsl3kjdct.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 05 Nov 2007 18:51:14 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755486AbXKFLOg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 06:14:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754677AbXKFLOg
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 06:14:36 -0500
+Received: from ug-out-1314.google.com ([66.249.92.173]:27392 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751991AbXKFLOf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 06:14:35 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so1076415ugc
+        for <git@vger.kernel.org>; Tue, 06 Nov 2007 03:14:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        bh=qpmYtavVvnj2MzsZbEizrSNqPPu2+6odZHTlDeoRg3c=;
+        b=Qp0NEYuIcC4c6kO1p7ifFnr8eVSDaCf8P30oFmZvPl6WtsZt1CemC0z0hEidnS2eaYqkDS+buR+MANzlMaWTZ5KHtvHOKgVP3QLoZq3q8tM9OV7kKgBaT72HbBpo+uIrCxHpFfYgKy2NWH9uyfGm9nWsMUW0f45MuqSwM9Cw+C0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding;
+        b=FyQsd4izgHihsjWmkRmLSd43Ha2neVLE7amxMEDylTbEhFQDGkUBvxKmMwUtqA26C1R4t7URm9Z7awVX4neFhP9+3GWWjaet0f4qyP6OTggK20IByHZWHy9TtKGNE7jdgvqu0JSAqpWZJu3lyNgyNa8PzWc418X3A3Xxf5O7UA4=
+Received: by 10.66.237.9 with SMTP id k9mr573465ugh.1194347674296;
+        Tue, 06 Nov 2007 03:14:34 -0800 (PST)
+Received: from ?192.168.1.14? ( [87.0.185.143])
+        by mx.google.com with ESMTPS id o1sm6151025uge.2007.11.06.03.14.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 06 Nov 2007 03:14:33 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <Pine.LNX.4.64.0711061052570.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63661>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Schindelin ha scritto:
+> 
+> For most people, neither path is correct.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->> In the same way, I would expect "git revert <commit> -- file" to undo the 
->> changes in that commit to _that_ file (something like "git merge-file 
->> file <commit>:file <commit>^:file"), but this time commit it, since it 
->> was committed at one stage.
->
-> Allowing people to revert or cherry pick partially by using
-> paths limiter is a very good idea; ...
-
-As Pierre said earlier, a partial revert via "revert <commit> --
-<paths>" and a partial cherry-pick would make quite a lot of
-sense, and in addition, it should not be too hard to add.
-
-Reusing the 'merge-recursive' part should be almost trivial.
-The only tricky part is coming up with a fake tree using base
-and next commit in revert_or_cherry_pick() for this purpose.
-
-When replaying the change from A->B (when cherry-picking, A is
-the parent and B is what was named from the command line; when
-reverting, they are the other way around), instead of doing the
-three-way merge using:
-
-	merge-recursive A HEAD B
-
-you would first come up with a modified tree B' that has the
-identical contents to A _except_ the parts the path limiters
-specify which are taken from B.  Then running
-
-	merge-recursive A HEAD B'
-
-would replay the revert or cherry-pick of change from A->B,
-limited by the path, on top of the current HEAD.
-
-As to "reverting to the index" case, if somebody is interested
-in doing a builtin-checkout.c, please keep in mind that major
-parts of that work should be made available to the
-implementation of "git revert [--] <paths>", as it appears that
-it will be exactly the same as "git checkout" with the same set
-of options.
-
-I am wondering what "git cherry-pick -- <paths>" should do.  My
-current thinking is that it would not make any sense at all.
+Yeah, I agree. I'll try to reflect this with a neutral wording :-)
+In the context of the documentation, we should just take care of logical
+following the example.
