@@ -1,48 +1,45 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in
- git, help users out.
-Date: Tue, 6 Nov 2007 18:27:54 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711061827030.4362@racer.site>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
- <CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com>
- <7vlk9cmiyq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711052325090.4362@racer.site>
- <7vsl3kjdct.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711060317220.4362@racer.site>
- <7vode8j7o5.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711061230540.4362@racer.site>
- <7v8x5bi703.fsf@gitster.siamese.dyndns.org>
+Subject: Re: git pull opinion
+Date: Tue, 6 Nov 2007 18:28:52 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711061828380.4362@racer.site>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
+ <fgo5dt$avh$1@ger.gmane.org> <Pine.LNX.4.64.0711060007010.4362@racer.site>
+ <3abd05a90711052022j590f1faesb85f4646afd9acec@mail.gmail.com>
+ <Pine.LNX.4.64.0711061159240.4362@racer.site> <7v1wb3i6nx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Steven Grimm <koreth@midwinter.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+Cc: Aghiles <aghilesk@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 19:29:32 2007
+X-From: git-owner@vger.kernel.org Tue Nov 06 19:30:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpTAy-0007MH-58
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:29:24 +0100
+	id 1IpTCC-0007lC-GO
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754195AbXKFS2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 13:28:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXKFS2x
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:28:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59154 "HELO mail.gmx.net"
+	id S1754723AbXKFS3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 13:29:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754650AbXKFS3u
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:29:50 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33846 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751991AbXKFS2w (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 13:28:52 -0500
-Received: (qmail invoked by alias); 06 Nov 2007 18:28:49 -0000
+	id S1754503AbXKFS3t (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 13:29:49 -0500
+Received: (qmail invoked by alias); 06 Nov 2007 18:29:47 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 06 Nov 2007 19:28:49 +0100
+  by mail.gmx.net (mp005) with SMTP; 06 Nov 2007 19:29:47 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/OFLZhdILOWEn5rOprXqyMcIYDr4CwJnUTzHum+M
-	VMEF7HA1v5KV1a
+X-Provags-ID: V01U2FsdGVkX19LcZlQdkNLdUoSW1x71tHyEIp0k7tibVhcTGWcXD
+	kyv+PeOv44Mr8p
 X-X-Sender: gene099@racer.site
-In-Reply-To: <7v8x5bi703.fsf@gitster.siamese.dyndns.org>
+In-Reply-To: <7v1wb3i6nx.fsf@gitster.siamese.dyndns.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63699>
 
 Hi,
 
@@ -50,24 +47,17 @@ On Tue, 6 Nov 2007, Junio C Hamano wrote:
 
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Well, I think that _if_ we allow "git revert <path>" to mean "revert the 
-> > changes to <path>, relative to the index" (which would be the same as "git 
-> > checkout <path>"), then committing that change just does not make sense.
-> >
-> > And it is this behaviour that people are seeking, not "git revert <commit> 
-> > <path>".
+> > A pull is just a fetch and a merge.  And a merge is a commit with more 
+> > than one parent.  So you can use the command "git reset --hard HEAD^" to 
+> > undo a merge, just as you can undo any other commit.
 > 
-> Heh, I found this in the recent log somewhere.
+> *DANGER*
 > 
-> <gitte> Really, I wonder how difficult git is for people who are not
-> 	brainwashed by cvs/svn, and unfortunately enough, partly by bzr and hg.
-> <gitte> From a user perspective, you might be correct.  But then we have to
-> 	add 1000 commands to reflect the English language.
-> <gitte> Not what I want.						[06:46]
-> 
-> I am wondering who said it ;-).
+> A pull is usually just a fetch and a merge, but sometimes it can fast 
+> forward.  ORIG_HEAD, not HEAD^, points at the previous HEAD location in 
+> both cases.
 
-Now, that is not fair, using my own words against me ;-)
+Oops. Right.
 
-Ciao,
+Thanks,
 Dscho
