@@ -1,66 +1,85 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: Git-windows and git-svn?
-Date: Tue, 06 Nov 2007 18:52:03 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4730A9C3.1090006@obry.net>
-References: <fgg6cd$3ep$1@ger.gmane.org> <472BABFA.6030200@obry.net> <A35C7C2D-A829-4A16-B81B-8A6DE01FE5DB@zib.de> <472C211C.90907@obry.net> <EE16FE19-8C6C-4438-8E6E-EA6B87A898A7@zib.de> <72D5CB06-9067-47C4-ABDF-4E1F6F4A679D@zib.de> <472C2FF8.2000603@obry.net> <591E16CE-E303-4971-B57D-D84E883BB01D@zib.de> <Pine.LNX.4.64.0711060857140.8577@ds9.cixit.se>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [bug in next ?] git-fetch/git-push issue
+Date: Tue, 06 Nov 2007 18:56:27 +0100
+Message-ID: <20071106175627.GB9517@artemis.corp>
+References: <20071105175654.GD6205@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Abdelrazak Younes <younes.a@free.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Peter Karlsson <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Nov 06 18:52:38 2007
+Content-Type: multipart/signed; boundary="Fba/0zbH8Xs+Fj9o";
+	protocol="application/pgp-signature"; micalg=SHA1
+To: Nicolas Pitre <nico@cam.org>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Jeff King <peff@peff.net>, Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 18:56:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpSbI-0002sg-ER
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 18:52:32 +0100
+	id 1IpSfN-0004SS-96
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 18:56:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754509AbXKFRwS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 12:52:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbXKFRwR
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 12:52:17 -0500
-Received: from smtp23.orange.fr ([80.12.242.97]:55590 "EHLO smtp23.orange.fr"
+	id S1754504AbXKFR4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 12:56:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753268AbXKFR4a
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 12:56:30 -0500
+Received: from pan.madism.org ([88.191.52.104]:38980 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754284AbXKFRwR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 12:52:17 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2312.orange.fr (SMTP Server) with ESMTP id CD65C7000093
-	for <git@vger.kernel.org>; Tue,  6 Nov 2007 18:52:14 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-79-163.w81-249.abo.wanadoo.fr [81.249.105.163])
-	by mwinf2312.orange.fr (SMTP Server) with ESMTP id 729777000088;
-	Tue,  6 Nov 2007 18:52:14 +0100 (CET)
-X-ME-UUID: 20071106175214469.729777000088@mwinf2312.orange.fr
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711060857140.8577@ds9.cixit.se>
-X-Enigmail-Version: 0.95.5
+	id S1754195AbXKFR4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 12:56:30 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 8874D26487;
+	Tue,  6 Nov 2007 18:56:28 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 721B11456CC; Tue,  6 Nov 2007 18:56:27 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Daniel Barkalow <barkalow@iabervon.org>, Jeff King <peff@peff.net>,
+	Git ML <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <20071105175654.GD6205@artemis.corp>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63692>
 
-Peter Karlsson a =E9crit :
-> I got errors almost right away when trying that (I need text mode to
-> interface with some other programs), so Cygwin-git is a no-go for me =
-at
 
-Won't it be possible for you to have a specific mount point using
-textmode and one with binmode ? This should allow you to have the best
-of both world. Note that I've never done that so I don't know if it is
-working fine.
+--Fba/0zbH8Xs+Fj9o
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Pascal.
+  On the same vein, with today's next:
+
+    $ git push origin :teaser
+    To ssh://git.corp/srv/git/mmsx.git
+     - [deleting]        teaser
+    refs/heads/teaser: 05518bc7df1af680447f58b034b108f66668db03 -> deleted
+    Everything up-to-date
+    fatal: Invalid revision range 05518bc7df1af680447f58b034b108f66668db03.=
+=2E0000000000000000000000000000000000000000
+    fatal: ambiguous argument 'refs/heads/teaser': unknown revision or path=
+ not in the working tree.
+    Use '--' to separate paths from revisions
 
 --=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
 
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+--Fba/0zbH8Xs+Fj9o
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMKrLvGr7W6HudhwRAno6AJ9ZstYO1XwSAKY5a6lzGFdxFPinRQCfevUM
+5qwIithBf4U93ITeFMe5exE=
+=CZUx
+-----END PGP SIGNATURE-----
+
+--Fba/0zbH8Xs+Fj9o--
