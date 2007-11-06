@@ -1,95 +1,96 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: Re: git pull opinion
-Date: Tue, 6 Nov 2007 06:29:58 +0100
-Message-ID: <176851C5-D735-4DDC-B799-A5106CD03989@lrde.epita.fr>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <20071105234049.GA31277@genesis.frugalware.org> <3abd05a90711052016s615cd66cy5a5f932900d89143@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-25--876050153"
-Content-Transfer-Encoding: 7bit
-Cc: git list <git@vger.kernel.org>
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 06:30:22 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Mon, 05 Nov 2007 21:30:52 -0800
+Message-ID: <7vbqa8j5yr.fsf@gitster.siamese.dyndns.org>
+References: <1194202941253-git-send-email-shawn.bohrer@gmail.com>
+	<11942029442710-git-send-email-shawn.bohrer@gmail.com>
+	<11942029474058-git-send-email-shawn.bohrer@gmail.com>
+	<7vejf4pf7r.fsf@gitster.siamese.dyndns.org>
+	<20071106050512.GA6768@mediacenter.austin.rr.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 06:31:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpH13-0004Fx-RN
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 06:30:22 +0100
+	id 1IpH20-0004Pn-JC
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 06:31:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179AbXKFFaG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 00:30:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752143AbXKFFaG
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 00:30:06 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:38463 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752028AbXKFFaE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 00:30:04 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IpH0k-0003PL-OT; Tue, 06 Nov 2007 06:30:02 +0100
-In-Reply-To: <3abd05a90711052016s615cd66cy5a5f932900d89143@mail.gmail.com>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1752232AbXKFFbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 00:31:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbXKFFbE
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 00:31:04 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:48693 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752064AbXKFFbD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 00:31:03 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 679E62EF;
+	Tue,  6 Nov 2007 00:31:20 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B20148FCDF;
+	Tue,  6 Nov 2007 00:31:16 -0500 (EST)
+In-Reply-To: <20071106050512.GA6768@mediacenter.austin.rr.com> (Shawn Bohrer's
+	message of "Mon, 5 Nov 2007 23:05:12 -0600")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63628>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-25--876050153
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Shawn Bohrer <shawn.bohrer@gmail.com> writes:
 
-On Nov 6, 2007, at 5:16 AM, Aghiles wrote:
-
-> Hello,
+> On Mon, Nov 05, 2007 at 01:14:32PM -0800, Junio C Hamano wrote:
+>> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
+>> [...]
+>> > +static int disabled = 1;
+>> 
+>> This means we are committed to make clean.requireForce default
+>> to true, which is fine by me.  I need to warn the users about
+>> this early.
 >
->> who will run git stash clear? :)
+> Actually I don't care either way, but in my last rebase on next this
+> change was already made to git-clean.sh so I adjusted accordingly.
+
+Oh, that was not a question to you, but a note to me.
+
+>> > +static int show_only = 0;
+>> > +static int remove_directories = 0;
+>> > +static int quiet = 0;
+>> > +static int ignored = 0;
+>> > +static int ignored_only = 0;
+>> 
+>> Please do not explicitly initialize static variables to zero.
 >
-> Yes you are right. By the way, in the context of merging into a
-> dirty tree, "git stash clear" seems to be a dangerous command:
-> there is a risk of loosing all your changes without a question
-> asked!
->
-> I know unix is a harsh world but ...
+> I realize that static variables will be automatically initialized to
+> zero so this is unnecessary, but is there some technical reason not to
+> initialize explicitly?  If the answer is simply a style preference that
+> is fine, I'm just here to learn.
 
-Be *very* careful, because it's worse than that.  If you run, say,  
-`git stash clean', instead of `clear' (that's the sort of typo that  
-quickly slips through), then it will stash all your changes in a new  
-stash named "clean".  Once you realize you made a typo, you will most  
-probably correct it and run `git stash clear' but...   Oops, you just  
-wiped your changes that were in the "clean" stash.
-That happened to me and other people I know, so now I'm utterly  
-cautious when I start a command with "git stash".
+Both readability and style have to do much with this.
 
-As far as I remember, a patch was proposed to change this mis- 
-behavior of "git stash" (one could argue that it's a PEBCAK issue,  
-but I really think this command is *way* too dangerous) but I don't  
-think it's been accepted at this time.
+The style has a historical background which is a slight
+technical merit.  It results in a smaller executable file, as C
+compilers traditionally placed file-scope static variables that
+are not explicitly initialized in the BSS section, instead of
+explicitly storing N-bytes of zero as the the initial data in it
+(although I do not see a reason for compilers not to do the same
+for variables explicitly initialized to zero.  In fact, I think
+modern gcc produces the same allocation with or without "= 0"
+initialization).
 
-Cheers,
+> Of course as already pointed out these don't actually need to be static
+> in the first place so I'll simply move them into cmd_clean().  This does
+> lead me to another question though.  Now that Dscho has converted my
+> patch to use parse-options, what is the best way to update my patch
+> while still giving credit to Dscho?
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-25--876050153
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHL/vWwwE67wC8PUkRAt0xAJ0UEaqIEgb2iLCV/hOlhqTzG0UQugCdG4pb
-Tr0WfCy0iTKJzSys9kgILLc=
-=twWM
------END PGP SIGNATURE-----
-
---Apple-Mail-25--876050153--
+Please send a rewritten replacement version as a single patch
+that is cleanly applicable to 'next', and mention people whose
+input helped you in polishing the patch in the proposed commit
+log message.
