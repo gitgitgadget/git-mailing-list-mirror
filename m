@@ -1,57 +1,67 @@
-From: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
-Subject: [PATCH] When exec() fails include the failing command in the error message
-Date: Tue,  6 Nov 2007 02:54:01 -0800
-Message-ID: <1194346441-20292-1-git-send-email-ask@develooper.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-mailsplit: with maildirs try to process new/ if cur/
+ is empty
+Date: Tue, 6 Nov 2007 11:01:03 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711061100150.4362@racer.site>
+References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org>
+ <20071026160118.GA5076@ferdyx.org> <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org>
+ <20071105225258.GC4208@steel.home> <635FFEC2-2489-443B-8425-DF2B58BE23C2@mac.com>
+ <20071106072831.GA3021@steel.home> <20071106075150.GA21694@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 06 12:01:21 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Alex Riesen <raa.lkml@gmail.com>,
+	Michael Cohen <michaeljosephcohen@mac.com>,
+	Gerrit Pape <pape@smarden.org>,
+	"Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 06 12:02:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpMBF-0008TQ-Tj
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 12:01:14 +0100
+	id 1IpMCD-0000IE-Ua
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 12:02:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755367AbXKFLA6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 06:00:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754942AbXKFLA6
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 06:00:58 -0500
-Received: from gw.develooper.com ([64.81.84.140]:56234 "EHLO
-	freja.develooper.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754833AbXKFLA6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 06:00:58 -0500
-X-Greylist: delayed 415 seconds by postgrey-1.27 at vger.kernel.org; Tue, 06 Nov 2007 06:00:58 EST
-Received: by freja.develooper.com (Postfix, from userid 500)
-	id 5A6B617D028; Tue,  6 Nov 2007 02:54:01 -0800 (PST)
-X-Mailer: git-send-email 1.5.3.5.561.g140d
+	id S1755197AbXKFLB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 06:01:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755010AbXKFLB7
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 06:01:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:59406 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755004AbXKFLB6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 06:01:58 -0500
+Received: (qmail invoked by alias); 06 Nov 2007 11:01:57 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp034) with SMTP; 06 Nov 2007 12:01:57 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/Oh90JiGXO5+gBpVaZE22BLQOZ8q87ErSuFtFF1O
+	V2HPQHuxwNyhk1
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071106075150.GA21694@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63659>
 
-git-svn occasionally fails with no details as to what went wrong - this=
- should help debug those situations.
+Hi,
 
-Signed-off-by: Ask Bj=C3=B8rn Hansen <ask@develooper.com>
----
- perl/Git.pm |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Tue, 6 Nov 2007, Jeff King wrote:
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 3f4080c..dca92c8 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -812,7 +812,7 @@ sub _cmd_exec {
- 		$self->wc_subdir() and chdir($self->wc_subdir());
- 	}
- 	_execv_git_cmd(@args);
--	die "exec failed: $!";
-+	die qq[exec "@args" failed: $!];
- }
-=20
- # Execute the given Git command ($_[0]) with arguments ($_[1..])
---=20
-1.5.3.5.561.g140d
+> On Tue, Nov 06, 2007 at 08:28:31AM +0100, Alex Riesen wrote:
+> 
+> > > In Maildir format, cur and new hold the mails. :P
+> > 
+> > So? Why *STOP* reading the mails if just one of the directories could 
+> > not be opened? IOW, I suggest:
+> 
+> Because you are then trying to apply a patch series with some patches 
+> potentially missing? Continuing only on errno == ENOENT seems prudent.
+
+I fail to see how the absence of one of cur/ or new/ can lead to the 
+absence of patches.  You could forget to save some patches, yes, but the 
+presence of cur/ and new/ is no indicator for that.
+
+Ciao,
+Dscho
