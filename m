@@ -1,69 +1,52 @@
-From: Aghiles <aghilesk@gmail.com>
-Subject: Re: git pull opinion
-Date: Tue, 6 Nov 2007 02:45:13 -0500
-Message-ID: <3abd05a90711052345v7cc74524g588e03c0c1a93c68@mail.gmail.com>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
-	 <20071105234049.GA31277@genesis.frugalware.org>
-	 <3abd05a90711052016s615cd66cy5a5f932900d89143@mail.gmail.com>
-	 <176851C5-D735-4DDC-B799-A5106CD03989@lrde.epita.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-mailsplit: with maildirs try to process new/ if
+	cur/ is empty
+Date: Tue, 6 Nov 2007 02:51:53 -0500
+Message-ID: <20071106075150.GA21694@sigill.intra.peff.net>
+References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org> <20071026160118.GA5076@ferdyx.org> <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org> <20071105225258.GC4208@steel.home> <635FFEC2-2489-443B-8425-DF2B58BE23C2@mac.com> <20071106072831.GA3021@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Benoit Sigoure" <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 06 08:45:40 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Cohen <michaeljosephcohen@mac.com>,
+	Gerrit Pape <pape@smarden.org>,
+	"Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 08:52:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpJ7s-00047x-3t
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 08:45:32 +0100
+	id 1IpJEd-0005VD-NR
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 08:52:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754504AbXKFHpS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 02:45:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754462AbXKFHpR
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 02:45:17 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:53794 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751938AbXKFHpP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 02:45:15 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1604814nfb
-        for <git@vger.kernel.org>; Mon, 05 Nov 2007 23:45:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=gWEDR42YaulWNQemdfdTW1kAncBO9SwUyydZOx7F99o=;
-        b=ZCHwJNC1CKFW8FMPdN3jZUiiqJM5PHPzXRPA7YDm8WBEqpPw39bEc9lwJWGcBVtJb6CAJ9cB2R34jKLCzv1BFy6zVcVzlZFUfqeXjtmrh+MXiBjmUAGkb8tFO5PS/TnO6bI9HTuRHOj2P4uZFKo/uwxFk7QeIIrE7Dk0SuCgh1o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=IFP6nG7Vw2tlof1v/pymMo8p9Bi/EBXeu12DmA4+WGRbTn7ab7R85eXQ8Bb1EazsccaxnDJlSBj9P7QHJVsajUzWO6oihgddL1DcQfGJhN2+JLGG3j5crpU5rHv9Bm1Bz3bXCIt/P4Wphbh7ODUQEsQ0MaiukxPTMgfzItjNCsA=
-Received: by 10.78.185.15 with SMTP id i15mr4563388huf.1194335113512;
-        Mon, 05 Nov 2007 23:45:13 -0800 (PST)
-Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 23:45:13 -0800 (PST)
-In-Reply-To: <176851C5-D735-4DDC-B799-A5106CD03989@lrde.epita.fr>
+	id S1754548AbXKFHwR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 02:52:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754215AbXKFHwR
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 02:52:17 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4733 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752605AbXKFHwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 02:52:16 -0500
+Received: (qmail 28206 invoked by uid 111); 6 Nov 2007 07:52:11 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 06 Nov 2007 02:52:11 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Nov 2007 02:51:53 -0500
 Content-Disposition: inline
+In-Reply-To: <20071106072831.GA3021@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63636>
 
-Hello,
+On Tue, Nov 06, 2007 at 08:28:31AM +0100, Alex Riesen wrote:
 
-> As far as I remember, a patch was proposed to change this mis-
-> behavior of "git stash" (one could argue that it's a PEBCAK issue,
-> but I really think this command is *way* too dangerous) but I don't
-> think it's been accepted at this time.
+> > In Maildir format, cur and new hold the mails. :P
+> 
+> So? Why *STOP* reading the mails if just one of the directories could
+> not be opened? IOW, I suggest:
 
-I think that people will use this a lot with the pull command and some
-accidents will happen.  I am of the opinion that the semantics of this
-command must be  changed.
-Additionally, having "git stash [command]" and "git stash [argument]"
-mixed together seems strange. One suggestion would be:
+Because you are then trying to apply a patch series with some patches
+potentially missing? Continuing only on errno == ENOENT seems prudent.
 
-    git stash store/add/create [stash-name]
-    git stash apply [stash-name]
-    git stash clear <stash-name>  (accepts wildcards but no empty args)
-    ...
-
-- Aghiles.
+-Peff
