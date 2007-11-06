@@ -1,54 +1,79 @@
-From: Matt McCutchen <matt@mattmccutchen.net>
-Subject: Re: [PATCH] git-cvsimport: Add -N option to force a new import
-Date: Mon, 05 Nov 2007 22:36:10 -0500
-Message-ID: <1194320170.21645.72.camel@localhost>
-References: <1193268519.8008.11.camel@mattlaptop2>
-	 <7vfxzz51d7.fsf@gitster.siamese.dyndns.org>
+From: Aghiles <aghilesk@gmail.com>
+Subject: Re: git pull opinion
+Date: Mon, 5 Nov 2007 23:04:28 -0500
+Message-ID: <3abd05a90711052004v3de6d448s2d1d9a53323060be@mail.gmail.com>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
+	 <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 04:36:36 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 06 05:04:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpFEw-0001O6-4e
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 04:36:34 +0100
+	id 1IpFgD-0006tu-8v
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 05:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754355AbXKFDgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 22:36:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754808AbXKFDgN
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 22:36:13 -0500
-Received: from sd-green-bigip-83.dreamhost.com ([208.97.132.83]:48237 "EHLO
-	jankymail-a4.dreamhost.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1753648AbXKFDgM (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 5 Nov 2007 22:36:12 -0500
-Received: from [129.2.207.218] (rmccutch.student.umd.edu [129.2.207.218])
-	by jankymail-a4.dreamhost.com (Postfix) with ESMTP id 248C81810D9;
-	Mon,  5 Nov 2007 19:36:11 -0800 (PST)
-In-Reply-To: <7vfxzz51d7.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.1 (2.12.1-3.matt1) 
+	id S1755998AbXKFEEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 23:04:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755181AbXKFEEb
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 23:04:31 -0500
+Received: from nf-out-0910.google.com ([64.233.182.191]:39416 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754802AbXKFEEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 23:04:30 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1572011nfb
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 20:04:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=hbN/GYVcrwopfcciZ3VcrsCvLxKdiGRiEuLwpvkW0IE=;
+        b=KbUq7usRPxzxef8/gp6fV2a9cL+QBr6TMsT1huysFPi+P0xmqMVtTsvVCCDw/6zi40p9m9boE3iMGlfdqyrYkfQ2t7a5WttuURSTp0z9cNZjtcbbPswd68z/gIskGJPlk2jCJ9NkhHuzDnMRQP+2x1lb0XW5YEmK0LJpeqZbwuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bNEu4Hxc+/xXdyk9A2qQqTEV2+KNQeg0TG9FEtI/sbIlpB3cf2x1aaOJw9x9qddsle3dk60DmEliWfleF1c6nmEdr6psnHiDPkyLZ2g7h+HEihMi+vvjEejD2BLM2Spk+UnynJVNSyUjJ51D2ZNeLBo2KdoJjC2Y5tlcooBZUJo=
+Received: by 10.78.107.8 with SMTP id f8mr4400221huc.1194321868512;
+        Mon, 05 Nov 2007 20:04:28 -0800 (PST)
+Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 20:04:28 -0800 (PST)
+In-Reply-To: <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63621>
 
-On Wed, 2007-10-24 at 20:17 -0700, Junio C Hamano wrote:
-> Matt McCutchen <matt@mattmccutchen.net> writes:
-> 
-> > I had a git repository for development of rsync and wanted to start
-> > importing the upstream CVS with git-cvsimport, but git-cvsimport saw
-> > that the git repository existed and insisted on updating a previous
-> > import.  This patch adds an -N option to git-cvsimport to force a new
-> > import and updates the documentation appropriately.
-> 
-> Sounds like a useful addition.  Tests?
+Hello Junio,
 
-Good call!  As I was dismayed to discover, the existing files in the
-working tree confused the import, so -N as I implemented it is useless.
-I ended up doing the import a different way; I'll notify the list if I
-get around to implementing -N properly.
+> You need to switch your mindset from centralized SVN workflow.
 
-Matt
+Yes, we understood that and we are trying hard :)
+
+> The beauty of distributedness is that it redefines the meaning
+> of "to commit".  In distributed systems, the act of committing
+> is purely checkpointing and it is not associated with publishing
+> the result to others as centralized systems force you to.
+>
+
+This is very nice actually and we absolutely understand what a
+commit means in the git world. Having the commit as a step
+before publishing is very helpful (although some  concepts such
+as "staging for a commit" are still obscure as of now).
+
+> Stop thinking like "I need to integrate the changes from
+> upstream into my WIP to keep up to date."  You first finish what
+> you are currently doing, at least to the point that it is
+> stable, make a commit to mark that state, and then start
+> thinking about what other people did.
+
+One particular situation in which this might not apply is when
+two people work very closely on the same feature (as mentioned
+by Steve Grimm in this thread) and one needs the changes
+made by the other. This often happens when starting a new project,
+as it is our case now :)
+
+Thank you,
+
+- Aghiles.
