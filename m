@@ -1,91 +1,132 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [ANNOUNCE] cgit v0.7
-Date: Tue, 6 Nov 2007 09:44:27 +0100
-Message-ID: <8c5c35580711060044i7a3d0134p42e9437cbe2a258b@mail.gmail.com>
-References: <8c5c35580711030408n658eb11fk19d554f0fa3b17@mail.gmail.com>
-	 <Pine.LNX.4.64.0711060903070.8577@ds9.cixit.se>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
+Date: Tue, 06 Nov 2007 09:49:25 +0100
+Message-ID: <20071106084925.GC4435@artemis.corp>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com> <7vlk9cmiyq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711052325090.4362@racer.site> <7vsl3kjdct.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711060317220.4362@racer.site> <7vode8j7o5.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Peter Karlsson" <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Nov 06 09:44:50 2007
+Content-Type: multipart/signed; boundary="NKoe5XOeduwbEQHU";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 09:49:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpK3F-0007gR-Rb
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 09:44:50 +0100
+	id 1IpK7y-0000N1-3b
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 09:49:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754666AbXKFIog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 03:44:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753648AbXKFIog
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 03:44:36 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:43253 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417AbXKFIof (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 03:44:35 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2325102wah
-        for <git@vger.kernel.org>; Tue, 06 Nov 2007 00:44:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=/cbdkdBduQyYyEGLMHlFIus7Xu1tBppDqhe1rGas0mE=;
-        b=JPTzt89DrSnrLWlgEBjoiCqs/PRudFDypKk/fEjWRlu31vy+uEnj22Dk/KZ1ujIoZH8Py3iJBh5FjvaOGgkA/3qtqS1sYwTmtb2UZpgqxTPRI9GkPM5PNYqWIXYK+2YTvT2+WrP9xYxgLOtoyVQwPYqhEEEDU06Hpf8q5CLE2GA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=lZq6e8n228S6i/1lxiVtr0ashFJSXeAbKgc5+DP/rLgWgbyMgNsz/PgNtD1vUHkln/cBhvIHWSe8vYzM6cMevPtB0IgN+7CS1E6fNinGr1W4zGxP6eTpMDYXe0bfHEJK0dKP9mokXCtRH1ycF2Hymemgsla8pomOeFT0wQdZIYk=
-Received: by 10.114.151.13 with SMTP id y13mr376791wad.1194338667440;
-        Tue, 06 Nov 2007 00:44:27 -0800 (PST)
-Received: by 10.114.235.4 with HTTP; Tue, 6 Nov 2007 00:44:27 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711060903070.8577@ds9.cixit.se>
+	id S1751729AbXKFIt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 03:49:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751327AbXKFIt1
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 03:49:27 -0500
+Received: from pan.madism.org ([88.191.52.104]:44133 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751441AbXKFIt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 03:49:27 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id E118328B0D;
+	Tue,  6 Nov 2007 09:49:25 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 905849B8; Tue,  6 Nov 2007 09:49:25 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
 Content-Disposition: inline
+In-Reply-To: <7vode8j7o5.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63644>
 
-On Nov 6, 2007 9:04 AM, Peter Karlsson <peter@softwolves.pp.se> wrote:
-> Lars Hjemli:
->
-> > cgit v0.7 (a fast webinterface for git) is now available at
+
+--NKoe5XOeduwbEQHU
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Nov 06, 2007 at 04:54:02AM +0000, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > On Mon, 5 Nov 2007, Junio C Hamano wrote:
 > >
-> >      git://hjemli.net/pub/git/cgit
->
-> Has anyone managed to compile this for Win32?
+> >> Allowing people to revert or cherry pick partially by using paths=20
+> >> limiter is a very good idea; the whole "it comes from a commit so we=
+=20
+> >> also commit" feels an utter nonsense, though.
+> >
+> > No.
+> >
+> > When "git revert <commit>" commits the result, "git revert <commit> --=
+=20
+> > <file>" should, too.
+>=20
+> I was not questioning about that part.  "If 'git revert <some
+> other form> foo' does not talk about commit, it should not
+> commit" was what I was referring to.
 
-If (win32 == cygwin): yes, just did (but it needed a makefile tweak
-regarding iconv)
+  Well, I don't really know how closely you read #git, but I'd say that
+"how do I undo my local changes in a git repository" is among the top 3
+questions. There _IS_ an UI issue for that.
 
--- 
-From: Lars Hjemli <hjemli@gmail.com>
-Date: Tue, 6 Nov 2007 09:35:07 +0100
-Subject: [PATCH] Makefile: link with libiconv if NEEDS_LIBICONV is defined
+If git revert <commitish> -- path1 path2 path3 is going to work at some
+point, I see no harm in saying that git revert HEAD -- path1 path2 path3
+work. We can also in that case spit an error message:
 
-This seems to be needed to compile on cygwin.
+error: this works as a courtesy but you really meant git checkout -- path/t=
+o/file
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
- Makefile |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+  On some other issues I'm all about educating people and learning to
+them how to "think different". But here it's a pure interface problem,
+and git is the sole $scm with a revert commands that doesn't reverts
+local changes wrt HEAD.
 
-diff --git a/Makefile b/Makefile
-index 6abd82a..dbc34a2 100644
---- a/Makefile
-+++ b/Makefile
-@@ -19,6 +19,11 @@ OBJECTS = shared.o cache.o parsing.o html.o
-ui-shared.o ui-repolist.o \
-        ui-snapshot.o ui-blob.o ui-tag.o ui-refs.o
+  The next release of master will have tons of UI improvements (terse
+output, better options parsing, more builtins hence faster commands =E2=80=
+=A6),
+I believe it's stopping halfway not thinking about issues like this from
+a newcomer point of view.
 
+  On the pure theoretical basis I believe you're right, it's a bit
+mixing apples and oranges. On the pragmatic usability side I'm quite
+sure you're wrong, because everyone is used to that:
 
-+ifdef NEEDS_LIBICONV
-+       EXTLIBS += -liconv
-+endif
-+
-+
- .PHONY: all git install clean distclean force-version get-git
+    $ hg revert --help | head -3 | tail -1
+    revert files or dirs to their states as of some revision
 
- all: cgit git
--- 
-1.5.3.4.452.g09149
+    $ bzr help revert | head -1
+    Purpose: Revert files to a previous revision.
+
+    $ svn help revert | head -1
+    revert: Restore pristine working copy file (undo most local edits).
+
+    $ darcs help revert | head -3 | tail -1
+    Revert to the recorded version (safe the first time only).
+
+    <put your favorite non-git scm with a revert command here>
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--NKoe5XOeduwbEQHU
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMCqVvGr7W6HudhwRAlkDAJwJ03Gxq4Tlx6iEvSbT2eFUGuz0SgCfdEgB
+tVsb/n5iGxPz8d0sxmf6uqw=
+=kyCV
+-----END PGP SIGNATURE-----
+
+--NKoe5XOeduwbEQHU--
