@@ -1,89 +1,58 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git pull opinion
-Date: Tue, 06 Nov 2007 19:07:04 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4730AD48.2050907@obry.net>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [bug in next ?] git-fetch/git-push issue
+Date: Tue, 6 Nov 2007 13:09:10 -0500
+Message-ID: <20071106180910.GA25934@sigill.intra.peff.net>
+References: <20071105175654.GD6205@artemis.corp> <20071106175627.GB9517@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Aghiles <aghilesk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 19:07:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Git ML <git@vger.kernel.org>
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 19:09:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpSps-0008Le-OQ
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:07:37 +0100
+	id 1IpSri-0000dG-26
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:09:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754637AbXKFSHT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 13:07:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754714AbXKFSHS
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:07:18 -0500
-Received: from smtp20.orange.fr ([80.12.242.26]:44980 "EHLO smtp20.orange.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752613AbXKFSHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 13:07:17 -0500
-Received: from me-wanadoo.net (localhost [127.0.0.1])
-	by mwinf2029.orange.fr (SMTP Server) with ESMTP id 50E881C00053
-	for <git@vger.kernel.org>; Tue,  6 Nov 2007 19:07:15 +0100 (CET)
-Received: from [192.168.0.100] (AVelizy-151-1-79-163.w81-249.abo.wanadoo.fr [81.249.105.163])
-	by mwinf2029.orange.fr (SMTP Server) with ESMTP id E90E01C00094;
-	Tue,  6 Nov 2007 19:07:14 +0100 (CET)
-X-ME-UUID: 20071106180714954.E90E01C00094@mwinf2029.orange.fr
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
-X-Enigmail-Version: 0.95.5
+	id S1753016AbXKFSJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 13:09:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752871AbXKFSJO
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:09:14 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1301 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751312AbXKFSJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 13:09:14 -0500
+Received: (qmail 32172 invoked by uid 111); 6 Nov 2007 18:09:12 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 06 Nov 2007 13:09:12 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 06 Nov 2007 13:09:10 -0500
+Content-Disposition: inline
+In-Reply-To: <20071106175627.GB9517@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63695>
 
-Aghiles a =E9crit :
-> Hello,
->=20
-> I am not sure this is the best place to write about this. Anyway,
-> we just switched a couple of repositories to git (from svn) here
-> at work and one thing people find annoying is a pull into
-> a dirty directory. Before the "stash" feature it was even worse
-> but now we can type:
->=20
->     git stash
->     git pull
->     git stash apply
->=20
-> But isn't that something we should be able to specify to the "pull"
-> command ? Additionally and if I am not mistakn, those commands will
-> create "dangling" commits and blobs. So one has to execute:
->=20
->     git prune
->=20
-> Is there an "easier" way to pull into a dirty directory ?=20
+On Tue, Nov 06, 2007 at 06:56:27PM +0100, Pierre Habouzit wrote:
 
-I'm using:
+>   On the same vein, with today's next:
+> 
+>     $ git push origin :teaser
+>     To ssh://git.corp/srv/git/mmsx.git
+>      - [deleting]        teaser
+>     refs/heads/teaser: 05518bc7df1af680447f58b034b108f66668db03 -> deleted
+>     Everything up-to-date
+>     fatal: Invalid revision range 05518bc7df1af680447f58b034b108f66668db03..0000000000000000000000000000000000000000
+>     fatal: ambiguous argument 'refs/heads/teaser': unknown revision or path not in the working tree.
+>     Use '--' to separate paths from revisions
 
-$ git config --global alias.update '!git stash && git pull && git stash
-apply'
+I can't replicate this output; can you provide more information on your
+test repo?
 
-Then in a git repository just do:
+If it is related to the bug we have been discussing, there haven't been
+any fixes applied yet. :)
 
-$ git update
-
-> ps; if someone is interested to hear what is the general opinion
-> on switching to git from svn in our company, I could elaborate.
-
-Would be nice to hear about that indeed.
-
-Pascal.
-
---=20
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|              http://www.obry.net
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
+-Peff
