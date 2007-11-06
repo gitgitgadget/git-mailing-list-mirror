@@ -1,106 +1,90 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: git pull opinion
-Date: Tue, 06 Nov 2007 01:46:01 +0100
-Message-ID: <20071106004601.GS8939@artemis.corp>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <7vd4uomfn8.fsf@gitster.siamese.dyndns.org> <18223.46848.109961.552827@lisa.zopyra.com>
+Date: Tue, 06 Nov 2007 01:54:23 +0100
+Message-ID: <472FBB3F.8080307@op5.se>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>	<7vd4uomfn8.fsf@gitster.siamese.dyndns.org> <18223.46848.109961.552827@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="sLx0z+5FKKtIVDwd";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, Aghiles <aghilesk@gmail.com>,
 	git@vger.kernel.org
 To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 01:46:20 2007
+X-From: git-owner@vger.kernel.org Tue Nov 06 01:54:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpCaB-0000ua-Tx
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 01:46:20 +0100
+	id 1IpCiW-0002ef-SX
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 01:54:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753999AbXKFAqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 19:46:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754887AbXKFAqF
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 19:46:05 -0500
-Received: from pan.madism.org ([88.191.52.104]:51191 "EHLO hermes.madism.org"
+	id S1757355AbXKFAya (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 19:54:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755920AbXKFAya
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 19:54:30 -0500
+Received: from mail.op5.se ([193.201.96.20]:36447 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753574AbXKFAqD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 19:46:03 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id B2BAA27053;
-	Tue,  6 Nov 2007 01:46:01 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 50BA3746B7; Tue,  6 Nov 2007 01:46:01 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Bill Lear <rael@zopyra.com>, Junio C Hamano <gitster@pobox.com>,
-	Aghiles <aghilesk@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
+	id S1757351AbXKFAy3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 19:54:29 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id D181C173064D;
+	Tue,  6 Nov 2007 01:53:39 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 83FchCviePsn; Tue,  6 Nov 2007 01:53:38 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.10])
+	by mail.op5.se (Postfix) with ESMTP id 8094E173064B;
+	Tue,  6 Nov 2007 01:53:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
 In-Reply-To: <18223.46848.109961.552827@lisa.zopyra.com>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63604>
 
-
---sLx0z+5FKKtIVDwd
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Nov 06, 2007 at 12:36:16AM +0000, Bill Lear wrote:
+Bill Lear wrote:
 > On Monday, November 5, 2007 at 15:33:31 (-0800) Junio C Hamano writes:
-> > Stop thinking like "I need to integrate the changes from upstream
-> > into my WIP to keep up to date."
-> >
-> > [...]
-> >
-> > Once you get used to that, you would not have "a dirty directory"
-> > problem.
->=20
+>> Aghiles <aghilesk@gmail.com> writes:
+>>
+>>> Is there an "easier" way to pull into a dirty directory ? I am
+>>> asking this to make sure I understand the problem and not
+>>> because I find it annoying to type those 4 commands to perform
+>>> a pull (although some of my colleagues do find that annoying :).
+>> You need to switch your mindset from centralized SVN workflow.
+>>
+>> The beauty of distributedness is that it redefines the meaning
+>> of "to commit".  In distributed systems, the act of committing
+>> is purely checkpointing and it is not associated with publishing
+>> the result to others as centralized systems force you to.
+>>
+>> Stop thinking like "I need to integrate the changes from
+>> upstream into my WIP to keep up to date."  You first finish what
+>> you are currently doing, at least to the point that it is
+>> stable, make a commit to mark that state, and then start
+>> thinking about what other people did.  You may most likely do a
+>> "git fetch" followed by "git rebase" to update your WIP on top
+>> of the updated work by others.
+>>
+>> Once you get used to that, you would not have "a dirty
+>> directory" problem.
+> 
 > I respectfully beg to differ.  I think it is entirely reasonable, and
 > not a sign of "centralized" mindset, to want to pull changes others
 > have made into your dirty repository with a single command.
+> 
 
-  I agree, I have such needs at work.  Here is how we (very informally)
-work: people push things that they believe could help other (a new
-helper function, a new module, a bug fix) in our master ASAP, but
-develop big complex feature in their repository and merge into master
-when it's ready.
+I find it much more convenient to just fetch them. I'd rather see
+git-pull being given a --rebase option (which would ultimately mean
+teaching git-merge about it) to rebase already committed changes on
+top of the newly fetched tracking branch. It's being worked on, but
+rather slowly.
 
-  Very often we discuss some bugfix that is impeding people, or a
-most-wanted-API. Someone does the work, commits, I often want to merge
-master _directly_ into my current work-branch, because I want the
-fix/new-API/... whatever.
-
-  I don't believe it's because we have a centralized repository that I
-have those needs, I would have the very same if I pulled changes
-directly from my colleagues repository. The reason why I need it at work
-is because there are some very vivid kind of changes, that only takes a
-couple of diff lines, and that you _need_ for your work to be completed.
-It's not really a matter of being fully up-to-date.
-
-  Though to my delight, with the current tip-of-next git, I noticed that
-many rebase and pull work in a dirty tree now :)
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---sLx0z+5FKKtIVDwd
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHL7lJvGr7W6HudhwRAsZoAJ9LA6onmigDyYJpSfVGbSnprK4kgACfYvZf
-kMZARe1+qwR5z9+pV0ovxSU=
-=/jwF
------END PGP SIGNATURE-----
-
---sLx0z+5FKKtIVDwd--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
