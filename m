@@ -1,104 +1,123 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin
-	commands.
-Date: Tue, 6 Nov 2007 18:08:13 +0100
-Message-ID: <20071106170813.GA27100@atjola.homenet>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com> <1194017589-4669-2-git-send-email-krh@redhat.com> <1194017589-4669-3-git-send-email-krh@redhat.com> <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet> <1194289073.13968.16.camel@hinata.boston.redhat.com> <20071105192347.GA29997@atjola.homenet> <Pine.LNX.4.64.0711052317170.4362@racer.site> <20071106065941.GA6423@atjola.homenet> <1194367619.20020.9.camel@hinata.boston.redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in  git, help users out.
+Date: Tue, 6 Nov 2007 18:43:39 +0100
+Message-ID: <7790B5EB-2EFC-47EF-8A5A-FA83CA26DDB9@wincent.com>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <CD2E6759-9E7E-41E6-8B58-AB6CA9604111@midwinter.com> <7vlk9cmiyq.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711052325090.4362@racer.site> <7vsl3kjdct.fsf@gitster.siamese.dyndns.org> <7vk5oviqbe.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711061216330.4362@racer.site> <20071106124833.GA25637@artemis.corp>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kristian =?iso-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 18:09:08 2007
+	Junio C Hamano <gitster@pobox.com>,
+	Steven Grimm <koreth@midwinter.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 18:44:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpRuo-00031f-Ga
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 18:08:38 +0100
+	id 1IpSTU-0008G1-Dc
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 18:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753235AbXKFRIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 12:08:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753459AbXKFRIR
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 12:08:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52823 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753247AbXKFRIQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 12:08:16 -0500
-Received: (qmail invoked by alias); 06 Nov 2007 17:08:15 -0000
-Received: from i577BB83C.versanet.de (EHLO localhost) [87.123.184.60]
-  by mail.gmx.net (mp012) with SMTP; 06 Nov 2007 18:08:15 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1+Jdmw4qjCJEjxKHlPhNk4RnpmJdXtOXq0s+4vCXM
-	67jASMhoWb15Y/
-Content-Disposition: inline
-In-Reply-To: <1194367619.20020.9.camel@hinata.boston.redhat.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
+	id S1754076AbXKFRoL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 12:44:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753490AbXKFRoL
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 12:44:11 -0500
+Received: from wincent.com ([72.3.236.74]:48164 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753459AbXKFRoK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2007 12:44:10 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA6HheKV012358;
+	Tue, 6 Nov 2007 11:43:41 -0600
+In-Reply-To: <20071106124833.GA25637@artemis.corp>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63690>
 
-On 2007.11.06 11:46:59 -0500, Kristian H=F8gsberg wrote:
-> On Tue, 2007-11-06 at 07:59 +0100, Bj=F6rn Steinbrink wrote:
-> ...
-> > Note though, that Kristian had a similar check at the end of his em=
-ail,
-> > that included "only" (but lacked the bool conversion). The original
-> > reason why I thought that it would be better was that for example
-> > "git commit --all --only foo" didn't care about "only" at all. But =
-that
-> > actually was because the --all + paths usage check was broken. So t=
-he
-> > fixed version actually refuses to use accept that, but with a (IMHO=
-) not
-> > so good error message:
-> >=20
-> > $ git commit -a -o file
-> > Paths with -a does not make sense.
-> >=20
-> > Given that some people are used to just pass -a all the time, they =
-might
-> > just automatically pass it together with -o. And I think that we
-> > actually want to tell them that -a + -o makes no sense instead. Jus=
-t
-> > like we do for -a + -i, which is kind of the complementary usage er=
-ror.
-> >=20
-> > So I'd go for a correct version of Kristian's suggestion:
-> >=20
-> > if (!!also + !!only + !!all + !!interactive > 1)
-> > 	die("Only one of --include/--only/--all/--interactive can be used.=
-");
->=20
-> Good points, I will use that in the next version of the patch.  Just =
-a
-> note about the !! idiom (which I can't stand, fwiw): my version just
-> added the variables, which were all integers, initialized to zero and
-> incremented by the option parser when it sees the corresponding optio=
-n.
-> So what I had would work too, with the extra check that:
->=20
->   $ git commit -a -a
->=20
-> etc would give the error
->=20
->   Only one of --include/--only/--all/--interactive can be used.
->=20
-> which is acutally accurate.
+El 6/11/2007, a las 13:48, Pierre Habouzit escribi=F3:
 
-Hm, why? The user used only one of them. The error message does not say
-that you cannot pass the same one multiple times. And I don't think tha=
-t
-passing the same boolean flag twice should be treated as an usage error
-either. There's no contradiction in wanting all files and, well, all
-files to be committed.
+> On Tue, Nov 06, 2007 at 12:25:33PM +0000, Johannes Schindelin wrote:
+>> Hi,
+>>
+>> On Tue, 6 Nov 2007, Junio C Hamano wrote:
+>>
+>>> Junio C Hamano <gitster@pobox.com> writes:
+>>>
+>>>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>>
+>>>>> In the same way, I would expect "git revert <commit> -- file" to =
+=20
+>>>>> undo the
+>>>>> changes in that commit to _that_ file (something like "git merge-=
+=20
+>>>>> file
+>>>>> file <commit>:file <commit>^:file"), but this time commit it, =20
+>>>>> since it
+>>>>> was committed at one stage.
+>>>>
+>>>> Allowing people to revert or cherry pick partially by using
+>>>> paths limiter is a very good idea; ...
+>>>
+>>> As Pierre said earlier, a partial revert via "revert <commit> --
+>>> <paths>" and a partial cherry-pick would make quite a lot of
+>>> sense, and in addition, it should not be too hard to add.
+>>
+>> Yes, but Pierre also said earlier that people want to revert their =20
+>> local
+>> changes.  And the logical thing to try that really is
+>>
+>> 	git revert <path>
+>>
+>> Now, if you read that out in English, it does not make too much =20
+>> sense:
+>> "revert the path" (not "revert the _changes_ to that file").  But =20
+>> it is
+>> what people try to do.
+>>
+>> However, IIUC another thing Pierre mentioned is that
+>>
+>> 	$scm revert <commit> <path>
+>>
+>> commonly means "revert the file _to the version_ stored in <commit>"=
+=2E
+>> This is just different enough from "revert the _changes_ to that fil=
+e
+>> stored in <commit>" to bite people, no?
+>
+>  Yeah but that's what checkout is for. The main source of iritation =20
+> for
+> new users comes (IMHO) from svn, where `svn revert path/to/file` is =20
+> part
+> of the workflow: in case of a conflict when you `svn up`, you have
+> either to:
+>  (1) fix the conflict and `svn resolved path/to/file`
+>  (2) drop your changes and take the trunk version `svn revert path/=20
+> to/file`
+>
+> People really expect git revert -- path/to/file to do the same as git
+> checkout HEAD -- path/to/file. Though I believe that like I said, =20
+> maybe
+> we don't wan't git revert -- path/to/file to become the first class
+> command to do that, but rather to do what the user meant, hinting =20
+> him in
+> the direction of the proper command. I wasn't really advocating that
+> git-revert should be a complete implementation of what git checkout
+> <comitish> -- <paths> does. YMMV.
 
-Sidenote: The "or mask" stuff in the option parser would probably
-prevent you from catching "-a -a" anyway, because the flag becomes trul=
-y
-boolean ;-)
 
-Bj=F6rn
+I agree; they're semantically different and it wouldn't be a good =20
+thing to start blurring the lines between them too much. It's just =20
+unfortunate that the term "revert" is used by most other SCMs to mean =20
+something different than what it means in "git-revert". I think the =20
+best path here is education, what Pierre says, rather than changing =20
+git-revert's semantics.
+
+The other changes discussed so far in this thread (path-limiting git-=20
+revert with preserving its semantics) seem like a good thing.
+
+Cheers,
+Wincent
