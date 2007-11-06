@@ -1,79 +1,60 @@
 From: Aghiles <aghilesk@gmail.com>
 Subject: Re: git pull opinion
-Date: Mon, 5 Nov 2007 23:04:28 -0500
-Message-ID: <3abd05a90711052004v3de6d448s2d1d9a53323060be@mail.gmail.com>
+Date: Mon, 5 Nov 2007 23:16:06 -0500
+Message-ID: <3abd05a90711052016s615cd66cy5a5f932900d89143@mail.gmail.com>
 References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
-	 <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
+	 <20071105234049.GA31277@genesis.frugalware.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 06 05:04:45 2007
+Cc: git@vger.kernel.org
+To: "Miklos Vajna" <vmiklos@frugalware.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 05:16:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpFgD-0006tu-8v
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 05:04:45 +0100
+	id 1IpFrU-0000PP-Mv
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 05:16:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755998AbXKFEEb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 5 Nov 2007 23:04:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755181AbXKFEEb
-	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 23:04:31 -0500
-Received: from nf-out-0910.google.com ([64.233.182.191]:39416 "EHLO
+	id S1754808AbXKFEQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 5 Nov 2007 23:16:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750950AbXKFEQJ
+	(ORCPT <rfc822;git-outgoing>); Mon, 5 Nov 2007 23:16:09 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:53865 "EHLO
 	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754802AbXKFEEa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 5 Nov 2007 23:04:30 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1572011nfb
-        for <git@vger.kernel.org>; Mon, 05 Nov 2007 20:04:28 -0800 (PST)
+	with ESMTP id S1754631AbXKFEQI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 5 Nov 2007 23:16:08 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1573645nfb
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 20:16:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hbN/GYVcrwopfcciZ3VcrsCvLxKdiGRiEuLwpvkW0IE=;
-        b=KbUq7usRPxzxef8/gp6fV2a9cL+QBr6TMsT1huysFPi+P0xmqMVtTsvVCCDw/6zi40p9m9boE3iMGlfdqyrYkfQ2t7a5WttuURSTp0z9cNZjtcbbPswd68z/gIskGJPlk2jCJ9NkhHuzDnMRQP+2x1lb0XW5YEmK0LJpeqZbwuY=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nx9Jcyo1QrB6ms6afjsYwcQPDOBjLPj8lLh3TPkxoAs=;
+        b=KpozOxe73zDE0rpQlfv9GdnnYsy6/ed3RPN3exn/3J6Q/wj76KWgppuwMYCUp2eTG+f2bzj05Z34MRuo6vq+35j9odVYENcf4A6u4OLbK9X0PWsXhCSAIdkGp/EWkA0E0zRSmhzXzzlJPEHCCg1GjhFXsTAHp7fPM0b3+kKWoPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=bNEu4Hxc+/xXdyk9A2qQqTEV2+KNQeg0TG9FEtI/sbIlpB3cf2x1aaOJw9x9qddsle3dk60DmEliWfleF1c6nmEdr6psnHiDPkyLZ2g7h+HEihMi+vvjEejD2BLM2Spk+UnynJVNSyUjJ51D2ZNeLBo2KdoJjC2Y5tlcooBZUJo=
-Received: by 10.78.107.8 with SMTP id f8mr4400221huc.1194321868512;
-        Mon, 05 Nov 2007 20:04:28 -0800 (PST)
-Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 20:04:28 -0800 (PST)
-In-Reply-To: <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qrJXTj6/Gks4Qnr5L9caLDadnl8oSb3y3ngM7h5AG/MQGiXTFlowAfBbGRrHokA0Cg4mYuvgU0SdnYNfm6Ynu48qBfIreGTaH9yXvwQnQosa03psg1kPL3grLsXkT7CpmhBYqcxeCXsg2rTrV6oszV1+2YPUhmlfnq/GGqKXUbk=
+Received: by 10.78.149.15 with SMTP id w15mr4402155hud.1194322566613;
+        Mon, 05 Nov 2007 20:16:06 -0800 (PST)
+Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 20:16:06 -0800 (PST)
+In-Reply-To: <20071105234049.GA31277@genesis.frugalware.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63622>
 
-Hello Junio,
+Hello,
 
-> You need to switch your mindset from centralized SVN workflow.
+> who will run git stash clear? :)
 
-Yes, we understood that and we are trying hard :)
+Yes you are right. By the way, in the context of merging into a
+dirty tree, "git stash clear" seems to be a dangerous command:
+there is a risk of loosing all your changes without a question
+asked!
 
-> The beauty of distributedness is that it redefines the meaning
-> of "to commit".  In distributed systems, the act of committing
-> is purely checkpointing and it is not associated with publishing
-> the result to others as centralized systems force you to.
->
-
-This is very nice actually and we absolutely understand what a
-commit means in the git world. Having the commit as a step
-before publishing is very helpful (although some  concepts such
-as "staging for a commit" are still obscure as of now).
-
-> Stop thinking like "I need to integrate the changes from
-> upstream into my WIP to keep up to date."  You first finish what
-> you are currently doing, at least to the point that it is
-> stable, make a commit to mark that state, and then start
-> thinking about what other people did.
-
-One particular situation in which this might not apply is when
-two people work very closely on the same feature (as mentioned
-by Steve Grimm in this thread) and one needs the changes
-made by the other. This often happens when starting a new project,
-as it is our case now :)
-
-Thank you,
+I know unix is a harsh world but ...
 
 - Aghiles.
