@@ -1,113 +1,147 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git pull opinion
-Date: Tue, 06 Nov 2007 09:59:51 +0100
-Message-ID: <47302D07.9030703@op5.se>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> <7vd4uomfn8.fsf@gitster.siamese.dyndns.org> <18223.46848.109961.552827@lisa.zopyra.com> <472FBB3F.8080307@op5.se> <Pine.LNX.4.64.0711060115130.4362@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin commands.
+Date: Tue, 06 Nov 2007 10:12:22 +0100
+Message-ID: <20071106091222.GE4435@artemis.corp>
+References: <1194017589-4669-1-git-send-email-krh@redhat.com> <1194017589-4669-2-git-send-email-krh@redhat.com> <1194017589-4669-3-git-send-email-krh@redhat.com> <1194017589-4669-4-git-send-email-krh@redhat.com> <20071103150637.GA11172@atjola.homenet> <1194289073.13968.16.camel@hinata.boston.redhat.com> <20071105192347.GA29997@atjola.homenet> <Pine.LNX.4.64.0711052317170.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Bill Lear <rael@zopyra.com>, Junio C Hamano <gitster@pobox.com>,
-	Aghiles <aghilesk@gmail.com>, git@vger.kernel.org
+Content-Type: multipart/signed; boundary="cYtjc4pxslFTELvY";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: =?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 06 10:00:16 2007
+X-From: git-owner@vger.kernel.org Tue Nov 06 10:12:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpKIA-0002lf-Mp
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 10:00:15 +0100
+	id 1IpKUD-0005bn-BZ
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 10:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751079AbXKFI76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 03:59:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750878AbXKFI76
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 03:59:58 -0500
-Received: from mail.op5.se ([193.201.96.20]:60518 "EHLO mail.op5.se"
+	id S1752608AbXKFJM1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 04:12:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752201AbXKFJM0
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 04:12:26 -0500
+Received: from pan.madism.org ([88.191.52.104]:41398 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750741AbXKFI75 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 03:59:57 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A96D2173065A;
-	Tue,  6 Nov 2007 09:59:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qg7KVBsZlORU; Tue,  6 Nov 2007 09:59:30 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 7364B17305AB;
-	Tue,  6 Nov 2007 09:59:30 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0711060115130.4362@racer.site>
+	id S1751320AbXKFJMY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 04:12:24 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 3D2A228B19;
+	Tue,  6 Nov 2007 10:12:23 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id EA38B34EFF6; Tue,  6 Nov 2007 10:12:22 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?utf-8?B?QmrDtnJu?= Steinbrink <B.Steinbrink@gmx.de>,
+	Kristian =?utf-8?B?SMO4Z3NiZXJn?= <krh@redhat.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711052317170.4362@racer.site>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63648>
 
-Johannes Schindelin wrote:
+
+--cYtjc4pxslFTELvY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Nov 05, 2007 at 11:18:36PM +0000, Johannes Schindelin wrote:
 > Hi,
-> 
-> On Tue, 6 Nov 2007, Andreas Ericsson wrote:
-> 
->> Bill Lear wrote:
->>> On Monday, November 5, 2007 at 15:33:31 (-0800) Junio C Hamano writes:
->>>> Aghiles <aghilesk@gmail.com> writes:
->>>>
->>>>> Is there an "easier" way to pull into a dirty directory ? I am
->>>>> asking this to make sure I understand the problem and not
->>>>> because I find it annoying to type those 4 commands to perform
->>>>> a pull (although some of my colleagues do find that annoying :).
->>>> You need to switch your mindset from centralized SVN workflow.
->>>>
->>>> The beauty of distributedness is that it redefines the meaning
->>>> of "to commit".  In distributed systems, the act of committing
->>>> is purely checkpointing and it is not associated with publishing
->>>> the result to others as centralized systems force you to.
->>>>
->>>> Stop thinking like "I need to integrate the changes from
->>>> upstream into my WIP to keep up to date."  You first finish what
->>>> you are currently doing, at least to the point that it is
->>>> stable, make a commit to mark that state, and then start
->>>> thinking about what other people did.  You may most likely do a
->>>> "git fetch" followed by "git rebase" to update your WIP on top
->>>> of the updated work by others.
->>>>
->>>> Once you get used to that, you would not have "a dirty
->>>> directory" problem.
->>> I respectfully beg to differ.  I think it is entirely reasonable, and
->>> not a sign of "centralized" mindset, to want to pull changes others
->>> have made into your dirty repository with a single command.
->>>
->> I find it much more convenient to just fetch them. I'd rather see
->> git-pull being given a --rebase option (which would ultimately mean
->> teaching git-merge about it) to rebase already committed changes on
->> top of the newly fetched tracking branch. It's being worked on, but
->> rather slowly.
-> 
-> git-pull learning about --rebase does not mean teaching git-merge about 
-> it.  See my patch, which you (and others) failed to enthusiastically 
-> embrace, which is the sole reason it is stalled.
-> 
+>=20
+> On Mon, 5 Nov 2007, Bj?rn Steinbrink wrote:
+>=20
+> > On 2007.11.05 13:57:53 -0500, Kristian H?gsberg wrote:
+> >
+> > > The shell script just has
+> > >=20
+> > > case "$all,$interactive,$also,$#" in
+> > > *t,*t,*)
+> > >         die "Cannot use -a, --interactive or -i at the same time." ;;
+> > >=20
+> > > which doesn't seem to care about the value of $also.  As far as I=20
+> > > understand git commit, it doesn't make sense to pass any of -a, -i, -=
+o=20
+> > > or --interactive at the same time so I guess I could join the checks
+> >=20
+> > Note that there are only two commas. The asterisks catch everything and
+> > $# won't be "t", so that catches anything with at least two t's.
+>=20
+> So shouldn't it be
+>=20
+> 	if (!!all + !!interactive + !!also > 1)
 
-I must have missed it. Found the thread now though. Gonna try the patch in
-production for a while and see how it pans out.
+Btw, I'm starting to work slowly on the diff_opt_parse conversion to the
+macro we discussed, and the need for new option parsing callbacks
+arised, and I've created a:
 
-I'm curious about this hunk though. It seems unaffiliated with the --rebase
-option as such, but was still in the patch. Would you care to clarify?
+  parse_opt_mask_{or,and,xor} commands that you declare this way:
 
-@@ -86,7 +95,6 @@ merge_head=$(sed -e '/	not-for-merge	/d' \
- 
- case "$merge_head" in
- '')
--	curr_branch=$(git symbolic-ref -q HEAD)
- 	case $? in
- 	  0) ;;
- 	  1) echo >&2 "You are not currently on a branch; you must explicitly"
+    OPT_MASK_OR('a', "all",         &mode, "...", MASK_ALL),
+    OPT_MASK_OR('i', "interactive", &mode, "...", MASK_INTERACTIVE),
+    ...
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+And if you chose MASK_ALL/INTERACTIVE/.. to be single bits,
+
+    if (!!all + !!interactive ... > 1)
+
+becomes[0]:
+
+    if (mode & (mode - 1)) {
+
+    }
+
+I've not read your patch thoroughly, but if you feel such a thing would
+help you, I could send a preliminar set of patches to enable this
+feature for people that may need it. Though you can look at my WIP on my
+git public repository[1].
+
+For those who care, this need arised because parse_diff_opts have a
+_lot_ of single bit options, and that expansing it on many many full
+blown integers looked like a regression, so I took the option to have a
+`flags` member with explicit masks, and those masks will be used from
+the parse-option callbacks[2]
+
+
+  [0] for those who don't already know it, (i & (i - 1)) =3D=3D 0
+      iff i is 0 or a power of 2.
+
+  [1] the patch[3]:
+      http://git.madism.org/?p=3Dgit.git;a=3Dcommitdiff;h=3D9d75b0a00915fa8=
+1657934f36318c1c0f5bac96b
+      example of use:
+      http://git.madism.org/?p=3Dgit.git;a=3Dcommitdiff;h=3D74aacc487579d0c=
+bd638adf883e743caeaee0f76
+      http://git.madism.org/?p=3Dgit.git;a=3Dcommitdiff;h=3Daf15793dde94119=
+faa1577c9eec7e839ae628011
+
+  [2] http://git.madism.org/?p=3Dgit.git;a=3Dcommitdiff;h=3D86032204f1bdf5d=
+a2fee555ec917709b3e6f662c#patch10
+
+  [3] oh boy gitweb urls are really way too long :/
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--cYtjc4pxslFTELvY
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMC/2vGr7W6HudhwRAtCcAJ9uT7mVd0PfuaxB1qvnqY+04Y1KCwCfc8/c
+rgTYDQcZeWlWbkBhAm5ZSjo=
+=FA7g
+-----END PGP SIGNATURE-----
+
+--cYtjc4pxslFTELvY--
