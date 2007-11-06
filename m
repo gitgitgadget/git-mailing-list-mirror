@@ -1,67 +1,90 @@
-From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
-Subject: Re: Git-windows and git-svn?
-Date: Tue, 6 Nov 2007 20:27:55 +0100
-Message-ID: <200711062027.56519.robin.rosenberg.lists@dewire.com>
-References: <fgg6cd$3ep$1@ger.gmane.org> <Pine.LNX.4.64.0711060857140.8577@ds9.cixit.se> <4730A9C3.1090006@obry.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 04/10] Migrate git-clone to use git-rev-parse --parseopt
+Date: Tue, 06 Nov 2007 11:32:49 -0800
+Message-ID: <7vr6j3gof2.fsf@gitster.siamese.dyndns.org>
+References: <1194172262-1563-1-git-send-email-madcoder@debian.org>
+	<1194172262-1563-2-git-send-email-madcoder@debian.org>
+	<1194172262-1563-3-git-send-email-madcoder@debian.org>
+	<1194172262-1563-4-git-send-email-madcoder@debian.org>
+	<1194172262-1563-5-git-send-email-madcoder@debian.org>
+	<alpine.LFD.0.9999.0711061355330.21255@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Karlsson <peter@softwolves.pp.se>,
-	Steffen Prohaska <prohaska@zib.de>,
-	Abdelrazak Younes <younes.a@free.fr>,
-	Git Mailing List <git@vger.kernel.org>
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Tue Nov 06 20:26:58 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Nicolas Pitre <nico@cam.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 20:33:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpU4R-0001Nm-PC
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 20:26:44 +0100
+	id 1IpUAx-0003me-HW
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 20:33:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756252AbXKFT00 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 14:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756224AbXKFT00
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 14:26:26 -0500
-Received: from [83.140.172.130] ([83.140.172.130]:27722 "EHLO dewire.com"
-	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
-	id S1751079AbXKFT0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 14:26:25 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3A7C614706CC;
-	Tue,  6 Nov 2007 20:17:25 +0100 (CET)
-Received: from dewire.com ([127.0.0.1])
- by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 01450-03; Tue,  6 Nov 2007 20:17:24 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id E0BDD802661;
-	Tue,  6 Nov 2007 20:17:24 +0100 (CET)
-User-Agent: KMail/1.9.7
-In-Reply-To: <4730A9C3.1090006@obry.net>
-Content-Disposition: inline
-X-Virus-Scanned: by amavisd-new at dewire.com
+	id S1754650AbXKFTc5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 14:32:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754586AbXKFTc5
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 14:32:57 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:48814 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160AbXKFTc4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 14:32:56 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 8DE992F0;
+	Tue,  6 Nov 2007 14:33:16 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EF9E992DF5;
+	Tue,  6 Nov 2007 14:33:12 -0500 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0711061355330.21255@xanadu.home> (Nicolas
+	Pitre's message of "Tue, 06 Nov 2007 14:04:07 -0500 (EST)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63704>
 
-tisdag 06 november 2007 skrev Pascal Obry:
-> Peter Karlsson a =E9crit :
-> > I got errors almost right away when trying that (I need text mode t=
-o
-> > interface with some other programs), so Cygwin-git is a no-go for m=
-e at
->=20
-> Won't it be possible for you to have a specific mount point using
-> textmode and one with binmode ? This should allow you to have the bes=
-t
-> of both world. Note that I've never done that so I don't know if it i=
-s
-> working fine.
+Gaah.
 
-I do that. It works fine. I've set up such paths so I have /cygdrive/c =
-for textmode and
-/binmode/c for binary mode and some other extra binary paths for conven=
-ience.
+I'd blame Linus for suggesting to make parseopt part of
+rev-parse, the latter of which makes sense only inside git while
+the former of which makes sense outside git.
 
--- robin
+Would something like this help?
+
+---
+ builtin-rev-parse.c |    4 ++--
+ git.c               |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index 054519b..d1038a0 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -337,11 +337,11 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 	int i, as_is = 0, verify = 0;
+ 	unsigned char sha1[20];
+ 
+-	git_config(git_default_config);
+-
+ 	if (argc > 1 && !strcmp("--parseopt", argv[1]))
+ 		return cmd_parseopt(argc - 1, argv + 1, prefix);
+ 
++	prefix = setup_git_directory();
++	git_config(git_default_config);
+ 	for (i = 1; i < argc; i++) {
+ 		const char *arg = argv[i];
+ 
+diff --git a/git.c b/git.c
+index 6c5f9af..204a6f7 100644
+--- a/git.c
++++ b/git.c
+@@ -340,7 +340,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
+ 		{ "reset", cmd_reset, RUN_SETUP },
+ 		{ "rev-list", cmd_rev_list, RUN_SETUP },
+-		{ "rev-parse", cmd_rev_parse, RUN_SETUP },
++		{ "rev-parse", cmd_rev_parse },
+ 		{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+ 		{ "rm", cmd_rm, RUN_SETUP },
+ 		{ "runstatus", cmd_runstatus, RUN_SETUP | NEED_WORK_TREE },
