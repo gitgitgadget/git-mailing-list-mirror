@@ -1,63 +1,57 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git pull opinion
-Date: Tue, 6 Nov 2007 18:28:52 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711061828380.4362@racer.site>
-References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
- <fgo5dt$avh$1@ger.gmane.org> <Pine.LNX.4.64.0711060007010.4362@racer.site>
- <3abd05a90711052022j590f1faesb85f4646afd9acec@mail.gmail.com>
- <Pine.LNX.4.64.0711061159240.4362@racer.site> <7v1wb3i6nx.fsf@gitster.siamese.dyndns.org>
+From: "Patrick Aljord" <patcito@gmail.com>
+Subject: Re: [ANNOUNCE] cgit v0.7
+Date: Tue, 6 Nov 2007 19:39:44 +0100
+Message-ID: <6b6419750711061039l26290561wd2abe07035a8679c@mail.gmail.com>
+References: <8c5c35580711030408n658eb11fk19d554f0fa3b17@mail.gmail.com>
+	 <Pine.LNX.4.64.0711060903070.8577@ds9.cixit.se>
+	 <8c5c35580711060044i7a3d0134p42e9437cbe2a258b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Aghiles <aghilesk@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 19:30:41 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git list" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 06 19:40:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpTCC-0007lC-GO
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:30:40 +0100
+	id 1IpTLI-0002MW-AE
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 19:40:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754723AbXKFS3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 13:29:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754650AbXKFS3u
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:29:50 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33846 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754503AbXKFS3t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 13:29:49 -0500
-Received: (qmail invoked by alias); 06 Nov 2007 18:29:47 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp005) with SMTP; 06 Nov 2007 19:29:47 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19LcZlQdkNLdUoSW1x71tHyEIp0k7tibVhcTGWcXD
-	kyv+PeOv44Mr8p
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7v1wb3i6nx.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1754942AbXKFSju (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 13:39:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754784AbXKFSju
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 13:39:50 -0500
+Received: from mu-out-0910.google.com ([209.85.134.184]:37278 "EHLO
+	mu-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754780AbXKFSjt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 13:39:49 -0500
+Received: by mu-out-0910.google.com with SMTP id i10so2008638mue
+        for <git@vger.kernel.org>; Tue, 06 Nov 2007 10:39:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=ZQTuIOr3T5cwFuvji6S7etdw+23G79P6bFxxUiAv9/E=;
+        b=CVsnvQxCu2u/Nah07KytjmsdJp++KjYG0mTiRu9cDaeIG0Fp/ylKpcS5isPop8ag6ynjf0XDhB+aZxeP5fvX/SMwnSFtwhyxoUydm46/eDMq5EH4OBsQ96Z40w3JmN2O742s1DKUoPyTGLJ3QDsa0zJZyDLN12k4kN6ea8kk8B4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=p+hZk2NU3yy6M/6xVel1l2Yy1MeA9a1pMZUifzzwT6/PZeTgXklNBKBX6lf/lXcEGsCKAl4KuG3xhSaN9fq8FvUXN7h+TB/n/XH/i1wSAJdy815fEbqWdIgpdpqy+UgoQAJkE0blxlN0MvWGBvjgRtXsFGQp0h54uNvN1OcAQKU=
+Received: by 10.82.177.3 with SMTP id z3mr13124914bue.1194374384708;
+        Tue, 06 Nov 2007 10:39:44 -0800 (PST)
+Received: by 10.82.184.13 with HTTP; Tue, 6 Nov 2007 10:39:44 -0800 (PST)
+In-Reply-To: <8c5c35580711060044i7a3d0134p42e9437cbe2a258b@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63700>
 
-Hi,
+Looks great, thanks for the new release.
 
-On Tue, 6 Nov 2007, Junio C Hamano wrote:
+It would be great if when a commit message contains something such as
+#1234 it would automatically link to the bug tracker page of that bug
+(like Trac does) by preconfiguring the bugtracker URL.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > A pull is just a fetch and a merge.  And a merge is a commit with more 
-> > than one parent.  So you can use the command "git reset --hard HEAD^" to 
-> > undo a merge, just as you can undo any other commit.
-> 
-> *DANGER*
-> 
-> A pull is usually just a fetch and a merge, but sometimes it can fast 
-> forward.  ORIG_HEAD, not HEAD^, points at the previous HEAD location in 
-> both cases.
-
-Oops. Right.
-
-Thanks,
-Dscho
+Such as "bug #238 test for root-window that XFree86 fixed in their"
+would link the "#238"  part to
+http://bugs.freedesktop.org/show_bug.cgi?id=238
