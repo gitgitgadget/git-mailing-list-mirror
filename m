@@ -1,97 +1,91 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH 4/4] Implement git commit and status as a builtin
-	commands.
-Date: Tue, 06 Nov 2007 11:46:59 -0500
-Message-ID: <1194367619.20020.9.camel@hinata.boston.redhat.com>
-References: <1194017589-4669-1-git-send-email-krh@redhat.com>
-	 <1194017589-4669-2-git-send-email-krh@redhat.com>
-	 <1194017589-4669-3-git-send-email-krh@redhat.com>
-	 <1194017589-4669-4-git-send-email-krh@redhat.com>
-	 <20071103150637.GA11172@atjola.homenet>
-	 <1194289073.13968.16.camel@hinata.boston.redhat.com>
-	 <20071105192347.GA29997@atjola.homenet>
-	 <Pine.LNX.4.64.0711052317170.4362@racer.site>
-	 <20071106065941.GA6423@atjola.homenet>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-mailsplit: with maildirs try to process new/ if cur/
+ is empty
+Date: Tue, 6 Nov 2007 16:58:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711061658050.4362@racer.site>
+References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org>
+ <20071026160118.GA5076@ferdyx.org> <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org>
+ <20071105225258.GC4208@steel.home> <635FFEC2-2489-443B-8425-DF2B58BE23C2@mac.com>
+ <20071106072831.GA3021@steel.home> <20071106075150.GA21694@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0711061100150.4362@racer.site> <20071106154740.GA24505@sigill.intra.peff.net>
+ <Pine.LNX.4.64.0711061550580.4362@racer.site> <20071106163548.GA8207@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 06 17:48:59 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jeff King <peff@peff.net>, Alex Riesen <raa.lkml@gmail.com>,
+	Michael Cohen <michaeljosephcohen@mac.com>,
+	Gerrit Pape <pape@smarden.org>,
+	"Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 18:00:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpRbS-0003uC-LQ
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 17:48:39 +0100
+	id 1IpRmu-0008Q9-O2
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 18:00:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754274AbXKFQrl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 6 Nov 2007 11:47:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754118AbXKFQrl
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 11:47:41 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:36305 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754076AbXKFQrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 11:47:39 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA6Gl5PS008845;
-	Tue, 6 Nov 2007 11:47:05 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA6Gl5oi022095;
-	Tue, 6 Nov 2007 11:47:05 -0500
-Received: from [192.168.1.101] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA6Gl4P4021745;
-	Tue, 6 Nov 2007 11:47:04 -0500
-In-Reply-To: <20071106065941.GA6423@atjola.homenet>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1753831AbXKFQ7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 11:59:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbXKFQ7p
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 11:59:45 -0500
+Received: from mail.gmx.net ([213.165.64.20]:36830 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753562AbXKFQ7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 11:59:44 -0500
+Received: (qmail invoked by alias); 06 Nov 2007 16:59:42 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp019) with SMTP; 06 Nov 2007 17:59:42 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+SGj1S9QmSljxgWVxhyNy+0h8az2e2vH9/lD80lS
+	aiALI9k57wmAZL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071106163548.GA8207@diana.vm.bytemark.co.uk>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63687>
 
-On Tue, 2007-11-06 at 07:59 +0100, Bj=C3=B6rn Steinbrink wrote:
-=2E..
-> Note though, that Kristian had a similar check at the end of his emai=
-l,
-> that included "only" (but lacked the bool conversion). The original
-> reason why I thought that it would be better was that for example
-> "git commit --all --only foo" didn't care about "only" at all. But th=
-at
-> actually was because the --all + paths usage check was broken. So the
-> fixed version actually refuses to use accept that, but with a (IMHO) =
-not
-> so good error message:
->=20
-> $ git commit -a -o file
-> Paths with -a does not make sense.
->=20
-> Given that some people are used to just pass -a all the time, they mi=
-ght
-> just automatically pass it together with -o. And I think that we
-> actually want to tell them that -a + -o makes no sense instead. Just
-> like we do for -a + -i, which is kind of the complementary usage erro=
-r.
->=20
-> So I'd go for a correct version of Kristian's suggestion:
->=20
-> if (!!also + !!only + !!all + !!interactive > 1)
-> 	die("Only one of --include/--only/--all/--interactive can be used.")=
-;
+Hi,
 
-Good points, I will use that in the next version of the patch.  Just a
-note about the !! idiom (which I can't stand, fwiw): my version just
-added the variables, which were all integers, initialized to zero and
-incremented by the option parser when it sees the corresponding option.
-So what I had would work too, with the extra check that:
+On Tue, 6 Nov 2007, Karl Hasselstr?m wrote:
 
-  $ git commit -a -a
+> On 2007-11-06 15:51:09 +0000, Johannes Schindelin wrote:
+> 
+> > On Tue, 6 Nov 2007, Jeff King wrote:
+> >
+> > > On Tue, Nov 06, 2007 at 11:01:03AM +0000, Johannes Schindelin wrote:
+> > >
+> > > > I fail to see how the absence of one of cur/ or new/ can lead to
+> > > > the absence of patches. You could forget to save some patches,
+> > > > yes, but the presence of cur/ and new/ is no indicator for that.
+> > >
+> > > Read my message again. Alex is proposing ignoring errors in
+> > > opening the directories; I am proposing ignoring such errors
+> > > _only_ when the error is that the directory does not exist.
+> > >
+> > > IOW, if there is some other error in opening the directory, it
+> > > should be fatal, because you might be missing patches.
+> >
+> > Yeah, sorry, I missed that.
+> 
+> I think it might actually not be totally unreasonable to error out
+> unless both directories exist. From
+> http://www.qmail.org/qmail-manual-html/man5/maildir.html:
+> 
+>   A directory in maildir format has three subdirectories, all on the
+>   same filesystem: tmp, new, and cur.
+> 
+> In other words, if it doesn't have these three directories, it isn't a
+> Maildir directory.
+> 
+> On the other hand, one could argue that requiring both dirs to exist
+> is being too picky.
 
-etc would give the error
+Not only that.  The recent patch for OSX' mail program would be trivial 
+if we did not error out: the array would just contain cur, new and 
+Messages.
 
-  Only one of --include/--only/--all/--interactive can be used.
-
-which is acutally accurate.
-
-cheers,
-Kristian
+Ciao,
+Dscho
