@@ -1,96 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Mon, 05 Nov 2007 21:30:52 -0800
-Message-ID: <7vbqa8j5yr.fsf@gitster.siamese.dyndns.org>
-References: <1194202941253-git-send-email-shawn.bohrer@gmail.com>
-	<11942029442710-git-send-email-shawn.bohrer@gmail.com>
-	<11942029474058-git-send-email-shawn.bohrer@gmail.com>
-	<7vejf4pf7r.fsf@gitster.siamese.dyndns.org>
-	<20071106050512.GA6768@mediacenter.austin.rr.com>
+From: Aghiles <aghilesk@gmail.com>
+Subject: Re: git pull opinion
+Date: Tue, 6 Nov 2007 01:30:23 -0500
+Message-ID: <3abd05a90711052230y4d6151c6o3e7985a0c8e18161@mail.gmail.com>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com>
+	 <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>
+	 <18223.46848.109961.552827@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
-To: Shawn Bohrer <shawn.bohrer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 06 06:31:21 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Bill Lear" <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Nov 06 07:30:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpH20-0004Pn-JC
-	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 06:31:21 +0100
+	id 1IpHxQ-000619-Fg
+	for gcvg-git-2@gmane.org; Tue, 06 Nov 2007 07:30:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752232AbXKFFbG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 00:31:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750951AbXKFFbE
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 00:31:04 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:48693 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752064AbXKFFbD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 00:31:03 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 679E62EF;
-	Tue,  6 Nov 2007 00:31:20 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B20148FCDF;
-	Tue,  6 Nov 2007 00:31:16 -0500 (EST)
-In-Reply-To: <20071106050512.GA6768@mediacenter.austin.rr.com> (Shawn Bohrer's
-	message of "Mon, 5 Nov 2007 23:05:12 -0600")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754410AbXKFGa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 01:30:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754284AbXKFGa0
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 01:30:26 -0500
+Received: from nf-out-0910.google.com ([64.233.182.184]:23103 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754390AbXKFGa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 01:30:26 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1592364nfb
+        for <git@vger.kernel.org>; Mon, 05 Nov 2007 22:30:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0p9DL2s05yAQuAYqYLFQU/dMdv/QFNVEMUqOSlKCgNA=;
+        b=E8nwR/CItwExIoVzY7Lrm5zqhnm8sYTvwV4L5cgqx17NEndNHsEG/pLbwrhYNXIA/f3RP3jQFElOuZ97yPdb67ikDv7tiUijMzNqAScvtxsEGrcmEgqaiFnjSYkl93XrwwdZxd9mGOoaqZ+jQyykh0j/MiOnsU7mtlmbo/TE02M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=czvMzkFBegDFQNYcicx87TLzQUwMQacgfx5iwQDaIXDv8W9UmMg1jUNK4inWvwhELtLPZ0O8hFZdpxfAC8ses7KfsZarMkzWazRYNkzN0OuYnta0SREzI37qj4iYuN9treex3Yl0bZBeIsoMHQVxxJAMIBxU4ltgwixXaST8BQ4=
+Received: by 10.78.149.15 with SMTP id w15mr4490456hud.1194330623841;
+        Mon, 05 Nov 2007 22:30:23 -0800 (PST)
+Received: by 10.78.185.1 with HTTP; Mon, 5 Nov 2007 22:30:23 -0800 (PST)
+In-Reply-To: <18223.46848.109961.552827@lisa.zopyra.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63628>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63629>
 
-Shawn Bohrer <shawn.bohrer@gmail.com> writes:
+> I respectfully beg to differ.  I think it is entirely reasonable, and
+> not a sign of "centralized" mindset, to want to pull changes others
+> have made into your dirty repository with a single command.
 
-> On Mon, Nov 05, 2007 at 01:14:32PM -0800, Junio C Hamano wrote:
->> Shawn Bohrer <shawn.bohrer@gmail.com> writes:
->> [...]
->> > +static int disabled = 1;
->> 
->> This means we are committed to make clean.requireForce default
->> to true, which is fine by me.  I need to warn the users about
->> this early.
->
-> Actually I don't care either way, but in my last rebase on next this
-> change was already made to git-clean.sh so I adjusted accordingly.
+BitKeeper, for example, does a merge with a "dirty" directory.
+I am not saying that git should behave the same way but I think
+that this argument strengthens the point that it is not a
+"centralized repository" mindset.
 
-Oh, that was not a question to you, but a note to me.
-
->> > +static int show_only = 0;
->> > +static int remove_directories = 0;
->> > +static int quiet = 0;
->> > +static int ignored = 0;
->> > +static int ignored_only = 0;
->> 
->> Please do not explicitly initialize static variables to zero.
->
-> I realize that static variables will be automatically initialized to
-> zero so this is unnecessary, but is there some technical reason not to
-> initialize explicitly?  If the answer is simply a style preference that
-> is fine, I'm just here to learn.
-
-Both readability and style have to do much with this.
-
-The style has a historical background which is a slight
-technical merit.  It results in a smaller executable file, as C
-compilers traditionally placed file-scope static variables that
-are not explicitly initialized in the BSS section, instead of
-explicitly storing N-bytes of zero as the the initial data in it
-(although I do not see a reason for compilers not to do the same
-for variables explicitly initialized to zero.  In fact, I think
-modern gcc produces the same allocation with or without "= 0"
-initialization).
-
-> Of course as already pointed out these don't actually need to be static
-> in the first place so I'll simply move them into cmd_clean().  This does
-> lead me to another question though.  Now that Dscho has converted my
-> patch to use parse-options, what is the best way to update my patch
-> while still giving credit to Dscho?
-
-Please send a rewritten replacement version as a single patch
-that is cleanly applicable to 'next', and mention people whose
-input helped you in polishing the patch in the proposed commit
-log message.
+- Aghiles.
