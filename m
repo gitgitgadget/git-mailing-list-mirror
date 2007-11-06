@@ -1,61 +1,67 @@
-From: "Han-Wen Nienhuys" <hanwenn@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git-log -p --raw broken?
-Date: Tue, 6 Nov 2007 20:03:33 -0300
-Message-ID: <f329bf540711061503u4f5ba006p10d4e518812ae893@mail.gmail.com>
+Date: Tue, 6 Nov 2007 15:10:59 -0800 (PST)
+Message-ID: <alpine.LFD.0.999.0711061508490.15101@woody.linux-foundation.org>
 References: <f329bf540711061448iab9d4a9q37e13b846dbc5ff1@mail.gmail.com>
-Reply-To: hanwen@xs4all.nl
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 07 00:04:56 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: git@vger.kernel.org
+To: hanwen@xs4all.nl
+X-From: git-owner@vger.kernel.org Wed Nov 07 00:11:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpXTX-0007iw-Cc
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 00:04:51 +0100
+	id 1IpXZo-0001F7-Tz
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 00:11:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752554AbXKFXDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 18:03:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754621AbXKFXDf
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 18:03:35 -0500
-Received: from rv-out-0910.google.com ([209.85.198.186]:41692 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752398AbXKFXDe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 18:03:34 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1883761rvb
-        for <git@vger.kernel.org>; Tue, 06 Nov 2007 15:03:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=Bbh3lFDAHyT4WMGxW07e8fSb2vuTxrsN+7S+JSfJ8sY=;
-        b=VcOx+qguxKgZVSIQY6uE7bV6mPOtNhW0PrUs57QT/Jb3czmjGwH8KiLNPF+sixQFbURrawAczFyHbWQ7af2qb6SCEomKi3OXdD8KCil6s0CvkGilmviWy13LBBoa8i7MQutxyP7qKs+N1ZGc3DuNvxXKaY7GWYqBI8lFKayfzNY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:reply-to:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=MMW8xq3lh7BPUTjPBn/cpZojlZOGT99+HQGCKj6MXbg8DRVXv1eMsyaq/diItkDhYdc/cU5N66NUD8QaS59qoaCGtINqvK1R/Xo43y4Imh9k2dSnc/McEopmtw/BqvMVObR/I2TNBKJl0t9cJF6I+5WQ0O8ysiSDO8rlNzVJEws=
-Received: by 10.115.108.1 with SMTP id k1mr43284wam.1194390213882;
-        Tue, 06 Nov 2007 15:03:33 -0800 (PST)
-Received: by 10.114.76.4 with HTTP; Tue, 6 Nov 2007 15:03:33 -0800 (PST)
+	id S1755085AbXKFXLG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 18:11:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754681AbXKFXLE
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 18:11:04 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41304 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754673AbXKFXLC (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2007 18:11:02 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA6NB09P011048
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 6 Nov 2007 15:11:01 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA6NAxaC013938;
+	Tue, 6 Nov 2007 15:11:00 -0800
 In-Reply-To: <f329bf540711061448iab9d4a9q37e13b846dbc5ff1@mail.gmail.com>
-Content-Disposition: inline
+X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63744>
 
-2007/11/6, Han-Wen Nienhuys <hanwenn@gmail.com>:
 
-> I'm trying to get a list of
+
+On Tue, 6 Nov 2007, Han-Wen Nienhuys wrote:
 >
->   git diff-tree -t -r --raw COMMITTISH
->
-> [..]
-
+> The manual page suggests that I should be able to do
+> 
+>  git log -p --raw COMMIT-RANGE
+> 
+> however, when I try that, I get always get the same style output,
+> which is the (to me: useless) human readable output.
+> 
 > Am I missing something?
 
-I probably am, never mind this message.
-\
--- 
-Han-Wen Nienhuys - hanwen@xs4all.nl - http://www.xs4all.nl/~hanwen
+No, you're not *missing* anything. You have something *too much*.
+
+Please remove the "-p" if you don't want a patch.
+
+This works:
+
+	git log --raw COMMIT-RANGE
+
+(actually, most of the time you'd want to use "-r" too when you get raw 
+output, but git log enables that by default)
+
+			Linus
