@@ -1,73 +1,79 @@
-From: Johannes Gilger <heipei@hackvalue.de>
+From: James <jtp@nc.rr.com>
 Subject: Re: git push refspec problem
-Date: Wed, 07 Nov 2007 16:22:58 +0100
-Message-ID: <4731D852.2080500@hackvalue.de>
-References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com> <Pine.LNX.4.64.0711071510480.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: James <jtp@nc.rr.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 16:23:19 2007
+Date: Wed, 7 Nov 2007 10:23:27 -0500
+Message-ID: <EA230407-45F1-4F7E-8415-A43ECF940856@nc.rr.com>
+References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com> <Pine.LNX.4.64.0711071510480.4362@racer.site> <20071107152003.GL18057@artemis.corp>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Wed Nov 07 16:23:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpmkP-0000VS-JH
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:23:18 +0100
+	id 1Ipmkq-0000f6-Ah
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:23:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753554AbXKGPWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 10:22:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754682AbXKGPWo
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:22:44 -0500
-Received: from avalon.gnuzifer.de ([85.10.199.84]:35648 "EHLO
-	avalon.gnuzifer.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753554AbXKGPWn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 10:22:43 -0500
-Received: from 6-142.vpn.rwth-aachen.de ([134.130.246.142]:59905)
-	by avalon.gnuzifer.de with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.63)
-	(envelope-from <heipei@hackvalue.de>)
-	id 1Ipmjo-0004bc-3w; Wed, 07 Nov 2007 16:22:40 +0100
-User-Agent: Thunderbird 2.0.0.6 (X11/20070803)
-In-Reply-To: <Pine.LNX.4.64.0711071510480.4362@racer.site>
-X-Enigmail-Version: 0.95.2
-OpenPGP: id=42F6DE81;
-	url=http://pgpkeys.pca.dfn.de/pks/lookup?op=get&search=0x58EEB17842F6DE81
-X-SA-Exim-Connect-IP: 134.130.246.142
-X-SA-Exim-Mail-From: heipei@hackvalue.de
+	id S1753427AbXKGPXa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 10:23:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753105AbXKGPX3
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:23:29 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.121]:42812 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753079AbXKGPX3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 10:23:29 -0500
+Received: from [192.168.1.252] (really [75.182.108.180])
+          by cdptpa-omta02.mail.rr.com with ESMTP
+          id <20071107152328.UXCU26419.cdptpa-omta02.mail.rr.com@[192.168.1.252]>;
+          Wed, 7 Nov 2007 15:23:28 +0000
+In-Reply-To: <20071107152003.GL18057@artemis.corp>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63823>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Wed, 7 Nov 2007, James wrote:
-> 
->>        fetch = +refs/heads/*:refs/remotes/origin/*
-> 
-> This is a refspec.
-> 
->>        push = ssh://james@my.server.com/home/james/scm/git/project.git/
-> 
-> This is a URL.  It does not specify any refs.  But "push =" expects a URL.
+On Nov 7, 2007, at 10:20 AM, Pierre Habouzit wrote:
 
-I think Johannes meant to say "But 'push =' expects a refspec." (the
-manpage even says so).
+> On Wed, Nov 07, 2007 at 03:11:46PM +0000, Johannes Schindelin wrote:
+>> Hi,
+>>
+>> On Wed, 7 Nov 2007, James wrote:
+>>
+>>>       fetch =3D +refs/heads/*:refs/remotes/origin/*
+>>
+>> This is a refspec.
+>>
+>>>       push =3D ssh://james@my.server.com/home/james/scm/git/project=
+=2Egit/
+>>
+>> This is a URL.  It does not specify any refs.  But "push =3D" expect=
+s =20
+>> a URL.
+>>
+>> You probably want to setup a different remote if you want to push =20
+>> to a
+>> different URL than you are fetching from.
+>
+>  Oh, there is no way to pull through git:// and push to ssh://
+> perfectly knowint it's the same physical repository so that the fetch
+> doesn't have the ssh-handhshake-overhead ?
 
-About your problem: If you want to pull from a git:// repository and
-push to another with ssh:// (or in general when having two different
-repositories for pushing and fetching) in my novice understanding
-you would need two remotes. In your case, can't you just use your
-ssh-url for fetching as well?
 
-Regards,
-Jojo
+There has to be *some* way of pulling through git and pushing through =20
+ssh with a simple "git push".  :-P  I'm doing it manually, after all.  =
+=20
+I could have sworn I've read how to do its somewhere but have since =20
+forgotten.
 
--- 
-Johannes Gilger <heipei@hackvalue.de>
-http://hackvalue.de/heipei/
-GPG-Key: 0x42F6DE81
-GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+
+> --=20
+> =B7O=B7  Pierre Habouzit
+> =B7=B7O                                                madcoder@debia=
+n.org
+> OOO                                                http://www.madism.=
+org
