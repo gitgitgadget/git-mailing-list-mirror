@@ -1,82 +1,65 @@
-From: James <jtp@nc.rr.com>
-Subject: Re: git push refspec problem
-Date: Wed, 7 Nov 2007 10:30:33 -0500
-Message-ID: <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
-References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com> <Pine.LNX.4.64.0711071510480.4362@racer.site> <4731D852.2080500@hackvalue.de>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Johannes Gilger <heipei@hackvalue.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 16:31:58 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 0/5] some shell portability fixes
+Date: Wed, 7 Nov 2007 15:37:01 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711071536180.4362@racer.site>
+References: <20071106201518.GA6361@ins.uni-bonn.de>  <7v8x5bgl04.fsf@gitster.siamese.dyndns.org>
+  <20071106210210.GA32159@glandium.org>  <Pine.LNX.4.64.0711062324590.4362@racer.site>
+  <e2b179460711070617h7e9af64egcde5122808a4d924@mail.gmail.com> 
+ <Pine.LNX.4.64.0711071446190.4362@racer.site>
+ <e2b179460711070730w4ca95989y14872665ddc8bfca@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Mike Hommey <mh@glandium.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Mike Ralphson <mike.ralphson@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 16:37:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipmrq-0003PN-2C
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:30:58 +0100
+	id 1Ipmy3-00063s-Lr
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:37:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753788AbXKGPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 10:30:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbXKGPag
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:30:36 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:44974 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752102AbXKGPaf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 10:30:35 -0500
-Received: from [192.168.1.252] (really [75.182.108.180])
-          by cdptpa-omta02.mail.rr.com with ESMTP
-          id <20071107153034.UZQY26419.cdptpa-omta02.mail.rr.com@[192.168.1.252]>;
-          Wed, 7 Nov 2007 15:30:34 +0000
-In-Reply-To: <4731D852.2080500@hackvalue.de>
-X-Mailer: Apple Mail (2.912)
+	id S1752495AbXKGPhJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 10:37:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752447AbXKGPhJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:37:09 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40197 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752273AbXKGPhH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 10:37:07 -0500
+Received: (qmail invoked by alias); 07 Nov 2007 15:37:05 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp020) with SMTP; 07 Nov 2007 16:37:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18rQL0KtKwrWJYIIi/TBNzaeUt8nE/emrUdVWxoYT
+	UMElvpBgduXPxL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <e2b179460711070730w4ca95989y14872665ddc8bfca@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63827>
 
+Hi,
 
-On Nov 7, 2007, at 10:22 AM, Johannes Gilger wrote:
+On Wed, 7 Nov 2007, Mike Ralphson wrote:
 
-> Johannes Schindelin wrote:
->> Hi,
->>
->> On Wed, 7 Nov 2007, James wrote:
->>
->>>       fetch = +refs/heads/*:refs/remotes/origin/*
->>
->> This is a refspec.
->>
->>>       push = ssh://james@my.server.com/home/james/scm/git/project.git/
->>
->> This is a URL.  It does not specify any refs.  But "push =" expects  
->> a URL.
+> On Nov 7, 2007 2:47 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 >
-> I think Johannes meant to say "But 'push =' expects a refspec." (the
-> manpage even says so).
->
-> About your problem: If you want to pull from a git:// repository and
-> push to another with ssh:// (or in general when having two different
-> repositories for pushing and fetching) in my novice understanding
-> you would need two remotes. In your case, can't you just use your
-> ssh-url for fetching as well?
->
-> Regards,
-> Jojo
+> > I am not sure if the GNU tools are installed in the same place on all 
+> > AIX boxen...
+> 
+> Well let's say the patch would arrive earlier if it was based on the
+> shipped Makefile rather than the unholy abomination that is
+> autoconf... If the GNU tools have been installed via the IBM AIX
+> Toolbox for Linux Applications[1] then they'll be installed in
+> /opt/freeware/bin and /usr/linux/bin will be a set of symlinks to
+> them.
 
+I guess Makefile is the better place, then.  You are the expert on AIX.
 
-I guess I could use my ssh url for pulling, as well.  I simply figured  
-it would be easier to add an ssh URL for push (like I was doing  
-manually) and be done with it.  But it doesn't seem there's a super  
-simple solution (i.e., my syntax was wrong in the config file) to  
-using git for pull and ssh for push.
-
-.james
-
-
-> -- 
-> Johannes Gilger <heipei@hackvalue.de>
-> http://hackvalue.de/heipei/
-> GPG-Key: 0x42F6DE81
-> GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
+Ciao,
+Dscho
