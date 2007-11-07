@@ -1,91 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add missing inside_work_tree setting in setup_git_directory_gently
-Date: Wed, 7 Nov 2007 20:54:08 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711072053490.4362@racer.site>
-References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
- <7vir4ivdcr.fsf@gitster.siamese.dyndns.org> <20071104070307.GA26071@laptop>
- <7vve8daisu.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 21:54:33 2007
+From: Emil Medve <Emilian.Medve@Freescale.com>
+Subject: [PATCH] git-stash: Fix listing stashes
+Date: Wed,  7 Nov 2007 15:10:27 -0600
+Message-ID: <1194469827-17037-1-git-send-email-Emilian.Medve@Freescale.com>
+Cc: Emil Medve <Emilian.Medve@Freescale.com>
+To: gitster@pobox.com, nanako3@bluebottle.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 07 22:22:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipruu-0000rE-PC
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:54:29 +0100
+	id 1IpsM3-00021w-Lo
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 22:22:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754123AbXKGUyM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 15:54:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753800AbXKGUyM
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:54:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35138 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753241AbXKGUyM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 15:54:12 -0500
-Received: (qmail invoked by alias); 07 Nov 2007 20:54:10 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 07 Nov 2007 21:54:10 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+AlGUx+bOAWJaXfoA3INP0D5AjTrZVMcLKmaiL38
-	PnH96/yPPB2WQJ
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vve8daisu.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1754802AbXKGVWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 16:22:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754495AbXKGVWQ
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 16:22:16 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:44474 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753966AbXKGVWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 16:22:16 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id lA7LLaIF027325;
+	Wed, 7 Nov 2007 14:21:36 -0700 (MST)
+Received: from emmedve1-12.am.freescale.net ([10.82.124.180])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id lA7LLZt4027816;
+	Wed, 7 Nov 2007 15:21:35 -0600 (CST)
+Received: by emmedve1-12.am.freescale.net (Postfix, from userid 1000)
+	id 7B192449CE5; Wed,  7 Nov 2007 15:10:27 -0600 (CST)
+X-Mailer: git-send-email 1.5.3.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63861>
 
-Hi,
+Commit bc9e7399af3790918140c30a5b2c85bf9a8f1ad3 "reverted" commit
+f12e925ac23ad6169e046cfe05b8438a1611ad58
 
-On Wed, 7 Nov 2007, Junio C Hamano wrote:
+Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
+---
+ git-stash.sh |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
-> 
-> > On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
-> >> 
-> >> Please add automated test script for this, thanks.
-> >
-> > Thank you for reminding.  I tried to put a test in
-> > t1501-worktree.sh and found out core.worktree can override
-> > inside_work_tree previously set by setup_git_directory_gently(),
-> > activating the worktree code in setup_git_directory() again.
-> >
-> > This made me think setup_git_directory_gently() should use
-> > get_git_work_tree() instead. But then git_work_tree_cfg may not be
-> > initialized when get_git_work_tree() is called (starting from
-> > setup_git_directory(), git_work_tree_cfg is initialized in
-> > check_repository_format_version(), which is called _after_
-> > setup_git_directory_gently()).
-> >
-> > The interaction between these variables and functions is really beyond
-> > my knowledge. Johannes, can you have a look at this? In theory the
-> > following test should pass:
-> >
-> > diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-> > index 7ee3820..bdb7720 100755
-> > --- a/t/t1501-worktree.sh
-> > +++ b/t/t1501-worktree.sh
-> > @@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from work tree, too' '
-> >  	 test sub/dir/tracked = "$(git ls-files)")
-> >  '
-> >  
-> > +test_expect_success 'Try a command from subdir in worktree' '
-> > +	(cd repo.git/work/sub &&
-> > +	GIT_DIR=../.. GIT_WORK_TREE=.. git blame dir/tracked)
-> > +'
-> > +
-> >  test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE' '
-> >  	cd repo.git/work/sub/dir &&
-> >  	GIT_DIR=../../.. GIT_WORK_TREE=../.. GIT_PAGER= \
-> 
-> I am wondering what happened to this thread...
-
-It is still in my inbox, waiting for a time where I can actually 
-concentrate.
-
-Ciao,
-Dscho
+diff --git a/git-stash.sh b/git-stash.sh
+index e556f42..534eb16 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -22,7 +22,7 @@ no_changes () {
+ clear_stash () {
+ 	if current=$(git rev-parse --verify $ref_stash 2>/dev/null)
+ 	then
+-		git update-ref -d refs/stash $current
++		git update-ref -d $ref_stash $current
+ 	fi
+ }
+ 
+@@ -93,6 +93,10 @@ save_stash () {
+ 		clear_stash || die "Cannot initialize stash"
+ 
+ 	create_stash "$stash_msg"
++
++	# Make sure the reflog for stash is kept.
++	: >>"$GIT_DIR/logs/$ref_stash"
++
+ 	git update-ref -m "$stash_msg" $ref_stash $w_commit ||
+ 		die "Cannot save the current status"
+ 	printf >&2 'Saved "%s"\n' "$stash_msg"
+-- 
+1.5.3.GIT
