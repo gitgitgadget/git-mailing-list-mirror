@@ -1,88 +1,82 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH 0/5] some shell portability fixes
-Date: Wed, 7 Nov 2007 15:30:16 +0000
-Message-ID: <e2b179460711070730w4ca95989y14872665ddc8bfca@mail.gmail.com>
-References: <20071106201518.GA6361@ins.uni-bonn.de>
-	 <7v8x5bgl04.fsf@gitster.siamese.dyndns.org>
-	 <20071106210210.GA32159@glandium.org>
-	 <Pine.LNX.4.64.0711062324590.4362@racer.site>
-	 <e2b179460711070617h7e9af64egcde5122808a4d924@mail.gmail.com>
-	 <Pine.LNX.4.64.0711071446190.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: James <jtp@nc.rr.com>
+Subject: Re: git push refspec problem
+Date: Wed, 7 Nov 2007 10:30:33 -0500
+Message-ID: <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
+References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com> <Pine.LNX.4.64.0711071510480.4362@racer.site> <4731D852.2080500@hackvalue.de>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: "Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>,
-	"Mike Hommey" <mh@glandium.org>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 16:30:41 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Johannes Gilger <heipei@hackvalue.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 16:31:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpmrV-0003El-Ap
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:30:37 +0100
+	id 1Ipmrq-0003PN-2C
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:30:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293AbXKGPaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 10:30:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752102AbXKGPaU
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:30:20 -0500
-Received: from an-out-0708.google.com ([209.85.132.243]:41078 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751795AbXKGPaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 10:30:18 -0500
-Received: by an-out-0708.google.com with SMTP id b36so318255ana
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 07:30:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ytyiKOEjvQUi0awZIBxAsperxgdhqSXXK40S6Dfyvsc=;
-        b=sqFxtF9WUu6VdwBV/ozeXQSd16QOMtBvnwex6wMyvl8f6HO79y5ZkyYWNlFHgtCZaZ9hTjp+g1PuchzMkVp94GhRzIaK7sdXyPjq9vBxY16NCkevfasyTXCo2bAqAKioikT5t3Xhofn1mHFx9oqCA0SJB3WDza3H3CRF5V+zIKM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=sV54snd+4+2ZuGyt64tDrtdts7gn9HsLWuK5wcmDzslIi/2Y390PcgyEILEn+e5uwnw05qgTokAHnUtibt9YjlAaPSO2B/mdX7mIjAdPlDA/oPN8IXwc4TZf1tsEEVS+5JTuKufr3thSkFLK4lIzRHVLmhcjEGytrYdqAwhncnI=
-Received: by 10.90.86.10 with SMTP id j10mr5341415agb.1194449416688;
-        Wed, 07 Nov 2007 07:30:16 -0800 (PST)
-Received: by 10.90.51.10 with HTTP; Wed, 7 Nov 2007 07:30:16 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711071446190.4362@racer.site>
-Content-Disposition: inline
+	id S1753788AbXKGPag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 10:30:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753578AbXKGPag
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:30:36 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:44974 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102AbXKGPaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 10:30:35 -0500
+Received: from [192.168.1.252] (really [75.182.108.180])
+          by cdptpa-omta02.mail.rr.com with ESMTP
+          id <20071107153034.UZQY26419.cdptpa-omta02.mail.rr.com@[192.168.1.252]>;
+          Wed, 7 Nov 2007 15:30:34 +0000
+In-Reply-To: <4731D852.2080500@hackvalue.de>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63826>
 
-On Nov 7, 2007 2:47 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > Equally GNU sed is available as a drop-in rpm for AIX. I wonder if it
-> > would be worth adding Makefile support for a PATH prefix for the git
-> > scripts, so they could prepend (in this case) something like
-> > /opt/freeware/bin or /usr/linux/bin ?
-> >
-> > In our AIX environment many GNU tools are installed but I can't
-> > guarantee they come first in the paths of the git users.
-> >
-> > I'm willing to work up a patch if there's any interest.
+
+On Nov 7, 2007, at 10:22 AM, Johannes Gilger wrote:
+
+> Johannes Schindelin wrote:
+>> Hi,
+>>
+>> On Wed, 7 Nov 2007, James wrote:
+>>
+>>>       fetch = +refs/heads/*:refs/remotes/origin/*
+>>
+>> This is a refspec.
+>>
+>>>       push = ssh://james@my.server.com/home/james/scm/git/project.git/
+>>
+>> This is a URL.  It does not specify any refs.  But "push =" expects  
+>> a URL.
 >
-> Would that be a task for configure?  Because I am not sure if the GNU
-> tools are installed in the same place on all AIX boxen...
+> I think Johannes meant to say "But 'push =' expects a refspec." (the
+> manpage even says so).
+>
+> About your problem: If you want to pull from a git:// repository and
+> push to another with ssh:// (or in general when having two different
+> repositories for pushing and fetching) in my novice understanding
+> you would need two remotes. In your case, can't you just use your
+> ssh-url for fetching as well?
+>
+> Regards,
+> Jojo
 
-Well let's say the patch would arrive earlier if it was based on the
-shipped Makefile rather than the unholy abomination that is
-autoconf... If the GNU tools have been installed via the IBM AIX
-Toolbox for Linux Applications[1] then they'll be installed in
-/opt/freeware/bin and /usr/linux/bin will be a set of symlinks to
-them.
 
-That said, there may be 32/64bit differences and of course anyone
-could have rolled their own sed, awk, diff, patch, grep, sort etc in
-/usr/local/bin or anywhere else, and I'd guess this might be useful
-for Solaris / HPUX users etc.
+I guess I could use my ssh url for pulling, as well.  I simply figured  
+it would be easier to add an ssh URL for push (like I was doing  
+manually) and be done with it.  But it doesn't seem there's a super  
+simple solution (i.e., my syntax was wrong in the config file) to  
+using git for pull and ssh for push.
 
-I was thinking along the lines of the existing $SHELL_PATH, i.e. a
-build-time manually-set Makefile/environment variable. I'd also like
-to be able to override gitexecdir in the same way without having my
-builds marked dirty.
+.james
 
-Cheers, Mike
 
-[1] http://www-03.ibm.com/systems/p/os/aix/linux/download.html
+> -- 
+> Johannes Gilger <heipei@hackvalue.de>
+> http://hackvalue.de/heipei/
+> GPG-Key: 0x42F6DE81
+> GPG-Fingerprint: BB49 F967 775E BB52 3A81  882C 58EE B178 42F6 DE81
