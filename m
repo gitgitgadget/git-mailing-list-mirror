@@ -1,59 +1,66 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] Documentation: enhanced "git for CVS users" doc about
-	shared repositories
-Date: Wed, 7 Nov 2007 12:32:17 -0500
-Message-ID: <20071107173217.GB10525@fieldses.org>
-References: <472F99F8.4010904@gmail.com> <7v8x5cmern.fsf@gitster.siamese.dyndns.org> <4730E056.7080809@gmail.com> <7vd4unez2l.fsf@gitster.siamese.dyndns.org> <47310ACF.4030103@gmail.com> <Pine.LNX.4.64.0711070053320.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Francesco Pretto <ceztkoml@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 18:32:49 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: [PATCH] Fix mistakes in the documentation of git-add --interactive.
+Date: Wed,  7 Nov 2007 19:20:03 +0100
+Message-ID: <1194459603-7988-1-git-send-email-tsuna@lrde.epita.fr>
+Cc: gitster@pobox.com, Benoit Sigoure <tsuna@lrde.epita.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 07 19:20:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipolh-00015i-Qb
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 18:32:46 +0100
+	id 1IppVq-0002Nb-7N
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 19:20:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249AbXKGRca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 12:32:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755237AbXKGRca
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 12:32:30 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:35051 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754856AbXKGRc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 12:32:29 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IpolF-0005YF-B1; Wed, 07 Nov 2007 12:32:17 -0500
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711070053320.4362@racer.site>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752603AbXKGSUK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 13:20:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752357AbXKGSUK
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 13:20:10 -0500
+Received: from 1.139.39-62.rev.gaoland.net ([62.39.139.1]:61196 "EHLO
+	tsunaxbook.lrde.epita.fr" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752087AbXKGSUJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 13:20:09 -0500
+Received: by tsunaxbook.lrde.epita.fr (Postfix, from userid 501)
+	id DA2B4C80EAE; Wed,  7 Nov 2007 19:20:03 +0100 (CET)
+X-Mailer: git-send-email 1.5.3.4.398.g859b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63844>
 
-On Wed, Nov 07, 2007 at 12:55:49AM +0000, Johannes Schindelin wrote:
-> Remember, those who read "git for CVS users" are _unwilling_ to spend the 
-> time reading git documentation (at least for the most part).  If they 
-> encounter something which is not useful to them, they will not just ignore 
-> it, they will stop reading.
+This patch fixes a couple of language issues in the documentation
+of the `patch' sub-command of git-add --interactive.
 
-That might overstate the case a little, but I definitely agree that we
-should get people to the information they need as quickly as possible,
-and that adding more beginning-unix-administration will interfere with
-that goal for the intended audience.
+Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
+---
+ Documentation/git-add.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-And it's not just here--there's probably lots of basic unix-commandline
-stuff that we could include with the user-manual (how find/xargs pipes
-work, etc...), and that would similarly help one possible audience at
-the expense of bogging it down for another audience.
-
-I think the way to help people without those prerequisites is by clearer
-statements of prerequisites, and references to documentation elsewhere
-where appropriate.
-
---b.
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 963e1ab..f7c02ff 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -202,8 +202,8 @@ patch::
+ 
+        y - add the change from that hunk to index
+        n - do not add the change from that hunk to index
+-       a - add the change from that hunk and all the rest to index
+-       d - do not the change from that hunk nor any of the rest to index
++       a - add the change from that hunk and all the remaining ones
++       d - do not the add change from that hunk and skip the remaining ones
+        j - do not decide on this hunk now, and view the next
+            undecided hunk
+        J - do not decide on this hunk now, and view the next hunk
+@@ -211,8 +211,8 @@ patch::
+            undecided hunk
+        K - do not decide on this hunk now, and view the previous hunk
+ +
+-After deciding the fate for all hunks, if there is any hunk
+-that was chosen, the index is updated with the selected hunks.
++After deciding the fate of each hunk, the index is updated with the selected
++ones.
+ 
+ diff::
+ 
+-- 
+1.5.3.4.398.g859b
