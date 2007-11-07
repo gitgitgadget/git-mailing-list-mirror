@@ -1,70 +1,91 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
-Date: Wed, 7 Nov 2007 09:16:08 +0100
-Organization: glandium.org
-Message-ID: <20071107081608.GA19066@glandium.org>
-References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <200711062106.57083.robin.rosenberg.lists@dewire.com> <20071106201324.GA30262@glandium.org> <200711062221.58475.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0711062225090.4362@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Mark 'git stash [message...]' as deprecated
+Date: Wed, 07 Nov 2007 09:23:45 +0100
+Message-ID: <20071107082345.GA18057@artemis.corp>
+References: <20071106085134.GD4435@artemis.corp> <1194395205-27905-1-git-send-email-bdowning@lavos.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Steven Grimm <koreth@midwinter.com>,
-	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 09:19:33 2007
+Content-Type: multipart/signed; boundary="k+w/mQv8wyuph6w0";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Junio C Hamano <gitster@pobox.com>, tsuna@lrde.epita.fr,
+	aghilesk@gmail.com, git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Wed Nov 07 09:24:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipg8J-0000z7-KD
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:19:32 +0100
+	id 1IpgCi-00024w-6d
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758003AbXKGITB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 03:19:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757989AbXKGITB
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:19:01 -0500
-Received: from vawad.err.no ([85.19.200.177]:34989 "EHLO vawad.err.no"
+	id S1756862AbXKGIXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 03:23:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756778AbXKGIXs
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:23:48 -0500
+Received: from pan.madism.org ([88.191.52.104]:36714 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757985AbXKGITA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 03:19:00 -0500
-Received: from aputeaux-153-1-78-131.w81-249.abo.wanadoo.fr ([81.249.108.131] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1Ipg7T-0006bY-Gt; Wed, 07 Nov 2007 09:18:43 +0100
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1Ipg52-0004z7-Df; Wed, 07 Nov 2007 09:16:08 +0100
+	id S1756797AbXKGIXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 03:23:47 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 33B32147;
+	Wed,  7 Nov 2007 09:23:46 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 75382F9CD; Wed,  7 Nov 2007 09:23:45 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Brian Downing <bdowning@lavos.net>,
+	Junio C Hamano <gitster@pobox.com>, tsuna@lrde.epita.fr,
+	aghilesk@gmail.com, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711062225090.4362@racer.site>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+In-Reply-To: <1194395205-27905-1-git-send-email-bdowning@lavos.net>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63787>
 
-On Tue, Nov 06, 2007 at 10:25:48PM +0000, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
-> 
-> On Tue, 6 Nov 2007, Robin Rosenberg wrote:
-> 
-> > tisdag 06 november 2007 skrev Mike Hommey:
-> > > Maybe the documentation could emphasise on how to undo things when the
-> > > user makes mistakes.
-> > > Sometimes, saving your repo can be as simple as git reset --hard HEAD@{1}.
-> > > This is not, unfortunately, a works-for-all-cases command.
-> > 
-> > Yea, git-undo(7). 
-> 
-> In related news, I know a few users who need an un-rm-rf.  Anyone?
 
-The fact is you can do harm to your repo with things you wouldn't expect to
-break things, except maybe you gave bad arguments or so. It's quite easy to
-fuck up with git-rebase, or to merge the wrong commits, etc.
+--k+w/mQv8wyuph6w0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Mike
+On Wed, Nov 07, 2007 at 12:26:44AM +0000, Brian Downing wrote:
+> Complain to STDERR unless 'git stash save' is explicitly used.
+> This is in preparation for completely disabling the "default save"
+> behavior of the command in the future.
+
+  No arguments at all should not IMHO be deprecated, it's very useful,
+and is not ambiguous. The issue with git stash <random> is that if you
+thought you typed a command that doesn't in fact exists, you stash which
+is not what you meant _at all_.
+
+  When you type `git stash` you certainly want to stash, and it's what
+it does.
+
+Here is how it should work:
+
+git-stash (list | show [<stash>] | apply [<stash>] | clear)
+git-stash [save <message>]
+
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--k+w/mQv8wyuph6w0
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMXYRvGr7W6HudhwRAjGHAJ4s+7WWFyLBvO7pHXrjhGCH9NoS5wCfd6XM
+U5LTDKCMv1nzPGeIIkoCvr4=
+=9e4A
+-----END PGP SIGNATURE-----
+
+--k+w/mQv8wyuph6w0--
