@@ -1,93 +1,72 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: git push refspec problem
-Date: Wed, 07 Nov 2007 16:20:03 +0100
-Message-ID: <20071107152003.GL18057@artemis.corp>
-References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com> <Pine.LNX.4.64.0711071510480.4362@racer.site>
+From: "Yin Ping" <pkufranky@gmail.com>
+Subject: Re: [PATCH] status&commit: Teach them to show commits of modified submodules.
+Date: Wed, 7 Nov 2007 23:20:00 +0800
+Message-ID: <46dff0320711070720j2af83fabm28cdbf03b82d7862@mail.gmail.com>
+References: <1194004427-26934-1-git-send-email-pkufranky@gmail.com>
+	 <7vd4us1jds.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320711021650q4e56d025q63a961176c682a14@mail.gmail.com>
+	 <7vfxzoyz7f.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320711040125v111c75davb49e9822537f4b19@mail.gmail.com>
+	 <46dff0320711040145k1edb1fcaq1daa5469c1158e81@mail.gmail.com>
+	 <7vmytus0ff.fsf@gitster.siamese.dyndns.org>
+	 <46dff0320711040517r6da5d7aaid849ff06df1b5bb6@mail.gmail.com>
+	 <7vwsswjeom.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="GU3/x65mZ6MFE8p3";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: James <jtp@nc.rr.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 16:20:26 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 16:20:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpmhZ-0007uh-PA
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:20:22 +0100
+	id 1Ipmhq-0007zg-MM
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 16:20:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752336AbXKGPUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 10:20:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752627AbXKGPUG
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:20:06 -0500
-Received: from pan.madism.org ([88.191.52.104]:57334 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752336AbXKGPUF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 10:20:05 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 322D127DB3;
-	Wed,  7 Nov 2007 16:20:04 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id C266F1AB3E; Wed,  7 Nov 2007 16:20:03 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	James <jtp@nc.rr.com>, git@vger.kernel.org
+	id S1753602AbXKGPUL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 10:20:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753554AbXKGPUL
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 10:20:11 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:61324 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752678AbXKGPUJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 10:20:09 -0500
+Received: by py-out-1112.google.com with SMTP id u77so4443190pyb
+        for <git@vger.kernel.org>; Wed, 07 Nov 2007 07:20:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=qMk4r/kCMnSdV5+SOn9AvSm0zs4ObOzyfyhdD+2dsYo=;
+        b=Mk5kMYh1IK6nSqTqeM2c/ov1RMosG7ByeCyz3ps1KXoduH0OcizmoJ3XropBWDTZc2Cf4HahQksWm8znu/8y1jycUORmBUEQdvNZx4p2ob7qhsRi4rcgRAKu71ib+qzoEs6wQRovDQoVBIkDQHmn/OeWtjSzLJUS8qZxf9KU+6c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=p40kXG1XkUlVyCPN5z7NiMUq+pPXQ9l3qgkkZgaX+a/o35Yiv/duyKqnYO+3z6JzXUcHDY5JFYrkEvGXCck2z08Jo6Wioa9+WqWDfhsWLxvZk12w3qdZBd2QfGqIlJejGIkmSsJm+Q0Iz0zWp9Ew1qA83giEaF43bpwRudxKr/w=
+Received: by 10.35.69.11 with SMTP id w11mr8976292pyk.1194448800364;
+        Wed, 07 Nov 2007 07:20:00 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Wed, 7 Nov 2007 07:20:00 -0800 (PST)
+In-Reply-To: <7vwsswjeom.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711071510480.4362@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63821>
 
+On 11/6/07, Junio C Hamano <gitster@pobox.com> wrote:
+> "Yin Ping" <pkufranky@gmail.com> writes:
+>
+> > However, in some cases these messages are helpful. And a third kind of
+> > cases is that people care about only part of all submodules.
+> >
+> > So, maybe some an switch can be used to turn this on or off (default
+> > off)?
+>
+> I personally think that is overengineering.  Isn't having/not
+> having the submodule directory cloned a good enough indicator
+> of which submodules are interested in by the user?
+>
+Good suggestion. I'll give my new patch later.
 
---GU3/x65mZ6MFE8p3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Nov 07, 2007 at 03:11:46PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Wed, 7 Nov 2007, James wrote:
->=20
-> >        fetch =3D +refs/heads/*:refs/remotes/origin/*
->=20
-> This is a refspec.
->=20
-> >        push =3D ssh://james@my.server.com/home/james/scm/git/project.gi=
-t/
->=20
-> This is a URL.  It does not specify any refs.  But "push =3D" expects a U=
-RL.
->=20
-> You probably want to setup a different remote if you want to push to a=20
-> different URL than you are fetching from.
-
-  Oh, there is no way to pull through git:// and push to ssh://
-perfectly knowint it's the same physical repository so that the fetch
-doesn't have the ssh-handhshake-overhead ?
-
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---GU3/x65mZ6MFE8p3
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHMdejvGr7W6HudhwRAnGsAKCC2M20GzRMK48HG29YN4rr5vsqogCcCOhU
-PcpK8cz+T/3j8NyI+Dxd5BU=
-=ERkJ
------END PGP SIGNATURE-----
-
---GU3/x65mZ6MFE8p3--
+-- 
+franky
