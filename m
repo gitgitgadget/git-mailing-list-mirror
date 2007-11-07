@@ -1,69 +1,69 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add Documentation/CodingStyle
-Date: Wed, 07 Nov 2007 09:53:22 +0100
-Message-ID: <47317D02.3050703@op5.se>
-References: <20071106201518.GA6361@ins.uni-bonn.de> <20071106201809.GD6361@ins.uni-bonn.de> <20071106202600.GH6361@ins.uni-bonn.de> <7vtznzf5jb.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711062317330.4362@racer.site> <4749D87D-9660-472B-97CF-8E649435AFD7@wincent.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
+Date: Wed, 07 Nov 2007 10:03:36 +0100
+Message-ID: <868x5afmvr.fsf@lola.quinscape.zz>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <200711062106.57083.robin.rosenberg.lists@dewire.com> <20071106201324.GA30262@glandium.org> <200711062221.58475.robin.rosenberg.lists@dewire.com> <Pine.LNX.4.64.0711062225090.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 09:53:43 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 07 10:04:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpgfN-0000tm-2s
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:53:41 +0100
+	id 1Ipgpr-0003bE-21
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 10:04:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755924AbXKGIx1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 03:53:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755555AbXKGIx0
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:53:26 -0500
-Received: from mail.op5.se ([193.201.96.20]:48332 "EHLO mail.op5.se"
+	id S1756928AbXKGJD6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 04:03:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756447AbXKGJD5
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 04:03:57 -0500
+Received: from main.gmane.org ([80.91.229.2]:56729 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755282AbXKGIx0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 03:53:26 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id EED43173064D;
-	Wed,  7 Nov 2007 09:53:13 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id uQWMM3ydfksk; Wed,  7 Nov 2007 09:53:13 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 21E0B173064A;
-	Wed,  7 Nov 2007 09:53:13 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <4749D87D-9660-472B-97CF-8E649435AFD7@wincent.com>
+	id S1756695AbXKGJDz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 04:03:55 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ipgp7-0006Wy-RI
+	for git@vger.kernel.org; Wed, 07 Nov 2007 09:03:45 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Nov 2007 09:03:45 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 07 Nov 2007 09:03:45 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:jxnv1lwhOGCnepTCYKTK6ZJHr/g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63791>
 
-Wincent Colaiuta wrote:
-> El 7/11/2007, a las 0:17, Johannes Schindelin escribi=F3:
->=20
->> Even if our code is quite a good documentation for our coding style,
->> some people seem to prefer a document describing it.
->=20
-> Great idea, Johannes, especially your nice concise summary of=20
-> conventions for shell-scripts (which is an area where we most often s=
-ee=20
-> list traffic on which way to write things).
->=20
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-That was ripped from a mail Junio sent to the list though ;-)
+> On Tue, 6 Nov 2007, Robin Rosenberg wrote:
+>
+>> tisdag 06 november 2007 skrev Mike Hommey:
+>> > Maybe the documentation could emphasise on how to undo things when the
+>> > user makes mistakes.
+>> > Sometimes, saving your repo can be as simple as git reset --hard HEAD@{1}.
+>> > This is not, unfortunately, a works-for-all-cases command.
+>> 
+>> Yea, git-undo(7). 
+>
+> In related news, I know a few users who need an un-rm-rf.  Anyone?
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Most file systems don't have a reflog or other ways to recover from
+shooting yourself in the foot.  git has, and for good reason.
+
+There is no sense in hiding that facility away because of feeling
+macho.  Since git already keeps the file space around needed for
+recovery (and you really have to exert yourself to make it let go for
+good), there is no point in not making it as convenient as feasible to
+recover.
+
+-- 
+David Kastrup
