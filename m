@@ -1,63 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-fetch: avoid local fetching from alternate (again)
-Date: Wed, 07 Nov 2007 12:32:40 -0800
-Message-ID: <7vr6j1bxuf.fsf@gitster.siamese.dyndns.org>
-References: <20071107024118.GA11043@spearce.org>
-	<7vsl3iefoj.fsf@gitster.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: git push refspec problem
+Date: Wed, 7 Nov 2007 15:40:40 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711071533590.29952@iabervon.org>
+References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com>
+ <Pine.LNX.4.64.0711071510480.4362@racer.site> <4731D852.2080500@hackvalue.de>
+ <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Nov 07 21:33:10 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Johannes Gilger <heipei@hackvalue.de>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: James <jtp@nc.rr.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 21:41:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpraH-0001PH-5I
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:33:09 +0100
+	id 1Iprhy-0004Ta-Jg
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:41:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbXKGUcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 15:32:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbXKGUcw
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:32:52 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:57390 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752143AbXKGUcv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 15:32:51 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 064322EF;
-	Wed,  7 Nov 2007 15:33:12 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E80E932FD;
-	Wed,  7 Nov 2007 15:33:08 -0500 (EST)
-In-Reply-To: <7vsl3iefoj.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Tue, 06 Nov 2007 22:24:28 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754806AbXKGUkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 15:40:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755165AbXKGUkn
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:40:43 -0500
+Received: from iabervon.org ([66.92.72.58]:50891 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754396AbXKGUkm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 15:40:42 -0500
+Received: (qmail 15714 invoked by uid 1000); 7 Nov 2007 20:40:41 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 7 Nov 2007 20:40:41 -0000
+In-Reply-To: <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63852>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, 7 Nov 2007, James wrote:
 
-> Well spotted.  It would be a good idea to commit the big comment
-> from contrib/examples/git-fetch.sh to fetch_local_nocopy()
-> function, which would have made us realize that the patch does
-> not refrain from applying this optimization even when shallow
-> is in effect.  But I think that is actually a good change.
+> On Nov 7, 2007, at 10:22 AM, Johannes Gilger wrote:
+> 
+> >Johannes Schindelin wrote:
+> > >Hi,
+> > >
+> > >On Wed, 7 Nov 2007, James wrote:
+> > >
+> > > >      fetch = +refs/heads/*:refs/remotes/origin/*
+> > >
+> > >This is a refspec.
+> > >
+> > > >      push = ssh://james@my.server.com/home/james/scm/git/project.git/
+> > >
+> > >This is a URL.  It does not specify any refs.  But "push =" expects a URL.
+> >
+> >I think Johannes meant to say "But 'push =' expects a refspec." (the
+> >manpage even says so).
+> >
+> >About your problem: If you want to pull from a git:// repository and
+> >push to another with ssh:// (or in general when having two different
+> >repositories for pushing and fetching) in my novice understanding
+> >you would need two remotes. In your case, can't you just use your
+> >ssh-url for fetching as well?
+> >
+> >Regards,
+> >Jojo
+> 
+> 
+> I guess I could use my ssh url for pulling, as well.  I simply figured it
+> would be easier to add an ssh URL for push (like I was doing manually) and be
+> done with it.  But it doesn't seem there's a super simple solution (i.e., my
+> syntax was wrong in the config file) to using git for pull and ssh for push.
 
-I take this back.  This regresses badly.
+We *should* be able to make the rules: fetch tries URLs until one works, 
+and then ignores later ones; push uses, in turn, all URLs that support 
+pushing.
 
-Why?
+Then you could just list both URLs, with the "git:" one first, and it 
+would do what you want (plus, if the git server on your remote machine 
+were down, it would fall back to ssh automatically for you).
 
-Because the optimization is useless when we are trying to deepen
-the shallow history.  When you are trying to deepen a shallow
-history and the tips of remotes haven't moved since you fetched
-from there the last time, you have everything near the tip, and
-becuse your history is shallow, your ancestry chain is
-cauterized to make it appear that the history is complete.  The
-rev-list reachability test would not fail as we expect.
+Actually, I think this would be a relatively easy project now, if you want 
+to attempt it, since fetch and push and both in C now and the config file 
+parser in remote.h reports all URLs in the config file's order. You'd just 
+need to make it silently skip URLs in push that don't support pushing, and 
+only give an error if none remain. (And add fallback support to fetch, for 
+completeness; it's currently only using the first, IIRC).
 
-The breakage can be seen with t5500.
+	-Daniel
+*This .sig left intentionally blank*
