@@ -1,37 +1,33 @@
 From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Documentation: enhanced "git for CVS users" doc about
- shared repositories
-Date: Wed, 07 Nov 2007 09:45:12 +0100
-Message-ID: <47317B18.7000804@op5.se>
-References: <472F99F8.4010904@gmail.com> <7v8x5cmern.fsf@gitster.siamese.dyndns.org> <4730E056.7080809@gmail.com> <7vd4unez2l.fsf@gitster.siamese.dyndns.org> <47310ACF.4030103@gmail.com> <Pine.LNX.4.64.0711070053320.4362@racer.site> <3abd05a90711061736r4c969cddj348c006615ffbdd6@mail.gmail.com> <DED2A61B-B5AE-4BAA-942A-18A61924611E@zib.de>
+Subject: Re: [PATCH] Add Documentation/CodingStyle
+Date: Wed, 07 Nov 2007 09:52:39 +0100
+Message-ID: <47317CD7.5040506@op5.se>
+References: <20071106201518.GA6361@ins.uni-bonn.de>	<20071106201809.GD6361@ins.uni-bonn.de>	<20071106202600.GH6361@ins.uni-bonn.de>	<7vtznzf5jb.fsf@gitster.siamese.dyndns.org>	<Pine.LNX.4.64.0711062317330.4362@racer.site> <7v640ega5q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Aghiles <aghilesk@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Francesco Pretto <ceztkoml@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 09:45:49 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 09:53:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpgXZ-0007GR-M8
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:45:38 +0100
+	id 1Ipgei-0000la-3D
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755427AbXKGIpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 03:45:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbXKGIpW
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:45:22 -0500
-Received: from mail.op5.se ([193.201.96.20]:45364 "EHLO mail.op5.se"
+	id S1755891AbXKGIwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 03:52:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755282AbXKGIwp
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:52:45 -0500
+Received: from mail.op5.se ([193.201.96.20]:48311 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755401AbXKGIpV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 03:45:21 -0500
+	id S1754774AbXKGIwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 03:52:44 -0500
 Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 75AEE1730667;
-	Wed,  7 Nov 2007 09:44:48 +0100 (CET)
+	by mail.op5.se (Postfix) with ESMTP id 42F6C173064A;
+	Wed,  7 Nov 2007 09:52:15 +0100 (CET)
 X-Virus-Scanned: amavisd-new at 
 X-Spam-Flag: NO
 X-Spam-Score: -2.499
@@ -40,28 +36,94 @@ X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
 	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
 Received: from mail.op5.se ([127.0.0.1])
 	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GdMIOR1M6Dhy; Wed,  7 Nov 2007 09:44:46 +0100 (CET)
+	with ESMTP id BQMPRnkYFB9l; Wed,  7 Nov 2007 09:52:13 +0100 (CET)
 Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 05AC51730674;
-	Wed,  7 Nov 2007 09:44:44 +0100 (CET)
+	by mail.op5.se (Postfix) with ESMTP id 97BAD17305BB;
+	Wed,  7 Nov 2007 09:52:13 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <DED2A61B-B5AE-4BAA-942A-18A61924611E@zib.de>
+In-Reply-To: <7v640ega5q.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63789>
 
-Steffen Prohaska wrote:
->  BTW, useradd and such
-> would not help me at all, because I need to talk to my admin
-> anyway and he adds an account to the LDAP database.
+Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+>> diff --git a/Documentation/CodingStyle b/Documentation/CodingStyle
+>> new file mode 100644
+>> index 0000000..622b80b
+>> --- /dev/null
+>> +++ b/Documentation/CodingStyle
+>> @@ -0,0 +1,87 @@
+>> +As a popular project, we also have some guidelines to keep to the
+>> +code.  For git in general, two rough rules are:
+>> +
+>> + - Most importantly, we never say "It's in POSIX; we'll happily
+>> +   screw your system that does not conform."  We live in the
+>> +   real world.
+>> +
+>> + - However, we often say "Let's stay away from that construct,
+>> +   it's not even in POSIX".
+>> +
+> 
+> I am not sure if we want to have CodingStyle document, but the
+> above are not CodingStyle issues.
+> 
+> If we are to write this down, I'd like to have the more
+> important third rule, which is:
+> 
+>  - In spite of the above two rules, we sometimes say "Although
+>    this is not in POSIX, it (is so convenient | makes the code
+>    much more readable | has other good characteristics) and
+>    practically all the platforms we care about support it, so
+>    let's use it".  Again, we live in the real world, and it is
+>    sometimes a judgement call, decided based more on real world
+>    constraints people face than what the paper standard says.
+> 
+>> +For C programs:
+>> +
+>> + - Use tabs to increment, and interpret tabs as taking up to 8 spaces
+> 
+> What's the character for decrement?  DEL? ;-)
+> 
+>> +   Double negation is often harder to understand than no negation at
+>> +   all.
+>> +
+>> +   Some clever tricks, like using the !! operator with arithmetic
+>> +   constructs, can be extremely confusing to others.  Avoid them,
+>> +   unless there is a compelling reason to use them.
+> 
+> I actually think (!!var) idiom is already established in our
+> codebase.
 > 
 
-I suspect this is the case for most companies looking to switch
-to git. It certainly is here. Personally, I tend to find documents
-stooping to toddler-level a bit insulting unless they're marked
-as "walkthrough" or "for beginners" or some such. Especially if
-they are obviously not correct for all environments.
+Not very widely for arithmetic expressions though. I believe this
+alludes to the (!!a + !!b + !!c) idiom used earlier, where it's not
+exactly clear *why* a, b and c can be > 1 if != 0 is the only thing
+we care about.
+
+>> + - Use the API.  No, really.  We have a strbuf (variable length string),
+>> +   several arrays with the ALLOC_GROW() macro, a path_list for sorted
+>> +   string lists, a hash map (mapping struct objects) named
+>> +   "struct decorate", amongst other things.
+> 
+>  - When you come up with an API, document it.
+> 
+>> + - if you are planning a new command, consider writing it in shell or
+>> +   perl first, so that changes in semantics can be easily changed and
+>> +   discussed.  Many git commands started out like that, and a few are
+>> +   still scripts.
+> 
+> No Python allowed?
+
+
+Perhaps with this addendum?
+
+- Think very, very hard before introducing a new dependency into git. This
+  means you should stay away from scripting languages not already used in
+  the git core command set unless your command is clearly separate from it,
+  such as an importer to convert random-scm-X repositories to git.
 
 -- 
 Andreas Ericsson                   andreas.ericsson@op5.se
