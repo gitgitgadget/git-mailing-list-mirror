@@ -1,75 +1,75 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 0/5] some shell portability fixes
-Date: Wed, 7 Nov 2007 14:47:29 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711071446190.4362@racer.site>
-References: <20071106201518.GA6361@ins.uni-bonn.de>  <7v8x5bgl04.fsf@gitster.siamese.dyndns.org>
-  <20071106210210.GA32159@glandium.org>  <Pine.LNX.4.64.0711062324590.4362@racer.site>
- <e2b179460711070617h7e9af64egcde5122808a4d924@mail.gmail.com>
+From: Shawn Bohrer <shawn.bohrer@gmail.com>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Wed, 7 Nov 2007 08:54:34 -0600
+Message-ID: <20071107145434.GB6768@mediacenter.austin.rr.com>
+References: <11944127311587-git-send-email-shawn.bohrer@gmail.com> <Pine.LNX.4.64.0711071110040.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Mike Hommey <mh@glandium.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Mike Ralphson <mike.ralphson@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 15:47:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 15:54:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpmC6-0003wJ-CL
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:47:50 +0100
+	id 1IpmIU-0006Pf-5v
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756154AbXKGOrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 09:47:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756796AbXKGOre
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:47:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:33256 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755002AbXKGOrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 09:47:33 -0500
-Received: (qmail invoked by alias); 07 Nov 2007 14:47:31 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp054) with SMTP; 07 Nov 2007 15:47:31 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191S4ku/m11o1IsFfDrCf5zFYiwDwKjU6fvl10uWJ
-	E5Ry3S+zO45RtY
-X-X-Sender: gene099@racer.site
-In-Reply-To: <e2b179460711070617h7e9af64egcde5122808a4d924@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1759162AbXKGOyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 09:54:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757987AbXKGOyL
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:54:11 -0500
+Received: from wx-out-0506.google.com ([66.249.82.224]:18979 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759158AbXKGOyJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 09:54:09 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so2471467wxd
+        for <git@vger.kernel.org>; Wed, 07 Nov 2007 06:54:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        bh=u1NxL5slNmIaSHJ5w0mbhI0lD6RIbyzJcc81OS50Z1Q=;
+        b=rOw94yAtj/8SyVdKyZ6g5GYgAFlsGVo9g1iiO3r4Jw8LFULMBUynEoPmVIpER2qg+BXNXw4ymV9jLP35ikN5L4YKLuhBccDF3g5roqA0QpHm2E7kSgMtyXt94R8qIaob4VD9tweVU82M0uN33e+hfd8NctFecTbj5NyhFhrQV2g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
+        b=RX60ig7a+W+aJrh2gOEIWVoX89tmOg5MzMo0viLKyClF5lGBPKEfe3XErHbr/zIhKtTqyzoQSEmCMq68RbldsQkDs9X8THHoVdAGN9uRhoWHlmHkshA7odw52NCz/iXvyLxWO+85Ey1eYgmGxQrJCuXQ1SEpi6RNBjE0e3v7gIQ=
+Received: by 10.70.52.1 with SMTP id z1mr12335043wxz.1194447248153;
+        Wed, 07 Nov 2007 06:54:08 -0800 (PST)
+Received: from mediacenter.austin.rr.com ( [70.112.149.232])
+        by mx.google.com with ESMTPS id h8sm12144456wxd.2007.11.07.06.54.06
+        (version=SSLv3 cipher=OTHER);
+        Wed, 07 Nov 2007 06:54:07 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711071110040.4362@racer.site>
+User-Agent: Mutt/1.5.15 (2007-04-06)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63812>
 
-Hi,
-
-On Wed, 7 Nov 2007, Mike Ralphson wrote:
-
-> Junio C Hamano wrote on Tue, Nov 06, 2007 at 09:46:35PM CET:
-> > [2/5] Gaah, AIX sed X-<.  I am not opposed to this patch but
-> >       would want to get Yays from people with non GNU sed.  Is
-> >       busybox sed good enough to grok our scripts these days?
-> >       Please ask help and collect Acks at least from folks on
-> >       Solaris, MacOS, FBSD, and OBSD.
+On Wed, Nov 07, 2007 at 11:10:45AM +0000, Johannes Schindelin wrote:
 > 
-> On Nov 6, 2007 11:25 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> > As Junio commented in the part you did not quote, there are better shells
-> > in Solaris.  Use those.
+> you still have quite a number of instances where you wrap just one line 
+> into curly brackets:
 > 
-> Equally GNU sed is available as a drop-in rpm for AIX. I wonder if it
-> would be worth adding
-> Makefile support for a PATH prefix for the git scripts, so they could
-> prepend (in this case)
-> something like /opt/freeware/bin or /usr/linux/bin ?
-> 
-> In our AIX environment many GNU tools are installed but I can't
-> guarantee they come first
-> in the paths of the git users.
-> 
-> I'm willing to work up a patch if there's any interest.
+> 	if (bla) {
+> 		[just one line]
+> 	}
 
-Would that be a task for configure?  Because I am not sure if the GNU 
-tools are installed in the same place on all AIX boxen...
+Crap.  OK I count one instance unless you count:
 
-Ciao,
-Dscho
+	if (foo) {
+		one_line();
+	} else if (bar) {
+		one_line();
+		two_lines();
+	} else {
+		something_else();
+	}
+
+Now I suppose I can get rid of the curly braces here as well but I
+personally find that strange and ugly.  So is there an official guideline
+on if else statements?
+
+Of course I'll fix the other one I missed and send a new patch.
