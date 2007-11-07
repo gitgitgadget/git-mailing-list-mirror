@@ -1,64 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/9] gitk i18n implementation: Add Makefile with rules for po file creation and installation.
-Date: Wed, 07 Nov 2007 13:38:47 -0800
-Message-ID: <7vbqa5ag7s.fsf@gitster.siamese.dyndns.org>
-References: <200711071839.08570.stimming@tuhh.de>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH v2] Add Documentation/CodingStyle
+Date: Wed, 7 Nov 2007 22:43:20 +0100
+Message-ID: <200711072243.21086.robin.rosenberg.lists@dewire.com>
+References: <20071106201518.GA6361@ins.uni-bonn.de> <47317CD7.5040506@op5.se> <Pine.LNX.4.64.0711071456440.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: Christian Stimming <stimming@tuhh.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 22:39:13 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Ericsson <ae@op5.se>, Junio C Hamano <gitster@pobox.com>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 22:41:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpscA-0007gr-MS
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 22:39:11 +0100
+	id 1IpseH-0008Sl-AS
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 22:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754495AbXKGViz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 16:38:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754510AbXKGViz
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 16:38:55 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:38970 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754441AbXKGViy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 16:38:54 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id A6C5B2F9;
-	Wed,  7 Nov 2007 16:39:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2DE5B92281;
-	Wed,  7 Nov 2007 16:39:11 -0500 (EST)
-In-Reply-To: <200711071839.08570.stimming@tuhh.de> (Christian Stimming's
-	message of "Wed, 7 Nov 2007 18:39:08 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754252AbXKGVlG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 16:41:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754304AbXKGVlF
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 16:41:05 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:18143 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1754252AbXKGVlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 16:41:04 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 09D7C802679;
+	Wed,  7 Nov 2007 22:32:04 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 17738-05; Wed,  7 Nov 2007 22:32:03 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 87CF6802659;
+	Wed,  7 Nov 2007 22:32:03 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0711071456440.4362@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63864>
 
-Christian Stimming <stimming@tuhh.de> writes:
+onsdag 07 november 2007 skrev Johannes Schindelin:
+> diff --git a/Documentation/CodingStyle b/Documentation/CodingStyle
+> new file mode 100644
+> index 0000000..38a3d9f
+> --- /dev/null
+> +++ b/Documentation/CodingStyle
+> @@ -0,0 +1,103 @@
+> +As a popular project, we also have some guidelines to keep to the
+> +code.  For git in general, two rough rules are:
+> +
+> + - Most importantly, we never say "It's in POSIX; we'll happily
+> +   screw your system that does not conform."  We live in the
+> +   real world.
 
-> The compiled .msg files will be installed into $(sharedir)/gitk/lib/msgs
-> according to Junio's mailing list proposal on 2007-07-28.
-> ---
-> These patches are against master of gitk.git at git.kernel.org.
->
-> Just in case any of the mailers might mess up whitespaces, I've also
-> attached all 9 patches in the attached tarball.
->
->  Makefile |   45 +++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 45 insertions(+), 0 deletions(-)
->  create mode 100644 Makefile
+Can we use less offensive wording in documentation than we do on the list or IRC?
+I'm not hurt by it but it doesn't look serious.
 
-There is a slight issue of merging this into git.git, as the
-initial "coolest merge ever" was done with the understanding
-that gitk will remain a single file project.
+> + - Try to keep to 80 characters per line
+less than?
 
-The simplest way without using submodule (because it would
-require everybody who follow git.git to update to 1.5.3 or
-later, which I'd rather not to do at this point yet) would be to
-merge gitk.git with the subtree strategy to a subdirectory,
-which I think will be what I'll end up doing.
+> +
+> + - When declaring pointers, the star sides with the variable name, i.e.
+> +   "char *string", not "char* string" or "char * string".  This makes
+> +   it easier to understand "char *string, c;"
+
+Rationale: The C syntax is defined the way it is. C programmers should
+understand it.
+
+I'd amend: Don't mix different types in declarations.
+
+Write:
+	char *string;
+	char c;
+
+Rather than:
+
+	char *string,c;
+
+> + - Do not use curly brackets unnecessarily.  I.e.
+> +
+> +	if (bla) {
+> +		x = 1;
+> +	}
+> +
+> +   is frowned upon.  A gray area is when the statement extends over a
+> +   few lines, and/or you have a lengthy comment atop of it.
+
+Avoid unnecessary curly brackets but use them if unsure. (This is less 
+strict than "do not". There are cases where we do want "unnecessary"
+brackets.
+
+-- robin
