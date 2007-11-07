@@ -1,82 +1,106 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Add missing inside_work_tree setting in setup_git_directory_gently
-Date: Wed, 07 Nov 2007 12:42:57 -0800
-Message-ID: <7vve8daisu.fsf@gitster.siamese.dyndns.org>
-References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
-	<7vir4ivdcr.fsf@gitster.siamese.dyndns.org>
-	<20071104070307.GA26071@laptop>
+Subject: Re: [PATCH] send-email: apply --suppress-from to S-o-b and cc-cmd
+Date: Wed, 07 Nov 2007 12:43:16 -0800
+Message-ID: <7vode5aisb.fsf@gitster.siamese.dyndns.org>
+References: <1194420852-15822-1-git-send-email-ukleinek@informatik.uni-freiburg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 21:44:30 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <Uwe.Kleine-Koenig@digi.com>,
+	Ryan Anderson <ryan@michonline.com>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<ukleinek@informatik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 21:44:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IprlD-0005mh-QG
+	id 1IprlE-0005mh-GC
 	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756185AbXKGUnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 15:43:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755165AbXKGUnG
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:43:06 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:43785 "EHLO
+	id S1755488AbXKGUn0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 15:43:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755374AbXKGUn0
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:43:26 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:43800 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756185AbXKGUnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 15:43:04 -0500
+	with ESMTP id S1755165AbXKGUnZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 15:43:25 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 208552F9;
-	Wed,  7 Nov 2007 15:43:25 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id EC7162F0;
+	Wed,  7 Nov 2007 15:43:46 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 894BC933A5;
-	Wed,  7 Nov 2007 15:43:21 -0500 (EST)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 3512B933A5;
+	Wed,  7 Nov 2007 15:43:41 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63856>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Uwe Kleine-K=C3=B6nig  <ukleinek@informatik.uni-freiburg.de> writes:
 
-> On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
->> 
->> Please add automated test script for this, thanks.
+> From: Uwe Kleine-K=C3=B6nig <Uwe.Kleine-Koenig@digi.com>
 >
-> Thank you for reminding.  I tried to put a test in
-> t1501-worktree.sh and found out core.worktree can override
-> inside_work_tree previously set by setup_git_directory_gently(),
-> activating the worktree code in setup_git_directory() again.
+> Signed-off-by: Uwe Kleine-K=C3=B6nig <Uwe.Kleine-Koenig@digi.com>
+> Cc: Ryan Anderson <ryan@michonline.com>
+> ---
+> Hello,
 >
-> This made me think setup_git_directory_gently() should use
-> get_git_work_tree() instead. But then git_work_tree_cfg may not be
-> initialized when get_git_work_tree() is called (starting from
-> setup_git_directory(), git_work_tree_cfg is initialized in
-> check_repository_format_version(), which is called _after_
-> setup_git_directory_gently()).
->
-> The interaction between these variables and functions is really beyond
-> my knowledge. Johannes, can you have a look at this? In theory the
-> following test should pass:
->
-> diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-> index 7ee3820..bdb7720 100755
-> --- a/t/t1501-worktree.sh
-> +++ b/t/t1501-worktree.sh
-> @@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from work tree, too' '
->  	 test sub/dir/tracked = "$(git ls-files)")
->  '
->  
-> +test_expect_success 'Try a command from subdir in worktree' '
-> +	(cd repo.git/work/sub &&
-> +	GIT_DIR=../.. GIT_WORK_TREE=.. git blame dir/tracked)
-> +'
-> +
->  test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE' '
->  	cd repo.git/work/sub/dir &&
->  	GIT_DIR=../../.. GIT_WORK_TREE=../.. GIT_PAGER= \
+> I don't see the sense in adding the sender to Cc: from Signed-off-by
+> lines but not from From:.  If someone is convinced it makes sense, I'=
+m
+> willing to send a new patch that uses a different option.
 
-I am wondering what happened to this thread...
+I _think_ --suppress-from just means "I know what I'll be
+sending out, so do not bother my mailbox with a copy of this
+message", so what the patch tries to do makes perfect sense to
+me.
+
+> @@ -730,6 +729,7 @@ foreach my $t (@files) {
+>  			if (/^(Signed-off-by|Cc): (.*)$/i && $signed_off_cc) {
+>  				my $c =3D $2;
+>  				chomp $c;
+> +				next if ($c eq $sender and $suppress_from);
+>  				push @cc, $c;
+>  				printf("(sob) Adding cc: %s from line '%s'\n",
+>  					$c, $_) unless $quiet;
+> @@ -745,6 +745,7 @@ foreach my $t (@files) {
+>  			my $c =3D $_;
+>  			$c =3D~ s/^\s*//g;
+>  			$c =3D~ s/\n$//g;
+> +			next if ($c eq $sender and $suppress_from);
+>  			push @cc, $c;
+>  			printf("(cc-cmd) Adding cc: %s from: '%s'\n",
+>  				$c, $cc_cmd) unless $quiet;
+
+By the way, I noticed that in the header part we pick CC: and
+=46rom: address, which are rfc2047 quoted, and unquote it to
+compare with the sender.  If they are different, we push the
+address, still rfc2047 quoted, to @cc, like this:
+
+	} elsif (/^(Cc|From):\s+(.*)$/) {
+		if (unquote_rfc2047($2) eq $sender) {
+			next if ($suppress_from);
+		}
+		elsif ($1 eq 'From') {
+			$author =3D unquote_rfc2047($2);
+		}
+		printf("(mbox) Adding cc: %s from line '%s'\n",
+			$2, $_) unless $quiet;
+		push @cc, $2;
+	}
+
+However, in the body part, when we see S-o-b: and CC: address,
+which are _not_ rfc2047 quoted, do not unquote to compare with
+$sender and we push it direct to @cc (the original text in the
+first hunk of your patch).  We do the same for output from
+$cc_cmd if specified (the second hunk).
+
+This means that @cc list would be a mixed bag.  Some are rfc2047
+quoted, and some are not.  This inconsistency of course is taken
+care of by the call to sanitize_address over @cc at the very
+beginning of send_message(), but it somehow feels dirty.
