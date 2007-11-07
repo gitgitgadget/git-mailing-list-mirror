@@ -1,75 +1,123 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Wed, 7 Nov 2007 08:54:34 -0600
-Message-ID: <20071107145434.GB6768@mediacenter.austin.rr.com>
-References: <11944127311587-git-send-email-shawn.bohrer@gmail.com> <Pine.LNX.4.64.0711071110040.4362@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add Documentation/CodingStyle
+Date: Wed, 7 Nov 2007 14:54:27 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711071451010.4362@racer.site>
+References: <20071106201518.GA6361@ins.uni-bonn.de> <20071106201809.GD6361@ins.uni-bonn.de>
+ <20071106202600.GH6361@ins.uni-bonn.de> <7vtznzf5jb.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711062317330.4362@racer.site> <7v640ega5q.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 15:54:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 15:56:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpmIU-0006Pf-5v
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:54:26 +0100
+	id 1IpmJt-0006u2-6p
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:55:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759162AbXKGOyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 09:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757987AbXKGOyL
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:54:11 -0500
-Received: from wx-out-0506.google.com ([66.249.82.224]:18979 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759158AbXKGOyJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 09:54:09 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so2471467wxd
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 06:54:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        bh=u1NxL5slNmIaSHJ5w0mbhI0lD6RIbyzJcc81OS50Z1Q=;
-        b=rOw94yAtj/8SyVdKyZ6g5GYgAFlsGVo9g1iiO3r4Jw8LFULMBUynEoPmVIpER2qg+BXNXw4ymV9jLP35ikN5L4YKLuhBccDF3g5roqA0QpHm2E7kSgMtyXt94R8qIaob4VD9tweVU82M0uN33e+hfd8NctFecTbj5NyhFhrQV2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:date:from:to:cc:subject:message-id:references:mime-version:content-type:content-disposition:in-reply-to:user-agent;
-        b=RX60ig7a+W+aJrh2gOEIWVoX89tmOg5MzMo0viLKyClF5lGBPKEfe3XErHbr/zIhKtTqyzoQSEmCMq68RbldsQkDs9X8THHoVdAGN9uRhoWHlmHkshA7odw52NCz/iXvyLxWO+85Ey1eYgmGxQrJCuXQ1SEpi6RNBjE0e3v7gIQ=
-Received: by 10.70.52.1 with SMTP id z1mr12335043wxz.1194447248153;
-        Wed, 07 Nov 2007 06:54:08 -0800 (PST)
-Received: from mediacenter.austin.rr.com ( [70.112.149.232])
-        by mx.google.com with ESMTPS id h8sm12144456wxd.2007.11.07.06.54.06
-        (version=SSLv3 cipher=OTHER);
-        Wed, 07 Nov 2007 06:54:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711071110040.4362@racer.site>
-User-Agent: Mutt/1.5.15 (2007-04-06)
+	id S1759182AbXKGOyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 09:54:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759073AbXKGOyd
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:54:33 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48716 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758663AbXKGOyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 09:54:32 -0500
+Received: (qmail invoked by alias); 07 Nov 2007 14:54:30 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 07 Nov 2007 15:54:30 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19B0bknPUpB8a8j8KUlrFBPb0At7/QVtVsNvBxzSl
+	LdlDZJt/hsRrM6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v640ega5q.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63813>
 
-On Wed, Nov 07, 2007 at 11:10:45AM +0000, Johannes Schindelin wrote:
+Hi,
+
+On Tue, 6 Nov 2007, Junio C Hamano wrote:
+
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> you still have quite a number of instances where you wrap just one line 
-> into curly brackets:
+> > diff --git a/Documentation/CodingStyle b/Documentation/CodingStyle
+> > new file mode 100644
+> > index 0000000..622b80b
+> > --- /dev/null
+> > +++ b/Documentation/CodingStyle
+> > @@ -0,0 +1,87 @@
+> > +As a popular project, we also have some guidelines to keep to the
+> > +code.  For git in general, two rough rules are:
+> > +
+> > + - Most importantly, we never say "It's in POSIX; we'll happily
+> > +   screw your system that does not conform."  We live in the
+> > +   real world.
+> > +
+> > + - However, we often say "Let's stay away from that construct,
+> > +   it's not even in POSIX".
+> > +
 > 
-> 	if (bla) {
-> 		[just one line]
-> 	}
+> I am not sure if we want to have CodingStyle document, but the
+> above are not CodingStyle issues.
 
-Crap.  OK I count one instance unless you count:
+Would you like to call it CodingConventions?
 
-	if (foo) {
-		one_line();
-	} else if (bar) {
-		one_line();
-		two_lines();
-	} else {
-		something_else();
-	}
+> If we are to write this down, I'd like to have the more
+> important third rule, which is:
+> 
+>  - In spite of the above two rules, we sometimes say "Although
+>    this is not in POSIX, it (is so convenient | makes the code
+>    much more readable | has other good characteristics) and
+>    practically all the platforms we care about support it, so
+>    let's use it".  Again, we live in the real world, and it is
+>    sometimes a judgement call, decided based more on real world
+>    constraints people face than what the paper standard says.
 
-Now I suppose I can get rid of the curly braces here as well but I
-personally find that strange and ugly.  So is there an official guideline
-on if else statements?
+Okay, will add.
 
-Of course I'll fix the other one I missed and send a new patch.
+> > +For C programs:
+> > +
+> > + - Use tabs to increment, and interpret tabs as taking up to 8 spaces
+> 
+> What's the character for decrement?  DEL? ;-)
+
+Hehe.  As you undoubtedly guessed, I meant "indent"...
+
+> > +   Double negation is often harder to understand than no negation at
+> > +   all.
+> > +
+> > +   Some clever tricks, like using the !! operator with arithmetic
+> > +   constructs, can be extremely confusing to others.  Avoid them,
+> > +   unless there is a compelling reason to use them.
+> 
+> I actually think (!!var) idiom is already established in our
+> codebase.
+
+Yep, but when there are easier variants, AFAICT they were preferred.
+
+> > + - Use the API.  No, really.  We have a strbuf (variable length string),
+> > +   several arrays with the ALLOC_GROW() macro, a path_list for sorted
+> > +   string lists, a hash map (mapping struct objects) named
+> > +   "struct decorate", amongst other things.
+> 
+>  - When you come up with an API, document it.
+
+Okay.
+
+> > + - if you are planning a new command, consider writing it in shell or
+> > +   perl first, so that changes in semantics can be easily changed and
+> > +   discussed.  Many git commands started out like that, and a few are
+> > +   still scripts.
+> 
+> No Python allowed?
+
+Well, maybe we should allow that again.  Although I hoped we are over that 
+now, as it would complicate the msysGit efforts tremendously.
+
+Ciao,
+Dscho
