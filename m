@@ -1,70 +1,78 @@
-From: Jon Loeliger <jdl@freescale.com>
-Subject: Re: [PATCH] Make git-clean a builtin
-Date: Wed, 07 Nov 2007 13:46:10 -0600
-Message-ID: <1194464770.14978.11.camel@ld0161-tx32>
-References: <11944127311587-git-send-email-shawn.bohrer@gmail.com>
-	 <Pine.LNX.4.64.0711071110040.4362@racer.site>
-	 <18225.48553.44088.269677@lisa.zopyra.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in git, help users out.
+Date: Wed, 7 Nov 2007 20:32:47 +0100
+Message-ID: <200711072032.48193.robin.rosenberg.lists@dewire.com>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org> <20071107081608.GA19066@glandium.org> <Pine.LNX.4.64.0711071103450.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Shawn Bohrer <shawn.bohrer@gmail.com>, gitster@pobox.com,
-	Git List <git@vger.kernel.org>
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 20:47:04 2007
+Cc: Mike Hommey <mh@glandium.org>, Junio C Hamano <gitster@pobox.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 20:51:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipqrf-0001BN-6B
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 20:47:03 +0100
+	id 1IpqwG-0002vs-S1
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 20:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753842AbXKGTqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 14:46:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754026AbXKGTqj
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 14:46:39 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:38048 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753473AbXKGTqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 14:46:38 -0500
-Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id lA7JkBeE012002;
-	Wed, 7 Nov 2007 12:46:11 -0700 (MST)
-Received: from ld0161-tx32 (ld0161-tx32.am.freescale.net [10.82.19.111])
-	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id lA7JkANG027335;
-	Wed, 7 Nov 2007 13:46:10 -0600 (CST)
-In-Reply-To: <18225.48553.44088.269677@lisa.zopyra.com>
-X-Mailer: Ximian Evolution 1.4.5 (1.4.5-17) 
+	id S1754043AbXKGTve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 14:51:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754041AbXKGTvd
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 14:51:33 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:16875 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1753463AbXKGTvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 14:51:33 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id B40C1802679;
+	Wed,  7 Nov 2007 20:42:32 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 16789-08; Wed,  7 Nov 2007 20:42:32 +0100 (CET)
+Received: from [10.9.0.2] (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 31CD5802659;
+	Wed,  7 Nov 2007 20:42:32 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <Pine.LNX.4.64.0711071103450.4362@racer.site>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63848>
 
-On Wed, 2007-11-07 at 07:29, Bill Lear wrote:
-> On Wednesday, November 7, 2007 at 11:10:45 (+0000) Johannes Schindelin writes:
-> >Hi,
-> >
-> >you still have quite a number of instances where you wrap just one line 
-> >into curly brackets:
-> >
-> >	if (bla) {
-> >		[just one line]
-> >	}
+onsdag 07 november 2007 skrev Johannes Schindelin:
+> Hi,
 > 
-> I've always found this a thoughtful practice.  It helps ensure nobody writes:
+> On Wed, 7 Nov 2007, Mike Hommey wrote:
 > 
->        if (bla)
->            just_one_line();
->            /* perhaps a comment, other stuff ... */
->            just_another_line();
+> > On Tue, Nov 06, 2007 at 10:25:48PM +0000, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > 
+> > > On Tue, 6 Nov 2007, Robin Rosenberg wrote:
+> > > 
+> > > > tisdag 06 november 2007 skrev Mike Hommey:
+> > > > > Maybe the documentation could emphasise on how to undo things when 
+> > > > > the user makes mistakes. Sometimes, saving your repo can be as 
+> > > > > simple as git reset --hard HEAD@{1}. This is not, unfortunately, a 
+> > > > > works-for-all-cases command.
+> > > > 
+> > > > Yea, git-undo(7). 
+> > > 
+> > > In related news, I know a few users who need an un-rm-rf.  Anyone?
+> > 
+> > The fact is you can do harm to your repo with things you wouldn't expect 
+> > to break things, except maybe you gave bad arguments or so. It's quite 
+> > easy to fuck up with git-rebase, or to merge the wrong commits, etc.
 > 
-> which I've seen happen countless times.  It also is nice for others who
-> come along and extend the branch from just one line to multiple ones,
-> as the brackets are already in place.
-> 
-> Why do you find it objectionable?
+> I don't see how these commands are dangerous.  Usually you just look into 
+> the reflog, pick the one commit you started with, and reset --hard.
 
-I _totally_ agree with Bill.
+Indeed, but you must *know* that and you must know that you *can* do it.
 
-jdl
+As for undo rm -rf, it's not part of git and outside the scope of git.
+
+-- robin
