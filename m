@@ -1,91 +1,69 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH] Mark 'git stash [message...]' as deprecated
-Date: Wed, 07 Nov 2007 09:23:45 +0100
-Message-ID: <20071107082345.GA18057@artemis.corp>
-References: <20071106085134.GD4435@artemis.corp> <1194395205-27905-1-git-send-email-bdowning@lavos.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Documentation: enhanced "git for CVS users" doc about
+ shared repositories
+Date: Wed, 07 Nov 2007 09:45:12 +0100
+Message-ID: <47317B18.7000804@op5.se>
+References: <472F99F8.4010904@gmail.com> <7v8x5cmern.fsf@gitster.siamese.dyndns.org> <4730E056.7080809@gmail.com> <7vd4unez2l.fsf@gitster.siamese.dyndns.org> <47310ACF.4030103@gmail.com> <Pine.LNX.4.64.0711070053320.4362@racer.site> <3abd05a90711061736r4c969cddj348c006615ffbdd6@mail.gmail.com> <DED2A61B-B5AE-4BAA-942A-18A61924611E@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="k+w/mQv8wyuph6w0";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: Junio C Hamano <gitster@pobox.com>, tsuna@lrde.epita.fr,
-	aghilesk@gmail.com, git@vger.kernel.org
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Wed Nov 07 09:24:06 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Aghiles <aghilesk@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Francesco Pretto <ceztkoml@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 09:45:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpgCi-00024w-6d
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:24:04 +0100
+	id 1IpgXZ-0007GR-M8
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:45:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756862AbXKGIXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 03:23:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756778AbXKGIXs
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:23:48 -0500
-Received: from pan.madism.org ([88.191.52.104]:36714 "EHLO hermes.madism.org"
+	id S1755427AbXKGIpW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 03:45:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755414AbXKGIpW
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:45:22 -0500
+Received: from mail.op5.se ([193.201.96.20]:45364 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756797AbXKGIXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 03:23:47 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 33B32147;
-	Wed,  7 Nov 2007 09:23:46 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 75382F9CD; Wed,  7 Nov 2007 09:23:45 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Brian Downing <bdowning@lavos.net>,
-	Junio C Hamano <gitster@pobox.com>, tsuna@lrde.epita.fr,
-	aghilesk@gmail.com, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <1194395205-27905-1-git-send-email-bdowning@lavos.net>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1755401AbXKGIpV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 03:45:21 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 75AEE1730667;
+	Wed,  7 Nov 2007 09:44:48 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GdMIOR1M6Dhy; Wed,  7 Nov 2007 09:44:46 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 05AC51730674;
+	Wed,  7 Nov 2007 09:44:44 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <DED2A61B-B5AE-4BAA-942A-18A61924611E@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63788>
 
+Steffen Prohaska wrote:
+>  BTW, useradd and such
+> would not help me at all, because I need to talk to my admin
+> anyway and he adds an account to the LDAP database.
+> 
 
---k+w/mQv8wyuph6w0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I suspect this is the case for most companies looking to switch
+to git. It certainly is here. Personally, I tend to find documents
+stooping to toddler-level a bit insulting unless they're marked
+as "walkthrough" or "for beginners" or some such. Especially if
+they are obviously not correct for all environments.
 
-On Wed, Nov 07, 2007 at 12:26:44AM +0000, Brian Downing wrote:
-> Complain to STDERR unless 'git stash save' is explicitly used.
-> This is in preparation for completely disabling the "default save"
-> behavior of the command in the future.
-
-  No arguments at all should not IMHO be deprecated, it's very useful,
-and is not ambiguous. The issue with git stash <random> is that if you
-thought you typed a command that doesn't in fact exists, you stash which
-is not what you meant _at all_.
-
-  When you type `git stash` you certainly want to stash, and it's what
-it does.
-
-Here is how it should work:
-
-git-stash (list | show [<stash>] | apply [<stash>] | clear)
-git-stash [save <message>]
-
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---k+w/mQv8wyuph6w0
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHMXYRvGr7W6HudhwRAjGHAJ4s+7WWFyLBvO7pHXrjhGCH9NoS5wCfd6XM
-U5LTDKCMv1nzPGeIIkoCvr4=
-=9e4A
------END PGP SIGNATURE-----
-
---k+w/mQv8wyuph6w0--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
