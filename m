@@ -1,68 +1,88 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations
-  when not needed
-Date: Thu, 08 Nov 2007 00:21:30 +0100
-Message-ID: <4732487A.4050100@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site> <Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org> <472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org> <4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx> <20071107001112.GD4382@artemis.corp> <20071107001458.GE4382@artemis.corp>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Inconsistencies with git log
+Date: Wed, 7 Nov 2007 18:29:38 -0500
+Message-ID: <9e4733910711071529m604f3b12v29b3a040074ea4e@mail.gmail.com>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
+	 <Pine.LNX.4.64.0711072242230.4362@racer.site>
+	 <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
+	 <Pine.LNX.4.64.0711072255420.4362@racer.site>
+	 <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
+	 <Pine.LNX.4.64.0711072309380.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 00:22:24 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 00:30:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpuDv-0006WI-9r
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 00:22:15 +0100
+	id 1IpuLa-0000GE-RD
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 00:30:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756447AbXKGXVs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 18:21:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756278AbXKGXVs
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 18:21:48 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:34054
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756446AbXKGXVr (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 18:21:47 -0500
-Received: from [10.0.1.201] (p57B7C524.dip.t-dialin.net [87.183.197.36])
-	by neapel230.server4you.de (Postfix) with ESMTP id B235F873BA;
-	Thu,  8 Nov 2007 00:21:46 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071107001458.GE4382@artemis.corp>
+	id S1756802AbXKGX3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 18:29:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757187AbXKGX3k
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 18:29:40 -0500
+Received: from wa-out-1112.google.com ([209.85.146.180]:33868 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756778AbXKGX3j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 18:29:39 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so3027613wah
+        for <git@vger.kernel.org>; Wed, 07 Nov 2007 15:29:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=fIWq5fzXOM99lRcXC0JzsPVTY4U8ycPXt9cyum+LW3o=;
+        b=SuWv/VJudvLsifg1KpFexuSYmyOtPe4hnWZNSTYjW0BUkSz/FGl3etiwfEUzuZ2WIOzhtwR06eTUPGVEisVPdgCBqyuQUOhSWncUTT5dsEqlSvGq5ZwYy60kQozNdACa1GFTdyNYN1jKXzXHdLVO9Erfg7DQxOPDUGYMB13M9p4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=VL8dCXpY6GCz7r1xzAbHtSdfffJyEnbDnuyh3xga6cyUuEKw2GXTvK7EqzVgQEIaeuwgAaPKwJ0p4vG5dDm30O6wWYRoEYwxt4yn35aLcEe1IlsBcTVJLvJKppiBrH3UaYLMfWog8nMqBRwdjsRJAkDTgDFPdxvPJg6hVzwjqts=
+Received: by 10.114.14.1 with SMTP id 1mr491271wan.1194478178569;
+        Wed, 07 Nov 2007 15:29:38 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Wed, 7 Nov 2007 15:29:38 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711072309380.4362@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63896>
 
-Pierre Habouzit schrieb:
-> {
->     const char *percent =3D strchrnul(fmt, '%');
->     while (*percent) {
->         strbuf_add(sb, fmt, percent - fmt);
->         fmt =3D percent + 1;
->=20
->         /* do your stuff */
->=20
->         percent =3D strchrnul(fmt, '%');
->     }
->     strbuf_add(sb, fmt, percent - fmt);
-> }
->=20
->=20
-> Which would require strchrnul, but it's trivial compat/ material for =
-sure.
+On 11/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> Hi,
+>
+> On Wed, 7 Nov 2007, Jon Smirl wrote:
+>
+> > On 11/7/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > > We also tend to take the approach of viewing the history as that of
+> > > the whole project.
+> >
+> > But if you type 'git log' while cd'd into a subdirectory the whole log
+> > is almost never what you want. It's this kind of thing that makes git
+> > harder to use.
+>
+> When I am working in a subdirectory, I often want the whole history.  For
+> example, when I am working on the documentation, sometimes I need to look
+> up a commit real quick, that touched other parts.
+>
+> Besides, adding a space and a dot is not what qualifies for "harder to
+> use" with this developer.
 
-Grepping through the source I see several places that can be simplified
-by converting them to strchrnul(), so I think introducing this GNU
-extension is a good idea in any case.
+So if git log is always whole tree, why doesn't this work?
 
-Using strchr()/strchrnul() instead of strbuf_addch()'ing is sensible, o=
-f
-course.  I don't like the duplicate code in your sketch above, though.
-I'll try to look into it later today.
+ cd arch/powerpc/platforms/52xx
+ git log arch/powerpc/platforms/52xx
+fatal: ambiguous argument 'arch/powerpc/platforms/52xx': unknown
+revision or path not in the working tree.
+Use '--' to separate paths from revisions
 
-Thanks!
-Ren=E9
+It's not consistent. git log with no parameters is relative to the
+project root, git log with a parameter is relative to the current
+directory.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
