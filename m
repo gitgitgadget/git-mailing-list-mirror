@@ -1,64 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add Documentation/CodingStyle
-Date: Wed, 7 Nov 2007 20:13:58 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711072013010.4362@racer.site>
-References: <20071106201518.GA6361@ins.uni-bonn.de>  <20071106201809.GD6361@ins.uni-bonn.de>
-  <20071106202600.GH6361@ins.uni-bonn.de>  <7vtznzf5jb.fsf@gitster.siamese.dyndns.org>
-  <Pine.LNX.4.64.0711062317330.4362@racer.site> <1194464406.14978.9.camel@ld0161-tx32>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-fetch: avoid local fetching from alternate (again)
+Date: Wed, 07 Nov 2007 12:32:40 -0800
+Message-ID: <7vr6j1bxuf.fsf@gitster.siamese.dyndns.org>
+References: <20071107024118.GA11043@spearce.org>
+	<7vsl3iefoj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Git List <git@vger.kernel.org>
-To: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 21:14:59 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 07 21:33:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IprIZ-0003HI-Ki
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:14:52 +0100
+	id 1IpraH-0001PH-5I
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753082AbXKGUOG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 15:14:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752336AbXKGUOF
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:14:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:49840 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750818AbXKGUOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 15:14:03 -0500
-Received: (qmail invoked by alias); 07 Nov 2007 20:14:01 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp056) with SMTP; 07 Nov 2007 21:14:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19LGeV/vPBLOaH1bJMdCw5iu7LEmiP+7C+x0Uyf53
-	UN+zq4DmdpMRbm
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1194464406.14978.9.camel@ld0161-tx32>
-X-Y-GMX-Trusted: 0
+	id S1753082AbXKGUcw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 15:32:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752556AbXKGUcw
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:32:52 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57390 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143AbXKGUcv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 15:32:51 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 064322EF;
+	Wed,  7 Nov 2007 15:33:12 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8E80E932FD;
+	Wed,  7 Nov 2007 15:33:08 -0500 (EST)
+In-Reply-To: <7vsl3iefoj.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Tue, 06 Nov 2007 22:24:28 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63850>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63851>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Wed, 7 Nov 2007, Jon Loeliger wrote:
+> Well spotted.  It would be a good idea to commit the big comment
+> from contrib/examples/git-fetch.sh to fetch_local_nocopy()
+> function, which would have made us realize that the patch does
+> not refrain from applying this optimization even when shallow
+> is in effect.  But I think that is actually a good change.
 
-> On Tue, 2007-11-06 at 17:17, Johannes Schindelin wrote:
-> 
-> > +
-> > + - Do not use curly brackets unnecessarily.  I.e.
-> > +
-> > +	if (bla) {
-> > +		x = 1;
-> > +	}
-> 
-> In my opinion, I think this is a bad guideline.
+I take this back.  This regresses badly.
 
-In my opinion, this is a good guideline.
+Why?
 
-So now what? Let's have another pointless flamewar?
+Because the optimization is useless when we are trying to deepen
+the shallow history.  When you are trying to deepen a shallow
+history and the tips of remotes haven't moved since you fetched
+from there the last time, you have everything near the tip, and
+becuse your history is shallow, your ancestry chain is
+cauterized to make it appear that the history is complete.  The
+rev-list reachability test would not fail as we expect.
 
-Ciao,
-Dscho
+The breakage can be seen with t5500.
