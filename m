@@ -1,72 +1,61 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: [PATCH v3] Fix mistakes in the documentation of git-add --interactive.
-Date: Wed,  7 Nov 2007 23:31:08 +0100
-Message-ID: <1194474668-8837-1-git-send-email-tsuna@lrde.epita.fr>
-References: <Pine.LNX.4.64.0711072224200.4362@racer.site>
-Cc: gitster@pobox.com, Benoit Sigoure <tsuna@lrde.epita.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 07 23:31:42 2007
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] restore fetching with thin-pack capability
+Date: Wed, 07 Nov 2007 17:20:22 -0500 (EST)
+Message-ID: <alpine.LFD.0.9999.0711071712270.21255@xanadu.home>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 23:32:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IptQq-0008GS-BF
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 23:31:32 +0100
+	id 1IptS9-0000EY-6s
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 23:32:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757673AbXKGWbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 17:31:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757550AbXKGWbP
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 17:31:15 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213]:61618 "EHLO
-	quanta.tsunanet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756565AbXKGWbO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 17:31:14 -0500
-Received: by quanta.tsunanet.net (Postfix, from userid 501)
-	id 2BC3BC81BD9; Wed,  7 Nov 2007 23:31:08 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.4.398.g859b
-In-Reply-To: <Pine.LNX.4.64.0711072224200.4362@racer.site>
+	id S1756778AbXKGWca (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 17:32:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757373AbXKGWca
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 17:32:30 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:25330 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756412AbXKGWc3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 17:32:29 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JR5003V8Q1Y2AT0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Wed, 07 Nov 2007 17:20:28 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63879>
 
-This patch fixes a couple of language issues in the documentation
-of the `patch' sub-command of git-add --interactive.
+Broken since commit fa74052922cf39e5a39ad7178d1b13c2da9b4519.
 
-Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
+Signed-off-by: Nicolas Pitre <nico@cam.org>
 ---
-Use better wording proposed by Dscho.
-
- Documentation/git-add.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
-index 963e1ab..3117798 100644
---- a/Documentation/git-add.txt
-+++ b/Documentation/git-add.txt
-@@ -201,9 +201,9 @@ patch::
-   the change of each hunk.  You can say:
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index 862652b..bb1742f 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -32,7 +32,7 @@ static const char fetch_pack_usage[] =
+ #define MAX_IN_VAIN 256
  
-        y - add the change from that hunk to index
--       n - do not add the change from that hunk to index
--       a - add the change from that hunk and all the rest to index
--       d - do not the change from that hunk nor any of the rest to index
-+       n - skip this hunk
-+       a - add the change from that hunk and all the remaining ones
-+       d - skip this hunk, as well as the remaining ones
-        j - do not decide on this hunk now, and view the next
-            undecided hunk
-        J - do not decide on this hunk now, and view the next hunk
-@@ -211,8 +211,8 @@ patch::
-            undecided hunk
-        K - do not decide on this hunk now, and view the previous hunk
- +
--After deciding the fate for all hunks, if there is any hunk
--that was chosen, the index is updated with the selected hunks.
-+After deciding the fate of each hunk, the index is updated with the selected
-+ones.
+ static struct commit_list *rev_list;
+-static int non_common_revs, multi_ack, use_thin_pack, use_sideband;
++static int non_common_revs, multi_ack, use_sideband;
  
- diff::
- 
--- 
-1.5.3.4.398.g859b
+ static void rev_list_push(struct commit *commit, int mark)
+ {
+@@ -178,7 +178,7 @@ static int find_common(int fd[2], unsigned char *result_sha1,
+ 				     (multi_ack ? " multi_ack" : ""),
+ 				     (use_sideband == 2 ? " side-band-64k" : ""),
+ 				     (use_sideband == 1 ? " side-band" : ""),
+-				     (use_thin_pack ? " thin-pack" : ""),
++				     (args.use_thin_pack ? " thin-pack" : ""),
+ 				     (args.no_progress ? " no-progress" : ""),
+ 				     " ofs-delta");
+ 		else
