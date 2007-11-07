@@ -1,146 +1,107 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations  when not needed
-Date: Wed, 07 Nov 2007 01:14:58 +0100
-Message-ID: <20071107001458.GE4382@artemis.corp>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site> <Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org> <472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org> <4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx> <20071107001112.GD4382@artemis.corp>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Add Documentation/CodingStyle
+Date: Tue, 06 Nov 2007 16:40:49 -0800
+Message-ID: <7v640ega5q.fsf@gitster.siamese.dyndns.org>
+References: <20071106201518.GA6361@ins.uni-bonn.de>
+	<20071106201809.GD6361@ins.uni-bonn.de>
+	<20071106202600.GH6361@ins.uni-bonn.de>
+	<7vtznzf5jb.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711062317330.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="d8Lz2Tf5e5STOWUP";
-	protocol="application/pgp-signature"; micalg=SHA1
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 07 01:15:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 01:41:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpYZg-0001SH-NZ
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 01:15:17 +0100
+	id 1IpYyl-0007HH-Tn
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 01:41:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754199AbXKGAPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 19:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754196AbXKGAPA
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 19:15:00 -0500
-Received: from pan.madism.org ([88.191.52.104]:56994 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754076AbXKGAO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 19:14:59 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id C286E28D35;
-	Wed,  7 Nov 2007 01:14:58 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 6DF15352263; Wed,  7 Nov 2007 01:14:58 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071107001112.GD4382@artemis.corp>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1753956AbXKGAk5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 19:40:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754086AbXKGAk4
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 19:40:56 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44017 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753697AbXKGAk4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 19:40:56 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DD15E2EF;
+	Tue,  6 Nov 2007 19:41:16 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2968A92C94;
+	Tue,  6 Nov 2007 19:41:13 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711062317330.4362@racer.site> (Johannes
+	Schindelin's message of "Tue, 6 Nov 2007 23:17:50 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63759>
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---d8Lz2Tf5e5STOWUP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/Documentation/CodingStyle b/Documentation/CodingStyle
+> new file mode 100644
+> index 0000000..622b80b
+> --- /dev/null
+> +++ b/Documentation/CodingStyle
+> @@ -0,0 +1,87 @@
+> +As a popular project, we also have some guidelines to keep to the
+> +code.  For git in general, two rough rules are:
+> +
+> + - Most importantly, we never say "It's in POSIX; we'll happily
+> +   screw your system that does not conform."  We live in the
+> +   real world.
+> +
+> + - However, we often say "Let's stay away from that construct,
+> +   it's not even in POSIX".
+> +
 
-On Wed, Nov 07, 2007 at 12:11:12AM +0000, Pierre Habouzit wrote:
-> On Tue, Nov 06, 2007 at 11:17:14PM +0000, Ren=C3=A9 Scharfe wrote:
-> > I haven't seen any comments on strbuf_expand.  Is it too far out?
-> > Here it is again, adjusted for current master and with the changes
-> > to strbuf.[ch] coming first:
->=20
->   I have one.
->=20
-> >  strbuf.c |   22 +++++
-> >  strbuf.h |    3=20
-> >  pretty.c |  276 ++++++++++++++++++++++++++++++++++--------------------=
----------
-> >  3 files changed, 178 insertions(+), 123 deletions(-)
-> >=20
-> > diff --git a/strbuf.c b/strbuf.c
-> > index f4201e1..b71da99 100644
-> > --- a/strbuf.c
-> > +++ b/strbuf.c
-> > @@ -129,6 +129,28 @@ void strbuf_addf(struct strbuf *sb, const char *fm=
-t, ...)
-> >  	strbuf_setlen(sb, sb->len + len);
-> >  }
-> > =20
-> > +void strbuf_expand(struct strbuf *sb, const char *fmt,
-> > +                   const char **placeholders, expand_fn_t fn, void *co=
-ntext)
-> > +{
-> > +	char c;
-> > +	const char **p;
-> > +
-> > +	while ((c =3D *fmt++)) {
-> > +		if (c !=3D '%') {
-> > +			strbuf_addch(sb, c);
-> > +			continue;
-> > +		}
->=20
-> strbuf_addch is pretty inneficient as it puts NULs each time. rather
-> do that (sketchy) :
->=20
-> {
->     for (;;) {
->         const char *percent =3D strchr(fmt, '%');
->         if (!percent)
->             break;
->         strbuf_add(sb, fmt, percent - fmt);
->         fmt =3D percent + 1;
->=20
->         /* do your stuff */
->     }
->     strbuf_addstr(sb, fmt);
-> }
+I am not sure if we want to have CodingStyle document, but the
+above are not CodingStyle issues.
 
+If we are to write this down, I'd like to have the more
+important third rule, which is:
 
-Or if we are at this level of micro-optimization:
+ - In spite of the above two rules, we sometimes say "Although
+   this is not in POSIX, it (is so convenient | makes the code
+   much more readable | has other good characteristics) and
+   practically all the platforms we care about support it, so
+   let's use it".  Again, we live in the real world, and it is
+   sometimes a judgement call, decided based more on real world
+   constraints people face than what the paper standard says.
 
-{
-    const char *percent =3D strchrnul(fmt, '%');
-    while (*percent) {
-        strbuf_add(sb, fmt, percent - fmt);
-        fmt =3D percent + 1;
+> +For C programs:
+> +
+> + - Use tabs to increment, and interpret tabs as taking up to 8 spaces
 
-        /* do your stuff */
+What's the character for decrement?  DEL? ;-)
 
-        percent =3D strchrnul(fmt, '%');
-    }
-    strbuf_add(sb, fmt, percent - fmt);
-}
+> +   Double negation is often harder to understand than no negation at
+> +   all.
+> +
+> +   Some clever tricks, like using the !! operator with arithmetic
+> +   constructs, can be extremely confusing to others.  Avoid them,
+> +   unless there is a compelling reason to use them.
 
+I actually think (!!var) idiom is already established in our
+codebase.
 
-Which would require strchrnul, but it's trivial compat/ material for sure.
+> + - Use the API.  No, really.  We have a strbuf (variable length string),
+> +   several arrays with the ALLOC_GROW() macro, a path_list for sorted
+> +   string lists, a hash map (mapping struct objects) named
+> +   "struct decorate", amongst other things.
 
+ - When you come up with an API, document it.
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+> + - if you are planning a new command, consider writing it in shell or
+> +   perl first, so that changes in semantics can be easily changed and
+> +   discussed.  Many git commands started out like that, and a few are
+> +   still scripts.
 
---d8Lz2Tf5e5STOWUP
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHMQOCvGr7W6HudhwRAtc4AJ95JFmBLIOokUe8XvPajkYaTrnBUACdGSIQ
-SWkESm+carb1MKbNbWA5NiI=
-=yhJI
------END PGP SIGNATURE-----
-
---d8Lz2Tf5e5STOWUP--
+No Python allowed?
