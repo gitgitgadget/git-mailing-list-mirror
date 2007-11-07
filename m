@@ -1,80 +1,130 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Add Documentation/CodingStyle
-Date: Wed, 07 Nov 2007 01:04:20 +0100
-Message-ID: <47310104.5040202@op5.se>
-References: <20071106201518.GA6361@ins.uni-bonn.de> <20071106201809.GD6361@ins.uni-bonn.de> <20071106202600.GH6361@ins.uni-bonn.de> <7vtznzf5jb.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711062317330.4362@racer.site>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations  when not needed
+Date: Wed, 07 Nov 2007 01:11:12 +0100
+Message-ID: <20071107001112.GD4382@artemis.corp>
+References: <Pine.LNX.4.64.0711041912190.4362@racer.site> <Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org> <472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org> <4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="OROCMA9jn6tkzFBc";
+	protocol="application/pgp-signature"; micalg=SHA1
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 01:04:49 2007
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Wed Nov 07 01:11:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpYPR-0007Cc-Ma
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 01:04:42 +0100
+	id 1IpYW2-0000UC-Bd
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 01:11:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754205AbXKGAE1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 19:04:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751019AbXKGAE1
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 19:04:27 -0500
-Received: from mail.op5.se ([193.201.96.20]:39231 "EHLO mail.op5.se"
+	id S1754498AbXKGALQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 19:11:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753062AbXKGALQ
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 19:11:16 -0500
+Received: from pan.madism.org ([88.191.52.104]:56983 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751079AbXKGAE0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 6 Nov 2007 19:04:26 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 6DDB917305AD;
-	Wed,  7 Nov 2007 01:04:08 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 6JQNLq9Z9Tny; Wed,  7 Nov 2007 01:04:07 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.10])
-	by mail.op5.se (Postfix) with ESMTP id CCB15173059F;
-	Wed,  7 Nov 2007 01:04:06 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0711062317330.4362@racer.site>
+	id S1751312AbXKGALP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 6 Nov 2007 19:11:15 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id A97C628D11;
+	Wed,  7 Nov 2007 01:11:13 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 4541235566B; Wed,  7 Nov 2007 01:11:12 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <4730F5FA.3030705@lsrfire.ath.cx>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63757>
 
-Johannes Schindelin wrote:
-> Even if our code is quite a good documentation for our coding style,
-> some people seem to prefer a document describing it.
-> 
 
-Sweet. You just saved me 40 minutes of writing one just like that for
-company use. I owe you a drink, and then you can tell me what movie
-you alluded to ;-)
+--OROCMA9jn6tkzFBc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Nov 06, 2007 at 11:17:14PM +0000, Ren=C3=A9 Scharfe wrote:
+> I haven't seen any comments on strbuf_expand.  Is it too far out?
+> Here it is again, adjusted for current master and with the changes
+> to strbuf.[ch] coming first:
+
+  I have one.
+
+>  strbuf.c |   22 +++++
+>  strbuf.h |    3=20
+>  pretty.c |  276 ++++++++++++++++++++++++++++++++++----------------------=
+-------
+>  3 files changed, 178 insertions(+), 123 deletions(-)
+>=20
+> diff --git a/strbuf.c b/strbuf.c
+> index f4201e1..b71da99 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -129,6 +129,28 @@ void strbuf_addf(struct strbuf *sb, const char *fmt,=
+ ...)
+>  	strbuf_setlen(sb, sb->len + len);
+>  }
+> =20
+> +void strbuf_expand(struct strbuf *sb, const char *fmt,
+> +                   const char **placeholders, expand_fn_t fn, void *cont=
+ext)
+> +{
+> +	char c;
+> +	const char **p;
 > +
-> + - if you are planning a new command, consider writing it in shell or
-> +   perl first, so that changes in semantics can be easily changed and
-> +   discussed.  Many git commands started out like that, and a few are
-> +   still scripts.
+> +	while ((c =3D *fmt++)) {
+> +		if (c !=3D '%') {
+> +			strbuf_addch(sb, c);
+> +			continue;
+> +		}
 
-I'd skip this part though and just add a pointer to contrib/examples/,
-saying something along the lines of
+strbuf_addch is pretty inneficient as it puts NULs each time. rather
+do that (sketchy) :
 
-- if you're planning a new command, sneak a peak in contrib/examples/
-  for ample study-material of retired git commands implemented in perl
-  and shell.
+{
+    for (;;) {
+        const char *percent =3D strchr(fmt, '%');
+        if (!percent)
+            break;
+        strbuf_add(sb, fmt, percent - fmt);
+        fmt =3D percent + 1;
 
-Possibly with s/retired // on that paragraph.
+        /* do your stuff */
+    }
+    strbuf_addstr(sb, fmt);
+}
 
-There's nothing particular wrong with writing in C from the start after
-all.
+Of course it's a detail as formats will probably be short. But it's a good
+example to show to people wanting to write new strbuf functions.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+This nitpicking apart, the timings are impressive.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--OROCMA9jn6tkzFBc
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMQKgvGr7W6HudhwRAnt2AJ9a9IDY2YTbNqKZ45ki+gieB+wZHgCfURre
+zokyn008uNjX+X/OwCaRBIE=
+=N1tT
+-----END PGP SIGNATURE-----
+
+--OROCMA9jn6tkzFBc--
