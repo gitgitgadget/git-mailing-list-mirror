@@ -1,83 +1,68 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations
- when not needed
-Date: Thu, 08 Nov 2007 00:19:44 +0100
-Message-ID: <47324810.2010507@lsrfire.ath.cx>
-References: <Pine.LNX.4.64.0711041912190.4362@racer.site> <Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org> <472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org> <4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx> <Pine.LNX.4.64.0711062343050.4362@racer.site>
+  when not needed
+Date: Thu, 08 Nov 2007 00:21:30 +0100
+Message-ID: <4732487A.4050100@lsrfire.ath.cx>
+References: <Pine.LNX.4.64.0711041912190.4362@racer.site> <Pine.LNX.4.64.0711041915290.4362@racer.site> <7v8x5cqxn0.fsf@gitster.siamese.dyndns.org> <472F7B2F.4050608@lsrfire.ath.cx> <7vejf4kwry.fsf@gitster.siamese.dyndns.org> <4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx> <20071107001112.GD4382@artemis.corp> <20071107001458.GE4382@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 08 00:20:34 2007
+To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 08 00:22:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpuCH-000632-BM
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 00:20:33 +0100
+	id 1IpuDv-0006WI-9r
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 00:22:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754925AbXKGXUS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 18:20:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754683AbXKGXUR
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 18:20:17 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:34041
+	id S1756447AbXKGXVs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 18:21:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756278AbXKGXVs
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 18:21:48 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:34054
 	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754554AbXKGXUQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 18:20:16 -0500
+	by vger.kernel.org with ESMTP id S1756446AbXKGXVr (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 18:21:47 -0500
 Received: from [10.0.1.201] (p57B7C524.dip.t-dialin.net [87.183.197.36])
-	by neapel230.server4you.de (Postfix) with ESMTP id 62AB4873BA;
-	Thu,  8 Nov 2007 00:20:14 +0100 (CET)
+	by neapel230.server4you.de (Postfix) with ESMTP id B235F873BA;
+	Thu,  8 Nov 2007 00:21:46 +0100 (CET)
 User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711062343050.4362@racer.site>
+In-Reply-To: <20071107001458.GE4382@artemis.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63895>
 
-Johannes Schindelin schrieb:
-> Hi,
+Pierre Habouzit schrieb:
+> {
+>     const char *percent =3D strchrnul(fmt, '%');
+>     while (*percent) {
+>         strbuf_add(sb, fmt, percent - fmt);
+>         fmt =3D percent + 1;
 >=20
-> On Wed, 7 Nov 2007, Ren=C3=A9 Scharfe wrote:
+>         /* do your stuff */
 >=20
->> By the way, the more intrusive surgery required when using strbuf_ex=
-pand()
->> leads to even faster operation.  Here my measurements of most of Pau=
-l's
->> test cases (best of three runs):
->>
->> [...]
+>         percent =3D strchrnul(fmt, '%');
+>     }
+>     strbuf_add(sb, fmt, percent - fmt);
+> }
 >=20
-> impressive timings.  Although I wonder where the time comes from, as =
-the=20
-> other substitutions should not be _that_ expensive.
+>=20
+> Which would require strchrnul, but it's trivial compat/ material for =
+sure.
 
-I haven't run a profiler, but my two suspects are the malloc()s and
-free()s done by interp_set_entry(), and the fact that
-format_commit_message() calls interpolate() twice.
+Grepping through the source I see several places that can be simplified
+by converting them to strchrnul(), so I think introducing this GNU
+extension is a good idea in any case.
 
-> In any case, your approach seems much more sensible, now that we have=
-=20
-> strbuf.
->=20
->> diff --git a/strbuf.h b/strbuf.h
->> index cd7f295..95071d5 100644
->> --- a/strbuf.h
->> +++ b/strbuf.h
->> @@ -102,6 +102,9 @@ static inline void strbuf_addbuf(struct strbuf *=
-sb, struct strbuf *sb2) {
->>  	strbuf_add(sb, sb2->buf, sb2->len);
->>  }
->> =20
->> +typedef void (*expand_fn_t) (struct strbuf *sb, const char *placeho=
-lder, void *context);
->> +extern void strbuf_expand(struct strbuf *sb, const char *fmt, const=
- char **placeholders, expand_fn_t fn, void *context);
->=20
-> I wonder if it would even faster (but maybe not half as readable) if=20
-> expand_fd_t got the placeholder_index instead of the placeholder.
+Using strchr()/strchrnul() instead of strbuf_addch()'ing is sensible, o=
+f
+course.  I don't like the duplicate code in your sketch above, though.
+I'll try to look into it later today.
 
-I doubt it.  All this would save is one pointer dereference per
-placeholder.  I haven't tried and measured this, though.
-
-Ren=C3=A9
+Thanks!
+Ren=E9
