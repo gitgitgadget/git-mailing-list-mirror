@@ -1,40 +1,44 @@
 From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] Improve accuracy of check for presence of deflateBound.
-Date: Wed,  7 Nov 2007 14:15:13 +1100
-Message-ID: <11944053134082-git-send-email-dsymonds@gmail.com>
+Subject: [REPLACEMENT PATCH] Improve accuracy of check for presence of deflateBound.
+Date: Wed,  7 Nov 2007 14:24:28 +1100
+Message-ID: <11944058682845-git-send-email-dsymonds@gmail.com>
 Cc: git@vger.kernel.org, David Symonds <dsymonds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 04:19:38 2007
+X-From: git-owner@vger.kernel.org Wed Nov 07 04:28:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpbRw-0005hf-W6
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 04:19:29 +0100
+	id 1IpbaN-0007Lg-8R
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 04:28:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754995AbXKGDTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 6 Nov 2007 22:19:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754861AbXKGDTJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 22:19:09 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:33954 "EHLO
+	id S1755419AbXKGD1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 6 Nov 2007 22:27:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755353AbXKGD1y
+	(ORCPT <rfc822;git-outgoing>); Tue, 6 Nov 2007 22:27:54 -0500
+Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:61177 "EHLO
 	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754510AbXKGDTI (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2007 22:19:08 -0500
+	by vger.kernel.org with ESMTP id S1755153AbXKGD1y (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 6 Nov 2007 22:27:54 -0500
 X-IronPort-AV: E=Sophos;i="4.21,381,1188743400"; 
-   d="scan'208";a="222790044"
+   d="scan'208";a="222794686"
 Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 07 Nov 2007 13:45:15 +1030
+  by ipmail02.adl2.internode.on.net with ESMTP; 07 Nov 2007 13:54:29 +1030
 X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63770>
 
 ZLIB_VERNUM isn't defined in some zlib versions, so this patch does a proper
-linking test in autoconf to see whether deflateBound exists in zlib.
+linking test in autoconf to see whether deflateBound exists in zlib. Also,
+setting NO_DEFLATE_BOUND will also work for folk not using autoconf.
 
 Signed-off-by: David Symonds <dsymonds@gmail.com>
 ---
+	This resend keeps the ZLIB_VERNUM test in place for people who don't
+	use autoconf (thanks spearce).
+
  Makefile      |    6 ++++++
  cache.h       |    2 +-
  config.mak.in |    1 +
@@ -66,7 +70,7 @@ index 1a81ef1..c8bcd1d 100644
  	SHA1_HEADER = "ppc/sha1.h"
  	LIB_OBJS += ppc/sha1.o ppc/sha1ppc.o
 diff --git a/cache.h b/cache.h
-index 830d2e0..a3b1a26 100644
+index 830d2e0..ae66de1 100644
 --- a/cache.h
 +++ b/cache.h
 @@ -7,7 +7,7 @@
@@ -74,7 +78,7 @@ index 830d2e0..a3b1a26 100644
  #include <zlib.h>
  
 -#if ZLIB_VERNUM < 0x1200
-+#if defined(NO_DEFLATE_BOUND)
++#if defined(NO_DEFLATE_BOUND) || ZLIB_VERNUM < 0x1200
  #define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
  #endif
  
