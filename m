@@ -1,50 +1,61 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Add Documentation/CodingStyle
-Date: Wed, 7 Nov 2007 08:53:06 +0100
-Message-ID: <4749D87D-9660-472B-97CF-8E649435AFD7@wincent.com>
-References: <20071106201518.GA6361@ins.uni-bonn.de> <20071106201809.GD6361@ins.uni-bonn.de> <20071106202600.GH6361@ins.uni-bonn.de> <7vtznzf5jb.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711062317330.4362@racer.site>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 08:53:32 2007
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Mark 'git stash [message...]' as deprecated
+Date: Wed, 07 Nov 2007 09:00:43 +0100
+Message-ID: <473170AB.7030104@viscovery.net>
+References: <20071106085134.GD4435@artemis.corp> <1194395205-27905-1-git-send-email-bdowning@lavos.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, tsuna@lrde.epita.fr,
+	aghilesk@gmail.com, git@vger.kernel.org
+To: Brian Downing <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Wed Nov 07 09:01:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipfj5-0003do-S5
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 08:53:28 +0100
+	id 1IpfqR-0005IX-8O
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 09:01:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754774AbXKGHxN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 02:53:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755427AbXKGHxM
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 02:53:12 -0500
-Received: from wincent.com ([72.3.236.74]:49413 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752357AbXKGHxM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 02:53:12 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lA77r78Q028312;
-	Wed, 7 Nov 2007 01:53:08 -0600
-In-Reply-To: <Pine.LNX.4.64.0711062317330.4362@racer.site>
-X-Mailer: Apple Mail (2.912)
+	id S1756447AbXKGIAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 03:00:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756319AbXKGIAs
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 03:00:48 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:35898 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752032AbXKGIAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 03:00:48 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Ipfpg-0004I0-Sl; Wed, 07 Nov 2007 09:00:17 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id BF1BD69F; Wed,  7 Nov 2007 09:00:43 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1194395205-27905-1-git-send-email-bdowning@lavos.net>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63780>
 
-El 7/11/2007, a las 0:17, Johannes Schindelin escribi=F3:
+Brian Downing schrieb:
+> Complain to STDERR unless 'git stash save' is explicitly used.
+> This is in preparation for completely disabling the "default save"
+> behavior of the command in the future.
+> 
+> ...
+> -'git-stash' [save] [message...]
+> +'git-stash' save [message...]
 
-> Even if our code is quite a good documentation for our coding style,
-> some people seem to prefer a document describing it.
+Can't we have these two?
 
-Great idea, Johannes, especially your nice concise summary of =20
-conventions for shell-scripts (which is an area where we most often =20
-see list traffic on which way to write things).
+	git-stash
+	git-stash save [message...]
 
-Cheers,
-Wincent
+'git stash' without a message as an equivalent of 'git stash save' is still 
+very handy.
+
+-- Hannes
