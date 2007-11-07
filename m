@@ -1,74 +1,71 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: stgit: cleaning up after using git branch delete commands
-Date: Wed, 7 Nov 2007 11:11:42 -0500
-Message-ID: <9e4733910711070811y72f96a90i4db9acdf93aa765c@mail.gmail.com>
-References: <9e4733910711070606t2c558ac9ob4c729d5baca8fb9@mail.gmail.com>
-	 <tnxwssuyug1.fsf@pc1117.cambridge.arm.com>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] Documentation: enhanced "git for CVS users" doc about
+	shared repositories
+Date: Wed, 7 Nov 2007 11:47:48 -0500
+Message-ID: <20071107164748.GA10525@fieldses.org>
+References: <472F99F8.4010904@gmail.com> <7v8x5cmern.fsf@gitster.siamese.dyndns.org> <4730E056.7080809@gmail.com> <7vd4unez2l.fsf@gitster.siamese.dyndns.org> <47310ACF.4030103@gmail.com> <277490E5-2B9A-4BA7-9DD7-C1CEE698B348@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 17:12:35 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Francesco Pretto <ceztkoml@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Wed Nov 07 17:50:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpnVx-0003kU-Dz
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 17:12:25 +0100
+	id 1Ipo6N-0001QT-FG
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 17:50:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758024AbXKGQLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 11:11:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751925AbXKGQLp
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 11:11:45 -0500
-Received: from nz-out-0506.google.com ([64.233.162.230]:61864 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758012AbXKGQLo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 11:11:44 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so1734262nze
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 08:11:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=+XuFftpmkHRWfCkwxipIfJmHDiNmvdfkIcuBABBM8Vc=;
-        b=tvOGZyFtPDtJD9WWBIMmbqKi3b38ZlK174dDvj4F+JXLfM8KekYCNbGnSHknBgh1VH+wNasAByfPc2vSsVgZaucL1TJi/QWHSkJIpZAA5ONnwIsqQ0ZPfbG/vvjjYYnfyNb+N0e6Ww8B4UQXMSU37z/u8wGevjqZsjW2En5xOgc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GteC2nbhrMYaM8OJIZh7T/rkAe2M9rAQVb55F1Rx4DlAtNmSw08gz15yRdcFiMUoSygb+Gp125MOY0Rnx+woYXMyPa+zFTDM9fG/luD3d07KyatN05LKz+oNGFM7f5rqWdS0RJR1ZtsC8awO6x2pSfEqtpfj8jUhmsD8/yjJAZI=
-Received: by 10.114.184.7 with SMTP id h7mr7698638waf.1194451902767;
-        Wed, 07 Nov 2007 08:11:42 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Wed, 7 Nov 2007 08:11:42 -0800 (PST)
-In-Reply-To: <tnxwssuyug1.fsf@pc1117.cambridge.arm.com>
+	id S1756565AbXKGQto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 11:49:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756153AbXKGQto
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 11:49:44 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:49519 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755461AbXKGQtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 11:49:43 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Ipo4C-0004Yt-Vt; Wed, 07 Nov 2007 11:47:48 -0500
 Content-Disposition: inline
+In-Reply-To: <277490E5-2B9A-4BA7-9DD7-C1CEE698B348@zib.de>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63833>
 
-On 11/7/07, Catalin Marinas <catalin.marinas@arm.com> wrote:
-> "Jon Smirl" <jonsmirl@gmail.com> wrote:
-> > I've used git commands to delete several branches that had stgit
-> > active on it.  Doing that has left a bunch of clutter in the .git
-> > directory. Is there a stgit command to remove all the clutter from
-> > branches that no longer exist? I'd like to use the branch names again
-> > but the clutter is interfering.
+On Wed, Nov 07, 2007 at 09:07:58AM +0100, Steffen Prohaska wrote:
+> On Nov 7, 2007, at 1:46 AM, Francesco Pretto wrote:
 >
-> You can create the branch back with GIT and run "stg branch --delete
-> --force", though I don't guarantee it will work (BTW, I only recently
-> relaxed the branch deletion rules in StGIT so that it doesn't complain
-> of missing files and completes the operation, so you should use the
-> latest HEAD).
-
-how about a 'stg gc' command that gets rid of all the inaccessible clutter?
-
-
+>> Junio C Hamano ha scritto:
+>>>
+>>> Honestly speaking, I am not too thrilled about making the
+>>> cvs-migration document much longer than what it currently is.
+>>>
 >
-> --
-> Catalin
->
+> Maybe the description of setting up a shared repository should
+> go to the user-manual and cvs-migration should refer to the
+> user-manual, instead of the other way round. I don't like the
+> idea that the user-manual is referring to a CVS specific guide.
+> The user manual should be as self-contained as possible.
 
+I'd be interested in patches that did that.  If somebody wants to work
+on that, they might want to start with
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+	git://linux-nfs.org/~bfields/git.git docwork-foreign-scms
+
+which has the skeleton of an "interoperating with foreign scms" chapter.
+
+The thing that's kept me from working on this in the past is that it's a
+bit of a step backwards for someone that *just* wants to get to the
+cvs-migration stuff, since now it may appear you have to plow through
+the rest of the manual to get to it.
+
+We could address that with clearer dependency information ("before
+reading this chapter, read chapters 1 and 3..."), and/or by providing
+some more links (e.g. repopulate the howto directory with links to some
+chapters that address popular questions).
+
+--b.
