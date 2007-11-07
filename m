@@ -1,78 +1,83 @@
-From: "Lars Hjemli" <hjemli@gmail.com>
-Subject: Re: [ANNOUNCE] cgit v0.7
-Date: Wed, 7 Nov 2007 11:52:21 +0100
-Message-ID: <8c5c35580711070252g4b0c2914v6ecb73320a07ee83@mail.gmail.com>
-References: <8c5c35580711030408n658eb11fk19d554f0fa3b17@mail.gmail.com>
-	 <Pine.LNX.4.64.0711060903070.8577@ds9.cixit.se>
-	 <8c5c35580711060044i7a3d0134p42e9437cbe2a258b@mail.gmail.com>
-	 <6b6419750711061039l26290561wd2abe07035a8679c@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-revert is one of the most misunderstood command in
+ git, help users out.
+Date: Wed, 7 Nov 2007 11:08:04 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711071103450.4362@racer.site>
+References: <1194289301-7800-1-git-send-email-madcoder@debian.org>
+ <200711062106.57083.robin.rosenberg.lists@dewire.com> <20071106201324.GA30262@glandium.org>
+ <200711062221.58475.robin.rosenberg.lists@dewire.com>
+ <Pine.LNX.4.64.0711062225090.4362@racer.site> <20071107081608.GA19066@glandium.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Patrick Aljord" <patcito@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 11:52:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Steven Grimm <koreth@midwinter.com>,
+	Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Wed Nov 07 12:08:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpiWT-0001RQ-E5
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 11:52:37 +0100
+	id 1Ipiln-00065f-08
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 12:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750882AbXKGKwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 05:52:23 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750830AbXKGKwW
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 05:52:22 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:31512 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750824AbXKGKwV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 05:52:21 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so2762836wah
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 02:52:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KlN+ov3t557u1FTshd8URvTT5hORmAArKWneqdnQV4U=;
-        b=UlVQ6ShYws/OC+Emair+VQEyP1S07AgGnv/CssoJMPBvhcTjm3Ec2Bo6AZYgHKy6ChP8pK8WXAc0gdNtOP10JLkDYGYcPkiqj/H4YxnGY6HwZtoFlbVum17HHWUKy7nm5PTPUPwPRYuWV/BjR1+4EarKApJsCGtQ9ddnBSqkPxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=PU1TyXnkCJOWLQL4BH1X4/DMA0BVjHxVwsMuoe4vvAjMO+P+PCpmuT4oD0jATgsepC1N+dLtRJhhi9mQDevXOh9O+/XLGLFi35iPV67rtSBNOSPf+qSnq/hBeWhB6wGyT6V9mrnEXAlG9xFiJADDSoTu7RRFKE9uHkxkOThBniw=
-Received: by 10.115.106.7 with SMTP id i7mr7380372wam.1194432741154;
-        Wed, 07 Nov 2007 02:52:21 -0800 (PST)
-Received: by 10.114.235.4 with HTTP; Wed, 7 Nov 2007 02:52:21 -0800 (PST)
-In-Reply-To: <6b6419750711061039l26290561wd2abe07035a8679c@mail.gmail.com>
-Content-Disposition: inline
+	id S1752108AbXKGLIL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 06:08:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751441AbXKGLIK
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 06:08:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:45332 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750695AbXKGLIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 06:08:09 -0500
+Received: (qmail invoked by alias); 07 Nov 2007 11:08:07 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp021) with SMTP; 07 Nov 2007 12:08:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/R2fMZosLRYT8v8t22ZwSX0Dv8LLlkjeTbjIsFjB
+	u8XP/gNK7nU/m/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071107081608.GA19066@glandium.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63804>
 
-On Nov 6, 2007 7:39 PM, Patrick Aljord <patcito@gmail.com> wrote:
-> Looks great, thanks for the new release.
+Hi,
 
-Thanks!
+On Wed, 7 Nov 2007, Mike Hommey wrote:
 
-> It would be great if when a commit message contains something such as
-> #1234 it would automatically link to the bug tracker page of that bug
-> (like Trac does) by preconfiguring the bugtracker URL.
+> On Tue, Nov 06, 2007 at 10:25:48PM +0000, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> 
+> > On Tue, 6 Nov 2007, Robin Rosenberg wrote:
+> > 
+> > > tisdag 06 november 2007 skrev Mike Hommey:
+> > > > Maybe the documentation could emphasise on how to undo things when 
+> > > > the user makes mistakes. Sometimes, saving your repo can be as 
+> > > > simple as git reset --hard HEAD@{1}. This is not, unfortunately, a 
+> > > > works-for-all-cases command.
+> > > 
+> > > Yea, git-undo(7). 
+> > 
+> > In related news, I know a few users who need an un-rm-rf.  Anyone?
+> 
+> The fact is you can do harm to your repo with things you wouldn't expect 
+> to break things, except maybe you gave bad arguments or so. It's quite 
+> easy to fuck up with git-rebase, or to merge the wrong commits, etc.
 
-Yeah, it shouldn't be to difficult either. We could just add a couple
-of repo-options to cgitrc, maybe something like this:
+I don't see how these commands are dangerous.  Usually you just look into 
+the reflog, pick the one commit you started with, and reset --hard.
 
-  repo.bugtracker-regex=(#[0-9]+)
-  repo.bugtracker-url=http://bugs.freedesktop.org/show_bug.cgi?id=%1
+The _only_ commands I find dangerous are "git stash clear" and "git reflog 
+--expire=0".  Funnily, people want to do that all the time.
 
-and then use regexec() combined with the interpolate() function in git
-to perform the substitution. There could also be similar global
-options, i.e.:
+Like recently, on the IRC channel, where somebody lost patches "during a 
+rebase", by "rm -rf .dotest".
 
-  bugtracker-regex=(#[0-9]+)
-  bugtracker-url=http://bugs.freedesktop.org/show_bug.cgi?id=%1
+There will be a point where nobody can help.  But before that, reflogs are 
+your friend.  But you must not do "reset --hard HEAD@{1}" blindly.  You 
+have to look first what the reflogs are.
 
-which would be used if the per-repo options weren't specified.
-
-I'll put it on my todo-list (and patches are always appreciated).
-
---
-larsh
+Ciao,
+Dscho
