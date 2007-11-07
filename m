@@ -1,76 +1,80 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH 0/5] some shell portability fixes
-Date: Wed, 7 Nov 2007 14:17:22 +0000
-Message-ID: <e2b179460711070617h7e9af64egcde5122808a4d924@mail.gmail.com>
-References: <20071106201518.GA6361@ins.uni-bonn.de>
-	 <7v8x5bgl04.fsf@gitster.siamese.dyndns.org>
-	 <20071106210210.GA32159@glandium.org>
-	 <Pine.LNX.4.64.0711062324590.4362@racer.site>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Wed, 07 Nov 2007 15:45:02 +0100
+Message-ID: <vpq7ikudsi9.fsf@bauges.imag.fr>
+References: <11944127311587-git-send-email-shawn.bohrer@gmail.com>
+	<Pine.LNX.4.64.0711071110040.4362@racer.site>
+	<18225.48553.44088.269677@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Mike Hommey" <mh@glandium.org>,
-	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 07 15:17:52 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Shawn Bohrer <shawn.bohrer@gmail.com>, gitster@pobox.com,
+	git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 15:46:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iplj4-0001xl-83
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:17:50 +0100
+	id 1IpmAf-0003Ox-BU
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 15:46:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757683AbXKGORZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 09:17:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757649AbXKGORY
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:17:24 -0500
-Received: from wx-out-0506.google.com ([66.249.82.226]:59426 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757554AbXKGORX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 09:17:23 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so2459118wxd
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 06:17:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=4Gi5nWM7lGOiMgnrqWjj7XfxPNgJ2dmHi+1pPaGvmRM=;
-        b=k1P7JFhykgBCaoPZy/0GftoYCgmz4pVzkvi2BlQcv/3/nfjDA1wwC83XoD5baz6IyRkyoRW1gtPwBwQRzw0WvYjceUI9KZiKMzjn25UODiixY9kAaJr9ezokbnPEsNZeyZEh9fS8j6VXOob7eIMAF3SpGYkiJ3jVh1h89ar8+jI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=uWkscahKEtZ1FeIvpbrWmxH57nlonrHSHiLi3E1ON+wtbeUWHfcZWtadZZJS50oXh7pbBaNfh1Q4oMrO7WvgmiA11Urr5KVdFhXDzYD40Jtb+1dHssReG9F+vKQmMNb1V0ktEnwCiPn2jqmZE9+lHEWUkSjIco39Md1uvlPAzRA=
-Received: by 10.90.56.11 with SMTP id e11mr5272243aga.1194445042837;
-        Wed, 07 Nov 2007 06:17:22 -0800 (PST)
-Received: by 10.90.51.10 with HTTP; Wed, 7 Nov 2007 06:17:22 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711062324590.4362@racer.site>
-Content-Disposition: inline
+	id S1754033AbXKGOqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 09:46:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbXKGOqE
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 09:46:04 -0500
+Received: from imag.imag.fr ([129.88.30.1]:61461 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753379AbXKGOqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 09:46:03 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lA7Ej3Zn026214
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 7 Nov 2007 15:45:03 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Ipm9O-0004AL-VP; Wed, 07 Nov 2007 15:45:03 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Ipm9O-0008P6-Sl; Wed, 07 Nov 2007 15:45:02 +0100
+In-Reply-To: <18225.48553.44088.269677@lisa.zopyra.com> (Bill Lear's message of "Wed\, 7 Nov 2007 07\:29\:13 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 07 Nov 2007 15:45:05 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63810>
 
-Junio C Hamano wrote on Tue, Nov 06, 2007 at 09:46:35PM CET:
-> [2/5] Gaah, AIX sed X-<.  I am not opposed to this patch but
->       would want to get Yays from people with non GNU sed.  Is
->       busybox sed good enough to grok our scripts these days?
->       Please ask help and collect Acks at least from folks on
->       Solaris, MacOS, FBSD, and OBSD.
+Bill Lear <rael@zopyra.com> writes:
 
-On Nov 6, 2007 11:25 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> As Junio commented in the part you did not quote, there are better shells
-> in Solaris.  Use those.
+> I've always found this a thoughtful practice.  It helps ensure nobody writes:
+>
+>        if (bla)
+>            just_one_line();
+>            /* perhaps a comment, other stuff ... */
+>            just_another_line();
 
-Equally GNU sed is available as a drop-in rpm for AIX. I wonder if it
-would be worth adding
-Makefile support for a PATH prefix for the git scripts, so they could
-prepend (in this case)
-something like /opt/freeware/bin or /usr/linux/bin ?
+It also simplify patches for cases like
 
-In our AIX environment many GNU tools are installed but I can't
-guarantee they come first
-in the paths of the git users.
+ 	if (bla) {
+ 		just_one_line();
++		another_added_line();
+ 	}
 
-I'm willing to work up a patch if there's any interest.
+instead of
 
-Mike
+- 	if (bla)
++ 	if (bla) {
+ 		just_one_line();
++		another_added_line();
++	}
+
+But it seems people here prefer not putting the braces in this case.
+
+-- 
+Matthieu
