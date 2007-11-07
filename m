@@ -1,90 +1,89 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: git push refspec problem
-Date: Wed, 7 Nov 2007 15:40:40 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0711071533590.29952@iabervon.org>
-References: <7B37E361-9606-447C-B853-001182688AFA@nc.rr.com>
- <Pine.LNX.4.64.0711071510480.4362@racer.site> <4731D852.2080500@hackvalue.de>
- <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make git-clean a builtin
+Date: Wed, 07 Nov 2007 12:42:16 -0800
+Message-ID: <7vabppbxef.fsf@gitster.siamese.dyndns.org>
+References: <11944127311587-git-send-email-shawn.bohrer@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Gilger <heipei@hackvalue.de>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: James <jtp@nc.rr.com>
-X-From: git-owner@vger.kernel.org Wed Nov 07 21:41:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de
+To: Shawn Bohrer <shawn.bohrer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 07 21:42:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iprhy-0004Ta-Jg
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:41:07 +0100
+	id 1IprjT-00055O-RB
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 21:42:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754806AbXKGUkn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 15:40:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755165AbXKGUkn
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:40:43 -0500
-Received: from iabervon.org ([66.92.72.58]:50891 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754396AbXKGUkm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 15:40:42 -0500
-Received: (qmail 15714 invoked by uid 1000); 7 Nov 2007 20:40:41 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 7 Nov 2007 20:40:41 -0000
-In-Reply-To: <607586B5-7BA0-4018-9FB1-691C5E78D550@nc.rr.com>
+	id S1753082AbXKGUmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 15:42:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753390AbXKGUmX
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 15:42:23 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:43721 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752556AbXKGUmW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 15:42:22 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DA1DC2F9;
+	Wed,  7 Nov 2007 15:42:43 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 51AFA9301F;
+	Wed,  7 Nov 2007 15:42:40 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63853>
 
-On Wed, 7 Nov 2007, James wrote:
+Shawn Bohrer <shawn.bohrer@gmail.com> writes:
 
-> On Nov 7, 2007, at 10:22 AM, Johannes Gilger wrote:
-> 
-> >Johannes Schindelin wrote:
-> > >Hi,
-> > >
-> > >On Wed, 7 Nov 2007, James wrote:
-> > >
-> > > >      fetch = +refs/heads/*:refs/remotes/origin/*
-> > >
-> > >This is a refspec.
-> > >
-> > > >      push = ssh://james@my.server.com/home/james/scm/git/project.git/
-> > >
-> > >This is a URL.  It does not specify any refs.  But "push =" expects a URL.
-> >
-> >I think Johannes meant to say "But 'push =' expects a refspec." (the
-> >manpage even says so).
-> >
-> >About your problem: If you want to pull from a git:// repository and
-> >push to another with ssh:// (or in general when having two different
-> >repositories for pushing and fetching) in my novice understanding
-> >you would need two remotes. In your case, can't you just use your
-> >ssh-url for fetching as well?
-> >
-> >Regards,
-> >Jojo
-> 
-> 
-> I guess I could use my ssh url for pulling, as well.  I simply figured it
-> would be easier to add an ssh URL for push (like I was doing manually) and be
-> done with it.  But it doesn't seem there's a super simple solution (i.e., my
-> syntax was wrong in the config file) to using git for pull and ssh for push.
+> This replaces git-clean.sh with builtin-clean.c, and moves
+> git-clean.sh to the examples.
+>
+> This also introduces a change in behavior where the -d parameter is
+> required to remove an entire directory of untracked files even when
+> the directory is passed as a path.
 
-We *should* be able to make the rules: fetch tries URLs until one works, 
-and then ignores later ones; push uses, in turn, all URLs that support 
-pushing.
+The updated behaviour may be better, but this description at the
+first read makes one wonder if it is describing a regression as
+if it is a feature.
 
-Then you could just list both URLs, with the "git:" one first, and it 
-would do what you want (plus, if the git server on your remote machine 
-were down, it would fall back to ssh automatically for you).
+> ... For example ...
+> ...
+> if 'dir' only contains untracked files.  This is consistent with the
+> old behavior when two or more paths were specified.
 
-Actually, I think this would be a relatively easy project now, if you want 
-to attempt it, since fetch and push and both in C now and the config file 
-parser in remote.h reports all URLs in the config file's order. You'd just 
-need to make it silently skip URLs in push that don't support pushing, and 
-only give an error if none remain. (And add fallback support to fetch, for 
-completeness; it's currently only using the first, IIRC).
+I think what you fixed are two inconsistencies in the original
+implementation.  If you spelled out the existing inconsistency
+and described what your implementation does differently, the
+proposal would start looking like a real improvement, like this:
 
-	-Daniel
-*This .sig left intentionally blank*
+    1. When dir has only untracked files, these two behave differently:
+
+        $ git clean -n dir
+        $ git clean -n dir/
+
+    the former says "Would not remove dir/", while the latter would
+    say "Would remove dir/untracked" for all paths under it.
+
+    With -d, the former would stop refusing, but the difference in
+    reporting is still there.  The latter lists all paths under the
+    directory.
+
+    2. When there are more parameters, the latter behave differently:
+
+        $ git clean -n dir/ foo
+
+    refuses to remove dir/.  This is inconsistent.
+
+    My reimplementation changes the behaviour by always
+    requiring the -d option with or without the trailing slash.
+
+Having said that, I do not particularly agree with the way the
+new implementation resolves the existing inconsistencies.  
+
+Wouldn't it be better to remove "dir" when the user explicitly
+told you to clean "dir", with or without the trailing slash?
+That's what the user asked you to do, isn't it?
