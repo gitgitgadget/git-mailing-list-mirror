@@ -1,130 +1,161 @@
 From: Pierre Habouzit <madcoder@debian.org>
-Subject: [PATCH PARSEOPT 2/4] Use OPT_SET_INT and OPT_BIT in builtin-branch
-Date: Wed,  7 Nov 2007 11:20:28 +0100
-Message-ID: <1194430832-6224-4-git-send-email-madcoder@debian.org>
-References: <1194430832-6224-1-git-send-email-madcoder@debian.org>
- <1194430832-6224-2-git-send-email-madcoder@debian.org>
- <1194430832-6224-3-git-send-email-madcoder@debian.org>
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+Subject: Preliminary patches to the diff.[hc] parseoptification
+Date: Wed,  7 Nov 2007 11:20:25 +0100
+Message-ID: <1194430832-6224-1-git-send-email-madcoder@debian.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Nov 07 11:21:02 2007
+X-From: git-owner@vger.kernel.org Wed Nov 07 11:21:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipi1l-00018B-Ml
-	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 11:20:54 +0100
+	id 1Ipi2W-0001LP-TW
+	for gcvg-git-2@gmane.org; Wed, 07 Nov 2007 11:21:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755217AbXKGKUi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 05:20:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754253AbXKGKUh
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 05:20:37 -0500
-Received: from pan.madism.org ([88.191.52.104]:35300 "EHLO hermes.madism.org"
+	id S1751267AbXKGKUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 05:20:44 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750882AbXKGKUn
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 05:20:43 -0500
+Received: from pan.madism.org ([88.191.52.104]:35298 "EHLO hermes.madism.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751110AbXKGKUf (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1752722AbXKGKUf (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 7 Nov 2007 05:20:35 -0500
 Received: from madism.org (unknown [81.57.219.236])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 1A02028E25;
-	Wed,  7 Nov 2007 11:20:34 +0100 (CET)
+	by hermes.madism.org (Postfix) with ESMTP id F192323F6D;
+	Wed,  7 Nov 2007 11:20:33 +0100 (CET)
 Received: by madism.org (Postfix, from userid 1000)
-	id 1C3231CA9E; Wed,  7 Nov 2007 11:20:33 +0100 (CET)
+	id F2F2FF9B5; Wed,  7 Nov 2007 11:20:32 +0100 (CET)
 X-Mailer: git-send-email 1.5.3.5.1598.gdef4e
-In-Reply-To: <1194430832-6224-3-git-send-email-madcoder@debian.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63797>
 
-Also remove a spurious after-check on --abbrev (OPT__ABBREV already takes
-care of that)
----
- builtin-branch.c |   44 ++++++++++++++++----------------------------
- 1 files changed, 16 insertions(+), 28 deletions(-)
+I'm currently working on the very involved task of migrating diff
+options to parseopts. It's quite involved because for many reasons I
+won't detail here, it needs to migrate those _and_ revisions options at
+the same time (most of the diff options users _also_ use the revisions
+ones).
 
-diff --git a/builtin-branch.c b/builtin-branch.c
-index 3bf40f1..2694c9c 100644
---- a/builtin-branch.c
-+++ b/builtin-branch.c
-@@ -507,48 +507,36 @@ static void rename_branch(const char *oldname, const char *newname, int force)
- 
- int cmd_branch(int argc, const char **argv, const char *prefix)
- {
--	int delete = 0, force_delete = 0, force_create = 0;
--	int rename = 0, force_rename = 0;
-+	int delete = 0, rename = 0, force_create = 0;
- 	int verbose = 0, abbrev = DEFAULT_ABBREV, detached = 0;
- 	int reflog = 0, track;
--	int kinds = REF_LOCAL_BRANCH, kind_remote = 0, kind_any = 0;
-+	int kinds = REF_LOCAL_BRANCH;
- 
- 	struct option options[] = {
- 		OPT_GROUP("Generic options"),
- 		OPT__VERBOSE(&verbose),
- 		OPT_BOOLEAN( 0 , "track",  &track, "set up tracking mode (see git-pull(1))"),
- 		OPT_BOOLEAN( 0 , "color",  &branch_use_color, "use colored output"),
--		OPT_BOOLEAN('r', NULL,     &kind_remote, "act on remote-tracking branches"),
-+		OPT_SET_INT('r', NULL,     &kinds, "act on remote-tracking branches",
-+			REF_REMOTE_BRANCH),
- 		OPT__ABBREV(&abbrev),
- 
- 		OPT_GROUP("Specific git-branch actions:"),
--		OPT_BOOLEAN('a', NULL,     &kind_any, "list both remote-tracking and local branches"),
--		OPT_BOOLEAN('d', NULL,     &delete, "delete fully merged branch"),
--		OPT_BOOLEAN('D', NULL,     &force_delete, "delete branch (even if not merged)"),
--		OPT_BOOLEAN('l', NULL,     &reflog, "create the branch's reflog"),
--		OPT_BOOLEAN('f', NULL,     &force_create, "force creation (when already exists)"),
--		OPT_BOOLEAN('m', NULL,     &rename, "move/rename a branch and its reflog"),
--		OPT_BOOLEAN('M', NULL,     &force_rename, "move/rename a branch, even if target exists"),
-+		OPT_SET_INT('a', NULL, &kinds, "list both remote-tracking and local branches",
-+			REF_REMOTE_BRANCH | REF_LOCAL_BRANCH),
-+		OPT_BIT('d', NULL, &delete, "delete fully merged branch", 1),
-+		OPT_BIT('D', NULL, &delete, "delete branch (even if not merged)", 2),
-+		OPT_BIT('m', NULL, &rename, "move/rename a branch and its reflog", 1),
-+		OPT_BIT('M', NULL, &rename, "move/rename a branch, even if target exists", 2),
-+		OPT_BOOLEAN('l', NULL, &reflog, "create the branch's reflog"),
-+		OPT_BOOLEAN('f', NULL, &force_create, "force creation (when already exists)"),
- 		OPT_END(),
- 	};
- 
- 	git_config(git_branch_config);
- 	track = branch_track;
- 	argc = parse_options(argc, argv, options, builtin_branch_usage, 0);
--
--	delete |= force_delete;
--	rename |= force_rename;
--	if (kind_remote)
--		kinds = REF_REMOTE_BRANCH;
--	if (kind_any)
--		kinds = REF_REMOTE_BRANCH | REF_LOCAL_BRANCH;
--	if (abbrev && abbrev < MINIMUM_ABBREV)
--		abbrev = MINIMUM_ABBREV;
--	else if (abbrev > 40)
--		abbrev = 40;
--
--	if ((delete && rename) || (delete && force_create) ||
--	    (rename && force_create))
-+	if (!!delete + !!rename + !!force_create > 1)
- 		usage_with_options(builtin_branch_usage, options);
- 
- 	head = resolve_ref("HEAD", head_sha1, 0, NULL);
-@@ -564,13 +552,13 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	if (delete)
--		return delete_branches(argc, argv, force_delete, kinds);
-+		return delete_branches(argc, argv, delete > 1, kinds);
- 	else if (argc == 0)
- 		print_ref_list(kinds, detached, verbose, abbrev);
- 	else if (rename && (argc == 1))
--		rename_branch(head, argv[0], force_rename);
-+		rename_branch(head, argv[0], rename > 1);
- 	else if (rename && (argc == 2))
--		rename_branch(argv[0], argv[1], force_rename);
-+		rename_branch(argv[0], argv[1], rename > 1);
- 	else if (argc <= 2)
- 		create_branch(argv[0], (argc == 2) ? argv[1] : head,
- 			      force_create, reflog, track);
--- 
-1.5.3.5.1598.gdef4e
+So I'm trying to see some preliminary patches that I need to make this
+the less disruptive possible: my goal is that people can use those
+preliminary series bit by bit, and not a whole 10 to 20 patches (I
+believe it will really take this amount in the end) at once with
+breakages hard to find in the mess.
+
+So in the coming days I'll probably send my work bit by bit when I feel
+it won't change anymore.
+
+
+Summary:
+~~~~~~~
+
+The 3 series are completely independent.
+
+  + this is a patch to fix an issue that begin to irritate me and
+    prevents me to build with -Werror.
+
+    [1/1] Make gcc warning about empty if body go away.
+
+  + this series add new features that are needed for the diff options.
+    commit 1 implements them (see commit log,
+    commits 2 to 4 use them in some commands that benefit from those.
+
+    [1/4] parse-options new features.
+    [2/4] Use OPT_SET_INT and OPT_BIT in builtin-branch
+    [3/4] Use OPT_BIT in builtin-for-each-ref
+    [4/4] Use OPT_BIT in builtin-pack-refs
+
+  + this series does some modifications on the diff_options structure
+    and the diff_opt_parse functions. Those are not fundamentally neede=
+d
+    without parseopt, but parseopt will need them.
+
+    Basically, diff_options had bitfields (the C :1 kind). parseopt can=
+not
+    grok that portably, so I've converted these into a single
+    `unsigned flags` with explicit masks to use (and helper macros to
+    avoid overlong lines).
+
+    The obvious goal is that I can use the OPTION_BIT feature from the
+    previous series to fill them from parse_options.
+
+    [1/2] Make the diff_options bitfields be an unsigned with explicit =
+masks.
+    [2/2] Reorder diff_opt_parse options more logically per topics.
+
+Those patches are available on my public repository in the
+ph/parseopt-stable branch.
+
+ph/parseopt is my WIP and has many many horrible commits right now, tha=
+t
+I rebase -i to cleanse them once the big picture pleases me enough,
+though people may want to look at diff.h in that branch to see where it
+goes. I'm pleased to say that it seems I'll only need 3 diff-specific
+callbacks, which is not a lot:
+
+    http://git.madism.org/?p=3Dgit.git;a=3Dblobdiff;f=3Ddiff.h;h=3D0e44=
+e5;hp=3D6ff2b0;hb=3Ddef4eb;hpb=3Dbdc1ab
+
+I suppose that the split of this big macro is explanatory enough for th=
+e
+reason behind commit 2/2 of the third series...
+
+
+Diff stats:
+~~~~~~~~~~
+
+  + gcc issue:
+     builtin-diff.c |    2 +-
+     1 file changed, 1 insertion(+), 1 deletion(-)
+
+  + parseopt features:
+     builtin-branch.c       |   44 ++++++++++++-----------------------
+     builtin-for-each-ref.c |   19 ++++++++-------
+     builtin-pack-refs.c    |   12 ++-------
+     git-compat-util.h      |    1=20
+     parse-options.c        |   61 +++++++++++++++++++++++++++++++++++-=
+-------------
+     parse-options.h        |   15 +++++++++++-
+     6 files changed, 88 insertions(+), 64 deletions(-)
+
+  + diff-cleanup:
+     builtin-blame.c      |   10 +-
+     builtin-diff-files.c |    4 +-
+     builtin-diff-index.c |    4 +-
+     builtin-diff-tree.c  |    9 +-
+     builtin-diff.c       |   12 ++--
+     builtin-log.c        |   24 +++---
+     combine-diff.c       |   10 +-
+     diff-lib.c           |   23 +++---
+     diff.c               |  221 ++++++++++++++++++++++++++------------=
+------------
+     diff.h               |   40 ++++++----
+     log-tree.c           |    6 +-
+     merge-recursive.c    |    2 +-
+     patch-ids.c          |    2 +-
+     revision.c           |   22 +++---
+     tree-diff.c          |   14 ++--
+     15 files changed, 209 insertions(+), 194 deletions(-)
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@d=
+ebian.org
+OOO                                                http://www.madism.or=
+g
