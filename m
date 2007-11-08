@@ -1,69 +1,82 @@
-From: "Mike Ralphson" <mike.ralphson@gmail.com>
-Subject: Re: [PATCH] Add Documentation/CodingStyle
-Date: Thu, 8 Nov 2007 11:29:32 +0000
-Message-ID: <e2b179460711080329j4979dc00w421ec79a6f3159ed@mail.gmail.com>
-References: <20071106201518.GA6361@ins.uni-bonn.de>
-	 <20071106201809.GD6361@ins.uni-bonn.de>
-	 <20071106202600.GH6361@ins.uni-bonn.de>
-	 <7vtznzf5jb.fsf@gitster.siamese.dyndns.org>
-	 <Pine.LNX.4.64.0711062317330.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 12:29:54 2007
+From: David D Kilzer <ddkilzer@kilzer.net>
+Subject: [PATCH] Make it easier to run individual tests
+Date: Thu,  8 Nov 2007 03:31:12 -0800
+Message-ID: <1194521472-13172-1-git-send-email-ddkilzer@kilzer.net>
+Cc: gitster@pobox.com, David D Kilzer <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 08 12:31:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq5Zz-0003Mx-Le
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 12:29:48 +0100
+	id 1Iq5be-0003tD-GP
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 12:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758177AbXKHL3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 06:29:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755927AbXKHL3f
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 06:29:35 -0500
-Received: from wx-out-0506.google.com ([66.249.82.235]:26681 "EHLO
-	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758577AbXKHL3e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 06:29:34 -0500
-Received: by wx-out-0506.google.com with SMTP id h31so138933wxd
-        for <git@vger.kernel.org>; Thu, 08 Nov 2007 03:29:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RwAEgJgHJH7ZEXN3hGSiFvbe+m6Q/f5kRUcYeklZOFY=;
-        b=LqYPmX3MNVeSev2QaTLKa7PVgUGh8bNPI18zDESpCL/LCE3rZ4aKxiWY8ep26K2TBLZxlYjzXIbDGhpxYupdtz/eRQbt6Adsmyj0PIg7OsM4+D6wLW6wFJ8yJr/YUGYtCVU9UQ5Wj9tn8fmAB4ex7TLeCWURMale3dNBmUcWgEA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=ZpvYWSvdpScvHC6xc+9HeDySODJWhV0B9gprH3S+5Yo4/6Q1cAWSiNl6RXKEIALi4sSQrqblsIjPYWGNIc2lKxDnLpNMZ+Jd3+jk/G3XDH+Yk5GLD65PY9KEsToM1K5pqxiaNKDa2TlwOFb/FxEw9theShqDq9/+nxg0l/u7Cng=
-Received: by 10.90.87.5 with SMTP id k5mr369632agb.1194521372186;
-        Thu, 08 Nov 2007 03:29:32 -0800 (PST)
-Received: by 10.90.100.12 with HTTP; Thu, 8 Nov 2007 03:29:32 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711062317330.4362@racer.site>
-Content-Disposition: inline
+	id S1758509AbXKHLbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 06:31:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758467AbXKHLbP
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 06:31:15 -0500
+Received: from mail-out4.apple.com ([17.254.13.23]:51642 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756422AbXKHLbO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 06:31:14 -0500
+Received: from relay14.apple.com (relay14.apple.com [17.128.113.52])
+	by mail-out4.apple.com (Postfix) with ESMTP id BD40F1870AB9;
+	Thu,  8 Nov 2007 03:31:13 -0800 (PST)
+Received: from relay14.apple.com (unknown [127.0.0.1])
+	by relay14.apple.com (Symantec Mail Security) with ESMTP id A2B0E28050;
+	Thu,  8 Nov 2007 03:31:13 -0800 (PST)
+X-AuditID: 11807134-a5403bb000003395-07-4732f3814c75
+Received: from localhost.localdomain (unknown [17.151.78.62])
+	by relay14.apple.com (Apple SCV relay) with ESMTP id 268F42804C;
+	Thu,  8 Nov 2007 03:31:13 -0800 (PST)
+X-Mailer: git-send-email 1.5.3.4
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63997>
 
-On Nov 6, 2007 11:17 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> Even if our code is quite a good documentation for our coding style,
-> some people seem to prefer a document describing it.
+The following commands now work from the top-level source directory:
+$ make t/t0001-init.sh
+$ T=t0001-init.sh make test
 
-Might this file be a place to document exactly which licenses we
-accept code under? I.e. is it GPLv2 only or any license compatible
-with GPLv2 ?
+Signed-off-by: David D Kilzer <ddkilzer@kilzer.net>
+---
+For the maint branch.
 
-Currently I see only GPLv2 in core git, but I have a series of patches
-which give me a speed-up of two orders of magnitude for some cases of
-at least git-status (on my platform, with my repos etc) and so far my
-two approaches involve bringing in code which is either public domain
-with restrictions (which may be too onerous for us to carry in
-mainline) or 3-clause BSD.
+I'm so lazy I wanted a way to run tests from the primary Makefile.
 
-Cheers, Mike
+ Makefile   |    3 +++
+ t/Makefile |    2 +-
+ 2 files changed, 4 insertions(+), 1 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index e70e320..eb0f7da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -961,6 +961,9 @@ export NO_SVN_TESTS
+ test: all
+ 	$(MAKE) -C t/ all
+ 
++t/t%.sh: all
++	T=`basename $@` $(MAKE) -C t/ all
++
+ test-date$X: date.o ctype.o
+ 
+ test-delta$X: diff-delta.o patch-delta.o
+diff --git a/t/Makefile b/t/Makefile
+index 72d7884..ae25561 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -11,7 +11,7 @@ RM ?= rm -f
+ # Shell quote;
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ 
+-T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
++T ?= $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
+ TSVN = $(wildcard t91[0-9][0-9]-*.sh)
+ 
+ all: $(T) clean
+-- 
+1.5.3.4
