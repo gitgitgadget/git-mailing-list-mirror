@@ -1,95 +1,74 @@
-From: Sergei Organov <osv@javad.com>
-Subject: [PATCH] core-tutorial.txt: Fix git-show-branch example and its description
-Date: Thu, 08 Nov 2007 18:10:28 +0300
-Message-ID: <877iks93iz.fsf@osv.gnss.ru>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 4/3] t3700: avoid racy git situation
+Date: Thu, 8 Nov 2007 15:16:17 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711081511440.4362@racer.site>
+References: <Pine.LNX.4.64.0711081213580.4362@racer.site>
+ <Pine.LNX.4.64.0711081414160.4362@racer.site> <47331E65.9010209@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 16:10:58 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Nov 08 16:16:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq920-0005zk-Fm
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 16:10:56 +0100
+	id 1Iq97Z-00087Z-Js
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 16:16:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758609AbXKHPKj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 10:10:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759031AbXKHPKj
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 10:10:39 -0500
-Received: from javad.com ([216.122.176.236]:2911 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758440AbXKHPKi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 10:10:38 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lA8FAZ027169;
-	Thu, 8 Nov 2007 15:10:35 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1Iq91Y-0001Eq-3l; Thu, 08 Nov 2007 18:10:28 +0300
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1755702AbXKHPQZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 10:16:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754652AbXKHPQZ
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 10:16:25 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48078 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753417AbXKHPQY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 10:16:24 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 15:16:22 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp002) with SMTP; 08 Nov 2007 16:16:22 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/xdRkzXQnxOaYMgfLHG9ZQ9O93rB11OzXEH1o7WC
+	QNtFK9w795DpZp
+X-X-Sender: gene099@racer.site
+In-Reply-To: <47331E65.9010209@viscovery.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64038>
 
+Hi,
 
+On Thu, 8 Nov 2007, Johannes Sixt wrote:
 
-Signed-off-by: Sergei Organov <osv@javad.com>
----
+> Johannes Schindelin schrieb:
+> > Wow, the builtin commit is fast.  It sometimes triggers a racy
+> > situation in the test case for "git add --refresh -- foo".
+> > 
+> > So when that test fails, simply sleep one second and try again.
+> 
+> [/me looks at the calender - no, it's not April Fool's day]
 
- The example and its description didn't match each other. In addition,
- I've added explanatory notes that hopefully will decrease the chances
- of confusion I've personally ran into after reading this part of the
- tutorial.
+No. The builtin commit is really that fast.
 
- Documentation/core-tutorial.txt |   17 +++++++++++++++--
- 1 files changed, 15 insertions(+), 2 deletions(-)
+> Wouldn't it be better to fix git-commit (or git-add)? I would like to 
+> help, but you already seem to have done the analysis, so...
 
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index 99817c5..ebd2492 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -931,12 +931,13 @@ Another useful tool, especially if you do not always work in X-Window
- environment, is `git show-branch`.
- 
- ------------------------------------------------
--$ git show-branch --topo-order master mybranch
-+$ git-show-branch --topo-order --more=1 master mybranch
- * [master] Merge work in mybranch
-  ! [mybranch] Some work.
- --
- -  [master] Merge work in mybranch
- *+ [mybranch] Some work.
-+*  [master^] Some fun.
- ------------------------------------------------
- 
- The first two lines indicate that it is showing the two branches
-@@ -954,10 +955,22 @@ because `mybranch` has not been merged to incorporate these
- commits from the master branch.  The string inside brackets
- before the commit log message is a short name you can use to
- name the commit.  In the above example, 'master' and 'mybranch'
--are branch heads.  'master~1' is the first parent of 'master'
-+are branch heads.  'master^' is the first parent of 'master'
- branch head.  Please see 'git-rev-parse' documentation if you
- see more complex cases.
- 
-+[NOTE]
-+Without the '--more=1' option, 'git-show-branch' would not output the
-+'[master^]' commit, as '[mybranch]' commit is a common ancestor of
-+both 'master' and 'mybranch' tips.  Please see 'git-show-branch'
-+documentation for details.
-+
-+[NOTE]
-+If there were more commits on the 'master' branch after the merge, the
-+merge commit itself would not be shown by 'git-show-branch' by
-+default.  You would need to provide '--sparse' option to make the
-+merge commit visible in this case.
-+
- Now, let's pretend you are the one who did all the work in
- `mybranch`, and the fruit of your hard work has finally been merged
- to the `master` branch. Let's go back to `mybranch`, and run
--- 
-1.5.3.5.529.ge3d6d
+The problem is that the index has the same timestamp as the file "foo".
+
+Therefore, git cannot tell if "foo" is up-to-date in the index, since it 
+could have been modified (and indeed is) just a fraction of a second later 
+than the index was last updated.
+
+And since diff-index, as called from the test script, does not generate a 
+diff, but really only determines if the index information suggests that 
+the files are up-to-date, there is not really much you can do.
+
+This is our good old friend, the racy git problem.
+
+NOTE: other scms do not have this problem, mostly because they are too 
+slow to trigger it.
+
+Ciao,
+Dscho
