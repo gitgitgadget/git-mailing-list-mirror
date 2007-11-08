@@ -1,67 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] hooks--update: fix test for properly set up project description file
-Date: Thu, 08 Nov 2007 14:13:38 -0800
-Message-ID: <7v640c1j3h.fsf@gitster.siamese.dyndns.org>
-References: <20071106134749.24233.qmail@809f27f669039a.315fe32.mid.smarden.org>
-	<4730726B.1000407@op5.se>
-	<20071108140200.24902.qmail@f23d7e396b1523.315fe32.mid.smarden.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 23:14:03 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH 2/3] Fix sed script to work with AIX and BSD sed.
+Date: Thu, 8 Nov 2007 23:15:32 +0100
+Message-ID: <D42380BD-64A7-4686-9EC1-39F76D0C35D6@lrde.epita.fr>
+References: <20071108214624.GF31439@ins.uni-bonn.de> <20071108214824.GH31439@ins.uni-bonn.de>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-94--642915966"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 23:16:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqFdR-0002hB-5X
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 23:14:01 +0100
+	id 1IqFfJ-0003JX-Jt
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 23:15:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924AbXKHWNp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 17:13:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753999AbXKHWNp
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 17:13:45 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:59597 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752952AbXKHWNo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 17:13:44 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 669712F9;
-	Thu,  8 Nov 2007 17:14:05 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id DD642939D3;
-	Thu,  8 Nov 2007 17:14:01 -0500 (EST)
-In-Reply-To: <20071108140200.24902.qmail@f23d7e396b1523.315fe32.mid.smarden.org>
-	(Gerrit Pape's message of "Thu, 8 Nov 2007 14:02:00 +0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1759664AbXKHWPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 17:15:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759500AbXKHWPm
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 17:15:42 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:41297 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759452AbXKHWPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 17:15:42 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IqFf2-0001XQ-HA; Thu, 08 Nov 2007 23:15:40 +0100
+In-Reply-To: <20071108214824.GH31439@ins.uni-bonn.de>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64082>
 
-Gerrit Pape <pape@smarden.org> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-94--642915966
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> The update hook template intends to abort if the project description file
-> hasn't been adjusted or is empty.  This patch fixes the check for 'being
-> adjusted'.
->
-> Signed-off-by: Gerrit Pape <pape@smarden.org>
-> ---
->
-> On Tue, Nov 06, 2007 at 02:55:55PM +0100, Andreas Ericsson wrote:
->> Gerrit Pape wrote:
->> > # check for no description
->> >-projectdesc=$(sed -e '1p' "$GIT_DIR/description")
->> >-if [ -z "$projectdesc" -o "$projectdesc" = "Unnamed repository; edit
->> >this
->> >file to name it for gitweb" ]; then
->> >+projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
->>
->> Write this as
->>       projectdesc=$(sed -e 1q "$GIT_DIR/description")
->> instead. It's a little shorter, a little faster and slightly more
->> portable.
+On Nov 8, 2007, at 10:48 PM, Ralf Wildenhues wrote:
 
-I even suspect that the original 'p' is indeed a typo of 'q'.
+> diff --git a/git-bisect.sh b/git-bisect.sh
+> index c18bd32..3aac816 100755
+> --- a/git-bisect.sh
+> +++ b/git-bisect.sh
+> @@ -276,7 +276,8 @@ exit_if_skipped_commits () {
+>  	if expr "$_tried" : ".*[|].*" > /dev/null ; then
+>  		echo "There are only 'skip'ped commit left to test."
+>  		echo "The first bad commit could be any of:"
+> -		echo "$_tried" | sed -e 's/[|]/\n/g'
+> +		echo "$_tried" | sed -e 's/[|]/\
+
+Just out of curiosity, is there any valid reason to use `[' and `]'  
+in this RE?  By default sed does not use extended RE (at least none  
+of the implementation I know of) so why not just use sed 's/|/...' ?
+
+> +/g'
+>  		echo "We cannot bisect more!"
+>  		exit 2
+>  	fi
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-94--642915966
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHM4qEwwE67wC8PUkRAjH3AJ4wOCgkdUCCNCrr7cB9lR1AGrGs/gCgxiS5
+Nvxhyt34HQ9A8iUf5NrIbkU=
+=RiLg
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-94--642915966--
