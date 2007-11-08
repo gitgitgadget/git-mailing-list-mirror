@@ -1,79 +1,80 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: Inconsistencies with git log
-Date: Fri, 9 Nov 2007 00:16:59 +1100
-Message-ID: <ee77f5c20711080516n4f207ba3pccc8efffa2a6ad4c@mail.gmail.com>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
-	 <Pine.LNX.4.64.0711072242230.4362@racer.site>
-	 <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
-	 <Pine.LNX.4.64.0711072255420.4362@racer.site>
-	 <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
-	 <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com>
-	 <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com>
-	 <47325415.1070205@op5.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] user-manual: add advanced topic "bisecting merges"
+Date: Thu, 08 Nov 2007 14:22:00 +0100
+Message-ID: <47330D78.3040808@viscovery.net>
+References: <20071104112302.GA2119@ins.uni-bonn.de> <11944722214046-git-send-email-prohaska@zib.de> <4732B899.6000908@viscovery.net> <6E62E205-0951-4CCB-A807-AC107E40ACE1@zib.de> <4732D2CC.1010008@viscovery.net> <4732D7F6.7040006@op5.se> <4732DC98.70304@viscovery.net> <97F64156-A457-4BC1-84BE-108369FFD18C@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
-	"Jon Smirl" <jonsmirl@gmail.com>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 08 14:17:20 2007
+Cc: Andreas Ericsson <ae@op5.se>, gitster@pobox.com,
+	Ralf.Wildenhues@gmx.de, tsuna@lrde.epita.fr, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 14:22:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq7G3-0000L5-Em
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 14:17:19 +0100
+	id 1Iq7L5-0001uN-LI
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 14:22:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755072AbXKHNRC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 08:17:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754802AbXKHNRC
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 08:17:02 -0500
-Received: from rv-out-0910.google.com ([209.85.198.187]:26780 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754682AbXKHNRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 08:17:00 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so138556rvb
-        for <git@vger.kernel.org>; Thu, 08 Nov 2007 05:16:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=k6v6hPKGixhC1tDdSgtoV9H0NQshbUPGoyFPsEUmyA0=;
-        b=JjCD4R71G4JJvgX2+uL31ofrW1U2qKFggL30Sd+TPUE18R+zXqd7DYqx/fUHxCYEvL7Wf0n/QOrgqR91a1+LYNYqUZFjLsczL7fet1fMRHY6wcvPBX39RUJhqKaWwKPZ3ZshFzFpCyy04KYvF2s4gnh0+VmAdI0F8KSFfFaryXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=onOtGBBmGNkne8eM2jrY8fukHBmBHeIbDC2Kc9y39vvZp6XPb0LcdVTBhzEG+2rG29TWQQ9dvapPQr8IO+Sn8bklraVuRB0RrvGiA7Y0s2TDANzA0aYRQvaoLCKH776X0/YDdRldfVwX52/HbRa1UT+IMC2QuGtTeHvF5B4+cPM=
-Received: by 10.140.136.6 with SMTP id j6mr232334rvd.1194527819645;
-        Thu, 08 Nov 2007 05:16:59 -0800 (PST)
-Received: by 10.141.20.13 with HTTP; Thu, 8 Nov 2007 05:16:59 -0800 (PST)
-In-Reply-To: <47325415.1070205@op5.se>
-Content-Disposition: inline
+	id S1755492AbXKHNWL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 08:22:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755339AbXKHNWL
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 08:22:11 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:9233 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755082AbXKHNWK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 08:22:10 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Iq7K9-00062U-Eg; Thu, 08 Nov 2007 14:21:33 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C3EDA6B7; Thu,  8 Nov 2007 14:22:00 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <97F64156-A457-4BC1-84BE-108369FFD18C@zib.de>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64018>
 
-On Nov 8, 2007 11:11 AM, Andreas Ericsson <ae@op5.se> wrote:
->
-> David Symonds wrote:
-> > On Nov 8, 2007 10:19 AM, Brian Gernhardt <benji@silverinsanity.com> wrote:
-> >> However, Dave's suggestion of altering git-status output to be
-> >> relative to (but not limited by) CWD has merit.  Too bad I don't have
-> >> time to work on it right now.
-> >
-> > I am happy to hack on this if there's not widespread revolt against the concept.
-> >
->
-> I'd definitely like that feature, but I wonder how many people will run
-> "git commit -a" in a subdir after seeing only what they want to see in the
-> output, and then accidentally committing junk somewhere else in the repo.
+Steffen Prohaska schrieb:
+> 
+> On Nov 8, 2007, at 10:53 AM, Johannes Sixt wrote:
+>> The text that the patch amends is 
+>> about bisecting history that reveals that a merge commit breaks, which 
+>> is not helpful, and then how to find where and what and why the 
+>> breakage really was introduce.
+>>
+>> And the answer to "how to find" is to rebase and bisect in the rebased 
+>> history.
+> 
+> Do you use rebase like this in real life?
 
-I never suggested path *limited*, only path *relative*. git-status
-would still show all the same files, but their paths would be relative
-to your current directory, so there'd be no confusion like you
-mentioned. This is how Johannes' patch works.
+Why is this relevant?
 
+You've written a superb addendum to the user manual, but IT TALKS ABOUT 
+BISECTION, and is not a guideline when to use merges and when to rebase.
 
-Dave.
+It better not be meant as such. Consider an integrator who has just merged 
+two histories, both of which are available publically. Pushing out a rebased 
+history IS NOT AN OPTION. If the poor fellow for the heck of it has no 
+choice but to find the bogus commit, then your instructions are worth a 
+thousand bucks - even if the rebased history is otherwise useless -, but any 
+guidelines how to construct histories are IRRELEVANT for his case.
+
+> But now I'm wondering if your suggestions of rebasing only for
+> locating the evil commit is feasible in reality. You may need
+> to solve a lot of merge conflicts if you rebase a larger part
+> of the history. If you do not have them in your rerere cache
+> this might be time consuming. ...
+
+During the rebase you will see the same conflicts that you also had during 
+the merge, even simpler ones (because they are - hopefully - broken down 
+into smaller pieces). If your merge was clean (as was suggested in the 
+patch), then you won't see a lot of conflicts during the rebase, either.
+
+-- Hannes
