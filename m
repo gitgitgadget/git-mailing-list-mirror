@@ -1,134 +1,230 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] git-checkout: Test for relative path use.
-Date: Fri,  9 Nov 2007 11:36:07 +1100
-Message-ID: <11945685732608-git-send-email-dsymonds@gmail.com>
-References: <11945685673280-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	David Symonds <dsymonds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:25 2007
+From: "Yossi Leybovich" <sleybo@mellanox.co.il>
+Subject: corrupt object on git-gc
+Date: Fri, 9 Nov 2007 01:59:47 +0200
+Message-ID: <6C2C79E72C305246B504CBA17B5500C9029A36A1@mtlexch01.mtl.com>
+References: <6C2C79E72C305246B504CBA17B5500C902535D9C@mtlexch01.mtl.com> <458BC6B0F287034F92FE78908BD01CE814472B3D@mtlexch01.mtl.com>
+Mime-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----_=_NextPart_001_01C82263.72AD8D90"
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIFQ-00047A-CZ
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:24 +0100
+	id 1IqIFK-00047A-61
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754794AbXKIBAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 20:00:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbXKIBAv
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:00:51 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:28568 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751321AbXKIBAt (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 20:00:49 -0500
-X-IronPort-AV: E=Sophos;i="4.21,392,1188743400"; 
-   d="scan'208";a="224084302"
-Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 09 Nov 2007 11:06:15 +1030
-X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <11945685673280-git-send-email-dsymonds@gmail.com>
+	id S1763435AbXKIAAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 19:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763434AbXKIAAK
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 19:00:10 -0500
+Received: from mail.mellanox.co.il ([194.90.237.44]:42910 "EHLO mellanox.co.il"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1762927AbXKIAAH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 19:00:07 -0500
+Received: from Internal Mail-Server by MTLPINE1 (envelope-from sleybo@mellanox.co.il)
+	with SMTP; 9 Nov 2007 01:59:50 +0200
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+In-Reply-To: <458BC6B0F287034F92FE78908BD01CE814472B3D@mtlexch01.mtl.com>
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: corrupt object on git-gc
+Thread-Index: Acghddb+IbjZqwHASKKlNyglUjUavAAK7YugADApGuA=
+x-pineapp-mail-mail-from: sleybo@mellanox.co.il
+x-pineapp-mail-rcpt-to: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64091>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
-	Test 5 in this series fails because of a bug in git-ls-files, where
-		git-ls-files t/../
-	(with or without --full-name) returns no files.
+This is a multi-part message in MIME format.
 
- t/t2008-checkout-subdir.sh |   79 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 79 insertions(+), 0 deletions(-)
- create mode 100755 t/t2008-checkout-subdir.sh
+------_=_NextPart_001_01C82263.72AD8D90
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
-new file mode 100755
-index 0000000..f226511
---- /dev/null
-+++ b/t/t2008-checkout-subdir.sh
-@@ -0,0 +1,79 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 David Symonds
-+
-+test_description='git checkout from subdirectories'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	echo "base" > file0 &&
-+	git add file0 &&
-+	mkdir dir1 &&
-+	echo "hello" > dir1/file1 &&
-+	git add dir1/file1 &&
-+	mkdir dir2 &&
-+	echo "bonjour" > dir2/file2 &&
-+	git add dir2/file2 &&
-+	test_tick &&
-+	git commit -m "populate tree"
-+
-+'
-+
-+test_expect_success 'remove and restore with relative path' '
-+
-+	cd dir1 &&
-+	rm ../file0 &&
-+	git checkout HEAD -- ../file0 &&
-+	test "base" = "$(cat ../file0)" &&
-+	rm ../dir2/file2 &&
-+	git checkout HEAD -- ../dir2/file2 &&
-+	test "bonjour" = "$(cat ../dir2/file2)" &&
-+	rm ../file0 ./file1 &&
-+	git checkout HEAD -- .. &&
-+	test "base" = "$(cat ../file0)" &&
-+	test "hello" = "$(cat file1)" &&
-+	cd -
-+
-+'
-+
-+test_expect_success 'checkout with empty prefix' '
-+
-+	rm file0 &&
-+	git checkout HEAD -- file0 &&
-+	test "base" = "$(cat file0)"
-+
-+'
-+
-+test_expect_success 'checkout with simple prefix' '
-+
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1 &&
-+	test "hello" = "$(cat dir1/file1)" &&
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1/file1 &&
-+	test "hello" = "$(cat dir1/file1)"
-+
-+'
-+
-+test_expect_success 'checkout with complex relative path' '
-+
-+	rm file1 &&
-+	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
-+
-+'
-+
-+test_expect_failure 'relative path outside tree should fail' \
-+	'git checkout HEAD -- ../../Makefile'
-+
-+test_expect_failure 'incorrect relative path to file should fail (1)' \
-+	'git checkout HEAD -- ../file0'
-+
-+test_expect_failure 'incorrect relative path should fail (2)' \
-+	'cd dir1 && git checkout HEAD -- ./file0'
-+
-+test_expect_failure 'incorrect relative path should fail (3)' \
-+	'cd dir1 && git checkout HEAD -- ../../file0'
-+
-+test_done
--- 
-1.5.3.1
+Hi
+
+I wonder if someone can help in this error
+I tried to do git-gc and got error on corrupted object.=20
+
+I do the following:
+
+$ git-gc
+Generating pack...
+Done counting 3037 objects.
+Deltifying 3037 objects...
+error: corrupt loose object '4b9458b3786228369c63936db65827de3cc06200'
+fatal: object 4b9458b3786228369c63936db65827de3cc06200 cannot be read
+error: failed to run repack
+
+sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib
+$ cd .git/objects/4b/
+
+sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib/.git/objects/4b
+$ git-fsck-objects.exe 9458b3786228369c63936db65827de3cc06200
+error: corrupt loose object '4b9458b3786228369c63936db65827de3cc06200'
+error: 4b9458b3786228369c63936db65827de3cc06200: object corrupt or
+missing
+error: invalid parameter: expected sha1, got
+'9458b3786228369c63936db65827de3cc0
+6200'
+missing blob 4b9458b3786228369c63936db65827de3cc06200
+
+Unfortunately I can't get this object from backup directories as advise
+in the FAQ.
+Can this object manually fixed by any tool? (the object is attached) I
+don't even know to which file/tree/commit it belong how can I know that
+?
+
+Thanks
+Yossi
+
+------_=_NextPart_001_01C82263.72AD8D90
+Content-Type: application/octet-stream;
+	name="9458b3786228369c63936db65827de3cc06200"
+Content-Transfer-Encoding: base64
+Content-Description: 9458b3786228369c63936db65827de3cc06200
+Content-Disposition: attachment;
+	filename="9458b3786228369c63936db65827de3cc06200"
+
+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
+0a8L289PTvNrB7e5xWD/EMwHkVyDzX+P43aNxijWY0trA5bsOxh4ZXextXELGlNTZhvuUma8lzer
+9rIetJ99QQdpQx2Mmif0cL/T78rO4eE5rPI4+7LRvr3w4k+tz9jTr4azXYTT/jY4r4pwtr4JTnur
+COfFt8F5WYSz/U1wtkp0/pHg1AlSgY/WURTME5+9AbDUzOBR2/heQqkAApkHbUDU7S0WqgRJHiIQ
+O/MJMKF/Azx44YvL4ManILkrYkVRCY7gMT8yf7AExiUQRLlTEDgghO/aLQ0K6TDo/OX0vL31Cghy
+3pJH3RNGMWNjDZWYuEZcXOjB2AsmQAKkBCrLUKFF6Bb7XdNinKR4jWaNhfzWU5B/tQj5rQXIb30l
+8ltfhbwB6uBcnP30Sx+QXG29utvhP+IvvfOBnVTNGc3C/GwW5r2qkvcrL8IFNC8YGH3oLELp6zF6
+UcBoq4zRCwujrSqMmNvJFYrkhkHGtV5MoxEaRhcYY4aOsohV4r9yC+g4y2Ya2dhQKEoqx4kGv+Xq
+kc6w2X4Cb6EYKHLVtuaqIlttZ2yl+OpRxtquZqwCZxFr1dhSfajXTT1lA59IhaClVGlA/P4AKo2t
+Cds6qLurAqu0Aidn89Qp65OkdUF3WAfjV9AMimq2AYR1bNRRMZFM0KE38y6CSQCWTmUDbONAKdfw
+s8zbL9Hbmc4Tw4afvxKzKIHyIyORNpHTCQzoNugnIA5K0h6FvamfDDoDUhgYvumXQAvlB4fTYQ3I
+S8sDNFR6/UGVZWJsWuSZyW2QDq9EYfm3fElD9P8WVDp5cnp+3DnaeaTU/nnv8F13p4xLlXJmKn2d
+s85+76g3+IV6A0QAglbFPl0AkGvDxsI4Um8+SSuatPds6GcE69xeYbivAyO0vo7hJNAex0ptV8aG
+Uf6zN+IfLyogCiAqIFJlZGlzdHJpYnV0aW9uIGFuZCB1c2UgaW4gc291cmNlIGFuZCBiaW5hcnkg
+Zm9ybXMsIHdpdGggb3Igd2l0aG91dCBtb2RpZmljYXRpb24sIAogKiBhcmUgcGVybWl0dGVkIHBy
+b3ZpZGVkIHRoYXQgdGhlIGZvbGxvd2luZyBjb25kaXRpb25zIGFyZSBtZXQ6CiAqIAogKgkxLiBS
+ZWRpc3RyaWJ1dGlvbnMgb2Ygc291cmNlIGNvZGUgbXVzdCByZXRhaW4gdGhlIGFib3ZlIGNvcHly
+aWdodCBub3RpY2UsIHRoaXMgCiAqCWxpc3Qgb2YgY29uZGl0aW9ucywgYW5kIHRoZSBmb2xsb3dp
+bmcgZGlzY2xhaW1lci4gCiAqCTIuIFJlZGlzdHJpYnV0aW9ucyBpbiBiaW5hcnkgZm9ybSBtdXN0
+IHJlcHJvZHVjZSB0aGUgYWJvdmUgY29weXJpZ2h0IG5vdGljZSwgCiAqCXRoaXMgbGlzdCBvZiBj
+b25kaXRpb25zLCBhbmQgdGhlIGZvbGxvd2luZyBkaXNjbGFpbWVyIGluIHRoZSBkb2N1bWVudGF0
+aW9uIAogKglhbmQvb3Igb3RoZXIgbWF0ZXJpYWxzIHByb3ZpZGVkIHdpdGggdGhlIGRpc3RyaWJ1
+dGlvbi4gCiAqIAogKiBISVMgU09GVFdBUkUgSVMgUFJPVklERUQgQlkgVEhFIENPUFlSSUdIVCBI
+T0xERVJTIEFORCAKICogQ09OVFJJQlVUT1JTICJBUyBJUyIgQU5EIEFOWSBFWFBSRVNTIE9SIElN
+UExJRUQgV0FSUkFOVElFUywgCiAqIElOQ0xVRElORywgQlVUIE5PVCBMSU1JVEVEIFRPLCBUSEUg
+SU1QTElFRCBXQVJSQU5USUVTIE9GIAogKiBNRVJDSEFOVEFCSUxJVFkgQU5EIEZJVE5FU1MgRk9S
+IEEgUEFSVElDVUxBUiBQVVJQT1NFIEFSRSAKICogRElTQ0xBSU1FRC5JTiBOTyBFVkVOVCBTSEFM
+TCBUSEUgQ09QWVJJR0hUIE9XTkVSIE9SIAogKiBDT05UUklCVVRPUlMgQkUgTElBQkxFIEZPUiBB
+TlkgRElSRUNULCBJTkRJUkVDVCwgSU5DSURFTlRBTCwgCiAqIFNQRUNJQUwsIEVYRU1QTEFSWSwg
+T1IgQ09OU0VRVUVOVElBTCBEQU1BR0VTIChJTkNMVURJTkcsIEJVVCAKICogTk9UIExJTUlURUQg
+VE8sIFBST0NVUkVNRU5UIE9GIFNVQlNUSVRVVEUgR09PRFMgT1IgU0VSVklDRVM7IAogKiBMT1NT
+IE9GIFVTRSwgREFUQSwgT1IgUFJPRklUUzsgT1IgQlVTSU5FU1MgSU5URVJSVVBUSU9OKSBIT1dF
+VkVSIAogKiBDQVVTRUQgQU5EIE9OIEFOWSBUSEVPUlkgT0YgTElBQklMSVRZLCBXSEVUSEVSIElO
+IENPTlRSQUNULCAKICogU1RSSUNUIExJQUJJTElUWSwgT1IgVE9SVCAoSU5DTFVESU5HIE5FR0xJ
+R0VOQ0UgT1IgT1RIRVJXSVNFKSAKICogQVJJU0lORyBJTiBBTlkgV0FZIE9VVCBPRiBUSEUgVVNF
+IE9GIFRISVMgU09GVFdBUkUsIEVWRU4gSUYgQURWSVNFRCAKICogT0YgVEhFIFBPU1NJQklMSVRZ
+IE9GIFNVQ0ggREFNQUdFLgogKiAgICAgCiAqICRJZCQKICovKciCafGmtzznu4UlEYLH89S/o3tO
+8KITuulkikkUuor3C8IfWPnpIhE83ETFodB/IQF38jR1JCMvPoJSWLBXAQALc9gWHq0EC8bf0KVT
+fe8NrlS3bKIYOJBSjwN4L1R1ArhRb2R8naOvxSi32aDAMOQlL42mwRAlsPMME9f3htE8hIlOqkwx
+epdL4M1AUoWW1YrRu2YRFbxbZrscL8zfpO72Qbe69uPQn2xyP4YkgEd+ypGQo2g4Rzbno6MRXbkE
+CnTnrIe3SDREZ5LgnSC+ODQLMqz1kY/ybSO9Szfo6heiD2NBEXMLqGOEBFZ0XdFu5A8t2lVMtLwl
+Vx15z1MkRTfE81kaXEz8BZiI5aiIJbjUFodaLkIiH5ST00F3RyELejC178K4IEPyYT7CK88CDe4G
+aA+Ub9bVVS2CeBjLjqLb6rI/ZPfx2E0tIIbg+AOz5RJRMEh/CVUQhqaMjqHlBdYkl8knKrZy6fjo
++MslIxSET+QWhoVVv5tAps8v0P31tocKUJ1PHN7xT5qkanuJjt6xi4I0n0/S7NZa1rUu1Z1qHKjf
+SLS2RDlQtpFk/nW8AgEP9KCy9DLXqjCdS++J539+bgXPUjKGfjz3nuNdXS3453nreaaIPhhRsVnh
+5/qu1Axhfmhg62sKZaVfKw7gAsQG32EArtMrlN2sm9StLR6VBXoCHuqLnT7fxefFl0MhP5x86HcP
+ZVMFZEDizafPWbJ5K0Z+Ebh94Y/TYPjj0FVWAxptWK7ocELgVTaPVkAUokIhugPgb2BtGnHcFtb+
+WptGAcaqoq1DEKiP7c+m9WKW27LK8cHKXO8GzT4cOwoE3mV7t4LeYO5tVamtvFRGp90yiqrrQ1ib
+YS7cBqD3rs7gPz6uQLevV1VHsmbp4nHaymraahBfbTXqik5xvI3beLVulnr45Qd+bvDSLLm+U81H
+7vJIaf0zbqh/UnkjAAnjj8bT9BOM0cbGBu2hq0AnKT/K485HeXB8COrISZeOcrcy+FR7OB19KpZT
+1zKT0amunMisQosA3FlVQI1+7lUwijZc20Gsq1Y4F3JuqNootUienZk1wnfVzXp8xQYWqjwj0j0/
+l2eDc2e9e3J63D3OTg1ov06iNt2BOnTXM546Qv6nBaDhKpIvYuoFyPKrphOed1OTlE+tcVW6EYXu
+8JvFQK5ig+hP4ZPHrVazKBXJo66PwLEbEMC9tg96LackBVrxBZhl4nHkkhqchTSdZecpH0zGAPuZ
+b3vJOErV00xUXPItBF19Lk93OQHrvoLRNGOpUBJ7px8b1SN8HUwmkkhsoJfb7xXdNXGuUBxNxLj0
+91gi++p7KYJtsu/RRO/8v9UKbCzADUE7LTGtibtZ+AVdbY4UkakuAEm7VdlOQxXg+KzYRYGpI6rU
+Rlm+3kPZSz/0Y9QOk5hkKQ7p5mZm6dsldtSqo5zPdlNOjlrT7AfpmZlvjb+UI6dJcFdwsDUEBXPW
+tEsVi/BxJ9HAP4GvXGqguw9dYbjT6jUQRJa/DEqQu4wvHFC1+eDcMI3UXgn6HqkRSHSK7qvA9sKW
+QbwunjssH4yjcy+lrbM8PpS8T9xLJEoBh+y4hshrLDi1ZhDVcGXG/q9zH7+NFf9qb3/iCOH9mBbf
+VDIMFit8gCj+VQc9muG5gDpH6Kol1r+RzEsZDXKWpDHBbqqQKwPPHQG2IBB34blJ5jxg0JpBbnL0
+5dxHo/FG0BSpGYzIyYxaiXshRz3t8kecivFxpY+tWaOIt1fgSEKPnM0GNN3YbG+/2n7VLMyxpuh+
+HIBWLY+PPgIQvAU4i1y9c9xm4a0lNhsnYMNyOB2YqlmM1MLW9fT71kaNcHHV1BO7/vH39p1Hptjp
+79RnxaFGZ7On4gwz+DOLT6SdpsqJZc4AqFC1QurVMQNC9XSNLKLSnCO6KB/zsD2veSceasWbJ1U1
+MwQXv6h2FUchhjhU9YD9T3nThfILMChtrti1FALf5asX2quQOTmzEEYKUMwDw2l9U0qavsOUl4FR
+EOMWtlPVkay+9qAZfKQhZpq82twJ8hUmA433r27n2U6w3n8vT/uy/1Pv7cAVzwS/4tWLuyaKwRKc
+lLhXa7otqbHx4Wx+ffUlQzNb1vO8BcNpeKiKjed1v5fPvk9fg0x4WVWjq2cRIHH8XvZPD96zShFH
+d/fq85Hk9vVDMhFndFOgdQgbC1EoF94NngUk0IDiDY7DXZElxENtjpGdQNCds7cSrLbBbx38O4Cp
+3DmiwWoKxEb28Yr046boncmz89PB6eDgTKuzdLtutYkwtm4lSiOhzr5wm0+ISDXUDfqLPdtIglCO
+vWkAi6haDBXyu3YZpJKGB+tfCgu6Q5QrlOMHfb5R3/gZD+nS03DkIAGdApkFqA/PeC/fDj8yxsH8
+qB5Ae5xA2BraTUwe4ayO3HKMPiBm0Gk4iRIfMKwg3ZZlQFF3FAthh9pfixzXVREbfwyGL+zBrbh/
+JEGsveHQn6WEtTJdLe0VxmZIIUSuvSu74E6dLEF9JejHVkuFEWWKrYFyPcvQInVICn+lTPq3f7fg
+362XpRio1SGYGJpKfnwDJjrp1plgU75Wdi2ZcoyfxyPcVhPkLhkldriBIQQNKahcuvCepOYU1x9j
+kXnRSimzVMA8XbJguYnDTGJ2HAaQ4hWzu1Yyemlq7Qj1oKZffmwju0ZvQbMuXnhAFPq9sj6bbEVR
+byhThrjInEDLRYUpF/QMGxVOHQvH0VxTKYqfIondRRLugCEba9Tz1eT5hoBlOo7vN9gBzpzzJKFm
+WchGjx4q5kLm8sVuZd8IHedfKciiauIhGqRz+spwjR5gNH+kEONRRBYnyXcCiMAYjDrDgN+KMGR8
+rVZTom8LRR++W+YqxeURKLHKoQ8xHwR7AFNUySaGhiF26+t6uy3rbswistxfCtD4QzvMEP/3emyB
+8XAzPfQ1J9x4kzkdVfHvZvqUSj5Z6XhQjdopEU4ba0LbNNegDcsLL44DP2b64XejKR5aCUvtLLK2
+Q40PTK/vAYQAJGeAsUCZqMGtVPrWQBSLiZfQoSFFAtbX6dL03kesw3RQ8InTFjWAoZVa3f+IpmmG
+LY/G8tZZkOGuj3bEt+7UdVUWTk2j9ebirtY43OxNS7D3zIIh1tpCudIEj0vm244SOl2EkSPGecnA
+bomy8V4nbChXKFocr/pQtwYQqz0yepUuNWEGk1R3tJmD/MqRwsngOJaL5IkjxgSCscKhMkZKAJ1E
+04SI2sa/xmh972/a/8WLA3RmGvFGcSFIAIxPCdZnMVhLJWsrXcqEg4dkkmae7VqeehvF17/i+VQ+
+L65qq5BUZTe7u1/5PfdS3FLpS6SGx6m2uWl9zh3a5vN86t6AYmbhS+Pit/zr56XSv+FJSc7ungzO
+f+l+7A2yCurLpOrt+N3xwHpRfSTPQm0Tg8dUhA5txPHAaC8Lfdao5GNVHSh5WO303FVLq9bCmy/Q
+l7vg7ouKLD72SDAtkGprtKLW9QJoqsIigNYJykJV8wxlRZYJUtM4i65THzLTW1Cgb+FVfPRBCT4k
+DxSnj8noIvx9B2DDt71zkAL9s94Jxuarix+y86fF8H+6R33RDoU6QaQrm6eIbCiuXuW1EDG2po3U
+hpsfk/12GQ6yrv/LyQEf9G+7VvfU0ViMqDdqawPVoIJ9SkPfcvWq4Tok6e2AZPMM8vHgp4OOHHT2
+j7ry4KcPJ+/zjziLZ1j3H86SIiVseXsZOQAFQfU4bG7WLFLgvay8/YIzvLfflyenIP6Pd0HUV/iZ
+F1Y26sqfO70B1zeO8OLPkKD3CX0cMGZZuSyyzxS7mbecEocT3wvnM1McZ63oPEsol3JtNHKTgnTC
+aYQfemSxW0BCZfl3OitHBXL/H3Xq5yQ=
+
+------_=_NextPart_001_01C82263.72AD8D90--
