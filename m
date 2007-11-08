@@ -1,51 +1,49 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Deprecate git-lost-found
-Date: Thu, 8 Nov 2007 00:37:00 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711080036490.4362@racer.site>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site>
- <7vlk998u6r.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4] Add Documentation/CodingGuidelines
+Date: Wed, 07 Nov 2007 16:38:05 -0800
+Message-ID: <7vhcjx8tci.fsf@gitster.siamese.dyndns.org>
+References: <20071106201518.GA6361@ins.uni-bonn.de> <47317CD7.5040506@op5.se>
+	<Pine.LNX.4.64.0711071456440.4362@racer.site>
+	<200711072243.21086.robin.rosenberg.lists@dewire.com>
+	<Pine.LNX.4.64.0711072233010.4362@racer.site>
+	<7vtznx8x86.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711080033080.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 01:37:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 01:38:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpvOc-0001Qo-FV
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 01:37:22 +0100
+	id 1IpvPm-0001ih-Ha
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 01:38:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756776AbXKHAhH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 19:37:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756602AbXKHAhH
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 19:37:07 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48408 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753879AbXKHAhF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 19:37:05 -0500
-Received: (qmail invoked by alias); 08 Nov 2007 00:37:03 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp005) with SMTP; 08 Nov 2007 01:37:03 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/LBEZ0Gm/LgEdUhKqBr1mipJRkYhgBrJv2NPEdMy
-	ZOObwUJ+yShi5n
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vlk998u6r.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1755912AbXKHAiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 19:38:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755387AbXKHAiU
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 19:38:20 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36836 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755301AbXKHAiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 19:38:19 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id F1E612FC;
+	Wed,  7 Nov 2007 19:38:39 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6E72B935A2;
+	Wed,  7 Nov 2007 19:38:34 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711080033080.4362@racer.site> (Johannes
+	Schindelin's message of "Thu, 8 Nov 2007 00:33:19 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63913>
 
-Hi,
-
-On Wed, 7 Nov 2007, Junio C Hamano wrote:
-
-> Makes sort of sense.  Add deprecation notice to Documentation/
-> as well, please.
-
-Of course.  Will resend in a minute.
-
-Ciao,
-Dscho
+Ok, will queue this for 'maint' ;-).
