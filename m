@@ -1,68 +1,46 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Inconsistencies with git log
-Date: Thu, 8 Nov 2007 22:23:20 +0100
-Message-ID: <20071108212320.GB4899@steel.home>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com> <Pine.LNX.4.64.0711072242230.4362@racer.site> <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com> <Pine.LNX.4.64.0711072255420.4362@racer.site> <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com> <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com> <47325415.1070205@op5.se> <ee77f5c20711080516n4f207ba3pccc8efffa2a6ad4c@mail.gmail.com> <20071108212123.GA4899@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: [PATCH 0/3] some shell portability fixes, v2
+Date: Thu, 8 Nov 2007 22:46:25 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071108214624.GF31439@ins.uni-bonn.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Brian Gernhardt <benji@silverinsanity.com>,
-	Jon Smirl <jonsmirl@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 22:23:42 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 08 22:46:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqEqh-0002A3-KT
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:23:40 +0100
+	id 1IqFDB-00024G-I2
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758959AbXKHVXY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 16:23:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758748AbXKHVXX
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:23:23 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:50685 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758242AbXKHVXX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 16:23:23 -0500
-Received: from tigra.home (Fc819.f.strato-dslnet.de [195.4.200.25])
-	by post.webmailer.de (klopstock mo60) (RZmta 14.0)
-	with ESMTP id x047dfjA8HpCz7 ; Thu, 8 Nov 2007 22:23:21 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id E82F1277AE;
-	Thu,  8 Nov 2007 22:23:20 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id CBD7056D22; Thu,  8 Nov 2007 22:23:20 +0100 (CET)
+	id S1762395AbXKHVq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 16:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762394AbXKHVq3
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:46:29 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:60490 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762331AbXKHVq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 16:46:26 -0500
+Received: from localhost.localdomain (xdsl-87-78-163-133.netcologne.de [87.78.163.133])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id ADA9B4000009B
+	for <git@vger.kernel.org>; Thu,  8 Nov 2007 22:46:25 +0100 (CET)
+Received: from ralf by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <Ralf.Wildenhues@gmx.de>)
+	id 1IqFCj-00058g-6j
+	for git@vger.kernel.org; Thu, 08 Nov 2007 22:46:25 +0100
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20071108212123.GA4899@steel.home>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWowxOg==
-X-RZG-CLASS-ID: mo07
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64075>
 
-Alex Riesen, Thu, Nov 08, 2007 22:21:23 +0100:
-> David Symonds, Thu, Nov 08, 2007 14:16:59 +0100:
-> > I never suggested path *limited*, only path *relative*. git-status
-> > would still show all the same files, but their paths would be relative
-> > to your current directory, so there'd be no confusion like you
-> > mentioned. This is how Johannes' patch works.
-> 
-> Relative? Like this?
-> 
-> $ cd project/foo/bar
-> $ git status
-> ...
->     M file1.c
->     M file2.c
->     M ../baz/file3.c
->     R ../bax/file4 => file4.c
-> 
+Thanks for all the helpful feedback.  Here's a new series that drops the
+$(()) and test -a/-o patches, and otherwise hopefully incorporates all
+nits.
 
-Oh, I see. Yes. Cool.
+Cheers,
+Ralf
