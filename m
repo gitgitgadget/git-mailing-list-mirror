@@ -1,80 +1,78 @@
-From: Luke Diamand <luke@vidanti.com>
-Subject: Problem with https and git-pull
-Date: Thu, 08 Nov 2007 07:42:30 +0000
-Message-ID: <4732BDE6.4020509@vidanti.com>
+From: Miles Bader <miles.bader@necel.com>
+Subject: git add -i fails to heed user's exclude settings
+Date: Thu, 08 Nov 2007 16:56:46 +0900
+Message-ID: <buowsstmapt.fsf@dhapc248.dev.necel.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:48:51 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 08:57:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq28A-0001j3-0Q
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:48:50 +0100
+	id 1Iq2GJ-0003bS-RM
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:57:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751289AbXKHHsf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:48:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751067AbXKHHsf
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:48:35 -0500
-Received: from c2bthomr13.btconnect.com ([213.123.20.131]:20013 "EHLO
-	c2bthomr13.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750708AbXKHHsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:48:35 -0500
-Received: from mozart.ballroom.vidanti.com 
-	by c2bthomr13.btconnect.com
-	with ESMTP id DNC81958;
-	Thu, 8 Nov 2007 07:42:30 GMT
-Received: from cpc2-cmbg6-0-0-cust655.cmbg.cable.ntl.com ([81.107.34.144] helo=[192.168.245.128])
-	by mozart.ballroom.vidanti.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.54)
-	id 1Iq222-0004aC-F8
-	for git@vger.kernel.org; Thu, 08 Nov 2007 07:42:30 +0000
-User-Agent: Icedove 1.5.0.12 (X11/20070606)
-X-Junkmail-Status: score=10/50, host=c2bthomr13.btconnect.com
-X-Junkmail-SD-Raw: score=unknown,
-	refid=str=0001.0A0B0202.4732BCAA.0181,ss=1,fgs=0,
-	ip=81.107.34.144,
-	so=2006-12-09 10:45:40,
-	dmn=5.4.3/2007-10-18
+	id S1751811AbXKHH46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 02:56:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbXKHH46
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:56:58 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:43853 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbXKHH45 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 02:56:57 -0500
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lA87ul4r010574;
+	Thu, 8 Nov 2007 16:56:47 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 16:56:47 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 16:56:47 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id D88C7545; Thu,  8 Nov 2007 16:56:46 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63949>
 
-I'm finding that git-pull using https does not work in the way I would 
-expect.
+Inside git add -i, option 4 "add untracked", it doesn't seem to consider
+the user's personal ignore patterns, which is _really_ annoying.
 
-I created a bare repository, test.git, available by https://
+E.g., I have:
 
-I then cloned it:
+   $ git config core.excludesfile
+   /home/miles/.gitignore
 
-% git-clone https://host/git/test.git
+   $ cat /home/miles/.gitignore
+   [+,#]*
+   *~
 
-So far, so good.
+   $ git status
+   # On branch master
+   nothing to commit (working directory clean)
 
-Then I made a change in a different clone and pushed it.
+   $ git add -i
+              staged     unstaged path
 
-When I next did git-pull it just said:
+   *** Commands ***
+     1: status       2: update       3: revert       4: add untracked
+     5: patch        6: diff         7: quit         8: help
+   What now> 4
+     1: ,l
+     2: ,l.~1~
+     3: AUTHORS.~1~
+     4: Makefile.am.~1~
+     5: config.h.in~
+     6: configure.ac.~1~
+     ...tons of other random backup files etc...
 
-% git-pull
-Fetching refs/heads/master from https://host/git/test.git using https
-Already up-to-date.
+This makes it very hard to find files that actually need to be added!
 
-But it *isn't* up-to-date! If I do the same exercise with git:// or 
-ssh:// on the same repo then it pulls down my changes as expected.
+Thanks,
 
-Tried with:
-   git version 1.5.3.4 (debian testing)
-   git 1.5.3.5-dirty
+-Miles
 
-curl is 7.16.4
-
-The server access log shows the git-pull happening, and there are no 
-errors reported by the server.
-
-Is there something obvious I'm missing?
-
-Thanks
-Luke
+-- 
+o The existentialist, not having a pillow, goes everywhere with the book by
+  Sullivan, _I am going to spit on your graves_.
