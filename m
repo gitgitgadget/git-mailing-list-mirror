@@ -1,104 +1,69 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 3/3] git-fetch: avoid local fetching from alternate (again)
-Date: Thu, 8 Nov 2007 06:22:54 -0500
-Message-ID: <20071108112254.GN14735@spearce.org>
-References: <20071108080058.GC16690@spearce.org> <20071108100039.GM14735@spearce.org> <7vhcjx2gq5.fsf@gitster.siamese.dyndns.org>
+From: "Mike Ralphson" <mike.ralphson@gmail.com>
+Subject: Re: [PATCH] Add Documentation/CodingStyle
+Date: Thu, 8 Nov 2007 11:29:32 +0000
+Message-ID: <e2b179460711080329j4979dc00w421ec79a6f3159ed@mail.gmail.com>
+References: <20071106201518.GA6361@ins.uni-bonn.de>
+	 <20071106201809.GD6361@ins.uni-bonn.de>
+	 <20071106202600.GH6361@ins.uni-bonn.de>
+	 <7vtznzf5jb.fsf@gitster.siamese.dyndns.org>
+	 <Pine.LNX.4.64.0711062317330.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 12:23:17 2007
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 12:29:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq5Tg-0001YG-9r
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 12:23:16 +0100
+	id 1Iq5Zz-0003Mx-Le
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 12:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758370AbXKHLW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 06:22:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758374AbXKHLW7
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 06:22:59 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:39680 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757020AbXKHLW6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 06:22:58 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iq5TJ-0000tl-BP; Thu, 08 Nov 2007 06:22:53 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 0339E20FBAE; Thu,  8 Nov 2007 06:22:54 -0500 (EST)
+	id S1758177AbXKHL3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 06:29:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755927AbXKHL3f
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 06:29:35 -0500
+Received: from wx-out-0506.google.com ([66.249.82.235]:26681 "EHLO
+	wx-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758577AbXKHL3e (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 06:29:34 -0500
+Received: by wx-out-0506.google.com with SMTP id h31so138933wxd
+        for <git@vger.kernel.org>; Thu, 08 Nov 2007 03:29:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=RwAEgJgHJH7ZEXN3hGSiFvbe+m6Q/f5kRUcYeklZOFY=;
+        b=LqYPmX3MNVeSev2QaTLKa7PVgUGh8bNPI18zDESpCL/LCE3rZ4aKxiWY8ep26K2TBLZxlYjzXIbDGhpxYupdtz/eRQbt6Adsmyj0PIg7OsM4+D6wLW6wFJ8yJr/YUGYtCVU9UQ5Wj9tn8fmAB4ex7TLeCWURMale3dNBmUcWgEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=ZpvYWSvdpScvHC6xc+9HeDySODJWhV0B9gprH3S+5Yo4/6Q1cAWSiNl6RXKEIALi4sSQrqblsIjPYWGNIc2lKxDnLpNMZ+Jd3+jk/G3XDH+Yk5GLD65PY9KEsToM1K5pqxiaNKDa2TlwOFb/FxEw9theShqDq9/+nxg0l/u7Cng=
+Received: by 10.90.87.5 with SMTP id k5mr369632agb.1194521372186;
+        Thu, 08 Nov 2007 03:29:32 -0800 (PST)
+Received: by 10.90.100.12 with HTTP; Thu, 8 Nov 2007 03:29:32 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711062317330.4362@racer.site>
 Content-Disposition: inline
-In-Reply-To: <7vhcjx2gq5.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63995>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63996>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> > I'm starting to suspect heap corruption again in builtin-fetch.
-> > This patch alters the malloc() calls we are doing and may be shifting
-> > something around just enough in memory to cause a data overwrite or
-> > something and that's why this tag just drops out of the linked list?
-> > But then why does that happen in the test suite but not outside.
-> > Maybe because the test suite is setting environment variables that
-> > I'm not and the impact of those combined with these additional
-> > mallocs is what is breaking it?  *sigh*
+On Nov 6, 2007 11:17 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+>
+> Even if our code is quite a good documentation for our coding style,
+> some people seem to prefer a document describing it.
 
-Found it.  This ain't pretty.  Remember, what's failing in the test
-suite is we aren't getting "tag-three-file" automatically followed
-during fetch.  This is an annotated tag referring to a blob.
+Might this file be a place to document exactly which licenses we
+accept code under? I.e. is it GPLv2 only or any license compatible
+with GPLv2 ?
 
-Here's the *WAY WRONG FIX THAT SHOULD NOT EVER BE APPLIED*:
+Currently I see only GPLv2 in core git, but I have a series of patches
+which give me a speed-up of two orders of magnitude for some cases of
+at least git-status (on my platform, with my repos etc) and so far my
+two approaches involve bringing in code which is either public domain
+with restrictions (which may be too onerous for us to carry in
+mainline) or 3-clause BSD.
 
-diff --git a/builtin-fetch.c b/builtin-fetch.c
-index 847db73..a935b5a 100644
---- a/builtin-fetch.c
-+++ b/builtin-fetch.c
-@@ -389,7 +389,7 @@ static struct ref *find_non_local_tags(struct transport *transport,
- 
- 		if (!path_list_has_path(&existing_refs, ref_name) &&
- 		    !path_list_has_path(&new_refs, ref_name) &&
--		    lookup_object(ref->old_sha1)) {
-+		    has_sha1_file(ref->old_sha1)) {
- 			path_list_insert(ref_name, &new_refs);
- 
- 			rm = alloc_ref(strlen(ref_name) + 1);
-
-(I know Junio knows why this patch shouldn't be applied.
- Its exactly why quickfetch calls rev-list --objects...)
-
-The problem here is my quickfetch patch is bypassing the internal
-call to fetch-pack.  Which means we never do object handshaking,
-and thus never allocate struct object* for the things we had been
-talking about (because we never talked about them!).  Or in the
-case of commits, their trees and parents too.  Thus the call above
-to lookup_object() for a blob fails, as we never tried to parse it
-before in fetch-pack.
-
-Now I'm really not sure why we have blob objects allocated into
-memory for lookup_object() during fetch-pack, but apparently we do.
-At least during this test vector.  It doesn't make sense if we are
-only talking about commits (and their parents).  I'd expect the
-root trees to have objects (when the commit buffer was parsed for
-graph traversal) but not blobs.
-
-Maybe some smart individual will come up with the right solution to
-keep automatic tag following enabled (safely!) while also allowing
-us to use quickfetch.  There's got to be a solution that doesn't
-implicitly rely upon the handshaking we just happened to do with
-the remote peer...
-
-Me, I'm off to catch a few hours of sleep.
-
--- 
-Shawn.
+Cheers, Mike
