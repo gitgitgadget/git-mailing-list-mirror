@@ -1,85 +1,82 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: [PATCH] Do git reset --hard HEAD when using git rebase --skip
-Date: Thu,  8 Nov 2007 08:03:06 +0100
-Message-ID: <1194505386-18156-1-git-send-email-mh@glandium.org>
-References: <20071107222105.GA31666@glandium.org>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:04:26 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] git-sh-setup: fix parseopt `eval`.
+Date: Wed, 07 Nov 2007 23:09:29 -0800
+Message-ID: <7vr6j15i3a.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 08:09:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq1R9-00017v-3k
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:04:23 +0100
+	id 1Iq1WQ-0002Dc-SC
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756221AbXKHHEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:04:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754441AbXKHHEG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:04:06 -0500
-Received: from vawad.err.no ([85.19.200.177]:36941 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754041AbXKHHEF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:04:05 -0500
-Received: from aputeaux-153-1-97-76.w86-217.abo.wanadoo.fr ([86.217.119.76] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1Iq1Qg-0002ls-KA; Thu, 08 Nov 2007 08:03:57 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1Iq1Pu-0004j9-FS; Thu, 08 Nov 2007 08:03:06 +0100
-X-Mailer: git-send-email 1.5.3.5
-In-Reply-To: <20071107222105.GA31666@glandium.org>
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+	id S1754041AbXKHHJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 02:09:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754545AbXKHHJf
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:09:35 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:45901 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbXKHHJe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 02:09:34 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 28F2D2EF;
+	Thu,  8 Nov 2007 02:09:55 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A60E8916C2;
+	Thu,  8 Nov 2007 02:09:52 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63940>
 
-When you have a merge conflict and want to bypass the commit causing it,
-you don't want to care about the dirty state of the working tree.
+The 'automagic parseopt' support corrupted non option parameters
+that had IFS characters in them.  The worst case can be seen
+when it has a non option parameter like this:
 
-Also, don't git reset --hard HEAD in the rebase-skip test, so that the
-lack of support for this is detected.
+	$1=" * some string   blech"
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-rebase.sh          |    1 +
- t/t3403-rebase-skip.sh |    2 --
- 2 files changed, 1 insertions(+), 2 deletions(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index e3ad7de..8814be9 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -158,6 +158,7 @@ do
- 		exit
- 		;;
- 	--skip)
-+		git reset --hard HEAD || exit $?
- 		if test -d "$dotest"
- 		then
- 			git rerere clear
-diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
-index eab053c..becabfc 100755
---- a/t/t3403-rebase-skip.sh
-+++ b/t/t3403-rebase-skip.sh
-@@ -36,7 +36,6 @@ test_expect_failure 'rebase with git am -3 (default)' '
- '
+ * I had "git pull -n . to/pic-branch" in Meta/PU which was
+   affected by this bug, expanding the " * " bullet before the
+   merge message that is passed from git-pull to git-merge.
+
+   I am a bit upset because I _knew_ that the eval was wrong
+   when I first saw it, but somehow I forgot about it when I
+   made it land on 'next'.  My fault.
+
+ git-sh-setup.sh |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
+
+diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+index e1cf885..f1c4839 100755
+--- a/git-sh-setup.sh
++++ b/git-sh-setup.sh
+@@ -21,11 +21,12 @@ if test -n "$OPTIONS_SPEC"; then
+ 		exec "$0" -h
+ 	}
  
- test_expect_success 'rebase --skip with am -3' '
--	git reset --hard HEAD &&
- 	git rebase --skip
- 	'
- test_expect_success 'checkout skip-merge' 'git checkout -f skip-merge'
-@@ -44,7 +43,6 @@ test_expect_success 'checkout skip-merge' 'git checkout -f skip-merge'
- test_expect_failure 'rebase with --merge' 'git rebase --merge master'
- 
- test_expect_success 'rebase --skip with --merge' '
--	git reset --hard HEAD &&
- 	git rebase --skip
- 	'
- 
+-	parseopt_extra=
+-	[ -n "$OPTIONS_KEEPDASHDASH" ] &&
+-		parseopt_extra="$parseopt_extra --keep-dashdash"
+-
+-	eval `echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@" || echo exit $?`
++	[ -n "$OPTIONS_KEEPDASHDASH" ] && parseopt_extra="--keep-dashdash"
++	parsed=$(
++		echo "$OPTIONS_SPEC" |
++		git rev-parse --parseopt $parseopt_extra -- "$@"
++	) &&
++	eval "$parsed" || exit
+ else
+ 	usage() {
+ 		die "Usage: $0 $USAGE"
 -- 
-1.5.3.5
+1.5.3.5.1617.g65b5b
