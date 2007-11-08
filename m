@@ -1,59 +1,59 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: GIT_DIR/--git-dir question
-Date: Fri, 9 Nov 2007 00:24:52 +0100
-Message-ID: <008701c8225e$90f38dd0$5267a8c0@Jocke>
-References: <007c01c8223a$6af2e550$5267a8c0@Jocke> <7vfxzg1jpb.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Port git commit to C.
+Date: Thu, 08 Nov 2007 15:47:36 -0800
+Message-ID: <7vmytoz4dj.fsf@gitster.siamese.dyndns.org>
+References: <1194541140-3062-1-git-send-email-krh@redhat.com>
+	<20071108232751.GC4899@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Junio C Hamano'" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:08 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
+	git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIF9-00047A-LL
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:08 +0100
+	id 1IqIFM-00047A-LE
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756707AbXKHXdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 18:33:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757944AbXKHXdw
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 18:33:52 -0500
-Received: from mail.transmode.se ([83.241.175.147]:54125 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1756447AbXKHXdv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 18:33:51 -0500
-Received: from Jocke ([84.217.6.238]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Fri, 9 Nov 2007 00:25:09 +0100
-X-Mailer: Microsoft Office Outlook 11
-In-Reply-To: <7vfxzg1jpb.fsf@gitster.siamese.dyndns.org>
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
-Thread-Index: AcgiUs6qmgY6RXEiQpuPtd8N1jIaswAC1j1A
-X-OriginalArrivalTime: 08 Nov 2007 23:25:09.0144 (UTC) FILETIME=[9A52B180:01C8225E]
+	id S1763524AbXKIAcU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 19:32:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763525AbXKIAcU
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 19:32:20 -0500
+Received: from lollipop.listbox.com ([208.210.124.78]:57738 "EHLO
+	lollipop.listbox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758970AbXKIAcU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 19:32:20 -0500
+Received: from sceptre.pobox.com (sceptre.pobox.com [207.106.133.20])
+	by lollipop.listbox.com (Postfix) with ESMTP id EF7F041D7FD
+	for <git@vger.kernel.org>; Thu,  8 Nov 2007 18:50:47 -0500 (EST)
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 0E7AA2F2;
+	Thu,  8 Nov 2007 18:48:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9768F93A6B;
+	Thu,  8 Nov 2007 18:48:00 -0500 (EST)
+In-Reply-To: <20071108232751.GC4899@steel.home> (Alex Riesen's message of
+	"Fri, 9 Nov 2007 00:27:52 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64089>
 
-> From: Junio C Hamano [mailto:gitster@pobox.com] 
-> Sent: den 8 november 2007 23:01
-> To: Joakim Tjernlund
-> Cc: git@vger.kernel.org
-> Subject: Re: GIT_DIR/--git-dir question
-> 
-> "Joakim Tjernlund" <joakim.tjernlund@transmode.se> writes:
-> 
-> > I just started to look at having multiple work trees, each 
-> working on a separate branch,
-> > using the same git repo.
-> 
-> I suspect contrib/workdir is what you are looking for not
-> GIT_DIR.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
-Yes, it does look like what I am looking for. But now I am 
-a bit confused as to what GIT_DIR/--git-dir is supposed to be
-used for.
+> Kristian H=C3=B8gsberg, Thu, Nov 08, 2007 17:59:00 +0100:
+>> This makes git commit a builtin and moves git-commit.sh to
+>> contrib/examples.  This also removes the git-runstatus
+>> helper, which was mostly just a git-status.sh implementation detail.
+>
+> Applied instead of 00c8febf563da on Junio's pu it breaks t1400:
 
- Jocke
+Don't worry.  It will pass with two of the Dscho's patches.
+
+The racy-git issue is still there, though.
