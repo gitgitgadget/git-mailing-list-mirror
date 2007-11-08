@@ -1,54 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH amend] git-mailsplit: with maildirs not only process
-	cur/, but also new/
-Date: Wed, 7 Nov 2007 21:31:10 -0500
-Message-ID: <20071108023109.GA3564@sigill.intra.peff.net>
-References: <20071026141539.29928.qmail@d3691352d65cf2.315fe32.mid.smarden.org> <20071026160118.GA5076@ferdyx.org> <20071105124920.17726.qmail@746e9cce42b49f.315fe32.mid.smarden.org> <20071105225258.GC4208@steel.home> <20071106085418.14211.qmail@54d7c9212e25c5.315fe32.mid.smarden.org> <7vfxzh7ajt.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, Gerrit Pape <pape@smarden.org>,
-	"Fernando J. Pereda" <ferdy@gentoo.org>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <junio@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 03:31:36 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH] git-checkout: Handle relative paths containing "..".
+Date: Thu,  8 Nov 2007 13:33:12 +1100
+Message-ID: <1194489192-20021-1-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Symonds <dsymonds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 03:35:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpxBA-00015G-1T
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 03:31:36 +0100
+	id 1IpxEX-0001jM-CF
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 03:35:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754954AbXKHCbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 21:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754412AbXKHCbU
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 21:31:20 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1824 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754096AbXKHCbU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 21:31:20 -0500
-Received: (qmail 10819 invoked by uid 111); 8 Nov 2007 02:31:15 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 07 Nov 2007 21:31:15 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 07 Nov 2007 21:31:10 -0500
-Content-Disposition: inline
-In-Reply-To: <7vfxzh7ajt.fsf@gitster.siamese.dyndns.org>
+	id S1760403AbXKHCd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 21:33:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757760AbXKHCd5
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 21:33:57 -0500
+Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:26214 "EHLO
+	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1760398AbXKHCdz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 21:33:55 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Aq4HAFgCMkd5LBGK/2dsb2JhbACBWw
+X-IronPort-AV: E=Sophos;i="4.21,387,1188743400"; 
+   d="scan'208";a="223431170"
+Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
+  by ipmail02.adl2.internode.on.net with ESMTP; 08 Nov 2007 13:03:14 +1030
+X-Mailer: git-send-email 1.5.3.5.1529.g69a1-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63926>
 
-On Wed, Nov 07, 2007 at 06:09:26PM -0800, Junio C Hamano wrote:
+Based on gitte's idea.
 
-> > When saving patches to a maildir with e.g. mutt, the files are put into
-> > the new/ subdirectory of the maildir, not cur/.  This makes git-am state
-> > "Nothing to do.".  This patch lets git-mailsplit additional check new/
-> > after reading cur/.
-> 
-> Looks good to me.  Final acks please?
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ git-checkout.sh |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Fixed my concerns.
-
-Acked-by: Jeff King <peff@peff.net>
-
--Peff
+diff --git a/git-checkout.sh b/git-checkout.sh
+index 8993920..b2c50aa 100755
+--- a/git-checkout.sh
++++ b/git-checkout.sh
+@@ -134,9 +134,10 @@ Did you intend to checkout '$@' which can not be resolved as commit?"
+ 	fi
+ 
+ 	# Make sure the request is about existing paths.
+-	git ls-files --error-unmatch -- "$@" >/dev/null || exit
+-	git ls-files -- "$@" |
+-	git checkout-index -f -u --stdin
++	git ls-files --full-name --error-unmatch -- "$@" >/dev/null || exit
++	git ls-files --full-name -- "$@" |
++		(cd "$(git-rev-parse --show-cdup)" &&
++		 git checkout-index -f -u --stdin)
+ 
+         # Run a post-checkout hook -- the HEAD does not change so the
+         # current HEAD is passed in for both args
+-- 
+1.5.3.5.1529.g69a1-dirty
