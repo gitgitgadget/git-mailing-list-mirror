@@ -1,67 +1,84 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git rebase --skip
-Date: Thu, 08 Nov 2007 04:31:23 +0100
-Organization: At home
-Message-ID: <fgtvu9$o1r$1@ger.gmane.org>
-References: <20071107222105.GA31666@glandium.org> <20071108032308.GA5638@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 04:31:59 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH] git-checkout: Add a test case for relative paths use.
+Date: Thu,  8 Nov 2007 14:40:52 +1100
+Message-ID: <11944932524072-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	David Symonds <dsymonds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 04:43:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipy7Z-0005Eo-Vd
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 04:31:58 +0100
+	id 1IpyII-0007Pw-5Z
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 04:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758156AbXKHDbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 22:31:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756447AbXKHDbn
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 22:31:43 -0500
-Received: from main.gmane.org ([80.91.229.2]:35803 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754593AbXKHDbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 22:31:42 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Ipy7A-0003ah-CL
-	for git@vger.kernel.org; Thu, 08 Nov 2007 03:31:32 +0000
-Received: from abwc220.neoplus.adsl.tpnet.pl ([83.8.226.220])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Nov 2007 03:31:32 +0000
-Received: from jnareb by abwc220.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 08 Nov 2007 03:31:32 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwc220.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756154AbXKHDmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 22:42:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754424AbXKHDmF
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 22:42:05 -0500
+Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:37312 "EHLO
+	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754123AbXKHDmE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 22:42:04 -0500
+X-IronPort-AV: E=Sophos;i="4.21,387,1188743400"; 
+   d="scan'208";a="223469101"
+Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
+  by ipmail02.adl2.internode.on.net with ESMTP; 08 Nov 2007 14:10:55 +1030
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63930>
 
-Jeff King wrote:
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ t/t2008-checkout-subdir.sh |   36 ++++++++++++++++++++++++++++++++++++
+ 1 files changed, 36 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2008-checkout-subdir.sh
 
-> On Wed, Nov 07, 2007 at 11:21:05PM +0100, Mike Hommey wrote:
-> 
->> I use git-rebase quite regularly, and I haven't used git-rebase --skip
->> after a failed merge without first resetting the working tree. I was
->> wondering if it wouldn't make sense to automatically do the reset when
->> running git-rebase --skip.
-> 
-> I have often been annoyed by this behavior, too, and I can't think of
-> any situation where you _wouldn't_ want the reset to happen.  But I
-> would be more comfortable hearing confirmation from others that they
-> can't think of such a situation.
-
-Perhaps "git rebase --force-skip" or "git rebase --force --skip"
-would be the way to fo above...
-
+diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
+new file mode 100755
+index 0000000..cb9c9eb
+--- /dev/null
++++ b/t/t2008-checkout-subdir.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 David Symonds
++
++test_description='git checkout from subdirectories'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	echo base > file0 &&
++	git add file0 &&
++	mkdir dir1 &&
++	echo hello > dir1/file1 &&
++	git add dir1/file1 &&
++	test_tick &&
++	mkdir dir2 &&
++	echo bonjour > dir2/file2 &&
++	git add dir2/file2 &&
++	git commit -m "populate tree"
++
++'
++
++test_expect_success 'remove and restore with relative path' '
++
++	cd dir1 &&
++	rm ../file0 &&
++	git checkout HEAD -- ../file0 && test -f ../file0 &&
++	rm ../dir2/file2 &&
++	git checkout HEAD -- ../dir2/file2 && test -f ../dir2/file2 &&
++	rm ../file0 ./file1 &&
++	git checkout HEAD -- .. && test -f ../file0 && test -f ./file1
++
++'
++
++test_done
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+1.5.3.1
