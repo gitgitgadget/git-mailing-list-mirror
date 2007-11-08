@@ -1,56 +1,77 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: stgit: cleaning up after using git branch delete commands
-Date: Thu, 8 Nov 2007 06:53:02 +0100
-Message-ID: <20071108055302.GA11230@diana.vm.bytemark.co.uk>
-References: <9e4733910711070606t2c558ac9ob4c729d5baca8fb9@mail.gmail.com> <tnxwssuyug1.fsf@pc1117.cambridge.arm.com> <9e4733910711070811y72f96a90i4db9acdf93aa765c@mail.gmail.com>
+From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+Subject: Re: [PATCH 0/5] some shell portability fixes
+Date: Thu, 8 Nov 2007 07:14:56 +0100
+Organization: Department of Numerical Simulation, University of Bonn
+Message-ID: <20071108061456.GA28509@ins.uni-bonn.de>
+References: <20071106201518.GA6361@ins.uni-bonn.de> <7v8x5bgl04.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711070758w5832ab83ic16e8fb4edb80972@mail.gmail.com> <fcaeb9bf0711070805x49228d8dq7e8e6f26060c47ab@mail.gmail.com> <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Catalin Marinas <catalin.marinas@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 06:53:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 07:15:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq0Kj-0004lh-KU
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 06:53:42 +0100
+	id 1Iq0fc-0000I8-5o
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 07:15:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751016AbXKHFxW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 00:53:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750922AbXKHFxW
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 00:53:22 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:3987 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750872AbXKHFxV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 00:53:21 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Iq0K6-0002w4-00; Thu, 08 Nov 2007 05:53:02 +0000
+	id S1751778AbXKHGPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 01:15:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbXKHGPA
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 01:15:00 -0500
+Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:42659 "EHLO
+	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbXKHGO7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 01:14:59 -0500
+Received: from localhost.localdomain (xdsl-87-78-134-79.netcologne.de [87.78.134.79])
+	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id D3C7A400002BE;
+	Thu,  8 Nov 2007 07:14:57 +0100 (CET)
+Received: from ralf by localhost.localdomain with local (Exim 4.63)
+	(envelope-from <Ralf.Wildenhues@gmx.de>)
+	id 1Iq0fI-0007QF-PC; Thu, 08 Nov 2007 07:14:56 +0100
+Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <9e4733910711070811y72f96a90i4db9acdf93aa765c@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63936>
 
-On 2007-11-07 11:11:42 -0500, Jon Smirl wrote:
+* Junio C Hamano wrote on Wed, Nov 07, 2007 at 09:42:41PM CET:
+> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+> >
+> > Argh, should have made it clear, busybox sed is good enough.
+> 
+> Thanks.  And you can also happy grok Ralf's rewritten construct,
+> right?
+> 
+> That is, existing
+> 
+>         $ sed -e 's/foo/\n/' file
+> 
+> will be rewritten by the patch [2/5] to
+> 
+>         $ sed -e 's/foo/\
+>         /' file
 
-> how about a 'stg gc' command that gets rid of all the inaccessible
-> clutter?
+The original was something like
+  sed 's/[|]/\n/g'
 
-"stg assimilate" already has the job of fixing up stuff after the user
-has used git commands to move HEAD around. I think it would make sense
-to teach it to do this too -- and then rename it "stg repair" or
-something. That way, there's one command to fix every kind of "damage"
-that git can do to stgit.
+Using instead
+  tr '|' '\n'
 
-Alternatively, "stg branch --create" and "stg init" and whoever else
-is bothered by the clutter could simply remove it themselves. That
-would be even more user-friendly, I guess.
+should work for the original construct, and AFAIK only /usr/ucb/tr on
+Solaris fails to understand \n correctly.  Would that be better for you?
+Or even
+  tr '|' '\012'
 
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+which fails only on EBCDIC, which I don't think git targets.
+
+I'll resend the patches tonight.
+
+Cheers,
+Ralf
