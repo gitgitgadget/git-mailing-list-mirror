@@ -1,107 +1,112 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH DIFF-CLEANUP 1/2] Make the diff_options bitfields be an unsigned with explicit masks.
-Date: Wed, 07 Nov 2007 22:39:02 -0800
-Message-ID: <7vy7d95ji1.fsf@gitster.siamese.dyndns.org>
-References: <1194430832-6224-1-git-send-email-madcoder@debian.org>
-	<1194430832-6224-2-git-send-email-madcoder@debian.org>
-	<1194430832-6224-3-git-send-email-madcoder@debian.org>
-	<1194430832-6224-4-git-send-email-madcoder@debian.org>
-	<1194430832-6224-5-git-send-email-madcoder@debian.org>
-	<1194430832-6224-6-git-send-email-madcoder@debian.org>
-	<1194430832-6224-7-git-send-email-madcoder@debian.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 07:39:30 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v2] user-manual: add advanced topic "bisecting merges"
+Date: Thu, 8 Nov 2007 07:40:56 +0100
+Message-ID: <16D3798E-5229-485D-9EC4-426625BAFEB2@zib.de>
+References: <20071104112302.GA2119@ins.uni-bonn.de> <11944722214046-git-send-email-prohaska@zib.de> <F783880C-A0F9-45D9-A23A-075600B31CEE@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=ISO-8859-1;
+	delsp=yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Ralf.Wildenhues@gmx.de,
+	Git Mailing List <git@vger.kernel.org>
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 08 07:40:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq132-0004qR-9k
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 07:39:28 +0100
+	id 1Iq13e-0004wd-5M
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 07:40:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461AbXKHGjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 01:39:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbXKHGjJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 01:39:09 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:39388 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbXKHGjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 01:39:08 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id DE8D72EF;
-	Thu,  8 Nov 2007 01:39:28 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A0FF8E6D5;
-	Thu,  8 Nov 2007 01:39:26 -0500 (EST)
-In-Reply-To: <1194430832-6224-7-git-send-email-madcoder@debian.org> (Pierre
-	Habouzit's message of "Wed, 7 Nov 2007 11:20:31 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751646AbXKHGjt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 01:39:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751521AbXKHGjs
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 01:39:48 -0500
+Received: from mailer.zib.de ([130.73.108.11]:62873 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751452AbXKHGjr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 01:39:47 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA86dd96021848;
+	Thu, 8 Nov 2007 07:39:39 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db1017f.pool.einsundeins.de [77.177.1.127])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA86dcpt027230
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 8 Nov 2007 07:39:38 +0100 (MET)
+In-Reply-To: <F783880C-A0F9-45D9-A23A-075600B31CEE@lrde.epita.fr>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63937>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63938>
 
-Pierre Habouzit <madcoder@debian.org> writes:
 
-> reverse_diff was a bit-value in disguise, it's merged in the flags now.
+On Nov 7, 2007, at 11:16 PM, Benoit Sigoure wrote:
+
+> Hi Steffen,
 >
-> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
+> On Nov 7, 2007, at 10:50 PM, Steffen Prohaska wrote:
+>
+> Some more comments below.  Sorry for not spotting these earlier.
 
-Just my first impression, as I am in the middle of unrelated
-bisect.  I haven't read beyond diff-lib.c changes.
+I'll took all your suggestions except for ...
 
-> diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
-> index 0b591c8..e71841a 100644
-> --- a/builtin-diff-tree.c
-> +++ b/builtin-diff-tree.c
-> @@ -118,12 +118,12 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
->  	}
->  
->  	if (!read_stdin)
-> -		return opt->diffopt.exit_with_status ?
-> -		    opt->diffopt.has_changes: 0;
-> +		return DIFF_OPT_TST(&opt->diffopt, EXIT_WITH_STATUS)
-> +			&& DIFF_OPT_TST(&opt->diffopt, HAS_CHANGES);
 
-Had to think a bit about this, although it is correct.
+[...]
 
->  	if (opt->diffopt.detect_rename)
->  		opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
-> -				       DIFF_SETUP_USE_CACHE);
-> +							   DIFF_SETUP_USE_CACHE);
+>> +later when you have a better understanding of git.
+>> +
+>> +[[bisect-merges]]
+>> +Why bisecting merge commits can be harder than bisecting linear =20
+>> history
+>> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~=20
+>> ~~~
+>> +The following text is based upon an email by Junio C. Hamano to
+>> +the git mailing list
+>> +(link:http://marc.info/?l=3Dgit&m=3D119403257315527&w=3D2[link:http=
+://=20
+>> marc.info/?l=3Dgit&m=3D119403257315527&w=3D2]).
+>> +It was slightly adapted for this manual.
+>> +
+>> +Bisecting merges can be challenging due to the complexity of
+>> +changes introduced at a merge.  Bisecting through merges is not a
+>
+> s/at a merge/& point/ ?
 
-I wonder what this is about.
+I'll replace the first sentence with
 
-> diff --git a/combine-diff.c b/combine-diff.c
-> index fe5a2a1..3cab04b 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -664,7 +664,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
->  	int mode_differs = 0;
->  	int i, show_hunks;
->  	int working_tree_file = is_null_sha1(elem->sha1);
-> -	int abbrev = opt->full_index ? 40 : DEFAULT_ABBREV;
-> +        int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
+Using gitlink:git-bisect[1] on a history with merges can be challenging=
+=2E
 
-Indent?
+The details are explained in the remainder of the paragraph.
 
-> diff --git a/diff-lib.c b/diff-lib.c
-> index da55713..69b5dc9 100644
-> --- a/diff-lib.c
-> +++ b/diff-lib.c
-> @@ -188,8 +188,7 @@ static int handle_diff_files_args(struct rev_info *revs,
->  		else if (!strcmp(argv[1], "-n") ||
->  				!strcmp(argv[1], "--no-index")) {
->  			revs->max_count = -2;
-> -			revs->diffopt.exit_with_status = 1;
-> -			revs->diffopt.no_index = 1;
-> +			revs->diffopt.flags |= DIFF_OPT_EXIT_WITH_STATUS | DIFF_OPT_NO_INDEX;
->  		}
 
-Now this looks harder to read that everybody else uses
-DIFF_OPT_SET() for this, without DIFF_OPT_ prefix for the
-bitmask names.
+[...]
+
+>> +added a new calling site for that function at commit Y.  The
+>> +commits from Z leading to B all assume the old semantics of that
+>> +function and the callers and the callee are consistent with each
+>> +other.  There is no bug at B, either.
+>> +
+>> +You merge to create C.  There is no textual conflict with this
+>> +three way merge, and the result merges cleanly.  You bisect
+>> +this, because you found D is bad and you know Z was good.  Your
+>> +bisect will find that C (merge) is broken.  Understandably so,
+>> +as at C, the new calling site of the function added by the lower
+>> +branch is not converted to the new semantics, while all the
+>> +other calling sites that already existed at Z would have been
+>> +converted by the merge.  The new calling site has semantic
+>> +adjustment needed, but you do not know that yet.  You need to
+>
+> s/adjustment/&s/
+
+I'm not sure if plural is needed.
+
+	Steffen
+
+--
+Steffen Prohaska <prohaska@zib.de>  <http://www.zib.de/prohaska/>
+Zuse Institute Berlin, Takustra=DFe 7, D-14195 Berlin-Dahlem, Germany
++49 (30) 841 85-337, fax -107
