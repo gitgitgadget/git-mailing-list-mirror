@@ -1,108 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Drop deprecated commands from git(7) and update deprecation notices
-Date: Thu, 08 Nov 2007 13:01:09 -0800
-Message-ID: <7vzlxo1mga.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site>
-	<7vlk998u6r.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711080041120.4362@racer.site>
-	<20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se>
-	<20071108160114.GB20988@diku.dk>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Inconsistencies with git log
+Date: Thu, 8 Nov 2007 22:21:23 +0100
+Message-ID: <20071108212123.GA4899@steel.home>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com> <Pine.LNX.4.64.0711072242230.4362@racer.site> <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com> <Pine.LNX.4.64.0711072255420.4362@racer.site> <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com> <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com> <47325415.1070205@op5.se> <ee77f5c20711080516n4f207ba3pccc8efffa2a6ad4c@mail.gmail.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Andreas Ericsson <ae@op5.se>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Jon Smirl <jonsmirl@gmail.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Nov 08 22:01:37 2007
+	Git Mailing List <git@vger.kernel.org>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 22:22:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqEVM-0002ms-Fl
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:01:36 +0100
+	id 1IqEop-0001QW-W7
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:21:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760285AbXKHVBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 16:01:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759866AbXKHVBT
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:01:19 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:56809 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757858AbXKHVBS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 16:01:18 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 37BBA2FA;
-	Thu,  8 Nov 2007 16:01:38 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 7BAB4939A1;
-	Thu,  8 Nov 2007 16:01:33 -0500 (EST)
-In-Reply-To: <20071108160114.GB20988@diku.dk> (Jonas Fonseca's message of
-	"Thu, 8 Nov 2007 17:01:14 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1761114AbXKHVV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 16:21:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761013AbXKHVV1
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:21:27 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:49428 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759927AbXKHVV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 16:21:26 -0500
+Received: from tigra.home (Fc819.f.strato-dslnet.de [195.4.200.25])
+	by post.webmailer.de (klopstock mo5) (RZmta 14.0)
+	with ESMTP id Y047adjA8I8i9a ; Thu, 8 Nov 2007 22:21:23 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id A7E31277AE;
+	Thu,  8 Nov 2007 22:21:23 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 3E40C56D22; Thu,  8 Nov 2007 22:21:23 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <ee77f5c20711080516n4f207ba3pccc8efffa2a6ad4c@mail.gmail.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaEWowxOg==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64073>
 
-Thanks.
+David Symonds, Thu, Nov 08, 2007 14:16:59 +0100:
+> I never suggested path *limited*, only path *relative*. git-status
+> would still show all the same files, but their paths would be relative
+> to your current directory, so there'd be no confusion like you
+> mentioned. This is how Johannes' patch works.
 
-But lost-found is merely deprecated but not removed yet, so I
-think it should be kept in the list cmd-list.perl generates.
+Relative? Like this?
 
-
-We may want a mechanism to mark it deprecated in the list as
-well, though.  Perhaps ...
-
----
- Documentation/cmd-list.perl |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 8d21d42..0066064 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -3,7 +3,8 @@
- use File::Compare qw(compare);
- 
- sub format_one {
--	my ($out, $name) = @_;
-+	my ($out, $nameattr) = @_;
-+	my ($name, $attr) = @$nameattr;
- 	my ($state, $description);
- 	$state = 0;
- 	open I, '<', "$name.txt" or die "No such file $name.txt";
-@@ -26,8 +27,11 @@ sub format_one {
- 		die "No description found in $name.txt";
- 	}
- 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
--		print $out "gitlink:$name\[1\]::\n";
--		print $out "\t$text.\n\n";
-+		print $out "gitlink:$name\[1\]::\n\t";
-+		if ($attr) {
-+			print $out "($attr) ";
-+		}
-+		print $out "$text.\n\n";
- 	}
- 	else {
- 		die "Description does not match $name: $description";
-@@ -39,8 +43,8 @@ while (<DATA>) {
- 	next if /^#/;
- 
- 	chomp;
--	my ($name, $cat) = /^(\S+)\s+(.*)$/;
--	push @{$cmds{$cat}}, $name;
-+	my ($name, $cat, $attr) = /^(\S+)\s+(.*?)(?:\s+(.*))?$/;
-+	push @{$cmds{$cat}}, [$name, $attr];
- }
- 
- for my $cat (qw(ancillaryinterrogators
-@@ -126,7 +130,7 @@ git-instaweb                            ancillaryinterrogators
- gitk                                    mainporcelain
- git-local-fetch                         synchingrepositories
- git-log                                 mainporcelain
--git-lost-found                          ancillarymanipulators
-+git-lost-found                          ancillarymanipulators	deprecated
- git-ls-files                            plumbinginterrogators
- git-ls-remote                           plumbinginterrogators
- git-ls-tree                             plumbinginterrogators
+$ cd project/foo/bar
+$ git status
+...
+    M file1.c
+    M file2.c
+    M ../baz/file3.c
+    R ../bax/file4 => file4.c
