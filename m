@@ -1,63 +1,63 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] git-checkout: Handle relative paths containing "..".
-Date: Thu,  8 Nov 2007 13:33:12 +1100
-Message-ID: <1194489192-20021-1-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] git-branch --with=commit
+Date: Thu, 8 Nov 2007 03:02:03 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711080300100.4362@racer.site>
+References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711080008050.4362@racer.site> <7vk5ot7aqz.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 03:35:08 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 04:02:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpxEX-0001jM-CF
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 03:35:05 +0100
+	id 1Ipxf0-0007dx-Ic
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 04:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760403AbXKHCd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 21:33:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757760AbXKHCd5
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 21:33:57 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:26214 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760398AbXKHCdz (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 21:33:55 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4HAFgCMkd5LBGK/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.21,387,1188743400"; 
-   d="scan'208";a="223431170"
-Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 08 Nov 2007 13:03:14 +1030
-X-Mailer: git-send-email 1.5.3.5.1529.g69a1-dirty
+	id S1753372AbXKHDCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 22:02:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753308AbXKHDCK
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 22:02:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:41368 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753241AbXKHDCJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 22:02:09 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 03:02:06 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp016) with SMTP; 08 Nov 2007 04:02:06 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19dg50+Zbxds4DqodZzDbDYc4aEu8gH1s9qgqTbuL
+	wGNldgW4kzkVh8
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7vk5ot7aqz.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63926>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63927>
 
-Based on gitte's idea.
+Hi,
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- git-checkout.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+On Wed, 7 Nov 2007, Junio C Hamano wrote:
 
-diff --git a/git-checkout.sh b/git-checkout.sh
-index 8993920..b2c50aa 100755
---- a/git-checkout.sh
-+++ b/git-checkout.sh
-@@ -134,9 +134,10 @@ Did you intend to checkout '$@' which can not be resolved as commit?"
- 	fi
- 
- 	# Make sure the request is about existing paths.
--	git ls-files --error-unmatch -- "$@" >/dev/null || exit
--	git ls-files -- "$@" |
--	git checkout-index -f -u --stdin
-+	git ls-files --full-name --error-unmatch -- "$@" >/dev/null || exit
-+	git ls-files --full-name -- "$@" |
-+		(cd "$(git-rev-parse --show-cdup)" &&
-+		 git checkout-index -f -u --stdin)
- 
-         # Run a post-checkout hook -- the HEAD does not change so the
-         # current HEAD is passed in for both args
--- 
-1.5.3.5.1529.g69a1-dirty
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > would it not be better to call it --containing=commit?  Besides, I 
+> > think that the opt_parse_with_commit() function would be better named 
+> > opt_parse_commit() and be put into parse-options.[ch].
+> 
+> git-describe has "--contains" so that may be a better match.
+
+I just thought what I would understand when reading "git branch 
+--with=master".  I would have expected that it branches off of master.
+
+> I do not know the particular function is generic enough to be in 
+> parse-options.
+
+Maybe not, you're right.  And we can always come back later, and expose 
+the function if need be.
+
+Ciao,
+Dscho
