@@ -1,73 +1,79 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] git-branch --with=commit
-Date: Thu, 08 Nov 2007 10:17:52 +0100
-Message-ID: <4732D440.2020504@op5.se>
-References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>	<4732BC6F.7070005@viscovery.net> <7vejf140jd.fsf@gitster.siamese.dyndns.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: stgit: cleaning up after using git branch delete commands
+Date: Thu, 8 Nov 2007 09:18:35 +0000
+Message-ID: <b0943d9e0711080118q47441844hc25758f733e9af65@mail.gmail.com>
+References: <9e4733910711070606t2c558ac9ob4c729d5baca8fb9@mail.gmail.com>
+	 <tnxwssuyug1.fsf@pc1117.cambridge.arm.com>
+	 <9e4733910711070811y72f96a90i4db9acdf93aa765c@mail.gmail.com>
+	 <20071108055302.GA11230@diana.vm.bytemark.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 10:18:16 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Jon Smirl" <jonsmirl@gmail.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 10:19:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq3Wf-0007DQ-BU
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:18:13 +0100
+	id 1Iq3Xx-0007aP-UF
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:19:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846AbXKHJR6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 04:17:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753541AbXKHJR5
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:17:57 -0500
-Received: from mail.op5.se ([193.201.96.20]:53706 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751059AbXKHJR4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 04:17:56 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 44E0F1F08709;
-	Thu,  8 Nov 2007 10:17:22 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id cslA6aSWlUDr; Thu,  8 Nov 2007 10:17:21 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 3E8F11F08706;
-	Thu,  8 Nov 2007 10:17:21 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7vejf140jd.fsf@gitster.siamese.dyndns.org>
+	id S1757578AbXKHJSh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 04:18:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757285AbXKHJSh
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:18:37 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:41001 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757578AbXKHJSf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 04:18:35 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so93406rvb
+        for <git@vger.kernel.org>; Thu, 08 Nov 2007 01:18:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=DX95RKi0H+keY0z841mxUkj9NNIanI+1JabjD4hmnUM=;
+        b=rKpGN+1b5r5JUs4Hi4jZsHkBZ9Otxhr0p67UdqfVM03q4Ffi+L1bdoxMC7a/YmQTHRUngT9aRS9kqs8y80gWk+VZv/qYMlyvWwhcKgTTv5acOihSD/zjFMHVnoRQSqJiOct3QDcUFvvGhas+896ADh1rvKafqMXbQtPdvtp16Y0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=B9QnvKX5dFw8wv0fYr5QP5g3U9EDSSHYgTAKqUvPPbEjtRt71CFu4WlmxySDuAV57T/1Z5RpPjkAzJEcf0UUVrHrRQvHDSzs6TNJUWJr27JXk7TjbZhMaigtqsDVQabr9ghAD+F6JLBVdZZXMaMna38Xz3idhxgN+oCRMNqh5BM=
+Received: by 10.140.163.3 with SMTP id l3mr133018rve.1194513515166;
+        Thu, 08 Nov 2007 01:18:35 -0800 (PST)
+Received: by 10.140.170.16 with HTTP; Thu, 8 Nov 2007 01:18:35 -0800 (PST)
+In-Reply-To: <20071108055302.GA11230@diana.vm.bytemark.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63973>
 
-Junio C Hamano wrote:
-> Johannes Sixt <j.sixt@viscovery.net> writes:
-> 
->> Junio C Hamano schrieb:
-> 
->>> With this patch, I could do this to find out which topic
->>> branches already contain the faulty commit:
->>>
->>>     $ git branch --with=maint^ | grep /
->>>       xx/maint-fix-foo
->> It'd be helpful if you could construct the example in this commit
->> message such that you don't need the "grep /" here; otherwise, the
->> reader doesn't know which part of the effect is hidden by the grep.
-> 
-> Yeah, in the example sequence, I think only maint itself and
-> xx/maint-fix-foo are shown, so there is no need for grep.
+On 08/11/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> On 2007-11-07 11:11:42 -0500, Jon Smirl wrote:
+>
+> > how about a 'stg gc' command that gets rid of all the inaccessible
+> > clutter?
+>
+> "stg assimilate" already has the job of fixing up stuff after the use=
+r
+> has used git commands to move HEAD around. I think it would make sens=
+e
+> to teach it to do this too -- and then rename it "stg repair" or
+> something. That way, there's one command to fix every kind of "damage=
+"
+> that git can do to stgit.
 
-And "maint" could certainly be stripped by the code itself, since the
-user can reasonably be expected to know that plain maint will have
-everything maint^ has.
+"repair" sounds better than "gc" (which might also be confused with
+the "git gc" command).
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> Alternatively, "stg branch --create" and "stg init" and whoever else
+> is bothered by the clutter could simply remove it themselves. That
+> would be even more user-friendly, I guess.
+
+I did some fixes for branch --delete but, since I use StGIT almost
+exclusively, haven't thought that we need to relax the branch creation
+as well.
+
+--=20
+Catalin
