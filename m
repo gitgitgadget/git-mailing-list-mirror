@@ -1,44 +1,61 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: GIT_DIR/--git-dir question
-Date: Thu, 8 Nov 2007 20:06:07 +0100
-Message-ID: <007c01c8223a$6af2e550$5267a8c0@Jocke>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: git rebase --skip
+Date: Thu, 8 Nov 2007 20:16:01 +0100
+Organization: glandium.org
+Message-ID: <20071108191601.GA22353@glandium.org>
+References: <20071107222105.GA31666@glandium.org> <20071108032308.GA5638@sigill.intra.peff.net> <20071108102412.GA31187@atjola.homenet> <Pine.LNX.4.64.0711081332550.29952@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 20:06:56 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-15?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 20:18:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqCiB-0001Vl-8K
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 20:06:43 +0100
+	id 1IqCtB-0005uF-9q
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 20:18:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760893AbXKHTG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 14:06:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754674AbXKHTG1
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 14:06:27 -0500
-Received: from mail.transmode.se ([83.241.175.147]:59214 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1759203AbXKHTG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 14:06:26 -0500
-Received: from Jocke ([84.217.6.238]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Thu, 8 Nov 2007 20:06:23 +0100
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
-Thread-Index: AcgiOmpXgYH1i1WZTmCGoqrtwVdiIA==
-X-OriginalArrivalTime: 08 Nov 2007 19:06:23.0349 (UTC) FILETIME=[743A6250:01C8223A]
+	id S1761119AbXKHTRn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 14:17:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760966AbXKHTRn
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 14:17:43 -0500
+Received: from vawad.err.no ([85.19.200.177]:60092 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753971AbXKHTRm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 14:17:42 -0500
+Received: from aputeaux-153-1-36-161.w82-124.abo.wanadoo.fr ([82.124.128.161] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1IqCsa-00027q-LB; Thu, 08 Nov 2007 20:17:31 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1IqCrB-0005r7-Uo; Thu, 08 Nov 2007 20:16:01 +0100
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711081332550.29952@iabervon.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.16 (2007-06-11)
+X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64065>
 
-I just started to look at having multiple work trees, each working on a separate branch,
-using the same git repo.
+On Thu, Nov 08, 2007 at 01:43:05PM -0500, Daniel Barkalow wrote:
+> > git commit
+> > git rebase --skip
+> 
+> I guess that works, and nothing else presently does. But I don't think 
+> that's at all intuitive as the correct thing to do (plus it feels too easy 
+> to get into losing your commit message). Maybe we should have a "git 
+> rebase --amend", which does the obvious thing (acts like --continue, but 
+> lets you edit the message). It's not like you just did something totally 
+> different; the commit is still the replacement for D, it's just less the 
+> same.
 
-GIT_DIR/--git-dir seems to be what I am looking for but I wonder if there
-is a way to store the value of GIT_DIR/--git-dir in the working tree
-somehow?
+Maybe some commands such as commit should fail or at least emit warning
+when used during a rebase ?
 
-  Jocke
+Mike
