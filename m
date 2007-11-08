@@ -1,59 +1,88 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] git-branch --with=commit
-Date: Thu, 08 Nov 2007 08:36:15 +0100
-Message-ID: <4732BC6F.7070005@viscovery.net>
-References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>
+From: Luke Diamand <luke@vidanti.com>
+Subject: Re: Problem with https and git-pull
+Date: Thu, 08 Nov 2007 07:46:37 +0000
+Message-ID: <4732BEDD.3010703@vidanti.com>
+References: <4732BDE6.4020509@vidanti.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:36:33 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 08 08:48:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq1wG-0007d4-U3
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:36:33 +0100
+	id 1Iq27K-0001V4-V6
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:47:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316AbXKHHgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:36:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753943AbXKHHgS
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:36:18 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:52093 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753879AbXKHHgR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:36:17 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Iq1vX-0001Ps-II; Thu, 08 Nov 2007 08:35:47 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 509BF6B7; Thu,  8 Nov 2007 08:36:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1750919AbXKHHrn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 02:47:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751023AbXKHHrm
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:47:42 -0500
+Received: from c2bthomr10.btconnect.com ([213.123.20.128]:4541 "EHLO
+	c2bthomr10.btconnect.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919AbXKHHrm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 02:47:42 -0500
+X-Greylist: delayed 310 seconds by postgrey-1.27 at vger.kernel.org; Thu, 08 Nov 2007 02:47:41 EST
+Received: from mozart.ballroom.vidanti.com (host86-148-215-210.range86-148.btcentralplus.com [86.148.215.210])
+	by c2bthomr10.btconnect.com
+	with ESMTP id DNV91056;
+	Thu, 8 Nov 2007 07:46:37 GMT
+Received: from cpc2-cmbg6-0-0-cust655.cmbg.cable.ntl.com ([81.107.34.144] helo=[192.168.245.128])
+	by mozart.ballroom.vidanti.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.54)
+	id 1Iq261-0004cV-H0
+	for git@vger.kernel.org; Thu, 08 Nov 2007 07:46:37 +0000
+User-Agent: Icedove 1.5.0.12 (X11/20070606)
+In-Reply-To: <4732BDE6.4020509@vidanti.com>
+X-Junkmail-Status: score=10/50, host=c2bthomr10.btconnect.com
+X-Junkmail-SD-Raw: score=unknown,
+	refid=str=0001.0A0B0202.4732BDA3.017C,ss=1,fgs=0,
+	ip=81.107.34.144,
+	so=2006-12-09 10:45:40,
+	dmn=5.4.3/2007-10-18
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63947>
 
-Junio C Hamano schrieb:
->      $ git checkout -b xx/maint-fix-foo
->      $ git am -3 -s ,xx-maint-fix-foo.patch
+OK, I just read the FAQ.
 
-Is this comma a hidden feature?
-
-> With this patch, I could do this to find out which topic
-> branches already contain the faulty commit:
+Luke Diamand wrote:
+> I'm finding that git-pull using https does not work in the way I would 
+> expect.
 > 
->     $ git branch --with=maint^ | grep /
->       xx/maint-fix-foo
-
-It'd be helpful if you could construct the example in this commit message 
-such that you don't need the "grep /" here; otherwise, the reader doesn't 
-know which part of the effect is hidden by the grep.
-
--- Hannes
+> I created a bare repository, test.git, available by https://
+> 
+> I then cloned it:
+> 
+> % git-clone https://host/git/test.git
+> 
+> So far, so good.
+> 
+> Then I made a change in a different clone and pushed it.
+> 
+> When I next did git-pull it just said:
+> 
+> % git-pull
+> Fetching refs/heads/master from https://host/git/test.git using https
+> Already up-to-date.
+> 
+> But it *isn't* up-to-date! If I do the same exercise with git:// or 
+> ssh:// on the same repo then it pulls down my changes as expected.
+> 
+> Tried with:
+>   git version 1.5.3.4 (debian testing)
+>   git 1.5.3.5-dirty
+> 
+> curl is 7.16.4
+> 
+> The server access log shows the git-pull happening, and there are no 
+> errors reported by the server.
+> 
+> Is there something obvious I'm missing?
+> 
+> Thanks
+> Luke
+> 
+> 
