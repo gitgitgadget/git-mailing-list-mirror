@@ -1,84 +1,80 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] git-checkout: Add a test case for relative paths use.
-Date: Thu,  8 Nov 2007 14:40:52 +1100
-Message-ID: <11944932524072-git-send-email-dsymonds@gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	David Symonds <dsymonds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 04:43:02 2007
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: missing object on git-gc
+Date: Thu, 8 Nov 2007 06:03:40 +0100
+Message-ID: <200711080603.41004.chriscool@tuxfamily.org>
+References: <6C2C79E72C305246B504CBA17B5500C902535D9C@mtlexch01.mtl.com> <6C2C79E72C305246B504CBA17B5500C9029A3071@mtlexch01.mtl.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Yossi Leybovich" <sleybo@mellanox.co.il>
+X-From: git-owner@vger.kernel.org Thu Nov 08 05:57:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IpyII-0007Pw-5Z
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 04:43:02 +0100
+	id 1IpzS2-0003sl-EF
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 05:57:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756154AbXKHDmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 22:42:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754424AbXKHDmF
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 22:42:05 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:37312 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754123AbXKHDmE (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 22:42:04 -0500
-X-IronPort-AV: E=Sophos;i="4.21,387,1188743400"; 
-   d="scan'208";a="223469101"
-Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 08 Nov 2007 14:10:55 +1030
-X-Mailer: git-send-email 1.5.3.1
+	id S1752823AbXKHE4u convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 23:56:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbXKHE4u
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 23:56:50 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:55742 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751419AbXKHE4t convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 23:56:49 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id C21301AB2B6;
+	Thu,  8 Nov 2007 05:56:47 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 84A061AB2B2;
+	Thu,  8 Nov 2007 05:56:47 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <6C2C79E72C305246B504CBA17B5500C9029A3071@mtlexch01.mtl.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63931>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
- t/t2008-checkout-subdir.sh |   36 ++++++++++++++++++++++++++++++++++++
- 1 files changed, 36 insertions(+), 0 deletions(-)
- create mode 100755 t/t2008-checkout-subdir.sh
+There is an entry "How to fix a broken repository?" in the Git Faq on t=
+he=20
+wiki:
 
-diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
-new file mode 100755
-index 0000000..cb9c9eb
---- /dev/null
-+++ b/t/t2008-checkout-subdir.sh
-@@ -0,0 +1,36 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 David Symonds
-+
-+test_description='git checkout from subdirectories'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	echo base > file0 &&
-+	git add file0 &&
-+	mkdir dir1 &&
-+	echo hello > dir1/file1 &&
-+	git add dir1/file1 &&
-+	test_tick &&
-+	mkdir dir2 &&
-+	echo bonjour > dir2/file2 &&
-+	git add dir2/file2 &&
-+	git commit -m "populate tree"
-+
-+'
-+
-+test_expect_success 'remove and restore with relative path' '
-+
-+	cd dir1 &&
-+	rm ../file0 &&
-+	git checkout HEAD -- ../file0 && test -f ../file0 &&
-+	rm ../dir2/file2 &&
-+	git checkout HEAD -- ../dir2/file2 && test -f ../dir2/file2 &&
-+	rm ../file0 ./file1 &&
-+	git checkout HEAD -- .. && test -f ../file0 && test -f ./file1
-+
-+'
-+
-+test_done
--- 
-1.5.3.1
+http://git.or.cz/gitwiki/GitFaq#head-ac11406480d09e2df98588e800e41b7256=
+602074
+
+Maybe it can help you.
+
+The same topic has been discussed at least 3 times on the mailing list.
+By the way, if you find these discussions on gmane, please tell us so t=
+hat=20
+we can add the links to the FAQ entry. (You can also add them yourself.=
+)
+
+Thanks,
+Christian. =20
+
+Le jeudi 8 novembre 2007, Yossi Leybovich a =E9crit :
+> I am running the git-gc tool over my repository and get the following
+> error:=20
+>
+> > git-gc
+>
+> ...
+> deltifying 3308 objects...
+> error: corrupt loose object '<sha1>'
+> fatal: object <sha1> cannot be read .
+> error: failed to run repack
+> =A0
+> when sha1 is 40 bytes number
+> =A0
+> Does any one know how I can solve thus issue?
+> =A0
+> Thanks
+> YOssi
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
