@@ -1,82 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] git-sh-setup: fix parseopt `eval`.
-Date: Wed, 07 Nov 2007 23:09:29 -0800
-Message-ID: <7vr6j15i3a.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH v2] user-manual: add advanced topic "bisecting merges"
+Date: Thu, 08 Nov 2007 08:19:53 +0100
+Message-ID: <4732B899.6000908@viscovery.net>
+References: <20071104112302.GA2119@ins.uni-bonn.de> <11944722214046-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:09:55 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: gitster@pobox.com, Ralf.Wildenhues@gmx.de, tsuna@lrde.epita.fr,
+	git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 08:20:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq1WQ-0002Dc-SC
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:09:51 +0100
+	id 1Iq1gU-0004Ly-Kq
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:20:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041AbXKHHJf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:09:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754545AbXKHHJf
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:09:35 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:45901 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552AbXKHHJe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:09:34 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 28F2D2EF;
-	Thu,  8 Nov 2007 02:09:55 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A60E8916C2;
-	Thu,  8 Nov 2007 02:09:52 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754879AbXKHHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 02:19:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754403AbXKHHT6
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:19:58 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:51080 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751552AbXKHHT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 02:19:57 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Iq1fi-0000mC-2N; Thu, 08 Nov 2007 08:19:26 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id AD6F96B7; Thu,  8 Nov 2007 08:19:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <11944722214046-git-send-email-prohaska@zib.de>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63941>
 
-The 'automagic parseopt' support corrupted non option parameters
-that had IFS characters in them.  The worst case can be seen
-when it has a non option parameter like this:
+Steffen Prohaska schrieb:
+> +If you linearize the history by rebasing the lower branch on
+> +top of the upper, instead of merging, the bug becomes much easier to
+> +find and understand.  Your history would instead be:
 
-	$1=" * some string   blech"
+At this point I'm missing the words
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+	The solution is ...
 
- * I had "git pull -n . to/pic-branch" in Meta/PU which was
-   affected by this bug, expanding the " * " bullet before the
-   merge message that is passed from git-pull to git-merge.
+I.e.:
 
-   I am a bit upset because I _knew_ that the eval was wrong
-   when I first saw it, but somehow I forgot about it when I
-   made it land on 'next'.  My fault.
+The solution is to linearize the history by rebasing the lower branch on
+top of the upper, instead of merging. Now the bug becomes much easier to
+find and understand.  Your history would instead be:
 
- git-sh-setup.sh |   11 ++++++-----
- 1 files changed, 6 insertions(+), 5 deletions(-)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index e1cf885..f1c4839 100755
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -21,11 +21,12 @@ if test -n "$OPTIONS_SPEC"; then
- 		exec "$0" -h
- 	}
- 
--	parseopt_extra=
--	[ -n "$OPTIONS_KEEPDASHDASH" ] &&
--		parseopt_extra="$parseopt_extra --keep-dashdash"
--
--	eval `echo "$OPTIONS_SPEC" | git rev-parse --parseopt $parseopt_extra -- "$@" || echo exit $?`
-+	[ -n "$OPTIONS_KEEPDASHDASH" ] && parseopt_extra="--keep-dashdash"
-+	parsed=$(
-+		echo "$OPTIONS_SPEC" |
-+		git rev-parse --parseopt $parseopt_extra -- "$@"
-+	) &&
-+	eval "$parsed" || exit
- else
- 	usage() {
- 		die "Usage: $0 $USAGE"
--- 
-1.5.3.5.1617.g65b5b
+-- Hannes
