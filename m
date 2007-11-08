@@ -1,136 +1,68 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH v2] user-manual: add advanced topic "bisecting merges"
-Date: Thu, 8 Nov 2007 13:54:58 +0100
-Message-ID: <97F64156-A457-4BC1-84BE-108369FFD18C@zib.de>
-References: <20071104112302.GA2119@ins.uni-bonn.de> <11944722214046-git-send-email-prohaska@zib.de> <4732B899.6000908@viscovery.net> <6E62E205-0951-4CCB-A807-AC107E40ACE1@zib.de> <4732D2CC.1010008@viscovery.net> <4732D7F6.7040006@op5.se> <4732DC98.70304@viscovery.net>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "David Symonds" <dsymonds@gmail.com>
+Subject: Re: [PATCH] git-checkout: Handle relative paths containing "..".
+Date: Fri, 9 Nov 2007 00:10:20 +1100
+Message-ID: <ee77f5c20711080510i138729b9vb0b9ad485cb2db3@mail.gmail.com>
+References: <1194489192-20021-1-git-send-email-dsymonds@gmail.com>
+	 <7v4pfx3zs3.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Andreas Ericsson <ae@op5.se>, gitster@pobox.com,
-	Ralf.Wildenhues@gmx.de, tsuna@lrde.epita.fr, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Nov 08 13:55:07 2007
+Cc: git@vger.kernel.org,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+To: "Junio C Hamano" <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 14:10:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq6uY-0001qj-CX
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 13:55:06 +0100
+	id 1Iq79l-0006lf-Kn
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 14:10:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752912AbXKHMyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 07:54:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750886AbXKHMyr
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 07:54:47 -0500
-Received: from mailer.zib.de ([130.73.108.11]:57930 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750755AbXKHMyr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 07:54:47 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lA8Crf3t019431;
-	Thu, 8 Nov 2007 13:53:41 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lA8CrfIo029017
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 8 Nov 2007 13:53:41 +0100 (MET)
-In-Reply-To: <4732DC98.70304@viscovery.net>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754083AbXKHNKW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 08:10:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754105AbXKHNKW
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 08:10:22 -0500
+Received: from rv-out-0910.google.com ([209.85.198.189]:17106 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752999AbXKHNKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 08:10:21 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so137342rvb
+        for <git@vger.kernel.org>; Thu, 08 Nov 2007 05:10:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=AbOJDzW+b4bIvIYNQgchkLViyl5r4QkCIujBUqwfl5w=;
+        b=r4ntUUP5RUWwUUS/6JflZvJkx/I1BCDcgQarmV8Qb/iwSpSmRwXiU1HI78xYXX/l1wVcDQN2cUZDIjVjh9LLrHlTmnH6Ho9jadhoQ7mBjjXV5kEeKoB73TQGOlLQj2bSaYhK0FAsOzX7dax3g5RPzO8uwlNGp6b74yWHkpbZ1EY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=msGROHINe1Hs8OmcWma6xkBFgUggAlYC1C+hUBZCDNDuDATFp+//ZsV+7OsprzsFxvA1qsfEdPRhrRV11Thze3FyPHyoaKnslSR34zbZ3PIqcjOzfv9uDVEkYIzW8TvFz1DGPDHpqar/ziEFbMFnZcdMx9InlzVKFAtBeF8gDnU=
+Received: by 10.140.251.1 with SMTP id y1mr229982rvh.1194527421062;
+        Thu, 08 Nov 2007 05:10:21 -0800 (PST)
+Received: by 10.141.20.13 with HTTP; Thu, 8 Nov 2007 05:10:20 -0800 (PST)
+In-Reply-To: <7v4pfx3zs3.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64013>
 
-
-On Nov 8, 2007, at 10:53 AM, Johannes Sixt wrote:
-
-> Andreas Ericsson schrieb:
->> Johannes Sixt wrote:
->>> Steffen Prohaska schrieb:
->>>>
->>>> On Nov 8, 2007, at 8:19 AM, Johannes Sixt wrote:
->>>>
->>>>> Steffen Prohaska schrieb:
->>>>>> +If you linearize the history by rebasing the lower branch on
->>>>>> +top of the upper, instead of merging, the bug becomes much  
->>>>>> easier to
->>>>>> +find and understand.  Your history would instead be:
->>>>>
->>>>> At this point I'm missing the words
->>>>>
->>>>>     The solution is ...
->>>>>
->>>>> I.e.:
->>>>>
->>>>> The solution is to linearize the history by rebasing the lower  
->>>>> branch on
->>>>> top of the upper, instead of merging. Now the bug becomes much  
->>>>> easier to
->>>>> find and understand.  Your history would instead be:
->>>>
->>>> Hmm. It might be a solution if you did not publish history.
->>>
->>> This is about finding the commit that introduced a bug. Once you  
->>> found it, better: you know how to fix the bug, you are expected  
->>> to throw away the rebased branch, not to publish it! Maybe a note  
->>> along these lines could be appended:
->>>
->>> Now that you know what caused the error (and how to fix it),  
->>> throw away the rebased branch, and commit a fix on top of D.
->>>
->> Well, if rebasing becomes the standard for normal development,  
->> it's hardly
->> right to throw it away, is it? I like Steffen's suggestion better.
+On Nov 8, 2007 7:30 PM, Junio C Hamano <junio@pobox.com> wrote:
 >
-> There is a big misunderstanding. The text that the patch amends is  
-> about bisecting history that reveals that a merge commit breaks,  
-> which is not helpful, and then how to find where and what and why  
-> the breakage really was introduce.
->
-> And the answer to "how to find" is to rebase and bisect in the  
-> rebased history.
+> Have you tested this patch from the toplevel of any tree, where
+> "git-rev-parse --show-cdup" would yield an empty string?
 
-Do you use rebase like this in real life?
+No, I didn't. Arguably, "git-rev-parse --show-cdup" should always
+return a path to the top-level, which would make this kind of
+construction much simpler. Is there anything that relies upon it
+returning the empty string when you're in the top-level directory?
 
-I thought of the text as background information that might
-be helpful for users who want do decide wether to merge or
-to rebase. The problem described may be valuable information
-supporting a decision about a recommended workflow for a group
-of users.
+> I also wonder how this patch (with an obvious fix to address the
+> above point) would interact with GIT_DIR and/or GIT_WORK_TREE in
+> the environment.
 
-My personal conclusion was: I'll accept the danger of complex
-merges that might be hard to bisect. I now understand this
-risk, but I nonetheless prefer the simplicity of a merge
-based workflow. This avoids the danger that published history
-gets rewritten.
-
-But now I'm wondering if your suggestions of rebasing only for
-locating the evil commit is feasible in reality. You may need
-to solve a lot of merge conflicts if you rebase a larger part
-of the history. If you do not have them in your rerere cache
-this might be time consuming. ...
+No idea. I'm still learning my way around the git codebase, so I was
+hoping for some review and feedback from more experienced Gits.
 
 
-> My initial complaint was that in the flow of reading the  
-> instructions the pointer to "the solution" was missing. Rather, at  
-> the point where the reader is supposed to think "ah, yes, that's  
-> how to do it", there is the conditional statement "If you linearize  
-> history". My suggestion is to put a big emphasis on the solution by  
-> using the words "The solution is".
->
-> Now, the user can *always* rebase one of the branches on top of the  
-> other, even if both histories are already published. *But* if both  
-> were indeed published, then the rebased history must be thrown  
-> away, and the only thing you learnt from it was where and what and  
-> why the breakage really was introduced.
->
-> Of course we could include a few "ifs" and "unlesses" (about  
-> published histories), before suggesting to throw away rebased  
-> history. But once the task is accomplished (find the bogus commit),  
-> throwing away the rebased history (and continuing at commit D) is  
-> always correct, but keeping it (and continuing at D*) is not.
-
-... So, again, the question for me is if someone does use
-rebase in reality in the way that you suggests. Do you? Does
-someone else?
-
-	Steffen
+Dave.
