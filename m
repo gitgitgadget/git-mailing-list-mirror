@@ -1,48 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] send-pack: segfault fix on forced push
-Date: Thu, 8 Nov 2007 04:43:39 -0500
-Message-ID: <20071108094339.GA20766@sigill.intra.peff.net>
-References: <7vsl3h2i2j.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git add -i fails to heed user's exclude settings
+Date: Thu, 08 Nov 2007 10:46:00 +0100
+Message-ID: <4732DAD8.8000702@op5.se>
+References: <buowsstmapt.fsf@dhapc248.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 10:44:07 2007
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 10:46:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq3vc-0006NQ-7G
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:44:00 +0100
+	id 1Iq3xv-0007Ep-PG
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:46:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758445AbXKHJnm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 04:43:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758565AbXKHJnm
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:43:42 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3462 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758370AbXKHJnl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 04:43:41 -0500
-Received: (qmail 13271 invoked by uid 111); 8 Nov 2007 09:43:40 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 08 Nov 2007 04:43:40 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2007 04:43:39 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsl3h2i2j.fsf@gitster.siamese.dyndns.org>
+	id S1758622AbXKHJqH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 04:46:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758577AbXKHJqG
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:46:06 -0500
+Received: from mail.op5.se ([193.201.96.20]:37145 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758459AbXKHJqF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 04:46:05 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 304AC1F08709;
+	Thu,  8 Nov 2007 10:45:49 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id b733VdWVteoe; Thu,  8 Nov 2007 10:45:48 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 506DC1F08705;
+	Thu,  8 Nov 2007 10:45:48 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <buowsstmapt.fsf@dhapc248.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63982>
 
-On Thu, Nov 08, 2007 at 01:38:12AM -0800, Junio C Hamano wrote:
+Miles Bader wrote:
+> Inside git add -i, option 4 "add untracked", it doesn't seem to consider
+> the user's personal ignore patterns, which is _really_ annoying.
+> 
+> E.g., I have:
+> 
+>    $ git config core.excludesfile
+>    /home/miles/.gitignore
+> 
+>    $ cat /home/miles/.gitignore
+>    [+,#]*
+>    *~
+> 
+>    $ git status
+>    # On branch master
+>    nothing to commit (working directory clean)
+> 
+>    $ git add -i
+>               staged     unstaged path
+> 
+>    *** Commands ***
+>      1: status       2: update       3: revert       4: add untracked
+>      5: patch        6: diff         7: quit         8: help
+>    What now> 4
+>      1: ,l
+>      2: ,l.~1~
+>      3: AUTHORS.~1~
+>      4: Makefile.am.~1~
+>      5: config.h.in~
+>      6: configure.ac.~1~
+>      ...tons of other random backup files etc...
+> 
+> This makes it very hard to find files that actually need to be added!
+> 
 
-> When pushing to overwrite a ref that points at a commit we do
-> not even have, the recent "terse push" patch tried to get a
-> unique abbreviation for the non-existent (from our point of
-> view) object, which resulted in strcpy(buf, NULL) and
-> segfaulted.
+Which git version are you using?
 
-Good catch. The fix looks obviously correct.
-
--Peff
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
