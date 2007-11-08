@@ -1,53 +1,87 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: git add -i fails to heed user's exclude settings
-Date: Thu, 08 Nov 2007 19:17:47 +0900
-Message-ID: <buor6j1m46s.fsf@dhapc248.dev.necel.com>
-References: <buowsstmapt.fsf@dhapc248.dev.necel.com> <4732DAD8.8000702@op5.se>
-Reply-To: Miles Bader <miles@gnu.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: git rebase --skip
+Date: Thu, 8 Nov 2007 11:24:12 +0100
+Message-ID: <20071108102412.GA31187@atjola.homenet>
+References: <20071107222105.GA31666@glandium.org> <20071108032308.GA5638@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 08 11:18:25 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Mike Hommey <mh@glandium.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 08 11:24:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq4Sr-0007lS-UZ
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 11:18:22 +0100
+	id 1Iq4Yq-00015N-Aw
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 11:24:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757391AbXKHKSG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 05:18:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756655AbXKHKSF
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 05:18:05 -0500
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:44090 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750708AbXKHKSE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 05:18:04 -0500
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lA8AHmQj004738;
-	Thu, 8 Nov 2007 19:17:48 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 19:17:48 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 19:17:48 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 08D43545; Thu,  8 Nov 2007 19:17:47 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <4732DAD8.8000702@op5.se> (Andreas Ericsson's message of "Thu\, 08 Nov 2007 10\:46\:00 +0100")
+	id S1753946AbXKHKYR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 05:24:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753005AbXKHKYR
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 05:24:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38719 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753473AbXKHKYQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 05:24:16 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 10:24:14 -0000
+Received: from i577B8015.versanet.de (EHLO localhost) [87.123.128.21]
+  by mail.gmx.net (mp012) with SMTP; 08 Nov 2007 11:24:14 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/ghHQWhYDgmLqHqS2tMp4Yg40vHM1n2sZQxWAu+B
+	vlRtwEC99Q2wkx
+Content-Disposition: inline
+In-Reply-To: <20071108032308.GA5638@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63991>
 
-Andreas Ericsson <ae@op5.se> writes:
-> Which git version are you using?
+On 2007.11.07 22:23:10 -0500, Jeff King wrote:
+> On Wed, Nov 07, 2007 at 11:21:05PM +0100, Mike Hommey wrote:
+>=20
+> > I use git-rebase quite regularly, and I haven't used git-rebase --s=
+kip
+> > after a failed merge without first resetting the working tree. I wa=
+s
+> > wondering if it wouldn't make sense to automatically do the reset w=
+hen
+> > running git-rebase --skip.
+>=20
+> I have often been annoyed by this behavior, too, and I can't think of
+> any situation where you _wouldn't_ want the reset to happen.  But I
+> would be more comfortable hearing confirmation from others that they
+> can't think of such a situation.
 
-1.5.3.5
+Let's take this history:
 
-Thanks,
+      C---D---E topic
+     /
+    A---B master
 
--Miles
+You then do:
+git rebase master topic
 
--- 
-The secret to creativity is knowing how to hide your sources.
-  --Albert Einstein
+Now D causes conflicts, because B did a similar change, but not quite
+the same, maybe having a bug. So you want to keep parts of D, but it's
+no longer the same commit semantically and the original commit message
+would be bogus. So you resolve the conflicts and do:
+
+git commit
+git rebase --skip
+
+Because you replaced D with a new different commit, instead of really
+just rebasing it. With plain --continue, you'd have to go back and fix
+the commit message once the rebase is complete. And --continue after th=
+e
+commit is a no-go, too, because rebase will complain that there's
+nothing left to produce the rebased D commit.
+
+And now imagine that you forget to commit but instead just --skip.
+Ouch, all the work is lost, time to restart the rebase. With the curren=
+t
+behaviour, rebase won't just throw away your stuff.
+
+Bj=F6rn
