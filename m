@@ -1,57 +1,97 @@
-From: "Yossi Leybovich" <sleybo@mellanox.co.il>
-Subject: missing object on git-gc
-Date: Thu, 8 Nov 2007 02:59:02 +0200
-Message-ID: <6C2C79E72C305246B504CBA17B5500C9029A3071@mtlexch01.mtl.com>
-References: <6C2C79E72C305246B504CBA17B5500C902535D9C@mtlexch01.mtl.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] git status: show relative paths when run in a
+ subdirectory
+Date: Thu, 8 Nov 2007 01:00:16 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711080059400.4362@racer.site>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com> 
+ <Pine.LNX.4.64.0711072242230.4362@racer.site> 
+ <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com> 
+ <Pine.LNX.4.64.0711072255420.4362@racer.site> 
+ <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> 
+ <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com> 
+ <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com> 
+ <Pine.LNX.4.64.0711080011170.4362@racer.site>
+ <ee77f5c20711071653x6a1fe8f8peb8ac2714941d2bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=Windows-1252
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 01:59:27 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 02:00:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipvjy-0006OP-7a
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 01:59:26 +0100
+	id 1IpvlM-0006iw-HM
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 02:00:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752151AbXKHA7L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 7 Nov 2007 19:59:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751419AbXKHA7K
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 19:59:10 -0500
-Received: from mail.mellanox.co.il ([194.90.237.44]:43732 "EHLO mellanox.co.il"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751100AbXKHA7J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 7 Nov 2007 19:59:09 -0500
-Received: from Internal Mail-Server by MTLPINE1 (envelope-from sleybo@mellanox.co.il)
-	with SMTP; 8 Nov 2007 02:59:05 +0200
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <6C2C79E72C305246B504CBA17B5500C902535D9C@mtlexch01.mtl.com>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: missing object on git-gc
-Thread-Index: Acghddb+IbjZqwHASKKlNyglUjUavAAK7Yug
-x-pineapp-mail-mail-from: sleybo@mellanox.co.il
-x-pineapp-mail-rcpt-to: git@vger.kernel.org
+	id S1751023AbXKHBA0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 20:00:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752999AbXKHBA0
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 20:00:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50218 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752663AbXKHBAZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 20:00:25 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 01:00:23 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp020) with SMTP; 08 Nov 2007 02:00:23 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19r9Bo88mxrMLnqN7uhfZn8YLZ7TayiGyOWTshXFC
+	gRFGKJtelZgvEa
+X-X-Sender: gene099@racer.site
+In-Reply-To: <ee77f5c20711071653x6a1fe8f8peb8ac2714941d2bb@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63920>
 
-I am running the git-gc tool over my repository and get the following e=
-rror:
-=A0
-> git-gc
-=2E..
-deltifying 3308 objects...
-error: corrupt loose object '<sha1>'
-fatal: object <sha1> cannot be read .
-error: failed to run repack
-=A0
-when sha1 is 40 bytes number=20
-=A0
-Does any one know how I can solve thus issue?
-=A0
-Thanks
-YOssi =20
+Hi,
+
+On Thu, 8 Nov 2007, David Symonds wrote:
+
+> On Nov 8, 2007 11:12 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >
+> >         This looks a bit ugly because quote_crlf() is now also called
+> >         on the untracked files, which are not NUL terminated.
+> >
+> >         Maybe someone has an idea how to do this more elegantly.
+> >
+> >  builtin-runstatus.c |    1 +
+> >  wt-status.c         |   50 ++++++++++++++++++++++++++++++++++++++++++--------
+> >  wt-status.h         |    1 +
+> >  3 files changed, 44 insertions(+), 8 deletions(-)
+> 
+> Tested, and looks good.
+> 
+> Now that I play with it, though, it seems that a few other bits of git
+> need updating to handle relative paths okay:
+> 
+> $ cd gitweb/test
+> $ rm ../../wt-status.h
+>     [oops, what a silly thing to do -- better checkout the latest
+> revision of it]
+> $ git status
+> # On branch next
+> # Changed but not updated:
+> #   (use "git add/rm <file>..." to update what will be committed)
+> #
+> #       deleted:    ../../wt-status.h
+> no changes added to commit (use "git add" and/or "git commit -a")
+> $ git checkout HEAD ../../wt-status.h
+> fatal: git-ls-files: cannot generate relative filenames containing '..'
+>     [grr....]
+> $ cd ../..
+> $ git checkout HEAD .
+>     [that works]
+
+Well, now that I did all the hard work with git-status, I leave this easy 
+exercise for you ;-)
+
+Ciao,
+Dscho
