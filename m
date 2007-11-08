@@ -1,70 +1,70 @@
-From: Junio C Hamano <junio@pobox.com>
-Subject: Re: [PATCH 2/2] git status: show relative paths when run in a subdirectory
-Date: Thu, 08 Nov 2007 00:26:16 -0800
-Message-ID: <7v8x593zyv.fsf@gitster.siamese.dyndns.org>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
-	<Pine.LNX.4.64.0711072242230.4362@racer.site>
-	<9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
-	<Pine.LNX.4.64.0711072255420.4362@racer.site>
-	<9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
-	<243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com>
-	<ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com>
-	<Pine.LNX.4.64.0711080011170.4362@racer.site>
+From: Peter Baumann <waste.manager@gmx.de>
+Subject: Re: Inconsistencies with git log
+Date: Thu, 8 Nov 2007 09:29:14 +0100
+Message-ID: <20071108082914.GA28800@xp.machine.xx>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com> <Pine.LNX.4.64.0711072242230.4362@racer.site> <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com> <Pine.LNX.4.64.0711072255420.4362@racer.site> <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com> <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com> <47325415.1070205@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: David Symonds <dsymonds@gmail.com>,
 	Brian Gernhardt <benji@silverinsanity.com>,
 	Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 08 09:26:50 2007
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Nov 08 09:29:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq2io-000208-Op
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 09:26:43 +0100
+	id 1Iq2lZ-0002gr-07
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 09:29:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753539AbXKHI00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 03:26:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbXKHI00
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 03:26:26 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:39878 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbXKHI0Z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 03:26:25 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id E0AB22EF;
-	Thu,  8 Nov 2007 03:26:46 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4553592643;
-	Thu,  8 Nov 2007 03:26:40 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711080011170.4362@racer.site> (Johannes
-	Schindelin's message of "Thu, 8 Nov 2007 00:12:22 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754330AbXKHI3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 03:29:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752540AbXKHI3R
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 03:29:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:51899 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751295AbXKHI3Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 03:29:16 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 08:29:14 -0000
+Received: from mason.hofmann.stw.uni-erlangen.de (EHLO localhost) [131.188.24.36]
+  by mail.gmx.net (mp047) with SMTP; 08 Nov 2007 09:29:14 +0100
+X-Authenticated: #1252284
+X-Provags-ID: V01U2FsdGVkX1/e3+lGAULeW8QUknutgrTKCFfxDOkU1dZte6SG8w
+	VLOdV8Yk2XuUKd
+Content-Disposition: inline
+In-Reply-To: <47325415.1070205@op5.se>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63964>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Thu, Nov 08, 2007 at 01:11:01AM +0100, Andreas Ericsson wrote:
+> David Symonds wrote:
+>> On Nov 8, 2007 10:19 AM, Brian Gernhardt <benji@silverinsanity.com> wrote:
+>>> However, Dave's suggestion of altering git-status output to be
+>>> relative to (but not limited by) CWD has merit.  Too bad I don't have
+>>> time to work on it right now.
+>>
+>> I am happy to hack on this if there's not widespread revolt against the concept.
+>>
+>
+> I'd definitely like that feature, but I wonder how many people will run
+> "git commit -a" in a subdir after seeing only what they want to see in the
+> output, and then accidentally committing junk somewhere else in the repo.
+>
+> So perhaps git-commit -a should also be path-delimited, but where would we
+> end up then? It might be better to just let git-status accept a path
+> delimiter and let the path delimiter default to current work-dir.
+>
 
-> -static const char *quote_crlf(const char *in, char *buf, size_t sz)
-> +static const char *quote_crlf(const char *in, int len, char *buf, size_t sz,
-> +	const char *prefix)
->  {
+I agree that 'git status' should show the *whole* tree and if it will work
+in subdirectories with 'git status .' or 'git status Documentation', it
+would be a nice UI improvement.
 
-This is not quote_*crlf* anymore.
+But please don't make it always show only the current subdir.
 
-> @@ -118,8 +150,8 @@ static void wt_status_print_filepair(struct wt_status *s,
->  	const char *one, *two;
->  	char onebuf[PATH_MAX], twobuf[PATH_MAX];
->  
-> -	one = quote_crlf(p->one->path, onebuf, sizeof(onebuf));
-> -	two = quote_crlf(p->two->path, twobuf, sizeof(twobuf));
-> +	one = quote_crlf(p->one->path, -1, onebuf, sizeof(onebuf), s->prefix);
-> +	two = quote_crlf(p->two->path, -1, twobuf, sizeof(twobuf), s->prefix);
-
-I wonder if it makes more sense to use strbuf here...
+-Peter
