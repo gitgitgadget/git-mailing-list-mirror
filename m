@@ -1,57 +1,98 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [REPLACEMENT PATCH] git-checkout: Add a test case for relative paths use.
-Date: Fri, 9 Nov 2007 00:12:14 +1100
-Message-ID: <ee77f5c20711080512h2304d2b1y5d3040e2be375197@mail.gmail.com>
-References: <11945006082887-git-send-email-dsymonds@gmail.com>
-	 <4732D5A9.5040504@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 08 14:12:39 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [NEW REPLACEMENT PATCH] git-checkout: Add a test case for relative paths use.
+Date: Fri,  9 Nov 2007 00:13:52 +1100
+Message-ID: <11945276321726-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>,
+	David Symonds <dsymonds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 14:14:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq7BS-0007HA-An
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 14:12:34 +0100
+	id 1Iq7D3-0007mt-Cv
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 14:14:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754228AbXKHNMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 08:12:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754151AbXKHNMQ
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 08:12:16 -0500
-Received: from rv-out-0910.google.com ([209.85.198.185]:19454 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754110AbXKHNMP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 08:12:15 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so137686rvb
-        for <git@vger.kernel.org>; Thu, 08 Nov 2007 05:12:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=OSgxd+BL3X6OJPwWEy82GiO15zQQQJAn3MlDNuIgYNs=;
-        b=CRzV9NoA3kllmcSUp6opppaEY4n/pr3fwxsnnA7aomLNn/zz73nVyPHDN9ymj6uEwjEUhY5wKInPH5wnlrtMfLQYagHspwlN8Rs0YD4Rk3Gy6FG3AVyelx7q0W0YmdNEqzO8SRgV9uGoL5JF4s5K75fYNuiMRVTniwgMi+hUy2I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=pidcbNzcltTbxDMnOFTmwDg6jhZDiNoQr6vMW1ZqPQFMEPyPdmrPLYo6EEHxd3uNJpTSVzpFEpPumrQtwpi9WHhDDBgEbDoKUv1NbigOvaqtIriPID1VmeUPcI1tuTRnsDvq+f+ditqofzKHxm5+0KhXX31d5tnZr18TnOAhQnU=
-Received: by 10.141.79.12 with SMTP id g12mr231331rvl.1194527534886;
-        Thu, 08 Nov 2007 05:12:14 -0800 (PST)
-Received: by 10.141.20.13 with HTTP; Thu, 8 Nov 2007 05:12:14 -0800 (PST)
-In-Reply-To: <4732D5A9.5040504@op5.se>
-Content-Disposition: inline
+	id S1754527AbXKHNN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 08:13:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754456AbXKHNN5
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 08:13:57 -0500
+Received: from ipmail03.adl2.internode.on.net ([203.16.214.135]:24007 "EHLO
+	ipmail03.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754234AbXKHNN5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 08:13:57 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAA+YMkd5LBGKWmdsb2JhbACBW40aASA
+X-IronPort-AV: E=Sophos;i="4.21,389,1188743400"; 
+   d="scan'208";a="183620694"
+Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
+  by ipmail03.adl2.internode.on.net with ESMTP; 08 Nov 2007 23:43:54 +1030
+X-Mailer: git-send-email 1.5.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64015>
 
-On Nov 8, 2007 8:23 PM, Andreas Ericsson <ae@op5.se> wrote:
->
-> Single-dashes on all of these?
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+ t/t2008-checkout-subdir.sh |   47 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 47 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2008-checkout-subdir.sh
 
-Damn. I wonder how it passed? I'll resend shortly.
-
-
-Dave.
+diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
+new file mode 100755
+index 0000000..45b9e13
+--- /dev/null
++++ b/t/t2008-checkout-subdir.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 David Symonds
++
++test_description='git checkout from subdirectories'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	echo base > file0 &&
++	git add file0 &&
++	mkdir dir1 &&
++	echo hello > dir1/file1 &&
++	git add dir1/file1 &&
++	test_tick &&
++	mkdir dir2 &&
++	echo bonjour > dir2/file2 &&
++	git add dir2/file2 &&
++	git commit -m "populate tree"
++
++'
++
++test_expect_success 'remove and restore with relative path' '
++
++	cd dir1 &&
++	rm ../file0 &&
++	git checkout HEAD -- ../file0 && test -f ../file0 &&
++	rm ../dir2/file2 &&
++	git checkout HEAD -- ../dir2/file2 && test -f ../dir2/file2 &&
++	rm ../file0 ./file1 &&
++	git checkout HEAD -- .. && test -f ../file0 && test -f ./file1 &&
++	rm file1 &&
++	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
++
++'
++
++test_expect_failure 'checkout with relative path outside tree should fail (1)' \
++	'git checkout HEAD -- ../file0'
++
++test_expect_failure 'checkout with relative path outside tree should fail (2)' \
++	'cd dir1 && git checkout HEAD -- ./file0'
++
++test_expect_failure 'checkout with relative path outside tree should fail (2)' \
++	'cd dir1 && git checkout HEAD -- ../../file0'
++
++test_done
+-- 
+1.5.3.1
