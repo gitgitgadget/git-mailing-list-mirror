@@ -1,78 +1,116 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH 4/3] git-fetch: test avoiding unnecessary copying from alternates
-Date: Thu, 8 Nov 2007 03:34:40 -0500
-Message-ID: <20071108083440.GK14735@spearce.org>
-References: <20071108082213.GA17054@spearce.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH MISC 1/1] Make gcc warning about empty if body go away.
+Date: Thu, 08 Nov 2007 09:41:55 +0100
+Message-ID: <4732CBD3.503@op5.se>
+References: <1194430832-6224-1-git-send-email-madcoder@debian.org>	<1194430832-6224-2-git-send-email-madcoder@debian.org> <7vode57awg.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 09:35:08 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 09:42:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq2qq-00045h-E6
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 09:35:00 +0100
+	id 1Iq2xr-0005vy-Nt
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 09:42:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755065AbXKHIep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 03:34:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753026AbXKHIep
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 03:34:45 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:33546 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752899AbXKHIeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 03:34:44 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iq2qW-00016m-P3; Thu, 08 Nov 2007 03:34:40 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E482820FBAE; Thu,  8 Nov 2007 03:34:40 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20071108082213.GA17054@spearce.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1752494AbXKHImA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 03:42:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752495AbXKHImA
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 03:42:00 -0500
+Received: from mail.op5.se ([193.201.96.20]:36450 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751059AbXKHIl7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 03:41:59 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id CDA531F08708;
+	Thu,  8 Nov 2007 09:41:46 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id i5MbThtSJsf2; Thu,  8 Nov 2007 09:41:46 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id A1F1E1F08707;
+	Thu,  8 Nov 2007 09:41:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <7vode57awg.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63967>
 
-"Shawn O. Pearce" <spearce@spearce.org> wrote:
-> This test verifies my prior "avoid local fetching from alternate"
-> patch is functional and doesn't regress in the future during any
-> additional improvements made to git.
-...
-> +test_expect_success 'quickfetch should not copy from alternate' '
-> +
-> +	(
-> +		mkdir quickclone &&
-> +		cd quickclone &&
-> +		git init-db &&
-> +		(cd ../.git/objects && pwd) >.git/objects/info/alternates &&
-> +		git remote add origin .. &&
-> +		git fetch -k -k
+Junio C Hamano wrote:
+> Pierre Habouzit <madcoder@debian.org> writes:
+> 
+>> diff --git a/builtin-diff.c b/builtin-diff.c
+>> index f77352b..80392a8 100644
+>> --- a/builtin-diff.c
+>> +++ b/builtin-diff.c
+>> @@ -204,7 +204,7 @@ static void refresh_index_quietly(void)
+>>  		if (write_cache(fd, active_cache, active_nr) ||
+>>  		    close(fd) ||
+>>  		    commit_locked_index(lock_file))
+>> -			; /*
+>> +			(void)0; /*
+>>  			   * silently ignore it -- we haven't mucked
+>>  			   * with the real index.
+>>  			   */
+> 
+> Wouldn't this be much easier to read, by the way?
+> 
+> The point is that if we touched the active_cache, we try to
+> write it out and make it the index file for later users to use
+> by calling "commit", but we do not really care about the failure
+> from this sequence because it is done purely as an optimization.
+> 
+> The original code called three functions primarily for their
+> side effects, which is admittedly a bad style.
+> 
+>  builtin-diff.c |   12 +++---------
+>  1 files changed, 3 insertions(+), 9 deletions(-)
+> 
+> diff --git a/builtin-diff.c b/builtin-diff.c
+> index f77352b..906c924 100644
+> --- a/builtin-diff.c
+> +++ b/builtin-diff.c
+> @@ -200,15 +200,9 @@ static void refresh_index_quietly(void)
+>  	discard_cache();
+>  	read_cache();
+>  	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
+> -	if (active_cache_changed) {
+> -		if (write_cache(fd, active_cache, active_nr) ||
+> -		    close(fd) ||
+> -		    commit_locked_index(lock_file))
+> -			; /*
+> -			   * silently ignore it -- we haven't mucked
+> -			   * with the real index.
+> -			   */
+> -	}
+> +	if (active_cache_changed &&
+> +	    !write_cache(fd, active_cache, active_nr) && !close(fd))
+> +		commit_locked_index(lock_file);
+>  	rollback_lock_file(lock_file);
+>  }
+>  
 
-Hmmph.  On second thought I think this is a little sketchy for
-a test.  Versions without my quickfetch patch fail this test and
-versions with it pass.  But it depends on the implementation of
-`-k -k` to always call index-pack over unpack-objects.
+Ack, obviously, as it no longer requires a comment to explain it, although
+I'd prefer an empty line after commit_locked_index(lock_file); so as to not
+confuse the rollback_lock_file() statement as being part of the conditional
+path.
 
-I'm using -k -k here to ensure we keep the pack fetched as we're only
-fetching 6 objects and they are already reachable in the quickclone
-repository thanks to the alternate ODB.  If we use unpack-objects
-during this fetch we will still pass this test because the objects
-won't be unpacked if they are already reachable locally.
-
-Of course this test is for a performance optimization.  For 6
-tiny objects it really doesn't matter if we copy them or not, or
-if we copy them over a pipe only to discard them because they are
-already reachable.  It does however matter when you are talking
-about nearly 300MB worth of objects.  :-\
+First I thought the rollback_lock_file() was the *only* statement to the
+condition, and everyone who uses 4 for tabsize) will have double trouble
+since commit_locked_index(lock_file) aligns with the second line of the
+condition.
 
 -- 
-Shawn.
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
