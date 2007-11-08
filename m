@@ -1,219 +1,139 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH 1/2] mirror pushing
-Date: Thu, 8 Nov 2007 12:12:20 -0000
-Message-ID: <1f94d22f57fd8168c5b5ff555888abdd@pinky>
+Subject: [PATCH 2/2] git-push: plumb in --mirror mode
+Date: Thu, 8 Nov 2007 12:12:36 -0000
+Message-ID: <8d394f51c869abc6c910dd0ffc94b4ab@pinky>
 References: <20071108121136.GG9736@shadowen.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 13:12:30 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 13:12:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq6FJ-0006ru-Ns
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 13:12:30 +0100
+	id 1Iq6Fc-0006wD-53
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 13:12:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758361AbXKHMMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 07:12:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758074AbXKHMMM
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 07:12:12 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:1517 "EHLO
+	id S1758374AbXKHMM2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 07:12:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758399AbXKHMM2
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 07:12:28 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:1519 "EHLO
 	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757920AbXKHMML (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 07:12:11 -0500
+	with ESMTP id S1758364AbXKHMM1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 07:12:27 -0500
 Received: from localhost ([127.0.0.1] helo=pinky)
 	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1Iq6F0-0002yX-Ci
-	for git@vger.kernel.org; Thu, 08 Nov 2007 12:12:10 +0000
+	id 1Iq6FG-0002yj-6g
+	for git@vger.kernel.org; Thu, 08 Nov 2007 12:12:26 +0000
 InReply-To: <20071108121136.GG9736@shadowen.org>
 Received-SPF: pass
 X-SPF-Guess: pass
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64003>
 
 
-Existing "git push --all" is almost perfect for backing up to
-another repository, except that "--all" only means "all
-branches" in modern git, and it does not delete old branches and
-tags that exist at the back-up repository that you have removed
-from your local repository.
+Plumb in the --mirror mode for git-push.
 
-This teaches "git-send-pack" a new "--mirror" option.  The
-difference from the "--all" option are that (1) it sends all
-refs, not just branches, and (2) it deletes old refs you no
-longer have on the local side from the remote side.
-
-[apw@shadowen.org: rebase to next post arguments update]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Andy Whitcroft <apw@shadowen.org>
 ---
- builtin-send-pack.c |   40 ++++++++++++++++++++++++++++------------
- remote.c            |   15 ++++++++++-----
- send-pack.h         |    1 +
- 3 files changed, 39 insertions(+), 17 deletions(-)
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 5a0f5c6..d5ead97 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -8,7 +8,7 @@
- #include "send-pack.h"
+ builtin-push.c |   14 ++++++++++++--
+ transport.c    |    7 +++++++
+ transport.h    |    1 +
+ 3 files changed, 20 insertions(+), 2 deletions(-)
+diff --git a/builtin-push.c b/builtin-push.c
+index 2c56195..d49157c 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -10,7 +10,7 @@
+ #include "parse-options.h"
  
- static const char send_pack_usage[] =
--"git-send-pack [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-+"git-send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
- "  --all and explicit <ref> specification are mutually exclusive.";
+ static const char * const push_usage[] = {
+-	"git-push [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
++	"git-push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
+ 	NULL,
+ };
  
- static struct send_pack_args args = {
-@@ -242,7 +242,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	if (!remote_tail)
- 		remote_tail = &remote_refs;
- 	if (match_refs(local_refs, remote_refs, &remote_tail,
--		       nr_refspec, refspec, args.send_all))
-+		       nr_refspec, refspec, args.send_all | (args.send_mirror << 1)))
- 		return -1;
- 
- 	if (!remote_refs) {
-@@ -259,20 +259,28 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 		char old_hex[60], *new_hex;
- 		int will_delete_ref;
- 		const char *pretty_ref;
--		const char *pretty_peer;
-+		const char *pretty_peer = NULL; /* only used when not deleting */
-+		const unsigned char *new_sha1;
- 
--		if (!ref->peer_ref)
--			continue;
-+		if (!ref->peer_ref) {
-+			if (!args.send_mirror)
-+				continue;
-+			new_sha1 = null_sha1;
-+		}
-+		else
-+			new_sha1 = ref->peer_ref->new_sha1;
- 
- 		if (!shown_dest) {
- 			fprintf(stderr, "To %s\n", dest);
- 			shown_dest = 1;
- 		}
- 
-+		will_delete_ref = is_null_sha1(new_sha1);
-+
- 		pretty_ref = prettify_ref(ref->name);
--		pretty_peer = prettify_ref(ref->peer_ref->name);
-+		if (!will_delete_ref)
-+			pretty_peer = prettify_ref(ref->peer_ref->name);
- 
--		will_delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
- 		if (will_delete_ref && !allow_deleting_refs) {
- 			fprintf(stderr, " ! %-*s %s (remote does not support deleting refs)\n",
- 					SUMMARY_WIDTH, "[rejected]", pretty_ref);
-@@ -280,7 +288,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 			continue;
- 		}
- 		if (!will_delete_ref &&
--		    !hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
-+		    !hashcmp(ref->old_sha1, new_sha1)) {
- 			if (args.verbose)
- 				fprintf(stderr, " = %-*s %s -> %s\n",
- 					SUMMARY_WIDTH, "[up to date]",
-@@ -312,8 +320,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 		    !is_null_sha1(ref->old_sha1) &&
- 		    !ref->force) {
- 			if (!has_sha1_file(ref->old_sha1) ||
--			    !ref_newer(ref->peer_ref->new_sha1,
--				       ref->old_sha1)) {
-+			    !ref_newer(new_sha1, ref->old_sha1)) {
- 				/* We do not have the remote ref, or
- 				 * we know that the remote ref is not
- 				 * an ancestor of what we are trying to
-@@ -328,7 +335,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 				continue;
- 			}
- 		}
--		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
-+		hashcpy(ref->new_sha1, new_sha1);
- 		if (!will_delete_ref)
- 			new_refs++;
- 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
-@@ -459,6 +466,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.dry_run = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--mirror")) {
-+				args.send_mirror = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--force")) {
- 				args.force_update = 1;
- 				continue;
-@@ -483,7 +494,12 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!dest)
- 		usage(send_pack_usage);
--	if (heads && args.send_all)
-+	/*
-+	 * --all and --mirror are incompatible; neither makes sense
-+	 * with any refspecs.
-+	 */
-+	if ((heads && (args.send_all || args.send_mirror)) ||
-+					(args.send_all && args.send_mirror))
- 		usage(send_pack_usage);
- 
- 	if (remote_name) {
-diff --git a/remote.c b/remote.c
-index 59defdb..45dd59b 100644
---- a/remote.c
-+++ b/remote.c
-@@ -722,10 +722,12 @@ static const struct refspec *check_pattern_match(const struct refspec *rs,
-  * without thinking.
-  */
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
--	       int nr_refspec, const char **refspec, int all)
-+	       int nr_refspec, const char **refspec, int flags)
+@@ -91,6 +91,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
  {
- 	struct refspec *rs =
- 		parse_ref_spec(nr_refspec, (const char **) refspec);
-+	int send_all = flags & 01;
-+	int send_mirror = flags & 02;
+ 	int flags = 0;
+ 	int all = 0;
++	int mirror = 0;
+ 	int dry_run = 0;
+ 	int force = 0;
+ 	int tags = 0;
+@@ -100,6 +101,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&verbose),
+ 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+ 		OPT_BOOLEAN( 0 , "all", &all, "push all refs"),
++		OPT_BOOLEAN( 0 , "mirror", &mirror, "mirror all refs"),
+ 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
+ 		OPT_BOOLEAN( 0 , "dry-run", &dry_run, "dry run"),
+ 		OPT_BOOLEAN('f', "force", &force, "force updates"),
+@@ -119,13 +121,21 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		add_refspec("refs/tags/*");
+ 	if (all)
+ 		flags |= TRANSPORT_PUSH_ALL;
++	if (mirror)
++		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
  
- 	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec))
- 		return -1;
-@@ -742,7 +744,7 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 			if (!pat)
- 				continue;
- 		}
--		else if (prefixcmp(src->name, "refs/heads/"))
-+		else if (!send_mirror && prefixcmp(src->name, "refs/heads/"))
- 			/*
- 			 * "matching refs"; traditionally we pushed everything
- 			 * including refs outside refs/heads/ hierarchy, but
-@@ -763,10 +765,13 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 		if (dst_peer && dst_peer->peer_ref)
- 			/* We're already sending something to this ref. */
- 			goto free_name;
--		if (!dst_peer && !nr_refspec && !all)
--			/* Remote doesn't have it, and we have no
+ 	if (argc > 0) {
+ 		repo = argv[0];
+ 		set_refspecs(argv + 1, argc - 1);
+ 	}
+-	if ((flags & TRANSPORT_PUSH_ALL) && refspec)
++	if ((flags & (TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) && refspec)
+ 		usage_with_options(push_usage, options);
+ 
++	if ((flags & (TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) ==
++				(TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) {
++		error("--all and --mirror are incompatible");
++		usage_with_options(push_usage, options);
++	}
 +
-+		if (!dst_peer && !nr_refspec && !(send_all || send_mirror))
-+			/*
-+			 * Remote doesn't have it, and we have no
- 			 * explicit pattern, and we don't have
--			 * --all. */
-+			 * --all nor --mirror.
-+			 */
- 			goto free_name;
- 		if (!dst_peer) {
- 			/* Create a new one and link it */
-diff --git a/send-pack.h b/send-pack.h
-index 7a24f71..8ff1dc3 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -5,6 +5,7 @@ struct send_pack_args {
- 	const char *receivepack;
- 	unsigned verbose:1,
- 		send_all:1,
-+		send_mirror:1,
- 		force_update:1,
- 		use_thin_pack:1,
- 		dry_run:1;
+ 	return do_push(repo, flags);
+ }
+diff --git a/transport.c b/transport.c
+index f4577b7..08e62b1 100644
+--- a/transport.c
++++ b/transport.c
+@@ -284,6 +284,9 @@ static int rsync_transport_push(struct transport *transport,
+ 	struct child_process rsync;
+ 	const char *args[10];
+ 
++	if (flags & TRANSPORT_PUSH_MIRROR)
++		return error("rsync transport does not support mirror mode");
++
+ 	/* first push the objects */
+ 
+ 	strbuf_addstr(&buf, transport->url);
+@@ -386,6 +389,9 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
+ 	int argc;
+ 	int err;
+ 
++	if (flags & TRANSPORT_PUSH_MIRROR)
++		return error("http transport does not support mirror mode");
++
+ 	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
+ 	argv[0] = "http-push";
+ 	argc = 1;
+@@ -653,6 +659,7 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
+ 
+ 	args.receivepack = data->receivepack;
+ 	args.send_all = !!(flags & TRANSPORT_PUSH_ALL);
++	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
+ 	args.force_update = !!(flags & TRANSPORT_PUSH_FORCE);
+ 	args.use_thin_pack = data->thin;
+ 	args.verbose = transport->verbose;
+diff --git a/transport.h b/transport.h
+index d27f562..7f337d2 100644
+--- a/transport.h
++++ b/transport.h
+@@ -30,6 +30,7 @@ struct transport {
+ #define TRANSPORT_PUSH_ALL 1
+ #define TRANSPORT_PUSH_FORCE 2
+ #define TRANSPORT_PUSH_DRY_RUN 4
++#define TRANSPORT_PUSH_MIRROR 8
+ 
+ /* Returns a transport suitable for the url */
+ struct transport *transport_get(struct remote *, const char *);
