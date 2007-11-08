@@ -1,31 +1,31 @@
 From: Andy Whitcroft <apw@shadowen.org>
 Subject: Re: git push mirror mode
-Date: Thu, 8 Nov 2007 12:44:35 +0000
-Message-ID: <20071108124435.GH9736@shadowen.org>
+Date: Thu, 8 Nov 2007 12:49:16 +0000
+Message-ID: <20071108124916.GI9736@shadowen.org>
 References: <20071108121136.GG9736@shadowen.org> <Pine.LNX.4.64.0711081218090.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 08 13:44:52 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 13:49:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq6kZ-0007C0-Pr
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 13:44:48 +0100
+	id 1Iq6p4-000082-Il
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 13:49:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753241AbXKHMoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 07:44:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753376AbXKHMoa
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 07:44:30 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4156 "EHLO
+	id S1754036AbXKHMtK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 07:49:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754045AbXKHMtJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 07:49:09 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:2492 "EHLO
 	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752999AbXKHMo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 07:44:29 -0500
+	with ESMTP id S1754036AbXKHMtI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 07:49:08 -0500
 Received: from localhost ([127.0.0.1] helo=pinky)
 	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1Iq6kF-00034B-1S; Thu, 08 Nov 2007 12:44:27 +0000
+	id 1Iq6ol-00035A-Fw; Thu, 08 Nov 2007 12:49:07 +0000
 Content-Disposition: inline
 In-Reply-To: <Pine.LNX.4.64.0711081218090.4362@racer.site>
 User-Agent: Mutt/1.5.13 (2006-08-11)
@@ -34,30 +34,26 @@ X-SPF-Guess: pass
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64011>
 
 On Thu, Nov 08, 2007 at 12:19:18PM +0000, Johannes Schindelin wrote:
-> Hi,
-> 
-> On Thu, 8 Nov 2007, Andy Whitcroft wrote:
-> 
-> > Ok, sometime back Junio sent out a proof-of-concept change to
-> > send-pack allowing a mirror mode.
-> 
-> You added/left his sign-off, but did not attribute the patches to him.  
-> Why?
 
-I believe I left his signed off by from the original (first) patch, and
-added mine to indicate that what I had modified was also unecombered.
-The second patch is only signed off by me as I am the author.  In my
-world (admittedly a kernel hacker) the first Signed-off-by: indicates the
-primary authorship of that patch and the [apw@...] part tries to clarify
-the changes I made therein.
+> P.S.: Without tests I am opposed to inclusion.  This _definitely_ needs 
+> some tests.
 
-No intentional stripping of credit was intended, and I believe that the
-attribution as written states Junio is the originator of this patch.
-However that is the way I would read the meanings of these lines, if git
-has different rules or you think there is a clearer way of stating this
-I am happy to change it, and resend it so attributed.
+This is very much 'pu' material right now.  I've used it for a day
+keeping some kernel repos in sync on a couple of test boxes.  Hardly
+extensive testing.
+
+Yes some tests would be advisable.  However I am no expert in the git
+test system, so I am not going to be able to do that in short order.
+What little time I had to work on this this morning was wasted by some
+SarBox madness here (but that is another story).  In the spirit of
+making progress on what is a useful feature I pulled Junio's original
+change forward, fixed up my patch to expose it the the user and gave it
+some testing.
+
+Whats there does seem to work and has a prima-facie use case.  Hopefully
+someone can provide the nessary tests before I can.
 
 -apw
