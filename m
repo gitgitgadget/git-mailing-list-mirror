@@ -1,64 +1,65 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 1/3] Refactor working tree setup
-Date: Fri, 09 Nov 2007 07:41:10 +0900
-Message-ID: <87bqa4gy2h.fsf@catnip.gol.com>
-References: <1194088993-25692-1-git-send-email-mh@glandium.org>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [NEW REPLACEMENT PATCH] git-checkout: Add a test case for relative
+ paths use.
+Date: Thu, 8 Nov 2007 23:04:52 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711082304310.4362@racer.site>
+References: <11945276321726-git-send-email-dsymonds@gmail.com>
+ <Pine.LNX.4.64.0711081427450.4362@racer.site> <7v7iks31lm.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Thu Nov 08 23:42:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	Andreas Ericsson <ae@op5.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 00:34:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqG4e-0003W8-FW
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 23:42:08 +0100
+	id 1IqGsh-00081H-Jj
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 00:33:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760397AbXKHWlf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 17:41:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760178AbXKHWle
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 17:41:34 -0500
-Received: from smtp02.dentaku.gol.com ([203.216.5.72]:57052 "EHLO
-	smtp02.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759622AbXKHWle (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 17:41:34 -0500
-Received: from 203-216-100-114.dsl.gol.ne.jp ([203.216.100.114] helo=catnip.gol.com)
-	by smtp02.dentaku.gol.com with esmtpa (Dentaku)
-	id 1IqG3k-00013q-AJ; Fri, 09 Nov 2007 07:41:12 +0900
-Received: by catnip.gol.com (Postfix, from userid 1000)
-	id B8C852FF6; Fri,  9 Nov 2007 07:41:10 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-In-Reply-To: <1194088993-25692-1-git-send-email-mh@glandium.org> (Mike Hommey's message of "Sat\,  3 Nov 2007 12\:23\:11 +0100")
-X-Abuse-Complaints: abuse@gol.com
+	id S1758399AbXKHXM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 18:12:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761348AbXKHXM0
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 18:12:26 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54728 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758374AbXKHXMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 18:12:25 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 23:05:00 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp021) with SMTP; 09 Nov 2007 00:05:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19lJLhlq9llLLccICQXFVvcRXGp1ogLVeOwRuyilk
+	n9sONG0rtLpjLs
+X-X-Sender: gene099@racer.site
+In-Reply-To: <7v7iks31lm.fsf@gitster.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64085>
 
-Mike Hommey <mh@glandium.org> writes:
-> Create a setup_work_tree() that can be used from any command requiring
-> a working tree conditionally.
-...
-> +void setup_work_tree(void) {
-> +	const char *work_tree = get_git_work_tree();
+Hi,
 
-Hi, could you please not use this "function begin brace at EOL" style?
+On Thu, 8 Nov 2007, Junio C Hamano wrote:
 
-It's inconsistent with the rest of the source, makes the code harder to
-read, and confuses Emacs in some cases[1].  Also it's an abomination
-unto God, but I imagine it's the first of these reasons that you'll care
-about the most... :-)
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> +	mkdir dir2 &&
+> >> +	echo bonjour > dir2/file2 &&
+> >> +	git add dir2/file2 &&
+> >> +	git commit -m "populate tree"
+> >> +
+> >> +'
+> >
+> > Please lose the empty line before the closing quote.  (This applies to all 
+> > tests.)
+> 
+> I personaly find the extra blank lines before and after the
+> indented test body easier to read. 
 
-Thanks,
+Personally, I don't.  But you are the maintainer.
 
--Miles
-
-
-[1] Until quite recently, Emacs c-mode couldn't find the beginning of
-such functions (recent versions of c-mode seem OK though).
-
--- 
-The secret to creativity is knowing how to hide your sources.
-  --Albert Einstein
+Ciao,
+Dscho
