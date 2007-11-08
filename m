@@ -1,221 +1,190 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH 1/4] mirror pushing
-Date: Thu, 8 Nov 2007 17:00:57 -0000
-Message-ID: <1194541257.0@pinky>
-References: <20071108165801.GM9736@shadowen.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 18:02:20 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase: operate on a detached HEAD
+Date: Thu, 8 Nov 2007 18:19:08 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711081818330.4362@racer.site>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 08 19:19:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqAlV-0005gQ-Ai
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 18:02:01 +0100
+	id 1IqByZ-0001Nv-DT
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 19:19:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761587AbXKHRAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 12:00:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761445AbXKHRAt
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 12:00:49 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4165 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761579AbXKHRAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 12:00:48 -0500
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by hellhawk.shadowen.org with esmtp (Exim 4.50)
-	id 1IqAkJ-0003tz-64
-	for git@vger.kernel.org; Thu, 08 Nov 2007 17:00:47 +0000
-InReply-To: <20071108165801.GM9736@shadowen.org>
-Received-SPF: pass
-X-SPF-Guess: pass
+	id S1761879AbXKHSTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 13:19:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761862AbXKHSTR
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 13:19:17 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49860 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1761690AbXKHSTP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 13:19:15 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 18:19:13 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp050) with SMTP; 08 Nov 2007 19:19:13 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX193NkMLNCp3xoV31YufzoXYveLKDkrVBntJPGnscC
+	ttyfwJbVNBAdRw
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64058>
 
 
-From: Junio C Hamano <gitster@pobox.com>
+The interactive version of rebase does all the operations on a detached
+HEAD, so that after a successful rebase, <branch>@{1} is the pre-rebase
+state.  The reflogs of "HEAD" still show all the actions in detail.
 
-Existing "git push --all" is almost perfect for backing up to
-another repository, except that "--all" only means "all
-branches" in modern git, and it does not delete old branches and
-tags that exist at the back-up repository that you have removed
-from your local repository.
+This teaches the non-interactive version to do the same.
 
-This teaches "git-send-pack" a new "--mirror" option.  The
-difference from the "--all" option are that (1) it sends all
-refs, not just branches, and (2) it deletes old refs you no
-longer have on the local side from the remote side.
-
-[apw@shadowen.org: rebase to next post arguments update]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin-send-pack.c |   40 ++++++++++++++++++++++++++++------------
- remote.c            |   15 ++++++++++-----
- send-pack.h         |    1 +
- 3 files changed, 39 insertions(+), 17 deletions(-)
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 5a0f5c6..d5ead97 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -8,7 +8,7 @@
- #include "send-pack.h"
+ git-rebase.sh           |   56 ++++++++++++++++++++++++++++++++++++++++++----
+ t/t3402-rebase-merge.sh |    7 +++++-
+ 2 files changed, 57 insertions(+), 6 deletions(-)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 8814be9..3684a31 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -88,7 +88,7 @@ call_merge () {
+ 	cmt="$(cat "$dotest/cmt.$1")"
+ 	echo "$cmt" > "$dotest/current"
+ 	hd=$(git rev-parse --verify HEAD)
+-	cmt_name=$(git symbolic-ref HEAD)
++	cmt_name=$(git symbolic-ref HEAD 2> /dev/null || echo HEAD)
+ 	msgnum=$(cat "$dotest/msgnum")
+ 	end=$(cat "$dotest/end")
+ 	eval GITHEAD_$cmt='"${cmt_name##refs/heads/}~$(($end - $msgnum))"'
+@@ -116,7 +116,24 @@ call_merge () {
+ 	esac
+ }
  
- static const char send_pack_usage[] =
--"git-send-pack [--all] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
-+"git-send-pack [--all | --mirror] [--dry-run] [--force] [--receive-pack=<git-receive-pack>] [--verbose] [--thin] [<host>:]<directory> [<ref>...]\n"
- "  --all and explicit <ref> specification are mutually exclusive.";
- 
- static struct send_pack_args args = {
-@@ -242,7 +242,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	if (!remote_tail)
- 		remote_tail = &remote_refs;
- 	if (match_refs(local_refs, remote_refs, &remote_tail,
--		       nr_refspec, refspec, args.send_all))
-+		       nr_refspec, refspec, args.send_all | (args.send_mirror << 1)))
- 		return -1;
- 
- 	if (!remote_refs) {
-@@ -259,20 +259,28 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 		char old_hex[60], *new_hex;
- 		int will_delete_ref;
- 		const char *pretty_ref;
--		const char *pretty_peer;
-+		const char *pretty_peer = NULL; /* only used when not deleting */
-+		const unsigned char *new_sha1;
- 
--		if (!ref->peer_ref)
--			continue;
-+		if (!ref->peer_ref) {
-+			if (!args.send_mirror)
-+				continue;
-+			new_sha1 = null_sha1;
-+		}
-+		else
-+			new_sha1 = ref->peer_ref->new_sha1;
- 
- 		if (!shown_dest) {
- 			fprintf(stderr, "To %s\n", dest);
- 			shown_dest = 1;
- 		}
- 
-+		will_delete_ref = is_null_sha1(new_sha1);
++move_to_original_branch () {
++	test -z "$head_name" &&
++		head_name="$(cat "$dotest"/head-name)" &&
++		onto="$(cat "$dotest"/onto)" &&
++		orig_head="$(cat "$dotest"/orig-head)"
++	case "$head_name" in
++	refs/*)
++		message="rebase finished: $head_name onto $onto"
++		git update-ref -m "$message" \
++			$head_name $(git rev-parse HEAD) $orig_head &&
++		git symbolic-ref HEAD $head_name ||
++		die "Could not move back to $head_name"
++		;;
++	esac
++}
 +
- 		pretty_ref = prettify_ref(ref->name);
--		pretty_peer = prettify_ref(ref->peer_ref->name);
-+		if (!will_delete_ref)
-+			pretty_peer = prettify_ref(ref->peer_ref->name);
+ finish_rb_merge () {
++	move_to_original_branch
+ 	rm -r "$dotest"
+ 	echo "All done."
+ }
+@@ -175,16 +192,23 @@ do
+ 			finish_rb_merge
+ 			exit
+ 		fi
+-		git am -3 --skip --resolvemsg="$RESOLVEMSG"
++		head_name=$(cat .dotest/head-name) &&
++		onto=$(cat .dotest/onto) &&
++		orig_head=$(cat .dotest/orig-head) &&
++		git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
++		move_to_original_branch
+ 		exit
+ 		;;
+ 	--abort)
+ 		git rerere clear
+ 		if test -d "$dotest"
+ 		then
++			move_to_original_branch
+ 			rm -r "$dotest"
+ 		elif test -d .dotest
+ 		then
++			dotest=.dotest
++			move_to_original_branch
+ 			rm -r .dotest
+ 		else
+ 			die "No rebase in progress?"
+@@ -320,6 +344,19 @@ then
+ 	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
+ fi
  
--		will_delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
- 		if (will_delete_ref && !allow_deleting_refs) {
- 			fprintf(stderr, " ! %-*s %s (remote does not support deleting refs)\n",
- 					SUMMARY_WIDTH, "[rejected]", pretty_ref);
-@@ -280,7 +288,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 			continue;
- 		}
- 		if (!will_delete_ref &&
--		    !hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
-+		    !hashcmp(ref->old_sha1, new_sha1)) {
- 			if (args.verbose)
- 				fprintf(stderr, " = %-*s %s -> %s\n",
- 					SUMMARY_WIDTH, "[up to date]",
-@@ -312,8 +320,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 		    !is_null_sha1(ref->old_sha1) &&
- 		    !ref->force) {
- 			if (!has_sha1_file(ref->old_sha1) ||
--			    !ref_newer(ref->peer_ref->new_sha1,
--				       ref->old_sha1)) {
-+			    !ref_newer(new_sha1, ref->old_sha1)) {
- 				/* We do not have the remote ref, or
- 				 * we know that the remote ref is not
- 				 * an ancestor of what we are trying to
-@@ -328,7 +335,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 				continue;
- 			}
- 		}
--		hashcpy(ref->new_sha1, ref->peer_ref->new_sha1);
-+		hashcpy(ref->new_sha1, new_sha1);
- 		if (!will_delete_ref)
- 			new_refs++;
- 		strcpy(old_hex, sha1_to_hex(ref->old_sha1));
-@@ -459,6 +466,10 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 				args.dry_run = 1;
- 				continue;
- 			}
-+			if (!strcmp(arg, "--mirror")) {
-+				args.send_mirror = 1;
-+				continue;
-+			}
- 			if (!strcmp(arg, "--force")) {
- 				args.force_update = 1;
- 				continue;
-@@ -483,7 +494,12 @@ int cmd_send_pack(int argc, const char **argv, const char *prefix)
- 	}
- 	if (!dest)
- 		usage(send_pack_usage);
--	if (heads && args.send_all)
-+	/*
-+	 * --all and --mirror are incompatible; neither makes sense
-+	 * with any refspecs.
-+	 */
-+	if ((heads && (args.send_all || args.send_mirror)) ||
-+					(args.send_all && args.send_mirror))
- 		usage(send_pack_usage);
- 
- 	if (remote_name) {
-diff --git a/remote.c b/remote.c
-index 59defdb..45dd59b 100644
---- a/remote.c
-+++ b/remote.c
-@@ -722,10 +722,12 @@ static const struct refspec *check_pattern_match(const struct refspec *rs,
-  * without thinking.
-  */
- int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
--	       int nr_refspec, const char **refspec, int all)
-+	       int nr_refspec, const char **refspec, int flags)
- {
- 	struct refspec *rs =
- 		parse_ref_spec(nr_refspec, (const char **) refspec);
-+	int send_all = flags & 01;
-+	int send_mirror = flags & 02;
- 
- 	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec))
- 		return -1;
-@@ -742,7 +744,7 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 			if (!pat)
- 				continue;
- 		}
--		else if (prefixcmp(src->name, "refs/heads/"))
-+		else if (!send_mirror && prefixcmp(src->name, "refs/heads/"))
- 			/*
- 			 * "matching refs"; traditionally we pushed everything
- 			 * including refs outside refs/heads/ hierarchy, but
-@@ -763,10 +765,13 @@ int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
- 		if (dst_peer && dst_peer->peer_ref)
- 			/* We're already sending something to this ref. */
- 			goto free_name;
--		if (!dst_peer && !nr_refspec && !all)
--			/* Remote doesn't have it, and we have no
++# move to a detached HEAD
++orig_head=$(git rev-parse HEAD^0)
++head_name=$(git symbolic-ref HEAD 2> /dev/null)
++case "$head_name" in
++'')
++	head_name="detached HEAD"
++	;;
++*)
++	git checkout "$orig_head" > /dev/null 2>&1 ||
++		die "could not detach HEAD"
++	;;
++esac
 +
-+		if (!dst_peer && !nr_refspec && !(send_all || send_mirror))
-+			/*
-+			 * Remote doesn't have it, and we have no
- 			 * explicit pattern, and we don't have
--			 * --all. */
-+			 * --all nor --mirror.
-+			 */
- 			goto free_name;
- 		if (!dst_peer) {
- 			/* Create a new one and link it */
-diff --git a/send-pack.h b/send-pack.h
-index 7a24f71..8ff1dc3 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -5,6 +5,7 @@ struct send_pack_args {
- 	const char *receivepack;
- 	unsigned verbose:1,
- 		send_all:1,
-+		send_mirror:1,
- 		force_update:1,
- 		use_thin_pack:1,
- 		dry_run:1;
+ # Rewind the head to "$onto"; this saves our current head in ORIG_HEAD.
+ echo "First, rewinding head to replay your work on top of it..."
+ git-reset --hard "$onto"
+@@ -329,14 +366,21 @@ git-reset --hard "$onto"
+ if test "$mb" = "$branch"
+ then
+ 	echo >&2 "Fast-forwarded $branch_name to $onto_name."
++	move_to_original_branch
+ 	exit 0
+ fi
+ 
+ if test -z "$do_merge"
+ then
+ 	git format-patch -k --stdout --full-index --ignore-if-in-upstream "$upstream"..ORIG_HEAD |
+-	git am $git_am_opt --binary -3 -k --resolvemsg="$RESOLVEMSG"
+-	exit $?
++	git am $git_am_opt --binary -3 -k --resolvemsg="$RESOLVEMSG" &&
++	move_to_original_branch
++	ret=$?
++	test 0 != $ret -a -d .dotest &&
++		echo $head_name > .dotest/head-name &&
++		echo $onto > .dotest/onto &&
++		echo $orig_head > .dotest/orig-head
++	exit $ret
+ fi
+ 
+ # start doing a rebase with git-merge
+@@ -345,8 +389,10 @@ fi
+ mkdir -p "$dotest"
+ echo "$onto" > "$dotest/onto"
+ echo "$onto_name" > "$dotest/onto_name"
+-prev_head=`git rev-parse HEAD^0`
++prev_head=$orig_head
+ echo "$prev_head" > "$dotest/prev_head"
++echo "$orig_head" > "$dotest/orig-head"
++echo "$head_name" > "$dotest/head-name"
+ 
+ msgnum=0
+ for cmt in `git rev-list --reverse --no-merges "$upstream"..ORIG_HEAD`
+diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
+index 0779aaa..7b7d072 100755
+--- a/t/t3402-rebase-merge.sh
++++ b/t/t3402-rebase-merge.sh
+@@ -48,9 +48,14 @@ test_expect_success 'reference merge' '
+ 	git merge -s recursive "reference merge" HEAD master
+ '
+ 
++PRE_REBASE=$(git rev-parse test-rebase)
+ test_expect_success rebase '
+ 	git checkout test-rebase &&
+-	git rebase --merge master
++	GIT_TRACE=1 git rebase --merge master
++'
++
++test_expect_success 'test-rebase@{1} is pre rebase' '
++	test $PRE_REBASE = $(git rev-parse test-rebase@{1})
+ '
+ 
+ test_expect_success 'merge and rebase should match' '
+-- 
+1.5.3.5.1634.g0fa78
