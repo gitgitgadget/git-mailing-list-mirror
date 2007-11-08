@@ -1,78 +1,96 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: git add -i fails to heed user's exclude settings
-Date: Thu, 08 Nov 2007 16:56:46 +0900
-Message-ID: <buowsstmapt.fsf@dhapc248.dev.necel.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: [PATCH 1/3] run-command: Support sending stderr to /dev/null
+Date: Thu, 8 Nov 2007 03:00:22 -0500
+Message-ID: <20071108080022.GA16690@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:57:17 2007
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 09:00:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq2GJ-0003bS-RM
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:57:16 +0100
+	id 1Iq2Je-0004Is-PU
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 09:00:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751811AbXKHH46 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:56:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751552AbXKHH46
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:56:58 -0500
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:43853 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419AbXKHH45 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:56:57 -0500
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lA87ul4r010574;
-	Thu, 8 Nov 2007 16:56:47 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 16:56:47 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 8 Nov 2007 16:56:47 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id D88C7545; Thu,  8 Nov 2007 16:56:46 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
+	id S1751346AbXKHIA1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 03:00:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751152AbXKHIA0
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 03:00:26 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:60827 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751107AbXKHIA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 03:00:26 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Iq2JK-00089x-Cf; Thu, 08 Nov 2007 03:00:22 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 492FF20FBAE; Thu,  8 Nov 2007 03:00:22 -0500 (EST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63950>
 
-Inside git add -i, option 4 "add untracked", it doesn't seem to consider
-the user's personal ignore patterns, which is _really_ annoying.
+Some callers may wish to redirect stderr to /dev/null in some
+contexts, such as if they are executing a command only to get
+the exit status and don't want users to see whatever output it
+may produce as a side-effect of computing that exit status.
 
-E.g., I have:
+Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
+---
 
-   $ git config core.excludesfile
-   /home/miles/.gitignore
+ This series replaces my earlier single patch for git-fetch to bypass
+ copying objects from local alternates.  It includes (I believe)
+ all comments made on the prior version.
 
-   $ cat /home/miles/.gitignore
-   [+,#]*
-   *~
+ run-command.c |    6 ++++--
+ run-command.h |    1 +
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-   $ git status
-   # On branch master
-   nothing to commit (working directory clean)
-
-   $ git add -i
-              staged     unstaged path
-
-   *** Commands ***
-     1: status       2: update       3: revert       4: add untracked
-     5: patch        6: diff         7: quit         8: help
-   What now> 4
-     1: ,l
-     2: ,l.~1~
-     3: AUTHORS.~1~
-     4: Makefile.am.~1~
-     5: config.h.in~
-     6: configure.ac.~1~
-     ...tons of other random backup files etc...
-
-This makes it very hard to find files that actually need to be added!
-
-Thanks,
-
--Miles
-
+diff --git a/run-command.c b/run-command.c
+index d99a6c4..476d00c 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -41,7 +41,7 @@ int start_command(struct child_process *cmd)
+ 		cmd->close_out = 1;
+ 	}
+ 
+-	need_err = cmd->err < 0;
++	need_err = !cmd->no_stderr && cmd->err < 0;
+ 	if (need_err) {
+ 		if (pipe(fderr) < 0) {
+ 			if (need_in)
+@@ -87,7 +87,9 @@ int start_command(struct child_process *cmd)
+ 			close(cmd->out);
+ 		}
+ 
+-		if (need_err) {
++		if (cmd->no_stderr)
++			dup_devnull(2);
++		else if (need_err) {
+ 			dup2(fderr[1], 2);
+ 			close_pair(fderr);
+ 		}
+diff --git a/run-command.h b/run-command.h
+index 94e1e9d..1fc781d 100644
+--- a/run-command.h
++++ b/run-command.h
+@@ -23,6 +23,7 @@ struct child_process {
+ 	unsigned close_out:1;
+ 	unsigned no_stdin:1;
+ 	unsigned no_stdout:1;
++	unsigned no_stderr:1;
+ 	unsigned git_cmd:1; /* if this is to be git sub-command */
+ 	unsigned stdout_to_stderr:1;
+ };
 -- 
-o The existentialist, not having a pillow, goes everywhere with the book by
-  Sullivan, _I am going to spit on your graves_.
+1.5.3.5.1590.gfadfad
