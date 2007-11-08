@@ -1,72 +1,70 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Remove deprecated commands from command list and update
- manpages
-Date: Thu, 08 Nov 2007 16:00:43 +0100
-Message-ID: <4733249B.9020504@op5.se>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site> <7vlk998u6r.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] mirror pushing
+Date: Thu, 8 Nov 2007 15:03:31 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711081441260.4362@racer.site>
+References: <20071108121136.GG9736@shadowen.org> <1194531890.0@pinky>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Thu Nov 08 16:01:52 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: Andy Whitcroft <apw@shadowen.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 16:03:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq8sw-0002fC-LJ
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 16:01:35 +0100
+	id 1Iq8vD-0003U7-QY
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 16:03:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760524AbXKHPAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 10:00:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760817AbXKHPAt
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 10:00:49 -0500
-Received: from mail.op5.se ([193.201.96.20]:37624 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760399AbXKHPAs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 10:00:48 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id A12311F0870A;
-	Thu,  8 Nov 2007 15:59:06 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AsiyiR5LJRR7; Thu,  8 Nov 2007 15:59:06 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id D22061F08708;
-	Thu,  8 Nov 2007 15:59:05 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071108145435.GA18727@diku.dk>
+	id S1759549AbXKHPDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 10:03:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759479AbXKHPDj
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 10:03:39 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38381 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759156AbXKHPDi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 10:03:38 -0500
+Received: (qmail invoked by alias); 08 Nov 2007 15:03:36 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp057) with SMTP; 08 Nov 2007 16:03:36 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+2TS89x2O2wZXaLh7mkuehPEcpEh6Qc09UdEAjNP
+	x3a64l6l4LxI6x
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194531890.0@pinky>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64035>
 
-Jonas Fonseca wrote:
-> ... and remove manpages of commands that no longer exists.
-> 
-> diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-> index 8139423..73c37b0 100644
-> --- a/Documentation/git-var.txt
-> +++ b/Documentation/git-var.txt
-> @@ -20,7 +20,8 @@ OPTIONS
->  	Cause the logical variables to be listed. In addition, all the
->  	variables of the git configuration file .git/config are listed
->  	as well. (However, the configuration variables listing functionality
-> -	is deprecated in favor of `git-config -l`.)
-> +	is deprecated. Use gitlink:git-config[1] with the option '-l'
-> +	instead.)
+Hi,
+
+On Thu, 8 Nov 2007, Andy Whitcroft wrote:
+
+> -		       nr_refspec, refspec, args.send_all))
+> +		       nr_refspec, refspec, args.send_all | (args.send_mirror << 1)))
+
+This line is too long.  But it needsmore love: it's all too magic to have 
+a 1 for send_all, and a 2 for mirror.  Please introduce an enum for that 
+in remote.h, and use those constants, so that this hunk and the following 
+one cannot get out of sync that easily.
+
+> +++ b/remote.c
+> @@ -722,10 +722,12 @@ static const struct refspec *check_pattern_match(const struct refspec *rs,
+>   * without thinking.
+>   */
+>  int match_refs(struct ref *src, struct ref *dst, struct ref ***dst_tail,
+> -	       int nr_refspec, const char **refspec, int all)
+> +	       int nr_refspec, const char **refspec, int flags)
+>  {
+>  	struct refspec *rs =
+>  		parse_ref_spec(nr_refspec, (const char **) refspec);
+> +	int send_all = flags & 01;
+> +	int send_mirror = flags & 02;
 >  
+>  	if (match_explicit_refs(src, dst, dst_tail, rs, nr_refspec))
+>  		return -1;
 
-Skip the parentheses. It reads better without it.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Thanks,
+Dscho
