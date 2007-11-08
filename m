@@ -1,77 +1,59 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] git-fetch: avoid local fetching from alternate (again)
-Date: Thu, 8 Nov 2007 02:35:05 -0500
-Message-ID: <20071108073505.GI14735@spearce.org>
-References: <20071107024118.GA11043@spearce.org> <7vsl3iefoj.fsf@gitster.siamese.dyndns.org> <7vr6j1bxuf.fsf@gitster.siamese.dyndns.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git-branch --with=commit
+Date: Thu, 08 Nov 2007 08:36:15 +0100
+Message-ID: <4732BC6F.7070005@viscovery.net>
+References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 08:35:28 2007
+X-From: git-owner@vger.kernel.org Thu Nov 08 08:36:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq1vD-0007Pb-Hp
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:35:27 +0100
+	id 1Iq1wG-0007d4-U3
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 08:36:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843AbXKHHfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 02:35:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753879AbXKHHfM
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:35:12 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:59962 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751360AbXKHHfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 02:35:11 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1Iq1ur-0005ZZ-VL; Thu, 08 Nov 2007 02:35:07 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id 82FF120FBCC; Thu,  8 Nov 2007 02:35:05 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7vr6j1bxuf.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1754316AbXKHHgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 02:36:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753943AbXKHHgS
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 02:36:18 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:52093 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753879AbXKHHgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 02:36:17 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Iq1vX-0001Ps-II; Thu, 08 Nov 2007 08:35:47 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id 509BF6B7; Thu,  8 Nov 2007 08:36:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63946>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Junio C Hamano schrieb:
+>      $ git checkout -b xx/maint-fix-foo
+>      $ git am -3 -s ,xx-maint-fix-foo.patch
+
+Is this comma a hidden feature?
+
+> With this patch, I could do this to find out which topic
+> branches already contain the faulty commit:
 > 
-> > Well spotted.  It would be a good idea to commit the big comment
-> > from contrib/examples/git-fetch.sh to fetch_local_nocopy()
-> > function, which would have made us realize that the patch does
-> > not refrain from applying this optimization even when shallow
-> > is in effect.  But I think that is actually a good change.
-> 
-> I take this back.  This regresses badly.
-> 
-> Why?
+>     $ git branch --with=maint^ | grep /
+>       xx/maint-fix-foo
 
-Whoops.  Good catch.  This is why you had a check for the shallow
-history file in git-fetch.sh before you took this optimization path.
-My fault for not including it in this patch.
- 
-> Because the optimization is useless when we are trying to deepen
-> the shallow history.  When you are trying to deepen a shallow
-> history and the tips of remotes haven't moved since you fetched
-> from there the last time, you have everything near the tip, and
-> becuse your history is shallow, your ancestry chain is
-> cauterized to make it appear that the history is complete.  The
-> rev-list reachability test would not fail as we expect.
+It'd be helpful if you could construct the example in this commit message 
+such that you don't need the "grep /" here; otherwise, the reader doesn't 
+know which part of the effect is hidden by the grep.
 
-What about just inserting a check to see if --depth was supplied
-to git-fetch on the command line?  If so then we are deepening the
-history and we just bypass the rev-list "fast path" test.
-
-I will be posting an updated patch (series now) shortly.
-
--- 
-Shawn.
+-- Hannes
