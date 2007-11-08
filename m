@@ -1,67 +1,57 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: [PATCH 3/3] Fix sed string regex escaping in module_name.
-Date: Thu, 8 Nov 2007 22:48:49 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071108214849.GI31439@ins.uni-bonn.de>
-References: <20071108214624.GF31439@ins.uni-bonn.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git push mirror mode
+Date: Thu, 08 Nov 2007 13:53:33 -0800
+Message-ID: <7vk5os1k0y.fsf@gitster.siamese.dyndns.org>
+References: <20071108121136.GG9736@shadowen.org>
+	<Pine.LNX.4.64.0711081218090.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 08 22:49:59 2007
+Cc: Andy Whitcroft <apw@shadowen.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 08 22:54:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqFG1-0002zG-IT
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:49:49 +0100
+	id 1IqFKO-0004Rm-WB
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 22:54:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761153AbXKHVsv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 16:48:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761265AbXKHVsv
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:48:51 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:60654 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761132AbXKHVsv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 16:48:51 -0500
-Received: from localhost.localdomain (xdsl-87-78-163-133.netcologne.de [87.78.163.133])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id 0FF93400000BC
-	for <git@vger.kernel.org>; Thu,  8 Nov 2007 22:48:50 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1IqFF3-000591-IB
-	for git@vger.kernel.org; Thu, 08 Nov 2007 22:48:49 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20071108214624.GF31439@ins.uni-bonn.de>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1759863AbXKHVxq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 16:53:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758264AbXKHVxq
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 16:53:46 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56834 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759348AbXKHVxp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 16:53:45 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 2A25B2F2;
+	Thu,  8 Nov 2007 16:54:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9BB6D939FF;
+	Thu,  8 Nov 2007 16:53:58 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711081218090.4362@racer.site> (Johannes
+	Schindelin's message of "Thu, 8 Nov 2007 12:19:18 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64079>
 
-When escaping a string to be used as a sed regex, it is important
-to only escape active characters.  Escaping other characters is
-undefined according to POSIX, and in practice leads to issues with
-extensions such as GNU sed's \+.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
----
- git-submodule.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> On Thu, 8 Nov 2007, Andy Whitcroft wrote:
+>
+>> Ok, sometime back Junio sent out a proof-of-concept change to
+>> send-pack allowing a mirror mode.
+>
+> You added/left his sign-off, but did not attribute the patches to him.  
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 1c656be..82ac28f 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -74,7 +74,7 @@ resolve_relative_url ()
- module_name()
- {
- 	# Do we have "submodule.<something>.path = $1" defined in .gitmodules file?
--	re=$(printf '%s' "$1" | sed -e 's/\([^a-zA-Z0-9_]\)/\\\1/g')
-+	re=$(printf '%s' "$1" | sed -e 's/[].[^$\\*]/\\&/g')
- 	name=$( GIT_CONFIG=.gitmodules \
- 		git config --get-regexp '^submodule\..*\.path$' |
- 		sed -n -e 's|^submodule\.\(.*\)\.path '"$re"'$|\1|p' )
--- 
-1.5.3.5.561.g140d
+No big deal; I do not think much of my changes remain in the
+result.  Mentioning "inspired by" would be nice as courtesy, but
+I think this is mostly Andy's work.
+
+As I haven't seen _his_ part of the change before he posted this
+updated patch, copying my S-o-b line wasn't necessary either.
