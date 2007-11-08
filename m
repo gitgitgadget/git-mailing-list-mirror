@@ -1,77 +1,107 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH 0/5] some shell portability fixes
-Date: Thu, 8 Nov 2007 07:14:56 +0100
-Organization: Department of Numerical Simulation, University of Bonn
-Message-ID: <20071108061456.GA28509@ins.uni-bonn.de>
-References: <20071106201518.GA6361@ins.uni-bonn.de> <7v8x5bgl04.fsf@gitster.siamese.dyndns.org> <fcaeb9bf0711070758w5832ab83ic16e8fb4edb80972@mail.gmail.com> <fcaeb9bf0711070805x49228d8dq7e8e6f26060c47ab@mail.gmail.com> <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH DIFF-CLEANUP 1/2] Make the diff_options bitfields be an unsigned with explicit masks.
+Date: Wed, 07 Nov 2007 22:39:02 -0800
+Message-ID: <7vy7d95ji1.fsf@gitster.siamese.dyndns.org>
+References: <1194430832-6224-1-git-send-email-madcoder@debian.org>
+	<1194430832-6224-2-git-send-email-madcoder@debian.org>
+	<1194430832-6224-3-git-send-email-madcoder@debian.org>
+	<1194430832-6224-4-git-send-email-madcoder@debian.org>
+	<1194430832-6224-5-git-send-email-madcoder@debian.org>
+	<1194430832-6224-6-git-send-email-madcoder@debian.org>
+	<1194430832-6224-7-git-send-email-madcoder@debian.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 08 07:15:19 2007
+Cc: git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 07:39:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq0fc-0000I8-5o
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 07:15:16 +0100
+	id 1Iq132-0004qR-9k
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 07:39:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751778AbXKHGPA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 01:15:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751667AbXKHGPA
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 01:15:00 -0500
-Received: from merkur.ins.uni-bonn.de ([131.220.223.13]:42659 "EHLO
-	merkur.ins.uni-bonn.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751552AbXKHGO7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 01:14:59 -0500
-Received: from localhost.localdomain (xdsl-87-78-134-79.netcologne.de [87.78.134.79])
-	by merkur.ins.uni-bonn.de (Postfix) with ESMTP id D3C7A400002BE;
-	Thu,  8 Nov 2007 07:14:57 +0100 (CET)
-Received: from ralf by localhost.localdomain with local (Exim 4.63)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1Iq0fI-0007QF-PC; Thu, 08 Nov 2007 07:14:56 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1751461AbXKHGjK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 01:39:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbXKHGjJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 01:39:09 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:39388 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751419AbXKHGjI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 01:39:08 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id DE8D72EF;
+	Thu,  8 Nov 2007 01:39:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5A0FF8E6D5;
+	Thu,  8 Nov 2007 01:39:26 -0500 (EST)
+In-Reply-To: <1194430832-6224-7-git-send-email-madcoder@debian.org> (Pierre
+	Habouzit's message of "Wed, 7 Nov 2007 11:20:31 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63937>
 
-* Junio C Hamano wrote on Wed, Nov 07, 2007 at 09:42:41PM CET:
-> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
-> >
-> > Argh, should have made it clear, busybox sed is good enough.
-> 
-> Thanks.  And you can also happy grok Ralf's rewritten construct,
-> right?
-> 
-> That is, existing
-> 
->         $ sed -e 's/foo/\n/' file
-> 
-> will be rewritten by the patch [2/5] to
-> 
->         $ sed -e 's/foo/\
->         /' file
+Pierre Habouzit <madcoder@debian.org> writes:
 
-The original was something like
-  sed 's/[|]/\n/g'
+> reverse_diff was a bit-value in disguise, it's merged in the flags now.
+>
+> Signed-off-by: Pierre Habouzit <madcoder@debian.org>
 
-Using instead
-  tr '|' '\n'
+Just my first impression, as I am in the middle of unrelated
+bisect.  I haven't read beyond diff-lib.c changes.
 
-should work for the original construct, and AFAIK only /usr/ucb/tr on
-Solaris fails to understand \n correctly.  Would that be better for you?
-Or even
-  tr '|' '\012'
+> diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
+> index 0b591c8..e71841a 100644
+> --- a/builtin-diff-tree.c
+> +++ b/builtin-diff-tree.c
+> @@ -118,12 +118,12 @@ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	if (!read_stdin)
+> -		return opt->diffopt.exit_with_status ?
+> -		    opt->diffopt.has_changes: 0;
+> +		return DIFF_OPT_TST(&opt->diffopt, EXIT_WITH_STATUS)
+> +			&& DIFF_OPT_TST(&opt->diffopt, HAS_CHANGES);
 
-which fails only on EBCDIC, which I don't think git targets.
+Had to think a bit about this, although it is correct.
 
-I'll resend the patches tonight.
+>  	if (opt->diffopt.detect_rename)
+>  		opt->diffopt.setup |= (DIFF_SETUP_USE_SIZE_CACHE |
+> -				       DIFF_SETUP_USE_CACHE);
+> +							   DIFF_SETUP_USE_CACHE);
 
-Cheers,
-Ralf
+I wonder what this is about.
+
+> diff --git a/combine-diff.c b/combine-diff.c
+> index fe5a2a1..3cab04b 100644
+> --- a/combine-diff.c
+> +++ b/combine-diff.c
+> @@ -664,7 +664,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+>  	int mode_differs = 0;
+>  	int i, show_hunks;
+>  	int working_tree_file = is_null_sha1(elem->sha1);
+> -	int abbrev = opt->full_index ? 40 : DEFAULT_ABBREV;
+> +        int abbrev = DIFF_OPT_TST(opt, FULL_INDEX) ? 40 : DEFAULT_ABBREV;
+
+Indent?
+
+> diff --git a/diff-lib.c b/diff-lib.c
+> index da55713..69b5dc9 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -188,8 +188,7 @@ static int handle_diff_files_args(struct rev_info *revs,
+>  		else if (!strcmp(argv[1], "-n") ||
+>  				!strcmp(argv[1], "--no-index")) {
+>  			revs->max_count = -2;
+> -			revs->diffopt.exit_with_status = 1;
+> -			revs->diffopt.no_index = 1;
+> +			revs->diffopt.flags |= DIFF_OPT_EXIT_WITH_STATUS | DIFF_OPT_NO_INDEX;
+>  		}
+
+Now this looks harder to read that everybody else uses
+DIFF_OPT_SET() for this, without DIFF_OPT_ prefix for the
+bitmask names.
