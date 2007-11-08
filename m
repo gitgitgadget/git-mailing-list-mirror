@@ -1,73 +1,88 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] user-manual: add advanced topic "bisecting merges"
-Date: Thu, 08 Nov 2007 10:11:40 +0100
-Message-ID: <4732D2CC.1010008@viscovery.net>
-References: <20071104112302.GA2119@ins.uni-bonn.de> <11944722214046-git-send-email-prohaska@zib.de> <4732B899.6000908@viscovery.net> <6E62E205-0951-4CCB-A807-AC107E40ACE1@zib.de>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] git-sh-setup: fix parseopt `eval`.
+Date: Thu, 08 Nov 2007 10:14:02 +0100
+Message-ID: <20071108091402.GA7391@artemis.corp>
+References: <7vr6j15i3a.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: gitster@pobox.com, Ralf.Wildenhues@gmx.de, tsuna@lrde.epita.fr,
-	git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Thu Nov 08 10:12:11 2007
+Content-Type: multipart/signed; boundary="sdtB3X0nJg68CQEu";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 08 10:14:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iq3Qi-0005YS-BP
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:12:04 +0100
+	id 1Iq3Sw-0006De-CS
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 10:14:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760609AbXKHJLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 04:11:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760607AbXKHJLr
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:11:47 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:60736 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760466AbXKHJLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 04:11:45 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Iq3Ps-0005nd-P7; Thu, 08 Nov 2007 10:11:12 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 707A06B7; Thu,  8 Nov 2007 10:11:40 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <6E62E205-0951-4CCB-A807-AC107E40ACE1@zib.de>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1753440AbXKHJOH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 04:14:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753667AbXKHJOG
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 04:14:06 -0500
+Received: from pan.madism.org ([88.191.52.104]:55858 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753005AbXKHJOF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 04:14:05 -0500
+Received: from madism.org (unknown [81.57.219.236])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 33A4D28BBD;
+	Thu,  8 Nov 2007 10:14:02 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 63450F9B9; Thu,  8 Nov 2007 10:14:02 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7vr6j15i3a.fsf@gitster.siamese.dyndns.org>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63971>
 
-Steffen Prohaska schrieb:
-> 
-> On Nov 8, 2007, at 8:19 AM, Johannes Sixt wrote:
-> 
->> Steffen Prohaska schrieb:
->>> +If you linearize the history by rebasing the lower branch on
->>> +top of the upper, instead of merging, the bug becomes much easier to
->>> +find and understand.  Your history would instead be:
->>
->> At this point I'm missing the words
->>
->>     The solution is ...
->>
->> I.e.:
->>
->> The solution is to linearize the history by rebasing the lower branch on
->> top of the upper, instead of merging. Now the bug becomes much easier to
->> find and understand.  Your history would instead be:
-> 
-> Hmm. It might be a solution if you did not publish history.
 
-This is about finding the commit that introduced a bug. Once you found it, 
-better: you know how to fix the bug, you are expected to throw away the 
-rebased branch, not to publish it! Maybe a note along these lines could be 
-appended:
+--sdtB3X0nJg68CQEu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Now that you know what caused the error (and how to fix it), throw away the 
-rebased branch, and commit a fix on top of D.
+On Thu, Nov 08, 2007 at 07:09:29AM +0000, Junio C Hamano wrote:
+> The 'automagic parseopt' support corrupted non option parameters
+> that had IFS characters in them.  The worst case can be seen
+> when it has a non option parameter like this:
+>=20
+> 	$1=3D" * some string   blech"
+>=20
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
--- Hannes
+> -	parseopt_extra=3D
+> -	[ -n "$OPTIONS_KEEPDASHDASH" ] &&
+> -		parseopt_extra=3D"$parseopt_extra --keep-dashdash"
+> +	[ -n "$OPTIONS_KEEPDASHDASH" ] && parseopt_extra=3D"--keep-dashdash"
+
+  oh and this part is wrong because you're affected by $parseopt_extra
+environment poisonning. And you have to fix git-clone.sh that uses
+git-rev-parse --parsopt directly with the same call too (as it doesn't
+use git-sh-setup).
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--sdtB3X0nJg68CQEu
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHMtNavGr7W6HudhwRAjKnAJ9PeTGxw/ML+DiHHFVyqXNs1VjJsACeIWxn
+KHMAHprjT/cowN8wqlbvVuQ=
+=4HGM
+-----END PGP SIGNATURE-----
+
+--sdtB3X0nJg68CQEu--
