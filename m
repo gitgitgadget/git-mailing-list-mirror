@@ -1,97 +1,79 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH 2/2] git status: show relative paths when run in a subdirectory
-Date: Thu, 8 Nov 2007 11:53:48 +1100
-Message-ID: <ee77f5c20711071653x6a1fe8f8peb8ac2714941d2bb@mail.gmail.com>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
-	 <Pine.LNX.4.64.0711072242230.4362@racer.site>
-	 <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
-	 <Pine.LNX.4.64.0711072255420.4362@racer.site>
-	 <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
-	 <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com>
-	 <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com>
-	 <Pine.LNX.4.64.0711080011170.4362@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] hooks--update: allow deleting a tag through git push <remote> :<tag>
+Date: Wed, 07 Nov 2007 16:54:42 -0800
+Message-ID: <7v640d8skt.fsf@gitster.siamese.dyndns.org>
+References: <20071107103450.29849.qmail@c27a4ce40673ff.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Brian Gernhardt" <benji@silverinsanity.com>,
-	"Jon Smirl" <jonsmirl@gmail.com>,
-	"Git Mailing List" <git@vger.kernel.org>, gitster@pobox.com
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 08 01:54:11 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Thu Nov 08 01:55:07 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ipven-0005Kg-Lz
-	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 01:54:06 +0100
+	id 1Ipvfm-0005Ve-Ii
+	for gcvg-git-2@gmane.org; Thu, 08 Nov 2007 01:55:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754933AbXKHAxv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 7 Nov 2007 19:53:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756166AbXKHAxv
-	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 19:53:51 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:47080 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755351AbXKHAxt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 7 Nov 2007 19:53:49 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so2216144rvb
-        for <git@vger.kernel.org>; Wed, 07 Nov 2007 16:53:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=FOFORA3G8o0nXP1oBnV9mOTTMeD+tt01B+Y8vz0QjPw=;
-        b=rOkHBS0hYnwOLk1XUCWsO+BbBqugLfCflNclMLnSfENyv+YhVJqtczLwIUBq2MlSPfAbY0/zqC9a5/7cBsGeN/MmK46h7vXTH5BO5xurwcjWs78HTSr9n7i0JAuLDcBz0fjelyQdn3+a2eEIsqd5XRzI7RdEenVDhQW1qU8Q64s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=l0eqneTYoFz/Id6kosRC6GK6K9y0BtSRvfbzCBnGkSG3Yr4DdsTfaMKcqxJShjobUvM28/J4YZnJAK6xXDByZTy6Bq9xCtM46NNDJKIqI4agxh2SAf/p7kyMUxaKk3L4duzYzJDCRoIzWFE6HxoCys9lj6150WhHvbfBFFHHVHw=
-Received: by 10.141.211.13 with SMTP id n13mr392948rvq.1194483228918;
-        Wed, 07 Nov 2007 16:53:48 -0800 (PST)
-Received: by 10.141.115.4 with HTTP; Wed, 7 Nov 2007 16:53:48 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711080011170.4362@racer.site>
-Content-Disposition: inline
+	id S1759391AbXKHAyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 7 Nov 2007 19:54:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759291AbXKHAyu
+	(ORCPT <rfc822;git-outgoing>); Wed, 7 Nov 2007 19:54:50 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:36991 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759037AbXKHAyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 7 Nov 2007 19:54:49 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 4EA332EF;
+	Wed,  7 Nov 2007 19:55:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id CCC43935BF;
+	Wed,  7 Nov 2007 19:55:06 -0500 (EST)
+In-Reply-To: <20071107103450.29849.qmail@c27a4ce40673ff.315fe32.mid.smarden.org>
+	(Gerrit Pape's message of "Wed, 7 Nov 2007 10:34:50 +0000")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/63918>
 
-On Nov 8, 2007 11:12 AM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+Gerrit Pape <pape@smarden.org> writes:
+
+> The update hook interpretes deleting a tag, no matter if annotated or not,
+> through git push <remote> :<tag> as unannotated tag, and declines it by
+> default:
+> ...
+> With this patch deleting a tag is allowed unconditionally, just as
+> deleting a branch.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Gerrit Pape <pape@smarden.org>
 > ---
->
->         This looks a bit ugly because quote_crlf() is now also called
->         on the untracked files, which are not NUL terminated.
->
->         Maybe someone has an idea how to do this more elegantly.
->
->  builtin-runstatus.c |    1 +
->  wt-status.c         |   50 ++++++++++++++++++++++++++++++++++++++++++--------
->  wt-status.h         |    1 +
->  3 files changed, 44 insertions(+), 8 deletions(-)
+>  templates/hooks--update |    9 ++++++---
+>  1 files changed, 6 insertions(+), 3 deletions(-)
 
-Tested, and looks good.
+Since you are allowing deletion for anything, wouldn't this be
+much simpler, I wonder...
 
-Now that I play with it, though, it seems that a few other bits of git
-need updating to handle relative paths okay:
+---
 
-$ cd gitweb/test
-$ rm ../../wt-status.h
-    [oops, what a silly thing to do -- better checkout the latest
-revision of it]
-$ git status
-# On branch next
-# Changed but not updated:
-#   (use "git add/rm <file>..." to update what will be committed)
-#
-#       deleted:    ../../wt-status.h
-no changes added to commit (use "git add" and/or "git commit -a")
-$ git checkout HEAD ../../wt-status.h
-fatal: git-ls-files: cannot generate relative filenames containing '..'
-    [grr....]
-$ cd ../..
-$ git checkout HEAD .
-    [that works]
+ templates/hooks--update |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-
-
-Dave.
+diff --git a/templates/hooks--update b/templates/hooks--update
+index d8c7626..e12904a 100644
+--- a/templates/hooks--update
++++ b/templates/hooks--update
+@@ -41,9 +41,9 @@ if [ -z "$projectdesc" -o "$projectdesc" = "Unnamed repository; edit this file t
+ fi
+ 
+ # --- Check types
+-# if $newrev is 0000...0000, it's a commit to delete a branch
++# if $newrev is 0000...0000, it's a commit to delete a ref.
+ if [ "$newrev" = "0000000000000000000000000000000000000000" ]; then
+-	newrev_type=commit
++	exit 0 ;# allow anything to be deleted
+ else
+ 	newrev_type=$(git-cat-file -t $newrev)
+ fi
