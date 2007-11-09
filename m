@@ -1,69 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: git push mirror mode tests V2
-Date: Fri, 09 Nov 2007 12:05:43 -0800
-Message-ID: <7vsl3frxpk.fsf@gitster.siamese.dyndns.org>
-References: <1194541305.0@pinky> <1194603673.0@pinky>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: [PATCH] git-checkout: Test for relative path use.
+Date: Fri, 9 Nov 2007 20:48:34 +0100
+Message-ID: <200711092048.34868.robin.rosenberg.lists@dewire.com>
+References: <11945685673280-git-send-email-dsymonds@gmail.com> <11945685732608-git-send-email-dsymonds@gmail.com> <7vtznwxl59.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andy Whitcroft <apw@shadowen.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 21:06:29 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: David Symonds <dsymonds@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 21:23:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqa7H-0001Tk-Te
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 21:06:12 +0100
+	id 1IqaNg-0007zV-8N
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 21:23:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335AbXKIUFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 15:05:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754793AbXKIUFt
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 15:05:49 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50811 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752335AbXKIUFs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 15:05:48 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id D35AB2F0;
-	Fri,  9 Nov 2007 15:06:09 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 606A493BFE;
-	Fri,  9 Nov 2007 15:06:07 -0500 (EST)
-In-Reply-To: <1194603673.0@pinky> (Andy Whitcroft's message of "Fri, 9 Nov
-	2007 10:21:13 -0000")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751448AbXKIUWw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 15:22:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751442AbXKIUWw
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 15:22:52 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:18501 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1751438AbXKIUWv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 15:22:51 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 93F998026C9;
+	Fri,  9 Nov 2007 21:13:49 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 13437-03; Fri,  9 Nov 2007 21:13:49 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 260B48026F3;
+	Fri,  9 Nov 2007 21:13:49 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vtznwxl59.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64258>
 
-Andy Whitcroft <apw@shadowen.org> writes:
+fredag 09 november 2007 skrev Junio C Hamano:
+> David Symonds <dsymonds@gmail.com> writes:
+> 
+> > Signed-off-by: David Symonds <dsymonds@gmail.com>
+> > ---
+> > 	Test 5 in this series fails because of a bug in git-ls-files, where
+> > 		git-ls-files t/../
+> > 	(with or without --full-name) returns no files.
+> 
+> Heh, you shouldn't do that ;-)
+> 
+> Seriously, that's a long standing limitation in the code, not to
+> deal with arbitrary combination of ups and downs, but I do not
+> think there is any fundamental reason to disallow something
+> like:
+> 
+> 	cd Documentation && git ls-files --full-name ../t
+> 
+> Patches welcome.
 
-> +test_expect_success 'push mirror does not create new branches' '
-> +
-> +	mk_repo_pair &&
-> +	(
-> +		cd master &&
-> +		echo one >foo && git add foo && git commit -m one &&
-> +		git push --mirror up
-> +	) &&
-> +	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-> +	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-> +	test "$master_master" = "$mirror_master"
-> +
-> +'
+I'm for allowing it, but then it should really be all over, not just some arbitrary
+command. Everywhere or not at all.
 
-I am quite puzzled by this and many other "does not" in the test
-description.  The --mirror option is advertised as
-
- - newly created will be pushed;
- - locally updated will be force pushed;
- - locally deleted will be removed.
-
-which makes sense as we do want these things to happen for
-"mirrors".  Indeed the above updates master branch at the master
-repository and makes sure that change is propagated to the
-mirror repository.  The description should read "push mirror
-creates new branches" shouldn't it?
+-- robin
