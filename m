@@ -1,134 +1,177 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] git-checkout: Test for relative path use.
-Date: Fri,  9 Nov 2007 20:12:28 +1100
-Message-ID: <11945995483966-git-send-email-dsymonds@gmail.com>
-References: <ee77f5c20711090110s5d6c533et5e1e016a95fde943@mail.gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Symonds <dsymonds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 10:12:54 2007
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: [PATCH] tests: git push mirror mode tests V2
+Date: Fri, 9 Nov 2007 10:21:13 -0000
+Message-ID: <1194603673.0@pinky>
+References: <1194541305.0@pinky>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 11:22:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqPv2-00049O-MZ
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 10:12:53 +0100
+	id 1IqQzs-00018h-69
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 11:21:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751439AbXKIJMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 04:12:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751438AbXKIJMe
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 04:12:34 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:50610 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751392AbXKIJMc (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 04:12:32 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4HAPKyM0d5LBGK/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.21,394,1188743400"; 
-   d="scan'208";a="224354642"
-Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 09 Nov 2007 19:42:30 +1030
-X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <ee77f5c20711090110s5d6c533et5e1e016a95fde943@mail.gmail.com>
+	id S1751594AbXKIKVI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 05:21:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751595AbXKIKVH
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 05:21:07 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:1485 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559AbXKIKVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 05:21:06 -0500
+Received: from localhost ([127.0.0.1] helo=pinky)
+	by hellhawk.shadowen.org with esmtp (Exim 4.50)
+	id 1IqQyz-0007D7-PO
+	for git@vger.kernel.org; Fri, 09 Nov 2007 10:21:01 +0000
+InReply-To: <1194541305.0@pinky>
+Received-SPF: pass
+X-SPF-Guess: pass
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64150>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
+
+Add some basic tests for git push --mirror mode.
+
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
 ---
- t/t2008-checkout-subdir.sh |   80 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 80 insertions(+), 0 deletions(-)
- create mode 100755 t/t2008-checkout-subdir.sh
-
-diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
+	Following the discussion on how tests which change directory
+	should use subshells to prevent loss of CWD and of how
+	! is not something we can rely on, here is an updates to
+	the tests.
+---
+ t/t5517-push-mirror.sh |  125 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 125 insertions(+), 0 deletions(-)
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
 new file mode 100755
-index 0000000..98d8eb3
+index 0000000..a65d2f5
 --- /dev/null
-+++ b/t/t2008-checkout-subdir.sh
-@@ -0,0 +1,80 @@
++++ b/t/t5517-push-mirror.sh
+@@ -0,0 +1,125 @@
 +#!/bin/sh
-+#
-+# Copyright (c) 2007 David Symonds
 +
-+test_description='git checkout from subdirectories'
++test_description='pushing to a mirror repository'
 +
 +. ./test-lib.sh
 +
-+test_expect_success setup '
++D=`pwd`
 +
-+	echo "base" > file0 &&
-+	git add file0 &&
-+	mkdir dir1 &&
-+	echo "hello" > dir1/file1 &&
-+	git add dir1/file1 &&
-+	mkdir dir2 &&
-+	echo "bonjour" > dir2/file2 &&
-+	git add dir2/file2 &&
-+	test_tick &&
-+	git commit -m "populate tree"
++invert () {
++	if "$@"; then
++		return 1
++	else
++		return 0
++	fi
++}
++
++mk_repo_pair () {
++	rm -rf master mirror &&
++	mkdir mirror &&
++	(
++		cd mirror &&
++		git init
++	) &&
++	mkdir master &&
++	(
++		cd master &&
++		git init &&
++		git config remote.up.url ../mirror
++	)
++}
++
++
++test_expect_success 'push mirror does not create new branches' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" = "$mirror_master"
 +
 +'
 +
-+test_expect_success 'remove and restore with relative path' '
++test_expect_success 'push mirror does not update existing branches' '
 +
++	mk_repo_pair &&
 +	(
-+		cd dir1 &&
-+		rm ../file0 &&
-+		git checkout HEAD -- ../file0 &&
-+		test "base" = "$(cat ../file0)" &&
-+		rm ../dir2/file2 &&
-+		git checkout HEAD -- ../dir2/file2 &&
-+		test "bonjour" = "$(cat ../dir2/file2)" &&
-+		rm ../file0 ./file1 &&
-+		git checkout HEAD -- .. &&
-+		test "base" = "$(cat ../file0)" &&
-+		test "hello" = "$(cat file1)"
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git push --mirror up &&
++		echo two >foo && git add foo && git commit -m two &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'push mirror does not force update existing branches' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git push --mirror up &&
++		echo two >foo && git add foo && git commit -m two &&
++		git push --mirror up &&
++		git reset --hard HEAD^
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'push mirror does not remove branches' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git branch remove master &&
++		git push --mirror up &&
++		git branch -D remove
++		git push --mirror up 
++	) &&
++	(
++		cd mirror &&
++		invert git show-ref -s --verify refs/heads/remove
 +	)
 +
 +'
 +
-+test_expect_success 'checkout with empty prefix' '
++test_expect_success 'push mirror does not add, update and remove together' '
 +
-+	rm file0 &&
-+	git checkout HEAD -- file0 &&
-+	test "base" = "$(cat file0)"
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git branch remove master &&
++		git push --mirror up &&
++		git branch -D remove &&
++		git branch add master &&
++		echo two >foo && git add foo && git commit -m two &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
++	master_add=$(cd master && git show-ref -s --verify refs/heads/add) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
++	mirror_add=$(cd mirror && git show-ref -s --verify refs/heads/add) &&
++	test "$master_master" = "$mirror_master" &&
++	test "$master_add" = "$mirror_add" &&
++	(
++		cd mirror &&
++		invert git show-ref -s --verify refs/heads/remove
++	)
 +
 +'
-+
-+test_expect_success 'checkout with simple prefix' '
-+
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1 &&
-+	test "hello" = "$(cat dir1/file1)" &&
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1/file1 &&
-+	test "hello" = "$(cat dir1/file1)"
-+
-+'
-+
-+test_expect_success 'checkout with complex relative path' '
-+
-+	rm file1 &&
-+	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
-+
-+'
-+
-+test_expect_failure 'relative path outside tree should fail' \
-+	'git checkout HEAD -- ../../Makefile'
-+
-+test_expect_failure 'incorrect relative path to file should fail (1)' \
-+	'git checkout HEAD -- ../file0'
-+
-+test_expect_failure 'incorrect relative path should fail (2)' \
-+	'( cd dir1 && git checkout HEAD -- ./file0 )'
-+
-+test_expect_failure 'incorrect relative path should fail (3)' \
-+	'( cd dir1 && git checkout HEAD -- ../../file0 )'
 +
 +test_done
--- 
-1.5.3.1
