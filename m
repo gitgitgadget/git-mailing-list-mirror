@@ -1,7 +1,7 @@
 From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH 3/4] Add tests for git push'es mirror mode
-Date: Fri, 9 Nov 2007 23:32:41 -0000
-Message-ID: <1194651161.0@pinky>
+Subject: [PATCH 2/4] git-push: plumb in --mirror mode
+Date: Fri, 9 Nov 2007 23:32:25 -0000
+Message-ID: <1194651145.0@pinky>
 References: <20071109233041.GC301@shadowen.org>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sat Nov 10 00:33:00 2007
@@ -9,266 +9,130 @@ Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqdLB-0003DW-NT
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 00:32:46 +0100
+	id 1IqdL3-0003DW-OM
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 00:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757156AbXKIXcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 18:32:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758828AbXKIXcc
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 18:32:32 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:3510 "EHLO
+	id S1761215AbXKIXcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 18:32:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761173AbXKIXcQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 18:32:16 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:3508 "EHLO
 	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756959AbXKIXcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 18:32:31 -0500
+	with ESMTP id S1759860AbXKIXcP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 18:32:15 -0500
 Received: from localhost ([127.0.0.1] helo=pinky)
 	by hellhawk.shadowen.org with esmtp (Exim 4.63)
 	(envelope-from <apw@shadowen.org>)
-	id 1IqdKv-0006cg-MF
-	for git@vger.kernel.org; Fri, 09 Nov 2007 23:32:29 +0000
+	id 1IqdKg-0006cX-7V
+	for git@vger.kernel.org; Fri, 09 Nov 2007 23:32:14 +0000
 InReply-To: <20071109233041.GC301@shadowen.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64280>
 
 
-Add some tests for git push --mirror mode.
+Plumb in the --mirror mode for git-push.
 
 Signed-off-by: Andy Whitcroft <apw@shadowen.org>
 ---
- t/t5517-push-mirror.sh |  228 ++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 228 insertions(+), 0 deletions(-)
-diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
-new file mode 100755
-index 0000000..0fc6778
---- /dev/null
-+++ b/t/t5517-push-mirror.sh
-@@ -0,0 +1,228 @@
-+#!/bin/sh
+ builtin-push.c |   14 ++++++++++++--
+ transport.c    |    7 +++++++
+ transport.h    |    1 +
+ 3 files changed, 20 insertions(+), 2 deletions(-)
+diff --git a/builtin-push.c b/builtin-push.c
+index 2c56195..d49157c 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -10,7 +10,7 @@
+ #include "parse-options.h"
+ 
+ static const char * const push_usage[] = {
+-	"git-push [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
++	"git-push [--all | --mirror] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
+ 	NULL,
+ };
+ 
+@@ -91,6 +91,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ {
+ 	int flags = 0;
+ 	int all = 0;
++	int mirror = 0;
+ 	int dry_run = 0;
+ 	int force = 0;
+ 	int tags = 0;
+@@ -100,6 +101,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT__VERBOSE(&verbose),
+ 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
+ 		OPT_BOOLEAN( 0 , "all", &all, "push all refs"),
++		OPT_BOOLEAN( 0 , "mirror", &mirror, "mirror all refs"),
+ 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
+ 		OPT_BOOLEAN( 0 , "dry-run", &dry_run, "dry run"),
+ 		OPT_BOOLEAN('f', "force", &force, "force updates"),
+@@ -119,13 +121,21 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		add_refspec("refs/tags/*");
+ 	if (all)
+ 		flags |= TRANSPORT_PUSH_ALL;
++	if (mirror)
++		flags |= (TRANSPORT_PUSH_MIRROR|TRANSPORT_PUSH_FORCE);
+ 
+ 	if (argc > 0) {
+ 		repo = argv[0];
+ 		set_refspecs(argv + 1, argc - 1);
+ 	}
+-	if ((flags & TRANSPORT_PUSH_ALL) && refspec)
++	if ((flags & (TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) && refspec)
+ 		usage_with_options(push_usage, options);
+ 
++	if ((flags & (TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) ==
++				(TRANSPORT_PUSH_ALL|TRANSPORT_PUSH_MIRROR)) {
++		error("--all and --mirror are incompatible");
++		usage_with_options(push_usage, options);
++	}
 +
-+test_description='pushing to a mirror repository'
+ 	return do_push(repo, flags);
+ }
+diff --git a/transport.c b/transport.c
+index 83677fc..fad97d7 100644
+--- a/transport.c
++++ b/transport.c
+@@ -284,6 +284,9 @@ static int rsync_transport_push(struct transport *transport,
+ 	struct child_process rsync;
+ 	const char *args[10];
+ 
++	if (flags & TRANSPORT_PUSH_MIRROR)
++		return error("rsync transport does not support mirror mode");
 +
-+. ./test-lib.sh
+ 	/* first push the objects */
+ 
+ 	strbuf_addstr(&buf, transport->url);
+@@ -387,6 +390,9 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
+ 	int argc;
+ 	int err;
+ 
++	if (flags & TRANSPORT_PUSH_MIRROR)
++		return error("http transport does not support mirror mode");
 +
-+D=`pwd`
-+
-+invert () {
-+	if "$@"; then
-+		return 1
-+	else
-+		return 0
-+	fi
-+}
-+
-+mk_repo_pair () {
-+	rm -rf master mirror &&
-+	mkdir mirror &&
-+	(
-+		cd mirror &&
-+		git init
-+	) &&
-+	mkdir master &&
-+	(
-+		cd master &&
-+		git init &&
-+		git config remote.up.url ../mirror
-+	)
-+}
-+
-+
-+# BRANCH tests
-+test_expect_success 'push mirror does not create new branches' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not update existing branches' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git push --mirror up &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not force update existing branches' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git push --mirror up &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git push --mirror up &&
-+		git reset --hard HEAD^
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not remove branches' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git branch remove master &&
-+		git push --mirror up &&
-+		git branch -D remove
-+		git push --mirror up
-+	) &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/heads/remove
-+	)
-+
-+'
-+
-+test_expect_success 'push mirror does not add, update and remove branches together' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git branch remove master &&
-+		git push --mirror up &&
-+		git branch -D remove &&
-+		git branch add master &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-+	master_add=$(cd master && git show-ref -s --verify refs/heads/add) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-+	mirror_add=$(cd mirror && git show-ref -s --verify refs/heads/add) &&
-+	test "$master_master" = "$mirror_master" &&
-+	test "$master_add" = "$mirror_add" &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/heads/remove
-+	)
-+
-+'
-+
-+
-+# TAG tests
-+test_expect_success 'push mirror does not create new tags' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git tag -f tmaster master &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not update existing tags' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git tag -f tmaster master &&
-+		git push --mirror up &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git tag -f tmaster master &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not force update existing tags' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git tag -f tmaster master &&
-+		git push --mirror up &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git tag -f tmaster master &&
-+		git push --mirror up &&
-+		git reset --hard HEAD^
-+		git tag -f tmaster master &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
-+	test "$master_master" = "$mirror_master"
-+
-+'
-+
-+test_expect_success 'push mirror does not remove tags' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git tag -f tremove master &&
-+		git push --mirror up &&
-+		git tag -d tremove
-+		git push --mirror up
-+	) &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/tags/tremove
-+	)
-+
-+'
-+
-+test_expect_success 'push mirror does not add, update and remove tags together' '
-+
-+	mk_repo_pair &&
-+	(
-+		cd master &&
-+		echo one >foo && git add foo && git commit -m one &&
-+		git tag -f tmaster master &&
-+		git tag -f tremove master &&
-+		git push --mirror up &&
-+		git tag -d tremove &&
-+		git tag tadd master &&
-+		echo two >foo && git add foo && git commit -m two &&
-+		git tag -f tmaster master &&
-+		git push --mirror up
-+	) &&
-+	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
-+	master_add=$(cd master && git show-ref -s --verify refs/tags/tadd) &&
-+	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
-+	mirror_add=$(cd mirror && git show-ref -s --verify refs/tags/tadd) &&
-+	test "$master_master" = "$mirror_master" &&
-+	test "$master_add" = "$mirror_add" &&
-+	(
-+		cd mirror &&
-+		invert git show-ref -s --verify refs/tags/tremove
-+	)
-+
-+'
-+
-+test_done
+ 	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
+ 	argv[0] = "http-push";
+ 	argc = 1;
+@@ -655,6 +661,7 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
+ 
+ 	args.receivepack = data->receivepack;
+ 	args.send_all = !!(flags & TRANSPORT_PUSH_ALL);
++	args.send_mirror = !!(flags & TRANSPORT_PUSH_MIRROR);
+ 	args.force_update = !!(flags & TRANSPORT_PUSH_FORCE);
+ 	args.use_thin_pack = data->thin;
+ 	args.verbose = transport->verbose;
+diff --git a/transport.h b/transport.h
+index d27f562..7f337d2 100644
+--- a/transport.h
++++ b/transport.h
+@@ -30,6 +30,7 @@ struct transport {
+ #define TRANSPORT_PUSH_ALL 1
+ #define TRANSPORT_PUSH_FORCE 2
+ #define TRANSPORT_PUSH_DRY_RUN 4
++#define TRANSPORT_PUSH_MIRROR 8
+ 
+ /* Returns a transport suitable for the url */
+ struct transport *transport_get(struct remote *, const char *);
