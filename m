@@ -1,68 +1,81 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: [BUG] git-rebase fails when a commit message contains a diff
-Date: Fri, 9 Nov 2007 14:18:15 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711091417500.4362@racer.site>
+Date: Fri, 9 Nov 2007 14:19:56 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711091418510.4362@racer.site>
 References: <20071109011214.GA5903@diku.dk> <7vlk98xkm3.fsf@gitster.siamese.dyndns.org>
- <7vhcjwxk1s.fsf@gitster.siamese.dyndns.org> <B2BAA0E1-8DA7-417D-AE25-53D8690810ED@zib.de>
+ <7vhcjwxk1s.fsf@gitster.siamese.dyndns.org> <7v640cxitc.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711090225110.4362@racer.site> <7v1wb0xhxq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Fri Nov 09 15:18:48 2007
+Cc: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 15:20:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqUh0-0003so-1C
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 15:18:42 +0100
+	id 1IqUid-0004Tb-S6
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 15:20:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754585AbXKIOS0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 09:18:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758271AbXKIOS0
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 09:18:26 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39391 "HELO mail.gmx.net"
+	id S1758399AbXKIOUH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 09:20:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758302AbXKIOUH
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 09:20:07 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50233 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754431AbXKIOS0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 09:18:26 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 14:18:24 -0000
+	id S1753378AbXKIOUF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 09:20:05 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 14:20:03 -0000
 Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp003) with SMTP; 09 Nov 2007 15:18:24 +0100
+  by mail.gmx.net (mp056) with SMTP; 09 Nov 2007 15:20:03 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/3RY92z+X3UfU+RO5igviYHFnANxDq8vEEjQu5yl
-	uIsMn8GeDIlfeX
+X-Provags-ID: V01U2FsdGVkX1+XzpJxzt+XAhnzn4WozgfrwVShjgcMbWd6zrks1U
+	kzPZM2t9hCsUr7
 X-X-Sender: gene099@racer.site
-In-Reply-To: <B2BAA0E1-8DA7-417D-AE25-53D8690810ED@zib.de>
+In-Reply-To: <7v1wb0xhxq.fsf@gitster.siamese.dyndns.org>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64187>
 
 Hi,
 
-On Fri, 9 Nov 2007, Steffen Prohaska wrote:
+On Thu, 8 Nov 2007, Junio C Hamano wrote:
 
-> On Nov 9, 2007, at 2:51 AM, Junio C Hamano wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> > 
-> > > That's a known design limitation of applymbox/mailinfo.  Any
-> > > line that looks like a beginning of a patch in e-mail ("^--- ",
-> > > "^---$", "^diff -", and "^Index: ") terminates the commit log.
-> > 
-> > Ok, so that explains the symptom.  What's the next step?
-> > 
-> >  * The applymbox/mailinfo pair should continue to split the
-> >    commit log message at the first such line.  There is no point
-> >    breaking established workflow, and people in communities that
-> >    exchange patches via e-mail already know to avoid this issue
-> >    by indenting quoted diff snippet in the log message,
-> >    e.g. 5be507fc.
+> > On Thu, 8 Nov 2007, Junio C Hamano wrote:
+> >
+> >> I wonder if this is a sensible thing to do, regardless of the issue 
+> >> of commit log message that contains anything.
+> >> 
+> >> The patch replaces git-rebase with git-rebase--interactive.  The only 
+> >> difference from the existing "git-rebase -i" is if the command is 
+> >> called without "-i" the initial "here is the to-do list. please 
+> >> rearrange the lines, modify 'pick' to 'edit' or whatever as 
+> >> appropriate" step is done without letting the user edit the list.
+> >
+> > Hmm.  I don't know, really.  I had the impression that the "git 
+> > format-patch | git am" pipeline would be faster.
 > 
-> I wasn't aware of this.
+> Heh, I did not read rebase--interactive carefully enough.
+> 
+> Unless told to use merge with "rebase -m", rebase replays the change by 
+> extracting and applying patches, and speed comparison was about that vs 
+> merge based replaying; I thought make_patch was done in order to avoid 
+> using cherry-pick (which is based on merge-recursive) and doing patch 
+> application with three-way fallback.  Apparently that is not what 
+> "interactive" does.
+> 
+> Perhaps pick_one () could be taught to perform the 3-way fallback dance 
+> git-am plays correctly.  The patch I sent to make 
+> git-rebase--interactive take over git-rebase would then become quite 
+> reasonable, I would think.
 
-But there's a really easy workaround: use --merge with git rebase.
+I have a different idea: How about changing cherry-pick to try a simple 
+patch first?  If that fails, we can always go back to merge-recursive (or 
+merge-nu once that is ready).
 
 Ciao,
 Dscho
