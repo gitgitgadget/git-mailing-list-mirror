@@ -1,107 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/2] Add strchrnul()
-Date: Fri, 9 Nov 2007 17:44:49 +0100
-Message-ID: <200711091744.50017.jnareb@gmail.com>
-References: <4733AEA0.1060602@lsrfire.ath.cx> <fh1o4o$jei$1@ger.gmane.org> <473467C4.8020208@op5.se>
+From: Michael Poole <mdpoole@troilus.org>
+Subject: Re: tracking remotes with Git
+Date: Fri, 09 Nov 2007 11:37:17 -0500
+Message-ID: <87ode31iki.fsf@graviton.dyn.troilus.org>
+References: <b1e3a35f0711090444g3c31e862g4ef4ef8139927840@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-15?q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Nov 09 17:45:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Ivan Shmakov" <oneingray@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 17:46:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqWyt-0005K4-FF
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 17:45:19 +0100
+	id 1IqWzm-0005gE-4n
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 17:46:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbXKIQpF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2007 11:45:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754068AbXKIQpE
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 11:45:04 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:2472 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753410AbXKIQpB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 11:45:01 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so525778nfb
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 08:44:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=SNbt0QF2LLIvBMFkxs4yQmgBEj56VOTr25ZfeKo0XRE=;
-        b=qb306HVnh/ZXHtpMyJHJkhKmRfti/NDJRo5UNLjs02ygngg2ruk9mL9EYpKGcJ5rNDz428jK2OjHL6CIMHHOKO1Q2BbVuDT07ZRdQKJg2Swbtwy6btMu493S50qDgr/WzZkz1XquTCTUfIUwYxOSUeIi1NDtbOLL9KxDEwV1WAc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=GfXX8qLQfck0zJfZPy3m+dGAA6Fxw/C4guNtsmjUF0ke9EgyDqWQOW706WeZDU261AvfsKiehzhmT8d2iN5Gef+itjxy/zXI/ayPI70k1yQNXsurI5DD0l0EYfnTi4l/vvhhU1pQ6UxEYtrb+7ujEKF6DlMZaiHI4P4zg3ZkYZ0=
-Received: by 10.86.98.18 with SMTP id v18mr1557258fgb.1194626698258;
-        Fri, 09 Nov 2007 08:44:58 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.213.178])
-        by mx.google.com with ESMTPS id 3sm1601362fge.2007.11.09.08.44.55
-        (version=SSLv3 cipher=OTHER);
-        Fri, 09 Nov 2007 08:44:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <473467C4.8020208@op5.se>
-Content-Disposition: inline
+	id S1754601AbXKIQp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 11:45:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754581AbXKIQp6
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 11:45:58 -0500
+Received: from 24-75-174-210-st.chvlva.adelphia.net ([24.75.174.210]:46362
+	"EHLO sanosuke.troilus.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754512AbXKIQp5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 11:45:57 -0500
+X-Greylist: delayed 518 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Nov 2007 11:45:57 EST
+Received: by sanosuke.troilus.org (Postfix, from userid 1000)
+	id 84CA689C110; Fri,  9 Nov 2007 11:37:17 -0500 (EST)
+In-Reply-To: <b1e3a35f0711090444g3c31e862g4ef4ef8139927840@mail.gmail.com> (Ivan Shmakov's message of "Fri\, 9 Nov 2007 19\:44\:50 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64218>
 
-Andreas Ericsson wrote:
-> Jakub Narebski wrote:
->> Ren=E9 Scharfe wrote:
+Ivan Shmakov writes:
 
->>> +#if !defined(__GLIBC__) && !__GLIBC_PREREQ(2, 1)
->>> +# define strchrnul(s, c) gitstrchrnul(s, c)
->>> +static inline char *gitstrchrnul(const char *s, int c)
->>> +{
->>> +       while (*s && *s !=3D c)
->>> +               s++;
->>> +
->>> +       return (char *)s;
->>> +}
->>> +#endif
->>> +
->>=20
->> This is good solution, although I'm not sure about the check itself.
->> What if somebody has libc which is not glibc, but it does have
->> strchrnul?=20
->=20
-> They most likely fall into the minority that get to suffer from
-> using code that's as fast as what's in there today, although
-> a bit more readable. The glibc optimization is really only
-> worthwhile for architectures where strchrnul()-like operations
-> have microcode support, or when it's used on large strings.
+>         I'm using Git (1.5.3.5 debian 1) for about a day or so, and I'm
+>         quite impressed that it allows tracking remote repositories
+>         (I've tried CVS and SVN) so easily with `git-cvsimport' and
+>         `git-svn'.  However, I've ran into a couple of problems with
+>         them:
+>
+>         * it looks like `git-cvsimport' uses its own CVS protocol
+>           implementation which doesn't support compression; I've tried
+>           to clone a repository of a project hosted in CVS since circa
+>           1998 and it 20 MiB or so to obtain revisions until 2000 or so;
+>           any ways to minimize traffic?
 
-If we end up using this solution, then adding test for strchrnul in the=
-=20
-configure (configure.ac and config.mak.in) is not needed...
+What I do is arguably a horrible kludge, but it works well: rsync to
+mirror the CVS repository to my local drive, and cvsimport from that.
+When I was tweaking the import process (command-line options and the
+author conversion file), having the local copy helped a lot.
 
-> YMMV. I suppose rewriting it as
->=20
-> #if defined(__GLIBC_PREREQ) && __GLIBC_PREREQ(2, 1)
-
-#if !defined(HAVE_STRCHRNUL) && \
-     defined(__GLIBC_PREREQ) && __GLIBC_PREREQ(2, 1)
-
-> # define HAVE_STRCHRNUL
-> #endif
->=20
-> #ifdef HAVE_STRCHRNUL
-> ...
->=20
-> would work too, and will provide an easier way out for other fellas
-> wanting to say "Hey, my favourite solaris libc has this too!". OTOH,
-> that rewrite can be done when the first such case appears.
-
-=2E..but if we end up using this version (be it HAVE_STRCHRNUL, or=20
-NO_STRCHRNUL), then test for strchrnul in ./configure is I think
-necessary.
-
---=20
-Jakub Narebski
-Poland
+Michael Poole
