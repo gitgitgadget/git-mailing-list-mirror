@@ -1,64 +1,51 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: git 1.5.3.5 error over NFS
-Date: Fri, 9 Nov 2007 09:31:39 -0600
-Message-ID: <18228.32091.865519.312011@lisa.zopyra.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: corrupt object on git-gc
+Date: Fri, 09 Nov 2007 16:34:38 +0100
+Message-ID: <47347E0E.1040205@viscovery.net>
+References: <4fe79b4b0711090538wf483ce7j89c518962e89780e@mail.gmail.com>	 <473464A2.7080003@op5.se> <4fe79b4b0711090701g7a43cdfdi5e20e5ffb437d7bb@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 09 16:32:07 2007
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org,
+	Yossi Leybovich <sleybo@mellanox.co.il>
+To: Yossi Leybovich <sleybo@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 16:35:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqVq2-000872-Su
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 16:32:07 +0100
+	id 1IqVst-0000qE-8o
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 16:35:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762227AbXKIPbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 10:31:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760130AbXKIPbv
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 10:31:51 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:61395 "EHLO zopyra.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761697AbXKIPbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 10:31:50 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id lA9FVnP18527;
-	Fri, 9 Nov 2007 09:31:49 -0600
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1763002AbXKIPeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 10:34:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762907AbXKIPeo
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 10:34:44 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:17942 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762789AbXKIPen (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 10:34:43 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IqVs2-0000WD-4z; Fri, 09 Nov 2007 16:34:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id E097B6C4; Fri,  9 Nov 2007 16:34:38 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <4fe79b4b0711090701g7a43cdfdi5e20e5ffb437d7bb@mail.gmail.com>
+X-Spam-Score: 1.2 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_95=3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64202>
 
-I've brought this up before, but I don't recall a resolution to it.
+Yossi Leybovich schrieb:
+> [about corrupt loose object '4b9458b3786228369c63936db65827de3cc06200']
 
-We have an NFS-mounted filesystem, and git pull is choking on it.
+You can try to create a clone (after you have fixed up the artificial 
+breakages that you made). If that goes well, then the bad object is 
+referenced only from reflogs.
 
-% uname -a
-Linux uhlr.zopyra.com 2.6.9-42.0.2.ELsmp #1 SMP Wed Aug 23 13:38:27 BST 2006 x86_64 x86_64 x86_64 GNU/Linux
-
-% git --version
-git version 1.5.3.5
-
-% git pull
-remote: Generating pack...
-remote: Done counting 998 objects.
-remote: Result has 836 objects.
-remote: Deltifying 836 objects.
-remote:  100% (836/836) done
-Indexing 836 objects...
-remote: Total 836 (delta 526), reused 688 (delta 380)
-  100% (836/836) done
-Resolving 526 deltas...
-fatal: cannot pread pack file: No such file or directory
-fatal: index-pack died with error code 128
-fatal: Fetch failure: git://source/repo
-
-I looked through the archives of this list and did not see a final
-resolution, other than a suspected bug in the OS NFS code.
-
-Do we just need to update our OS?
-
-
-Bill
+-- Hannes
