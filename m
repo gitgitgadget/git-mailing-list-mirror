@@ -1,124 +1,110 @@
-From: "Yossi Leybovich" <sleybo@gmail.com>
-Subject: Re: corrupt object on git-gc
-Date: Fri, 9 Nov 2007 10:01:29 -0500
-Message-ID: <4fe79b4b0711090701g7a43cdfdi5e20e5ffb437d7bb@mail.gmail.com>
-References: <4fe79b4b0711090538wf483ce7j89c518962e89780e@mail.gmail.com>
-	 <473464A2.7080003@op5.se>
+From: "Simon Sasburg" <simon.sasburg@gmail.com>
+Subject: Re: linux-2.6 clone with CygWin git
+Date: Fri, 9 Nov 2007 16:02:21 +0100
+Message-ID: <981e6de60711090702y2132a5eq889ac1b62993adce@mail.gmail.com>
+References: <598D5675D34BE349929AF5EDE9B03E270174D8A2@az33exm24.fsl.freescale.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Yossi Leybovich" <sleybo@mellanox.co.il>
-To: "Andreas Ericsson" <ae@op5.se>
-X-From: git-owner@vger.kernel.org Fri Nov 09 16:02:03 2007
+Cc: git@vger.kernel.org
+To: "Medve Emilian" <Emilian.Medve@freescale.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 16:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqVMh-00041A-Nn
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 16:01:48 +0100
+	id 1IqVNW-0004MN-IZ
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 16:02:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754431AbXKIPBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 10:01:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759500AbXKIPBb
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 10:01:31 -0500
-Received: from nz-out-0506.google.com ([64.233.162.227]:45526 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753943AbXKIPBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 10:01:30 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so532874nze
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 07:01:29 -0800 (PST)
+	id S1759860AbXKIPCX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 10:02:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758875AbXKIPCX
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 10:02:23 -0500
+Received: from wa-out-1112.google.com ([209.85.146.177]:22900 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759500AbXKIPCW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 10:02:22 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so634141wah
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 07:02:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wTDF+rZLdBrlCVgCPWoT4scDyo/brS4gW34xKUPq1B4=;
-        b=R6CZ0cAEvGHjqXXFIJdJDW+ZmdcM0LUX9u8z6bl6BJbWQBeMYZNbXOUSzPMU7LHEZZxJcmE6K4tayFq2UmW5AO6NjJFxmNFn3WLwI54eJM9lvTjRcJubImmdiFSpwPFz5wNmN2GbU8I1KMZoYeXUGi+ElIKdRKZbTV6eqSbQswg=
+        bh=CZ7TZMwqOg9DiyupzP+n66E0ZDMM/7PyQc0ts0FwiS4=;
+        b=llkRz2UJ2Kr5reY/ukKpxEqXh3x/aCE/7j4w66rgqMHHYsD1Qyvh+Nc893cehcbDTdmZ/HGdFZMh8ex4nnoQiDf2rgih7ybYGQDBydcu8o3XIPZhg3xTgWfPUgrN5fKO7Vmr8Fz5drykRTgcw7OzxuelBxUqQ/LxDH5hWV4jD0w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=deDw/QdzGtQLx5LPRtU+SBYPhXQ8Ft4zyu6UdVpwCHygnfOBDMgJ7pr5tPctJJXbWHXXINxX4DvzN/jWkkUODTqgZ2QoNBBr7NHKogekTzIDDhkF1dwOZFvicUu5Nqq9gUGD5NE5dskqotERbB8jxLxIqKOzJw970JpF043QkGk=
-Received: by 10.142.216.9 with SMTP id o9mr518603wfg.1194620489164;
-        Fri, 09 Nov 2007 07:01:29 -0800 (PST)
-Received: by 10.142.217.12 with HTTP; Fri, 9 Nov 2007 07:01:29 -0800 (PST)
-In-Reply-To: <473464A2.7080003@op5.se>
+        b=BjV/u4CIYUlc23RF+/zsbF2+zd9wchBafU3JHf+IezDy6XXlZhMvk4BunHxF77/5nUYVJw4sc2avn6r0Re0JVYFGRIWTVewJqJCYPXzqSuQimeayCUaPk1XHgJCMTKIVyzZHplASHL3BC3+WW+3C7pN5P2EO/neonbovPSGY9FU=
+Received: by 10.114.111.1 with SMTP id j1mr258597wac.1194620541593;
+        Fri, 09 Nov 2007 07:02:21 -0800 (PST)
+Received: by 10.114.124.16 with HTTP; Fri, 9 Nov 2007 07:02:21 -0800 (PST)
+In-Reply-To: <598D5675D34BE349929AF5EDE9B03E270174D8A2@az33exm24.fsl.freescale.net>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64198>
 
-On Nov 9, 2007 8:46 AM, Andreas Ericsson <ae@op5.se> wrote:
+This is not a problem with git.
+
+The kernel tree contains files which only differ from other files by case.
+
+If on a case-insensitive filesystem this will cause problems like the
+ones you noticed.
+
+On Nov 9, 2007 3:29 PM, Medve Emilian <Emilian.Medve@freescale.com> wrote:
+> Hello,
 >
-> Is this a super-secret project or you can make a tarball of the .git
-> directory and send it to me? Trying to track down the cause through
-> email is decidedly slow.
 >
-
-Actually yes , I am not sure I can send the repository , I will
-farther check that.
+> I noticed that something might not be right with my CygWin git (latest
+> CygWin relevant build packages + a few days old git build from the next
+> & master branches). When I clone, say,  Linus' tree over the native git
+> protocol everything goes fine but a git-status shows this:
 >
-> One tree uses the object. I'm not sure if any commit-objects
-> use the tree. Try
+> $ git-status
+> # On branch master
+> # Changed but not updated:
+> #   (use "git add <file>..." to update what will be committed)
+> #
+> #       modified:   include/linux/netfilter/xt_CONNMARK.h
+> #       modified:   include/linux/netfilter/xt_DSCP.h
+> #       modified:   include/linux/netfilter/xt_MARK.h
+> #       modified:   include/linux/netfilter/xt_TCPMSS.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_CONNMARK.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_DSCP.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_ECN.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_MARK.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_TCPMSS.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_TOS.h
+> #       modified:   include/linux/netfilter_ipv4/ipt_TTL.h
+> #       modified:   include/linux/netfilter_ipv6/ip6t_HL.h
+> #       modified:   include/linux/netfilter_ipv6/ip6t_MARK.h
+> #       modified:   net/ipv4/netfilter/ipt_ECN.c
+> #       modified:   net/ipv4/netfilter/ipt_TOS.c
+> #       modified:   net/ipv4/netfilter/ipt_TTL.c
+> #       modified:   net/ipv6/netfilter/ip6t_HL.c
+> #       modified:   net/netfilter/xt_CONNMARK.c
+> #       modified:   net/netfilter/xt_DSCP.c
+> #       modified:   net/netfilter/xt_MARK.c
+> #       modified:   net/netfilter/xt_TCPMSS.c
+> #
+> no changes added to commit (use "git add" and/or "git commit -a")
 >
-> for b in $(git branch --no-color -a | cut -b3-); do
-> for rev in $(git rev-list HEAD); do
->        git ls-tree -r $rev | grep -q 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
->        test $? -eq 0 && echo $rev && break
-> done
-> done
-
-tried this and it return empty
-
-[mellanox@mellanox-compile ib]$
-[mellanox@mellanox-compile ib]$  for b in $(git branch --no-color -a |
-cut -b3-); do
-> for rev in $(git rev-list HEAD); do
-> git ls-tree -r $rev | grep -q 2d9263c6d23595e7cb2a21e5ebbb53655278dff8;
-> test $? -eq 0 && echo $rev && break;
->  done; done
-[mellanox@mellanox-compile ib]$
-[mellanox@mellanox-compile ib]$
-
-[BTW I didn't notice u use the b varieble so I also tried gi rev-list
-$b but still empty ]
-I also tried to remove object and tree and apperently other trees and
-commits reference to these objects
-
- mv ../9458b3786228369c63936db65827de3cc06200  ../4b/
-mv: cannot stat `../9458b3786228369c63936db65827de3cc06200': No such
-file or directory
-[mellanox@mellanox-compile ib]$ mv
-.git/objects/4b/9458b3786228369c63936db65827de3cc06200  ../4b/
-[mellanox@mellanox-compile ib]$ mv
-.git/objects/2d/9263c6d23595e7cb2a21e5ebbb53655278dff8  ../2d/
-[mellanox@mellanox-compile ib]$ git-fsck --full
-broken link from    tree e5a0044c4ccae7635f07414c1f155bac72d25fd9
-              to    tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
-dangling commit 0d43a63623237385e432572bf61171713dcd8e98
-dangling commit 4fc6b1127e4a7f4ff5b65a2dd8a90779b5aff3e0
-dangling commit 7da607374fe2b1ae09228d2035dd608c73dad7c8
-dangling commit 004ef09ae022c60a30f9cd61f90d18df5db3628e
-broken link from    tree 8bd00402b2a20024f4556107b8a729b0205657db
-              to    tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
-dangling commit 85112c6fabb6b8913ab244a8645d67380616eba6
-missing tree 2d9263c6d23595e7cb2a21e5ebbb53655278dff8
-dangling commit bd98481afa93356fa6daa4b6f88c4e631ae2fd72
-dangling commit e81e3d2c9c25e5bf5b31327b10b23f9bd0a6d056
-dangling commit 92ff9b8cbc771345c9cde0c7fef2c23bb79242b9
-
-
-
+> git-fsck --strict --full finds no fault in the clone, git-reset --hard
+> goes fine but changes nothing in the output of git-status. Some
+> additional superficial investigation showed that git-diff doesn't even
+> compare my checked out tree against the latest commit. Checkout of
+> various commits shows the same issue.
 >
-> If it turns up empty, you *should* be able to safely delete
-> 2d9263c6d23595e7cb2a21e5ebbb53655278dff8 and
-> 4b9458b3786228369c63936db65827de3cc06200
+> Can somebody please double-check this scenario for me just to validate
+> that this happens only due to some particular factors combination on my
+> box?
 >
-> Make sure to take a backup first though.
-
-a lot of commits and trees point to this
-
 >
-> --
-> Andreas Ericsson                   andreas.ericsson@op5.se
-> OP5 AB                             www.op5.se
-> Tel: +46 8-230225                  Fax: +46 8-230231
+> Thanks,
+> Emil.
+> -
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 >
