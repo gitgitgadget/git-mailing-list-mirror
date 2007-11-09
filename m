@@ -1,62 +1,68 @@
-From: Sven Herzberg <sven@imendio.com>
-Subject: git submodules and diffing
-Date: Fri, 9 Nov 2007 22:19:25 +0100
-Message-ID: <4D079E0B-D6FB-4FBA-B449-2EFBFD5A5DE4@imendio.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git-list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 22:54:41 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
+Date: Fri, 9 Nov 2007 22:18:54 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711092218150.4362@racer.site>
+References: <4733AEA6.1040802@lsrfire.ath.cx> <Pine.LNX.4.64.0711090122470.4362@racer.site>
+ <4734CD78.4000704@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Nov 09 23:19:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqboG-0007Im-C7
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 22:54:40 +0100
+	id 1IqcCB-0006wy-QU
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 23:19:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754724AbXKIVyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 16:54:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754664AbXKIVyZ
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 16:54:25 -0500
-Received: from holken.mikan.net ([88.131.94.251]:34810 "EHLO holken.mikan.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754431AbXKIVyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 16:54:24 -0500
-X-Greylist: delayed 2110 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Nov 2007 16:54:24 EST
-Received: from localhost (localhost [127.0.0.1])
-	by holken.mikan.net (Postfix) with ESMTP id EEF371459D
-	for <git@vger.kernel.org>; Fri,  9 Nov 2007 22:19:08 +0100 (CET)
-Received: from holken.mikan.net ([127.0.0.1])
-	by localhost (holken.mikan.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 15024-08 for <git@vger.kernel.org>;
-	Fri, 9 Nov 2007 22:19:05 +0100 (CET)
-Received: from [192.168.2.108] (p548FC53A.dip.t-dialin.net [84.143.197.58])
-	by holken.mikan.net (Postfix) with ESMTP id 9B7F711E89
-	for <git@vger.kernel.org>; Fri,  9 Nov 2007 22:19:05 +0100 (CET)
-X-Mailer: Apple Mail (2.752.3)
-X-Virus-Scanned: Debian amavisd-new at holken.mikan.net
-X-Spam-Status: No, score=-97.611 tagged_above=-999 required=4
-	tests=[AWL=0.301, RCVD_IN_SORBS_DUL=2.088, USER_IN_WHITELIST=-100]
-X-Spam-Score: -97.611
-X-Spam-Level: 
+	id S1755210AbXKIWTH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 17:19:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755192AbXKIWTG
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 17:19:06 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43738 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755091AbXKIWTF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 17:19:05 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 22:19:02 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp001) with SMTP; 09 Nov 2007 23:19:02 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18PPvMELXMPpqH2hSWeU0/B4VZgRSFfqlIrpBh5Qi
+	A6PdxE7caYXO2p
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4734CD78.4000704@lsrfire.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64264>
 
 Hi,
 
-when I started working with git submodules, I realized that git-diff  
-only lists the revision ids of a submodule if it has changed. I have  
-created a repository which includes a diff command for git-submodule,  
-so you can use it like "gut submodule diff <modules...>"
+On Fri, 9 Nov 2007, Ren? Scharfe wrote:
 
-I pushed my git tree at git://git.imendio.com/sven/git.git
+> Johannes Schindelin schrieb:
+> > Hi,
+> > 
+> > On Fri, 9 Nov 2007, Ren? Scharfe wrote:
+> > 
+> >>  strbuf.c |   24 ++++++
+> >>  strbuf.h |    3 +
+> >>  pretty.c |  276 ++++++++++++++++++++++++++++++++++----------------------------
+> > 
+> > I would be so grateful if you could (trivially) split up this patch into 
+> > the addition of strbuf_expend() (with a small example in the commit 
+> > message), and a patch that uses it in pretty.c.
+> 
+> Makes sense.  Will do next time.
 
-Feel free to look into the changes and request improvements or merge  
-it into your tree.
+You mean next time you write strbuf_expand()?
 
-Regards,
-   Sven
+;-)  I saw that Junio already applied your patch as is.  Hmm.
 
-PS: Please CC me, I'm not on this list
+Ciao,
+Dscho
