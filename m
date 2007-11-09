@@ -1,77 +1,81 @@
-From: "Yossi Leybovich" <sleybo@gmail.com>
-Subject: Re: corrupt object on git-gc
-Date: Fri, 9 Nov 2007 13:37:35 -0500
-Message-ID: <4fe79b4b0711091037g8c6c048h29b7d387e75d62bb@mail.gmail.com>
-References: <4fe79b4b0711090538wf483ce7j89c518962e89780e@mail.gmail.com>
-	 <alpine.LFD.0.999.0711090758560.15101@woody.linux-foundation.org>
-	 <4fe79b4b0711090953h5b06f7d4l2d17972630a4d355@mail.gmail.com>
-	 <alpine.LFD.0.999.0711091000310.15101@woody.linux-foundation.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Inconsistencies with git log
+Date: Fri, 09 Nov 2007 19:37:58 +0100
+Organization: At home
+Message-ID: <fh29e4$i6v$1@ger.gmane.org>
+References: <Pine.LNX.4.64.0711072255420.4362@racer.site> <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> <Pine.LNX.4.64.0711072309380.4362@racer.site> <9e4733910711071529m604f3b12v29b3a040074ea4e@mail.gmail.com> <Pine.LNX.4.64.0711080003080.4362@racer.site> <9e4733910711071609t3e5412f1mf02e501b2d820bb3@mail.gmail.com> <alpine.LFD.0.999.0711090747210.15101@woody.linux-foundation.org> <9e4733910711090920m6b0b7704x7c5a3849215f385c@mail.gmail.com> <alpine.LFD.0.999.0711090929130.15101@woody.linux-foundation.org> <alpine.LFD.0.999.0711090943120.15101@woody.linux-foundation.org> <20071109182248.GD28800@xp.machine.xx> <7vd4ujtgh7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, ae@op5.se,
-	"Yossi Leybovich" <sleybo@mellanox.co.il>
-To: "Linus Torvalds" <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 19:38:01 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 19:39:14 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqYjs-0001mi-Ap
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 19:37:56 +0100
+	id 1IqYkv-0002F4-Me
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 19:39:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196AbXKIShi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 13:37:38 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752594AbXKIShi
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 13:37:38 -0500
-Received: from nz-out-0506.google.com ([64.233.162.238]:44852 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751990AbXKIShh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 13:37:37 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so586845nze
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 10:37:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=A1t8K3SBA1w5uJKNBri8nAyl5TXyjZfElZ4Gsb+uAO8=;
-        b=EmJllo70h+dNHJOsAXNbe4x0cjeNtkhFiv9c75cPadhAV71EH3lMz2bEKatHstADt5YJQUhcPWLh/0Agq9U+7JPfz58dF/eaXet8tmtRUSlj9KpQypb4nto6RS/BMWVa87P5n8rjioFuYBFutj2os9m5tVFTV5f0q6IiPExx+bc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=fvIny1yI4Fl0uUK0ZsUjhVPZBcZ7t79ABvHT4Hq3Wqp5OpfdFPBa0yhoyNrmxj0m5o0zzqRSBnaUDYNW5gTmJqLpoTHxm9o48yRZTb2OHJ3Lznd8xKUaGVWEJEzwsTnJIqdaReGM8aKkOcEJrTiSY90FWTaksJVM6OK/D6D0vxE=
-Received: by 10.114.157.1 with SMTP id f1mr997579wae.1194633455634;
-        Fri, 09 Nov 2007 10:37:35 -0800 (PST)
-Received: by 10.114.174.5 with HTTP; Fri, 9 Nov 2007 10:37:35 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.999.0711091000310.15101@woody.linux-foundation.org>
-Content-Disposition: inline
+	id S1756120AbXKISiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 13:38:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756022AbXKISiQ
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 13:38:16 -0500
+Received: from main.gmane.org ([80.91.229.2]:51296 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823AbXKISiP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 13:38:15 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IqYk3-0006n6-3q
+	for git@vger.kernel.org; Fri, 09 Nov 2007 18:38:07 +0000
+Received: from abvp178.neoplus.adsl.tpnet.pl ([83.8.213.178])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 18:38:07 +0000
+Received: from jnareb by abvp178.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 18:38:07 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvp178.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64246>
 
-On Nov 9, 2007 1:02 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
->
->
-> On Fri, 9 Nov 2007, Yossi Leybovich wrote:
-> >
-> > Ok, tried that and unfortuantly the SHA1 number is apear only one
-> >
-> > [mellanox@mellanox-compile ib]$ git log --raw --all --full-history --
-> > SymmK/St.c  | grep 4b9
-> > :100755 100755 308806c... 4b9458b3786228369c63936db65827de3cc06200 M  SymmK/St.c
->
-> Actually, that's not at all "unfortunately", because that implies that
-> it's the very *latest* version of that "SymmK/St.c" file. I really think
-> you already had it checked out, but didn't try my first suggestion of just
-> doing "git hash-object -w SymmK/St.c" which likely would have fixed it
-> already (unless you had changed it in your working tree, of course!)
->
-Its very old version of the file.
-What interesting is the second part of the experiment
-I tried to apply the same commit on this file and it leaded to different SHA1
+Junio C Hamano wrote:
 
+> Peter Baumann <waste.manager@gmx.de> writes:
+> 
+>> Hm. I tried to run your 'git log' and 'git log .' example and a diff
+>> revealed that the output of those two isn't the same, contrary to what I
+>> thought.
+>>
+>> In the 'git-log .' case, there should be done a history simplification,
+>> but then only commits which don't change anything are pruned and AFAIR
+>> 'git commit' doesn't allow this. Using core git, one could create commits
+>> with the same tree as their parent, but I don't think that all the commits
+>> which get removed in the '.' case where produced that way. There has to be
+>> another case I can't figure out.
+> 
+> The answer is "merges".
+> 
+> If a merge does not change the tree from one of the ancestors,
+> the side branches are pruned out, to give you _one_ explanation
+> of how you got there.  And by pruning such side branches, you
+> get the simpler explanation.
+> 
+> Linus gave the example of "log origin/pu ."; there is at least
+> one merge I am aware of that did not change any path (it is the
+> one that merges "jc/maint-format-patch-encoding" topic).  With
+> the path limiter, the merge commit and the two commits that
+> leads to it on the side branch are hidden away.
 
+Does it mean that "git log" and "git log --full-history ." produce
+the same output?
 
-
->                Linus
->
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
