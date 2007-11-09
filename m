@@ -1,135 +1,111 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] Add strchrnul()
-Date: Fri, 9 Nov 2007 01:21:27 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711090119430.4362@racer.site>
-References: <4733AEA0.1060602@lsrfire.ath.cx>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/3] Documentation: lost-found is now deprecated.
+Date: Thu, 08 Nov 2007 17:21:48 -0800
+Message-ID: <7v7iksz00j.fsf_-_@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711072253580.4362@racer.site>
+	<7vlk998u6r.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711080041120.4362@racer.site>
+	<20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se>
+	<20071108160114.GB20988@diku.dk>
+	<7vzlxo1mga.fsf@gitster.siamese.dyndns.org>
+	<20071109002001.GB5082@diku.dk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:21:57 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:22:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIZD-0000fV-MV
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:21:52 +0100
+	id 1IqIZZ-0000jp-Ro
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:22:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807AbXKIBVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 20:21:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbXKIBVg
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:21:36 -0500
-Received: from mail.gmx.net ([213.165.64.20]:37012 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752494AbXKIBVf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 20:21:35 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 01:21:34 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp048) with SMTP; 09 Nov 2007 02:21:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/3bFo7FfP35JE07wqQoo0ZIToyJv4EzdAwaWWP8E
-	pEkOM/nylzNuLn
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4733AEA0.1060602@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1752899AbXKIBV5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 20:21:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752823AbXKIBV5
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:21:57 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:39611 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752663AbXKIBV4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 20:21:56 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 4487B310;
+	Thu,  8 Nov 2007 20:22:17 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 86A6893AEB;
+	Thu,  8 Nov 2007 20:22:12 -0500 (EST)
+In-Reply-To: <20071109002001.GB5082@diku.dk> (Jonas Fonseca's message of "Fri,
+	9 Nov 2007 01:20:02 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64103>
 
-Hi,
+This makes it possible to mark commands that are deprecated in the
+command list of the primary manual page git(7), and uses it to
+mark "git lost-found" as deprecated.
 
-On Fri, 9 Nov 2007, Ren? Scharfe wrote:
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> diff --git a/Makefile b/Makefile
-> index 0d5590f..578c999 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -30,6 +30,8 @@ all::
->  #
->  # Define NO_MEMMEM if you don't have memmem.
->  #
-> +# Define NO_STRCHRNUL if you don't have strchrnul.
-> +#
->  # Define NO_STRLCPY if you don't have strlcpy.
->  #
->  # Define NO_STRTOUMAX if you don't have strtoumax in the C library.
-> @@ -406,6 +408,7 @@ ifeq ($(uname_S),Darwin)
->  	OLD_ICONV = UnfortunatelyYes
->  	NO_STRLCPY = YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  endif
->  ifeq ($(uname_S),SunOS)
->  	NEEDS_SOCKET = YesPlease
-> @@ -413,6 +416,7 @@ ifeq ($(uname_S),SunOS)
->  	SHELL_PATH = /bin/bash
->  	NO_STRCASESTR = YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	NO_HSTRERROR = YesPlease
->  	ifeq ($(uname_R),5.8)
->  		NEEDS_LIBICONV = YesPlease
-> @@ -438,6 +442,7 @@ ifeq ($(uname_O),Cygwin)
->  	NO_D_INO_IN_DIRENT = YesPlease
->  	NO_STRCASESTR = YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	NO_SYMLINK_HEAD = YesPlease
->  	NEEDS_LIBICONV = YesPlease
->  	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
-> @@ -452,12 +457,14 @@ endif
->  ifeq ($(uname_S),FreeBSD)
->  	NEEDS_LIBICONV = YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	BASIC_CFLAGS += -I/usr/local/include
->  	BASIC_LDFLAGS += -L/usr/local/lib
->  endif
->  ifeq ($(uname_S),OpenBSD)
->  	NO_STRCASESTR = YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	NEEDS_LIBICONV = YesPlease
->  	BASIC_CFLAGS += -I/usr/local/include
->  	BASIC_LDFLAGS += -L/usr/local/lib
-> @@ -473,6 +480,7 @@ endif
->  ifeq ($(uname_S),AIX)
->  	NO_STRCASESTR=YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	NO_STRLCPY = YesPlease
->  	NEEDS_LIBICONV=YesPlease
->  endif
-> @@ -485,6 +493,7 @@ ifeq ($(uname_S),IRIX64)
->  	NO_SETENV=YesPlease
->  	NO_STRCASESTR=YesPlease
->  	NO_MEMMEM = YesPlease
-> +	NO_STRCHRNUL = YesPlease
->  	NO_STRLCPY = YesPlease
->  	NO_SOCKADDR_STORAGE=YesPlease
->  	SHELL_PATH=/usr/gnu/bin/bash
+ * Here is what I have been preparing for queuing.
 
-Might be easier to define HAVE_STRCHRNUL ;-)
+ Documentation/cmd-list.perl |   16 ++++++++++------
+ 1 files changed, 10 insertions(+), 6 deletions(-)
 
-> diff --git a/compat/strchrnul.c b/compat/strchrnul.c
-> new file mode 100644
-> index 0000000..51839fe
-> --- /dev/null
-> +++ b/compat/strchrnul.c
-> @@ -0,0 +1,8 @@
-> +#include "../git-compat-util.h"
-> +
-> +char *gitstrchrnul(const char *s, int c)
-> +{
-> +	while (*s && *s != c)
-> +		s++;
-> +	return (char *)s;
-> +}
-
-This is so short, I think it is even better to inline it.
-
-Ciao,
-Dscho
+diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
+index 8d21d42..0066064 100755
+--- a/Documentation/cmd-list.perl
++++ b/Documentation/cmd-list.perl
+@@ -3,7 +3,8 @@
+ use File::Compare qw(compare);
+ 
+ sub format_one {
+-	my ($out, $name) = @_;
++	my ($out, $nameattr) = @_;
++	my ($name, $attr) = @$nameattr;
+ 	my ($state, $description);
+ 	$state = 0;
+ 	open I, '<', "$name.txt" or die "No such file $name.txt";
+@@ -26,8 +27,11 @@ sub format_one {
+ 		die "No description found in $name.txt";
+ 	}
+ 	if (my ($verify_name, $text) = ($description =~ /^($name) - (.*)/)) {
+-		print $out "gitlink:$name\[1\]::\n";
+-		print $out "\t$text.\n\n";
++		print $out "gitlink:$name\[1\]::\n\t";
++		if ($attr) {
++			print $out "($attr) ";
++		}
++		print $out "$text.\n\n";
+ 	}
+ 	else {
+ 		die "Description does not match $name: $description";
+@@ -39,8 +43,8 @@ while (<DATA>) {
+ 	next if /^#/;
+ 
+ 	chomp;
+-	my ($name, $cat) = /^(\S+)\s+(.*)$/;
+-	push @{$cmds{$cat}}, $name;
++	my ($name, $cat, $attr) = /^(\S+)\s+(.*?)(?:\s+(.*))?$/;
++	push @{$cmds{$cat}}, [$name, $attr];
+ }
+ 
+ for my $cat (qw(ancillaryinterrogators
+@@ -126,7 +130,7 @@ git-instaweb                            ancillaryinterrogators
+ gitk                                    mainporcelain
+ git-local-fetch                         synchingrepositories
+ git-log                                 mainporcelain
+-git-lost-found                          ancillarymanipulators
++git-lost-found                          ancillarymanipulators	deprecated
+ git-ls-files                            plumbinginterrogators
+ git-ls-remote                           plumbinginterrogators
+ git-ls-tree                             plumbinginterrogators
+-- 
+1.5.3.5.1622.g41d10
