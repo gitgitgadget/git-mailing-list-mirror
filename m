@@ -1,110 +1,99 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Add missing inside_work_tree setting in setup_git_directory_gently
-Date: Fri, 9 Nov 2007 11:32:24 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711091129450.4362@racer.site>
+Subject: [PATCH] builtin-blame: set up the work_tree before the first file
+ access
+Date: Fri, 9 Nov 2007 11:34:07 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711091132290.4362@racer.site>
 References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
  <7vir4ivdcr.fsf@gitster.siamese.dyndns.org> <20071104070307.GA26071@laptop>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-784504316-1194607944=:4362"
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:32:56 2007
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:34:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqS6S-0006qs-Pk
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:32:50 +0100
+	id 1IqS8H-0007M0-Ks
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751925AbXKILce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 06:32:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbXKILce
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:32:34 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50955 "HELO mail.gmx.net"
+	id S1752005AbXKILe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:34:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbXKILe1
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:34:27 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55142 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751903AbXKILcd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 06:32:33 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 11:32:31 -0000
+	id S1751937AbXKILe0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:34:26 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 11:34:14 -0000
 Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp053) with SMTP; 09 Nov 2007 12:32:31 +0100
+  by mail.gmx.net (mp050) with SMTP; 09 Nov 2007 12:34:14 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19y8Z8HuixyuaUSpQC5m5vsoLFg4ZIxG7rR3qoUyY
-	fl2uTDj/ztXA3i
+X-Provags-ID: V01U2FsdGVkX18JoD10jRkJbEb0hjKJHS4s3CmdP1aSJRzGX32g7g
+	hAwoUS4G1S1E/5
 X-X-Sender: gene099@racer.site
 In-Reply-To: <20071104070307.GA26071@laptop>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64168>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-784504316-1194607944=:4362
-Content-Type: TEXT/PLAIN; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+We check in cmd_blame() if the specified path is there, but we
+failed to set up the working tree before that.
 
-Hi,
+While at it, make setup_work_tree() just return if it was run
+before.
 
-On Sun, 4 Nov 2007, Nguyen Thai Ngoc Duy wrote:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-> On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
-> > Nguyễn Thái Ngọc Duy <pclouds@gmail.com> writes:
-> > 
-> > > When both GIT_DIR and GIT_WORK_TREE are set, and
-> > > setup_git_directory_gently() changes the current working
-> > > directory accordingly, it should also set inside_work_tree = 1.
-> > >
-> > > Without this, work_tree handling code in setup_git_directory()
-> > > will be activated. If you stay in root work tree (no prefix),
-> > > it does not harm. It does if you work from a subdirectory though.
-> > 
-> > Please add automated test script for this, thanks.
-> > 
-> 
-> Thank you for reminding.  I tried to put a test in
-> t1501-worktree.sh and found out core.worktree can override
-> inside_work_tree previously set by setup_git_directory_gently(),
-> activating the worktree code in setup_git_directory() again.
-> 
-> This made me think setup_git_directory_gently() should use
-> get_git_work_tree() instead. But then git_work_tree_cfg may not be
-> initialized when get_git_work_tree() is called (starting from
-> setup_git_directory(), git_work_tree_cfg is initialized in
-> check_repository_format_version(), which is called _after_
-> setup_git_directory_gently()).
-> 
-> The interaction between these variables and functions is really beyond
-> my knowledge. Johannes, can you have a look at this? In theory the
-> following test should pass:
-> 
-> diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-> index 7ee3820..bdb7720 100755
-> --- a/t/t1501-worktree.sh
-> +++ b/t/t1501-worktree.sh
-> @@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from work tree, too' '
->  	 test sub/dir/tracked = "$(git ls-files)")
->  '
->  
-> +test_expect_success 'Try a command from subdir in worktree' '
-> +	(cd repo.git/work/sub &&
-> +	GIT_DIR=../.. GIT_WORK_TREE=.. git blame dir/tracked)
-> +'
-> +
->  test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE' '
->  	cd repo.git/work/sub/dir &&
->  	GIT_DIR=../../.. GIT_WORK_TREE=../.. GIT_PAGER= \
+	IMO both this patch and the recent patch to call setup_work_tree() 
+	are needed.  Only the second call to setup_work_tree() will know 
+	if there was no revision specified, and the first one will know if 
+	a -- has been seen.
 
-This does not really test work_tree, but if blame uses the work_tree 
-machinery correctly.
+ builtin-blame.c |    1 +
+ setup.c         |   10 ++++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-I will send out a patch to builtin-blame.c in a minute.
-
-However, this test case still fails, since blame needs a HEAD revision!  
-And in t1501 there is no commit done yet.
-
-Ciao,
-Dscho
-
---8323584-784504316-1194607944=:4362--
+diff --git a/builtin-blame.c b/builtin-blame.c
+index 55a3c0b..ba80bf8 100644
+--- a/builtin-blame.c
++++ b/builtin-blame.c
+@@ -2295,6 +2295,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 			else if (i != argc - 1)
+ 				usage(blame_usage); /* garbage at end */
+ 
++			setup_work_tree();
+ 			if (!has_path_in_work_tree(path))
+ 				die("cannot stat path %s: %s",
+ 				    path, strerror(errno));
+diff --git a/setup.c b/setup.c
+index 084d722..1421a2c 100644
+--- a/setup.c
++++ b/setup.c
+@@ -207,12 +207,18 @@ static const char *set_work_tree(const char *dir)
+ }
+ 
+ void setup_work_tree(void) {
+-	const char *work_tree = get_git_work_tree();
+-	const char *git_dir = get_git_dir();
++	const char *work_tree, *git_dir;
++	static int initialized = 0;
++
++	if (initialized)
++		return;
++	work_tree = get_git_work_tree();
++	git_dir = get_git_dir();
+ 	if (!is_absolute_path(git_dir))
+ 		set_git_dir(make_absolute_path(git_dir));
+ 	if (!work_tree || chdir(work_tree))
+ 		die("This operation must be run in a work tree");
++	initialized = 1;
+ }
+ 
+ /*
+-- 
+1.5.3.5.1645.g1f4df
