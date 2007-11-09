@@ -1,147 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Port git commit to C.
-Date: Thu, 08 Nov 2007 15:14:46 -0800
-Message-ID: <7vy7d8z5w9.fsf@gitster.siamese.dyndns.org>
-References: <1194541140-3062-1-git-send-email-krh@redhat.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3] pretty=format: Avoid some expensive calculations
+ when not needed
+Date: Fri, 09 Nov 2007 01:49:19 +0100
+Message-ID: <4733AE8F.4080403@lsrfire.ath.cx>
+References: <Pine.LNX.4.64.0711041912190.4362@racer.site>	<Pine.LNX.4.64.0711041915290.4362@racer.site>	<7v8x5cqxn0.fsf@gitster.siamese.dyndns.org>	<472F7B2F.4050608@lsrfire.ath.cx>	<7vejf4kwry.fsf@gitster.siamese.dyndns.org>	<4730EB4E.4080903@lsrfire.ath.cx> <4730F5FA.3030705@lsrfire.ath.cx> <7vhcjxaire.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:35 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIFI-00047A-VR
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:17 +0100
+	id 1IqIFN-00047A-SR
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762220AbXKHX45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 18:56:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761979AbXKHX44
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 18:56:56 -0500
-Received: from lollipop.listbox.com ([208.210.124.78]:52865 "EHLO
-	lollipop.listbox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756221AbXKHX4z (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 18:56:55 -0500
-Received: from sceptre.pobox.com (sceptre.pobox.com [207.106.133.20])
-	by lollipop.listbox.com (Postfix) with ESMTP id 7FC1846C1E1
-	for <git@vger.kernel.org>; Thu,  8 Nov 2007 18:17:47 -0500 (EST)
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 682CC2F0;
-	Thu,  8 Nov 2007 18:15:14 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8FE2593A15;
-	Thu,  8 Nov 2007 18:15:11 -0500 (EST)
-In-Reply-To: <1194541140-3062-1-git-send-email-krh@redhat.com> (Kristian
-	=?utf-8?Q?H=C3=B8gsberg's?= message of "Thu, 8 Nov 2007 11:59:00 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760720AbXKIA7t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 19:59:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757856AbXKIA7s
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 19:59:48 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:52599
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756422AbXKIA7r (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 19:59:47 -0500
+Received: from [10.0.1.201] (p57B7C9DB.dip.t-dialin.net [87.183.201.219])
+	by neapel230.server4you.de (Postfix) with ESMTP id E32D8873BA;
+	Fri,  9 Nov 2007 01:49:39 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vhcjxaire.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64096>
 
-A huge diff.
+Junio C Hamano schrieb:
+> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>=20
+>> I haven't seen any comments on strbuf_expand.  Is it too far out?
+>> Here it is again, adjusted for current master and with the changes
+>> to strbuf.[ch] coming first:
+>=20
+> Numbers talk ;-).
 
-I'll quote the difference between this version and the version
-previously parked on 'pu', and comment, after re-reverting what
-you reverted from the parked version (which has minor tweaks
-such as removing git-runstatus from .gitignore I made
-previously).
+:-)  I just hope someone else has compared the times, too..
 
->  builtin-commit.c |   88 +++++++++++++++++++++++++++---------------------------
->  1 files changed, 44 insertions(+), 44 deletions(-)
-> 
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index f108e90..669cc6b 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -70,25 +70,22 @@ static char *prepare_index(const char **files, const char *prefix)
->  	struct tree *tree;
->  	struct lock_file *next_index_lock;
->  
-> +	if (interactive) {
-> +		interactive_add();
-> +		return get_index_file();
-> +	}
-> +
+> In your previous round, you alluded that the strbuf_expand()
+> interface could allow caching of the return value of fn(), but I
+> do not think strbuf_expand() in this patch has anything to
+> directly support that notion.
+>=20
+> Nor I would expect to --- fn() could keep the really expensive
+> information cached, keyed with context value, if it wanted to,
+> but in practice for the purpose of format_commit_item() I do not
+> offhand see anything cacheable and reusable, unless the user did
+> stupid things (e.g. use more than one %h in the format string).
 
-So interactive bypasses everything else, which makes sense.
+Yes, that's what I arrived at, too, when I actually wrote and used
+the function.
 
-What happens when the user aborts interactive_add, wishing to
-abort the whole commit process?
+> I added a few paragraphs to describe the API in the commit log
+> message, and rewrote "# master" to "(master)" etc.
 
-> @@ -267,36 +264,41 @@ static int message_is_empty(struct strbuf *sb, int start)
->  
->  static void determine_author_info(struct strbuf *sb)
->  {
-> -	char *p, *eol;
-> -	char *name = NULL, *email = NULL;
-> +	char *name, *email, *date;
->  
-> -	if (force_author) {
-> -		const char *eoname = strstr(force_author, " <");
-> -		const char *eomail = strchr(force_author, '>');
-> +	name = getenv("GIT_AUTHOR_NAME");
-> +	email = getenv("GIT_AUTHOR_EMAIL");
-> +	date = getenv("GIT_AUTHOR_DATE");
->  
-> -		if (!eoname || !eomail)
-> -			die("malformed --author parameter\n");
-> -		name = xstrndup(force_author, eoname - force_author);
-> -		email = xstrndup(eoname + 2, eomail - eoname - 2);
-> -		/* REVIEW: drops author date from amended commit on --amend --author=<author> */
-> -		strbuf_addf(sb, "author %s\n",
-> -			    fmt_ident(name, email,
-> -				      getenv("GIT_AUTHOR_DATE"), 1));
-> -		free(name);
-> -		free(email);
-> -	} else if (use_message) {
-> -		p = strstr(use_message_buffer, "\nauthor");
-> -		if (!p)
-> +	if (use_message) {
-> +		const char *a, *lb, *rb, *eol;
-> +
-> +		a = strstr(use_message_buffer, "\nauthor ");
-> +		if (!a)
->  			die("invalid commit: %s\n", use_message);
+Thanks!  I'll send a slightly enhanced version in a two-patch
+series -- with an actual commit message, including your API
+desciption -- in just a few seconds.
 
-You know in what sense it is invalid here and ...
-
-> -		p++;
-> -		eol = strchr(p, '\n');
-> -		if (!eol)
-> +
-> +		lb = strstr(a + 8, " <");
-> +		rb = strstr(a + 8, "> ");
-> +		eol = strchr(a + 8, '\n');
-> +		if (!lb || !rb || !eol)
->  			die("invalid commit: %s\n", use_message);
-
-... here.  Would it be more helpful to say "No author line", and
-"Cannot parse author line", I wonder.  Probably too much.
-
-> -		strbuf_add(sb, p, eol + 1 - p);
-> -	} else {
-> -		strbuf_addf(sb, "author %s\n", git_author_info(1));
-> +		name = xstrndup(a + 8, lb - (a + 8));
-> +		email = xstrndup(lb + 2, rb - (lb + 2));
-> +		date = xstrndup(rb + 2, eol - (rb + 2));
->  	}
-> +
-> +	if (force_author) {
-> +		const char *lb = strstr(force_author, " <");
-> +		const char *rb = strchr(force_author, '>');
-> +
-> +		if (!lb || !rb)
-> +			die("malformed --author parameter\n");
-> +		name = xstrndup(force_author, lb - force_author);
-> +		email = xstrndup(lb + 2, rb - (lb + 2));
-> +	}
-> +
-> +	strbuf_addf(sb, "author %s\n", fmt_ident(name, email, date, 1));
-
-I see a slight leak here of name/email/date depending on how
-they are obtained.  Probably it is too much hassle to deal with
-for too little gain.
+Ren=C3=A9
