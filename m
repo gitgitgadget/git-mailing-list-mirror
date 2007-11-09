@@ -1,59 +1,134 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Port git commit to C.
-Date: Thu, 08 Nov 2007 15:47:36 -0800
-Message-ID: <7vmytoz4dj.fsf@gitster.siamese.dyndns.org>
-References: <1194541140-3062-1-git-send-email-krh@redhat.com>
-	<20071108232751.GC4899@steel.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>,
-	git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:21 2007
+From: David Symonds <dsymonds@gmail.com>
+Subject: [PATCH] git-checkout: Test for relative path use.
+Date: Fri,  9 Nov 2007 11:36:07 +1100
+Message-ID: <11945685732608-git-send-email-dsymonds@gmail.com>
+References: <11945685673280-git-send-email-dsymonds@gmail.com>
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Andreas Ericsson <ae@op5.se>,
+	David Symonds <dsymonds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:01:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIFM-00047A-LE
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:21 +0100
+	id 1IqIFQ-00047A-CZ
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:01:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763524AbXKIAcU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 8 Nov 2007 19:32:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763525AbXKIAcU
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 19:32:20 -0500
-Received: from lollipop.listbox.com ([208.210.124.78]:57738 "EHLO
-	lollipop.listbox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758970AbXKIAcU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 19:32:20 -0500
-Received: from sceptre.pobox.com (sceptre.pobox.com [207.106.133.20])
-	by lollipop.listbox.com (Postfix) with ESMTP id EF7F041D7FD
-	for <git@vger.kernel.org>; Thu,  8 Nov 2007 18:50:47 -0500 (EST)
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 0E7AA2F2;
-	Thu,  8 Nov 2007 18:48:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9768F93A6B;
-	Thu,  8 Nov 2007 18:48:00 -0500 (EST)
-In-Reply-To: <20071108232751.GC4899@steel.home> (Alex Riesen's message of
-	"Fri, 9 Nov 2007 00:27:52 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754794AbXKIBAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 20:00:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753563AbXKIBAv
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:00:51 -0500
+Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:28568 "EHLO
+	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751321AbXKIBAt (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 8 Nov 2007 20:00:49 -0500
+X-IronPort-AV: E=Sophos;i="4.21,392,1188743400"; 
+   d="scan'208";a="224084302"
+Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
+  by ipmail02.adl2.internode.on.net with ESMTP; 09 Nov 2007 11:06:15 +1030
+X-Mailer: git-send-email 1.5.3.1
+In-Reply-To: <11945685673280-git-send-email-dsymonds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64090>
 
-Alex Riesen <raa.lkml@gmail.com> writes:
+Signed-off-by: David Symonds <dsymonds@gmail.com>
+---
+	Test 5 in this series fails because of a bug in git-ls-files, where
+		git-ls-files t/../
+	(with or without --full-name) returns no files.
 
-> Kristian H=C3=B8gsberg, Thu, Nov 08, 2007 17:59:00 +0100:
->> This makes git commit a builtin and moves git-commit.sh to
->> contrib/examples.  This also removes the git-runstatus
->> helper, which was mostly just a git-status.sh implementation detail.
->
-> Applied instead of 00c8febf563da on Junio's pu it breaks t1400:
+ t/t2008-checkout-subdir.sh |   79 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 79 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2008-checkout-subdir.sh
 
-Don't worry.  It will pass with two of the Dscho's patches.
-
-The racy-git issue is still there, though.
+diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
+new file mode 100755
+index 0000000..f226511
+--- /dev/null
++++ b/t/t2008-checkout-subdir.sh
+@@ -0,0 +1,79 @@
++#!/bin/sh
++#
++# Copyright (c) 2007 David Symonds
++
++test_description='git checkout from subdirectories'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	echo "base" > file0 &&
++	git add file0 &&
++	mkdir dir1 &&
++	echo "hello" > dir1/file1 &&
++	git add dir1/file1 &&
++	mkdir dir2 &&
++	echo "bonjour" > dir2/file2 &&
++	git add dir2/file2 &&
++	test_tick &&
++	git commit -m "populate tree"
++
++'
++
++test_expect_success 'remove and restore with relative path' '
++
++	cd dir1 &&
++	rm ../file0 &&
++	git checkout HEAD -- ../file0 &&
++	test "base" = "$(cat ../file0)" &&
++	rm ../dir2/file2 &&
++	git checkout HEAD -- ../dir2/file2 &&
++	test "bonjour" = "$(cat ../dir2/file2)" &&
++	rm ../file0 ./file1 &&
++	git checkout HEAD -- .. &&
++	test "base" = "$(cat ../file0)" &&
++	test "hello" = "$(cat file1)" &&
++	cd -
++
++'
++
++test_expect_success 'checkout with empty prefix' '
++
++	rm file0 &&
++	git checkout HEAD -- file0 &&
++	test "base" = "$(cat file0)"
++
++'
++
++test_expect_success 'checkout with simple prefix' '
++
++	rm dir1/file1 &&
++	git checkout HEAD -- dir1 &&
++	test "hello" = "$(cat dir1/file1)" &&
++	rm dir1/file1 &&
++	git checkout HEAD -- dir1/file1 &&
++	test "hello" = "$(cat dir1/file1)"
++
++'
++
++test_expect_success 'checkout with complex relative path' '
++
++	rm file1 &&
++	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
++
++'
++
++test_expect_failure 'relative path outside tree should fail' \
++	'git checkout HEAD -- ../../Makefile'
++
++test_expect_failure 'incorrect relative path to file should fail (1)' \
++	'git checkout HEAD -- ../file0'
++
++test_expect_failure 'incorrect relative path should fail (2)' \
++	'cd dir1 && git checkout HEAD -- ./file0'
++
++test_expect_failure 'incorrect relative path should fail (3)' \
++	'cd dir1 && git checkout HEAD -- ../../file0'
++
++test_done
+-- 
+1.5.3.1
