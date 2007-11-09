@@ -1,56 +1,59 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
-Date: Fri, 9 Nov 2007 01:24:00 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711090122470.4362@racer.site>
-References: <4733AEA6.1040802@lsrfire.ath.cx>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH 1/3] Documentation: lost-found is now deprecated.
+Date: Fri, 9 Nov 2007 02:27:58 +0100
+Message-ID: <20071109012758.GB5903@diku.dk>
+References: <Pine.LNX.4.64.0711072253580.4362@racer.site> <7vlk998u6r.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7v7iksz00j.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:24:28 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:28:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIbi-0001DW-Qz
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:24:27 +0100
+	id 1IqIfW-00027z-1s
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:28:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753196AbXKIBYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 20:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752973AbXKIBYM
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:24:12 -0500
-Received: from mail.gmx.net ([213.165.64.20]:36604 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751461AbXKIBYL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 20:24:11 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 01:24:09 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp039) with SMTP; 09 Nov 2007 02:24:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18ZPXxsrDQZsTkFe6GOaUryHm9zkqx5jqUcQ/omSi
-	v/kGx4a+jSnD5s
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4733AEA6.1040802@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1754802AbXKIB2G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 20:28:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754954AbXKIB2G
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:28:06 -0500
+Received: from mgw2.diku.dk ([130.225.96.92]:35002 "EHLO mgw2.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754330AbXKIB2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 20:28:05 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw2.diku.dk (Postfix) with ESMTP id DCD7A19BB06;
+	Fri,  9 Nov 2007 02:28:02 +0100 (CET)
+Received: from mgw2.diku.dk ([127.0.0.1])
+ by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 23183-03; Fri,  9 Nov 2007 02:28:01 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw2.diku.dk (Postfix) with ESMTP id 351A619BB0F;
+	Fri,  9 Nov 2007 02:27:59 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id A92F86DFEEB; Fri,  9 Nov 2007 02:27:37 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id CF5115B8001; Fri,  9 Nov 2007 02:27:58 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7v7iksz00j.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Virus-Scanned: amavisd-new at diku.dk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64107>
 
-Hi,
+Junio C Hamano <gitster@pobox.com> wrote Thu, Nov 08, 2007:
+> This makes it possible to mark commands that are deprecated in the
+> command list of the primary manual page git(7), and uses it to
+> mark "git lost-found" as deprecated.
 
-On Fri, 9 Nov 2007, Ren? Scharfe wrote:
+How about also marking git-tar-tree as deprecated?
 
->  strbuf.c |   24 ++++++
->  strbuf.h |    3 +
->  pretty.c |  276 ++++++++++++++++++++++++++++++++++----------------------------
-
-I would be so grateful if you could (trivially) split up this patch into 
-the addition of strbuf_expend() (with a small example in the commit 
-message), and a patch that uses it in pretty.c.
-
-Thanks,
-Dscho
+-- 
+Jonas Fonseca
