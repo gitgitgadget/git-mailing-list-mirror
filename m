@@ -1,33 +1,33 @@
 From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 03/11] Define free_all_objects to deallocate object pools
-Date: Fri, 9 Nov 2007 06:06:16 -0500
-Message-ID: <20071109110616.GC19368@spearce.org>
+Subject: [PATCH 05/11] Bulk allocate struct commit_list, as we do for struct commit
+Date: Fri, 9 Nov 2007 06:06:24 -0500
+Message-ID: <20071109110623.GE19368@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:07:07 2007
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:07:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqRhG-0007XS-MB
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:06:47 +0100
+	id 1IqRhI-0007XS-7O
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:06:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752144AbXKILGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 06:06:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752039AbXKILGW
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:06:22 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34089 "EHLO
+	id S1758242AbXKILGa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:06:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756118AbXKILGa
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:06:30 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:34095 "EHLO
 	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005AbXKILGU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 06:06:20 -0500
+	with ESMTP id S1752856AbXKILG1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:06:27 -0500
 Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
 	by corvette.plexpod.net with esmtpa (Exim 4.68)
 	(envelope-from <spearce@spearce.org>)
-	id 1IqRgl-0003CA-E6; Fri, 09 Nov 2007 06:06:15 -0500
+	id 1IqRgs-0003CV-Lc; Fri, 09 Nov 2007 06:06:22 -0500
 Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id CCF4A20FBAE; Fri,  9 Nov 2007 06:06:16 -0500 (EST)
+	id 1122120FBAE; Fri,  9 Nov 2007 06:06:24 -0500 (EST)
 Content-Disposition: inline
 User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
@@ -38,256 +38,292 @@ X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64157>
 
-The new API call free_all_objects releases all struct objects that
-have been allocated thus far in the process, invalidating all of
-those pointers and clearing out the object hash.  This resets the
-process to before any objects were parsed and allocated, allowing
-a future revision walk to start from a clean slate without needing
-to clear_commit_marks() first, or worry about parent rewriting.
+Typically every commit has at least one struct commit_list allocated
+for its parent.  It is also not uncommon for there to be more than
+one allocated per commit, especially if merges are common in this
+repository.
 
-The release routines support recursively releasing any buffers held
-by an active object through object specific scrub functions.  These
-only need to free any buffers that had been held by the object and
-are not yet released as any other clearing activity would be handled
-by the next user of the memory.
+Running `git rev-list --all` doesn't usually wind up requiring many
+commit_list items (about 1024 for git.git right now) as the commits
+are output as soon as they are first seen and then the parent list
+is freed as it is no longer necessary for traversal.  However when
+we add --topo-order or --date-order and request sorting the lists
+are not deallocated until after sorting is complete.  Any memory
+they consume during that time just increases our footprint.
 
-Performance testing with `git rev-list --objects --all` shows that
-calling free_all_objects() after completing the traversal doesn't
-cost us any additional significant running time.
+In git.git for 15865 commits we need 50354 commit_lists to complete
+a --topo-order sort.  That's an average of 3 commit_list items per
+commit (I blame my local reflogs of Junio's pu branch for the high
+ratio of commits to their parents).  With that kind of allocation
+individually mallocing them is wasting a lot of memory for these
+very small and otherwise lightwight objects.
+
+Aside from reducing our memory usage during the --topo-order
+sorting case a major benefit from allocating these by blocks is we
+can release them enmass when we release the other objects in the
+object pool.  This reduces the cost of the scrub_commit() function
+as it no longer needs to free each parent entry individually.
 
 Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
 ---
- alloc.c  |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-----
- cache.h  |    1 +
- commit.c |    6 ++++++
- commit.h |    1 +
- object.c |   11 +++++++++++
- object.h |    1 +
- tag.c    |    5 +++++
- tag.h    |    1 +
- tree.c   |    5 +++++
- tree.h   |    1 +
- 10 files changed, 87 insertions(+), 5 deletions(-)
+ alloc.c               |    5 ++++-
+ builtin-diff-tree.c   |    8 ++------
+ builtin-rev-parse.c   |    2 +-
+ builtin-send-pack.c   |    2 +-
+ builtin-show-branch.c |    2 +-
+ cache.h               |    2 ++
+ commit.c              |   13 ++++++-------
+ http-push.c           |    2 +-
+ reflog-walk.c         |    2 +-
+ revision.c            |    6 +++---
+ upload-pack.c         |    2 +-
+ 11 files changed, 23 insertions(+), 23 deletions(-)
 
 diff --git a/alloc.c b/alloc.c
-index a61ae41..aa429ec 100644
+index 5737a73..b69f613 100644
 --- a/alloc.c
 +++ b/alloc.c
 @@ -51,7 +51,7 @@ static void report(const char* name, struct node_pool *p, size_t sz)
+ 	count -= p->nr;
  
- #undef SZ_FMT
- 
--#define DEFINE_ALLOCATOR(name, t)				\
-+#define DEFINE_BASE_ALLOCATOR(name, t)				\
- static struct node_pool name##_pool;				\
- void *alloc_##name##_node(void)					\
- {								\
-@@ -76,6 +76,36 @@ static void report_##name(void)					\
- 	report(#name, &name##_pool, sizeof(t));			\
+ 	sz = (count * sz) >> 10;
+-	fprintf(stderr, "%10s: %8u (" SZ_FMT " kB)", name, count, sz);
++	fprintf(stderr, "%15s: %8u (" SZ_FMT " kB)", name, count, sz);
+ 	if (free)
+ 		fprintf(stderr, ", %8u on free list", free);
+ 	fputc('\n', stderr);
+@@ -144,6 +144,7 @@ static void scrub_any_object(union any_object *o)
+ 	}
  }
  
-+#define DEFINE_ALLOCATOR(name, t)				\
-+DEFINE_BASE_ALLOCATOR(name, t)					\
-+static void free_all_##name(void)				\
-+{								\
-+	struct node_block *b, *n;				\
-+	for (b = name##_pool.block_list; b; b = n) {		\
-+		n = b->next;					\
-+		free(b);					\
-+	}							\
-+	memset(&name##_pool, 0, sizeof(name##_pool));		\
-+}
-+
-+#define DEFINE_SCRUBBING_ALLOCATOR(name, t, scrub)		\
-+DEFINE_BASE_ALLOCATOR(name, t)					\
-+static void free_all_##name(void)				\
-+{								\
-+	struct node_block *b, *n;				\
-+	for (b = name##_pool.block_list; b; b = n) {		\
-+		size_t nr = BLOCKING;				\
-+		char *e = (char*)(b + 1);			\
-+		if (b == name##_pool.block_list)		\
-+			nr -= name##_pool.nr;			\
-+		for (; nr--; e += sizeof(t))			\
-+			scrub((t*)e);				\
-+		n = b->next;					\
-+		free(b);					\
-+	}							\
-+	memset(&name##_pool, 0, sizeof(name##_pool));		\
-+}
-+
- union any_object {
- 	struct object object;
- 	struct blob blob;
-@@ -84,11 +114,22 @@ union any_object {
- 	struct tag tag;
- };
- 
-+static void scrub_any_object(union any_object *o)
-+{
-+	switch (o->object.type) {
-+	case OBJ_COMMIT: scrub_commit(&o->commit); break;
-+	case OBJ_TREE: scrub_tree(&o->tree); break;
-+	case OBJ_BLOB: break;
-+	case OBJ_TAG: scrub_tag(&o->tag); break;
-+	default: die("unknown type %s", typename(o->object.type));
-+	}
-+}
-+
++DEFINE_ALLOCATOR(commit_list, struct commit_list)
  DEFINE_ALLOCATOR(blob, struct blob)
--DEFINE_ALLOCATOR(tree, struct tree)
--DEFINE_ALLOCATOR(commit, struct commit)
--DEFINE_ALLOCATOR(tag, struct tag)
--DEFINE_ALLOCATOR(object, union any_object)
-+DEFINE_SCRUBBING_ALLOCATOR(tree, struct tree, scrub_tree)
-+DEFINE_SCRUBBING_ALLOCATOR(commit, struct commit, scrub_commit)
-+DEFINE_SCRUBBING_ALLOCATOR(tag, struct tag, scrub_tag)
-+DEFINE_SCRUBBING_ALLOCATOR(object, union any_object, scrub_any_object)
- 
- void alloc_report(void)
- {
-@@ -98,3 +139,12 @@ void alloc_report(void)
+ DEFINE_SCRUBBING_ALLOCATOR(tree, struct tree, scrub_tree)
+ DEFINE_SCRUBBING_ALLOCATOR(commit, struct commit, scrub_commit)
+@@ -155,6 +156,7 @@ void alloc_report(void)
+ 	report_blob();
+ 	report_tree();
+ 	report_commit();
++	report_commit_list();
  	report_tag();
  	report_object();
  }
-+
-+void alloc_free_everything(void)
-+{
-+	free_all_blob();
-+	free_all_tree();
-+	free_all_commit();
-+	free_all_tag();
-+	free_all_object();
-+}
+@@ -164,6 +166,7 @@ void alloc_free_everything(void)
+ 	free_all_blob();
+ 	free_all_tree();
+ 	free_all_commit();
++	free_all_commit_list();
+ 	free_all_tag();
+ 	free_all_object();
+ }
+diff --git a/builtin-diff-tree.c b/builtin-diff-tree.c
+index 0b591c8..eb340d2 100644
+--- a/builtin-diff-tree.c
++++ b/builtin-diff-tree.c
+@@ -31,14 +31,10 @@ static int diff_tree_stdin(char *line)
+ 	if (isspace(line[40]) && !get_sha1_hex(line+41, sha1)) {
+ 		/* Graft the fake parents locally to the commit */
+ 		int pos = 41;
+-		struct commit_list **pptr, *parents;
++		struct commit_list **pptr;
+ 
+ 		/* Free the real parent list */
+-		for (parents = commit->parents; parents; ) {
+-			struct commit_list *tmp = parents->next;
+-			free(parents);
+-			parents = tmp;
+-		}
++		free_commit_list(commit->parents);
+ 		commit->parents = NULL;
+ 		pptr = &(commit->parents);
+ 		while (line[pos] && !get_sha1_hex(line + pos, sha1)) {
+diff --git a/builtin-rev-parse.c b/builtin-rev-parse.c
+index d1038a0..7500814 100644
+--- a/builtin-rev-parse.c
++++ b/builtin-rev-parse.c
+@@ -200,7 +200,7 @@ static int try_difference(const char *arg)
+ 				struct commit_list *n = exclude->next;
+ 				show_rev(REVERSED,
+ 					 exclude->item->object.sha1,NULL);
+-				free(exclude);
++				free_commit_list_node(exclude);
+ 				exclude = n;
+ 			}
+ 		}
+diff --git a/builtin-send-pack.c b/builtin-send-pack.c
+index 5a0f5c6..818519e 100644
+--- a/builtin-send-pack.c
++++ b/builtin-send-pack.c
+@@ -82,7 +82,7 @@ static void unmark_and_free(struct commit_list *list, unsigned int mark)
+ 		struct commit_list *temp = list;
+ 		temp->item->object.flags &= ~mark;
+ 		list = temp->next;
+-		free(temp);
++		free_commit_list_node(temp);
+ 	}
+ }
+ 
+diff --git a/builtin-show-branch.c b/builtin-show-branch.c
+index 6dc835d..f10377c 100644
+--- a/builtin-show-branch.c
++++ b/builtin-show-branch.c
+@@ -38,7 +38,7 @@ static struct commit *pop_one_commit(struct commit_list **list_p)
+ 	list = *list_p;
+ 	commit = list->item;
+ 	*list_p = list->next;
+-	free(list);
++	free_commit_list_node(list);
+ 	return commit;
+ }
+ 
 diff --git a/cache.h b/cache.h
-index 7174eb1..8289de1 100644
+index 8289de1..a33c8ee 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -587,6 +587,7 @@ extern void *alloc_commit_node(void);
+@@ -586,6 +586,8 @@ extern void *alloc_tree_node(void);
+ extern void *alloc_commit_node(void);
  extern void *alloc_tag_node(void);
  extern void *alloc_object_node(void);
++extern void *alloc_commit_list_node(void);
++extern void free_commit_list_node(void *);
  extern void alloc_report(void);
-+extern void alloc_free_everything(void);
+ extern void alloc_free_everything(void);
  
- /* trace.c */
- extern void trace_printf(const char *format, ...);
 diff --git a/commit.c b/commit.c
-index f074811..05f3cd6 100644
+index 05f3cd6..796fc59 100644
 --- a/commit.c
 +++ b/commit.c
-@@ -318,6 +318,12 @@ int parse_commit(struct commit *item)
- 	return ret;
+@@ -320,13 +320,12 @@ int parse_commit(struct commit *item)
+ 
+ void scrub_commit(struct commit *item)
+ {
+-	free_commit_list(item->parents);
+ 	free(item->buffer);
  }
  
-+void scrub_commit(struct commit *item)
-+{
-+	free_commit_list(item->parents);
-+	free(item->buffer);
-+}
-+
  struct commit_list *commit_list_insert(struct commit *item, struct commit_list **list_p)
  {
- 	struct commit_list *new_list = xmalloc(sizeof(struct commit_list));
-diff --git a/commit.h b/commit.h
-index aa67986..cd0d286 100644
---- a/commit.h
-+++ b/commit.h
-@@ -39,6 +39,7 @@ struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
- int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size);
- 
- int parse_commit(struct commit *item);
-+void scrub_commit(struct commit *item);
- 
- struct commit_list * commit_list_insert(struct commit *item, struct commit_list **list_p);
- struct commit_list * insert_by_date(struct commit *item, struct commit_list **list);
-diff --git a/object.c b/object.c
-index 16793d9..9b49472 100644
---- a/object.c
-+++ b/object.c
-@@ -43,6 +43,17 @@ int type_from_string(const char *str)
- 	die("invalid object type \"%s\"", str);
+-	struct commit_list *new_list = xmalloc(sizeof(struct commit_list));
++	struct commit_list *new_list = alloc_commit_list_node();
+ 	new_list->item = item;
+ 	new_list->next = *list_p;
+ 	*list_p = new_list;
+@@ -338,7 +337,7 @@ void free_commit_list(struct commit_list *list)
+ 	while (list) {
+ 		struct commit_list *temp = list;
+ 		list = temp->next;
+-		free(temp);
++		free_commit_list_node(temp);
+ 	}
  }
  
-+void free_all_objects(void)
-+{
-+	if (obj_hash) {
-+		free(obj_hash);
-+		obj_hash = NULL;
-+		nr_objs = 0;
-+		obj_hash_size = 0;
-+		alloc_free_everything();
-+	}
-+}
-+
- static unsigned int hash_obj(struct object *obj, unsigned int n)
- {
- 	unsigned int hash = *(unsigned int *)obj->sha1;
-diff --git a/object.h b/object.h
-index 397bbfa..642beeb 100644
---- a/object.h
-+++ b/object.h
-@@ -40,6 +40,7 @@ extern int track_object_refs;
- extern const char *typename(unsigned int type);
- extern int type_from_string(const char *str);
+@@ -374,7 +373,7 @@ struct commit *pop_most_recent_commit(struct commit_list **list,
+ 	struct commit_list *old = *list;
  
-+extern void free_all_objects(void);
- extern unsigned int get_max_object_index(void);
- extern struct object *get_indexed_object(unsigned int);
- extern struct object_refs *lookup_object_refs(struct object *);
-diff --git a/tag.c b/tag.c
-index f62bcdd..c39d3f0 100644
---- a/tag.c
-+++ b/tag.c
-@@ -114,3 +114,8 @@ int parse_tag(struct tag *item)
- 	free(data);
- 	return ret;
+ 	*list = (*list)->next;
+-	free(old);
++	free_commit_list_node(old);
+ 
+ 	while (parents) {
+ 		struct commit *commit = parents->item;
+@@ -416,7 +415,7 @@ struct commit *pop_commit(struct commit_list **stack)
+ 
+ 	if (top) {
+ 		*stack = top->next;
+-		free(top);
++		free_commit_list_node(top);
+ 	}
+ 	return item;
  }
-+
-+void scrub_tag(struct tag *item)
-+{
-+	free(item->tag);
-+}
-diff --git a/tag.h b/tag.h
-index 7a0cb00..933b876 100644
---- a/tag.h
-+++ b/tag.h
-@@ -15,6 +15,7 @@ struct tag {
- extern struct tag *lookup_tag(const unsigned char *sha1);
- extern int parse_tag_buffer(struct tag *item, void *data, unsigned long size);
- extern int parse_tag(struct tag *item);
-+extern void scrub_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
+@@ -561,7 +560,7 @@ static struct commit_list *merge_bases(struct commit *one, struct commit *two)
  
- #endif /* TAG_H */
-diff --git a/tree.c b/tree.c
-index 8c0819f..278dad7 100644
---- a/tree.c
-+++ b/tree.c
-@@ -281,6 +281,11 @@ int parse_tree(struct tree *item)
- 	return parse_tree_buffer(item, buffer, size);
+ 		commit = list->item;
+ 		n = list->next;
+-		free(list);
++		free_commit_list_node(list);
+ 		list = n;
+ 
+ 		flags = commit->object.flags & (PARENT1 | PARENT2 | STALE);
+@@ -592,7 +591,7 @@ static struct commit_list *merge_bases(struct commit *one, struct commit *two)
+ 		struct commit_list *n = list->next;
+ 		if (!(list->item->object.flags & STALE))
+ 			insert_by_date(list->item, &result);
+-		free(list);
++		free_commit_list_node(list);
+ 		list = n;
+ 	}
+ 	return result;
+diff --git a/http-push.c b/http-push.c
+index 99328f5..75f1664 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1931,7 +1931,7 @@ static void unmark_and_free(struct commit_list *list, unsigned int mark)
+ 		struct commit_list *temp = list;
+ 		temp->item->object.flags &= ~mark;
+ 		list = temp->next;
+-		free(temp);
++		free_commit_list_node(temp);
+ 	}
  }
  
-+void scrub_tree(struct tree *tree)
-+{
-+	free(tree->buffer);
-+}
-+
- struct tree *parse_tree_indirect(const unsigned char *sha1)
- {
- 	struct object *obj = parse_object(sha1);
-diff --git a/tree.h b/tree.h
-index dd25c53..d03cfd7 100644
---- a/tree.h
-+++ b/tree.h
-@@ -16,6 +16,7 @@ struct tree *lookup_tree(const unsigned char *sha1);
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
+diff --git a/reflog-walk.c b/reflog-walk.c
+index ee1456b..a6cc6ca 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -236,7 +236,7 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+ 		return;
+ 	}
  
- int parse_tree(struct tree *tree);
-+void scrub_tree(struct tree *tree);
+-	commit->parents = xcalloc(sizeof(struct commit_list), 1);
++	commit->parents = alloc_commit_list_node();
+ 	commit->parents->item = commit_info->commit;
+ 	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
+ }
+diff --git a/revision.c b/revision.c
+index 931f978..d9c3998 100644
+--- a/revision.c
++++ b/revision.c
+@@ -554,7 +554,7 @@ static int limit_list(struct rev_info *revs)
+ 		show_early_output_fn_t show;
  
- /* Parses and returns the tree in the given ent, chasing tags and commits. */
- struct tree *parse_tree_indirect(const unsigned char *sha1);
+ 		list = list->next;
+-		free(entry);
++		free_commit_list_node(entry);
+ 
+ 		if (revs->max_age != -1 && (commit->date < revs->max_age))
+ 			obj->flags |= UNINTERESTING;
+@@ -735,7 +735,7 @@ static void prepare_show_merge(struct rev_info *revs)
+ 	while (bases) {
+ 		struct commit *it = bases->item;
+ 		struct commit_list *n = bases->next;
+-		free(bases);
++		free_commit_list_node(bases);
+ 		bases = n;
+ 		it->object.flags |= UNINTERESTING;
+ 		add_pending_object(revs, &it->object, "(merge-base)");
+@@ -1451,7 +1451,7 @@ static struct commit *get_revision_1(struct rev_info *revs)
+ 		struct commit *commit = entry->item;
+ 
+ 		revs->commits = entry->next;
+-		free(entry);
++		free_commit_list_node(entry);
+ 
+ 		if (revs->reflog_info)
+ 			fake_reflog_parent(revs->reflog_info, commit);
+diff --git a/upload-pack.c b/upload-pack.c
+index 7e04311..51796dc 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -331,7 +331,7 @@ static int reachable(struct commit *want)
+ 	while (work) {
+ 		struct commit_list *list = work->next;
+ 		struct commit *commit = work->item;
+-		free(work);
++		free_commit_list_node(work);
+ 		work = list;
+ 
+ 		if (commit->object.flags & THEY_HAVE) {
 -- 
 1.5.3.5.1622.g41d10
