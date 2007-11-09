@@ -1,99 +1,83 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH] builtin-blame: set up the work_tree before the first file
- access
-Date: Fri, 9 Nov 2007 11:34:07 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711091132290.4362@racer.site>
-References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
- <7vir4ivdcr.fsf@gitster.siamese.dyndns.org> <20071104070307.GA26071@laptop>
+From: Marco Colombo <m.colombo@ed.ac.uk>
+Subject: [PATCH] gitk: Use a different background color for the active head.
+Date: Fri, 09 Nov 2007 11:21:48 +0000
+Message-ID: <473442CC.3050907@ed.ac.uk>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:34:49 2007
+Content-Type: multipart/mixed;
+ boundary="------------010306010900000505090401"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:57:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqS8H-0007M0-Ks
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:34:42 +0100
+	id 1IqSUG-0005nB-5P
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:57:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752005AbXKILe1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 06:34:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751979AbXKILe1
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:34:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:55142 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751937AbXKILe0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 06:34:26 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 11:34:14 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp050) with SMTP; 09 Nov 2007 12:34:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18JoD10jRkJbEb0hjKJHS4s3CmdP1aSJRzGX32g7g
-	hAwoUS4G1S1E/5
-X-X-Sender: gene099@racer.site
-In-Reply-To: <20071104070307.GA26071@laptop>
-X-Y-GMX-Trusted: 0
+	id S1751874AbXKIL5I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:57:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752169AbXKIL5H
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:57:07 -0500
+Received: from lmtp1.ucs.ed.ac.uk ([129.215.149.64]:52585 "EHLO
+	lmtp1.ucs.ed.ac.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578AbXKIL5G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:57:06 -0500
+X-Greylist: delayed 2116 seconds by postgrey-1.27 at vger.kernel.org; Fri, 09 Nov 2007 06:57:06 EST
+Received: from [129.215.104.171] (newton.maths.ed.ac.uk [129.215.104.171])
+	by lmtp1.ucs.ed.ac.uk (8.13.8/8.13.7) with ESMTP id lA9BLmIO014849
+	for <git@vger.kernel.org>; Fri, 9 Nov 2007 11:21:48 GMT
+User-Agent: Thunderbird 1.5.0.12 (X11/20071018)
+X-Edinburgh-Scanned: at lmtp1.ucs.ed.ac.uk
+    with MIMEDefang 2.52, Sophie, Sophos Anti-Virus
+X-Scanned-By: MIMEDefang 2.52 on 129.215.149.64
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64169>
+
+This is a multi-part message in MIME format.
+--------------010306010900000505090401
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 
 
-We check in cmd_blame() if the specified path is there, but we
-failed to set up the working tree before that.
+--------------010306010900000505090401
+Content-Type: text/x-patch;
+ name*0="0001-gitk-Use-a-different-background-color-for-the-activ.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline;
+ filename*0="0001-gitk-Use-a-different-background-color-for-the-activ.pat";
+ filename*1="ch"
 
-While at it, make setup_work_tree() just return if it was run
-before.
+>From 7c7a8f6dbe5c4f96ddbc508fa4ab9c2dbae56d82 Mon Sep 17 00:00:00 2001
+From: Marco Colombo <m.colombo@ed.ac.uk>
+Date: Fri, 9 Nov 2007 10:19:01 +0000
+Subject: [PATCH] gitk: Use a different background color for the active head.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Currently the background color of all heads is green. The active head is
+distinguished only by the use of a bold font. This patch changes the
+background color of the active head to orange, thus making it
+visually more separate from the other heads.
+
+Signed-off-by: Marco Colombo <m.colombo@ed.ac.uk>
 ---
+ gitk |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-	IMO both this patch and the recent patch to call setup_work_tree() 
-	are needed.  Only the second call to setup_work_tree() will know 
-	if there was no revision specified, and the first one will know if 
-	a -- has been seen.
-
- builtin-blame.c |    1 +
- setup.c         |   10 ++++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/builtin-blame.c b/builtin-blame.c
-index 55a3c0b..ba80bf8 100644
---- a/builtin-blame.c
-+++ b/builtin-blame.c
-@@ -2295,6 +2295,7 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 			else if (i != argc - 1)
- 				usage(blame_usage); /* garbage at end */
- 
-+			setup_work_tree();
- 			if (!has_path_in_work_tree(path))
- 				die("cannot stat path %s: %s",
- 				    path, strerror(errno));
-diff --git a/setup.c b/setup.c
-index 084d722..1421a2c 100644
---- a/setup.c
-+++ b/setup.c
-@@ -207,12 +207,18 @@ static const char *set_work_tree(const char *dir)
- }
- 
- void setup_work_tree(void) {
--	const char *work_tree = get_git_work_tree();
--	const char *git_dir = get_git_dir();
-+	const char *work_tree, *git_dir;
-+	static int initialized = 0;
-+
-+	if (initialized)
-+		return;
-+	work_tree = get_git_work_tree();
-+	git_dir = get_git_dir();
- 	if (!is_absolute_path(git_dir))
- 		set_git_dir(make_absolute_path(git_dir));
- 	if (!work_tree || chdir(work_tree))
- 		die("This operation must be run in a work tree");
-+	initialized = 1;
- }
- 
- /*
+diff --git a/gitk b/gitk
+index 1da0b0a..dacbc31 100755
+--- a/gitk
++++ b/gitk
+@@ -4038,6 +4038,7 @@ proc drawtags {id x xt y1} {
+ 	    if {[incr nheads -1] >= 0} {
+ 		set col green
+ 		if {$tag eq $mainhead} {
++		    set col orange
+ 		    set font mainfontbold
+ 		}
+ 	    } else {
 -- 
-1.5.3.5.1645.g1f4df
+1.5.3.4
+
+
+--------------010306010900000505090401--
