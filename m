@@ -1,67 +1,65 @@
-From: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-Subject: Re: [PATCH] builtin-commit: Refresh cache after adding files.
-Date: Fri, 09 Nov 2007 12:13:32 -0500
-Message-ID: <1194628412.30909.7.camel@hinata.boston.redhat.com>
-References: <1194626427-2419-1-git-send-email-krh@redhat.com>
-	 <Pine.LNX.4.64.0711091702190.4362@racer.site>
+From: Pascal Obry <pascal@obry.net>
+Subject: Re: linux-2.6 clone with CygWin git
+Date: Fri, 09 Nov 2007 18:16:17 +0100
+Organization: Home - http://www.obry.net
+Message-ID: <473495E1.3080305@obry.net>
+References: <598D5675D34BE349929AF5EDE9B03E270174D8A2@az33exm24.fsl.freescale.net> <20071109150306.GA20531@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 09 18:14:47 2007
+To: Medve Emilian <Emilian.Medve@freescale.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 18:16:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqXRI-0001F2-EB
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 18:14:40 +0100
+	id 1IqXTA-00024j-Ph
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 18:16:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753727AbXKIROY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2007 12:14:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753475AbXKIROY
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 12:14:24 -0500
-Received: from mx1.redhat.com ([66.187.233.31]:52841 "EHLO mx1.redhat.com"
+	id S1754049AbXKIRQV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2007 12:16:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753987AbXKIRQV
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 12:16:21 -0500
+Received: from smtp21.orange.fr ([80.12.242.48]:10511 "EHLO smtp21.orange.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753196AbXKIROX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 12:14:23 -0500
-Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
-	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lA9HDcu1009216;
-	Fri, 9 Nov 2007 12:13:38 -0500
-Received: from pobox.corp.redhat.com (pobox.corp.redhat.com [10.11.255.20])
-	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA9HDc46016944;
-	Fri, 9 Nov 2007 12:13:38 -0500
-Received: from [192.168.1.105] (dhcp83-9.boston.redhat.com [172.16.83.9])
-	by pobox.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lA9HDbiQ009190;
-	Fri, 9 Nov 2007 12:13:37 -0500
-In-Reply-To: <Pine.LNX.4.64.0711091702190.4362@racer.site>
-X-Mailer: Evolution 2.11.90 (2.11.90-4.fc8) 
+	id S1752823AbXKIRQU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 12:16:20 -0500
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf2116.orange.fr (SMTP Server) with ESMTP id DBE651C0009B
+	for <git@vger.kernel.org>; Fri,  9 Nov 2007 18:16:17 +0100 (CET)
+Received: from [192.168.0.100] (AVelizy-151-1-37-239.w82-120.abo.wanadoo.fr [82.120.19.239])
+	by mwinf2116.orange.fr (SMTP Server) with ESMTP id A1C051C0008F;
+	Fri,  9 Nov 2007 18:16:17 +0100 (CET)
+X-ME-UUID: 20071109171617662.A1C051C0008F@mwinf2116.orange.fr
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071109150306.GA20531@old.davidb.org>
+X-Enigmail-Version: 0.95.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64222>
 
-On Fri, 2007-11-09 at 17:05 +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Fri, 9 Nov 2007, Kristian H=C3=B8gsberg wrote:
->=20
-> > This fixes the race in the last test int t3700.
->=20
-> Well, it is not a race.  My fault.  I thought it was.
->=20
-> What you basically did was to make sure that the index is up-to-date =
-after=20
-> adding the files.  You might even want to say that in the commit mess=
-age,=20
-> and only then say that it fixes t3700, too.
+David Brown a =E9crit :
+> It's because of the case-insensitive nature of the filesystem.  The k=
+ernel
+> contains both an xt_connmark.h and an xt_CONNMARK.h file, that are
+> different.  But only one exists on Windows, so git sees the first one=
+ it
+> wrote as having been modified.
 
-OK, I guess what I was wondering was why write_cache() doesn't write ou=
-t
-an up-to-date index.  I'll send an updated patch.  Do we need a call to
-refresh_cache() when we update the user cache but commit an index
-created from read_tree+add_files?  I.e. after the add_files_to_index()
-call on line 97?  The shell script doesn't do this, it only runs
-update-index --refresh for the index that gets committed.
+Probably not something for the list... but if you ask me this is just
+bad practice anyway. Casing has no semantic, it is nonsense to have two
+files with the same name with different casing!
 
-Kristian
+Pascal.
+
+--=20
+
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|              http://www.obry.net
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver wwwkeys.pgp.net --recv-key C1082595
