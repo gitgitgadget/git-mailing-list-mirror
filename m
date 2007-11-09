@@ -1,72 +1,66 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [BUG] git-rebase fails when a commit message contains a diff
-Date: Fri, 09 Nov 2007 11:29:23 +0100
-Message-ID: <47343683.7080904@op5.se>
-References: <20071109011214.GA5903@diku.dk> <7vlk98xkm3.fsf@gitster.siamese.dyndns.org> <7vhcjwxk1s.fsf@gitster.siamese.dyndns.org> <7v640cxitc.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711090225110.4362@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git rebase --skip
+Date: Fri, 9 Nov 2007 10:59:57 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711091056530.4362@racer.site>
+References: <20071107222105.GA31666@glandium.org> <20071108032308.GA5638@sigill.intra.peff.net>
+ <20071108102412.GA31187@atjola.homenet> <4732E5A8.3020101@op5.se>
+ <20071108104403.GB31187@atjola.homenet> <20071108231632.GC29840@sigill.intra.peff.net>
+ <7vir4cz45z.fsf@gitster.siamese.dyndns.org> <20071109032227.GA31760@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Nov 09 11:29:46 2007
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Andreas Ericsson <ae@op5.se>, Mike Hommey <mh@glandium.org>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:00:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqR7N-0003pF-UE
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 11:29:42 +0100
+	id 1IqRbP-0005c6-C3
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:00:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751617AbXKIK31 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 05:29:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbXKIK31
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 05:29:27 -0500
-Received: from mail.op5.se ([193.201.96.20]:55724 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751515AbXKIK30 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 05:29:26 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 643BD1F0871F;
-	Fri,  9 Nov 2007 11:29:25 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id w7PS4Fz6Weth; Fri,  9 Nov 2007 11:29:24 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 694971F08715;
-	Fri,  9 Nov 2007 11:29:24 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0711090225110.4362@racer.site>
+	id S1751922AbXKILAL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:00:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751696AbXKILAL
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:00:11 -0500
+Received: from mail.gmx.net ([213.165.64.20]:40615 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751874AbXKILAJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:00:09 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 11:00:05 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp034) with SMTP; 09 Nov 2007 12:00:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+lyZ8w2LSl/fB6RO5auZveYQwWXspftiYjme75f0
+	044lyCPdzAQrbI
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071109032227.GA31760@sigill.intra.peff.net>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64153>
 
-Johannes Schindelin wrote:
->> +		case "$INTERACTIVE" in
->> +		t)
->> +			git_editor "$TODO" || die "Could not execute editor"
->> +			;;
->> +		esac
-> 
-> 
-> Would that not be easier to read as
-> 
-> 		test t = "$INTERACTIVE" &&
-> 			git_editor "$TODO" || die "Could not execute editor"
-> 
+Hi,
 
-Written like that, it would die every time $INTERACTIVE isn't "t". You'd need
-curly braces around 
+On Thu, 8 Nov 2007, Jeff King wrote:
 
-	git_editor "$TODO" || die "Could not execute editor"
+> So I am fine with the original patch (unconditional reset --hard), but 
+> it would be nice to see the people who care submit concrete proposals 
+> for such a safety valve.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Isn't having to say "--skip" instead of "--continue" enough?  Some people 
+might complain that it's too easy to get your fingers wired to type 
+--skip.
+
+In that case, I might beg to differ for two reasons: --skip is definitely 
+not the default operation, so the fingers do not get any chance to do 
+that, and even if, they would get wired to --force --skip just as easily.
+
+Besides, after my patch to rebase on a detached HEAD, it is very easy to 
+go back to the original state and try again.
+
+Ciao,
+Dscho
