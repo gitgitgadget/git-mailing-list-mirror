@@ -1,127 +1,66 @@
-From: "Yossi Leybovich" <sleybo@mellanox.co.il>
-Subject: RE: corrupt object on git-gc
-Date: Fri, 9 Nov 2007 14:23:11 +0200
-Message-ID: <6C2C79E72C305246B504CBA17B5500C9029A36F2@mtlexch01.mtl.com>
-References: <6C2C79E72C305246B504CBA17B5500C902535D9C@mtlexch01.mtl.com> <458BC6B0F287034F92FE78908BD01CE814472B3D@mtlexch01.mtl.com> <6C2C79E72C305246B504CBA17B5500C9029A36A1@mtlexch01.mtl.com> <20071109081035.GA2794@steel.home>
+From: "Ivan Shmakov" <oneingray@gmail.com>
+Subject: tracking remotes with Git
+Date: Fri, 9 Nov 2007 19:44:50 +0700
+Message-ID: <b1e3a35f0711090444g3c31e862g4ef4ef8139927840@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "Alex Riesen" <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 13:23:45 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 13:45:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqStY-0005dy-4T
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 13:23:32 +0100
+	id 1IqTER-0004F1-5M
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 13:45:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753398AbXKIMXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 07:23:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752768AbXKIMXR
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 07:23:17 -0500
-Received: from mail.mellanox.co.il ([194.90.237.44]:42890 "EHLO mellanox.co.il"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752088AbXKIMXQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 07:23:16 -0500
-Received: from Internal Mail-Server by MTLPINE1 (envelope-from sleybo@mellanox.co.il)
-	with SMTP; 9 Nov 2007 14:23:14 +0200
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <20071109081035.GA2794@steel.home>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: corrupt object on git-gc
-Thread-Index: AcgiqAXKtN4fN90MRcqyH/1Y6I9BqgAIvXrQ
-x-pineapp-mail-mail-from: sleybo@mellanox.co.il
-x-pineapp-mail-rcpt-to: git@vger.kernel.org
+	id S1757914AbXKIMoy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 07:44:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752399AbXKIMoy
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 07:44:54 -0500
+Received: from ik-out-1112.google.com ([66.249.90.177]:26928 "EHLO
+	ik-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751578AbXKIMox (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 07:44:53 -0500
+Received: by ik-out-1112.google.com with SMTP id c28so258269ika
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 04:44:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=5SyJtyJHB8DqNTRYzromEnTCsiOnKlle3mAXUBxzMfw=;
+        b=dq4+S4OcqfAuDicRnETsyHdz3cTpoMGnoxFEO3stDwzEheLWyQMn7xquUZ+VQPcICln+DW5L8f/n3oqS8r4tOOoMg9OotlE1Op6x5kEXH6ET0pSnyMyIJT6ESOpXfX2PbH6EGeQL0UA0JCF8ppYqjN646iMxG6DJc5WVwH+1u9E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=ZKXb093wJASZRdcPzBYK4ixdEAOgQVlGS3XIRlAQMY8vTeVLOV0CgEoNjcVBFHwiwN1XEfoHykPEwdWA6JSSC/VRxc6g4BApgHGz90glUgwBlew+dfBxZ6PTTp9StpTPEVTLaB2r5k7e887K3MYDSFCWDi4COn8HN6XXyyMRX28=
+Received: by 10.78.149.15 with SMTP id w15mr2292614hud.1194612290738;
+        Fri, 09 Nov 2007 04:44:50 -0800 (PST)
+Received: by 10.78.192.2 with HTTP; Fri, 9 Nov 2007 04:44:50 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64172>
 
-Hi
+        I'm using Git (1.5.3.5 debian 1) for about a day or so, and I'm
+        quite impressed that it allows tracking remote repositories
+        (I've tried CVS and SVN) so easily with `git-cvsimport' and
+        `git-svn'.  However, I've ran into a couple of problems with
+        them:
 
- I know its loose but still I think there are references in the
-repository to this object.
-How I can remove it from the repository ?
+        * it looks like `git-cvsimport' uses its own CVS protocol
+          implementation which doesn't support compression; I've tried
+          to clone a repository of a project hosted in CVS since circa
+          1998 and it 20 MiB or so to obtain revisions until 2000 or so;
+          any ways to minimize traffic?
 
+        * how many revisions will `git-svn fetch' obtain from the SVN
+          repository? I had to run it for several times to get the full
+          history; I've tried to use (undocumented) `--fetch-all'
+          option, but it appears to help (may be but for a little.)
 
-sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib
-$ mv .git/objects/4b ..
+        BTW, does http://.../git.git/ mean a ``bare repository (i. e., a
+        would be /git/.git/) for Git''?
 
-sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib
-$ git-fsck --full
-broken link from    tree ca8022a21a064d075d71a342744e584024fd2782
-              to    blob 4b920d658a05a66a9d18dd34b51d6e3a9f229ce1
-broken link from  commit 2ca27acf05f1631586718b68ce43f0a0400e1f9b
-              to  commit 4b1aabfe3ecc12007535369a2ba17bcee776df64
-dangling commit 0d43a63623237385e432572bf61171713dcd8e98
-dangling tree b303c073c5d6c30de761a5ecce39ab30da81e98a
-dangling tree f3c333f9756e824e6b51e585d734e410790e7dc5
-dangling tree 10a4688d94ab6b1fb1bb3aee7e77255a0e41ae94
-broken link from    tree eea47bf0788a38ac0988de26eddafa8d60caaa58
-              to    blob 4b920d658a05a66a9d18dd34b51d6e3a9f229ce1
-broken link from  commit 06858a6c8d5a6b1ffbc203057d023c48567dd83e
-              to    tree 4b89da873ce6e1b36a818d70d4665b3074f2354c
-dangling commit 4fc6b1127e4a7f4ff5b65a2dd8a90779b5aff3e0
-dangling commit 7da607374fe2b1ae09228d2035dd608c73dad7c8
-missing tree 4b89da873ce6e1b36a818d70d4665b3074f2354c
-broken link from    tree 380b2b78d10136cc2b6e1578f4906fccb3e432b1
-              to    blob 4b920d658a05a66a9d18dd34b51d6e3a9f229ce1>
------Original Message-----
-
-
-
-Thanks
-Yossi 
-
-
-
-
-> From: Alex Riesen [mailto:raa.lkml@gmail.com]
-> Sent: Friday, November 09, 2007 3:11 AM
-> To: Yossi Leybovich
-> Cc: git@vger.kernel.org
-> Subject: Re: corrupt object on git-gc
-> 
-> Yossi Leybovich, Fri, Nov 09, 2007 00:59:47 +0100:
-> > I wonder if someone can help in this error
-> > I tried to do git-gc and got error on corrupted object.
-> >
-> > I do the following:
-> >
-> > $ git-gc
-> > Generating pack...
-> > Done counting 3037 objects.
-> > Deltifying 3037 objects...
-> > error: corrupt loose object
-> '4b9458b3786228369c63936db65827de3cc06200'
-> 
-> It is loose. Nothing uses it in this repository. What do you need to
-> repair it for?
-> 
-> > fatal: object 4b9458b3786228369c63936db65827de3cc06200 cannot be
-read
-> > error: failed to run repack
-> >
-> > sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib
-> > $ cd .git/objects/4b/
-> >
-> > sleybo@SLEYBO-LT /w/work/EMC/ib.071030.001/ib/.git/objects/4b
-> > $ git-fsck-objects.exe 9458b3786228369c63936db65827de3cc06200
-> > error: corrupt loose object
-> '4b9458b3786228369c63936db65827de3cc06200'
-> > error: 4b9458b3786228369c63936db65827de3cc06200: object corrupt or
-> > missing
-> > error: invalid parameter: expected sha1, got
-> > '9458b3786228369c63936db65827de3cc06200'
-> > missing blob 4b9458b3786228369c63936db65827de3cc06200
-> 
-> the directories directly under .git/objects contain the first bytes of
-> sha1, to use filesystem in a more efficient way. git-fsck expects an
-> sha1 (or a reference).
-> 
-> Try running moving the corrupt object (with its *whole* name) some
-> place else and run git-fsck --all.
+PS.  I wonder, if this mailing list accepts mail from unsubscribed
+        `From:'s?
