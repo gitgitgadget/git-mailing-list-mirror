@@ -1,186 +1,61 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: [PATCH 10/11] git-fetch: avoid local fetching from alternate (again)
-Date: Fri, 9 Nov 2007 06:06:45 -0500
-Message-ID: <20071109110645.GJ19368@spearce.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 07/11] git-fetch: Limit automated tag following to only
+ fetched objects
+Date: Fri, 09 Nov 2007 12:28:28 +0100
+Message-ID: <4734445C.6000303@viscovery.net>
+References: <20071109110631.GG19368@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:08:08 2007
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:28:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqRiU-00081j-F6
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:08:02 +0100
+	id 1IqS2b-0005dd-Jv
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:28:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752326AbXKILGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 06:06:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752335AbXKILGu
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:06:50 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:34121 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752276AbXKILGt (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 06:06:49 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IqRhE-0003DU-BO; Fri, 09 Nov 2007 06:06:44 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id BABF620FBAE; Fri,  9 Nov 2007 06:06:45 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
+	id S1751869AbXKIL2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:28:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751874AbXKIL2d
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:28:33 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:11162 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751668AbXKIL2c (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:28:32 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IqS1o-0000AC-4G; Fri, 09 Nov 2007 12:28:00 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id BC8386C4; Fri,  9 Nov 2007 12:28:28 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <20071109110631.GG19368@spearce.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64166>
 
-Back in e3c6f240fd9c5bdeb33f2d47adc859f37935e2df Junio taught
-git-fetch to avoid copying objects when we are fetching from
-a repository that is already registered as an alternate object
-database.  In such a case there is no reason to copy any objects
-as we can already obtain them through the alternate.
+Shawn O. Pearce schrieb:
+> Some of the test vectors for t5515 were affected by this as they
+> were listing "not-for-merge" tags in .git/FETCH_HEAD that were
+> being fetched under the old rule but are now not fetched under the
+> new rule.  To be perfectly honest I have no idea why they were even
+> fetching under the old rule, and I think that's part of the problem
+> with the old rule.  It was very difficult to understand why some
+> things would auto-follow a tag and others wouldn't.
 
-However we need to ensure the objects are all reachable, so we
-run `git rev-list --objects $theirs --not --all` to verify this.
-If any object is missing or unreadable then we need to fetch/copy
-the objects from the remote.  When a missing object is detected
-the git-rev-list process will exit with a non-zero exit status,
-making this condition quite easy to detect.
+The old rule was:
 
-Although git-fetch is currently a builtin (and so is rev-list)
-we cannot invoke the traverse_objects() API at this point in the
-transport code.  The object walker within traverse_objects() calls
-die() as soon as it finds an object it cannot read.  If that happens
-we want to resume the fetch process by calling do_fetch_pack().
-To get aroaund this we spawn git-rev-list into a background process
-to prevent a die() from killing the foreground fetch process,
-thus allowing the fetch process to resume into do_fetch_pack()
-if copying is necessary.
+	Fetch a tag if we have the object that the tag refers to.
 
-We aren't interested in the output of rev-list (a list of SHA-1
-object names that are reachable) or its errors (a "spurious" error
-about an object not being found as we need to copy it) so we redirect
-both stdout and stderr to /dev/null.
+So, If you have an object lingering in your repo, even if it is not 
+accessible by any of the refs - eg. it's a left-over from a previous fetch - 
+then the tag was fetched again.
 
-We run this git-rev-list based check before any fetch as we may
-already have the necessary objects local from a prior fetch.  If we
-don't then its very likely the first $theirs object listed on the
-command line won't exist locally and git-rev-list will die very
-quickly, allowing us to start the network transfer.  This test even
-on remote URLs may save bandwidth if someone runs `git pull origin`,
-sees a merge conflict, resets out, then redoes the same pull just
-a short time later.  If the remote hasn't changed between the two
-pulls and the local repository hasn't had git-gc run in it then
-there is probably no need to perform network transfer as all of
-the objects are local.
-
-Documentation for the new fetch_local_nocopy function was suggested
-and written by Junio, based on his original comment in git-fetch.sh.
-
-Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
----
- transport.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 65 insertions(+), 3 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index f4577b7..883348b 100644
---- a/transport.c
-+++ b/transport.c
-@@ -615,17 +615,76 @@ static struct ref *get_refs_via_connect(struct transport *transport)
- 	return refs;
- }
- 
-+/*
-+ * We would want to bypass the object transfer altogether if
-+ * everything we are going to fetch already exists and connected
-+ * locally.
-+ *
-+ * The refs we are going to fetch are in to_fetch (nr_heads in
-+ * total).  If running
-+ *
-+ *  $ git-rev-list --objects to_fetch[0] to_fetch[1] ... --not --all
-+ *
-+ * does not error out, that means everything reachable from the
-+ * refs we are going to fetch exists and is connected to some of
-+ * our existing refs.
-+ */
-+static int fetch_local_nocopy(struct transport *transport,
-+			       int nr_heads, struct ref **to_fetch)
-+{
-+	struct git_transport_data *data = transport->data;
-+	struct child_process revlist;
-+	char **argv;
-+	int i, j, err;
-+
-+	/*
-+	 * If we are deepening a shallow clone we already have these
-+	 * objects reachable.  Running rev-list here will return with
-+	 * a good (0) exit status and we'll bypass the fetch that we
-+	 * really need to perform.  Claiming failure now will ensure
-+	 * we perform the network exchange to deepen our history.
-+	 */
-+	if (data->depth)
-+		return -1;
-+
-+	i = 0;
-+	argv = xmalloc(sizeof(*argv) * (nr_heads + 6));
-+	argv[i++] = xstrdup("rev-list");
-+	argv[i++] = xstrdup("--quiet");
-+	argv[i++] = xstrdup("--objects");
-+	for (j = 0; j < nr_heads; j++)
-+		argv[i++] = xstrdup(sha1_to_hex(to_fetch[j]->old_sha1));
-+	argv[i++] = xstrdup("--not");
-+	argv[i++] = xstrdup("--all");
-+	argv[i++] = NULL;
-+
-+	memset(&revlist, 0, sizeof(revlist));
-+	revlist.argv = (const char**)argv;
-+	revlist.git_cmd = 1;
-+	revlist.no_stdin = 1;
-+	revlist.no_stdout = 1;
-+	revlist.no_stderr = 1;
-+	err = run_command(&revlist);
-+
-+	for (i = 0; argv[i]; i++)
-+		free(argv[i]);
-+	free(argv);
-+	return err;
-+}
-+
- static int fetch_refs_via_pack(struct transport *transport,
- 			       int nr_heads, struct ref **to_fetch)
- {
- 	struct git_transport_data *data = transport->data;
--	char **heads = xmalloc(nr_heads * sizeof(*heads));
--	char **origh = xmalloc(nr_heads * sizeof(*origh));
-+	char **heads, **origh;
- 	struct ref *refs;
--	char *dest = xstrdup(transport->url);
-+	char *dest;
- 	struct fetch_pack_args args;
- 	int i;
- 
-+	if (!fetch_local_nocopy(transport, nr_heads, to_fetch))
-+		return 0;
-+
- 	memset(&args, 0, sizeof(args));
- 	args.uploadpack = data->uploadpack;
- 	args.keep_pack = data->keep;
-@@ -634,6 +693,9 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.verbose = transport->verbose > 0;
- 	args.depth = data->depth;
- 
-+	heads = xmalloc(nr_heads * sizeof(*heads));
-+	origh = xmalloc(nr_heads * sizeof(*origh));
-+	dest = xstrdup(transport->url);
- 	for (i = 0; i < nr_heads; i++)
- 		origh[i] = heads[i] = xstrdup(to_fetch[i]->name);
- 	refs = fetch_pack(&args, dest, nr_heads, heads, &transport->pack_lockfile);
--- 
-1.5.3.5.1622.g41d10
+-- Hannes
