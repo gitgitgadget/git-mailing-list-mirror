@@ -1,62 +1,100 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: corrupt object on git-gc
-Date: Fri, 9 Nov 2007 10:02:43 -0800 (PST)
-Message-ID: <alpine.LFD.0.999.0711091000310.15101@woody.linux-foundation.org>
-References: <4fe79b4b0711090538wf483ce7j89c518962e89780e@mail.gmail.com> 
- <alpine.LFD.0.999.0711090758560.15101@woody.linux-foundation.org>
- <4fe79b4b0711090953h5b06f7d4l2d17972630a4d355@mail.gmail.com>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Inconsistencies with git log
+Date: Fri, 9 Nov 2007 13:04:16 -0500
+Message-ID: <9e4733910711091004p6b5dd0c3x2c92148a51dd9927@mail.gmail.com>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
+	 <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
+	 <Pine.LNX.4.64.0711072309380.4362@racer.site>
+	 <9e4733910711071529m604f3b12v29b3a040074ea4e@mail.gmail.com>
+	 <Pine.LNX.4.64.0711080003080.4362@racer.site>
+	 <9e4733910711071609t3e5412f1mf02e501b2d820bb3@mail.gmail.com>
+	 <alpine.LFD.0.999.0711090747210.15101@woody.linux-foundation.org>
+	 <9e4733910711090920m6b0b7704x7c5a3849215f385c@mail.gmail.com>
+	 <alpine.LFD.0.999.0711090929130.15101@woody.linux-foundation.org>
+	 <alpine.LFD.0.999.0711090943120.15101@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org, ae@op5.se,
-	Yossi Leybovich <sleybo@mellanox.co.il>
-To: Yossi Leybovich <sleybo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 19:04:00 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Fri Nov 09 19:04:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqYCu-0004sc-AX
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 19:03:52 +0100
+	id 1IqYDg-0005EY-Jk
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 19:04:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755258AbXKISC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 13:02:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751541AbXKISC7
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 13:02:59 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:52019 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755234AbXKISC6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 13:02:58 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA9I2je0015746
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 9 Nov 2007 10:02:46 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lA9I2hCJ025391;
-	Fri, 9 Nov 2007 10:02:44 -0800
-In-Reply-To: <4fe79b4b0711090953h5b06f7d4l2d17972630a4d355@mail.gmail.com>
-X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751814AbXKISEX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 13:04:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751151AbXKISEX
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 13:04:23 -0500
+Received: from nz-out-0506.google.com ([64.233.162.235]:28665 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814AbXKISEW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 13:04:22 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so580741nze
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 10:04:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=4J7tkS5FAK+pWschbsOFFV1jx6J7ZA+iwAoJIdTtTPM=;
+        b=QkpVXbMvcQllhJVLk1ZGBxMM0OeB7XbUM6pQaK9+wFTK6/Jo7UnckeKBn0Y97h+LUkx6hGdDGolgfihavsRtgx4mYhgkU/rE/3Vc6gRf13ce1111aau9VC08P2IdUCUVZTo0cQQv0tz/G71hI//ts6ZtSi/u/XP45+RWYLky9BI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=d2aCUlxhJfaVdpzXczEpOa0ZV63RyZ1f65X+6CfNQh/Hta7MXonAA+9sRFjIFOYeyRMnY6BXs34Pge3zxRbYapLowp46NwrNcktES3gTz56kcAqu/QAvWuhVPCrGrgKoj/00ru6PPR+iT1NpAU0EvYa3Yixnipehh24gv7qtjb8=
+Received: by 10.115.108.1 with SMTP id k1mr191736wam.1194631456784;
+        Fri, 09 Nov 2007 10:04:16 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Fri, 9 Nov 2007 10:04:16 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.999.0711090943120.15101@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64236>
+
+On 11/9/07, Linus Torvalds <torvalds@linux-foundation.org> wrote:
+>
+>
+> On Fri, 9 Nov 2007, Linus Torvalds wrote:
+> >
+> > In fact, even at the top-of-tree, "git log" and "git log ." are two
+> > totally different things [...]
+>
+> Btw, the reason (and really the *only* reason) this is interesting at all
+> is just to show that the notion of "full history" and "relative pathnames"
+> really have nothing to do with each other. They really are in totally
+> different and orthogonal dimensions.
+
+Should "git log" and "git log path"  have two different command names?
+
+> "Full history" is something that exist *independently* of the pathnames.
+>
+> So the fact is, "git log" on its own is really about the *project*. It is
+> totally pathname-independent, and I'd argue that many people are often
+> just interested in the explanations (even though you obviously can also
+> see the patches and the files changed too!) so I seriously doubt that this
+> is just an implementation issue or my personal hang-up.
+>
+> In other words "git log" simply is something *global*. It doesn't matter
+> where in the tree you are, the end result is the same - it's about the
+> project as a whole.
+>
+> In contrast, "git log <filename>" is fundamentally different. Now you're
+> explicitly stating that it's not something global any more, and that it's
+> about the *files*. That's also why "git log" and "git log ." are acually
+> different even at the top level.
+>
+> Because when you're interested in the files, by implication you're not
+> interested in commits that don't change the files - and there can be such
+> commits even when you give the *total* file list.
+>
+>                         Linus
+>
 
 
-
-On Fri, 9 Nov 2007, Yossi Leybovich wrote:
-> 
-> Ok, tried that and unfortuantly the SHA1 number is apear only one
-> 
-> [mellanox@mellanox-compile ib]$ git log --raw --all --full-history --
-> SymmK/St.c  | grep 4b9
-> :100755 100755 308806c... 4b9458b3786228369c63936db65827de3cc06200 M  SymmK/St.c
-
-Actually, that's not at all "unfortunately", because that implies that 
-it's the very *latest* version of that "SymmK/St.c" file. I really think 
-you already had it checked out, but didn't try my first suggestion of just 
-doing "git hash-object -w SymmK/St.c" which likely would have fixed it 
-already (unless you had changed it in your working tree, of course!)
-
-		Linus
+-- 
+Jon Smirl
+jonsmirl@gmail.com
