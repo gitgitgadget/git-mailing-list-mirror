@@ -1,61 +1,110 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 07/11] git-fetch: Limit automated tag following to only
- fetched objects
-Date: Fri, 09 Nov 2007 12:28:28 +0100
-Message-ID: <4734445C.6000303@viscovery.net>
-References: <20071109110631.GG19368@spearce.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Add missing inside_work_tree setting in setup_git_directory_gently
+Date: Fri, 9 Nov 2007 11:32:24 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711091129450.4362@racer.site>
+References: <20071103100323.GA25305@laptop> <20071103131806.GA25109@laptop>
+ <7vir4ivdcr.fsf@gitster.siamese.dyndns.org> <20071104070307.GA26071@laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-784504316-1194607944=:4362"
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 12:28:54 2007
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 12:32:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqS2b-0005dd-Jv
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:28:50 +0100
+	id 1IqS6S-0006qs-Pk
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 12:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751869AbXKIL2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 06:28:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751874AbXKIL2d
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:28:33 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:11162 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751668AbXKIL2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 06:28:32 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IqS1o-0000AC-4G; Fri, 09 Nov 2007 12:28:00 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BC8386C4; Fri,  9 Nov 2007 12:28:28 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071109110631.GG19368@spearce.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1751925AbXKILce (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 06:32:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751906AbXKILce
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 06:32:34 -0500
+Received: from mail.gmx.net ([213.165.64.20]:50955 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751903AbXKILcd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 06:32:33 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 11:32:31 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp053) with SMTP; 09 Nov 2007 12:32:31 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19y8Z8HuixyuaUSpQC5m5vsoLFg4ZIxG7rR3qoUyY
+	fl2uTDj/ztXA3i
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071104070307.GA26071@laptop>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64166>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64167>
 
-Shawn O. Pearce schrieb:
-> Some of the test vectors for t5515 were affected by this as they
-> were listing "not-for-merge" tags in .git/FETCH_HEAD that were
-> being fetched under the old rule but are now not fetched under the
-> new rule.  To be perfectly honest I have no idea why they were even
-> fetching under the old rule, and I think that's part of the problem
-> with the old rule.  It was very difficult to understand why some
-> things would auto-follow a tag and others wouldn't.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-The old rule was:
+--8323584-784504316-1194607944=:4362
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-	Fetch a tag if we have the object that the tag refers to.
+Hi,
 
-So, If you have an object lingering in your repo, even if it is not 
-accessible by any of the refs - eg. it's a left-over from a previous fetch - 
-then the tag was fetched again.
+On Sun, 4 Nov 2007, Nguyen Thai Ngoc Duy wrote:
 
--- Hannes
+> On Sat, Nov 03, 2007 at 09:33:40PM -0700, Junio C Hamano wrote:
+> > Nguyễn Thái Ngọc Duy <pclouds@gmail.com> writes:
+> > 
+> > > When both GIT_DIR and GIT_WORK_TREE are set, and
+> > > setup_git_directory_gently() changes the current working
+> > > directory accordingly, it should also set inside_work_tree = 1.
+> > >
+> > > Without this, work_tree handling code in setup_git_directory()
+> > > will be activated. If you stay in root work tree (no prefix),
+> > > it does not harm. It does if you work from a subdirectory though.
+> > 
+> > Please add automated test script for this, thanks.
+> > 
+> 
+> Thank you for reminding.  I tried to put a test in
+> t1501-worktree.sh and found out core.worktree can override
+> inside_work_tree previously set by setup_git_directory_gently(),
+> activating the worktree code in setup_git_directory() again.
+> 
+> This made me think setup_git_directory_gently() should use
+> get_git_work_tree() instead. But then git_work_tree_cfg may not be
+> initialized when get_git_work_tree() is called (starting from
+> setup_git_directory(), git_work_tree_cfg is initialized in
+> check_repository_format_version(), which is called _after_
+> setup_git_directory_gently()).
+> 
+> The interaction between these variables and functions is really beyond
+> my knowledge. Johannes, can you have a look at this? In theory the
+> following test should pass:
+> 
+> diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
+> index 7ee3820..bdb7720 100755
+> --- a/t/t1501-worktree.sh
+> +++ b/t/t1501-worktree.sh
+> @@ -103,6 +103,11 @@ test_expect_success 'repo finds its work tree from work tree, too' '
+>  	 test sub/dir/tracked = "$(git ls-files)")
+>  '
+>  
+> +test_expect_success 'Try a command from subdir in worktree' '
+> +	(cd repo.git/work/sub &&
+> +	GIT_DIR=../.. GIT_WORK_TREE=.. git blame dir/tracked)
+> +'
+> +
+>  test_expect_success '_gently() groks relative GIT_DIR & GIT_WORK_TREE' '
+>  	cd repo.git/work/sub/dir &&
+>  	GIT_DIR=../../.. GIT_WORK_TREE=../.. GIT_PAGER= \
+
+This does not really test work_tree, but if blame uses the work_tree 
+machinery correctly.
+
+I will send out a patch to builtin-blame.c in a minute.
+
+However, this test case still fails, since blame needs a HEAD revision!  
+And in t1501 there is no commit done yet.
+
+Ciao,
+Dscho
+
+--8323584-784504316-1194607944=:4362--
