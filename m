@@ -1,293 +1,135 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Remove non-existing commands from git(7) and delete their manpages
-Date: Fri, 9 Nov 2007 01:20:02 +0100
-Message-ID: <20071109002001.GB5082@diku.dk>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site> <7vlk998u6r.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] Add strchrnul()
+Date: Fri, 9 Nov 2007 01:21:27 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711090119430.4362@racer.site>
+References: <4733AEA0.1060602@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 02:20:53 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Fri Nov 09 02:21:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqIYD-0000R4-ST
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:20:50 +0100
+	id 1IqIZD-0000fV-MV
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 02:21:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758875AbXKIBUV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 20:20:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759983AbXKIBUU
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:20:20 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:38206 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759943AbXKIBUR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 20:20:17 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 7A0BB770009;
-	Fri,  9 Nov 2007 01:20:05 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xd9fwkoMIm6c; Fri,  9 Nov 2007 01:20:02 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 4875A52C358;
-	Fri,  9 Nov 2007 01:20:02 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id EC77C6DFE34; Fri,  9 Nov 2007 01:19:40 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 284BD5B8001; Fri,  9 Nov 2007 01:20:02 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vzlxo1mga.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752807AbXKIBVg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 20:21:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752663AbXKIBVg
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 20:21:36 -0500
+Received: from mail.gmx.net ([213.165.64.20]:37012 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752494AbXKIBVf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 20:21:35 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 01:21:34 -0000
+Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
+  by mail.gmx.net (mp048) with SMTP; 09 Nov 2007 02:21:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3bFo7FfP35JE07wqQoo0ZIToyJv4EzdAwaWWP8E
+	pEkOM/nylzNuLn
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4733AEA0.1060602@lsrfire.ath.cx>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64102>
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/cmd-list.perl       |    3 --
- Documentation/git-local-fetch.txt |   66 -------------------------------------
- Documentation/git-ssh-fetch.txt   |   52 -----------------------------
- Documentation/git-ssh-upload.txt  |   48 ---------------------------
- 4 files changed, 0 insertions(+), 169 deletions(-)
- delete mode 100644 Documentation/git-local-fetch.txt
- delete mode 100644 Documentation/git-ssh-fetch.txt
- delete mode 100644 Documentation/git-ssh-upload.txt
+Hi,
 
- Junio C Hamano <gitster@pobox.com> wrote Thu, Nov 08, 2007:
- > Thanks.
- > 
- > But lost-found is merely deprecated but not removed yet, so I
- > think it should be kept in the list cmd-list.perl generates.
- 
- I don't understand why you want to still advertise commands that have
- been deprecated, but here is a sliced out part of my previous patch,
- which I hope is acceptible.
- 
- > We may want a mechanism to mark it deprecated in the list as
- > well, though.  Perhaps ...
+On Fri, 9 Nov 2007, Ren? Scharfe wrote:
 
- It might also make sense to put this kind of information in the manpage
- document header:
+> diff --git a/Makefile b/Makefile
+> index 0d5590f..578c999 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -30,6 +30,8 @@ all::
+>  #
+>  # Define NO_MEMMEM if you don't have memmem.
+>  #
+> +# Define NO_STRCHRNUL if you don't have strchrnul.
+> +#
+>  # Define NO_STRLCPY if you don't have strlcpy.
+>  #
+>  # Define NO_STRTOUMAX if you don't have strtoumax in the C library.
+> @@ -406,6 +408,7 @@ ifeq ($(uname_S),Darwin)
+>  	OLD_ICONV = UnfortunatelyYes
+>  	NO_STRLCPY = YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  endif
+>  ifeq ($(uname_S),SunOS)
+>  	NEEDS_SOCKET = YesPlease
+> @@ -413,6 +416,7 @@ ifeq ($(uname_S),SunOS)
+>  	SHELL_PATH = /bin/bash
+>  	NO_STRCASESTR = YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	NO_HSTRERROR = YesPlease
+>  	ifeq ($(uname_R),5.8)
+>  		NEEDS_LIBICONV = YesPlease
+> @@ -438,6 +442,7 @@ ifeq ($(uname_O),Cygwin)
+>  	NO_D_INO_IN_DIRENT = YesPlease
+>  	NO_STRCASESTR = YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	NO_SYMLINK_HEAD = YesPlease
+>  	NEEDS_LIBICONV = YesPlease
+>  	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+> @@ -452,12 +457,14 @@ endif
+>  ifeq ($(uname_S),FreeBSD)
+>  	NEEDS_LIBICONV = YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	BASIC_CFLAGS += -I/usr/local/include
+>  	BASIC_LDFLAGS += -L/usr/local/lib
+>  endif
+>  ifeq ($(uname_S),OpenBSD)
+>  	NO_STRCASESTR = YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	NEEDS_LIBICONV = YesPlease
+>  	BASIC_CFLAGS += -I/usr/local/include
+>  	BASIC_LDFLAGS += -L/usr/local/lib
+> @@ -473,6 +480,7 @@ endif
+>  ifeq ($(uname_S),AIX)
+>  	NO_STRCASESTR=YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	NO_STRLCPY = YesPlease
+>  	NEEDS_LIBICONV=YesPlease
+>  endif
+> @@ -485,6 +493,7 @@ ifeq ($(uname_S),IRIX64)
+>  	NO_SETENV=YesPlease
+>  	NO_STRCASESTR=YesPlease
+>  	NO_MEMMEM = YesPlease
+> +	NO_STRCHRNUL = YesPlease
+>  	NO_STRLCPY = YesPlease
+>  	NO_SOCKADDR_STORAGE=YesPlease
+>  	SHELL_PATH=/usr/gnu/bin/bash
 
- 	git-lost-found(1)
-	=================
-	:Deprecated:	Use git-fsck --lost-found instead.
+Might be easier to define HAVE_STRCHRNUL ;-)
 
- And then modify asciidoc.conf to put in a warnings a few places.
+> diff --git a/compat/strchrnul.c b/compat/strchrnul.c
+> new file mode 100644
+> index 0000000..51839fe
+> --- /dev/null
+> +++ b/compat/strchrnul.c
+> @@ -0,0 +1,8 @@
+> +#include "../git-compat-util.h"
+> +
+> +char *gitstrchrnul(const char *s, int c)
+> +{
+> +	while (*s && *s != c)
+> +		s++;
+> +	return (char *)s;
+> +}
 
-diff --git a/Documentation/cmd-list.perl b/Documentation/cmd-list.perl
-index 8d21d42..8a0679a 100755
---- a/Documentation/cmd-list.perl
-+++ b/Documentation/cmd-list.perl
-@@ -124,7 +124,6 @@ git-index-pack                          plumbingmanipulators
- git-init                                mainporcelain
- git-instaweb                            ancillaryinterrogators
- gitk                                    mainporcelain
--git-local-fetch                         synchingrepositories
- git-log                                 mainporcelain
- git-lost-found                          ancillarymanipulators
- git-ls-files                            plumbinginterrogators
-@@ -178,8 +177,6 @@ git-show-branch                         ancillaryinterrogators
- git-show-index                          plumbinginterrogators
- git-show-ref                            plumbinginterrogators
- git-sh-setup                            purehelpers
--git-ssh-fetch                           synchingrepositories
--git-ssh-upload                          synchingrepositories
- git-stash                               mainporcelain
- git-status                              mainporcelain
- git-stripspace                          purehelpers
-diff --git a/Documentation/git-local-fetch.txt b/Documentation/git-local-fetch.txt
-deleted file mode 100644
-index e830dee..0000000
---- a/Documentation/git-local-fetch.txt
-+++ /dev/null
-@@ -1,66 +0,0 @@
--git-local-fetch(1)
--==================
--
--NAME
------
--git-local-fetch - Duplicate another git repository on a local system
--
--
--SYNOPSIS
----------
--[verse]
--'git-local-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] [-l] [-s] [-n]
--                  commit-id path
--
--DESCRIPTION
-------------
--THIS COMMAND IS DEPRECATED.
--
--Duplicates another git repository on a local system.
--
--OPTIONS
---------
---c::
--	Get the commit objects.
---t::
--	Get trees associated with the commit objects.
---a::
--	Get all the objects.
---v::
--	Report what is downloaded.
---s::
--	Instead of regular file-to-file copying use symbolic links to the objects
--	in the remote repository.
---l::
--	Before attempting symlinks (if -s is specified) or file-to-file copying the
--	remote objects, try to hardlink the remote objects into the local
--	repository.
---n::
--	Never attempt to file-to-file copy remote objects.  Only useful with
--	-s or -l command-line options.
--
---w <filename>::
--        Writes the commit-id into the filename under $GIT_DIR/refs/<filename> on
--        the local end after the transfer is complete.
--
----stdin::
--	Instead of a commit id on the command line (which is not expected in this
--	case), 'git-local-fetch' expects lines on stdin in the format
--
--		<commit-id>['\t'<filename-as-in--w>]
--
----recover::
--	Verify that everything reachable from target is fetched.  Used after
--	an earlier fetch is interrupted.
--
--Author
--------
--Written by Junio C Hamano <junkio@cox.net>
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the gitlink:git[7] suite
-diff --git a/Documentation/git-ssh-fetch.txt b/Documentation/git-ssh-fetch.txt
-deleted file mode 100644
-index 8d3e2ff..0000000
---- a/Documentation/git-ssh-fetch.txt
-+++ /dev/null
-@@ -1,52 +0,0 @@
--git-ssh-fetch(1)
--================
--
--NAME
------
--git-ssh-fetch - Fetch from a remote repository over ssh connection
--
--
--
--SYNOPSIS
----------
--'git-ssh-fetch' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] commit-id url
--
--DESCRIPTION
-------------
--THIS COMMAND IS DEPRECATED.
--
--Pulls from a remote repository over ssh connection, invoking
--git-ssh-upload on the other end. It functions identically to
--git-ssh-upload, aside from which end you run it on.
--
--
--OPTIONS
---------
--commit-id::
--        Either the hash or the filename under [URL]/refs/ to
--        pull.
--
---c::
--	Get the commit objects.
---t::
--	Get trees associated with the commit objects.
---a::
--	Get all the objects.
---v::
--	Report what is downloaded.
---w::
--        Writes the commit-id into the filename under $GIT_DIR/refs/ on
--        the local end after the transfer is complete.
--
--
--Author
--------
--Written by Daniel Barkalow <barkalow@iabervon.org>
--
--Documentation
----------------
--Documentation by David Greaves, Junio C Hamano and the git-list <git@vger.kernel.org>.
--
--GIT
-----
--Part of the gitlink:git[7] suite
-diff --git a/Documentation/git-ssh-upload.txt b/Documentation/git-ssh-upload.txt
-deleted file mode 100644
-index 5e2ca8d..0000000
---- a/Documentation/git-ssh-upload.txt
-+++ /dev/null
-@@ -1,48 +0,0 @@
--git-ssh-upload(1)
--=================
--
--NAME
------
--git-ssh-upload - Push to a remote repository over ssh connection
--
--
--SYNOPSIS
----------
--'git-ssh-upload' [-c] [-t] [-a] [-d] [-v] [-w filename] [--recover] commit-id url
--
--DESCRIPTION
-------------
--THIS COMMAND IS DEPRECATED.
--
--Pushes from a remote repository over ssh connection, invoking
--git-ssh-fetch on the other end. It functions identically to
--git-ssh-fetch, aside from which end you run it on.
--
--OPTIONS
---------
--commit-id::
--        Id of commit to push.
--
---c::
--        Get the commit objects.
---t::
--        Get tree associated with the requested commit object.
---a::
--        Get all the objects.
---v::
--        Report what is uploaded.
---w::
--        Writes the commit-id into the filename under [URL]/refs/ on
--        the remote end after the transfer is complete.
--
--Author
--------
--Written by Daniel Barkalow <barkalow@iabervon.org>
--
--Documentation
----------------
--Documentation by Daniel Barkalow
--
--GIT
-----
--Part of the gitlink:git[7] suite
--- 
-1.5.3.5.1623.gabaff-dirty
+This is so short, I think it is even better to inline it.
 
--- 
-Jonas Fonseca
+Ciao,
+Dscho
