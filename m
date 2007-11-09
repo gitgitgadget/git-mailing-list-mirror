@@ -1,58 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-checkout: Test for relative path use.
-Date: Fri, 09 Nov 2007 01:06:54 -0800
-Message-ID: <7vfxzfvlch.fsf@gitster.siamese.dyndns.org>
-References: <11945685673280-git-send-email-dsymonds@gmail.com>
-	<11945685732608-git-send-email-dsymonds@gmail.com>
-	<47340895.6000403@viscovery.net>
-	<ee77f5c20711082324s39a9d441tc05c5a27e6d39f3e@mail.gmail.com>
-	<7v7ikrx2st.fsf@gitster.siamese.dyndns.org>
-	<ee77f5c20711090014qfed56e7y446c014399e47a82@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Johannes Sixt" <j.sixt@viscovery.net>, git@vger.kernel.org,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Andreas Ericsson" <ae@op5.se>
-To: "David Symonds" <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 10:07:26 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [BUG] git-rebase fails when a commit message contains a diff
+Date: Fri, 9 Nov 2007 10:07:47 +0100
+Message-ID: <87747E02-0C25-4330-84F4-1C56C0196BD5@lrde.epita.fr>
+References: <20071109011214.GA5903@diku.dk> <7vlk98xkm3.fsf@gitster.siamese.dyndns.org> <7vhcjwxk1s.fsf@gitster.siamese.dyndns.org> <7v640cxitc.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711090225110.4362@racer.site> <6FCE17E3-9FAA-4676-B12A-369B31743DA6@lrde.epita.fr> <473420FE.7010807@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-103--603780441"
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonas Fonseca <fonseca@diku.dk>,
+	Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Nov 09 10:08:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqPpk-0002iv-9X
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 10:07:24 +0100
+	id 1IqPqf-0002y8-Io
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 10:08:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751420AbXKIJHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 04:07:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751392AbXKIJHI
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 04:07:08 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:36409 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751411AbXKIJHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 04:07:05 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 0AE732F2;
-	Fri,  9 Nov 2007 04:07:27 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 710AC91EFB;
-	Fri,  9 Nov 2007 04:07:18 -0500 (EST)
-In-Reply-To: <ee77f5c20711090014qfed56e7y446c014399e47a82@mail.gmail.com>
-	(David Symonds's message of "Fri, 9 Nov 2007 19:14:44 +1100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751435AbXKIJIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 04:08:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751437AbXKIJIG
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 04:08:06 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:44275 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751431AbXKIJIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 04:08:04 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IqPqF-0005Yr-Mq; Fri, 09 Nov 2007 10:07:55 +0100
+In-Reply-To: <473420FE.7010807@viscovery.net>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64146>
 
-"David Symonds" <dsymonds@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-103--603780441
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> So what would you prefer? Bracketing the whole test in parentheses
-> looks ugly, but I can do that if that's the only option. If I look at
-> t5510-fetch.sh (one of yours, Junio), there is no directory
-> restoration in the case of test failure, as in my original patch.
+On Nov 9, 2007, at 9:57 AM, Johannes Sixt wrote:
 
-Yes, that is what I was referring to as "bad examples".  The way
-t4116 goes down to different directory do not look ugly to me.
+> Benoit Sigoure schrieb:
+>> Off topic question: why do you guys always do this instead of  
+>> doing, say, this:
+>> INTERACTIVE=false
+>> case $1 in
+>>   --interactive|-i)
+>>     INTERACTIVE=:
+>>     ... ;;
+>> esac
+>> if $INTERACTIVE; then
+>>   git_editor "$TODO" || die ...
+>> fi
+>
+> Because in some shells 'false' is not a built-in.
+
+Can you name such a shell?  (besides Solaris' brain-damaged, b0rken  
+and foobared /bin/sh which will most likely not work with Git anyway)
+
+> But then this might do it without the extra process:
+>
+> 	INTERACTIVE="! :"	# false
+
+`!' is not portable either.  In particular, I highly doubt `!' will  
+work on shells that don't have `false' as a builtin (Hello Mr Solaris).
+
+>
+> 	case $1 in
+> 	--interactive|-i)
+> 	    INTERACTIVE=:
+> 	    ... ;;
+> 	esac
+> 	if $INTERACTIVE; then
+> 	  git_editor "$TODO" || die ...
+> 	fi
+
+Correct me if I'm wrong but I think that some shells don't have  
+`test' as a builtin either.
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-103--603780441
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHNCNjwwE67wC8PUkRAmtpAJ9+K280o20zKGyR57n70jimykb6WwCgwvn3
+u/IS3c8GWDEOjHrDHbyWWYw=
+=7CZv
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-103--603780441--
