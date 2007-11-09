@@ -1,138 +1,99 @@
-From: David Symonds <dsymonds@gmail.com>
-Subject: [PATCH] git-checkout: Test for relative path use.
-Date: Fri,  9 Nov 2007 18:37:26 +1100
-Message-ID: <11945938461226-git-send-email-dsymonds@gmail.com>
-References: <ee77f5c20711082324s39a9d441tc05c5a27e6d39f3e@mail.gmail.com>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Andreas Ericsson <ae@op5.se>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	David Symonds <dsymonds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 08:37:49 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [BUG] git-rebase fails when a commit message contains a diff
+Date: Fri, 9 Nov 2007 08:57:00 +0100
+Message-ID: <6FCE17E3-9FAA-4676-B12A-369B31743DA6@lrde.epita.fr>
+References: <20071109011214.GA5903@diku.dk> <7vlk98xkm3.fsf@gitster.siamese.dyndns.org> <7vhcjwxk1s.fsf@gitster.siamese.dyndns.org> <7v640cxitc.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711090225110.4362@racer.site>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-102--608027657"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 09 08:57:35 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqOR2-0006Ex-V2
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 08:37:49 +0100
+	id 1IqOk9-000269-Vf
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 08:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751090AbXKIHhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 02:37:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751106AbXKIHhd
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 02:37:33 -0500
-Received: from ipmail02.adl2.internode.on.net ([203.16.214.141]:57432 "EHLO
-	ipmail02.adl2.internode.on.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751062AbXKIHhd (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 02:37:33 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Aq4HAFeaM0d5LBGK/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.21,393,1188743400"; 
-   d="scan'208";a="224316609"
-Received: from ppp121-44-17-138.lns10.syd7.internode.on.net (HELO localhost.localdomain) ([121.44.17.138])
-  by ipmail02.adl2.internode.on.net with ESMTP; 09 Nov 2007 18:07:29 +1030
-X-Mailer: git-send-email 1.5.3.1
-In-Reply-To: <ee77f5c20711082324s39a9d441tc05c5a27e6d39f3e@mail.gmail.com>
+	id S1751151AbXKIH5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 02:57:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751146AbXKIH5S
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 02:57:18 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:54872 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751135AbXKIH5S (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 02:57:18 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IqOjm-0002i9-9i; Fri, 09 Nov 2007 08:57:10 +0100
+In-Reply-To: <Pine.LNX.4.64.0711090225110.4362@racer.site>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64136>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64137>
 
-Signed-off-by: David Symonds <dsymonds@gmail.com>
----
-	Tests that change directories now change back at the start of the
-	next test. I don't know what to do about that last test, though.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-102--608027657
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
- t/t2008-checkout-subdir.sh |   81 ++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 81 insertions(+), 0 deletions(-)
- create mode 100755 t/t2008-checkout-subdir.sh
+On Nov 9, 2007, at 3:28 AM, Johannes Schindelin wrote:
 
-diff --git a/t/t2008-checkout-subdir.sh b/t/t2008-checkout-subdir.sh
-new file mode 100755
-index 0000000..41e76c9
---- /dev/null
-+++ b/t/t2008-checkout-subdir.sh
-@@ -0,0 +1,81 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2007 David Symonds
-+
-+test_description='git checkout from subdirectories'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+
-+	echo "base" > file0 &&
-+	git add file0 &&
-+	mkdir dir1 &&
-+	echo "hello" > dir1/file1 &&
-+	git add dir1/file1 &&
-+	mkdir dir2 &&
-+	echo "bonjour" > dir2/file2 &&
-+	git add dir2/file2 &&
-+	test_tick &&
-+	git commit -m "populate tree"
-+
-+'
-+
-+test_expect_success 'remove and restore with relative path' '
-+
-+	cd dir1 &&
-+	rm ../file0 &&
-+	git checkout HEAD -- ../file0 &&
-+	test "base" = "$(cat ../file0)" &&
-+	rm ../dir2/file2 &&
-+	git checkout HEAD -- ../dir2/file2 &&
-+	test "bonjour" = "$(cat ../dir2/file2)" &&
-+	rm ../file0 ./file1 &&
-+	git checkout HEAD -- .. &&
-+	test "base" = "$(cat ../file0)" &&
-+	test "hello" = "$(cat file1)"
-+
-+'
-+
-+# currently in dir1/
-+test_expect_success 'checkout with empty prefix' '
-+
-+	cd .. &&
-+	rm file0 &&
-+	git checkout HEAD -- file0 &&
-+	test "base" = "$(cat file0)"
-+
-+'
-+
-+test_expect_success 'checkout with simple prefix' '
-+
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1 &&
-+	test "hello" = "$(cat dir1/file1)" &&
-+	rm dir1/file1 &&
-+	git checkout HEAD -- dir1/file1 &&
-+	test "hello" = "$(cat dir1/file1)"
-+
-+'
-+
-+test_expect_success 'checkout with complex relative path' '
-+
-+	rm file1 &&
-+	git checkout HEAD -- ../dir1/../dir1/file1 && test -f ./file1
-+
-+'
-+
-+test_expect_failure 'relative path outside tree should fail' \
-+	'git checkout HEAD -- ../../Makefile'
-+
-+test_expect_failure 'incorrect relative path to file should fail (1)' \
-+	'git checkout HEAD -- ../file0'
-+
-+test_expect_failure 'incorrect relative path should fail (2)' \
-+	'cd dir1 && git checkout HEAD -- ./file0'
-+
-+# currently in dir1/
-+test_expect_failure 'incorrect relative path should fail (3)' \
-+	'git checkout HEAD -- ../../file0'
-+
-+test_done
+> Would that not be easier to read as
+>
+> 		test t = "$INTERACTIVE" &&
+> 			git_editor "$TODO" || die "Could not execute editor"
+
+Hmm this will `die' if you're not running interactively.
+
+Off topic question: why do you guys always do this instead of doing,  
+say, this:
+
+INTERACTIVE=false
+
+case $1 in
+.
+.
+.
+   --interactive|-i)
+     INTERACTIVE=:
+     ... ;;
+esac
+.
+.
+.
+if $INTERACTIVE; then
+   git_editor "$TODO" || die ...
+fi
+
+
+?
+
 -- 
-1.5.3.1
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-102--608027657
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHNBLMwwE67wC8PUkRArO2AKC+UestbPWSefcWpGCgmOyAJIRs/QCfcOxD
+CLzaPkzZsR4j6iEvDuvGlUg=
+=I42s
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-102--608027657--
