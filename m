@@ -1,85 +1,177 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: git push failing, unpacker error
-Date: Fri, 9 Nov 2007 09:43:49 -0500
-Message-ID: <9e4733910711090643t493b0e6fl2a18390a2f9ab842@mail.gmail.com>
-References: <9e4733910711082155t62df9d4by10bd3f546ffbd950@mail.gmail.com>
-	 <9e4733910711090637tcf7e837na863a4276578bf3f@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 09 15:44:40 2007
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: [PATCH] tests: git push mirror mode tests V2 -- add tag tests
+Date: Fri, 9 Nov 2007 14:45:55 -0000
+Message-ID: <1194619555.0@pinky>
+References: <1194603673.0@pinky>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 09 15:46:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqV5x-0005Ni-S7
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 15:44:30 +0100
+	id 1IqV7S-0005yq-0d
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 15:46:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760679AbXKIOnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 09:43:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758271AbXKIOnv
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 09:43:51 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:46084 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760147AbXKIOnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 09:43:50 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so627931wah
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 06:43:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=yJ3YGo2UKiX98NYnrZpdZNEV7h96EjPpC9bFQWr4pbw=;
-        b=rNj/zEvRFrJTlCCsBZfeGUXdhn89yWb14LArltcd0r7dxgp3/9xDcaYgW1G72y6bm1gFjJYp5g9jzKqQgDi2j47T8adW6vOVvA9ZlrAaKyLUdXZgYN5gVFI8uuKBrboaAj5woHyHyTT21h+hZEy1cMruOTnqHbekMKlQk9oVH88=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=k2z6JtWKmLUSDr0yW+MpPvHDHTs/plis7gdf6xvsdqBVaapm4NEqUIldPW8V0Y0XsH/MPdrpLiFIX0bV+Pn8fzhv770+f3n/GPxOvpwEOedPjmeg2eAYCSU9mgsfOVMWqLmrTRXTYcBg72voevNFFto3zUEA9G268fmMQyQVpKM=
-Received: by 10.115.59.4 with SMTP id m4mr435141wak.1194619430001;
-        Fri, 09 Nov 2007 06:43:50 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Fri, 9 Nov 2007 06:43:49 -0800 (PST)
-In-Reply-To: <9e4733910711090637tcf7e837na863a4276578bf3f@mail.gmail.com>
-Content-Disposition: inline
+	id S1760458AbXKIOpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 09:45:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760650AbXKIOpq
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 09:45:46 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:1853 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760432AbXKIOpp (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 09:45:45 -0500
+Received: from localhost ([127.0.0.1] helo=pinky)
+	by hellhawk.shadowen.org with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1IqV7A-0001Gs-Ge
+	for git@vger.kernel.org; Fri, 09 Nov 2007 14:45:44 +0000
+InReply-To: <1194603673.0@pinky>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64193>
-
-On 11/9/07, Jon Smirl <jonsmirl@gmail.com> wrote:
-> I updated both sides to current git and it still fails. How do I debug this?
-> What's causing this, "error: pack-objects died with strange error"?
-
-My remote host is running 2.4.32, is git ok on that kernel?
-
->
->
-> jonsmirl@terra:~/mpc5200b$ git push dreamhost
-> To ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
->  * [new branch]      m24 -> linus/m24
->  * [new branch]      m25 -> linus/m25
->  * [new branch]      m26 -> linus/m26
->  * [new branch]      m28 -> linus/m28
->  * [new branch]      m29 -> linus/m29
-> Counting objects: 81156, done.
-> Compressing objects: 100% (15280/15280), done.
-> error: pack-objects died with strange errorMiB | 412 KiB/s
-> unpack index-pack abnormal exit
-> ng refs/remotes/linus/m24 n/a (unpacker error)
-> ng refs/remotes/linus/m25 n/a (unpacker error)
-> ng refs/remotes/linus/m26 n/a (unpacker error)
-> ng refs/remotes/linus/m28 n/a (unpacker error)
-> ng refs/remotes/linus/m29 n/a (unpacker error)
-> error: failed to push to 'ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git'
-> jonsmirl@terra:~/mpc5200b$
->
->
->
-> --
-> Jon Smirl
-> jonsmirl@gmail.com
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64194>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Add additional tests to the the V2 tests testing the handling of
+tags in --mirror mode.  We expect these to be tracked in line with
+the master.
+
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+	Note that this patch is cumulative on top of the following
+	patch:
+		tests: git push mirror mode tests V2
+
+	These two patches together replace the 4/4 from the original
+	series.
+---
+ t/t5517-push-mirror.sh |  105 +++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 104 insertions(+), 1 deletions(-)
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
+index a65d2f5..ec87ce5 100755
+--- a/t/t5517-push-mirror.sh
++++ b/t/t5517-push-mirror.sh
+@@ -30,6 +30,7 @@ mk_repo_pair () {
+ }
+ 
+ 
++# BRANCH tests
+ test_expect_success 'push mirror does not create new branches' '
+ 
+ 	mk_repo_pair &&
+@@ -96,7 +97,7 @@ test_expect_success 'push mirror does not remove branches' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not add, update and remove together' '
++test_expect_success 'push mirror does not add, update and remove branches together' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -122,4 +123,106 @@ test_expect_success 'push mirror does not add, update and remove together' '
+ 
+ '
+ 
++
++# TAG tests
++test_expect_success 'push mirror does not create new tags' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git tag -f tmaster master &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'push mirror does not update existing tags' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git tag -f tmaster master &&
++		git push --mirror up &&
++		echo two >foo && git add foo && git commit -m two &&
++		git tag -f tmaster master &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'push mirror does not force update existing tags' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git tag -f tmaster master &&
++		git push --mirror up &&
++		echo two >foo && git add foo && git commit -m two &&
++		git tag -f tmaster master &&
++		git push --mirror up &&
++		git reset --hard HEAD^
++		git tag -f tmaster master &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
++	test "$master_master" = "$mirror_master"
++
++'
++
++test_expect_success 'push mirror does not remove tags' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git tag -f tremove master &&
++		git push --mirror up &&
++		git tag -d tremove
++		git push --mirror up 
++	) &&
++	(
++		cd mirror &&
++		invert git show-ref -s --verify refs/tags/tremove
++	)
++
++'
++
++test_expect_success 'push mirror does not add, update and remove tags together' '
++
++	mk_repo_pair &&
++	(
++		cd master &&
++		echo one >foo && git add foo && git commit -m one &&
++		git tag -f tmaster master &&
++		git tag -f tremove master &&
++		git push --mirror up &&
++		git tag -d tremove &&
++		git tag tadd master &&
++		echo two >foo && git add foo && git commit -m two &&
++		git tag -f tmaster master &&
++		git push --mirror up
++	) &&
++	master_master=$(cd master && git show-ref -s --verify refs/tags/tmaster) &&
++	master_add=$(cd master && git show-ref -s --verify refs/tags/tadd) &&
++	mirror_master=$(cd mirror && git show-ref -s --verify refs/tags/tmaster) &&
++	mirror_add=$(cd mirror && git show-ref -s --verify refs/tags/tadd) &&
++	test "$master_master" = "$mirror_master" &&
++	test "$master_add" = "$mirror_add" &&
++	(
++		cd mirror &&
++		invert git show-ref -s --verify refs/tags/tremove
++	)
++
++'
++
+ test_done
