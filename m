@@ -1,78 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 4/3] t3700: avoid racy git situation
-Date: Fri, 9 Nov 2007 03:00:57 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711090258530.4362@racer.site>
-References: <Pine.LNX.4.64.0711081213580.4362@racer.site>
- <Pine.LNX.4.64.0711081414160.4362@racer.site> <47331E65.9010209@viscovery.net>
- <Pine.LNX.4.64.0711081511440.4362@racer.site> <7vbqa431vj.fsf@gitster.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: git rebase --skip
+Date: Thu, 8 Nov 2007 22:22:29 -0500
+Message-ID: <20071109032227.GA31760@sigill.intra.peff.net>
+References: <20071107222105.GA31666@glandium.org> <20071108032308.GA5638@sigill.intra.peff.net> <20071108102412.GA31187@atjola.homenet> <4732E5A8.3020101@op5.se> <20071108104403.GB31187@atjola.homenet> <20071108231632.GC29840@sigill.intra.peff.net> <7vir4cz45z.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	krh@redhat.com
+Content-Type: text/plain; charset=us-ascii
+Cc: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Andreas Ericsson <ae@op5.se>, Mike Hommey <mh@glandium.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 04:01:47 2007
+X-From: git-owner@vger.kernel.org Fri Nov 09 04:23:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqK7v-0004v0-50
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 04:01:47 +0100
+	id 1IqKSS-0000qg-I8
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 04:23:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758213AbXKIDBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 8 Nov 2007 22:01:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754228AbXKIDBG
-	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 22:01:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58065 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753686AbXKIDBF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 8 Nov 2007 22:01:05 -0500
-Received: (qmail invoked by alias); 09 Nov 2007 03:01:03 -0000
-Received: from wbgn013.biozentrum.uni-wuerzburg.de (EHLO openvpn-client) [132.187.25.13]
-  by mail.gmx.net (mp018) with SMTP; 09 Nov 2007 04:01:03 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+0uA9IWuu02NCjAxBdsgaozkaYo2jNzvUnk4PS/R
-	FbIZceL8xBG87G
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vbqa431vj.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1753475AbXKIDWp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 8 Nov 2007 22:22:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752991AbXKIDWo
+	(ORCPT <rfc822;git-outgoing>); Thu, 8 Nov 2007 22:22:44 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1144 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751925AbXKIDWo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 8 Nov 2007 22:22:44 -0500
+Received: (qmail 20454 invoked by uid 111); 9 Nov 2007 03:22:36 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 08 Nov 2007 22:22:36 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 08 Nov 2007 22:22:29 -0500
+Content-Disposition: inline
+In-Reply-To: <7vir4cz45z.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64123>
 
-Hi,
+On Thu, Nov 08, 2007 at 03:52:08PM -0800, Junio C Hamano wrote:
 
-On Thu, 8 Nov 2007, Junio C Hamano wrote:
+> The user is explicitly saying --skip, so I do not think it is
+> dangerous even if we unconditionally did "reset --hard" at that
+> point.
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> > The problem is that the index has the same timestamp as the file "foo".
-> >
-> > Therefore, git cannot tell if "foo" is up-to-date in the index, since 
-> > it could have been modified (and indeed is) just a fraction of a 
-> > second later than the index was last updated.
-> >
-> > And since diff-index, as called from the test script, does not 
-> > generate a diff, but really only determines if the index information 
-> > suggests that the files are up-to-date, there is not really much you 
-> > can do.
-> >
-> > This is our good old friend, the racy git problem.
-> 
-> That sounds very wrong.
-> 
-> What happened to the ce_smudge_racily_clean_entry() call that is
-> done from write_index()?
+Sure, I think the complaint is not that "reset --hard" is the wrong
+behavior, but that people are prone to type --skip in error. Right now
+we handle that error in a data-preserving way (we complain, and the user
+has to think and issue a "throw away this data" command), but automatic
+reset is less safe (even though there are fewer times when somebody
+meant to commit instead of just reset, the consequences are harder to
+recover from).
 
-And sure enough I am wrong.  My patch assumes that it was the second 
-diff-index which failed, the one after "git add --refresh".
+I've never personally run into this, but I think it is a reasonable
+thing to think about, and if it is easy to add an additional safety
+valve (either stashing the index/wt state, or checking before automatic
+"reset --hard" whether any work has been done towards resolving), then
+we probably should.
 
-Alas, in shell "a && b && c && d || e" will execute e if a fails.  So 
-after debugging this a bit more carefully, it seems that it is indeed the 
-missing update_index --refresh that Kristian mentioned, which leads to 
-this error.
+So I am fine with the original patch (unconditional reset --hard), but
+it would be nice to see the people who care submit concrete proposals
+for such a safety valve.
 
-And my patch is wrong.
+> Or we could introduce a new option "--drop" (that's "drop the
+> current commit and continue") to do so, if people find that the
+> word "skip" does not sound like a scary destructive operation.
 
-Ciao,
-Dscho
+I don't think the problem is "users don't realize how scary --skip can
+be", but rather "I use --skip to resolve this situation 99% of the time,
+so in the other 1%, I soetimes use it accidentally."
+
+-Peff
