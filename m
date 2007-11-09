@@ -1,78 +1,62 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: corrupt object on git-gc
-Date: Fri, 09 Nov 2007 11:52:17 -0500 (EST)
-Message-ID: <alpine.LFD.0.9999.0711091149050.21255@xanadu.home>
-References: <4fe79b4b0711090538wf483ce7j89c518962e89780e@mail.gmail.com>
- <473464A2.7080003@op5.se>
- <4fe79b4b0711090701g7a43cdfdi5e20e5ffb437d7bb@mail.gmail.com>
- <47347E0E.1040205@viscovery.net>
- <4fe79b4b0711090753r52abd3e1ree64271c0fa229f6@mail.gmail.com>
- <alpine.LFD.0.9999.0711091102370.21255@xanadu.home>
- <4fe79b4b0711090831o30d2880dh3d9ec0bb0503f77a@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-commit: Refresh cache after adding files.
+Date: Fri, 9 Nov 2007 17:05:17 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711091702190.4362@racer.site>
+References: <1194626427-2419-1-git-send-email-krh@redhat.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Andreas Ericsson <ae@op5.se>,
-	git@vger.kernel.org, Yossi Leybovich <sleybo@mellanox.co.il>
-To: Yossi Leybovich <sleybo@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 09 17:52:58 2007
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1102319673-1194627917=:4362"
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Nov 09 18:06:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqX5v-0008Tw-8p
-	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 17:52:35 +0100
+	id 1IqXIh-0005nG-7q
+	for gcvg-git-2@gmane.org; Fri, 09 Nov 2007 18:05:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754152AbXKIQwT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 11:52:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752823AbXKIQwT
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 11:52:19 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:41262 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754152AbXKIQwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 11:52:19 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MO-MR001.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JR900H0H075VU80@VL-MO-MR001.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 09 Nov 2007 11:52:18 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4fe79b4b0711090831o30d2880dh3d9ec0bb0503f77a@mail.gmail.com>
+	id S1750847AbXKIRFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 12:05:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751229AbXKIRFb
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 12:05:31 -0500
+Received: from mail.gmx.net ([213.165.64.20]:49242 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750842AbXKIRFa (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 12:05:30 -0500
+Received: (qmail invoked by alias); 09 Nov 2007 17:05:28 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp034) with SMTP; 09 Nov 2007 18:05:28 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19c/XpFF/VcjUfZetj27sBQJLEz95OpjFasBJ+i/P
+	aZJ+1BQNmKC2Vj
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194626427-2419-1-git-send-email-krh@redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64220>
 
-On Fri, 9 Nov 2007, Yossi Leybovich wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> On Nov 9, 2007 11:03 AM, Nicolas Pitre <nico@cam.org> wrote:
-> > On Fri, 9 Nov 2007, Yossi Leybovich wrote:
-> >
-> > > On Nov 9, 2007 10:34 AM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> > > > Yossi Leybovich schrieb:
-> > > > > [about corrupt loose object '4b9458b3786228369c63936db65827de3cc06200']
-> > > >
-> > > > You can try to create a clone (after you have fixed up the artificial
-> > > > breakages that you made). If that goes well, then the bad object is
-> > > > referenced only from reflogs.
-> > > >
-> > >
-> > >
-> > > git clone ib ib-clone
-> > > Initialized empty Git repository in /home/mellanox/work/symm/ib-clone/.git/
-> > > 0 blocks
-> >
-> > Please try "file://ib" instead.  Otherwise the clone will only hardlink
-> > files to the original repository.
-> >
-> >
-> 
-> And agian the corruption pop up again , so clone does not help
+--8323584-1102319673-1194627917=:4362
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-OK that means that the object is really part of your active history.
+Hi,
 
-Linus just posted a nice summary of your only option left.  If you 
-manage to recreate the damaged object then it would be nice of you if 
-you could provide us with both the bad and the good one for analysis.
+On Fri, 9 Nov 2007, Kristian Høgsberg wrote:
 
+> This fixes the race in the last test int t3700.
 
-Nicolas
+Well, it is not a race.  My fault.  I thought it was.
+
+What you basically did was to make sure that the index is up-to-date after 
+adding the files.  You might even want to say that in the commit message, 
+and only then say that it fixes t3700, too.
+
+Thanks,
+Dscho
+
+--8323584-1102319673-1194627917=:4362--
