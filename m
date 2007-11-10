@@ -1,70 +1,53 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
-Date: Sat, 10 Nov 2007 17:24:26 +0100
-Message-ID: <4735DB3A.2020905@lsrfire.ath.cx>
-References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net> <4734EA4E.8070405@lsrfire.ath.cx> <20071110004635.GA14992@sigill.intra.peff.net> <47359221.7090707@lsrfire.ath.cx> <Pine.LNX.4.64.0711101605560.4362@racer.site>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] for-each-ref: fix setup of option-parsing for --sort
+Date: Sat, 10 Nov 2007 16:25:25 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711101625050.4362@racer.site>
+References: <9e4733910711100610y478c62cend1d9af84e0ecc08b@mail.gmail.com>
+ <1194710863-22868-1-git-send-email-hjemli@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 10 17:25:09 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 17:25:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqt8s-0003MQ-6U
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 17:25:06 +0100
+	id 1Iqt9d-0003do-4Y
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 17:25:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788AbXKJQYs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2007 11:24:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbXKJQYs
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 11:24:48 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:37103
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751715AbXKJQYr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 11:24:47 -0500
-Received: from [10.0.1.201] (p57B7F8B8.dip.t-dialin.net [87.183.248.184])
-	by neapel230.server4you.de (Postfix) with ESMTP id DD6D4873BA;
-	Sat, 10 Nov 2007 17:24:45 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711101605560.4362@racer.site>
+	id S1751865AbXKJQZi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 11:25:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751809AbXKJQZh
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 11:25:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57838 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751785AbXKJQZh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 11:25:37 -0500
+Received: (qmail invoked by alias); 10 Nov 2007 16:25:35 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp005) with SMTP; 10 Nov 2007 17:25:35 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19Mbp1gqpxMOvO3d0jItFmfLFXvmatwx4PCbE8cq/
+	Jb4Zj1j81hyfUB
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194710863-22868-1-git-send-email-hjemli@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64358>
 
-Johannes Schindelin schrieb:
-> Hi,
->=20
-> On Sat, 10 Nov 2007, Ren=E9 Scharfe wrote:
->=20
->> [...] have cooked up a different one on top of a cleaned up version =
-of=20
->> mine.  It plays the dirty trick of reading expansions of repeated=20
->> placeholders from the strbuf..
->=20
-> ... which would not work (likely even segfault) if you work with the =
-same=20
-> private data on different strbufs.
->=20
-> But I guess it will not matter much in practice.
+Hi,
 
-Only a single strbuf is used, and the function that copies the data
-around, strbuf_adddup(), operates on a single strbuf, only.  Copying
-data between two strbufs using strbuf_add() etc. would be safe.
+On Sat, 10 Nov 2007, Lars Hjemli wrote:
 
-What one should *not* do is this:
+> The option value for --sort is already a pointer to a pointer to struct
+> ref_sort, so just use it.
 
-	strbuf_add(sb, sb->buf + offset, length);
-
-This leads to problems when the buffer is realloc()ated by strbuf_add()=
-=2E
-
-What other things can go wrong?  A segfault would definitely matter..
+Could you add a test for that too, please?
 
 Thanks,
-Ren=E9
+Dscho
