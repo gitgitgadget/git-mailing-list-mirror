@@ -1,55 +1,66 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: `git-send-email' doesn't specify `Content-Type'
-Date: Sat, 10 Nov 2007 00:52:59 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711100052290.4362@racer.site>
-References: <87ode3klc7.fsf@chbouib.org>
+From: bdowning@lavos.net (Brian Downing)
+Subject: Re: Reducing the memory footprint
+Date: Fri, 9 Nov 2007 18:53:27 -0600
+Message-ID: <20071110005327.GH6212@lavos.net>
+References: <9e4733910711091538h260fbcd2s5783f01e7db4b19a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Ludovic =?iso-8859-1?Q?Court=E8s?= <ludo@chbouib.org>
-X-From: git-owner@vger.kernel.org Sat Nov 10 01:53:27 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 01:53:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqebF-0000no-V9
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:53:26 +0100
+	id 1Iqeba-0000sn-9R
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:53:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755941AbXKJAxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 19:53:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755845AbXKJAxJ
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:53:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52042 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755687AbXKJAxI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 19:53:08 -0500
-Received: (qmail invoked by alias); 10 Nov 2007 00:53:06 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp038) with SMTP; 10 Nov 2007 01:53:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ZPnFQ+YpZYpWZFI/vPFZQFWUlOfUSUcBeYkwrUZ
-	8hrMMQY0GMhtHI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <87ode3klc7.fsf@chbouib.org>
-X-Y-GMX-Trusted: 0
+	id S1755540AbXKJAxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 19:53:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755471AbXKJAxa
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:53:30 -0500
+Received: from mxsf05.insightbb.com ([74.128.0.75]:20855 "EHLO
+	mxsf05.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755201AbXKJAx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 19:53:29 -0500
+X-IronPort-AV: E=Sophos;i="4.21,397,1188792000"; 
+   d="scan'208";a="108983016"
+Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
+  by mxsf05.insightbb.com with ESMTP; 09 Nov 2007 19:53:28 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Ah4FAH+PNEdKhvkY/2dsb2JhbACBWw
+X-IronPort-AV: E=Sophos;i="4.21,397,1188792000"; 
+   d="scan'208";a="157401158"
+Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
+  by asav02.insightbb.com with ESMTP; 09 Nov 2007 19:53:28 -0500
+Received: by mail.lavos.net (Postfix, from userid 1000)
+	id BDD8D309F22; Fri,  9 Nov 2007 18:53:27 -0600 (CST)
+Content-Disposition: inline
+In-Reply-To: <9e4733910711091538h260fbcd2s5783f01e7db4b19a@mail.gmail.com>
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64293>
 
-Hi,
-
-On Sat, 10 Nov 2007, Ludovic Court?s wrote:
-
-> Apparently, `git-send-email' doesn't specify the email's `Content-Type',
-> notably its charset, while it should really add something like:
+On Fri, Nov 09, 2007 at 06:38:00PM -0500, Jon Smirl wrote:
+> I'm using this config file:
 > 
->   Content-Type: text/plain; charset=UTF-8
+> [pack]
+>         windowMemory = 1M
+>         deltaCacheSize = 1M
 > 
-> Or did I miss an option or something?
+> And I have NO_MMAP compiled in.
+> 
+> git is still using over 200MB of memory or address space, my process
+> gets killed either way.
 
-Apparently.  There was a thread some days ago, about that very issue.  
-Please find and read it.
+I'm assuming it's dying on repacking since you included the pack
+parameters.
 
-Ciao,
-Dscho
+How big is your biggest object?  Even with pack.windowMemory, it still
+keeps the last object around to try and delta against (in other words,
+the window only shrinks to size 1), which means you have to have room
+for it and its delta index.
+
+-bcd
