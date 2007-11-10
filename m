@@ -1,103 +1,92 @@
 From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: gitweb, updating 'last changed' column on the project page
-Date: Sat, 10 Nov 2007 01:01:11 -0500
-Message-ID: <9e4733910711092201n5aaeeb7cvfd0e76e43170d481@mail.gmail.com>
-References: <9e4733910711091709k173bf23flf2824673f82de9bb@mail.gmail.com>
-	 <fh337a$ggp$1@ger.gmane.org>
+Subject: Re: Reducing the memory footprint
+Date: Sat, 10 Nov 2007 01:07:05 -0500
+Message-ID: <9e4733910711092207p6d997750i5db997dfa125ef5d@mail.gmail.com>
+References: <9e4733910711091538h260fbcd2s5783f01e7db4b19a@mail.gmail.com>
+	 <20071110005327.GH6212@lavos.net>
+	 <9e4733910711091705i6f77d05uc5ba04f668796a73@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 07:01:31 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Brian Downing" <bdowning@lavos.net>
+X-From: git-owner@vger.kernel.org Sat Nov 10 07:07:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqjPN-0004vv-PS
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:01:30 +0100
+	id 1IqjVK-0005vH-Sq
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:07:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751523AbXKJGBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 01:01:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751491AbXKJGBO
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:01:14 -0500
-Received: from ro-out-1112.google.com ([72.14.202.179]:29263 "EHLO
-	ro-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393AbXKJGBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 01:01:13 -0500
-Received: by ro-out-1112.google.com with SMTP id p4so462143roc
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 22:01:13 -0800 (PST)
+	id S1754080AbXKJGHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 01:07:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbXKJGHY
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:07:24 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:31400 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751612AbXKJGHG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 01:07:06 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so842685wah
+        for <git@vger.kernel.org>; Fri, 09 Nov 2007 22:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
         h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=nNwPcL5+DwH/TiI/VjYzlAsuDutey6PHpTfT2cL3gVk=;
-        b=OetZEnPT5a98CYZ2FAwHQ37KSWKknkzgMBvgEcEcW6H69qtoOYZYtB6vkpW+cB2OOp4UV/1OxxIvVqQYevBfqrcOy195nSHvhX6gqTCh/RgU14orQ1fc4a+MNyZV1kmlTPIB20kDmk98b3hdKzqrYrN1PRRR6DmgEDS/diVyhfA=
+        bh=wBV6CAXh57cDXiZ6Uq3qTcq50dv2uPKjHGw+Th6/2wY=;
+        b=bjwpNdSLrzmg2NpfaE8oi0WYmlrnu6B+hjq1hJ+/291JVPBQSMNt2d8SteuRzzdXKYIf7Hpp2KQ0RGJP8aGtmEz5fcxR0ITSHJmCG8FzaqzNFi3gnj4HrWELlXVy/VOu6gHIH5qu6YfSLVlAQOqsH9eDAlgFGpZC8SwrM7SsrtY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
         h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=V9rOV+skXP9DzKZlP5X1zaS0UG9aGCXP4fx1QkgJMY42aY2JjhN1y7XwTTZtskkRnBJZbTudGi4jddn7p/xh9133tYol/U80P9hBiWENDVy2nH0m4LV/GlAH5+KJ0L2DH86WqCEE3UgI4/+3o2nblnhgnHk/Bvk3zfYb7SRp3t8=
-Received: by 10.114.25.3 with SMTP id 3mr527088way.1194674471704;
-        Fri, 09 Nov 2007 22:01:11 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Fri, 9 Nov 2007 22:01:11 -0800 (PST)
-In-Reply-To: <fh337a$ggp$1@ger.gmane.org>
+        b=kHpjHJYJZDoo6NaxJgV0bTSNThbvnKiyp8DIUd34uOWxvrLZxD3OrERzlSCtoEdgrirzqwTDeK9eQ/hmv47oFusLivipFNDqsxL9ZwtddSJcMdfuYAggt0JC8uHiGSYshlDQdNnWlAJTD0kAswWEn/uiMnrhzA2CEN68LEYRZ9c=
+Received: by 10.114.77.1 with SMTP id z1mr347009waa.1194674825864;
+        Fri, 09 Nov 2007 22:07:05 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Fri, 9 Nov 2007 22:07:05 -0800 (PST)
+In-Reply-To: <9e4733910711091705i6f77d05uc5ba04f668796a73@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64307>
 
-On 11/9/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> Jon Smirl wrote:
->
-> > At http://git.digispeaker.com/ the 'last change' column is not getting updated.
+On 11/9/07, Jon Smirl <jonsmirl@gmail.com> wrote:
+> On 11/9/07, Brian Downing <bdowning@lavos.net> wrote:
+> > On Fri, Nov 09, 2007 at 06:38:00PM -0500, Jon Smirl wrote:
+> > > I'm using this config file:
+> > >
+> > > [pack]
+> > >         windowMemory = 1M
+> > >         deltaCacheSize = 1M
+> > >
+> > > And I have NO_MMAP compiled in.
+> > >
+> > > git is still using over 200MB of memory or address space, my process
+> > > gets killed either way.
 > >
-> > mpc5200b.git
-> >       DigiSpeaker for Freescale MPC5200B.
-> >       Jon Smirl
-> >       5 weeks ago
-> >       summary | shortlog | log | tree
+> > I'm assuming it's dying on repacking since you included the pack
+> > parameters.
 > >
-> > It still says 5 weeks ago, but if I click on the project last change is today.
-> >
-> > What controls this? I tried running update-server-info
+> > How big is your biggest object?  Even with pack.windowMemory, it still
+> > keeps the last object around to try and delta against (in other words,
+> > the window only shrinks to size 1), which means you have to have room
+> > for it and its delta index.
 >
-> What does
+> It's a Linux kernel repository. Git receive-pack is going over 200MB
+> and getting zapped.  I don't understand why the process is so large. I
+> am compiled with -DNO_MMAP.
+
+I believe I must not have installed everything correctly with my
+NO_MMAP build. After debugging for a while and fixing things I'm able
+to do a push now in about 80MB of memory.
+
+> I think I have a achieved a work around. I rsync'd in my last several
+> weeks of changes. Now I can 'git push' small amounts of changes
+> without getting killed.
 >
->   git for-each-ref --format="%(refname):%09%(committer)" --sort=-committerdate
->       refs/heads
-
-[daedalus]$ git for-each-ref --format="%(refname):%09%(committer)"
---sort=-committerdate refs/heads
-refs/heads/m24: Jon Smirl <jonsmirl@gmail.com> 1191362799 -0400
-refs/heads/m25: Jon Smirl <jonsmirl@gmail.com> 1191472422 -0400
-refs/heads/m26: Jon Smirl <jonsmirl@gmail.com> 1194382038 -0500
-refs/heads/m28: Jon Smirl <jonsmirl@gmail.com> 1194385071 -0500
-refs/heads/m29: Jon Smirl <jonsmirl@gmail.com> 1194585780 -0500
-
->
-> return? Does adding --count select proper branch, with proper update
-> date?
-
-Is it looking for master, and just picking the first branch instead?
-
->
-> Which gitweb version is this?
-
-<!-- git web interface version 1.5.3.5.605.g79fa-dirty, (C) 2005-2006,
-Kay Sievers <kay.sievers@vrfy.org>, Christian Gierke -->
-<!-- git core binaries version 1.5.3.5.605.g79fa-dirty -->
-
+> I'm begging dreamhost to simply install git. Installed commands don't
+> get zapped.
 >
 > --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> Jon Smirl
+> jonsmirl@gmail.com
 >
 
 
