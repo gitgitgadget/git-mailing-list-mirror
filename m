@@ -1,69 +1,112 @@
-From: Remi Vanicat <vanicat@debian.org>
-Subject: [PATCH] Make GIT_INDEX_FILE apply to git-commit
-Date: Sat, 10 Nov 2007 11:00:50 +0100
-Organization: none
-Message-ID: <87abpml8rx.dlv@vanicat.homelinux.org>
+From: Brian Swetland <swetland@google.com>
+Subject: Re: `git-send-email' doesn't specify `Content-Type'
+Date: Sat, 10 Nov 2007 02:14:20 -0800
+Organization: Google, Inc.
+Message-ID: <20071110101420.GA21353@bulgaria>
+References: <87ode3klc7.fsf@chbouib.org> <Pine.LNX.4.64.0711100052290.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 11:03:03 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Ludovic =?iso-8859-1?Q?Court=E8s?= <ludo@chbouib.org>,
+	git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 10 11:15:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqnB8-0007nj-Ij
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 11:03:03 +0100
+	id 1IqnMi-00029R-TY
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 11:15:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751010AbXKJKCk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2007 05:02:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750847AbXKJKCk
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 05:02:40 -0500
-Received: from main.gmane.org ([80.91.229.2]:57110 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750805AbXKJKCj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 05:02:39 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iqn9i-0005qj-Up
-	for git@vger.kernel.org; Sat, 10 Nov 2007 10:01:34 +0000
-Received: from 77.193.67.174 ([77.193.67.174])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:01:34 +0000
-Received: from vanicat by 77.193.67.174 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:01:34 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 77.193.67.174
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-Cancel-Lock: sha1:nyyhCBAyIe3THZqE/ffz/QWX+p0=
+	id S1751214AbXKJKOo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 05:14:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751213AbXKJKOo
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 05:14:44 -0500
+Received: from smtp-out.google.com ([216.239.33.17]:14962 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751173AbXKJKOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 05:14:43 -0500
+Received: from zps38.corp.google.com (zps38.corp.google.com [172.25.146.38])
+	by smtp-out.google.com with ESMTP id lAAAEa0Y001783;
+	Sat, 10 Nov 2007 10:14:37 GMT
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=received:date:from:to:cc:subject:message-id:references:
+	mime-version:content-type:content-disposition:in-reply-to:organization:user-agent;
+	b=eSTMNlbIdoXwcA57TZzx9MmZUL0hyl8llLZb2/KsIAtX0H+UaIYoxBzD+bMOlqSoG
+	MvtkR4tr44fCMgnaU7zyA==
+Received: from bulgaria (bulgaria.corp.google.com [172.18.102.38])
+	by zps38.corp.google.com with ESMTP id lAAAEZTj028617;
+	Sat, 10 Nov 2007 02:14:35 -0800
+Received: by bulgaria (Postfix, from userid 1000)
+	id 597548F45E; Sat, 10 Nov 2007 02:14:20 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711100052290.4362@racer.site>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64325>
 
-Currently, when committing, git-commit ignore the value of
-GIT_INDEX_FILE, and always use $GIT_DIR/index. This patch
-fix it.
+[Johannes Schindelin <Johannes.Schindelin@gmx.de>]
+> Hi,
+> 
+> On Sat, 10 Nov 2007, Ludovic Court?s wrote:
+> 
+> > Apparently, `git-send-email' doesn't specify the email's `Content-Type',
+> > notably its charset, while it should really add something like:
+> > 
+> >   Content-Type: text/plain; charset=UTF-8
+> > 
+> > Or did I miss an option or something?
+> 
+> Apparently.  There was a thread some days ago, about that very issue.  
+> Please find and read it.
 
-Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
+The thread I found says that git-send-email should do the right thing if
+there are non-ascii characters, but this does not seem to be the case
+for me.
+
+The example I have involves a coworker's name which needs non-ascii
+characters.  They are properly escaped in the From: line generated by
+git-format-patch.  git-send-email puts the generated From: line at the
+top of the body of the email, unescapes it (to utf-8), and proceeds to
+send the email with no Content-Type specified.
+
+This behaviour is observed in 1.5.3.5.  A sample output from
+git-format-patch follows, which demonstrates the problem:
+
+
+>From 3440baaed3b21138f6fc8b80e03769e3903f9c11 Mon Sep 17 00:00:00 2001
+From: =?utf-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>
+Date: Wed, 7 Nov 2007 22:51:44 -0800
+Subject: [PATCH] hrtimer: Add timer back to pending list if it was reactivated and has already expired again.
+
+This avoids problems with timer hardware that does not respond to timers set in the past.
+
+Signed-off-by: Brian Swetland <swetland@android.com>
 ---
- git-commit.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ kernel/hrtimer.c |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/git-commit.sh b/git-commit.sh
-index fcb8443..6490045 100755
---- a/git-commit.sh
-+++ b/git-commit.sh
-@@ -26,7 +26,7 @@ refuse_partial () {
- }
-
- TMP_INDEX=3D
--THIS_INDEX=3D"$GIT_DIR/index"
-+THIS_INDEX=3D"${GIT_INDEX_FILE:-$GIT_DIR/index}"
- NEXT_INDEX=3D"$GIT_DIR/next-index$$"
- rm -f "$NEXT_INDEX"
- save_index () {
---
+diff --git a/kernel/hrtimer.c b/kernel/hrtimer.c
+index 22a2514..7c60769 100644
+--- a/kernel/hrtimer.c
++++ b/kernel/hrtimer.c
+@@ -1149,8 +1149,14 @@ static void run_hrtimer_softirq(struct softirq_action *h)
+ 			 * If the timer was rearmed on another CPU, reprogram
+ 			 * the event device.
+ 			 */
+-			if (timer->base->first == &timer->node)
+-				hrtimer_reprogram(timer, timer->base);
++			if (timer->base->first == &timer->node) {
++				if(hrtimer_reprogram(timer, timer->base)) {
++					__remove_hrtimer(timer, timer->base,
++							 HRTIMER_STATE_PENDING, 0);
++					list_add_tail(&timer->cb_entry,
++						      &cpu_base->cb_pending);
++				}
++			}
+ 		}
+ 	}
+ 	spin_unlock_irq(&cpu_base->lock);
+-- 
 1.5.3.5
