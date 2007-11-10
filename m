@@ -1,95 +1,71 @@
-From: Lars Hjemli <hjemli@gmail.com>
-Subject: [PATCH] for-each-ref: fix setup of option-parsing for --sort
-Date: Sat, 10 Nov 2007 17:47:54 +0100
-Message-ID: <1194713274-31200-1-git-send-email-hjemli@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>, Jon Smirl <jonsmirl@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 17:48:17 2007
+From: bob <kranki@mac.com>
+Subject: Re: git packs
+Date: Sat, 10 Nov 2007 12:40:16 -0500
+Message-ID: <00593593-E943-4DA0-AA9B-FDBB866E7EFB@mac.com>
+References: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 10 18:41:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqtVJ-0001tt-7a
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 17:48:17 +0100
+	id 1IquK4-0001rK-I6
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 18:40:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865AbXKJQr6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 11:47:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751788AbXKJQr6
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 11:47:58 -0500
-Received: from mail48.e.nsc.no ([193.213.115.48]:51223 "EHLO mail48.e.nsc.no"
+	id S1750791AbXKJRk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 12:40:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750763AbXKJRk1
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 12:40:27 -0500
+Received: from smtpoutm.mac.com ([17.148.16.75]:51151 "EHLO smtpoutm.mac.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751768AbXKJQr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 11:47:58 -0500
-Received: from localhost.localdomain (ti231210a341-0189.bb.online.no [88.88.168.189])
-	by mail48.nsc.no (8.13.8/8.13.5) with ESMTP id lAAGlFTO021625;
-	Sat, 10 Nov 2007 17:47:15 +0100 (MET)
-X-Mailer: git-send-email 1.5.3.5.623.g0a1d
+	id S1750695AbXKJRk0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 12:40:26 -0500
+Received: from mac.com (asmtp008-s [10.150.69.71])
+	by smtpoutm.mac.com (Xserve/smtpout012/MantshX 4.0) with ESMTP id lAAHeQ2Y017775
+	for <git@vger.kernel.org>; Sat, 10 Nov 2007 09:40:26 -0800 (PST)
+Received: from [192.168.2.23] (c-66-176-54-4.hsd1.fl.comcast.net [66.176.54.4])
+	(authenticated bits=0)
+	by mac.com (Xserve/asmtp008/MantshX 4.0) with ESMTP id lAAHeOGj020265
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
+	for <git@vger.kernel.org>; Sat, 10 Nov 2007 09:40:25 -0800 (PST)
+In-Reply-To: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64360>
 
-The option value for --sort is already a pointer to a pointer to struct
-ref_sort, so just use it.
+I compiled git under MacOSX 10.4.10 withr:
 
-Signed-off-by: Lars Hjemli <hjemli@gmail.com>
----
+A) -m64 -arch ppc64 on a dual G5
+B) -m64 -arch x86_64 on the dual quad-core
 
-On Nov 10, 2007 5:25 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Could you add a test for that too, please?
+In both case, the link phase failed because there
+was no 64-bit version of libz, libssl, libiconv and
+libcrypto to link with.
 
-Is this ok?
+I then installed MacOSX 10.5 (Leopard) which
+was just released last month on the dual
+quad-core machine with -m64 -arch x86_64.
+git compiled and linked successfully.  However,
+it failed in the "git add ." which was the
+second command after "git init".  The message
+was fairly cryptic, "Bus error".
 
+I am guessing that the "Bus error" is an Apple
+problem and it did produce a crashreport.  So,
+I am going to submit it to Apple since it is easily
+reproducible.
 
- builtin-for-each-ref.c  |    2 +-
- t/t6300-for-each-ref.sh |   22 ++++++++++++++++++++++
- 2 files changed, 23 insertions(+), 1 deletions(-)
+Anyway, those are the results.
 
-diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
-index da8c794..e909e66 100644
---- a/builtin-for-each-ref.c
-+++ b/builtin-for-each-ref.c
-@@ -847,7 +847,7 @@ int cmd_for_each_ref(int argc, const char **argv, const char *prefix)
- 		OPT_GROUP(""),
- 		OPT_INTEGER( 0 , "count", &maxcount, "show only <n> matched refs"),
- 		OPT_STRING(  0 , "format", &format, "format", "format to use for the output"),
--		OPT_CALLBACK(0 , "sort", &sort_tail, "key",
-+		OPT_CALLBACK(0 , "sort", sort_tail, "key",
- 		            "field name to sort on", &opt_parse_sort),
- 		OPT_END(),
- 	};
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index d0809eb..c722635 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -148,4 +148,26 @@ test_expect_success 'Check format "rfc2822" date fields output' '
- 	git diff expected actual
- '
- 
-+cat >expected <<\EOF
-+refs/heads/master
-+refs/tags/testtag
-+EOF
-+
-+test_expect_success 'Verify ascending sort' '
-+	git-for-each-ref --format="%(refname)" --sort=refname >actual &&
-+	git diff expected actual
-+'
-+
-+
-+cat >expected <<\EOF
-+refs/tags/testtag
-+refs/heads/master
-+EOF
-+
-+test_expect_success 'Verify descending sort' '
-+	git-for-each-ref --format="%(refname)" --sort=-refname >actual &&
-+	git diff expected actual
-+'
-+
-+
- test_done
--- 
-1.5.3.5.623.g0a1d
+I am now going to split out the jpg(s), pdf(s)
+and (.mov) files from the repository  and just
+manage them external to the git repository
+which will fix my git problem.
+
+I will report again when I get git running on
+Leopard.
