@@ -1,72 +1,71 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Tue, 13 Nov 2007 14:50:49 -0500
-Message-ID: <CBAEC42B-9F50-4723-9847-640D9832532E@silverinsanity.com>
-References: <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <vpqzlxiiii6.fsf@bauges.imag.fr> <20071113100209.GE14735@spearce.org> <vpqpryefmhj.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:51:24 2007
+From: Sergei Organov <osv@javad.com>
+Subject: [PATCH] core-tutorial.txt: Fix argument mistake in an example.
+Date: Sat, 10 Nov 2007 16:17:33 +0300
+Message-ID: <87hcjp7w6c.fsf@osv.gnss.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 13 21:00:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is1n2-0004NM-9x
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:51:16 +0100
+	id 1Is1wQ-0007sd-4w
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755640AbXKMTux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 14:50:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbXKMTux
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 14:50:53 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:51064 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753430AbXKMTuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 14:50:52 -0500
-Received: from [192.168.1.5] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 9E32E1FFC230;
-	Tue, 13 Nov 2007 19:50:50 +0000 (UTC)
-In-Reply-To: <vpqpryefmhj.fsf@bauges.imag.fr>
-X-Mailer: Apple Mail (2.912)
+	id S1761272AbXKMUAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 15:00:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761254AbXKMUAg
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:00:36 -0500
+Received: from javad.com ([216.122.176.236]:1047 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761124AbXKMUAf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 15:00:35 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lADK0X067647;
+	Tue, 13 Nov 2007 20:00:34 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1Is1vv-0005xi-Oa; Tue, 13 Nov 2007 23:00:27 +0300
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64843>
 
+One of examples has wrong output given the arguments provided.
+Fix arguments to match the output.
 
-On Nov 13, 2007, at 5:50 AM, Matthieu Moy wrote:
+Fix a minor syntax mistake in another place.
 
-> While clone normally does a bit more:
->
-> [remote "origin"]
->        url = /tmp/git1/.git
->        fetch = +refs/heads/*:refs/remotes/origin/*
-> [branch "master"]
->        remote = origin
->        merge = refs/heads/master
+Signed-off-by: Sergei Organov <osv@javad.com>
+---
+ Documentation/core-tutorial.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-But how is clone expected to do that when the origin is an empty  
-repo?  There is no branch for it to track, and automagically setting  
-it to master is bogus because then it's tracking something that  
-doesn't exist.
-
-The easy way to set up the last bit is "git checkout -b master --track  
-origin/master".  But that won't work if origin/master doesn't exist.   
-The following will always work:
-
-git config branch.master.remote origin
-git config branch.master.merge refs/heads/master
-
-But asking git-clone do do this sort of odd magic for an empty repo is  
-dubious at best.  Perhaps convenient for your situation, but creates  
-repos that don't actually work.  (Will give errors when trying to  
-merge a non-existent branch, at the very least.)
-
-~~ Brian
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index 401d1de..d611854 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -1152,7 +1152,7 @@ back to the earlier repository with "hello" and "example" file,
+ and bring ourselves back to the pre-merge state:
+ 
+ ------------
+-$ git show-branch --more=3 master mybranch
++$ git show-branch --more=2 master mybranch
+ ! [master] Merge work in mybranch
+  * [mybranch] Merge work in mybranch
+ --
+@@ -1215,7 +1215,7 @@ $ git-read-tree -m -u $mb HEAD mybranch
+ This is the same `git-read-tree` command we have already seen,
+ but it takes three trees, unlike previous examples.  This reads
+ the contents of each tree into different 'stage' in the index
+-file (the first tree goes to stage 1, the second stage 2,
++file (the first tree goes to stage 1, the second -- to stage 2,
+ etc.).  After reading three trees into three stages, the paths
+ that are the same in all three stages are 'collapsed' into stage
+ 0.  Also paths that are the same in two of three stages are
+-- 
+1.5.3.4
