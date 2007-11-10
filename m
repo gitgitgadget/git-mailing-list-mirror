@@ -1,242 +1,117 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH 1/3] --pretty=format: parse commit message only once
-Date: Sat, 10 Nov 2007 12:14:20 +0100
-Message-ID: <4735928C.3040009@lsrfire.ath.cx>
-References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net> <4734EA4E.8070405@lsrfire.ath.cx> <20071110004635.GA14992@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH v3] user-manual: add advanced topic "bisecting merges"
+Date: Sat, 10 Nov 2007 12:16:14 +0100
+Message-ID: <B622E814-D7D1-4DC8-A724-666BA0A1220F@zib.de>
+References: <217E7104-312D-4D0C-BC66-C4829779C216@zib.de> <119468808499-git-send-email-prohaska@zib.de> <7vsl3emlpc.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 12:15:01 2007
+Cc: git@vger.kernel.org, Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 12:15:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqoIk-0006w2-7H
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 12:14:58 +0100
+	id 1IqoJD-000708-0A
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 12:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751391AbXKJLOm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 06:14:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751249AbXKJLOm
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 06:14:42 -0500
-Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:54495
-	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751306AbXKJLOl (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 06:14:41 -0500
-Received: from [10.0.1.201] (p57B7EF01.dip.t-dialin.net [87.183.239.1])
-	by neapel230.server4you.de (Postfix) with ESMTP id CCF73873BA;
-	Sat, 10 Nov 2007 12:14:38 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071110004635.GA14992@sigill.intra.peff.net>
+	id S1751452AbXKJLPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 06:15:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751420AbXKJLPK
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 06:15:10 -0500
+Received: from mailer.zib.de ([130.73.108.11]:48015 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751249AbXKJLPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 06:15:09 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAABEw1Z004889;
+	Sat, 10 Nov 2007 12:14:58 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db83e97.pool.einsundeins.de [77.184.62.151])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAABEurU000275
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sat, 10 Nov 2007 12:14:58 +0100 (MET)
+In-Reply-To: <7vsl3emlpc.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64330>
 
-As Jeff King pointed out, some placeholder expansions are related to
-each other: the steps to calculate one go most of the way towards
-calculating the other, too.
 
-This patch makes format_commit_message() parse the commit message
-only once, remembering the position of each item.  This speeds up
-handling of format strings containing multiple placeholders from the
-set %s, %a*, %c*, %e, %b.
+On Nov 10, 2007, at 11:36 AM, Junio C Hamano wrote:
 
-Here are the timings for the git version in next.  The first one is
-to estimate the overhead of the caching, the second one is taken
-from http://svn.tue.mpg.de/tentakel/trunk/tentakel/Makefile as an
-example of a format string found in the wild.  The times are the
-fastest of three consecutive runs in each case:
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> ...
+>> +A solution is to linearize the history by rebasing the lower
+>> +branch on top of the upper, instead of merging. There were no
+>
+> Hmm.  When I wrote it, I did not mean this as a "solution", but
+> as an illustration of how a merge heavy history and a linear
+> history have impact on bisectability.
 
-$ time git log --pretty=format:%e >/dev/null
+I agree. This is what I understood. But later Johannes brought up
+the idea of naming it a "solution"; and some others liked this.
 
-real    0m0.381s
-user    0m0.340s
-sys     0m0.024s
+We should probably move the discussion to Chapter 5 "Rewriting
+history and maintaining patch series". Discussing pros and cons
+of merge versus rebase makes more sense there.  The discussion
+would go right after "Problems with rewriting history". So,
+users should be warned not to rebase without thinking about
+the consequences. Another advantage is that users should
+have learnt more about git when they reach Chapter 5. Hence,
+it should be easier to follow the discussion.
 
-$ time git log --pretty=format:"* %cd %cn%n%n%s%n%b" >/dev/null
 
-real    0m0.623s
-user    0m0.556s
-sys     0m0.052s
+>   So it is more like...
+>
+>     On the other hand, if you did not merge at C but rebased the
+>     history between Z to B on top of A, you would have get this
+>     linear history [illustration here].  Bisecting between Z and
+>     D* would hit a single culprit commit Y* instead.  This tends
+>     to be easier to understand why it is broken.
 
-And here the times with this patch:
+I'll take this...
 
-$ time git log --pretty=format:%e >/dev/null
 
-real    0m0.385s
-user    0m0.332s
-sys     0m0.040s
+> For this reason, many experienced git users, even when they are
+> working on an otherwise merge-heavy project, keep the histories
+> linear by rebasing their work on top of public upstreams before
+> publishing (when able).  An extreme example: merges from a few
+> top-level lieutenants to Linus in the kernel, e.g. David Miller,
+> are known to _almost always_ fast-forward for Linus.
+>
+> IOW, the description is to mildly encourage private rebasing to
+> keep the job of later bisecting (for potentially others) easier.
+> I realize I originally wrote as if C (merge) was made by the
+> same person as the person who ends up bisecting, but that is
+> not necessarily the case.  Keeping the history without needless
+> merges tend to make _other_ people's lives simpler.
+>
+> And after encouraging the private rebasing, I would continue
+> like...
+>
+>     But if you already made a merge C instead of rebasing, all
+>     is not lost.  In the illustrated case, you can easily rebase
+>     one parent branch on top of the other after the fact, just
+>     to understand the history and to make the history more
+>     easily bisectable.
 
-$ time git log --pretty=format:"* %cd %cn%n%n%s%n%b" >/dev/null
+s/more easily bisectable/easier to bisect/ ?
 
-real    0m0.563s
-user    0m0.504s
-sys     0m0.048s
 
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- pretty.c |  124 +++++++++++++++++++++++++++++++++++++++++---------------------
- 1 files changed, 82 insertions(+), 42 deletions(-)
+>     Even though the published history should
+>     not be rewound without consent with others in the project,
+>     nobody gets hurt if you rebased to create alternate history
+>     privately.  After understanding the breakage and coming up
+>     with a fix on top of D*, you can discard that rebased
+>     history, and apply the same fix on top of D, as D* and D
+>     should have the identical trees.
 
-diff --git a/pretty.c b/pretty.c
-index 9fbd73f..0c2f83b 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -354,14 +354,67 @@ static void format_person_part(struct strbuf *sb, char part,
- 	}
- }
- 
--static void format_commit_item(struct strbuf *sb, const char *placeholder,
--                               void *context)
-+struct chunk {
-+	size_t off;
-+	size_t len;
-+};
-+
-+struct format_commit_context {
-+	const struct commit *commit;
-+
-+	/* These offsets are relative to the start of the commit message. */
-+	int commit_header_parsed;
-+	struct chunk subject;
-+	struct chunk author;
-+	struct chunk committer;
-+	struct chunk encoding;
-+	size_t body_off;
-+};
-+
-+static void parse_commit_header(struct format_commit_context *context)
- {
--	const struct commit *commit = context;
--	struct commit_list *p;
-+	const char *msg = context->commit->buffer;
- 	int i;
- 	enum { HEADER, SUBJECT, BODY } state;
-+
-+	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
-+		int eol;
-+		for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
-+			; /* do nothing */
-+
-+		if (state == SUBJECT) {
-+			context->subject.off = i;
-+			context->subject.len = eol - i;
-+			i = eol;
-+		}
-+		if (i == eol) {
-+			state++;
-+			/* strip empty lines */
-+			while (msg[eol + 1] == '\n')
-+				eol++;
-+		} else if (!prefixcmp(msg + i, "author ")) {
-+			context->author.off = i + 7;
-+			context->author.len = eol - i - 7;
-+		} else if (!prefixcmp(msg + i, "committer ")) {
-+			context->committer.off = i + 10;
-+			context->committer.len = eol - i - 10;
-+		} else if (!prefixcmp(msg + i, "encoding ")) {
-+			context->encoding.off = i + 9;
-+			context->encoding.len = eol - i - 9;
-+		}
-+		i = eol;
-+	}
-+	context->body_off = i;
-+	context->commit_header_parsed = 1;
-+}
-+
-+static void format_commit_item(struct strbuf *sb, const char *placeholder,
-+                               void *context)
-+{
-+	struct format_commit_context *c = context;
-+	const struct commit *commit = c->commit;
- 	const char *msg = commit->buffer;
-+	struct commit_list *p;
- 
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
-@@ -429,45 +482,28 @@ static void format_commit_item(struct strbuf *sb, const char *placeholder,
- 	}
- 
- 	/* For the rest we have to parse the commit header. */
--	for (i = 0, state = HEADER; msg[i] && state < BODY; i++) {
--		int eol;
--		for (eol = i; msg[eol] && msg[eol] != '\n'; eol++)
--			; /* do nothing */
-+	if (!c->commit_header_parsed)
-+		parse_commit_header(c);
- 
--		if (state == SUBJECT) {
--			if (placeholder[0] == 's') {
--				strbuf_add(sb, msg + i, eol - i);
--				return;
--			}
--			i = eol;
--		}
--		if (i == eol) {
--			state++;
--			/* strip empty lines */
--			while (msg[eol + 1] == '\n')
--				eol++;
--		} else if (!prefixcmp(msg + i, "author ")) {
--			if (placeholder[0] == 'a') {
--				format_person_part(sb, placeholder[1],
--				                   msg + i + 7, eol - i - 7);
--				return;
--			}
--		} else if (!prefixcmp(msg + i, "committer ")) {
--			if (placeholder[0] == 'c') {
--				format_person_part(sb, placeholder[1],
--				                   msg + i + 10, eol - i - 10);
--				return;
--			}
--		} else if (!prefixcmp(msg + i, "encoding ")) {
--			if (placeholder[0] == 'e') {
--				strbuf_add(sb, msg + i + 9, eol - i - 9);
--				return;
--			}
--		}
--		i = eol;
-+	switch (placeholder[0]) {
-+	case 's':
-+		strbuf_add(sb, msg + c->subject.off, c->subject.len);
-+		return;
-+	case 'a':
-+		format_person_part(sb, placeholder[1],
-+		                   msg + c->author.off, c->author.len);
-+		return;
-+	case 'c':
-+		format_person_part(sb, placeholder[1],
-+		                   msg + c->committer.off, c->committer.len);
-+		return;
-+	case 'e':
-+		strbuf_add(sb, msg + c->encoding.off, c->encoding.len);
-+		return;
-+	case 'b':
-+		strbuf_addstr(sb, msg + c->body_off);
-+		return;
- 	}
--	if (msg[i] && placeholder[0] == 'b')	/* body */
--		strbuf_addstr(sb, msg + i);
- }
- 
- void format_commit_message(const struct commit *commit,
-@@ -505,7 +541,11 @@ void format_commit_message(const struct commit *commit,
- 		"m",		/* left/right/bottom */
- 		NULL
- 	};
--	strbuf_expand(sb, format, placeholders, format_commit_item, (void *)commit);
-+	struct format_commit_context context;
-+
-+	memset(&context, 0, sizeof(context));
-+	context.commit = commit;
-+	strbuf_expand(sb, format, placeholders, format_commit_item, &context);
- }
- 
- static void pp_header(enum cmit_fmt fmt,
--- 
-1.5.3.5.1651.g30bf
+... and will prepare PATCH v4.
+
+	Steffen
