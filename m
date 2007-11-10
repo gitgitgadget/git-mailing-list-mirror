@@ -1,86 +1,126 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Make builtin-tag.c use parse_options.
-Date: Sat, 10 Nov 2007 13:25:44 +0100
-Message-ID: <1b46aba20711100425o2f351ac5o81537adc6f09dc80@mail.gmail.com>
-References: <473463E0.7000406@gmail.com>
-	 <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: `git-send-email' doesn't specify `Content-Type'
+Date: Sat, 10 Nov 2007 13:25:28 +0100
+Message-ID: <20071110122528.GA4977@atjola.homenet>
+References: <87ode3klc7.fsf@chbouib.org> <Pine.LNX.4.64.0711100052290.4362@racer.site> <20071110101420.GA21353@bulgaria>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Pierre Habouzit" <madcoder@debian.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 13:26:02 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ludovic =?iso-8859-1?Q?Court=E8s?= <ludo@chbouib.org>,
+	git@vger.kernel.org
+To: Brian Swetland <swetland@google.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 13:26:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqpPW-0007Jj-3M
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:26:02 +0100
+	id 1IqpPl-0007O6-Bo
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:26:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751718AbXKJMZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 07:25:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbXKJMZq
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:25:46 -0500
-Received: from rv-out-0910.google.com ([209.85.198.184]:14605 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278AbXKJMZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 07:25:45 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so723803rvb
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 04:25:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=JJBtz1jL0JyX97vyt9weOUFFSrfIqSIChhjcdgiwJP4=;
-        b=XWL4XBe/RIlaKy6xjAiLeaLX37Sn2abdw6GGxCUs8H1W9HwoUvGXSyPocEvldT0BV8trWbfwnYcDFgT2a/12edtxXGIiBgY0YWfokPD5rI0hEYVMm1bta7zSOahHM+AjuiC+YzgeJt0iG7iLd6ICLHQkJshV1HoHG7hskReFt80=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=mbl2suxAh2fCyp7JaRtUDu3fZspROoDvvUqvEiAFS4JC+KhedbFX5U/klFwhQLs+vVvuw3GLGUoLzpxeGFDpQ8tfzWk6y6KYaIUQdgSrK1XZ0xrsYgHAwEO3tVhkgGReRUq2sQuFtPSiT9TjBJkmk0WSQmEQe7K+9ZJ0qiONSJk=
-Received: by 10.142.131.18 with SMTP id e18mr532952wfd.1194697544953;
-        Sat, 10 Nov 2007 04:25:44 -0800 (PST)
-Received: by 10.142.88.7 with HTTP; Sat, 10 Nov 2007 04:25:44 -0800 (PST)
-In-Reply-To: <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
+	id S1752046AbXKJMZv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2007 07:25:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752000AbXKJMZv
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:25:51 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42192 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751733AbXKJMZu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 07:25:50 -0500
+Received: (qmail invoked by alias); 10 Nov 2007 12:25:29 -0000
+Received: from i577BBC4D.versanet.de (EHLO localhost) [87.123.188.77]
+  by mail.gmx.net (mp055) with SMTP; 10 Nov 2007 13:25:29 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+jeoQKLGujlseePBI/KCJpAJK4yUGQsJsWAlVV9I
+	OW1mEMaLssJC1q
 Content-Disposition: inline
+In-Reply-To: <20071110101420.GA21353@bulgaria>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64339>
 
-2007/11/10, Junio C Hamano <gitster@pobox.com>:
-> Carlos Rica <jasampler@gmail.com> writes:
->
-> > Also, this removes those tests ensuring that repeated
-> > -m options don't allocate memory more than once, because now
-> > this is done after parsing options, using the last one
-> > when more are given. The same for -F.
->
-> The reason for this change is...?  Is this because it is
-> cumbersome to detect and refuse multiple -m options using the
-> parseopt API?  If so, the API may be what needs to be fixed.
-> Taking the last one and discarding earlier ones feels to me an
-> arbitrary choice.
->
-> While I freely admit that I do not particularly find the "One -m
-> introduces one new line, concatenated to form the final
-> paragraph" handling of multiple -m options done by git-commit
-> nice nor useful, I suspect that it would make more sense to make
-> git-tag and git-commit handle multiple -m option consistently,
-> if you are going to change the existing semantics.  Since some
-> people really seem to like multiple -m handling of git-commit,
-> the avenue of the least resistance for better consistency would
-> be to accept and concatenate (with LF in between) multiple -m
-> options.
->
-> With multiple -F, I think erroring out would be the sensible
-> thing to do, but some people might prefer concatenation.  I do
-> not care either way as long as commit and tag behave
-> consistently.
+On 2007.11.10 02:14:20 -0800, Brian Swetland wrote:
+> [Johannes Schindelin <Johannes.Schindelin@gmx.de>]
+> > Hi,
+> >=20
+> > On Sat, 10 Nov 2007, Ludovic Court?s wrote:
+> >=20
+> > > Apparently, `git-send-email' doesn't specify the email's `Content=
+-Type',
+> > > notably its charset, while it should really add something like:
+> > >=20
+> > >   Content-Type: text/plain; charset=3DUTF-8
+> > >=20
+> > > Or did I miss an option or something?
+> >=20
+> > Apparently.  There was a thread some days ago, about that very issu=
+e. =20
+> > Please find and read it.
+>=20
+> The thread I found says that git-send-email should do the right thing=
+ if
+> there are non-ascii characters, but this does not seem to be the case
+> for me.
+>=20
+> The example I have involves a coworker's name which needs non-ascii
+> characters.  They are properly escaped in the From: line generated by
+> git-format-patch.  git-send-email puts the generated From: line at th=
+e
+> top of the body of the email, unescapes it (to utf-8), and proceeds t=
+o
+> send the email with no Content-Type specified.
 
-A solution not needing memory allocation into the option parser
-could be setting a callback running over the repeated option
-arguments, passing them to the function one per each call.
-Then, the user will be able to decide if he wants the arguments
-concatenated or only need one of them and prefers erroring out.
+You mean that it converts the header field to utf-8? It doesn't do that
+here (neither master nor 1.5.3.5) and IIRC that would be invalid anyway=
+,
+because Content-Type applies to exactly that, content, not headers. You=
+r
+sample has no non-ASCII characters (or at least I didn't see any), so
+git-send-email doesn't add a header to specify a charset.
 
-Is this already possible with the current parser or the callback
-mode only calls using the last option?
+Bj=F6rn
+
+> This behaviour is observed in 1.5.3.5.  A sample output from
+> git-format-patch follows, which demonstrates the problem:
+>=20
+>=20
+> >From 3440baaed3b21138f6fc8b80e03769e3903f9c11 Mon Sep 17 00:00:00 20=
+01
+> From: =3D?utf-8?q?Arve=3D20Hj=3DC3=3DB8nnev=3DC3=3DA5g?=3D <arve@andr=
+oid.com>
+> Date: Wed, 7 Nov 2007 22:51:44 -0800
+> Subject: [PATCH] hrtimer: Add timer back to pending list if it was re=
+activated and has already expired again.
+>=20
+> This avoids problems with timer hardware that does not respond to tim=
+ers set in the past.
+>=20
+> Signed-off-by: Brian Swetland <swetland@android.com>
+> ---
+>  kernel/hrtimer.c |   10 ++++++++--
+>  1 files changed, 8 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/kernel/hrtimer.c b/kernel/hrtimer.c
+> index 22a2514..7c60769 100644
+> --- a/kernel/hrtimer.c
+> +++ b/kernel/hrtimer.c
+> @@ -1149,8 +1149,14 @@ static void run_hrtimer_softirq(struct softirq=
+_action *h)
+>  			 * If the timer was rearmed on another CPU, reprogram
+>  			 * the event device.
+>  			 */
+> -			if (timer->base->first =3D=3D &timer->node)
+> -				hrtimer_reprogram(timer, timer->base);
+> +			if (timer->base->first =3D=3D &timer->node) {
+> +				if(hrtimer_reprogram(timer, timer->base)) {
+> +					__remove_hrtimer(timer, timer->base,
+> +							 HRTIMER_STATE_PENDING, 0);
+> +					list_add_tail(&timer->cb_entry,
+> +						      &cpu_base->cb_pending);
+> +				}
+> +			}
+>  		}
+>  	}
+>  	spin_unlock_irq(&cpu_base->lock);
