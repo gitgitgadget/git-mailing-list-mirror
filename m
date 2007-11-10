@@ -1,73 +1,171 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: cogito remote branch
-Date: Sat, 10 Nov 2007 12:52:39 +0100
-Organization: At home
-Message-ID: <fh4627$men$1@ger.gmane.org>
-References: <1IqTj5-24rt3I0@fwd33.aul.t-online.de> <47345E85.8090702@op5.se> <1IqUGN-1XXOVs0@fwd33.aul.t-online.de> <Pine.LNX.4.64.0711091417060.4362@racer.site> <1IqWRW-0QQ4LA0@fwd26.aul.t-online.de> <1194625691.1471.3.camel@ld0161-tx32> <Pine.LNX.4.64.0711101217130.4330@castor.milkiway.cos>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH] Simplify strchrnul() compat code
+Date: Sat, 10 Nov 2007 12:55:48 +0100
+Message-ID: <47359C44.6090903@lsrfire.ath.cx>
+References: <4733AEA0.1060602@lsrfire.ath.cx> <473434ED.50002@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 12:53:46 2007
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Andreas Ericsson <ae@op5.se>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 12:56:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqouF-0007rN-Sl
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 12:53:44 +0100
+	id 1Iqows-00009F-Ht
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 12:56:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbXKJLxa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 06:53:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754028AbXKJLxa
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 06:53:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:40055 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751641AbXKJLx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 06:53:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iqotc-0001IM-1U
-	for git@vger.kernel.org; Sat, 10 Nov 2007 11:53:04 +0000
-Received: from abvi124.neoplus.adsl.tpnet.pl ([83.8.206.124])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 11:53:04 +0000
-Received: from jnareb by abvi124.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 11:53:04 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvi124.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751717AbXKJL4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 06:56:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751703AbXKJL4K
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 06:56:10 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:58305
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751324AbXKJL4J (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 06:56:09 -0500
+Received: from [10.0.1.201] (p57B7EF01.dip.t-dialin.net [87.183.239.1])
+	by neapel230.server4you.de (Postfix) with ESMTP id A126E873BA;
+	Sat, 10 Nov 2007 12:56:07 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <473434ED.50002@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64336>
 
-Michael Dressel wrote:
-> On Fri, 9 Nov 2007, Jon Loeliger wrote: 
->> On Fri, 2007-11-09 at 10:10, MichaelTiloDressel@t-online.de wrote:
->>
->>>  There are just some features
->>> which simplify things for me in cogito. E.g. in cogito in the simplest
->>> way you don't need to be aware of the index. While with git
->>> you have to remember to add the changes to the index explicitly
->>> to get them committed. 
->> 
->> "git commit -a ..." might be useful for you.
->> 
->> Other lingering cogito-isms you think are lacking in git?
-> 
-> Thanks for the hint. I have to use git for a while to understand what may 
-> still be lacking (at least for me, if at all). Off the top of my head one 
-> other difference is that if I do a cg-push the remote (or origin) head is 
-> updated automatically, I think.
+From: Andreas Ericsson <ae@op5.se>
 
-If you mean that tracking branches are updated on push, this is what
-git also does from some time (perhaps not in released version, so please
-wait or run 'master').
+strchrnul() was introduced in glibc in April 1999 and included in
+glibc-2.1. Checking for that version means the majority of all git
+users would get to use the optimized version in glibc. Of the
+remaining few some might get to use a slightly slower version
+than necessary but probably not slower than what we have today.
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Rediffed-against-next-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+I agree that we can do without providing a way to use a native
+version outside glibc until we actually encounter such a thing.
+
+ Makefile           |   13 -------------
+ compat/strchrnul.c |    8 --------
+ git-compat-util.h  |    9 +++++++--
+ 3 files changed, 7 insertions(+), 23 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 4f1d7ca..4a5d2b9 100644
+--- a/Makefile
++++ b/Makefile
+@@ -30,8 +30,6 @@ all::
+ #
+ # Define NO_MEMMEM if you don't have memmem.
+ #
+-# Define NO_STRCHRNUL if you don't have strchrnul.
+-#
+ # Define NO_STRLCPY if you don't have strlcpy.
+ #
+ # Define NO_STRTOUMAX if you don't have strtoumax in the C library.
+@@ -409,7 +407,6 @@ ifeq ($(uname_S),Darwin)
+ 	OLD_ICONV = UnfortunatelyYes
+ 	NO_STRLCPY = YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ endif
+ ifeq ($(uname_S),SunOS)
+ 	NEEDS_SOCKET = YesPlease
+@@ -417,7 +414,6 @@ ifeq ($(uname_S),SunOS)
+ 	SHELL_PATH = /bin/bash
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	NO_HSTRERROR = YesPlease
+ 	ifeq ($(uname_R),5.8)
+ 		NEEDS_LIBICONV = YesPlease
+@@ -443,7 +439,6 @@ ifeq ($(uname_O),Cygwin)
+ 	NO_D_INO_IN_DIRENT = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	NO_SYMLINK_HEAD = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_FAST_WORKING_DIRECTORY = UnfortunatelyYes
+@@ -458,14 +453,12 @@ endif
+ ifeq ($(uname_S),FreeBSD)
+ 	NEEDS_LIBICONV = YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+ endif
+ ifeq ($(uname_S),OpenBSD)
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+@@ -481,7 +474,6 @@ endif
+ ifeq ($(uname_S),AIX)
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NEEDS_LIBICONV=YesPlease
+ endif
+@@ -494,7 +486,6 @@ ifeq ($(uname_S),IRIX64)
+ 	NO_SETENV=YesPlease
+ 	NO_STRCASESTR=YesPlease
+ 	NO_MEMMEM = YesPlease
+-	NO_STRCHRNUL = YesPlease
+ 	NO_STRLCPY = YesPlease
+ 	NO_SOCKADDR_STORAGE=YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+@@ -705,10 +696,6 @@ ifdef NO_MEMMEM
+ 	COMPAT_CFLAGS += -DNO_MEMMEM
+ 	COMPAT_OBJS += compat/memmem.o
+ endif
+-ifdef NO_STRCHRNUL
+-	COMPAT_CFLAGS += -DNO_STRCHRNUL
+-	COMPAT_OBJS += compat/strchrnul.o
+-endif
+ 
+ ifdef THREADED_DELTA_SEARCH
+ 	BASIC_CFLAGS += -DTHREADED_DELTA_SEARCH
+diff --git a/compat/strchrnul.c b/compat/strchrnul.c
+deleted file mode 100644
+index 51839fe..0000000
+--- a/compat/strchrnul.c
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#include "../git-compat-util.h"
+-
+-char *gitstrchrnul(const char *s, int c)
+-{
+-	while (*s && *s != c)
+-		s++;
+-	return (char *)s;
+-}
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e72654b..11e6df6 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -183,9 +183,14 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
+                 const void *needle, size_t needlelen);
+ #endif
+ 
+-#ifdef NO_STRCHRNUL
++#if !defined(__GLIBC__) && !__GLIBC_PREREQ(2, 1)
+ #define strchrnul gitstrchrnul
+-char *gitstrchrnul(const char *s, int c);
++static inline char *gitstrchrnul(const char *s, int c)
++{
++        while (*s && *s != c)
++                s++;
++        return (char *)s;
++}
+ #endif
+ 
+ extern void release_pack_memory(size_t, int);
