@@ -1,100 +1,86 @@
-From: Michel Marti <mma@objectxp.com>
-Subject: Re: [PATCH REPLACEMENT for 2/2] git status: show relative paths when
-   run in a subdirectory
-Date: Sat, 10 Nov 2007 13:08:30 +0100
-Message-ID: <fh46vv$ooj$1@ger.gmane.org>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com> <Pine.LNX.4.64.0711072242230.4362@racer.site> <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com> <Pine.LNX.4.64.0711072255420.4362@racer.site> <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com> <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com> <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com> <Pine.LNX.4.64.0711080011170.4362@racer.site> <7v8x593zyv.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711091529570.4362@racer.site>
+From: "Carlos Rica" <jasampler@gmail.com>
+Subject: Re: [PATCH] Make builtin-tag.c use parse_options.
+Date: Sat, 10 Nov 2007 13:25:44 +0100
+Message-ID: <1b46aba20711100425o2f351ac5o81537adc6f09dc80@mail.gmail.com>
+References: <473463E0.7000406@gmail.com>
+	 <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 13:09:08 2007
+Cc: git@vger.kernel.org, "Pierre Habouzit" <madcoder@debian.org>
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 13:26:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqp9A-00035e-3c
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:09:08 +0100
+	id 1IqpPW-0007Jj-3M
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:26:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557AbXKJMIu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 07:08:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751385AbXKJMIu
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:08:50 -0500
-Received: from main.gmane.org ([80.91.229.2]:44039 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751384AbXKJMIt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 07:08:49 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iqp8j-0003pu-Bf
-	for git@vger.kernel.org; Sat, 10 Nov 2007 12:08:41 +0000
-Received: from 84-73-13-217.dclient.hispeed.ch ([84.73.13.217])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 12:08:41 +0000
-Received: from mma by 84-73-13-217.dclient.hispeed.ch with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 12:08:41 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: 84-73-13-217.dclient.hispeed.ch
-User-Agent: Thunderbird 2.0.0.6 (Macintosh/20070728)
-In-Reply-To: <Pine.LNX.4.64.0711091529570.4362@racer.site>
+	id S1751718AbXKJMZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 07:25:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751586AbXKJMZq
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:25:46 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:14605 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751278AbXKJMZp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 07:25:45 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so723803rvb
+        for <git@vger.kernel.org>; Sat, 10 Nov 2007 04:25:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=JJBtz1jL0JyX97vyt9weOUFFSrfIqSIChhjcdgiwJP4=;
+        b=XWL4XBe/RIlaKy6xjAiLeaLX37Sn2abdw6GGxCUs8H1W9HwoUvGXSyPocEvldT0BV8trWbfwnYcDFgT2a/12edtxXGIiBgY0YWfokPD5rI0hEYVMm1bta7zSOahHM+AjuiC+YzgeJt0iG7iLd6ICLHQkJshV1HoHG7hskReFt80=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=mbl2suxAh2fCyp7JaRtUDu3fZspROoDvvUqvEiAFS4JC+KhedbFX5U/klFwhQLs+vVvuw3GLGUoLzpxeGFDpQ8tfzWk6y6KYaIUQdgSrK1XZ0xrsYgHAwEO3tVhkgGReRUq2sQuFtPSiT9TjBJkmk0WSQmEQe7K+9ZJ0qiONSJk=
+Received: by 10.142.131.18 with SMTP id e18mr532952wfd.1194697544953;
+        Sat, 10 Nov 2007 04:25:44 -0800 (PST)
+Received: by 10.142.88.7 with HTTP; Sat, 10 Nov 2007 04:25:44 -0800 (PST)
+In-Reply-To: <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64338>
 
-Untracked files in the current dir don't include the relative path 
-to the project-root, but changed/updated files do:
+2007/11/10, Junio C Hamano <gitster@pobox.com>:
+> Carlos Rica <jasampler@gmail.com> writes:
+>
+> > Also, this removes those tests ensuring that repeated
+> > -m options don't allocate memory more than once, because now
+> > this is done after parsing options, using the last one
+> > when more are given. The same for -F.
+>
+> The reason for this change is...?  Is this because it is
+> cumbersome to detect and refuse multiple -m options using the
+> parseopt API?  If so, the API may be what needs to be fixed.
+> Taking the last one and discarding earlier ones feels to me an
+> arbitrary choice.
+>
+> While I freely admit that I do not particularly find the "One -m
+> introduces one new line, concatenated to form the final
+> paragraph" handling of multiple -m options done by git-commit
+> nice nor useful, I suspect that it would make more sense to make
+> git-tag and git-commit handle multiple -m option consistently,
+> if you are going to change the existing semantics.  Since some
+> people really seem to like multiple -m handling of git-commit,
+> the avenue of the least resistance for better consistency would
+> be to accept and concatenate (with LF in between) multiple -m
+> options.
+>
+> With multiple -F, I think erroring out would be the sensible
+> thing to do, but some people might prefer concatenation.  I do
+> not care either way as long as commit and tag behave
+> consistently.
 
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       new file: ../subdir/hello
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       world
+A solution not needing memory allocation into the option parser
+could be setting a callback running over the repeated option
+arguments, passing them to the function one per each call.
+Then, the user will be able to decide if he wants the arguments
+concatenated or only need one of them and prefers erroring out.
 
-With the patch below (on top of your changes), the output becomes
-
-# Changes to be committed:
-#   (use "git reset HEAD <file>..." to unstage)
-#
-#       new file: hello
-#
-# Untracked files:
-#   (use "git add <file>..." to include in what will be committed)
-#
-#       world
-
-Cheers,
-
-- Michel
-
-diff --git a/wt-status.c b/wt-status.c
-index 0d25362..2cdc8ce 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -133,8 +133,8 @@ static void wt_status_print_filepair(struct wt_status *s,
- 
-        strbuf_init(&onebuf, 0);
-        strbuf_init(&twobuf, 0);
--       one = quote_path(p->one->path, -1, &onebuf, s->prefix);
--       two = quote_path(p->two->path, -1, &twobuf, s->prefix);
-+       one = quote_path(p->one->path, strlen(p->one->path), &onebuf, s->prefix);
-+       two = quote_path(p->two->path, strlen(p->two->path), &twobuf, s->prefix);
- 
-        color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
-        switch (p->status) {
-@@ -233,7 +233,8 @@ static void wt_status_print_initial(struct wt_status *s)
-        for (i = 0; i < active_nr; i++) {
-                color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
-                color_fprintf_ln(s->fp, color(WT_STATUS_UPDATED), "new file: %s",
--                               quote_path(active_cache[i]->name, -1,
-+                               quote_path(active_cache[i]->name,
-+                                       strlen(active_cache[i]->name),
-                                           &buf, s->prefix));
-        }
-        if (active_nr)
+Is this already possible with the current parser or the callback
+mode only calls using the last option?
