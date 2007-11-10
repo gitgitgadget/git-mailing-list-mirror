@@ -1,59 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
 Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
-Date: Sat, 10 Nov 2007 16:07:10 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711101605560.4362@racer.site>
-References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net>
- <4734EA4E.8070405@lsrfire.ath.cx> <20071110004635.GA14992@sigill.intra.peff.net>
- <47359221.7090707@lsrfire.ath.cx>
+Date: Sat, 10 Nov 2007 17:24:26 +0100
+Message-ID: <4735DB3A.2020905@lsrfire.ath.cx>
+References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net> <4734EA4E.8070405@lsrfire.ath.cx> <20071110004635.GA14992@sigill.intra.peff.net> <47359221.7090707@lsrfire.ath.cx> <Pine.LNX.4.64.0711101605560.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Paul Mackerras <paulus@samba.org>,
 	Git Mailing List <git@vger.kernel.org>,
 	Pierre Habouzit <madcoder@debian.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Nov 10 17:07:49 2007
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sat Nov 10 17:25:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqss7-0006Yc-9b
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 17:07:47 +0100
+	id 1Iqt8s-0003MQ-6U
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 17:25:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751912AbXKJQHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 11:07:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751891AbXKJQHY
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 11:07:24 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59605 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751844AbXKJQHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 11:07:23 -0500
-Received: (qmail invoked by alias); 10 Nov 2007 16:07:22 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp016) with SMTP; 10 Nov 2007 17:07:22 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX191ecwl4et1ofCtis0yVcXxJ+eQahq6yT1u01o54z
-	1/SkNB/MYeEMlz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <47359221.7090707@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1751788AbXKJQYs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2007 11:24:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751785AbXKJQYs
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 11:24:48 -0500
+Received: from static-ip-217-172-187-230.inaddr.intergenia.de ([217.172.187.230]:37103
+	"EHLO neapel230.server4you.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751715AbXKJQYr (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 11:24:47 -0500
+Received: from [10.0.1.201] (p57B7F8B8.dip.t-dialin.net [87.183.248.184])
+	by neapel230.server4you.de (Postfix) with ESMTP id DD6D4873BA;
+	Sat, 10 Nov 2007 17:24:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <Pine.LNX.4.64.0711101605560.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64357>
 
-Hi,
+Johannes Schindelin schrieb:
+> Hi,
+>=20
+> On Sat, 10 Nov 2007, Ren=E9 Scharfe wrote:
+>=20
+>> [...] have cooked up a different one on top of a cleaned up version =
+of=20
+>> mine.  It plays the dirty trick of reading expansions of repeated=20
+>> placeholders from the strbuf..
+>=20
+> ... which would not work (likely even segfault) if you work with the =
+same=20
+> private data on different strbufs.
+>=20
+> But I guess it will not matter much in practice.
 
-On Sat, 10 Nov 2007, Ren? Scharfe wrote:
+Only a single strbuf is used, and the function that copies the data
+around, strbuf_adddup(), operates on a single strbuf, only.  Copying
+data between two strbufs using strbuf_add() etc. would be safe.
 
-> [...] have cooked up a different one on top of a cleaned up version of 
-> mine.  It plays the dirty trick of reading expansions of repeated 
-> placeholders from the strbuf..
+What one should *not* do is this:
 
-... which would not work (likely even segfault) if you work with the same 
-private data on different strbufs.
+	strbuf_add(sb, sb->buf + offset, length);
 
-But I guess it will not matter much in practice.
+This leads to problems when the buffer is realloc()ated by strbuf_add()=
+=2E
 
-Ciao,
-Dscho
+What other things can go wrong?  A segfault would definitely matter..
+
+Thanks,
+Ren=E9
