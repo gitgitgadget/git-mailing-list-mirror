@@ -1,76 +1,87 @@
-From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: Re: cogito remote branch
-Date: Sat, 10 Nov 2007 13:35:52 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711101323040.6138@castor.milkiway.cos>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: `git-send-email' doesn't specify `Content-Type'
+Date: Sat, 10 Nov 2007 13:51:26 +0100
+Message-ID: <20071110125126.GA7261@atjola.homenet>
+References: <87ode3klc7.fsf@chbouib.org> <Pine.LNX.4.64.0711100052290.4362@racer.site> <20071110101420.GA21353@bulgaria> <20071110122528.GA4977@atjola.homenet> <20071110123505.GA24445@bulgaria>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Sat Nov 10 13:36:39 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Ludovic =?iso-8859-1?Q?Court=E8s?= <ludo@chbouib.org>,
+	git@vger.kernel.org
+To: Brian Swetland <swetland@google.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 13:51:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqpZi-0001Q6-TC
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:36:35 +0100
+	id 1IqpoR-00057P-NM
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:51:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752675AbXKJMgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 07:36:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbXKJMgM
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:36:12 -0500
-Received: from mailout08.sul.t-online.de ([194.25.134.20]:54201 "EHLO
-	mailout08.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751855AbXKJMgK (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 07:36:10 -0500
-Received: from fwd28.aul.t-online.de 
-	by mailout08.sul.t-online.com with smtp 
-	id 1IqpZ9-0006lV-06; Sat, 10 Nov 2007 13:35:59 +0100
-Received: from [192.168.2.100] (X6SENvZroh6uHn6JGuMB7Y-dqSta8xh0QDoeqKlytr6u09u+c-HqS2tC8MH28apgwX@[84.163.232.243]) by fwd28.t-online.de
-	with esmtp id 1IqpZ5-2K7YFE0; Sat, 10 Nov 2007 13:35:55 +0100
-X-X-Sender: michael@castor.milkiway.cos
-X-ID: X6SENvZroh6uHn6JGuMB7Y-dqSta8xh0QDoeqKlytr6u09u+c-HqS2tC8MH28apgwX
-X-TOI-MSGID: 48cfdd74-3fd6-4780-a872-d4f496d4726e
+	id S1752096AbXKJMva convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 10 Nov 2007 07:51:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751855AbXKJMva
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:51:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:34036 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752000AbXKJMv3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 07:51:29 -0500
+Received: (qmail invoked by alias); 10 Nov 2007 12:51:27 -0000
+Received: from i577BBC4D.versanet.de (EHLO localhost) [87.123.188.77]
+  by mail.gmx.net (mp052) with SMTP; 10 Nov 2007 13:51:27 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/d25pYuuDdkxcBLW5qEay0EelgNQvaON5h5kNXrl
+	IsUl5WarTODo0o
+Content-Disposition: inline
+In-Reply-To: <20071110123505.GA24445@bulgaria>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64342>
 
->Michael Dressel wrote:
->> On Fri, 9 Nov 2007, Jon Loeliger wrote: 
->>> On Fri, 2007-11-09 at 10:10, MichaelTiloDressel@t-online.de wrote:
->>>
->>>>  There are just some features
->>>> which simplify things for me in cogito. E.g. in cogito in the 
-simplest
->>>> way you don't need to be aware of the index. While with git
->>>> you have to remember to add the changes to the index explicitly
->>>> to get them committed. 
->>> 
->>> "git commit -a ..." might be useful for you.
->>> 
->>> Other lingering cogito-isms you think are lacking in git?
->> 
->> Thanks for the hint. I have to use git for a while to understand what 
-may 
->> still be lacking (at least for me, if at all). Off the top of my head 
-one 
->> other difference is that if I do a cg-push the remote (or origin) head 
-is 
->> updated automatically, I think.
+On 2007.11.10 04:35:05 -0800, Brian Swetland wrote:
+> [Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>]
+> > On 2007.11.10 02:14:20 -0800, Brian Swetland wrote:
+> > >=20
+> > > The example I have involves a coworker's name which needs non-asc=
+ii
+> > > characters.  They are properly escaped in the From: line generate=
+d by
+> > > git-format-patch.  git-send-email puts the generated From: line a=
+t the
+> > > top of the body of the email, unescapes it (to utf-8), and procee=
+ds to
+> > > send the email with no Content-Type specified.
+> >=20
+> > You mean that it converts the header field to utf-8? It doesn't do =
+that
+> > here (neither master nor 1.5.3.5) and IIRC that would be invalid an=
+yway,
+> > because Content-Type applies to exactly that, content, not headers.=
+ Your
+> > sample has no non-ASCII characters (or at least I didn't see any), =
+so
+> > git-send-email doesn't add a header to specify a charset.
+>=20
+> The first line of the patch is a From: field with Arve's name, in
+> an (rfc822?) encoded format):
+> From: =3D?utf-8?q?Arve=3D20Hj=3DC3=3DB8nnev=3DC3=3DA5g?=3D <arve@andr=
+oid.com>
+>=20
+> The mail generated by git-send-email makes this From: line the first
+> line of the *body* of the generated email.  This line in the body
+> is no longer escaped, the utf8 characters are visible, but the header
+> of the message does not have a Content-Type indicating a non-ascii
+> encoding.
 
-Jakub Narebski wrote:
->If you mean that tracking branches are updated on push, this is what
->git also does from some time (perhaps not in released version, so please
->wait or run 'master').
+Ah! Commit author differs from mail sender, didn't think of that. That'=
+s
+probably the same problem as with the -s option, ie. that git-send-emai=
+l
+only looks at the existing text and not add anything it adds itself whe=
+n
+checking the encoding. Sorry for the noise.
 
-Ok nice. Another thing is that git-push will push all the tracking 
-branches in refs/remotes/origin. 
-
-I was wondering if it was possible to have some cogito like wrapper 
-scripts (lets say kg-...) for git again which would use the git commands 
-with some arguments in order to resemble the cogito behavior 
-even more closely. But it dawned on me that this would most likely end up 
-in a rather large amount of script code again.
-
-Cheers,
-Michael
+Bj=F6rn
