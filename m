@@ -1,110 +1,131 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: gitweb, updating 'last changed' column on the project page
-Date: Sat, 10 Nov 2007 09:10:05 -0500
-Message-ID: <9e4733910711100610y478c62cend1d9af84e0ecc08b@mail.gmail.com>
-References: <9e4733910711091709k173bf23flf2824673f82de9bb@mail.gmail.com>
-	 <200711101034.47861.jnareb@gmail.com>
-	 <9e4733910711100505n78459612xdaa12eaa880773d8@mail.gmail.com>
-	 <200711101427.18215.jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH REPLACEMENT for 2/2] git status: show relative paths when
+   run in a subdirectory
+Date: Sat, 10 Nov 2007 14:10:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711101401370.4362@racer.site>
+References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
+ <Pine.LNX.4.64.0711072242230.4362@racer.site>
+ <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
+ <Pine.LNX.4.64.0711072255420.4362@racer.site>
+ <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
+ <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com>
+ <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com>
+ <Pine.LNX.4.64.0711080011170.4362@racer.site> <7v8x593zyv.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711091529570.4362@racer.site> <fh46vv$ooj$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 15:10:27 2007
+To: Michel Marti <mma@objectxp.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 15:10:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqr2X-0003Nd-FJ
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 15:10:25 +0100
+	id 1Iqr2a-0003Nd-Fs
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 15:10:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750942AbXKJOKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 09:10:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751133AbXKJOKH
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 09:10:07 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:27727 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750882AbXKJOKG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 09:10:06 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so944840wah
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 06:10:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=HeB5YzRi+FqVTk5195drFCYZwRaZkeRJAgqIyZWISgA=;
-        b=jNeqFVXUnW56fyQJgZz/1URoGNMIBCQVQUP9bHbyG9KXI0aaS7yhecvAjP8H8S4Iqfcct7FkUgItYX3nmqqzEEx54aR/OUfjxd4iKvKOYeb6dxqzDqVywFonowX4qTb5Iuc8vafDlXu3G44ilkQvoRYAHN+m1EMEWSWSxtmQCxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=YBtTcwuGivYZVwrxNyg39sc2YB5GPcpP+3KZVnj5G/rx4ggw3VFcVT3+yuCR4fSrLys9tq8OKjk97KiwUcSVevKG6U4gskEVb0jFncFcMvtxvguEziLYdK4jT17aTaMZsb+qTYDH+1voQr4IkJWZPUCVRhB4oRDkGsxVQ9DQ4MY=
-Received: by 10.115.47.1 with SMTP id z1mr496645waj.1194703805339;
-        Sat, 10 Nov 2007 06:10:05 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Sat, 10 Nov 2007 06:10:05 -0800 (PST)
-In-Reply-To: <200711101427.18215.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751288AbXKJOKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 09:10:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbXKJOKN
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 09:10:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60046 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751173AbXKJOKL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 09:10:11 -0500
+Received: (qmail invoked by alias); 10 Nov 2007 14:10:09 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp041) with SMTP; 10 Nov 2007 15:10:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18g67cVVKMgo1NVZvRVKYeJCqkUVqS7+njmc4iAaO
+	mLytLEEubzUuiN
+X-X-Sender: gene099@racer.site
+In-Reply-To: <fh46vv$ooj$1@ger.gmane.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64351>
 
-On 11/10/07, Jakub Narebski <jnareb@gmail.com> wrote:
-> > It is sorted by committerdate, the sort is ascending. Did you expect
-> > it to be descending, pick off the last entry instead of the first?
->
-> Excerpts from git-for-each-ref(1):
->
->   git-for-each-ref [--count=<count>]* (...) [--sort=<key>]* (...)
->
->   <count>
->           By  default  the  command  shows all refs that match <pattern>. This
->           option makes it stop after showing that many refs.
->
->    <key>  A field name to sort on. Prefix - to sort in descending order of the
->           value.  When  unspecified,  refname is used. More than one sort keys
->           can be given.
->
-> So I expect --sort=-committerdate to sort by date of committing,
-> descending, and --count=1 pick first one, which means most recent.
+Hi,
 
-git has a bug, it is not implementing the - prefix. I am using git head.
+please, please, please do not cull the Cc list.  I consider it rude to 
+reply to _me_, but _address_ the mail to me, either the To: (preferred) or 
+the Cc: (not so preferred).
 
-jonsmirl@terra:~$ cd mpc5200b
-jonsmirl@terra:~/mpc5200b$ git for-each-ref
---format="%(refname):%09%(committer)" --sort=-committerdate refs/heads
-refs/heads/m24: Jon Smirl <jonsmirl@gmail.com> 1191362799 -0400
-refs/heads/m25: Jon Smirl <jonsmirl@gmail.com> 1191472422 -0400
-refs/heads/m26: Jon Smirl <jonsmirl@gmail.com> 1194382038 -0500
-refs/heads/m28: Jon Smirl <jonsmirl@gmail.com> 1194385071 -0500
-refs/heads/m29: Jon Smirl <jonsmirl@gmail.com> 1194674673 -0500
-jonsmirl@terra:~/mpc5200b$ git for-each-ref
---format="%(refname):%09%(committer)" --sort=committerdate refs/heads
-refs/heads/m24: Jon Smirl <jonsmirl@gmail.com> 1191362799 -0400
-refs/heads/m25: Jon Smirl <jonsmirl@gmail.com> 1191472422 -0400
-refs/heads/m26: Jon Smirl <jonsmirl@gmail.com> 1194382038 -0500
-refs/heads/m28: Jon Smirl <jonsmirl@gmail.com> 1194385071 -0500
-refs/heads/m29: Jon Smirl <jonsmirl@gmail.com> 1194674673 -0500
-jonsmirl@terra:~/mpc5200b$ git --version
-git version 1.5.3.5.1651.g30bf
-jonsmirl@terra:~/mpc5200b$
+On Sat, 10 Nov 2007, Michel Marti wrote:
 
+> Untracked files in the current dir don't include the relative path 
+> to the project-root, but changed/updated files do:
+> 
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #       new file: ../subdir/hello
+> #
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> #       world
+> 
+> With the patch below (on top of your changes), the output becomes
+> 
+> # Changes to be committed:
+> #   (use "git reset HEAD <file>..." to unstage)
+> #
+> #       new file: hello
+> #
+> # Untracked files:
+> #   (use "git add <file>..." to include in what will be committed)
+> #
+> #       world
+> 
+> Cheers,
+> 
+> - Michel
+> 
+> diff --git a/wt-status.c b/wt-status.c
+> index 0d25362..2cdc8ce 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -133,8 +133,8 @@ static void wt_status_print_filepair(struct wt_status *s,
+>  
+>         strbuf_init(&onebuf, 0);
+>         strbuf_init(&twobuf, 0);
+> -       one = quote_path(p->one->path, -1, &onebuf, s->prefix);
+> -       two = quote_path(p->two->path, -1, &twobuf, s->prefix);
+> +       one = quote_path(p->one->path, strlen(p->one->path), &onebuf, s->prefix);
+> +       two = quote_path(p->two->path, strlen(p->two->path), &twobuf, s->prefix);
+>  
+>         color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
+>         switch (p->status) {
+> @@ -233,7 +233,8 @@ static void wt_status_print_initial(struct wt_status *s)
+>         for (i = 0; i < active_nr; i++) {
+>                 color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
+>                 color_fprintf_ln(s->fp, color(WT_STATUS_UPDATED), "new file: %s",
+> -                               quote_path(active_cache[i]->name, -1,
+> +                               quote_path(active_cache[i]->name,
+> +                                       strlen(active_cache[i]->name),
+>                                            &buf, s->prefix));
+>         }
+>         if (active_nr)
+> 
 
->
-> It looks like "your" gitweb sorts ascending instead... strange...
->
->
-> How does git_get_last_activity subroutine in your gitweb.cgi looks like?
-> Does it have '--sort=-commiterdate'? If it has, then I think it is some
-> strange bug in git, if it doesn't it is strange modification of gitweb.
->
-> HTH
-> --
-> Jakub Narebski
-> Poland
->
+This patch is wrong.
 
+If you want to go that way, move the strlen() call _into_ quote_path(), 
+like I had it earlier.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+But then we will have a double traversal of the strings again.  That's 
+what I tried to avoid, but I missed one place:
+
+In line 94, it says "... && off < len && ...".  This should read something 
+like "((len < 0 && !in[off]) || off < len)" instead.  Or maybe even "(len 
+< 0 || off < len)" and have an "} else if (in[off]) off++; else break;" in 
+the loop block.
+
+Besides, you completely ignored the nice examples how other people 
+contribute their patches, with mail bodies that double as a commit 
+message, a diffstat, and with a test case.
+
+Hth,
+Dscho
