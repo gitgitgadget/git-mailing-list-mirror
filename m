@@ -1,54 +1,81 @@
-From: "Remi Vanicat" <vanicat@debian.org>
-Subject: Re: [PATCH] Make GIT_INDEX_FILE apply to git-commit
-Date: Sat, 10 Nov 2007 19:38:34 +0100
-Message-ID: <6b8a91420711101038t3b2ca647v422f81d9365dd05d@mail.gmail.com>
-References: <87abpml8rx.dlv@vanicat.homelinux.org>
-	 <7vode2mljf.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: git-branch silently ignores --track on local branches
+Date: Sat, 10 Nov 2007 10:43:28 -0800
+Message-ID: <7vfxzelz5b.fsf@gitster.siamese.dyndns.org>
+References: <20071110174557.GC1036@blorf.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 19:39:36 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Wayne Davison <wayne@opencoder.net>
+X-From: git-owner@vger.kernel.org Sat Nov 10 19:43:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqvF1-0003NJ-BX
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 19:39:35 +0100
+	id 1IqvJA-0004ki-6i
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 19:43:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641AbXKJSih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 13:38:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbXKJSig
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 13:38:36 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:2137 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751633AbXKJSif (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 13:38:35 -0500
-Received: by py-out-1112.google.com with SMTP id u77so334146pyb
-        for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:38:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        bh=Yz340yua7vJBnw22sV9JRzSbBQ2uCJl0Cu5qpNxqmk4=;
-        b=gumBOSLLd17Hgw4BG1hpYUiFE+q4jVQiwwmvuKTdcXcCp6/AhZSNGV6Pqa84YcD8w5PfmDt+EFOsU2q2tmVR00h22SP/DuRS46pVkbJcYse77MRnia3iTQJlCEiUzzQtFtjwynxaa2Twjtw4z6Lc4mZ36siaiQf3tngSYRqAt3g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
-        b=DzXiqRoegb1Fm9j2eDbAMuXzISxFTXu1pzWLR6x0ICoAw9sdFRfTN90X7CtcVPwOPUUk37xqERbZhCMwqpOIPC5INP8eQafvplGcFsgXgi1DGhKz9PwQb7rydatZ1w8KjyfOmL6PrjfkcfT/r+46i6U177c7l/PgSjsW/5Y19VU=
-Received: by 10.35.116.12 with SMTP id t12mr3683779pym.1194719914312;
-        Sat, 10 Nov 2007 10:38:34 -0800 (PST)
-Received: by 10.35.113.17 with HTTP; Sat, 10 Nov 2007 10:38:34 -0800 (PST)
-In-Reply-To: <7vode2mljf.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
-X-Google-Sender-Auth: a58370e37e6622b9
+	id S1752204AbXKJSng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 13:43:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752349AbXKJSng
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 13:43:36 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57630 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752204AbXKJSnf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 13:43:35 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 6C0AB2F2;
+	Sat, 10 Nov 2007 13:43:56 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E17EA93EDE;
+	Sat, 10 Nov 2007 13:43:51 -0500 (EST)
+In-Reply-To: <20071110174557.GC1036@blorf.net> (Wayne Davison's message of
+	"Sat, 10 Nov 2007 09:45:57 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64365>
 
-2007/11/10, Junio C Hamano <gitster@pobox.com>:
-> Sounds sensible.  Tests?
->
+Wayne Davison <wayne@opencoder.net> writes:
 
-all test pass
+> ...  Is there
+> a problem with local branches being supported when explicitly
+> requested?
+
+Maybe this one?
+
+commit 6f084a56fcb3543d88d252bb49c1d2bbf2bd0cf3
+Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Tue Jul 10 18:50:44 2007 +0100
+
+    branch --track: code cleanup and saner handling of local branches
+    
+    This patch cleans up some complicated code, and replaces it with a
+    cleaner version, using code from remote.[ch], which got extended a
+    little in the process.  This also enables us to fix two cases:
+    
+    The earlier "fix" to setup tracking only when the original ref started
+    with "refs/remotes" is wrong.  You are absolutely allowed to use a
+    separate layout for your tracking branches.  The correct fix, of course,
+    is to set up tracking information only when there is a matching
+    remote.<nick>.fetch line containing a colon.
+    
+    Another corner case was not handled properly.  If two remotes write to
+    the original ref, just warn the user and do not set up tracking.
+    
+    Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+As a local branch does not have to be "fetched", the restriction
+on "remote.<nick>.fetch" is sort of pointless.
+
+Also why remote.<nick>.fetch needs a colon, I begin to wonder.
+You can be keep fetching and merging from the same branch of the
+same remote without keeping a remote tracking branch for that,
+but the above "correct fix" forbids that.
+
+Dscho, what were we smoking when we made this change?
