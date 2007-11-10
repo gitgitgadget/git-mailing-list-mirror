@@ -1,71 +1,64 @@
 From: Linus Torvalds <torvalds@linux-foundation.org>
 Subject: Re: git packs
-Date: Fri, 9 Nov 2007 22:53:24 -0800 (PST)
-Message-ID: <alpine.LFD.0.999.0711092244080.15101@woody.linux-foundation.org>
+Date: Fri, 9 Nov 2007 22:58:16 -0800 (PST)
+Message-ID: <alpine.LFD.0.999.0711092254130.15101@woody.linux-foundation.org>
 References: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com>
  <alpine.LFD.0.9999.0711100011150.21255@xanadu.home>
  <FC175E4F-D9BE-42CC-B0BB-561B2EDCD941@mac.com>
- <alpine.LFD.0.999.0711092211250.15101@woody.linux-foundation.org>
+ <DF65F7E4-448A-4726-8B42-642776155A8F@vicaya.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=us-ascii
-Cc: git@vger.kernel.org
-To: bob <kranki@mac.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 07:53:53 2007
+Cc: bob <kranki@mac.com>, git@vger.kernel.org
+To: Luke Lu <git@vicaya.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 07:58:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqkE2-00043Y-LZ
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:53:51 +0100
+	id 1IqkIe-0004nR-KJ
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751354AbXKJGxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 01:53:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751341AbXKJGxb
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:53:31 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:54378 "EHLO
+	id S1751586AbXKJG6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 01:58:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751566AbXKJG6W
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:58:22 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:41338 "EHLO
 	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751204AbXKJGxa (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 01:53:30 -0500
+	by vger.kernel.org with ESMTP id S1751531AbXKJG6V (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 01:58:21 -0500
 Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA6rRbM025515
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA6wHTU025618
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Fri, 9 Nov 2007 22:53:28 -0800
+	Fri, 9 Nov 2007 22:58:19 -0800
 Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA6rQoO027006;
-	Fri, 9 Nov 2007 22:53:26 -0800
-In-Reply-To: <alpine.LFD.0.999.0711092211250.15101@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA6wHXp027149;
+	Fri, 9 Nov 2007 22:58:17 -0800
+In-Reply-To: <DF65F7E4-448A-4726-8B42-642776155A8F@vicaya.com>
+X-Spam-Status: No, hits=-2.439 required=5 tests=AWL,BAYES_00,J_CHICKENPOX_64
 X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
 X-MIMEDefang-Filter: lf$Revision: 1.188 $
 X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64313>
 
 
 
-On Fri, 9 Nov 2007, Linus Torvalds wrote:
+On Fri, 9 Nov 2007, Luke Lu wrote:
 > 
-> That said, I have worked with a 3GB pack-file (one of the KDE trial 
-> repos). That worked fine. But git does tend to want a *lot* of memory for 
-> really big repositories, so I suspect that if you actually work with 2GB+ 
-> pack-files, you'll be wanting a 64-bit environment just because you'll be 
-> wanting more than 2GB of physical RAM in order to be able to access it 
-> efficiently.
+> mmap(2), which git uses by default, is subject to vm limits (typically <2GB),
+> regardless of large file support. file `which git` will probably tell you that
+> it's a Mach-O executable i386 instead of x86_64. In order to get 64 bit
+> binaries on Mactel boxes, you'll need the -m64 flag for gcc. I suspect that
+> compiling with NO_MMAP option work as well.
 
-Just double-checked. Yes, sirree. You definitely want 4GB+ if you are 
-cloning a 3GB git pack-file. The "git-pack-objects" phase not only is 
-going to walk all over the pack-file, it's going to add its own memory 
-footprint on top of that just keeping track of all the objects.
+Even with NO_MMAP, git will still want to read in source files in their 
+entirety (just with regular reads). So you'll still be VM size-limited: 
+the mmap() will just be replaced with a malloc+read in order to avoid 
+some broken windows mmap() behaviour.
 
-So I doubt 2GB+ pack-files are all that practical on 32-bit hosts. At 
-least not with the kind of performance behaviour *I* would accept.
+But hearing whether -m64 makes a difference would be interesting. I'm 
+hoping OS X is LP64, not some insane half-way thing like Vista is.
 
-(Of course, since git packs things pretty damn well, it would need to be a 
-really really big project to be a 2GB+ pack-file, or just contain a lot of 
-generally large non-deltable binary data file - one scenario where git 
-definitely doesn't work wonderfully well, although I doubt many other 
-SCM's do either..)
-
-			Linus
+		Linus
