@@ -1,124 +1,54 @@
-From: bob <kranki@mac.com>
-Subject: Re: git packs
-Date: Sat, 10 Nov 2007 13:01:46 -0500
-Message-ID: <134659C4-BA10-4B9E-9C64-2754A90D93F8@mac.com>
-References: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com> <00593593-E943-4DA0-AA9B-FDBB866E7EFB@mac.com> <20071110174559.GA2200@old.davidb.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Remi Vanicat" <vanicat@debian.org>
+Subject: Re: [PATCH] Make GIT_INDEX_FILE apply to git-commit
+Date: Sat, 10 Nov 2007 19:38:34 +0100
+Message-ID: <6b8a91420711101038t3b2ca647v422f81d9365dd05d@mail.gmail.com>
+References: <87abpml8rx.dlv@vanicat.homelinux.org>
+	 <7vode2mljf.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 10 19:03:01 2007
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 19:39:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqufU-0000Xn-9j
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 19:02:52 +0100
+	id 1IqvF1-0003NJ-BX
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 19:39:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751779AbXKJSB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 13:01:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751173AbXKJSB5
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 13:01:57 -0500
-Received: from smtpoutm.mac.com ([17.148.16.68]:50981 "EHLO smtpoutm.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751496AbXKJSB4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 13:01:56 -0500
-Received: from mac.com (asmtp008-s [10.150.69.71])
-	by smtpoutm.mac.com (Xserve/smtpout005/MantshX 4.0) with ESMTP id lAAI1u3t007381
-	for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:01:56 -0800 (PST)
-Received: from [192.168.2.23] (c-66-176-54-4.hsd1.fl.comcast.net [66.176.54.4])
-	(authenticated bits=0)
-	by mac.com (Xserve/asmtp008/MantshX 4.0) with ESMTP id lAAI1s6H029443
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:01:55 -0800 (PST)
-In-Reply-To: <20071110174559.GA2200@old.davidb.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751641AbXKJSih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 13:38:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753833AbXKJSig
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 13:38:36 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:2137 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751633AbXKJSif (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 13:38:35 -0500
+Received: by py-out-1112.google.com with SMTP id u77so334146pyb
+        for <git@vger.kernel.org>; Sat, 10 Nov 2007 10:38:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=Yz340yua7vJBnw22sV9JRzSbBQ2uCJl0Cu5qpNxqmk4=;
+        b=gumBOSLLd17Hgw4BG1hpYUiFE+q4jVQiwwmvuKTdcXcCp6/AhZSNGV6Pqa84YcD8w5PfmDt+EFOsU2q2tmVR00h22SP/DuRS46pVkbJcYse77MRnia3iTQJlCEiUzzQtFtjwynxaa2Twjtw4z6Lc4mZ36siaiQf3tngSYRqAt3g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=DzXiqRoegb1Fm9j2eDbAMuXzISxFTXu1pzWLR6x0ICoAw9sdFRfTN90X7CtcVPwOPUUk37xqERbZhCMwqpOIPC5INP8eQafvplGcFsgXgi1DGhKz9PwQb7rydatZ1w8KjyfOmL6PrjfkcfT/r+46i6U177c7l/PgSjsW/5Y19VU=
+Received: by 10.35.116.12 with SMTP id t12mr3683779pym.1194719914312;
+        Sat, 10 Nov 2007 10:38:34 -0800 (PST)
+Received: by 10.35.113.17 with HTTP; Sat, 10 Nov 2007 10:38:34 -0800 (PST)
+In-Reply-To: <7vode2mljf.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
+X-Google-Sender-Auth: a58370e37e6622b9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64364>
 
-It is fairly disappointing as far as indicating the problem.  Here is  
-the entire report since it was so short.
-
-
-============ Begin =================
-Process:         git [82703]
-Path:            git
-Identifier:      git
-Version:         ??? (???)
-Code Type:       X86-64 (Native)
-Parent Process:  bash [261]
-
-Date/Time:       2007-11-10 11:23:33.976 -0500
-OS Version:      Mac OS X 10.5 (9A581)
-Report Version:  6
-
-Exception Type:  EXC_BAD_ACCESS (SIGBUS)
-Exception Codes: KERN_PROTECTION_FAILURE at 0x00007fff5fc00000
-Crashed Thread:  Unknown
-
-Error Formulating Crash Report:
-*** -[NSCFDictionary setObject:forKey:]: attempt to insert nil value  
-(key: VMUSignaturePath)
-0x9501626b
-0x9586009b
-0x9501604b
-0x9501608a
-0x900d65e8
-0x00078308
-0x00087eb8
-0x0008800e
-0x000850a2
-0x00002d90
-0x000093be
-0x0000b57c
-0x0000b0c9
-0x919f8793
-0x0000a7d0
-0x919cc075
-0x919cbf32
-
-Backtrace not available
-
-Unknown thread crashed with X86 Thread State (64-bit):
-   rax: 0x000000000000003b  rbx: 0x00000001191c9338  rcx:  
-0x0000000000000392  rdx: 0x00000000aff4bc3b
-   rdi: 0x00007fff5fc00000  rsi: 0x0000000040000003  rbp:  
-0x00007fff5fbff180  rsp: 0x00007fff5fbff160
-    r8: 0x0000000000000000   r9: 0x058487f0858487f0  r10:  
-0x000000002cb27436  r11: 0x000000000ee2afe3
-   r12: 0x00000000181c84c0  r13: 0x00007fff5fbff1a0  r14:  
-0x000000010000000c  r15: 0x0000000101000000
-   rip: 0x00007fff80543ca5  rfl: 0x0000000000010202  cr2:  
-0x00007fff5fc00000
-
-Binary images description not available
-============ end =================
-
-Maybe there was another option to specifiy other than "-m64 -arch  
-x86_64".
-
-
-On Nov 10, 2007, at 12:45 PM, David Brown wrote:
-
-> On Sat, Nov 10, 2007 at 12:40:16PM -0500, bob wrote:
+2007/11/10, Junio C Hamano <gitster@pobox.com>:
+> Sounds sensible.  Tests?
 >
->> I am guessing that the "Bus error" is an Apple
->> problem and it did produce a crashreport.  So,
->> I am going to submit it to Apple since it is easily
->> reproducible.
->
-> The crash report is probably not all that useful to Apple, since it  
-> occurs
-> in a program you have built.  Perhaps you should send the stack  
-> trace from
-> the crash report here and people might have some ideas about what  
-> might be
-> the problem.
->
-> David
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+
+all test pass
