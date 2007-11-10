@@ -1,98 +1,88 @@
-From: Sven Herzberg <sven@imendio.com>
-Subject: Re: git submodules and diffing
-Date: Sat, 10 Nov 2007 01:46:00 +0100
-Message-ID: <C3A79C8B-2953-4A9F-B0BE-78CEA375393B@imendio.com>
-References: <4D079E0B-D6FB-4FBA-B449-2EFBFD5A5DE4@imendio.com> <1194649057-19676-1-git-send-email-jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 01:46:08 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
+Date: Fri, 9 Nov 2007 19:46:37 -0500
+Message-ID: <20071110004635.GA14992@sigill.intra.peff.net>
+References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net> <4734EA4E.8070405@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Nov 10 01:47:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqeU7-0007YX-Sd
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:46:04 +0100
+	id 1IqeV3-0007ma-GY
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540AbXKJApt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 19:45:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbXKJApt
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:45:49 -0500
-Received: from holken.mikan.net ([88.131.94.251]:37834 "EHLO holken.mikan.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752345AbXKJAps (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 19:45:48 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by holken.mikan.net (Postfix) with ESMTP id 7EB961458F;
-	Sat, 10 Nov 2007 01:45:46 +0100 (CET)
-Received: from holken.mikan.net ([127.0.0.1])
-	by localhost (holken.mikan.net [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 17976-03; Sat, 10 Nov 2007 01:45:43 +0100 (CET)
-Received: from [192.168.2.108] (p548FC53A.dip.t-dialin.net [84.143.197.58])
-	by holken.mikan.net (Postfix) with ESMTP id 3BE8912C08;
-	Sat, 10 Nov 2007 01:45:42 +0100 (CET)
-In-Reply-To: <1194649057-19676-1-git-send-email-jnareb@gmail.com>
-X-Mailer: Apple Mail (2.752.3)
-X-Virus-Scanned: Debian amavisd-new at holken.mikan.net
-X-Spam-Status: No, score=-97.613 tagged_above=-999 required=4
-	tests=[AWL=0.299, RCVD_IN_SORBS_DUL=2.088, USER_IN_WHITELIST=-100]
-X-Spam-Score: -97.613
-X-Spam-Level: 
+	id S1753227AbXKJAqr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 9 Nov 2007 19:46:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753194AbXKJAqr
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:46:47 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2448 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752737AbXKJAqq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 9 Nov 2007 19:46:46 -0500
+Received: (qmail 20647 invoked by uid 111); 10 Nov 2007 00:46:43 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Fri, 09 Nov 2007 19:46:43 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 09 Nov 2007 19:46:37 -0500
+Content-Disposition: inline
+In-Reply-To: <4734EA4E.8070405@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64289>
 
-Hey Jakub,
+On Sat, Nov 10, 2007 at 12:16:30AM +0100, Ren=E9 Scharfe wrote:
 
-Am 09.11.2007 um 23:57 schrieb Jakub Narebski:
+> > A partial patch on top of yours is below (it caches commit and tree=
+=20
+> > abbreviations; parent abbreviations and person-parsing are probably=
+=20
+> > worth doing). Some timings:
+>=20
+> ... but I object to the choice of items to cache.  Are there real-wor=
+ld
+> formats containing the same placeholder twice or even more often?
 
-> Sven Herzberg wrote:
->
->> When I started working with git submodules, I realized that git-diff
->> only lists the revision ids of a submodule if it has changed. I have
->> created a repository which includes a diff command for git-submodule,
->> so you can use it like "gut submodule diff <modules...>"
->>
->> I pushed my git tree at git://git.imendio.com/sven/git.git
+My choice of items was more "here is what I am talking about" and not
+"this is the best set of items."
 
->   http://git.imendio.com/?p=sven/git.git
->
->> Feel free to look into the changes and request improvements or merge
->> it into your tree.
->
-> Although having "git submodule diff" is quite nice, I'd rather have
-> "git diff --recurse-submodules" (or something like that) if I want to
-> get diff of submodules.
+As for what real-world workloads are like, part of the _point_ of
+--pretty=3Dformat: is for one-off formats that users use in their
+workflow. So yes, I have used formats that repeat specifiers, but they
+are probably not common.
 
-I think it's pretty nice if git-submodule is the only command that  
-knows about submodules.
+The point of my timings was to show not only that we sped up that
+uncommon case, but that there was negligible cost to the common case.
+And since we don't know what formats users will provide, it makes sense
+not to have lousy performance on the uncommon.
 
-> From browsing commitdiff
->   http://git.imendio.com/?p=sven/ 
-> git.git;a=commitdiff;h=7fa1d4911d1ac2590ab1eccd84a7f235aca7878e
-> I'd like to mention that instead of
->
->   (unset GIT_DIR && cd "$path" && git diff $flag "$sha1..HEAD")
->
-> you can simply use
->
->   git --git-dir="$path" diff $flag "$sha1..HEAD"
+> There is probably more to gain from the interdependencies of differen=
+t
+> placeholders.  The patch below attempts to avoid parsing the commit
+> twice, by saving pointers to the different parts.
 
-It wasn't exactly that simple (I has to add `pwd` and "/.git") but  
-thats for the hint. See the updated version in my repository.
+Looks sane, although I don't see any reason this couldn't just go on to=
+p
+of my patch, and then we can speed up both cases.
 
->> PS: Please CC me, I'm not on this list
->
-> You can always read list using NNTP / news / Usenet interface at
->   nntp://news.gmane.org/gmane.comp.version-control.git
-> or one of the mailing list archives, see
->   http://git.or.cz/gitwiki/GitCommunity
+> (next)
+> $ time git log --pretty=3Dformat:"* %cd %cn%n%n%s%n%b" >/dev/null
+> real    0m0.631s
+[...]
+> (next+patch)
+> $ time git log --pretty=3Dformat:"* %cd %cn%n%n%s%n%b" >/dev/null
+> real    0m0.570s
 
-I know, but being CCed is a simple task and makes it even easier for  
-me to contribute in irregular intervals.
+Great, you have sped up the uncommon case. But what is the cost to "git
+log --pretty=3Dformat:" and "git log --pretty=3Dformat:%cd"?
 
-Thank you,
-   Sven
+-Peff
