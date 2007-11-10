@@ -1,131 +1,70 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH REPLACEMENT for 2/2] git status: show relative paths when
-   run in a subdirectory
-Date: Sat, 10 Nov 2007 14:10:00 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711101401370.4362@racer.site>
-References: <9e4733910711071415i1729e277u6be19b72cd682a85@mail.gmail.com>
- <Pine.LNX.4.64.0711072242230.4362@racer.site>
- <9e4733910711071445p7cfb6cffx83adb1d84d6bf9d8@mail.gmail.com>
- <Pine.LNX.4.64.0711072255420.4362@racer.site>
- <9e4733910711071503va92a653s25fd978989d5917d@mail.gmail.com>
- <243E1E6E-4723-42D3-933C-D2A0D1ACE287@silverinsanity.com>
- <ee77f5c20711071531q5acc4d06u264f5daad7c04cc4@mail.gmail.com>
- <Pine.LNX.4.64.0711080011170.4362@racer.site> <7v8x593zyv.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0711091529570.4362@racer.site> <fh46vv$ooj$1@ger.gmane.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 07/11] git-fetch: Limit automated tag following to only
+ fetched objects
+Date: Sat, 10 Nov 2007 15:10:11 +0100
+Message-ID: <4735BBC3.5040207@op5.se>
+References: <20071109110631.GG19368@spearce.org> <20071109121228.GA4241@prefect.vdbonline.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Michel Marti <mma@objectxp.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 15:10:29 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: CJ van den Berg <cj@vdbonline.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 15:10:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqr2a-0003Nd-Fs
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 15:10:28 +0100
+	id 1Iqr2o-0003UV-NX
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 15:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbXKJOKN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 09:10:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751297AbXKJOKN
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 09:10:13 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60046 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751173AbXKJOKL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 09:10:11 -0500
-Received: (qmail invoked by alias); 10 Nov 2007 14:10:09 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp041) with SMTP; 10 Nov 2007 15:10:09 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18g67cVVKMgo1NVZvRVKYeJCqkUVqS7+njmc4iAaO
-	mLytLEEubzUuiN
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fh46vv$ooj$1@ger.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1751345AbXKJOKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 09:10:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751350AbXKJOKS
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 09:10:18 -0500
+Received: from mail.op5.se ([193.201.96.20]:35544 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751297AbXKJOKP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 09:10:15 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A072C1F0873D;
+	Sat, 10 Nov 2007 15:10:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vaFdl1k22oPD; Sat, 10 Nov 2007 15:10:13 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 43AD21F0873B;
+	Sat, 10 Nov 2007 15:10:13 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <20071109121228.GA4241@prefect.vdbonline.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64352>
 
-Hi,
-
-please, please, please do not cull the Cc list.  I consider it rude to 
-reply to _me_, but _address_ the mail to me, either the To: (preferred) or 
-the Cc: (not so preferred).
-
-On Sat, 10 Nov 2007, Michel Marti wrote:
-
-> Untracked files in the current dir don't include the relative path 
-> to the project-root, but changed/updated files do:
+CJ van den Berg wrote:
+> On Fri, Nov 09, 2007 at 06:06:31AM -0500, Shawn O. Pearce wrote:
+>> We now redefine the rule to be: "tags are fetched if they refer
+>> to an object that was just transferred; that is an object that is
+>> new to your repository".  This rule is quite simple to understand,
+>> you only get a tag if you just got the object it refers to.
 > 
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #       new file: ../subdir/hello
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       world
-> 
-> With the patch below (on top of your changes), the output becomes
-> 
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #       new file: hello
-> #
-> # Untracked files:
-> #   (use "git add <file>..." to include in what will be committed)
-> #
-> #       world
-> 
-> Cheers,
-> 
-> - Michel
-> 
-> diff --git a/wt-status.c b/wt-status.c
-> index 0d25362..2cdc8ce 100644
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -133,8 +133,8 @@ static void wt_status_print_filepair(struct wt_status *s,
->  
->         strbuf_init(&onebuf, 0);
->         strbuf_init(&twobuf, 0);
-> -       one = quote_path(p->one->path, -1, &onebuf, s->prefix);
-> -       two = quote_path(p->two->path, -1, &twobuf, s->prefix);
-> +       one = quote_path(p->one->path, strlen(p->one->path), &onebuf, s->prefix);
-> +       two = quote_path(p->two->path, strlen(p->two->path), &twobuf, s->prefix);
->  
->         color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
->         switch (p->status) {
-> @@ -233,7 +233,8 @@ static void wt_status_print_initial(struct wt_status *s)
->         for (i = 0; i < active_nr; i++) {
->                 color_fprintf(s->fp, color(WT_STATUS_HEADER), "#\t");
->                 color_fprintf_ln(s->fp, color(WT_STATUS_UPDATED), "new file: %s",
-> -                               quote_path(active_cache[i]->name, -1,
-> +                               quote_path(active_cache[i]->name,
-> +                                       strlen(active_cache[i]->name),
->                                            &buf, s->prefix));
->         }
->         if (active_nr)
+> With this new rule a retrospectively pushed tag will never be fetched,
+> right? With our local work flow tags are only ever pushed retrospectively
+> because the tagged commit has to first pass regression tests. So this would
+> be a major regression for us.
 > 
 
-This patch is wrong.
+Same for us. Deciding after something has been pushed that "ok, this version
+works, let's make that one the release" is, I think, fairly common behaviour.
 
-If you want to go that way, move the strlen() call _into_ quote_path(), 
-like I had it earlier.
-
-But then we will have a double traversal of the strings again.  That's 
-what I tried to avoid, but I missed one place:
-
-In line 94, it says "... && off < len && ...".  This should read something 
-like "((len < 0 && !in[off]) || off < len)" instead.  Or maybe even "(len 
-< 0 || off < len)" and have an "} else if (in[off]) off++; else break;" in 
-the loop block.
-
-Besides, you completely ignored the nice examples how other people 
-contribute their patches, with mail bodies that double as a commit 
-message, a diffstat, and with a test case.
-
-Hth,
-Dscho
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
