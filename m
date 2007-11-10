@@ -1,95 +1,69 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Reducing the memory footprint
-Date: Sat, 10 Nov 2007 01:07:05 -0500
-Message-ID: <9e4733910711092207p6d997750i5db997dfa125ef5d@mail.gmail.com>
-References: <9e4733910711091538h260fbcd2s5783f01e7db4b19a@mail.gmail.com>
-	 <20071110005327.GH6212@lavos.net>
-	 <9e4733910711091705i6f77d05uc5ba04f668796a73@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Make builtin-tag.c use parse_options.
+Date: Fri, 09 Nov 2007 22:07:37 -0800
+Message-ID: <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
+References: <473463E0.7000406@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Brian Downing" <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Sat Nov 10 07:07:42 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Carlos Rica <jasampler@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 07:08:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqjVK-0005vH-Sq
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:07:39 +0100
+	id 1IqjW6-00063U-7P
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 07:08:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754080AbXKJGHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 01:07:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751557AbXKJGHY
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:07:24 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:31400 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751612AbXKJGHG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 01:07:06 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so842685wah
-        for <git@vger.kernel.org>; Fri, 09 Nov 2007 22:07:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=wBV6CAXh57cDXiZ6Uq3qTcq50dv2uPKjHGw+Th6/2wY=;
-        b=bjwpNdSLrzmg2NpfaE8oi0WYmlrnu6B+hjq1hJ+/291JVPBQSMNt2d8SteuRzzdXKYIf7Hpp2KQ0RGJP8aGtmEz5fcxR0ITSHJmCG8FzaqzNFi3gnj4HrWELlXVy/VOu6gHIH5qu6YfSLVlAQOqsH9eDAlgFGpZC8SwrM7SsrtY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=kHpjHJYJZDoo6NaxJgV0bTSNThbvnKiyp8DIUd34uOWxvrLZxD3OrERzlSCtoEdgrirzqwTDeK9eQ/hmv47oFusLivipFNDqsxL9ZwtddSJcMdfuYAggt0JC8uHiGSYshlDQdNnWlAJTD0kAswWEn/uiMnrhzA2CEN68LEYRZ9c=
-Received: by 10.114.77.1 with SMTP id z1mr347009waa.1194674825864;
-        Fri, 09 Nov 2007 22:07:05 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Fri, 9 Nov 2007 22:07:05 -0800 (PST)
-In-Reply-To: <9e4733910711091705i6f77d05uc5ba04f668796a73@mail.gmail.com>
-Content-Disposition: inline
+	id S1751689AbXKJGHo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 01:07:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXKJGHn
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 01:07:43 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:52934 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751690AbXKJGHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 01:07:42 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 5EEB42F2;
+	Sat, 10 Nov 2007 01:08:03 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9358A914B4;
+	Sat, 10 Nov 2007 01:08:00 -0500 (EST)
+In-Reply-To: <473463E0.7000406@gmail.com> (Carlos Rica's message of "Fri, 09
+	Nov 2007 14:42:56 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64308>
 
-On 11/9/07, Jon Smirl <jonsmirl@gmail.com> wrote:
-> On 11/9/07, Brian Downing <bdowning@lavos.net> wrote:
-> > On Fri, Nov 09, 2007 at 06:38:00PM -0500, Jon Smirl wrote:
-> > > I'm using this config file:
-> > >
-> > > [pack]
-> > >         windowMemory = 1M
-> > >         deltaCacheSize = 1M
-> > >
-> > > And I have NO_MMAP compiled in.
-> > >
-> > > git is still using over 200MB of memory or address space, my process
-> > > gets killed either way.
-> >
-> > I'm assuming it's dying on repacking since you included the pack
-> > parameters.
-> >
-> > How big is your biggest object?  Even with pack.windowMemory, it still
-> > keeps the last object around to try and delta against (in other words,
-> > the window only shrinks to size 1), which means you have to have room
-> > for it and its delta index.
->
-> It's a Linux kernel repository. Git receive-pack is going over 200MB
-> and getting zapped.  I don't understand why the process is so large. I
-> am compiled with -DNO_MMAP.
+Carlos Rica <jasampler@gmail.com> writes:
 
-I believe I must not have installed everything correctly with my
-NO_MMAP build. After debugging for a while and fixing things I'm able
-to do a push now in about 80MB of memory.
+> Also, this removes those tests ensuring that repeated
+> -m options don't allocate memory more than once, because now
+> this is done after parsing options, using the last one
+> when more are given. The same for -F.
 
-> I think I have a achieved a work around. I rsync'd in my last several
-> weeks of changes. Now I can 'git push' small amounts of changes
-> without getting killed.
->
-> I'm begging dreamhost to simply install git. Installed commands don't
-> get zapped.
->
-> --
-> Jon Smirl
-> jonsmirl@gmail.com
->
+The reason for this change is...?  Is this because it is
+cumbersome to detect and refuse multiple -m options using the
+parseopt API?  If so, the API may be what needs to be fixed.
+Taking the last one and discarding earlier ones feels to me an
+arbitrary choice.
 
+While I freely admit that I do not particularly find the "One -m
+introduces one new line, concatenated to form the final
+paragraph" handling of multiple -m options done by git-commit
+nice nor useful, I suspect that it would make more sense to make
+git-tag and git-commit handle multiple -m option consistently,
+if you are going to change the existing semantics.  Since some
+people really seem to like multiple -m handling of git-commit,
+the avenue of the least resistance for better consistency would
+be to accept and concatenate (with LF in between) multiple -m
+options.
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+With multiple -F, I think erroring out would be the sensible
+thing to do, but some people might prefer concatenation.  I do
+not care either way as long as commit and tag behave
+consistently.
