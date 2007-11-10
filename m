@@ -1,201 +1,76 @@
-From: Brian Swetland <swetland@google.com>
-Subject: Re: `git-send-email' doesn't specify `Content-Type'
-Date: Sat, 10 Nov 2007 04:35:05 -0800
-Organization: Google, Inc.
-Message-ID: <20071110123505.GA24445@bulgaria>
-References: <87ode3klc7.fsf@chbouib.org> <Pine.LNX.4.64.0711100052290.4362@racer.site> <20071110101420.GA21353@bulgaria> <20071110122528.GA4977@atjola.homenet>
+From: Michael Dressel <MichaelTiloDressel@t-online.de>
+Subject: Re: cogito remote branch
+Date: Sat, 10 Nov 2007 13:35:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711101323040.6138@castor.milkiway.cos>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="fUYQa+Pmc3FrFX/N"
-Content-Transfer-Encoding: 8bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ludovic =?iso-8859-1?Q?Court=E8s?= <ludo@chbouib.org>,
-	git@vger.kernel.org
-To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Nov 10 13:35:47 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org
+To: jnareb@gmail.com
+X-From: git-owner@vger.kernel.org Sat Nov 10 13:36:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqpYw-0001EC-31
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:35:46 +0100
+	id 1IqpZi-0001Q6-TC
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 13:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbXKJMf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 07:35:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751806AbXKJMf3
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:35:29 -0500
-Received: from smtp-out.google.com ([216.239.33.17]:19612 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751713AbXKJMf2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 07:35:28 -0500
-Received: from zps77.corp.google.com (zps77.corp.google.com [172.25.146.77])
-	by smtp-out.google.com with ESMTP id lAACZLrw005356;
-	Sat, 10 Nov 2007 12:35:22 GMT
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:date:from:to:cc:subject:message-id:references:
-	mime-version:content-type:content-disposition:
-	content-transfer-encoding:in-reply-to:organization:user-agent;
-	b=C9uz31b+VExMXyNoOGXUqQvtRPp8MAgRXxFd0RGISBilUnYgDSC4DZddangyLeUYJ
-	ThtZ87KKsvZrskqxWJBHQ==
-Received: from bulgaria (bulgaria.corp.google.com [172.18.102.38])
-	by zps77.corp.google.com with ESMTP id lAACZKup022571;
-	Sat, 10 Nov 2007 04:35:21 -0800
-Received: by bulgaria (Postfix, from userid 1000)
-	id 3A26D8F45E; Sat, 10 Nov 2007 04:35:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20071110122528.GA4977@atjola.homenet>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752675AbXKJMgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 07:36:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752430AbXKJMgM
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 07:36:12 -0500
+Received: from mailout08.sul.t-online.de ([194.25.134.20]:54201 "EHLO
+	mailout08.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751855AbXKJMgK (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 10 Nov 2007 07:36:10 -0500
+Received: from fwd28.aul.t-online.de 
+	by mailout08.sul.t-online.com with smtp 
+	id 1IqpZ9-0006lV-06; Sat, 10 Nov 2007 13:35:59 +0100
+Received: from [192.168.2.100] (X6SENvZroh6uHn6JGuMB7Y-dqSta8xh0QDoeqKlytr6u09u+c-HqS2tC8MH28apgwX@[84.163.232.243]) by fwd28.t-online.de
+	with esmtp id 1IqpZ5-2K7YFE0; Sat, 10 Nov 2007 13:35:55 +0100
+X-X-Sender: michael@castor.milkiway.cos
+X-ID: X6SENvZroh6uHn6JGuMB7Y-dqSta8xh0QDoeqKlytr6u09u+c-HqS2tC8MH28apgwX
+X-TOI-MSGID: 48cfdd74-3fd6-4780-a872-d4f496d4726e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64341>
 
+>Michael Dressel wrote:
+>> On Fri, 9 Nov 2007, Jon Loeliger wrote: 
+>>> On Fri, 2007-11-09 at 10:10, MichaelTiloDressel@t-online.de wrote:
+>>>
+>>>>  There are just some features
+>>>> which simplify things for me in cogito. E.g. in cogito in the 
+simplest
+>>>> way you don't need to be aware of the index. While with git
+>>>> you have to remember to add the changes to the index explicitly
+>>>> to get them committed. 
+>>> 
+>>> "git commit -a ..." might be useful for you.
+>>> 
+>>> Other lingering cogito-isms you think are lacking in git?
+>> 
+>> Thanks for the hint. I have to use git for a while to understand what 
+may 
+>> still be lacking (at least for me, if at all). Off the top of my head 
+one 
+>> other difference is that if I do a cg-push the remote (or origin) head 
+is 
+>> updated automatically, I think.
 
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Jakub Narebski wrote:
+>If you mean that tracking branches are updated on push, this is what
+>git also does from some time (perhaps not in released version, so please
+>wait or run 'master').
 
-[Björn Steinbrink <B.Steinbrink@gmx.de>]
-> On 2007.11.10 02:14:20 -0800, Brian Swetland wrote:
-> > 
-> > The example I have involves a coworker's name which needs non-ascii
-> > characters.  They are properly escaped in the From: line generated by
-> > git-format-patch.  git-send-email puts the generated From: line at the
-> > top of the body of the email, unescapes it (to utf-8), and proceeds to
-> > send the email with no Content-Type specified.
-> 
-> You mean that it converts the header field to utf-8? It doesn't do that
-> here (neither master nor 1.5.3.5) and IIRC that would be invalid anyway,
-> because Content-Type applies to exactly that, content, not headers. Your
-> sample has no non-ASCII characters (or at least I didn't see any), so
-> git-send-email doesn't add a header to specify a charset.
+Ok nice. Another thing is that git-push will push all the tracking 
+branches in refs/remotes/origin. 
 
-The first line of the patch is a From: field with Arve's name, in
-an (rfc822?) encoded format):
-From: =?utf-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>
+I was wondering if it was possible to have some cogito like wrapper 
+scripts (lets say kg-...) for git again which would use the git commands 
+with some arguments in order to resemble the cogito behavior 
+even more closely. But it dawned on me that this would most likely end up 
+in a rather large amount of script code again.
 
-The mail generated by git-send-email makes this From: line the first
-line of the *body* of the generated email.  This line in the body
-is no longer escaped, the utf8 characters are visible, but the header
-of the message does not have a Content-Type indicating a non-ascii
-encoding.
-
-Attached are the result of git-format-patch and the actual email
-received from git-send-email (mbox format).
-
-Brian
-
---fUYQa+Pmc3FrFX/N
-Content-Type: text/x-diff; charset=us-ascii
-Content-Disposition: attachment; filename="0001-hrtimer-Add-timer-back-to-pending-list-if-it-was-re.patch"
-
->From 3440baaed3b21138f6fc8b80e03769e3903f9c11 Mon Sep 17 00:00:00 2001
-From: =?utf-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>
-Date: Wed, 7 Nov 2007 22:51:44 -0800
-Subject: [PATCH] hrtimer: Add timer back to pending list if it was reactivated and has already expired again.
-
-This avoids problems with timer hardware that does not respond to timers set in the past.
-
-Signed-off-by: Brian Swetland <swetland@android.com>
----
- kernel/hrtimer.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/kernel/hrtimer.c b/kernel/hrtimer.c
-index 22a2514..7c60769 100644
---- a/kernel/hrtimer.c
-+++ b/kernel/hrtimer.c
-@@ -1149,8 +1149,14 @@ static void run_hrtimer_softirq(struct softirq_action *h)
- 			 * If the timer was rearmed on another CPU, reprogram
- 			 * the event device.
- 			 */
--			if (timer->base->first == &timer->node)
--				hrtimer_reprogram(timer, timer->base);
-+			if (timer->base->first == &timer->node) {
-+				if(hrtimer_reprogram(timer, timer->base)) {
-+					__remove_hrtimer(timer, timer->base,
-+							 HRTIMER_STATE_PENDING, 0);
-+					list_add_tail(&timer->cb_entry,
-+						      &cpu_base->cb_pending);
-+				}
-+			}
- 		}
- 	}
- 	spin_unlock_irq(&cpu_base->lock);
--- 
-1.5.3.5
-
-
---fUYQa+Pmc3FrFX/N
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: attachment; filename=mbox
-Content-Transfer-Encoding: 8bit
-
->From swetland@google.com Sat Nov 10 02:04:08 2007
-Return-Path: <swetland@google.com>
-X-Original-To: swetland@frotz.net
-Delivered-To: swetland@frotz.net
-Received: from smtp-out.google.com (smtp-out.google.com [216.239.45.13])
-	by mumble.frotz.net (Postfix) with ESMTP id 1BC002500D
-	for <swetland@frotz.net>; Sat, 10 Nov 2007 02:04:08 -0800 (PST)
-Received: from zps35.corp.google.com (zps35.corp.google.com [172.25.146.35])
-	by smtp-out.google.com with ESMTP id lAAA5hUj030761;
-	Sat, 10 Nov 2007 02:05:43 -0800
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:from:to:cc:subject:date:message-id:x-mailer;
-	b=g2B628wRsJJahlIpNw3mgNDqOQKNMcUCPOurvqj+3fO6qLH+vpBS0ZwN1lLv6BnC7
-	w4QLOotDo7t+nI2KgZDVQ==
-Received: from bulgaria (bulgaria.corp.google.com [172.18.102.38])
-	by zps35.corp.google.com with ESMTP id lAAA5e22002202;
-	Sat, 10 Nov 2007 02:05:42 -0800
-Received: by bulgaria (Postfix, from userid 1000)
-	id 613018F45E; Sat, 10 Nov 2007 02:05:25 -0800 (PST)
-From: swetland@google.com
-To: swetland@frotz.net
-Cc: =?utf-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@android.com>
-Subject: [PATCH] hrtimer: Add timer back to pending list if it was reactivated and has already expired again.
-Date: Sat, 10 Nov 2007 02:05:25 -0800
-Message-Id: <1194689125-21319-1-git-send-email-swetland@google.com>
-X-Mailer: git-send-email 1.5.3.5
-X-SpamProbe: GOOD 0.0000099 b892c7c5c469d044f28ab48846487cf5
-X-SpamCheck: OKAY
-Status: RO
-Content-Length: 983
-Lines: 33
-
-From: Arve Hjønnevåg <arve@android.com>
-
-This avoids problems with timer hardware that does not respond to timers set in the past.
-
-Signed-off-by: Brian Swetland <swetland@android.com>
----
- kernel/hrtimer.c |   10 ++++++++--
- 1 files changed, 8 insertions(+), 2 deletions(-)
-
-diff --git a/kernel/hrtimer.c b/kernel/hrtimer.c
-index 22a2514..7c60769 100644
---- a/kernel/hrtimer.c
-+++ b/kernel/hrtimer.c
-@@ -1149,8 +1149,14 @@ static void run_hrtimer_softirq(struct softirq_action *h)
- 			 * If the timer was rearmed on another CPU, reprogram
- 			 * the event device.
- 			 */
--			if (timer->base->first == &timer->node)
--				hrtimer_reprogram(timer, timer->base);
-+			if (timer->base->first == &timer->node) {
-+				if(hrtimer_reprogram(timer, timer->base)) {
-+					__remove_hrtimer(timer, timer->base,
-+							 HRTIMER_STATE_PENDING, 0);
-+					list_add_tail(&timer->cb_entry,
-+						      &cpu_base->cb_pending);
-+				}
-+			}
- 		}
- 	}
- 	spin_unlock_irq(&cpu_base->lock);
--- 
-1.5.3.5
-
-
-
---fUYQa+Pmc3FrFX/N--
+Cheers,
+Michael
