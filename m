@@ -1,118 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status&commit: Teach them to show commits of modified submodules.
-Date: Sat, 10 Nov 2007 13:14:16 -0800
-Message-ID: <7vabpliz13.fsf@gitster.siamese.dyndns.org>
-References: <1194722863-14741-1-git-send-email-pkufranky@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ping Yin <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 10 22:14:42 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: gitk/git-gui misfeature: saving the geometry can the window out of reach
+Date: Sat, 10 Nov 2007 22:48:05 +0100
+Message-ID: <63F7323C-D90A-4F5E-AE3C-8937455972FD@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-19--471762876"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Nov 10 22:48:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iqxf7-0005l3-RH
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 22:14:42 +0100
+	id 1IqyBv-0006zq-6Y
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 22:48:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754247AbXKJVO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 16:14:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754266AbXKJVOZ
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 16:14:25 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:51622 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754242AbXKJVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 16:14:25 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B0D7F2F2;
-	Sat, 10 Nov 2007 16:14:45 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id D04889405D;
-	Sat, 10 Nov 2007 16:14:40 -0500 (EST)
-In-Reply-To: <1194722863-14741-1-git-send-email-pkufranky@gmail.com> (Ping
-	Yin's message of "Sun, 11 Nov 2007 03:27:43 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754453AbXKJVsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 16:48:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754481AbXKJVsS
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 16:48:18 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:41605 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754266AbXKJVsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 16:48:18 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IqyBc-00013k-9u
+	for git@vger.kernel.org; Sat, 10 Nov 2007 22:48:16 +0100
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64379>
 
-Ping Yin <pkufranky@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-19--471762876
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> 	# submodule modifiled: sm1 sm2
-> 	#
-> 	# * sm1 354cd45...3f751e5:
-> 	#   <<<
-> 	#   	one line message for C
-> 	#   	one line message for B
-> 	#   >>>
-> 	#   	one line message for D
-> 	#   	one line message for E
-> 	#
-> 	# * sm2 5c8bfb5...ac46d84:
-> 	#   <<<
-> 	#   	msg
-> 	#
-> 	# On branch master
-> 	# Changes to be committed:
-> 	#   (use "git reset HEAD <file>..." to unstage)
-> 	#
-> 	#	modified:   sm1
-> 	#	modified:   sm2
+Hello list,
 
-I think this presentation order is horrible.
+gitk (and I think git-gui too) save their "geometry" (which includes  
+X/Y position) in ~/.gitk.  So far so good.  The problem is that I  
+often use 2 screens at work (one is the screen of my laptop, the  
+other one is above) and I happen to put my gitk/git-gui windows on  
+the 2nd screen.  When I go back home, I don't have a second screen  
+and gitk/git-gui open their windows out of reach.  This could well be  
+an ugly wart in Apple's port of Tcl/Tk (I have a MacBook with OSX  
+10.4.10) or a more general problem (didn't try with other OSes).
 
- * I think everbody preferes to have "On branch master" at the
-   very beginning, to avoid committing to a wrong branch by
-   mistake.
+git-gui version 0.8.4
+git version 1.5.3.5.654.gdd5ec (tonight's master's HEAD)
+Tcl/Tk version 8.4.7 (Apple's)
+(gitk doesn't support --version!)
 
- * As I understand it, in the real life use, there will be quite
-   many commits from the submodule updates when a new commit is
-   bound to a submodule in the superproject, as _the_ point of
-   having a submodule is to bind a more or less independent
-   project that progresses at quite a different pace as a
-   submodule to the superproject.  In other words, by design,
-   the superproject can stay behind from the tip of subproject
-   and rebind it to a different commit only when there are
-   significant changes of the subproject that need to be there
-   to allow the other parts of the superproject (either
-   superproject itself or another submodule) to use the features
-   and/or fixes the submodule updates provides.
+For those struggling with the same problem, here is a quick workaround:
+   gnused -i /geometry/d ~/.gitk
 
-   Which means it will not be uncommon have hundreds of "one
-   line message" for the submodules at the very beginning of the
-   commit log message buffer, and your prsentation order will
-   make that part overwhelm the overview of what changed _in_
-   the supermodule itself (the "Changes to be committed:"
-   lines), which gives the birds-eye view.
+Cheers,
 
-   And I think it is more important to give the birds-eye view
-   of the supermodule itself first, when you are helping to
-   prepare a commit message for the supermodule.  The user would
-   start the commit log for the superproject with "This updates
-   the new frotz feature.  It uses the updated API from the
-   submodules A and B so we now use updated versions of them."
-   and then continue "Notable changes in submodule A are ...".
-   And the new part you are adding would help the user to write
-   the latter description.
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
 
-I also find "<<< lines then >>> other lines" format very hard to
-read.  Maybe formatting it like this would make it a bit more
-readable and more space efficient?
 
- 	# * sm1 354cd45...3f751e5:
- 	#   - one line message for C
- 	#   - one line message for B
- 	#   + one line message for D
- 	#   + one line message for E
- 	# * sm2 5c8bfb5...ac46d84:
- 	#   - msg
 
-Note that if you swap the order and move this at the tail
-(perhaps before "Untracked files:" section, if you do not have a
-decent .gitignore set up), you can also lose the "submodules
-modified: sm1 sm2" line and the blank line before it, which
-would make the output even shorter without losing any useful
-information.
+--Apple-Mail-19--471762876
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHNicVwwE67wC8PUkRAtncAJsEJqvaIKpVMa1ioBAK/zu1YkB47gCdFgeQ
+Py06SbKLoYEcvEYIKb+iCUk=
+=b1YW
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-19--471762876--
