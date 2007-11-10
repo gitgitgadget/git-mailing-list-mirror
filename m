@@ -1,68 +1,85 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
-Date: Sat, 10 Nov 2007 00:31:41 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711100030090.4362@racer.site>
-References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net>
- <4734EA4E.8070405@lsrfire.ath.cx>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git pull opinion
+Date: Fri, 9 Nov 2007 16:36:12 -0800 (PST)
+Message-ID: <alpine.LFD.0.999.0711091633380.15101@woody.linux-foundation.org>
+References: <3abd05a90711051352t2f6be00bsa862585abd370fb1@mail.gmail.com> 
+ <7vd4uomfn8.fsf@gitster.siamese.dyndns.org>  <18223.46848.109961.552827@lisa.zopyra.com>
+  <3abd05a90711052230y4d6151c6o3e7985a0c8e18161@mail.gmail.com> 
+ <alpine.LFD.0.999.0711060812170.15101@woody.linux-foundation.org>
+ <3abd05a90711071325y397434efq7d4e50cb7a1cf07e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Paul Mackerras <paulus@samba.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Pierre Habouzit <madcoder@debian.org>
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Sat Nov 10 01:32:11 2007
+Content-Type: TEXT/PLAIN; charset=us-ascii
+Cc: Bill Lear <rael@zopyra.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+To: Aghiles <aghilesk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 10 01:38:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IqeGf-0003sa-BQ
-	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:32:09 +0100
+	id 1IqeMk-0005XY-Rk
+	for gcvg-git-2@gmane.org; Sat, 10 Nov 2007 01:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752036AbXKJAby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 9 Nov 2007 19:31:54 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751912AbXKJAby
-	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:31:54 -0500
-Received: from mail.gmx.net ([213.165.64.20]:50810 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751892AbXKJAbx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 9 Nov 2007 19:31:53 -0500
-Received: (qmail invoked by alias); 10 Nov 2007 00:31:51 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp002) with SMTP; 10 Nov 2007 01:31:51 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18e4OFlgrEecLcBrKgOl4BuJUDBpA97wgr09utjjR
-	/zLEw4rRVCX0/t
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4734EA4E.8070405@lsrfire.ath.cx>
-X-Y-GMX-Trusted: 0
+	id S1751541AbXKJAiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 9 Nov 2007 19:38:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751573AbXKJAiL
+	(ORCPT <rfc822;git-outgoing>); Fri, 9 Nov 2007 19:38:11 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:47118 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751525AbXKJAiK (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 9 Nov 2007 19:38:10 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA0aDOa031384
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Fri, 9 Nov 2007 16:36:14 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAA0aC4x007205;
+	Fri, 9 Nov 2007 16:36:12 -0800
+In-Reply-To: <3abd05a90711071325y397434efq7d4e50cb7a1cf07e@mail.gmail.com>
+X-Spam-Status: No, hits=-2.739 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64286>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64287>
 
-Hi,
 
-On Sat, 10 Nov 2007, Ren? Scharfe wrote:
 
-> (next)
-> $ time git log --pretty=format:"* %cd %cn%n%n%s%n%b" >/dev/null
+On Wed, 7 Nov 2007, Aghiles wrote:
+
+> > [...]
+> > Now, I do think that we could relax the rule so that "files that are
+> > modified must be clean in the working tree" could instead become "files
+> > that actually don't merge _trivially_ must be clean in the working tree".
+> > But basically, if it's not a trivial merge, then since it's done in the
+> > working tree, the working tree has to be clean (or the merge would
+> > overwrite it).
+> >[...]
 > 
-> real    0m0.631s
-> user    0m0.584s
-> sys     0m0.040s
+> I really think this is a good idea. It seems to me that the first "bad"
+> surprise a svn/cvs/bk user will have is the result of a "git pull" command
+> on a dirty tree. With the proposed change, and if I understand correctly:
+>   - users that are used to commit often and fetch into clean trees
+> will never be bothered by this change.
+>   - users that are used to "update" often are expecting to resolve
+> conflicts in their working copy anyway.
 > 
-> (next+patch)
-> $ time git log --pretty=format:"* %cd %cn%n%n%s%n%b" >/dev/null
-> 
-> real    0m0.570s
-> user    0m0.512s
-> sys     0m0.044s
+> In both cases git does not get in your way and everyone is happy.
 
-Wow.
+Well, there will still be cases where people won't be happy.
 
-If you keep going like that, "git log" will be slower than "git log 
---pretty=format:bla" soon.
+That said, all fast-forward cases (which is, I guess, a fairly common way 
+of operating for anybody who has ever just uses anoncvs to track others) 
+would be handled by the "three-way-merge dirty data for trivial merges". 
 
-Ciao,
-Dscho
+So even if it would only handle that special case (and it handles a *lot* 
+of other cases too!) it probably would be useful to some people.
+
+That said, I still don't think I have the energy to actually try to do it. 
+I do suspect it's not that hard, and I outlined where it would go, but 
+it's really quite core and important code... IOW, this needs *lots* of 
+deep thought and care.
+
+			Linus
