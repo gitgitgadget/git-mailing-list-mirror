@@ -1,69 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from .gitconfig
-Date: Sun, 11 Nov 2007 02:34:31 -0800
-Message-ID: <7vabplf4ug.fsf@gitster.siamese.dyndns.org>
-References: <47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
-	<7v640ivagv.fsf@gitster.siamese.dyndns.org>
-	<20071104054305.GA13929@sigill.intra.peff.net>
-	<20071110202351.7b4544aa@paradox.zwell.net>
-	<7vve89f6qy.fsf@gitster.siamese.dyndns.org>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: gitk/git-gui misfeature: saving the geometry can the window out of reach
+Date: Sun, 11 Nov 2007 05:44:08 -0500
+Message-ID: <20071111104407.GY14735@spearce.org>
+References: <63F7323C-D90A-4F5E-AE3C-8937455972FD@lrde.epita.fr> <20071111051128.GS14735@spearce.org> <8700373A-4878-4EBD-BA27-D4F31BE44907@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@zwell.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 11:35:07 2007
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Sun Nov 11 11:44:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrA9f-0003aD-VO
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 11:35:04 +0100
+	id 1IrAIp-0005Z2-AB
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 11:44:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754131AbXKKKen (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 05:34:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754063AbXKKKen
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 05:34:43 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:52325 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753940AbXKKKem (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 05:34:42 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id BAB902F2;
-	Sun, 11 Nov 2007 05:35:03 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 31AFC939F2;
-	Sun, 11 Nov 2007 05:34:55 -0500 (EST)
-In-Reply-To: <7vve89f6qy.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 11 Nov 2007 01:53:25 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753408AbXKKKoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 05:44:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753107AbXKKKoM
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 05:44:12 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:46465 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752437AbXKKKoM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 05:44:12 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1IrAIS-0005js-R6; Sun, 11 Nov 2007 05:44:08 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 7F25420FBAE; Sun, 11 Nov 2007 05:44:08 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <8700373A-4878-4EBD-BA27-D4F31BE44907@lrde.epita.fr>
+User-Agent: Mutt/1.5.11
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64442>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
+> On Nov 11, 2007, at 6:11 AM, Shawn O. Pearce wrote:
+> >Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
+> >>gitk (and I think git-gui too) save their "geometry" (which includes
+> >>X/Y position) in ~/.gitk.  So far so good.  The problem is that I
+> >>often use 2 screens at work (one is the screen of my laptop, the
+> >>other one is above) and I happen to put my gitk/git-gui windows on
+> >>the 2nd screen.  When I go back home, I don't have a second screen
+> >>and gitk/git-gui open their windows out of reach.
+> >
+> >Actually git-gui saves the geometry to .git/config so I'm not sure
+> >why the sed line above would correct git-gui's display issues.  But I
+> >have also noticed this problem on my Mac OS X laptop when running
+> >again after leaving either git-gui or gitk on the external display.
+> 
+> it's been a long time since I last used Tcl/Tk but if you give me a  
+> hint as to where to look / what should be done, I can give it a try.
 
-> Makes me wonder if you are better off with two new helper
-> functions defined in Git.pm, as in:
->
-> 	$prompt_color = $repo->config_color("interactive.prompt") || "bold blue")
-> 	$normal_color = Git::color_to_ansi_code("normal");
+Look in git-gui.sh for "-- Load geometry"; in my current master
+it is on line 2625.  This is the block where we have taken the
+geometry data back in from .git/config and are trying to update
+the UI to match what it says.  Unfortunately we set a coordinate
+that is off the desktop using a standard X geometry string in the
+"wm geometry . [lindex $gm 0]" call...
 
-Sorry, but please disregard.  "bold blue" part was also
-parameter to the string-to-ansi-color-escape function, so the
-above does not make much sense.
+-- 
+Shawn.
