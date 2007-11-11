@@ -1,72 +1,60 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: [PATCH] git-svn: prevent dcommitting if the index is dirty.
-Date: Sun, 11 Nov 2007 19:41:41 +0100
-Message-ID: <1194806501-4796-1-git-send-email-tsuna@lrde.epita.fr>
-Cc: normalperson@yhbt.net, Benoit Sigoure <tsuna@lrde.epita.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 19:42:09 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] for-each-ref: fix setup of option-parsing for --sort
+Date: Sun, 11 Nov 2007 19:19:04 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711111918470.4362@racer.site>
+References: <1194713274-31200-1-git-send-email-hjemli@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jon Smirl <jonsmirl@gmail.com>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 20:19:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrHl1-0008Or-QL
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 19:42:08 +0100
+	id 1IrILK-0002Oi-NX
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 20:19:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756131AbXKKSlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 13:41:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755255AbXKKSlv
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 13:41:51 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213]:59597 "EHLO
-	quanta.tsunanet.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754633AbXKKSlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 13:41:51 -0500
-Received: by quanta.tsunanet.net (Postfix, from userid 501)
-	id 73A4EC94220; Sun, 11 Nov 2007 19:41:41 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.5.654.gdd5ec
+	id S1755632AbXKKTTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 14:19:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755579AbXKKTTS
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:19:18 -0500
+Received: from mail.gmx.net ([213.165.64.20]:38700 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755387AbXKKTTS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 14:19:18 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 19:19:16 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp018) with SMTP; 11 Nov 2007 20:19:16 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/3EEw+I/D3fCK3BToQh1vK0pH8wB/+NLAcmJEpfG
+	mZtMXP7s5aF4Lf
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194713274-31200-1-git-send-email-hjemli@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64494>
 
-dcommit uses rebase `sync' the history with what has just been pushed to
-SVN.  Trying to dcommit with a dirty index is troublesome for rebase, so now
-the user will get an error message if he attempts to dcommit with a dirty
-index.
+Hi,
 
-Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
----
- git-svn.perl                              |    3 +++
- t/t9106-git-svn-dcommit-clobber-series.sh |    6 ++++++
- 2 files changed, 9 insertions(+), 0 deletions(-)
+On Sat, 10 Nov 2007, Lars Hjemli wrote:
 
-diff --git a/git-svn.perl b/git-svn.perl
-index dd93e32..a15df4f 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -390,6 +390,9 @@ sub cmd_set_tree {
- 
- sub cmd_dcommit {
- 	my $head = shift;
-+        git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
-+          'Cannot dcommit with a dirty index.  Commit your changes first'
-+          . "or stash them with `git stash'.\n";
- 	$head ||= 'HEAD';
- 	my @refs;
- 	my ($url, $rev, $uuid, $gs) = working_head_info($head, \@refs);
-diff --git a/t/t9106-git-svn-dcommit-clobber-series.sh b/t/t9106-git-svn-dcommit-clobber-series.sh
-index 7eff4cd..44fae3b 100755
---- a/t/t9106-git-svn-dcommit-clobber-series.sh
-+++ b/t/t9106-git-svn-dcommit-clobber-series.sh
-@@ -53,4 +53,10 @@ test_expect_success 'change file but in unrelated area' "
- 		test x\"\`sed -n -e 61p < file\`\" = x6611
- 	"
- 
-+test_expect_failure 'attempt to dcommit with a dirty index' "
-+	echo foo >>file &&
-+	git add file &&
-+	git svn dcommit
-+	"
-+
- test_done
--- 
-1.5.3.5.654.gdd5ec
+> The option value for --sort is already a pointer to a pointer to struct
+> ref_sort, so just use it.
+> 
+> Signed-off-by: Lars Hjemli <hjemli@gmail.com>
+> ---
+> 
+> On Nov 10, 2007 5:25 PM, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> > Could you add a test for that too, please?
+> 
+> Is this ok?
+
+That's exactly what I had in mind.
+
+Thank you,
+Dscho
