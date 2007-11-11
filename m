@@ -1,75 +1,93 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: [PATCH] t7005-editor.sh: Don't invoke real vi when it is in GIT_EXEC_PATH
-Date: Sun, 11 Nov 2007 12:49:57 -0500
-Message-ID: <2AE2E502-7942-449E-B847-75876A5DAF37@silverinsanity.com>
-References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com> <1194802691-27610-1-git-send-email-B.Steinbrink@gmx.de> <Pine.LNX.4.64.0711111742010.4362@racer.site>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	aroben@apple.com, dak@gnu.org, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 11 18:50:29 2007
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Local branch to remote branch translation
+Date: Sun, 11 Nov 2007 12:54:41 -0500
+Message-ID: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Nov 11 18:55:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrGws-0001aZ-Sd
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 18:50:19 +0100
+	id 1IrH1P-0002yw-Bi
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 18:54:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755284AbXKKRuE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 12:50:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755320AbXKKRuB
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 12:50:01 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:45030 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755284AbXKKRuA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 12:50:00 -0500
-Received: from [192.168.1.7] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTP id 3DD331FFC10F;
-	Sun, 11 Nov 2007 17:49:59 +0000 (UTC)
-In-Reply-To: <Pine.LNX.4.64.0711111742010.4362@racer.site>
-X-Mailer: Apple Mail (2.912)
+	id S1756314AbXKKRyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 12:54:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756299AbXKKRyn
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 12:54:43 -0500
+Received: from rv-out-0910.google.com ([209.85.198.185]:5292 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755698AbXKKRym (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 12:54:42 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so970471rvb
+        for <git@vger.kernel.org>; Sun, 11 Nov 2007 09:54:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=ihmlycw6hdD44sowJk7s/hbLgJP7DalGjnRC4xFuf1Y=;
+        b=HpTR/JrOjlxIT7i2zG5Q0afv92xFfWy4Jci5wC8nOfdSTOynnd4wA3XIikPivvmCmXa9MguXNIJaMtB+K4M/2gTXVDkK0DIkVSdURtnlfF+YqfA+8MbLvRqNrHBLBoRu4zi0CWMGrwatjLw66FlF4GUVAz0ztAJj8MWgmKfL6DE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=R3hlN42dlCSWcZj5MYbNMK6IZ4nrTfGcVCHSL99mvw3ceeFfc9LcMCIKHfBv+JVq2Jo2UR7EJ/9ZT8/OLWVj5UMlObYx7a8Lpdb7mG7ACHi/sKvcfn7ZXIxdUlGmZUeuFJIW8rLdQpK0siqkkf9BlJ1930+qRemZ8gbmuwQya5c=
+Received: by 10.114.25.3 with SMTP id 3mr1642795way.1194803681973;
+        Sun, 11 Nov 2007 09:54:41 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Sun, 11 Nov 2007 09:54:41 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64488>
 
+What am I doing wrong in this sequence?
 
-On Nov 11, 2007, at 12:44 PM, Johannes Schindelin wrote:
+In my local repo I have two remotes:
 
-> Hi,
->
-> On Sun, 11 Nov 2007, Bj=F6rn Steinbrink wrote:
->
->> The git wrapper executable always prepends the GIT_EXEC_PATH build
->> variable to the current PATH, so prepending "." to the PATH is not
->> enough to give precedence to the fake vi executable.
->>
->> The --exec-path option allows to prepend a directory to PATH even =20
->> before
->> GIT_EXEC_PATH (which is added anyway), so we can use that instead.
->
-> Hmm.  This will probably stop working when you do not have git =20
-> installed,
-> because you now tell git to search for git programs in ".", where =20
-> they are
-> not.  Probably git-commit executes your installed write-tree, commit-=
-=20
-> tree
-> and friends, instead of the compiled ones.
+jonsmirl@terra:~/mpc5200b$ git remote
+dreamhost
+linus
 
-You are wrong there.  From exec_cmd.c:setup_path() (lines 51-54):
+I create branches off from these using:
+git branch -b m29 linus/master
 
-     add_path(&new_path, argv_exec_path);
-     add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
-     add_path(&new_path, builtin_exec_path);
-     add_path(&new_path, cmd_path);
+I update them with
+stg rebase linus/master
 
-So the path with this patch will still include the build directory =20
-before the install location.
+My repo has a .git/packed-refs file
 
-~~ Brian
+When I push this repo to a remote server my local branches get renamed.
+
+jonsmirl@terra:~/mpc5200b$ git push dreamhost
+To ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
+ * [new branch]      m24 -> linus/m24
+ * [new branch]      m25 -> linus/m25
+ * [new branch]      m26 -> linus/m26
+ * [new branch]      m28 -> linus/m28
+ * [new branch]      m29 -> linus/m29
+Counting objects: 619084, done.
+...
+
+So one the remote server I see this:
+
+[daedalus]$ git remote
+[daedalus]$ git branch
+[daedalus]$ git branch -r
+  linus/m24
+  linus/m25
+  linus/m26
+  linus/m28
+  linus/m29
+[daedalus]$
+
+With the repo in this state at the remote server gitweb thinks the
+repo is empty.
+Why are these branches getting renamed?
+
+git head is in use on both ends.
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
