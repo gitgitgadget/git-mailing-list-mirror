@@ -1,59 +1,68 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Deprecate git-fetch-pack?
-Date: Sun, 11 Nov 2007 11:05:34 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711111103240.4362@racer.site>
-References: <Pine.LNX.4.64.0711101752490.29952@iabervon.org>
- <7v4pftip42.fsf@gitster.siamese.dyndns.org> <74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com>
+From: Derek Fawcus <dfawcus@cisco.com>
+Subject: Re: git packs
+Date: Sun, 11 Nov 2007 11:09:42 +0000
+Message-ID: <20071111110942.A4013@edi-view2.cisco.com>
+References: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com> <00593593-E943-4DA0-AA9B-FDBB866E7EFB@mac.com> <20071110174559.GA2200@old.davidb.org> <134659C4-BA10-4B9E-9C64-2754A90D93F8@mac.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 12:06:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: bob <kranki@mac.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 12:20:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrAde-0002dU-RG
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 12:06:03 +0100
+	id 1IrAr7-0005fY-TW
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 12:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605AbXKKLFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 06:05:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751965AbXKKLFs
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 06:05:48 -0500
-Received: from mail.gmx.net ([213.165.64.20]:53759 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751605AbXKKLFr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 06:05:47 -0500
-Received: (qmail invoked by alias); 11 Nov 2007 11:05:44 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp037) with SMTP; 11 Nov 2007 12:05:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+3nMlWh9e3rA96yhqLn0ICHNUVbROmAtX3hpmNHw
-	m3ntoMlTnLXf1T
-X-X-Sender: gene099@racer.site
-In-Reply-To: <74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com>
-X-Y-GMX-Trusted: 0
+	id S1751965AbXKKLTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 06:19:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbXKKLTc
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 06:19:32 -0500
+Received: from ams-iport-1.cisco.com ([144.254.224.140]:63987 "EHLO
+	ams-iport-1.cisco.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751605AbXKKLTb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 06:19:31 -0500
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Nov 2007 06:19:30 EST
+X-IronPort-AV: E=Sophos;i="4.21,401,1188770400"; 
+   d="scan'208";a="157372645"
+Received: from ams-dkim-1.cisco.com ([144.254.224.138])
+  by ams-iport-1.cisco.com with ESMTP; 11 Nov 2007 12:09:43 +0100
+Received: from ams-core-1.cisco.com (ams-core-1.cisco.com [144.254.224.150])
+	by ams-dkim-1.cisco.com (8.12.11/8.12.11) with ESMTP id lABB9giv009620;
+	Sun, 11 Nov 2007 12:09:42 +0100
+Received: from edi-view2.cisco.com (edi-view2.cisco.com [64.103.71.156])
+	by ams-core-1.cisco.com (8.12.10/8.12.6) with ESMTP id lABB9g8i028886;
+	Sun, 11 Nov 2007 11:09:42 GMT
+Received: (dfawcus@localhost) by edi-view2.cisco.com (8.11.2/CISCO.WS.1.2) id lABB9gM15755; Sun, 11 Nov 2007 11:09:42 GMT
+X-Mailer: Mutt 1.0.1i
+In-Reply-To: <134659C4-BA10-4B9E-9C64-2754A90D93F8@mac.com>; from kranki@mac.com on Sat, Nov 10, 2007 at 01:01:46PM -0500
+DKIM-Signature: v=0.5; a=rsa-sha256; q=dns/txt; l=426; t=1194779382; x=1195643382;
+	c=relaxed/simple; s=amsdkim1002;
+	h=Content-Type:From:Subject:Content-Transfer-Encoding:MIME-Version;
+	d=cisco.com; i=dfawcus@cisco.com;
+	z=From:=20Derek=20Fawcus=20<dfawcus@cisco.com>
+	|Subject:=20Re=3A=20git=20packs
+	|Sender:=20;
+	bh=aUGWeWCYAl05kGPn4VxlMlvoJUTaXkWlKm+7ZSsde4g=;
+	b=Ycb8GecXzzUt8q9oHuc6l3SRrghJUycPQOyRZ3TU8LziBZb+cEBswnkzyVWDqtl6rpLoOdMy
+	+CtFZ2SfxCG/V2kHxqcAVju5ID/4ZJZyzX620e4F+CT/bd7ktymvbBda;
+Authentication-Results: ams-dkim-1; header.From=dfawcus@cisco.com; dkim=pass (
+	sig from cisco.com/amsdkim1002 verified; ); 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64446>
 
-Hi,
+On Sat, Nov 10, 2007 at 01:01:46PM -0500, bob wrote:
+> It is fairly disappointing as far as indicating the problem.  Here is  
+> the entire report since it was so short.
 
-On Sat, 10 Nov 2007, Ask Bj?rn Hansen wrote:
+> Error Formulating Crash Report:
+> *** -[NSCFDictionary setObject:forKey:]: attempt to insert nil value  
+> (key: VMUSignaturePath)
 
-> For new users the superfluous programs are a burden making it harder to 
-> learn how everything works.
+huh?  The above looks like an ObjC invocation.  Last I checked,  git was C.
+So why is that in the frame?
 
-This should be a non-issue.  We really should start deprecating 
-"git-<command>" in favour of "git <command>" for real.
-
-New users should not even be told that this is correct usage.
-
-My reason?  We have plumbing, and we will always have plumbing, as 
-commands.  A regular git user does not _want_ to see that.  Without said 
-deprecation she _will_, however.
-
-Ciao,
-Dscho
+DF
