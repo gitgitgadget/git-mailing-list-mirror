@@ -1,82 +1,74 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: Local branch to remote branch translation
-Date: Sun, 11 Nov 2007 19:19:22 +0100
-Message-ID: <A1B9CE91-15E0-4298-A606-68BB31541574@zib.de>
-References: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com> <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 19:20:09 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] t7005-editor.sh: Don't invoke real vi when it is in
+ GIT_EXEC_PATH
+Date: Sun, 11 Nov 2007 18:31:05 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711111829250.4362@racer.site>
+References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com>
+ <1194802691-27610-1-git-send-email-B.Steinbrink@gmx.de>
+ <Pine.LNX.4.64.0711111742010.4362@racer.site>
+ <2AE2E502-7942-449E-B847-75876A5DAF37@silverinsanity.com>
+Mime-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-1498005555-1194805865=:4362"
+Cc: Bj?rn Steinbrink <B.Steinbrink@gmx.de>, aroben@apple.com,
+	git@vger.kernel.org
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 19:31:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrHPk-00021b-5a
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 19:20:08 +0100
+	id 1IrHaz-0005Ry-My
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 19:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751457AbXKKSTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 13:19:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbXKKSTs
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 13:19:48 -0500
-Received: from mailer.zib.de ([130.73.108.11]:46060 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750941AbXKKSTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 13:19:47 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABII6v2012460;
-	Sun, 11 Nov 2007 19:19:43 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db82006.pool.einsundeins.de [77.184.32.6])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABII5YE029623
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 11 Nov 2007 19:18:05 +0100 (MET)
-In-Reply-To: <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
-X-Mailer: Apple Mail (2.752.3)
+	id S1754682AbXKKSb2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 13:31:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754177AbXKKSb2
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 13:31:28 -0500
+Received: from mail.gmx.net ([213.165.64.20]:57631 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754045AbXKKSb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 13:31:28 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 18:31:25 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp049) with SMTP; 11 Nov 2007 19:31:25 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/YyqVOQJ7YeiNbz+bMw0SNcxO2aC6bW10RejpO+K
+	s05U9xxj0MBFIt
+X-X-Sender: gene099@racer.site
+In-Reply-To: <2AE2E502-7942-449E-B847-75876A5DAF37@silverinsanity.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64492>
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Nov 11, 2007, at 7:02 PM, Jon Smirl wrote:
+--8323584-1498005555-1194805865=:4362
+Content-Type: TEXT/PLAIN; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 
-> Is the remote config not correct?
+Hi Brian, hi Björn,
 
-This is the configuration for remote "dreamhost". In your
-previous mail you also mentioned a remote "linus". But
-this seems to be unrelated to your question.
+On Sun, 11 Nov 2007, Brian Gernhardt wrote:
 
+> On Nov 11, 2007, at 12:44 PM, Johannes Schindelin wrote:
+> 
+> > Probably git-commit executes your installed write-tree, commit-tree 
+> > and friends, instead of the compiled ones.
+> 
+> You are wrong there.  From exec_cmd.c:setup_path() (lines 51-54):
+> 
+>    add_path(&new_path, argv_exec_path);
+>    add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
+>    add_path(&new_path, builtin_exec_path);
+>    add_path(&new_path, cmd_path);
 
-> [remote "dreamhost"]
->         url = ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
->         fetch = +refs/heads/*:refs/remotes/dreamhost/*
+Ah, I forgot that --exec-path=<path> did not override GIT_EXEC_PATH.  
+Thanks for clarifying!  Your patch is obviously good, then.
 
-correct. This fetches the branches from the remote and stores
-them locally as remote tracking branches "dreamhost/<branch>".
+Ciao,
+Dscho
 
->         push = +refs/heads/*:refs/remotes/linus/*
-
-This "renames" your branches when you push. Your local branches
-get pushed to "dreamhost" and are stored there as remote branches
-"linus/<branch>". From your previous mail I assume you like to store
-them as normal branches. You'd need to say
-
-	push = +refs/heads/*:refs/heads/*
-
-But most likely you don't want to force here, that is drop '+'.
-And you don't need to explicitly say that you want to store a branch
-under the same name. So, probably you want
-
-	push = refs/heads/*
-
-But maybe you could even drop the push line completely. Then, only
-existing branches would be pushed and if you want to create a new
-remote branch on "dreamhost" you'd need to explicitly tell git with
-
-	git push dreamhost <new-branch>
-
-Does this help?
-	
-	Steffen
+--8323584-1498005555-1194805865=:4362--
