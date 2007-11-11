@@ -1,114 +1,111 @@
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 5/6] builtin-commit: resurrect behavior for multiple -m
-  options
-Date: Sun, 11 Nov 2007 20:42:48 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711112039130.4362@racer.site>
-References: <Pine.LNX.4.64.0711111730580.4362@racer.site>
- <Pine.LNX.4.64.0711111736310.4362@racer.site> <20071111194228.GC13200@artemis.corp>
+Subject: Re: [PATCH] Use the best available exec path only
+Date: Sun, 11 Nov 2007 20:50:40 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711112047170.4362@racer.site>
+References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com>
+ <Pine.LNX.4.64.0711111557370.4362@racer.site>
+ <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com>
+ <7v3avcefg9.fsf@gitster.siamese.dyndns.org> <20071111203318.GA32671@atjola.homenet>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
-To: Pierre Habouzit <madcoder@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 11 21:43:33 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <benji@silverinsanity.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 11 21:51:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrJeR-0000Zf-BI
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:43:27 +0100
+	id 1IrJlu-0002j1-12
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:51:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757508AbXKKUnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 15:43:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757360AbXKKUnF
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 15:43:05 -0500
-Received: from mail.gmx.net ([213.165.64.20]:46455 "HELO mail.gmx.net"
+	id S1754923AbXKKUuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 15:50:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754406AbXKKUuy
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 15:50:54 -0500
+Received: from mail.gmx.net ([213.165.64.20]:33277 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756042AbXKKUnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 15:43:02 -0500
-Received: (qmail invoked by alias); 11 Nov 2007 20:43:00 -0000
+	id S1754504AbXKKUux (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 15:50:53 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 20:50:52 -0000
 Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp056) with SMTP; 11 Nov 2007 21:43:00 +0100
+  by mail.gmx.net (mp012) with SMTP; 11 Nov 2007 21:50:52 +0100
 X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+PaHh6Q1CPINxkgIkzD6QUl9rqVbC91iIOJQXYVB
-	+Xf6LGNf1Y2oB6
+X-Provags-ID: V01U2FsdGVkX19jnIdU+z1jCI77Ii6kT01pqVrn7jIvv44pla10Ro
+	Q6nrdLJea6BHmD
 X-X-Sender: gene099@racer.site
-In-Reply-To: <20071111194228.GC13200@artemis.corp>
+In-Reply-To: <20071111203318.GA32671@atjola.homenet>
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64511>
 
 Hi,
 
-On Sun, 11 Nov 2007, Pierre Habouzit wrote:
+On Sun, 11 Nov 2007, Bj?rn Steinbrink wrote:
 
-> On Sun, Nov 11, 2007 at 05:36:39PM +0000, Johannes Schindelin wrote:
+> On 2007.11.11 11:43:02 -0800, Junio C Hamano wrote:
+> > Brian Gernhardt <benji@silverinsanity.com> writes:
 > > 
-> > When more than one -m option is given, the message does not replace
-> > the previous, but is appended.
+> > > I'm sorry, I should have been more clear.  I was referring to the 
+> > > GIT_EXEC_PATH build variable, not the environment variable.  The git 
+> > > wrapper always adds the path determined during build to the front of 
+> > > PATH.  When I was changing my build script, this got set to "/usr/ 
+> > > local/bin" (I usually use /usr/local/stow/git, instead).  Since I 
+> > > have a /usr/local/bin/vim, PATH for git-commit.sh during the test 
+> > > was:
+> > >
+> > > - my git build directory
+> > > - /usr/local/bin (containing a symlink vi -> vim)
+> > > - the t/trash directory, added by the test via `PATH=".:$PATH"`
+> > > (containing the test vi script)
+> > > - my normal path
 > > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> >  builtin-commit.c |   26 ++++++++++++++++++++------
-> >  1 files changed, 20 insertions(+), 6 deletions(-)
-> > 
-> > diff --git a/builtin-commit.c b/builtin-commit.c
-> > index 66d7e5e..069d180 100644
-> > --- a/builtin-commit.c
-> > +++ b/builtin-commit.c
-> > @@ -30,13 +30,27 @@ static char *use_message_buffer;
-> >  static const char commit_editmsg[] = "COMMIT_EDITMSG";
-> >  static struct lock_file lock_file;
-> >  
-> > -static char *logfile, *force_author, *message, *template_file;
-> > +static char *logfile, *force_author, *template_file;
-> >  static char *edit_message, *use_message;
-> >  static int all, edit_flag, also, interactive, only, amend, signoff;
-> >  static int quiet, verbose, untracked_files, no_verify;
-> >  
-> >  static int no_edit, initial_commit, in_merge;
-> >  const char *only_include_assumed;
-> > +struct strbuf message;
+> > Maybe that is what is broken.  t/test-lib.sh makes the environment 
+> > variable point at the build directory, and that should override the 
+> > path that is compiled in, shouldn't it?
 > 
->   Unless I'm mistaken `static` keywords are missign for`message` and
-> `only_include_assumed`.
-
-Oh yeah.  Will fix.
-
->   And you _have_ to initialize message with STRBUF_INIT (remember of the
-> slop).
-
-Not in this case, since I do not use message.buf as long as message.len == 
-0.  But I agree it would be cleaner to just use STRBUF_INIT.
-
-> > +static int opt_parse_m(const struct option *opt, const char *arg, int unset)
-> > +{
-> > +	struct strbuf *buf = opt->value;
-> > +	if (unset)
-> > +		strbuf_setlen(buf, 0);
-> > +	else {
-> > +		strbuf_addstr(buf, arg);
-> > +		strbuf_addch(buf, '\n');
-> > +		strbuf_addch(buf, '\n');
-> > +	}
-> > +	return 0;
-> > +}
+> Maybe you prefer this patch then? "make test" survived up to 9101/25, 
+> but that fails with the current master anyway and I didn't bother to run 
+> the remaining tests manually, so it seems to be fine. Might break some 
+> weird setups that rely on being able to set multiple additional paths 
+> though (not that I think that that is a good idea to begin with).
 > 
->   I believe such a callback could live in parse-options.[hc]. The need
-> to aggregate all string arguments into a strbuf looks generic enough to
-> me. Why are you adding two '\n' btw ? Isn't one enough ?
+> Bj?rn
+> ---
+> Instead of adding all possible exec paths to PATH, only add the best
+> one, following the same rules that --exec-path, without arguments, uses
+> to figure out which path to display.
+> 
+> Signed-off-by: Bj?rn Steinbrink <B.Steinbrink@gmx.de>
+> ---
 
-Well, this empty line is needed to stay backwards compatible.  It was 
-added to pass the test that Junio added to 'next'.  As such, this function 
-is not really generic enough, right?
+For easy application by the maintainer, please make the commit message the 
+first part, then have a single "---", and then the quoted mail.
 
->   Oh and last nitpicking, strbuf_addstr(buf, "\n\n"); is more efficient
-> than the two addchar (the strlen it generates is inlined).
+> diff --git a/exec_cmd.c b/exec_cmd.c
+> index 2d0a758..9c376ad 100644
+> --- a/exec_cmd.c
+> +++ b/exec_cmd.c
+> @@ -48,9 +48,7 @@ void setup_path(const char *cmd_path)
+>  
+>  	strbuf_init(&new_path, 0);
+>  
+> -	add_path(&new_path, argv_exec_path);
+> -	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
+> -	add_path(&new_path, builtin_exec_path);
+> +	add_path(&new_path, git_exec_path());
+>  	add_path(&new_path, cmd_path);
 
-Well, I meant to mention it in the cover letter.  My preference is to do 
-away with the extra empty line.  But this might break existing setups 
-depending on that behaviour.
+I wonder why cmd_path is still there, then.  (I'd have expected something 
+like
+
+	add_path(&new_path, cmd_path ? cmd_path : git_exec_path());
+
+In related news, IMO cmd_path should be made absolute if it is not already 
+the case.
 
 Ciao,
 Dscho
