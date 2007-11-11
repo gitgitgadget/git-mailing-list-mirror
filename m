@@ -1,61 +1,70 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 1/6] push: mention --verbose option in documentation
-Date: Sun, 11 Nov 2007 15:14:42 +0100
-Message-ID: <FAB11CE3-B834-45A9-9D29-A37C302A9E1D@zib.de>
-References: <1194789708646-git-send-email-prohaska@zib.de> <11947897083381-git-send-email-prohaska@zib.de> <51B9B630-85F7-42BA-BCFF-4374A2527733@zib.de>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 3/6] push: support pushing HEAD to real branch name
+Date: Sun, 11 Nov 2007 15:17:03 +0100
+Message-ID: <47370EDF.3090907@op5.se>
+References: <1194789708646-git-send-email-prohaska@zib.de> <11947897083381-git-send-email-prohaska@zib.de> <11947897081278-git-send-email-prohaska@zib.de> <11947897083159-git-send-email-prohaska@zib.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 15:13:46 2007
+Cc: git@vger.kernel.org, Steffen Prohaska <gitster@pobox.com>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Nov 11 15:17:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrDZJ-00061K-DR
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:13:45 +0100
+	id 1IrDcq-0006w4-W5
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:17:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752923AbXKKONb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 09:13:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752918AbXKKONb
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:13:31 -0500
-Received: from mailer.zib.de ([130.73.108.11]:58895 "EHLO mailer.zib.de"
+	id S1752921AbXKKORI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 09:17:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753296AbXKKORH
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:17:07 -0500
+Received: from mail.op5.se ([193.201.96.20]:47031 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751929AbXKKONa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 09:13:30 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABEDQP8022867;
-	Sun, 11 Nov 2007 15:13:26 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db11614.pool.einsundeins.de [77.177.22.20])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABEDOEw001580
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Sun, 11 Nov 2007 15:13:25 +0100 (MET)
-In-Reply-To: <51B9B630-85F7-42BA-BCFF-4374A2527733@zib.de>
-X-Mailer: Apple Mail (2.752.3)
+	id S1752921AbXKKORG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 09:17:06 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 2CBAB1F08748;
+	Sun, 11 Nov 2007 15:17:05 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RdJwTPFb4UtR; Sun, 11 Nov 2007 15:17:04 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 5C5551F08746;
+	Sun, 11 Nov 2007 15:17:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <11947897083159-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64465>
 
+Steffen Prohaska wrote:
+> diff --git a/builtin-push.c b/builtin-push.c
+> index 6d1da07..a99ba0c 100644
+> --- a/builtin-push.c
+> +++ b/builtin-push.c
+> @@ -44,6 +44,15 @@ static void set_refspecs(const char **refs, int nr)
+>  			strcat(tag, refs[i]);
+>  			ref = tag;
+>  		}
+> +		if (!strcmp("HEAD", ref)) {
+> +			unsigned char sha1_dummy[20];
+> +			ref = resolve_ref(ref, sha1_dummy, 1, NULL);
+> +			if (!ref)
+> +				die("HEAD cannot be resolved.");
+> +			if (strncmp(ref, "refs/heads/", 11))
 
-On Nov 11, 2007, at 3:10 PM, Steffen Prohaska wrote:
+Why not prefixcmp(ref, "refs/heads/")?
 
->
-> On Nov 11, 2007, at 3:01 PM, Steffen Prohaska wrote:
->
->> From: Steffen Prohaska <gitster@pobox.com>
->
-> This is obviously wrong. I have no clear idea how this happend.
-> I remember I took the topic branch sp/push-refspec from pu and
-> started to refactor. I used 'rebase' and 'rebase -i' a couple
-> of times and now I have my name with Junios email address.
->
-> I'll investigate how this could happen.
-
-The Author line was already wrong in Junio's pu branch, commit
-f31447f5f06200305393ca16e2eb9485e65dcccc,  and I carried this
-over without noticing.
-
-	Steffen
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
