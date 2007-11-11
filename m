@@ -1,137 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] Make GIT_INDEX_FILE apply to git-commit
-Date: Sun, 11 Nov 2007 11:59:40 -0800
-Message-ID: <7vlk94d043.fsf@gitster.siamese.dyndns.org>
-References: <87r6ixj7af.dlv@vanicat.homelinux.org>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] Use the best available exec path only
+Date: Sun, 11 Nov 2007 21:33:18 +0100
+Message-ID: <20071111203318.GA32671@atjola.homenet>
+References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com> <Pine.LNX.4.64.0711111557370.4362@racer.site> <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com> <7v3avcefg9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?R=C3=A9mi?= Vanicat <vanicat@debian.org>
-X-From: git-owner@vger.kernel.org Sun Nov 11 21:00:20 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 21:33:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrIyh-0005nJ-E6
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:00:19 +0100
+	id 1IrJUw-0006S5-Ft
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:33:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757239AbXKKT7s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 14:59:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756987AbXKKT7s
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:59:48 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:43370 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757210AbXKKT7q convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 14:59:46 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 507092F2;
-	Sun, 11 Nov 2007 15:00:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9F6AD946D3;
-	Sun, 11 Nov 2007 15:00:04 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757336AbXKKUdX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 15:33:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757273AbXKKUdX
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 15:33:23 -0500
+Received: from mail.gmx.net ([213.165.64.20]:47950 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756177AbXKKUdW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 15:33:22 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 20:33:20 -0000
+Received: from i577B84F1.versanet.de (EHLO localhost) [87.123.132.241]
+  by mail.gmx.net (mp034) with SMTP; 11 Nov 2007 21:33:20 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1+v09YlL8avAwsDe1Xeb1Od3WKct6SUe9oTzSjtal
+	l5XY2EiwweKIem
+Content-Disposition: inline
+In-Reply-To: <7v3avcefg9.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64508>
 
-R=C3=A9mi Vanicat <vanicat@debian.org> writes:
+On 2007.11.11 11:43:02 -0800, Junio C Hamano wrote:
+> Brian Gernhardt <benji@silverinsanity.com> writes:
+>=20
+> > I'm sorry, I should have been more clear.  I was referring to the
+> > GIT_EXEC_PATH build variable, not the environment variable.  The gi=
+t
+> > wrapper always adds the path determined during build to the front o=
+f
+> > PATH.  When I was changing my build script, this got set to "/usr/
+> > local/bin" (I usually use /usr/local/stow/git, instead).  Since I h=
+ave
+> > a /usr/local/bin/vim, PATH for git-commit.sh during the test was:
+> >
+> > - my git build directory
+> > - /usr/local/bin (containing a symlink vi -> vim)
+> > - the t/trash directory, added by the test via `PATH=3D".:$PATH"`
+> > (containing the test vi script)
+> > - my normal path
+>=20
+> Maybe that is what is broken.  t/test-lib.sh makes the
+> environment variable point at the build directory, and that
+> should override the path that is compiled in, shouldn't it?
 
-> @@ -26,7 +26,7 @@ refuse_partial () {
->  }
-> =20
->  TMP_INDEX=3D
-> -THIS_INDEX=3D"$GIT_DIR/index"
-> +THIS_INDEX=3D"${GIT_INDEX_FILE:-$GIT_DIR/index}"
->  NEXT_INDEX=3D"$GIT_DIR/next-index$$"
->  rm -f "$NEXT_INDEX"
->  save_index () {
+Maybe you prefer this patch then? "make test" survived up to 9101/25,
+but that fails with the current master anyway and I didn't bother to ru=
+n
+the remaining tests manually, so it seems to be fine. Might break some
+weird setups that rely on being able to set multiple additional paths
+though (not that I think that that is a good idea to begin with).
 
-This is just a "purist" question, but I wonder if we want to
-differentiate the case where GIT_INDEX_FILE is set to empty and
-GIT_INDEX_FILE is not set at all?
+Bj=F6rn
+---
+Instead of adding all possible exec paths to PATH, only add the best
+one, following the same rules that --exec-path, without arguments, uses
+to figure out which path to display.
 
-> diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-> index abbf54b..3e5abef 100755
-> --- a/t/t7500-commit.sh
-> +++ b/t/t7500-commit.sh
-> @@ -93,4 +93,17 @@ test_expect_success 'commit message from file shou=
-ld override template' '
->         commit_msg_is "standard input msg"
->  '
-> =20
-> +test_expect_success 'using GIT_INDEX_FILE' '
-> +
-> +       echo "some new content" >file &&
-> +       GIT_INDEX_FILE=3D.git/another_index git add file &&
-> +       GIT_INDEX_FILE=3D.git/another_index \
-> +               git commit -m "commit using another index" &&
-
-Tests that git-commit does not choke on committing the addion a
-new 'file'.
-
-> +       git reset HEAD &&
-> +       git diff HEAD -- file >current &&
-> +       touch empty-file &&
-> +       diff empty-file current
-
-Clobbers the index that the above GIT_INDEX_FILE trick should
-not have touched before making sure of that, which is bad, and
-then makes sure that the new file actually has the right
-contents.
-
-So, what I would suggest is:
-
- * Your "GIT_INDEX_FILE=3D... git-commit" test -- git-commit
-   should not fail;
-
- + Test that the path you modified in the above commit (in this
-   case, 'file') matches between index you used in the commit
-   and the resulting commit;
-
- * Test that the path you modified in the above commit matches
-   between the HEAD, the alternate index and the work tree (your
-   latter test).
-
- + Test that the original index the above wanted to preserve was
-   not clobbered by git-commit;
-
- + Test git-commit runs sensibly even when it is given a
-   nonexistent file as GIT_INDEX_FILE.
-
-Perhaps like this, instead of your patch to t/t7500:
-
-	test_expect_success 'using alternate GIT_INDEX_FILE (1)' '
-=09
-		cp .git/index saved-index &&
-		(
-			echo some new content >file &&
-		        GIT_INDEX_FILE=3D.git/another_index &&
-			export GIT_INDEX_FILE &&
-			git add file &&
-			git commit -m "commit using another index" &&
-			git diff-index --exit-code HEAD &&
-			git diff-files --exit-code
-		) &&
-		cmp .git/index saved-index >/dev/null
-=09
-	'
-=09
-	test_expect_success 'using alternate GIT_INDEX_FILE (2)' '
-=09
-		cp .git/index saved-index &&
-		(
-			rm -f .git/no-such-index &&
-			GIT_INDEX_FILE=3D.git/no-such-index &&
-			export GIT_INDEX_FILE &&
-			git commit -m "commit using nonexistent index" &&
-			test -z "$(git ls-files)" &&
-			test -z "$(git ls-tree HEAD)"
-=09
-		) &&
-		cmp .git/index saved-index >/dev/null
-=09
-	'
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+diff --git a/exec_cmd.c b/exec_cmd.c
+index 2d0a758..9c376ad 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -48,9 +48,7 @@ void setup_path(const char *cmd_path)
+=20
+ 	strbuf_init(&new_path, 0);
+=20
+-	add_path(&new_path, argv_exec_path);
+-	add_path(&new_path, getenv(EXEC_PATH_ENVIRONMENT));
+-	add_path(&new_path, builtin_exec_path);
++	add_path(&new_path, git_exec_path());
+ 	add_path(&new_path, cmd_path);
+=20
+ 	if (old_path)
