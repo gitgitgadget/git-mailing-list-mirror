@@ -1,120 +1,195 @@
 From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH 2/6] push: teach push to pass --verbose option to transport layer
-Date: Sun, 11 Nov 2007 15:01:44 +0100
-Message-ID: <11947897081278-git-send-email-prohaska@zib.de>
+Subject: [PATCH 6/6] refactor fetch's ref matching to use ref_abbrev_matches_full_with_rules()
+Date: Sun, 11 Nov 2007 15:01:48 +0100
+Message-ID: <11947897092576-git-send-email-prohaska@zib.de>
 References: <1194789708646-git-send-email-prohaska@zib.de>
  <11947897083381-git-send-email-prohaska@zib.de>
-Cc: Steffen Prohaska <gitster@pobox.com>,
-	Steffen Prohaska <prohaska@zib.de>
+ <11947897081278-git-send-email-prohaska@zib.de>
+ <11947897083159-git-send-email-prohaska@zib.de>
+ <11947897083265-git-send-email-prohaska@zib.de>
+ <1194789709671-git-send-email-prohaska@zib.de>
+Cc: Steffen Prohaska <prohaska@zib.de>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Sun Nov 11 15:05:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrDRf-0003eX-J6
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:05:52 +0100
+	id 1IrDRc-0003eX-Pz
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:05:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752593AbXKKOEz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 09:04:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbXKKOEy
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:04:54 -0500
-Received: from mailer.zib.de ([130.73.108.11]:57968 "EHLO mailer.zib.de"
+	id S1752108AbXKKOEs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 09:04:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752319AbXKKOEr
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:04:47 -0500
+Received: from mailer.zib.de ([130.73.108.11]:57954 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752218AbXKKOEr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 09:04:47 -0500
+	id S1751411AbXKKOEp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 09:04:45 -0500
 Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABE1nMW021596;
-	Sun, 11 Nov 2007 15:04:43 +0100 (CET)
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABE1nOI021601
+	for <git@vger.kernel.org>; Sun, 11 Nov 2007 15:04:43 +0100 (CET)
 Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABE1mlW027967;
-	Sun, 11 Nov 2007 15:01:48 +0100 (MET)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABE1mla027967;
+	Sun, 11 Nov 2007 15:01:49 +0100 (MET)
 X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <11947897083381-git-send-email-prohaska@zib.de>
+In-Reply-To: <1194789709671-git-send-email-prohaska@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64456>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64457>
 
-From: Steffen Prohaska <gitster@pobox.com>
+The old rules used by fetch were coded as a series of ifs.  The old
+rules are:
+1) match full refname if it starts with "refs/" or matches "HEAD"
+2) verify that full refname starts with "refs/"
+3) match abbreviated name in "refs/" if it starts with "heads/",
+    "tags/", or "remotes/".
+4) match abbreviated name in "refs/heads/"
 
-A --verbose option to push should also be passed to the
-transport layer, i.e. git-send-pack, git-http-push.
+This is replaced by the new rules
+a) match full refname
+b) match abbreviated name prefixed with "refs/"
+c) match abbreviated name prefixed with "refs/heads/"
 
-git push is modified to do so.
+The details of the new rules are different from the old rules.  We no
+longer verify that the full refname starts with "refs/".  The new rule
+(a) matches any full string.  The old rules (1) and (2) were stricter.
+Now, the caller is responsible for using sensible full refnames.  This
+should be the case for the current code.  The new rule (b) is less
+strict than old rule (3).  The new rule accepts abbreviated names that
+start with a non-standard prefix below "refs/".
+
+Despite this modifications the new rules should handle all cases as
+expected.  Two tests are added to verify that fetch does not resolve
+short tags or HEAD in remotes.
+
+We may even think about loosening the rules a bit more and unify them
+with the rev-parse rules.  This would be done by replacing
+ref_ref_fetch_rules with ref_ref_parse_rules.  Note, the two new test
+would break.
 
 Signed-off-by: Steffen Prohaska <prohaska@zib.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin-push.c |    2 ++
- transport.c    |    8 ++++++--
- transport.h    |    1 +
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ cache.h          |    1 +
+ refs.c           |    7 +++++++
+ remote.c         |   23 ++---------------------
+ t/t5510-fetch.sh |   25 +++++++++++++++++++++++++
+ 4 files changed, 35 insertions(+), 21 deletions(-)
 
-diff --git a/builtin-push.c b/builtin-push.c
-index 2c56195..6d1da07 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -115,6 +115,8 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		flags |= TRANSPORT_PUSH_FORCE;
- 	if (dry_run)
- 		flags |= TRANSPORT_PUSH_DRY_RUN;
-+	if (verbose)
-+		flags |= TRANSPORT_PUSH_VERBOSE;
- 	if (tags)
- 		add_refspec("refs/tags/*");
- 	if (all)
-diff --git a/transport.c b/transport.c
-index fa5cfbb..e8a2608 100644
---- a/transport.c
-+++ b/transport.c
-@@ -386,7 +386,7 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 	int argc;
- 	int err;
+diff --git a/cache.h b/cache.h
+index d36b91d..1313378 100644
+--- a/cache.h
++++ b/cache.h
+@@ -411,6 +411,7 @@ extern int dwim_log(const char *str, int len, unsigned char *sha1, char **ref);
  
--	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
-+	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
- 	argv[0] = "http-push";
- 	argc = 1;
- 	if (flags & TRANSPORT_PUSH_ALL)
-@@ -395,6 +395,8 @@ static int curl_transport_push(struct transport *transport, int refspec_nr, cons
- 		argv[argc++] = "--force";
- 	if (flags & TRANSPORT_PUSH_DRY_RUN)
- 		argv[argc++] = "--dry-run";
-+	if (flags & TRANSPORT_PUSH_VERBOSE)
-+		argv[argc++] = "--verbose";
- 	argv[argc++] = transport->url;
- 	while (refspec_nr--)
- 		argv[argc++] = *refspec++;
-@@ -655,7 +657,7 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 	int argc;
- 	int err;
+ extern int ref_abbrev_matches_full_with_rules(const char *abbrev_name, const char *full_name, const char **rules);
+ extern const char *ref_rev_parse_rules[];
++extern const char *ref_fetch_rules[];
  
--	argv = xmalloc((refspec_nr + 11) * sizeof(char *));
-+	argv = xmalloc((refspec_nr + 12) * sizeof(char *));
- 	argv[0] = "send-pack";
- 	argc = 1;
- 	if (flags & TRANSPORT_PUSH_ALL)
-@@ -664,6 +666,8 @@ static int git_transport_push(struct transport *transport, int refspec_nr, const
- 		argv[argc++] = "--force";
- 	if (flags & TRANSPORT_PUSH_DRY_RUN)
- 		argv[argc++] = "--dry-run";
-+	if (flags & TRANSPORT_PUSH_VERBOSE)
-+		argv[argc++] = "--verbose";
- 	if (data->receivepack) {
- 		char *rp = xmalloc(strlen(data->receivepack) + 16);
- 		sprintf(rp, "--receive-pack=%s", data->receivepack);
-diff --git a/transport.h b/transport.h
-index df12ea7..2f80ab4 100644
---- a/transport.h
-+++ b/transport.h
-@@ -30,6 +30,7 @@ struct transport {
- #define TRANSPORT_PUSH_ALL 1
- #define TRANSPORT_PUSH_FORCE 2
- #define TRANSPORT_PUSH_DRY_RUN 4
-+#define TRANSPORT_PUSH_VERBOSE 8
+ extern int create_symref(const char *ref, const char *refs_heads_master, const char *logmsg);
+ extern int validate_headref(const char *ref);
+diff --git a/refs.c b/refs.c
+index 4bb16e5..7db2146 100644
+--- a/refs.c
++++ b/refs.c
+@@ -665,6 +665,13 @@ const char *ref_rev_parse_rules[] = {
+ 	NULL
+ };
  
- /* Returns a transport suitable for the url */
- struct transport *transport_get(struct remote *, const char *);
++const char *ref_fetch_rules[] = {
++	"%.*s",
++	"refs/%.*s",
++	"refs/heads/%.*s",
++	NULL
++};
++
+ int ref_abbrev_matches_full_with_rules(const char *abbrev_name, const char *full_name, const char **rules)
+ {
+ 	const char **p;
+diff --git a/remote.c b/remote.c
+index 28d8eb7..2dfce70 100644
+--- a/remote.c
++++ b/remote.c
+@@ -417,25 +417,6 @@ int remote_has_url(struct remote *remote, const char *url)
+ 	return 0;
+ }
+ 
+-/*
+- * Returns true if, under the matching rules for fetching, name is the
+- * same as the given full name.
+- */
+-static int ref_matches_abbrev(const char *name, const char *full)
+-{
+-	if (!prefixcmp(name, "refs/") || !strcmp(name, "HEAD"))
+-		return !strcmp(name, full);
+-	if (prefixcmp(full, "refs/"))
+-		return 0;
+-	if (!prefixcmp(name, "heads/") ||
+-	    !prefixcmp(name, "tags/") ||
+-	    !prefixcmp(name, "remotes/"))
+-		return !strcmp(name, full + 5);
+-	if (prefixcmp(full + 5, "heads/"))
+-		return 0;
+-	return !strcmp(full + 11, name);
+-}
+-
+ int remote_find_tracking(struct remote *remote, struct refspec *refspec)
+ {
+ 	int find_src = refspec->src == NULL;
+@@ -804,7 +785,7 @@ int branch_merge_matches(struct branch *branch,
+ {
+ 	if (!branch || i < 0 || i >= branch->merge_nr)
+ 		return 0;
+-	return ref_matches_abbrev(branch->merge[i]->src, refname);
++	return ref_abbrev_matches_full_with_rules(branch->merge[i]->src, refname, ref_fetch_rules);
+ }
+ 
+ static struct ref *get_expanded_map(struct ref *remote_refs,
+@@ -843,7 +824,7 @@ static struct ref *find_ref_by_name_abbrev(struct ref *refs, const char *name)
+ {
+ 	struct ref *ref;
+ 	for (ref = refs; ref; ref = ref->next) {
+-		if (ref_matches_abbrev(name, ref->name))
++		if (ref_abbrev_matches_full_with_rules(name, ref->name, ref_fetch_rules))
+ 			return ref;
+ 	}
+ 	return NULL;
+diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+index aad863d..2025742 100755
+--- a/t/t5510-fetch.sh
++++ b/t/t5510-fetch.sh
+@@ -95,6 +95,31 @@ test_expect_success 'fetch following tags' '
+ 
+ '
+ 
++test_expect_failure 'fetch must not resolve short tag name' '
++
++	cd "$D" &&
++
++	mkdir five &&
++	cd five &&
++	git init &&
++
++	git fetch .. anno:five
++
++'
++
++test_expect_failure 'fetch must not resolve short remote name' '
++
++	cd "$D" &&
++	git-update-ref refs/remotes/six/HEAD HEAD
++
++	mkdir six &&
++	cd six &&
++	git init &&
++
++	git fetch .. six:six
++
++'
++
+ test_expect_success 'create bundle 1' '
+ 	cd "$D" &&
+ 	echo >file updated again by origin &&
 -- 
 1.5.3.5.578.g886d
