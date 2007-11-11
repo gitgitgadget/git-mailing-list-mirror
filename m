@@ -1,60 +1,56 @@
-From: "Yin Ping" <pkufranky@gmail.com>
-Subject: Dose git-fetch need --reference option like git-clone?
-Date: Sun, 11 Nov 2007 16:09:55 +0800
-Message-ID: <46dff0320711110009y713c7d38q7b1457c92daecef6@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] --pretty=format: on-demand format expansion
+Date: Sun, 11 Nov 2007 03:13:05 -0500
+Message-ID: <20071111081305.GA27798@sigill.intra.peff.net>
+References: <4733AEA6.1040802@lsrfire.ath.cx> <20071109045040.GC31760@sigill.intra.peff.net> <4734EA4E.8070405@lsrfire.ath.cx> <20071110004635.GA14992@sigill.intra.peff.net> <47359221.7090707@lsrfire.ath.cx> <20071110203435.GB20592@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 09:10:22 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sun Nov 11 09:13:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ir7ta-0000qE-V7
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 09:10:19 +0100
+	id 1Ir7we-0001GC-Vz
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 09:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994AbXKKIJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 03:09:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752131AbXKKIJ5
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 03:09:57 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:60017 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751707AbXKKIJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 03:09:56 -0500
-Received: by py-out-1112.google.com with SMTP id u77so569055pyb
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 00:09:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=zelJlZXRzYab4tNLYHGXrL6eNcTShtGzOa1y/VnV+0U=;
-        b=pgHirPVA5txVFbzyPeG3ZPIDrwJManHM7C4Vg5Wm9UAagL0N9DRRAedjr6WQTYSaXD2eJjVKrsEjMDlMFAxoIKn5UD/0JQ99mYAIkc8f6jOf07Id0WNySh886WxfCZ40wvxvRNIiSpN6n01tKp7rWgEv0ItXuwS4bWUCwXJoE68=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=HxAQknqkTm+TBh3qnM6UaGaUsyCzztl1H44ZqPnLxCqKrCE6mcC6qYiKpBlx4Sc4PYE7x4XUK+48nhu4N2FSYRvqQ995wyeiKZPLDbKXaaoS2O1SUgq8XVusGd5VYxmygWgp8YQ3WWxAIbZ9OUHlTySMoKCkClF1XI6RsghZEDM=
-Received: by 10.35.99.5 with SMTP id b5mr4463350pym.1194768595683;
-        Sun, 11 Nov 2007 00:09:55 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Sun, 11 Nov 2007 00:09:55 -0800 (PST)
+	id S1752753AbXKKINK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 03:13:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752745AbXKKINJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 03:13:09 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1106 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752441AbXKKINI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 03:13:08 -0500
+Received: (qmail 29974 invoked by uid 111); 11 Nov 2007 08:13:07 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 11 Nov 2007 03:13:07 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2007 03:13:05 -0500
 Content-Disposition: inline
+In-Reply-To: <20071110203435.GB20592@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64423>
 
-I want to track remote repsotory (say remoteA) on my local repository
-(say localB), so i do the following in directory localB
-$ git remote add remoteA git://remoteAUrl
-$ git fetch remoteA
-This will fetch all objects from git://remoteAUrl if localB and
-remoteA don't have common objects.
+On Sat, Nov 10, 2007 at 03:34:35PM -0500, Jeff King wrote:
 
-If I already have a cloned remoteA on local machine (say
-/path/to/remoteACloned), I want to do following to reduce the net
-traffic as git-clone:
-git fetch --reference /path/to/remoteACloned remotedA
+> Your solution leaves me partly disgusted at the hackishness, and partly
+> delighted at the cleverness. I think the way you have coded it is quite
+> clear, though, so I don't think anyone is likely to get confused reading
+> it. I haven't read through it carefully yet, but a tentative Ack from
+> me.
 
-Is this reasonable? Or is there already a resolution for this case?
+OK, I had a chance to read through your patches more carefully. Assuming
+that the strbuf offset technique is acceptable (and I think it is worth
+the increased speed and simplicity), they look great to me. So:
 
--- 
-Ping Yin
+Acked-by: Jeff King <peff@peff.net>
+
+-Peff
