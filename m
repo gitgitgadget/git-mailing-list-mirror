@@ -1,97 +1,109 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git-branch silently ignores --track on local branches
-Date: Sun, 11 Nov 2007 19:23:38 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711111919170.4362@racer.site>
-References: <20071110174557.GC1036@blorf.net> <7vfxzelz5b.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Local branch to remote branch translation
+Date: Sun, 11 Nov 2007 14:36:11 -0500
+Message-ID: <9e4733910711111136s20616468sd70b4bb19e7f3d0c@mail.gmail.com>
+References: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com>
+	 <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
+	 <A1B9CE91-15E0-4298-A606-68BB31541574@zib.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Wayne Davison <wayne@opencoder.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 20:24:29 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Steffen Prohaska" <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Sun Nov 11 20:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrIQ0-0003j8-8o
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 20:24:28 +0100
+	id 1IrIbc-0007bs-UT
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 20:36:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755873AbXKKTXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 14:23:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755874AbXKKTXx
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:23:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41992 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755873AbXKKTXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 14:23:52 -0500
-Received: (qmail invoked by alias); 11 Nov 2007 19:23:50 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp034) with SMTP; 11 Nov 2007 20:23:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+LN0Qi3emLA2PmaGPHQmOBjJ3amrrY2fYJ3NoFG+
-	NoVU6046d6menx
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vfxzelz5b.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1756162AbXKKTgN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 14:36:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755857AbXKKTgN
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:36:13 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:60489 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755846AbXKKTgM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 14:36:12 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1292131wah
+        for <git@vger.kernel.org>; Sun, 11 Nov 2007 11:36:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=5rdMpO4Ei5a8icQEFYaLAguC5YFQOBygLINngFq4OQ0=;
+        b=q5Dro1e0/6z66yK3AzMWk44uFbrCNv51jcQe93exRadsUGzv1dpU+GgcutMZiwgebTmEx2zvAVrz929fys/nspfvqVSnGkhZdvxqZkyIVw4/a6uXpc4THjDJnjYI/2Ou7Lk+JFxL5HNYxREB0qJmmJOnUToc6cWtaPrNXuZpdPE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=n1+MCegTaasRxsFbKKFj22S8zzghOhXHR0xmbTy63vQGMEIQox6y7Ulytn79HI9+yHzMbFmZkCC+XXyvUyb+D5pe4Kh+Qw1yX66BuM8r7PHbOOnWY0gRJCmUNm6BryCmAbYw9N0M5prxg9mUfiWnPQNwtREVk9s7U7x3xgA/UrE=
+Received: by 10.114.59.1 with SMTP id h1mr93085waa.1194809771920;
+        Sun, 11 Nov 2007 11:36:11 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Sun, 11 Nov 2007 11:36:11 -0800 (PST)
+In-Reply-To: <A1B9CE91-15E0-4298-A606-68BB31541574@zib.de>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64496>
 
-Hi,
+On 11/11/07, Steffen Prohaska <prohaska@zib.de> wrote:
+>
+> On Nov 11, 2007, at 7:02 PM, Jon Smirl wrote:
+>
+> > Is the remote config not correct?
+>
+> This is the configuration for remote "dreamhost". In your
+> previous mail you also mentioned a remote "linus". But
+> this seems to be unrelated to your question.
+>
+>
+> > [remote "dreamhost"]
+> >         url = ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
+> >         fetch = +refs/heads/*:refs/remotes/dreamhost/*
+>
+> correct. This fetches the branches from the remote and stores
+> them locally as remote tracking branches "dreamhost/<branch>".
+>
+> >         push = +refs/heads/*:refs/remotes/linus/*
+>
+> This "renames" your branches when you push. Your local branches
+> get pushed to "dreamhost" and are stored there as remote branches
+> "linus/<branch>". From your previous mail I assume you like to store
+> them as normal branches. You'd need to say
 
-On Sat, 10 Nov 2007, Junio C Hamano wrote:
+I did this part incorrectly. I was trying to push my local definition
+of the linus remote to the dreamhost repo so that when someone clones
+dreamhost linus would be defined in their repo.
 
-> Wayne Davison <wayne@opencoder.net> writes:
-> 
-> > ...  Is there
-> > a problem with local branches being supported when explicitly
-> > requested?
-> 
-> Maybe this one?
-> 
-> commit 6f084a56fcb3543d88d252bb49c1d2bbf2bd0cf3
-> Author: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Date:   Tue Jul 10 18:50:44 2007 +0100
-> 
->     branch --track: code cleanup and saner handling of local branches
->     
->     This patch cleans up some complicated code, and replaces it with a
->     cleaner version, using code from remote.[ch], which got extended a
->     little in the process.  This also enables us to fix two cases:
->     
->     The earlier "fix" to setup tracking only when the original ref started
->     with "refs/remotes" is wrong.  You are absolutely allowed to use a
->     separate layout for your tracking branches.  The correct fix, of course,
->     is to set up tracking information only when there is a matching
->     remote.<nick>.fetch line containing a colon.
->     
->     Another corner case was not handled properly.  If two remotes write to
->     the original ref, just warn the user and do not set up tracking.
->     
->     Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> 
-> As a local branch does not have to be "fetched", the restriction
-> on "remote.<nick>.fetch" is sort of pointless.
+jonsmirl@terra:~/mpc5200b$ git remote show linus
+* remote linus
+  URL: git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-IIRC it was you, Junio, who complained first that the local branches have 
-tracking set up.
+How do I push the definition of the linus remote repo?
 
-> Also why remote.<nick>.fetch needs a colon, I begin to wonder. You can 
-> be keep fetching and merging from the same branch of the same remote 
-> without keeping a remote tracking branch for that, but the above 
-> "correct fix" forbids that.
 
-The point here was to find out what to track when we do a "git branch 
---track <name> <origname>".  So we definitely only want to find those 
-remotes that fetch to a certain tracking branch.
+>
+>         push = +refs/heads/*:refs/heads/*
+>
+> But most likely you don't want to force here, that is drop '+'.
+> And you don't need to explicitly say that you want to store a branch
+> under the same name. So, probably you want
+>
+>         push = refs/heads/*
+>
+> But maybe you could even drop the push line completely. Then, only
+> existing branches would be pushed and if you want to create a new
+> remote branch on "dreamhost" you'd need to explicitly tell git with
+>
+>         git push dreamhost <new-branch>
+>
+> Does this help?
+>
+>         Steffen
+>
 
-Sure, you can set up branch.<x>.merge to a branch that is not tracked.  
-But git cannot find out which one it is in the command "branch".
 
-> Dscho, what were we smoking when we made this change?
-
-Dude, I, uh, I think I, uh, don't remember.  Peace.
-
-Ciao,
-Dscho
+-- 
+Jon Smirl
+jonsmirl@gmail.com
