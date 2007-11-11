@@ -1,199 +1,85 @@
-From: Dan Zwell <dzwell@zwell.net>
-Subject: [PATCH 1/3] Added basic color support to git add --interactive
-Date: Sat, 10 Nov 2007 18:01:52 -0600
-Message-ID: <20071110180152.78483719@paradox.zwell.net>
-References: <47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
-	<7v640ivagv.fsf@gitster.siamese.dyndns.org>
-	<20071104054305.GA13929@sigill.intra.peff.net>
+From: "Shawn O. Pearce" <spearce@spearce.org>
+Subject: Re: git-gui messes up the diff view on non ASCII characters
+Date: Sun, 11 Nov 2007 00:59:59 -0500
+Message-ID: <20071111055959.GW14735@spearce.org>
+References: <20071109154935.GC28800@xp.machine.xx> <200711092230.37905.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 06:59:07 2007
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Peter Baumann <waste.manager@gmx.de>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 07:00:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ir5qc-0006YN-4m
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 06:59:06 +0100
+	id 1Ir5rp-0006jA-L6
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 07:00:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751315AbXKKF6t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 00:58:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751405AbXKKF6t
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 00:58:49 -0500
-Received: from gateway03.websitewelcome.com ([69.93.223.26]:38567 "EHLO
-	gateway03.websitewelcome.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750864AbXKKF6s (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 00:58:48 -0500
-Received: (qmail 19380 invoked from network); 11 Nov 2007 00:02:58 -0000
-Received: from gator290.hostgator.com (74.53.26.226)
-  by gateway03.websitewelcome.com with ESMTPS (DHE-RSA-AES256-SHA encrypted); 11 Nov 2007 00:02:58 -0000
-Received: from [143.44.70.185] (port=35687 helo=paradox.zwell.net)
-	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.66)
-	(envelope-from <dzwell@zwell.net>)
-	id 1Ir0I4-0004Kk-TE; Sat, 10 Nov 2007 18:03:06 -0600
-In-Reply-To: <20071104054305.GA13929@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.0.2 (GTK+ 2.10.14; x86_64-pc-linux-gnu)
+	id S1751647AbXKKGAG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 01:00:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751693AbXKKGAG
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 01:00:06 -0500
+Received: from corvette.plexpod.net ([64.38.20.226]:39306 "EHLO
+	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751642AbXKKGAF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 01:00:05 -0500
+Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
+	by corvette.plexpod.net with esmtpa (Exim 4.68)
+	(envelope-from <spearce@spearce.org>)
+	id 1Ir5rW-0006b5-EH; Sun, 11 Nov 2007 01:00:02 -0500
+Received: by asimov.home.spearce.org (Postfix, from userid 1000)
+	id 8BA2820FBAE; Sun, 11 Nov 2007 00:59:59 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <200711092230.37905.barra_cuda@katamail.com>
+User-Agent: Mutt/1.5.11
 X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator290.hostgator.com
+X-AntiAbuse: Primary Hostname - corvette.plexpod.net
 X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - zwell.net
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64407>
 
-Added function "colored()" that prints text with a color that
-is passed in. Converted many calls to "print" to being calls to
-"print colored".
+Michele Ballabio <barra_cuda@katamail.com> wrote:
+> On Friday 09 November 2007, Peter Baumann wrote:
+> > I'm managing some UTF-8 encoded LaTeX files in git, which include s=
+ome
+> > non ASCII characters like the german =C3=A4,=C3=B6 and =C3=BC. If I=
+ view the diff with
+> > git-diff on an UTF8 enabled terminal, all looks nice. So does the d=
+iff
+> > view in gitk after I commited my changes. Only git-gui shows some
+> > "strange" characters, so I assume it is an encoding problem.
+> >=20
+> > I have to admit that I'm totally unaware how this should work, but =
+at
+> > least I think my configuration is correct here, because otherwise g=
+it-diff
+> > or gitk would show the same behaviour. Is there anything which coul=
+d be
+> > done to make git-gui happy, too?
+>=20
+> It's a known issue, and already on Shawn's ToDo list. I have to add t=
+hat
+> viewing untracked UTF8 files in git-gui works just fine. Weird.
 
-The prompt, the header, and the help output are the 3 types of
-colorized output, and each has its own color.
+Cute.  That's because in the untracked case we open the file and
+let the platform's chosen encoding be used to convert it into the
+text viewer.  In the tracked diff case we force the encoding to
+be in binary.
 
-Colorization is done through Term::ANSIColor, which is included
-with modern versions of perl. This is optional, and should not
-need to be present if color.interactive is not turned on.
+Now gitk works because it assumes the diff is in the same character
+encoding as the commit message itself.  Since commit messages are
+typically in UTF-8 (as that is the Git default encoding) then a
+UTF-8 encoded file shows correctly in gitk.
 
-Signed-off-by: Dan Zwell <dzwell@zwell.net>
----
- Documentation/config.txt  |    6 ++++++
- git-add--interactive.perl |   44
-++++++++++++++++++++++++++++++++++++++------ 2 files changed, 44
-insertions(+), 6 deletions(-)
+What's the right behavior here?  Just assume the platform encoding
+is correct for the file we are showing and show it?  Assume the
+commit encoding configured in i18n.commitencoding is the correct
+one for the file content?  Something else?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8d5d200..3712d6a 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -382,6 +382,12 @@ color.diff.<slot>::
- 	whitespace).  The values of these variables may be specified as
- 	in color.branch.<slot>.
- 
-+color.interactive::
-+	When true (or `always`), always use colors in `git add
-+	--interactive`.  When false (or `never`), never.  When set to
-+	`auto`, use colors only when the output is to the
-+	terminal. Defaults to false.
-+
- color.pager::
- 	A boolean to enable/disable colored output when the pager is in
- 	use (default is true).
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index ac598f8..f2b0e56 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -2,6 +2,38 @@
- 
- use strict;
- 
-+my ($use_color, $prompt_color, $header_color, $help_color,
-$normal_color); +my $color_config = qx(git config --get
-color.interactive); +if ($color_config=~/true|always/ || -t STDOUT &&
-$color_config=~/auto/) {
-+	eval { require Term::ANSIColor; };
-+	if (!$@) {
-+		$use_color = 1;
-+
-+		# Sane (visible) defaults:
-+		$prompt_color = Term::ANSIColor::color("blue bold");
-+		$header_color = Term::ANSIColor::color("bold");
-+		$help_color   = Term::ANSIColor::color("red bold");
-+		$normal_color = Term::ANSIColor::color("reset");
-+	}
-+}
-+
-+sub colored {
-+	my $color = shift;
-+	my $string = join("", @_);
-+
-+	if ($use_color) {
-+		# Put a color code at the beginning of each line, a
-reset at the end
-+		# color after newlines that are not at the end of the
-string
-+		$string =~ s/(\n+)(.)/$1$color$2/g;
-+		# reset before newlines
-+		$string =~ s/(\n+)/$normal_color$1/g;
-+		# codes at beginning and end (if necessary):
-+		$string =~ s/^/$color/;
-+		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
-+	}
-+	return $string;
-+}
-+
- sub run_cmd_pipe {
- 	if ($^O eq 'MSWin32') {
- 		my @invalid = grep {m/[":*]/} @_;
-@@ -175,7 +207,7 @@ sub list_and_choose {
- 			if (!$opts->{LIST_FLAT}) {
- 				print "     ";
- 			}
--			print "$opts->{HEADER}\n";
-+			print colored $header_color,
-"$opts->{HEADER}\n"; }
- 		for ($i = 0; $i < @stuff; $i++) {
- 			my $chosen = $chosen[$i] ? '*' : ' ';
-@@ -205,7 +237,7 @@ sub list_and_choose {
- 
- 		return if ($opts->{LIST_ONLY});
- 
--		print $opts->{PROMPT};
-+		print colored $prompt_color, $opts->{PROMPT};
- 		if ($opts->{SINGLETON}) {
- 			print "> ";
- 		}
-@@ -544,7 +576,7 @@ sub coalesce_overlapping_hunks {
- }
- 
- sub help_patch_cmd {
--	print <<\EOF ;
-+	print colored $help_color, <<\EOF ;
- y - stage this hunk
- n - do not stage this hunk
- a - stage this and all the remaining hunks
-@@ -619,7 +651,7 @@ sub patch_update_cmd {
- 		for (@{$hunk[$ix]{TEXT}}) {
- 			print;
- 		}
--		print "Stage this hunk [y/n/a/d$other/?]? ";
-+		print colored $prompt_color, "Stage this hunk
-[y/n/a/d$other/?]? "; my $line = <STDIN>;
- 		if ($line) {
- 			if ($line =~ /^y/i) {
-@@ -673,7 +705,7 @@ sub patch_update_cmd {
- 			elsif ($other =~ /s/ && $line =~ /^s/) {
- 				my @split =
-split_hunk($hunk[$ix]{TEXT}); if (1 < @split) {
--					print "Split into ",
-+					print colored $header_color,
-"Split into ", scalar(@split), " hunks.\n";
- 				}
- 				splice(@hunk, $ix, 1,
-@@ -766,7 +798,7 @@ sub quit_cmd {
- }
- 
- sub help_cmd {
--	print <<\EOF ;
-+	print colored $help_color, <<\EOF ;
- status        - show paths with changes
- update        - add working tree state to the staged set of changes
- revert        - revert staged set of changes back to the HEAD version
--- 
-1.5.3.5.565.gf0b83-dirty
+--=20
+Shawn.
