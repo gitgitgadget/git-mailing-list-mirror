@@ -1,21 +1,10 @@
-From: Dan Zwell <dzwell@zwell.net>
-Subject: [PATCH 0/3] Adding colors to git-add--interactive
-Date: Sat, 10 Nov 2007 20:21:55 -0600
-Message-ID: <20071110202155.0cc3c401@paradox.zwell.net>
-References: <47112491.8070309@gmail.com>
-	<20071015034338.GA4844@coredump.intra.peff.net>
-	<20071016194709.3c1cb3a8@danzwell.com>
-	<20071017015152.GN13801@spearce.org>
-	<20071022164048.71a3dceb@danzwell.com>
-	<20071023042702.GB28312@coredump.intra.peff.net>
-	<20071023035221.66ea537f@danzwell.com>
-	<20071102224100.71665182@paradox.zwell.net>
-	<20071104045735.GA12359@segfault.peff.net>
-	<7v640ivagv.fsf@gitster.siamese.dyndns.org>
-	<20071104054305.GA13929@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/3] Adding colors to git-add--interactive
+Date: Sun, 11 Nov 2007 02:54:47 -0500
+Message-ID: <20071111075446.GA26985@sigill.intra.peff.net>
+References: <20071016194709.3c1cb3a8@danzwell.com> <20071017015152.GN13801@spearce.org> <20071022164048.71a3dceb@danzwell.com> <20071023042702.GB28312@coredump.intra.peff.net> <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net> <20071104045735.GA12359@segfault.peff.net> <7v640ivagv.fsf@gitster.siamese.dyndns.org> <20071104054305.GA13929@sigill.intra.peff.net> <20071110180109.34febc3f@paradox.zwell.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Wincent Colaiuta <win@wincent.com>,
@@ -23,86 +12,164 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jonathan del Strother <maillist@steelskies.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Frank Lichtenheld <frank@lichtenheld.de>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 11 08:41:08 2007
+To: Dan Zwell <dzwell@zwell.net>
+X-From: git-owner@vger.kernel.org Sun Nov 11 08:55:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ir7RL-0004q3-6c
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 08:41:07 +0100
+	id 1Ir7ev-00070r-HR
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 08:55:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131AbXKKHku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 02:40:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751565AbXKKHku
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 02:40:50 -0500
-Received: from gateway03.websitewelcome.com ([67.18.34.22]:55173 "EHLO
-	gateway03.websitewelcome.com" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1750987AbXKKHkt (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 02:40:49 -0500
-X-Greylist: delayed 24185 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Nov 2007 02:40:49 EST
-Received: (qmail 24384 invoked from network); 11 Nov 2007 02:23:03 -0000
-Received: from gator290.hostgator.com (74.53.26.226)
-  by gateway03.websitewelcome.com with ESMTPS (DHE-RSA-AES256-SHA encrypted); 11 Nov 2007 02:23:03 -0000
-Received: from [143.44.70.185] (port=54660 helo=paradox.zwell.net)
-	by gator290.hostgator.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.66)
-	(envelope-from <dzwell@zwell.net>)
-	id 1Ir2Tf-0006W4-AT; Sat, 10 Nov 2007 20:23:13 -0600
-In-Reply-To: <20071104054305.GA13929@sigill.intra.peff.net>
-X-Mailer: Claws Mail 3.0.2 (GTK+ 2.10.14; x86_64-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - gator290.hostgator.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [0 0] / [47 12]
-X-AntiAbuse: Sender Address Domain - zwell.net
+	id S1751994AbXKKHyx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 02:54:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXKKHyw
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 02:54:52 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3679 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750987AbXKKHyw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 02:54:52 -0500
+Received: (qmail 29849 invoked by uid 111); 11 Nov 2007 07:54:50 -0000
+Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 11 Nov 2007 02:54:50 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 11 Nov 2007 02:54:48 -0500
+Content-Disposition: inline
+In-Reply-To: <20071110180109.34febc3f@paradox.zwell.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64421>
 
-[Note: I'm resending this because it looks like this e-mail didn't go
-out properly. Sorry for duplicates.]
+On Sat, Nov 10, 2007 at 06:01:09PM -0600, Dan Zwell wrote:
 
-A bit of a recap--this feature was
-requested by a user a few weeks ago, and I wrote a short patch that
-implemented partial coloring. The main criticisms of this patch were:
-- The name of the configuration key to turn on interactive coloring
-was not well chosen.
-- The color attribute synonyms "clear" and "reset" were used
-interchangeably, though "reset" is what the rest of git uses.
-- The colors were not user-settable.
+> A bit of a recap--this feature was requested by a user a few weeks
 
-When the above were fixed, the new patch garnered the following
-criticism:
-- The color names accepted in .gitconfig were perl color names (to be
-fed to Term::ANSIColor), and this was not consistent with the rest
-of git. For example, "red blue ul" would have to be written, "red
-on_blue underline".
+Thanks for the recap; there have been enough iterations of this series
+that at least I forgot what was going on. The patches look reasonable,
+but I have a few comments (hopefully you have enough "umph" for one more
+iteration). I'll just inline them here.
 
-Fixing this (the colors could not be converted by a regex, but had to
-be parsed) was very libraryish, and also a little confusing. I was
-given a suggestion or two about how to make it more readable. This
-parsing also needed to be added to Git.pm instead of
-git-add--interactive.perl.
+[patch 1/3]:
+> +my ($use_color, $prompt_color, $header_color, $help_color, $normal_color);
+> +my $color_config = qx(git config --get color.interactive);
 
-In the next iteration, all of the above were fixed, but as Jeff King
-pointed out, I was printing $color before the beginning of a string,
-and printing $clear at the end, which allowed ${COLOR}text\n${RESET},
-which looks bad on some terminals.
+Why call git config here manually, but Git::config later (I think the
+answer is "because we don't call Git::config until a later patch", but it
+is probably best to remain consistent).
 
-Last iteration, it was pointed out that print_colored must take a
-file handle to pave the way for pager support, and Junio Hamano and Jeff
-King both gave suggestions as to how, and Junio sent me few changes
-that allow printing colored diffs in addition to prompts. I ended up
-making changes so that the two color functions can be used with perl's
-print():
-print colored($color, "some text")
-print color_diff_hunk($hunk)
+> +sub colored {
+> +	my $color = shift;
+> +	my $string = join("", @_);
+> +
+> +	if ($use_color) {
+> +		# Put a color code at the beginning of each line, a reset at the end
+> +		# color after newlines that are not at the end of the string
+> +		$string =~ s/(\n+)(.)/$1$color$2/g;
+> +		# reset before newlines
+> +		$string =~ s/(\n+)/$normal_color$1/g;
+> +		# codes at beginning and end (if necessary):
+> +		$string =~ s/^/$color/;
+> +		$string =~ s/$/$normal_color/ unless $string =~ /\n$/;
+> +	}
+> +	return $string;
+> +}
 
-This way, file handles can be added directly to the print calls, when
-support for $PAGER is added.
+This also seems like a candidate for lib-ification in Git.pm, alongside
+color_to_ansi_code.
 
-Let me know if other things need correction.
+> -			print "$opts->{HEADER}\n";
+> +			print colored $header_color, "$opts->{HEADER}\n";
 
-Dan
+I don't know if we have a style policy on calling
+
+  user_defined_function $foo, $bar;
+
+rather than
+
+  user_defined_function($foo, $bar);
+
+In fact, I don't know that we have much perl style policy at all. But I
+tend to shy away from the former because then the syntax requires that
+"colored" is always defined before the calling spot.
+
+[patch 2/3]:
+> +		# Grab the 3 main colors in git color string format, with sane
+> +		# (visible) defaults:
+> +		my $repo = Git->repository();
+> +		$prompt_color = Git::color_to_ansi_code(
+> +			Git::config($repo, "color.interactive.prompt") || "bold blue");
+> +		$header_color = Git::color_to_ansi_code(
+> +			Git::config($repo, "color.interactive.header") || "bold");
+> +		$help_color = Git::color_to_ansi_code(
+> +			Git::config($repo, "color.interactive.help") || "red bold");
+> +		$normal_color = Git::color_to_ansi_code("normal");
+
+It is much more common (and proper OO, in the face of inheritance) to
+use
+
+   $repo->config("color.interactive.prompt")
+
+> +=item color_to_ansi_code ( COLOR )
+> +
+> +Converts a git-style color string, like "underline blue white" to
+> +an ANSI color code. The code is generated by Term::ANSIColor,
+> +after the string is parsed into the format that is accepted by
+> +that module. Used as follows:
+> +
+> +	print color_to_ansi_code("underline blue white");
+> +	print "some text";
+> +	print color_to_ansi_code("normal");
+
+Yay, documentation!  It would also be nice to have a test script that
+runs this through a few more complex git color specs.
+
+> +	my %attrib_mappings = (
+> +		"bold"    => "bold",
+> +		"ul"      => "underline",
+> +		"blink"   => "blink",
+> +		# not supported:
+> +		#"dim"     => "",
+
+Why not? I don't especially care about "dim" support, but if there is a
+good reason, then you should note it.
+
+> +	foreach $word (split /\s+/, $git_string) {
+> +		if ($word =~ /normal/) {
+> +			$fg_done = "true";
+> +		}
+
+Why a regex instead of 'eq'? Also, should this be case insensitive?
+
+> +		elsif ($word =~ /black|red|green|yellow/ ||
+> +			   $word =~ /blue|magenta|cyan|white/) {
+
+It looks like you are doing two regexes here just to meet whitespace
+guidelines. Look into the '/x' modifier to make your regex prettier (but
+again, consider 'eq').
+
+> +	return Term::ANSIColor::color(join(" ", @ansi_words)||"reset");
+
+Style: whitespace around ||
+
+[patch 3/3]:
+> +			# Not implemented:
+> +			#$whitespace_color = Git::color_to_ansi_code(
+> +				#Git::config($repo, "color.diff.whitespace") || "normal red");
+
+Personally I would have just excluded the parsing, since it isn't
+implemented, but I don't think it matters.
+
+> +sub colored_diff_hunk {
+
+Perhaps this should also go in Git.pm? Though right now I don't know
+which other perl scripts would actually want to colorize a diff, so I
+don't think it matters.
+
+> -	system(qw(git diff-index -p --cached HEAD --),
+> -	       map { $_->{VALUE} } @them);
+> +	system(qw(git diff -p --cached HEAD --), map { $_->{VALUE} } @them);
+
+Now this was a surprise after reading the commit message.
+
+-Peff
