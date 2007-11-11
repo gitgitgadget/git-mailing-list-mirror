@@ -1,75 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Use the best available exec path only
-Date: Sun, 11 Nov 2007 22:12:39 +0100
-Organization: At home
-Message-ID: <fh7r84$vj$1@ger.gmane.org>
-References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com> <Pine.LNX.4.64.0711111557370.4362@racer.site> <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com> <7v3avcefg9.fsf@gitster.siamese.dyndns.org> <20071111203318.GA32671@atjola.homenet> <Pine.LNX.4.64.0711112047170.4362@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Deprecate git-fetch-pack?
+Date: Sun, 11 Nov 2007 13:16:09 -0800
+Message-ID: <7vd4ugcwkm.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711101752490.29952@iabervon.org>
+	<7v4pftip42.fsf@gitster.siamese.dyndns.org>
+	<74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com>
+	<Pine.LNX.4.64.0711111103240.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 22:13:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Ask =?utf-8?Q?Bj=C3=B8rn?= Hansen <ask@develooper.com>,
+	Daniel Barkalow <barkalow@iabervon.org>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Sun Nov 11 22:16:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrK7A-0000Kd-3b
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 22:13:08 +0100
+	id 1IrKAS-0001Eu-Kt
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 22:16:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752645AbXKKVMv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 16:12:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752246AbXKKVMv
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 16:12:51 -0500
-Received: from main.gmane.org ([80.91.229.2]:57320 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752072AbXKKVMu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 16:12:50 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IrK6k-0002lN-TH
-	for git@vger.kernel.org; Sun, 11 Nov 2007 21:12:43 +0000
-Received: from abtr2.neoplus.adsl.tpnet.pl ([83.8.163.2])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 21:12:42 +0000
-Received: from jnareb by abtr2.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 21:12:42 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abtr2.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1753279AbXKKVQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 16:16:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752748AbXKKVQR
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 16:16:17 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:60721 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751961AbXKKVQQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 16:16:16 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 6A9B42F0;
+	Sun, 11 Nov 2007 16:16:37 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E09E294753;
+	Sun, 11 Nov 2007 16:16:32 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711111103240.4362@racer.site> (Johannes
+	Schindelin's message of "Sun, 11 Nov 2007 11:05:34 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64514>
 
-Johannes Schindelin wrote:
-> On Sun, 11 Nov 2007, Bj=F6rn Steinbrink wrote:
->>
->> ---
->> Instead of adding all possible exec paths to PATH, only add the best
->> one, following the same rules that --exec-path, without arguments, u=
-ses
->> to figure out which path to display.
->>=20
->> Signed-off-by: Bj?rn Steinbrink <B.Steinbrink@gmx.de>
->> ---
->=20
-> For easy application by the maintainer, please make the commit messag=
-e the=20
-> first part, then have a single "---", and then the quoted mail.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-There are two conventions, for slightly different cases:
+> Hi,
+>
+> On Sat, 10 Nov 2007, Ask Bj?rn Hansen wrote:
+>
+>> For new users the superfluous programs are a burden making it harder to 
+>> learn how everything works.
+>
+> This should be a non-issue.  We really should start deprecating 
+> "git-<command>" in favour of "git <command>" for real.
+>
+> New users should not even be told that this is correct usage.
+>
+> My reason?  We have plumbing, and we will always have plumbing, as 
+> commands.  A regular git user does not _want_ to see that.  Without said 
+> deprecation she _will_, however.
 
-1. Commit message, then diffstat / single "---", then comments,
-   then patch
+If you can write "git-commit" and "git commit" interchangeably
+while you cannot say "git-cat-file" and are forced to say "git
+cat-file", I suspect that would lead to a great confusion and
+unhappy users.
 
-2. Email (for example long discussion), then separator BUT NOT "---";
-   use for example "-- >8 --" (cut here scissors), then commit message,
-   then diffstat and patch, beginning with "---".
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+I wonder if making the distinction between plumbing and
+porcelain in the git(7) page even more cleaner would help.
