@@ -1,57 +1,82 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
+From: Steffen Prohaska <prohaska@zib.de>
 Subject: Re: Local branch to remote branch translation
-Date: Sun, 11 Nov 2007 13:02:00 -0500
-Message-ID: <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
-References: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Date: Sun, 11 Nov 2007 19:19:22 +0100
+Message-ID: <A1B9CE91-15E0-4298-A606-68BB31541574@zib.de>
+References: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com> <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 11 19:02:29 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 19:20:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrH8Y-00059z-W2
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 19:02:23 +0100
+	id 1IrHPk-00021b-5a
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 19:20:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756403AbXKKSCE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 13:02:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756374AbXKKSCD
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 13:02:03 -0500
-Received: from wa-out-1112.google.com ([209.85.146.183]:3689 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756313AbXKKSCB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 13:02:01 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1271351wah
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 10:02:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=HgcgXw5le7ATpV/wFl/YCFwR2d71HvYAx1/BEp+4KgU=;
-        b=lXKJtCACEdtai9L1od0Q8ItMZqn/fqqwAMapR26WXe1EnevT/+eJl9B15Wpbd6HGJE69hXfWnKMVjo6QBqZcOWSzKLogMx6wdnv9ZRIxrh8Xn3RbW1rHGWRHR6Ohi4yK+zST0GAu9ZcPiwS2/GklXHy30bWyJ/bnMP9VsYsuu7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=BldISocMw0MHotipTonuC2ystwr79pazLXVOJX/3H0XIqC87tUOJ1KlhqGGSRHkFCv7Ss7VvY6tbGtrvSDE3Du0AqUkpTo1vNSDYJjqN4xDh8HLjnDE+UOFUKfZNS9aHgtY4+faM8ROCf3U4jo5KBC598xtC6WQkCteRbHJDoYg=
-Received: by 10.114.144.1 with SMTP id r1mr1109673wad.1194804120591;
-        Sun, 11 Nov 2007 10:02:00 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Sun, 11 Nov 2007 10:02:00 -0800 (PST)
-In-Reply-To: <9e4733910711110954m3ed3f9adtf19ca15dff61f0@mail.gmail.com>
-Content-Disposition: inline
+	id S1751457AbXKKSTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 13:19:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbXKKSTs
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 13:19:48 -0500
+Received: from mailer.zib.de ([130.73.108.11]:46060 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750941AbXKKSTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 13:19:47 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABII6v2012460;
+	Sun, 11 Nov 2007 19:19:43 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db82006.pool.einsundeins.de [77.184.32.6])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABII5YE029623
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 11 Nov 2007 19:18:05 +0100 (MET)
+In-Reply-To: <9e4733910711111002x2f8cabf7yce263faf7b33bde1@mail.gmail.com>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64490>
-
-Is the remote config not correct?
-
-[remote "dreamhost"]
-        url = ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
-        fetch = +refs/heads/*:refs/remotes/dreamhost/*
-        push = +refs/heads/*:refs/remotes/linus/*
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64491>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+On Nov 11, 2007, at 7:02 PM, Jon Smirl wrote:
+
+> Is the remote config not correct?
+
+This is the configuration for remote "dreamhost". In your
+previous mail you also mentioned a remote "linus". But
+this seems to be unrelated to your question.
+
+
+> [remote "dreamhost"]
+>         url = ssh://jonsmirl1@git.digispeaker.com/~/mpc5200b.git
+>         fetch = +refs/heads/*:refs/remotes/dreamhost/*
+
+correct. This fetches the branches from the remote and stores
+them locally as remote tracking branches "dreamhost/<branch>".
+
+>         push = +refs/heads/*:refs/remotes/linus/*
+
+This "renames" your branches when you push. Your local branches
+get pushed to "dreamhost" and are stored there as remote branches
+"linus/<branch>". From your previous mail I assume you like to store
+them as normal branches. You'd need to say
+
+	push = +refs/heads/*:refs/heads/*
+
+But most likely you don't want to force here, that is drop '+'.
+And you don't need to explicitly say that you want to store a branch
+under the same name. So, probably you want
+
+	push = refs/heads/*
+
+But maybe you could even drop the push line completely. Then, only
+existing branches would be pushed and if you want to create a new
+remote branch on "dreamhost" you'd need to explicitly tell git with
+
+	git push dreamhost <new-branch>
+
+Does this help?
+	
+	Steffen
