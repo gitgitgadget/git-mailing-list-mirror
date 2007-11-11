@@ -1,38 +1,39 @@
 From: Michael Dressel <MichaelTiloDressel@t-online.de>
-Subject: (unknown)
-Date: Sun, 11 Nov 2007 14:08:48 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711111359590.9401@castor.milkiway.cos>
+Subject: Re: cogito remote branch
+Date: Sun, 11 Nov 2007 14:11:13 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711111409440.9401@castor.milkiway.cos>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 14:09:25 2007
+X-From: git-owner@vger.kernel.org Sun Nov 11 14:11:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrCZ0-0006eb-9H
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 14:09:22 +0100
+	id 1IrCb6-0007A8-7t
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 14:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751324AbXKKNJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 08:09:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751288AbXKKNJF
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 08:09:05 -0500
-Received: from mailout08.sul.t-online.de ([194.25.134.20]:58178 "EHLO
-	mailout08.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751306AbXKKNJE (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 08:09:04 -0500
+	id S1751124AbXKKNLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 08:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751071AbXKKNLR
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 08:11:17 -0500
+Received: from mailout01.sul.t-online.de ([194.25.134.80]:46302 "EHLO
+	mailout01.sul.t-online.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750764AbXKKNLQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 08:11:16 -0500
 Received: from fwd27.aul.t-online.de 
-	by mailout08.sul.t-online.com with smtp 
-	id 1IrCYe-0008Mf-02; Sun, 11 Nov 2007 14:09:00 +0100
-Received: from [192.168.2.100] (XNKKq8Z68hZ9J6pGhIJqMvJ8yx0ebD9WpMrzNvB-FV84rfckLGCAqKIHXBjuezpwHe@[84.163.241.124]) by fwd27.t-online.de
-	with esmtp id 1IrCYV-1QHFS40; Sun, 11 Nov 2007 14:08:51 +0100
+	by mailout01.sul.t-online.com with smtp 
+	id 1IrCao-0002QG-07; Sun, 11 Nov 2007 14:11:14 +0100
+Received: from [192.168.2.100] (bpIun-ZJwha+k8j1+JAJqXHyOI5ouyVRN+tf47GpSepeHWemXtfA8-MibQzaSjwZjx@[84.163.241.124]) by fwd27.t-online.de
+	with esmtp id 1IrCan-11y4OG0; Sun, 11 Nov 2007 14:11:13 +0100
 X-X-Sender: michael@castor.milkiway.cos
-X-ID: XNKKq8Z68hZ9J6pGhIJqMvJ8yx0ebD9WpMrzNvB-FV84rfckLGCAqKIHXBjuezpwHe
-X-TOI-MSGID: 422b9ed7-f46c-4b65-9213-bbf6bb1eb93c
+X-ID: bpIun-ZJwha+k8j1+JAJqXHyOI5ouyVRN+tf47GpSepeHWemXtfA8-MibQzaSjwZjx
+X-TOI-MSGID: 3e9b4531-1216-432c-b9f0-1b757745c4ec
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64454>
+
 
 
 >Michael Dressel wrote:
