@@ -1,78 +1,176 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: t7005 and vi in GIT_EXEC_PATH
-Date: Sun, 11 Nov 2007 16:28:39 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711111622350.4362@racer.site>
-References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com>
- <Pine.LNX.4.64.0711111557370.4362@racer.site>
- <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [PATCH 3/3] git-svn log: handle unreachable revisions like "svn log"
+Date: Sun, 11 Nov 2007 17:36:50 +0100
+Message-ID: <4A2CBEB1-F7B1-4DEC-9F72-506EBCDA2233@lrde.epita.fr>
+References: <189577.85054.qm@web52407.mail.re2.yahoo.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-27--404037667"
+Content-Transfer-Encoding: 7bit
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 17:29:20 2007
+To: ddkilzer@kilzer.net
+X-From: git-owner@vger.kernel.org Sun Nov 11 17:37:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrFgN-00026l-Q7
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 17:29:12 +0100
+	id 1IrFoJ-0004gs-6O
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 17:37:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752337AbXKKQ2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 11:28:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752358AbXKKQ2v
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 11:28:51 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59690 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752337AbXKKQ2u (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 11:28:50 -0500
-Received: (qmail invoked by alias); 11 Nov 2007 16:28:49 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp054) with SMTP; 11 Nov 2007 17:28:49 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/elVRrVD3eXR0/CYmB5ooFVsgSqz4C2ABQgSXGfy
-	RE/PfkqScRYNJx
-X-X-Sender: gene099@racer.site
-In-Reply-To: <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com>
-X-Y-GMX-Trusted: 0
+	id S1757208AbXKKQhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 11:37:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757202AbXKKQhF
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 11:37:05 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:45108 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757128AbXKKQhC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 11:37:02 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IrFnw-0005Ee-Me; Sun, 11 Nov 2007 17:37:00 +0100
+In-Reply-To: <189577.85054.qm@web52407.mail.re2.yahoo.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64473>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-27--404037667
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Sun, 11 Nov 2007, Brian Gernhardt wrote:
+On Nov 11, 2007, at 3:20 PM, David D. Kilzer wrote:
 
-> On Nov 11, 2007, at 10:58 AM, Johannes Schindelin wrote:
-> 
-> > > If vi is in GIT_EXEC_PATH, then t7005-editor.sh fails because the 
-> > > real vi is invoked instead of the test vi script.  This is because 
-> > > the git wrapper puts GIT_EXEC_PATH ahead of ".".  I see no easy 
-> > > solution to this problem, and thought I should bring it up with the 
-> > > list.
-> > 
-> > I don't understand.  GIT_EXEC_PATH should be set to the build 
-> > directory when you are running the tests.  Unless you copy vi _there_, 
-> > you should not have any problem.
-> 
-> I'm sorry, I should have been more clear.  I was referring to the 
-> GIT_EXEC_PATH build variable, not the environment variable.  The git 
-> wrapper always adds the path determined during build to the front of 
-> PATH.  When I was changing my build script, this got set to 
-> "/usr/local/bin" (I usually use /usr/local/stow/git, instead).  Since I 
-> have a /usr/local/bin/vim, PATH for git-commit.sh during the test was:
-> 
-> - my git build directory
-> - /usr/local/bin (containing a symlink vi -> vim)
-> - the t/trash directory, added by the test via `PATH=".:$PATH"` (containing
-> the test vi script)
-> - my normal path
-> 
-> The test appeared to hang when running it normally.  When I ran it with 
-> -v, I saw that vim was started.
+> Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
+>
+>> On Nov 11, 2007, at 7:10 AM, David D Kilzer wrote:
+>>
+>>>  sub find_rev_before {
+>>> -	my ($self, $rev, $eq_ok) = @_;
+>>> +	my ($self, $rev, $eq_ok, $min_rev) = @_;
+>>
+>> Could you please document this function?  I guess that you had to
+>> figure out what each argument was for, so please save the time of the
+>> contributors that will read this code after you :)
+>
+> What is the format for documenting functions in git Perl scripts?   
+> I haven't
+> see any "perlpod" use anywhere.  Do you just want comments before  
+> the function?
+>
+> This method returns the git commit hash and svn revision of the  
+> first svn
+> revision that exists on the current branch that is less than $rev (or
+> less-than-or-equal-to $rev if $eq_ok is true).
 
-The obvious solution would be to copy "vi" into the git build directory 
-for the test, or skip the test if that copy could not be performed.
+Personally, I don't care.  Maybe Eric has his own preference.  For  
+me, as long as the code is documented one way or another, that's fine  
+by me.  Under-documented code hinders new contributors, so I think  
+it's important to add documentation whenever possible.
 
-Ciao,
-Dscho
+> Please note that I don't have a full understanding of how  
+> find_rev_before()
+> works (other than it's computing an offset into a sparse? data file  
+> based on
+> the revision number) since I'm still new to git.
+>
+>>> +sub find_rev_after {
+>>> +	my ($self, $rev, $eq_ok, $max_rev) = @_;
+>>> +	++$rev unless $eq_ok;
+>>> +	$max_rev ||= $self->rev_db_max();
+>>> +	while ($rev <= $max_rev) {
+>>> +		if (my $c = $self->rev_db_get($rev)) {
+>>> +			return ($rev, $c);
+>>> +		}
+>>> +		++$rev;
+>>> +	}
+>>> +	return (undef, undef);
+>>> +}
+>>
+>> Too much code duplication.  It should be possible to write a sub
+>> find_rev_ (or _find_rev, don't know what's the naming convention for
+>> internal details) that takes a 5th argument, an anonymous sub that
+>> does the comparison.  So that basically, find_rev_before will be
+>> something along these (untested) lines:
+>>
+>> sub find_rev_before {
+>> 	my ($self, $rev, $eq_ok, $min_rev) = @_;
+>> 	return find_rev_($self, $rev, $eq_ok, $min_rev, sub { my ($a, $b) =
+>> @_; return $a >= $b; });
+>> }
+>
+> I think that combining find_rev_before() and find_rev_after() would  
+> greatly
+> sacrifice readability of the code in exchange for removing ~10  
+> lines of code.
+> Also, you must do more than just replace the comparison in the while 
+> () loop:
+>
+> - before() decrements $rev while after() increments it
+> - stop limits are different ($max_rev versus $min_rev)
+>
+> This is what such a method might look like (untested).  Since you  
+> already
+> requested find_rev_before() be documented, is this really going to  
+> help?
+>
+> sub find_rev_ {
+> 	my ($self, $rev, $eq_ok, $is_before, $limit_rev) = @_;
+> 	($is_before ? --$rev : ++$rev) unless $eq_ok;
+> 	$limit_rev ||= ($is_before ? 1 : $self->rev_db_max());
+> 	while ($is_before ? $rev >= $limit_rev : $rev <= $limit_rev) {
+> 		if (my $c = $self->rev_db_get($rev)) {
+> 			return ($rev, $c);
+> 		}
+> 			$is_before ? --$rev : ++$rev;
+> 	}
+> 	return (undef, undef);
+> }
+>
+> Defining wrapper functions would help, but I still think it's just  
+> as clear to
+> keep the two methods separate.
+>
+> sub find_rev_before() {
+> 	my ($self, $rev, $eq_ok, $min_rev) = @_;
+> 	return $self->find_rev_($rev, $eq_ok, 1, $min_rev);
+> }
+>
+> sub find_rev_after() {
+> 	my ($self, $rev, $eq_ok, $max_rev) = @_;
+> 	return $self->find_rev_($rev, $eq_ok, 0, $max_rev);
+> }
+>
+> Do you agree, or do you think the methods should still be combined?
+
+Er... you're right, I overlooked the differences between the two  
+functions.  So merging them would make the code more complex than it  
+needs to be, or so I think.
+
+Thanks!
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-27--404037667
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHNy+iwwE67wC8PUkRAiqZAJ9QyQKzC53aDFqJNJrqb+8pZoYP4wCeOdEQ
+wexMQbgb1/cyXUzsF2u9DsE=
+=gN9W
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-27--404037667--
