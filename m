@@ -1,65 +1,67 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Obscure commit message formatting issue
-Date: Sun, 11 Nov 2007 16:28:19 -0500 (EST)
-Message-ID: <Pine.LNX.4.64.0711111559220.29952@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t7005 and vi in GIT_EXEC_PATH
+Date: Sun, 11 Nov 2007 13:29:01 -0800
+Message-ID: <7v4pfscvz6.fsf@gitster.siamese.dyndns.org>
+References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com>
+	<Pine.LNX.4.64.0711111557370.4362@racer.site>
+	<FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com>
+	<7v3avcefg9.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Junio C Hamano <junkio@cox.net>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 22:28:37 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 22:29:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrKM8-0004MQ-0w
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 22:28:36 +0100
+	id 1IrKMw-0004ce-8S
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 22:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754270AbXKKV2V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 16:28:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753933AbXKKV2V
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 16:28:21 -0500
-Received: from iabervon.org ([66.92.72.58]:38003 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751483AbXKKV2U (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 16:28:20 -0500
-Received: (qmail 27078 invoked by uid 1000); 11 Nov 2007 21:28:19 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Nov 2007 21:28:19 -0000
+	id S1754406AbXKKV3L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 16:29:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754387AbXKKV3K
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 16:29:10 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:57430 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754406AbXKKV3J (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 16:29:09 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 9935D2FA;
+	Sun, 11 Nov 2007 16:29:30 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A5D8294749;
+	Sun, 11 Nov 2007 16:29:26 -0500 (EST)
+In-Reply-To: <7v3avcefg9.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 11 Nov 2007 11:43:02 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64519>
 
-The current code drops extra blank lines between the first line of a 
-commit message (the summary line) and the remainder. That is:
+Junio C Hamano <gitster@pobox.com> writes:
 
-This is the summary
+> Brian Gernhardt <benji@silverinsanity.com> writes:
+>
+>> I'm sorry, I should have been more clear.  I was referring to the
+>> GIT_EXEC_PATH build variable, not the environment variable.  The git
+>> wrapper always adds the path determined during build to the front of
+>> PATH.  When I was changing my build script, this got set to "/usr/
+>> local/bin" (I usually use /usr/local/stow/git, instead).  Since I have
+>> a /usr/local/bin/vim, PATH for git-commit.sh during the test was:
+>>
+>> - my git build directory
+>> - /usr/local/bin (containing a symlink vi -> vim)
+>> - the t/trash directory, added by the test via `PATH=".:$PATH"`
+>> (containing the test vi script)
+>> - my normal path
+>
+> Maybe that is what is broken.  t/test-lib.sh makes the
+> environment variable point at the build directory, and that
+> should override the path that is compiled in, shouldn't it?
 
-
-This is another bit
-
-
-This is a third bit
-
-turns into:
-
-Subject: This is the summary
-Other-Headers:
-
-This is another bit
-
-
-This is a third bit
-
-
-This is an issue if you want to generate an email whose body starts with a 
-blank line, and I assume (although I haven't tried), that rebase would 
-lose a blank line out of commits formatted like that. We don't seem to 
-have any tests that require that line to get suppressed, and we also don't 
-suppress any other blank lines. Is there some reason to do it?
-
-I'd guess that the "first" handling in pp_remainder() was intended to skip 
-the blank line between the summary line and the body, but that line has 
-already been consumed by other code.
-
-	-Daniel
-*This .sig left intentionally blank*
+Ah, nevermind.  I did not see the other messages in the thread.
