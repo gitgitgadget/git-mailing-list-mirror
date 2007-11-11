@@ -1,76 +1,88 @@
-From: Ivan Shmakov <ivan@theory.asu.ru>
-Subject: Re: tracking remotes with Git
-Date: 11 Nov 2007 10:05:13 +0600
-Message-ID: <m24pftmnpi.fsf@cherry.siamics.int>
-References: <b1e3a35f0711090444g3c31e862g4ef4ef8139927840@mail.gmail.com>
-	<200711092138.56277.robin.rosenberg.lists@dewire.com>
-Reply-To: Ivan Shmakov <oneingray@gmail.com>
+From: Nicolas Pitre <nico@cam.org>
+Subject: [PATCH] fix index-pack with packs >4GB containing deltas on 32-bit
+ machines
+Date: Sat, 10 Nov 2007 23:29:10 -0500 (EST)
+Message-ID: <alpine.LFD.0.9999.0711102319470.21255@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ivan Shmakov <oneingray@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 11 05:05:51 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 05:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ir44m-00075v-D3
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 05:05:48 +0100
+	id 1Ir4Rs-0002CM-2e
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 05:29:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662AbXKKEFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 10 Nov 2007 23:05:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751657AbXKKEFV
-	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 23:05:21 -0500
-Received: from mx.asu.ru ([82.179.20.33]:39284 "HELO ns.asu.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751564AbXKKEFU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 10 Nov 2007 23:05:20 -0500
-Received: (qmail 5579 invoked by uid 1002); 11 Nov 2007 04:05:15 -0000
-Received: from unknown (HELO th2.phys.asu.ru) (82.179.21.199)
-  by ns.asu.ru with SMTP; 11 Nov 2007 04:05:15 -0000
-Received: from localhost ([127.0.0.1] helo=cherry.siamics.int)
-	by th2.phys.asu.ru with esmtp (Exim 4.63)
-	(envelope-from <ivan@theory.asu.ru>)
-	id 1Ir44Q-0001BK-Ro; Sun, 11 Nov 2007 10:05:15 +0600
-In-Reply-To: <200711092138.56277.robin.rosenberg.lists@dewire.com>
-X-Date: 10 Nov 2007 10:07:08 +0600
-X-Message-ID: <m28x56n3pv.fsf@cherry.siamics.int>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751805AbXKKE3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 10 Nov 2007 23:29:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751824AbXKKE3M
+	(ORCPT <rfc822;git-outgoing>); Sat, 10 Nov 2007 23:29:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:13894 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751204AbXKKE3L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 10 Nov 2007 23:29:11 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JRB00HNTR4MEI91@VL-MH-MR002.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 10 Nov 2007 23:29:10 -0500 (EST)
+X-X-Sender: nico@xanadu.home
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64396>
 
->>>>> Robin Rosenberg <robin.rosenberg.lists@dewire.com> writes:
+This probably hasn't been properly tested before.  Here's a script to 
+create a 8GB repo with the necessary characteristics (copy the 
+test-genrandom executable from the Git build tree to /tmp first):
 
-[...]
+-----
+#!/bin/bash
 
- >> * it looks like `git-cvsimport' uses its own CVS protocol
- >> implementation which doesn't support compression; I've tried to
- >> clone a repository of a project hosted in CVS since circa 1998 and
- >> it 20 MiB or so to obtain revisions until 2000 or so; any ways to
- >> minimize traffic?
+git init
+git config core.compression 0
 
- > You can pass options to cvsps.  My guess is -P "-Z" will do it.
+# create big objects with no deltas
+for i in $(seq -w 1 2 63)
+do
+	echo $i
+	/tmp/test-genrandom $i 268435456 > file_$i
+	git add file_$i
+	rm file_$i
+	echo "file_$i -delta" >> .gitattributes
+done
 
-	Well, this helps somewhat.  But still, IIUC, cvsps(1) is used
-	only to reconstruct the ``patch sets'', and to fetch the actual
-	revisions, `git-cvsimport' contacts the CVS repository directly:
+# create "deltifiable" objects in between big objects
+for i in $(seq -w 2 2 64)
+do
+	echo "$i $i $i" >> grow
+	cp grow file_$i
+	git add file_$i
+	rm file_$i
+done
+rm grow
 
---cut: $ nl -ba git-cvsimport--
-...
-   182	package CVSconn;
-   183	# Basic CVS dialog.
-   184	# We're only interested in connecting and downloading, so ...
-   185	
-... not a word about the compression...
-   482	package main;
-   483	
-   484	my $cvs = CVSconn->new($opt_d, $cvs_tree);
-...
-   911			print "Fetching $fn   v $rev\n" if $opt_v;
-   912			my ($tmpname, $size) = $cvs->file($fn,$rev);
-...
-   930			unlink($tmpname);
-...
---cut: $ nl -ba git-cvsimport--
+# create a pack with them
+git commit -q -m "commit of big objects interlaced with small deltas"
+git repack -a -d
+-----
+
+Then clone this repo over the Git protocol.
+
+Signed-off-by: Nicolas Pitre <nico@cam.org>
+---
+diff --git a/index-pack.c b/index-pack.c
+index 469a330..9fd6982 100644
+--- a/index-pack.c
++++ b/index-pack.c
+@@ -256,7 +256,7 @@ static void *unpack_raw_entry(struct object_entry *obj, union delta_base *delta_
+ 
+ static void *get_data_from_pack(struct object_entry *obj)
+ {
+-	unsigned long from = obj[0].idx.offset + obj[0].hdr_size;
++	off_t from = obj[0].idx.offset + obj[0].hdr_size;
+ 	unsigned long len = obj[1].idx.offset - from;
+ 	unsigned long rdy = 0;
+ 	unsigned char *src, *data;
