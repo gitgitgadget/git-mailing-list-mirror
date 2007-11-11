@@ -1,87 +1,73 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH] Simplify strchrnul() compat code
-Date: Sun, 11 Nov 2007 13:35:47 +0100
-Message-ID: <4736F723.60904@op5.se>
-References: <4733AEA0.1060602@lsrfire.ath.cx> <473434ED.50002@op5.se>	<47359C44.6090903@lsrfire.ath.cx> <4735BA79.5020102@op5.se> <7v6409f4eh.fsf@gitster.siamese.dyndns.org>
+From: Remi Vanicat <vanicat@debian.org>
+Subject: git diff and file deleted from the cache
+Date: Sun, 11 Nov 2007 13:43:26 +0100
+Message-ID: <876409j6kx.dlv@vanicat.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15;
-	format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 13:36:17 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 11 13:43:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrC2p-0006si-Cc
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 13:36:07 +0100
+	id 1IrCAD-0000Dg-Pw
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 13:43:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063AbXKKMfw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 07:35:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753189AbXKKMfw
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 07:35:52 -0500
-Received: from mail.op5.se ([193.201.96.20]:48146 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752935AbXKKMfv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 07:35:51 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 059E61F0874B;
-	Sun, 11 Nov 2007 13:35:50 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 9bwechrgOcv8; Sun, 11 Nov 2007 13:35:49 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id B85C01F0874A;
-	Sun, 11 Nov 2007 13:35:48 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7v6409f4eh.fsf@gitster.siamese.dyndns.org>
+	id S1753189AbXKKMn3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 07:43:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753354AbXKKMn2
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 07:43:28 -0500
+Received: from sp604005mt.neufgp.fr ([84.96.92.11]:60732 "EHLO smtp.Neuf.fr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753063AbXKKMn2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 07:43:28 -0500
+Received: from vanicat.homelinux.org ([77.193.67.174])
+ by sp604005mt.gpm.neuf.ld
+ (Sun Java System Messaging Server 6.2-5.05 (built Feb 16 2006))
+ with ESMTP id <0JRC004D4E0E04N4@sp604005mt.gpm.neuf.ld> for
+ git@vger.kernel.org; Sun, 11 Nov 2007 13:43:26 +0100 (CET)
+Received: from moi by vanicat.homelinux.org with local (Exim 4.68)
+	(envelope-from <remi.vanicat@laposte.net>)
+	id 1IrC9u-0007QI-96	for git@vger.kernel.org; Sun, 11 Nov 2007 13:43:26 +0100
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: remi.vanicat@laposte.net
+X-SA-Exim-Scanned: No (on vanicat.homelinux.org); SAEximRunCond expanded to
+ false
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64451>
 
-Junio C Hamano wrote:
-> Andreas Ericsson <ae@op5.se> writes:
->=20
->> Ren=E9 Scharfe wrote:
->>>  -#ifdef NO_STRCHRNUL
->>> +#if !defined(__GLIBC__) && !__GLIBC_PREREQ(2, 1)
->> This will break things for users of glibc-2.1.1 (the first release s=
-till
->> available from ftp://sources.redhat.com/pub/glibc/old-releases that
->> includes the strchrnul() function), since __GLIBC_PREREQ() was inven=
-ted
->> after strchrnul() was introduced.
->>
->> Replacing __GLIBC__ with __GLIBC_PREREQ (as in the original patch) w=
-ill
->> solve it nicely. Users of glibc-2.1.1 will be the odd minority where
->> strchrnul() is available in their libc but not used.
->=20
-> Do you mean this on top of Ren=E9's patch?
+The manual of git-diff tell me that :
+  git-diff [--options] <commit> [--] [<path>...]
+      This form is to view the changes you have in your working tree
+      relative to the named <commit>. You can use HEAD to compare it wi=
+th
+      the latest commit, or a branch name to compare with the tip of a
+      different branch.
 
-Yes.
+So the following seem strange :
 
->  Although I do not
-> think I saw "the original patch" that did it this way,
+$ echo foo > bar
+$ git commit -m "committing bar" -a
+Created commit 074893b: committing bar
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 bar
+$ git rm --cached bar
+rm 'bar'
+$ git diff HEAD --
+diff --git a/bar b/bar
+deleted file mode 100644
+index 257cc56..0000000
+--- a/bar
++++ /dev/null
+@@ -1 +0,0 @@
+-foo
 
-My memory seems to be failing. I never committed my proposal to my repo=
-,
-and the one I sent out was the __GLIBC__ || !__GLIBC_PREREQ thing. My
-apologies.
+I excepted the diff to be empty, as HEAD and the working directory are
+synchronized, I've only modified the cache.
 
 --=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+R=C3=A9mi Vanicat
