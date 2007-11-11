@@ -1,66 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] status&commit: Teach them to show commits of modified submodules.
-Date: Sun, 11 Nov 2007 12:34:37 -0800
-Message-ID: <7vhcjscyhu.fsf@gitster.siamese.dyndns.org>
-References: <1194722863-14741-1-git-send-email-pkufranky@gmail.com>
-	<7vabpliz13.fsf@gitster.siamese.dyndns.org>
-	<46dff0320711102218h259199e3g2b4a4d3b73202cdb@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 5/6] builtin-commit: resurrect behavior for multiple -m
+  options
+Date: Sun, 11 Nov 2007 20:42:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711112039130.4362@racer.site>
+References: <Pine.LNX.4.64.0711111730580.4362@racer.site>
+ <Pine.LNX.4.64.0711111736310.4362@racer.site> <20071111194228.GC13200@artemis.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Yin Ping" <pkufranky@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 21:35:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Sun Nov 11 21:43:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrJWM-0006pS-He
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:35:06 +0100
+	id 1IrJeR-0000Zf-BI
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 21:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757104AbXKKUep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 15:34:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757267AbXKKUep
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 15:34:45 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:60542 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756998AbXKKUeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 15:34:44 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id F33252F0;
-	Sun, 11 Nov 2007 15:35:04 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 857F594717;
-	Sun, 11 Nov 2007 15:35:02 -0500 (EST)
-In-Reply-To: <46dff0320711102218h259199e3g2b4a4d3b73202cdb@mail.gmail.com>
-	(Yin Ping's message of "Sun, 11 Nov 2007 14:18:11 +0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757508AbXKKUnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 15:43:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757360AbXKKUnF
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 15:43:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:46455 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756042AbXKKUnC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 15:43:02 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 20:43:00 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp056) with SMTP; 11 Nov 2007 21:43:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+PaHh6Q1CPINxkgIkzD6QUl9rqVbC91iIOJQXYVB
+	+Xf6LGNf1Y2oB6
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071111194228.GC13200@artemis.corp>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64510>
 
-"Yin Ping" <pkufranky@gmail.com> writes:
+Hi,
 
-> I think it's this kind of case in most open-source project. However,
-> in a company environment, superprojects may be not so super.
+On Sun, 11 Nov 2007, Pierre Habouzit wrote:
 
-Let's not say "most open-source" nor "company", because I think
-nobody said anything that substantiates that the commit density
-characteristics I described is typical for most open-source, nor
-what you said is typical for corporate development projects, in
-this thread so far.
+> On Sun, Nov 11, 2007 at 05:36:39PM +0000, Johannes Schindelin wrote:
+> > 
+> > When more than one -m option is given, the message does not replace
+> > the previous, but is appended.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  builtin-commit.c |   26 ++++++++++++++++++++------
+> >  1 files changed, 20 insertions(+), 6 deletions(-)
+> > 
+> > diff --git a/builtin-commit.c b/builtin-commit.c
+> > index 66d7e5e..069d180 100644
+> > --- a/builtin-commit.c
+> > +++ b/builtin-commit.c
+> > @@ -30,13 +30,27 @@ static char *use_message_buffer;
+> >  static const char commit_editmsg[] = "COMMIT_EDITMSG";
+> >  static struct lock_file lock_file;
+> >  
+> > -static char *logfile, *force_author, *message, *template_file;
+> > +static char *logfile, *force_author, *template_file;
+> >  static char *edit_message, *use_message;
+> >  static int all, edit_flag, also, interactive, only, amend, signoff;
+> >  static int quiet, verbose, untracked_files, no_verify;
+> >  
+> >  static int no_edit, initial_commit, in_merge;
+> >  const char *only_include_assumed;
+> > +struct strbuf message;
+> 
+>   Unless I'm mistaken `static` keywords are missign for`message` and
+> `only_include_assumed`.
 
-If "superprojects is not so super", why are you using submodule
-to bind these, instead of using a single project that tracks
-developments of such closely tied parts?
+Oh yeah.  Will fix.
 
-I am not saying that it is wrong to use submodule to track such
-groups of source trees whose versions are very closely tied
-together.  At least not yet.
+>   And you _have_ to initialize message with STRBUF_INIT (remember of the
+> slop).
 
-I am just trying to find out what benefit you are getting out of
-the submodule support, after rejecting one of the most visible
-and advertised benefit of submodule support, which is to enable
-binding "related but not that closely tied together" projects.
+Not in this case, since I do not use message.buf as long as message.len == 
+0.  But I agree it would be cleaner to just use STRBUF_INIT.
+
+> > +static int opt_parse_m(const struct option *opt, const char *arg, int unset)
+> > +{
+> > +	struct strbuf *buf = opt->value;
+> > +	if (unset)
+> > +		strbuf_setlen(buf, 0);
+> > +	else {
+> > +		strbuf_addstr(buf, arg);
+> > +		strbuf_addch(buf, '\n');
+> > +		strbuf_addch(buf, '\n');
+> > +	}
+> > +	return 0;
+> > +}
+> 
+>   I believe such a callback could live in parse-options.[hc]. The need
+> to aggregate all string arguments into a strbuf looks generic enough to
+> me. Why are you adding two '\n' btw ? Isn't one enough ?
+
+Well, this empty line is needed to stay backwards compatible.  It was 
+added to pass the test that Junio added to 'next'.  As such, this function 
+is not really generic enough, right?
+
+>   Oh and last nitpicking, strbuf_addstr(buf, "\n\n"); is more efficient
+> than the two addchar (the strlen it generates is inlined).
+
+Well, I meant to mention it in the cover letter.  My preference is to do 
+away with the extra empty line.  But this might break existing setups 
+depending on that behaviour.
+
+Ciao,
+Dscho
