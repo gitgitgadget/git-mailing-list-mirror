@@ -1,83 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Deprecate git-fetch-pack?
-Date: Sun, 11 Nov 2007 14:35:44 -0800
-Message-ID: <7vabpkbebj.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711101752490.29952@iabervon.org>
-	<7v4pftip42.fsf@gitster.siamese.dyndns.org>
-	<74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com>
-	<Pine.LNX.4.64.0711111103240.4362@racer.site>
-	<7vd4ugcwkm.fsf@gitster.siamese.dyndns.org>
-	<20071111222117.GA7392@thunk.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Obscure commit message formatting issue
+Date: Sun, 11 Nov 2007 22:43:10 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711112240350.4362@racer.site>
+References: <Pine.LNX.4.64.0711111559220.29952@iabervon.org>
+ <7vprygbfwf.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711111706490.29952@iabervon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Ask =?utf-8?Q?Bj?= =?utf-8?Q?=C3=B8rn?= Hansen 
-	<ask@develooper.com>, Daniel Barkalow <barkalow@iabervon.org>,
-	git@vger.kernel.org
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sun Nov 11 23:36:38 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Sun Nov 11 23:43:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrLPr-0005hC-7I
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 23:36:31 +0100
+	id 1IrLWm-0007NE-A4
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 23:43:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757049AbXKKWf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 17:35:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757045AbXKKWf5
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 17:35:57 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:45567 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757031AbXKKWf4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 17:35:56 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 0ADAA2F2;
-	Sun, 11 Nov 2007 17:36:17 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 64334947E7;
-	Sun, 11 Nov 2007 17:36:10 -0500 (EST)
-In-Reply-To: <20071111222117.GA7392@thunk.org> (Theodore Tso's message of
-	"Sun, 11 Nov 2007 17:21:17 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755799AbXKKWnY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 17:43:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755516AbXKKWnY
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 17:43:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:55362 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755460AbXKKWnX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 17:43:23 -0500
+Received: (qmail invoked by alias); 11 Nov 2007 22:43:21 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp054) with SMTP; 11 Nov 2007 23:43:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX187o5pkvC07ew1VHdx9B0lwdhThRruS+eGYEt8NkU
+	0Xj5BHfOdR3HaY
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0711111706490.29952@iabervon.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64531>
 
-Theodore Tso <tytso@mit.edu> writes:
+Hi,
 
-> On Sun, Nov 11, 2007 at 01:16:09PM -0800, Junio C Hamano wrote:
->> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->> > This should be a non-issue.  We really should start deprecating 
->> > "git-<command>" in favour of "git <command>" for real.
->> >
->> > New users should not even be told that this is correct usage.
->> 
->> If you can write "git-commit" and "git commit" interchangeably
->> while you cannot say "git-cat-file" and are forced to say "git
->> cat-file", I suspect that would lead to a great confusion and
->> unhappy users.
->
-> One of the reasons why I use git-diff and git-commit and in particular
-> "git-rebase --interactive master" very often is that it allows my
-> shell's bang completion to work.  (i.e., "!git-rebase").  If we tell
-> people they can not use "git-rebase", and must instead use "git
-> rebase" instead, I would consider that pretty annoying/obnoxious.
+On Sun, 11 Nov 2007, Daniel Barkalow wrote:
 
-Oh, of course.
+> On Sun, 11 Nov 2007, Junio C Hamano wrote:
+> 
+> > Daniel Barkalow <barkalow@iabervon.org> writes:
+> > 
+> > > The current code drops extra blank lines between the first line of a 
+> > > commit message (the summary line) and the remainder.
+> > 
+> > The patch application side does even more.  It not just strips
+> > off the leading or trailing blank lines, but duplicate blank
+> > lines in the middle and trailing whitespaces at the end of each
+> > line.
+> > 
+> > I am of two minds about the formatting side.
+> > 
+> > The behaviour you found does not go far enough to correct all of
+> > the above whitespace breakage the application side will fix up
+> > on the generation side -- it only corrects one of them.  We
+> > might want to do more, instead of less that you seem to be
+> > implying to favor.
+> 
+> What I'm actually doing is working on a cover letter implementation.
 
-But my impression was that Johannes was talking about
-deprecating git-<foo> form only for plumbing, so that the users
-will only see git-<foo> for the Porcelain.  That would not break
-your bang completion for the porcelain commands.
+Funny.
 
-If Johannes was talking about deprecating all git-<foo> form,
-then that would indeed break your bang completion, but it has
-conceptually a much bigger problem.  The topic was about fixing
-"a new user sees too many git commands and gets scared" problem.
-Deprecaing all git-<foo> form just replaces the problem with "a
-new user sees too many git subcommands and gets scared" problem,
-without solving anything.
+I am in the middle of cleaning out my personal git branch that has a messy 
+history, since I never rebased, but always merged.  Now I decided to go 
+with rebasing.
+
+And there I found an implementation of a cover letter.  You might want to 
+be interested ;-)
+
+	http://repo.or.cz/w/git/dscho.git?a=shortlog;h=cover-letter
+
+Ciao,
+Dscho
