@@ -1,125 +1,62 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH 5/6] builtin-commit: resurrect behavior for multiple -m  options
-Date: Sun, 11 Nov 2007 20:42:28 +0100
-Message-ID: <20071111194228.GC13200@artemis.corp>
-References: <Pine.LNX.4.64.0711111730580.4362@racer.site> <Pine.LNX.4.64.0711111736310.4362@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t7005 and vi in GIT_EXEC_PATH
+Date: Sun, 11 Nov 2007 11:43:02 -0800
+Message-ID: <7v3avcefg9.fsf@gitster.siamese.dyndns.org>
+References: <9A9986E7-E03D-458A-9A19-A3EF0E7B203D@silverinsanity.com>
+	<Pine.LNX.4.64.0711111557370.4362@racer.site>
+	<FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="8X7/QrJGcKSMr1RN";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 11 20:42:50 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Brian Gernhardt <benji@silverinsanity.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 20:43:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrIhk-0000zl-6E
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 20:42:48 +0100
+	id 1IrIiL-0001DN-In
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 20:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429AbXKKTmd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 14:42:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756783AbXKKTmc
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:42:32 -0500
-Received: from pan.madism.org ([88.191.52.104]:34799 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756429AbXKKTma (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 14:42:30 -0500
-Received: from madism.org (olympe.madism.org [82.243.245.108])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id 17B4829981;
-	Sun, 11 Nov 2007 20:42:29 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id A575131706C; Sun, 11 Nov 2007 20:42:28 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, krh@redhat.com, gitster@pobox.com
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711111736310.4362@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1756637AbXKKTnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 14:43:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754878AbXKKTnJ
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 14:43:09 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56296 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756637AbXKKTnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 14:43:08 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id E8DD82F2;
+	Sun, 11 Nov 2007 14:43:28 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 760749464E;
+	Sun, 11 Nov 2007 14:43:25 -0500 (EST)
+In-Reply-To: <FCFF59B3-D3F1-4BEB-B3C3-D07DD5D5D8EF@silverinsanity.com> (Brian
+	Gernhardt's message of "Sun, 11 Nov 2007 11:10:12 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64499>
 
+Brian Gernhardt <benji@silverinsanity.com> writes:
 
---8X7/QrJGcKSMr1RN
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> I'm sorry, I should have been more clear.  I was referring to the
+> GIT_EXEC_PATH build variable, not the environment variable.  The git
+> wrapper always adds the path determined during build to the front of
+> PATH.  When I was changing my build script, this got set to "/usr/
+> local/bin" (I usually use /usr/local/stow/git, instead).  Since I have
+> a /usr/local/bin/vim, PATH for git-commit.sh during the test was:
+>
+> - my git build directory
+> - /usr/local/bin (containing a symlink vi -> vim)
+> - the t/trash directory, added by the test via `PATH=".:$PATH"`
+> (containing the test vi script)
+> - my normal path
 
-On Sun, Nov 11, 2007 at 05:36:39PM +0000, Johannes Schindelin wrote:
->=20
-> When more than one -m option is given, the message does not replace
-> the previous, but is appended.
->=20
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  builtin-commit.c |   26 ++++++++++++++++++++------
->  1 files changed, 20 insertions(+), 6 deletions(-)
->=20
-> diff --git a/builtin-commit.c b/builtin-commit.c
-> index 66d7e5e..069d180 100644
-> --- a/builtin-commit.c
-> +++ b/builtin-commit.c
-> @@ -30,13 +30,27 @@ static char *use_message_buffer;
->  static const char commit_editmsg[] =3D "COMMIT_EDITMSG";
->  static struct lock_file lock_file;
-> =20
-> -static char *logfile, *force_author, *message, *template_file;
-> +static char *logfile, *force_author, *template_file;
->  static char *edit_message, *use_message;
->  static int all, edit_flag, also, interactive, only, amend, signoff;
->  static int quiet, verbose, untracked_files, no_verify;
-> =20
->  static int no_edit, initial_commit, in_merge;
->  const char *only_include_assumed;
-> +struct strbuf message;
-
-  Unless I'm mistaken `static` keywords are missign for`message` and
-`only_include_assumed`.
-
-  And you _have_ to initialize message with STRBUF_INIT (remember of the
-slop).
-
-> +static int opt_parse_m(const struct option *opt, const char *arg, int un=
-set)
-> +{
-> +	struct strbuf *buf =3D opt->value;
-> +	if (unset)
-> +		strbuf_setlen(buf, 0);
-> +	else {
-> +		strbuf_addstr(buf, arg);
-> +		strbuf_addch(buf, '\n');
-> +		strbuf_addch(buf, '\n');
-> +	}
-> +	return 0;
-> +}
-
-  I believe such a callback could live in parse-options.[hc]. The need
-to aggregate all string arguments into a strbuf looks generic enough to
-me. Why are you adding two '\n' btw ? Isn't one enough ?
-
-  Oh and last nitpicking, strbuf_addstr(buf, "\n\n"); is more efficient
-than the two addchar (the strlen it generates is inlined).
-
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
-
---8X7/QrJGcKSMr1RN
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHN1skvGr7W6HudhwRAnymAJ9o40dJCLJdUl6Rt5tfUCIaJVnDXwCaA8eb
-NsTMf2y2z+L1Rpznu+/zmGQ=
-=/er5
------END PGP SIGNATURE-----
-
---8X7/QrJGcKSMr1RN--
+Maybe that is what is broken.  t/test-lib.sh makes the
+environment variable point at the build directory, and that
+should override the path that is compiled in, shouldn't it?
