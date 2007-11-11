@@ -1,168 +1,106 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: Re: [PATCH 3/3] git-svn log: handle unreachable revisions like "svn log"
-Date: Sun, 11 Nov 2007 06:20:18 -0800 (PST)
-Message-ID: <189577.85054.qm@web52407.mail.re2.yahoo.com>
-References: <D6A0D2B9-A355-4216-8D15-84993C26B503@lrde.epita.fr>
-Reply-To: ddkilzer@kilzer.net
-Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Sun Nov 11 15:20:45 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: [REPLACEMENT PATCH 3/6] push: support pushing HEAD to real branch name
+Date: Sun, 11 Nov 2007 15:35:07 +0100
+Message-ID: <1194791707467-git-send-email-prohaska@zib.de>
+References: <47370EDF.3090907@op5.se>
+Cc: Steffen Prohaska <prohaska@zib.de>
+To: git@vger.kernel.org, ericsson Andreas <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sun Nov 11 15:35:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrDfw-0007jk-Ir
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:20:37 +0100
+	id 1IrDuK-0002x5-3n
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 15:35:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751777AbXKKOUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 09:20:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751805AbXKKOUU
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:20:20 -0500
-Received: from web52407.mail.re2.yahoo.com ([206.190.48.170]:44040 "HELO
-	web52407.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751697AbXKKOUU (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 09:20:20 -0500
-Received: (qmail 86411 invoked by uid 60001); 11 Nov 2007 14:20:18 -0000
-X-YMail-OSG: NRbrFjgVM1kXRJ9ZgDak9pF068sQJtBdaF.iY2le6wdJOXATirldUS8DP.qbTHWbt7hcePCVuA--
-Received: from [24.7.124.164] by web52407.mail.re2.yahoo.com via HTTP; Sun, 11 Nov 2007 06:20:18 PST
-X-RocketYMMF: ddkilzer
-In-Reply-To: <D6A0D2B9-A355-4216-8D15-84993C26B503@lrde.epita.fr>
+	id S1753050AbXKKOfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 09:35:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753074AbXKKOfL
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 09:35:11 -0500
+Received: from mailer.zib.de ([130.73.108.11]:61220 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752976AbXKKOfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 09:35:10 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lABEZ7bd025306;
+	Sun, 11 Nov 2007 15:35:07 +0100 (CET)
+Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lABEZ7Wm007597;
+	Sun, 11 Nov 2007 15:35:07 +0100 (MET)
+X-Mailer: git-send-email 1.5.2.4
+In-Reply-To: <47370EDF.3090907@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64467>
 
-Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
+This teaches "push <remote> HEAD" to resolve HEAD on the local
+side to its real branch name, e.g. master, and then act as if
+the real branch name was specified. So we have a shorthand for
+pushing the current branch. Besides HEAD, no other symbolic ref
+is resolved.
 
-> thanks for the patches, the series looks good to me, I added some  
-> comments below, for this patch.
+Thanks to Daniel Barkalow <barkalow@iabervon.org> for suggesting
+this implementation, which is much simpler than the
+implementation proposed before.
 
-Thanks for the review, Benoit!  Comments below.
+Signed-off-by: Steffen Prohaska <prohaska@zib.de>
+---
+ builtin-push.c        |    9 +++++++++
+ t/t5516-fetch-push.sh |   17 +++++++++++++++++
+ 2 files changed, 26 insertions(+), 0 deletions(-)
 
-> On Nov 11, 2007, at 7:10 AM, David D Kilzer wrote:
-> 
-> >  sub find_rev_before {
-> > -	my ($self, $rev, $eq_ok) = @_;
-> > +	my ($self, $rev, $eq_ok, $min_rev) = @_;
-> 
-> Could you please document this function?  I guess that you had to  
-> figure out what each argument was for, so please save the time of the  
-> contributors that will read this code after you :)
+prefixcmp() is simpler.
 
-What is the format for documenting functions in git Perl scripts?  I haven't
-see any "perlpod" use anywhere.  Do you just want comments before the function?
+    Steffen
 
-This method returns the git commit hash and svn revision of the first svn
-revision that exists on the current branch that is less than $rev (or
-less-than-or-equal-to $rev if $eq_ok is true).
-
-Please note that I don't have a full understanding of how find_rev_before()
-works (other than it's computing an offset into a sparse? data file based on
-the revision number) since I'm still new to git.
-
-> > +sub find_rev_after {
-> > +	my ($self, $rev, $eq_ok, $max_rev) = @_;
-> > +	++$rev unless $eq_ok;
-> > +	$max_rev ||= $self->rev_db_max();
-> > +	while ($rev <= $max_rev) {
-> > +		if (my $c = $self->rev_db_get($rev)) {
-> > +			return ($rev, $c);
-> > +		}
-> > +		++$rev;
-> > +	}
-> > +	return (undef, undef);
-> > +}
-> 
-> Too much code duplication.  It should be possible to write a sub  
-> find_rev_ (or _find_rev, don't know what's the naming convention for  
-> internal details) that takes a 5th argument, an anonymous sub that  
-> does the comparison.  So that basically, find_rev_before will be  
-> something along these (untested) lines:
-> 
-> sub find_rev_before {
-> 	my ($self, $rev, $eq_ok, $min_rev) = @_;
-> 	return find_rev_($self, $rev, $eq_ok, $min_rev, sub { my ($a, $b) =  
-> @_; return $a >= $b; });
-> }
-
-I think that combining find_rev_before() and find_rev_after() would greatly
-sacrifice readability of the code in exchange for removing ~10 lines of code. 
-Also, you must do more than just replace the comparison in the while() loop:
-
-- before() decrements $rev while after() increments it
-- stop limits are different ($max_rev versus $min_rev)
-
-This is what such a method might look like (untested).  Since you already
-requested find_rev_before() be documented, is this really going to help?
-
-sub find_rev_ {
-	my ($self, $rev, $eq_ok, $is_before, $limit_rev) = @_;
-	($is_before ? --$rev : ++$rev) unless $eq_ok;
-	$limit_rev ||= ($is_before ? 1 : $self->rev_db_max());
-	while ($is_before ? $rev >= $limit_rev : $rev <= $limit_rev) {
-		if (my $c = $self->rev_db_get($rev)) {
-			return ($rev, $c);
-		}
-			$is_before ? --$rev : ++$rev;
-	}
-	return (undef, undef);
-}
-
-Defining wrapper functions would help, but I still think it's just as clear to
-keep the two methods separate.
-
-sub find_rev_before() {
-	my ($self, $rev, $eq_ok, $min_rev) = @_;
-	return $self->find_rev_($rev, $eq_ok, 1, $min_rev);
-}
-
-sub find_rev_after() {
-	my ($self, $rev, $eq_ok, $max_rev) = @_;
-	return $self->find_rev_($rev, $eq_ok, 0, $max_rev);
-}
-
-Do you agree, or do you think the methods should still be combined?
-
-> > +		if ($r_max < $r_min) {
-> > +			($r_min, $r_max) = ($r_max, $r_min);
-> > +		}
-> > +		my (undef, $c_max) = $gs->find_rev_before($r_max, 1, $r_min);
-> > +		my (undef, $c_min) = $gs->find_rev_after($r_min, 1, $r_max);
-> > +		# If there are no commits in the range, both $c_max and $c_min
-> > +		# will be undefined.  If there is at least 1 commit in the
-> > +		# range, both will be defined.
-> > +		return () if !defined $c_min;
-> 
-> Fair enough but I'd strengthen the test by writing something like:
-> 		return () if not defined $c_min || not defined $c_max;
-> unless you can prove that `rev_db_get' can never return `undef' or  
-> something like that.
-
-Will make this change.
-
-> > +sub commit_log_separator {
-> > +    return ('-' x 72) . "\n";
-> > +}
-> > +
-> 
-> This is basically a constant, I think that declaring it with a  
-> prototype helps Perl to optimize it:
-> sub commit_log_separator() {
-
-Will do.
-
-> > +echo  
-> > ---------------------------------------------------------------------- 
-> > -- > expected-separator
-> 
-> This will choke on shells with buggy/fragile `echo'.  I think it'd be  
-> safer to use printf here.
-
-Will do.
-
-Thanks!
-
-Dave
+diff --git a/builtin-push.c b/builtin-push.c
+index 6d1da07..54fba0e 100644
+--- a/builtin-push.c
++++ b/builtin-push.c
+@@ -44,6 +44,15 @@ static void set_refspecs(const char **refs, int nr)
+ 			strcat(tag, refs[i]);
+ 			ref = tag;
+ 		}
++		if (!strcmp("HEAD", ref)) {
++			unsigned char sha1_dummy[20];
++			ref = resolve_ref(ref, sha1_dummy, 1, NULL);
++			if (!ref)
++				die("HEAD cannot be resolved.");
++			if (prefixcmp(ref, "refs/heads/"))
++				die("HEAD cannot be resolved to branch.");
++			ref = xstrdup(ref + 11);
++		}
+ 		add_refspec(ref);
+ 	}
+ }
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 86f9b53..b0ff488 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -244,6 +244,23 @@ test_expect_success 'push with colon-less refspec (4)' '
+ 
+ '
+ 
++test_expect_success 'push with HEAD' '
++
++	mk_test heads/master &&
++	git checkout master &&
++	git push testrepo HEAD &&
++	check_push_result $the_commit heads/master
++
++'
++
++test_expect_success 'push with HEAD nonexisting at remote' '
++
++	mk_test heads/master &&
++	git checkout -b local master &&
++	git push testrepo HEAD &&
++	check_push_result $the_commit heads/local
++'
++
+ test_expect_success 'push with dry-run' '
+ 
+ 	mk_test heads/master &&
+-- 
+1.5.3.5.643.g20245
