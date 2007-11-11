@@ -1,77 +1,91 @@
-From: "Yin Ping" <pkufranky@gmail.com>
-Subject: Re: Dose git-fetch need --reference option like git-clone?
-Date: Sun, 11 Nov 2007 19:38:37 +0800
-Message-ID: <46dff0320711110338t74d654a3h8811ae9d22f25870@mail.gmail.com>
-References: <46dff0320711110009y713c7d38q7b1457c92daecef6@mail.gmail.com>
-	 <7vsl3dgovv.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?Q?R=C3=A9mi?= Vanicat <vanicat@debian.org>
+Subject: [PATCH v3] Make GIT_INDEX_FILE apply to git-commit
+Date: Sun, 11 Nov 2007 13:28:08 +0100
+Message-ID: <87r6ixj7af.dlv@vanicat.homelinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 11 12:39:00 2007
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 11 13:28:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrB9X-0001O6-7V
-	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 12:38:59 +0100
+	id 1IrBvV-00050W-G2
+	for gcvg-git-2@gmane.org; Sun, 11 Nov 2007 13:28:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754147AbXKKLij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 06:38:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754146AbXKKLij
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 06:38:39 -0500
-Received: from py-out-1112.google.com ([64.233.166.179]:23707 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754140AbXKKLii (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 06:38:38 -0500
-Received: by py-out-1112.google.com with SMTP id u77so614625pyb
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 03:38:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=ImyzXB0G4zpn8Y0IP0pEhiugl3FS8d9U3oX6O6UkHY0=;
-        b=Dag+KKFgVUPDwf3z4PdsMckZ3l1VBqku0tWyTZO5insqZVtdvTzWonITFjvHoU0KZqrHfugVMf48+uvkFE6YvEqO2VWtnkNX9DVA0fTBw33J3TQzbiMt0RH3tA3aSVRf9sIIObT5TWMlwRIoxI1luPcZjo9iXVwRW9outEkHHEw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=scFV4beYTJaZvKYgihWRmkTmHPQ3kpNTjEIhsC07mN1HZ0Y81745wk/L/Qm/6L9XGKr50VqyAkqGOlj531i8AR2zsJs7p4lJLZF/i5gq0I98dxi7Vc+IFm7vAvisNcA5hJ0W8Xg6GeSxdk6Gz6lhJx1cTquVm/Q+gp8tSXnQVV4=
-Received: by 10.35.103.6 with SMTP id f6mr4642172pym.1194781117455;
-        Sun, 11 Nov 2007 03:38:37 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Sun, 11 Nov 2007 03:38:37 -0800 (PST)
-In-Reply-To: <7vsl3dgovv.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1753354AbXKKM2P convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 07:28:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752935AbXKKM2P
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 07:28:15 -0500
+Received: from sp604005mt.neufgp.fr ([84.96.92.11]:47872 "EHLO smtp.Neuf.fr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751891AbXKKM2O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 11 Nov 2007 07:28:14 -0500
+Received: from vanicat.homelinux.org ([77.193.67.174])
+ by sp604005mt.gpm.neuf.ld
+ (Sun Java System Messaging Server 6.2-5.05 (built Feb 16 2006))
+ with ESMTP id <0JRC00G3QDAXBC55@sp604005mt.gpm.neuf.ld> for
+ git@vger.kernel.org; Sun, 11 Nov 2007 13:28:09 +0100 (CET)
+Received: from moi by vanicat.homelinux.org with local (Exim 4.68)
+	(envelope-from <remi.vanicat@laposte.net>)	id 1IrBv6-0007BH-Fg; Sun,
+ 11 Nov 2007 13:28:08 +0100
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: remi.vanicat@laposte.net
+X-SA-Exim-Scanned: No (on vanicat.homelinux.org); SAEximRunCond expanded to
+ false
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64449>
 
-On Nov 11, 2007 4:36 PM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> No, there is no such thing.
->
-> I think what you are talking about is a reasonable thing to
-> want.  It would have been easier to hack in back when git-fetch
-> was a script, but now you would need to work a bit harder in the
-> C code.  On the other hand, however, I suspect the resulting
-> code would be cleaner without having to actually create and
-> delete temporary refs in refs/reference-tmp/ namespace but fake
-> them only in-core, with a proper transport API enhancements.
->
-> But if you only want a quick-and-dirty workaround, you can
-> manually do refs/reference-tmp and objects/info/alternates dance
-> that is done by git-clone before running a git-fetch from such
-> "nearby" remote.
+Currently, when committing, git-commit ignore the value of
+GIT_INDEX_FILE, and always use $GIT_DIR/index. This patch
+fix it.
 
-Now my workaround is
-$ git remote add remoteA path/to/remoteACloned
-$ git fetch remoteA
-Then update .git/config to let remote.remoteA.url=git://remoteAUrl
-$ git fetch
+Signed-off-by: R=C3=A9mi Vanicat <vanicat@debian.org>
+---
+ git-commit.sh     |    2 +-
+ t/t7500-commit.sh |   13 +++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletions(-)
 
-
-
-
-
--- 
-Ping Yin
+diff --git a/git-commit.sh b/git-commit.sh
+index fcb8443..6490045 100755
+--- a/git-commit.sh
++++ b/git-commit.sh
+@@ -26,7 +26,7 @@ refuse_partial () {
+ }
+=20
+ TMP_INDEX=3D
+-THIS_INDEX=3D"$GIT_DIR/index"
++THIS_INDEX=3D"${GIT_INDEX_FILE:-$GIT_DIR/index}"
+ NEXT_INDEX=3D"$GIT_DIR/next-index$$"
+ rm -f "$NEXT_INDEX"
+ save_index () {
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index abbf54b..3e5abef 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -93,4 +93,17 @@ test_expect_success 'commit message from file should=
+ override template' '
+        commit_msg_is "standard input msg"
+ '
+=20
++test_expect_success 'using GIT_INDEX_FILE' '
++
++       echo "some new content" >file &&
++       GIT_INDEX_FILE=3D.git/another_index git add file &&
++       GIT_INDEX_FILE=3D.git/another_index \
++               git commit -m "commit using another index" &&
++       git reset HEAD &&
++       git diff HEAD -- file >current &&
++       touch empty-file &&
++       diff empty-file current
++
++'
++
+ test_done
+--=20
+1.5.3.5
