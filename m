@@ -1,85 +1,75 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Cloning from kernel.org, then switching to another repo
-Date: Mon, 12 Nov 2007 12:21:20 -0500
-Message-ID: <9e4733910711120921q651208cby1276426ccd4b5fa4@mail.gmail.com>
-References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
-	 <Pine.LNX.4.64.0711121412410.4362@racer.site>
-	 <9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com>
-	 <Pine.LNX.4.64.0711121613570.4362@racer.site>
-	 <9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
-	 <Pine.LNX.4.64.0711121635130.4362@racer.site>
+From: Bill Lear <rael@zopyra.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
+ repositories?
+Date: Mon, 12 Nov 2007 11:24:05 -0600
+Message-ID: <18232.35893.243300.179076@lisa.zopyra.com>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+	<20071112131927.GA1701@c3sl.ufpr.br>
+	<Pine.LNX.4.64.0711121355380.4362@racer.site>
+	<200711121719.54146.wielemak@science.uva.nl>
+	<Pine.LNX.4.64.0711121624330.4362@racer.site>
+	<vpq3avbv2ju.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121715090.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:21:52 2007
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:24:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ircyh-0005j3-Io
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:21:40 +0100
+	id 1Ird1O-0006r3-LQ
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:24:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755116AbXKLRVY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 12:21:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754140AbXKLRVY
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:21:24 -0500
-Received: from wa-out-1112.google.com ([209.85.146.180]:29346 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753812AbXKLRVX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 12:21:23 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1598076wah
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 09:21:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RSCGvFzxXpyKNm1/v0VaP42LjwF3dAmcQkrV7cRO8Ec=;
-        b=QKPhIDqdk6028AhygiDD99dYVQVvs7CZ8Jx5jPRqqIGrUAeCgZR8G2ymbeMPou/EG1VVaVrOBnpE+3OOm7YDskiytxAzTL81yfdq31bl15ulDXOMfwk+iDoxkFvYpj16HoVX+udlp0PzokqR8PzfulfsqwnjXmESa2t+1C9qPUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=Y6VYGmUM8REBqrRD2I0yjiKFCXf9SwKbNH4dHiLlRTpBkbccPk6YAFUkzu7jTzRE1B341U5qtnWPLEUQHXIVRsoG/RbQqsfQ5AVyMiCOKyxCGL0Xg1QrnJVcCf/rwMmYizPM0dMek1ByPvrlRKvM+x2i4alaLntYuWPYgA9BYF8=
-Received: by 10.115.90.1 with SMTP id s1mr130849wal.1194888081017;
-        Mon, 12 Nov 2007 09:21:21 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 09:21:20 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711121635130.4362@racer.site>
-Content-Disposition: inline
+	id S1759224AbXKLRYK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 12:24:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759201AbXKLRYK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:24:10 -0500
+Received: from mail.zopyra.com ([65.68.225.25]:60147 "EHLO zopyra.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758070AbXKLRYJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 12:24:09 -0500
+Received: (from rael@localhost)
+	by zopyra.com (8.11.6/8.11.6) id lACHO6q07873;
+	Mon, 12 Nov 2007 11:24:06 -0600
+In-Reply-To: <Pine.LNX.4.64.0711121715090.4362@racer.site>
+X-Mailer: VM 7.18 under Emacs 21.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64668>
 
-On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
+On Monday, November 12, 2007 at 17:15:51 (+0000) Johannes Schindelin writes:
+>Hi,
 >
-> On Mon, 12 Nov 2007, Jon Smirl wrote:
+>On Mon, 12 Nov 2007, Matthieu Moy wrote:
 >
-> > On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > > On Mon, 12 Nov 2007, Jon Smirl wrote:
-> > >
-> > > > jonsmirl@terra:~/foo$ git clone
-> > > > git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git ds
-> > > > clone.....
-> > >
-> > > This sets up branch.master.{remote,merge} to {origin,master}.
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > On Mon, 12 Nov 2007, Jan Wielemaker wrote:
+>> >
+>> >> I found out that cloning a empty bare repository produces nothing at 
+>> >> all, [...]
+>> >
+>> > If they are empty, what exactly do you mean to clone?
+>> 
+>> I'd expect an empty repository, with the git remote configured 
+>> correctly.
 >
-> You haven't shown me that this is set correctly in your set up, and if it
-> is, when it stops being correctly set up.
-
-Running git update-server-info at the remote end fixed it.
-
-I am using 'git push' to send changes, I though that was supposed to
-update the server info automatically.
-
-
+>Yeah, right.
 >
-> Ciao,
-> Dscho
->
+>Last time I checked, those geneticists did not clone thin air.  They 
+>always waited until they had something to clone.
+
+We have wanted this behavior; I don't think it's so foolish.  We have
+an administrator create a new bare repo for us, and we populate it by
+pushing into it.  It wold be nice if the administrator could create a
+bare repo and we could clone from it, and push to it to populate it,
+instead of cloning the bare repo from another repo that has already
+been (partly) populated.
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+Bill
