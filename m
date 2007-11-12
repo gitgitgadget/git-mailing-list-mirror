@@ -1,76 +1,65 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: [PATCH] git-svn: Document the `create-ignore', `propget' and `proplist' subcommands.
-Date: Mon, 12 Nov 2007 18:13:19 +0100
-Message-ID: <1194887599-5821-1-git-send-email-tsuna@lrde.epita.fr>
-References: <1192545412-10929-4-git-send-email-tsuna@lrde.epita.fr>
-Cc: normalperson@yhbt.net, Benoit Sigoure <tsuna@lrde.epita.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:13:51 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
+ repositories?
+Date: Mon, 12 Nov 2007 17:15:51 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711121715090.4362@racer.site>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br>
+ <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl>
+ <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:16:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ircr5-0002WX-UF
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:13:48 +0100
+	id 1Irctj-0003Vs-VH
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:16:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759819AbXKLRNd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 12:13:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759800AbXKLRNc
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:13:32 -0500
-Received: from 1.139.39-62.rev.gaoland.net ([62.39.139.1]:65516 "EHLO
-	tsunaxbook.lrde.epita.fr" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1757818AbXKLRNc (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2007 12:13:32 -0500
-Received: by tsunaxbook.lrde.epita.fr (Postfix, from userid 501)
-	id 99529CC01A1; Mon, 12 Nov 2007 18:13:19 +0100 (CET)
-X-Mailer: git-send-email 1.5.3.5.654.gdd5ec
-In-Reply-To: <1192545412-10929-4-git-send-email-tsuna@lrde.epita.fr>
+	id S1759412AbXKLRQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 12:16:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759396AbXKLRQI
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:16:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:56198 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1759261AbXKLRQG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 12:16:06 -0500
+Received: (qmail invoked by alias); 12 Nov 2007 17:16:04 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp020) with SMTP; 12 Nov 2007 18:16:04 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+XrgljQ6WXEvYDVJTFGujNIZtokTQsWfB+S1UtQ1
+	4pJ4nNqTHrLLiL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <vpq3avbv2ju.fsf@bauges.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64666>
 
-Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
----
-I forgot to do this when I added these options to git-svn, my bad, sorry about
-that.  I think mentioning the current limitation of the implementation of
-propget and proplist is worthwhile, I wouldn't like to be surprised by this.
-Moreover, this is the kind of thing that's going to be fixed (or rather
-"enhanced" I should say), one day or another.
+Hi,
 
- Documentation/git-svn.txt |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
+On Mon, 12 Nov 2007, Matthieu Moy wrote:
 
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 488e4b1..0d5406d 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -182,6 +182,9 @@ Any other arguments are passed directly to `git log'
- 	directories.  The output is suitable for appending to
- 	the $GIT_DIR/info/exclude file.
- 
-+'create-ignore'::
-+	Create a .gitignore file per svn:ignore.
-+
- 'commit-diff'::
- 	Commits the diff of two tree-ish arguments from the
- 	command-line.  This command is intended for interoperability with
-@@ -193,6 +196,16 @@ Any other arguments are passed directly to `git log'
- 	repository (that has been init-ed with git-svn).
- 	The -r<revision> option is required for this.
- 
-+'propget'::
-+	Print the value of a property on a file or directory.
-+	The current implementation needs access to the SVN repository to
-+	perform this operation.
-+
-+'proplist'::
-+	List all properties of a file or directory.
-+	The current implementation needs access to the SVN repository to
-+	perform this operation.
-+
- --
- 
- OPTIONS
--- 
-1.5.3.5.654.gdd5ec
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> > On Mon, 12 Nov 2007, Jan Wielemaker wrote:
+> >
+> >> I found out that cloning a empty bare repository produces nothing at 
+> >> all, [...]
+> >
+> > If they are empty, what exactly do you mean to clone?
+> 
+> I'd expect an empty repository, with the git remote configured 
+> correctly.
+
+Yeah, right.
+
+Last time I checked, those geneticists did not clone thin air.  They 
+always waited until they had something to clone.
+
+Ciao,
+Dscho
