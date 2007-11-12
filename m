@@ -1,62 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cloning from kernel.org, then switching to another repo
-Date: Mon, 12 Nov 2007 16:36:03 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711121635130.4362@racer.site>
-References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com> 
- <Pine.LNX.4.64.0711121412410.4362@racer.site> 
- <9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com> 
- <Pine.LNX.4.64.0711121613570.4362@racer.site>
- <9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What is the idea for bare repositories?
+Date: Mon, 12 Nov 2007 17:37:50 +0100
+Organization: At home
+Message-ID: <fh9vgu$u75$1@ger.gmane.org>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <86pryf7815.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jon Smirl <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 17:36:37 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 17:38:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrcH7-0004we-4h
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:36:37 +0100
+	id 1IrcJA-0005g6-Be
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:38:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbXKLQgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 11:36:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751170AbXKLQgV
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:36:21 -0500
-Received: from mail.gmx.net ([213.165.64.20]:58730 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751133AbXKLQgU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 11:36:20 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 16:36:18 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp028) with SMTP; 12 Nov 2007 17:36:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+uops+SdaufmsKJnvxfQOZjFZ7n5Znk3m/rRwaNZ
-	eDlUNuVj1WRrNk
-X-X-Sender: gene099@racer.site
-In-Reply-To: <9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
-X-Y-GMX-Trusted: 0
+	id S1752569AbXKLQi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 11:38:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbXKLQi3
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:38:29 -0500
+Received: from main.gmane.org ([80.91.229.2]:51326 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751483AbXKLQi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 11:38:28 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IrcIb-0003jE-9r
+	for git@vger.kernel.org; Mon, 12 Nov 2007 16:38:09 +0000
+Received: from abwz76.neoplus.adsl.tpnet.pl ([83.8.249.76])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 16:38:09 +0000
+Received: from jnareb by abwz76.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 16:38:09 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwz76.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64656>
 
-Hi,
+David Kastrup wrote:
 
-On Mon, 12 Nov 2007, Jon Smirl wrote:
+> Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
+> 
+>> A bare repository is the way to publish your changes to the public.
+>> git-daemon  and http-clones use a bare repository that only contains
+>> adminsitrative files.
+[...]
+> 
+> Fine.  So why don't the following commands complain?  Apart from
+> git-reset without arguments (which could probably get along without a
+> working dir), they are supposed to employ a working directory.
+> 
+>> On Mon, Nov 12, 2007 at 02:11:58PM +0100, David Kastrup wrote:
+>>> 
+>>> I have a repository declared as bare.  Some commands treat it as such,
+>>> other's don't.  For example, I get
+>>> 
+>>> git-diff [no complaint]
+>>> git-reset [no complaint]
+>>> git-reset --hard
+>>> HEAD is now at db862c1... installmanager.sh: setze GIT_WORK_TREE
 
-> On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
->
-> > On Mon, 12 Nov 2007, Jon Smirl wrote:
-> >
-> > > jonsmirl@terra:~/foo$ git clone
-> > > git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git ds
-> > > clone.....
-> >
-> > This sets up branch.master.{remote,merge} to {origin,master}.
+git-diff can compare tree and tree, or tree and index; only for
+comparing tree and files of index and files it needs working dir.
 
-You haven't shown me that this is set correctly in your set up, and if it 
-is, when it stops being correctly set up.
+git-reset resets only refs and index. git-reset --hard resets also
+files, so it needs working directory. Perhaps it should fail completely
+and not only after doing mixed (non-hard) reset if we are in bare
+repository.
 
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
