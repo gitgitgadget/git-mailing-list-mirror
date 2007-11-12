@@ -1,75 +1,91 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Update the tracking references only if they were
-	succesfully updated on remote
-Date: Mon, 12 Nov 2007 22:39:38 +0100
-Message-ID: <20071112213938.GC2918@steel.home>
-References: <20071112213823.GB2918@steel.home>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Mon, 12 Nov 2007 13:56:38 -0800
+Message-ID: <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+	<20071112131927.GA1701@c3sl.ufpr.br>
+	<Pine.LNX.4.64.0711121355380.4362@racer.site>
+	<200711121719.54146.wielemak@science.uva.nl>
+	<Pine.LNX.4.64.0711121624330.4362@racer.site>
+	<vpq3avbv2ju.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121715090.4362@racer.site>
+	<18232.35893.243300.179076@lisa.zopyra.com>
+	<Pine.LNX.4.64.0711121727130.4362@racer.site>
+	<vpq7iknqrtp.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121755460.4362@racer.site>
+	<vpqy7d3pck0.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121804400.4362@racer.site>
+	<vpqoddzpc88.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 22:39:58 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:57:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irh0e-000851-Kx
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 22:39:57 +0100
+	id 1IrhHN-0005uQ-Rk
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 22:57:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753812AbXKLVjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 16:39:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbXKLVjl
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 16:39:41 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:47213 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579AbXKLVjk (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 16:39:40 -0500
-Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
-	by post.webmailer.de (fruni mo27) (RZmta 14.0)
-	with ESMTP id k021b2jACI6ihg ; Mon, 12 Nov 2007 22:39:38 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 5FE28277AE;
-	Mon, 12 Nov 2007 22:39:38 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 4841A56D22; Mon, 12 Nov 2007 22:39:38 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071112213823.GB2918@steel.home>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
-X-RZG-CLASS-ID: mo07
+	id S1753940AbXKLV4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 16:56:48 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753847AbXKLV4s
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 16:56:48 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:52267 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753851AbXKLV4r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 16:56:47 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 60FA42F2;
+	Mon, 12 Nov 2007 16:57:08 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B2B0C950B8;
+	Mon, 12 Nov 2007 16:57:02 -0500 (EST)
+In-Reply-To: <vpqoddzpc88.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
+	12 Nov 2007 19:09:27 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64716>
 
-It fixes the bug where local tracing branches were filled with zeroed SHA-1
-if the remote branch was not updated because, for instance, it was not
-an ancestor of the local (i.e. had other changes).
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>>> > On Mon, 12 Nov 2007, Matthieu Moy wrote:
+>>> >
+>>> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>> >> 
+>>> >> > So you need to populate the repository before starting _anyway_.
+>>> >> 
+>>> >> Last time I checked, the thread was talking about bare repository.
+>>
+>> Look at the subject.  "Cloning empty repositories."
+>
+> Look at the content. "cloning a empty bare repository".
 
-Jeff, I think your change (334f4831e5a77) was either not complete or
-got broken some time later.
+But both of Johannes's points apply equally well to an empty
+bare repository and to an empty non bare repository.  IOW,
+bareness does not matter to the suggestion Johannes gave.
 
- send-pack.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+But you are acting as if the bareness of the target repository
+makes his point irrelevant.  I am a bit confused.
 
-diff --git a/send-pack.c b/send-pack.c
-index b74fd45..d56d980 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -349,7 +349,8 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 
- 	if (!dry_run && remote && ret == 0) {
- 		for (ref = remote_refs; ref; ref = ref->next)
--			update_tracking_ref(remote, ref);
-+			if (!is_null_sha1(ref->new_sha1))
-+				update_tracking_ref(remote, ref);
- 	}
- 
- 	if (!new_refs && ret == 0)
--- 
-1.5.3.5.648.g1e92c
+About his point 1, I'd just stop at saying that "it is not so
+hard" does not mean "we do not have to make it even easier".
+
+His second point is also a real issue.  If you allowed cloning
+an empty repo (either bare or non-bare), then you and Bill can
+both clone from it, come up with an initial commit each.  Bill
+pushes his initial commit first.  Your later attempt to push
+will hopefully fail with "non fast forward", if you know better
+than forcing such a push, but then what?  You need to fetch, and
+merge (or rebase) your change on top of Bill's initial commit,
+and at that point the history you are trying to merge does not
+have any common ancestor with his history.
