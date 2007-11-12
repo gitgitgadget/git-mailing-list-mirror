@@ -1,76 +1,138 @@
-From: "Ping Yin" <pkufranky@gmail.com>
-Subject: Re: [PATCH] status&commit: Teach them to show submodule commit summary
-Date: Mon, 12 Nov 2007 23:46:32 +0800
-Message-ID: <46dff0320711120746s1258f31eh9bf676acedb10dc6@mail.gmail.com>
-References: <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
-	 <fh9rv5$g06$1@ger.gmane.org>
+From: Andy Whitcroft <apw@shadowen.org>
+Subject: [PATCH] push mirroring update test titles
+Date: Mon, 12 Nov 2007 15:48:02 +0000
+Message-ID: <20071112154802.GK301@shadowen.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:46:53 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:48:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrbUw-0002vj-G5
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:46:50 +0100
+	id 1IrbWP-0003UA-2g
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758901AbXKLPqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:46:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758871AbXKLPqe
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:46:34 -0500
-Received: from py-out-1112.google.com ([64.233.166.183]:62092 "EHLO
-	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758862AbXKLPqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:46:33 -0500
-Received: by py-out-1112.google.com with SMTP id u77so1298296pyb
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 07:46:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RkUuGSDEYak2Qrdn/iI+kA/P3DeUZJg9duAcrhe9t6A=;
-        b=mrNG5UIyPcxeolPg400OfrttcvvXWmxPDBmvdjnrksmtDFDAUp2+XQgripll6wrjwG4Y+GzRJJFDsVjAV5voxRIgWL62U5BFrhWbwF3FE2Su5b8tkfZfNF0nYjY364wEPbRsfrekiHdcN/ItGHrQGCAFU4/KJWB+06RackJ/vi0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=hkanyw5UISZqItVB/OkfBXMDmzf13KRZZpgtZZZyraPqElLY8J1RmaVagxykFI0EyuqfvJQXrERAEdKSKcabuWEeb+HSYzxvzCzp9VSRPX+2GPPGDlPqRiWA1NWtIEzl38krBE+2g4X5tlA5bKl2Xz0KfnpygH1TDdPQygDhSb4=
-Received: by 10.35.132.9 with SMTP id j9mr2193169pyn.1194882392682;
-        Mon, 12 Nov 2007 07:46:32 -0800 (PST)
-Received: by 10.35.108.1 with HTTP; Mon, 12 Nov 2007 07:46:32 -0800 (PST)
-In-Reply-To: <fh9rv5$g06$1@ger.gmane.org>
+	id S1753590AbXKLPrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:47:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753406AbXKLPrv
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:47:51 -0500
+Received: from hellhawk.shadowen.org ([80.68.90.175]:4561 "EHLO
+	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752426AbXKLPru (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:47:50 -0500
+Received: from localhost ([127.0.0.1] helo=pinky)
+	by hellhawk.shadowen.org with esmtp (Exim 4.63)
+	(envelope-from <apw@shadowen.org>)
+	id 1IrbVt-0006sH-AN; Mon, 12 Nov 2007 15:47:49 +0000
 Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64643>
 
-On Nov 12, 2007 11:37 PM, Jakub Narebski <jnareb@gmail.com> wrote:
-> Ping Yin wrote:
->
-> > ---
-> > Documentation/git-commit.txt | 10 +++++
-> > Documentation/git-status.txt | 3 +
-> > git-commit.sh | 90 ++++++++++++++++++++++++++++++++++++++++--
-> > 3 files changed, 99 insertions(+), 4 deletions(-)
->
-> Shouldn't you also modify Documentation/config.txt ?
-Oh, I'll supplement later
->
-> --
-> Jakub Narebski
-> Warsaw, Poland
-> ShadeHawk on #git
->
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Fix up the test titles which are incorrectly in the negative.
 
+Signed-off-by: Andy Whitcroft <apw@shadowen.org>
+---
+	This probabally should be folded down into the
+	current tests patch.  If you want me to do that
+	and resubmit, yell at me.
 
-
--- 
-Ping Yin
+ t/t5517-push-mirror.sh |   20 ++++++++++----------
+ 1 files changed, 10 insertions(+), 10 deletions(-)
+diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
+index 0fc6778..ed3fec1 100755
+--- a/t/t5517-push-mirror.sh
++++ b/t/t5517-push-mirror.sh
+@@ -31,7 +31,7 @@ mk_repo_pair () {
+ 
+ 
+ # BRANCH tests
+-test_expect_success 'push mirror does not create new branches' '
++test_expect_success 'push mirror creates new branches' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -45,7 +45,7 @@ test_expect_success 'push mirror does not create new branches' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not update existing branches' '
++test_expect_success 'push mirror updates existing branches' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -61,7 +61,7 @@ test_expect_success 'push mirror does not update existing branches' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not force update existing branches' '
++test_expect_success 'push mirror force updates existing branches' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -79,7 +79,7 @@ test_expect_success 'push mirror does not force update existing branches' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not remove branches' '
++test_expect_success 'push mirror removes branches' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -97,7 +97,7 @@ test_expect_success 'push mirror does not remove branches' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not add, update and remove branches together' '
++test_expect_success 'push mirror adds, updates and removes branches together' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -125,7 +125,7 @@ test_expect_success 'push mirror does not add, update and remove branches togeth
+ 
+ 
+ # TAG tests
+-test_expect_success 'push mirror does not create new tags' '
++test_expect_success 'push mirror creates new tags' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -140,7 +140,7 @@ test_expect_success 'push mirror does not create new tags' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not update existing tags' '
++test_expect_success 'push mirror updates existing tags' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -158,7 +158,7 @@ test_expect_success 'push mirror does not update existing tags' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not force update existing tags' '
++test_expect_success 'push mirror force updates existing tags' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -179,7 +179,7 @@ test_expect_success 'push mirror does not force update existing tags' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not remove tags' '
++test_expect_success 'push mirror removes tags' '
+ 
+ 	mk_repo_pair &&
+ 	(
+@@ -197,7 +197,7 @@ test_expect_success 'push mirror does not remove tags' '
+ 
+ '
+ 
+-test_expect_success 'push mirror does not add, update and remove tags together' '
++test_expect_success 'push mirror adds, updates and removes tags together' '
+ 
+ 	mk_repo_pair &&
+ 	(
