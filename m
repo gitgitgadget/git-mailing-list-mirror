@@ -1,64 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/3] Implement --dirty for git-rebase--interactive.
-Date: Mon, 12 Nov 2007 11:51:54 -0800
-Message-ID: <7vpryf2qed.fsf@gitster.siamese.dyndns.org>
-References: <1193952624-608-1-git-send-email-Simon.Sasburg@gmail.com>
-	<1193952624-608-2-git-send-email-Simon.Sasburg@gmail.com>
-	<1193952624-608-3-git-send-email-Simon.Sasburg@gmail.com>
+Subject: Re: [PATCH 4/6] add ref_abbrev_matches_full_with_rules()
+Date: Mon, 12 Nov 2007 11:51:44 -0800
+Message-ID: <7vve872qen.fsf@gitster.siamese.dyndns.org>
+References: <1194789708646-git-send-email-prohaska@zib.de>
+	<11947897083381-git-send-email-prohaska@zib.de>
+	<11947897081278-git-send-email-prohaska@zib.de>
+	<11947897083159-git-send-email-prohaska@zib.de>
+	<11947897083265-git-send-email-prohaska@zib.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Simon Sasburg <simon.sasburg@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 20:52:26 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 20:52:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrfKb-00027p-1c
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 20:52:25 +0100
+	id 1IrfKa-00027p-Co
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 20:52:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753060AbXKLTv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 14:51:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753063AbXKLTv7
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 14:51:59 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50473 "EHLO
+	id S1753039AbXKLTvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 14:51:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753025AbXKLTvz
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 14:51:55 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:50466 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753046AbXKLTv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 14:51:58 -0500
+	with ESMTP id S1752980AbXKLTvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 14:51:54 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 37A8A2FC;
-	Mon, 12 Nov 2007 14:52:20 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id C24C22FB;
+	Mon, 12 Nov 2007 14:52:15 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B6BBF94FC7;
-	Mon, 12 Nov 2007 14:52:17 -0500 (EST)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6088894FC7;
+	Mon, 12 Nov 2007 14:52:13 -0500 (EST)
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64694>
 
-Simon Sasburg <simon.sasburg@gmail.com> writes:
+Steffen Prohaska <prohaska@zib.de> writes:
 
-> +restore_dirty_state () {
-> +	lastmsg=$(git-rev-list HEAD^..HEAD --pretty=oneline | sed "s:[^ ]* ::")
-> +	if test "$lastmsg" = "REBASE--dirty: store index..workingtree diff"
-> +	then
-> +		echo "Restoring dirty index state"
-> +		git reset --mixed HEAD^
-> +	fi
-> +	lastmsg=$(git-rev-list HEAD^..HEAD --pretty=oneline | sed "s:[^ ]* ::")
-> +	if test "$lastmsg" = "REBASE--dirty: store HEAD..index diff"
-> +	then
-> +		echo "Restoring dirty working dir state"
-> +		git reset --soft HEAD^
-> +	fi
+> +int ref_abbrev_matches_full_with_rules(const char *abbrev_name, const char *full_name, const char **rules)
+> +{
+> +	const char **p;
+> +	const int abbrev_name_len = strlen(abbrev_name);
+> +
+> +	for (p = rules; *p; p++) {
+> +		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
+> +			return 1;
+> +		}
+> +	}
+> +
+> +	return 0;
 > +}
+> +
 
-This forces the user to pay the two rev-list overhead, even when
-running rebase without --dirty option.  Can we avoid paying any,
-when not giving the option?
-
-Also it pollutes the reflog of the branch, but that won't be a
-huge issue with Dscho's "detach HEAD while rebasing" patch.
+How about calling this simply "ref_abbrev_matches()" or
+"refname_match()" which is even shorter?
