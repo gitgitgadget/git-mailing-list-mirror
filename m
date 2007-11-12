@@ -1,78 +1,110 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: Fix references to deprecated commands
-Date: Mon, 12 Nov 2007 00:22:40 -0800
-Message-ID: <7vbq9z50vj.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site>
-	<7vlk998u6r.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711080041120.4362@racer.site>
-	<20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se>
-	<20071108160114.GB20988@diku.dk>
-	<7vzlxo1mga.fsf@gitster.siamese.dyndns.org>
-	<20071109002001.GB5082@diku.dk>
-	<7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org>
-	<20071112002410.GA21970@diku.dk> <20071112003251.GB21970@diku.dk>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] git-clean: Fix error message if clean.requireForce is not
+ set.
+Date: Mon, 12 Nov 2007 09:27:35 +0100
+Message-ID: <47380E77.9040205@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Nov 12 09:23:09 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 09:28:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrUZV-0006OS-T1
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 09:23:06 +0100
+	id 1IrUeH-0007R6-6Z
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 09:28:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754615AbXKLIWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 03:22:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754590AbXKLIWu
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 03:22:50 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:53996 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753812AbXKLIWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 03:22:49 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id BD38B2F9;
-	Mon, 12 Nov 2007 03:23:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 353CB94AE3;
-	Mon, 12 Nov 2007 03:23:06 -0500 (EST)
-In-Reply-To: <20071112003251.GB21970@diku.dk> (Jonas Fonseca's message of
-	"Mon, 12 Nov 2007 01:32:51 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1754453AbXKLI1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 03:27:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXKLI1o
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 03:27:44 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:62557 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753902AbXKLI1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 03:27:44 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IrUdN-0007lu-63; Mon, 12 Nov 2007 09:27:10 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id D9E3D54D; Mon, 12 Nov 2007 09:27:35 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64574>
 
-Jonas Fonseca <fonseca@diku.dk> writes:
+It was distracting to see this error message:
 
-> diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
-> index 9b5f86f..ef1b19c 100644
-> --- a/Documentation/git-get-tar-commit-id.txt
-> +++ b/Documentation/git-get-tar-commit-id.txt
-> @@ -14,12 +14,12 @@ SYNOPSIS
->  DESCRIPTION
->  -----------
->  Acts as a filter, extracting the commit ID stored in archives created by
-> -git-tar-tree.  It reads only the first 1024 bytes of input, thus its
-> +gitlink:git-archive[1].  It reads only the first 1024 bytes of input, thus its
->  runtime is not influenced by the size of <tarfile> very much.
->  
->  If no commit ID is found, git-get-tar-commit-id quietly exists with a
->  return code of 1.  This can happen if <tarfile> had not been created
-> -using git-tar-tree or if the first parameter of git-tar-tree had been
-> +using git-archive or if the <treeish> parameter of git-archive had been
->  a tree ID instead of a commit ID or tag.
->
-> -- 
-> Jonas Fonseca
+     clean.requireForce set and -n or -f not given; refusing to clean
 
-How did you prepare this hunk?  I count 10 lines preimage and
-postimage, followed by a blank line and the signature separator
-"-- " you added in your MUA, but the header claims to have 12
-lines.
+even though clean.requireForce was not set at all. This patch distinguishes
+the cases and gives a different message depending on whether the
+configuration variable is not set or set to true.
+
+While we are here, we also divert the error messages to stderr.
+
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+  git-clean.sh |   24 +++++++++++++++---------
+  1 files changed, 15 insertions(+), 9 deletions(-)
+
+diff --git a/git-clean.sh b/git-clean.sh
+index f4965b8..7138fae 100755
+--- a/git-clean.sh
++++ b/git-clean.sh
+@@ -25,10 +25,7 @@ rmrf="rm -rf --"
+  rm_refuse="echo Not removing"
+  echo1="echo"
+
+-# requireForce used to default to false but now it defaults to true.
+-# IOW, lack of explicit "clean.requireForce = false" is taken as
+-# "clean.requireForce = true".
+-disabled=$(git config --bool clean.requireForce || echo true)
++disabled=$(git config --bool clean.requireForce)
+
+  while test $# != 0
+  do
+@@ -37,10 +34,10 @@ do
+  		cleandir=1
+  		;;
+  	-f)
+-		disabled=
++		disabled=false
+  		;;
+  	-n)
+-		disabled=
++		disabled=false
+  		rmf="echo Would remove"
+  		rmrf="echo Would remove"
+  		rm_refuse="echo Would not remove"
+@@ -68,10 +65,19 @@ do
+  	shift
+  done
+
+-if [ "$disabled" = true ]; then
+-	echo "clean.requireForce set and -n or -f not given; refusing to clean"
++# requireForce used to default to false but now it defaults to true.
++# IOW, lack of explicit "clean.requireForce = false" is taken as
++# "clean.requireForce = true".
++case "$disabled" in
++"")
++	echo >&2 "clean.requireForce not set and -n or -f not given; refusing to clean"
+  	exit 1
+-fi
++	;;
++"true")
++	echo >&2 "clean.requireForce set and -n or -f not given; refusing to clean"
++	exit 1
++	;;
++esac
+
+  case "$ignored,$ignoredonly" in
+  	1,1) usage;;
+-- 
+1.5.3.5.1368.g3cabf
