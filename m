@@ -1,116 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: git diff woes
-Date: Mon, 12 Nov 2007 12:19:08 +0100
-Message-ID: <473836AC.6090802@op5.se>
-References: <4738208D.1080003@op5.se> <Pine.LNX.4.64.0711120958500.4362@racer.site> <47382C84.50408@op5.se> <Pine.LNX.4.64.0711121047590.4362@racer.site>
+From: "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>
+Subject: Re: [PATCH 0/5] some shell portability fixes
+Date: Mon, 12 Nov 2007 18:20:54 +0700
+Message-ID: <fcaeb9bf0711120320jce181d4xd962c538a898c039@mail.gmail.com>
+References: <20071106201518.GA6361@ins.uni-bonn.de>
+	 <7v8x5bgl04.fsf@gitster.siamese.dyndns.org>
+	 <fcaeb9bf0711070758w5832ab83ic16e8fb4edb80972@mail.gmail.com>
+	 <fcaeb9bf0711070805x49228d8dq7e8e6f26060c47ab@mail.gmail.com>
+	 <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 12:19:28 2007
+Cc: "Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>, git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 12:21:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrXKB-0001F6-Kf
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:19:28 +0100
+	id 1IrXLt-0001fS-0F
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068AbXKLLTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 06:19:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757374AbXKLLTM
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:19:12 -0500
-Received: from mail.op5.se ([193.201.96.20]:53528 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757068AbXKLLTL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 06:19:11 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 262C21F0875A;
-	Mon, 12 Nov 2007 12:19:10 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ExXKnnZh3Gid; Mon, 12 Nov 2007 12:19:09 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 1E6DE1F08751;
-	Mon, 12 Nov 2007 12:19:09 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <Pine.LNX.4.64.0711121047590.4362@racer.site>
+	id S1757054AbXKLLU4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 06:20:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757374AbXKLLU4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:20:56 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:25596 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757043AbXKLLUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 06:20:55 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1059675nfb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 03:20:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=Os3uw5P34ey50fJvx/uB9YEzZmgRSHzdmFCuXBh94lc=;
+        b=jEqVtdsxaBRLp1wVlKJgcnenYBIfZvLvRKM+8WgpntLDWnlOji2SWtFNXYUoULe6GnAVbIC9Pi6e5cwkE4Whn1K2oBWuyz+pYW/yB6IeD8wqXACy+qfeuyQfUyWpZqGaJTWc/B+yMUw3ZEN5i2rFRe6FlGXY5t7cVPFFXi/9sSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=KqhiyAGMREQcmpsxxhoXpt8jwDk4ayHk/caAddVEK2ZOJnV4/Z+LdNSrGmXmzlTqwRI+I7LUE5dNIK0uJNm+l0guoTtt7COQLYytkGGwC3iVwW3DTMb15TYOW4ZlIMpFJH4vygqMt4UpyxBG6WhkzTgp+eQNTglhVWYhqUTVaSs=
+Received: by 10.86.60.7 with SMTP id i7mr4523232fga.1194866454190;
+        Mon, 12 Nov 2007 03:20:54 -0800 (PST)
+Received: by 10.86.25.2 with HTTP; Mon, 12 Nov 2007 03:20:54 -0800 (PST)
+In-Reply-To: <7v3avhbxdq.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64603>
 
-Johannes Schindelin wrote:
-> Hi,
-> 
-> On Mon, 12 Nov 2007, Andreas Ericsson wrote:
-> 
->> Johannes Schindelin wrote:
->>
->>>  And sure you can trust the hunk header.  Like most of the things, the 
->>> relate to the _original_ version, since the diff is meant to be 
->>> applied as a forward patch.
->>>
->>> So for all practical matters, the diff shows the correct thing: "in 
->>> this hunk, which (still) belongs to that function, change this and 
->>> this."
->>>
->>> Of course, that is only the case if you accept that the diff should be 
->>> applied _in total_, not piecewise.  IOW if you are a fan of GNU patch 
->>> which happily clobbers your file until it fails with the last hunk, 
->>> you will not be happy.
->>>
->> You're right. GNU patch will apply one hunk and then happily churn on 
->> even if it fails. git-apply will apply all hunks or none, so all hunks 
->> can assume that all previous hunks were successfully applied. So what 
->> was your point again?
-> 
-> My point was that this diff is not to be read as if the previous hunks had 
-> been applied.  Just look at the context: it is also the original file.
-> 
+On Nov 8, 2007 3:42 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "Nguyen Thai Ngoc Duy" <pclouds@gmail.com> writes:
+>
+> > On 11/7/07, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> >> On 11/7/07, Junio C Hamano <gitster@pobox.com> wrote:
+> >> > [2/5] Gaah, AIX sed X-<.  I am not opposed to this patch but
+> >> >       would want to get Yays from people with non GNU sed.  Is
+> >> >       busybox sed good enough to grok our scripts these days?
+> >> >       Please ask help and collect Acks at least from folks on
+> >> >       Solaris, MacOS, FBSD, and OBSD.
+> >>
+> >> I haven't extensively used all the scripts. There seems to be no
+> >> sed-related failure from git testsuite results in my git-box branch.
+> >> So I would say for now it's good enough.
+> >
+> > Argh, should have made it clear, busybox sed is good enough.
+>
+> Thanks.  And you can also happy grok Ralf's rewritten construct,
+> right?
+>
+> That is, existing
+>
+>         $ sed -e 's/foo/\n/' file
+>
+> will be rewritten by the patch [2/5] to
+>
+>         $ sed -e 's/foo/\
+>         /' file
+>
+>
 
-The context is ambiguous, as it must be present in both the new and the
-old file for it to actually *be* context. Otherwise it would be part of
-the +- diff text.
-
-> It seems I am singularly unable to explain plain concepts as this: a diff 
-> assumes that the file is yet unchanged.
-> 
-
-Sure, but the useraid with writing the apparent function declaration in
-the hunk header *will* be confusing if the function declaration changes
-in the same patch as other things in the function.
-
-> So I'll stop.
-> 
-
-Give me something valuable instead, such as your opinion on whether it
-would be better to not print the function declaration at all if it will
-be changed by applying the same patch, or if one should pick one of the
-declarations from old or new and, if so, which one to pick.
-
-I simply refuse to believe that you wouldn't immediately think the hunk
-below holds an obvious bug. I thought so because of the helpful function
-context git diff prints (which is a helper for human reviewers, and not
-something git-apply or GNU patch needs to work), and now I want to do
-something about it so others won't have to suffer the same confusion.
-
-@@ -583,75 +346,100 @@ double jitter_request(const char *host, int *status){
-       if(verbose) printf("%d candiate peers available\n", num_candidates);
-       if(verbose && syncsource_found) printf("synchronization source found\n")
-       if(! syncsource_found){
--               *status = STATE_UNKNOWN;
-+               status = STATE_WARNING;
-               if(verbose) printf("warning: no synchronization source found\n")
-       }
+Yes it worked well
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Duy
