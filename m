@@ -1,62 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/6] add ref_abbrev_matches_full_with_rules()
-Date: Mon, 12 Nov 2007 11:51:44 -0800
-Message-ID: <7vve872qen.fsf@gitster.siamese.dyndns.org>
-References: <1194789708646-git-send-email-prohaska@zib.de>
-	<11947897083381-git-send-email-prohaska@zib.de>
-	<11947897081278-git-send-email-prohaska@zib.de>
-	<11947897083159-git-send-email-prohaska@zib.de>
-	<11947897083265-git-send-email-prohaska@zib.de>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [PATCH] Fix rev-list when showing objects involving submodules
+Date: Tue, 13 Nov 2007 08:54:08 +1300
+Message-ID: <4738AF60.90207@vilain.net>
+References: <Pine.LNX.4.64.0711112335020.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 20:52:32 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 20:53:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrfKa-00027p-Co
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 20:52:24 +0100
+	id 1IrfM4-0002dX-3p
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 20:53:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753039AbXKLTvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 14:51:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753025AbXKLTvz
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 14:51:55 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50466 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752980AbXKLTvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 14:51:54 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id C24C22FB;
-	Mon, 12 Nov 2007 14:52:15 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	id S1753255AbXKLTxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 14:53:38 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752921AbXKLTxi
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 14:53:38 -0500
+Received: from watts.utsl.gen.nz ([202.78.240.73]:60354 "EHLO
+	magnus.utsl.gen.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752753AbXKLTxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 14:53:37 -0500
+Received: by magnus.utsl.gen.nz (Postfix, from userid 65534)
+	id 3977021D014; Tue, 13 Nov 2007 08:53:35 +1300 (NZDT)
+Received: from [192.168.69.104] (203-97-235-49.cable.telstraclear.net [203.97.235.49])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6088894FC7;
-	Mon, 12 Nov 2007 14:52:13 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	by magnus.utsl.gen.nz (Postfix) with ESMTP id 77DDF21D012;
+	Tue, 13 Nov 2007 08:53:31 +1300 (NZDT)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <Pine.LNX.4.64.0711112335020.4362@racer.site>
+X-Enigmail-Version: 0.95.0
+X-Spam-Checker-Version: SpamAssassin 3.0.2 (2004-11-16) on 
+	mail.magnus.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=0.4 required=5.0 tests=SPF_HELO_FAIL autolearn=no 
+	version=3.0.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64695>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Johannes Schindelin wrote:
+> The function mark_tree_uninteresting() assumed that the tree entries
+> are blob when they are not trees.  This is not so.  Since we do
+> not traverse into submodules (yet), the gitlinks should be ignored.
+>
+> diff --git a/revision.c b/revision.c
+> index 931f978..81b5a93 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -69,7 +69,7 @@ void mark_tree_uninteresting(struct tree *tree)
+>  	while (tree_entry(&desc, &entry)) {
+>  		if (S_ISDIR(entry.mode))
+>  			mark_tree_uninteresting(lookup_tree(entry.sha1));
+> -		else
+> +		else if (!S_ISGITLINK(entry.mode))
+>  			mark_blob_uninteresting(lookup_blob(entry.sha1));
+>  	}
+>  
+>   
 
-> +int ref_abbrev_matches_full_with_rules(const char *abbrev_name, const char *full_name, const char **rules)
-> +{
-> +	const char **p;
-> +	const int abbrev_name_len = strlen(abbrev_name);
-> +
-> +	for (p = rules; *p; p++) {
-> +		if (!strcmp(full_name, mkpath(*p, abbrev_name_len, abbrev_name))) {
-> +			return 1;
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-> +
+Wouldn't it be better to check for what it is, rather than what it is not?
 
-How about calling this simply "ref_abbrev_matches()" or
-"refname_match()" which is even shorter?
+Sam.
