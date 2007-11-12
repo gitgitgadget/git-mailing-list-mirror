@@ -1,138 +1,67 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: [PATCH] push mirroring update test titles
-Date: Mon, 12 Nov 2007 15:48:02 +0000
-Message-ID: <20071112154802.GK301@shadowen.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] status&commit: Teach them to show submodule commit summary
+Date: Mon, 12 Nov 2007 16:59:11 +0100
+Message-ID: <4738784F.7010106@viscovery.net>
+References: <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:48:21 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ping Yin <pkufranky@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:59:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrbWP-0003UA-2g
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:48:21 +0100
+	id 1IrbhG-0007Y3-FU
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590AbXKLPrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:47:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753406AbXKLPrv
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:47:51 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4561 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426AbXKLPru (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:47:50 -0500
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by hellhawk.shadowen.org with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1IrbVt-0006sH-AN; Mon, 12 Nov 2007 15:47:49 +0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753396AbXKLP7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:59:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752549AbXKLP7P
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:59:15 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:36184 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752495AbXKLP7O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:59:14 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IrbgO-0002AS-W8; Mon, 12 Nov 2007 16:58:41 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id C7CC554D; Mon, 12 Nov 2007 16:59:11 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64644>
 
-Fix up the test titles which are incorrectly in the negative.
+Ping Yin schrieb:
+> git status/commit just treats submodules as ordinary files when reporting status
+> changes. However, one may also wonder how submodules change (the commits).
+> 
+> This commit teaches git status/commit to additionally show commit summary of
+> user-cared (i.e. checked out) modified submodules since HEAD (or HEAD^ if
+> --amend option is on). For submodules deleted or initially added, commit summary
+> are not shown.
 
-Signed-off-by: Andy Whitcroft <apw@shadowen.org>
----
-	This probabally should be folded down into the
-	current tests patch.  If you want me to do that
-	and resubmit, yell at me.
+In general, I like the idea (as I've already pointed out).
 
- t/t5517-push-mirror.sh |   20 ++++++++++----------
- 1 files changed, 10 insertions(+), 10 deletions(-)
-diff --git a/t/t5517-push-mirror.sh b/t/t5517-push-mirror.sh
-index 0fc6778..ed3fec1 100755
---- a/t/t5517-push-mirror.sh
-+++ b/t/t5517-push-mirror.sh
-@@ -31,7 +31,7 @@ mk_repo_pair () {
- 
- 
- # BRANCH tests
--test_expect_success 'push mirror does not create new branches' '
-+test_expect_success 'push mirror creates new branches' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -45,7 +45,7 @@ test_expect_success 'push mirror does not create new branches' '
- 
- '
- 
--test_expect_success 'push mirror does not update existing branches' '
-+test_expect_success 'push mirror updates existing branches' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -61,7 +61,7 @@ test_expect_success 'push mirror does not update existing branches' '
- 
- '
- 
--test_expect_success 'push mirror does not force update existing branches' '
-+test_expect_success 'push mirror force updates existing branches' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -79,7 +79,7 @@ test_expect_success 'push mirror does not force update existing branches' '
- 
- '
- 
--test_expect_success 'push mirror does not remove branches' '
-+test_expect_success 'push mirror removes branches' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -97,7 +97,7 @@ test_expect_success 'push mirror does not remove branches' '
- 
- '
- 
--test_expect_success 'push mirror does not add, update and remove branches together' '
-+test_expect_success 'push mirror adds, updates and removes branches together' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -125,7 +125,7 @@ test_expect_success 'push mirror does not add, update and remove branches togeth
- 
- 
- # TAG tests
--test_expect_success 'push mirror does not create new tags' '
-+test_expect_success 'push mirror creates new tags' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -140,7 +140,7 @@ test_expect_success 'push mirror does not create new tags' '
- 
- '
- 
--test_expect_success 'push mirror does not update existing tags' '
-+test_expect_success 'push mirror updates existing tags' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -158,7 +158,7 @@ test_expect_success 'push mirror does not update existing tags' '
- 
- '
- 
--test_expect_success 'push mirror does not force update existing tags' '
-+test_expect_success 'push mirror force updates existing tags' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -179,7 +179,7 @@ test_expect_success 'push mirror does not force update existing tags' '
- 
- '
- 
--test_expect_success 'push mirror does not remove tags' '
-+test_expect_success 'push mirror removes tags' '
- 
- 	mk_repo_pair &&
- 	(
-@@ -197,7 +197,7 @@ test_expect_success 'push mirror does not remove tags' '
- 
- '
- 
--test_expect_success 'push mirror does not add, update and remove tags together' '
-+test_expect_success 'push mirror adds, updates and removes tags together' '
- 
- 	mk_repo_pair &&
- 	(
+But at this time git-commit is about to be made a builtin, and since your 
+implementation contains a lot of non-portable constructs ($'', >&) and a new 
+dependency on awk (and, hence, has little chances of being accepted), I 
+suggest that you stay tuned, and implement this in the forth-coming 
+builtin-commit.c.
+
+> A configuration variable 'submodule.status' is used to turn this summary
+> behaviour on or off (default off). Also --submodule and --no-submodule options
+> are added.
+
+There is already 'status.color', I suggest the configuration to become 
+'status.submoduleSummary'.
+
+-- Hannes
