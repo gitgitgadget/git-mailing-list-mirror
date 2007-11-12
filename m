@@ -1,72 +1,64 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 12 Nov 2007 15:27:40 +0100
-Message-ID: <087FCF8E-74BF-42EA-B7E2-4622DD0F5F9B@zib.de>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711121203150.4362@racer.site>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "Adrian Wilkins" <adrian.wilkins@gmail.com>
+Subject: BUG: git-svn does not escape literal backslashes in author names.
+Date: Mon, 12 Nov 2007 14:28:24 +0000
+Message-ID: <1213a9470711120628l4ccab632n17635295ec897a2@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 15:29:28 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 15:29:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IraHq-00005q-Rw
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:29:15 +0100
+	id 1IraHq-00005q-5n
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:29:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758391AbXKLO2n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 09:28:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755056AbXKLO2n
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:28:43 -0500
-Received: from mailer.zib.de ([130.73.108.11]:54511 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758249AbXKLO2m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 09:28:42 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lACEQR27001828;
-	Mon, 12 Nov 2007 15:26:27 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lACEQM2i003879
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 12 Nov 2007 15:26:27 +0100 (MET)
-In-Reply-To: <Pine.LNX.4.64.0711121203150.4362@racer.site>
-X-Mailer: Apple Mail (2.752.3)
+	id S1757539AbXKLO21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 09:28:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757527AbXKLO21
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:28:27 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:34678 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757514AbXKLO20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 09:28:26 -0500
+Received: by py-out-1112.google.com with SMTP id u77so1249861pyb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 06:28:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=Jw5wi4Z1c5a7Wi3Al5wB7PLEt+f5YiopRthNnh/mi34=;
+        b=FYErztt8ndki1X+gI+oaLPOJdue/aFMmiZ8MV40sT2xl+gpDdYcL3SEM+SFPZUa+8a6eYBqDXIXhN15U1O6JGwraQqY8Wu8e8MvI06Hp+GYFQM6px9unSQDjGyls6vIZ9CUzPP1agCZOHLvu5zHvjSOb+E9I6CF1++vha4FfQCY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=hzVSjMwcERU4DzaFnSdAi6oGuyLxDRNyGKHzT0zvikmc/78mYsEie6zJOArHFObZEoAQHNHvBETrD66Updd5lzyMhDoIdvWy8dSV534L5DpygC8EVfzElxd25apANi2YuYunOsX6xbBZ4e2FqBqaSptP+LUU4pdXO7oIpj5ONJw=
+Received: by 10.65.159.19 with SMTP id l19mr13912416qbo.1194877704970;
+        Mon, 12 Nov 2007 06:28:24 -0800 (PST)
+Received: by 10.64.243.15 with HTTP; Mon, 12 Nov 2007 06:28:24 -0800 (PST)
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64628>
 
+Recently converted a large (11,000+ revisions) repository.
 
-On Nov 12, 2007, at 1:21 PM, Johannes Schindelin wrote:
+We authenticate against the NT domain controller, so all our revision
+authors are of the form "domain\user". (You can switch off mod_sspi
+reporting the domain part, but I didn't know about this at the time,
+so it continues for historical reasons.)
 
->> * sp/refspec-match (Sun Nov 11 15:01:48 2007 +0100) 4 commits
->>  - refactor fetch's ref matching to use refname_match()
->>  - push: use same rules as git-rev-parse to resolve refspecs
->>  - add refname_match()
->>  - push: support pushing HEAD to real branch name
->>
->> This changes the semantics slightly but I think it is a move in
->> the right direction.
->
-> We could add a "--matching" option and output a warning when it is not
-> passed.  I would like this pretty soon, and would not be sad if it  
-> went
-> into 'next' before this topic.
+git-svn treats the literal backslashes in the author names as escapes.
+This leads to authors like
 
-Is this the road towards
-1) "git push --matching" push matching branches.
-2) "git push --current" push only current branch.
-3) "git push" report error if the config does not contain a Push line.
-    (after it reported a warning for a while).
+domainkevin
+domain\
+ichard
 
-I'd like to see this too. Unfortunately it's unlikely that I'll start
-working on it before next weekend.
+I know, I should have read the manual and used my "authors" file. Bah.
 
-"--matching" would be a no-op at this time. Only a warning would be  
-printed
-if it is missing. Right?
+I'm sure that part of the revision hash in git includes the author
+name... so I guess I'm looking at another multi-day conversion. :-(
 
-	Steffen
+Can I suggest that you make the authors file compulsory by default as well?
