@@ -1,66 +1,72 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Deprecate git-fetch-pack?
-Date: Mon, 12 Nov 2007 17:33:04 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711121732000.4362@racer.site>
-References: <Pine.LNX.4.64.0711101752490.29952@iabervon.org> 
- <7v4pftip42.fsf@gitster.siamese.dyndns.org>  <74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com>
-  <Pine.LNX.4.64.0711111103240.4362@racer.site>  <7vd4ugcwkm.fsf@gitster.siamese.dyndns.org>
-  <20071111222117.GA7392@thunk.org>  <7vabpkbebj.fsf@gitster.siamese.dyndns.org>
-  <Pine.LNX.4.64.0711112247350.4362@racer.site>  <20071111235819.GB7392@thunk.org>
-   <fh8609$umn$1@ger.gmane.org> <1194888565.1335.1.camel@ld0161-tx32>
+From: Nicolas Pitre <nico@cam.org>
+Subject: Re: Cloning empty repositories,
+ was Re: What is the idea for bare repositories?
+Date: Mon, 12 Nov 2007 12:33:08 -0500 (EST)
+Message-ID: <alpine.LFD.0.9999.0711121231150.21255@xanadu.home>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+ <20071112131927.GA1701@c3sl.ufpr.br>
+ <Pine.LNX.4.64.0711121355380.4362@racer.site>
+ <200711121719.54146.wielemak@science.uva.nl>
+ <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
+ <Pine.LNX.4.64.0711121715090.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, Git List <git@vger.kernel.org>
-To: Jon Loeliger <jdl@freescale.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:33:39 2007
+Content-Transfer-Encoding: 7BIT
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:33:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrdAG-00025f-Nx
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:33:37 +0100
+	id 1IrdAb-0002Fa-Hc
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:33:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758169AbXKLRdU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 12:33:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758093AbXKLRdU
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:33:20 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41520 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752658AbXKLRdT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 12:33:19 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 17:33:18 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp036) with SMTP; 12 Nov 2007 18:33:18 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19zvpwSVdhzDgmQzupEjGXaU4Dm+hlrcUMF3MZvuT
-	azkPIP4+p1VaPz
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1194888565.1335.1.camel@ld0161-tx32>
-X-Y-GMX-Trusted: 0
+	id S1758541AbXKLRdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 12:33:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758365AbXKLRdl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:33:41 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:51096 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755261AbXKLRdk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 12:33:40 -0500
+Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR001.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JRE0020NM38NTK0@VL-MH-MR001.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 12 Nov 2007 12:33:08 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <Pine.LNX.4.64.0711121715090.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64673>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64674>
 
-Hi,
+On Mon, 12 Nov 2007, Johannes Schindelin wrote:
 
-On Mon, 12 Nov 2007, Jon Loeliger wrote:
-
-> On Sun, 2007-11-11 at 18:16, Jakub Narebski wrote:
+> Hi,
 > 
-> > >        c) show-branch: The output is terrifying without explanation
+> On Mon, 12 Nov 2007, Matthieu Moy wrote:
+> 
+> > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > > 
-> > I agree. I would replace it by gitk, or gui (git-gui / "git gui").
+> > > On Mon, 12 Nov 2007, Jan Wielemaker wrote:
+> > >
+> > >> I found out that cloning a empty bare repository produces nothing at 
+> > >> all, [...]
+> > >
+> > > If they are empty, what exactly do you mean to clone?
+> > 
+> > I'd expect an empty repository, with the git remote configured 
+> > correctly.
 > 
-> I disagree; we should keep it.
+> Yeah, right.
+> 
+> Last time I checked, those geneticists did not clone thin air.  They 
+> always waited until they had something to clone.
 
-We keep it.  We just don't advertise it.  The whole thread was not about 
-removing commands, but removing them from the output of "git help".
+But we're not geneticists, and I think the above usage should
+"just work (tm)".
 
-> It is a very useful command, and usable on systems where GUI isn't an 
-> option.
 
-Yes, and those systems are the majority nowadays.  Oh, wait...
-
-Ciao,
-Dscho
+Nicolas
