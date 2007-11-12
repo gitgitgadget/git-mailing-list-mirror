@@ -1,89 +1,85 @@
-From: "David Symonds" <dsymonds@gmail.com>
-Subject: Re: [PATCH] Simplify strchrnul() compat code
-Date: Mon, 12 Nov 2007 20:24:09 +1100
-Message-ID: <ee77f5c20711120124m6281fddfs9403a46cf354b993@mail.gmail.com>
-References: <4733AEA0.1060602@lsrfire.ath.cx> <473434ED.50002@op5.se>
-	 <47359C44.6090903@lsrfire.ath.cx> <4735BA79.5020102@op5.se>
-	 <7v6409f4eh.fsf@gitster.siamese.dyndns.org>
-	 <ee77f5c20711120103s478e26cdib85f38293423d90c@mail.gmail.com>
-	 <473818FA.1060400@viscovery.net>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [PATCH] Documentation: Fix references to deprecated commands
+Date: Mon, 12 Nov 2007 10:37:19 +0100
+Message-ID: <20071112093719.GA22555@diku.dk>
+References: <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org> <20071112002410.GA21970@diku.dk> <20071112003251.GB21970@diku.dk> <7vbq9z50vj.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Andreas Ericsson" <ae@op5.se>,
-	"=?ISO-8859-1?Q?Ren=E9_Scharfe?=" <rene.scharfe@lsrfire.ath.cx>,
-	"Pierre Habouzit" <madcoder@debian.org>,
-	"Git Mailing List" <git@vger.kernel.org>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Jakub Narebski" <jnareb@gmail.com>
-To: "Johannes Sixt" <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Nov 12 10:25:02 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 10:37:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrVXR-0003i8-E8
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:25:01 +0100
+	id 1IrVjq-0007Gx-0u
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:37:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753209AbXKLJYM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 04:24:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXKLJYL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:24:11 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:19058 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752813AbXKLJYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 04:24:10 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1120905rvb
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 01:24:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=LJxIP1eHL0P/feajHSSp2g99R9JIz89rWAFVsyCssYo=;
-        b=lCV9Svb23gRsLP+iv+HagjEFykehsRn154loe/OnUWsDLam0cb4hAurSAqhcb4eUzBwKEP4Vi1i1tONqXzhPRRT9aM7FWvDlbjd0GM9bcFyqI4xmnOdHejaPQ4xJjVgQtyufDAHnF7sABqT3kRkrG9SfdP5ahSylhGJsOI3ivXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=GcFDH5bRhvMU4mPCA1Df6xQtZXzpDXSlpl+CpKmY1X6MRr7ci4wctNmrX97+QeP20SSX15qCiCrZhi4jlGSxzVylQBOJU3ydOnjAubc6qwbqg1TzKB/hs0ftevFSt5ZYNBRo3VY2VvK1lcIzDt72halZjAdFwfkTnZXKAwFdu7M=
-Received: by 10.141.180.5 with SMTP id h5mr2262024rvp.1194859449479;
-        Mon, 12 Nov 2007 01:24:09 -0800 (PST)
-Received: by 10.141.20.13 with HTTP; Mon, 12 Nov 2007 01:24:09 -0800 (PST)
-In-Reply-To: <473818FA.1060400@viscovery.net>
+	id S1755723AbXKLJh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 04:37:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbXKLJh2
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:37:28 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:58154 "EHLO mgw1.diku.dk"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755627AbXKLJh1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 04:37:27 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 2254C7704BA;
+	Mon, 12 Nov 2007 10:37:26 +0100 (CET)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id mfDA2wmqVElr; Mon, 12 Nov 2007 10:37:24 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 8DB0B770502;
+	Mon, 12 Nov 2007 10:37:19 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 240826DFD94; Mon, 12 Nov 2007 10:36:53 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 577455B8001; Mon, 12 Nov 2007 10:37:19 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <7vbq9z50vj.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64582>
 
-On Nov 12, 2007 8:12 PM, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> David Symonds schrieb:
-> > On Nov 11, 2007 9:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> >> @@ -183,7 +183,7 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
-> >>                  const void *needle, size_t needlelen);
-> >>  #endif
-> >>
-> >> -#if !defined(__GLIBC__) && !__GLIBC_PREREQ(2, 1)
-> >> +#if !defined(__GLIBC_PREREQ) && !__GLIBC_PREREQ(2, 1)
-> >>  #define strchrnul gitstrchrnul
-> >>  static inline char *gitstrchrnul(const char *s, int c)
-> >>  {
+Junio C Hamano <gitster@pobox.com> wrote Mon, Nov 12, 2007:
+> Jonas Fonseca <fonseca@diku.dk> writes:
+> 
+> > diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
+> > index 9b5f86f..ef1b19c 100644
+> > --- a/Documentation/git-get-tar-commit-id.txt
+> > +++ b/Documentation/git-get-tar-commit-id.txt
+> > @@ -14,12 +14,12 @@ SYNOPSIS
+> >  DESCRIPTION
+> >  -----------
+> >  Acts as a filter, extracting the commit ID stored in archives created by
+> > -git-tar-tree.  It reads only the first 1024 bytes of input, thus its
+> > +gitlink:git-archive[1].  It reads only the first 1024 bytes of input, thus its
+> >  runtime is not influenced by the size of <tarfile> very much.
+> >  
+> >  If no commit ID is found, git-get-tar-commit-id quietly exists with a
+> >  return code of 1.  This can happen if <tarfile> had not been created
+> > -using git-tar-tree or if the first parameter of git-tar-tree had been
+> > +using git-archive or if the <treeish> parameter of git-archive had been
+> >  a tree ID instead of a commit ID or tag.
 > >
-> > I just tested it on my machine (OS X Tiger) now that it's in 'next',
-> > and this breaks the build:
-> >
-> >     CC git.o
-> > In file included from builtin.h:4,
-> >                  from git.c:1:
-> > git-compat-util.h:187:48: error: missing binary operator before token "("
-> > make: *** [git.o] Error 1
-> >
-> >
-> > I don't think I have __GLIBC_PREREQ defined anywhere I can find.
->
-> Turn the && in that line into || and it should work.
+> > -- 
+> > Jonas Fonseca
+> 
+> How did you prepare this hunk?  I count 10 lines preimage and
+> postimage, followed by a blank line and the signature separator
+> "-- " you added in your MUA, but the header claims to have 12
+> lines.
 
-Nope, no dice. Plus, that'd change the logic. I also tried turning the
-(!X && !Y) into (X || Y) to no avail.
+I am sorry to cause you this kind of problems. Usually I keep the patch
+ending inserted by format-patch, but yesterday I deleted it for some
+unknown reason. Maybe I should learn to use git-send-email. 
 
-
-Dave.
+-- 
+Jonas Fonseca
