@@ -1,76 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: git config error message
-Date: Tue, 13 Nov 2007 00:09:26 +0100
-Organization: At home
-Message-ID: <fhamf4$g7t$1@ger.gmane.org>
-References: <9e4733910711120735p653c643eveb44627bf4532b1a@mail.gmail.com> <20071112222317.GF2918@steel.home> <Pine.LNX.4.64.0711122224190.4362@racer.site> <20071112222629.GG2918@steel.home>
+From: Thomas Neumann <tneumann@users.sourceforge.net>
+Subject: Re: wishlist: git info
+Date: Mon, 12 Nov 2007 23:50:18 +0100
+Message-ID: <4738D8AA.1030604@users.sourceforge.net>
+References: <fhad5q$iia$1@ger.gmane.org> <20071112222106.GE2918@steel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 00:10:05 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 00:24:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IriPq-0005ix-AS
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:10:02 +0100
+	id 1Irie0-0001mK-Gm
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633AbXKLXJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 18:09:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXKLXJp
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:09:45 -0500
-Received: from main.gmane.org ([80.91.229.2]:57517 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753840AbXKLXJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 18:09:45 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IriPP-0004Wi-KH
-	for git@vger.kernel.org; Mon, 12 Nov 2007 23:09:35 +0000
-Received: from abvw125.neoplus.adsl.tpnet.pl ([83.8.220.125])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 23:09:35 +0000
-Received: from jnareb by abvw125.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 23:09:35 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvw125.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1756763AbXKLXYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 18:24:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXKLXYY
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:24:24 -0500
+Received: from tneu02.synserver.de ([217.119.58.222]:2395 "EHLO
+	tneu02.synserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751844AbXKLXYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 18:24:24 -0500
+X-Greylist: delayed 2049 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Nov 2007 18:24:23 EST
+Received: from [192.168.0.2] (dslb-084-058-234-234.pools.arcor-ip.net [84.58.234.234])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by tneu02.synserver.de (Postfix) with ESMTP id DDBF1680BA;
+	Mon, 12 Nov 2007 23:50:12 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
+In-Reply-To: <20071112222106.GE2918@steel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64731>
 
-Alex Riesen wrote:
+> you're better of just running "gitk --all" at this point. It'll show
+> remote branches (with the names of remote repos prepended) and their
+> relations to the local repo.
+hm, this is not what I am after. I do not want to inspect the history, I
+want to see where this repository "belongs" to. Gitk shows me the name
+(which is reasonable, of course), but not the URL. And it is a GUI
+application, which is not so perfect.
 
-> Johannes Schindelin, Mon, Nov 12, 2007 23:24:54 +0100:
->> Hi,
->> On Mon, 12 Nov 2007, Alex Riesen wrote:
->>> Jon Smirl, Mon, Nov 12, 2007 16:35:07 +0100:
->>>
->>>> I'm not in a git repo, this error message is misleading.
->>>> 
->>>> jonsmirl@terra:~/foo$ git config remote.origin.url
->>>> http://git.digispeaker.com/projects/digispeaker-kernel.git
->>>> could not lock config file
->>>> 
->>> 
->>> Cygwin or any crashes in this repo lately?
->>> If cygwin, than we probably have a file handle leak in config code.
->> 
->> He said that he's not in a git repo.  Thus, .git/config does not exist, 
->> and is not lockable, since not even .git/ exists.
->> 
-> 
-> Oh.
+>> Probably not the most intelligent way to compute it, but you get the
+>> idea. git info should give a brief overview over the current working
+>> directory.
+>
+> Like what? None of the commands you suggested even touch it.
+probably "current working directory" was not the best way to phrase it.
+I mean state of the repository, which in my case is a clone of a central
+repository.
+My commands show (ignoring formatting): 1. the remote repositories with
+URL 2. the current head commit hash 3. the date of the head commit.
+Which gives a pretty decent idea about the state of the repository.
 
-And neither does per-user config file (I triet to reproduce this error, and
-forgot about ~/.gitconfig file).
+> Would
+>
+>     git remote -r -v && git log --max-count=1 --pretty=format:'%h %s'
+>
+> do what you think is what you need?
+perhaps, the first command gives me an error (git 1.5.2.5). This here is
+nearly ok
 
--- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+git remote && git log --max-count=1 --pretty=format:'%H %cD'
+
+except the missing URL from git remote (but perhaps your options include
+it with a newer git version, will test).
+
+> May I suggest you to consider just running "git fetch -v"?
+this is has side effects, and is quite slow. Your command sequence above
+  is more handy (and faster).
+
+So I can emulate git info with an alias, and this is good enough for mew
+now, thanks for the hints. Perhaps a somewhat more elaborate version of
+git info might be useful for others, too, but this is not urgent.
+
+Thomas
