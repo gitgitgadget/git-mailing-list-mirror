@@ -1,86 +1,99 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: [PATCH] git-commit: Add tests for invalid usage of
-	-a/--interactive with paths
-Date: Mon, 12 Nov 2007 16:15:39 +0100
-Message-ID: <20071112151539.GA2696@atjola.homenet>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] status&commit: Teach them to show submodule commit summary
+Date: Mon, 12 Nov 2007 23:17:48 +0800
+Message-ID: <46dff0320711120717gf8a67cdn2b6bdaa9cfa29218@mail.gmail.com>
+References: <47382506.1090106@viscovery.net>
+	 <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
+	 <20071112144605.GA16791@ins.uni-bonn.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:16:08 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: "Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>,
+	"Ping Yin" <pkufranky@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:18:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irb16-0008I0-St
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:16:01 +0100
+	id 1Irb37-0000au-Ix
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:18:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752319AbXKLPPo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 10:15:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbXKLPPn
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:15:43 -0500
-Received: from mail.gmx.net ([213.165.64.20]:35443 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751663AbXKLPPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:15:42 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 15:15:40 -0000
-Received: from i577AF071.versanet.de (EHLO localhost) [87.122.240.113]
-  by mail.gmx.net (mp049) with SMTP; 12 Nov 2007 16:15:40 +0100
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19y2rcjq5FyNsgv+fwvDFTWdc7Cz/KKiEQBBfBY5M
-	ycwGxuhjocens7
+	id S1751701AbXKLPRu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:17:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXKLPRu
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:17:50 -0500
+Received: from rv-out-0910.google.com ([209.85.198.184]:65386 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751484AbXKLPRt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:17:49 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1194818rvb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 07:17:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=r+ZD/q/rUyhZr82bYTCh5zYYtJJOuSn1DjIy9xA6jWw=;
+        b=H4BUQ7oAwqsilELIAamnGnmPucZhccDy8Vad18TMppDX7ZxHyumAcezT18Oy2jGq1t2L74OVm5R7XA8mG4DdMcP2H2i1sBwZmUVX2aPjXxzjrHZDJs4bMOlAD/yPOLNA4o+HN+Tlg1sJG94siQ4x5iW4aWf9krGXAOtS8yMbHUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=gC8yzfKdrl2H2Mn6UTABDoE8FM5eS5CFWcYeQa2MAg9JqzopRVul09dybQ7uT+K9dGC5VTdr2zwjno5JTAv9fuQ4hLl1jYcCZ5+TNAjb6UCUXl8/mWv35X7n3x4WT7IslRBlDRa5l9tgIpXS2ytjTAcgZTCoXUwIlJrwsSbWgwM=
+Received: by 10.140.148.3 with SMTP id v3mr218460rvd.1194880668902;
+        Mon, 12 Nov 2007 07:17:48 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Mon, 12 Nov 2007 07:17:48 -0800 (PST)
+In-Reply-To: <20071112144605.GA16791@ins.uni-bonn.de>
 Content-Disposition: inline
-In-Reply-To: <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64634>
 
-git-commit was/is broken in that it accepts paths together with -a or
---interactive, which it shouldn't. There tests check those usage errors=
-=2E
+On Nov 12, 2007 10:46 PM, Ralf Wildenhues <Ralf.Wildenhues@gmx.de> wrote:
+> Hello,
+>
+> A couple of portability nits:
+>
+> * Ping Yin wrote on Mon, Nov 12, 2007 at 03:21:17PM CET:
+> [...]
+> > +
+> > +     # TODO: quote module names containing space or tab
+> > +     test -n "$modules" && echo -e "# Submodules modifiled: "$modules"\n#"
+>
+> Typo: s/modifiled/modified/
+Oops
+>
+> Then, "echo -e" is not portable (and not used elsewhere in git), but you
+> can just use this instead:
+>   test ... && { echo "# ..."; echo "#"; }
+See
+>
+> Also, it so happens you leave $modules outside quotes which will drop
+> multiple adjacent white spaces.  Did you mean to use
+>   echo "# Submodules modified: \"$modules\""
+I leave $modules outside quotes to let "\n" change to <space> by auto
+word splitting.
+It actually eats white spaces in the module names. So any suggestion
+to handle this case?
+To handles module names with spaces, is it ok to display as follows?
 
-Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
----
-> [Stalled]
->=20
-> * bs/maint-commit-options (Mon Nov 5 20:36:33 2007 +0100) 1 commit
->  - git-commit.sh: Fix usage checks regarding paths given when they do
->    not make sense
->=20
-> This is meant to go to 'maint' but needs test script to exhibit
-> the existing breakage and demonstrate the fix.
->=20
-> The test will help catching future regression even after we
-> replace git-commit with Kristian's rewrite in C.
+Submodules modified: sm1 "sm name with space"
 
-Sorry, didn't take your comment to that patch as a request to provide
-tests. Anyway, here they are :-) I hope I got the commit message/commen=
-t
-formatting right this time.
+Any good way to only add quoting for names with spaces?
 
-diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
-index 4dc35bd..9dba104 100644
---- a/t/t7501-commit.sh
-+++ b/t/t7501-commit.sh
-@@ -34,6 +34,16 @@ test_expect_failure \
- 	"git-commit -C HEAD -m illegal"
-=20
- test_expect_failure \
-+	"using paths with -a" \
-+	"echo King of the bongo >file &&
-+	git-commit -m foo -a file"
-+
-+test_expect_failure \
-+	"using paths with --interactive" \
-+	"echo bong-o-bong >file &&
-+	echo 7 | git-commit -m foo --interactive file"
-+
-+test_expect_failure \
- 	"using invalid commit with -C" \
- 	"git-commit -C bogus"
-=20
+> You can instead just use a literal newline:
+>   IFS='
+>   '
+> (minus the indentation).  And add a literal carriage return if need be
+> (is that really needed on Mac OS?), though you may want to enclose that
+> in another pair of quotes to avoid it being "optimized" away by some
+> editor.
+I just guess '\r' is need for Mac OS because i havn't Mac OS environment.
+BTW, how to add a literal carriage return?
+>
+> Cheers,
+> Ralf
+>
+
+
+
+-- 
+Ping Yin
