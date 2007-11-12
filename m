@@ -1,82 +1,86 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 12 Nov 2007 15:02:37 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711121501500.4362@racer.site>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
- <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
- <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
- <Pine.LNX.4.64.0711121203150.4362@racer.site> <087FCF8E-74BF-42EA-B7E2-4622DD0F5F9B@zib.de>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: [PATCH] git-commit: Add tests for invalid usage of
+	-a/--interactive with paths
+Date: Mon, 12 Nov 2007 16:15:39 +0100
+Message-ID: <20071112151539.GA2696@atjola.homenet>
+References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:03:09 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:16:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iraoe-0003jj-PT
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:03:09 +0100
+	id 1Irb16-0008I0-St
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:16:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086AbXKLPCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:02:53 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbXKLPCx
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:02:53 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48029 "HELO mail.gmx.net"
+	id S1752319AbXKLPPo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 10:15:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751988AbXKLPPn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:15:43 -0500
+Received: from mail.gmx.net ([213.165.64.20]:35443 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750854AbXKLPCw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:02:52 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 15:02:50 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp035) with SMTP; 12 Nov 2007 16:02:50 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19AhDM8QflAvA+fucypPXE+dgKjINVUlzcIFtU3Jm
-	OEZcey6yWxfXDe
-X-X-Sender: gene099@racer.site
-In-Reply-To: <087FCF8E-74BF-42EA-B7E2-4622DD0F5F9B@zib.de>
+	id S1751663AbXKLPPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:15:42 -0500
+Received: (qmail invoked by alias); 12 Nov 2007 15:15:40 -0000
+Received: from i577AF071.versanet.de (EHLO localhost) [87.122.240.113]
+  by mail.gmx.net (mp049) with SMTP; 12 Nov 2007 16:15:40 +0100
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX19y2rcjq5FyNsgv+fwvDFTWdc7Cz/KKiEQBBfBY5M
+	ycwGxuhjocens7
+Content-Disposition: inline
+In-Reply-To: <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64633>
 
-Hi,
+git-commit was/is broken in that it accepts paths together with -a or
+--interactive, which it shouldn't. There tests check those usage errors=
+=2E
 
-On Mon, 12 Nov 2007, Steffen Prohaska wrote:
+Signed-off-by: Bj=F6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+> [Stalled]
+>=20
+> * bs/maint-commit-options (Mon Nov 5 20:36:33 2007 +0100) 1 commit
+>  - git-commit.sh: Fix usage checks regarding paths given when they do
+>    not make sense
+>=20
+> This is meant to go to 'maint' but needs test script to exhibit
+> the existing breakage and demonstrate the fix.
+>=20
+> The test will help catching future regression even after we
+> replace git-commit with Kristian's rewrite in C.
 
-> On Nov 12, 2007, at 1:21 PM, Johannes Schindelin wrote:
-> 
-> > > * sp/refspec-match (Sun Nov 11 15:01:48 2007 +0100) 4 commits
-> > > - refactor fetch's ref matching to use refname_match()
-> > > - push: use same rules as git-rev-parse to resolve refspecs
-> > > - add refname_match()
-> > > - push: support pushing HEAD to real branch name
-> > > 
-> > > This changes the semantics slightly but I think it is a move in
-> > > the right direction.
-> > 
-> > We could add a "--matching" option and output a warning when it is not
-> > passed.  I would like this pretty soon, and would not be sad if it went
-> > into 'next' before this topic.
-> 
-> Is this the road towards
-> 1) "git push --matching" push matching branches.
-> 2) "git push --current" push only current branch.
-> 3) "git push" report error if the config does not contain a Push line.
->   (after it reported a warning for a while).
+Sorry, didn't take your comment to that patch as a request to provide
+tests. Anyway, here they are :-) I hope I got the commit message/commen=
+t
+formatting right this time.
 
-AFAIAC yes.  Maybe in two years (that's twice an eternity in git time 
-scales):
-
-4) make "git push --current" the default.
-
-> I'd like to see this too. Unfortunately it's unlikely that I'll start 
-> working on it before next weekend.
-> 
-> "--matching" would be a no-op at this time. Only a warning would be printed
-> if it is missing. Right?
-
-Right.
-
-Ciao,
-Dscho
+diff --git a/t/t7501-commit.sh b/t/t7501-commit.sh
+index 4dc35bd..9dba104 100644
+--- a/t/t7501-commit.sh
++++ b/t/t7501-commit.sh
+@@ -34,6 +34,16 @@ test_expect_failure \
+ 	"git-commit -C HEAD -m illegal"
+=20
+ test_expect_failure \
++	"using paths with -a" \
++	"echo King of the bongo >file &&
++	git-commit -m foo -a file"
++
++test_expect_failure \
++	"using paths with --interactive" \
++	"echo bong-o-bong >file &&
++	echo 7 | git-commit -m foo --interactive file"
++
++test_expect_failure \
+ 	"using invalid commit with -C" \
+ 	"git-commit -C bogus"
+=20
