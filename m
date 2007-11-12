@@ -1,76 +1,66 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 5/6] push: use same rules as git-rev-parse to resolve refspecs
-Date: Mon, 12 Nov 2007 21:48:49 +0100
-Message-ID: <DEDBC16B-0BDD-4671-8446-EFD0B32969BF@zib.de>
-References: <1194789708646-git-send-email-prohaska@zib.de> <11947897083381-git-send-email-prohaska@zib.de> <11947897081278-git-send-email-prohaska@zib.de> <11947897083159-git-send-email-prohaska@zib.de> <11947897083265-git-send-email-prohaska@zib.de> <1194789709671-git-send-email-prohaska@zib.de> <7v1wav44z8.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 21:48:28 2007
+From: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+Subject: [PATCH] Call refresh_cache() when updating the user index for --only commits.
+Date: Mon, 12 Nov 2007 15:48:22 -0500
+Message-ID: <1194900502-8987-1-git-send-email-krh@redhat.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 12 21:50:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrgCp-0005oG-SF
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 21:48:28 +0100
+	id 1IrgEf-0006V4-Jz
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 21:50:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750986AbXKLUsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 15:48:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751636AbXKLUsL
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 15:48:11 -0500
-Received: from mailer.zib.de ([130.73.108.11]:57371 "EHLO mailer.zib.de"
+	id S1751457AbXKLUuF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 15:50:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbXKLUuF
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 15:50:05 -0500
+Received: from mx1.redhat.com ([66.187.233.31]:49276 "EHLO mx1.redhat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750986AbXKLUsK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 15:48:10 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lACKlWen007152;
-	Mon, 12 Nov 2007 21:47:33 +0100 (CET)
-Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lACKlWL2009771
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 12 Nov 2007 21:47:32 +0100 (MET)
-In-Reply-To: <7v1wav44z8.fsf@gitster.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.752.3)
+	id S1751192AbXKLUuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 15:50:04 -0500
+Received: from int-mx1.corp.redhat.com (int-mx1.corp.redhat.com [172.16.52.254])
+	by mx1.redhat.com (8.13.8/8.13.1) with ESMTP id lACKmeDh010548;
+	Mon, 12 Nov 2007 15:48:40 -0500
+Received: from mail.boston.redhat.com (mail.boston.redhat.com [172.16.76.12])
+	by int-mx1.corp.redhat.com (8.13.1/8.13.1) with ESMTP id lACKmdiS020700;
+	Mon, 12 Nov 2007 15:48:40 -0500
+Received: from localhost.localdomain (dhcp83-9.boston.redhat.com [172.16.83.9])
+	by mail.boston.redhat.com (8.13.1/8.13.1) with ESMTP id lACKmRap021166;
+	Mon, 12 Nov 2007 15:48:31 -0500
+X-Mailer: git-send-email 1.5.3.5.1762.g9a09d-dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64704>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64705>
 
+We're guaranteeing the user that the index will be stat-clean after
+git commit. Thus, we need to call refresh_cache() for the user index to=
+o,
+in the 'git commit <paths>' case.
 
-On Nov 12, 2007, at 8:51 PM, Junio C Hamano wrote:
+Signed-off-by: Kristian H=C3=B8gsberg <krh@redhat.com>
+---
+ builtin-commit.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> Steffen Prohaska <prohaska@zib.de> writes:
->
->> diff --git a/remote.c b/remote.c
->> index bec2ba1..28d8eb7 100644
->> --- a/remote.c
->> +++ b/remote.c
->> @@ -519,10 +519,7 @@ static int count_refspec_match(const char  
->> *pattern,
->>  		char *name = refs->name;
->>  		int namelen = strlen(name);
->>
->> -		if (namelen < patlen ||
->> -		    memcmp(name + namelen - patlen, pattern, patlen))
->> -			continue;
->> -		if (namelen != patlen && name[namelen - patlen - 1] != '/')
->> +		if (!ref_abbrev_matches_full_with_rules(pattern, name,  
->> ref_rev_parse_rules))
->>  			continue;
->
-> I vaguely recall that in the old round this check used to be
-> without negation '!' in the front.  I think this version is
-> correct.
-
-Yes. I started with a syntax inspired by strcmp. But later
-the function got match in its name. I think returning a
-match with 'true' is more natural; and reserving '-1, 0, 1'
-for compare (as in strcmp). Therefore I changed the return
-value.
-
-With '!' is correct now. Without '!' was correct before.
-
-	Steffen
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 5011b8b..35205ef 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -109,6 +109,7 @@ static char *prepare_index(const char **files, cons=
+t char *prefix)
+=20
+ 	/* update the user index file */
+ 	add_files_to_cache(verbose, prefix, files);
++	refresh_cache(REFRESH_QUIET);
+ 	if (write_cache(fd, active_cache, active_nr) || close(fd))
+ 		die("unable to write new_index file");
+=20
+--=20
+1.5.3.5.1762.g9a09d-dirty
