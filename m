@@ -1,110 +1,74 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: Re: [PATCH] git-svn: prevent dcommitting if the index is dirty.
-Date: Mon, 12 Nov 2007 10:11:03 +0100
-Message-ID: <F711CC72-4A91-4B69-B26A-31B0FB6621B0@lrde.epita.fr>
-References: <1194806501-4796-1-git-send-email-tsuna@lrde.epita.fr> <20071112022851.GA25675@mayonaise>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-39--344384958"
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] Simplify strchrnul() compat code
+Date: Mon, 12 Nov 2007 10:12:26 +0100
+Message-ID: <473818FA.1060400@viscovery.net>
+References: <4733AEA0.1060602@lsrfire.ath.cx> <473434ED.50002@op5.se>	 <47359C44.6090903@lsrfire.ath.cx> <4735BA79.5020102@op5.se>	 <7v6409f4eh.fsf@gitster.siamese.dyndns.org> <ee77f5c20711120103s478e26cdib85f38293423d90c@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Mon Nov 12 10:11:41 2007
+Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
+	=?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>
+To: David Symonds <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 10:12:48 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrVKO-0000FN-Er
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:11:32 +0100
+	id 1IrVLa-0000Y1-Mr
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752813AbXKLJLR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 04:11:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752784AbXKLJLQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:11:16 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:57309 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752625AbXKLJLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 04:11:16 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IrVK5-0001QR-T0; Mon, 12 Nov 2007 10:11:14 +0100
-In-Reply-To: <20071112022851.GA25675@mayonaise>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1753209AbXKLJMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 04:12:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753131AbXKLJMb
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:12:31 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:60813 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752784AbXKLJMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 04:12:30 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IrVKm-0001NW-1c; Mon, 12 Nov 2007 10:11:56 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id A033454D; Mon, 12 Nov 2007 10:12:26 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <ee77f5c20711120103s478e26cdib85f38293423d90c@mail.gmail.com>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64579>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64580>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-39--344384958
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-
-On Nov 12, 2007, at 3:28 AM, Eric Wong wrote:
-
-> Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
->> dcommit uses rebase `sync' the history with what has just been  
->> pushed to
->> SVN.  Trying to dcommit with a dirty index is troublesome for  
->> rebase, so now
->> the user will get an error message if he attempts to dcommit with  
->> a dirty
->> index.
+David Symonds schrieb:
+> On Nov 11, 2007 9:44 PM, Junio C Hamano <gitster@pobox.com> wrote:
+>> @@ -183,7 +183,7 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
+>>                  const void *needle, size_t needlelen);
+>>  #endif
 >>
->> Signed-off-by: Benoit Sigoure <tsuna@lrde.epita.fr>
->
-> Thanks,
->
-> Minor nit below about indentation (which Junio can fix when applying),
-> but nevertheless:
->
-> Acked-by: Eric Wong <normalperson@yhbt.net>
->
->> ---
->>  git-svn.perl                              |    3 +++
->>  t/t9106-git-svn-dcommit-clobber-series.sh |    6 ++++++
->>  2 files changed, 9 insertions(+), 0 deletions(-)
->>
->> diff --git a/git-svn.perl b/git-svn.perl
->> index dd93e32..a15df4f 100755
->> --- a/git-svn.perl
->> +++ b/git-svn.perl
->> @@ -390,6 +390,9 @@ sub cmd_set_tree {
->>
->>  sub cmd_dcommit {
->>  	my $head = shift;
->> +        git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
->> +          'Cannot dcommit with a dirty index.  Commit your  
->> changes first'
->> +          . "or stash them with `git stash'.\n";
->
-> We use tabs for indentation, and spaces for alignment.
+>> -#if !defined(__GLIBC__) && !__GLIBC_PREREQ(2, 1)
+>> +#if !defined(__GLIBC_PREREQ) && !__GLIBC_PREREQ(2, 1)
+>>  #define strchrnul gitstrchrnul
+>>  static inline char *gitstrchrnul(const char *s, int c)
+>>  {
+> 
+> I just tested it on my machine (OS X Tiger) now that it's in 'next',
+> and this breaks the build:
+> 
+>     CC git.o
+> In file included from builtin.h:4,
+>                  from git.c:1:
+> git-compat-util.h:187:48: error: missing binary operator before token "("
+> make: *** [git.o] Error 1
+> 
+> 
+> I don't think I have __GLIBC_PREREQ defined anywhere I can find.
 
-Yes, sorry again, would you consider to add `# vi: set noexpandtab:'  
-at the end of the file so that ViM users (like me) don't have to  
-think about it?  (it tells ViM to NOT expand tabs to series of spaces)
+Turn the && in that line into || and it should work.
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
-
-
-
---Apple-Mail-39--344384958
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHOBinwwE67wC8PUkRAv92AKCr+lbQvKtToICklm87OzXjMYVW9gCgmkEV
-10uAeJldWUtzSZkSbZeqzGc=
-=Uyf0
------END PGP SIGNATURE-----
-
---Apple-Mail-39--344384958--
+-- Hannes
