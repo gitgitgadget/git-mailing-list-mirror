@@ -1,154 +1,70 @@
-From: bob <kranki@mac.com>
-Subject: Re: git packs
-Date: Mon, 12 Nov 2007 09:15:56 -0500
-Message-ID: <904628F9-EE34-4C4B-A114-82159AFF0260@mac.com>
-References: <F6DD8DCD-416B-4DDF-B384-7213C9ED5565@mac.com> <alpine.LFD.0.9999.0711100011150.21255@xanadu.home> <FC175E4F-D9BE-42CC-B0BB-561B2EDCD941@mac.com> <alpine.LFD.0.999.0711092211250.15101@woody.linux-foundation.org> <B20E1D71-BCDB-4189-952F-3B809A342870@mac.com> <alpine.LFD.0.9999.0711102331270.21255@xanadu.home> <B298202C-3D54-498D-A348-0338914FBA46@mac.com> <alpine.LFD.0.9999.0711112307070.21255@xanadu.home>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+From: "David Tweed" <david.tweed@gmail.com>
+Subject: Re: What is the idea for bare repositories?
+Date: Mon, 12 Nov 2007 14:20:23 +0000
+Message-ID: <e1dab3980711120620l61d3e84ene094ea9235af5a15@mail.gmail.com>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+	 <20071112131927.GA1701@c3sl.ufpr.br>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 15:16:44 2007
+Cc: "David Kastrup" <dak@gnu.org>, git@vger.kernel.org
+To: "Bruno Cesar Ribas" <ribas@c3sl.ufpr.br>
+X-From: git-owner@vger.kernel.org Mon Nov 12 15:20:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ira5Y-0004As-00
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:16:32 +0100
+	id 1Ira9a-0005Uq-03
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:20:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255AbXKLOQR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 09:16:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752772AbXKLOQQ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:16:16 -0500
-Received: from smtpoutm.mac.com ([17.148.16.70]:56679 "EHLO smtpoutm.mac.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752660AbXKLOQP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 09:16:15 -0500
-Received: from mac.com (asmtp008-s [10.150.69.71])
-	by smtpoutm.mac.com (Xserve/smtpout007/MantshX 4.0) with ESMTP id lACEG3er020036;
-	Mon, 12 Nov 2007 06:16:03 -0800 (PST)
-Received: from [192.168.2.23] (c-66-176-54-4.hsd1.fl.comcast.net [66.176.54.4])
-	(authenticated bits=0)
-	by mac.com (Xserve/asmtp008/MantshX 4.0) with ESMTP id lACEFxoq010976
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 12 Nov 2007 06:16:01 -0800 (PST)
-In-Reply-To: <alpine.LFD.0.9999.0711112307070.21255@xanadu.home>
-X-Mailer: Apple Mail (2.752.3)
+	id S1753538AbXKLOU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 09:20:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753148AbXKLOU0
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:20:26 -0500
+Received: from py-out-1112.google.com ([64.233.166.181]:26211 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753206AbXKLOUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 09:20:25 -0500
+Received: by py-out-1112.google.com with SMTP id u77so1245147pyb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 06:20:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=MGUoZL6XNWw9WZ5dvLhY1GUqbxjEkJREDPoMJOJ+Aso=;
+        b=ADU2wumkjGecH8Mz4OFCZrxm5zJluRevgT+0lnUBmyb3GmCKkGidNAGzToCCnNGcE89tnwqytWZ3ClOMd1lyhDFZmZBXZ3zW50mqInMWyJnVbaInj3pcdsno1jxutGn9RPotKDwysysNZmxzHDrJ9I0eNO9+aq9mDPseVTDOetE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=p+PWii7zpxJDJl2jJNdSOeL4FZ39NCLrhnmsCsKwnpqLRn7L+z4LvW8o9ypP9tk1l2D/JrXKwmdmTmkqFC3+HSLcqFRN+HYzoVSOXFy7nEBYfF620VU628ODV8YzzAEg8spMR8Wxv+7xIPL1HA0mqvYaPwJ8BhI3rP+T+tO+xQQ=
+Received: by 10.65.121.9 with SMTP id y9mr13845046qbm.1194877223493;
+        Mon, 12 Nov 2007 06:20:23 -0800 (PST)
+Received: by 10.64.181.10 with HTTP; Mon, 12 Nov 2007 06:20:23 -0800 (PST)
+In-Reply-To: <20071112131927.GA1701@c3sl.ufpr.br>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64625>
 
+On Nov 12, 2007 1:19 PM, Bruno Cesar Ribas <ribas@c3sl.ufpr.br> wrote:
+> A bare repository is the way to publish your changes to the public.
 
-On Nov 11, 2007, at 11:21 PM, Nicolas Pitre wrote:
+Just to mention this: an incredibly minor use, but a bare repository
+is also useful for "temporary storage" on a non-case-preserving
+filesystem (particularly if you don't have the authority/capability to
+change the filesystem for one that is case preserving).
 
-> On Sun, 11 Nov 2007, bob wrote:
->
->> I applied the patch and these commands:
->>
->> cd rmwHtmlOld
->> rm -fr .git
->> git init
->> git config core.compression 0
->> git add .
->
-> Note that I did "git config core.compression 0" simply to disable
-> zlib compression altogether when creating the test repo just so it  
-> gets
-> created faster.  even then, auto-generating and cloning a 8GB test
-> repository isn't particularly quick.
-	I wasn't sure why you used that, but figured that I should put it
-	in, because you did.  And you are very correct that these tests
-	can take a very long time.
->
->> I then got the same error as before, "Bus error".  Rats!
->
-> Do you get that with a 32-bit or 64-bit build of Git?
-	On that machine, I changed the config.mak to generate nothing
-	but a 64-bit build.  And activity monitor shows it as 64-bit
-	when I am running it. Also, off_t is 64 bit on regular
-	MacOSX and as a 64-bit program supported by the
-	latest MacOSX.
->
->> Then I modified your script since I do not have seq or
->> your test-genrandom.
->
-> test-genrandom is built with Git.  It is just not installed anywhere.
->
->> I substituted:
->>
->> dd count=XX  if=/dev/random of=file_$i
->>
->> where XX is adjusted to meet dd's requirements.  Also,
->
-> Again I used test-genrandom instead of /dev/random or /dev/urandom
-> simply because the former is much faster.
-	I didn't know that it existed, since I am not that familiar with the
-	internals and source directory for git.
->
->> I found after searching for a while, that the following
->> works just like your seq command:
->>
->> xyzzy="1 2 3 4"
->> for i in $xyzzy
->> do
->> ...
->> done
->>
->> Your script then ran flawlessly.
->
-> However 'seq -w 1 2 63' should be replaced  with "01 03 05 07 09 11 13
-> 15" and so on up to 63, and 'seq -w 2 2 64' is "02 04 06 08 10 12 16"
-> and so on.
-	That I missed but the files added up to quite a bit over 8gigs,
-	because my count calculation was off.  So, I thought that it
-	was adequate for the testing.  Based on above, it was
-	quite a few files less as well.
->
->> I looked through index-pack.c some more, but it is
->> very hard to figure it out without doing a lot of research
->> since there doesn't seem to be anything that describes
->> the layout of a pack.  The link towards the end of the user's
->> manual doesn't work for me.
->
-> Look at Documentation/technical/pack-format.txt in the Git source  
-> tree.
-Thanks.
->
->> The difference between your test and my data is that
->> instead of having a few large files, I have 11,500 files
->> of varying sizes.  On average though, the file size is
->> about 370k.
->
-> Are you saying that the test repo with big files works for you but not
-> your own data set?
-	That is correct, but you are probably correct that this is a separate
-	problem, because it is only occurring on the 64-bit side.  The 32-bit
-	side is running without error.
->
-> Would you please recap what your problem is?
-	With more testing last night, I believe that the problem on the 32-bit
-	side has been fixed.  But the 'Bus error' on 64-bit side persists.  I
-	agree that I was combining it and probably shouldn't have.
-> With my one line patch you should not get the "serious inflate
-> inconsistency" error anymore.  The bus error must be another issue.
-I no longer do on the 32-bit side.
->
->
-> Nicolas
+[I have a USB stick that I also occasionally use on Windows so
+couldn't reformat. My repo doesn't have files whose names differ only
+by case, but does have files with capitals somewhere. Not caring
+either way about having checked out files, I initially tried to put a
+standard repo on the stick and it wouldn't fast-forward when I tried
+to push an update to it because some files checked out files had
+"vanished". Making it a bare repository avoided the issue problem.]
 
-
-
-I am going to wait on the 64-bit problem until MacOSX 10.5 (Leopard)
-settles down a bit.  It has a few bugs in it.  I will submit the  
-crashreporter
-issue to Apple. Currently, I don't have the time to commit a lot to  
-git right
-now.
-
-As Apple comes out with new subreleases, I will retry my data.
-If it doesn't get resolved after a subrelease or two, then I dig  
-deeper and
-hopefully have more time to devote to it at that point.
-
-Thank you, I do appreciate your help and your patience.
+-- 
+cheers, dave tweed__________________________
+david.tweed@gmail.com
+Rm 124, School of Systems Engineering, University of Reading.
+"we had no idea that when we added templates we were adding a Turing-
+complete compile-time language." -- C++ standardisation committee
