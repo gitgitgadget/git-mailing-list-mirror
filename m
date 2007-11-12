@@ -1,79 +1,116 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: [BUG] fast-import quoting broken for renames
-Date: Mon, 12 Nov 2007 05:13:25 -0600
-Message-ID: <20071112111324.GR6212@lavos.net>
-References: <20071112110354.GP6212@lavos.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git diff woes
+Date: Mon, 12 Nov 2007 12:19:08 +0100
+Message-ID: <473836AC.6090802@op5.se>
+References: <4738208D.1080003@op5.se> <Pine.LNX.4.64.0711120958500.4362@racer.site> <47382C84.50408@op5.se> <Pine.LNX.4.64.0711121047590.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 12:13:44 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 12:19:28 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrXEc-00088a-KE
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:13:43 +0100
+	id 1IrXKB-0001F6-Kf
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068AbXKLLN1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 06:13:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757399AbXKLLN1
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:13:27 -0500
-Received: from mxsf00.insightbb.com ([74.128.0.70]:42829 "EHLO
-	mxsf00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757014AbXKLLN0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 06:13:26 -0500
-X-IronPort-AV: E=Sophos;i="4.21,404,1188792000"; 
-   d="scan'208";a="108080992"
-Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
-  by mxsf00.insightbb.com with ESMTP; 12 Nov 2007 06:13:26 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAJPDN0dKhvkY/2dsb2JhbACBWw
-X-IronPort-AV: E=Sophos;i="4.21,404,1188792000"; 
-   d="scan'208";a="158297917"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav02.insightbb.com with ESMTP; 12 Nov 2007 06:13:26 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id C522C309F21; Mon, 12 Nov 2007 05:13:25 -0600 (CST)
-Content-Disposition: inline
-In-Reply-To: <20071112110354.GP6212@lavos.net>
-User-Agent: Mutt/1.5.9i
+	id S1757068AbXKLLTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 06:19:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757374AbXKLLTM
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:19:12 -0500
+Received: from mail.op5.se ([193.201.96.20]:53528 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757068AbXKLLTL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 06:19:11 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 262C21F0875A;
+	Mon, 12 Nov 2007 12:19:10 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ExXKnnZh3Gid; Mon, 12 Nov 2007 12:19:09 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 1E6DE1F08751;
+	Mon, 12 Nov 2007 12:19:09 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0711121047590.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64602>
 
-While I'm at it...
+Johannes Schindelin wrote:
+> Hi,
+> 
+> On Mon, 12 Nov 2007, Andreas Ericsson wrote:
+> 
+>> Johannes Schindelin wrote:
+>>
+>>>  And sure you can trust the hunk header.  Like most of the things, the 
+>>> relate to the _original_ version, since the diff is meant to be 
+>>> applied as a forward patch.
+>>>
+>>> So for all practical matters, the diff shows the correct thing: "in 
+>>> this hunk, which (still) belongs to that function, change this and 
+>>> this."
+>>>
+>>> Of course, that is only the case if you accept that the diff should be 
+>>> applied _in total_, not piecewise.  IOW if you are a fan of GNU patch 
+>>> which happily clobbers your file until it fails with the last hunk, 
+>>> you will not be happy.
+>>>
+>> You're right. GNU patch will apply one hunk and then happily churn on 
+>> even if it fails. git-apply will apply all hunks or none, so all hunks 
+>> can assume that all previous hunks were successfully applied. So what 
+>> was your point again?
+> 
+> My point was that this diff is not to be read as if the previous hunks had 
+> been applied.  Just look at the context: it is also the original file.
+> 
 
-$ GIT_DIR=foo.git git init
-$ GIT_DIR=foo.git git fast-import <<EOC
-commit refs/import
-committer foo <foo> 0 +0000
-data <<EOF
-test
-EOF
-M 644 inline "foo"
-data <<EOF
-foo
-EOF
-R foo "bar"
-EOC
+The context is ambiguous, as it must be present in both the new and the
+old file for it to actually *be* context. Otherwise it would be part of
+the +- diff text.
 
-fatal: Garbage after dest in: R foo "bar"
+> It seems I am singularly unable to explain plain concepts as this: a diff 
+> assumes that the file is yet unchanged.
+> 
 
-$ GIT_DIR=foo.git git fast-import <<EOC
-commit refs/import
-committer foo <foo> 0 +0000
-data <<EOF
-test
-EOF
-M 644 inline "foo"
-data <<EOF
-foo
-EOF
-R "foo" bar
-EOC
+Sure, but the useraid with writing the apparent function declaration in
+the hunk header *will* be confusing if the function declaration changes
+in the same patch as other things in the function.
 
-fatal: Missing space after source: R "foo" bar
+> So I'll stop.
+> 
 
--bcd
+Give me something valuable instead, such as your opinion on whether it
+would be better to not print the function declaration at all if it will
+be changed by applying the same patch, or if one should pick one of the
+declarations from old or new and, if so, which one to pick.
+
+I simply refuse to believe that you wouldn't immediately think the hunk
+below holds an obvious bug. I thought so because of the helpful function
+context git diff prints (which is a helper for human reviewers, and not
+something git-apply or GNU patch needs to work), and now I want to do
+something about it so others won't have to suffer the same confusion.
+
+@@ -583,75 +346,100 @@ double jitter_request(const char *host, int *status){
+       if(verbose) printf("%d candiate peers available\n", num_candidates);
+       if(verbose && syncsource_found) printf("synchronization source found\n")
+       if(! syncsource_found){
+-               *status = STATE_UNKNOWN;
++               status = STATE_WARNING;
+               if(verbose) printf("warning: no synchronization source found\n")
+       }
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
