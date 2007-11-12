@@ -1,72 +1,134 @@
-From: Jan Wielemaker <wielemak@science.uva.nl>
-Subject: Re: What is the idea for bare repositories?
-Date: Mon, 12 Nov 2007 17:19:54 +0100
-Organization: HCS, University of Amsterdam
-Message-ID: <200711121719.54146.wielemak@science.uva.nl>
-References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: Cloning from kernel.org, then switching to another repo
+Date: Mon, 12 Nov 2007 11:22:41 -0500
+Message-ID: <9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
+References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
+	 <Pine.LNX.4.64.0711121412410.4362@racer.site>
+	 <9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com>
+	 <Pine.LNX.4.64.0711121613570.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 17:20:21 2007
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 17:23:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irc1H-0007B7-Ug
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:20:16 +0100
+	id 1Irc3v-0008F3-3T
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:22:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753568AbXKLQT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 11:19:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753408AbXKLQT6
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:19:58 -0500
-Received: from smtp-vbr9.xs4all.nl ([194.109.24.29]:4191 "EHLO
-	smtp-vbr9.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753063AbXKLQT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 11:19:56 -0500
-Received: from gollem.science.uva.nl (gollem.science.uva.nl [146.50.26.20])
-	(authenticated bits=0)
-	by smtp-vbr9.xs4all.nl (8.13.8/8.13.8) with ESMTP id lACGJs8f029007
-	for <git@vger.kernel.org>; Mon, 12 Nov 2007 17:19:55 +0100 (CET)
-	(envelope-from wielemak@science.uva.nl)
-User-Agent: KMail/1.9.5
-In-Reply-To: <Pine.LNX.4.64.0711121355380.4362@racer.site>
+	id S1752980AbXKLQWn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 11:22:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752737AbXKLQWn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:22:43 -0500
+Received: from wa-out-1112.google.com ([209.85.146.176]:29138 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752653AbXKLQWn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 11:22:43 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1579279wah
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 08:22:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=nS5aNPc6moucR+t6+9ADat3/TnuT+fh4pPlTDUhELkc=;
+        b=aCaizhh8TvoIcYsnUO7PR/56x0x/7BnRo30Y0ccdI8YGDOPDBG7/bc/ka0zE14mAQ2zFznhWtIlCbdd4W7XzYDs+DcTTURQPKNifVFtcv0pyTdEo4WbJ4/WsOlHgMBrj46I2EUg9Qn3J/J94s18mhqHc8nA1sOb1QdtzaCaiIeU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Kt3j1hSvnec3mVjvEJnL3z61nT7nQKsT+g1WYmOfHJw5OKnf4ijPrRCxTNVea6IqfoV/+T5oYmdWLe2/5mAE/D7Kjwei8tD1IuydV1m/VqWeuK0YcSD7kuF2ClmQjg1/DcLNsQYsyNpoBbLnc34FomAAnnxANlTbZwJKRexIzlc=
+Received: by 10.114.184.7 with SMTP id h7mr854516waf.1194884561571;
+        Mon, 12 Nov 2007 08:22:41 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 08:22:41 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711121613570.4362@racer.site>
 Content-Disposition: inline
-X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64651>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64652>
 
-On Monday 12 November 2007 14:57, Johannes Schindelin wrote:
+On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
 > Hi,
 >
-> On Mon, 12 Nov 2007, Bruno Cesar Ribas wrote:
-> > A bare repository is the way to publish your changes to the public.
-> > git-daemon and http-clones use a bare repository that only contains
-> > adminsitrative files.
+> On Mon, 12 Nov 2007, Jon Smirl wrote:
 >
-> More to the point, a bare repository is one which does not have a working
-> directory attached.
+> > On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > > On Mon, 12 Nov 2007, Jon Smirl wrote:
+> > >
+> > > > git clone linus
+> > > > move origin to digispeaker.git
+> > >
+> > > AKA "git config remote.origin.url <your-digispeaker-url-here>"
+> >
+> > There is more to this:
 >
-> As such, many commands do not make any sense at all, such as "git add"
-> (_what_ do you want to add?  There is not even a working directory to work
-> with!), or "git commit".
+> You must be hiding something.
+>
+> > jonsmirl@terra:~/foo$ git clone
+> > git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git ds
+> > clone.....
+>
+> This sets up branch.master.{remote,merge} to {origin,master}.
+>
+> > jonsmirl@terra:~/foo/ds$ git config remote.origin.url
+> > http://git.digispeaker.com/projects/digispeaker-kernel.git
+>
+> This does not change that setting.
 
-As we are on the subject anyway. Though not tested with the very latest,
-but when I was playing with them, I found out that cloning a empty bare
-repository produces nothing at all, dispite the promising message:
+It edited origin:[remote "origin"]
+        url = http://git.digispeaker.com/projects/digispeaker-kernel.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
 
-	$ mkdir x && cd x
-	$ git --bare init --shared=group
-	Initialized empty shared Git repository in /home/nobackup/jan/tmp/x/
-	$ cd ..
-	$ git clone x y
-	Initialized empty Git repository in /home/jan/nobackup/tmp/y/.git/
-	$ ls y
-	ls: cannot access y: No such file or directory
+> > jonsmirl@terra:~/foo/ds$ git pull
+> > You asked me to pull without telling me which branch you
+> > want to merge with, and 'branch.master.merge' in
+> > your configuration file does not tell me either.  Please
+> > name which branch you want to merge on the command line and
+> > try again (e.g. 'git pull <repository> <refspec>').
+> > See git-pull(1) for details on the refspec.
+>
+> And this does not come up here.
+>
+> Maybe you don't have a master branch on digispeaker.
 
-Is this a bug?
+At digispeaker remote repo:
+[daedalus]$ git branch
+  m24
+  m25
+  m26
+  m28
+  m29
+* master
+[daedalus]$
 
-	--- Jan
+gitweb is at:
+git.digispeaker.com
+
+[daedalus]$ cd refs
+[daedalus]$ find
+.
+./heads
+./heads/m24
+./heads/m25
+./heads/m26
+./heads/m28
+./heads/m29
+./heads/master
+./tags
+[daedalus]$
+
+
+
+
+>
+> Ciao,
+> Dscho
+>
+>
+
+
+-- 
+Jon Smirl
+jonsmirl@gmail.com
