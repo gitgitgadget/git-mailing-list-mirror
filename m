@@ -1,86 +1,74 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
- repositories?
-Date: Mon, 12 Nov 2007 22:17:52 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711122212540.4362@racer.site>
-References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br>
- <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl>
- <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com>
- <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr>
- <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <alpine.LFD.0.9999.0711121702030.21255@xanadu.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: wishlist: git info
+Date: Mon, 12 Nov 2007 23:21:06 +0100
+Message-ID: <20071112222106.GE2918@steel.home>
+References: <fhad5q$iia$1@ger.gmane.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 23:18:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Neumann <tneumann@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Nov 12 23:21:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irhbt-00055k-4e
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:18:25 +0100
+	id 1Irheo-0006AT-Oe
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:21:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756865AbXKLWSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 17:18:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755732AbXKLWSJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:18:09 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48343 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755520AbXKLWSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 17:18:07 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 22:18:06 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp004) with SMTP; 12 Nov 2007 23:18:06 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ox8NhFQpo1/o1tctfCOKZR7ibe8AMgp99BXWBKP
-	bA4o6I74cNTjG7
-X-X-Sender: gene099@racer.site
-In-Reply-To: <alpine.LFD.0.9999.0711121702030.21255@xanadu.home>
-X-Y-GMX-Trusted: 0
+	id S1755505AbXKLWVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 17:21:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755498AbXKLWVK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:21:10 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:16566 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753873AbXKLWVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 17:21:09 -0500
+Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
+	by post.webmailer.de (mrclete mo45) (RZmta 14.0)
+	with ESMTP id 602715jACJOuVl ; Mon, 12 Nov 2007 23:21:07 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E1E7F277AE;
+	Mon, 12 Nov 2007 23:21:06 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id C35C756D22; Mon, 12 Nov 2007 23:21:06 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <fhad5q$iia$1@ger.gmane.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64722>
 
-Hi,
-
-On Mon, 12 Nov 2007, Nicolas Pitre wrote:
-
-> On Mon, 12 Nov 2007, Junio C Hamano wrote:
+Thomas Neumann, Mon, Nov 12, 2007 21:30:56 +0100:
+> while git is pleasant to use in everyday work, there is one svn feature
+> which is miss dearly, namely "svn info". svn info can give information
+> about specific file objects, but I think its main feature is to use it
+> without any path and thus just describe the current project.
+> I use this a lot to quickly find out to which remote repository the
+> current directory belongs (yes, some work projects tend to look very
+> similar...) and what is the current state of the directory.
 > 
-> > His second point is also a real issue.  If you allowed cloning
-> > an empty repo (either bare or non-bare), then you and Bill can
-> > both clone from it, come up with an initial commit each.  Bill
-> > pushes his initial commit first.  Your later attempt to push
-> > will hopefully fail with "non fast forward", if you know better
-> > than forcing such a push, but then what?  You need to fetch, and
-> > merge (or rebase) your change on top of Bill's initial commit,
-> > and at that point the history you are trying to merge does not
-> > have any common ancestor with his history.
-> 
-> While that could well be true, I don't see this condition happening 
-> solely in the context (hence because) of an empty clone.
+> As a crude approximation, "git info" should print something like:
+> cat .git/config | grep url
+> git show | head -3
 
-Hehe.  That is a very delicate play with predicates.
+you're better of just running "gitk --all" at this point. It'll show
+remote branches (with the names of remote repos prepended) and their
+relations to the local repo.
 
-If Alice and Bob clone from an empty repository, and both work on it, 
-there is _no way_ that they can have a common ancestor[*].  Hence, an 
-empty clone _would_ be a cause of that condition.
+> Probably not the most intelligent way to compute it, but you get the
+> idea. git info should give a brief overview over the current working
+> directory.
 
-The only way to _not_ have this condition would be at least one side 
-starting with a non-empty clone.  Or with an _effectively_ non-empty 
-clone.
+Like what? None of the commands you suggested even touch it.
+Would
 
-Ciao,
-Dscho
+    git remote -r -v && git log --max-count=1 --pretty=format:'%h %s'
 
-[*] Oh yes, theoretically they could commit the same commit with the same 
-author info and author timestamp, but to be a common ancestor, they would 
-also have to use the same _committer_information, which means that Alice 
-== Bob, as far as Git is concerned.  Do I have to go on?
+do what you think is what you need?
+
+May I suggest you to consider just running "git fetch -v"?
