@@ -1,68 +1,136 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: Cloning empty repositories,
- was Re: What is the idea for bare repositories?
-Date: Mon, 12 Nov 2007 17:06:01 -0500 (EST)
-Message-ID: <alpine.LFD.0.9999.0711121702030.21255@xanadu.home>
-References: <86k5on8v6p.fsf@lola.quinscape.zz>
- <20071112131927.GA1701@c3sl.ufpr.br>
- <Pine.LNX.4.64.0711121355380.4362@racer.site>
- <200711121719.54146.wielemak@science.uva.nl>
- <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121715090.4362@racer.site>
- <18232.35893.243300.179076@lisa.zopyra.com>
- <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr>
- <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH] Beautify the output of send-pack a bit
+Date: Mon, 12 Nov 2007 23:11:40 +0100
+Message-ID: <20071112221140.GD2918@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 23:06:47 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <junkio@cox.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 23:12:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrhQD-0000dg-I2
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:06:21 +0100
+	id 1IrhWL-0002zP-45
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654AbXKLWGF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 17:06:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754738AbXKLWGF
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:06:05 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:27518 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754654AbXKLWGD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 17:06:03 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JRE00DUIYQ18N51@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 12 Nov 2007 17:06:01 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+	id S1759602AbXKLWLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 17:11:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756519AbXKLWLn
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:11:43 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:46926 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759583AbXKLWLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 17:11:42 -0500
+Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
+	by post.webmailer.de (klopstock mo15) (RZmta 14.0)
+	with ESMTP id U046d7jACHdMKk ; Mon, 12 Nov 2007 23:11:40 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 99FDC277AE;
+	Mon, 12 Nov 2007 23:11:40 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 777BE56D22; Mon, 12 Nov 2007 23:11:40 +0100 (CET)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64719>
 
-On Mon, 12 Nov 2007, Junio C Hamano wrote:
+Cluster the errors regarding ancestry violation and output them
+in one batch, together with a hint to pull before pushing.
 
-> His second point is also a real issue.  If you allowed cloning
-> an empty repo (either bare or non-bare), then you and Bill can
-> both clone from it, come up with an initial commit each.  Bill
-> pushes his initial commit first.  Your later attempt to push
-> will hopefully fail with "non fast forward", if you know better
-> than forcing such a push, but then what?  You need to fetch, and
-> merge (or rebase) your change on top of Bill's initial commit,
-> and at that point the history you are trying to merge does not
-> have any common ancestor with his history.
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
+---
 
-While that could well be true, I don't see this condition happening 
-solely in the context (hence because) of an empty clone.
+Catching trend...
 
+ send-pack.c |   33 ++++++++++++++++++++++-----------
+ 1 files changed, 22 insertions(+), 11 deletions(-)
 
-Nicolas
+diff --git a/send-pack.c b/send-pack.c
+index d56d980..e6da567 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -215,6 +215,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 	int ask_for_status_report = 0;
+ 	int allow_deleting_refs = 0;
+ 	int expect_status_report = 0;
++	struct ref *failed_refs = NULL, **failed_tail = &failed_refs;
+ 
+ 	/* No funny business with the matcher */
+ 	remote_tail = get_remote_heads(in, &remote_refs, 0, NULL, REF_NORMAL);
+@@ -243,25 +244,27 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 	 * Finally, tell the other end!
+ 	 */
+ 	new_refs = 0;
+-	for (ref = remote_refs; ref; ref = ref->next) {
++	ref = remote_refs;
++	remote_refs = NULL;
++	remote_tail = &remote_refs;
++	for (; ref; ref = ref->next) {
+ 		char old_hex[60], *new_hex;
+ 		int will_delete_ref;
+ 
+ 		if (!ref->peer_ref)
+-			continue;
+-
++			goto remote_ok;
+ 
+ 		will_delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
+ 		if (will_delete_ref && !allow_deleting_refs) {
+ 			error("remote does not support deleting refs");
+ 			ret = -2;
+-			continue;
++			goto remote_ok;
+ 		}
+ 		if (!will_delete_ref &&
+ 		    !hashcmp(ref->old_sha1, ref->peer_ref->new_sha1)) {
+ 			if (verbose)
+ 				fprintf(stderr, "'%s': up-to-date\n", ref->name);
+-			continue;
++			goto remote_ok;
+ 		}
+ 
+ 		/* This part determines what can overwrite what.
+@@ -297,13 +300,9 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 				 * commits at the remote end and likely
+ 				 * we were not up to date to begin with.
+ 				 */
+-				error("remote '%s' is not an ancestor of\n"
+-				      " local  '%s'.\n"
+-				      " Maybe you are not up-to-date and "
+-				      "need to pull first?",
+-				      ref->name,
+-				      ref->peer_ref->name);
+ 				ret = -2;
++				*failed_tail = ref;
++				failed_tail = &ref->next;
+ 				continue;
+ 			}
+ 		}
+@@ -335,6 +334,18 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 			fprintf(stderr, "\n  from %s\n  to   %s\n",
+ 				old_hex, new_hex);
+ 		}
++	remote_ok:
++		*remote_tail = ref;
++		remote_tail = &ref->next;
++	}
++	*remote_tail = NULL;
++	*failed_tail = NULL;
++
++	if (failed_refs) {
++		for (ref = failed_refs; ref; ref = ref->next)
++			error("remote '%s' is not an ancestor of local '%s'",
++			      ref->name, ref->peer_ref->name);
++		fprintf(stderr, "Maybe you are not up-to-date and need to pull first?\n");
+ 	}
+ 
+ 	packet_flush(out);
+-- 
+1.5.3.5.648.g1e92c
