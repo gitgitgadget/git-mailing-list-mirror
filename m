@@ -1,102 +1,84 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Cloning from kernel.org, then switching to another repo
-Date: Mon, 12 Nov 2007 10:36:42 -0500
-Message-ID: <9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com>
-References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
-	 <Pine.LNX.4.64.0711121412410.4362@racer.site>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: [PATCH] Include diff options in the git-log manpage
+Date: Mon, 12 Nov 2007 16:37:17 +0100
+Message-ID: <20071112153717.GI5309@genesis.frugalware.org>
+References: <1193929060-6183-1-git-send-email-vmiklos@frugalware.org> <1193929060-6183-2-git-send-email-vmiklos@frugalware.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:37:15 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="IR1Y5IvQhrKgS4e6"
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:37:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrbLQ-0007kR-RP
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:37:01 +0100
+	id 1IrbM2-0007zP-2N
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:37:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752193AbXKLPgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:36:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750854AbXKLPgp
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:36:45 -0500
-Received: from nz-out-0506.google.com ([64.233.162.231]:38969 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484AbXKLPgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:36:44 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so981530nze
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 07:36:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=WngfOmN0qILscSBno5JpIH6I9iVEkpdNxdx00A4X8iI=;
-        b=Md3+p/7IEMcwYpiGMJdj8l7pKn0iZmLr8//9a4s1IefQejdalMDjsntAnUXEYj4lmXpcu3WDvw+5Vsv2Q8oIFPRIEz5ay8erwoGzccYgE6IYJx0EY+C+k2guI8KJvIMr3ERa0lqXS6l31EKpL1eIXRPkPvVRtnciavYOc87LztQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=JtjInmKp/50LLisO/JnPLWcrQZPCHPLoNONlcjo2a7ssO3f9uFPxg/dYSxPlwjs+fZ0JIUa/frWvWy+PF836q8eWmxTHXMIqeBVvOyQlhJxTwHNTUh7cSLbSM6BbcVYybkwdVmedmsd34TFwJandNSjltXRBKXBOIDFy6wXskm4=
-Received: by 10.115.90.1 with SMTP id s1mr181158wal.1194881802876;
-        Mon, 12 Nov 2007 07:36:42 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 07:36:42 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711121412410.4362@racer.site>
+	id S1752573AbXKLPhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:37:22 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbXKLPhV
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:37:21 -0500
+Received: from virgo.iok.hu ([193.202.89.103]:33155 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751304AbXKLPhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:37:20 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id D58691B2507;
+	Mon, 12 Nov 2007 16:37:17 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7FBD844659;
+	Mon, 12 Nov 2007 16:36:39 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 7497911901BD; Mon, 12 Nov 2007 16:37:17 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <1193929060-6183-2-git-send-email-vmiklos@frugalware.org>
+User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64638>
-
-On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 12 Nov 2007, Jon Smirl wrote:
->
-> > I'd like to do this sequence, but I can't figure out how without editing
-> > the config file. There doesn't seem to be a simple command to move the
-> > origin.
-> >
-> > git clone linus
-> > move origin to digispeaker.git
->
-> AKA "git config remote.origin.url <your-digispeaker-url-here>"
-
-There is more to this:
-
-jonsmirl@terra:~/foo$ git clone
-git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-ds
-clone.....
-jonsmirl@terra:~/foo/ds$ git config remote.origin.url
-http://git.digispeaker.com/projects/digispeaker-kernel.git
-jonsmirl@terra:~/foo/ds$ git pull
-You asked me to pull without telling me which branch you
-want to merge with, and 'branch.master.merge' in
-your configuration file does not tell me either.  Please
-name which branch you want to merge on the command line and
-try again (e.g. 'git pull <repository> <refspec>').
-See git-pull(1) for details on the refspec.
-
-If you often merge with the same branch, you may want to
-configure the following variables in your configuration
-file:
-
-    branch.master.remote = <nickname>
-    branch.master.merge = <remote-ref>
-    remote.<nickname>.url = <url>
-    remote.<nickname>.fetch = <refspec>
-
-See git-config(1) for details.
-jonsmirl@terra:~/foo/ds$
-
->
-> > git pull
->
-> Hth,
-> Dscho
->
->
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64639>
 
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+--IR1Y5IvQhrKgS4e6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Nov 01, 2007 at 03:57:40PM +0100, Miklos Vajna <vmiklos@frugalware.=
+org> wrote:
+> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
+> ---
+>=20
+> Recently I wanted to see what git log -M does but actually I was not able=
+ to
+> find it in the manpage, finally figured out that all the diff options are
+> missing from here.
+>=20
+> Removing -p as it's already in diff-options.txt.
+>=20
+> If this patch OK, then I would like to send a similar patch to
+> git-rev-list.txt, too.
+>=20
+>  Documentation/git-log.txt |    5 ++---
+>  1 files changed, 2 insertions(+), 3 deletions(-)
+
+could somebody please comment this patch? does it look ok?
+
+thanks,
+- VMiklos
+
+--IR1Y5IvQhrKgS4e6
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (GNU/Linux)
+
+iD8DBQFHOHMte81tAgORUJYRAk3iAJ9oQuUZmmmsQLOOOIy8ekj47x+zFgCfea8b
+9aDFZftpnL1paEXmlZfSsAM=
+=jnFw
+-----END PGP SIGNATURE-----
+
+--IR1Y5IvQhrKgS4e6--
