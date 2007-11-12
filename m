@@ -1,104 +1,137 @@
-From: "Carlos Rica" <jasampler@gmail.com>
-Subject: Re: [PATCH] Make builtin-tag.c use parse_options.
-Date: Mon, 12 Nov 2007 14:09:37 +0100
-Message-ID: <1b46aba20711120509l104792ebo4ea9a51c710510f3@mail.gmail.com>
-References: <473463E0.7000406@gmail.com>
-	 <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] rebase: brown paper bag fix after the detached HEAD patch
+Date: Mon, 12 Nov 2007 13:11:46 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711121310160.4362@racer.site>
+References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+ <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
+ <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711121203150.4362@racer.site> <20071112122652.GC20482@artemis.corp>
+ <Pine.LNX.4.64.0711121232370.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	"=?ISO-8859-1?Q?Kristian_H=F8gsberg?=" <krh@redhat.com>,
-	"Pierre Habouzit" <madcoder@debian.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 14:09:56 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pierre Habouzit <madcoder@debian.org>
+X-From: git-owner@vger.kernel.org Mon Nov 12 14:12:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrZ35-0008DM-U9
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 14:09:56 +0100
+	id 1IrZ5R-0000Vq-Dz
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 14:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753057AbXKLNJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 08:09:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751472AbXKLNJk
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 08:09:40 -0500
-Received: from nz-out-0506.google.com ([64.233.162.235]:11839 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751277AbXKLNJj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 08:09:39 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so944083nze
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 05:09:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=C18+a4R/GpoAzB8gwvNymYRv4ShoY9fp2KQCt+yVVJ0=;
-        b=ScXWASdytPAlZhuZfrsgOjDKlyvXdAJmht08GXF/mbevT9jXoUuyakB3JZNR1nEFG771vXlvpfULi8duccEI61iPnc4T84rqdm5lHzdLkfF8DUkme3BIoOKScbarybBLUC+ndZD3WQjlyd8ra29/PI3FmI1r72zP/D5InhO/Tx4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=WFRtRaziQXGi1Xb6q5hm1Vs8jqfmFx0t50/kkUH5LrhNWU3iD3GocR93njRIytVjAbdm1CUoZD0HzdlEXMFpwpSqkTZU4t1K69t/CafLHhKlyhjiYqPCNKADXmDxzSFM5+MmaqhvY6wtHTLn8kqOj6SaIsNnEb8DzC+XLvfmynQ=
-Received: by 10.142.245.10 with SMTP id s10mr970207wfh.1194872977797;
-        Mon, 12 Nov 2007 05:09:37 -0800 (PST)
-Received: by 10.142.88.7 with HTTP; Mon, 12 Nov 2007 05:09:37 -0800 (PST)
-In-Reply-To: <7vabpmpr9y.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1758256AbXKLNMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 08:12:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754294AbXKLNMF
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 08:12:05 -0500
+Received: from mail.gmx.net ([213.165.64.20]:43115 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754253AbXKLNMC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 08:12:02 -0500
+Received: (qmail invoked by alias); 12 Nov 2007 13:12:00 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp037) with SMTP; 12 Nov 2007 14:12:00 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18JCiQnfwMJ+t0XXsyKAG/PquTmNR03A/Kofqa9rm
+	72FJ/VdH+EZ/Q/
+X-X-Sender: gene099@racer.site
+In-Reply-To: <Pine.LNX.4.64.0711121232370.4362@racer.site>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64617>
 
-2007/11/10, Junio C Hamano <gitster@pobox.com>:
-> Carlos Rica <jasampler@gmail.com> writes:
->
-> > Also, this removes those tests ensuring that repeated
-> > -m options don't allocate memory more than once, because now
-> > this is done after parsing options, using the last one
-> > when more are given. The same for -F.
->
-> The reason for this change is...?  Is this because it is
-> cumbersome to detect and refuse multiple -m options using the
-> parseopt API?  If so, the API may be what needs to be fixed.
-> Taking the last one and discarding earlier ones feels to me an
-> arbitrary choice.
 
-You can do many things with repeated options.
-Here in git-tag we considered two different ways to manage them:
-Concatenating values for the option and/or refusing more than one.
-I found that current option-parser can do both from the client
-using callbacks, as Pierre shows me, so I think it is the right way to do it.
+The --skip case was handled properly when rebasing without --merge,
+but the --continue case was not.
 
-Pierre, by default, I think that the parser should print an error
-when more than one option of the same type is given,
-in order to report it to the command-line user,
-but make this behaviour optional for the programmer.
-Specifically, I thought in this last option:
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-enum parse_opt_option_flags {
-	PARSE_OPT_OPTARG  = 1,
-	PARSE_OPT_NOARG   = 2,
-	PARSE_OPT_ALLOWREP = 4
-};
+	On Mon, 12 Nov 2007, Johannes Schindelin wrote:
 
-> While I freely admit that I do not particularly find the "One -m
-> introduces one new line, concatenated to form the final
-> paragraph" handling of multiple -m options done by git-commit
-> nice nor useful, I suspect that it would make more sense to make
-> git-tag and git-commit handle multiple -m option consistently,
-> if you are going to change the existing semantics.  Since some
-> people really seem to like multiple -m handling of git-commit,
-> the avenue of the least resistance for better consistency would
-> be to accept and concatenate (with LF in between) multiple -m
-> options.
->
-> With multiple -F, I think erroring out would be the sensible
-> thing to do, but some people might prefer concatenation.  I do
-> not care either way as long as commit and tag behave
-> consistently.
+	> On Mon, 12 Nov 2007, Pierre Habouzit wrote:
+	> 
+	> > On Mon, Nov 12, 2007 at 12:21:34PM +0000, Johannes Schindelin 
+	> > wrote:
+	> > 
+	> > > On Sun, 11 Nov 2007, Junio C Hamano wrote:
+	> > > 
+	> > > > * js/rebase-detached (Thu Nov 8 18:19:08 2007 +0000) 1 commit
+	> > > >  + rebase: operate on a detached HEAD
+	> > > 
+	> > > Note: this might have a subtle bug when the last patch in 
+	> > > the series failed.  If I was not too tired this morning 
+	> > > (which might well have been the case), rebase could not 
+	> > > switch back to the branch correctly with this.
+	> > 
+	> > OOOH so this was what happened to me today then. I did a 
+	> > rebase, there was a commit to skip, the last one, and I ended 
+	> > up on a detached head. As I didn't had my coffee yet, I 
+	> > assumed this was my fault and did something stupid. So after 
+	> > all it seems it wasn't the case then :)
+	> 
+	> Thanks for acknowleding, and sorry for the bug.
+	> 
+	> Will work on a fix,
 
-Then, Kristian, what are you willing to do in such case?
-It seems easier for me to concatenate of -m and -F options, even when
-both types are given. I don't know why "people" want multiple -m options,
-but I think that mixing -m and -F options could be interesting for them too.
-If someone know if this have been discussed and decided already,
-please give me the link.
+	Here you are.  Sorry again.
+
+ git-rebase.sh          |    6 +++++-
+ t/t3403-rebase-skip.sh |   17 +++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 7a45e27..c9034b8 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -171,7 +171,11 @@ do
+ 			finish_rb_merge
+ 			exit
+ 		fi
+-		git am --resolved --3way --resolvemsg="$RESOLVEMSG"
++		head_name=$(cat .dotest/head-name) &&
++		onto=$(cat .dotest/onto) &&
++		orig_head=$(cat .dotest/orig-head) &&
++		git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
++		move_to_original_branch
+ 		exit
+ 		;;
+ 	--skip)
+diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
+index becabfc..657f681 100755
+--- a/t/t3403-rebase-skip.sh
++++ b/t/t3403-rebase-skip.sh
+@@ -38,6 +38,19 @@ test_expect_failure 'rebase with git am -3 (default)' '
+ test_expect_success 'rebase --skip with am -3' '
+ 	git rebase --skip
+ 	'
++
++test_expect_success 'rebase moves back to skip-reference' '
++	test refs/heads/skip-reference = $(git symbolic-ref HEAD) &&
++	git branch post-rebase &&
++	git reset --hard pre-rebase &&
++	! git rebase master &&
++	echo "hello" > hello &&
++	git add hello &&
++	git rebase --continue &&
++	test refs/heads/skip-reference = $(git symbolic-ref HEAD) &&
++	git reset --hard post-rebase
++'
++
+ test_expect_success 'checkout skip-merge' 'git checkout -f skip-merge'
+ 
+ test_expect_failure 'rebase with --merge' 'git rebase --merge master'
+@@ -49,6 +62,10 @@ test_expect_success 'rebase --skip with --merge' '
+ test_expect_success 'merge and reference trees equal' \
+ 	'test -z "`git diff-tree skip-merge skip-reference`"'
+ 
++test_expect_success 'moved back to branch correctly' '
++	test refs/heads/skip-merge = $(git symbolic-ref HEAD)
++'
++
+ test_debug 'gitk --all & sleep 1'
+ 
+ test_done
+-- 
+1.5.3.5.1738.g5c070
