@@ -1,67 +1,64 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: git config error message
-Date: Mon, 12 Nov 2007 23:26:29 +0100
-Message-ID: <20071112222629.GG2918@steel.home>
-References: <9e4733910711120735p653c643eveb44627bf4532b1a@mail.gmail.com> <20071112222317.GF2918@steel.home> <Pine.LNX.4.64.0711122224190.4362@racer.site>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Smirl <jonsmirl@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 23:27:14 2007
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Installing without rebuilding
+Date: Mon, 12 Nov 2007 17:33:36 -0500
+Message-ID: <FA694907-4845-4102-8A74-F084F88626AE@silverinsanity.com>
+References: <8B92E213-17DB-4E83-B045-01CE0E7D26CB@silverinsanity.com>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 12 23:34:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrhkL-0008AT-ER
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:27:09 +0100
+	id 1Irhqs-00029E-P4
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 23:33:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759786AbXKLW0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 17:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759782AbXKLW0c
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:26:32 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:19456 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755729AbXKLW0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 17:26:31 -0500
-Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
-	by post.webmailer.de (mrclete mo9) (RZmta 14.0)
-	with ESMTP id m0279cjACKLPwT ; Mon, 12 Nov 2007 23:26:29 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 53108277AE;
-	Mon, 12 Nov 2007 23:26:29 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 32DA856D22; Mon, 12 Nov 2007 23:26:29 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711122224190.4362@racer.site>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
-X-RZG-CLASS-ID: mo07
+	id S1754750AbXKLWdj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 17:33:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754868AbXKLWdj
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 17:33:39 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:53843 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754451AbXKLWdi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 17:33:38 -0500
+Received: from [192.168.1.3] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id A1AB91FFC230;
+	Mon, 12 Nov 2007 22:33:37 +0000 (UTC)
+In-Reply-To: <8B92E213-17DB-4E83-B045-01CE0E7D26CB@silverinsanity.com>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64726>
 
-Johannes Schindelin, Mon, Nov 12, 2007 23:24:54 +0100:
-> Hi,
-> 
-> On Mon, 12 Nov 2007, Alex Riesen wrote:
-> 
-> > Jon Smirl, Mon, Nov 12, 2007 16:35:07 +0100:
-> > > I'm not in a git repo, this error message is misleading.
-> > > 
-> > > jonsmirl@terra:~/foo$ git config remote.origin.url
-> > > http://git.digispeaker.com/projects/digispeaker-kernel.git
-> > > could not lock config file
-> > > 
-> > 
-> > Cygwin or any crashes in this repo lately?
-> > If cygwin, than we probably have a file handle leak in config code.
-> 
-> He said that he's not in a git repo.  Thus, .git/config does not exist, 
-> and is not lockable, since not even .git/ exists.
-> 
 
-Oh.
+On Nov 11, 2007, at 11:49 AM, Brian Gernhardt wrote:
+
+> Git has a very clever Makefile.  Sometimes its a little overly clever.
+
+I found a way around the Makefile cleverness.  It's ugly, but it  
+requires no changes to the existing Makefile.  I'm posting it in case  
+anyone finds this thread trying to do what I'm doing.  My nieve  
+suggestion fails, BTW, because git-gui's Makefile does the same  
+cleverness.
+
+----- 8< -----
+
+# Install ignoring version changes, etc.
+ignore="-o GIT-VERSION-FILE -o GIT-CFLAGS -o GIT-GUI-VARS"
+install="$ignore prefix=/usr/local/stow/git"
+gitgui="$install gitexecdir=/usr/local/bin"
+sudo make $install NO_TCLTK=Yes install install-doc
+sudo make $gitgui -C git-gui install
+
+----- 8< -----
+
+Why do I have to go through so many hoops just to install what I've  
+already compiled?
+
+~~ Brian
