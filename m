@@ -1,75 +1,54 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: [PATCH] tests: git push mirror mode tests V2
-Date: Mon, 12 Nov 2007 15:25:41 +0000
-Message-ID: <20071112152541.GJ301@shadowen.org>
-References: <1194541305.0@pinky> <1194603673.0@pinky> <7vsl3frxpk.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: git config error message
+Date: Mon, 12 Nov 2007 10:35:07 -0500
+Message-ID: <9e4733910711120735p653c643eveb44627bf4532b1a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:25:59 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:36:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrbAY-0003TL-41
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:25:46 +0100
+	id 1IrbKH-0007GC-O9
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752218AbXKLPZa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:25:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752092AbXKLPZa
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:25:30 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:1350 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751325AbXKLPZ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:25:29 -0500
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by hellhawk.shadowen.org with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1IrbAG-0006nM-Kg; Mon, 12 Nov 2007 15:25:28 +0000
+	id S1751407AbXKLPfL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:35:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757402AbXKLPfK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:35:10 -0500
+Received: from nz-out-0506.google.com ([64.233.162.228]:37913 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751250AbXKLPfJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:35:09 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so981085nze
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 07:35:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=WYrqRfRD/AiJGYYAeppGglRIUovTnTTeoHViGeUIM5A=;
+        b=ss7kkUPX1oFucmRo35llUl9zBmteoDRhNUlivDKSQ8tsYGk2VLbTy4o4VVYRYA3tjv8gIM06zryahZtoyt3sGO/rif0MKlppzqNp4rZet9ZE9KqSxIkYxsI7RyijnyrHWVSzJlyzSVcIW1aqaL7EVUS/qU7fj+sH9OUVtJSifWc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=OasBY7+DqhJXLXXQTyzb7z9LcN6u9ZyO2VY5QVfhJKqoKQMDPrWVZc0wISmtkB1fg+EGe/lA8xOkfqUo38u72VRQMj3Pl4F4V/k1Ga2JwvzvJZw3zaf7/PO2Wv9X0gfzk6VOoHyz7OYs5AzZgR6bRTjmiqhWSdOy+X5Ou/tfccE=
+Received: by 10.114.12.9 with SMTP id 9mr598540wal.1194881707680;
+        Mon, 12 Nov 2007 07:35:07 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 07:35:07 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vsl3frxpk.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64637>
 
-On Fri, Nov 09, 2007 at 12:05:43PM -0800, Junio C Hamano wrote:
-> Andy Whitcroft <apw@shadowen.org> writes:
-> 
-> > +test_expect_success 'push mirror does not create new branches' '
-> > +
-> > +	mk_repo_pair &&
-> > +	(
-> > +		cd master &&
-> > +		echo one >foo && git add foo && git commit -m one &&
-> > +		git push --mirror up
-> > +	) &&
-> > +	master_master=$(cd master && git show-ref -s --verify refs/heads/master) &&
-> > +	mirror_master=$(cd mirror && git show-ref -s --verify refs/heads/master) &&
-> > +	test "$master_master" = "$mirror_master"
-> > +
-> > +'
-> 
-> I am quite puzzled by this and many other "does not" in the test
-> description.  The --mirror option is advertised as
-> 
->  - newly created will be pushed;
->  - locally updated will be force pushed;
->  - locally deleted will be removed.
-> 
-> which makes sense as we do want these things to happen for
-> "mirrors".  Indeed the above updates master branch at the master
-> repository and makes sure that change is propagated to the
-> mirror repository.  The description should read "push mirror
-> creates new branches" shouldn't it?
+I'm not in a git repo, this error message is misleading.
 
-Indeed, I think the problem was a miss-understanding of the example I
-copied from.  I think partly I thought that the message was only
-displayed on failure.  Which is firstly demonstrably false, and secondly
-I am not consistent in applying that false knowledge.
+jonsmirl@terra:~/foo$ git config remote.origin.url
+http://git.digispeaker.com/projects/digispeaker-kernel.git
+could not lock config file
 
-If these are not already fixed up in pu I will check and sort them out.
 
--apw
+-- 
+Jon Smirl
+jonsmirl@gmail.com
