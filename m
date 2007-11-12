@@ -1,101 +1,82 @@
-From: Pierre Habouzit <madcoder@debian.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 12 Nov 2007 15:53:34 +0100
-Message-ID: <20071112145334.GB343@artemis.corp>
-References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org> <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org> <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711121203150.4362@racer.site> <20071112122652.GC20482@artemis.corp> <Pine.LNX.4.64.0711121232370.4362@racer.site>
+Date: Mon, 12 Nov 2007 15:02:37 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711121501500.4362@racer.site>
+References: <20071022063222.GS14735@spearce.org> <7vzly84qwf.fsf@gitster.siamese.dyndns.org>
+ <7vmytycykt.fsf@gitster.siamese.dyndns.org> <7vr6j6ve90.fsf@gitster.siamese.dyndns.org>
+ <7vir4d40sw.fsf@gitster.siamese.dyndns.org> <7vwsso3poo.fsf@gitster.siamese.dyndns.org>
+ <Pine.LNX.4.64.0711121203150.4362@racer.site> <087FCF8E-74BF-42EA-B7E2-4622DD0F5F9B@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="p4qYPpj5QlsIQJ0K";
-	protocol="application/pgp-signature"; micalg=SHA1
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 15:53:52 2007
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:03:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irafg-0000PY-Fa
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:53:52 +0100
+	id 1Iraoe-0003jj-PT
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:03:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285AbXKLOxg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 09:53:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751192AbXKLOxg
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:53:36 -0500
-Received: from pan.madism.org ([88.191.52.104]:44590 "EHLO hermes.madism.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751170AbXKLOxf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 09:53:35 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id E569329B41;
-	Mon, 12 Nov 2007 15:53:34 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id 8D58814738F; Mon, 12 Nov 2007 15:53:34 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711121232370.4362@racer.site>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1751086AbXKLPCx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 10:02:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751055AbXKLPCx
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:02:53 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48029 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750854AbXKLPCw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:02:52 -0500
+Received: (qmail invoked by alias); 12 Nov 2007 15:02:50 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp035) with SMTP; 12 Nov 2007 16:02:50 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19AhDM8QflAvA+fucypPXE+dgKjINVUlzcIFtU3Jm
+	OEZcey6yWxfXDe
+X-X-Sender: gene099@racer.site
+In-Reply-To: <087FCF8E-74BF-42EA-B7E2-4622DD0F5F9B@zib.de>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64632>
 
+Hi,
 
---p4qYPpj5QlsIQJ0K
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 12 Nov 2007, Steffen Prohaska wrote:
 
-On Mon, Nov 12, 2007 at 12:33:19PM +0000, Johannes Schindelin wrote:
-> Hi,
->=20
-> On Mon, 12 Nov 2007, Pierre Habouzit wrote:
->=20
-> > On Mon, Nov 12, 2007 at 12:21:34PM +0000, Johannes Schindelin wrote:
-> >=20
-> > > On Sun, 11 Nov 2007, Junio C Hamano wrote:
-> > >=20
-> > > > * js/rebase-detached (Thu Nov 8 18:19:08 2007 +0000) 1 commit
-> > > >  + rebase: operate on a detached HEAD
-> > >=20
-> > > Note: this might have a subtle bug when the last patch in the series=
-=20
-> > > failed.  If I was not too tired this morning (which might well have=
-=20
-> > > been the case), rebase could not switch back to the branch correctly=
-=20
-> > > with this.
-> >=20
-> >   OOOH so this was what happened to me today then. I did a rebase, ther=
-e=20
-> > was a commit to skip, the last one, and I ended up on a detached head.=
-=20
-> > As I didn't had my coffee yet, I assumed this was my fault and did=20
-> > something stupid. So after all it seems it wasn't the case then :)
->=20
-> Thanks for acknowleding, and sorry for the bug.
+> On Nov 12, 2007, at 1:21 PM, Johannes Schindelin wrote:
+> 
+> > > * sp/refspec-match (Sun Nov 11 15:01:48 2007 +0100) 4 commits
+> > > - refactor fetch's ref matching to use refname_match()
+> > > - push: use same rules as git-rev-parse to resolve refspecs
+> > > - add refname_match()
+> > > - push: support pushing HEAD to real branch name
+> > > 
+> > > This changes the semantics slightly but I think it is a move in
+> > > the right direction.
+> > 
+> > We could add a "--matching" option and output a warning when it is not
+> > passed.  I would like this pretty soon, and would not be sad if it went
+> > into 'next' before this topic.
+> 
+> Is this the road towards
+> 1) "git push --matching" push matching branches.
+> 2) "git push --current" push only current branch.
+> 3) "git push" report error if the config does not contain a Push line.
+>   (after it reported a warning for a while).
 
-  well, shit happens, I'm running next especially to spot those :)
+AFAIAC yes.  Maybe in two years (that's twice an eternity in git time 
+scales):
 
---=20
-=C2=B7O=C2=B7  Pierre Habouzit
-=C2=B7=C2=B7O                                                madcoder@debia=
-n.org
-OOO                                                http://www.madism.org
+4) make "git push --current" the default.
 
---p4qYPpj5QlsIQJ0K
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+> I'd like to see this too. Unfortunately it's unlikely that I'll start 
+> working on it before next weekend.
+> 
+> "--matching" would be a no-op at this time. Only a warning would be printed
+> if it is missing. Right?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
+Right.
 
-iD8DBQBHOGjuvGr7W6HudhwRAttWAJ422OtJcvb5vHFZ37XZ+GHDhSc/MgCfd45q
-/B9zblxnCzuQd5D7SnyXJ9I=
-=nyWl
------END PGP SIGNATURE-----
-
---p4qYPpj5QlsIQJ0K--
+Ciao,
+Dscho
