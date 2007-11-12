@@ -1,81 +1,112 @@
-From: Thomas Neumann <tneumann@users.sourceforge.net>
-Subject: Re: wishlist: git info
-Date: Mon, 12 Nov 2007 23:50:18 +0100
-Message-ID: <4738D8AA.1030604@users.sourceforge.net>
-References: <fhad5q$iia$1@ger.gmane.org> <20071112222106.GE2918@steel.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git 1.5.3.5 error over NFS
+Date: Tue, 13 Nov 2007 00:31:03 +0100
+Message-ID: <20071112233103.GH2918@steel.home>
+References: <18228.32091.865519.312011@lisa.zopyra.com> <20071109232106.GA3435@steel.home> <18232.29603.856766.275854@lisa.zopyra.com>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 00:24:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, nfs@lists.sourceforge.net,
+	linux-kernel <linux-kernel@vger.kernel.org>
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 00:31:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irie0-0001mK-Gm
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:24:40 +0100
+	id 1IrikZ-0003sL-CH
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:31:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756763AbXKLXYY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 18:24:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756409AbXKLXYY
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:24:24 -0500
-Received: from tneu02.synserver.de ([217.119.58.222]:2395 "EHLO
-	tneu02.synserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751844AbXKLXYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 18:24:24 -0500
-X-Greylist: delayed 2049 seconds by postgrey-1.27 at vger.kernel.org; Mon, 12 Nov 2007 18:24:23 EST
-Received: from [192.168.0.2] (dslb-084-058-234-234.pools.arcor-ip.net [84.58.234.234])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by tneu02.synserver.de (Postfix) with ESMTP id DDBF1680BA;
-	Mon, 12 Nov 2007 23:50:12 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (X11/20071022)
-In-Reply-To: <20071112222106.GE2918@steel.home>
+	id S1757760AbXKLXbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 18:31:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756605AbXKLXbK
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:31:10 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:34759 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756409AbXKLXbI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 18:31:08 -0500
+Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
+	by post.webmailer.de (klopstock mo52) (RZmta 14.0)
+	with ESMTP id B047aejACLQjGy ; Tue, 13 Nov 2007 00:31:03 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 58882277AE;
+	Tue, 13 Nov 2007 00:31:03 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 39F6C56D22; Tue, 13 Nov 2007 00:31:03 +0100 (CET)
+Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>,
+	Bill Lear <rael@zopyra.com>, git@vger.kernel.org,
+	nfs@lists.sourceforge.net,
+	linux-kernel <linux-kernel@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <18232.29603.856766.275854@lisa.zopyra.com>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64732>
 
-> you're better of just running "gitk --all" at this point. It'll show
-> remote branches (with the names of remote repos prepended) and their
-> relations to the local repo.
-hm, this is not what I am after. I do not want to inspect the history, I
-want to see where this repository "belongs" to. Gitk shows me the name
-(which is reasonable, of course), but not the URL. And it is a GUI
-application, which is not so perfect.
+Bill Lear, Mon, Nov 12, 2007 16:39:15 +0100:
+> On Saturday, November 10, 2007 at 00:21:06 (+0100) Alex Riesen writes:
+> >Bill Lear, Fri, Nov 09, 2007 16:31:39 +0100:
+> >> I've brought this up before, but I don't recall a resolution to it.
+> >> 
+> >> We have an NFS-mounted filesystem, and git pull is choking on it.
+> >> 
+> >> % uname -a
+> >> Linux uhlr.zopyra.com 2.6.9-42.0.2.ELsmp #1 SMP Wed Aug 23 13:38:27 BST 2006 x86_64 x86_64 x86_64 GNU/Linux
 
->> Probably not the most intelligent way to compute it, but you get the
->> idea. git info should give a brief overview over the current working
->> directory.
->
-> Like what? None of the commands you suggested even touch it.
-probably "current working directory" was not the best way to phrase it.
-I mean state of the repository, which in my case is a clone of a central
-repository.
-My commands show (ignoring formatting): 1. the remote repositories with
-URL 2. the current head commit hash 3. the date of the head commit.
-Which gives a pretty decent idea about the state of the repository.
+It is a really old kernel... Maybe you could try with some of the
+recent ones?
 
-> Would
->
->     git remote -r -v && git log --max-count=1 --pretty=format:'%h %s'
->
-> do what you think is what you need?
-perhaps, the first command gives me an error (git 1.5.2.5). This here is
-nearly ok
+> >> % git --version
+> >> git version 1.5.3.5
+> >> 
+> >> % git pull
+> >> remote: Generating pack...
+> >> remote: Done counting 998 objects.
+> >> remote: Result has 836 objects.
+> >> remote: Deltifying 836 objects.
+> >> remote:  100% (836/836) done
+> >> Indexing 836 objects...
+> >> remote: Total 836 (delta 526), reused 688 (delta 380)
+> >>   100% (836/836) done
+> >> Resolving 526 deltas...
+> >> fatal: cannot pread pack file: No such file or directory
+> >
+> >Could you please strace it? With strace -ff?
+> >
+> >> fatal: index-pack died with error code 128
+> >> fatal: Fetch failure: git://source/repo
+> >> 
+> >> I looked through the archives of this list and did not see a final
+> >> resolution, other than a suspected bug in the OS NFS code.
+> >
+> >Strace, just to be on the safe side
+> 
+> Ok, I've done the strace -ff.  It has generated 176 strace.out.<pid>
+> files.  I have placed a tarball of these files on my home server:
+> 
+>   http://www.zopyra.com/~rael/git/git-trace.tar.bz2
+> 
+> The file strace.out.25526 has, at the very end:
+> 
 
-git remote && git log --max-count=1 --pretty=format:'%H %cD'
+Yes, this is the file.
 
-except the missing URL from git remote (but perhaps your options include
-it with a newer git version, will test).
+I extend the part you quoted. The file is opened here:
 
-> May I suggest you to consider just running "git fetch -v"?
-this is has side effects, and is quite slow. Your command sequence above
-  is more handy (and faster).
+open(".git/objects/pack_awOTNW", O_RDWR|O_CREAT|O_EXCL, 0600) = 3
+write(3, "PACK\0\0\0\2\0\0\3r", 12)     = 12
+... lots of data. Counted writes: 488538...
+write(3, "v\351\247V\325\362\327/\240\265\211\211\322,\261\210\301"..., 4096) = 4096
+write(3, "\202\202g\232Bf\211Bf\261Bb\36X\22\4\364\365\25\22\223"..., 1114) = 1114
+write(3, "M", 1)                        = 1
 
-So I can emulate git info with an alias, and this is good enough for mew
-now, thanks for the hints. Perhaps a somewhat more elaborate version of
-git info might be useful for others, too, but this is not urgent.
+> write(2, "Resolving 551 deltas.\n", 22)                               = 22
+> pread64(3, "", 242, 541) = 0
 
-Thomas
+That's the problem.  Hmm... May I kindly suggest moving the topic to
+linux-nfs (cc-ed along with lk)?
