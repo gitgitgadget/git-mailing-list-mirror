@@ -1,84 +1,61 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] Include diff options in the git-log manpage
-Date: Mon, 12 Nov 2007 16:37:17 +0100
-Message-ID: <20071112153717.GI5309@genesis.frugalware.org>
-References: <1193929060-6183-1-git-send-email-vmiklos@frugalware.org> <1193929060-6183-2-git-send-email-vmiklos@frugalware.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] status&commit: Teach them to show submodule commit summary
+Date: Mon, 12 Nov 2007 16:37:09 +0100
+Organization: At home
+Message-ID: <fh9rv5$g06$1@ger.gmane.org>
+References: <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="IR1Y5IvQhrKgS4e6"
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 16:37:50 2007
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 16:38:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrbM2-0007zP-2N
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:37:38 +0100
+	id 1IrbMd-0008De-AL
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 16:38:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752573AbXKLPhW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 10:37:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751609AbXKLPhV
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:37:21 -0500
-Received: from virgo.iok.hu ([193.202.89.103]:33155 "EHLO virgo.iok.hu"
+	id S1751994AbXKLPiA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 10:38:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751427AbXKLPiA
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 10:38:00 -0500
+Received: from main.gmane.org ([80.91.229.2]:46312 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751304AbXKLPhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 10:37:20 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id D58691B2507;
-	Mon, 12 Nov 2007 16:37:17 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 7FBD844659;
-	Mon, 12 Nov 2007 16:36:39 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 7497911901BD; Mon, 12 Nov 2007 16:37:17 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <1193929060-6183-2-git-send-email-vmiklos@frugalware.org>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1751929AbXKLPh7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 10:37:59 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IrbLx-0000UW-Dc
+	for git@vger.kernel.org; Mon, 12 Nov 2007 15:37:33 +0000
+Received: from abwz76.neoplus.adsl.tpnet.pl ([83.8.249.76])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 15:37:33 +0000
+Received: from jnareb by abwz76.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 15:37:33 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwz76.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64640>
 
+Ping Yin wrote:
 
---IR1Y5IvQhrKgS4e6
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Nov 01, 2007 at 03:57:40PM +0100, Miklos Vajna <vmiklos@frugalware.=
-org> wrote:
-> Signed-off-by: Miklos Vajna <vmiklos@frugalware.org>
 > ---
->=20
-> Recently I wanted to see what git log -M does but actually I was not able=
- to
-> find it in the manpage, finally figured out that all the diff options are
-> missing from here.
->=20
-> Removing -p as it's already in diff-options.txt.
->=20
-> If this patch OK, then I would like to send a similar patch to
-> git-rev-list.txt, too.
->=20
->  Documentation/git-log.txt |    5 ++---
->  1 files changed, 2 insertions(+), 3 deletions(-)
+> =A0Documentation/git-commit.txt | =A0 10 +++++
+> =A0Documentation/git-status.txt | =A0 =A03 +
+> =A0git-commit.sh =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 90 ++++++++++++=
+++++++++++++++++++++++++++++--
+> =A03 files changed, 99 insertions(+), 4 deletions(-)
 
-could somebody please comment this patch? does it look ok?
+Shouldn't you also modify Documentation/config.txt ?
 
-thanks,
-- VMiklos
-
---IR1Y5IvQhrKgS4e6
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (GNU/Linux)
-
-iD8DBQFHOHMte81tAgORUJYRAk3iAJ9oQuUZmmmsQLOOOIy8ekj47x+zFgCfea8b
-9aDFZftpnL1paEXmlZfSsAM=
-=jnFw
------END PGP SIGNATURE-----
-
---IR1Y5IvQhrKgS4e6--
+--=20
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
