@@ -1,93 +1,86 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Re: Cloning from kernel.org, then switching to another repo
-Date: Mon, 12 Nov 2007 15:54:59 -0500
-Message-ID: <9e4733910711121254j5af5dba6k5acdce939936af66@mail.gmail.com>
-References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
-	 <Pine.LNX.4.64.0711121412410.4362@racer.site>
-	 <alpine.LFD.0.9999.0711121229090.3062@woody.linux-foundation.org>
-	 <Pine.LNX.4.64.0711122040350.4362@racer.site>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 12 21:55:20 2007
+From: Emil Medve <Emilian.Medve@Freescale.com>
+Subject: [PATCH] Fix a strchrnul() related build error
+Date: Mon, 12 Nov 2007 15:01:22 -0600
+Message-ID: <1194901282-2468-1-git-send-email-Emilian.Medve@Freescale.com>
+Cc: Emil Medve <Emilian.Medve@Freescale.com>
+To: gitster@pobox.com, ae@op5.se, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:03:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrgJT-00006Q-W3
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 21:55:20 +0100
+	id 1IrgQx-0003RY-2a
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 22:03:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751785AbXKLUzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 15:55:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750986AbXKLUzE
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 15:55:04 -0500
-Received: from wa-out-1112.google.com ([209.85.146.177]:49998 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751650AbXKLUzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 15:55:01 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1668263wah
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 12:55:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=C0c+kMFmzY7f6jCYY3UqR8wWCI1U3YhLGIrVr/r8pN8=;
-        b=kjotymKnUdezxA90vat3bFRDYviAyhwE7CAB8I0+0awKIUnIky8prtEoATlWvhVO4AaDzNQBfGaqk+iecOUYgWFpRJ22NrPEGKwMWrN5pJKfXRRIelxUuIPbcZdfXpfUWkTDJu83SagAA6abbiXz4YgcSazfDjCkzgcrZJfWgmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=AMt+8UrcB1gpBe3pHyonv5hFCfg4cQd0yEdq7tOSNYGCtdzZJwLNpTSyb6Hwq2tsFujFskwvYJAZiN/3h/dMWy5Lerayl+7bmpiYScP2f5h9bU18quB7JFKTFEAYopWxIyv8PIhAdLFZnNfh1PgHAWUAwGU2xMOkBtA1zJIYE3c=
-Received: by 10.114.209.1 with SMTP id h1mr514531wag.1194900900003;
-        Mon, 12 Nov 2007 12:55:00 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 12:54:59 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711122040350.4362@racer.site>
-Content-Disposition: inline
+	id S1760174AbXKLVCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 16:02:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759724AbXKLVCA
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 16:02:00 -0500
+Received: from az33egw02.freescale.net ([192.88.158.103]:59070 "EHLO
+	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760162AbXKLVB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 16:01:59 -0500
+Received: from az33smr01.freescale.net (az33smr01.freescale.net [10.64.34.199])
+	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id lACL1OuG022786;
+	Mon, 12 Nov 2007 14:01:25 -0700 (MST)
+Received: from localhost.localdomain ([10.82.125.87])
+	by az33smr01.freescale.net (8.13.1/8.13.0) with ESMTP id lACL1NxF007928;
+	Mon, 12 Nov 2007 15:01:24 -0600 (CST)
+X-Mailer: git-send-email 1.5.3.5.1466.gfa36
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64709>
 
-On 11/12/07, Johannes Schindelin <Johannes.Schindelin@gmx.de> wrote:
-> Hi,
->
-> On Mon, 12 Nov 2007, Linus Torvalds wrote:
->
-> > On Mon, 12 Nov 2007, Johannes Schindelin wrote:
-> > >
-> > > On Mon, 12 Nov 2007, Jon Smirl wrote:
-> > >
-> > > > I'd like to do this sequence, but I can't figure out how without
-> > > > editing the config file. There doesn't seem to be a simple command
-> > > > to move the origin.
-> > > >
-> > > > git clone linus
-> > > > move origin to digispeaker.git
-> > >
-> > > AKA "git config remote.origin.url <your-digispeaker-url-here>"
-> >
-> > I really think people should at least also mention:
-> >
-> >       "Or just edit your .git/config file by hand"
->
-> FWIW I agree.  The intent of git-repo-config (as it was named then) was to
-> have a program for _scripts_ to use.
->
-> But for some reasons, people on IRC refuse to edit .git/config by hand.
-> *sigh*  Will have to relearn giving proper help.
+Systems/environments without glibc (such as CygWin), and as a consequence whithout the
+__GLIBC_PREREQ() macro, fail to build with the following error message:
 
-It is eaiser to put
-  git config remote.origin.url
-http://git.digispeaker.com/projects/digispeaker-kernel.git
-in a cookbook web page sequence than say edit the config file by hand.
+    CC git.o
+In file included from builtin.h:4,
+                 from git.c:1:
+git-compat-util.h:187:48: missing binary operator before token "("
 
-I added the cookbook sequence to my git project page.
-http://git.digispeaker.com/
-Without cloning from kernel.org first it takes an hour to clone from
-dreamhost, but what do you want for $5/mth. I'll more to a better host
-when traffic picks up.
+Signed-off-by: Emil Medve <Emilian.Medve@Freescale.com>
+---
 
+Here is a relevant comment from my Linux box features.h:
+
+/* Convenience macros to test the versions of glibc and gcc.
+   Use them like this:
+   #if __GNUC_PREREQ (2,8)
+   ... code requiring gcc 2.8 or later ...
+   #endif
+   Note - they won't work for gcc1 or glibc1, since the _MINOR macros
+   were not defined then.  */
+
+My CygWin gcc version is:
+
+$ gcc -dumpversion
+3.4.4
+
+This applies to next
+
+ git-compat-util.h |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 3d147b6..c4ed308 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -184,7 +184,13 @@ void *gitmemmem(const void *haystack, size_t haystacklen,
+                 const void *needle, size_t needlelen);
+ #endif
+ 
+-#if !defined(__GLIBC_PREREQ) && !__GLIBC_PREREQ(2, 1)
++#ifndef __GLIBC_PREREQ
++#define NO_STRCHRNUL
++#elif !__GLIBC_PREREQ(2, 1)
++#define NO_STRCHRNUL
++#endif
++
++#ifdef NO_STRCHRNUL
+ #define strchrnul gitstrchrnul
+ static inline char *gitstrchrnul(const char *s, int c)
+ {
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+1.5.3.5.1466.gfa36
