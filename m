@@ -1,57 +1,56 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: Cloning from kernel.org, then switching to another repo
-Date: Mon, 12 Nov 2007 08:57:46 -0500
-Message-ID: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cloning from kernel.org, then switching to another repo
+Date: Mon, 12 Nov 2007 14:13:21 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711121412410.4362@racer.site>
+References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 14:58:16 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jon Smirl <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 15:13:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrZnn-0006y5-MA
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 14:58:12 +0100
+	id 1Ira2z-0003Kk-NU
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 15:13:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758666AbXKLN5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 08:57:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758632AbXKLN5r
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 08:57:47 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:52233 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758496AbXKLN5q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 08:57:46 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1174410rvb
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 05:57:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=7Tr3bZf0QcIPhtPj8eqRiSY8EOtXoqD8xP6tMdcEZ7M=;
-        b=thFop5+EVeE7iH9Mn2n+l/wyEVQX6pm9mdk/8fhJymmcVgPJa+xpo+LkajW+2xC6ndcyUCsNuRxq/RbargB6XO6twI9gsz94vAoeuQ8E+ZyR2JLolEAAd3/sqwAWbEo1pEsb4dvDChL+8OxJyOtN6ZF2oZhVIhsU1nnSaahrw5E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=c1/q2+To2f38mOBq7ANFlU6W1tftzIgouB+2fgIbnmOPNq8qEmmx1ZaTORPcrwqbWtzdEvpydlla6I0ziQAbLmHGWTcamzI5EAHPpg7QM9QMhbeoFhaMg+Af+8oP+s+nWMeIHxN2zaPiJ2Q7SssW7mx0y4yZ1ZMA3wUrNkwDUhw=
-Received: by 10.115.60.1 with SMTP id n1mr2309827wak.1194875866315;
-        Mon, 12 Nov 2007 05:57:46 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Mon, 12 Nov 2007 05:57:46 -0800 (PST)
-Content-Disposition: inline
+	id S1752762AbXKLONh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 09:13:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752660AbXKLONh
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 09:13:37 -0500
+Received: from mail.gmx.net ([213.165.64.20]:44751 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752573AbXKLONg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 09:13:36 -0500
+Received: (qmail invoked by alias); 12 Nov 2007 14:13:34 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp045) with SMTP; 12 Nov 2007 15:13:34 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19hSC1fRf9hEFVnf44RCQVb+zzhMcn49/aTDmad69
+	J5Ot8GdejwVERo
+X-X-Sender: gene099@racer.site
+In-Reply-To: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64623>
 
-I'd like to do this sequence, but I can't figure out how without
-editing the config file. There doesn't seem to be a simple command to
-move the origin.
+Hi,
 
-git clone linus
-move origin to digispeaker.git
-git pull
+On Mon, 12 Nov 2007, Jon Smirl wrote:
 
-What's the simplest way to do this?
+> I'd like to do this sequence, but I can't figure out how without editing 
+> the config file. There doesn't seem to be a simple command to move the 
+> origin.
+> 
+> git clone linus
+> move origin to digispeaker.git
 
--- 
-Jon Smirl
-jonsmirl@gmail.com
+AKA "git config remote.origin.url <your-digispeaker-url-here>"
+
+> git pull
+
+Hth,
+Dscho
