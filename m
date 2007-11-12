@@ -1,98 +1,75 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Add a test checking if send-pack updated local tracking
-	branches correctly
-Date: Mon, 12 Nov 2007 22:38:23 +0100
-Message-ID: <20071112213823.GB2918@steel.home>
+Subject: [PATCH] Update the tracking references only if they were
+	succesfully updated on remote
+Date: Mon, 12 Nov 2007 22:39:38 +0100
+Message-ID: <20071112213938.GC2918@steel.home>
+References: <20071112213823.GB2918@steel.home>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <junkio@cox.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 22:38:44 2007
+X-From: git-owner@vger.kernel.org Mon Nov 12 22:39:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrgzT-0007gK-S5
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 22:38:44 +0100
+	id 1Irh0e-000851-Kx
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 22:39:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753150AbXKLVi2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 16:38:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752579AbXKLVi2
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 16:38:28 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:45789 "EHLO
+	id S1753812AbXKLVjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 16:39:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753564AbXKLVjl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 16:39:41 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:47213 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751806AbXKLVi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 16:38:26 -0500
+	with ESMTP id S1752579AbXKLVjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 16:39:40 -0500
 Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
-	by post.webmailer.de (mrclete mo51) (RZmta 14.0)
-	with ESMTP id a0273bjACH5OMn ; Mon, 12 Nov 2007 22:38:23 +0100 (MET)
+	by post.webmailer.de (fruni mo27) (RZmta 14.0)
+	with ESMTP id k021b2jACI6ihg ; Mon, 12 Nov 2007 22:39:38 +0100 (MET)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id A3105277AE;
-	Mon, 12 Nov 2007 22:38:23 +0100 (CET)
+	by tigra.home (Postfix) with ESMTP id 5FE28277AE;
+	Mon, 12 Nov 2007 22:39:38 +0100 (CET)
 Received: by steel.home (Postfix, from userid 1000)
-	id 4AF6856D22; Mon, 12 Nov 2007 22:38:23 +0100 (CET)
+	id 4841A56D22; Mon, 12 Nov 2007 22:39:38 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <20071112213823.GB2918@steel.home>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3Cculz0wOR49Q==
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64715>
+
+It fixes the bug where local tracing branches were filled with zeroed SHA-1
+if the remote branch was not updated because, for instance, it was not
+an ancestor of the local (i.e. had other changes).
 
 Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- t/t5404-tracking-branches.sh |   40 ++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 40 insertions(+), 0 deletions(-)
- create mode 100755 t/t5404-tracking-branches.sh
 
-diff --git a/t/t5404-tracking-branches.sh b/t/t5404-tracking-branches.sh
-new file mode 100755
-index 0000000..20718d4
---- /dev/null
-+++ b/t/t5404-tracking-branches.sh
-@@ -0,0 +1,40 @@
-+#!/bin/sh
-+
-+test_description='tracking branch update checks for git push'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git branch b1 &&
-+	git branch b2 &&
-+	git clone . aa &&
-+	git checkout b1 &&
-+	echo b1 >>file &&
-+	git commit -a -m b1 &&
-+	git checkout b2 &&
-+	echo b2 >>file &&
-+	git commit -a -m b2
-+'
-+
-+test_expect_success 'check tracking branches updated correctly after push' '
-+	cd aa &&
-+	b1=$(git rev-parse origin/b1) &&
-+	b2=$(git rev-parse origin/b2) &&
-+	git checkout -b b1 origin/b1 &&
-+	echo aa-b1 >>file &&
-+	git commit -a -m aa-b1 &&
-+	git checkout -b b2 origin/b2 &&
-+	echo aa-b2 >>file &&
-+	git commit -a -m aa-b2 &&
-+	git checkout master &&
-+	echo aa-master >>file &&
-+	git commit -a -m aa-master &&
-+	git push &&
-+	test "$(git rev-parse origin/b1)" = "$b1" &&
-+	test "$(git rev-parse origin/b2)" = "$b2"
-+'
-+
-+test_done
+Jeff, I think your change (334f4831e5a77) was either not complete or
+got broken some time later.
+
+ send-pack.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/send-pack.c b/send-pack.c
+index b74fd45..d56d980 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -349,7 +349,8 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ 
+ 	if (!dry_run && remote && ret == 0) {
+ 		for (ref = remote_refs; ref; ref = ref->next)
+-			update_tracking_ref(remote, ref);
++			if (!is_null_sha1(ref->new_sha1))
++				update_tracking_ref(remote, ref);
+ 	}
+ 
+ 	if (!new_refs && ret == 0)
 -- 
 1.5.3.5.648.g1e92c
