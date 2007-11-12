@@ -1,58 +1,99 @@
-From: "eric miao" <eric.y.miao@gmail.com>
-Subject: Is it possible for git to remember the options preference for "git log"?
-Date: Mon, 12 Nov 2007 08:33:43 +0800
-Message-ID: <f17812d70711111633u6c00d182u532fef1c16c3c94a@mail.gmail.com>
+From: Jing Xue <jingxue@digizenstudio.com>
+Subject: [PATCH] replace reference to git-rm with git-reset in git-commit
+	doc
+Date: Sun, 11 Nov 2007 19:38:45 -0500
+Message-ID: <20071112003845.GA7595@fawkes>
+References: <20071102021711.GA28703@fawkes.hq.digizenstudio.com> <20071111140518.GA3847@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 01:34:01 2007
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 12 01:39:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrNFX-0007i7-8u
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:33:59 +0100
+	id 1IrNKY-0000Nd-9K
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:39:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947AbXKLAdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 19:33:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755945AbXKLAdo
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:33:44 -0500
-Received: from wa-out-1112.google.com ([209.85.146.182]:53398 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755939AbXKLAdo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 19:33:44 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1349929wah
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 16:33:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=Rh48tiVlQnaDGH2t2w9iW2s1SvrglqgY2ZEKVHItqAA=;
-        b=co5JL74RWwrl0UU5682IgzC09EE84GfQFj/uaibkuijryhIqjfmJPEBQRD404owg+76AZavIYLijoaDrdEI31ztHNnS0qRjOzjbS1GMAFDSzelI4gP8sgrgX97iYzrKtAi7TnLh9vo1u2/RdbW6X4s+WdeBBJhnj2jiDrjI57Q4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=KfF3hhCkQ1DuhaU1iYIjcokax4wtotIE6VKby9EJcJdYuK/SUEeiIeyksBscbjgOr69b5Go42xkjuy3IbRHlktIrUb8HXCxIz1UTD+xPT3s7ij24PElBAGJwdqetrFdS/A2KHrwdUqEWDlvZE8xyhONhR+5t+f83Ro1Dco0UZlw=
-Received: by 10.114.110.1 with SMTP id i1mr61947wac.1194827623427;
-        Sun, 11 Nov 2007 16:33:43 -0800 (PST)
-Received: by 10.114.147.6 with HTTP; Sun, 11 Nov 2007 16:33:43 -0800 (PST)
+	id S1756160AbXKLAiy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 19:38:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756136AbXKLAiy
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:38:54 -0500
+Received: from k2smtpout03-02.prod.mesa1.secureserver.net ([64.202.189.172]:49041
+	"HELO k2smtpout03-02.prod.mesa1.secureserver.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756047AbXKLAix (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 19:38:53 -0500
+Received: (qmail 18808 invoked from network); 12 Nov 2007 00:38:52 -0000
+Received: from unknown (HELO ip-72-167-33-213.ip.secureserver.net) (72.167.33.213)
+  by k2smtpout03-02.prod.mesa1.secureserver.net (64.202.189.172) with ESMTP; 12 Nov 2007 00:38:52 -0000
+Received: from localhost (unknown [127.0.0.1])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id 62906100A45
+	for <git@vger.kernel.org>; Mon, 12 Nov 2007 00:38:52 +0000 (UTC)
+Received: from ip-72-167-33-213.ip.secureserver.net ([127.0.0.1])
+	by localhost (ip-72-167-33-213.ip.secureserver.net [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id HOSI-SYVDg6P for <git@vger.kernel.org>;
+	Sun, 11 Nov 2007 19:38:46 -0500 (EST)
+Received: from fawkes.hq.digizenstudio.com (ip70-187-196-88.dc.dc.cox.net [70.187.196.88])
+	by ip-72-167-33-213.ip.secureserver.net (Postfix) with ESMTP id F1DAF10007A
+	for <git@vger.kernel.org>; Sun, 11 Nov 2007 19:38:45 -0500 (EST)
+Received: by fawkes.hq.digizenstudio.com (Postfix, from userid 1000)
+	id 451599ACEC; Sun, 11 Nov 2007 19:38:45 -0500 (EST)
+Mail-Followup-To: git <git@vger.kernel.org>
 Content-Disposition: inline
+In-Reply-To: <20071111140518.GA3847@efreet.light.src>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64542>
 
-All,
+On Sun, Nov 11, 2007 at 03:05:18PM +0100, Jan Hudec wrote:
+> 
+> The message in git-commit suggesting to use 'git rm --cached' to unstage is
+> just plain wrong. It really should mention 'git reset'.
 
-Most of the time I'm using git-log for inspecting a brief history
-and insert/remove/modify commits between, which I have to
-type "git log --abbrev-commit --pretty=oneline" every time. Is
-it possible for git to remember this command line options
-preference?
+Hopefully this makes it clearer. I have also updated the faq in wiki to
+clarify.
 
-And no, I don't really want to use shell's alias or something
-else, I was just used to type "git xxx" :-)
+Signed-off-by: Jing Xue <jingxue@digizenstudio.com>
+---
+ Documentation/git-add.txt    |    1 +
+ Documentation/git-commit.txt |   12 ++++++------
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
--- 
-Cheers
-- eric
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 963e1ab..63829d9 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -224,6 +224,7 @@ See Also
+ --------
+ gitlink:git-status[1]
+ gitlink:git-rm[1]
++gitlink:git-reset[1]
+ gitlink:git-mv[1]
+ gitlink:git-commit[1]
+ gitlink:git-update-index[1]
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index e54fb12..7c63dd8 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -154,12 +154,12 @@ EXAMPLES
+ --------
+ When recording your own work, the contents of modified files in
+ your working tree are temporarily stored to a staging area
+-called the "index" with gitlink:git-add[1].  Removal
+-of a file is staged with gitlink:git-rm[1].  After building the
+-state to be committed incrementally with these commands, `git
+-commit` (without any pathname parameter) is used to record what
+-has been staged so far.  This is the most basic form of the
+-command.  An example:
++called the "index" with gitlink:git-add[1].  File changes
++previously staged can be removed with `git-reset
++HEAD -- <file>`.  After building the state to be committed
++incrementally with these commands, `git commit` (without any
++pathname parameter) is used to record what has been staged so
++far.  This is the most basic form of the command.  An example:
+ 
+ ------------
+ $ edit hello.c
