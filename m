@@ -1,43 +1,38 @@
 From: Alex Riesen <raa.lkml@gmail.com>
 Subject: Re: git 1.5.3.5 error over NFS
-Date: Tue, 13 Nov 2007 00:31:03 +0100
-Message-ID: <20071112233103.GH2918@steel.home>
+Date: Tue, 13 Nov 2007 00:33:09 +0100
+Message-ID: <20071112233309.GI2918@steel.home>
 References: <18228.32091.865519.312011@lisa.zopyra.com> <20071109232106.GA3435@steel.home> <18232.29603.856766.275854@lisa.zopyra.com>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, nfs@lists.sourceforge.net,
-	linux-kernel <linux-kernel@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 00:31:31 2007
+X-From: git-owner@vger.kernel.org Tue Nov 13 00:33:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrikZ-0003sL-CH
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:31:27 +0100
+	id 1IrimZ-0004RW-IF
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 00:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757760AbXKLXbL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 18:31:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756605AbXKLXbK
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:31:10 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:34759 "EHLO
+	id S1760082AbXKLXdP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 18:33:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759880AbXKLXdP
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 18:33:15 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:57495 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756409AbXKLXbI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 18:31:08 -0500
+	with ESMTP id S1759448AbXKLXdN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 18:33:13 -0500
 Received: from tigra.home (Faf31.f.strato-dslnet.de [195.4.175.49])
-	by post.webmailer.de (klopstock mo52) (RZmta 14.0)
-	with ESMTP id B047aejACLQjGy ; Tue, 13 Nov 2007 00:31:03 +0100 (MET)
+	by post.webmailer.de (mrclete mo2) (RZmta 14.0)
+	with ESMTP id Z02693jACKGYVN ; Tue, 13 Nov 2007 00:33:09 +0100 (MET)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 58882277AE;
-	Tue, 13 Nov 2007 00:31:03 +0100 (CET)
+	by tigra.home (Postfix) with ESMTP id 34BBB277AE;
+	Tue, 13 Nov 2007 00:33:09 +0100 (CET)
 Received: by steel.home (Postfix, from userid 1000)
-	id 39F6C56D22; Tue, 13 Nov 2007 00:31:03 +0100 (CET)
-Mail-Followup-To: Alex Riesen <raa.lkml@gmail.com>,
-	Bill Lear <rael@zopyra.com>, git@vger.kernel.org,
-	nfs@lists.sourceforge.net,
-	linux-kernel <linux-kernel@vger.kernel.org>
+	id 1631C56D22; Tue, 13 Nov 2007 00:33:09 +0100 (CET)
 Content-Disposition: inline
 In-Reply-To: <18232.29603.856766.275854@lisa.zopyra.com>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
@@ -46,7 +41,10 @@ X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64733>
+
+This is the almost same message I cced to lk and nfs, but with
+Git-interasting parts added.
 
 Bill Lear, Mon, Nov 12, 2007 16:39:15 +0100:
 > On Saturday, November 10, 2007 at 00:21:06 (+0100) Alex Riesen writes:
@@ -108,5 +106,38 @@ write(3, "M", 1)                        = 1
 > write(2, "Resolving 551 deltas.\n", 22)                               = 22
 > pread64(3, "", 242, 541) = 0
 
-That's the problem.  Hmm... May I kindly suggest moving the topic to
-linux-nfs (cc-ed along with lk)?
+That's the problem.
+
+"Git-interesting parts"
+
+> write(2, "fatal: ", 7)                  = 7
+> write(2, "cannot pread pack file: Success", 31) = 31
+
+This is strange. The current git should not produce anything like
+this (and does not, here). The code in question is:
+
+	do {
+		ssize_t n = pread(pack_fd, data + rdy, len - rdy, from + rdy);
+		if (n <= 0)
+			die("cannot pread pack file: %s", strerror(errno));
+		rdy += n;
+	} while (rdy < len);
+
+Either your strace or that kernel seem to have clobbered errno, too.
+
+> fstat64(0, 0xffff907c)                  = 0
+> open("/etc/mtab", O_RDONLY)             = 4
+> fstat64(0x4, 0xffff6810)                = 0
+
+Interesing. What in git index-pack can read mtab and what for?
+Is it vanilla Git or have you instrumented it somehow?
+
+> [ Process PID=25347 runs in 32 bit mode. ]
+> umovestr: Input/output error
+> umovestr: Input/output error
+
+Is it your strace?
+Do you have anything unusual in syslog?
+
+BTW, you could try defining NO_PREAD in config.mak, and see if it
+works the problem around for you.
