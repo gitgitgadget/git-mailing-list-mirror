@@ -1,63 +1,96 @@
-From: Mike Hommey <mh@glandium.org>
-Subject: Re: [PATCH,RFC 1/2] Make the list of common commands more exclusive
-Date: Mon, 12 Nov 2007 11:24:12 +0100
-Organization: glandium.org
-Message-ID: <20071112102412.GA24803@glandium.org>
-References: <20071111235819.GB7392@thunk.org> <1194829077-14320-1-git-send-email-tytso@mit.edu> <7vzlxk8apz.fsf@gitster.siamese.dyndns.org> <20071112062222.GA17462@thunk.org> <7vhcjr53hp.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: git diff woes
+Date: Mon, 12 Nov 2007 11:35:48 +0100
+Message-ID: <47382C84.50408@op5.se>
+References: <4738208D.1080003@op5.se> <Pine.LNX.4.64.0711120958500.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Theodore Tso <tytso@mit.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 11:26:07 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 11:36:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrWUQ-000300-OW
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 11:25:59 +0100
+	id 1IrWeI-0005mG-7v
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 11:36:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756903AbXKLKZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 05:25:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756777AbXKLKZn
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 05:25:43 -0500
-Received: from vawad.err.no ([85.19.200.177]:52705 "EHLO vawad.err.no"
+	id S1756498AbXKLKfw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 05:35:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756633AbXKLKfw
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 05:35:52 -0500
+Received: from mail.op5.se ([193.201.96.20]:42686 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756377AbXKLKZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 05:25:43 -0500
-Received: from aputeaux-153-1-92-161.w86-217.abo.wanadoo.fr ([86.217.54.161] helo=vaio.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1IrWTm-0000oW-MH; Mon, 12 Nov 2007 11:25:21 +0100
-Received: from mh by vaio.glandium.org with local (Exim 4.63)
-	(envelope-from <mh@glandium.org>)
-	id 1IrWSi-0006W2-5Q; Mon, 12 Nov 2007 11:24:12 +0100
-Content-Disposition: inline
-In-Reply-To: <7vhcjr53hp.fsf@gitster.siamese.dyndns.org>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: mh@glandium.org
-X-SA-Exim-Scanned: No (on vaio.glandium.org); SAEximRunCond expanded to false
-X-Spam-Status: (score 2.0): Status=No hits=2.0 required=5.0 tests=RCVD_IN_SORBS_DUL version=3.1.4
+	id S1756305AbXKLKfv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 05:35:51 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 1DC281F0875B;
+	Mon, 12 Nov 2007 11:35:50 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AVDhey4loAwW; Mon, 12 Nov 2007 11:35:49 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 3B4001F0875A;
+	Mon, 12 Nov 2007 11:35:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <Pine.LNX.4.64.0711120958500.4362@racer.site>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64595>
 
-On Sun, Nov 11, 2007 at 11:26:10PM -0800, Junio C Hamano <gitster@pobox.com> wrote:
-> > My mental model for git newbies is that they would probably be pulling
-> > from upstream repositories (so I was tempted to remove git-init from
-> > the common commands list), but they would rarely be cherry-picking or
-> > reverting other people's changes.
+Johannes Schindelin wrote:
+> Hi,
 > 
-> I'd agree with that, but reverting and cherry-picking would also
-> be done on the commits the user builds on top of other people's
-> changes.
+> On Mon, 12 Nov 2007, Andreas Ericsson wrote:
+> 
+>> I recently ran into an oddity with the excellent git diff output
+>> format. When a function declaration changes in the same patch as
+>> something else in a function, the old declaration is used with the
+>> diff hunk-headers.
+>>
+>> [...]
+>>
+>> It definitely looks like a bug, but really isn't, since an earlier hunk
+>> (pasted below) changes the declaration.
+>>
+>> [...]
+>>
+>> This makes it impossible to trust the hunk-header info if the declaration
+>> changes.
+> 
+> Huh?  You admit yourself that it is not a bug.
 
-On the other hand, cherry-picking and reverting are just the same thing,
-except one applies a reversed patch. Wouldn't it make sense to merge these
-two in one command ?
 
-Mike
+In the check_ntpd.c program, there is no bug. I found the git diff output
+surprising, so I reported it.
+
+>  And sure you can trust the 
+> hunk header.  Like most of the things, the relate to the _original_ 
+> version, since the diff is meant to be applied as a forward patch.
+> 
+> So for all practical matters, the diff shows the correct thing: "in this 
+> hunk, which (still) belongs to that function, change this and this."
+> 
+> Of course, that is only the case if you accept that the diff should be 
+> applied _in total_, not piecewise.  IOW if you are a fan of GNU patch 
+> which happily clobbers your file until it fails with the last hunk, you 
+> will not be happy.
+> 
+
+You're right. GNU patch will apply one hunk and then happily churn on even
+if it fails. git-apply will apply all hunks or none, so all hunks can assume
+that all previous hunks were successfully applied. So what was your point
+again?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
