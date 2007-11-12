@@ -1,95 +1,95 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Deprecate git-fetch-pack?
-Date: Mon, 12 Nov 2007 01:16:13 +0100
-Organization: At home
-Message-ID: <fh8609$umn$1@ger.gmane.org>
-References: <Pine.LNX.4.64.0711101752490.29952@iabervon.org> <7v4pftip42.fsf@gitster.siamese.dyndns.org> <74415967-7F49-426C-8BF5-1A0210C337AB@develooper.com> <Pine.LNX.4.64.0711111103240.4362@racer.site> <7vd4ugcwkm.fsf@gitster.siamese.dyndns.org> <20071111222117.GA7392@thunk.org> <7vabpkbebj.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711112247350.4362@racer.site> <20071111235819.GB7392@thunk.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: [PATCH] Documentation: Fix references to deprecated commands
+Date: Mon, 12 Nov 2007 01:24:10 +0100
+Message-ID: <20071112002410.GA21970@diku.dk>
+References: <Pine.LNX.4.64.0711072253580.4362@racer.site> <7vlk998u6r.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 01:16:46 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 01:24:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrMyr-00048O-Q6
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:16:46 +0100
+	id 1IrN6M-0005nn-FD
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755609AbXKLAQa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 11 Nov 2007 19:16:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755601AbXKLAQa
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:16:30 -0500
-Received: from main.gmane.org ([80.91.229.2]:39773 "EHLO ciao.gmane.org"
+	id S1755510AbXKLAYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 19:24:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755734AbXKLAYP
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:24:15 -0500
+Received: from mgw1.diku.dk ([130.225.96.91]:54778 "EHLO mgw1.diku.dk"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752748AbXKLAQ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 19:16:29 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IrMyW-0005dT-38
-	for git@vger.kernel.org; Mon, 12 Nov 2007 00:16:24 +0000
-Received: from abwz76.neoplus.adsl.tpnet.pl ([83.8.249.76])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 00:16:24 +0000
-Received: from jnareb by abwz76.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 00:16:24 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwz76.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755510AbXKLAYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 19:24:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mgw1.diku.dk (Postfix) with ESMTP id 880C5770017;
+	Mon, 12 Nov 2007 01:24:12 +0100 (CET)
+X-Virus-Scanned: amavisd-new at diku.dk
+Received: from mgw1.diku.dk ([127.0.0.1])
+	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RB1JLxfa3y0B; Mon, 12 Nov 2007 01:24:10 +0100 (CET)
+Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
+	by mgw1.diku.dk (Postfix) with ESMTP id 6C70E770015;
+	Mon, 12 Nov 2007 01:24:10 +0100 (CET)
+Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
+	by nhugin.diku.dk (Postfix) with ESMTP
+	id 8DE206DFF77; Mon, 12 Nov 2007 01:23:44 +0100 (CET)
+Received: by tyr.diku.dk (Postfix, from userid 3873)
+	id 4D4C45B8001; Mon, 12 Nov 2007 01:24:10 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64539>
 
-Theodore Tso wrote:
+... by changing git-tar-tree reference to git-archive and removing
+seemingly unrelevant footnote about git-ssh-{fetch,upload}.
+---
+ Documentation/core-tutorial.txt         |    5 -----
+ Documentation/git-get-tar-commit-id.txt |    4 ++--
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
-> 2) The command which are displayed by "git help" should use some
-> serious rethinking. =A0Ideally, it would be nice if the output fit in=
- a
-> single 24-line terminal window. =A0 Some candidates for removal:
->=20
-> =A0 =A0 =A0 =A0a) prune: "git prune" definitely doesn't deserve to be=
- on the
-> =A0 =A0 =A0 =A0front and center as displayed by "git help". =A0Maybe =
-replace it
-> =A0 =A0 =A0 =A0with "gc", but now that we have gc.auto, I'm not sure =
-it's
-> =A0 =A0 =A0 =A0worth it at all.
+ Maybe also fixing these references would be in order.
 
-I would replace it by "git gc" (you have to run 'git gc --prune' by han=
-d
-on quiescent repository), or remove it altogether.
+diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
+index ebd2492..401d1de 100644
+--- a/Documentation/core-tutorial.txt
++++ b/Documentation/core-tutorial.txt
+@@ -1090,11 +1090,6 @@ server like git Native transport does.  Any stock HTTP server
+ that does not even support directory index would suffice.  But
+ you must prepare your repository with `git-update-server-info`
+ to help dumb transport downloaders.
+-+
+-There are (confusingly enough) `git-ssh-fetch` and `git-ssh-upload`
+-programs, which are 'commit walkers'; they outlived their
+-usefulness when git Native and SSH transports were introduced,
+-and are not used by `git pull` or `git push` scripts.
+ 
+ Once you fetch from the remote repository, you `merge` that
+ with your current branch.
+diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
+index 9b5f86f..ef1b19c 100644
+--- a/Documentation/git-get-tar-commit-id.txt
++++ b/Documentation/git-get-tar-commit-id.txt
+@@ -14,12 +14,12 @@ SYNOPSIS
+ DESCRIPTION
+ -----------
+ Acts as a filter, extracting the commit ID stored in archives created by
+-git-tar-tree.  It reads only the first 1024 bytes of input, thus its
++gitlink:git-archive[1].  It reads only the first 1024 bytes of input, thus its
+ runtime is not influenced by the size of <tarfile> very much.
+ 
+ If no commit ID is found, git-get-tar-commit-id quietly exists with a
+ return code of 1.  This can happen if <tarfile> had not been created
+-using git-tar-tree or if the first parameter of git-tar-tree had been
++using git-archive or if the first parameter of git-tar-tree had been
+ a tree ID instead of a commit ID or tag.
 
-> =A0 =A0 =A0 =A0b) revert: =A0Is that really that common of a command?
-
-It is useful command, perhaps short description should be improved.
-BTW. if we have cherry-pick, then we should have revert.
-
-> =A0 =A0 =A0 =A0c) show-branch: The output is terrifying without expla=
-nation
-
-I agree. I would replace it by gitk, or gui (git-gui / "git gui").
-
-> There are other commands I'm not so sure about, but it is worth
-> flagging them. =A0One way that might be helpful is to group the comma=
-nds
-> into subcommands, much like gdb does, so you could do something like
-> "git help other-repos" (where all commands that involve interacting
-> with other repositories are summarized), and so on.
-
-I think that "git-rm" could be removed, because "rm <file>; git commit =
-=2E.."
-works just fine.
-
-See also discussion about results of Git User's Survey 2007, somewhere
-around
-  http://thread.gmane.org/gmane.comp.version-control.git/59935/focus=3D=
-62205
-
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+-- 
+Jonas Fonseca
