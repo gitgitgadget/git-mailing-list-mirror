@@ -1,72 +1,69 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git diff woes
-Date: Mon, 12 Nov 2007 10:01:51 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711120958500.4362@racer.site>
-References: <4738208D.1080003@op5.se>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] status&commit: Teach them to show commits of modified
+ submodules.
+Date: Mon, 12 Nov 2007 11:03:50 +0100
+Message-ID: <47382506.1090106@viscovery.net>
+References: <1194722863-14741-1-git-send-email-pkufranky@gmail.com> <7vabpliz13.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Mon Nov 12 11:02:52 2007
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 11:04:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrW83-00057H-0s
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 11:02:51 +0100
+	id 1IrW9K-0005Te-AO
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 11:04:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758319AbXKLKCh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 05:02:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758320AbXKLKCh
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 05:02:37 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59579 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758319AbXKLKCf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 05:02:35 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 10:02:34 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp003) with SMTP; 12 Nov 2007 11:02:34 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+Av0Z/YbeAK2MA0gmwBJGipco76iZcfy08eJV4TG
-	w3aYh+6LrJuV9f
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4738208D.1080003@op5.se>
-X-Y-GMX-Trusted: 0
+	id S1756779AbXKLKDy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 05:03:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755936AbXKLKDy
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 05:03:54 -0500
+Received: from lilzmailso02.liwest.at ([212.33.55.13]:7403 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756742AbXKLKDx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 05:03:53 -0500
+Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1IrW8W-0003qu-6q; Mon, 12 Nov 2007 11:03:20 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
+	by linz.eudaptics.com (Postfix) with ESMTP
+	id CB43A54D; Mon, 12 Nov 2007 11:03:50 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+In-Reply-To: <7vabpliz13.fsf@gitster.siamese.dyndns.org>
+X-Spam-Score: 1.7 (+)
+X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64589>
 
-Hi,
-
-On Mon, 12 Nov 2007, Andreas Ericsson wrote:
-
-> I recently ran into an oddity with the excellent git diff output
-> format. When a function declaration changes in the same patch as
-> something else in a function, the old declaration is used with the
-> diff hunk-headers.
+Junio C Hamano schrieb:
+> I also find "<<< lines then >>> other lines" format very hard to
+> read.  Maybe formatting it like this would make it a bit more
+> readable and more space efficient?
 > 
-> [...]
-> 
-> It definitely looks like a bug, but really isn't, since an earlier hunk
-> (pasted below) changes the declaration.
->
-> [...]
->
-> This makes it impossible to trust the hunk-header info if the declaration
-> changes.
+>  	# * sm1 354cd45...3f751e5:
+>  	#   - one line message for C
+>  	#   - one line message for B
+>  	#   + one line message for D
+>  	#   + one line message for E
+>  	# * sm2 5c8bfb5...ac46d84:
+>  	#   - msg
 
-Huh?  You admit yourself that it is not a bug.  And sure you can trust the 
-hunk header.  Like most of the things, the relate to the _original_ 
-version, since the diff is meant to be applied as a forward patch.
+How about the equivalent of
 
-So for all practical matters, the diff shows the correct thing: "in this 
-hunk, which (still) belongs to that function, change this and this."
+	git log --left-right --pretty=oneline --topo-order 354cd45...3f751e5
 
-Of course, that is only the case if you accept that the diff should be 
-applied _in total_, not piecewise.  IOW if you are a fan of GNU patch 
-which happily clobbers your file until it fails with the last hunk, you 
-will not be happy.
+which would be
 
-Ciao,
-Dscho
+   	# * sm1 354cd45...3f751e5:
+   	#   <one line message for C
+   	#   <one line message for B
+   	#   >one line message for D
+   	#   >one line message for E
+
+-- Hannes
