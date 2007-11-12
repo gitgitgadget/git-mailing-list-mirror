@@ -1,112 +1,58 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Documentation: Fix references to deprecated commands
-Date: Mon, 12 Nov 2007 01:32:51 +0100
-Message-ID: <20071112003251.GB21970@diku.dk>
-References: <Pine.LNX.4.64.0711072253580.4362@racer.site> <7vlk998u6r.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org> <20071112002410.GA21970@diku.dk>
+From: "eric miao" <eric.y.miao@gmail.com>
+Subject: Is it possible for git to remember the options preference for "git log"?
+Date: Mon, 12 Nov 2007 08:33:43 +0800
+Message-ID: <f17812d70711111633u6c00d182u532fef1c16c3c94a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 01:33:11 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 01:34:01 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrNEl-0007Y2-3A
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:33:11 +0100
+	id 1IrNFX-0007i7-8u
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 01:33:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755920AbXKLAcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 19:32:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755903AbXKLAcz
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:32:55 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:45211 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755890AbXKLAcy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 19:32:54 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2FB16770017;
-	Mon, 12 Nov 2007 01:32:53 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id GSDH7IjnHlWH; Mon, 12 Nov 2007 01:32:51 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 7300377013E;
-	Mon, 12 Nov 2007 01:32:51 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 909C16DFE17; Mon, 12 Nov 2007 01:32:25 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 546AE5B8001; Mon, 12 Nov 2007 01:32:51 +0100 (CET)
+	id S1755947AbXKLAdo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 19:33:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755945AbXKLAdo
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 19:33:44 -0500
+Received: from wa-out-1112.google.com ([209.85.146.182]:53398 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755939AbXKLAdo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 19:33:44 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1349929wah
+        for <git@vger.kernel.org>; Sun, 11 Nov 2007 16:33:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        bh=Rh48tiVlQnaDGH2t2w9iW2s1SvrglqgY2ZEKVHItqAA=;
+        b=co5JL74RWwrl0UU5682IgzC09EE84GfQFj/uaibkuijryhIqjfmJPEBQRD404owg+76AZavIYLijoaDrdEI31ztHNnS0qRjOzjbS1GMAFDSzelI4gP8sgrgX97iYzrKtAi7TnLh9vo1u2/RdbW6X4s+WdeBBJhnj2jiDrjI57Q4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
+        b=KfF3hhCkQ1DuhaU1iYIjcokax4wtotIE6VKby9EJcJdYuK/SUEeiIeyksBscbjgOr69b5Go42xkjuy3IbRHlktIrUb8HXCxIz1UTD+xPT3s7ij24PElBAGJwdqetrFdS/A2KHrwdUqEWDlvZE8xyhONhR+5t+f83Ro1Dco0UZlw=
+Received: by 10.114.110.1 with SMTP id i1mr61947wac.1194827623427;
+        Sun, 11 Nov 2007 16:33:43 -0800 (PST)
+Received: by 10.114.147.6 with HTTP; Sun, 11 Nov 2007 16:33:43 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20071112002410.GA21970@diku.dk>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64541>
 
-Subject: [PATCH] Documentation: Fix references to deprecated commands
+All,
 
-... by changing git-tar-tree reference to git-archive and removing
-seemingly unrelevant footnote about git-ssh-{fetch,upload}.
+Most of the time I'm using git-log for inspecting a brief history
+and insert/remove/modify commits between, which I have to
+type "git log --abbrev-commit --pretty=oneline" every time. Is
+it possible for git to remember this command line options
+preference?
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/core-tutorial.txt         |    5 -----
- Documentation/git-get-tar-commit-id.txt |    4 ++--
- 2 files changed, 2 insertions(+), 7 deletions(-)
-
- Now with SOB and ...
-
- Jonas Fonseca <fonseca@diku.dk> wrote Mon, Nov 12, 2007:
- > diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
- > index 9b5f86f..ef1b19c 100644
- > --- a/Documentation/git-get-tar-commit-id.txt
- > +++ b/Documentation/git-get-tar-commit-id.txt
- > @@ -14,12 +14,12 @@ SYNOPSIS
- >  return code of 1.  This can happen if <tarfile> had not been created
- > -using git-tar-tree or if the first parameter of git-tar-tree had been
- > +using git-archive or if the first parameter of git-tar-tree had been
- >  a tree ID instead of a commit ID or tag.
-
- ... s//g
-
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index ebd2492..401d1de 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -1090,11 +1090,6 @@ server like git Native transport does.  Any stock HTTP server
- that does not even support directory index would suffice.  But
- you must prepare your repository with `git-update-server-info`
- to help dumb transport downloaders.
--+
--There are (confusingly enough) `git-ssh-fetch` and `git-ssh-upload`
--programs, which are 'commit walkers'; they outlived their
--usefulness when git Native and SSH transports were introduced,
--and are not used by `git pull` or `git push` scripts.
- 
- Once you fetch from the remote repository, you `merge` that
- with your current branch.
-diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
-index 9b5f86f..ef1b19c 100644
---- a/Documentation/git-get-tar-commit-id.txt
-+++ b/Documentation/git-get-tar-commit-id.txt
-@@ -14,12 +14,12 @@ SYNOPSIS
- DESCRIPTION
- -----------
- Acts as a filter, extracting the commit ID stored in archives created by
--git-tar-tree.  It reads only the first 1024 bytes of input, thus its
-+gitlink:git-archive[1].  It reads only the first 1024 bytes of input, thus its
- runtime is not influenced by the size of <tarfile> very much.
- 
- If no commit ID is found, git-get-tar-commit-id quietly exists with a
- return code of 1.  This can happen if <tarfile> had not been created
--using git-tar-tree or if the first parameter of git-tar-tree had been
-+using git-archive or if the <treeish> parameter of git-archive had been
- a tree ID instead of a commit ID or tag.
+And no, I don't really want to use shell's alias or something
+else, I was just used to type "git xxx" :-)
 
 -- 
-Jonas Fonseca
+Cheers
+- eric
