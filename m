@@ -1,81 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What is the idea for bare repositories?
-Date: Mon, 12 Nov 2007 17:37:50 +0100
-Organization: At home
-Message-ID: <fh9vgu$u75$1@ger.gmane.org>
-References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <86pryf7815.fsf@lola.quinscape.zz>
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: [PATCH] status&commit: Teach them to show submodule commit summary
+Date: Tue, 13 Nov 2007 00:39:34 +0800
+Message-ID: <46dff0320711120839q7fc0542frd90a396237c144bf@mail.gmail.com>
+References: <1194877277-31777-1-git-send-email-pkufranky@gmail.com>
+	 <4738784F.7010106@viscovery.net>
+	 <Pine.LNX.4.64.0711121612250.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 12 17:38:45 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Johannes Sixt" <j.sixt@viscovery.net>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Johannes Schindelin" <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Nov 12 17:40:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrcJA-0005g6-Be
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:38:44 +0100
+	id 1IrcKM-00066z-4h
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 17:39:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752569AbXKLQi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 11:38:29 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752504AbXKLQi3
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:38:29 -0500
-Received: from main.gmane.org ([80.91.229.2]:51326 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751483AbXKLQi2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 11:38:28 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IrcIb-0003jE-9r
-	for git@vger.kernel.org; Mon, 12 Nov 2007 16:38:09 +0000
-Received: from abwz76.neoplus.adsl.tpnet.pl ([83.8.249.76])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 16:38:09 +0000
-Received: from jnareb by abwz76.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 12 Nov 2007 16:38:09 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abwz76.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1755225AbXKLQjl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 11:39:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755042AbXKLQjl
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 11:39:41 -0500
+Received: from nz-out-0506.google.com ([64.233.162.227]:11192 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754792AbXKLQjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 11:39:40 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so995783nze
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 08:39:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=QxWH7Z/leDDcnrh/9nvkYKQS67eW3Y5+pAyJzcDNAIc=;
+        b=UZmHvevNjvrPae2qN4IFmIxpId4nkGte4Q8hRzgVAcDePSnjZ/8bBQLSpDPlXh8ipvm8lm2B7mzat26fBpIBglyDJi/SA8M2n2Y6AGFLl0gCd4r/1pCnXNDa4vwjJMR6PuTP/c1ULHzkSsotiAXOfo0GBE6VbUToPt/P+tusYKw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=Y548eT+HhIuDpj4etlbSyKkxv0rpzgGLrmJ9bncuoosVrlT8RFGws+6UNiwyJ9SeMz4EEtH6dGhag+BPOb50culJNzkypr64YKHrlcM4AwdU/2YqYttCws6B7XfFsHUhsAiTLgDSW4UGihb1FGBcUCfUjxOP0QE6ZitDNcXl5aU=
+Received: by 10.141.83.15 with SMTP id k15mr2479466rvl.1194885574645;
+        Mon, 12 Nov 2007 08:39:34 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Mon, 12 Nov 2007 08:39:34 -0800 (PST)
+In-Reply-To: <Pine.LNX.4.64.0711121612250.4362@racer.site>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64657>
 
-David Kastrup wrote:
+On Nov 13, 2007 12:13 AM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 
-> Bruno Cesar Ribas <ribas@c3sl.ufpr.br> writes:
-> 
->> A bare repository is the way to publish your changes to the public.
->> git-daemon  and http-clones use a bare repository that only contains
->> adminsitrative files.
-[...]
-> 
-> Fine.  So why don't the following commands complain?  Apart from
-> git-reset without arguments (which could probably get along without a
-> working dir), they are supposed to employ a working directory.
-> 
->> On Mon, Nov 12, 2007 at 02:11:58PM +0100, David Kastrup wrote:
->>> 
->>> I have a repository declared as bare.  Some commands treat it as such,
->>> other's don't.  For example, I get
->>> 
->>> git-diff [no complaint]
->>> git-reset [no complaint]
->>> git-reset --hard
->>> HEAD is now at db862c1... installmanager.sh: setze GIT_WORK_TREE
+> >
+> > There is already 'status.color', I suggest the configuration to become
+> > 'status.submoduleSummary'.
+>
+> You could make this variable even a numeric one.  Saying how many lines
+> you want to have maximally (-1 meaning unlimited).
+Good idea.
+However, there is a problem about limiting the lines of commit
+summary: if there are 50 backwards and 50 forwards, and summary lines
+are limited to 50 lines. How to display? 25 backwards, 25 forwards or
+only 50 backwards?
+>
+> Ciao,
+> Dscho
+>
+>
 
-git-diff can compare tree and tree, or tree and index; only for
-comparing tree and files of index and files it needs working dir.
 
-git-reset resets only refs and index. git-reset --hard resets also
-files, so it needs working directory. Perhaps it should fail completely
-and not only after doing mixed (non-hard) reset if we are in bare
-repository.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Ping Yin
