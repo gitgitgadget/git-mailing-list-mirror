@@ -1,66 +1,88 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
- repositories?
-Date: Mon, 12 Nov 2007 17:30:10 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711121727130.4362@racer.site>
-References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br>
- <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl>
- <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
- <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Mon, 12 Nov 2007 18:32:34 +0100
+Message-ID: <86ve875pzh.fsf@lola.quinscape.zz>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl> <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20=04?=
+	=?ISO-8859-1?Q?<Pine.LNX.4.64.0?= =?ISO-8859-1?Q?711121715090.436?=
+	=?ISO-8859-1?Q?2@racer.site>?=
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 18:31:23 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 18:33:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ird7z-0001Cb-EJ
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:31:15 +0100
+	id 1Ird9q-0001uK-7h
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 18:33:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758487AbXKLRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 12:30:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758602AbXKLRa1
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:30:27 -0500
-Received: from mail.gmx.net ([213.165.64.20]:59877 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1758487AbXKLRa0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 12:30:26 -0500
-Received: (qmail invoked by alias); 12 Nov 2007 17:30:24 -0000
-Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
-  by mail.gmx.net (mp038) with SMTP; 12 Nov 2007 18:30:24 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/9qAJGT5X9uGwt9yAxmy5pjbUhYuSz6n3ZcxT0qW
-	9R5FOsPudEi5d0
-X-X-Sender: gene099@racer.site
-In-Reply-To: <18232.35893.243300.179076@lisa.zopyra.com>
-X-Y-GMX-Trusted: 0
+	id S1755640AbXKLRcz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 12:32:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752658AbXKLRcy
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 12:32:54 -0500
+Received: from main.gmane.org ([80.91.229.2]:43608 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755314AbXKLRcy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 12:32:54 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Ird9R-0006SQ-RB
+	for git@vger.kernel.org; Mon, 12 Nov 2007 17:32:45 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 17:32:45 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 17:32:45 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:/vxOHEogLvdDq9v4C4i7WQ+GVA0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64672>
 
-Hi,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Mon, 12 Nov 2007, Bill Lear wrote:
+> Hi,
+>
+> On Mon, 12 Nov 2007, Matthieu Moy wrote:
+>
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>> 
+>> > On Mon, 12 Nov 2007, Jan Wielemaker wrote:
+>> >
+>> >> I found out that cloning a empty bare repository produces nothing at 
+>> >> all, [...]
+>> >
+>> > If they are empty, what exactly do you mean to clone?
+>> 
+>> I'd expect an empty repository, with the git remote configured 
+>> correctly.
+>
+> Yeah, right.
+>
+> Last time I checked, those geneticists did not clone thin air.  They 
+> always waited until they had something to clone.
 
-> We have an administrator create a new bare repo for us, and we populate 
-> it by pushing into it.  It wold be nice if the administrator could 
-> create a bare repo and we could clone from it, and push to it to 
-> populate it, instead of cloning the bare repo from another repo that has 
-> already been (partly) populated.
+>> >> a empty bare repository produces nothing at 
+>> >> all, [...]
+>> >
+>> > If they are empty, what exactly do you mean to clone?
+>> 
+>> I'd expect an empty repository, with the git remote configured 
+>> correctly.
+>
+> Yeah, right.
+>
+> Last time I checked, those geneticists did not clone thin air.  They 
+> always waited until they had something to clone.
 
-I don't see what is soooo hard with using git-remote in the repo you are 
-pushing from.  It's just a "git remote add origin <url>", and you can even 
-use this to push right afterwards: "git push --all origin".
+git-init does not perform sexual intercourse, either.  I don't see why
+geneticists should be relevant for determining what git-clone does.
 
-Besides, if you really want to work together, chances are that you do 
-_not_ want to start with <n> independent initial commits.  So you need to 
-populate the repository before starting _anyway_.
 
-Why are easy solutions so unattractive?
-
-Ciao,
-Dscho
+-- 
+David Kastrup
