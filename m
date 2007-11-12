@@ -1,85 +1,96 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Documentation: Fix references to deprecated commands
-Date: Mon, 12 Nov 2007 10:37:19 +0100
-Message-ID: <20071112093719.GA22555@diku.dk>
-References: <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org> <20071112002410.GA21970@diku.dk> <20071112003251.GB21970@diku.dk> <7vbq9z50vj.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: git diff woes
+Date: Mon, 12 Nov 2007 10:44:45 +0100
+Message-ID: <4738208D.1080003@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 10:37:51 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 12 10:45:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrVjq-0007Gx-0u
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:37:50 +0100
+	id 1IrVqq-0000bF-VY
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 10:45:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755723AbXKLJh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 04:37:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755633AbXKLJh2
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:37:28 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:58154 "EHLO mgw1.diku.dk"
+	id S1755920AbXKLJot (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 04:44:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755606AbXKLJos
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 04:44:48 -0500
+Received: from mail.op5.se ([193.201.96.20]:41314 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755627AbXKLJh1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 04:37:27 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2254C7704BA;
-	Mon, 12 Nov 2007 10:37:26 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id mfDA2wmqVElr; Mon, 12 Nov 2007 10:37:24 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 8DB0B770502;
-	Mon, 12 Nov 2007 10:37:19 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 240826DFD94; Mon, 12 Nov 2007 10:36:53 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 577455B8001; Mon, 12 Nov 2007 10:37:19 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <7vbq9z50vj.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1755484AbXKLJos (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 04:44:48 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id BB1B61F08754
+	for <git@vger.kernel.org>; Mon, 12 Nov 2007 10:44:46 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uqZTjjM8jBYj for <git@vger.kernel.org>;
+	Mon, 12 Nov 2007 10:44:46 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id D1A721F08753
+	for <git@vger.kernel.org>; Mon, 12 Nov 2007 10:44:45 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64583>
 
-Junio C Hamano <gitster@pobox.com> wrote Mon, Nov 12, 2007:
-> Jonas Fonseca <fonseca@diku.dk> writes:
-> 
-> > diff --git a/Documentation/git-get-tar-commit-id.txt b/Documentation/git-get-tar-commit-id.txt
-> > index 9b5f86f..ef1b19c 100644
-> > --- a/Documentation/git-get-tar-commit-id.txt
-> > +++ b/Documentation/git-get-tar-commit-id.txt
-> > @@ -14,12 +14,12 @@ SYNOPSIS
-> >  DESCRIPTION
-> >  -----------
-> >  Acts as a filter, extracting the commit ID stored in archives created by
-> > -git-tar-tree.  It reads only the first 1024 bytes of input, thus its
-> > +gitlink:git-archive[1].  It reads only the first 1024 bytes of input, thus its
-> >  runtime is not influenced by the size of <tarfile> very much.
-> >  
-> >  If no commit ID is found, git-get-tar-commit-id quietly exists with a
-> >  return code of 1.  This can happen if <tarfile> had not been created
-> > -using git-tar-tree or if the first parameter of git-tar-tree had been
-> > +using git-archive or if the <treeish> parameter of git-archive had been
-> >  a tree ID instead of a commit ID or tag.
-> >
-> > -- 
-> > Jonas Fonseca
-> 
-> How did you prepare this hunk?  I count 10 lines preimage and
-> postimage, followed by a blank line and the signature separator
-> "-- " you added in your MUA, but the header claims to have 12
-> lines.
+I recently ran into an oddity with the excellent git diff output
+format. When a function declaration changes in the same patch as
+something else in a function, the old declaration is used with the
+diff hunk-headers.
 
-I am sorry to cause you this kind of problems. Usually I keep the patch
-ending inserted by format-patch, but yesterday I deleted it for some
-unknown reason. Maybe I should learn to use git-send-email. 
+Consider this hunk:
+---%<---%<---%<---
+@@ -583,75 +346,100 @@ double jitter_request(const char *host, int *status){
+        if(verbose) printf("%d candiate peers available\n", num_candidates);
+        if(verbose && syncsource_found) printf("synchronization source found\n")
+        if(! syncsource_found){
+-               *status = STATE_UNKNOWN;
++               status = STATE_WARNING;
+                if(verbose) printf("warning: no synchronization source found\n")
+        }
+---%<---%<---%<---
+
+It definitely looks like a bug, but really isn't, since an earlier hunk
+(pasted below) changes the declaration. There were several hunks between
+these two, so it was far from obvious when I saw it first.
+
+---%<---%<---%<---
+@@ -517,19 +276,22 @@ setup_control_request(ntp_control_message *p, uint8_t opco
+ }
+ 
+ /* XXX handle responses with the error bit set */
+-double jitter_request(const char *host, int *status){
+-       int conn=-1, i, npeers=0, num_candidates=0, syncsource_found=0;
+-       int run=0, min_peer_sel=PEER_INCLUDED, num_selected=0, num_valid=0;
++int ntp_request(const char *host, double *offset, int *offset_result, double *j
++       int conn=-1, i, npeers=0, num_candidates=0;
++       int min_peer_sel=PEER_INCLUDED;
+        int peers_size=0, peer_offset=0;
++       int status;
+---%<---%<---%<--- 
+ 
+This makes it impossible to trust the hunk-header info if the declaration
+changes. It might be better to not write it out when the header-line is
+also part of the patch. That would at least force one to go back and find
+the real declaration. Best would probably be to write the new declaration,
+but I'm unsure if that could cause some other confusion.
+
+I haven't started looking into it yet, and as I'm sure there are others
+who are much more familiar with the xdiff code I'm shamelessly hoping
+someone will beat me to a fix.
 
 -- 
-Jonas Fonseca
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
