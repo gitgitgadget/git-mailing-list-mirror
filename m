@@ -1,90 +1,274 @@
-From: Theodore Tso <tytso@mit.edu>
-Subject: Re: [PATCH,RFC 1/2] Make the list of common commands more exclusive
-Date: Mon, 12 Nov 2007 01:22:22 -0500
-Message-ID: <20071112062222.GA17462@thunk.org>
-References: <20071111235819.GB7392@thunk.org> <1194829077-14320-1-git-send-email-tytso@mit.edu> <7vzlxk8apz.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 07:55:02 2007
+From: David D Kilzer <ddkilzer@kilzer.net>
+Subject: [PATCH 3/3 v2] git-svn log: handle unreachable revisions like "svn log"
+Date: Sun, 11 Nov 2007 22:56:52 -0800
+Message-ID: <1194850612-6907-1-git-send-email-ddkilzer@kilzer.net>
+References: <1194761435-7286-4-git-send-email-ddkilzer@kilzer.net>
+Cc: gitster@pobox.com, David D Kilzer <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 12 07:57:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrTCG-0005jw-VQ
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 07:55:01 +0100
+	id 1IrTEJ-00067p-Un
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 07:57:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751288AbXKLGym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 01:54:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751285AbXKLGym
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 01:54:42 -0500
-Received: from thunk.org ([69.25.196.29]:59176 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751192AbXKLGym (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 01:54:42 -0500
-Received: from root (helo=closure.thunk.org)
-	by thunker.thunk.org with local-esmtps 
-	(tls_cipher TLS-1.0:RSA_AES_256_CBC_SHA:32)  (Exim 4.50 #1 (Debian))
-	id 1IrTMC-0003y7-Fr; Mon, 12 Nov 2007 02:05:16 -0500
-Received: from tytso by closure.thunk.org with local (Exim 4.67)
-	(envelope-from <tytso@thunk.org>)
-	id 1IrSgg-0004YO-V9; Mon, 12 Nov 2007 01:22:23 -0500
-Content-Disposition: inline
-In-Reply-To: <7vzlxk8apz.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S1752358AbXKLG4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 01:56:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752056AbXKLG4w
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 01:56:52 -0500
+Received: from mail-out4.apple.com ([17.254.13.23]:57678 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751285AbXKLG4v (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 01:56:51 -0500
+Received: from relay14.apple.com (relay14.apple.com [17.128.113.52])
+	by mail-out4.apple.com (Postfix) with ESMTP id 04E7D18F6468;
+	Sun, 11 Nov 2007 22:56:51 -0800 (PST)
+Received: from relay14.apple.com (unknown [127.0.0.1])
+	by relay14.apple.com (Symantec Mail Security) with ESMTP id D921E28057;
+	Sun, 11 Nov 2007 22:56:50 -0800 (PST)
+X-AuditID: 11807134-9fbb9bb0000008bf-a2-4737f9329c52
+Received: from localhost.localdomain (unknown [17.151.108.44])
+	by relay14.apple.com (Apple SCV relay) with ESMTP id D62B628056;
+	Sun, 11 Nov 2007 22:56:49 -0800 (PST)
+X-Mailer: git-send-email 1.5.3.4
+In-Reply-To: <1194761435-7286-4-git-send-email-ddkilzer@kilzer.net>
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64565>
 
-On Sun, Nov 11, 2007 at 06:21:44PM -0800, Junio C Hamano wrote:
-> Theodore Ts'o <tytso@mit.edu> writes:
-> 
-> > Remove apply, archive, cherry-pick, prune, revert, and show-branch, so
-> > "git help" is less intimidating.
-> >
-> > Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
-> >
-> > -apply
-> > -archive
-> > -prune
-> > -revert
-> > -show-branch
-> 
-> I am fine with this list, perhaps except apply.
+When unreachable revisions are given to "svn log", it displays all commit
+logs in the given range that exist in the current tree.  (If no commit
+logs are found in the current tree, it simply prints a single commit log
+separator.)  This patch makes "git-svn log" behave the same way.
 
-I was borderline on apply, but given that people are familiar with
-patch -p1, the only real advantage git-apply has is that automatically
-deals with new files (which "git commit -a" or "git add -u" won't
-automatically get).
+Ten tests added to t/t9116-git-svn-log.sh.
 
-What did you think about cherry-pick?  Was that omitted by accident?
+Signed-off-by: David D Kilzer <ddkilzer@kilzer.net>
+---
 
-> On the other hand, if you are shooting *really* for the absolute
-> minimum set for the beginners, I would kill rm and possibly mv)
-> in addition to your list:
+No changes were needed to parts 1 and 2 of this series, so I am not
+reposting them.
 
-Those did cross my mind as well.  :-)
+Updated this patch based on feedback from Benoit Sigoure and Eric Wong:
 
-> I have a bit of reservation about revert, but I'd imagine we
-> could kill it, and also fetch, pull and push, if you are
-> shooting for *real* beginners who work alone.  I think the only
-> valid justification to drop "revert" from the list is to assume
-> that the audience do not interact with the outside world, and
-> dropping fetch/pull/push from the list is in line with that.
+- Commented find_rev_before() and find_rev_after().
+- Changed commit_log_separator() into a constant.
+- Made return statement safer by adding another check in git_svn_log_cmd().
+- Changed echo statement to printf in t/t9116-git-svn-log.sh.
 
-My mental model for git newbies is that they would probably be pulling
-from upstream repositories (so I was tempted to remove git-init from
-the common commands list), but they would rarely be cherry-picking or
-reverting other people's changes.
+All tests pass on maint branch.
 
-They probably would be submitting changes back upstream using e-mail
-before they learn how to publish their own repository, so commands I'd
-be tempted to add would include git-format-patch, git-send-email, and
-git-cherry.  But these commands are pretty complicated for beginners....
+ git-svn.perl           |   63 ++++++++++++++++++++++++++++++++--------------
+ t/t9116-git-svn-log.sh |   66 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 110 insertions(+), 19 deletions(-)
 
-	     	       		    	   - Ted
+diff --git a/git-svn.perl b/git-svn.perl
+index 39585d8..f017f94 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -2256,10 +2256,15 @@ sub rev_db_get {
+ 	$ret;
+ }
+ 
++# Finds the first svn revision that exists on (if $eq_ok is true) or
++# before $rev for the current branch.  It will not search any lower
++# than $min_rev.  Returns the git commit hash and svn revision number
++# if found, else (undef, undef).
+ sub find_rev_before {
+-	my ($self, $rev, $eq_ok) = @_;
++	my ($self, $rev, $eq_ok, $min_rev) = @_;
+ 	--$rev unless $eq_ok;
+-	while ($rev > 0) {
++	$min_rev ||= 1;
++	while ($rev >= $min_rev) {
+ 		if (my $c = $self->rev_db_get($rev)) {
+ 			return ($rev, $c);
+ 		}
+@@ -2268,6 +2273,23 @@ sub find_rev_before {
+ 	return (undef, undef);
+ }
+ 
++# Finds the first svn revision that exists on (if $eq_ok is true) or
++# after $rev for the current branch.  It will not search any higher
++# than $max_rev.  Returns the git commit hash and svn revision number
++# if found, else (undef, undef).
++sub find_rev_after {
++	my ($self, $rev, $eq_ok, $max_rev) = @_;
++	++$rev unless $eq_ok;
++	$max_rev ||= $self->rev_db_max();
++	while ($rev <= $max_rev) {
++		if (my $c = $self->rev_db_get($rev)) {
++			return ($rev, $c);
++		}
++		++$rev;
++	}
++	return (undef, undef);
++}
++
+ sub _new {
+ 	my ($class, $repo_id, $ref_id, $path) = @_;
+ 	unless (defined $repo_id && length $repo_id) {
+@@ -3494,6 +3516,7 @@ package Git::SVN::Log;
+ use strict;
+ use warnings;
+ use POSIX qw/strftime/;
++use constant commit_log_separator => ('-' x 72) . "\n";
+ use vars qw/$TZ $limit $color $pager $non_recursive $verbose $oneline
+             %rusers $show_commit $incremental/;
+ my $l_fmt;
+@@ -3587,19 +3610,19 @@ sub git_svn_log_cmd {
+ 			push @cmd, $c;
+ 		}
+ 	} elsif (defined $r_max) {
+-		my ($c_min, $c_max);
+-		$c_max = $gs->rev_db_get($r_max);
+-		$c_min = $gs->rev_db_get($r_min);
+-		if (defined $c_min && defined $c_max) {
+-			if ($r_max > $r_min) {
+-				push @cmd, "--boundary", "$c_min..$c_max";
+-			} else {
+-				push @cmd, "--boundary", "$c_max..$c_min";
+-			}
+-		} elsif ($r_max > $r_min) {
+-			push @cmd, $c_max;
++		if ($r_max < $r_min) {
++			($r_min, $r_max) = ($r_max, $r_min);
++		}
++		my (undef, $c_max) = $gs->find_rev_before($r_max, 1, $r_min);
++		my (undef, $c_min) = $gs->find_rev_after($r_min, 1, $r_max);
++		# If there are no commits in the range, both $c_max and $c_min
++		# will be undefined.  If there is at least 1 commit in the
++		# range, both will be defined.
++		return () if !defined $c_min || !defined $c_max;
++		if ($c_min eq $c_max) {
++			push @cmd, '--max-count=1', $c_min;
+ 		} else {
+-			push @cmd, $c_min;
++			push @cmd, '--boundary', "$c_min..$c_max";
+ 		}
+ 	}
+ 	return (@cmd, @files);
+@@ -3707,7 +3730,7 @@ sub show_commit_changed_paths {
+ 
+ sub show_commit_normal {
+ 	my ($c) = @_;
+-	print '-' x72, "\nr$c->{r} | ";
++	print commit_log_separator, "r$c->{r} | ";
+ 	print "$c->{c} | " if $show_commit;
+ 	print "$c->{a} | ", strftime("%Y-%m-%d %H:%M:%S %z (%a, %d %b %Y)",
+ 				 localtime($c->{t_utc})), ' | ';
+@@ -3768,6 +3791,10 @@ sub cmd_show_log {
+ 
+ 	config_pager();
+ 	@args = git_svn_log_cmd($r_min, $r_max, @args);
++	if (!@args) {
++		print commit_log_separator unless $incremental || $oneline;
++		return;
++	}
+ 	my $log = command_output_pipe(@args);
+ 	run_pager();
+ 	my (@k, $c, $d, $stat);
+@@ -3816,14 +3843,12 @@ sub cmd_show_log {
+ 		process_commit($c, $r_min, $r_max, \@k);
+ 	}
+ 	if (@k) {
+-		my $swap = $r_max;
+-		$r_max = $r_min;
+-		$r_min = $swap;
++		($r_min, $r_max) = ($r_max, $r_min);
+ 		process_commit($_, $r_min, $r_max) foreach reverse @k;
+ 	}
+ out:
+ 	close $log;
+-	print '-' x72,"\n" unless $incremental || $oneline;
++	print commit_log_separator unless $incremental || $oneline;
+ }
+ 
+ package Git::SVN::Migration;
+diff --git a/t/t9116-git-svn-log.sh b/t/t9116-git-svn-log.sh
+index 5000892..902ed41 100755
+--- a/t/t9116-git-svn-log.sh
++++ b/t/t9116-git-svn-log.sh
+@@ -30,6 +30,12 @@ test_expect_success 'setup repository and import' "
+ 	git reset --hard trunk &&
+ 	echo aye >> README &&
+ 	git commit -a -m aye &&
++	git svn dcommit &&
++	git reset --hard b &&
++	echo spy >> README &&
++	git commit -a -m spy &&
++	echo try >> README &&
++	git commit -a -m try &&
+ 	git svn dcommit
+ 	"
+ 
+@@ -59,4 +65,64 @@ test_expect_success 'test descending revision range' "
+ 	git svn log -r 4:1 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4-r2-r1 -
+ 	"
+ 
++printf 'r1 \nr2 \n' > expected-range-r1-r2
++
++test_expect_success 'test ascending revision range with unreachable revision' "
++	git reset --hard trunk &&
++	git svn log -r 1:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r1-r2 -
++	"
++
++printf 'r2 \nr1 \n' > expected-range-r2-r1
++
++test_expect_success 'test descending revision range with unreachable revision' "
++	git reset --hard trunk &&
++	git svn log -r 3:1 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2-r1 -
++	"
++
++printf 'r2 \n' > expected-range-r2
++
++test_expect_success 'test ascending revision range with unreachable upper boundary revision and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 2:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2 -
++	"
++
++test_expect_success 'test descending revision range with unreachable upper boundary revision and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 3:2 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r2 -
++	"
++
++printf 'r4 \n' > expected-range-r4
++
++test_expect_success 'test ascending revision range with unreachable lower boundary revision and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 3:4 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
++	"
++
++test_expect_success 'test descending revision range with unreachable lower boundary revision and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 4:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
++	"
++
++printf -- '------------------------------------------------------------------------\n' > expected-separator
++
++test_expect_success 'test ascending revision range with unreachable boundary revisions and no commits' "
++	git reset --hard trunk &&
++	git svn log -r 5:6 | diff -u expected-separator -
++	"
++
++test_expect_success 'test descending revision range with unreachable boundary revisions and no commits' "
++	git reset --hard trunk &&
++	git svn log -r 6:5 | diff -u expected-separator -
++	"
++
++test_expect_success 'test ascending revision range with unreachable boundary revisions and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 3:5 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
++	"
++
++test_expect_success 'test descending revision range with unreachable boundary revisions and 1 commit' "
++	git reset --hard trunk &&
++	git svn log -r 5:3 | grep '^r[0-9]' | cut -d'|' -f1 | diff -u expected-range-r4 -
++	"
++
+ test_done
+-- 
+1.5.3.4
