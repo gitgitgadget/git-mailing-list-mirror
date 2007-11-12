@@ -1,63 +1,70 @@
-From: Andy Whitcroft <apw@shadowen.org>
-Subject: Re: git push mirror mode V4 (replacement stack)
-Date: Mon, 12 Nov 2007 11:00:16 +0000
-Message-ID: <20071112110016.GG301@shadowen.org>
-References: <20071109233041.GC301@shadowen.org>
+From: "Catalin Marinas" <catalin.marinas@gmail.com>
+Subject: Re: [StGit PATCH 0/5] A few small fixes
+Date: Mon, 12 Nov 2007 11:02:54 +0000
+Message-ID: <b0943d9e0711120302y385676a9o2d5ad50ee3ae2333@mail.gmail.com>
+References: <20071111193545.18868.62490.stgit@yoghurt>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 12 12:01:10 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	"=?ISO-8859-1?Q?David_K=E5gedal?=" <davidk@lysator.liu.se>
+To: "=?ISO-8859-1?Q?Karl_Hasselstr=F6m?=" <kha@treskal.com>
+X-From: git-owner@vger.kernel.org Mon Nov 12 12:03:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrX2C-0004ke-3k
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:00:52 +0100
+	id 1IrX4R-0005P8-Nr
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 12:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758023AbXKLLAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 06:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757474AbXKLLAg
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:00:36 -0500
-Received: from hellhawk.shadowen.org ([80.68.90.175]:4848 "EHLO
-	hellhawk.shadowen.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755903AbXKLLAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 06:00:35 -0500
-Received: from localhost ([127.0.0.1] helo=pinky)
-	by hellhawk.shadowen.org with esmtp (Exim 4.63)
-	(envelope-from <apw@shadowen.org>)
-	id 1IrX1q-0006A4-5n; Mon, 12 Nov 2007 11:00:31 +0000
+	id S1757474AbXKLLC4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 06:02:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757255AbXKLLC4
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 06:02:56 -0500
+Received: from rv-out-0910.google.com ([209.85.198.191]:37895 "EHLO
+	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753131AbXKLLCz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2007 06:02:55 -0500
+Received: by rv-out-0910.google.com with SMTP id k20so1139382rvb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 03:02:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=gSUWnczYBT07TxAeOEmUHFQeiuHOEyq+FRckTyc4oyQ=;
+        b=h8x5k6op9ksbduX5KmdDS0D6Kn/Mb5Q7uGT7pUPOG4dEa9iqtpvhndL+XTGFPaNEfGyXMP5N7R60kPugnj5fmYeM7Yf81ykSn8eyCwYvb7kIHQfj6jzRVUB9IWl/Q3IFhjaMePakAypA2e7Y5fLDVTo+Q3osXQEMHP7jmTX5ncw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=etAtXXxuKSQ9wSDCfcEC7lpNa7ovdhnFEn8P8OzmOprD+mqL2vP1fytQ4exwM4MIRzJ23NBjAEkAFXzf3S9DJ4f3eXrVIJt2KVYdonk+1KKsX8o8W1ZM8B9kk3GqmkeACafZrPcnvkDnhHJIka42mUtKOLdcDEmseN4OWzV7E70=
+Received: by 10.141.37.8 with SMTP id p8mr2302876rvj.1194865374493;
+        Mon, 12 Nov 2007 03:02:54 -0800 (PST)
+Received: by 10.141.170.11 with HTTP; Mon, 12 Nov 2007 03:02:54 -0800 (PST)
+In-Reply-To: <20071111193545.18868.62490.stgit@yoghurt>
 Content-Disposition: inline
-In-Reply-To: <20071109233041.GC301@shadowen.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64599>
 
-On Fri, Nov 09, 2007 at 11:30:41PM +0000, Andy Whitcroft wrote:
-> Following this mail is a complete replacement git push mirror mode
-> stack (V4).  It folds down all the various patches into a logical
-> sequence (thanks Dscho).  This stack passes the entire test suite,
-> and I have been using the same code for real work here.
+On 11/11/2007, Karl Hasselstr=F6m <kha@treskal.com> wrote:
+> These are available from
+>
+>   git://repo.or.cz/stgit/kha.git safe
 
-Ok, I have spotted one oddity with this feature.  The symbolic refs are
-getting converted to real refs in the mirror.  Generally speaking this
-is the <remote>/HEAD refs but I guess it may be possible to have others.
+Thanks. Merged.
 
-I have had a looked about and I am actually confused as to whether we
-maintain remote symbolic refs at all?  Cirtainly git-clone.sh seems to
-do some hoop jumping, comparing the sha1's of all of the fetched branches
-and replacing the HEAD reference with a symbolic reference should it find
-a match.
+>       Let some commands work with detached HEAD
+[...]
+>  stgit/commands/add.py         |    2
 
-I am unsure if this a huge problem or not.  Its not preventing me using
-it as an effective mirror, but if we assume one is making the mirror as
-a backup, then there would be slightly more than an rsync to convert the
-the repo back into your original, though I guess there already is as you
-would want to insert your config into the remote also.
+My plan after 0.14 is to remove the implementation of add/rm etc.
+commands. I'd like to keep them as just synonyms to the equivalent git
+commands which stgit would invoke (this is mainly for convenience as I
+usually type "stg" rather than "git").
 
-Perhaps someone with a better understanding could point me to where we
-we maintain these refs, if we indeed do?
+BTW, I'll review this week the bugs already logged and clean as many
+as possible (help appreciated :-)) and try to release 0.14 in 1-2
+weeks.
 
--apw
+--=20
+Catalin
