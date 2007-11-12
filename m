@@ -1,89 +1,79 @@
-From: "eric miao" <eric.y.miao@gmail.com>
-Subject: Re: Is it possible for git to remember the options preference for "git log"?
-Date: Mon, 12 Nov 2007 10:21:10 +0800
-Message-ID: <f17812d70711111821v2e14cf6bsd65a192114872056@mail.gmail.com>
-References: <f17812d70711111633u6c00d182u532fef1c16c3c94a@mail.gmail.com>
-	 <Pine.LNX.4.64.0711111954520.29952@iabervon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH,RFC 1/2] Make the list of common commands more exclusive
+Date: Sun, 11 Nov 2007 18:21:44 -0800
+Message-ID: <7vzlxk8apz.fsf@gitster.siamese.dyndns.org>
+References: <20071111235819.GB7392@thunk.org>
+	<1194829077-14320-1-git-send-email-tytso@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Daniel Barkalow" <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Mon Nov 12 03:21:29 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Theodore Ts'o <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Mon Nov 12 03:22:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrOvZ-0004L3-1f
-	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 03:21:29 +0100
+	id 1IrOw9-0004Th-W0
+	for gcvg-git-2@gmane.org; Mon, 12 Nov 2007 03:22:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753734AbXKLCVM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 11 Nov 2007 21:21:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753703AbXKLCVM
-	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 21:21:12 -0500
-Received: from wa-out-1112.google.com ([209.85.146.176]:8261 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753637AbXKLCVM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 11 Nov 2007 21:21:12 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1372341wah
-        for <git@vger.kernel.org>; Sun, 11 Nov 2007 18:21:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=KCU2Zw01P4C0if3y2IKj4X8Nb61PpQgnj+i20W9R9IU=;
-        b=fSiEvVZ14aYj30Nb9v+BneD3yrsvjctf27bh/J0ZZX2rALHpNguBP/MvBwYsvzi4Vj2j8fImUxkacBQTvHVYRLwpjVCN+pMStzWSvANdTr9L9S6AGZNAXLm5xmy1ZzlmncyhED2z1epjiuphfYEuoRoQj1v7YHFbWAFDPEuegS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=UGFyRF6Q9pNlPg/IJwqUvpu9ygKkqSNRH2zpFjBnNjDsSco7VA3T2Vjwux/Wl+8G9fO9pOivW5LPquOpYxYHgJgQRTSIAADfyh6d37zfQbjcvjzgbLyd9v7Gc0irZyrFHCQIj687c6rMoeOtUb6It7vfWVvos/TmYQWOzPUIybw=
-Received: by 10.115.94.1 with SMTP id w1mr2030272wal.1194834071034;
-        Sun, 11 Nov 2007 18:21:11 -0800 (PST)
-Received: by 10.114.147.6 with HTTP; Sun, 11 Nov 2007 18:21:10 -0800 (PST)
-In-Reply-To: <Pine.LNX.4.64.0711111954520.29952@iabervon.org>
-Content-Disposition: inline
+	id S1754184AbXKLCVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 11 Nov 2007 21:21:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754023AbXKLCVu
+	(ORCPT <rfc822;git-outgoing>); Sun, 11 Nov 2007 21:21:50 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44219 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753942AbXKLCVt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 11 Nov 2007 21:21:49 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 6EF112F0;
+	Sun, 11 Nov 2007 21:22:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EF9469497F;
+	Sun, 11 Nov 2007 21:22:07 -0500 (EST)
+In-Reply-To: <1194829077-14320-1-git-send-email-tytso@mit.edu> (Theodore
+	Ts'o's message of "Sun, 11 Nov 2007 19:57:56 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64551>
 
-On Nov 12, 2007 9:02 AM, Daniel Barkalow <barkalow@iabervon.org> wrote:
+Theodore Ts'o <tytso@mit.edu> writes:
+
+> Remove apply, archive, cherry-pick, prune, revert, and show-branch, so
+> "git help" is less intimidating.
 >
-> On Mon, 12 Nov 2007, eric miao wrote:
+> Signed-off-by: "Theodore Ts'o" <tytso@mit.edu>
 >
-> > All,
-> >
-> > Most of the time I'm using git-log for inspecting a brief history
-> > and insert/remove/modify commits between, which I have to
-> > type "git log --abbrev-commit --pretty=oneline" every time. Is
-> > it possible for git to remember this command line options
-> > preference?
-> >
-> > And no, I don't really want to use shell's alias or something
-> > else, I was just used to type "git xxx" :-)
->
-> Git has a built-in alias mechanism, which is probably what you want. If
-> you put in your config file:
->
-> [alias]
->         xxx = log --abbrev-commit --pretty=online
->
+> -apply
+> -archive
+> -prune
+> -revert
+> -show-branch
 
-Thanks, this is exactly what I want.
+I am fine with this list, perhaps except apply.
 
-> then you can type "git xxx" and it'll do what you want. Changing the
-> default behavior of the basic commands is looked down on because there are
-> scripts that use them to get their input, and those scripts have
-> particular formats they expect.
->
+On the other hand, if you are shooting *really* for the absolute
+minimum set for the beginners, I would kill rm and possibly mv)
+in addition to your list:
 
-Ye, agree, I don't think that's a good idea either.
+ - git-rm is always easier to do with "rm -fr file-or-dir",
+   followed by "git commit -a".  Of course "git rm --cached" and
+   partial commits that contain removal cannot be emulated
+   easily this way, but this is an alternative suggestion to aim
+   for *real* beginners who do not use the index.
 
->         -Daniel
-> *This .sig left intentionally blank*
->
+ - git-mv is on my list for the same reason as "rm", but it is a
+   bit more cumbersome if you want to move a directory, because
+   "mv old new && git add new" would not work for people without
+   a correctly set-up .gitignore (and if we are talking about
+   beginners, we should expect user's .gitignore is borked).
 
-
-
--- 
-Cheers
-- eric
+I have a bit of reservation about revert, but I'd imagine we
+could kill it, and also fetch, pull and push, if you are
+shooting for *real* beginners who work alone.  I think the only
+valid justification to drop "revert" from the list is to assume
+that the audience do not interact with the outside world, and
+dropping fetch/pull/push from the list is in line with that.
