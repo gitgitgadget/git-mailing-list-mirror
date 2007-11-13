@@ -1,85 +1,67 @@
-From: Paul Mackerras <paulus@samba.org>
-Subject: Re: [PATCH 4/2] Fix parent rewriting in --early-output
-Date: Wed, 14 Nov 2007 08:55:18 +1100
-Message-ID: <18234.7494.851156.347578@cargo.ozlabs.ibm.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
-	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
-	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
-	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
-	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
-	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
-	<18233.30098.470244.421468@cargo.ozlabs.ibm.com>
-	<7vbq9yt1te.fsf@gitster.siamese.dyndns.org>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: Strange "beagle" interaction..
+Date: Tue, 13 Nov 2007 22:55:28 +0100
+Organization: glandium.org
+Message-ID: <20071113215528.GA30695@glandium.org>
+References: <alpine.LFD.0.9999.0711131241050.2786@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 22:56:04 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Nov 13 22:58:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is3jn-0000sd-1n
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:56:03 +0100
+	id 1Is3mH-0001m2-KR
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:58:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760033AbXKMVzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 16:55:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759560AbXKMVzq
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:55:46 -0500
-Received: from ozlabs.org ([203.10.76.45]:36319 "EHLO ozlabs.org"
+	id S1757450AbXKMV5n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 16:57:43 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759425AbXKMV5n
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:57:43 -0500
+Received: from vawad.err.no ([85.19.200.177]:46324 "EHLO vawad.err.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757874AbXKMVzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 16:55:45 -0500
-Received: by ozlabs.org (Postfix, from userid 1003)
-	id A4A9DDDE29; Wed, 14 Nov 2007 08:55:44 +1100 (EST)
-In-Reply-To: <7vbq9yt1te.fsf@gitster.siamese.dyndns.org>
-X-Mailer: VM 7.19 under Emacs 21.4.1
+	id S1755344AbXKMV5m (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 16:57:42 -0500
+Received: from aputeaux-153-1-42-198.w82-124.abo.wanadoo.fr ([82.124.6.198] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1Is3kg-0005xS-8Y; Tue, 13 Nov 2007 22:57:00 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1Is3jF-0000BL-1h; Tue, 13 Nov 2007 22:55:29 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.0.9999.0711131241050.2786@woody.linux-foundation.org>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Spam-Status: (score 5.0): Status=No hits=4.9 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64889>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64890>
 
-Junio C Hamano writes:
+On Tue, Nov 13, 2007 at 12:56:19PM -0800, Linus Torvalds wrote:
+> 
+> Ok, I've made a bugzilla entry for this for the Fedora people, but I 
+> thought I'd mention something I noticed yesterday but only tracked down 
+> today: it seems like the beagle file indexing code is able to screw up git 
+> in subtle ways.
+> 
+> I do not know exactly what happens, but the symptoms are random (and 
+> quite hard-to-trigger) dirty index contents where git believes that some 
+> set of files are not clean in the index.
+> 
+> I *suspect* that beagle is playing games with the file access times, 
+> causing the ctime on disk to not match the ce_ctime in the index file. But 
+> that's just a guess.
+(...)
 
-> I suspect that a "-" in place of a commit object name may not be
-> enough for your purpose, as the _number_ of parents can later
-> change in the later re-output.
+IIRC, beagle stores a bunch of useful information for itself in extended
+attributes on indexed files. It is likely that it's that that is
+tampering with the file stats.
 
-I don't mind if a commit that has "-" as one of its parents later
-turns out to have more parents (i.e. the "-" can stand for zero or
-more unknown parents).  I would be perturbed if a commit that didn't
-have any "-" in its parent list later turned out to have a different
-number of parents - but I don't think that's what you're implying, is
-it?
-
-> I wonder if the presense of "incomplete" on the "Final output"
-> line is a good enough indication for that.  That is, until you
-> see "Final output: $N done", you will treat the parent
-> information as unreliable.
-
-The easiest way for me to handle an unreliable parent is just to
-ignore it.  But I can't ignore all the parents, because then I
-wouldn't have a graph at all.
-
-In other words, the presence of "incomplete" doesn't give me any clue
-as to which particular parent ids are reliable.  As far as I can see,
-git log internally knows when a parent id is unreliable (it's one
-where it had to terminate the history simplification early), so it
-shouldn't be hard to tell gitk about that.  And it would make my job a
-lot easier.
-
-Paul.
+Mike
