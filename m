@@ -1,65 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from
-	.gitconfig
-Date: Tue, 13 Nov 2007 02:26:29 -0500
-Message-ID: <20071113072629.GA21769@sigill.intra.peff.net>
-References: <20071023035221.66ea537f@danzwell.com> <20071102224100.71665182@paradox.zwell.net> <20071104045735.GA12359@segfault.peff.net> <7v640ivagv.fsf@gitster.siamese.dyndns.org> <20071104054305.GA13929@sigill.intra.peff.net> <20071110202351.7b4544aa@paradox.zwell.net> <7vve89f6qy.fsf@gitster.siamese.dyndns.org> <47390050.1020907@zwell.net> <7v4pfq27tx.fsf@gitster.siamese.dyndns.org> <47391211.5000606@zwell.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-send-email: show all headers when sending mail
+Date: Mon, 12 Nov 2007 23:28:45 -0800
+Message-ID: <7vbq9ywqmq.fsf@gitster.siamese.dyndns.org>
+References: <1194883317-11161-1-git-send-email-ddkilzer@kilzer.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Wincent Colaiuta <win@wincent.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jonathan del Strother <maillist@steelskies.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Frank Lichtenheld <frank@lichtenheld.de>
-To: Dan Zwell <dzwell@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 08:26:49 2007
+Cc: git@vger.kernel.org
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Tue Nov 13 08:29:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrqAZ-0008Aw-Na
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 08:26:48 +0100
+	id 1IrqCy-0000HE-GU
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 08:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751782AbXKMH0c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 02:26:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751787AbXKMH0c
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 02:26:32 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4846 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751698AbXKMH0b (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 02:26:31 -0500
-Received: (qmail 18076 invoked by uid 111); 13 Nov 2007 07:26:30 -0000
-Received: from c-24-125-35-113.hsd1.va.comcast.net (HELO sigill.intra.peff.net) (24.125.35.113)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Tue, 13 Nov 2007 02:26:30 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Nov 2007 02:26:29 -0500
-Content-Disposition: inline
-In-Reply-To: <47391211.5000606@zwell.net>
+	id S1760714AbXKMH2w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 02:28:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752656AbXKMH2v
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 02:28:51 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:33666 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760685AbXKMH2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 02:28:50 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id A09A62F2;
+	Tue, 13 Nov 2007 02:29:11 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id EB1CA93700;
+	Tue, 13 Nov 2007 02:29:08 -0500 (EST)
+In-Reply-To: <1194883317-11161-1-git-send-email-ddkilzer@kilzer.net> (David
+	D. Kilzer's message of "Mon, 12 Nov 2007 08:01:57 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64758>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64759>
 
-On Mon, Nov 12, 2007 at 08:55:13PM -0600, Dan Zwell wrote:
+"David D. Kilzer" <ddkilzer@kilzer.net> writes:
 
-> Anyway, I preferred the regex version for readability, though I should have 
-> used the /x modifier--it would still take two lines, but it would not need 
+> +replace_header () {
+> +	EXPECTED=expected-show-all-headers &&
+> +	ACTUAL=actual-show-all-headers &&
+> +	REPLACEMENT=`cat ${ACTUAL} | grep "^$1:"` &&
+> +	if [ ! -z "${REPLACEMENT}" ]; then \
+> +		cat ${EXPECTED} | sed -e "s/^$1: .*\$/${REPLACEMENT}/" > ${EXPECTED}.$$ && \
+> +		mv -f ${EXPECTED}.$$ ${EXPECTED}
+> +	fi
+> +}
 
-Your regex is wrong, because it doesn't anchor at the beginning and end
-of the string (so /red/ will match "supercaliredfragilistic", which is
-probably not what you want). So you probably want /^red$/, which is
-equivalent to using 'eq' with 'red'. Or, as Junio noted, you are overall
-trying to say "is element $word in this list"; the canonical perl way of
-doing that is to make the list a hash for quick lookup.
+If the actual output did not have an asked-for field,
+REPLACEMENT will be empty and the breakage will go unnoticed,
+won't it?
 
-> to attempt two matches. As for misconfigured color configurations, should we 
-> catch that? I wrote this with the intent that it should ignore invalid color 
-> names, but it would probably be more useful to print a warning.
+It would probably be better to write it this way:
 
-Your patch doesn't just ignore; sometimes it accidentally matches
-invalid input (the example above is obviously silly, but consider what
-accidentally omitting the space in "blinkblack" would do).
+	test_expect_success 'Show all headers' '
 
--Peff
+		git send-email \
+                	--dry-run \
+                        --from="Example <from@example.com>" \
+                        --to=to@example.com \
+                        --cc=cc@example.com \
+                        --bcc=bcc@example.com \
+                        --in-reply-to="<unique-message-id@example.com>" \
+                        --smtp-sever relay.example.com \
+                        $patches |
+		sed	-e "s/^\(Date:\).*/1 DATE-STRING/" \
+                	-e "s/^\(Message-Id:\).*/1 ID-STRING/" \
+                        -e "s/^\(X-Mailer:\).*/1 X-MAILER-STRING/" \
+			>actual &&
+		diff -u expected actual
+
+        '
+
+and prepare the expected output with the varying field already
+replaced with the placeholder string.
+
+Oh, by the way, do not cat a single file and pipe it to another
+command.  There may still be a few such stupidity in our test
+scripts but let's not add even more of them...
