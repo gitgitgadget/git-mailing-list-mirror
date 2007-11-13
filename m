@@ -1,93 +1,81 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git diff woes
-Date: Tue, 13 Nov 2007 00:59:41 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711130053090.4362@racer.site>
-References: <4738208D.1080003@op5.se> <Pine.LNX.4.64.0711120958500.4362@racer.site>
- <47382C84.50408@op5.se> <7vhcjr2lte.fsf@gitster.siamese.dyndns.org>
- <4738E9E6.2040001@op5.se>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from
+ .gitconfig
+Date: Mon, 12 Nov 2007 19:39:28 -0600
+Message-ID: <47390050.1020907@zwell.net>
+References: <47112491.8070309@gmail.com>	<20071015034338.GA4844@coredump.intra.peff.net>	<20071016194709.3c1cb3a8@danzwell.com>	<20071017015152.GN13801@spearce.org>	<20071022164048.71a3dceb@danzwell.com>	<20071023042702.GB28312@coredump.intra.peff.net>	<20071023035221.66ea537f@danzwell.com>	<20071102224100.71665182@paradox.zwell.net>	<20071104045735.GA12359@segfault.peff.net>	<7v640ivagv.fsf@gitster.siamese.dyndns.org>	<20071104054305.GA13929@sigill.intra.peff.net>	<20071110202351.7b4544aa@paradox.zwell.net> <7vve89f6qy.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Nov 13 02:00:19 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 02:40:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irk8X-0003Sh-1m
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 02:00:17 +0100
+	id 1Irkle-0004ZS-KT
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 02:40:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755398AbXKMBAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 20:00:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755470AbXKMA77
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 19:59:59 -0500
-Received: from mail.gmx.net ([213.165.64.20]:48014 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1755094AbXKMA77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 19:59:59 -0500
-Received: (qmail invoked by alias); 13 Nov 2007 00:59:56 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp040) with SMTP; 13 Nov 2007 01:59:56 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+TuPFcW6OTeFOkxRHdtkmsHqD4F4ou8z8EtfuidH
-	Y6lF2G3tiMD1CO
-X-X-Sender: gene099@racer.site
-In-Reply-To: <4738E9E6.2040001@op5.se>
-X-Y-GMX-Trusted: 0
+	id S1757611AbXKMBk0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 20:40:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757510AbXKMBkZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 20:40:25 -0500
+Received: from py-out-1112.google.com ([64.233.166.176]:3067 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757508AbXKMBkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 20:40:25 -0500
+Received: by py-out-1112.google.com with SMTP id u77so1638692pyb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 17:40:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=Q1DJBhGgD0fKc7egJbNTyrKuWeUQ09dXhJW3c8Dsed0=;
+        b=hpzo1yHpQrnhOYbA46dRNsQtQXsx0Ic+ttyiwoy1my+GeKO04ME4bxXe07S2L2QPSTU/8ZCWRDoqKTbTBjhL8ZElkUFwr7DUh70I7NbdM+0bLjRZJ3wUXuv4FDPPRvjN/mjxABqm+K/sQuNjEQg16rqeMQb8IXvQVHwkUxBUsOs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=oYMUbadLsF7YVTOZ5/5mVgZphES95C6Y9laqPGxijAEBK7qxXOo8t5qvzZ6XcPQyiJ5Jk9sJAkqjH7dnooHOIWQORWzOBkP9KSo/e+aXtuABz1bN+wWWb93fCsnRY4xSg7OoTLs47PGxmzWdcFpGzauQJ3tPjH6YC6/wzA0ykdI=
+Received: by 10.35.63.2 with SMTP id q2mr6790023pyk.1194918023040;
+        Mon, 12 Nov 2007 17:40:23 -0800 (PST)
+Received: from ?143.44.70.185? ( [143.44.70.185])
+        by mx.google.com with ESMTPS id f57sm11488784pyh.2007.11.12.17.40.19
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Nov 2007 17:40:22 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071031)
+In-Reply-To: <7vve89f6qy.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64741>
 
-Hi,
-
-On Tue, 13 Nov 2007, Andreas Ericsson wrote:
-
-> Junio C Hamano wrote:
-> > Andreas Ericsson <ae@op5.se> writes:
-> > 
-> > > In the check_ntpd.c program, there is no bug. I found the git diff 
-> > > output surprising, so I reported it.
-> > 
-> > This is what I get from "GNU diff -pu" which makes me surpried
-> > that anybody finds "git diff" hunk header surprising.  Notice
-> > that hunk at line 84.
-> > 
-> > --- read-cache.c	2007-11-12 12:08:00.000000000 -0800
-> > +++ read-cache.c+	2007-11-12 12:07:54.000000000 -0800
-> > @@ -60,7 +60,7 @@ static int ce_compare_data(struct cache_
-> >  	return match;
-> >  }
-> >  -static int ce_compare_link(struct cache_entry *ce, size_t expected_size)
-> > +static int ce_compare_lonk(struct cache_entry *ce, size_t expected_size)
-> >  {
-> >  	int match = -1;
-> >  	char *target;
-> > @@ -84,7 +84,7 @@ static int ce_compare_link(struct cache_
-> >  		match = memcmp(buffer, target, size);
-> >  	free(buffer);
-> >  	free(target);
-> > -	return match;
-> > +	return match + 0;
-> >  }
-> >   static int ce_compare_gitlink(struct cache_entry *ce)
+Junio C Hamano wrote:
+>> +			$fg_done = "true";
+>> +		}
+>> +		elsif ($word =~ /black|red|green|yellow/ ||
+>> +			   $word =~ /blue|magenta|cyan|white/) {
 > 
+> 	exists $color_name{$word}
 > 
-> I notice it, and I don't like it. I guess I'm just used to git being
-> smarter than their GNU tool equivalents, especially since it only ever
-> applies patches in full.
+> with
+> 
+> 	my %color_name = map { $_ => 1 } qw(black red ... white);
+> 
+> at the beginning?
+> 
+I don't see the advantage of doing it that way. After all, we're pattern 
+matching. Does using a hash, an array, and a call to map() gain us 
+something? I think a regular expression is clearer. Of course, as Jeff 
+pointed out, I should have used a whitespace-agnostic regular expression.
++		elsif ($word =~ /black|red|green|yellow|
++			blue|magenta|cyan|white/x ) {
 
-I still think the existing behaviour is reasonable.  When I read a diff 
-(and remember, the hunk headers are _only_ there for the reviewer's 
-pleasure), the function names are a hint for _me_ where to look, and which 
-is the context, in my existing, _original_ file.
+I agreed with the rest of your suggestions, and will implement them in 
+the next round of changes, later this week.
 
-That is, unless I have already applied the patch, and am looking for the 
-reverse patch.  And, lo and behold, the reverse patch generated by 
-git-diff really shows the now-current function name!
-
-So IMO "fixing" this behaviour would be a regression.
-
-Ciao,
-Dscho
+Dan
