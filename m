@@ -1,92 +1,127 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [PATCH] Add support for # in URLs in git-remote (was: Re: [PATCH]
-   New script: git-changelog.perl - revised)
-Date: Tue, 13 Nov 2007 15:56:33 -0800
-Message-ID: <473A39B1.7050709@freedesktop.org>
-References: <67837cd60711030826q6b3b5c00l5b228531ab6a323e@mail.gmail.com> <Pine.LNX.4.64.0711031526060.4362@racer.site>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Newbie] How to *actually* get rid of remote tracking branch?
+Date: Tue, 13 Nov 2007 15:56:54 -0800
+Message-ID: <7vr6itr96h.fsf@gitster.siamese.dyndns.org>
+References: <874pfq9q8s.fsf@osv.gnss.ru> <fhcdpv$9u3$1@ger.gmane.org>
+	<87ve86889o.fsf@osv.gnss.ru> <200711131703.16357.jnareb@gmail.com>
+	<A919E788-C5D0-4404-95D4-869BAFE868AC@zib.de>
+	<473A027E.5000107@op5.se> <473A262B.4010205@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig70B8BF9C74E881DD97A78B54"
-Cc: Ronald Landheer-Cieslak <ronald@landheer-cieslak.com>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:57:14 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Sergei Organov <osv@javad.com>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:57:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5cz-0008Om-IS
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:57:09 +0100
+	id 1Is5dN-000058-4i
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:57:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755319AbXKMX4w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 18:56:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756730AbXKMX4w
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:56:52 -0500
-Received: from mail2.sea5.speakeasy.net ([69.17.117.4]:40153 "EHLO
-	mail2.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754996AbXKMX4v (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 18:56:51 -0500
-Received: (qmail 29450 invoked from network); 13 Nov 2007 23:56:50 -0000
-Received: from host-241-99.resnet.pdx.edu (HELO [131.252.241.99]) (josh@[131.252.241.99])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail2.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <Johannes.Schindelin@gmx.de>; 13 Nov 2007 23:56:50 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.6 (X11/20071009)
-In-Reply-To: <Pine.LNX.4.64.0711031526060.4362@racer.site>
-X-Enigmail-Version: 0.95.0
+	id S1758423AbXKMX5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 18:57:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757912AbXKMX5G
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:57:06 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:38604 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756739AbXKMX5F (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 18:57:05 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 064382FB;
+	Tue, 13 Nov 2007 18:57:24 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 35E9B957AD;
+	Tue, 13 Nov 2007 18:57:18 -0500 (EST)
+In-Reply-To: <473A262B.4010205@op5.se> (Andreas Ericsson's message of "Tue, 13
+	Nov 2007 23:33:15 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64916>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig70B8BF9C74E881DD97A78B54
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Andreas Ericsson <ae@op5.se> writes:
 
-Johannes Schindelin wrote:
-> On Sat, 3 Nov 2007, Ronald Landheer-Cieslak wrote:
->> The attached patch adds support for # signs in URLs passed to git-remo=
-te=20
->> add.
->=20
-> NACK!
->=20
-> Please be polite enough to read up on the _many_ emails on this list ab=
-out=20
-> this very subject.
->=20
-> Not doing so just _wastes_ our time.
->=20
-> Sorry for being so harsh, but this very subject easily cost me 20 hours=
- in=20
-> total(!) in the last few weeks.
+> I've got half a patch ready to change all occurrences of anything but
+> "remote-tracking branch" to that self-same description. This is what
+> I've got in Documentation/glossary.txt so far:
+>
+> [[def_remote_tracking_branch]]remote-tracking branch:
+>    A "remote-tracking branch" is a branch set up to track the
+>    state of a branch in a remote repository which the user has named.
+> These branches follow exactly the same rules as the branches which
+>    reside in the remote repository, except that they are manipulated
+>    by `git fetch` instead of `git push`. That is, they can only be
+>    updated if the update would result in a  <<def_fastforward,fast
+> forward>>, or if the user supplies the  '--force' option.  They cannot
+> be checked out or committed to by users, but serve
+>    solely as local reference-pointers to their corresponding branches
+>    in the remote repository.
+>    The most common example of a remote-tracking branch is origin/master.
 
-Perhaps this should go in the Git FAQ at
-http://git.or.cz/gitwiki/GitFaq .  Does your message with Message-ID
-<Pine.LNX.4.64.0710162228560.25221@racer.site>, subject "Re:
-remote#branch", accurately describe the full problem with using #,
-namely that refs can contain #?
+Please try to read it as if it were an entry in a glossary.
+The sentence "... follow exactly the same rules as ..." was
+"Huh?" to me.  "rules?  what rules?  the set of valid characters
+in their names?"
 
-Any other problems besides not having the ability to reference more
-than one branch with this syntax?
+When branch 'foo' from remote is tracked with the standard layout
+(post 1.3.0) it is copied to refs/remotes/origin/foo and people
+often fork their local branch refs/heads/foo to build on top.
+The use of the word "corresonding" feels a bit confusing,
+because you can arguably say refs/heads/foo at remote
+corresopnds to refs/heads/foo in your repository.
 
-- Josh Triplett
+I'd drop "These branches follow ... the '--force' option.  "
+from the above.  The rules on how they are updated are
+irrelevant, before the reader understands what they are for.
+How about this?
 
+    A "remote tracking branch" remembers which commit a branch
+    in the remote repository was pointing at last time you
+    checked.  It cannot be checked out or committed because its
+    purpose is to serve as a local reference point after you
+    built your own changes on top of it in your local branch
+    forked from it.  The most common example of a remote
+    tracking branch is "origin/master", which tracks the
+    "master" branch of the "origin" remote.
 
---------------enig70B8BF9C74E881DD97A78B54
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+BTW, when you have this data-flow (probably typical in a shared
+repository workflow):
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+    Remote repository               Your repository
 
-iD8DBQFHOjmxGJuZRtD+evsRAgtWAJ40QlE14NnPLOm9HRnBo4crgN1aLACeNBYe
-6dc0h/OO+0nfLm3O2EMsIpc=
-=joaI
------END PGP SIGNATURE-----
+    refs/heads/foo -------(A)------> refs/remotes/origin/foo
+         ^                                |
+         |                               (B)
+         |                                |
+         |                                V
+         `-------------(C)---------- refs/heads/foo
 
---------------enig70B8BF9C74E881DD97A78B54--
+         (A) "git fetch" with remote.origin.fetch configuration
+             set to +refs/heads/*:refs/remotes/origin/* keeps
+             your refs/remotes/origin/foo up-to-date with their
+             refs/heads/foo
+
+         (B) "git merge origin/foo" while on "foo" branch (there
+             are few shorthands like "git pull origin foo" while
+             on "foo" branch.  If you say "git branch --track
+             foo origin/foo", then running "git pull" without
+             parameter while on "foo" branch).
+
+         (C) "git push origin foo".
+
+ * Everybody seems to agree that "refs/remotes/origin/foo" is
+   called a "remote tracking branch";
+
+ * Your refs/heads/foo follows and builds on top of 'foo' branch
+   at the remote.  Some people errorneously call it "tracking"
+   but that is because we do not have a good term for it;
+
+ * There is no good name for "refs/heads/foo at the remote".  We
+   always say "the remote branch you follow" (or "track"). 
+
+   
