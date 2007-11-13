@@ -1,183 +1,96 @@
 From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH] Update the tracking references only if they were
-	succesfully updated on remote
-Date: Tue, 13 Nov 2007 20:47:31 +0100
-Message-ID: <20071113194731.GC3268@steel.home>
-References: <20071112213823.GB2918@steel.home> <20071112213938.GC2918@steel.home> <20071113075240.GA21799@sigill.intra.peff.net>
+Subject: [PATCH] Add a test for deleting remote branches
+Date: Tue, 13 Nov 2007 20:49:09 +0100
+Message-ID: <20071113194909.GD3268@steel.home>
+References: <20071112213823.GB2918@steel.home> <20071112213938.GC2918@steel.home> <20071113075240.GA21799@sigill.intra.peff.net> <20071113194731.GC3268@steel.home>
 Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:48:16 2007
+X-From: git-owner@vger.kernel.org Tue Nov 13 20:50:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is1jx-00037m-Bx
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:48:05 +0100
+	id 1Is1m6-00041A-Mq
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760637AbXKMTrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 14:47:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760258AbXKMTre
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 14:47:34 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:12481 "EHLO
+	id S1759696AbXKMTtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 14:49:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756499AbXKMTtM
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 14:49:12 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:27189 "EHLO
 	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758801AbXKMTrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 14:47:33 -0500
+	with ESMTP id S1752524AbXKMTtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 14:49:11 -0500
 Received: from tigra.home (Faa9a.f.strato-dslnet.de [195.4.170.154])
-	by post.webmailer.de (mrclete mo45) (RZmta 14.0)
-	with ESMTP id 602715jADJgL22 ; Tue, 13 Nov 2007 20:47:31 +0100 (MET)
+	by post.webmailer.de (fruni mo62) (RZmta 14.0)
+	with ESMTP id v02256jADGsA32 ; Tue, 13 Nov 2007 20:49:09 +0100 (MET)
 	(envelope-from: <raa.lkml@gmail.com>)
 Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 94034277AE;
-	Tue, 13 Nov 2007 20:47:31 +0100 (CET)
+	by tigra.home (Postfix) with ESMTP id 2C6BC277AE;
+	Tue, 13 Nov 2007 20:49:09 +0100 (CET)
 Received: by steel.home (Postfix, from userid 1000)
-	id 7286A56D22; Tue, 13 Nov 2007 20:47:31 +0100 (CET)
+	id 2559956D22; Tue, 13 Nov 2007 20:49:09 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20071113075240.GA21799@sigill.intra.peff.net>
+In-Reply-To: <20071113194731.GC3268@steel.home>
 User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolA10Q=
 X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64840>
 
-Jeff King, Tue, Nov 13, 2007 08:52:40 +0100:
-> On Mon, Nov 12, 2007 at 10:39:38PM +0100, Alex Riesen wrote:
-> 
-> > It fixes the bug where local tracing branches were filled with zeroed SHA-1
-> > if the remote branch was not updated because, for instance, it was not
-> > an ancestor of the local (i.e. had other changes).
-> > 
-> > Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
-> > ---
-> > 
-> > Jeff, I think your change (334f4831e5a77) was either not complete or
-> > got broken some time later.
-> 
-> Yes, some of the error information placed in 'ret' was getting lost.
-> Daniel and I discussed some fixes, but haven't done a final patch yet.
-> Your patch doesn't work because the assumption that
-> is_null_sha1(refs->new_sha1) signals error is not correct. This is also
-> the case for deleted refs, which means that we are failing to update
-> tracking branches for successfully deleted refs.
+Check if the tracking and the remote branches are both actually deleted.
 
-Yep. I extended the test with this case, checking for deletion of the
-remote reference and its tracking reference. Will send it separetely.
-The mainline fails the second test, my patch the third (first being
-the test setup).
-
-> I'd like to have a patch that accurately tracks per-ref errors,
-> including ones from the remote. That not only will give us more accurate
-> status reporting, but fixes like this will be much easier. Let me see if
-> I can put something together.
-
-I actually started almost like that: by placing an error bit in struct
-ref.  But than it looked like new_sha1 was just not updated for not
-sent references, and the deleted ref are checked if their
-peer_ref->new_sha1 is null_sha1.
-
-Date: Mon, 12 Nov 2007 17:09:24 +0100
-Subject: [PATCH] Do not update the tracking references if they could not be updated on remote
-
+Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
 ---
- cache.h     |    5 +++--
- send-pack.c |   20 +++++++++++++-------
- 2 files changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index f0a25c7..081b697 100644
---- a/cache.h
-+++ b/cache.h
-@@ -493,8 +493,9 @@ struct ref {
- 	struct ref *next;
- 	unsigned char old_sha1[20];
- 	unsigned char new_sha1[20];
--	unsigned char force;
--	unsigned char merge;
-+	unsigned char force:1;
-+	unsigned char merge:1;
-+	unsigned char failed:1;
- 	struct ref *peer_ref; /* when renaming */
- 	char name[FLEX_ARRAY]; /* more */
- };
-diff --git a/send-pack.c b/send-pack.c
-index b74fd45..c7a4c0e 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -196,8 +196,8 @@ static void update_tracking_ref(struct remote *remote, struct ref *ref)
- 		return;
+As promised.
+
+ t/t5404-tracking-branches.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/t/t5404-tracking-branches.sh b/t/t5404-tracking-branches.sh
+index 20718d4..f55143a 100755
+--- a/t/t5404-tracking-branches.sh
++++ b/t/t5404-tracking-branches.sh
+@@ -10,6 +10,7 @@ test_expect_success 'setup' '
+ 	git commit -m 1 &&
+ 	git branch b1 &&
+ 	git branch b2 &&
++	git branch b3 &&
+ 	git clone . aa &&
+ 	git checkout b1 &&
+ 	echo b1 >>file &&
+@@ -19,6 +20,8 @@ test_expect_success 'setup' '
+ 	git commit -a -m b2
+ '
  
- 	if (!remote_find_tracking(remote, &rs)) {
--		fprintf(stderr, "updating local tracking ref '%s'\n", rs.dst);
--		if (is_null_sha1(ref->peer_ref->new_sha1)) {
-+		fprintf(stderr, "updating local tracking ref '%s' with %s\n", rs.dst, sha1_to_hex(ref->new_sha1));
-+		if (is_null_sha1(ref->new_sha1)) {
- 			if (delete_ref(rs.dst, NULL))
- 				error("Failed to delete");
- 		} else
-@@ -211,6 +211,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- {
- 	struct ref *ref;
- 	int new_refs;
-+#define REF_NOT_UPTODATE (-3)
- 	int ret = 0;
- 	int ask_for_status_report = 0;
- 	int allow_deleting_refs = 0;
-@@ -246,6 +247,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		char old_hex[60], *new_hex;
- 		int will_delete_ref;
-+		ref->failed = 0;
- 
- 		if (!ref->peer_ref)
- 			continue;
-@@ -253,6 +255,7 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 
- 		will_delete_ref = is_null_sha1(ref->peer_ref->new_sha1);
- 		if (will_delete_ref && !allow_deleting_refs) {
-+			ref->failed = 1;
- 			error("remote does not support deleting refs");
- 			ret = -2;
- 			continue;
-@@ -297,13 +300,12 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 				 * commits at the remote end and likely
- 				 * we were not up to date to begin with.
- 				 */
-+				ref->failed = 1;
- 				error("remote '%s' is not an ancestor of\n"
--				      " local  '%s'.\n"
--				      " Maybe you are not up-to-date and "
--				      "need to pull first?",
-+				      " local  '%s'",
- 				      ref->name,
- 				      ref->peer_ref->name);
--				ret = -2;
-+				ret = REF_NOT_UPTODATE;
- 				continue;
- 			}
- 		}
-@@ -337,6 +339,9 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
- 		}
- 	}
- 
-+	if (ret == REF_NOT_UPTODATE)
-+		fprintf(stderr, "\nMaybe you are not up-to-date and need to pull first?\n\n");
++start_dir="$(pwd)"
 +
- 	packet_flush(out);
- 	if (new_refs && !dry_run)
- 		ret = pack_objects(out, remote_refs);
-@@ -349,7 +354,8 @@ static int send_pack(int in, int out, struct remote *remote, int nr_refspec, cha
+ test_expect_success 'check tracking branches updated correctly after push' '
+ 	cd aa &&
+ 	b1=$(git rev-parse origin/b1) &&
+@@ -37,4 +40,17 @@ test_expect_success 'check tracking branches updated correctly after push' '
+ 	test "$(git rev-parse origin/b2)" = "$b2"
+ '
  
- 	if (!dry_run && remote && ret == 0) {
- 		for (ref = remote_refs; ref; ref = ref->next)
--			update_tracking_ref(remote, ref);
-+			if (!ref->failed)
-+				update_tracking_ref(remote, ref);
- 	}
- 
- 	if (!new_refs && ret == 0)
++test_expect_success 'delete remote branch' '
++	git push origin :refs/heads/b3 &&
++	{
++		git rev-parse origin/b3 --
++		test $? != 0
++        } &&
++	cd "$start_dir" &&
++	{
++		git rev-parse refs/heads/b3 --
++		test $? != 0
++        }
++'
++
+ test_done
 -- 
 1.5.3.5.668.g22088
