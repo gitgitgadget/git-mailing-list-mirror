@@ -1,55 +1,87 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH/RFC 1/3] send-pack: track errors for each ref
-Date: Tue, 13 Nov 2007 21:18:59 +0100
-Message-ID: <20071113201859.GE3268@steel.home>
-References: <20071113102500.GA2767@sigill.intra.peff.net> <20071113102709.GA2905@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: "Todd A. Jacobs" <nospam@codegnome.org>
+Subject: Integrating with hooks
+Date: Tue, 13 Nov 2007 09:37:21 -0800
+Message-ID: <20071113173721.GI25282@penguin.codegnome.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 21:19:51 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 13 21:42:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is2EV-0006pR-4a
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:19:39 +0100
+	id 1Is2aE-0007JW-0C
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:42:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754890AbXKMUTI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 15:19:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758352AbXKMUTH
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:19:07 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:48237 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757926AbXKMUTF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 15:19:05 -0500
-Received: from tigra.home (Faa9a.f.strato-dslnet.de [195.4.170.154])
-	by post.webmailer.de (fruni mo49) (RZmta 14.0)
-	with ESMTP id Y02236jADGdtkU ; Tue, 13 Nov 2007 21:19:00 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 2C0BF277AE;
-	Tue, 13 Nov 2007 21:19:00 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 966C356D22; Tue, 13 Nov 2007 21:18:59 +0100 (CET)
+	id S1759964AbXKMUla (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 15:41:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759963AbXKMUla
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:41:30 -0500
+Received: from que02.charter.net ([209.225.8.190]:61401 "EHLO
+	que02.charter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759422AbXKMUl3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 15:41:29 -0500
+Received: from aarprv02.charter.net ([10.20.200.72]) by mtao04.charter.net
+          (InterMail vM.7.08.02.00 201-2186-121-20061213) with ESMTP
+          id <20071113173722.ZGWS23660.mtao04.charter.net@aarprv02.charter.net>
+          for <git@vger.kernel.org>; Tue, 13 Nov 2007 12:37:22 -0500
+Received: from penguin.codegnome.org ([71.83.124.90])
+          by aarprv02.charter.net with ESMTP
+          id <20071113173722.OOAZ495.aarprv02.charter.net@penguin.codegnome.org>
+          for <git@vger.kernel.org>; Tue, 13 Nov 2007 12:37:22 -0500
+Received: by penguin.codegnome.org (Postfix, from userid 1000)
+	id BD27237CA8; Tue, 13 Nov 2007 09:37:21 -0800 (PST)
+Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
+	Tue, 13 Nov 2007 09:37:21 -0800
 Content-Disposition: inline
-In-Reply-To: <20071113102709.GA2905@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolA10Q=
-X-RZG-CLASS-ID: mo07
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-Delivery-Agent: TMDA/1.1.12 (Macallan)
+Mail-Followup-To: git@vger.kernel.org
+X-Chzlrs: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64862>
 
-Jeff King, Tue, Nov 13, 2007 11:27:09 +0100:
-> Instead of keeping the 'ret' variable, we instead have a
-> status flag for each ref that tracks what happened to it.
-> We then print the ref status after all of the refs have
-> been examined.
+I've created some bash functions which handle tagging some files with
+revision information, but even after reading the git manual I'm not
+really sure how to integrate them so that they remove revision expansion
+before each check-in (to avoid cluttering the repository with keyword
+substitutions), and add them back (with the current commit info) after
+each commit.
 
-It wont apply to current master. How ready is built-in send-pack/push?
-Should I fix send-pack.c properly?
+These are the functions:
+
+    # Show some kind of useful revision string, like the RCS $Id$ string. I
+    # think commit hash, filename, hostname containing the repository, and
+    # timestamp should be plenty of information to track down a given file.
+    git-id () {
+	for file in "$@"; do
+	    _date=$(date +'%F %T %Z')
+	    git log -1 \
+		--pretty=format:"[%h] \"$file\" $(hostname -f) ($_date)" \
+		"$file"
+	done
+    }
+    # Replace the $Id$ keyword string in the file itself.
+    git-export () {
+	for file in "$@"; do
+	    echo Modifying $file...
+	    _id=$(git-id "$file")
+	    sed -ri 's/\$(Id|Revision).*\$/$Id: '"$_id"' $/' "$file"
+	done
+    }
+    # Clean the $Id$ keyword string to prevent cluttering the repository
+    # with keyword-revision diffs when we check the file back in.
+    git-unexport () {
+	for file in "$@"; do
+	    echo Resetting $file...
+	    sed -ri 's/\$Id.*\$/$Id$/' "$file"
+	done
+    }
+
+How do I hook this in the way I want so that it's handled automatically?
+
+-- 
+"Oh, look: rocks!"
+	-- Doctor Who, "Destiny of the Daleks"
