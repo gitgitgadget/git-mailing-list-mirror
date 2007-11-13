@@ -1,74 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Cloning from kernel.org, then switching to another repo
-Date: Tue, 13 Nov 2007 10:52:03 +0100
-Message-ID: <vpq3avah3r0.fsf@bauges.imag.fr>
-References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
-	<Pine.LNX.4.64.0711121412410.4362@racer.site>
-	<9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com>
-	<Pine.LNX.4.64.0711121613570.4362@racer.site>
-	<9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
-	<Pine.LNX.4.64.0711121635130.4362@racer.site>
-	<9e4733910711120921q651208cby1276426ccd4b5fa4@mail.gmail.com>
-	<20071113042017.GB9745@sigill.intra.peff.net>
-	<9e4733910711122030q7bbf6057ubb6b5b27e1885500@mail.gmail.com>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 4/2] Fix parent rewriting in --early-output
+Date: Tue, 13 Nov 2007 20:59:46 +1100
+Message-ID: <18233.30098.470244.421468@cargo.ozlabs.ibm.com>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Jeff King" <peff@peff.net>,
-	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Jon Smirl" <jonsmirl@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 10:53:22 2007
+Content-Transfer-Encoding: 7bit
+Cc: Marco Costalba <mcostalba@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Nov 13 11:00:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrsSP-0004kU-Mb
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 10:53:22 +0100
+	id 1IrsZL-0006nD-TH
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 11:00:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448AbXKMJxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 04:53:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbXKMJxF
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 04:53:05 -0500
-Received: from imag.imag.fr ([129.88.30.1]:59212 "EHLO imag.imag.fr"
+	id S1751250AbXKMKAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 05:00:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbXKMKAP
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 05:00:15 -0500
+Received: from ozlabs.org ([203.10.76.45]:59477 "EHLO ozlabs.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751412AbXKMJxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 04:53:04 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAD9q8h5008806
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 13 Nov 2007 10:52:08 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IrsR9-0000eo-Lq; Tue, 13 Nov 2007 10:52:03 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IrsR9-00015C-JO; Tue, 13 Nov 2007 10:52:03 +0100
-In-Reply-To: <9e4733910711122030q7bbf6057ubb6b5b27e1885500@mail.gmail.com> (Jon Smirl's message of "Mon\, 12 Nov 2007 23\:30\:17 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 13 Nov 2007 10:52:09 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751250AbXKMKAN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 05:00:13 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 8283DDDE02; Tue, 13 Nov 2007 21:00:12 +1100 (EST)
+In-Reply-To: <alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64778>
 
-"Jon Smirl" <jonsmirl@gmail.com> writes:
+Linus Torvalds writes:
 
-> Execute bit was not set. I just set it for all the scripts. +x is not
-> getting turned on with a default git init-db. I just made a new repo
-> to check, no +x on the scripts.
+> However, while the parent is now correctly rewritten, it looks like gitk 
+> is confused by this. Gitk will remember the original parent information, 
+> even if a replay has given new parenthood information. Since the partial 
+> early-output information is triggered by timing, this means that gitk will 
+> show some totally random parent that quite possibly won't even be part of 
+> the final commit set at all!
 
-That's by design: "git init" gives you _example_ hooks, but they won't
-run until you activate them explicitely with the appropriate chmod.
+Yep.  It will be a little complex to deal with that because there are
+bits of state that I set up for the parents, and if they're the wrong
+parents, I'll have to go back and undo that.
 
-That said, I'm not sure there's a really good reason not to run
-update-server-info by default on push. It doesn't cost much and saves
-a lot of troubles for beginners. Perhaps there are cases where the
-performance cost is non-negligible.
+In fact it would be easier for me if, instead of getting the id of
+some random ancestor commit, I got an explicit indication to say
+"unknown parent", such as just a "-" in place of the id of the
+unknown parent(s).  Would that be doable?  I could then just not do
+the processing for any unknown parent, and make sure to do it when I
+see the final version of the commit.
 
--- 
-Matthieu
+Also, I have just about worked out an efficient way to do the commit
+reordering incrementally, which would let me not use --topo-order or
+--date-order, and display commits as they come in.  I'll have to see
+whether that turns out to be better overall than using --early-output.
+
+Paul.
