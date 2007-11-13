@@ -1,87 +1,114 @@
 From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [PATCH 05/11] Use is_absolute_path() in sha1_file.c.
-Date: Tue, 13 Nov 2007 21:05:00 +0100
-Message-ID: <1194984306-3181-6-git-send-email-johannes.sixt@telecom.at>
+Subject: [PATCH 01/11] t5300-pack-object.sh: Split the big verify-pack test into smaller parts.
+Date: Tue, 13 Nov 2007 21:04:56 +0100
+Message-ID: <1194984306-3181-2-git-send-email-johannes.sixt@telecom.at>
 References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at>
- <1194984306-3181-2-git-send-email-johannes.sixt@telecom.at>
- <1194984306-3181-3-git-send-email-johannes.sixt@telecom.at>
- <1194984306-3181-4-git-send-email-johannes.sixt@telecom.at>
- <1194984306-3181-5-git-send-email-johannes.sixt@telecom.at>
 Cc: git@vger.kernel.org, Johannes Sixt <johannes.sixt@telecom.at>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 21:06:28 2007
+X-From: git-owner@vger.kernel.org Tue Nov 13 21:06:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is21C-0001Be-Nz
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:05:55 +0100
+	id 1Is21A-0001Be-Q3
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:05:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762488AbXKMUFV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 15:05:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762467AbXKMUFT
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:05:19 -0500
-Received: from smtp3.srv.eunet.at ([193.154.160.89]:49200 "EHLO
+	id S1762516AbXKMUFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 15:05:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762510AbXKMUFN
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:05:13 -0500
+Received: from smtp3.srv.eunet.at ([193.154.160.89]:49186 "EHLO
 	smtp3.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1762488AbXKMUFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 15:05:10 -0500
+	with ESMTP id S1762471AbXKMUFJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 15:05:09 -0500
 Received: from localhost.localdomain (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp3.srv.eunet.at (Postfix) with ESMTP id 694C310ACA2;
-	Tue, 13 Nov 2007 21:05:08 +0100 (CET)
+	by smtp3.srv.eunet.at (Postfix) with ESMTP id 5459B10A90B;
+	Tue, 13 Nov 2007 21:05:07 +0100 (CET)
 X-Mailer: git-send-email 1.5.3.5.1592.g0d6db
-In-Reply-To: <1194984306-3181-5-git-send-email-johannes.sixt@telecom.at>
+In-Reply-To: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64854>
 
-There are some places that test for an absolute path. Use the helper
-function to ease porting.
+This makes it easier to spot which of the tests failed.
 
 Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
 ---
- sha1_file.c |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ t/t5300-pack-object.sh |   34 ++++++++++++++++++----------------
+ 1 files changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/sha1_file.c b/sha1_file.c
-index f007874..560c0e0 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -86,7 +86,7 @@ int safe_create_leading_directories(char *path)
- 	char *pos = path;
- 	struct stat st;
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index ba7579c..f1106e6 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -187,49 +187,51 @@ test_expect_success \
+ 			test-3-${packname_3}.idx'
  
--	if (*pos == '/')
-+	if (is_absolute_path(path))
- 		pos++;
+ test_expect_success \
+-    'corrupt a pack and see if verify catches' \
++    'verify-pack catches mismatched .idx and .pack files' \
+     'cat test-1-${packname_1}.idx >test-3.idx &&
+      cat test-2-${packname_2}.pack >test-3.pack &&
+      if git verify-pack test-3.idx
+      then false
+      else :;
+-     fi &&
++     fi'
  
- 	while (pos) {
-@@ -253,7 +253,7 @@ static int link_alt_odb_entry(const char * entry, int len, const char * relative
- 	int entlen = pfxlen + 43;
- 	int base_len = -1;
+-     : PACK_SIGNATURE &&
+-     cat test-1-${packname_1}.pack >test-3.pack &&
++test_expect_success \
++    'verify-pack catches a corrupted pack signature' \
++    'cat test-1-${packname_1}.pack >test-3.pack &&
+      dd if=/dev/zero of=test-3.pack count=1 bs=1 conv=notrunc seek=2 &&
+      if git verify-pack test-3.idx
+      then false
+      else :;
+-     fi &&
++     fi'
  
--	if (*entry != '/' && relative_base) {
-+	if (!is_absolute_path(entry) && relative_base) {
- 		/* Relative alt-odb */
- 		if (base_len < 0)
- 			base_len = strlen(relative_base) + 1;
-@@ -262,7 +262,7 @@ static int link_alt_odb_entry(const char * entry, int len, const char * relative
- 	}
- 	ent = xmalloc(sizeof(*ent) + entlen);
+-     : PACK_VERSION &&
+-     cat test-1-${packname_1}.pack >test-3.pack &&
++test_expect_success \
++    'verify-pack catches a corrupted pack version' \
++    'cat test-1-${packname_1}.pack >test-3.pack &&
+      dd if=/dev/zero of=test-3.pack count=1 bs=1 conv=notrunc seek=7 &&
+      if git verify-pack test-3.idx
+      then false
+      else :;
+-     fi &&
++     fi'
  
--	if (*entry != '/' && relative_base) {
-+	if (!is_absolute_path(entry) && relative_base) {
- 		memcpy(ent->base, relative_base, base_len - 1);
- 		ent->base[base_len - 1] = '/';
- 		memcpy(ent->base + base_len, entry, len);
-@@ -333,7 +333,7 @@ static void link_alt_odb_entries(const char *alt, const char *ep, int sep,
- 		while (cp < ep && *cp != sep)
- 			cp++;
- 		if (last != cp) {
--			if ((*last != '/') && depth) {
-+			if (!is_absolute_path(last) && depth) {
- 				error("%s: ignoring relative alternate object store %s",
- 						relative_base, last);
- 			} else {
+-     : TYPE/SIZE byte of the first packed object data &&
+-     cat test-1-${packname_1}.pack >test-3.pack &&
++test_expect_success \
++    'verify-pack catches a corrupted type/size of the 1st packed object data' \
++    'cat test-1-${packname_1}.pack >test-3.pack &&
+      dd if=/dev/zero of=test-3.pack count=1 bs=1 conv=notrunc seek=12 &&
+      if git verify-pack test-3.idx
+      then false
+      else :;
+-     fi &&
++     fi'
+ 
+-     : sum of the index file itself &&
+-     l=`wc -c <test-3.idx` &&
++test_expect_success \
++    'verify-pack catches a corrupted sum of the index file itself' \
++    'l=`wc -c <test-3.idx` &&
+      l=`expr $l - 20` &&
+      cat test-1-${packname_1}.pack >test-3.pack &&
+      dd if=/dev/zero of=test-3.idx count=20 bs=1 conv=notrunc seek=$l &&
+      if git verify-pack test-3.pack
+      then false
+      else :;
+-     fi &&
+-
+-     :'
++     fi'
+ 
+ test_expect_success \
+     'build pack index for an existing pack' \
 -- 
 1.5.3.5.1592.g0d6db
