@@ -1,74 +1,72 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: wishlist: git info
-Date: Tue, 13 Nov 2007 20:49:46 +0100
-Message-ID: <4739FFDA.8020702@op5.se>
-References: <fhad5q$iia$1@ger.gmane.org> <20071112222106.GE2918@steel.home>	<4738D8AA.1030604@users.sourceforge.net> <fhaol0$p5r$1@ger.gmane.org>	<fhbn50$uqu$1@ger.gmane.org>	<Pine.LNX.4.64.0711131111220.4362@racer.site> <7v3avat147.fsf@gitster.siamese.dyndns.org> <4739F9F7.20407@users.sourceforge.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Tue, 13 Nov 2007 14:50:49 -0500
+Message-ID: <CBAEC42B-9F50-4723-9847-640D9832532E@silverinsanity.com>
+References: <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <vpqzlxiiii6.fsf@bauges.imag.fr> <20071113100209.GE14735@spearce.org> <vpqpryefmhj.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Thomas Neumann <tneumann@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:50:29 2007
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 13 20:51:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is1m7-00041A-BY
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:50:19 +0100
+	id 1Is1n2-0004NM-9x
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757800AbXKMTtv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 14:49:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbXKMTtu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 14:49:50 -0500
-Received: from mail.op5.se ([193.201.96.20]:47651 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754045AbXKMTtu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 14:49:50 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id 95A051F08764;
-	Tue, 13 Nov 2007 20:49:48 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WqqeTWiJ7QPh; Tue, 13 Nov 2007 20:49:47 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id 6FC071F08760;
-	Tue, 13 Nov 2007 20:49:47 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <4739F9F7.20407@users.sourceforge.net>
+	id S1755640AbXKMTux (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 14:50:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753663AbXKMTux
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 14:50:53 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:51064 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753430AbXKMTuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 14:50:52 -0500
+Received: from [192.168.1.5] (cpe-69-205-115-17.rochester.res.rr.com [69.205.115.17])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTP id 9E32E1FFC230;
+	Tue, 13 Nov 2007 19:50:50 +0000 (UTC)
+In-Reply-To: <vpqpryefmhj.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64842>
 
-Thomas Neumann wrote:
->> But "project description"?  Give me a break.  If you have cloned
->> the repository (or learned the existence of repository), you
->> already learned from elsewhere what the project is about.
-> well, not that I asked for the project description, but I see a small
-> benefit there. The point is not to know what the project is about. You
-> know, after all you checked it out in the first place. My goal is to
-> quickly/easily see "what is in this directory".
-> 
-> Perhaps my usage pattern is obscure, but I have something like 40
-> repositories checked out in different directories, and I sometimes loose
-> track of what actually is in a certain directory (and in what state). A
-> simple "ls" is not enough, as some of them look very similar on the top
-> level. Hence my interest for "git info".
-> 
 
-I had that problem too, until I realized that what I really needed was to
-clone repos out with the same careful structure we're using on the server,
-and then just use \w instead of \W in my $PS1.
+On Nov 13, 2007, at 5:50 AM, Matthieu Moy wrote:
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+> While clone normally does a bit more:
+>
+> [remote "origin"]
+>        url = /tmp/git1/.git
+>        fetch = +refs/heads/*:refs/remotes/origin/*
+> [branch "master"]
+>        remote = origin
+>        merge = refs/heads/master
+
+But how is clone expected to do that when the origin is an empty  
+repo?  There is no branch for it to track, and automagically setting  
+it to master is bogus because then it's tracking something that  
+doesn't exist.
+
+The easy way to set up the last bit is "git checkout -b master --track  
+origin/master".  But that won't work if origin/master doesn't exist.   
+The following will always work:
+
+git config branch.master.remote origin
+git config branch.master.merge refs/heads/master
+
+But asking git-clone do do this sort of odd magic for an empty repo is  
+dubious at best.  Perhaps convenient for your situation, but creates  
+repos that don't actually work.  (Will give errors when trying to  
+merge a non-existent branch, at the very least.)
+
+~~ Brian
