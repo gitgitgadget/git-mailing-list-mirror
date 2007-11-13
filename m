@@ -1,101 +1,67 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: Strange "beagle" interaction..
-Date: Tue, 13 Nov 2007 16:03:54 -0500
-Message-ID: <20071113210354.GD22590@fieldses.org>
-References: <alpine.LFD.0.9999.0711131241050.2786@woody.linux-foundation.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 08/11] Close files opened by lock_file() before unlinking.
+Date: Tue, 13 Nov 2007 21:05:32 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711132104060.4362@racer.site>
+References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-2-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-3-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-4-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-5-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-6-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-7-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-8-git-send-email-johannes.sixt@telecom.at>
+ <1194984306-3181-9-git-send-email-johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Tue Nov 13 22:04:41 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Tue Nov 13 22:06:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is2vz-0007Lk-QS
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:04:36 +0100
+	id 1Is2y0-00086S-P7
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:06:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760587AbXKMVET (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 16:04:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760508AbXKMVET
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:04:19 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:38617 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760086AbXKMVES (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 16:04:18 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1Is2vK-0008SH-Gz; Tue, 13 Nov 2007 16:03:54 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.9999.0711131241050.2786@woody.linux-foundation.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1756172AbXKMVGY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 16:06:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756781AbXKMVGY
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:06:24 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60328 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752428AbXKMVGX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 16:06:23 -0500
+Received: (qmail invoked by alias); 13 Nov 2007 21:06:20 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp056) with SMTP; 13 Nov 2007 22:06:20 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/A6NFOG43AWIzuhueur0pSBCLU/knDRz9NIaX5h8
+	d/t4P+Pw9fFbkL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1194984306-3181-9-git-send-email-johannes.sixt@telecom.at>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64865>
 
-On Tue, Nov 13, 2007 at 12:56:19PM -0800, Linus Torvalds wrote:
-> 
-> Ok, I've made a bugzilla entry for this for the Fedora people, but I 
-> thought I'd mention something I noticed yesterday but only tracked down 
-> today: it seems like the beagle file indexing code is able to screw up git 
-> in subtle ways.
-> 
-> I do not know exactly what happens, but the symptoms are random (and 
-> quite hard-to-trigger) dirty index contents where git believes that some 
-> set of files are not clean in the index.
-> 
-> I *suspect* that beagle is playing games with the file access times, 
-> causing the ctime on disk to not match the ce_ctime in the index file. But 
-> that's just a guess.
-> 
-> I'm posting here in case somebody on the list knows what beagle does, or 
-> somebody has been bitten by strange behaviour and realizes that he has 
-> beagle running and prefers to fix the problem by just disabling beagle 
-> (which will also be a great boon for performance - beagle seems to be very 
-> good at flushing your file caches, but I guess that's not a bug, but a 
-> "feature").
+Hi,
 
-Last I ran across this, I believe I found it was adding extended
-attributes to the file.  I think it's something like
+On Tue, 13 Nov 2007, Johannes Sixt wrote:
 
-	getfattr -d
+> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+> 
+> This is needed on Windows since open files cannot be unlinked.
+> 
+> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+> ---
+> 
+> 	This was authored by Dscho, but carries only my sign-off.
+> 	Is this ok?
 
-to show all the extended attributes set on the file.  Does that show
-anything?
+Signed-off-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 
-Yeah, I just turned off beagle.  It looked to me like it was doing
-something wrongheaded.
+BTW: Hannes, many thanks for your efforts.  Much appreciated.
 
---b.
-
-> 
-> The easiest way I have found so far to trigger this is to run
-> 
-> 	while ./t7003-filter-branch.sh -i; do echo ok; done
-> 
-> in the git t/ directory, while at the same time telling beagle to index 
-> just that git/t/ directory. That seems to trigger a failure on subtest 17 
-> fairly reliably (not the first time through the loop, but *eventually* - 
-> it takes a few minutes). I think it's because "git filter-branch" requires 
-> the index to be clean.
-> 
-> (But I've also seen it fail on subtest 4).
-> 
-> I opened bugzilla
-> 
-> 	https://bugzilla.redhat.com/show_bug.cgi?id=380791
-> 
-> for this, since I consider it a beagle bug (indexing shouldn't change 
-> directory state, and if beagle wants to avoid changing access times, it 
-> should use O_NOATIME). But I don't actually know exactly what it is that 
-> causes problems, so if somebody is interested and tries to figure this 
-> out, that would probably be good.
-> 
-> 			Linus
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+Ciao,
+Dscho
