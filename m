@@ -1,93 +1,125 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] revert/cherry-pick: allow starting from dirty work tree.
-Date: Tue, 13 Nov 2007 23:37:34 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711132154370.4362@racer.site>
-References: <7vd4udsv6b.fsf@gitster.siamese.dyndns.org>
+From: Josh Triplett <josh@freedesktop.org>
+Subject: Re: [PATCH 2/2] git-diff: complain about >=8 consecutive spaces in
+ initial indent
+Date: Tue, 13 Nov 2007 15:37:54 -0800
+Message-ID: <473A3552.3060907@freedesktop.org>
+References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org> <7vr6j95c84.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
+Content-Type: multipart/signed; micalg=pgp-sha1;
+ protocol="application/pgp-signature";
+ boundary="------------enig817F0CEACD726ED8BEF24A79"
+Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>,
+	dsymonds@gmail.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:38:46 2007
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:45:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5LA-0002m9-Tx
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:38:45 +0100
+	id 1Is5RZ-0004nQ-Eg
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:45:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759743AbXKMXhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 18:37:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761997AbXKMXhz
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:37:55 -0500
-Received: from mail.gmx.net ([213.165.64.20]:40226 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761965AbXKMXhx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 18:37:53 -0500
-Received: (qmail invoked by alias); 13 Nov 2007 23:37:52 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp005) with SMTP; 14 Nov 2007 00:37:52 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19iun0+b5liyvX1fllkl1KXzrA+M45E7RexE5hR1q
-	mFHEHhh6NDyVDr
-X-X-Sender: gene099@racer.site
-In-Reply-To: <7vd4udsv6b.fsf@gitster.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1755401AbXKMXpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 18:45:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755439AbXKMXpF
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:45:05 -0500
+Received: from mail5.sea5.speakeasy.net ([69.17.117.7]:48662 "EHLO
+	mail5.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754923AbXKMXpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 18:45:04 -0500
+X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Nov 2007 18:45:04 EST
+Received: (qmail 3439 invoked from network); 13 Nov 2007 23:38:23 -0000
+Received: from host-241-99.resnet.pdx.edu (HELO [131.252.241.99]) (josh@[131.252.241.99])
+          (envelope-sender <josh@freedesktop.org>)
+          by mail5.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
+          for <gitster@pobox.com>; 13 Nov 2007 23:38:23 -0000
+User-Agent: Mozilla-Thunderbird 2.0.0.6 (X11/20071009)
+In-Reply-To: <7vr6j95c84.fsf@gitster.siamese.dyndns.org>
+X-Enigmail-Version: 0.95.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64908>
 
-Hi,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--------------enig817F0CEACD726ED8BEF24A79
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 13 Nov 2007, Junio C Hamano wrote:
+[CCing David Symonds, because the same comment also applies to his
+patches.]
 
-> There is no reason to forbid a dirty work tree when reverting or
-> cherry-picking a change, as long as the index is clean.
-> 
-> The scripted version used to allow it:
-> 
->     case "$no_commit" in
->     t)
->     	# We do not intend to commit immediately.  We just want to
->     	# merge the differences in.
->     	head=$(git-write-tree) ||
->     		die "Your index file is unmerged."
->     	;;
->     *)
->     	head=$(git-rev-parse --verify HEAD) ||
->     		die "You do not have a valid HEAD"
->     	files=$(git-diff-index --cached --name-only $head) || exit
->     	if [ "$files" ]; then
->     		die "Dirty index: cannot $me (dirty: $files)"
->     	fi
->     	;;
->     esac
-> 
-> but C rewrite tightened the check, probably by mistake.
+Junio C Hamano wrote:
+> This introduces a new whitespace error type, "indent-with-non-tab".
+> The error is about starting a line with 8 or more SP, instead of
+> indenting it with a HT.
+>=20
+> This is not enabled by default, as some projects employ an
+> indenting policy to use only SPs and no HTs.
+>=20
+> The kernel folks and git contributors may want to enable this
+> detection with:
+>=20
+> 	[core]
+> 		whitespace =3D indent-with-non-tab
 
-Probably.  Thanks.
+This seems somewhat broken, whether a project uses tabs for
+indentation or not.  Lines can still legitimately start with many
+spaces.  Tab-based indentation should only use tabs to line up with
+other tabs, not with characters.  (Unfortunately most editors get this
+wrong when indenting with tabs.  I use spaces, not because I
+ideologically oppose tabs, but because I can't get any editor I want
+to use to do the right thing with tabs.)
 
-While we're at cherry-pick: Two days ago I had to rebase in a dirty 
-working directory.  Why?  Because one of the submodules was not yet ready 
-to be committed to the superproject.
+My standard test case for this:
 
-And you cannot easily stash away a submodule.
+fprintf("some very long string",
+        arguments);
 
-Now, my quick and dirty solution was to hack a GIT_IGNORE_SUBMODULES 
-patch: 
-http://repo.or.cz/w/git/mingw/4msysgit.git?a=commitdiff;h=9ef6b6bff4e368934c4262af13b0a309be19ebd4
+Type the first line, and press enter.  A good editor should indent to
+the open parenthesis.  However, it should not use a tab, because it
+needs to match up with the length of "fprintf(".  All the editors I
+know of use a tab; they just blindly replace a tab-width worth of
+spaces with a tab in initial indentation.
 
-But the more fundamental question is: should we eventually have a mode in 
-cherry-pick (or for that matter, apply!) which can change the submodule?  
-And if so, how to go about it?
+That statement would normally appear indented in a function, so the
+continuation line should have tabs up to the indentation level of the
+fprintf, and then 8 spaces.  An example more likely to appear at the
+start of the line, where this indent-with-non-tab heuristic would flag
+it:
 
-I could imagine that in this case, both apply and cherry-pick should call 
-submodule with a to-be-created subcommand to reset the named submodule to 
-a given commit, given the current commit (to avoid races, just as with 
-update-ref <ref> <newsha1> <oldsha1>).  Of course, this subcommand would 
-fail if the submodule's working directory is dirty.
+#define macro(arg1, arg2) macro_content \
+                          more_macro_content
 
-Thoughts?
+Another example:
 
-Ciao,
-Dscho
+some_type function_name(arg1, arg2, argred, argblue,
+                        argmore, argless)
+
+Again, the indentation should use spaces if it wants to line up after
+the open parenthesis, whether the project uses tabs or spaces for indenta=
+tion.
+
+(Those examples may or may not match all coding styles; some just
+indent the continuation lines by a fixed number of tabs, and also
+treat the first line as a continuation line to keep the indentation
+consistent.  Just presenting them as examples.)
+
+- Josh Triplett
+
+
+--------------enig817F0CEACD726ED8BEF24A79
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
+
+iD8DBQFHOjVcGJuZRtD+evsRAqqgAJsG/xjoVySvlnntvXtP36sOYk7HugCgkUFt
+dTt38S5ogsHvsDP5pCtoOcA=
+=yK/b
+-----END PGP SIGNATURE-----
+
+--------------enig817F0CEACD726ED8BEF24A79--
