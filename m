@@ -1,68 +1,76 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Tue, 13 Nov 2007 23:56:29 +0100
-Message-ID: <85abph4uw2.fsf@lola.goethe.zz>
-References: <86k5on8v6p.fsf@lola.quinscape.zz>
-	<20071112131927.GA1701@c3sl.ufpr.br>
-	<Pine.LNX.4.64.0711121355380.4362@racer.site>
-	<200711121719.54146.wielemak@science.uva.nl>
-	<Pine.LNX.4.64.0711121624330.4362@racer.site>
-	<vpq3avbv2ju.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121715090.4362@racer.site>
-	<18232.35893.243300.179076@lisa.zopyra.com>
-	<Pine.LNX.4.64.0711121727130.4362@racer.site>
-	<vpq7iknqrtp.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121755460.4362@racer.site>
-	<vpqy7d3pck0.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121804400.4362@racer.site>
-	<vpqoddzpc88.fsf@bauges.imag.fr>
-	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
-	<alpine.LFD.0.9999.0711121702030.21255@xanadu.home>
-	<Pine.LNX.4.64.0711122212540.4362@racer.site>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Integrating with hooks
+Date: Wed, 14 Nov 2007 00:07:29 +0100
+Organization: At home
+Message-ID: <fhdane$kfs$1@ger.gmane.org>
+References: <20071113173721.GI25282@penguin.codegnome.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@cam.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:07:35 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:09:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is4qt-0000qt-7A
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:07:27 +0100
+	id 1Is4se-0001Qk-7e
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:09:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758372AbXKMXHL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 18:07:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759551AbXKMXHK
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:07:10 -0500
-Received: from fencepost.gnu.org ([140.186.70.10]:39958 "EHLO
-	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757018AbXKMXHI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 18:07:08 -0500
-Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
-	by fencepost.gnu.org with esmtp (Exim 4.60)
-	(envelope-from <dak@gnu.org>)
-	id 1Is4qX-00012e-18; Tue, 13 Nov 2007 18:07:05 -0500
-Received: by lola.goethe.zz (Postfix, from userid 1002)
-	id 54F831C3DB46; Tue, 13 Nov 2007 23:56:29 +0100 (CET)
-In-Reply-To: <Pine.LNX.4.64.0711122212540.4362@racer.site> (Johannes
-	Schindelin's message of "Mon, 12 Nov 2007 22:17:52 +0000 (GMT)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
+	id S1761710AbXKMXIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 18:08:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761259AbXKMXIB
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:08:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:38456 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758742AbXKMXIA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 18:08:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Is4r9-0008AB-MB
+	for git@vger.kernel.org; Tue, 13 Nov 2007 23:07:43 +0000
+Received: from abwy6.neoplus.adsl.tpnet.pl ([83.8.248.6])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Nov 2007 23:07:43 +0000
+Received: from jnareb by abwy6.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 13 Nov 2007 23:07:43 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwy6.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64903>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64904>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+[Cc: Todd A. Jacobs <nospam@codegnome.org>, git@vger.kernel.org]
 
-> If Alice and Bob clone from an empty repository, and both work on it,
-> there is _no way_ that they can have a common ancestor[*].  Hence, an
-> empty clone _would_ be a cause of that condition.
+Todd A. Jacobs wrote:
 
-So where is the problem with that?
+> I've created some bash functions which handle tagging some files with
+> revision information, but even after reading the git manual I'm not
+> really sure how to integrate them so that they remove revision expansion
+> before each check-in (to avoid cluttering the repository with keyword
+> substitutions), and add them back (with the current commit info) after
+> each commit.
+> 
+> These are the functions:
+
+[...]
+
+> How do I hook this in the way I want so that it's handled automatically?
+
+Take a look at gitattributes(5), namely 'filter' attribute.
+
+Although instead of implementing it "by hand", perhaps it would be
+enough to use 'ident' and/or 'export-subs' attribute.
+
+P.S. Because of the way git updates files, and git thinks about files
+it is I think universally regarded to be bad idea to put in a file
+any Id that depend on commit data.
 
 -- 
-David Kastrup, Kriemhildstr. 15, 44793 Bochum
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
