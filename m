@@ -1,136 +1,78 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4/2] Fix parent rewriting in --early-output
-Date: Mon, 12 Nov 2007 20:58:22 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com> <18212.13862.637991.30536@cargo.ozlabs.ibm.com> <alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org> <18217.41899.54812.227152@cargo.ozlabs.ibm.com> <alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
- <18218.63946.772767.179841@cargo.ozlabs.ibm.com> <e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com> <alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org> <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
- <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org> <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org> <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org> <18221.14113.498416.396006@cargo.ozlabs.ibm.com>
- <alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org> <alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org> <alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] for-each-ref: fix off by one read.
+Date: Tue, 13 Nov 2007 06:15:54 +0100
+Message-ID: <200711130615.54196.chriscool@tuxfamily.org>
+References: <20071112053725.4f0d1940.chriscool@tuxfamily.org> <7vfxzb1032.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Marco Costalba <mcostalba@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Nov 13 05:58:59 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 06:09:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrnrS-00031V-AG
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 05:58:54 +0100
+	id 1Iro1g-000551-Ob
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 06:09:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760801AbXKME6h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 23:58:37 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760781AbXKME6g
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 23:58:36 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:51557 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760764AbXKME6f (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2007 23:58:35 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAD4wRRO017040
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 12 Nov 2007 20:58:28 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAD4wMg2026967;
-	Mon, 12 Nov 2007 20:58:22 -0800
-In-Reply-To: <alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
-X-Spam-Status: No, hits=-3.235 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1750974AbXKMFJN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 13 Nov 2007 00:09:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750955AbXKMFJL
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 00:09:11 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:38425 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750933AbXKMFJL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 13 Nov 2007 00:09:11 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id CB8871AB2C2;
+	Tue, 13 Nov 2007 06:09:08 +0100 (CET)
+Received: from bureau.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id B477B1AB2C1;
+	Tue, 13 Nov 2007 06:09:08 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <7vfxzb1032.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64753>
 
+Le mardi 13 novembre 2007, Junio C Hamano a =E9crit :
+> Christian Couder <chriscool@tuxfamily.org> writes:
+> > diff --git a/builtin-for-each-ref.c b/builtin-for-each-ref.c
+> > index 598d4e1..89ea37c 100644
+> > --- a/builtin-for-each-ref.c
+> > +++ b/builtin-for-each-ref.c
+> > @@ -306,7 +306,7 @@ static const char *find_wholine(const char *who=
+,
+> > int wholen, const char *buf, un if (!eol)
+> >  			return "";
+> >  		eol++;
+> > -		if (eol[1] =3D=3D '\n')
+> > +		if (*eol =3D=3D '\n')
+> >  			return ""; /* end of header */
+> >  		buf =3D eol;
+> >  	}
+>
+> Good eyes. =20
 
-When we do history simplification in early-output, we end up in the 
-interesting situation that the early output may do simplification with a 
-partial tree - in particular, there may be parents that simply haven't 
-been handled yet, and don't have their parenthood parsed.
+Well, Valgrind found it when I did:
 
-The history simplification would get this case totally wrong, and assume 
-that the parent list of a parent being NULL meant that it was a root 
-commit, and rewrite the whole parent as such.
+$ valgrind git for-each-ref --format=3D'%(refname)' "refs/tags/*"
 
-This would cause unconnected commits in the gitk output.
+> This would have broken if
 
-This fixes it, by saying that if you reach a parent that hasn't been 
-parsed yet, history simplification will simply stop and leave it alone: 
-later on, when we have the full history, we will *continue* the 
-simplification and eventually get the right information.
+>  (1) we had a header field that consists of a single character
+>      and then LF.  We would have mistaken such a line as the end
+>      of header; or
+>
+>  (2) we had a commit or a tag that consists solely of header and
+>      no body.  We would have read past the terminating NUL.
 
-However, while the parent is now correctly rewritten, it looks like gitk 
-is confused by this. Gitk will remember the original parent information, 
-even if a replay has given new parenthood information. Since the partial 
-early-output information is triggered by timing, this means that gitk will 
-show some totally random parent that quite possibly won't even be part of 
-the final commit set at all!
+I suspect that the end of the header was not properly detected, so that=
+ it=20
+may have read one byte past a body ending with LF and the terminating N=
+UL.
 
-On the kernel, at least with my machine, I can trigger this with something 
-like
-
-	gitk fs/read_write.c
-
-where currently the log (with --parents) reads like this:
-
-	commit a16877ca9cec211708a161057a7cbfbf2cbc3a53 d96e6e71647846e0dab097efd9b8bf3a3a556dca
-	Author: Pavel Emelyanov <xemul@openvz.org>
-	Date:   Mon Oct 1 14:41:11 2007 -0700
-	
-	    Cleanup macros for distinguishing mandatory locks
-	..
-
-	commit d96e6e71647846e0dab097efd9b8bf3a3a556dca d6b29d7cee064f28ca097e906de7453541351095
-	Author: Jens Axboe <jens.axboe@oracle.com>
-	Date:   Mon Jun 11 12:18:52 2007 +0200
-	
-	    Remove remnants of sendfile()
-	...
-
-but with early-output (and this fixed patch), I get something like this:
-
-	Final output: 1 incomplete
-	commit a16877ca9cec211708a161057a7cbfbf2cbc3a53 31b54f40e12e4d04941762be6615edaf3c6ed811
-	Author: Pavel Emelyanov <xemul@openvz.org>
-	Date:   Mon Oct 1 14:41:11 2007 -0700
-
-	    Cleanup macros for distinguishing mandatory locks
-	...
-
-	Final output: 26 done
-	commit a16877ca9cec211708a161057a7cbfbf2cbc3a53 d96e6e71647846e0dab097efd9b8bf3a3a556dca
-	Author: Pavel Emelyanov <xemul@openvz.org>
-	Date:   Mon Oct 1 14:41:11 2007 -0700
-	
-	    Cleanup macros for distinguishing mandatory locks
-	..
-
-ie notice how the early-output doesn't have the right parent, since it 
-hasn't gotten that far back in history yet. So now the final output will 
-have the parenthood rewritten (correctly), but gitk will have cached the 
-old random incorrect parenthood, and doesn't react properly to the updated 
-and fixed one at replay time.
-
-Anyway, this is a real fix, but gitk remains a bit useless as is.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
- revision.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 931f978..8872a91 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1352,6 +1352,8 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
- 		if (!revs->limited)
- 			if (add_parents_to_list(revs, p, &revs->commits) < 0)
- 				return rewrite_one_error;
-+		if (!p->object.parsed)
-+			return rewrite_one_ok;
- 		if (p->parents && p->parents->next)
- 			return rewrite_one_ok;
- 		if (p->object.flags & (TREECHANGE | UNINTERESTING))
+Christian.
