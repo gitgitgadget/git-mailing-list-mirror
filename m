@@ -1,94 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/2] Fix parent rewriting in --early-output
-Date: Tue, 13 Nov 2007 00:24:55 -0800
-Message-ID: <7vabpiv9go.fsf@gitster.siamese.dyndns.org>
-References: <alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
-	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
-	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
-	<alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
-	<7v1wauzomr.fsf@gitster.siamese.dyndns.org>
-	<20071113080125.GB14735@spearce.org>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from
+ .gitconfig
+Date: Tue, 13 Nov 2007 02:25:07 -0600
+Message-ID: <47395F63.8040306@zwell.net>
+References: <47112491.8070309@gmail.com>	<20071015034338.GA4844@coredump.intra.peff.net>	<20071016194709.3c1cb3a8@danzwell.com>	<20071017015152.GN13801@spearce.org>	<20071022164048.71a3dceb@danzwell.com>	<20071023042702.GB28312@coredump.intra.peff.net>	<20071023035221.66ea537f@danzwell.com>	<20071102224100.71665182@paradox.zwell.net>	<20071104045735.GA12359@segfault.peff.net>	<7v640ivagv.fsf@gitster.siamese.dyndns.org>	<20071104054305.GA13929@sigill.intra.peff.net>	<20071110202351.7b4544aa@paradox.zwell.net>	<7vve89f6qy.fsf@gitster.siamese.dyndns.org>	<47390050.1020907@zwell.net>	<7v4pfq27tx.fsf@gitster.siamese.dyndns.org>	<47391211.5000606@zwell.net> <7v4pfqwqln.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Paul Mackerras <paulus@samba.org>,
-	Marco Costalba <mcostalba@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Nov 13 09:25:27 2007
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dan Zwell <dzwell@gmail.com>, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 09:26:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irr5F-0005UW-CD
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 09:25:21 +0100
+	id 1Irr6E-0005mO-Hr
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 09:26:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310AbXKMIZF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 03:25:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751320AbXKMIZF
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 03:25:05 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50888 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751257AbXKMIZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 03:25:03 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 2EB3A2F2;
-	Tue, 13 Nov 2007 03:25:24 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8764C923EC;
-	Tue, 13 Nov 2007 03:25:18 -0500 (EST)
-In-Reply-To: <20071113080125.GB14735@spearce.org> (Shawn O. Pearce's message
-	of "Tue, 13 Nov 2007 03:01:25 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751193AbXKMI0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 03:26:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751196AbXKMI0F
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 03:26:05 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:6854 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751183AbXKMI0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 03:26:04 -0500
+Received: by py-out-1112.google.com with SMTP id u77so1825746pyb
+        for <git@vger.kernel.org>; Tue, 13 Nov 2007 00:26:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=ysgi9y4fZB/2QGRonZxADJVtBzjgIiRkhMClUtvX5Og=;
+        b=iWsQ+z1vxZ6gQmZQZ3DY08m7JrLuwxOoiJxyR7l1CkWdKkYdR4KJLTeRi9Ck2xaswvVdtA8mhGhE15zlrpMcC6QLpCukJshk1Yxj0hGSlvO1xg06pUvRfsZzFAetGzXyuAbxM1ld0qWOaE1Q5GVR2PnSELYwIjXzu5OG+FodQ9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=pIctHRZE+VVxDgix4K9cnP/VUvRqKxCmeZCKP0G6wcqVuypkKFBho+rLruv2pMHAlt95rSjX/iOqrQnJo41Gq381Ailh6gx+Fm3On6hRT0pF2alz6sK71rDiEx8pQqGDdHA+8ZWS0zsUJ3wB6FBcLEquWr4HKJV3jJ0JsEI01+U=
+Received: by 10.35.30.8 with SMTP id h8mr7157869pyj.1194942363314;
+        Tue, 13 Nov 2007 00:26:03 -0800 (PST)
+Received: from ?143.44.70.185? ( [143.44.70.185])
+        by mx.google.com with ESMTPS id w38sm12105967pyg.2007.11.13.00.26.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 13 Nov 2007 00:26:02 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071031)
+In-Reply-To: <7v4pfqwqln.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64768>
 
-"Shawn O. Pearce" <spearce@spearce.org> writes:
+Junio C Hamano wrote:
+> But the point is, that you are not ignoring invalid color names
+> but instead giving back a random match aren't you?
 
-> Junio C Hamano <gitster@pobox.com> wrote:
->
->> I have to wonder what would happen if a much higher level caller
->> caused the objects to get parsed before coming into the revision
->> walking machinery, e.g. after the command line processing for
->> A...B walked the ancestry chain until their common ancestors are
->> found.  So these commits between A and B are parsed, but the
->> revision limiting machinery hasn't done its operation to set
->> TREECHANGE and/or UNINTERESTING in add_parents_to_list() on
->> these commits yet.
->
-> That's one of the problems with the way the revision walking
-> machinery is built.  Its fast, but it can really only be used once.
+No, if there's no match, the token is ignored. False matches are 
+possible in some cases (the bogus config option "colored" would match 
+"red", for example), so I will follow your suggestion with the hash, 
+after all. I'll send out the next revised patches in a day or two--I've 
+made most of the changes you and Jeff suggested, but I need to double check.
 
-Yes but not quite.  As long as you do not use overlapping set of
-flag bits without cleaning, you are almost Ok.
-
-The reason I say "almost" is that I think the true problem with
-the first patch by Linus was to load "parsed" bit any semantics
-other than "we have read and parsed the data so do not bother
-rereading it".  If it used another mechanism (e.g. another flag
-bit that means "we have done TREECHANGE and stuff"), returning
-rewrite_one_ok to punt when seeing an unprocessed node would
-have been safe, as it would not have munged the parent list.
-The replacement "TREESAME" patch would work much better without
-using such an extra bit, because it allows us to directly check
-"if we already decided this does not change from the parent",
-and the lack of the bit covers both "we haven't processed it"
-and "we processed but we do not want to prune" cases, and not
-pruning is safe and easily and correctly re-processible in the
-post clean-up phase of the early_output series.
-
-But in general, you're right.  An operation that changes the
-ancestry shape is irreversible, and you would need to cause
-reparsing of the commit objects after you are done with revision
-traversal, and at that point, discarding and re-reading
-everything from scratch, although is heavy-handed, is one
-plausible approach to tackle the problem.
+Dan
