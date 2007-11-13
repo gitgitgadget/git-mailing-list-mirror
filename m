@@ -1,59 +1,68 @@
-From: David Reiss <dreiss@facebook.com>
-Subject: Trivial patch to git-svn
-Date: Tue, 13 Nov 2007 13:56:47 -0800
-Message-ID: <473A1D9F.4030103@facebook.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/11] Miscellaneous MinGW port fallout
+Date: Tue, 13 Nov 2007 14:22:47 -0800
+Message-ID: <7v8x51ss3s.fsf@gitster.siamese.dyndns.org>
+References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at>
+	<200711132110.29136.johannes.sixt@telecom.at>
+	<7vlk91svgf.fsf@gitster.siamese.dyndns.org>
+	<200711132232.11730.johannes.sixt@telecom.at>
+	<Pine.LNX.4.64.0711132145400.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 23:14:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <johannes.sixt@telecom.at>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 13 23:23:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is41Z-0007qq-VC
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 23:14:26 +0100
+	id 1Is4AY-0002VH-IX
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 23:23:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756794AbXKMWOJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 17:14:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756728AbXKMWOI
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 17:14:08 -0500
-Received: from fw-sf2p.facebook.com ([204.15.23.140]:28821 "EHLO
-	sf2pmxf02.TheFacebook.com" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1756606AbXKMWOH (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 13 Nov 2007 17:14:07 -0500
-X-Greylist: delayed 976 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Nov 2007 17:14:07 EST
-Received: from [192.168.98.131] ([69.63.176.115]) by sf2pmxf02.TheFacebook.com over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
-	 Tue, 13 Nov 2007 13:57:57 -0800
-User-Agent: Thunderbird 2.0.0.6 (X11/20071008)
-X-OriginalArrivalTime: 13 Nov 2007 21:57:58.0106 (UTC) FILETIME=[407263A0:01C82640]
+	id S1760718AbXKMWW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 17:22:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760671AbXKMWW4
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 17:22:56 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:40517 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759560AbXKMWWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 17:22:55 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D3B8B2EF;
+	Tue, 13 Nov 2007 17:23:14 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 53BE29543F;
+	Tue, 13 Nov 2007 17:23:11 -0500 (EST)
+In-Reply-To: <Pine.LNX.4.64.0711132145400.4362@racer.site> (Johannes
+	Schindelin's message of "Tue, 13 Nov 2007 21:46:59 +0000 (GMT)")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64894>
 
- From d9f93dc1c503c5f42b27485b2c35b38e8c9bca44 Mon Sep 17 00:00:00 2001
-From: David Reiss <dreiss@dreiss-vmware.(none)>
-Date: Tue, 13 Nov 2007 13:47:26 -0800
-Subject: [PATCH] Fix a typo and add a comma in an error message in git-svn
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Signed-off-by: David Reiss <dreiss@facebook.com>
----
-  git-svn.perl |    2 +-
-  1 files changed, 1 insertions(+), 1 deletions(-)
+> On Tue, 13 Nov 2007, Johannes Sixt wrote:
+>> On Tuesday 13 November 2007 22:10, Junio C Hamano wrote:
+>> > Johannes Sixt <johannes.sixt@telecom.at> writes:
+>> > > On Tuesday 13 November 2007 21:04, Johannes Sixt wrote:
+>> > > ... and so allow that the compiled binaries are installed in any
+>> > > directory that the user chooses.
+>> >
+>> > If you can do that without breaking the tests (specifically, the
+>> > test script should pick up the version of git you just built,
+>> > not from /usr/bin nor /usr/local/stow/git/bin) that would be
+>> > great.
+>> 
+>> Sorry, I don't understand your statement. Do you see any tests breaking?
+>
+> I guess what Junio is getting at: if your changes could lead to our not 
+> needing to hard code defaults, that would be awesome.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index e3e00fd..981cdd6 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -391,7 +391,7 @@ sub cmd_set_tree {
-  sub cmd_dcommit {
-  	my $head = shift;
-  	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
--		'Cannot dcommit with a dirty index.  Commit your changes first'
-+		'Cannot dcommit with a dirty index.  Commit your changes first, '
-  		. "or stash them with `git stash'.\n";
-  	$head ||= 'HEAD';
-  	my @refs;
--- 
-1.5.3.4
+Yes.  Another thing I said was that it would be grave regression
+for testability if the change leads git to look at somewhere
+else other than it was told to look via GIT_EXEC_PATH
+environment,
