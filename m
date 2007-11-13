@@ -1,76 +1,85 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH 0/11] Miscellaneous MinGW port fallout
-Date: Tue, 13 Nov 2007 22:54:36 +0100
-Message-ID: <200711132254.37053.johannes.sixt@telecom.at>
-References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <200711132232.11730.johannes.sixt@telecom.at> <Pine.LNX.4.64.0711132145400.4362@racer.site>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: [PATCH 4/2] Fix parent rewriting in --early-output
+Date: Wed, 14 Nov 2007 08:55:18 +1100
+Message-ID: <18234.7494.851156.347578@cargo.ozlabs.ibm.com>
+References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
+	<18212.13862.637991.30536@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0710280943090.30120@woody.linux-foundation.org>
+	<18217.41899.54812.227152@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711010815320.3342@woody.linux-foundation.org>
+	<18218.63946.772767.179841@cargo.ozlabs.ibm.com>
+	<e5bfff550711020544h1e9a648apfd268eb549645ccc@mail.gmail.com>
+	<alpine.LFD.0.999.0711020828440.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021114390.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
+	<18221.14113.498416.396006@cargo.ozlabs.ibm.com>
+	<alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
+	<alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
+	<18233.30098.470244.421468@cargo.ozlabs.ibm.com>
+	<7vbq9yt1te.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 22:55:00 2007
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Marco Costalba <mcostalba@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 22:56:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is3ij-0000RA-4z
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:54:57 +0100
+	id 1Is3jn-0000sd-1n
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:56:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759818AbXKMVyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 16:54:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757611AbXKMVyk
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:54:40 -0500
-Received: from smtp2.srv.eunet.at ([193.154.160.116]:49676 "EHLO
-	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757874AbXKMVyk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 16:54:40 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp2.srv.eunet.at (Postfix) with ESMTP id 7D8B6BF7C0;
-	Tue, 13 Nov 2007 22:54:37 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 4652259084;
-	Tue, 13 Nov 2007 22:54:37 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <Pine.LNX.4.64.0711132145400.4362@racer.site>
-Content-Disposition: inline
+	id S1760033AbXKMVzr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 16:55:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759560AbXKMVzq
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:55:46 -0500
+Received: from ozlabs.org ([203.10.76.45]:36319 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757874AbXKMVzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 16:55:45 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id A4A9DDDE29; Wed, 14 Nov 2007 08:55:44 +1100 (EST)
+In-Reply-To: <7vbq9yt1te.fsf@gitster.siamese.dyndns.org>
+X-Mailer: VM 7.19 under Emacs 21.4.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64888>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64889>
 
-On Tuesday 13 November 2007 22:46, Johannes Schindelin wrote:
-> Hi,
->
-> On Tue, 13 Nov 2007, Johannes Sixt wrote:
-> > On Tuesday 13 November 2007 22:10, Junio C Hamano wrote:
-> > > Johannes Sixt <johannes.sixt@telecom.at> writes:
-> > > > On Tuesday 13 November 2007 21:04, Johannes Sixt wrote:
-> > > >> [PATCH 09/11] Allow a relative builtin template directory.
-> > > >> [PATCH 10/11] Introduce git_etc_gitconfig() that encapsulates access
-> > > >> 	of ETC_GITCONFIG.
-> > > >> [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
-> > > >>
-> > > >> These need probably some discussion. They avoid that $(prefix) is
-> > > >> hardcoded and so allows that an arbitrary installation directory.
-> > > >
-> > > > ... and so allow that the compiled binaries are installed in any
-> > > > directory that the user chooses.
-> > >
-> > > If you can do that without breaking the tests (specifically, the
-> > > test script should pick up the version of git you just built,
-> > > not from /usr/bin nor /usr/local/stow/git/bin) that would be
-> > > great.
-> >
-> > Sorry, I don't understand your statement. Do you see any tests breaking?
->
-> I guess what Junio is getting at: if your changes could lead to our not
-> needing to hard code defaults, that would be awesome.
->
-> For example, a very unhappy camper reported recently that installing git
-> with a different prefix triggers a complete rebuild.
+Junio C Hamano writes:
 
-[PATCH 10/11] is one step into this direction.
+> I suspect that a "-" in place of a commit object name may not be
+> enough for your purpose, as the _number_ of parents can later
+> change in the later re-output.
 
--- Hannes
+I don't mind if a commit that has "-" as one of its parents later
+turns out to have more parents (i.e. the "-" can stand for zero or
+more unknown parents).  I would be perturbed if a commit that didn't
+have any "-" in its parent list later turned out to have a different
+number of parents - but I don't think that's what you're implying, is
+it?
+
+> I wonder if the presense of "incomplete" on the "Final output"
+> line is a good enough indication for that.  That is, until you
+> see "Final output: $N done", you will treat the parent
+> information as unreliable.
+
+The easiest way for me to handle an unreliable parent is just to
+ignore it.  But I can't ignore all the parents, because then I
+wouldn't have a graph at all.
+
+In other words, the presence of "incomplete" doesn't give me any clue
+as to which particular parent ids are reliable.  As far as I can see,
+git log internally knows when a parent id is unreliable (it's one
+where it had to terminate the history simplification early), so it
+shouldn't be hard to tell gitk about that.  And it would make my job a
+lot easier.
+
+Paul.
