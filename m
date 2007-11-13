@@ -1,81 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] revert/cherry-pick: allow starting from dirty work tree.
-Date: Tue, 13 Nov 2007 13:16:28 -0800
-Message-ID: <7vd4udsv6b.fsf@gitster.siamese.dyndns.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: Strange "beagle" interaction..
+Date: Tue, 13 Nov 2007 16:21:21 -0500
+Message-ID: <20071113212121.GE22590@fieldses.org>
+References: <alpine.LFD.0.9999.0711131241050.2786@woody.linux-foundation.org> <20071113210354.GD22590@fieldses.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 22:16:57 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Tue Nov 13 22:21:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is37w-0003a8-OT
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:16:57 +0100
+	id 1Is3Ce-0005Jb-J7
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 22:21:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757763AbXKMVQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 16:16:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755962AbXKMVQd
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:16:33 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50779 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757564AbXKMVQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 16:16:32 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id BDF602F2;
-	Tue, 13 Nov 2007 16:16:53 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 5101C95691;
-	Tue, 13 Nov 2007 16:16:52 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760291AbXKMVV0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 16:21:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759779AbXKMVV0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 16:21:26 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:56764 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760086AbXKMVVZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 16:21:25 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1Is3CD-0000O8-4L; Tue, 13 Nov 2007 16:21:21 -0500
+Content-Disposition: inline
+In-Reply-To: <20071113210354.GD22590@fieldses.org>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64869>
 
-There is no reason to forbid a dirty work tree when reverting or
-cherry-picking a change, as long as the index is clean.
+On Tue, Nov 13, 2007 at 04:03:54PM -0500, J. Bruce Fields wrote:
+> On Tue, Nov 13, 2007 at 12:56:19PM -0800, Linus Torvalds wrote:
+> > 
+> > Ok, I've made a bugzilla entry for this for the Fedora people, but I 
+> > thought I'd mention something I noticed yesterday but only tracked down 
+> > today: it seems like the beagle file indexing code is able to screw up git 
+> > in subtle ways.
+> > 
+> > I do not know exactly what happens, but the symptoms are random (and 
+> > quite hard-to-trigger) dirty index contents where git believes that some 
+> > set of files are not clean in the index.
+> > 
+> > I *suspect* that beagle is playing games with the file access times, 
+> > causing the ctime on disk to not match the ce_ctime in the index file. But 
+> > that's just a guess.
+> > 
+> > I'm posting here in case somebody on the list knows what beagle does, or 
+> > somebody has been bitten by strange behaviour and realizes that he has 
+> > beagle running and prefers to fix the problem by just disabling beagle 
+> > (which will also be a great boon for performance - beagle seems to be very 
+> > good at flushing your file caches, but I guess that's not a bug, but a 
+> > "feature").
+> 
+> Last I ran across this, I believe I found it was adding extended
+> attributes to the file.  I think it's something like
+> 
+> 	getfattr -d
+> 
+> to show all the extended attributes set on the file.  Does that show
+> anything?
 
-The scripted version used to allow it:
+By the way, on Debian or Ubuntu, at least, that requires an "apt-get
+install attr" first.
 
-    case "$no_commit" in
-    t)
-    	# We do not intend to commit immediately.  We just want to
-    	# merge the differences in.
-    	head=$(git-write-tree) ||
-    		die "Your index file is unmerged."
-    	;;
-    *)
-    	head=$(git-rev-parse --verify HEAD) ||
-    		die "You do not have a valid HEAD"
-    	files=$(git-diff-index --cached --name-only $head) || exit
-    	if [ "$files" ]; then
-    		die "Dirty index: cannot $me (dirty: $files)"
-    	fi
-    	;;
-    esac
+> 
+> Yeah, I just turned off beagle.  It looked to me like it was doing
+> something wrongheaded.
 
-but C rewrite tightened the check, probably by mistake.
+Just looking at the attribute names and taking a wild guess, it looked
+to me like beagle was computing a checksum of each file's data and
+comparing it to a checksum previously stored in an xattr, and using that
+to decide whether to reindex the file data.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin-revert.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+With the result that to check whether anything's changed when it starts
+up again it has to read through the entire filesystem's data.
 
-diff --git a/builtin-revert.c b/builtin-revert.c
-index cef7147..f704197 100644
---- a/builtin-revert.c
-+++ b/builtin-revert.c
-@@ -272,7 +272,7 @@ static int revert_or_cherry_pick(int argc, const char **argv)
- 		if (get_sha1("HEAD", head))
- 			die ("You do not have a valid HEAD");
- 		wt_status_prepare(&s);
--		if (s.commitable || s.workdir_dirty)
-+		if (s.commitable)
- 			die ("Dirty index: cannot %s", me);
- 		discard_cache();
- 	}
--- 
-1.5.3.5.1728.g34b3e
+Maybe I'm wrong--I hope so.  I'd love to know.
+
+--b.
