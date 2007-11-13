@@ -1,64 +1,80 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: git diff woes
-Date: Tue, 13 Nov 2007 11:53:44 +0900
-Message-ID: <buomytin9dz.fsf@dhapc248.dev.necel.com>
-References: <4738208D.1080003@op5.se>
-	<Pine.LNX.4.64.0711120958500.4362@racer.site> <47382C84.50408@op5.se>
-	<7vhcjr2lte.fsf@gitster.siamese.dyndns.org> <4738E9E6.2040001@op5.se>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from
+ .gitconfig
+Date: Mon, 12 Nov 2007 20:55:13 -0600
+Message-ID: <47391211.5000606@zwell.net>
+References: <47112491.8070309@gmail.com>	<20071015034338.GA4844@coredump.intra.peff.net>	<20071016194709.3c1cb3a8@danzwell.com>	<20071017015152.GN13801@spearce.org>	<20071022164048.71a3dceb@danzwell.com>	<20071023042702.GB28312@coredump.intra.peff.net>	<20071023035221.66ea537f@danzwell.com>	<20071102224100.71665182@paradox.zwell.net>	<20071104045735.GA12359@segfault.peff.net>	<7v640ivagv.fsf@gitster.siamese.dyndns.org>	<20071104054305.GA13929@sigill.intra.peff.net>	<20071110202351.7b4544aa@paradox.zwell.net>	<7vve89f6qy.fsf@gitster.siamese.dyndns.org>	<47390050.1020907@zwell.net> <7v4pfq27tx.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Dan Zwell <dzwell@gmail.com>, Jeff King <peff@peff.net>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Wincent Colaiuta <win@wincent.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan del Strother <maillist@steelskies.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Nov 13 03:54:28 2007
+	Frank Lichtenheld <frank@lichtenheld.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 03:56:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irlv1-0003dQ-4s
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 03:54:27 +0100
+	id 1Irlwz-000457-0h
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 03:56:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754672AbXKMCyL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 12 Nov 2007 21:54:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753774AbXKMCyJ
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 21:54:09 -0500
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:54513 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753604AbXKMCyI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 12 Nov 2007 21:54:08 -0500
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAD2riBl019376;
-	Tue, 13 Nov 2007 11:53:45 +0900 (JST)
-Received: from relay11.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay21.aps.necel.com with ESMTP; Tue, 13 Nov 2007 11:53:45 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay11.aps.necel.com with ESMTP; Tue, 13 Nov 2007 11:53:45 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 4B1F6448; Tue, 13 Nov 2007 11:53:44 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <4738E9E6.2040001@op5.se> (Andreas Ericsson's message of "Tue\, 13 Nov 2007 01\:03\:50 +0100")
+	id S1753774AbXKMC4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 21:56:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752023AbXKMC4N
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 21:56:13 -0500
+Received: from py-out-1112.google.com ([64.233.166.179]:9675 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753440AbXKMC4N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 21:56:13 -0500
+Received: by py-out-1112.google.com with SMTP id u77so1672660pyb
+        for <git@vger.kernel.org>; Mon, 12 Nov 2007 18:56:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        bh=GW73X3Sv2zSPapGWEckg0oCVJEKmnVYkwg9mQAjaaSI=;
+        b=Pftu33G0ywHoIHiyP+qK+S9zV9Q8jskIxO9NqB26QNhdSyq8ssJotyf3f6hypmTjVWZYlgsjAuXBvRg5KvGNbT8j+NEqV5ht23wccMFyRpsROKvZ28XzzVzgtaDUPRdcM0A6hw9p4Q2sOXtcPoPGkMiKyMCU3f4+EleK23g1uFs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding:from;
+        b=jboQhfD7PA2wjkzk47sKIB8IbQ2Z2EHxsPujNhjhiDkZVOZbMhs5P3pH5QcBgXcNtnWLuvBhPJZSoOWlnLr1D4khFFU04fWxHDiHEV9FhBjlWPt/Qqo9sOZFFP+sLTBWe90GSU3N+3PT+R5dDOxAehGLOCeXo6lrfLMLAhIayK0=
+Received: by 10.35.109.2 with SMTP id l2mr6854589pym.1194922570391;
+        Mon, 12 Nov 2007 18:56:10 -0800 (PST)
+Received: from ?143.44.70.185? ( [143.44.70.185])
+        by mx.google.com with ESMTPS id n44sm11598101pyh.2007.11.12.18.56.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 12 Nov 2007 18:56:08 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071031)
+In-Reply-To: <7v4pfq27tx.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64744>
 
-Andreas Ericsson <ae@op5.se> writes:
-> I notice it, and I don't like it. I guess I'm just used to git being
-> smarter than their GNU tool equivalents, especially since it only ever
-> applies patches in full.
+Junio C Hamano wrote:
+> I suggested the hash approach only because (1) it is easier to
+> read than two regexp matches that are split only to keep the
+> line less than 80-chars long, and (2) a misconfiguration like
+> "color.foo = fred" can be caught more easily.
+> 
+> I do not quite understand the "after all, we're pattern
+> matching" part, though.  Are you talking about "split(/\s+/, $str)" 
+> your for-loop iterates over?
+> 
 
-It's not at all obvious that this behavior is actually wrong -- it seems
-perfectly reasonable to use either old or new text for the hunk headers.
+I think we're talking about the same thing. I was referring to the split 
+regular expression, and the question is, "for the current element of 
+split(/\s+/, $str), does it match a color?"
 
-It hardly matters really, since that particular output is just "useful
-noise" to provide a bit of helpful context for human readers, and humans
-(unlike programs) are notoriously good at not being bothered by such
-things.  Er, well most humans anyway.
+Anyway, I preferred the regex version for readability, though I should 
+have used the /x modifier--it would still take two lines, but it would 
+not need to attempt two matches. As for misconfigured color 
+configurations, should we catch that? I wrote this with the intent that 
+it should ignore invalid color names, but it would probably be more 
+useful to print a warning.
 
--Miles
-
--- 
-Americans are broad-minded people.  They'll accept the fact that a person can
-be an alcoholic, a dope fiend, a wife beater, and even a newspaperman, but if a
-man doesn't drive, there is something wrong with him.  -- Art Buchwald
+Dan
