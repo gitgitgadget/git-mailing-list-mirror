@@ -1,62 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Subject: [PATCH 2/3] Let git-add--interactive read colors from .gitconfig
-Date: Tue, 13 Nov 2007 10:46:38 +0100
-Organization: At home
-Message-ID: <fhbrpp$ceq$2@ger.gmane.org>
-References: <47112491.8070309@gmail.com>	<20071015034338.GA4844@coredump.intra.peff.net>	<20071016194709.3c1cb3a8@danzwell.com>	<20071017015152.GN13801@spearce.org>	<20071022164048.71a3dceb@danzwell.com>	<20071023042702.GB28312@coredump.intra.peff.net>	<20071023035221.66ea537f@danzwell.com>	<20071102224100.71665182@paradox.zwell.net>	<20071104045735.GA12359@segfault.peff.net>	<7v640ivagv.fsf@gitster.siamese.dyndns.org>	<20071104054305.GA13929@sigill.intra.peff.net>	<20071110202351.7b4544aa@paradox.zwell.net>	<7vve89f6qy.fsf@gitster.siamese.dyndns.org>	<47390050.1020907@zwell.net>	<7v4pfq27tx.fsf@gitster.siamese.dyndns.org>	<47391211.5000606@zwell.net> <7v4pfqwqln.fsf@gitster.siamese.dyndns.org> <47395F63.8040306@zwell.net>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Cloning from kernel.org, then switching to another repo
+Date: Tue, 13 Nov 2007 10:52:03 +0100
+Message-ID: <vpq3avah3r0.fsf@bauges.imag.fr>
+References: <9e4733910711120557w62a9966bvb61a02a2bf9b99e9@mail.gmail.com>
+	<Pine.LNX.4.64.0711121412410.4362@racer.site>
+	<9e4733910711120736g31e3e84cx5a213afc4b889de7@mail.gmail.com>
+	<Pine.LNX.4.64.0711121613570.4362@racer.site>
+	<9e4733910711120822x18019fe6v40eb8ee0e48282dd@mail.gmail.com>
+	<Pine.LNX.4.64.0711121635130.4362@racer.site>
+	<9e4733910711120921q651208cby1276426ccd4b5fa4@mail.gmail.com>
+	<20071113042017.GB9745@sigill.intra.peff.net>
+	<9e4733910711122030q7bbf6057ubb6b5b27e1885500@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 10:50:25 2007
+Cc: "Jeff King" <peff@peff.net>,
+	"Johannes Schindelin" <Johannes.Schindelin@gmx.de>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Jon Smirl" <jonsmirl@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 10:53:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrsPY-00040m-CI
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 10:50:24 +0100
+	id 1IrsSP-0004kU-Mb
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 10:53:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751433AbXKMJuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 04:50:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbXKMJuJ
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 04:50:09 -0500
-Received: from main.gmane.org ([80.91.229.2]:52182 "EHLO ciao.gmane.org"
+	id S1751448AbXKMJxG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 04:53:06 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751221AbXKMJxF
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 04:53:05 -0500
+Received: from imag.imag.fr ([129.88.30.1]:59212 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751433AbXKMJuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 04:50:07 -0500
-Received: from root by ciao.gmane.org with local (Exim 4.43)
-	id 1IrsPC-000539-CC
-	for git@vger.kernel.org; Tue, 13 Nov 2007 09:50:02 +0000
-Received: from abvw125.neoplus.adsl.tpnet.pl ([83.8.220.125])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 09:50:02 +0000
-Received: from jnareb by abvw125.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 09:50:02 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvw125.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751412AbXKMJxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 04:53:04 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAD9q8h5008806
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 13 Nov 2007 10:52:08 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IrsR9-0000eo-Lq; Tue, 13 Nov 2007 10:52:03 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IrsR9-00015C-JO; Tue, 13 Nov 2007 10:52:03 +0100
+In-Reply-To: <9e4733910711122030q7bbf6057ubb6b5b27e1885500@mail.gmail.com> (Jon Smirl's message of "Mon\, 12 Nov 2007 23\:30\:17 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 13 Nov 2007 10:52:09 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64777>
 
-Dan Zwell wrote:
+"Jon Smirl" <jonsmirl@gmail.com> writes:
 
-> Junio C Hamano wrote:
->> But the point is, that you are not ignoring invalid color names
->> but instead giving back a random match aren't you?
-> 
-> No, if there's no match, the token is ignored. False matches are 
-> possible in some cases (the bogus config option "colored" would match 
-> "red", for example),
+> Execute bit was not set. I just set it for all the scripts. +x is not
+> getting turned on with a default git init-db. I just made a new repo
+> to check, no +x on the scripts.
 
-Match /\b(?:red|...)\b/ then
+That's by design: "git init" gives you _example_ hooks, but they won't
+run until you activate them explicitely with the appropriate chmod.
+
+That said, I'm not sure there's a really good reason not to run
+update-server-info by default on push. It doesn't cost much and saves
+a lot of troubles for beginners. Perhaps there are cases where the
+performance cost is non-negligible.
 
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Matthieu
