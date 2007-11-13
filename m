@@ -1,74 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Tue, 13 Nov 2007 10:41:39 -0800
-Message-ID: <7vir46t2cc.fsf@gitster.siamese.dyndns.org>
-References: <86k5on8v6p.fsf@lola.quinscape.zz>
-	<20071112131927.GA1701@c3sl.ufpr.br>
-	<Pine.LNX.4.64.0711121355380.4362@racer.site>
-	<200711121719.54146.wielemak@science.uva.nl>
-	<Pine.LNX.4.64.0711121624330.4362@racer.site>
-	<vpq3avbv2ju.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121715090.4362@racer.site>
-	<18232.35893.243300.179076@lisa.zopyra.com>
-	<Pine.LNX.4.64.0711121727130.4362@racer.site>
-	<vpq7iknqrtp.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121755460.4362@racer.site>
-	<vpqy7d3pck0.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121804400.4362@racer.site>
-	<vpqoddzpc88.fsf@bauges.imag.fr>
-	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
-	<vpqzlxiiii6.fsf@bauges.imag.fr>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [Newbie] How to *actually* get rid of remote tracking branch?
+Date: Tue, 13 Nov 2007 21:44:11 +0300
+Message-ID: <874pfq7zpg.fsf@osv.gnss.ru>
+References: <874pfq9q8s.fsf@osv.gnss.ru> <fhcdpv$9u3$1@ger.gmane.org>
+	<87ve86889o.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0711131600590.4362@racer.site>
+	<87prye832v.fsf@osv.gnss.ru>
+	<Pine.LNX.4.64.0711131819490.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 13 19:42:33 2007
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Nov 13 19:45:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is0iI-00020U-MR
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 19:42:19 +0100
+	id 1Is0lJ-0003Fb-4h
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 19:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758586AbXKMSlt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 13:41:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758060AbXKMSlt
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 13:41:49 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:52083 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118AbXKMSls (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 13:41:48 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 9B5522FB;
-	Tue, 13 Nov 2007 13:42:08 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 06A3E9546B;
-	Tue, 13 Nov 2007 13:42:02 -0500 (EST)
-In-Reply-To: <vpqzlxiiii6.fsf@bauges.imag.fr> (Matthieu Moy's message of "Tue,
-	13 Nov 2007 10:48:01 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1760523AbXKMSo1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 13:44:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761338AbXKMSo0
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 13:44:26 -0500
+Received: from javad.com ([216.122.176.236]:1863 "EHLO javad.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760523AbXKMSoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 13:44:25 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lADIiG056061;
+	Tue, 13 Nov 2007 18:44:17 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1Is0k7-0005DE-5p; Tue, 13 Nov 2007 21:44:11 +0300
+In-Reply-To: <Pine.LNX.4.64.0711131819490.4362@racer.site> (Johannes Schindelin's message of "Tue\, 13 Nov 2007 18\:21\:18 +0000 \(GMT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64825>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> To create an initial commit in a bare repository, the most natural way
-> for me is to clone it, create the commit in the clone, and then push.
+> Hi,
 >
-> Bare-ness _does_ matter for that.
+> On Tue, 13 Nov 2007, Sergei Organov wrote:
+>
+>> Sorry, but *I* didn't *explicitly* fetch it _again_!
+>> 
+>> 1. I cloned git.git repo making no custom steps.
+>
+> Which means that you wanted to track that repository.  Yes, the complete 
+> repository.  Not a single branch.  Not all branches except a single one.
+>
+>> 2. I decided I don't need to track some of branches.
+>
+> The you should have done that.
 
-You are still wrong.
+I think I did my best to try to do that (basing my attempts on current
+git documentation). Isn't it?
 
-The most natural is to create a commit in a non-bare repository
-you create, and push into a bare empty repository.  The
-repository that is pushed into can be non-bare, but bareness of
-that does _NOT_ matter.
+> But that is different from "I decided to delete the tracking
+> _branch_".
 
-Where bareness matters is on your end, the local private
-repository you create the initial commit in.
+Yes, but the question is *why*? Isn't it an obvious application of
+deleting tracking branch? And, as I've already asked in another
+sub-thread of this one, what the following example in the man git-branch
+is supposed to achieve?:
+
+<quote Documentation/git-branch.txt>
+Delete unneeded branch::
++
+------------
+$ git clone git://git.kernel.org/.../git.git my.git
+$ cd my.git
+$ git branch -d -r origin/todo origin/html origin/man   <1>
+$ git branch -D test                                    <2>
+------------
++
+<1> Delete remote-tracking branches "todo", "html", "man"
+</quote>
+
+Sorry, but I still believe that it's not me who needs fixing.
+
+-- 
+Sergei.
