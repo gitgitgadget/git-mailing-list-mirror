@@ -1,104 +1,72 @@
-From: Kristis Makris <kristis.makris@asu.edu>
-Subject: Re: Git and Scmbug integration
-Date: Tue, 13 Nov 2007 16:55:42 -0700
-Message-ID: <1194998142.4106.24.camel@localhost>
-References: <1194980792.4106.6.camel@localhost>
-	 <ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
+ repositories?
+Date: Tue, 13 Nov 2007 23:56:00 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711132352340.4362@racer.site>
+References: <Pine.LNX.4.64.0711121715090.4362@racer.site>
+ <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site>
+ <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site>
+ <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site>
+ <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+ <vpqzlxiiii6.fsf@bauges.imag.fr> <20071113100209.GE14735@spearce.org>
+ <vpqpryefmhj.fsf@bauges.imag.fr> <CBAEC42B-9F50-4723-9847-640D9832532E@silverinsanity.com>
+ <vpqhcjp6clm.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_morpheus-31438-1194998173-0001-2"
-Cc: git@vger.kernel.org, scmbug-users@lists.mkgnu.net
-To: David Symonds <dsymonds@gmail.com>, jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:56:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:56:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5cN-0008Ey-2M
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:56:31 +0100
+	id 1Is5ce-0008Jm-5j
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758140AbXKMX4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 18:56:15 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758133AbXKMX4P
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:56:15 -0500
-Received: from net.mkgnu.net ([67.40.69.52]:60113 "EHLO mail.mkgnu.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758070AbXKMX4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 18:56:14 -0500
-Received: from syd-mkgnu-net.dhcp.asu.edu (syd-mkgnu-net.dhcp.asu.edu [::ffff:149.169.179.39])
-  (AUTH: LOGIN mkgnu@mkgnu.net)
-  by morpheus with esmtp; Tue, 13 Nov 2007 16:56:12 -0700
-  id 0000601F.473A399C.00007ACE
-In-Reply-To: <ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
-X-Mailer: Evolution 2.6.3 
+	id S1758133AbXKMX4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 18:56:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757912AbXKMX4V
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:56:21 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42007 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756875AbXKMX4U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 18:56:20 -0500
+Received: (qmail invoked by alias); 13 Nov 2007 23:56:19 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp033) with SMTP; 14 Nov 2007 00:56:19 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18ZPsIGHpwZanzHw1TM1JDNr+6htUlctc1A0XRa/F
+	7VNHQ+s/j0OB/7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <vpqhcjp6clm.fsf@bauges.imag.fr>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64913>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Hi,
 
---=_morpheus-31438-1194998173-0001-2
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+On Tue, 13 Nov 2007, Matthieu Moy wrote:
 
-On Wed, 2007-11-14 at 10:00 +1100, David Symonds wrote:
-> > http://bugzilla.mkgnu.net/show_bug.cgi?id=3D991
-> >
-> > There's no hook that will trigger when a tag is applied.
->=20
-> I believe the 'update' hook is run when the tag is pushed.
+> I would just appreciate if people stopped calling me (and other users 
+> interested in a sane empty clone behavior) idiot because I think it 
+> would make sense to do it.
 
-Even if that is true, there no hook that will trigger when a local tag
-is applied.
+Oh, come on.  Nobody called _you_ idiot.
 
-> > (2)
-> >
-> > http://bugzilla.mkgnu.net/show_bug.cgi?id=3D992
-> >
-> > Git does not offer metadata describing a change on the commit trigger
-> >
-> > The commit trigger seems to be "post-commit" but it supplies no argumen=
-ts. The
-> > "update" trigger supplies a lot of information but that's only triggere=
-d when
-> > changes are published to a remote repository.
->=20
-> Isn't this some kind of centralised bug-tracking system anyway? It
-> would be nice, I see, for the 'commit' hook to take, say, the commit
-> SHA-1 hash as a parameter.
+But I illustrated that cloning from an empty repository makes no sense.
 
-It isn't a centralized bug-tracking system necessarily. Because
-different developers may used different, custom bug-tracking systems,
-with custom hooks in their own local Git repositories that integrate
-with only their own bug-tracking systems. And perhaps we can add the
-support in the Scmbug Git frontend to integrate with a centralized
-bug-tracker only on push operations if desired.
+There is a huge difference between calling somebody an idiot on the one 
+side, and investing some time to help somebody who has a suboptimal 
+workflow on the other one.
 
-But we can't explore any of these issues, discussed in the thread below
-too, unless we can extract what's needed from the hooks.
+But I fear that you took my help as a personal attack, and as a 
+consequence you feel insulted, and I wasted my precious time.
 
-http://thread.gmane.org/gmane.comp.version-control.git/48981/focus=3D49011
-
-
-I'd like the commit hook to provide enough information to be able to
-tell which files were modified and their respective old/new version (or
-perhaps their old/new SHA-1 hash). If the new SHA-1 hash can be used to
-extract all that, that's ok with me. But right now there's nothing.
-
-
-
---=_morpheus-31438-1194998173-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHOjl+/KuTDwnYLxERAqvOAKCjD28k7qs43YdkMTXFX7I9pizxhQCcDy1P
-QGCgvWNtGkpzzvOHI9XzoSw=
-=CM4h
------END PGP SIGNATURE-----
-
---=_morpheus-31438-1194998173-0001-2--
+Ciao,
+Dscho
