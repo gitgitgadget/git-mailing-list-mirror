@@ -1,125 +1,69 @@
-From: Josh Triplett <josh@freedesktop.org>
-Subject: Re: [PATCH 2/2] git-diff: complain about >=8 consecutive spaces in
- initial indent
-Date: Tue, 13 Nov 2007 15:37:54 -0800
-Message-ID: <473A3552.3060907@freedesktop.org>
-References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org> <7vr6j95c84.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix dependencies of parse-options test program
+Date: Tue, 13 Nov 2007 23:46:20 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711132345310.4362@racer.site>
+References: <20071113231636.GJ3268@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig817F0CEACD726ED8BEF24A79"
-Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>,
-	dsymonds@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 00:45:26 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 00:47:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5RZ-0004nQ-Eg
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:45:21 +0100
+	id 1Is5T5-0005I3-WE
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 00:46:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755401AbXKMXpG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 18:45:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755439AbXKMXpF
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:45:05 -0500
-Received: from mail5.sea5.speakeasy.net ([69.17.117.7]:48662 "EHLO
-	mail5.sea5.speakeasy.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754923AbXKMXpE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 18:45:04 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Nov 2007 18:45:04 EST
-Received: (qmail 3439 invoked from network); 13 Nov 2007 23:38:23 -0000
-Received: from host-241-99.resnet.pdx.edu (HELO [131.252.241.99]) (josh@[131.252.241.99])
-          (envelope-sender <josh@freedesktop.org>)
-          by mail5.sea5.speakeasy.net (qmail-ldap-1.03) with AES256-SHA encrypted SMTP
-          for <gitster@pobox.com>; 13 Nov 2007 23:38:23 -0000
-User-Agent: Mozilla-Thunderbird 2.0.0.6 (X11/20071009)
-In-Reply-To: <7vr6j95c84.fsf@gitster.siamese.dyndns.org>
-X-Enigmail-Version: 0.95.0
+	id S1756042AbXKMXqk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 18:46:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755818AbXKMXqk
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 18:46:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42248 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754558AbXKMXqj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 18:46:39 -0500
+Received: (qmail invoked by alias); 13 Nov 2007 23:46:37 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp057) with SMTP; 14 Nov 2007 00:46:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18+kGt5oJg+TORTO0P7DJyaIXTsbNtFtGsUG6ZUwI
+	Lpfd9x5WjtDgSe
+X-X-Sender: gene099@racer.site
+In-Reply-To: <20071113231636.GJ3268@steel.home>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64908>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64909>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig817F0CEACD726ED8BEF24A79
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-[CCing David Symonds, because the same comment also applies to his
-patches.]
+apparently I forgot to send this patch, which I thought was only relevant 
+in the builtin-commit branch of mine:
 
-Junio C Hamano wrote:
-> This introduces a new whitespace error type, "indent-with-non-tab".
-> The error is about starting a line with 8 or more SP, instead of
-> indenting it with a HT.
->=20
-> This is not enabled by default, as some projects employ an
-> indenting policy to use only SPs and no HTs.
->=20
-> The kernel folks and git contributors may want to enable this
-> detection with:
->=20
-> 	[core]
-> 		whitespace =3D indent-with-non-tab
+-- snipsnap --
+[PATCH] Makefile: add correct dependencies for test-parse-options
 
-This seems somewhat broken, whether a project uses tabs for
-indentation or not.  Lines can still legitimately start with many
-spaces.  Tab-based indentation should only use tabs to line up with
-other tabs, not with characters.  (Unfortunately most editors get this
-wrong when indenting with tabs.  I use spaces, not because I
-ideologically oppose tabs, but because I can't get any editor I want
-to use to do the right thing with tabs.)
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ Makefile |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-My standard test case for this:
-
-fprintf("some very long string",
-        arguments);
-
-Type the first line, and press enter.  A good editor should indent to
-the open parenthesis.  However, it should not use a tab, because it
-needs to match up with the length of "fprintf(".  All the editors I
-know of use a tab; they just blindly replace a tab-width worth of
-spaces with a tab in initial indentation.
-
-That statement would normally appear indented in a function, so the
-continuation line should have tabs up to the indentation level of the
-fprintf, and then 8 spaces.  An example more likely to appear at the
-start of the line, where this indent-with-non-tab heuristic would flag
-it:
-
-#define macro(arg1, arg2) macro_content \
-                          more_macro_content
-
-Another example:
-
-some_type function_name(arg1, arg2, argred, argblue,
-                        argmore, argless)
-
-Again, the indentation should use spaces if it wants to line up after
-the open parenthesis, whether the project uses tabs or spaces for indenta=
-tion.
-
-(Those examples may or may not match all coding styles; some just
-indent the continuation lines by a fixed number of tabs, and also
-treat the first line as a continuation line to keep the indentation
-consistent.  Just presenting them as examples.)
-
-- Josh Triplett
-
-
---------------enig817F0CEACD726ED8BEF24A79
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org
-
-iD8DBQFHOjVcGJuZRtD+evsRAqqgAJsG/xjoVySvlnntvXtP36sOYk7HugCgkUFt
-dTt38S5ogsHvsDP5pCtoOcA=
-=yK/b
------END PGP SIGNATURE-----
-
---------------enig817F0CEACD726ED8BEF24A79--
+diff --git a/Makefile b/Makefile
+index bda8762..2abb8da 100644
+--- a/Makefile
++++ b/Makefile
+@@ -996,6 +996,10 @@ test-date$X: date.o ctype.o
+ 
+ test-delta$X: diff-delta.o patch-delta.o
+ 
++test-parse-options$X: parse-options.o
++
++test-parse-options.o: parse-options.h
++
+ .PRECIOUS: $(patsubst test-%$X,test-%.o,$(TEST_PROGRAMS))
+ 
+ test-%$X: test-%.o $(GITLIBS)
+-- 
+1.5.3.5.1769.gc3bdd
