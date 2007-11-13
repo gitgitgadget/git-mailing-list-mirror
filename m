@@ -1,71 +1,78 @@
 From: Sergei Organov <osv@javad.com>
-Subject: [PATCH] core-tutorial.txt: Fix argument mistake in an example.
-Date: Sat, 10 Nov 2007 16:17:33 +0300
-Message-ID: <87hcjp7w6c.fsf@osv.gnss.ru>
+Subject: [PATCH] user-manual.txt: fix a few mistakes
+Date: Tue, 13 Nov 2007 21:19:39 +0300
+Message-ID: <87bq9x7w4d.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 21:00:58 2007
+X-From: git-owner@vger.kernel.org Tue Nov 13 21:02:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is1wQ-0007sd-4w
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:00:58 +0100
+	id 1Is1xj-0008Ne-1D
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 21:02:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761272AbXKMUAg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 15:00:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761254AbXKMUAg
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:00:36 -0500
-Received: from javad.com ([216.122.176.236]:1047 "EHLO javad.com"
+	id S1759894AbXKMUBq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 15:01:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759663AbXKMUBq
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 15:01:46 -0500
+Received: from javad.com ([216.122.176.236]:1088 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761124AbXKMUAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 15:00:35 -0500
+	id S1759677AbXKMUBp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 15:01:45 -0500
 Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lADK0X067647;
-	Tue, 13 Nov 2007 20:00:34 GMT
+	by javad.com (8.11.6/8.11.0) with ESMTP id lADK1h067776;
+	Tue, 13 Nov 2007 20:01:44 GMT
 	(envelope-from s.organov@javad.com)
 Received: from osv by osv with local (Exim 4.63)
 	(envelope-from <s.organov@javad.com>)
-	id 1Is1vv-0005xi-Oa; Tue, 13 Nov 2007 23:00:27 +0300
+	id 1Is1x4-0005yi-At; Tue, 13 Nov 2007 23:01:38 +0300
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64844>
 
-One of examples has wrong output given the arguments provided.
-Fix arguments to match the output.
-
-Fix a minor syntax mistake in another place.
 
 Signed-off-by: Sergei Organov <osv@javad.com>
 ---
- Documentation/core-tutorial.txt |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ Documentation/user-manual.txt |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/core-tutorial.txt b/Documentation/core-tutorial.txt
-index 401d1de..d611854 100644
---- a/Documentation/core-tutorial.txt
-+++ b/Documentation/core-tutorial.txt
-@@ -1152,7 +1152,7 @@ back to the earlier repository with "hello" and "example" file,
- and bring ourselves back to the pre-merge state:
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index d99adc6..a169ef0 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -475,7 +475,7 @@ Bisecting: 3537 revisions left to test after this
+ If you run "git branch" at this point, you'll see that git has
+ temporarily moved you to a new branch named "bisect".  This branch
+ points to a commit (with commit id 65934...) that is reachable from
+-v2.6.19 but not from v2.6.18.  Compile and test it, and see whether
++"master" but not from v2.6.18.  Compile and test it, and see whether
+ it crashes.  Assume it does crash.  Then:
  
- ------------
--$ git show-branch --more=3 master mybranch
-+$ git show-branch --more=2 master mybranch
- ! [master] Merge work in mybranch
-  * [mybranch] Merge work in mybranch
- --
-@@ -1215,7 +1215,7 @@ $ git-read-tree -m -u $mb HEAD mybranch
- This is the same `git-read-tree` command we have already seen,
- but it takes three trees, unlike previous examples.  This reads
- the contents of each tree into different 'stage' in the index
--file (the first tree goes to stage 1, the second stage 2,
-+file (the first tree goes to stage 1, the second -- to stage 2,
- etc.).  After reading three trees into three stages, the paths
- that are the same in all three stages are 'collapsed' into stage
- 0.  Also paths that are the same in two of three stages are
+ -------------------------------------------------
+@@ -1367,7 +1367,7 @@ If you make a commit that you later wish you hadn't, there are two
+ fundamentally different ways to fix the problem:
+ 
+ 	1. You can create a new commit that undoes whatever was done
+-	by the previous commit.  This is the correct thing if your
++	by the old commit.  This is the correct thing if your
+ 	mistake has already been made public.
+ 
+ 	2. You can go back and modify the old commit.  You should
+@@ -1567,8 +1567,8 @@ old history using, for example,
+ $ git log master@{1}
+ -------------------------------------------------
+ 
+-This lists the commits reachable from the previous version of the head.
+-This syntax can be used to with any git command that accepts a commit,
++This lists the commits reachable from the previous version of the branch.
++This syntax can be used with any git command that accepts a commit,
+ not just with git log.  Some other examples:
+ 
+ -------------------------------------------------
 -- 
 1.5.3.4
