@@ -1,53 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] builtin-commit: fix author date with --amend --author=<author>
-Date: Mon, 12 Nov 2007 16:37:37 -0800
-Message-ID: <7v8x530ylq.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711111730580.4362@racer.site>
-	<Pine.LNX.4.64.0711111735100.4362@racer.site>
-	<1194896334.2869.7.camel@hinata.boston.redhat.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: git diff woes
+Date: Tue, 13 Nov 2007 00:59:41 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711130053090.4362@racer.site>
+References: <4738208D.1080003@op5.se> <Pine.LNX.4.64.0711120958500.4362@racer.site>
+ <47382C84.50408@op5.se> <7vhcjr2lte.fsf@gitster.siamese.dyndns.org>
+ <4738E9E6.2040001@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org, gitster@pobox.com
-To: Kristian =?utf-8?Q?H=C3=B8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 01:38:07 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Tue Nov 13 02:00:19 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Irjn4-0006FY-JY
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 01:38:07 +0100
+	id 1Irk8X-0003Sh-1m
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 02:00:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752384AbXKMAhu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 12 Nov 2007 19:37:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751844AbXKMAhu
-	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 19:37:50 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:55277 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751802AbXKMAhu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 12 Nov 2007 19:37:50 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id DF57A2F2;
-	Mon, 12 Nov 2007 19:38:10 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 67B3D951CB;
-	Mon, 12 Nov 2007 19:38:06 -0500 (EST)
-In-Reply-To: <1194896334.2869.7.camel@hinata.boston.redhat.com> (Kristian
-	=?utf-8?Q?H=C3=B8gsberg's?= message of "Mon, 12 Nov 2007 14:38:54 -0500")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1755398AbXKMBAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 12 Nov 2007 20:00:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755470AbXKMA77
+	(ORCPT <rfc822;git-outgoing>); Mon, 12 Nov 2007 19:59:59 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48014 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755094AbXKMA77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 12 Nov 2007 19:59:59 -0500
+Received: (qmail invoked by alias); 13 Nov 2007 00:59:56 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp040) with SMTP; 13 Nov 2007 01:59:56 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+TuPFcW6OTeFOkxRHdtkmsHqD4F4ou8z8EtfuidH
+	Y6lF2G3tiMD1CO
+X-X-Sender: gene099@racer.site
+In-Reply-To: <4738E9E6.2040001@op5.se>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64740>
 
-Kristian H=C3=B8gsberg <krh@redhat.com> writes:
+Hi,
 
-> I suggest we back this patch out.
+On Tue, 13 Nov 2007, Andreas Ericsson wrote:
 
-Ok.  My mistake.  Your "Add testcase for amending and fixing
-author in git commit" does contain test for this.
+> Junio C Hamano wrote:
+> > Andreas Ericsson <ae@op5.se> writes:
+> > 
+> > > In the check_ntpd.c program, there is no bug. I found the git diff 
+> > > output surprising, so I reported it.
+> > 
+> > This is what I get from "GNU diff -pu" which makes me surpried
+> > that anybody finds "git diff" hunk header surprising.  Notice
+> > that hunk at line 84.
+> > 
+> > --- read-cache.c	2007-11-12 12:08:00.000000000 -0800
+> > +++ read-cache.c+	2007-11-12 12:07:54.000000000 -0800
+> > @@ -60,7 +60,7 @@ static int ce_compare_data(struct cache_
+> >  	return match;
+> >  }
+> >  -static int ce_compare_link(struct cache_entry *ce, size_t expected_size)
+> > +static int ce_compare_lonk(struct cache_entry *ce, size_t expected_size)
+> >  {
+> >  	int match = -1;
+> >  	char *target;
+> > @@ -84,7 +84,7 @@ static int ce_compare_link(struct cache_
+> >  		match = memcmp(buffer, target, size);
+> >  	free(buffer);
+> >  	free(target);
+> > -	return match;
+> > +	return match + 0;
+> >  }
+> >   static int ce_compare_gitlink(struct cache_entry *ce)
+> 
+> 
+> I notice it, and I don't like it. I guess I'm just used to git being
+> smarter than their GNU tool equivalents, especially since it only ever
+> applies patches in full.
 
-I need to amend the commit log message of that one, though ;-)
+I still think the existing behaviour is reasonable.  When I read a diff 
+(and remember, the hunk headers are _only_ there for the reviewer's 
+pleasure), the function names are a hint for _me_ where to look, and which 
+is the context, in my existing, _original_ file.
+
+That is, unless I have already applied the patch, and am looking for the 
+reverse patch.  And, lo and behold, the reverse patch generated by 
+git-diff really shows the now-current function name!
+
+So IMO "fixing" this behaviour would be a regression.
+
+Ciao,
+Dscho
