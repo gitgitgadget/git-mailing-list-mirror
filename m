@@ -1,56 +1,117 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: The 5th issue of the msysGit Herald
-Date: Tue, 13 Nov 2007 10:57:14 -0800
-Message-ID: <7v7ikmt1md.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711130312180.4362@racer.site>
-	<fhcat4$ef$1@ger.gmane.org>
+From: Kristis Makris <kristis.makris-tTJs1oqo2yY@public.gmane.org>
+Subject: Git and Scmbug integration
+Date: Tue, 13 Nov 2007 12:06:32 -0700
+Message-ID: <1194980792.4106.6.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 13 20:03:00 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
-Received: from vger.kernel.org ([209.132.176.167])
+Content-Type: multipart/mixed; boundary="=_morpheus-24161-1194980829-0001-2"
+Cc: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+To: git-u79uwXL29TY76Z2rM5mHXA@public.gmane.org
+X-From: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org Tue Nov 13 20:07:38 2007
+Return-path: <scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+Envelope-to: gcbsu-scmbug-users@m.gmane.org
+Received: from net.mkgnu.net ([67.40.69.52] helo=mail.mkgnu.net)
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is11z-0001qD-0f
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 20:02:39 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761193AbXKMS5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 13:57:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758504AbXKMS5U
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 13:57:20 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:36088 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760817AbXKMS5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 13:57:19 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 1B2CC2F2;
-	Tue, 13 Nov 2007 13:57:41 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6246E95595;
-	Tue, 13 Nov 2007 13:57:38 -0500 (EST)
-In-Reply-To: <fhcat4$ef$1@ger.gmane.org> (Jakub Narebski's message of "Tue, 13
-	Nov 2007 15:04:15 +0100")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64827>
+	id 1Is16g-0003mF-Tu
+	for gcbsu-scmbug-users@m.gmane.org; Tue, 13 Nov 2007 20:07:32 +0100
+Received: from [192.168.0.100] (localhost [::ffff:127.0.0.1])
+  by morpheus with esmtp; Tue, 13 Nov 2007 12:07:09 -0700
+  id 0001207F.4739F5DD.00005E61
+Received: from syd-mkgnu-net.dhcp.asu.edu (syd-mkgnu-net.dhcp.asu.edu
+	[::ffff:149.169.179.39]) (AUTH: LOGIN mkgnu-DO7gHyv135BeoWH0uzbU5w@public.gmane.org)
+	by morpheus with esmtp; Tue, 13 Nov 2007 12:07:04 -0700
+	id 00011EFA.4739F5D8.00005E57
+X-Mailer: Evolution 2.6.3 
+X-BeenThere: scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: General Scmbug list <scmbug-users.lists.mkgnu.net>
+List-Unsubscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=unsubscribe>
+List-Archive: <http://lists.mkgnu.net/pipermail/scmbug-users>
+List-Post: <mailto:scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org>
+List-Help: <mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=help>
+List-Subscribe: <http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users>, 
+	<mailto:scmbug-users-request-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org?subject=subscribe>
+Sender: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Errors-To: scmbug-users-bounces-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64828>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-> Perhaps it is time for git to have besides Git Homepage and Git Wiki also
-> Git Blog or Git Feed (with announcements, what's in... and herald). What do
-> you think?
+--=_morpheus-24161-1194980829-0001-2
+Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_morpheus-24161-1194980829-0001-3"
 
-I miss the "Kernel Traffic" (and its cousin, the unfortunate
-first and only issue of "Git Traffic").
+This is a MIME-formatted message.  If you see this text it means that your
+E-mail software does not support MIME-formatted messages.
 
-If you are stepping up as the chief "Git Traffic" editor (with
-help from others), I'd imagine it would be greatly appreciated
-by the community.
+--=_morpheus-24161-1194980829-0001-3
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-I certainly would.
+Hello,
+
+I've been working on adding Git support in Scmbug, a system that
+integrates software configuration management with bug-tracking. I've run
+across what seem to be limitations in the Git hooks mechanism (at least
+in version 1.5.1.3). In particular:
+
+
+(1)
+
+http://bugzilla.mkgnu.net/show_bug.cgi?id=3D991
+
+There's no hook that will trigger when a tag is applied.
+
+
+(2)
+
+http://bugzilla.mkgnu.net/show_bug.cgi?id=3D992
+
+Git does not offer metadata describing a change on the commit trigger
+
+The commit trigger seems to be "post-commit" but it supplies no arguments. =
+The
+"update" trigger supplies a lot of information but that's only triggered wh=
+en
+changes are published to a remote repository.
+
+
+I could not find a way to extract this information from what I've read in:
+
+http://www.kernel.org/pub/software/scm/git/docs/hooks.html
+
+
+Are there plans to implement these hooks ? Or, could someone help me
+understand how to extract such information ?=20
+
+
+Thanks,
+Kristis
+
+--=_morpheus-24161-1194980829-0001-3
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Transfer-Encoding: 7bit
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD4DBQBHOfW3/KuTDwnYLxERAtPeAJ9oZnByy0pw71ZUbTw9dcRX2CeWIgCWIklO
+HDZ+dvmm3rF/TjHwGPEkxQ==
+=rTl+
+-----END PGP SIGNATURE-----
+
+--=_morpheus-24161-1194980829-0001-3--
+
+--=_morpheus-24161-1194980829-0001-2
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+
+_______________________________________________
+scmbug-users mailing list
+scmbug-users-G8y9j4K4DsPiwOUmbS1EgQ@public.gmane.org
+http://lists.mkgnu.net/cgi-bin/mailman/listinfo/scmbug-users
+
+--=_morpheus-24161-1194980829-0001-2--
