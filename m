@@ -1,97 +1,99 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: wishlist: git info
-Date: Tue, 13 Nov 2007 10:44:25 +0100
-Organization: At home
-Message-ID: <fhbrll$ceq$1@ger.gmane.org>
-References: <fhad5q$iia$1@ger.gmane.org> <20071112222106.GE2918@steel.home> <4738D8AA.1030604@users.sourceforge.net> <fhaol0$p5r$1@ger.gmane.org> <fhbn50$uqu$1@ger.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Tue, 13 Nov 2007 10:48:01 +0100
+Message-ID: <vpqzlxiiii6.fsf@bauges.imag.fr>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+	<20071112131927.GA1701@c3sl.ufpr.br>
+	<Pine.LNX.4.64.0711121355380.4362@racer.site>
+	<200711121719.54146.wielemak@science.uva.nl>
+	<Pine.LNX.4.64.0711121624330.4362@racer.site>
+	<vpq3avbv2ju.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121715090.4362@racer.site>
+	<18232.35893.243300.179076@lisa.zopyra.com>
+	<Pine.LNX.4.64.0711121727130.4362@racer.site>
+	<vpq7iknqrtp.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121755460.4362@racer.site>
+	<vpqy7d3pck0.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121804400.4362@racer.site>
+	<vpqoddzpc88.fsf@bauges.imag.fr>
+	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 13 10:45:02 2007
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 13 10:49:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IrsKK-0002Vj-A6
-	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 10:45:00 +0100
+	id 1IrsOM-0003i8-4R
+	for gcvg-git-2@gmane.org; Tue, 13 Nov 2007 10:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751396AbXKMJon (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 04:44:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751328AbXKMJon
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 04:44:43 -0500
-Received: from main.gmane.org ([80.91.229.2]:33983 "EHLO ciao.gmane.org"
+	id S1751416AbXKMJsy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 04:48:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751412AbXKMJsy
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 04:48:54 -0500
+Received: from imag.imag.fr ([129.88.30.1]:55941 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751221AbXKMJon (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 04:44:43 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IrsJt-0004LV-Ps
-	for git@vger.kernel.org; Tue, 13 Nov 2007 09:44:33 +0000
-Received: from abvw125.neoplus.adsl.tpnet.pl ([83.8.220.125])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 09:44:33 +0000
-Received: from jnareb by abvw125.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 09:44:33 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abvw125.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1751328AbXKMJsx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 04:48:53 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAD9m1p0007796
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 13 Nov 2007 10:48:02 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IrsNF-0000bA-L1; Tue, 13 Nov 2007 10:48:01 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IrsNF-00014U-IX; Tue, 13 Nov 2007 10:48:01 +0100
+In-Reply-To: <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 12 Nov 2007 13\:56\:38 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 13 Nov 2007 10:48:03 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64775>
 
-Thomas Neumann wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
->> Perhaps also project description (if it exists?)
+> But both of Johannes's points apply equally well to an empty
+> bare repository and to an empty non bare repository.  IOW,
+> bareness does not matter to the suggestion Johannes gave.
 
-> one can specify a project description? I did not even know this. But
-> yes, this would be useful, too.
+He was suggesting to create the initial commit before cloning:
 
-It is project description for gitweb (git web interface), and I think also
-for other web interfaces (cgit, wit, git-php). Or rather *repository*
-description. It is in .git/description (in 'description' file in git
-repository).
+>> So you need to populate the repository before starting _anyway_.
 
-Unfortunately by default it contains (see: ${tempate_dir}/description)
+To create an initial commit in a non-bare repository, I put files in
+it, git add, and git commit.
 
-  Unnamed repository; edit this file to name it for gitweb.
+To create an initial commit in a bare repository, the most natural way
+for me is to clone it, create the commit in the clone, and then push.
 
-> In general I think git info should show everything to quickly understand
-> what is currently checked out. The name of the current branch should
-> probably be included, too.
+Bare-ness _does_ matter for that.
 
-Name of current branch, current directory, name of topdir (with '.git'
-stripped if it is bare repository), perhaps oneline description of top
-commit. And if branch is under StGit or Guilt (patch management interfaces)
-control.
+I repeat the use-case I mentionned above :
 
-See also helper functions to set shell prompt in
-contrib/completion/git-completion.bash. 
+,----
+| a typical use-case is when I want to create a new project. I'd
+| like to initialize an empty bare repo on my backed up disk, and then
+| clone it to my local-fast-unreliable disk to get a working copy and do
+| the first commit there.
+`----
 
-I for example have "1760:[gitweb/web!git]$ " as bash prompt:
- - 1760 is number of command in history, 
- - 'gitweb/web' is name of branch I am on,
- - 'git' is the name of repository
-This migitates need got 'git-info' command.
+I find this quite natural, and up to now, no one gave me either a
+rationale not to do that, or a _simple_ way to achieve this. As I
+said, it's currently not _very_ hard to do, but I have to edit
+.git/config by hand, while git clone knows how to do this much faster
+than I for non-empty repositories.
 
-> I use an alias with the commands proposed by Alex Riessen for now, but a
-> more general command would be nice.
-
-You can always write[*1*] git-info.sh or git-info.perl[*2*], and install it
-as git-info in your git installation. And send patches here, to git mailing
-list, for comments.
-
-Footnotes:
-----------
-[*1*] Even if one of the most common complaints is "too many user-visible
-      commands".
-[*2*] Scripts are better for ptototyping. Choose your own poison: POSIX
-      shell or Perl...
 -- 
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Matthieu
