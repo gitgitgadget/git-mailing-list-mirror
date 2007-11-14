@@ -1,71 +1,77 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Wed, 14 Nov 2007 21:30:46 +0100
-Message-ID: <14F93E86-32FA-41AD-BB02-256A599C82E0@wincent.com>
-References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl> <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru> <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org> <18235.22445.16228.535898@lisa.zopyra.com>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, Sergei Organov <osv@javad.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Bill Lear <rael@zopyra.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 21:33:25 2007
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Improved and extended t5404
+Date: Wed, 14 Nov 2007 21:34:09 +0100
+Message-ID: <20071114203409.GD3973@steel.home>
+References: <20071112213823.GB2918@steel.home> <20071112213938.GC2918@steel.home> <20071113075240.GA21799@sigill.intra.peff.net> <20071113194731.GC3268@steel.home> <20071113194909.GD3268@steel.home> <20071113230234.GI3268@steel.home> <7vmythr8xf.fsf@gitster.siamese.dyndns.org> <20071114071929.GA2942@steel.home> <Pine.LNX.4.64.0711141709410.4362@racer.site> <20071114194522.GA3973@steel.home>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 14 21:35:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsOv6-0003fP-Qv
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:33:09 +0100
+	id 1IsOwl-0004PW-Gj
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:34:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760414AbXKNUcu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 15:32:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759960AbXKNUcu
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:32:50 -0500
-Received: from wincent.com ([72.3.236.74]:38203 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754606AbXKNUct convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 15:32:49 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAEKUlLM000489;
-	Wed, 14 Nov 2007 14:30:48 -0600
-In-Reply-To: <18235.22445.16228.535898@lisa.zopyra.com>
-X-Mailer: Apple Mail (2.912)
+	id S1760641AbXKNUeO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 15:34:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761079AbXKNUeO
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:34:14 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:60829 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754740AbXKNUeN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 15:34:13 -0500
+Received: from tigra.home (Fad5d.f.strato-dslnet.de [195.4.173.93])
+	by post.webmailer.de (mrclete mo60) (RZmta 14.0)
+	with ESMTP id x0276ejAEIVCqT ; Wed, 14 Nov 2007 21:34:11 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id E9E23277AE;
+	Wed, 14 Nov 2007 21:34:09 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id C0F3456D22; Wed, 14 Nov 2007 21:34:09 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071114194522.GA3973@steel.home>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyCll4dQ==
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65012>
 
-El 14/11/2007, a las 21:16, Bill Lear escribi=F3:
+Alex Riesen, Wed, Nov 14, 2007 20:45:22 +0100:
+> Johannes Schindelin, Wed, Nov 14, 2007 18:10:25 +0100:
+> > On Wed, 14 Nov 2007, Alex Riesen wrote:
+> > > Junio C Hamano, Wed, Nov 14, 2007 01:02:20 +0100:
+> > > > Alex Riesen <raa.lkml@gmail.com> writes:
+> > > > 
+> > > > > Ignore exit code of git push in t5404, as it is not relevant for the 
+> > > > > test
+> > > > 
+> > > > This proposed log message solicits a "Huh? -- Since when ignoring exit 
+> > > > code is an improvement?" reaction.  If this push is expected to error 
+> > > > out, then wouldn't you want to make sure it errors out as expected?  
+> > > > If the problem is that the exit status is unreliable, maybe we need to 
+> > > > make it reliable instead?
+> > > 
+> > > Well, it is kind of undefined. git push just updated some remote 
+> > > references and failed on the others. It has had some failures, so it 
+> > > returns non-0. And as I said, it really is not about the operation, but 
+> > > about if the tracking and remote branches are set as we want them.
+> > 
+> > If you know it should fail, why not make the test dependent on that 
+> > failure?  I mean, should git-push have a bug and not fail, it would be 
+> > nice to catch this early...
+> > 
+> 
+> Well, I do not know it _should_ fail. Personally, I would not even
+> care: I see no way to cover with just one exit code multiple
+> failures. Some references were updated and I don't even know which.
+> So I'd better check whatever exit code.
 
-> % mkdir new_repo
-> % cd new_repo
-> [add content]
-> % git commit -a -m "Initial stuff"
-> % git config remote.origin.url git://host/new_repo
-> % git push
-> [ach! fails!  what's up??]
-> [poke, read, poke some more, try other things..]
-> [try setting the remote.origin.fetch?  No, that doesn't work]
-> [try setting branch.master.remote?  Just edit by hand??]
-> % git push master
-> [fails again; read some more; think, think, think...]
-> % git push origin master
-> [aha! finally it works]
-
-
-Instead of using git-config I think the following would have worked:
-
-git remote add origin git.example.com:/pub/git/path_repositories/=20
-repo.git
-git push --all
-
-I guess it is not necessarily obvious the first time, which more than =20
-anything makes this a documentation issue. I now can't remember how I =20
-learnt this; probably by reading this list.
-
-Cheers,
-Wincent
+"I'd better check whatever was updated and damn the exit code"
