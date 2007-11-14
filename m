@@ -1,74 +1,76 @@
-From: "David Symonds" <dsymonds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Git and Scmbug integration
-Date: Wed, 14 Nov 2007 12:16:47 +1100
-Message-ID: <ee77f5c20711131716l6dd1dccjcb3ff5f3a54c9359@mail.gmail.com>
+Date: Tue, 13 Nov 2007 17:27:42 -0800
+Message-ID: <7vk5olpqep.fsf@gitster.siamese.dyndns.org>
 References: <1194980792.4106.6.camel@localhost>
-	 <ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
-	 <1194998142.4106.24.camel@localhost>
-	 <ee77f5c20711131602m5b9042fx72689af53e24ddd2@mail.gmail.com>
-	 <1194999404.4106.40.camel@localhost>
-	 <ee77f5c20711131627q329d45aepe48102728cf2778c@mail.gmail.com>
-	 <7vprydpr5o.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
+	<1194998142.4106.24.camel@localhost>
+	<ee77f5c20711131602m5b9042fx72689af53e24ddd2@mail.gmail.com>
+	<1194999404.4106.40.camel@localhost>
+	<ee77f5c20711131627q329d45aepe48102728cf2778c@mail.gmail.com>
+	<7vprydpr5o.fsf@gitster.siamese.dyndns.org>
+	<ee77f5c20711131716l6dd1dccjcb3ff5f3a54c9359@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: "Kristis Makris" <kristis.makris@asu.edu>, jnareb@gmail.com,
 	git@vger.kernel.org, scmbug-users@lists.mkgnu.net
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 02:17:41 2007
+To: "David Symonds" <dsymonds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 02:28:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is6sa-0005se-0F
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 02:17:20 +0100
+	id 1Is731-0000DH-Lz
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 02:28:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761477AbXKNBQu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 20:16:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761396AbXKNBQu
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 20:16:50 -0500
-Received: from nz-out-0506.google.com ([64.233.162.229]:18106 "EHLO
-	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761092AbXKNBQt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 20:16:49 -0500
-Received: by nz-out-0506.google.com with SMTP id s18so14031nze
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 17:16:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=MvUZtWq/GP5PCvGsr72A/sC0Zdtwfghdy05msJUFLo0=;
-        b=t1Ar9symghMrFptw0TnuNZ0yk8JrmBEbkWtk9uIaBXyNTwpvXq3yvpJ3FD6K2wI51IgOFkx3HBlTCNImVEbhfOyJrr29tEWOHoRLEm8lfBG2UyqjQbHH+A1H/Nfw8TjRvP0vCJ5SQVibSkZI4nrQcszFrYPtQ+ynN43Co510HUM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=XDEI3qUjt8eVHrl8CY6QXP/IrJXsu384NniOU8AEj/GE7vdjkZVUG0WcDE9xgxpiOXPu9Wfv40wlWIxu6Oixyj8F3UC0FM+CbajesYQIoF3LqIe2fJCpwiOSLjYx7T8z0qoAok4TyJMcxcVsb/UO07zrQGPoGdqbTURVRLOC1tI=
-Received: by 10.142.14.20 with SMTP id 20mr16921wfn.1195003007609;
-        Tue, 13 Nov 2007 17:16:47 -0800 (PST)
-Received: by 10.142.142.12 with HTTP; Tue, 13 Nov 2007 17:16:47 -0800 (PST)
-In-Reply-To: <7vprydpr5o.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752606AbXKNB1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 20:27:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752622AbXKNB1v
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 20:27:51 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56449 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752367AbXKNB1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 20:27:50 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id A5F772F0;
+	Tue, 13 Nov 2007 20:28:11 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0F70395859;
+	Tue, 13 Nov 2007 20:28:05 -0500 (EST)
+In-Reply-To: <ee77f5c20711131716l6dd1dccjcb3ff5f3a54c9359@mail.gmail.com>
+	(David Symonds's message of "Wed, 14 Nov 2007 12:16:47 +1100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64939>
 
-On Nov 14, 2007 12:11 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> "David Symonds" <dsymonds@gmail.com> writes:
->
-> > Sure -- I've got a patch for it that I'll send shortly. It's using the
-> > existing shell git-commit, so might be suitable for maint; I haven't
-> > followed what's happened with the builtinification of git-commit.
->
-> No, 'maint' won't get a feature enhancements.
+"David Symonds" <dsymonds@gmail.com> writes:
 
-Fair enough.
+> Reading HEAD would be fine. I guess it just seems a sensible and more
+> direct path to passing that information so that the hook has less to
+> do. It seems quite a simple thing that would be very helpful to hook
+> writers, with zero impact on everyone else.
 
-> Again, why isn't reading HEAD enough?
+You cannot just say "The hook did not get any parameter, nobody
+would have cared, this does not regress."
 
-Reading HEAD would be fine. I guess it just seems a sensible and more
-direct path to passing that information so that the hook has less to
-do. It seems quite a simple thing that would be very helpful to hook
-writers, with zero impact on everyone else.
+Some anal people could have checked and checked "test $# = 0" at
+the beginning to make sure their hooks do not get broken by
+random interface changes on the git side.  Now their carefully
+written script errors out as designed.  Also some people seem to
+use different version of git on the same repository (e.g. NFS
+mounted across hosts that run different versions of git).
 
+I would 80% agree with you if the post-comit hook interface were
+written in the way your patch does from day one.  Unfortunately
+that is not the case.
 
-Dave.
+The remaining 20%?  If we _were_ to change the hook interface, I
+would also pass which branch the commit is added to, in addition
+to what commit it is.
+
+Both are easily obtainable by reading HEAD (you need to read
+HEAD twice, though) but would be handy.
