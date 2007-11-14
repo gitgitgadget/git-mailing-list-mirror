@@ -1,7 +1,7 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Sergei Organov <osv@javad.com>
 Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Wed, 14 Nov 2007 15:05:56 +0100
-Message-ID: <vpqfxz8c46z.fsf@bauges.imag.fr>
+Date: Wed, 14 Nov 2007 17:13:30 +0300
+Message-ID: <874pfo6hkl.fsf@osv.gnss.ru>
 References: <86k5on8v6p.fsf@lola.quinscape.zz>
 	<20071112131927.GA1701@c3sl.ufpr.br>
 	<Pine.LNX.4.64.0711121355380.4362@racer.site>
@@ -22,43 +22,35 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 15:07:09 2007
+X-From: git-owner@vger.kernel.org Wed Nov 14 15:13:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsIst-0005ii-IA
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 15:06:27 +0100
+	id 1IsJ0A-0000Lv-39
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 15:13:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753650AbXKNOGK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 09:06:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753619AbXKNOGI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 09:06:08 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:38333 "EHLO harmonie.imag.fr"
+	id S1753096AbXKNONm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 09:13:42 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752545AbXKNONm
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 09:13:42 -0500
+Received: from javad.com ([216.122.176.236]:1866 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752592AbXKNOGH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 09:06:07 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id lAEE5u53027966;
-	Wed, 14 Nov 2007 15:05:56 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IsIsO-0004gU-Fz; Wed, 14 Nov 2007 15:05:56 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IsIsO-000125-Dd; Wed, 14 Nov 2007 15:05:56 +0100
+	id S1752098AbXKNONl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 09:13:41 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lAEEDa076495;
+	Wed, 14 Nov 2007 14:13:37 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1IsIzi-00087i-54; Wed, 14 Nov 2007 17:13:30 +0300
 In-Reply-To: <fhettp$rtk$1@ger.gmane.org> (Jakub Narebski's message of "Wed\, 14 Nov 2007 14\:41\:13 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Wed, 14 Nov 2007 15:05:56 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64986>
 
 Jakub Narebski <jnareb@gmail.com> writes:
 
@@ -73,20 +65,13 @@ Jakub Narebski <jnareb@gmail.com> writes:
 > 'todo' branches in git.git), sometimes multiple roots are natural (merging
 > in a project, like git-mailtools, gitweb, gitk, git-gui in git.git).
 
-There's no contradiction IMHO. At least bzr and Mercurial have the
-notion of "null revision" that is a kind of virtual ancestor of the
-first revision of a project, and AFAICT, they supprot having unrelated
-branches in the same repository, and merging originally unrelated
-projects together (not sure for Mercurial, but bzr can do it).
+Sorry, I fail to see how does it interfere with the idea of the NULL
+commit. What if  "unrelated" is defined as "the only common
+ancestor is the NULL commit"?
 
-It just depends on the definition of "starting a project". Either you
-say you start the project with "init", in which case all projects
-start with the same thing, or you say you start with the first
-"commit" in which case every project start with something different.
-
-Anyway, we can't modify existing git projects now (adding an ancestor
-to the initial revision would change each sha1 sum), so adding this
-concept to git now would probably break all of it :-\.
+Anyway, I'm not going do defend the idea further. I just recalled I
+heard about it somewhere, probably in Bazaar-NG, and I thought I'd
+mention it here as it appeared very natural to me.
 
 -- 
-Matthieu
+Sergei.
