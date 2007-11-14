@@ -1,111 +1,81 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: [PATCH] Don't allow fast-import tree delta chains to exceed maximum depth
-Date: Wed, 14 Nov 2007 00:54:34 -0500
-Message-ID: <20071114055434.GG14735@spearce.org>
-References: <20071114044842.GA6876@spearce.org> <7vhcjpnzvq.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: Git and Scmbug integration
+Date: Wed, 14 Nov 2007 19:08:04 +1300
+Message-ID: <46a038f90711132208r4daf477cle54f2feb95852cdb@mail.gmail.com>
+References: <1194980792.4106.6.camel@localhost>
+	 <ee77f5c20711131500h6ee067ffv3e488ac7bde1d22c@mail.gmail.com>
+	 <1194998142.4106.24.camel@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 06:55:08 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "David Symonds" <dsymonds@gmail.com>, jnareb@gmail.com,
+	git@vger.kernel.org, scmbug-users@lists.mkgnu.net
+To: "Kristis Makris" <kristis.makris@asu.edu>
+X-From: git-owner@vger.kernel.org Wed Nov 14 07:08:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsBDJ-0006OZ-Jy
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 06:55:02 +0100
+	id 1IsBQm-0000nD-DK
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 07:08:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763998AbXKNFyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 00:54:41 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763953AbXKNFyk
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 00:54:40 -0500
-Received: from corvette.plexpod.net ([64.38.20.226]:53527 "EHLO
-	corvette.plexpod.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1763785AbXKNFyi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 00:54:38 -0500
-Received: from [74.70.48.173] (helo=asimov.home.spearce.org)
-	by corvette.plexpod.net with esmtpa (Exim 4.68)
-	(envelope-from <spearce@spearce.org>)
-	id 1IsBCu-0006So-GA; Wed, 14 Nov 2007 00:54:36 -0500
-Received: by asimov.home.spearce.org (Postfix, from userid 1000)
-	id E4D2020FBAE; Wed, 14 Nov 2007 00:54:34 -0500 (EST)
+	id S1752389AbXKNGIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 01:08:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750779AbXKNGIJ
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 01:08:09 -0500
+Received: from an-out-0708.google.com ([209.85.132.248]:37167 "EHLO
+	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750759AbXKNGIG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 01:08:06 -0500
+Received: by an-out-0708.google.com with SMTP id b36so12522ana
+        for <git@vger.kernel.org>; Tue, 13 Nov 2007 22:08:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=YylsWpqWC9eR/hf9FXAts8+p4Q1Y3/h/iD78C9eu/EQ=;
+        b=jcv15alXdfdTg8LvVtpgV/bTQzcSAVHRHbvARRdlY3SQ72FS/XfOq68V+2luCzxVL6nUM5bQa+bR5FjYU94hgvtAseGqbwR9CvZaxeAbz1wkInhlxD7OHiHmdhiBTk+jR5KGGsdITESzZV2vEAOux1KRxKfPgobCINbaMZDTFik=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=OGNblp2U/GWAH858Gja3yPVQLYjh4M1SeA31KRM7PVx7SOviOH3Hx3fBRhGHSUGHQ+tghkUpjxouelDMHmVJyJyRocWg09FnHlmyEfdHub+E1zIiRtd3Wi2MonjLA20A0DfXXhHycdqqIzj4jJ1NOuayL5t9qNs9S//LcSyxNU0=
+Received: by 10.100.31.3 with SMTP id e3mr11017158ane.1195020484679;
+        Tue, 13 Nov 2007 22:08:04 -0800 (PST)
+Received: by 10.100.228.13 with HTTP; Tue, 13 Nov 2007 22:08:04 -0800 (PST)
+In-Reply-To: <1194998142.4106.24.camel@localhost>
 Content-Disposition: inline
-In-Reply-To: <7vhcjpnzvq.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.11
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - corvette.plexpod.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - spearce.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64952>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> > +	uint32_t type : TYPE_BITS,
-> > +		pack_id : PACK_ID_BITS,
-> > +		depth : DEPTH_BITS;
-> 
-> uint32_t with bit-width specifiers look somewhat funny here...
+On Nov 14, 2007 12:55 PM, Kristis Makris <kristis.makris@asu.edu> wrote:
+> It isn't a centralized bug-tracking system necessarily. Because
+> different developers may used different, custom bug-tracking systems,
+> with custom hooks in their own local Git repositories that integrate
+> with only their own bug-tracking systems. And perhaps we can add the
+> support in the Scmbug Git frontend to integrate with a centralized
+> bug-tracker only on push operations if desired.
 
-Sure.  But the prior item is also uint32_t and before that a pointer
-so it aligns out nice.  And we're using exactly 32 bits in this field.
-So it just sort of made sense to me to declare it was a uint32_t.
- 
-> > @@ -1105,7 +1108,7 @@ static int store_object(
-> >  		unsigned pos = sizeof(hdr) - 1;
-> >  
-> >  		delta_count_by_type[type]++;
-> > -		last->depth++;
-> > +		e->depth = ++last->depth++;
-> 
-> "lvalue required as increment operand"?
-> 
-> Wouldn't it be easier to read like this?
+I disagree somewhat here. In git, local commits are extremely
+lightweight, and as a developer I don't want anything remarkable to
+happen on those, even locally. It's pushing (which is actually
+publishing!) that makes those commits relevant.
 
-Yes.  Good call.  :-)
- 
-> diff --git a/fast-import.c b/fast-import.c
-> index 7544949..d32c412 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -161,7 +161,7 @@ struct object_entry
->  {
->  	struct object_entry *next;
->  	uint32_t offset;
-> -	uint32_t type : TYPE_BITS,
-> +	unsigned type : TYPE_BITS,
->  		pack_id : PACK_ID_BITS,
->  		depth : DEPTH_BITS;
->  	unsigned char sha1[20];
-> @@ -1108,7 +1108,7 @@ static int store_object(
->  		unsigned pos = sizeof(hdr) - 1;
->  
->  		delta_count_by_type[type]++;
-> -		e->depth = ++last->depth++;
-> +		e->depth = last->depth + 1;
->  
->  		hdrlen = encode_header(OBJ_OFS_DELTA, deltalen, hdr);
->  		write_or_die(pack_data->pack_fd, hdr, hdrlen);
-> @@ -1121,8 +1121,6 @@ static int store_object(
->  		pack_size += sizeof(hdr) - pos;
->  	} else {
->  		e->depth = 0;
-> -		if (last)
-> -			last->depth = 0;
->  		hdrlen = encode_header(type, datlen, hdr);
->  		write_or_die(pack_data->pack_fd, hdr, hdrlen);
->  		pack_size += hdrlen;
-> @@ -1138,6 +1136,7 @@ static int store_object(
->  			free(last->data);
->  		last->data = dat;
->  		last->offset = e->offset;
-> +		last->depth = e->depth;
->  		last->len = datlen;
->  	}
->  	return 0;
+Even if I have a local or distributed bugtracker, any purely local
+commit is "draft".
 
--- 
-Shawn.
+And this is regardless of centralised or distributed -- that's a
+matter of policy around the repo I'm pushing to. The distinction that
+matters is local vs published. Local commits get removed, rebased,
+redone, discarded a whole lot.
+
+> But we can't explore any of these issues, discussed in the thread below
+> too, unless we can extract what's needed from the hooks.
+
+I concur with the chorus that chants "HEAD"... try with `git show
+HEAD` for starters...
+
+cheers,
+
+
+martin
