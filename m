@@ -1,104 +1,81 @@
-From: Bill Lear <rael@zopyra.com>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
-Date: Wed, 14 Nov 2007 14:22:31 -0600
-Message-ID: <18235.22791.974033.758825@lisa.zopyra.com>
-References: <86k5on8v6p.fsf@lola.quinscape.zz>
-	<20071112131927.GA1701@c3sl.ufpr.br>
-	<Pine.LNX.4.64.0711121355380.4362@racer.site>
-	<200711121719.54146.wielemak@science.uva.nl>
-	<Pine.LNX.4.64.0711121624330.4362@racer.site>
-	<vpq3avbv2ju.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121715090.4362@racer.site>
-	<18232.35893.243300.179076@lisa.zopyra.com>
-	<Pine.LNX.4.64.0711121727130.4362@racer.site>
-	<vpq7iknqrtp.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121755460.4362@racer.site>
-	<vpqy7d3pck0.fsf@bauges.imag.fr>
-	<Pine.LNX.4.64.0711121804400.4362@racer.site>
-	<vpqoddzpc88.fsf@bauges.imag.fr>
-	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
-	<87myth58r5.fsf@osv.gnss.ru>
-	<7vfxz8hbcf.fsf@gitster.siamese.dyndns.org>
-	<18235.22445.16228.535898@lisa.zopyra.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Junio C Hamano <gitster@pobox.com>, Sergei Organov <osv@javad.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Jan Wielemaker <wielemak@sci
-X-From: git-owner@vger.kernel.org Wed Nov 14 21:22:55 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH v3] Add line-wrapping guidelines to the coding style documentation
+Date: Wed, 14 Nov 2007 21:23:49 +0100
+Message-ID: <8515B0B6-9C28-41F1-B197-3EF821D43590@wincent.com>
+References: <56A87A65-3C2E-4E10-84D4-4470879EE466@wincent.com> <Pine.LNX.4.64.0711141717570.4362@racer.site> <622166FD-0727-47D4-B26C-8A01788FD1EA@wincent.com> <7v4pfoh9vu.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 21:24:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsOl9-0008Dm-Gl
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:22:51 +0100
+	id 1IsOmi-0000Q4-Et
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:24:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754101AbXKNUWf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 15:22:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753525AbXKNUWf
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:22:35 -0500
-Received: from mail.zopyra.com ([65.68.225.25]:60464 "EHLO zopyra.com"
+	id S1754570AbXKNUYM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 15:24:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754501AbXKNUYM
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:24:12 -0500
+Received: from wincent.com ([72.3.236.74]:38181 "EHLO s69819.wincent.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752736AbXKNUWe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 15:22:34 -0500
-Received: (from rael@localhost)
-	by zopyra.com (8.11.6/8.11.6) id lAEKMX529928;
-	Wed, 14 Nov 2007 14:22:33 -0600
-In-Reply-To: <18235.22445.16228.535898@lisa.zopyra.com>
-X-Mailer: VM 7.18 under Emacs 21.1.1
+	id S1753525AbXKNUYL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 15:24:11 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAEKNo5G000315;
+	Wed, 14 Nov 2007 14:23:51 -0600
+In-Reply-To: <7v4pfoh9vu.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65008>
 
-[I sent a few mistakes --- edited below.]
-On Wednesday, November 14, 2007 at 14:16:45 (-0600) Bill Lear writes:
->...
->Well, here's what we'd like:
->
->% mkdir new_repo
->% cd new_repo
->% git --bare init
->
->[on another machine:]
->% git clone git://host/new_repo
->% cd new_repo
->% git init
-[No git init would be needed here, obviously.]
->[add content]
->% git commit -a -m "Initial stuff"
->% git push
->
->So, this is hard work, and other priorities intrude.  Ok.
->
->Instead, we have to 1) figure out how to do this right, because it's
->difficult to remember and not intuitive, and 2) once we have "figured
->it out", really figure it out, because there are a few gotchas:
->
->% mkdir new_repo
->% cd new_repo
->% git --bare init
->
->% mkdir new_repo
->% cd new_repo
-[git init is needed here...]
->[add content]
->% git commit -a -m "Initial stuff"
->% git config remote.origin.url git://host/new_repo
->% git push
->[ach! fails!  what's up??]
->[poke, read, poke some more, try other things..]
->[try setting the remote.origin.fetch?  No, that doesn't work]
->[try setting branch.master.remote?  Just edit by hand??]
->% git push master
->[fails again; read some more; think, think, think...]
->% git push origin master
->[aha! finally it works]
->...
+El 14/11/2007, a las 21:04, Junio C Hamano escribi=F3:
 
-Sorry for the sloppiness.
+> Wincent Colaiuta <win@wincent.com> writes:
+>
+>> El 14/11/2007, a las 18:19, Johannes Schindelin escribi=F3:
+>>
+>>> Besides, is it really necessary to be as explicit as you word it?
+>>> IOW is
+>>> this patch needed?
+>>
+>> I was basically just trying to help new people from making the same
+>> mistake that I did; ie. not knowing if there was an official limit,
+>> looking at the maximum line length in a file, making sure my patch
+>> didn't exceed that length (and re-wrapping to avoid exceeding it), =20
+>> and
+>> then getting reprimanded for gratuitous re-wrapping.
+>
+> Sorry about that "reprimanded" part.  I should have been more
+> careful -- I did not really mean it that way.  It was more like
+> "it would have been nicer ... so please try to next time".
 
+Don't worry about it, Junio. I've been subscribed to the list for =20
+several months now, so I'm already aware of the perfectionism inherent =
+=20
+in the process; I didn't take anything personally, and much less =20
+coming from you who is always diplomatic. I just thought, "this is =20
+good advice that Junio has posted to the list, I found it helpful, so =20
+I think it should go in the style doc".
 
-Bill
+And I'm no stranger to Johannes' scything sarcasm either, it's his =20
+personal style; luckily, along with the sarcasm he makes so many high-=20
+quality contributions to the community as well.
+
+> I agree that "80 columns" sits better in that new "Line
+> wrapping" section.  I wonder if "tabs are 8 spaces wide" also
+> belong there.
+
+You're probably right; I understand that the 8-wide tabs convention =20
+holds in shell and perl scripts too, not just in C source.
+
+Cheers,
+Wincent
