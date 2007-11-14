@@ -1,99 +1,61 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] user-manual.txt: fix a few mistakes
-Date: Wed, 14 Nov 2007 15:46:32 +0300
-Message-ID: <87ir455713.fsf@osv.gnss.ru>
-References: <87bq9x7w4d.fsf@osv.gnss.ru>
-	<7vlk91mgz6.fsf@gitster.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Wed, 14 Nov 2007 14:41:13 +0100
+Organization: At home
+Message-ID: <fhettp$rtk$1@ger.gmane.org>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl> <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, J Bruce Fields <bfields@citi.umich.edu>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 13:48:01 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 14 14:42:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsHer-0002uU-MP
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 13:47:54 +0100
+	id 1IsIVh-0005EA-U0
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 14:42:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754771AbXKNMrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 07:47:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754813AbXKNMrN
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 07:47:13 -0500
-Received: from javad.com ([216.122.176.236]:2986 "EHLO javad.com"
+	id S1754446AbXKNNlq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 08:41:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752839AbXKNNlq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 08:41:46 -0500
+Received: from main.gmane.org ([80.91.229.2]:42208 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754771AbXKNMrL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 07:47:11 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lAECkd068094;
-	Wed, 14 Nov 2007 12:46:44 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1IsHdY-0007GO-9T; Wed, 14 Nov 2007 15:46:32 +0300
-In-Reply-To: <7vlk91mgz6.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 13 Nov 2007 23\:19\:41 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1753889AbXKNNlp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 08:41:45 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IsIUn-0005qY-N9
+	for git@vger.kernel.org; Wed, 14 Nov 2007 13:41:33 +0000
+Received: from abwy6.neoplus.adsl.tpnet.pl ([83.8.248.6])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Nov 2007 13:41:33 +0000
+Received: from jnareb by abwy6.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 14 Nov 2007 13:41:33 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwy6.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64984>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Sergei Organov wrote:
 
-> Sergei Organov <osv@javad.com> writes:
->
->> Signed-off-by: Sergei Organov <osv@javad.com>
->> ---
->>  Documentation/user-manual.txt |    8 ++++----
->>  1 files changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
->> index d99adc6..a169ef0 100644
->> --- a/Documentation/user-manual.txt
->> +++ b/Documentation/user-manual.txt
->> @@ -475,7 +475,7 @@ Bisecting: 3537 revisions left to test after this
->>  If you run "git branch" at this point, you'll see that git has
->>  temporarily moved you to a new branch named "bisect".  This branch
->>  points to a commit (with commit id 65934...) that is reachable from
->> -v2.6.19 but not from v2.6.18.  Compile and test it, and see whether
->> +"master" but not from v2.6.18.  Compile and test it, and see whether
->>  it crashes.  Assume it does crash.  Then:
->>  
->>  -------------------------------------------------
->
-> Thanks.
->
-> This hunk and the last hunk I do not have any problem with.
->
->> @@ -1367,7 +1367,7 @@ If you make a commit that you later wish you hadn't, there are two
->>  fundamentally different ways to fix the problem:
->>  
->>  	1. You can create a new commit that undoes whatever was done
->> -	by the previous commit.  This is the correct thing if your
->> +	by the old commit.  This is the correct thing if your
->>  	mistake has already been made public.
->>  
->>  	2. You can go back and modify the old commit.  You should
->
-> But is this an improvement or just a churn?
+> Just a wild idea. Doesn't it make sense to introduce perfect ultimate
+> common ancestor of the universe, probably calling it "the NULL commit"?
+> At first glance it seems that it can help to avoid corner cases
+> automagically.
 
-I believe this is an improvement. It's more precise. With this change
-it's crystal clear that both (1) and (2) above mean the same commit by
-calling it "the old commit". Before the change, when I read this the
-first time, I've got the term "previous" here literally, i.e., as the
-last commit made, and I thought that if the commit in question is the
-last one, I should do (1), otherwise -- (2). This confusion admittedly
-vanished rather quickly, but it did happen.
-
-If I didn't manage to express my first impression clearly (English is
-not my mothers' tongue), try to read this to get similar impression:
-
-  1. You can create a new commit that undoes whatever was done
-     by the previous commit.
-
-  2. You can go back and modify the old commit.
-
-Do you see the problem?
+No. Sometimes you want unrelated branches in repository ('html', 'man',
+'todo' branches in git.git), sometimes multiple roots are natural (merging
+in a project, like git-mailtools, gitweb, gitk, git-gui in git.git).
 
 -- 
-Sergei.
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
