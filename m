@@ -1,66 +1,84 @@
-From: "shunichi fuji" <palglowr@gmail.com>
-Subject: [PATCH] git-clean: consider core.excludesfile
-Date: Wed, 14 Nov 2007 16:40:33 +0900
-Message-ID: <30046e3b0711132340y2c503dd4laea24b9b1c79a160@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Wincent Colaiuta <win@wincent.com>
+Subject: [PATCH] Grammar fixes for gitattributes documentation
+Date: Wed, 14 Nov 2007 08:51:41 +0100
+Message-ID: <33080F0B-80C0-4860-9A74-C6878EE3B2CD@wincent.com>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 14 08:41:00 2007
+Cc: Junio Hamano <junkio@cox.net>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 14 08:52:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsCrj-000541-ML
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 08:40:52 +0100
+	id 1IsD2Z-0008FF-0x
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 08:52:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751929AbXKNHkg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 02:40:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751927AbXKNHkg
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 02:40:36 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:49204 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751897AbXKNHkf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 02:40:35 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so70317nfb
-        for <git@vger.kernel.org>; Tue, 13 Nov 2007 23:40:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=G+CpRPSXrguHQlBwUqP+6Nb8LL6YabmrZVH7elgwn5A=;
-        b=IH0Md89Quz2HGMUcy1mV6KXhBujYULgNcx5eSzLRr2Ek+yyvFnMNlqTIXP/vRGRnfX1v7+Ypb0qvxiu71daEpLn88/FpgAHh9uboymP4IC9Kw2o+2/kg56/87pKAq5CqLLgFxQIwA1PYGS73/oL97M4cF/bMaxRZvkuX7Sp1JlY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=NpiV4V5uiK8tVUzPtjxuS2w6kXUbyjwlbbDD4noL4Sm9jVO73UqnCyeCtDobfWLjYzfNhU/7EMmZ5HTTs3wJJfYru+QgRrDRwgOo1C7dNLmXAd5StrU0HlzLBQULRTLSRUJ9LNc6ZrypYGgn4oOqztHYljroHdi/XDcTjT79OsM=
-Received: by 10.86.90.2 with SMTP id n2mr6619794fgb.1195026033690;
-        Tue, 13 Nov 2007 23:40:33 -0800 (PST)
-Received: by 10.86.51.7 with HTTP; Tue, 13 Nov 2007 23:40:33 -0800 (PST)
-Content-Disposition: inline
+	id S1751500AbXKNHvr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 02:51:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751493AbXKNHvq
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 02:51:46 -0500
+Received: from wincent.com ([72.3.236.74]:35042 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751416AbXKNHvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 02:51:46 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAE7pg1b004600;
+	Wed, 14 Nov 2007 01:51:43 -0600
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64957>
 
-git-clean used "git ls-files" and "git ls-files" don't consider
-core.excludesfile.
-i add few lines.
+Tweak the "filter" section of the gitattributes documentation to add  
+some
+missing articles and improve some word choices without changing the
+semantics of the section.
 
---- /usr/bin/git-clean  2007-11-14 08:26:20.000000000 +0900
-+++ git-clean   2007-11-14 09:43:03.000000000 +0900
-@@ -81,9 +81,14 @@
-       if [ "$ignoredonly" ]; then
-               excl="$excl --ignored"
-       fi
-+       core_excl="`git-config core.excludesfile`"
-+       if [ -f "$core_excl" ]; then
-+               core_excl_info="--exclude-from=$core_excl"
-+       fi
- fi
+Signed-off-by: Wincent Colaiuta <win@wincent.com>
+---
+  Documentation/gitattributes.txt |   17 +++++++++--------
+  1 files changed, 9 insertions(+), 8 deletions(-)
 
--git ls-files --others --directory $excl ${excl_info:+"$excl_info"} -- "$@" |
-+git ls-files --others --directory $excl ${excl_info:+"$excl_info"} \
-+${core_excl_info:+"$core_excl_info"} -- "$@" |
- while read -r file; do
-       if [ -d "$file" -a ! -L "$file" ]; then
-               if [ -z "$cleandir" ]; then
+diff --git a/Documentation/gitattributes.txt b/Documentation/ 
+gitattributes.txt
+index 20cf8ff..b01786b 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -148,22 +148,23 @@ with `$Id$` upon check-in.
+  `filter`
+  ^^^^^^^^
+
+-A `filter` attribute can be set to a string value.  This names
++A `filter` attribute can be set to a string value which names a
+  filter driver specified in the configuration.
+
+-A filter driver consists of `clean` command and `smudge`
++A filter driver consists of a `clean` command and a `smudge`
+  command, either of which can be left unspecified.  Upon
+-checkout, when `smudge` command is specified, the command is fed
+-the blob object from its standard input, and its standard output
+-is used to update the worktree file.  Similarly, `clean` command
+-is used to convert the contents of worktree file upon checkin.
++checkout, when the `smudge` command is specified, the command is
++fed the blob object from its standard input, and its standard
++output is used to update the worktree file.  Similarly, the
++`clean` command is used to convert the contents of worktree file
++upon checkin.
+
+-Missing filter driver definition in the config is not an error
++A missing filter driver definition in the config is not an error
+  but makes the filter a no-op passthru.
+
+  The content filtering is done to massage the content into a
+  shape that is more convenient for the platform, filesystem, and
+-the user to use.  The keyword here is "more convenient" and not
++the user to use.  The key phrase here is "more convenient" and not
+  "turning something unusable into usable".  In other words, the
+  intent is that if someone unsets the filter driver definition,
+  or does not have the appropriate filter program, the project
+-- 
+1.5.3.5
