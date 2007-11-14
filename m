@@ -1,94 +1,155 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] git-diff: complain about >=8 consecutive spaces in initial indent
-Date: Tue, 13 Nov 2007 16:46:19 -0800
-Message-ID: <7vabphr6w4.fsf@gitster.siamese.dyndns.org>
-References: <7vwst15ceq.fsf@gitster.siamese.dyndns.org>
-	<7vr6j95c84.fsf@gitster.siamese.dyndns.org>
-	<473A3552.3060907@freedesktop.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [Newbie] How to *actually* get rid of remote tracking branch?
+Date: Wed, 14 Nov 2007 02:02:52 +0100
+Message-ID: <473A493C.4070902@op5.se>
+References: <874pfq9q8s.fsf@osv.gnss.ru> <fhcdpv$9u3$1@ger.gmane.org>	<87ve86889o.fsf@osv.gnss.ru> <200711131703.16357.jnareb@gmail.com>	<A919E788-C5D0-4404-95D4-869BAFE868AC@zib.de>	<473A027E.5000107@op5.se> <473A262B.4010205@op5.se> <7vr6itr96h.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Brian Downing <bdowning@lavos.net>,
-	dsymonds@gmail.com
-To: Josh Triplett <josh@freedesktop.org>
-X-From: git-owner@vger.kernel.org Wed Nov 14 01:46:58 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Steffen Prohaska <prohaska@zib.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Sergei Organov <osv@javad.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 02:03:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is6PB-0006B7-MS
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 01:46:58 +0100
+	id 1Is6eu-00021L-FG
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 02:03:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760735AbXKNAqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 19:46:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759993AbXKNAqm
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 19:46:42 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:43780 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760075AbXKNAql (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 19:46:41 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 2EB68322;
-	Tue, 13 Nov 2007 19:47:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8BAE39580E;
-	Tue, 13 Nov 2007 19:46:57 -0500 (EST)
-In-Reply-To: <473A3552.3060907@freedesktop.org> (Josh Triplett's message of
-	"Tue, 13 Nov 2007 15:37:54 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1763191AbXKNBC7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 20:02:59 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761155AbXKNBC6
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 20:02:58 -0500
+Received: from mail.op5.se ([193.201.96.20]:46219 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1762978AbXKNBC5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 20:02:57 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id A1FEF1F08710;
+	Wed, 14 Nov 2007 02:02:55 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id Tsj3GpvYa603; Wed, 14 Nov 2007 02:02:54 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id CCDEC1F0870D;
+	Wed, 14 Nov 2007 02:02:53 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <7vr6itr96h.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64933>
 
-Josh Triplett <josh@freedesktop.org> writes:
+Junio C Hamano wrote:
+> Andreas Ericsson <ae@op5.se> writes:
+> 
+>> I've got half a patch ready to change all occurrences of anything but
+>> "remote-tracking branch" to that self-same description. This is what
+>> I've got in Documentation/glossary.txt so far:
+>>
+>> [[def_remote_tracking_branch]]remote-tracking branch:
+>>    A "remote-tracking branch" is a branch set up to track the
+>>    state of a branch in a remote repository which the user has named.
+>> These branches follow exactly the same rules as the branches which
+>>    reside in the remote repository, except that they are manipulated
+>>    by `git fetch` instead of `git push`. That is, they can only be
+>>    updated if the update would result in a  <<def_fastforward,fast
+>> forward>>, or if the user supplies the  '--force' option.  They cannot
+>> be checked out or committed to by users, but serve
+>>    solely as local reference-pointers to their corresponding branches
+>>    in the remote repository.
+>>    The most common example of a remote-tracking branch is origin/master.
+> 
+> Please try to read it as if it were an entry in a glossary.
+> The sentence "... follow exactly the same rules as ..." was
+> "Huh?" to me.  "rules?  what rules?  the set of valid characters
+> in their names?"
+> 
+> When branch 'foo' from remote is tracked with the standard layout
+> (post 1.3.0) it is copied to refs/remotes/origin/foo and people
+> often fork their local branch refs/heads/foo to build on top.
+> The use of the word "corresonding" feels a bit confusing,
+> because you can arguably say refs/heads/foo at remote
+> corresopnds to refs/heads/foo in your repository.
+> 
+> I'd drop "These branches follow ... the '--force' option.  "
+> from the above.  The rules on how they are updated are
+> irrelevant, before the reader understands what they are for.
+> How about this?
+> 
+>     A "remote tracking branch" remembers which commit a branch
+>     in the remote repository was pointing at last time you
+>     checked.  It cannot be checked out or committed because its
+>     purpose is to serve as a local reference point after you
+>     built your own changes on top of it in your local branch
+>     forked from it.  The most common example of a remote
+>     tracking branch is "origin/master", which tracks the
+>     "master" branch of the "origin" remote.
+> 
 
-> My standard test case for this:
->
-> fprintf("some very long string",
->         arguments);
->
-> Type the first line, and press enter.  A good editor should indent to
-> the open parenthesis.  However, it should not use a tab, because it
-> needs to match up with the length of "fprintf(".
+I'd skip "after you built your own changes ..." and let it go at
+that. Will amend. Thanks.
 
-Sorry, I do not want to go into ideology or be anal, but I have
-to disagree.  Tab width is 8 spaces (in the kernel and git), so
-"fprintf(" from the beginning of the line and an HT at the
-beginning of the line have the same width.
+> BTW, when you have this data-flow (probably typical in a shared
+> repository workflow):
+> 
+>     Remote repository               Your repository
+> 
+>     refs/heads/foo -------(A)------> refs/remotes/origin/foo
+>          ^                                |
+>          |                               (B)
+>          |                                |
+>          |                                V
+>          `-------------(C)---------- refs/heads/foo
+> 
+>          (A) "git fetch" with remote.origin.fetch configuration
+>              set to +refs/heads/*:refs/remotes/origin/* keeps
+>              your refs/remotes/origin/foo up-to-date with their
+>              refs/heads/foo
+> 
+>          (B) "git merge origin/foo" while on "foo" branch (there
+>              are few shorthands like "git pull origin foo" while
+>              on "foo" branch.  If you say "git branch --track
+>              foo origin/foo", then running "git pull" without
+>              parameter while on "foo" branch).
+> 
+>          (C) "git push origin foo".
+> 
+>  * Everybody seems to agree that "refs/remotes/origin/foo" is
+>    called a "remote tracking branch";
+> 
 
-Your project may have different conventions.  Then you do not
-have to use that option to check for 8 or more leading spaces.
+I'd like to insert the significant dash there. remote-tracking vs
+remote tracking. It solves the one ambiguity with it, and would
+finally make it clear and consistent almost however it's used.
 
-And honestly, I think responding to that by saying "but somebody
-can have tab width that is not 8" is irrelevant.  Somebody else
-can even use a non-proportional font to print it, so your 8
-spaces and "fprintf(" won't line up ANYWAY.
+>  * Your refs/heads/foo follows and builds on top of 'foo' branch
+>    at the remote.  Some people errorneously call it "tracking"
+>    but that is because we do not have a good term for it;
+> 
 
-If you REALLY want to be anal, then the rules to follow would
-be:
+"private tracking branch"? Nah...
 
- - Do not assume you know the width of a HT, other than that the
-   same number of HT at the beginning of two lines indent to the
-   same distance from the left margin, and more of them indent
-   deeper;
+>  * There is no good name for "refs/heads/foo at the remote".  We
+>    always say "the remote branch you follow" (or "track"). 
+> 
 
- - Do not assume the text will be printed in monospace;
+"remote-repo branch" perhaps? The universe doesn't exactly toll its
+bells in approval at that, but at least it's not ambiguous.
 
-which leads to:
+I've seen it written as "remote tracking branch" on irc a few times.
+It causes 10 minutes of confusion where no-one's sure what anyone
+else means. With the dash in there, there's no room for ambiguity.
 
- - Indent with the same number of HT from the beginning of
-   lines.  Go deeper with one more HT, go shallower with one
-   less HT.
-
- - Start the continuation line with the same number of HT to
-   indent but DO NOT BOTHER aligning.  There is no alignment,
-   period.
-
-I happen to choose to be less anal, and accept 8 space HT _and_
-monospace font.  So "complaining at >=8 SP at the beginning"
-makes perfect sense, so does a corresponding patch to convert
-such runs of SPs to HTs with "git-apply --whitespace=fix" (which
-should require an option to be enabled, and the is not here
-yet) when applying a patch.
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
