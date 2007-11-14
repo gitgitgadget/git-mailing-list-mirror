@@ -1,94 +1,55 @@
-From: Kristis Makris <kristis.makris@asu.edu>
-Subject: Re: Git and Scmbug integration
-Date: Tue, 13 Nov 2007 17:01:33 -0700
-Message-ID: <1194998493.4106.30.camel@localhost>
-References: <1194980792.4106.6.camel@localhost>
-	 <20071113234722.GK3268@steel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improved and extended t5404
+Date: Tue, 13 Nov 2007 16:02:20 -0800
+Message-ID: <7vmythr8xf.fsf@gitster.siamese.dyndns.org>
+References: <20071112213823.GB2918@steel.home>
+	<20071112213938.GC2918@steel.home>
+	<20071113075240.GA21799@sigill.intra.peff.net>
+	<20071113194731.GC3268@steel.home> <20071113194909.GD3268@steel.home>
+	<20071113230234.GI3268@steel.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1; protocol="application/pgp-signature"; boundary="=_morpheus-31702-1194998524-0001-2"
-Cc: git@vger.kernel.org, scmbug-users@lists.mkgnu.net
-To: Alex Riesen <raa.lkml@gmail.com>, jnareb@gmail.com
-X-From: git-owner@vger.kernel.org Wed Nov 14 01:02:24 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 01:03:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5i2-0001XS-SJ
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 01:02:23 +0100
+	id 1Is5j8-0001mz-Ev
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 01:03:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761003AbXKNACH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 19:02:07 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760895AbXKNACG
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 19:02:06 -0500
-Received: from net.mkgnu.net ([67.40.69.52]:60240 "EHLO mail.mkgnu.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1760809AbXKNACF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 19:02:05 -0500
-Received: from syd-mkgnu-net.dhcp.asu.edu (syd-mkgnu-net.dhcp.asu.edu [::ffff:149.169.179.39])
-  (AUTH: LOGIN mkgnu@mkgnu.net)
-  by morpheus with esmtp; Tue, 13 Nov 2007 17:02:03 -0700
-  id 00012092.473A3AFB.00007BD6
-In-Reply-To: <20071113234722.GK3268@steel.home>
-X-Mailer: Evolution 2.6.3 
+	id S1758948AbXKNACl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 19:02:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757912AbXKNACl
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 19:02:41 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44122 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754064AbXKNACk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 19:02:40 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 3182E2F0;
+	Tue, 13 Nov 2007 19:03:02 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A8B3E956DA;
+	Tue, 13 Nov 2007 19:02:58 -0500 (EST)
+In-Reply-To: <20071113230234.GI3268@steel.home> (Alex Riesen's message of
+	"Wed, 14 Nov 2007 00:02:34 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64918>
 
-This is a MIME-formatted message.  If you see this text it means that your
-E-mail software does not support MIME-formatted messages.
+Alex Riesen <raa.lkml@gmail.com> writes:
 
---=_morpheus-31702-1194998524-0001-2
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
+> Ignore exit code of git push in t5404, as it is not relevant for the
+> test
 
-On Wed, 2007-11-14 at 00:47 +0100, Alex Riesen wrote:
-> > There's no hook that will trigger when a tag is applied.
->=20
-> what for?
-
-To implement the synchronous verification checks provided by Scmbug:
-
-http://www.mkgnu.net/?q=3Dscmbug
-http://files.mkgnu.net/files/scmbug/SCMBUG_RELEASE_0-23-0/manual/html-singl=
-e/manual.html#VERIFICATION-CHECKS
-
-In particular:
-
-(1) Convention-based labeling
-
-http://files.mkgnu.net/files/scmbug/SCMBUG_RELEASE_0-23-0/manual/html-singl=
-e/manual.html#VERIFICATION-CHECKS-CONVENTION-BASED-LABELING
-
-(2) The capability to freeze access to certain branches
-
-http://bugzilla.mkgnu.net/show_bug.cgi?id=3D859
-
-(3) Valid product-name verification
-
-http://files.mkgnu.net/files/scmbug/SCMBUG_RELEASE_0-23-0/manual/html-singl=
-e/manual.html#VERIFICATION-CHECKS-VALID-PRODUCT-NAME
-
-
-There are a lot more checks, as you can see from the manual, that are
-needed on a commit trigger, rather than just a tag trigger.
-
-A lot of people find the integration provided by Scmbug useful and some
-(Jakub, back me up here) have requested support for Git.
-
-
-
---=_morpheus-31702-1194998524-0001-2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Transfer-Encoding: 7bit
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHOjrd/KuTDwnYLxERAiH0AKCO6tNOcbqIckUN7wlkcbbyWcUMAgCePRo3
-yXsi7OuPMiN7xpuujC+e+0Q=
-=8fTD
------END PGP SIGNATURE-----
-
---=_morpheus-31702-1194998524-0001-2--
+This proposed log message solicits a "Huh? -- Since when
+ignoring exit code is an improvement?" reaction.  If this push
+is expected to error out, then wouldn't you want to make sure it
+errors out as expected?  If the problem is that the exit status
+is unreliable, maybe we need to make it reliable instead?
