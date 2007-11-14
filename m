@@ -1,116 +1,100 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [PATCH v2] Add line-wrapping guidelines to the coding style documentation
-Date: Wed, 14 Nov 2007 12:32:58 +0100
-Message-ID: <1037166E-C1B1-43A9-9B12-5866632CADCC@wincent.com>
-References: <A18FC90C-5874-445A-93CE-9E05D02C614F@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 14 12:33:36 2007
+From: Sergei Organov <osv@javad.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Wed, 14 Nov 2007 15:09:18 +0300
+Message-ID: <87myth58r5.fsf@osv.gnss.ru>
+References: <86k5on8v6p.fsf@lola.quinscape.zz>
+	<20071112131927.GA1701@c3sl.ufpr.br>
+	<Pine.LNX.4.64.0711121355380.4362@racer.site>
+	<200711121719.54146.wielemak@science.uva.nl>
+	<Pine.LNX.4.64.0711121624330.4362@racer.site>
+	<vpq3avbv2ju.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121715090.4362@racer.site>
+	<18232.35893.243300.179076@lisa.zopyra.com>
+	<Pine.LNX.4.64.0711121727130.4362@racer.site>
+	<vpq7iknqrtp.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121755460.4362@racer.site>
+	<vpqy7d3pck0.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121804400.4362@racer.site>
+	<vpqoddzpc88.fsf@bauges.imag.fr>
+	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 13:10:44 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsGUj-0002p5-GU
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 12:33:21 +0100
+	id 1IsH4p-0006ko-Rr
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 13:10:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751909AbXKNLdC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 06:33:02 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751452AbXKNLdB
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 06:33:01 -0500
-Received: from wincent.com ([72.3.236.74]:35340 "EHLO s69819.wincent.com"
+	id S1756102AbXKNMKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 07:10:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756040AbXKNMKY
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 07:10:24 -0500
+Received: from javad.com ([216.122.176.236]:1500 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751092AbXKNLdB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 06:33:01 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAEBWxaQ010641
-	for <git@vger.kernel.org>; Wed, 14 Nov 2007 05:32:59 -0600
-X-Mailer: Apple Mail (2.912)
+	id S1754912AbXKNMKW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 07:10:22 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lAEC9O064928;
+	Wed, 14 Nov 2007 12:09:25 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1IsH3W-0006u9-N4; Wed, 14 Nov 2007 15:09:18 +0300
+In-Reply-To: <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 12 Nov 2007 13\:56\:38 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64982>
 
-Help new contributors by providing some advice about line-wrapping; the
-advice basically boils down to "use 80-characters minus some slop as a
-rule of thumb", but also "use common sense", and "avoid gratuitous
-rewrapping".
-
-Signed-off-by: Wincent Colaiuta <win@wincent.com>
----
-
-El 14/11/2007, a las 11:37, Junio C Hamano escribi=F3:
-
-> Wincent Colaiuta <win@wincent.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 >
->> A statistician could probably make some interesting comments about =20
->> the
->> results, but the basic trend is that, while there are plenty of
->> examples of isolated long lines in the source tree (the longest is a
->> 287-character line in one of the perl scripts), the frequency starts
->> to drop off pretty rapidly once you pass 70 columns and start =20
->> climbing
->> towards 80.
+>> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>
+>>>> > On Mon, 12 Nov 2007, Matthieu Moy wrote:
+>>>> >
+>>>> >> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>>>> >> 
+>>>> >> > So you need to populate the repository before starting _anyway_.
+>>>> >> 
+>>>> >> Last time I checked, the thread was talking about bare repository.
+>>>
+>>> Look at the subject.  "Cloning empty repositories."
+>>
+>> Look at the content. "cloning a empty bare repository".
 >
-> Gaah.  287???
-
-Actually, not true. The longest line in a perl script is 209 chars =20
-(217 columns if you expand the leading tab), in file git-=20
-cvsexportcommit.perl.
-
-The 287-char line was actually in builtin-update-index.c; this and =20
-most of the other really huge lines are usage strings.
-
->> + - In the case of documentation, mixing excessively long and short
->> +   lines may make the AsciiDoc source harder to read, so try to
->> +   keep line lengths consistent.
->> +
->> + - When submitting patches use common sense to decide whether to
->> +   rewrap, avoiding gratuitous changes.
+> But both of Johannes's points apply equally well to an empty
+> bare repository and to an empty non bare repository.  IOW,
+> bareness does not matter to the suggestion Johannes gave.
 >
-> Hmph.  The last item applies only to the documentation because
-> it uses the word "rewrap", but otherwise applies equally well to
-> the sources (re-indenting).  So probably "whether to rewrap or
-> reindent" would be a good change there.
+> But you are acting as if the bareness of the target repository
+> makes his point irrelevant.  I am a bit confused.
+>
+> About his point 1, I'd just stop at saying that "it is not so
+> hard" does not mean "we do not have to make it even easier".
+>
+> His second point is also a real issue.  If you allowed cloning
+> an empty repo (either bare or non-bare), then you and Bill can
+> both clone from it, come up with an initial commit each.  Bill
+> pushes his initial commit first.  Your later attempt to push
+> will hopefully fail with "non fast forward", if you know better
+> than forcing such a push, but then what?  You need to fetch, and
+> merge (or rebase) your change on top of Bill's initial commit,
+> and at that point the history you are trying to merge does not
+> have any common ancestor with his history.
 
-Updated patch follows.
+Just a wild idea. Doesn't it make sense to introduce perfect ultimate
+common ancestor of the universe, probably calling it "the NULL commit"?
+At first glance it seems that it can help to avoid corner cases
+automagically.
 
-Documentation/CodingGuidelines |   22 ++++++++++++++++++++++
-1 files changed, 22 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/=20
-CodingGuidelines
-index 3b042db..3eecb64 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -110,3 +110,25 @@ For C programs:
-    used in the git core command set (unless your command is clearly
-    separate from it, such as an importer to convert random-scm-X
-    repositories to git).
-+
-+Line wrapping:
-+
-+ - While there are no official hard limits for line wrapping, we
-+   generally try to keep shell scripts, C source files and AsciiDoc
-+   documentation within the range of "80-characters minus some
-+   slop".
-+
-+ - We assume that everyone has terminals that are at least 80
-+   columns wide.
-+
-+ - In practice, we try to keep lines somewhat narrower than 80
-+   columns to accommodate diff change marks [-+ ] and quoting ">> "
-+   in emails.
-+
-+ - In the case of documentation, mixing excessively long and short
-+   lines may make the AsciiDoc source harder to read, so try to
-+   keep line lengths consistent.
-+
-+ - When submitting patches use common sense to decide whether to
-+   rewrap (or reindent), avoiding gratuitous changes.
-+
---=20
-1.5.3.5
+-- 
+Sergei.
