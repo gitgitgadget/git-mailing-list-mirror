@@ -1,61 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: Git and Scmbug integration
-Date: Wed, 14 Nov 2007 01:04:57 +0100
-Message-ID: <20071114000457.GM3268@steel.home>
-References: <1194980792.4106.6.camel@localhost> <20071113234722.GK3268@steel.home> <ee77f5c20711131553j587cb566id6d76bd23182dd6@mail.gmail.com>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Pierre Habouzit <madcoder@debian.org>
+Subject: Re: [PATCH] Fix dependencies of parse-options test program
+Date: Wed, 14 Nov 2007 01:08:33 +0100
+Message-ID: <20071114000833.GC22836@artemis.corp>
+References: <20071113231636.GJ3268@steel.home> <Pine.LNX.4.64.0711132345310.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kristis Makris <kristis.makris@asu.edu>, git@vger.kernel.org,
-	scmbug-users@lists.mkgnu.net
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 01:06:12 2007
+Content-Type: multipart/signed; boundary="z4+8/lEcDcG5Ke9S";
+	protocol="application/pgp-signature"; micalg=SHA1
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 14 01:09:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Is5lN-0002FR-TT
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 01:05:50 +0100
+	id 1Is5ou-0003h5-EV
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 01:09:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759276AbXKNAFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 13 Nov 2007 19:05:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759294AbXKNAFB
-	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 19:05:01 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:46195 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750989AbXKNAFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 13 Nov 2007 19:05:00 -0500
-Received: from tigra.home (Faa9a.f.strato-dslnet.de [195.4.170.154])
-	by post.webmailer.de (klopstock mo44) (RZmta 14.0)
-	with ESMTP id j0478djADI5mTp ; Wed, 14 Nov 2007 01:04:57 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id AB729277AE;
-	Wed, 14 Nov 2007 01:04:57 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 9859156D22; Wed, 14 Nov 2007 01:04:57 +0100 (CET)
+	id S1759507AbXKNAIh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 13 Nov 2007 19:08:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759357AbXKNAIg
+	(ORCPT <rfc822;git-outgoing>); Tue, 13 Nov 2007 19:08:36 -0500
+Received: from pan.madism.org ([88.191.52.104]:35133 "EHLO hermes.madism.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1759507AbXKNAIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 13 Nov 2007 19:08:35 -0500
+Received: from madism.org (olympe.madism.org [82.243.245.108])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
+	by hermes.madism.org (Postfix) with ESMTP id 340BA2A14C;
+	Wed, 14 Nov 2007 01:08:33 +0100 (CET)
+Received: by madism.org (Postfix, from userid 1000)
+	id 2931F43BCF3; Wed, 14 Nov 2007 01:08:33 +0100 (CET)
+Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <junkio@cox.net>
 Content-Disposition: inline
-In-Reply-To: <ee77f5c20711131553j587cb566id6d76bd23182dd6@mail.gmail.com>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CculzxtolA10Q=
-X-RZG-CLASS-ID: mo07
+In-Reply-To: <Pine.LNX.4.64.0711132345310.4362@racer.site>
+X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
+User-Agent: Madmutt/devel (Linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64923>
 
-David Symonds, Wed, Nov 14, 2007 00:53:43 +0100:
-> On Nov 14, 2007 10:47 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
-> > > http://bugzilla.mkgnu.net/show_bug.cgi?id=992
-> > >
-> > > Git does not offer metadata describing a change on the commit trigger
-> > >
-> > > The commit trigger seems to be "post-commit" but it supplies no arguments.
-> >
-> > HEAD?
-> 
-> That wouldn't be particularly safe if you have a very quick succession
-> of commits (say, via a rebase, or automated operations) because HEAD
-> could be moved by the time the post-commit hook reads it.
 
-How's that? git-commit waits for its hooks.
+--z4+8/lEcDcG5Ke9S
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Nov 13, 2007 at 11:46:20PM +0000, Johannes Schindelin wrote:
+> Hi,
+>=20
+> apparently I forgot to send this patch, which I thought was only relevant=
+=20
+> in the builtin-commit branch of mine:
+
+  Btw is there a reason why git doesn't use the gcc -M* options to have
+proper dependency informations ? I understand not everyone has a gcc
+compiler at hand, but still, most of the compilers know how to do that.
+We could even borough depcomp from automake for that task.
+
+  I've been bitten by dependencies issues in git many times, and it's
+only now that I understand that it was dependency issues, I always
+assumed git Makefiles dealt with that already, and I believe that'd be
+nice to have a real solution for that.
+
+--=20
+=C2=B7O=C2=B7  Pierre Habouzit
+=C2=B7=C2=B7O                                                madcoder@debia=
+n.org
+OOO                                                http://www.madism.org
+
+--z4+8/lEcDcG5Ke9S
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQBHOjyBvGr7W6HudhwRAtQqAJsF0M6p4udTm0WLlbmBl+QYbDYSWgCfT5u6
+ET66dqYZhhRVNw1ldyPovJ4=
+=JVKL
+-----END PGP SIGNATURE-----
+
+--z4+8/lEcDcG5Ke9S--
