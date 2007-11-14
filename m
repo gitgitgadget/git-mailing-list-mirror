@@ -1,130 +1,92 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: [PATCH] Documentation: Fix man page breakage with DocBook XSL v1.72
-Date: Wed, 14 Nov 2007 10:38:46 +0100
-Message-ID: <20071114093846.GA21082@diku.dk>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Wed, 14 Nov 2007 10:35:46 +0100
+Message-ID: <vpqir45w4nh.fsf@bauges.imag.fr>
+References: <Pine.LNX.4.64.0711121715090.4362@racer.site>
+	<18232.35893.243300.179076@lisa.zopyra.com>
+	<Pine.LNX.4.64.0711121727130.4362@racer.site>
+	<vpq7iknqrtp.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121755460.4362@racer.site>
+	<vpqy7d3pck0.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711121804400.4362@racer.site>
+	<vpqoddzpc88.fsf@bauges.imag.fr>
+	<7v4pfr2kmh.fsf@gitster.siamese.dyndns.org>
+	<vpqzlxiiii6.fsf@bauges.imag.fr> <20071113100209.GE14735@spearce.org>
+	<vpqpryefmhj.fsf@bauges.imag.fr>
+	<CBAEC42B-9F50-4723-9847-640D9832532E@silverinsanity.com>
+	<vpqhcjp6clm.fsf@bauges.imag.fr>
+	<Pine.LNX.4.64.0711132352340.4362@racer.site>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 14 10:39:08 2007
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Bill Lear <rael@zopyra.com>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 14 10:39:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsEiA-0006PL-Vz
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 10:39:07 +0100
+	id 1IsEiu-0006fQ-Oy
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 10:39:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753846AbXKNJiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 04:38:50 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753650AbXKNJiu
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 04:38:50 -0500
-Received: from mgw2.diku.dk ([130.225.96.92]:33995 "EHLO mgw2.diku.dk"
+	id S1752947AbXKNJjg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 04:39:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753650AbXKNJjg
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 04:39:36 -0500
+Received: from imag.imag.fr ([129.88.30.1]:38535 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752656AbXKNJit (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 04:38:49 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw2.diku.dk (Postfix) with ESMTP id 4CD2419BDCE;
-	Wed, 14 Nov 2007 10:38:48 +0100 (CET)
-Received: from mgw2.diku.dk ([127.0.0.1])
- by localhost (mgw2.diku.dk [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
- id 28670-12; Wed, 14 Nov 2007 10:38:46 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw2.diku.dk (Postfix) with ESMTP id 5018219BD4A;
-	Wed, 14 Nov 2007 10:38:46 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id 029076DFED7; Wed, 14 Nov 2007 10:38:17 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 389C15B8001; Wed, 14 Nov 2007 10:38:46 +0100 (CET)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Virus-Scanned: amavisd-new at diku.dk
+	id S1752912AbXKNJjf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 04:39:35 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAE9ZrGJ005326
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 14 Nov 2007 10:35:53 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IsEew-00054W-MX; Wed, 14 Nov 2007 10:35:46 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IsEew-0004Ta-Jr; Wed, 14 Nov 2007 10:35:46 +0100
+In-Reply-To: <Pine.LNX.4.64.0711132352340.4362@racer.site> (Johannes Schindelin's message of "Tue\, 13 Nov 2007 23\:56\:00 +0000 \(GMT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 14 Nov 2007 10:35:56 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/64970>
 
->From version 1.72 it will replace all dots in roff requests with U+2302
-("house" character), and add escaping in output for all instances of dot
-that are not in roff requests. This caused the ".ft" hack forcing
-monospace font in listingblocks to end up as "\&.ft" and being visible
-in the resulting man page.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-The fix adds a DOCBOOK_XSL_172 build variable that will disable the
-hack. To allow this variable to be defined in config.mak it also moves
-build variable handling below the inclusion of config.mak.
+> But I illustrated that cloning from an empty repository makes no sense.
 
-Signed-off-by: Jonas Fonseca <fonseca@diku.dk>
----
- Documentation/Makefile      |   10 +++++++---
- Documentation/asciidoc.conf |    3 +++
- Makefile                    |    2 ++
- 3 files changed, 12 insertions(+), 3 deletions(-)
+And I, and others, illustrated the opposite.
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 39ec0ed..d886641 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -37,9 +37,6 @@ man7dir=$(mandir)/man7
- 
- ASCIIDOC=asciidoc
- ASCIIDOC_EXTRA =
--ifdef ASCIIDOC8
--ASCIIDOC_EXTRA += -a asciidoc7compatible
--endif
- INSTALL?=install
- RM ?= rm -f
- DOC_REF = origin/man
-@@ -52,6 +49,13 @@ DOCBOOK2X_TEXI=docbook2x-texi
- -include ../config.mak.autogen
- -include ../config.mak
- 
-+ifdef ASCIIDOC8
-+ASCIIDOC_EXTRA += -a asciidoc7compatible
-+endif
-+ifdef DOCBOOK_XSL_172
-+ASCIIDOC_EXTRA += -a docbook-xsl-172
-+endif
-+
- #
- # Please note that there is a minor bug in asciidoc.
- # The version after 6.0.3 _will_ include the patch found here:
-diff --git a/Documentation/asciidoc.conf b/Documentation/asciidoc.conf
-index af5b155..99d8874 100644
---- a/Documentation/asciidoc.conf
-+++ b/Documentation/asciidoc.conf
-@@ -23,7 +23,9 @@ ifdef::backend-docbook[]
- endif::backend-docbook[]
- 
- ifdef::backend-docbook[]
-+ifndef::docbook-xsl-172[]
- # "unbreak" docbook-xsl v1.68 for manpages. v1.69 works with or without this.
-+# v1.72 breaks with this because it replaces dots not in roff requests.
- [listingblock]
- <example><title>{title}</title>
- <literallayout>
-@@ -36,6 +38,7 @@ ifdef::doctype-manpage[]
- endif::doctype-manpage[]
- </literallayout>
- {title#}</example>
-+endif::docbook-xsl-172[]
- endif::backend-docbook[]
- 
- ifdef::doctype-manpage[]
-diff --git a/Makefile b/Makefile
-index cd6d469..6936f7c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -115,6 +115,8 @@ all::
- #
- # Define ASCIIDOC8 if you want to format documentation with AsciiDoc 8
- #
-+# Define DOCBOOK_XSL_172 if you want to format man pages with DocBook XSL v1.72.
-+#
- # Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
- # MakeMaker (e.g. using ActiveState under Cygwin).
- #
--- 
-1.5.3.5.1661.gcbf0-dirty
+> There is a huge difference between calling somebody an idiot on the one 
+> side, and investing some time to help somebody who has a suboptimal 
+> workflow on the other one.
+
+You didn't show me where my proposed flow was suboptimal.
+
+> But I fear that you took my help as a personal attack, and as a 
+> consequence you feel insulted, and I wasted my precious time.
+
+Do you call _that_ "help"?
+
+,----
+| Last time I checked, those geneticists did not clone thin air.  They 
+| always waited until they had something to clone.
+`----
+
+To me, this classifies either as "totally irrelevant remark", or as
+"making fun of someone". Definitely not "help".
 
 -- 
-Jonas Fonseca
+Matthieu
