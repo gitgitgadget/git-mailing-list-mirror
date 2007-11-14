@@ -1,121 +1,71 @@
-From: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Subject: [PATCH] Fix Solaris Workshop Compiler issues
-Date: Wed, 14 Nov 2007 21:31:13 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711142125460.17530@bianca.dialin.t-online.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 14 21:31:54 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Wed, 14 Nov 2007 21:30:46 +0100
+Message-ID: <14F93E86-32FA-41AD-BB02-256A599C82E0@wincent.com>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl> <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru> <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org> <18235.22445.16228.535898@lisa.zopyra.com>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Sergei Organov <osv@javad.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Wed Nov 14 21:33:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsOtq-0003Aw-PO
-	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:31:51 +0100
+	id 1IsOv6-0003fP-Qv
+	for gcvg-git-2@gmane.org; Wed, 14 Nov 2007 21:33:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760225AbXKNUbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 15:31:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753651AbXKNUbU
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:31:20 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42027 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753243AbXKNUbT (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 15:31:19 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id 411B047274
-	for <git@vger.kernel.org>; Wed, 14 Nov 2007 15:31:18 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 14 Nov 2007 15:31:18 -0500
-X-Sasl-enc: QScOkjyWvZawGmUqXFPYoJtQVzWO8zTML3V+QNA9piYl 1195072277
-Received: from [192.168.2.101] (p549A183B.dip0.t-ipconnect.de [84.154.24.59])
-	by mail.messagingengine.com (Postfix) with ESMTP id 83A3F2A23F
-	for <git@vger.kernel.org>; Wed, 14 Nov 2007 15:31:17 -0500 (EST)
+	id S1760414AbXKNUcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 15:32:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759960AbXKNUcu
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 15:32:50 -0500
+Received: from wincent.com ([72.3.236.74]:38203 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754606AbXKNUct convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 15:32:49 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAEKUlLM000489;
+	Wed, 14 Nov 2007 14:30:48 -0600
+In-Reply-To: <18235.22445.16228.535898@lisa.zopyra.com>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65011>
 
-Hello,
+El 14/11/2007, a las 21:16, Bill Lear escribi=F3:
 
-please find below a patch that solves an error when compiling with the 
-original Sun Solaris Compiler. When compiling out of the box, the 
-following happens:
-
-     CC diff-delta.o
-"diff-delta.c", line 314: identifier redeclared: create_delta
- 	current : function(pointer to const struct delta_index {unsigned long memsize, pointer to const void src_buf, unsigned long src_size, unsigned int hash_mask, array[-1] of pointer to struct index_entry {..} hash}, pointer to const void, unsigned long, pointer to unsigned long, unsigned long) returning pointer to void
- 	previous: function(pointer to const struct delta_index {unsigned long memsize, pointer to const void src_buf, unsigned long src_size, unsigned int hash_mask, array[-1] of pointer to struct index_entry {..} hash}, pointer to const void, unsigned long, pointer to unsigned long, unsigned long) returning pointer to void : "delta.h", line 44
-cc: acomp failed for diff-delta.c
-make: *** [diff-delta.o] Error 2
-
-This is because 'struct delta_index' is declared with no size in delta.h 
-and with size in diff-delta.c which does not fit.
-
-When the struct definition is done in the header file as one would 
-normally expect, everything compiles ok with exception of a 
-mkdtemp()-issue which somebody else already took care of on this list.
-
-Best regards
-
-Guido
+> % mkdir new_repo
+> % cd new_repo
+> [add content]
+> % git commit -a -m "Initial stuff"
+> % git config remote.origin.url git://host/new_repo
+> % git push
+> [ach! fails!  what's up??]
+> [poke, read, poke some more, try other things..]
+> [try setting the remote.origin.fetch?  No, that doesn't work]
+> [try setting branch.master.remote?  Just edit by hand??]
+> % git push master
+> [fails again; read some more; think, think, think...]
+> % git push origin master
+> [aha! finally it works]
 
 
-diff --git a/delta.h b/delta.h
-index 40ccf5a..06af9a7 100644
---- a/delta.h
-+++ b/delta.h
-@@ -1,8 +1,23 @@
-  #ifndef DELTA_H
-  #define DELTA_H
+Instead of using git-config I think the following would have worked:
 
--/* opaque object for delta index */
--struct delta_index;
-+struct index_entry {
-+    const unsigned char *ptr;
-+    unsigned int val;
-+};
-+
-+struct unpacked_index_entry {
-+    struct index_entry entry;
-+    struct unpacked_index_entry *next;
-+};
-+
-+struct delta_index {
-+    unsigned long memsize;
-+    const void *src_buf;
-+    unsigned long src_size;
-+    unsigned int hash_mask;
-+    struct index_entry *hash[FLEX_ARRAY];
-+};
+git remote add origin git.example.com:/pub/git/path_repositories/=20
+repo.git
+git push --all
 
-  /*
-   * create_delta_index: compute index data from given buffer
-diff --git a/diff-delta.c b/diff-delta.c
-index 9e440a9..2023e40 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -112,24 +112,6 @@ static const unsigned int U[256] = {
-  	0x133eb0ac, 0x6d8b90a1, 0x450d4467, 0x3bb8646a
-  };
+I guess it is not necessarily obvious the first time, which more than =20
+anything makes this a documentation issue. I now can't remember how I =20
+learnt this; probably by reading this list.
 
--struct index_entry {
--	const unsigned char *ptr;
--	unsigned int val;
--};
--
--struct unpacked_index_entry {
--	struct index_entry entry;
--	struct unpacked_index_entry *next;
--};
--
--struct delta_index {
--	unsigned long memsize;
--	const void *src_buf;
--	unsigned long src_size;
--	unsigned int hash_mask;
--	struct index_entry *hash[FLEX_ARRAY];
--};
--
-  struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
-  {
-  	unsigned int i, hsize, hmask, entries, prev_val, *hash_count;
+Cheers,
+Wincent
