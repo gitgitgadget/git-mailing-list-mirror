@@ -1,98 +1,70 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] git-branch --with=commit
-Date: Thu, 15 Nov 2007 18:27:26 +0100
-Message-ID: <20071115172726.GA4525@efreet.light.src>
-References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org> <4732BC6F.7070005@viscovery.net> <7vejf140jd.fsf@gitster.siamese.dyndns.org> <4732D440.2020504@op5.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Discussion] cherry-picking a merge
+Date: Thu, 15 Nov 2007 09:40:22 -0800
+Message-ID: <7vy7cz4dbt.fsf@gitster.siamese.dyndns.org>
+References: <7v3av86iqa.fsf@gitster.siamese.dyndns.org>
+	<20071115081648.GK14735@spearce.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Thu Nov 15 18:36:31 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 18:41:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isidg-00030a-UI
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 18:36:29 +0100
+	id 1IsiiS-0005CK-4F
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 18:41:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757461AbXKORgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 12:36:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757154AbXKORgL
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 12:36:11 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:44516 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756187AbXKORgK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 12:36:10 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id E256357445;
-	Thu, 15 Nov 2007 18:36:08 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id x4Uy6nI+3R1A; Thu, 15 Nov 2007 18:36:06 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 797A857443;
-	Thu, 15 Nov 2007 18:36:03 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1IsiUw-0001RI-6F; Thu, 15 Nov 2007 18:27:26 +0100
-Content-Disposition: inline
-In-Reply-To: <4732D440.2020504@op5.se>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1759529AbXKORkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 12:40:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758376AbXKORkt
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 12:40:49 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:38640 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758343AbXKORks (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 12:40:48 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 0944E2FB;
+	Thu, 15 Nov 2007 12:41:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 8B25195FBF;
+	Thu, 15 Nov 2007 12:41:01 -0500 (EST)
+In-Reply-To: <20071115081648.GK14735@spearce.org> (Shawn O. Pearce's message
+	of "Thu, 15 Nov 2007 03:16:49 -0500")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65143>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65144>
 
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
---+QahgC5+KEYLbs62
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Nov 08, 2007 at 10:17:52 +0100, Andreas Ericsson wrote:
-> Junio C Hamano wrote:
->> Johannes Sixt <j.sixt@viscovery.net> writes:
->>
->>> Junio C Hamano schrieb:
->>
->>>> With this patch, I could do this to find out which topic
->>>> branches already contain the faulty commit:
->>>>
->>>>     $ git branch --with=3Dmaint^ | grep /
->>>>       xx/maint-fix-foo
->>> It'd be helpful if you could construct the example in this commit
->>> message such that you don't need the "grep /" here; otherwise, the
->>> reader doesn't know which part of the effect is hidden by the grep.
->>
->> Yeah, in the example sequence, I think only maint itself and
->> xx/maint-fix-foo are shown, so there is no need for grep.
+> Junio C Hamano <gitster@pobox.com> wrote:
+> ...
+>> When you think about it, as long as the topological relationship
+>> between A and B is very similar to that of C and B (iow,
+>> "merge-base A B" and "merge-base C B" are the same), the effect
+>> should be the same as a real merge between B and C, shouldn't it?
+>> 
+>>   ---o---o---C---A---M
+>>       \       \     /
+>>        o---o---\---B
+>>                 \   \
+>>                  `---X
+>> 
+>> I am wondering if it makes sense to record the result of
+>> "cherry-pick -m" as a real merge between the current HEAD and
+>> all the other parents of the cherry-picked merge except the one
+>> that is named with the <parent-number>.
 >
-> And "maint" could certainly be stripped by the code itself, since the
-> user can reasonably be expected to know that plain maint will have
-> everything maint^ has.
+> Yes.
 
-DWIDNS (Do what I did not say).
+Actually, this turns to be a trick question ;-)
 
-Normally one would expect 'git branch --with=3Dmaint^' and
-'git branch --with=3D$(git ref-parse maint^)' to be exactly the same. Alas,
-with your suggestion, they would not.
-
---=20
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
---+QahgC5+KEYLbs62
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQFHPIF+Rel1vVwhjGURAidFAJsERfZVheW1TR/sFbEHOEMA/0AWUQCgrkl6
-lqJxMmOOyjJB0XspCWYEZ1c=
-=SdgI
------END PGP SIGNATURE-----
-
---+QahgC5+KEYLbs62--
+If there was an accidental clean merge between A and B, and a
+part of the duplicated same changes in the accidental clean
+merge sits between C and A, replaying the difference from A to M
+on top of C would not yield the same result as merging B into C.
