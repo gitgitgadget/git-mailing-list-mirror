@@ -1,54 +1,56 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Extend cat-file to take multiple arguments or read input
- from stdin.
-Date: Thu, 15 Nov 2007 04:34:02 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711150432420.4362@racer.site>
-References: <fhghqv$98a$1@ger.gmane.org>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: git-clean won't read global ignore
+Date: Thu, 15 Nov 2007 13:33:32 +0900
+Message-ID: <buoy7d0f7qb.fsf@dhapc248.dev.necel.com>
+References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
+	<20071113225057.GB22836@artemis.corp>
+	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
+	<buo6404gmu7.fsf@dhapc248.dev.necel.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Han-Wen Nienhuys <hanwen@xs4all.nl>
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	shunichi fuji <palglowr@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Thu Nov 15 05:34:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsWRA-00018h-0V
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 05:34:44 +0100
+	id 1IsWR9-00018h-C2
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 05:34:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754371AbXKOEeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 23:34:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXKOEeW
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 23:34:22 -0500
-Received: from mail.gmx.net ([213.165.64.20]:52476 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753196AbXKOEeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 23:34:21 -0500
-Received: (qmail invoked by alias); 15 Nov 2007 04:34:19 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp032) with SMTP; 15 Nov 2007 05:34:19 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1/x9nYb5qzxLt5yI3uQEdEgeFICXOHp3sswbjmmQx
-	6RLIHSbz+yKgDI
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fhghqv$98a$1@ger.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1753711AbXKOEeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 23:34:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXKOEeI
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 23:34:08 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:34980 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753711AbXKOEeH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 23:34:07 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAF4XV62018055;
+	Thu, 15 Nov 2007 13:33:32 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay11.aps.necel.com with ESMTP; Thu, 15 Nov 2007 13:33:32 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Thu, 15 Nov 2007 13:33:32 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 0362143B; Thu, 15 Nov 2007 13:33:32 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <buo6404gmu7.fsf@dhapc248.dev.necel.com> (Miles Bader's message of "Thu\, 15 Nov 2007 13\:21\:52 +0900")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65055>
 
-Hi,
+Miles Bader <miles.bader@necel.com> writes:
+>> I think the problem is core.excludesfile is too new to be
+>> noticed by anything other than git-add and git-status.
+>
+> "git-add -i" _doesn't_ seems to notice it though...
 
-On Thu, 15 Nov 2007, Han-Wen Nienhuys wrote:
+To clarify:  the "add untracked" sub-menu of "git-add -i"
 
-> With this functionality, the entire object database can be dumped with a 
-> limited number of processes: two cat-file processes for discovering size 
-> and type, and one cat-file process per type.
-
-IMHO a better idea would be a counterpart to fast-import, probably called 
-"fast-export".  You'd need only one process then, and it would not only be 
-faster, but would be usable by even more people, I guess.
-
-Ciao,
-Dscho
+-Miles
+-- 
+Do not taunt Happy Fun Ball.
