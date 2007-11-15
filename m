@@ -1,65 +1,83 @@
-From: Miles Bader <miles.bader@necel.com>
+From: Andreas Ericsson <ae@op5.se>
 Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
-Date: Thu, 15 Nov 2007 18:53:58 +0900
-Message-ID: <buotznnesw9.fsf@dhapc248.dev.necel.com>
-References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
-	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
-	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
-	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
-Reply-To: Miles Bader <miles@gnu.org>
+Date: Thu, 15 Nov 2007 11:06:33 +0100
+Message-ID: <473C1A29.2010703@op5.se>
+References: <20071115081807.06fe092b.chriscool@tuxfamily.org>	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com> <buotznnesw9.fsf@dhapc248.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Wincent Colaiuta <win@wincent.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 10:55:08 2007
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 11:07:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsbR8-0002wa-Vt
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 10:55:03 +0100
+	id 1Isbck-0006mk-54
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756160AbXKOJyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 04:54:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755843AbXKOJyo
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 04:54:44 -0500
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:45252 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754112AbXKOJyn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 04:54:43 -0500
-Received: from relay11.aps.necel.com ([10.29.19.46])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAF9qw74026546;
-	Thu, 15 Nov 2007 18:53:58 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Thu, 15 Nov 2007 18:53:58 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 15 Nov 2007 18:53:58 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 04F8143B; Thu, 15 Nov 2007 18:53:58 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com> (Wincent Colaiuta's message of "Thu\, 15 Nov 2007 10\:36\:02 +0100")
+	id S1756218AbXKOKGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 05:06:39 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754953AbXKOKGj
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:06:39 -0500
+Received: from mail.op5.se ([193.201.96.20]:51729 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753548AbXKOKGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 05:06:38 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id EA1181F0871B;
+	Thu, 15 Nov 2007 11:06:36 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WewLRpIVe1OH; Thu, 15 Nov 2007 11:06:35 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id DB0D61F08716;
+	Thu, 15 Nov 2007 11:06:34 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <buotznnesw9.fsf@dhapc248.dev.necel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65101>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65102>
 
-Wincent Colaiuta <win@wincent.com> writes:
-> the shorter form without sed is arguably more readable:
->
-> -		echo "$head" | sed 's#^refs/heads/##' >"$GIT_DIR/head-name"
-> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
+Miles Bader wrote:
+> Wincent Colaiuta <win@wincent.com> writes:
+>> the shorter form without sed is arguably more readable:
+>>
+>> -		echo "$head" | sed 's#^refs/heads/##' >"$GIT_DIR/head-name"
+>> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
+> 
+> Er, I suppose -- if you are acquainted with that particular shell
+> variable syntax (I suspect knowledge of sed is far more widespread).
+> 
+> [personally, I know that syntax has something to do with replacing
+> something with something else, but really haven't much clue other than
+> that, and I always _thought_ it was bash-specific and so avoided using
+> any of that stuff.]
+> 
 
-Er, I suppose -- if you are acquainted with that particular shell
-variable syntax (I suspect knowledge of sed is far more widespread).
+It says "remove refs/heads/ from the beginning of the string pointed to
+by $head".
 
-[personally, I know that syntax has something to do with replacing
-something with something else, but really haven't much clue other than
-that, and I always _thought_ it was bash-specific and so avoided using
-any of that stuff.]
+It's not a bashism. Some extensions to that syntax are though (I think).
+If you want to be sure of portability, use sed instead. git uses this
+syntax often enough that it's worth using everywhere, but usually only
+in porcelain commands which one can relatively safely assume are run on
+at least decently up-to-date developer workstations.
 
--miles
+You'll note that stuff that absolutely *has* to reside server-side are
+entirely in C.
+
 -- 
-People who are more than casually interested in computers should have at
-least some idea of what the underlying hardware is like.  Otherwise the
-programs they write will be pretty weird.  -- Donald Knuth
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
