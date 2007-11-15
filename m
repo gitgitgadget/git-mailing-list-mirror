@@ -1,64 +1,48 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: [BUG] t9101 (master) busted on Leopard
-Date: Thu, 15 Nov 2007 14:46:14 +0100
-Message-ID: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+From: Paolo Bonzini <paolo.bonzini@lu.unisi.ch>
+Subject: git-fetch--tool and contrib/examples/git-fetch.sh
+Date: Thu, 15 Nov 2007 14:12:08 +0100
+Message-ID: <473C45A8.7020903@lu.unisi.ch>
+Reply-To: bonzini@gnu.org
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 14:46:44 2007
+X-From: git-owner@vger.kernel.org Thu Nov 15 15:12:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isf3D-0002yW-W5
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 14:46:36 +0100
+	id 1IsfSI-0004bZ-Ea
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 15:12:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755113AbXKONqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 08:46:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754341AbXKONqR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 08:46:17 -0500
-Received: from wincent.com ([72.3.236.74]:39612 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751178AbXKONqR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 08:46:17 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAFDkFsA020263
-	for <git@vger.kernel.org>; Thu, 15 Nov 2007 07:46:16 -0600
-X-Mailer: Apple Mail (2.912)
+	id S1751102AbXKOOMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 09:12:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751597AbXKOOML
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 09:12:11 -0500
+Received: from posta.ti-edu.ch ([195.176.176.171]:49607 "EHLO ti-edu.ch"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750854AbXKOOMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 09:12:10 -0500
+X-Greylist: delayed 3603 seconds by postgrey-1.27 at vger.kernel.org; Thu, 15 Nov 2007 09:12:10 EST
+X-Virus-Scanned: by cgpav
+Received: from mail.lu.unisi.ch ([195.176.178.40] verified)
+  by ti-edu.ch (CommuniGate Pro SMTP 5.1.12)
+  with ESMTP id 22997881 for git@vger.kernel.org; Thu, 15 Nov 2007 14:12:05 +0100
+Received: from scientist-2.mobile.usilu.net ([192.168.76.126]) by mail.lu.unisi.ch over TLS secured channel with Microsoft SMTPSVC(6.0.3790.3959);
+	 Thu, 15 Nov 2007 14:12:05 +0100
+User-Agent: Thunderbird 2.0.0.9 (Macintosh/20071031)
+X-OriginalArrivalTime: 15 Nov 2007 13:12:05.0143 (UTC) FILETIME=[1E3DD270:01C82789]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65122>
 
-Was just running the test suite against the master branch and saw that  
-t9101 is currently failing on Leopard, and a review with git-bisect  
-indicates that it has been ever since it was first introduced (in  
-commit 15153451). Not sure if this problem is Leopard-specific or not  
-as I only have one machine.
+When git-fetch was builtin-ized the previous script was moved to 
+contrib/examples.  Now, it is the sole remaining user for most of 
+git-parse-remote (except for get_remote_url) and for git-fetch--tool.
 
-This is the specific test that's failing:
+Would it make sense to remove git-fetch--tool, the dead parts of 
+git-parse-remote, and contrib/examples/git-fetch.sh?  Anyway, the script 
+is very involuted unlike the other scripts in contrib/examples.
 
-* FAIL 25: test propget
-git-svn propget svn:ignore . | cmp - prop.expect &&
-cd deeply &&
-git-svn propget svn:ignore . | cmp - ../prop.expect &&
-git-svn propget svn:entry:committed-rev nested/directory/.keep 	  |  
-cmp - ../prop2.expect &&
-git-svn propget svn:ignore .. | cmp - ../prop.expect &&
-git-svn propget svn:ignore nested/ | cmp - ../prop.expect &&
-git-svn propget svn:ignore ./nested | cmp - ../prop.expect &&
-git-svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
-
-The problem is that the for line:
-
-git-svn propget svn:entry:committed-rev nested/directory/.keep
-
-The test expects the "8", but it actually yields "7".
-
-I'm not a git-svn user myself, but if there's anything I can do to  
-help diagnose this problem further on Leopard please let me know.
-
-Cheers,
-Wincent
+Paolo
