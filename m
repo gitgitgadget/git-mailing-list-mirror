@@ -1,96 +1,72 @@
 From: Bruce Stephens <bruce.stephens@isode.com>
-Subject: Re: Odd .gitignore behaviour
-Date: Thu, 15 Nov 2007 20:15:19 +0000
-Message-ID: <80ir43e04o.fsf@tiny.isode.net>
-References: <80ir431xny.fsf@tiny.isode.net>
-            <alpine.LFD.0.9999.0711151044150.2786@woody.linux-foundation.org>
+Subject: Re: refining .gitignores
+Date: Thu, 15 Nov 2007 20:28:06 +0000
+Message-ID: <80ejerdzjd.fsf@tiny.isode.net>
+References: <804pfobgkp.fsf@tiny.isode.net>
+            <20071114230258.GG3973@steel.home>
+            <807ikj3fge.fsf@tiny.isode.net>
+            <20071115192654.GA3552@steel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 21:15:43 2007
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 21:28:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isl7n-00031v-2Q
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:15:43 +0100
+	id 1IslKB-0008UF-1k
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760612AbXKOUP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 15:15:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757830AbXKOUP0
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:15:26 -0500
-Received: from rufus.isode.com ([62.3.217.251]:38991 "EHLO rufus.isode.com"
+	id S1752269AbXKOU2P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 15:28:15 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752258AbXKOU2O
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:28:14 -0500
+Received: from rufus.isode.com ([62.3.217.251]:39467 "EHLO rufus.isode.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758652AbXKOUPZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 15:15:25 -0500
+	id S1751718AbXKOU2N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 15:28:13 -0500
 Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
           by rufus.isode.com (smtp internal) via TCP with SMTP 
-          id <Rzyo1wBBVIJK@rufus.isode.com>; Thu, 15 Nov 2007 20:15:21 +0000
+          id <Rzyr1gBBVHDz@rufus.isode.com>; Thu, 15 Nov 2007 20:28:08 +0000
 Received: by tiny.isode.net (sSMTP sendmail emulation);
-          Thu, 15 Nov 2007 20:15:19 +0000
-X-Hashcash: 1:20:071115:torvalds@linux-foundation.org::A5dRvJ+4P6NRgtNE:000000000000000000000000000000002Gdf
-X-Hashcash: 1:20:071115:git@vger.kernel.org::wvT7eAqCWnj/j5+4:0000000000000000000000000000000000000000008koa
-In-Reply-To: <alpine.LFD.0.9999.0711151044150.2786@woody.linux-foundation.org> (Linus Torvalds's message of "Thu\, 15 Nov 2007 10\:56\:27 -0800 \(PST\)")
+          Thu, 15 Nov 2007 20:28:06 +0000
+X-Hashcash: 1:20:071115:raa.lkml@gmail.com::Gp4B1gTAkEa8R7L6:00000000000000000000000000000000000000000001RRr
+X-Hashcash: 1:20:071115:git@vger.kernel.org::/5FNMzmY2B0MvmQn:0000000000000000000000000000000000000000000FT+
+In-Reply-To: <20071115192654.GA3552@steel.home> (Alex Riesen's message of "Thu\, 15 Nov 2007 20\:26\:54 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65156>
 
-Linus Torvalds <torvalds@linux-foundation.org> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
 
 [...]
 
-> So what you describe sounds wrong.
->
-> But my quick test didn't actually support the behaviour you see. In this 
-> situation:
->
-> 	[torvalds@woody git-test]$ cat .gitignore
-> 	a*
-> 	[torvalds@woody git-test]$ cat subdir/.gitignore
-> 	!a-ok
-> 	[torvalds@woody git-test]$ find *
-> 	all-files
-> 	subdir
-> 	subdir/a-ok
-> 	[torvalds@woody git-test]$ git ls-files -o --exclude-per-directory=.gitignore
-> 	.gitignore
-> 	subdir/.gitignore
-> 	subdir/a-ok
->
-> ie we *do* show "showdir/a-ok" (but we don't show "all-files") because 
-> a-ok is explicitly marked to be not ignored by a higher-priority rule.
+> .gitignore? Without "s"?
 
-OK, and if I say "git add subdir/a-ok" I get no error, as expected.
+Yes, my mistake.  I added '*.c' to ".gitignore".
 
-So extend it just a tiny bit, moving a-ok down a directory and using
-the negative pattern "!subsubdir/a-ok" to match:
+> Maybe your .c files are already added to index? Otherwise you have to
+> use the second form. It shows known-to-Git ignored files.
 
-    brs% cat .gitignore
-    a*
-    brs% cat subdir/.gitignore
-    !subsubdir/a-ok
-    brs% find *
-    all-files
-    subdir
-    subdir/.gitignore
-    subdir/subsubdir
-    subdir/subsubdir/a-ok
-    subdir/a-ok
-    brs% git ls-files -o --exclude-per-directory=.gitignore
-    .gitignore
-    subdir/.gitignore
-    subdir/subsubdir/a-ok
-    brs% git add subdir/subsubdir/a-ok
-    The following paths are ignored by one of your .gitignore files:
-    subdir/subsubdir/a-ok
-    Use -f if you really want to add them.
-    fatal: no files added
+They are in the index.  What I want is a list of files which are known
+to git, which are matched by the default rules (in particular the
+.gitignore files).
 
-So I think the output from git-ls-files is as expected (as I interpret
-the manpage and your explanation).  So is git-add just using some
-different code?
+So that should be this?
+
+    git ls-files --exclude-per-directory=.gitignore -i
+
+But that shows nothing at all, and it still shows nothing if I add a
+"builtin-add.c" as an argument to it (this file exists, and is in the
+index).
+
+"git add builtin-add.c" fails, complaining (correctly) that the path
+is ignored by one of my .gitignore files.
+
+We're obviously talking past one another somehow, or I have a broken
+build of git?
 
 [...]
