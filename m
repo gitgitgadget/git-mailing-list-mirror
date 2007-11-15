@@ -1,74 +1,67 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
-Date: Thu, 15 Nov 2007 21:59:28 +0900
-Message-ID: <buooddvekb3.fsf@dhapc248.dev.necel.com>
-References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
-	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
-	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
-	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
-	<buotznnesw9.fsf@dhapc248.dev.necel.com>
-	<86tznn4y7v.fsf@lola.quinscape.zz>
-	<fc339e4a0711150300n64b9d670o1e183553a9de0cba@mail.gmail.com>
-	<861war4uzp.fsf@lola.quinscape.zz>
-Reply-To: Miles Bader <miles@gnu.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare repositories?
+Date: Thu, 15 Nov 2007 14:15:30 +0100
+Message-ID: <86pryb3b0t.fsf@lola.quinscape.zz>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br> <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl> <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20=04?=
+	=?ISO-8859-1?Q?<Pine.LNX.4.64.0?= =?ISO-8859-1?Q?711121715090.436?=
+	=?ISO-8859-1?Q?2@racer.site>?= <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?Pine.=04LNX.4.64.0?= =?ISO-8859-1?Q?711121804400.436?=
+	=?ISO-8859-1?Q?2@racer.site>?= <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru> <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org> <85mytg1f6n.fsf@lola.goethe.zz> <473C0875.3020805@op5.se>  =?ISO-8859-1?Q?=20<?=
+	=?ISO-8859-1?Q?Pine.=04LNX.4.64.0?= =?ISO-8859-1?Q?711151330300.167?=
+	=?ISO-8859-1?Q?28@wbgn129.bioze?= =?ISO-8859-1?Q?ntrum.uni-wuerzb?=
+	=?ISO-8859-1?Q?urg.de>?=
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Kastrup <dak@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 14:00:03 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 14:16:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IseKA-0003MD-G0
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 14:00:02 +0100
+	id 1IseZv-0000h8-Li
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 14:16:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752891AbXKOM7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 07:59:45 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbXKOM7p
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 07:59:45 -0500
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:49947 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170AbXKOM7n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 07:59:43 -0500
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAFCxLGw005432;
-	Thu, 15 Nov 2007 21:59:28 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Thu, 15 Nov 2007 21:59:28 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 15 Nov 2007 21:59:28 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 9DA7B43B; Thu, 15 Nov 2007 21:59:28 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <861war4uzp.fsf@lola.quinscape.zz> (David Kastrup's message of "Thu\, 15 Nov 2007 12\:18\:50 +0100")
+	id S1752280AbXKONQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 08:16:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXKONQB
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 08:16:01 -0500
+Received: from main.gmane.org ([80.91.229.2]:56105 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751609AbXKONQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 08:16:00 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IseZM-0003Up-QN
+	for git@vger.kernel.org; Thu, 15 Nov 2007 13:15:44 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 13:15:44 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 13:15:44 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:0AwYyK8ySfwfTDulldOY1ZRifsM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65117>
 
-David Kastrup <dak@gnu.org> writes:
->> For typical straightforward usage, there seems little problem.
->>
->> [The main portability problems I've actually _noticed_ with sed are
->> the "-e" versus ";" issue and what happens with "\n" in various
->> contexts...]
->
-> What about character classes containing the pattern delimiter, \+, \?,
-> \|, nested grouping, anchors in groups, * after groups?  That's all
-> rather straightforward usage.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-You're right that the regexp stuff is not really "dusty corners", but
-none of those affect typical sed usage I think -- most sed usage being
-really rather simple (and the old "regexps differ between traditional
-unix tools" issue tends to dampen enthusiasm for really complex regexps
-with those tools).
+> Seriously again, there are sure things git was not optimised for.
+> If some complaints involving such (from git's POV) suboptimal
+> workflows are retorted by saying so, it is not calling somebody
+> "stupid".  Sheesh.
 
-I looked over the various random uses of sed I have locally (a couple of
-hundred instances), and the only thing which would potentially affect
-any of them would be the SVR3 thing about no nested groups (does anybody
-actually care about SVR3 though?!?).
+"Conditioned by retarded systems" is pretty close, and it was pretty
+much the wording employed.  And then, when someone gets upset, he gets
+"Sheesh"ed off, basically calling him stupid again.
 
--Miles
+"People skills" is not something I would associate with the git
+developer list in general.
 
 -- 
-Yo mama's so fat when she gets on an elevator it HAS to go down.
+David Kastrup
