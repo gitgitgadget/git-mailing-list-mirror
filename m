@@ -1,83 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
-	repositories?
-Date: Thu, 15 Nov 2007 01:19:42 -0500
-Message-ID: <20071115061941.GC10185@sigill.intra.peff.net>
-References: <18232.35893.243300.179076@lisa.zopyra.com> <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr> <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr> <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru> <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Problem in our test setup
+Date: Thu, 15 Nov 2007 06:24:48 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711150618300.4362@racer.site>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sergei Organov <osv@javad.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Bill Lear <rael@zopyra.com>,
-	Jan Wielemaker <wielemak@science.uva.nl>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 07:22:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 07:25:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsY7F-0006Dy-2U
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 07:22:17 +0100
+	id 1IsYAe-0006xf-5K
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 07:25:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764083AbXKOGTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 01:19:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764074AbXKOGTs
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 01:19:48 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2173 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1764042AbXKOGTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 01:19:47 -0500
-Received: (qmail 6487 invoked by uid 111); 15 Nov 2007 06:19:45 -0000
-Received: from ppp-216-106-96-30.storm.ca (HELO sigill.intra.peff.net) (216.106.96.30)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 15 Nov 2007 01:19:45 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2007 01:19:42 -0500
-Content-Disposition: inline
-In-Reply-To: <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org>
+	id S1765410AbXKOGZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 01:25:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765409AbXKOGZK
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 01:25:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:54190 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1765003AbXKOGZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 01:25:07 -0500
+Received: (qmail invoked by alias); 15 Nov 2007 06:25:05 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp057) with SMTP; 15 Nov 2007 07:25:05 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18yS/w+1K8y79wmEkX4g8L0yPvyloRWSdNSpoVCSg
+	2rL2dmKxMmHnJF
+X-X-Sender: gene099@racer.site
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65066>
 
-On Wed, Nov 14, 2007 at 11:32:32AM -0800, Junio C Hamano wrote:
+Hi,
 
-> We already spent quite a lot of time on this thread, and at
-> least to me I feel that my time would have been better spent if
-> instead I were looking at patches on some other topics, or
-> working on cleaning up cherry-pick/revert implementation.
+I just realised that our test setup has a serious problem.  In my 
+semi-private builtin-commit branch, there is no runstatus anymore.  Now, 
+I got a new toy yesterday, and installed git on it (my fork, including 
+builtin-commit), and all of a sudden tests were failing.
 
-Personally, I think cloning empty repositories should be allowed, but
-there are many more interesting things to be working on right now.
-However, I think the current behavior of not printing anything is quite
-bad, so here is a productive email that didn't take too long to write.
+The failing tests were t3001 and t4001, because they call runstatus, and 
+runstatus is no longer there in the builtin-commit branch.
 
--- >8 --
-git-clone: print an error message when trying to clone empty repo
+So why did I not catch this earlier?
 
-Previously, cloning an empty repository looked like this:
+Because my prefix is the default prefix, which is $HOME/bin, and which is 
+not turned off in the tests.  So git finds "runstatus", because it is 
+still installed.
 
-$ (mkdir parent && cd parent && git --bare init)
-$ git-clone parent child
-Initialized empty Git repository in /home/peff/clone/child/.git/
-$ cd child
--bash: cd: child: No such file or directory
-$ echo 'wtf?' | mail git@vger.kernel.org
+Now, things get worse if you install to /usr/bin/, which I do sometimes, 
+too, because you _cannot_ remove that from the PATH.
 
-Now we at least report that the clone was not successful.
+Okay, so removing a command is not all that common, but that means that we 
+have to be extra careful when we do so.
 
----
-diff --git a/git-clone.sh b/git-clone.sh
-index 18003ab..e2b7a9c 100755
---- a/git-clone.sh
-+++ b/git-clone.sh
-@@ -278,7 +278,8 @@ yes)
- 				      find objects -type f -print | sed -e 1q)
- 			# objects directory should not be empty because
- 			# we are cloning!
--			test -f "$repo/$sample_file" || exit
-+			test -f "$repo/$sample_file" ||
-+				die "fatal: cannot clone empty repository"
- 			if ln "$repo/$sample_file" "$GIT_DIR/objects/sample" 2>/dev/null
- 			then
- 				rm -f "$GIT_DIR/objects/sample"
+Ciao,
+Dscho
