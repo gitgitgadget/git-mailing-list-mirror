@@ -1,54 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problem in our test setup
-Date: Wed, 14 Nov 2007 23:11:50 -0800
-Message-ID: <7vzlxg6kzt.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711150618300.4362@racer.site>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2] Bisect reset: remove bisect refs that may have been
+ packed.
+Date: Thu, 15 Nov 2007 08:18:07 +0100
+Message-ID: <20071115081807.06fe092b.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 15 08:12:25 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 08:12:26 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsYtj-0000zT-25
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:12:23 +0100
+	id 1IsYtg-0000zT-P2
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:12:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764251AbXKOHL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 02:11:59 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S934003AbXKOHL5
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:11:57 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:33686 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933889AbXKOHL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 02:11:56 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 92BD22EF;
-	Thu, 15 Nov 2007 02:12:16 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2E3B094B0E;
-	Thu, 15 Nov 2007 02:12:14 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711150618300.4362@racer.site> (Johannes
-	Schindelin's message of "Thu, 15 Nov 2007 06:24:48 +0000 (GMT)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1764967AbXKOHL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 02:11:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933897AbXKOHL0
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:11:26 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:49355 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933940AbXKOHLY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 02:11:24 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 3A26E1AB2E4;
+	Thu, 15 Nov 2007 08:11:23 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 0266F1AB2C8;
+	Thu, 15 Nov 2007 08:11:22 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65074>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+If refs were ever packed in the middle of bisection, the bisect
+refs were not removed from the "packed-refs" file.
 
-> Because my prefix is the default prefix, which is $HOME/bin, and which is 
-> not turned off in the tests.  So git finds "runstatus", because it is 
-> still installed.
+This patch fixes this problem by using "git update-ref -d $ref $hash"
+in "bisect_clean_state".
 
-Yes, we have a problem.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh               |   11 ++++++++++-
+ t/t6030-bisect-porcelain.sh |   12 ++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
 
-We could solve this for commands issued in "git foo" form by not
-looking for "git-foo" anywhere other than in git_exec_path.  The
-scripts and tests only prepend GIT_EXEC_PATH to their PATH and
-run "git foo" or "git-foo", but if we replace all of them to the
-non-dash form, wouldn't that solve the issue as well?
+	Ooops, there was a problem with the previous patch
+	if "git bisect reset" was used when not bisecting.
+
+	Sorry.
+
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 1ed44e5..584906f 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -351,7 +351,16 @@ bisect_reset() {
+ 
+ bisect_clean_state() {
+ 	rm -fr "$GIT_DIR/refs/bisect"
+-	rm -f "$GIT_DIR/refs/heads/bisect"
++
++	# There may be some refs packed during bisection.
++	git for-each-ref --format='%(refname) %(objectname)' \
++		"refs/bisect/*" | while read ref hash
++	do
++		git update-ref -d $ref $hash
++	done
++
++	hash=$(git show-ref --hash refs/heads/bisect)
++	test -n "$hash" && git update-ref -d refs/heads/bisect $hash
+ 	rm -f "$GIT_DIR/BISECT_LOG"
+ 	rm -f "$GIT_DIR/BISECT_NAMES"
+ 	rm -f "$GIT_DIR/BISECT_RUN"
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 53956c0..f09db62 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -71,6 +71,18 @@ test_expect_success 'bisect start with one bad and good' '
+ 	git bisect next
+ '
+ 
++test_expect_success 'bisect reset removes packed refs' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH3 &&
++	git pack-refs --all --prune &&
++	git bisect next &&
++	git bisect reset &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	test -z "$(git for-each-ref "refs/heads/bisect")"
++'
++
+ # $HASH1 is good, $HASH4 is bad, we skip $HASH3
+ # but $HASH2 is bad,
+ # so we should find $HASH2 as the first bad commit
+-- 
+1.5.3.5.722.g789fd-dirty
