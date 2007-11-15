@@ -1,58 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Grammar fixes for gitattributes documentation
-Date: Thu, 15 Nov 2007 02:27:03 -0500
-Message-ID: <20071115072703.GF10185@sigill.intra.peff.net>
-References: <33080F0B-80C0-4860-9A74-C6878EE3B2CD@wincent.com> <7vfxz9kxz3.fsf@gitster.siamese.dyndns.org> <3461FD6E-1C46-4278-9EB0-5D730BB99084@wincent.com> <20071115071558.GE10185@sigill.intra.peff.net> <ee77f5c20711142320x1a070b21xf00f0853fe09e34c@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Unify the use of standard set of exclude files
+Date: Wed, 14 Nov 2007 23:41:02 -0800
+Message-ID: <7vk5ok6jn5.fsf@gitster.siamese.dyndns.org>
+References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
+	<20071113225057.GB22836@artemis.corp>
+	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
+	<7v4pfo813i.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: David Symonds <dsymonds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 08:27:29 2007
+Cc: shunichi fuji <palglowr@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 08:41:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsZ8J-0004yF-RG
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:27:28 +0100
+	id 1IsZLu-00007v-OY
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:41:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757006AbXKOH1K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 02:27:10 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752893AbXKOH1J
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:27:09 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3345 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751946AbXKOH1I (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 02:27:08 -0500
-Received: (qmail 6945 invoked by uid 111); 15 Nov 2007 07:27:06 -0000
-Received: from ppp-216-106-96-30.storm.ca (HELO sigill.intra.peff.net) (216.106.96.30)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 15 Nov 2007 02:27:06 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2007 02:27:03 -0500
-Content-Disposition: inline
-In-Reply-To: <ee77f5c20711142320x1a070b21xf00f0853fe09e34c@mail.gmail.com>
+	id S1755258AbXKOHlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 02:41:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755125AbXKOHlM
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:41:12 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:50270 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755070AbXKOHlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 02:41:11 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id CB7052F2;
+	Thu, 15 Nov 2007 02:41:31 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2BAD294BA5;
+	Thu, 15 Nov 2007 02:41:26 -0500 (EST)
+In-Reply-To: <7v4pfo813i.fsf_-_@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 14 Nov 2007 22:38:41 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65078>
 
-On Thu, Nov 15, 2007 at 06:20:10PM +1100, David Symonds wrote:
+By the way, I think the way in which excluded() is called inside
+ls-files for --cached, --staged, --deleted and --modified is
+totally bogus, and as a result, ls-files does not honor
+per-directory exclude files properly.
 
-> > >>> +A `filter` attribute can be set to a string value which names a
-> > >>> filter driver specified in the configuration.
-> 
-> "that" should be used to introduce restrictive clauses (as you point
-> out), and this use should be a restrictive clause, since you can't set
-> the attribute to just any value--you need to set it to the value
-> *that* names the desired filter driver.
+This is because dir.c:excluded() needs to be called after
+setting up the exclude_list stack properly, just like how
+dir.c:read_directory() and unpack-trees.c:unpack_trees_rec()
+do.  The directory traversal should look like this:
 
-I don't see it as restrictive, but I can see how one would. I think it
-is not a case of "this wording is correct" but rather "this wording
-means one thing, and the other wording means another."
+ - Call push_exclude_per_directory() upon entering a directory.
+   This reads the per directory exclude file (.gitignore) from
+   the directory, and push it into the existing stack.  This
+   way, the patterns from the file is set up to override the
+   existing patterns from the .gitignore files of higher level
+   directories.
 
-But the two meanings are likely to be interpreted the same way, so I
-think it isn't a big deal (although "which" without a comma _is_ wrong
-:) ).
+ - Ask excluded() if your paths in that directory matches, and
+   do whatever you want to happen.
 
--Peff
+ - Call pop_exclude_per_directory() when leaving the directory,
+   to free the patterns read from the .gitignore file there.
+
+Because the codepaths in question just iterate over the cache
+entries without telling the per-directory exclude file stack
+which set of .gitignore files should apply to the inquiry using
+push/pop mechanism, I _think_ excluded(dir, "a/b") calls in the
+codepaths do not honor .gitignore nor a/.gitignore file when
+checking if "a/b" is to be ignored.
+
+The push/pop mechanism was designed to be used in read_directory()
+and it was a good match to the code structure to make recursive
+calls to read_directory_recursive().  Because the paths are
+sorted in the pathname order, we can make appropriate calls to
+push/pop while iterating over the cache in these codepaths to
+fix this issue.
+
+As a longer term fix, I think it makes more sense to make
+excluded() automatically push/pop the per directory exclude file
+stack, just like the gitattributes mechanism maintains the
+attribute stack to match and cache the last checked path.
