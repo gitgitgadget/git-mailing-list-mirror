@@ -1,56 +1,66 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: core.excludesfile clean-up
-Date: Thu, 15 Nov 2007 15:16:21 +0100
-Message-ID: <473C54B5.5060500@viscovery.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [BUG] t7004 (master) busted on Leopard
+Date: Thu, 15 Nov 2007 14:37:36 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711151434060.30886@racer.site>
+References: <17E3F66C-4644-4B64-817C-88062727A2D9@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 15:16:47 2007
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 15:38:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsfWO-0006En-PY
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 15:16:45 +0100
+	id 1IsfrO-00079e-72
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 15:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756759AbXKOOQ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 09:16:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756689AbXKOOQ2
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 09:16:28 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:20243 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756620AbXKOOQ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 09:16:27 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IsfVW-0007W4-JA; Thu, 15 Nov 2007 15:15:50 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id 8ABCB6C4; Thu, 15 Nov 2007 15:16:21 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1757693AbXKOOiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 09:38:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756934AbXKOOiK
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 09:38:10 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42348 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1756683AbXKOOiJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 09:38:09 -0500
+Received: (qmail invoked by alias); 15 Nov 2007 14:38:07 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp046) with SMTP; 15 Nov 2007 15:38:07 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+2hJJSOqu2sDow3UJQWSMUvlL1WAokAvQe/YP6+8
+	ZM54OVrOR7YhYg
+X-X-Sender: gene099@racer.site
+In-Reply-To: <17E3F66C-4644-4B64-817C-88062727A2D9@wincent.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65124>
 
-Junio,
+Hi,
 
-in 039bc64e886 core.excludesfile clean-up you wrote:
+On Thu, 15 Nov 2007, Wincent Colaiuta wrote:
 
- > We probably could change git-ls-files to use the standard set
- > when no excludes are specified on the command line and ignore
- > processing was asked, or something like that, but that will be a
- > change in semantics and might break people's scripts in a subtle
- > way.  I am somewhat reluctant to make such a change.
+> Commit 4d8b1dc850 added a couple of tests to t7004, and my testing reveals
+> that this one has been broken on Leopard since then:
+> 
+> * FAIL 83: message in editor has initial comment
+> GIT_EDITOR=cat git tag -a initial-comment > actual || true &&
+> test $(sed -n "/^\(#\|\$\)/p" actual | wc -l) -gt 0
 
-Just for the records: git-filter-branch uses git-ls-files in a way that 
-requires that no exclude files are in effect. In particular, if the tree 
-filter creates new files, they are unconditionally added. See the 
-documentation of --tree-filter.
+I think this is our good old friend, MacOSX' sed.  (Wasn't there a 
+question today what's wrong with using sed?  I think this issue 
+qualifies.)
 
--- Hannes
+I imagine that it is that MacOSX' sed is adding a trailing newline (not 
+the regexp like you suggested).  Which means that "wc -l" would print "1".  
+(You can see for yourself if you run the script with "sh -x ...".)
+
+IMHO a good solution would be
+
+	test -z "$(grep -e '^#' -e '^$' actual)"
+
+Could you test, please?
+
+Thanks,
+Dscho
