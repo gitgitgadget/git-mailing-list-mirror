@@ -1,112 +1,65 @@
-From: Simon Hausmann <simon@lst.de>
-Subject: [PATCH] git-p4: Fix direct import from perforce after fetching changes through git from origin
-Date: Thu, 15 Nov 2007 10:38:45 +0100
-Message-ID: <200711151038.45668.simon@lst.de>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
+Date: Thu, 15 Nov 2007 18:53:58 +0900
+Message-ID: <buotznnesw9.fsf@dhapc248.dev.necel.com>
+References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
+	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
+	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart3738413.sFNXqf41DV";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 10:39:25 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 10:55:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsbC0-0006mc-AZ
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 10:39:24 +0100
+	id 1IsbR8-0002wa-Vt
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 10:55:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761744AbXKOJjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 04:39:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761902AbXKOJjE
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 04:39:04 -0500
-Received: from verein.lst.de ([213.95.11.210]:39711 "EHLO verein.lst.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1761744AbXKOJjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 04:39:01 -0500
-Received: from rhea.troll.no (nat0.troll.no [62.70.27.100])
-	(authenticated bits=0)
-	by verein.lst.de (8.12.3/8.12.3/Debian-7.1) with ESMTP id lAF9cnF3018246
-	(version=TLSv1/SSLv3 cipher=RC4-SHA bits=128 verify=NO);
-	Thu, 15 Nov 2007 10:38:50 +0100
-User-Agent: KMail/1.9.6 (enterprise 0.20070907.709405)
-X-Spam-Score: 0 () 
-X-Scanned-By: MIMEDefang 2.39
+	id S1756160AbXKOJyp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 04:54:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755843AbXKOJyo
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 04:54:44 -0500
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:45252 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754112AbXKOJyn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 04:54:43 -0500
+Received: from relay11.aps.necel.com ([10.29.19.46])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAF9qw74026546;
+	Thu, 15 Nov 2007 18:53:58 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay11.aps.necel.com with ESMTP; Thu, 15 Nov 2007 18:53:58 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 15 Nov 2007 18:53:58 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 04F8143B; Thu, 15 Nov 2007 18:53:58 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com> (Wincent Colaiuta's message of "Thu\, 15 Nov 2007 10\:36\:02 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65101>
 
---nextPart3738413.sFNXqf41DV
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
+Wincent Colaiuta <win@wincent.com> writes:
+> the shorter form without sed is arguably more readable:
+>
+> -		echo "$head" | sed 's#^refs/heads/##' >"$GIT_DIR/head-name"
+> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
 
-When using an existing git repository to cache the perforce import we don't=
- fetch the
-branch mapping from perforce as that is a slow operation. However the origi=
-n repository
-may not be fully up-to-date and therefore it may be necessary to import mor=
-e changes
-directly from Perforce. Such a direct import needs self.knownBranches to be=
- set up though,
-so initialize it from the existing p4/* git branches.
+Er, I suppose -- if you are acquainted with that particular shell
+variable syntax (I suspect knowledge of sed is far more widespread).
 
-Signed-off-by: Simon Hausmann <simon@lst.de>
-=2D--
- contrib/fast-import/git-p4 |   15 +++++++++++++--
- 1 files changed, 13 insertions(+), 2 deletions(-)
+[personally, I know that syntax has something to do with replacing
+something with something else, but really haven't much clue other than
+that, and I always _thought_ it was bash-specific and so avoided using
+any of that stuff.]
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index c148b5a..c869bb8 100755
-=2D-- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -1207,6 +1207,15 @@ class P4Sync(Command):
-         for branch in lostAndFoundBranches:
-             self.knownBranches[branch] =3D branch
-=20
-+    def getBranchMappingFromGitBranches(self):
-+        branches =3D p4BranchesInGit(self.importIntoRemotes)
-+        for branch in branches.keys():
-+            if branch =3D=3D "master":
-+                branch =3D "main"
-+            else:
-+                branch =3D branch[len(self.projectName):]
-+            self.knownBranches[branch] =3D branch
-+
-     def listExistingP4GitBranches(self):
-         # branches holds mapping from name to commit
-         branches =3D p4BranchesInGit(self.importIntoRemotes)
-@@ -1541,8 +1550,10 @@ class P4Sync(Command):
-             ## FIXME - what's a P4 projectName ?
-             self.projectName =3D self.guessProjectName()
-=20
-=2D            if not self.hasOrigin:
-=2D                self.getBranchMapping();
-+            if self.hasOrigin:
-+                self.getBranchMappingFromGitBranches()
-+            else:
-+                self.getBranchMapping()
-             if self.verbose:
-                 print "p4-git branches: %s" % self.p4BranchesInGit
-                 print "initial parents: %s" % self.initialParents
-=2D-=20
-1.5.3.5.576.gfe6193
-
-
---nextPart3738413.sFNXqf41DV
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHPBOlWXvMThJCpvIRAo+yAKCmidWfHzzjt6FTo7/WPb6/ZKHxCACg7PcU
-Pp51k9eOxqN91q26frF11d4=
-=grjB
------END PGP SIGNATURE-----
-
---nextPart3738413.sFNXqf41DV--
+-miles
+-- 
+People who are more than casually interested in computers should have at
+least some idea of what the underlying hardware is like.  Otherwise the
+programs they write will be pretty weird.  -- Donald Knuth
