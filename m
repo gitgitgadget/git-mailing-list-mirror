@@ -1,55 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Problem in our test setup
-Date: Thu, 15 Nov 2007 09:30:26 -0800
-Message-ID: <7v3av75sct.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711150618300.4362@racer.site>
-	<7vzlxg6kzt.fsf@gitster.siamese.dyndns.org>
-	<Pine.LNX.4.64.0711151237400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [PATCH] git-branch --with=commit
+Date: Thu, 15 Nov 2007 18:27:26 +0100
+Message-ID: <20071115172726.GA4525@efreet.light.src>
+References: <7vpryl8x5t.fsf@gitster.siamese.dyndns.org> <4732BC6F.7070005@viscovery.net> <7vejf140jd.fsf@gitster.siamese.dyndns.org> <4732D440.2020504@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 15 18:31:07 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Thu Nov 15 18:36:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsiYM-0000f4-Qp
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 18:30:59 +0100
+	id 1Isidg-00030a-UI
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 18:36:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756830AbXKORam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 12:30:42 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756187AbXKORal
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 12:30:41 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:50758 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756538AbXKORal (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 12:30:41 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 9140B2EF;
-	Thu, 15 Nov 2007 12:31:02 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 2AF6C96072;
-	Thu, 15 Nov 2007 12:31:00 -0500 (EST)
-In-Reply-To: <Pine.LNX.4.64.0711151237400.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-	(Johannes Schindelin's message of "Thu, 15 Nov 2007 12:40:30 +0100
-	(CET)")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1757461AbXKORgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 12:36:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757154AbXKORgL
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 12:36:11 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:44516 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756187AbXKORgK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 12:36:10 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E256357445;
+	Thu, 15 Nov 2007 18:36:08 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id x4Uy6nI+3R1A; Thu, 15 Nov 2007 18:36:06 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 797A857443;
+	Thu, 15 Nov 2007 18:36:03 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1IsiUw-0001RI-6F; Thu, 15 Nov 2007 18:27:26 +0100
+Content-Disposition: inline
+In-Reply-To: <4732D440.2020504@op5.se>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65142>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65143>
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Funnily enough, it _is_ the non-dash form that I replaced.  What happens 
-> is this: the git wrapper looks for a builtin named 'runstatus', does not 
-> find it, then calls out for something like 'git-runstatus', which is found 
-> in my $HOME/bin.
+--+QahgC5+KEYLbs62
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, but at that point we know we are looking for "git"
-subcommand not general command on PATH, so we can only look for
-"git-runstatus" in the git_exec_path (initialized by $GIT_EXEC_PATH 
-or compiled-in) and correctly fail during the test.
+On Thu, Nov 08, 2007 at 10:17:52 +0100, Andreas Ericsson wrote:
+> Junio C Hamano wrote:
+>> Johannes Sixt <j.sixt@viscovery.net> writes:
+>>
+>>> Junio C Hamano schrieb:
+>>
+>>>> With this patch, I could do this to find out which topic
+>>>> branches already contain the faulty commit:
+>>>>
+>>>>     $ git branch --with=3Dmaint^ | grep /
+>>>>       xx/maint-fix-foo
+>>> It'd be helpful if you could construct the example in this commit
+>>> message such that you don't need the "grep /" here; otherwise, the
+>>> reader doesn't know which part of the effect is hidden by the grep.
+>>
+>> Yeah, in the example sequence, I think only maint itself and
+>> xx/maint-fix-foo are shown, so there is no need for grep.
+>
+> And "maint" could certainly be stripped by the code itself, since the
+> user can reasonably be expected to know that plain maint will have
+> everything maint^ has.
+
+DWIDNS (Do what I did not say).
+
+Normally one would expect 'git branch --with=3Dmaint^' and
+'git branch --with=3D$(git ref-parse maint^)' to be exactly the same. Alas,
+with your suggestion, they would not.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--+QahgC5+KEYLbs62
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHPIF+Rel1vVwhjGURAidFAJsERfZVheW1TR/sFbEHOEMA/0AWUQCgrkl6
+lqJxMmOOyjJB0XspCWYEZ1c=
+=SdgI
+-----END PGP SIGNATURE-----
+
+--+QahgC5+KEYLbs62--
