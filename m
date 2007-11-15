@@ -1,67 +1,74 @@
-From: Bruce Stephens <bruce.stephens@isode.com>
-Subject: Odd .gitignore behaviour
-Date: Thu, 15 Nov 2007 12:49:21 +0000
-Message-ID: <80ir431xny.fsf@tiny.isode.net>
+From: Miles Bader <miles.bader@necel.com>
+Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
+Date: Thu, 15 Nov 2007 21:59:28 +0900
+Message-ID: <buooddvekb3.fsf@dhapc248.dev.necel.com>
+References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
+	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
+	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
+	<buotznnesw9.fsf@dhapc248.dev.necel.com>
+	<86tznn4y7v.fsf@lola.quinscape.zz>
+	<fc339e4a0711150300n64b9d670o1e183553a9de0cba@mail.gmail.com>
+	<861war4uzp.fsf@lola.quinscape.zz>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 13:49:43 2007
+Cc: git@vger.kernel.org
+To: David Kastrup <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 14:00:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IseAA-0008OC-3u
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 13:49:42 +0100
+	id 1IseKA-0003MD-G0
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 14:00:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759945AbXKOMt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 07:49:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759126AbXKOMtZ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 07:49:25 -0500
-Received: from rufus.isode.com ([62.3.217.251]:53072 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758230AbXKOMtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 07:49:24 -0500
-Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (smtp internal) via TCP with SMTP 
-          id <RzxAUQBBVLAP@rufus.isode.com> for <git@vger.kernel.org>;
-          Thu, 15 Nov 2007 12:49:22 +0000
-Received: by tiny.isode.net (sSMTP sendmail emulation);
-          Thu, 15 Nov 2007 12:49:21 +0000
-X-Hashcash: 1:20:071115:git@vger.kernel.org::5owxTVllbSfa/Sj2:0000000000000000000000000000000000000000003ZzR
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752891AbXKOM7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 07:59:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752099AbXKOM7p
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 07:59:45 -0500
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:49947 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170AbXKOM7n (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 07:59:43 -0500
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAFCxLGw005432;
+	Thu, 15 Nov 2007 21:59:28 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Thu, 15 Nov 2007 21:59:28 +0900
+Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay31.aps.necel.com with ESMTP; Thu, 15 Nov 2007 21:59:28 +0900
+Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
+	id 9DA7B43B; Thu, 15 Nov 2007 21:59:28 +0900 (JST)
+System-Type: i686-pc-linux-gnu
+Blat: Foop
+In-Reply-To: <861war4uzp.fsf@lola.quinscape.zz> (David Kastrup's message of "Thu\, 15 Nov 2007 12\:18\:50 +0100")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65115>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65116>
 
-Perhaps I'm misreading the manpage, but I think this is wrong:
+David Kastrup <dak@gnu.org> writes:
+>> For typical straightforward usage, there seems little problem.
+>>
+>> [The main portability problems I've actually _noticed_ with sed are
+>> the "-e" versus ";" issue and what happens with "\n" in various
+>> contexts...]
+>
+> What about character classes containing the pattern delimiter, \+, \?,
+> \|, nested grouping, anchors in groups, * after groups?  That's all
+> rather straightforward usage.
 
-    % mkdir base; cd base
-    % git init
-    % mkdir -p sub1/sub2
-    % cd sub1
-    % echo foo > .gitignore; echo '!sub2/foo' >> .gitignore
-    % touch sub2/foo
-    % git add sub2/foo
-    The following paths are ignored by one of your .gitignore files:
-    sub1/sub2/foo
-    Use -f if you really want to add them.
-    fatal: no files added
+You're right that the regexp stuff is not really "dusty corners", but
+none of those affect typical sed usage I think -- most sed usage being
+really rather simple (and the old "regexps differ between traditional
+unix tools" issue tends to dampen enthusiasm for really complex regexps
+with those tools).
 
-So sub1/sub2/foo matches the first pattern in sub1/.gitignore, but it
-also matches the negated pattern '!sub2/foo' (in the same file, so
-precedence isn't an issue).  And the manpage says
+I looked over the various random uses of sed I have locally (a couple of
+hundred instances), and the only thing which would potentially affect
+any of them would be the SVR3 thing about no nested groups (does anybody
+actually care about SVR3 though?!?).
 
-       o An optional prefix ! which negates the pattern; any matching
-           file excluded by a previous pattern will become included
-           again. If a negated pattern matches, this will override
-           lower precedence patterns sources.
+-Miles
 
-So surely sub1/sub2/foo ought to be included again?  Or is the first
-line in sub1/.gitignore not "a previous pattern" in this sense?
-
-If I move the "foo" pattern up a level, creating a .gitignore in base
-just containing "foo", then sub1/sub2/foo is still regarded as
-ignored, even though it surely matches the negating pattern
-sub1/.gitignore, and that should be of higher precedence than the
-pattern in base/.gitignore?
+-- 
+Yo mama's so fat when she gets on an elevator it HAS to go down.
