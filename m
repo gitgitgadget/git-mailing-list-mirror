@@ -1,83 +1,73 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
-Date: Thu, 15 Nov 2007 11:06:33 +0100
-Message-ID: <473C1A29.2010703@op5.se>
-References: <20071115081807.06fe092b.chriscool@tuxfamily.org>	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com> <buotznnesw9.fsf@dhapc248.dev.necel.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: git-clean won't read global ignore
+Date: Thu, 15 Nov 2007 11:07:43 +0100
+Message-ID: <vpqbq9vlt3k.fsf@bauges.imag.fr>
+References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
+	<20071113225057.GB22836@artemis.corp>
+	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:07:15 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Pierre Habouzit <madcoder@debian.org>,
+	shunichi fuji <palglowr@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 11:08:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isbck-0006mk-54
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:07:02 +0100
+	id 1IsbeI-0007GB-1j
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:08:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756218AbXKOKGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 05:06:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754953AbXKOKGj
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:06:39 -0500
-Received: from mail.op5.se ([193.201.96.20]:51729 "EHLO mail.op5.se"
+	id S1754567AbXKOKIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 05:08:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbXKOKIL
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:08:11 -0500
+Received: from harmonie.imag.fr ([147.171.130.40]:50611 "EHLO harmonie.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753548AbXKOKGi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 05:06:38 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id EA1181F0871B;
-	Thu, 15 Nov 2007 11:06:36 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id WewLRpIVe1OH; Thu, 15 Nov 2007 11:06:35 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id DB0D61F08716;
-	Thu, 15 Nov 2007 11:06:34 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <buotznnesw9.fsf@dhapc248.dev.necel.com>
+	id S1753548AbXKOKIK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 05:08:10 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id lAFA7hmJ007899;
+	Thu, 15 Nov 2007 11:07:44 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IsbdP-0001xh-N0; Thu, 15 Nov 2007 11:07:43 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IsbdP-0003Cy-KN; Thu, 15 Nov 2007 11:07:43 +0100
+In-Reply-To: <7vsl39l0b7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 14 Nov 2007 00\:05\:00 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 15 Nov 2007 11:07:44 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65103>
 
-Miles Bader wrote:
-> Wincent Colaiuta <win@wincent.com> writes:
->> the shorter form without sed is arguably more readable:
->>
->> -		echo "$head" | sed 's#^refs/heads/##' >"$GIT_DIR/head-name"
->> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
-> 
-> Er, I suppose -- if you are acquainted with that particular shell
-> variable syntax (I suspect knowledge of sed is far more widespread).
-> 
-> [personally, I know that syntax has something to do with replacing
-> something with something else, but really haven't much clue other than
-> that, and I always _thought_ it was bash-specific and so avoided using
-> any of that stuff.]
-> 
+Junio C Hamano <gitster@pobox.com> writes:
 
-It says "remove refs/heads/ from the beginning of the string pointed to
-by $head".
+> We probably could change git-ls-files to use the standard set
+> when no excludes are specified from the command line, or
+> something like that, but this will be a change in semantics that
+> would affect the scripts in a subtle way.  I am somewhat
+> reluctant to make such a change.
 
-It's not a bashism. Some extensions to that syntax are though (I think).
-If you want to be sure of portability, use sed instead. git uses this
-syntax often enough that it's worth using everywhere, but usually only
-in porcelain commands which one can relatively safely assume are run on
-at least decently up-to-date developer workstations.
++1 for your introduction of setup_standard_excludes().
 
-You'll note that stuff that absolutely *has* to reside server-side are
-entirely in C.
+And woh, I was writting a mail to say that adding a --exclude-standard
+would be cool, but it has been implemented even before I said it would
+be cool.
+
+Nothing to add, except "Thanks Junio, Thanks Jeff!" :-).
+
+At last, I'll be able to write
+
+$ git ls-files -o --exclude-standard >> .gitignore
+$ $EDITOR .gitignore
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Matthieu
