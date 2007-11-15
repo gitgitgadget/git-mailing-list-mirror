@@ -1,71 +1,64 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: New repo quickly corrupted
-Date: Thu, 15 Nov 2007 14:37:29 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711151434290.4260@woody.linux-foundation.org>
-References: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com> <alpine.LFD.0.9999.0711151358180.4260@woody.linux-foundation.org> <alpine.LFD.0.9999.0711151708470.21255@xanadu.home>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix Solaris compiler warnings
+Date: Fri, 16 Nov 2007 00:00:02 +0100
+Message-ID: <20071115230002.GA24069@steel.home>
+References: <Pine.LNX.4.64.0711152317140.7416@bianca.dialin.t-online.de>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jason Sewall <jasonsewall@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:39:09 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Guido Ostkamp <git@ostkamp.fastmail.fm>
+X-From: git-owner@vger.kernel.org Fri Nov 16 00:00:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsnMa-00072h-Ce
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:39:08 +0100
+	id 1IsnhC-0007Ap-P1
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 00:00:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754376AbXKOWiw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 17:38:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757271AbXKOWiw
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:38:52 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:38083 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754229AbXKOWiv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:38:51 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFMbUdc003254
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 15 Nov 2007 14:37:31 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFMbTHC019533;
-	Thu, 15 Nov 2007 14:37:29 -0800
-In-Reply-To: <alpine.LFD.0.9999.0711151708470.21255@xanadu.home>
-X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756974AbXKOXAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 18:00:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754795AbXKOXAJ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 18:00:09 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.189]:23593 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754567AbXKOXAI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 18:00:08 -0500
+Received: from tigra.home (Fcbc7.f.strato-dslnet.de [195.4.203.199])
+	by post.webmailer.de (klopstock mo37) (RZmta 14.0)
+	with ESMTP id 404744jAFHPeIW ; Fri, 16 Nov 2007 00:00:04 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 1C879277AE;
+	Fri, 16 Nov 2007 00:00:03 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id B216156D22; Fri, 16 Nov 2007 00:00:02 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <Pine.LNX.4.64.0711152317140.7416@bianca.dialin.t-online.de>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsKmZA=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65179>
 
+Guido Ostkamp, Thu, Nov 15, 2007 23:19:11 +0100:
+> Hello,
+>
+> the below patch fixes some compiler warnings returned by Solaris Workshop 
+> Compilers.
+>
+>     CC builtin-apply.o
+> "builtin-apply.c", line 686: warning: statement not reached
+>     CC utf8.o
+> "utf8.c", line 287: warning: statement not reached
+>     CC xdiff/xdiffi.o
+> "xdiff/xdiffi.c", line 261: warning: statement not reached
 
+All these are wrong. That's a fantastically broken piece of compiler
 
-On Thu, 15 Nov 2007, Nicolas Pitre wrote:
-> 
-> Does "dos2unix" override file access bits?  Because the object store is 
-> always made read-only.
+>     CC xdiff/xutils.o
+> "xdiff/xutils.c", line 236: warning: statement not reached
 
-Almost all programs like that will entirely ignor the fact that something 
-is read-only.
-
-Why? Becuase you end up having to create a new file *anyway*. So nobody 
-does modify-in-place, they literally end up doing
-
- - create temp-file
- - while (data) 
-	read old file, write to tempfile
- - rename temp-file over oldfile
-
-and unless you *explicitly* look at the permission bits you'll never even 
-notice that the old file was read-only, because none of the steps above 
-care at all!
-
-So marking things read-only will give only limited protection. It will 
-protect against most editors, and will protect against things that change 
-files in-place and literally try to open the original file as read-write, 
-but not much else.
-
-			Linus
+This one is right. Accidentally, as it seems
