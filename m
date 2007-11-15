@@ -1,76 +1,63 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] git-bisect: modernize branch shuffling hack
-Date: Thu, 15 Nov 2007 01:01:52 -0800
-Message-ID: <7vfxz76fwf.fsf@gitster.siamese.dyndns.org>
-References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+Subject: Re: [PATCH] Unify the use of standard set of exclude files
+Date: Thu, 15 Nov 2007 01:03:05 -0800
+Message-ID: <7vbq9v6fue.fsf@gitster.siamese.dyndns.org>
+References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
+	<20071113225057.GB22836@artemis.corp>
+	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
+	<7v4pfo813i.fsf_-_@gitster.siamese.dyndns.org>
+	<20071115070429.GD10185@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 10:02:21 2007
+Cc: git@vger.kernel.org, shunichi fuji <palglowr@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 10:03:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isac9-0004vC-6Z
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 10:02:21 +0100
+	id 1IsadN-0005FF-M5
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 10:03:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757119AbXKOJB6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 04:01:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756531AbXKOJB6
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 04:01:58 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:59534 "EHLO
+	id S1757148AbXKOJDS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 04:03:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757164AbXKOJDQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 04:03:16 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:59567 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757122AbXKOJB5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 04:01:57 -0500
+	with ESMTP id S1757143AbXKOJDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 04:03:14 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id B1AA52F2;
-	Thu, 15 Nov 2007 04:02:18 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id E1D2B2F2;
+	Thu, 15 Nov 2007 04:03:35 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 3EEE993C78;
-	Thu, 15 Nov 2007 04:02:16 -0500 (EST)
-In-Reply-To: <20071115081807.06fe092b.chriscool@tuxfamily.org> (Christian
-	Couder's message of "Thu, 15 Nov 2007 08:18:07 +0100")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 46C0D94E93;
+	Thu, 15 Nov 2007 04:03:29 -0500 (EST)
+In-Reply-To: <20071115070429.GD10185@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 15 Nov 2007 02:04:30 -0500")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65096>
 
-When switching to a new rev, we first made "new-bisect" branch to
-point at the chosen commit, attempt to switch to it, and then
-finally renamed the new-bisect branch to bisect by hand when
-successful.  This is so that we can catch checkout failure (your
-local modification may interfere with switching to the chosen
-version) without losing information on which commit the next
-attempt should be made.
+Jeff King <peff@peff.net> writes:
 
-Rewrite it using a more modern form but without breaking the
-safety.
+> git-add--interactive:list_untracked needs something like this, but I
+> don't think your patch will work. We need something more like this (also
+> on maint because your standard exclude patch is):
+>
+> -- >8 --
+> git-ls-files: add --exclude-standard
+>
+> This provides a way for scripts to get at the new standard exclude
+> function.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- git-bisect.sh |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+I like this, along with the patch to add--interactive.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 4b74a7b..dae8a8e 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -316,10 +316,9 @@ bisect_next() {
- 	exit_if_skipped_commits "$bisect_rev"
- 
- 	echo "Bisecting: $bisect_nr revisions left to test after this"
--	echo "$bisect_rev" >"$GIT_DIR/refs/heads/new-bisect"
-+	git branch -f new-bisect "$bisect_rev"
- 	git checkout -q new-bisect || exit
--	mv "$GIT_DIR/refs/heads/new-bisect" "$GIT_DIR/refs/heads/bisect" &&
--	GIT_DIR="$GIT_DIR" git symbolic-ref HEAD refs/heads/bisect
-+	git branch -M new-bisect bisect
- 	git show-branch "$bisect_rev"
- }
- 
--- 
-1.5.3.5.1780.gca2b
+Will forge your signature ;-).
