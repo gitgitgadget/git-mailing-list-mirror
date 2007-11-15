@@ -1,78 +1,79 @@
-From: David Kastrup <dak@gnu.org>
-Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
-Date: Thu, 15 Nov 2007 11:14:56 +0100
-Message-ID: <86hcjn4xy7.fsf@lola.quinscape.zz>
-References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
-	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
-	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
-	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
-	<buotznnesw9.fsf@dhapc248.dev.necel.com> <473C1A29.2010703@op5.se>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
+Subject: [BUG] encoding problem with format-patch + send-email
+Date: Thu, 15 Nov 2007 11:57:26 +0100
+Message-ID: <20071115105726.GA18555@bre-cln-ukleine.digi.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Swetland <swetland@google.com>,
+	Russell King - ARM Linux <linux@arm.linux.org.uk>,
+	Nicolas Pitre <nico@cam.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:15:56 2007
+X-From: git-owner@vger.kernel.org Thu Nov 15 11:56:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsblL-00013K-JT
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:15:56 +0100
+	id 1IscOe-00066G-57
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757613AbXKOKPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 05:15:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757645AbXKOKPR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:15:17 -0500
-Received: from main.gmane.org ([80.91.229.2]:52509 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757613AbXKOKPP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 05:15:15 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Isbka-0000I3-Dk
-	for git@vger.kernel.org; Thu, 15 Nov 2007 10:15:08 +0000
-Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Nov 2007 10:15:08 +0000
-Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 15 Nov 2007 10:15:08 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
-In-Reply-To: <473C1A29.2010703@op5.se> (Andreas Ericsson's message of "Thu\, 15 Nov 2007 11\:06\:33 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
-Cancel-Lock: sha1:abgLTklFKnoWarRJK2vIq0+ePWQ=
+	id S1753631AbXKOK4J convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 05:56:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753048AbXKOK4H
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:56:07 -0500
+Received: from mail164.messagelabs.com ([216.82.253.131]:37683 "HELO
+	mail164.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1750747AbXKOK4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 05:56:06 -0500
+X-VirusChecked: Checked
+X-Env-Sender: Uwe.Kleine-Koenig@digi.com
+X-Msg-Ref: server-12.tower-164.messagelabs.com!1195124164!19731325!1
+X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
+X-Originating-IP: [66.77.174.21]
+Received: (qmail 1010 invoked from network); 15 Nov 2007 10:56:05 -0000
+Received: from unknown (HELO owa.digi.com) (66.77.174.21)
+  by server-12.tower-164.messagelabs.com with SMTP; 15 Nov 2007 10:56:05 -0000
+Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 15 Nov 2007 04:56:04 -0600
+Received: from zentaur.digi.com ([10.100.10.144]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 15 Nov 2007 04:56:03 -0600
+Received: by zentaur.digi.com (Postfix, from userid 1080)
+	id E1F0749A5E; Thu, 15 Nov 2007 11:57:26 +0100 (CET)
+Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>,
+	git@vger.kernel.org, Brian Swetland <swetland@google.com>,
+	Russell King - ARM Linux <linux@arm.linux.org.uk>,
+	Nicolas Pitre <nico@cam.org>
+Content-Disposition: inline
+User-Agent: Mutt/1.5.13 (2006-08-11)
+X-OriginalArrivalTime: 15 Nov 2007 10:56:03.0790 (UTC) FILETIME=[1DB22EE0:01C82776]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65105>
 
-Andreas Ericsson <ae@op5.se> writes:
+Hello,
 
->> Wincent Colaiuta <win@wincent.com> writes:
->>> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
->
-> It says "remove refs/heads/ from the beginning of the string pointed
-> to by $head".
->
-> It's not a bashism. Some extensions to that syntax are though (I
-> think).
+Brian just stumbled over a problem with format-patch + send-email.
 
-General replace anywhere.
+format-patch only adds Content-Type and Content-Transfer-Encoding
+headers iff the body needs it.
 
-> If you want to be sure of portability, use sed instead.
+send-email adds "From: A. U. Thor <author@tld>" to the body if sender
+and From: in the patch to send differ.
 
-Guffaw.
+Both is just fine, but if the author has some non-ascii characters in
+her name but the body is ascii-only the resulting mail is broken.
 
-> git uses this syntax often enough that it's worth using everywhere,
-> but usually only in porcelain commands which one can relatively
-> safely assume are run on at least decently up-to-date developer
-> workstations.
+What about adding the Content-Type and Content-Transfer-Encoding header=
+s
+in any case?
 
-Huh?  It is used throughout.  That's why "make install" will install
-xxx.sh scripts as xxx after possibly replacing the initial #!/bin/sh
-line with a shell known to be reasonably conformant on a particular
-system.
+Best regards
+Uwe
 
--- 
-David Kastrup
+--=20
+Uwe Kleine-K=F6nig, Software Engineer
+Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
+ch, Germany
+Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
+3962
