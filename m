@@ -1,74 +1,152 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [BUG] t9101 (master) busted on Leopard
-Date: Thu, 15 Nov 2007 17:11:41 +0100
-Message-ID: <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com>
-References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com> <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Brian Gernhardt <benji@silverinsanity.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 17:12:40 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: [PATCH] builtin-commit: fix "git add x y && git commit y" committing
+ x, too
+Date: Thu, 15 Nov 2007 16:11:42 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711151611090.30886@racer.site>
+References: <Pine.LNX.4.64.0711150038020.4362@racer.site>
+ <1195138198-24511-1-git-send-email-krh@redhat.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: =?utf-8?q?Kristian=20H=C3=B8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 17:13:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IshK7-000774-BA
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 17:12:11 +0100
+	id 1IshKb-0007Lk-2U
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 17:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758174AbXKOQLq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 11:11:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758207AbXKOQLq
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 11:11:46 -0500
-Received: from wincent.com ([72.3.236.74]:39903 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755756AbXKOQLp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 11:11:45 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAFGBgCA023849;
-	Thu, 15 Nov 2007 10:11:43 -0600
-In-Reply-To: <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com>
-X-Mailer: Apple Mail (2.912)
+	id S1759105AbXKOQMO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 11:12:14 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759035AbXKOQMN
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 11:12:13 -0500
+Received: from mail.gmx.net ([213.165.64.20]:52716 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1758722AbXKOQML (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 11:12:11 -0500
+Received: (qmail invoked by alias); 15 Nov 2007 16:12:09 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp043) with SMTP; 15 Nov 2007 17:12:09 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/XA1EaTJjXgzBYOn0qtKRPldhsdERLSshzJ3yQ0q
+	7OkHVLlcI6PBND
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1195138198-24511-1-git-send-email-krh@redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65133>
 
-El 15/11/2007, a las 17:04, Brian Gernhardt escribi=F3:
 
-> On Nov 15, 2007, at 8:46 AM, Wincent Colaiuta wrote:
->
->> Was just running the test suite against the master branch and saw =20
->> that t9101 is currently failing on Leopard, and a review with git-=20
->> bisect indicates that it has been ever since it was first =20
->> introduced (in commit 15153451). Not sure if this problem is =20
->> Leopard-specific or not as I only have one machine.
->
-> It is not a Leopard specific problem, as far as I can tell.  I just =20
-> ran the test and had no errors on my Leopard machine.  So perhaps =20
-> it's some other detail of your setup?
->
->> I'm not a git-svn user myself, but if there's anything I can do to =20
->> help diagnose this problem further on Leopard please let me know.
->
-> I just tested it using svn from fink and (after discovering it =20
-> exists) from Leopard.  No problems.  Do you have an old svn package =20
-> (client, admin, or perl binding) installed from Darwin Ports or Fink =
-=20
-> perhaps?
+Earlier, builtin commit would implicitly commit also the staged
+changes.
 
-I don't use Darwin Ports or Fink, and this is a clean Leopard install =20
-(ie. nothing installed in /usr/local apart from git and a very small =20
-number of other tools that aren't related to Subversion).
+This patch fixes that.
 
-This is the output of "/usr/bin/svn --version":
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
 
-svn, version 1.4.4 (r25188)
-    compiled Sep 23 2007, 22:32:34
+	The function reset_index_to_head() could be moved to somewhere
+	more central and be reused in builtin-reset.c instead of
+	reset_index_file() later...
 
-Perhaps then it is something in the environment.
+ builtin-add.c     |    1 +
+ builtin-commit.c  |   30 +++++++++++++++++++++++++++++-
+ t/t7500-commit.sh |   10 ++++++++++
+ 3 files changed, 40 insertions(+), 1 deletions(-)
 
-Cheers,
-Wincent
+diff --git a/builtin-add.c b/builtin-add.c
+index 77dcde6..017c8f2 100644
+--- a/builtin-add.c
++++ b/builtin-add.c
+@@ -100,6 +100,7 @@ static void update_callback(struct diff_queue_struct *q,
+ 		case DIFF_STATUS_UNMERGED:
+ 		case DIFF_STATUS_MODIFIED:
+ 		case DIFF_STATUS_TYPE_CHANGED:
++		case DIFF_STATUS_ADDED:
+ 			add_file_to_cache(path, verbose);
+ 			break;
+ 		case DIFF_STATUS_DELETED:
+diff --git a/builtin-commit.c b/builtin-commit.c
+index 535039c..0dc6e1c 100644
+--- a/builtin-commit.c
++++ b/builtin-commit.c
+@@ -19,6 +19,7 @@
+ #include "strbuf.h"
+ #include "utf8.h"
+ #include "parse-options.h"
++#include "unpack-trees.h"
+ 
+ static const char * const builtin_commit_usage[] = {
+ 	"git-commit [options] [--] <filepattern>...",
+@@ -77,6 +78,31 @@ static struct option builtin_commit_options[] = {
+ 	OPT_END()
+ };
+ 
++static int reset_index_to_head(void)
++{
++	struct unpack_trees_options opts;
++	struct tree_desc tree_desc;
++	struct tree *tree;
++	unsigned char sha1[20];
++
++	/* ignore if it is an initial commit */
++	if (get_sha1("HEAD", sha1))
++		return 0;
++	tree = parse_tree_indirect(sha1);
++	if (!tree || parse_tree(tree))
++		return error("Could not get HEAD's tree");
++	init_tree_desc(&tree_desc, tree->buffer, tree->size);
++
++	memset(&opts, 0, sizeof(opts));
++	opts.index_only = 1;
++	opts.merge = 1;
++	opts.head_idx = 1;
++	opts.fn = oneway_merge;
++	if (unpack_trees(1, &tree_desc, &opts))
++		return error("Could not reset temporary index to HEAD");
++	return 0;
++}
++
+ static char *prepare_index(const char **files, const char *prefix)
+ {
+ 	int fd;
+@@ -120,12 +146,14 @@ static char *prepare_index(const char **files, const char *prefix)
+ 			die("failed to read HEAD tree object");
+ 	}
+ 
++	if (reset_index_to_head())
++		die ("failed to reset temporary index to HEAD");
++
+ 	/* Use a lock file to garbage collect the temporary index file. */
+ 	next_index_lock = xmalloc(sizeof(*next_index_lock));
+ 	fd = hold_lock_file_for_update(next_index_lock,
+ 				       git_path("next-index-%d", getpid()), 1);
+ 	add_files_to_cache(verbose, prefix, files);
+-	refresh_cache(REFRESH_QUIET);
+ 	if (write_cache(fd, active_cache, active_nr) || close(fd))
+ 		die("unable to write new_index file");
+ 
+diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+index c9d65e5..d4d7ed7 100755
+--- a/t/t7500-commit.sh
++++ b/t/t7500-commit.sh
+@@ -139,4 +139,14 @@ test_expect_success '--signoff' '
+ 	diff expect output
+ '
+ 
++test_expect_success 'implicit --only only commits specified files' '
++	echo "tonight: " > take &&
++	echo "over the" > world &&
++	git add world take &&
++	test_tick &&
++	git commit -m partial world &&
++	git diff-tree HEAD^..HEAD -- take &&
++	! git diff-index --cached --exit-code HEAD -- take
++'
++
+ test_done
+-- 
+1.5.3.5.1786.gdaaa
