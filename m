@@ -1,56 +1,59 @@
-From: Miles Bader <miles.bader@necel.com>
-Subject: Re: git-clean won't read global ignore
-Date: Thu, 15 Nov 2007 13:33:32 +0900
-Message-ID: <buoy7d0f7qb.fsf@dhapc248.dev.necel.com>
-References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
-	<20071113225057.GB22836@artemis.corp>
-	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
-	<buo6404gmu7.fsf@dhapc248.dev.necel.com>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Improved and extended t5404
+Date: Wed, 14 Nov 2007 23:35:14 -0500
+Message-ID: <20071115043513.GA10193@sigill.intra.peff.net>
+References: <20071112213823.GB2918@steel.home> <20071112213938.GC2918@steel.home> <20071113075240.GA21799@sigill.intra.peff.net> <20071113194731.GC3268@steel.home> <20071113194909.GD3268@steel.home> <20071113230234.GI3268@steel.home> <7vmythr8xf.fsf@gitster.siamese.dyndns.org> <20071114071929.GA2942@steel.home> <20071115041801.GA9794@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	shunichi fuji <palglowr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 05:34:45 2007
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 05:35:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsWR9-00018h-C2
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 05:34:43 +0100
+	id 1IsWS5-0001LJ-He
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 05:35:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753711AbXKOEeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 23:34:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754125AbXKOEeI
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 23:34:08 -0500
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:34980 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753711AbXKOEeH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 23:34:07 -0500
-Received: from relay11.aps.necel.com ([10.29.19.46])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id lAF4XV62018055;
-	Thu, 15 Nov 2007 13:33:32 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay11.aps.necel.com with ESMTP; Thu, 15 Nov 2007 13:33:32 +0900
-Received: from dhapc248.dev.necel.com ([10.114.112.215] [10.114.112.215]) by relay21.aps.necel.com with ESMTP; Thu, 15 Nov 2007 13:33:32 +0900
-Received: by dhapc248.dev.necel.com (Postfix, from userid 31295)
-	id 0362143B; Thu, 15 Nov 2007 13:33:32 +0900 (JST)
-System-Type: i686-pc-linux-gnu
-Blat: Foop
-In-Reply-To: <buo6404gmu7.fsf@dhapc248.dev.necel.com> (Miles Bader's message of "Thu\, 15 Nov 2007 13\:21\:52 +0900")
+	id S1754864AbXKOEfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 23:35:21 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754433AbXKOEfV
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 23:35:21 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:4567 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756583AbXKOEfT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 23:35:19 -0500
+Received: (qmail 5971 invoked by uid 111); 15 Nov 2007 04:35:18 -0000
+Received: from ppp-216-106-96-30.storm.ca (HELO sigill.intra.peff.net) (216.106.96.30)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Wed, 14 Nov 2007 23:35:18 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2007 23:35:14 -0500
+Content-Disposition: inline
+In-Reply-To: <20071115041801.GA9794@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65056>
 
-Miles Bader <miles.bader@necel.com> writes:
->> I think the problem is core.excludesfile is too new to be
->> noticed by anything other than git-add and git-status.
->
-> "git-add -i" _doesn't_ seems to notice it though...
+On Wed, Nov 14, 2007 at 11:18:01PM -0500, Jeff King wrote:
 
-To clarify:  the "add untracked" sub-menu of "git-add -i"
+> My goal with the recent patches is that _any_ failure will cause a non-0
+> exit code (but you have to read the stderr output to find out which, if
+> any, refs were successful).
 
--Miles
--- 
-Do not taunt Happy Fun Ball.
+BTW, since there seems to be some debate on how this _should_ work, I
+think the "signal failure if anything failed" approach is the better.
+
+Why?
+
+Because either way you do it, there is an ambiguity, and I would rather
+that ambiguity lie with the "failure" case. If I see exit code '0', I
+_know_ that all of my refs were updated. If I see exit code '1', then
+there was some failure detected, but my refs might or might not have
+been updated. But that ambiguity _already_ exists. Consider the case
+where we send refs, but the connection dies in the middle. We have to
+signal error, then, but for all we know the other side was about to
+"successfully updated all refs". So you can only ever _know_ success,
+and with failure, you simply guess (and presumably retry).
+
+-Peff
