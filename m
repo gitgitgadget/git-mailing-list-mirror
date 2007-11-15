@@ -1,85 +1,58 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: refining .gitignores
-Date: Thu, 15 Nov 2007 20:26:54 +0100
-Message-ID: <20071115192654.GA3552@steel.home>
-References: <804pfobgkp.fsf@tiny.isode.net> <20071114230258.GG3973@steel.home> <807ikj3fge.fsf@tiny.isode.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] rehabilitate some t5302 tests on 32-bit off_t machines
+Date: Thu, 15 Nov 2007 20:39:23 +0100
+Message-ID: <200711152039.23978.johannes.sixt@telecom.at>
+References: <alpine.LFD.0.9999.0711151211330.21255@xanadu.home> <alpine.LFD.0.9999.0711151349480.21255@xanadu.home> <7vsl3749hp.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Bruce Stephens <bruce.stephens@isode.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 20:27:21 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 20:39:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IskMt-0007kC-9j
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 20:27:15 +0100
+	id 1IskYx-0004Ix-FV
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 20:39:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762145AbXKOT06 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 14:26:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761556AbXKOT05
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 14:26:57 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.189]:60746 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758134AbXKOT04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 14:26:56 -0500
-Received: from tigra.home (Faed1.f.strato-dslnet.de [195.4.174.209])
-	by post.webmailer.de (fruni mo37) (RZmta 14.0)
-	with ESMTP id 4021f5jAFHcKOL ; Thu, 15 Nov 2007 20:26:55 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id D631B277AE;
-	Thu, 15 Nov 2007 20:26:54 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 2987156D22; Thu, 15 Nov 2007 20:26:54 +0100 (CET)
+	id S1760220AbXKOTj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 14:39:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759300AbXKOTj0
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 14:39:26 -0500
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:53610 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757175AbXKOTj0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 14:39:26 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id 9AF6F13B7DA;
+	Thu, 15 Nov 2007 20:39:24 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 3633D59DCF;
+	Thu, 15 Nov 2007 20:39:24 +0100 (CET)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vsl3749hp.fsf@gitster.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <807ikj3fge.fsf@tiny.isode.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3Cculz1E3upF1w=
-X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65152>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65153>
 
-Bruce Stephens, Thu, Nov 15, 2007 12:39:45 +0100:
-> Alex Riesen <raa.lkml@gmail.com> writes:
-> > Bruce Stephens, Wed, Nov 14, 2007 23:36:06 +0100:
-> >> How do I get a list of files (in HEAD, say) that would be ignored by
-> >> the .gitignore files (and the other usual settings)?
-> >> 
-> >> It feels like something like this ought to work:
-> >> 
-> >>      git ls-files -z | xargs -0 git ls-files --ignored
-> >> 
-> >> But listing its arguments that are ignored by .gitignore (etc.)
-> >> doesn't seem to be what "git ls-files --ignored" does.  Or at least,
-> >> not quite as straightforwardly as that.
+On Thursday 15 November 2007 20:03, Junio C Hamano wrote:
+> Nicolas Pitre <nico@cam.org> writes:
+> > On Thu, 15 Nov 2007, Johannes Sixt wrote:
+> >> Since you changed this test, I assume that the remaining
+> >> tests that you put back failed only because this one did
+> >> something wrong. If so, please mention that in the commit
+> >> message.
 > >
-> > git ls-files --exclude-per-directory=.gitignore -X .git/info/exclude -i -o
-> 
-> That doesn't seem to work.
-> 
-> For example, if I add '*.c' to .gitignores in git.git, I can't seem to
-> get that command to display any .c files.
+> > It did nothing wrong.  It was simply relying on the product of
+> > a previous test that might still be disabled.
+>
+> Thanks for a fix-up and clarification.   Hannes, otherwise this
+> passed in your environment?
 
-.gitignore? Without "s"?
-Maybe your .c files are already added to index? Otherwise you have to
-use the second form. It shows known-to-Git ignored files.
+Yes, it passes. Ack.
 
-> Run on its own, it displays lots of files, but no .c files.  Run with
-> an argument (such as builtin-add.c), it displays nothing.
-
-because the *are* in the index. "-o" means "others", as in "not Git".
-
-> >> The motivation is (obviously) that I fear some of the .gitignore
-> >> patterns are too broad, and a reasonable check is that none of the
-> >> files that are already committed would be caught by the patterns.
-> >
-> > git ls-files --exclude-per-directory=.gitignore -X .git/info/exclude -i
-> 
-> That also doesn't seem to do quite what I want, and probably in the
-> same way. ...
-
-It shows ignored files from the "known-to-Git" fileset.
+-- Hannes
