@@ -1,66 +1,67 @@
-From: "Todd A. Jacobs" <nospam@codegnome.org>
-Subject: Re: Integrating with hooks
-Date: Wed, 14 Nov 2007 17:18:37 -0800
-Message-ID: <20071115011837.GD32746@penguin.codegnome.org>
-References: <20071113173721.GI25282@penguin.codegnome.org>
-	<fhdane$kfs$1@ger.gmane.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH] Fix Solaris Workshop Compiler issues
+Date: Thu, 15 Nov 2007 02:21:44 +0100
+Message-ID: <85ir441exj.fsf@lola.goethe.zz>
+References: <Pine.LNX.4.64.0711142125460.17530@bianca.dialin.t-online.de>
+	<20071114204732.GE3973@steel.home>
+	<7vprycfrk6.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711150011020.4135@bianca.dialin.t-online.de>
+	<20071114232809.GH3973@steel.home>
+	<20071115001756.GA25021@atjola.homenet>
+	<7v3av89wq7.fsf@gitster.siamese.dyndns.org>
+	<alpine.LFD.0.9999.0711141640400.2786@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 02:19:01 2007
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	Alex Riesen <raa.lkml@gmail.com>,
+	Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 02:23:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsTNk-0007Pc-8m
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 02:19:00 +0100
+	id 1IsTS9-00007Y-9o
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 02:23:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424AbXKOBSo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 20:18:44 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754274AbXKOBSo
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 20:18:44 -0500
-Received: from mtai04.charter.net ([209.225.8.184]:44228 "EHLO
-	mtai04.charter.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753901AbXKOBSn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 20:18:43 -0500
-X-Greylist: delayed 114075 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Nov 2007 20:18:43 EST
-Received: from aarprv02.charter.net ([10.20.200.72]) by mtai04.charter.net
-          (InterMail vM.7.08.02.00 201-2186-121-20061213) with ESMTP
-          id <20071115011840.BKJH12338.mtai04.charter.net@aarprv02.charter.net>
-          for <git@vger.kernel.org>; Wed, 14 Nov 2007 20:18:40 -0500
-Received: from penguin.codegnome.org ([71.83.124.90])
-          by aarprv02.charter.net with ESMTP
-          id <20071115011840.CBPZ495.aarprv02.charter.net@penguin.codegnome.org>
-          for <git@vger.kernel.org>; Wed, 14 Nov 2007 20:18:40 -0500
-Received: by penguin.codegnome.org (Postfix, from userid 1000)
-	id D23E037CA8; Wed, 14 Nov 2007 17:18:37 -0800 (PST)
-Received: by penguin.codegnome.org (tmda-sendmail, from uid 1000);
-	Wed, 14 Nov 2007 17:18:37 -0800
-Content-Disposition: inline
-In-Reply-To: <fhdane$kfs$1@ger.gmane.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-Delivery-Agent: TMDA/1.1.12 (Macallan)
-Mail-Followup-To: git@vger.kernel.org
-X-Chzlrs: 0
+	id S1756284AbXKOBXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 20:23:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756894AbXKOBXS
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 20:23:18 -0500
+Received: from fencepost.gnu.org ([140.186.70.10]:49240 "EHLO
+	fencepost.gnu.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756061AbXKOBXP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 20:23:15 -0500
+Received: from localhost ([127.0.0.1] helo=lola.goethe.zz)
+	by fencepost.gnu.org with esmtp (Exim 4.60)
+	(envelope-from <dak@gnu.org>)
+	id 1IsTRn-0007Fy-EK; Wed, 14 Nov 2007 20:23:11 -0500
+Received: by lola.goethe.zz (Postfix, from userid 1002)
+	id A022F1C27968; Thu, 15 Nov 2007 02:21:45 +0100 (CET)
+In-Reply-To: <alpine.LFD.0.9999.0711141640400.2786@woody.linux-foundation.org>
+	(Linus Torvalds's message of "Wed, 14 Nov 2007 16:44:05 -0800 (PST)")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65039>
 
-On Wed, Nov 14, 2007 at 12:07:29AM +0100, Jakub Narebski wrote:
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-> Take a look at gitattributes(5), namely 'filter' attribute.
+> On Wed, 14 Nov 2007, Junio C Hamano wrote:
+>> 
+>> Maybe your compiler needs -DFLEX_ARRAY=0 in CFLAGS?
+>
+> Actually, for old pre-C99 compilers, you're probably better off using 
+> -DFLEX_ARRAY=1, since a zero-sized array could be considered bogus by 
+> some.
 
-Thanks, I took a look at the man page you suggested. The "ident" feature
-almost does what I want, but doesn't seem to take any sort of format
-string. So, I thought I'd explore "filter," but can't really find any
-examples of how to implement the smudge and clean commands, which seem
-to be what I'm really trying to do here.
-
-Is there an example somewhere that you can point me to? The man page
-doesn't really show any examples of how to implement the filter
-attribute, so I'm a little unsure how to proceed.
+Is that supposed to work?  I would have thought that the only options
+would be empty and 0.  I am pretty sure I have seen size calculations in
+the deltifying code that would break badly using FLEX_ARRAY=1.  So _IFF_
+-DFLEX_ARRAY=1 is supposed to be necessary for some compilers, I could
+try seeing whether I find those locations again.
 
 -- 
-"Oh, look: rocks!"
-	-- Doctor Who, "Destiny of the Daleks"
+David Kastrup, Kriemhildstr. 15, 44793 Bochum
