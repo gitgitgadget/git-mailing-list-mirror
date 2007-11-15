@@ -1,90 +1,67 @@
-From: Shawn Bohrer <shawn.bohrer@gmail.com>
-Subject: [PATCH] Teach git clean to use setup_standard_excludes()
-Date: Wed, 14 Nov 2007 23:00:54 -0600
-Message-ID: <1195102854310-git-send-email-shawn.bohrer@gmail.com>
-Cc: madcoder@debian.org, palglowr@gmail.com, git@vger.kernel.org,
-	Shawn Bohrer <shawn.bohrer@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 15 06:00:33 2007
+From: "Ping Yin" <pkufranky@gmail.com>
+Subject: Re: How to change a submodue as a subdirectory?
+Date: Thu, 15 Nov 2007 13:36:16 +0800
+Message-ID: <46dff0320711142136r2c70d698vd380c02188f95507@mail.gmail.com>
+References: <46dff0320711140637s51e1368fv3f632b6f04d093d5@mail.gmail.com>
+	 <20071114202651.GC3973@steel.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: "Git Mailing List" <git@vger.kernel.org>
+To: "Alex Riesen" <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 06:36:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsWq4-0006IG-1A
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 06:00:28 +0100
+	id 1IsXP1-0005C8-8g
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 06:36:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750737AbXKOFAJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 00:00:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750707AbXKOFAJ
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 00:00:09 -0500
-Received: from an-out-0708.google.com ([209.85.132.244]:2651 "EHLO
-	an-out-0708.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750705AbXKOFAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 00:00:07 -0500
-Received: by an-out-0708.google.com with SMTP id b36so83380ana
-        for <git@vger.kernel.org>; Wed, 14 Nov 2007 21:00:05 -0800 (PST)
+	id S1751000AbXKOFgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 00:36:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751004AbXKOFgS
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 00:36:18 -0500
+Received: from py-out-1112.google.com ([64.233.166.183]:20857 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751000AbXKOFgR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 00:36:17 -0500
+Received: by py-out-1112.google.com with SMTP id u77so3260478pyb
+        for <git@vger.kernel.org>; Wed, 14 Nov 2007 21:36:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=I+QE45odDeGQblUZljVvyxHyv1GrVyC7pL0lKQ5kQqc=;
-        b=k9/VFN6CHWL/xuooxwULtErKIhhKM1RP/6HG3DsRC+lr1VzhgHZj+M9M73e187ZDefvlJeG9MCa829jo4i9ClQeH/JzEDMr8m2XR/DI0urBQu7cDtvAICan4xNHVY3mX9tmlX4Os2bQ1lCz5nWRABr3MUK4d84frbxoSxtnvh+M=
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=0ncH/Y/SpPzKK6+VTE3yGWFBx4wNzXZfFJbERkk5+54=;
+        b=VjqETunmNE8iSQkmHYdfXYN71IpL1i9UvgWrTK+86NpiaxoOWYRne6FeSaGBDS+mZ8tagI9x0fBuorRtMcf5wwCvCoOzAFJbfF0JomFg1JEKsx8aaU0SyGKiZ3Mw/VRM8j38b+oJfldYuXOdMUaBZfcG5PdctxSAIszMORbLiDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=B/te9To5fqNL8qDecWtYFcq6wFSAPHTElp1Z/VLBzV2HCCb+WPX6IDmcSdAFnf4Vk8OTvV5YPBtib82EULdzav8T+ukN23FjYOnZ7BlaL1sToaituieO2dtHl46aXZT//aUZGkUxPXNRKQww6pZuQA3vb+oDUELaSNj7WhWPAro=
-Received: by 10.100.119.17 with SMTP id r17mr271131anc.1195102805898;
-        Wed, 14 Nov 2007 21:00:05 -0800 (PST)
-Received: from mediacenter ( [70.112.149.232])
-        by mx.google.com with ESMTPS id g9sm2152869wra.2007.11.14.21.00.03
-        (version=SSLv3 cipher=OTHER);
-        Wed, 14 Nov 2007 21:00:04 -0800 (PST)
-Received: by mediacenter (sSMTP sendmail emulation); Wed, 14 Nov 2007 23:00:54 -0600
-X-Mailer: git-send-email 1.5.3.GIT
-In-Reply-To: 7vsl39l0b7.fsf@gitster.siamese.dyndns.org
-References: 7vsl39l0b7.fsf@gitster.siamese.dyndns.org
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=qDXnqKWjlV7WCxRNjNKkfe2F75fR+mXOxfBMctl3+ujCpz7JiP3xXY/+AOR9XAWYidgC1GcphlsUiYkYrv3X4SP7HXOPjIdFrJXl/D8eZudQGNk8v4HR7JsfACDHSOdSbto183n+SjEDOqXa/4FckWb91LgfisYX8dvU2znRtZM=
+Received: by 10.35.77.18 with SMTP id e18mr366263pyl.1195104976775;
+        Wed, 14 Nov 2007 21:36:16 -0800 (PST)
+Received: by 10.35.108.1 with HTTP; Wed, 14 Nov 2007 21:36:16 -0800 (PST)
+In-Reply-To: <20071114202651.GC3973@steel.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65061>
 
-Signed-off-by: Shawn Bohrer <shawn.bohrer@gmail.com>
----
- builtin-clean.c |    9 ++-------
- 1 files changed, 2 insertions(+), 7 deletions(-)
+On Nov 15, 2007 4:26 AM, Alex Riesen <raa.lkml@gmail.com> wrote:
+> Ping Yin, Wed, Nov 14, 2007 15:37:57 +0100:
+> > I have a super project superA, and a submodue subB. Now i decide to
+> > switch subB from submodule to sub directory. Any good way to do that
+> > and not losing any history?
+>
+> $ mv subB sub
+> $ git add sub
+> $ git update-index --force-remove subB
+> $ git commit
+>
+> Which history were you afraid of losing?
+>
+I want to keep the history of the submodule
 
-diff --git a/builtin-clean.c b/builtin-clean.c
-index 01fb887..dc6a21e 100644
---- a/builtin-clean.c
-+++ b/builtin-clean.c
-@@ -22,7 +22,7 @@ static int git_clean_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "clean.requireforce"))
- 		force = !git_config_bool(var, value);
--	return 0;
-+	return git_default_config(var, value);
- }
- 
- int cmd_clean(int argc, const char **argv, const char *prefix)
-@@ -57,7 +57,6 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	memset(&dir, 0, sizeof(dir));
- 	if (ignored_only) {
- 		dir.show_ignored =1;
--		dir.exclude_per_dir = ".gitignore";
- 	}
- 
- 	if (ignored && ignored_only)
-@@ -70,11 +69,7 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
- 	dir.show_other_directories = 1;
- 
- 	if (!ignored) {
--		dir.exclude_per_dir = ".gitignore";
--		if (!access(git_path("info/exclude"), F_OK)) {
--			char *exclude_path = git_path("info/exclude");
--			add_excludes_from_file(&dir, exclude_path);
--		}
-+		setup_standard_excludes(&dir);
- 	}
- 
- 	pathspec = get_pathspec(prefix, argv);
+
+
 -- 
-1.5.3.GIT
+Ping Yin
