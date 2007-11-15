@@ -1,60 +1,70 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Integrating with hooks
-Date: Thu, 15 Nov 2007 08:57:42 +0100
-Message-ID: <473BFBF6.7070902@viscovery.net>
-References: <20071113173721.GI25282@penguin.codegnome.org>	<fhdane$kfs$1@ger.gmane.org> <20071115011837.GD32746@penguin.codegnome.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [Discussion] cherry-picking a merge
+Date: Thu, 15 Nov 2007 00:00:45 -0800
+Message-ID: <7v3av86iqa.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Todd A. Jacobs" <nospam@codegnome.org>
-X-From: git-owner@vger.kernel.org Thu Nov 15 08:58:05 2007
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 09:01:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsZbw-0004Sz-Uh
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:58:05 +0100
+	id 1IsZet-0005H0-9h
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 09:01:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755701AbXKOH5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 02:57:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbXKOH5s
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:57:48 -0500
-Received: from lilzmailso02.liwest.at ([212.33.55.13]:3672 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753253AbXKOH5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 02:57:47 -0500
-Received: from cm56-163-160.liwest.at ([86.56.163.160] helo=linz.eudaptics.com)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.66)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1IsZb3-0004yH-TP; Thu, 15 Nov 2007 08:57:12 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.42])
-	by linz.eudaptics.com (Postfix) with ESMTP
-	id BEF4D6C4; Thu, 15 Nov 2007 08:57:42 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
-In-Reply-To: <20071115011837.GD32746@penguin.codegnome.org>
-X-Spam-Score: 1.7 (+)
-X-Spam-Report: ALL_TRUSTED=-1.8, BAYES_99=3.5
+	id S1755449AbXKOIAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 03:00:51 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752775AbXKOIAu
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 03:00:50 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:58132 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752014AbXKOIAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 03:00:50 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id D3A312EF;
+	Thu, 15 Nov 2007 03:01:10 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 747C594D87;
+	Thu, 15 Nov 2007 03:01:09 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65080>
 
-Todd A. Jacobs schrieb:
-> On Wed, Nov 14, 2007 at 12:07:29AM +0100, Jakub Narebski wrote:
-> 
->> Take a look at gitattributes(5), namely 'filter' attribute.
-> 
-> Thanks, I took a look at the man page you suggested. The "ident" feature
-> almost does what I want, but doesn't seem to take any sort of format
-> string. So, I thought I'd explore "filter," but can't really find any
-> examples of how to implement the smudge and clean commands, which seem
-> to be what I'm really trying to do here.
+Earlier "git cherry-pick" learned the "-m <parent-number>"
+option to allow cherry-picking a merge commit.
 
-A clean and smudge filter processes one file at a time. It reads the old 
-content from stdin and writes the result to stdout.
+When you have this history:
 
-There is a tiny example in the test suite, t/t0021-conversion.sh, look for 
-rot13.sh.
+  ---o---o---C---A---M
+      \             /
+       o---o-------B
 
--- Hannes
+You can replay the change between A and M (in other words, the
+effect of merging B into A) on top of C to create a new commit,
+with:
+
+        $ git cherry-pick -m 1 M
+
+In the current implementation, the resulting commit has a single
+parent C.  This is quite similar to a squash merge of B into C.
+
+When you think about it, as long as the topological relationship
+between A and B is very similar to that of C and B (iow,
+"merge-base A B" and "merge-base C B" are the same), the effect
+should be the same as a real merge between B and C, shouldn't it?
+
+  ---o---o---C---A---M
+      \       \     /
+       o---o---\---B
+                \   \
+                 `---X
+
+I am wondering if it makes sense to record the result of
+"cherry-pick -m" as a real merge between the current HEAD and
+all the other parents of the cherry-picked merge except the one
+that is named with the <parent-number>.
