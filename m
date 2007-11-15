@@ -1,89 +1,83 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [BUG] t9101 (master) busted on Leopard
-Date: Thu, 15 Nov 2007 23:22:07 +0100
-Message-ID: <9A0785C3-1150-458C-BC84-1E13CC039D28@wincent.com>
-References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com> <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com> <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com> <1D7CC3C0-46C1-40D9-AAD5-B9ADFF99B58A@lrde.epita.fr>
-Mime-Version: 1.0 (Apple Message framework v912)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:22:31 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
+Date: Thu, 15 Nov 2007 23:24:52 +0100
+Message-ID: <1046B46D-585D-47B6-91B3-38F760E68DD4@zib.de>
+References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <200711151931.29029.johannes.sixt@telecom.at> <E652EC54-9F94-444F-AF94-2FA990355A78@zib.de> <200711152243.10229.johannes.sixt@telecom.at>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Thu Nov 15 23:26:24 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isn6T-0008U5-Rl
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:22:30 +0100
+	id 1IsnAC-0001jn-Mf
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:26:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759546AbXKOWWM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 17:22:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbXKOWWM
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:22:12 -0500
-Received: from wincent.com ([72.3.236.74]:40570 "EHLO s69819.wincent.com"
+	id S1760408AbXKOW0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 17:26:03 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757164AbXKOW0D
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:26:03 -0500
+Received: from mailer.zib.de ([130.73.108.11]:37491 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753536AbXKOWWL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:22:11 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
+	id S1756625AbXKOW0A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 17:26:00 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAFMNbSQ001279;
+	Thu, 15 Nov 2007 23:23:37 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db82eaf.pool.einsundeins.de [77.184.46.175])
 	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAFMLPZn000960;
-	Thu, 15 Nov 2007 16:22:08 -0600
-In-Reply-To: <1D7CC3C0-46C1-40D9-AAD5-B9ADFF99B58A@lrde.epita.fr>
-X-Mailer: Apple Mail (2.912)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAFMNaGT000031
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 15 Nov 2007 23:23:36 +0100 (MET)
+In-Reply-To: <200711152243.10229.johannes.sixt@telecom.at>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65175>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65176>
 
-El 15/11/2007, a las 22:13, Benoit Sigoure escribi=F3:
 
-> On Nov 15, 2007, at 5:11 PM, Wincent Colaiuta wrote:
+On Nov 15, 2007, at 10:43 PM, Johannes Sixt wrote:
+
+> On Thursday 15 November 2007 21:10, Steffen Prohaska wrote:
+>> On Nov 15, 2007, at 7:31 PM, Johannes Sixt wrote:
+>>> On Thursday 15 November 2007 07:53, Steffen Prohaska wrote:
+>>>> Now I'm wondering if we could make path relocation a bit more
+>>>> explicit.  How about doing something like.
+>>>>
+>>>> 	system_wide = relocate_path(ETC_GITCONFIG);
+>>>>
+>>>> and relocate_path(const char *) would expand a format
+>>>> string in path.  At this point I see only a single %s
+>>>> that would be expanded with the install prefix.  If
+>>>> ETC_GITCONFIG is "%s/etc/gitconfig" relocate path will return
+>>>> "C:/msysgit/bin/etc/gitconfig" for my above example.  It is
+>>>> basically a printf with the install prefix path.
+>>>
+>>> I don't see the problem that you are trying to solve.
+>>
+>> Path relocation would be more explicit:
+>> 1) Paths that need to be relocated are filtered through
+>>     relocate_path().  That's easy to understand.
+>> 2) All the code prefixing the path is in relocate_path().
+>>     This avoids code duplication.
+>> 3) Path that should be relocated contain "%s" in the Makefile.
+>>     This indicates that some string expansion may take place.
+>>
+>> (1) and (2) would be useful even if you do not agree with (3).
+>> The code in PATCH 9/11 and PATCH 11/11 looks very similar.
+>> If the prefixing code went into a separate function, we'd
+>> have less code.  Also, relocate_path() could be useful at
+>> other places.  For example, I'd use it to locate the HTML
+>> documentation relative to the installation directory.
 >
->> El 15/11/2007, a las 17:04, Brian Gernhardt escribi=F3:
->>
->>> On Nov 15, 2007, at 8:46 AM, Wincent Colaiuta wrote:
->>>
->>>> Was just running the test suite against the master branch and saw =
-=20
->>>> that t9101 is currently failing on Leopard, and a review with git-=
-=20
->>>> bisect indicates that it has been ever since it was first =20
->>>> introduced (in commit 15153451). Not sure if this problem is =20
->>>> Leopard-specific or not as I only have one machine.
->>>
->>> It is not a Leopard specific problem, as far as I can tell.  I =20
->>> just ran the test and had no errors on my Leopard machine.  So =20
->>> perhaps it's some other detail of your setup?
->>>
->>>> I'm not a git-svn user myself, but if there's anything I can do =20
->>>> to help diagnose this problem further on Leopard please let me =20
->>>> know.
->>>
->>> I just tested it using svn from fink and (after discovering it =20
->>> exists) from Leopard.  No problems.  Do you have an old svn =20
->>> package (client, admin, or perl binding) installed from Darwin =20
->>> Ports or Fink perhaps?
->>
->> I don't use Darwin Ports or Fink, and this is a clean Leopard =20
->> install (ie. nothing installed in /usr/local apart from git and a =20
->> very small number of other tools that aren't related to Subversion).
->>
->> This is the output of "/usr/bin/svn --version":
->>
->> svn, version 1.4.4 (r25188)
->>   compiled Sep 23 2007, 22:32:34
->>
->> Perhaps then it is something in the environment.
->
-> Hi Wincent,
-> Can you reproduce this deterministically?  If yes, can you re-run =20
-> the test with the --verbose flag and post the gzipped output (or =20
-> send it to me if the list doesn't like this sort of attachment).
+> How is %s/foo different from ../foo? There are only 2 paths that  
+> need to be
+> relocatable. Your proposal is over-engineering, IMHO.
 
-Yes, have just sent you the output of "--verbose" and also running the =
-=20
-script using "sh -x" (off list).
+fair enough. Let's take your patches.
 
-Cheers,
-Wincent
+	Steffen
