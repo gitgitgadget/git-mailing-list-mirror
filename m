@@ -1,83 +1,59 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
-Date: Thu, 15 Nov 2007 23:24:52 +0100
-Message-ID: <1046B46D-585D-47B6-91B3-38F760E68DD4@zib.de>
-References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <200711151931.29029.johannes.sixt@telecom.at> <E652EC54-9F94-444F-AF94-2FA990355A78@zib.de> <200711152243.10229.johannes.sixt@telecom.at>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:26:24 2007
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: Re: [PATCH] Fix "identifier redeclared" compilation error with SUN
+ cc.
+Date: Thu, 15 Nov 2007 23:28:52 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711152323510.7501@bianca.dialin.t-online.de>
+References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+ <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+ <Pine.LNX.4.64.0711152253430.4090@bianca.dialin.t-online.de>
+ <7v640340kp.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	raa.lkml@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 23:29:25 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsnAC-0001jn-Mf
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:26:21 +0100
+	id 1IsnD1-0002yW-G8
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:29:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760408AbXKOW0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 17:26:03 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757164AbXKOW0D
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:26:03 -0500
-Received: from mailer.zib.de ([130.73.108.11]:37491 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756625AbXKOW0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 17:26:00 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAFMNbSQ001279;
-	Thu, 15 Nov 2007 23:23:37 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db82eaf.pool.einsundeins.de [77.184.46.175])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAFMNaGT000031
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 15 Nov 2007 23:23:36 +0100 (MET)
-In-Reply-To: <200711152243.10229.johannes.sixt@telecom.at>
-X-Mailer: Apple Mail (2.752.3)
+	id S932369AbXKOW26 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 17:28:58 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932375AbXKOW26
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:28:58 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56147 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932324AbXKOW25 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:28:57 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id 4B243479A9;
+	Thu, 15 Nov 2007 17:28:57 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 15 Nov 2007 17:28:57 -0500
+X-Sasl-enc: O0hoxNvHahA5oHiKIFNpbCWqldhR4NbJJlDyhmzjMtlb 1195165736
+Received: from [192.168.2.101] (p549A10B1.dip0.t-ipconnect.de [84.154.16.177])
+	by mail.messagingengine.com (Postfix) with ESMTP id EC2B52A57E;
+	Thu, 15 Nov 2007 17:28:55 -0500 (EST)
+In-Reply-To: <7v640340kp.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65177>
 
+On Thu, 15 Nov 2007, Junio C Hamano wrote:
+> Are there problems with the implementation in compat/ directory, we ship 
+> specifically to help platforms without mkdtemp()?
 
-On Nov 15, 2007, at 10:43 PM, Johannes Sixt wrote:
+The Git version that I used for testing at office did not yet include your 
+compat fix or did not activate it automatically.
 
-> On Thursday 15 November 2007 21:10, Steffen Prohaska wrote:
->> On Nov 15, 2007, at 7:31 PM, Johannes Sixt wrote:
->>> On Thursday 15 November 2007 07:53, Steffen Prohaska wrote:
->>>> Now I'm wondering if we could make path relocation a bit more
->>>> explicit.  How about doing something like.
->>>>
->>>> 	system_wide = relocate_path(ETC_GITCONFIG);
->>>>
->>>> and relocate_path(const char *) would expand a format
->>>> string in path.  At this point I see only a single %s
->>>> that would be expanded with the install prefix.  If
->>>> ETC_GITCONFIG is "%s/etc/gitconfig" relocate path will return
->>>> "C:/msysgit/bin/etc/gitconfig" for my above example.  It is
->>>> basically a printf with the install prefix path.
->>>
->>> I don't see the problem that you are trying to solve.
->>
->> Path relocation would be more explicit:
->> 1) Paths that need to be relocated are filtered through
->>     relocate_path().  That's easy to understand.
->> 2) All the code prefixing the path is in relocate_path().
->>     This avoids code duplication.
->> 3) Path that should be relocated contain "%s" in the Makefile.
->>     This indicates that some string expansion may take place.
->>
->> (1) and (2) would be useful even if you do not agree with (3).
->> The code in PATCH 9/11 and PATCH 11/11 looks very similar.
->> If the prefixing code went into a separate function, we'd
->> have less code.  Also, relocate_path() could be useful at
->> other places.  For example, I'd use it to locate the HTML
->> documentation relative to the installation directory.
->
-> How is %s/foo different from ../foo? There are only 2 paths that  
-> need to be
-> relocatable. Your proposal is over-engineering, IMHO.
+I shall check this out tomorrow and let you know. Sorry, it's already late 
+here in Germany (23:27h) - I need to get some sleep ;-)
 
-fair enough. Let's take your patches.
+Regards
 
-	Steffen
+Guido
