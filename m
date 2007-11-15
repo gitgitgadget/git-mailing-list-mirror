@@ -1,72 +1,65 @@
-From: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Subject: Re: [PATCH] Fix "identifier redeclared" compilation error with SUN
- cc.
-Date: Thu, 15 Nov 2007 23:00:44 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711152253430.4090@bianca.dialin.t-online.de>
-References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
- <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: New repo quickly corrupted
+Date: Thu, 15 Nov 2007 14:01:26 -0800 (PST)
+Message-ID: <alpine.LFD.0.9999.0711151358180.4260@woody.linux-foundation.org>
+References: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323584-945524817-1195164044=:4090"
-Cc: gitster@pobox.com, raa.lkml@gmail.com, git@ostkamp.fastmail.fm,
-	git@vger.kernel.org
-To: =?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:01:19 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jason Sewall <jasonsewall@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 23:02:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Ismln-0007pL-En
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:01:07 +0100
+	id 1IsmnH-0008RY-NI
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759440AbXKOWAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 17:00:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759439AbXKOWAt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:00:49 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37034 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1758873AbXKOWAs (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:00:48 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 8496D48B83;
-	Thu, 15 Nov 2007 17:00:47 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 15 Nov 2007 17:00:47 -0500
-X-Sasl-enc: YQVKw48m9VbjGomTA99dC8aspkXbSfXAga2CJdyA+SjB 1195164046
-Received: from [192.168.2.101] (p549A10B1.dip0.t-ipconnect.de [84.154.16.177])
-	by mail.messagingengine.com (Postfix) with ESMTP id 289E42A571;
-	Thu, 15 Nov 2007 17:00:46 -0500 (EST)
-In-Reply-To: <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+	id S933727AbXKOWCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 17:02:25 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932950AbXKOWCY
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:02:24 -0500
+Received: from smtp2.linux-foundation.org ([207.189.120.14]:33181 "EHLO
+	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1765211AbXKOWCX (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:02:23 -0500
+Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
+	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFM1Q28001431
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Thu, 15 Nov 2007 14:01:27 -0800
+Received: from localhost (localhost [127.0.0.1])
+	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFM1QZa017961;
+	Thu, 15 Nov 2007 14:01:26 -0800
+In-Reply-To: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com>
+X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65169>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323584-945524817-1195164044=:4090
-Content-Type: TEXT/PLAIN; charset=iso-8859-15; format=flowed
-Content-Transfer-Encoding: 8BIT
 
-On Thu, 15 Nov 2007, Björn Steinbrink wrote:
-> Some versions of SUN's cc have a bug that causes them to complain about
-> a redeclared identifier when you use a function declaration that takes a
-> struct with a FAM and this struct has only been declared but not yet
-> defined.
-> [...]
-> Signed-off-by: Björn Steinbrink <B.Steinbrink@gmx.de>
-> ---
-> Guido, could you please test this patch?
+On Thu, 15 Nov 2007, Jason Sewall wrote:
+>
+> find . -type f -exec dos2unix {} +
 
-I tested it and the file in question compiled ok for the two versions of 
-Sun Forte and Workshop compilers that I have available.
+Oops.
 
-I could also link & run the main git binary after applying my own 
-mkdtemp() patch.
+You just ran "dos2unix" on all the *git* files!
 
-I hope your patch will get officially included.
+Which certainly explains why all your old objects got corrupted!
 
-Regards
+> What's going on?
 
-Guido
---8323584-945524817-1195164044=:4090--
+PEBKAC ;)
+
+To avoid this error in the future, may I suggest using
+
+	git ls-files -z | xargs -0 dos2unix
+
+or similar. Please DO NOT write to the .git/objects directory.
+
+		Linus
