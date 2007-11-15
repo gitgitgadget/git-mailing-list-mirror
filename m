@@ -1,65 +1,69 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Jason Sewall" <jasonsewall@gmail.com>
 Subject: Re: New repo quickly corrupted
-Date: Thu, 15 Nov 2007 14:01:26 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711151358180.4260@woody.linux-foundation.org>
+Date: Thu, 15 Nov 2007 17:06:14 -0500
+Message-ID: <31e9dd080711151406u6df05debs56ac473977dfede3@mail.gmail.com>
 References: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com>
+	 <alpine.LFD.0.9999.0711151358180.4260@woody.linux-foundation.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jason Sewall <jasonsewall@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:02:43 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "Junio C Hamano" <gitster@pobox.com>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 23:07:05 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsmnH-0008RY-NI
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:02:40 +0100
+	id 1IsmrD-0001f1-M8
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933727AbXKOWCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 17:02:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932950AbXKOWCY
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:02:24 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:33181 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1765211AbXKOWCX (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:02:23 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFM1Q28001431
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Thu, 15 Nov 2007 14:01:27 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAFM1QZa017961;
-	Thu, 15 Nov 2007 14:01:26 -0800
-In-Reply-To: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com>
-X-Spam-Status: No, hits=-2.734 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1751986AbXKOWGQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 17:06:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1762101AbXKOWGQ
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:06:16 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:37472 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761561AbXKOWGP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 17:06:15 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so809998wah
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 14:06:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=99xL8P9bLJToyqL0MtAGVL3hXUGOFRu89Zzwbuahzvg=;
+        b=VyBxp0KHk27lOkky3zOPe+qCruI2M97gMRiAy7zRCoi9XAq8U9h+upVKd+dHjOLYi4iep+brDfZAthI6tzl78RKllr0nitQP+jueFqvqlBDbHnHS0okpZSTbU9cJIs0jHsaYj61BkQcZC+lwpd7GkZhyeKDx7BN8Iyfi+W18oF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=bRwxkRGIvmVvckxsouR2LS9x73yDzD09qUVTnNLlE+342fOsHAgEur6zxz30DIqxU7vn0TmgkC3WvBa5ulYdoEuoJHMxqSOpzNe7dQTz5ngk5zaPed3M1oxZTuPcNZ4eTgkWJbe6usrzhZ+JSC37Se8+SfrPWlHoSBq9RBbs4Hk=
+Received: by 10.114.209.1 with SMTP id h1mr234092wag.1195164375115;
+        Thu, 15 Nov 2007 14:06:15 -0800 (PST)
+Received: by 10.115.76.19 with HTTP; Thu, 15 Nov 2007 14:06:14 -0800 (PST)
+In-Reply-To: <alpine.LFD.0.9999.0711151358180.4260@woody.linux-foundation.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65170>
 
-
-
-On Thu, 15 Nov 2007, Jason Sewall wrote:
+On Nov 15, 2007 5:01 PM, Linus Torvalds <torvalds@linux-foundation.org> wrote:
 >
-> find . -type f -exec dos2unix {} +
+>
+> On Thu, 15 Nov 2007, Jason Sewall wrote:
+> >
+> > find . -type f -exec dos2unix {} +
+>
+> Oops.
+>
+> You just ran "dos2unix" on all the *git* files!
+>
+> Which certainly explains why all your old objects got corrupted!
+>
+> > What's going on?
+>
+> PEBKAC ;)
 
-Oops.
+Yeah, Junio beat you to it. :)
 
-You just ran "dos2unix" on all the *git* files!
-
-Which certainly explains why all your old objects got corrupted!
-
-> What's going on?
-
-PEBKAC ;)
-
-To avoid this error in the future, may I suggest using
-
-	git ls-files -z | xargs -0 dos2unix
-
-or similar. Please DO NOT write to the .git/objects directory.
-
-		Linus
+I take comfort in the fact that others have suffered far worse
+consequences from find misuse....
