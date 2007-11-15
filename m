@@ -1,138 +1,89 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Add test that checks diverse aspects of updating remote
-	and tracking branches
-Date: Thu, 15 Nov 2007 21:46:11 +0100
-Message-ID: <20071115204611.GB3552@steel.home>
-References: <20071112213823.GB2918@steel.home> <20071112213938.GC2918@steel.home> <20071113075240.GA21799@sigill.intra.peff.net> <20071113194731.GC3268@steel.home> <20071113194909.GD3268@steel.home> <20071113230234.GI3268@steel.home> <20071113231048.GB19444@sigill.intra.peff.net> <20071115042625.GA10094@sigill.intra.peff.net>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: refining .gitignores
+Date: Thu, 15 Nov 2007 21:13:04 +0000
+Message-ID: <807ikjdxgf.fsf@tiny.isode.net>
+References: <804pfobgkp.fsf@tiny.isode.net>
+            <20071114230258.GG3973@steel.home>
+            <807ikj3fge.fsf@tiny.isode.net>
+            <20071115192654.GA3552@steel.home>
+            <80ejerdzjd.fsf@tiny.isode.net>
+            <alpine.LFD.0.9999.0711151237550.4260@woody.linux-foundation.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <junkio@cox.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Nov 15 21:46:38 2007
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 22:13:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Islbd-0007wJ-Ai
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:46:33 +0100
+	id 1Ism1g-0002Rr-LQ
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 22:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761056AbXKOUqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 15:46:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760336AbXKOUqP
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:46:15 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.188]:57723 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757249AbXKOUqO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 15:46:14 -0500
-Received: from tigra.home (Fcbc7.f.strato-dslnet.de [195.4.203.199])
-	by post.webmailer.de (fruni mo57) (RZmta 14.0)
-	with ESMTP id w02251jAFIOttP ; Thu, 15 Nov 2007 21:46:11 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 98F9B277AE;
-	Thu, 15 Nov 2007 21:46:11 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 3435F56D22; Thu, 15 Nov 2007 21:46:11 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071115042625.GA10094@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsKmZA=
-X-RZG-CLASS-ID: mo07
+	id S1754375AbXKOVNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 16:13:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758141AbXKOVNL
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 16:13:11 -0500
+Received: from rufus.isode.com ([62.3.217.251]:40770 "EHLO rufus.isode.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754375AbXKOVNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 16:13:10 -0500
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <Rzy2YABBVC2E@rufus.isode.com>; Thu, 15 Nov 2007 21:13:04 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Thu, 15 Nov 2007 21:13:04 +0000
+X-Hashcash: 1:20:071115:torvalds@linux-foundation.org::nLNiqDJe1h8jWExh:000000000000000000000000000000007/t9
+X-Hashcash: 1:20:071115:raa.lkml@gmail.com::a/zpKeUh8eCuD5ph:000000000000000000000000000000000000000000037Wm
+X-Hashcash: 1:20:071115:git@vger.kernel.org::mJmX5qRBSBUN9nXs:0000000000000000000000000000000000000000000q6O
+In-Reply-To: <alpine.LFD.0.9999.0711151237550.4260@woody.linux-foundation.org> (Linus Torvalds's message of "Thu\, 15 Nov 2007 12\:40\:14 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65159>
 
-Because we haven't settled on what the exit status from
-"git push" command itself should be in such a partial
-failure case, do not check the exit status from it for
-now.
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
+> On Thu, 15 Nov 2007, Bruce Stephens wrote:
+>>
+>> They are in the index.  What I want is a list of files which are known
+>> to git, which are matched by the default rules (in particular the
+>> .gitignore files).
+>
+> Ahh.
+>
+> *All* the .gitignore rules are purely about files that git does not 
+> already know about. Once git tracks a pathname, the ignore rules simply 
+> do not matter.
+>
+> Files that are in the index are simply never ignored. There's no way to 
+> ignore them, and in fact, the whole "git add -f" thing is a way to add 
+> files to the index and override the exclude rules - at which point git 
+> then tracks them regardless of any such exclude rules.
 
-Jeff King, Thu, Nov 15, 2007 05:26:26 +0100:
-> On Tue, Nov 13, 2007 at 06:10:48PM -0500, Jeff King wrote:
-> 
-> > > This one is on top of what is in next. It also include the check for
-> > > deleting remote braches I sent before. Regarding this one: if a remote
-> > > branch is deleted, shouldn't the matching tracking branch be removed
-> > > as well? The code in master seem to do that.
-> > 
-> > Yes, it should (the code in update_tracking_ref seems to handle that
-> > case, but I haven't tested, so I may have bungled something). I am
-> > literally walking out the door, now, though, so I will be out of touch
-> > for at least a day.
-> 
-> After I became disconnected, I looked at my 'next', and the reason for
-> the failure to delete the ref seems to be your is_null_sha1
-> error-checking patch, which Junio put in next. But maybe you have
-> figured that out in the intervening time. :)
+OK.  I think I sort of understood that, but it's nice to have it
+clearly stated.
 
-I didn't. But Junio already has all your patches in pu, so I activated
-the deletion test and rebased it on top of your patches in his tree
-(jk/send-pack, according to merge commit). Tried: works.
+I'm not worried so much about files that already exist.  I'm worried
+that we may in the future create files that we want to store in git
+and which are ignored.  If we do that there's a chance we'll miss them
+(because "git gui", "git status", etc., won't bring attention to
+them).
 
- t/t5404-tracking-branches.sh |   28 +++++++++++++++++++++++++---
- 1 files changed, 25 insertions(+), 3 deletions(-)
+So it seemed valuable to try to make the .gitignore patterns precise:
+so that they ignore all the generated files that our builds produce,
+while not matching any files that git knows about.
 
-diff --git a/t/t5404-tracking-branches.sh b/t/t5404-tracking-branches.sh
-index 20718d4..a6f60ac 100755
---- a/t/t5404-tracking-branches.sh
-+++ b/t/t5404-tracking-branches.sh
-@@ -10,6 +10,7 @@ test_expect_success 'setup' '
- 	git commit -m 1 &&
- 	git branch b1 &&
- 	git branch b2 &&
-+	git branch b3 &&
- 	git clone . aa &&
- 	git checkout b1 &&
- 	echo b1 >>file &&
-@@ -19,10 +20,13 @@ test_expect_success 'setup' '
- 	git commit -a -m b2
- '
- 
-+start_dir="$(pwd)"
-+
- test_expect_success 'check tracking branches updated correctly after push' '
- 	cd aa &&
- 	b1=$(git rev-parse origin/b1) &&
- 	b2=$(git rev-parse origin/b2) &&
-+	b3=$(git rev-parse origin/b3) &&
- 	git checkout -b b1 origin/b1 &&
- 	echo aa-b1 >>file &&
- 	git commit -a -m aa-b1 &&
-@@ -32,9 +36,27 @@ test_expect_success 'check tracking branches updated correctly after push' '
- 	git checkout master &&
- 	echo aa-master >>file &&
- 	git commit -a -m aa-master &&
--	git push &&
--	test "$(git rev-parse origin/b1)" = "$b1" &&
--	test "$(git rev-parse origin/b2)" = "$b2"
-+	{
-+		git push
-+		test "$(git rev-parse origin/b1)" = "$b1" &&
-+		test "$(git rev-parse origin/b2)" = "$b2" &&
-+		test "$(git rev-parse origin/b3)" = "$b3" &&
-+		test "$(git rev-parse origin/master)" = \
-+		"$(git rev-parse master)"
-+	}
-+'
-+
-+test_expect_success 'delete remote branch' '
-+	git push origin :refs/heads/b3
-+	{
-+		git rev-parse --verify origin/b3
-+		test $? != 0
-+        } &&
-+	cd "$start_dir" &&
-+	{
-+		git rev-parse refs/heads/b3
-+		test $? != 0
-+        }
- '
- 
- test_done
--- 
-1.5.3.5.692.ge1737
+That certainly wouldn't guarantee that new files wouldn't be caught by
+the patterns, but it ought to lower the probability of this, since
+there's a decent chance that such files will either be not touched by
+the patterns (because they're *.java or something), or they'll fit
+into one of the already handled exceptions (Doxyfile.local is one:
+most *.local files are build products, but Doxyfile.local aren't).
+
+I guess if you're starting off with some project in git then this
+isn't such an issue: you evolve the patterns and the build process and
+so on in parallel.  So maybe there's not such a demand for finding
+this information, and those of us who do want to do it are best using
+the "git add" loop approach?
