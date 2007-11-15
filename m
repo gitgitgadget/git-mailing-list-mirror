@@ -1,75 +1,96 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
-Date: Thu, 15 Nov 2007 21:10:32 +0100
-Message-ID: <E652EC54-9F94-444F-AF94-2FA990355A78@zib.de>
-References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-12-git-send-email-johannes.sixt@telecom.at> <9D2813B9-8E86-4551-94BF-2B04F5FBB141@zib.de> <200711151931.29029.johannes.sixt@telecom.at>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Thu Nov 15 21:11:39 2007
+From: Bruce Stephens <bruce.stephens@isode.com>
+Subject: Re: Odd .gitignore behaviour
+Date: Thu, 15 Nov 2007 20:15:19 +0000
+Message-ID: <80ir43e04o.fsf@tiny.isode.net>
+References: <80ir431xny.fsf@tiny.isode.net>
+            <alpine.LFD.0.9999.0711151044150.2786@woody.linux-foundation.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 21:15:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isl3n-0001OP-Az
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:11:35 +0100
+	id 1Isl7n-00031v-2Q
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:15:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758794AbXKOULR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 15:11:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761551AbXKOULR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:11:17 -0500
-Received: from mailer.zib.de ([130.73.108.11]:57161 "EHLO mailer.zib.de"
+	id S1760612AbXKOUP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 15:15:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757830AbXKOUP0
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:15:26 -0500
+Received: from rufus.isode.com ([62.3.217.251]:38991 "EHLO rufus.isode.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751719AbXKOULQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 15:11:16 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAFK9LqJ017843;
-	Thu, 15 Nov 2007 21:09:21 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db82eaf.pool.einsundeins.de [77.184.46.175])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAFK9GlI029323
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 15 Nov 2007 21:09:17 +0100 (MET)
-In-Reply-To: <200711151931.29029.johannes.sixt@telecom.at>
-X-Mailer: Apple Mail (2.752.3)
+	id S1758652AbXKOUPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 15:15:25 -0500
+Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
+          by rufus.isode.com (smtp internal) via TCP with SMTP 
+          id <Rzyo1wBBVIJK@rufus.isode.com>; Thu, 15 Nov 2007 20:15:21 +0000
+Received: by tiny.isode.net (sSMTP sendmail emulation);
+          Thu, 15 Nov 2007 20:15:19 +0000
+X-Hashcash: 1:20:071115:torvalds@linux-foundation.org::A5dRvJ+4P6NRgtNE:000000000000000000000000000000002Gdf
+X-Hashcash: 1:20:071115:git@vger.kernel.org::wvT7eAqCWnj/j5+4:0000000000000000000000000000000000000000008koa
+In-Reply-To: <alpine.LFD.0.9999.0711151044150.2786@woody.linux-foundation.org> (Linus Torvalds's message of "Thu\, 15 Nov 2007 10\:56\:27 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65155>
 
+Linus Torvalds <torvalds@linux-foundation.org> writes:
 
-On Nov 15, 2007, at 7:31 PM, Johannes Sixt wrote:
+[...]
 
-> On Thursday 15 November 2007 07:53, Steffen Prohaska wrote:
->> Now I'm wondering if we could make path relocation a bit more
->> explicit.  How about doing something like.
->>
->> 	system_wide = relocate_path(ETC_GITCONFIG);
->>
->> and relocate_path(const char *) would expand a format
->> string in path.  At this point I see only a single %s
->> that would be expanded with the install prefix.  If
->> ETC_GITCONFIG is "%s/etc/gitconfig" relocate path will return
->> "C:/msysgit/bin/etc/gitconfig" for my above example.  It is
->> basically a printf with the install prefix path.
+> So what you describe sounds wrong.
 >
-> I don't see the problem that you are trying to solve.
+> But my quick test didn't actually support the behaviour you see. In this 
+> situation:
+>
+> 	[torvalds@woody git-test]$ cat .gitignore
+> 	a*
+> 	[torvalds@woody git-test]$ cat subdir/.gitignore
+> 	!a-ok
+> 	[torvalds@woody git-test]$ find *
+> 	all-files
+> 	subdir
+> 	subdir/a-ok
+> 	[torvalds@woody git-test]$ git ls-files -o --exclude-per-directory=.gitignore
+> 	.gitignore
+> 	subdir/.gitignore
+> 	subdir/a-ok
+>
+> ie we *do* show "showdir/a-ok" (but we don't show "all-files") because 
+> a-ok is explicitly marked to be not ignored by a higher-priority rule.
 
-Path relocation would be more explicit:
-1) Paths that need to be relocated are filtered through
-    relocate_path().  That's easy to understand.
-2) All the code prefixing the path is in relocate_path().
-    This avoids code duplication.
-3) Path that should be relocated contain "%s" in the Makefile.
-    This indicates that some string expansion may take place.
+OK, and if I say "git add subdir/a-ok" I get no error, as expected.
 
-(1) and (2) would be useful even if you do not agree with (3).
-The code in PATCH 9/11 and PATCH 11/11 looks very similar.
-If the prefixing code went into a separate function, we'd
-have less code.  Also, relocate_path() could be useful at
-other places.  For example, I'd use it to locate the HTML
-documentation relative to the installation directory.
+So extend it just a tiny bit, moving a-ok down a directory and using
+the negative pattern "!subsubdir/a-ok" to match:
 
-	Steffen
+    brs% cat .gitignore
+    a*
+    brs% cat subdir/.gitignore
+    !subsubdir/a-ok
+    brs% find *
+    all-files
+    subdir
+    subdir/.gitignore
+    subdir/subsubdir
+    subdir/subsubdir/a-ok
+    subdir/a-ok
+    brs% git ls-files -o --exclude-per-directory=.gitignore
+    .gitignore
+    subdir/.gitignore
+    subdir/subsubdir/a-ok
+    brs% git add subdir/subsubdir/a-ok
+    The following paths are ignored by one of your .gitignore files:
+    subdir/subsubdir/a-ok
+    Use -f if you really want to add them.
+    fatal: no files added
+
+So I think the output from git-ls-files is as expected (as I interpret
+the manpage and your explanation).  So is git-add just using some
+different code?
+
+[...]
