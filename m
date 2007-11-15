@@ -1,111 +1,89 @@
-From: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Subject: [PATCH] Fix Solaris compiler warnings
-Date: Thu, 15 Nov 2007 23:19:11 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711152317140.7416@bianca.dialin.t-online.de>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 23:19:40 2007
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [BUG] t9101 (master) busted on Leopard
+Date: Thu, 15 Nov 2007 23:22:07 +0100
+Message-ID: <9A0785C3-1150-458C-BC84-1E13CC039D28@wincent.com>
+References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com> <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com> <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com> <1D7CC3C0-46C1-40D9-AAD5-B9ADFF99B58A@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v912)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 15 23:22:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Isn3f-00079X-Rt
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:19:36 +0100
+	id 1Isn6T-0008U5-Rl
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 23:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759440AbXKOWTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 17:19:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764677AbXKOWTR
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:19:17 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54330 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757750AbXKOWTQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:19:16 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id 4F0AF477C0
-	for <git@vger.kernel.org>; Thu, 15 Nov 2007 17:19:15 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 15 Nov 2007 17:19:15 -0500
-X-Sasl-enc: so7KXiUJOxNbcukQQxZVYuFlv+PMIr45OIE0ubMdX2Fy 1195165154
-Received: from [192.168.2.101] (p549A10B1.dip0.t-ipconnect.de [84.154.16.177])
-	by mail.messagingengine.com (Postfix) with ESMTP id 8D7BA2A57E
-	for <git@vger.kernel.org>; Thu, 15 Nov 2007 17:19:14 -0500 (EST)
+	id S1759546AbXKOWWM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 17:22:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754913AbXKOWWM
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 17:22:12 -0500
+Received: from wincent.com ([72.3.236.74]:40570 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753536AbXKOWWL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 17:22:11 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAFMLPZn000960;
+	Thu, 15 Nov 2007 16:22:08 -0600
+In-Reply-To: <1D7CC3C0-46C1-40D9-AAD5-B9ADFF99B58A@lrde.epita.fr>
+X-Mailer: Apple Mail (2.912)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65174>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65175>
 
-Hello,
+El 15/11/2007, a las 22:13, Benoit Sigoure escribi=F3:
 
-the below patch fixes some compiler warnings returned by Solaris Workshop 
-Compilers.
+> On Nov 15, 2007, at 5:11 PM, Wincent Colaiuta wrote:
+>
+>> El 15/11/2007, a las 17:04, Brian Gernhardt escribi=F3:
+>>
+>>> On Nov 15, 2007, at 8:46 AM, Wincent Colaiuta wrote:
+>>>
+>>>> Was just running the test suite against the master branch and saw =
+=20
+>>>> that t9101 is currently failing on Leopard, and a review with git-=
+=20
+>>>> bisect indicates that it has been ever since it was first =20
+>>>> introduced (in commit 15153451). Not sure if this problem is =20
+>>>> Leopard-specific or not as I only have one machine.
+>>>
+>>> It is not a Leopard specific problem, as far as I can tell.  I =20
+>>> just ran the test and had no errors on my Leopard machine.  So =20
+>>> perhaps it's some other detail of your setup?
+>>>
+>>>> I'm not a git-svn user myself, but if there's anything I can do =20
+>>>> to help diagnose this problem further on Leopard please let me =20
+>>>> know.
+>>>
+>>> I just tested it using svn from fink and (after discovering it =20
+>>> exists) from Leopard.  No problems.  Do you have an old svn =20
+>>> package (client, admin, or perl binding) installed from Darwin =20
+>>> Ports or Fink perhaps?
+>>
+>> I don't use Darwin Ports or Fink, and this is a clean Leopard =20
+>> install (ie. nothing installed in /usr/local apart from git and a =20
+>> very small number of other tools that aren't related to Subversion).
+>>
+>> This is the output of "/usr/bin/svn --version":
+>>
+>> svn, version 1.4.4 (r25188)
+>>   compiled Sep 23 2007, 22:32:34
+>>
+>> Perhaps then it is something in the environment.
+>
+> Hi Wincent,
+> Can you reproduce this deterministically?  If yes, can you re-run =20
+> the test with the --verbose flag and post the gzipped output (or =20
+> send it to me if the list doesn't like this sort of attachment).
 
-     CC builtin-apply.o
-"builtin-apply.c", line 686: warning: statement not reached
-     CC utf8.o
-"utf8.c", line 287: warning: statement not reached
-     CC xdiff/xdiffi.o
-"xdiff/xdiffi.c", line 261: warning: statement not reached
-     CC xdiff/xutils.o
-"xdiff/xutils.c", line 236: warning: statement not reached
+Yes, have just sent you the output of "--verbose" and also running the =
+=20
+script using "sh -x" (off list).
 
-Signed-off-by: Guido Ostkamp <git@ostkamp.fastmail.fm>
----
-  builtin-apply.c |    1 -
-  utf8.c          |    1 -
-  xdiff/xdiffi.c  |    2 --
-  xdiff/xutils.c  |    2 --
-  4 files changed, 0 insertions(+), 6 deletions(-)
-
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 8edcc08..91f8752 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -683,7 +683,6 @@ static char *git_header_name(char *line, int llen)
-  			}
-  		}
-  	}
--	return NULL;
-  }
-
-  /* Verify that we recognize the lines following a git header */
-diff --git a/utf8.c b/utf8.c
-index 8095a71..9efcdb9 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -284,7 +284,6 @@ int print_wrapped_text(const char *text, int indent, int indent2, int width)
-  			text++;
-  		}
-  	}
--	return w;
-  }
-
-  int is_encoding_utf8(const char *name)
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 5cb7171..1bad846 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -257,8 +257,6 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
-  			return ec;
-  		}
-  	}
--
--	return -1;
-  }
-
-
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 2ade97b..d7974d1 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -232,8 +232,6 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
-  		return i1 >= s1 && i2 >= s2;
-  	} else
-  		return s1 == s2 && !memcmp(l1, l2, s1);
--
--	return 0;
-  }
-
-  static unsigned long xdl_hash_record_with_whitespace(char const **data,
--- 
-1.5.3.5.721.g039b
+Cheers,
+Wincent
