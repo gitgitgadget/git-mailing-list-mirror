@@ -1,160 +1,127 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: Re: [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
-Date: Thu, 15 Nov 2007 07:53:15 +0100
-Message-ID: <9D2813B9-8E86-4551-94BF-2B04F5FBB141@zib.de>
-References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-2-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-3-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-4-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-5-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-6-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-7-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-8-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-9-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-10-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-11-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-12-git-send-email-johannes.sixt@telecom.at>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <johannes.sixt@telecom.at>
-X-From: git-owner@vger.kernel.org Thu Nov 15 07:53:08 2007
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Unify the use of standard set of exclude files
+Date: Thu, 15 Nov 2007 02:04:30 -0500
+Message-ID: <20071115070429.GD10185@sigill.intra.peff.net>
+References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com> <20071113225057.GB22836@artemis.corp> <7vsl39l0b7.fsf@gitster.siamese.dyndns.org> <7v4pfo813i.fsf_-_@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, shunichi fuji <palglowr@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 08:04:57 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsYb5-0004Zu-6q
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 07:53:07 +0100
+	id 1IsYmR-0007Qm-F3
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:04:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932850AbXKOGwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 01:52:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756653AbXKOGwV
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 01:52:21 -0500
-Received: from mailer.zib.de ([130.73.108.11]:42716 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932505AbXKOGwT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 01:52:19 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAF6q0Ks026606;
-	Thu, 15 Nov 2007 07:52:00 +0100 (CET)
-Received: from [192.168.178.21] (brln-4db82eaf.pool.einsundeins.de [77.184.46.175])
-	(authenticated bits=0)
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAF6pwfI022183
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Thu, 15 Nov 2007 07:51:59 +0100 (MET)
-In-Reply-To: <1194984306-3181-12-git-send-email-johannes.sixt@telecom.at>
-X-Mailer: Apple Mail (2.752.3)
+	id S933614AbXKOHEh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 02:04:37 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933586AbXKOHEg
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:04:36 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:1970 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933615AbXKOHEf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 02:04:35 -0500
+Received: (qmail 6725 invoked by uid 111); 15 Nov 2007 07:04:32 -0000
+Received: from ppp-216-106-96-30.storm.ca (HELO sigill.intra.peff.net) (216.106.96.30)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 15 Nov 2007 02:04:32 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2007 02:04:30 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4pfo813i.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65072>
 
+On Wed, Nov 14, 2007 at 10:38:41PM -0800, Junio C Hamano wrote:
 
-On Nov 13, 2007, at 9:05 PM, Johannes Sixt wrote:
+> This teaches "git ls-files" to read the standard set of exclude
+> files when no exclude patterns nor files is given from the
+> command line.  We used to error out in such a case.
 
-> If ETC_GITCONFIG is not an absolute path, interpret it relative to
-> --exec-dir. This makes the installed binaries relocatable because the
-> prefix is not compiled-in.
->
-> Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
-> ---
->  config.c |   13 ++++++++++++-
->  1 files changed, 12 insertions(+), 1 deletions(-)
->
-> diff --git a/config.c b/config.c
-> index dd7e9ad..9f014bb 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -6,6 +6,7 @@
->   *
->   */
->  #include "cache.h"
-> +#include "exec_cmd.h"
->
->  #define MAXNAME (256)
->
-> @@ -454,7 +455,17 @@ int git_config_from_file(config_fn_t fn, const  
-> char *filename)
->
->  const char *git_etc_gitconfig(void)
->  {
-> -	return ETC_GITCONFIG;
-> +	static const char *system_wide;
-> +	if (!system_wide) {
-> +		system_wide = ETC_GITCONFIG;
-> +		if (!is_absolute_path(system_wide)) {
-> +			/* interpret path relative to exec-dir */
-> +			const char *exec_path = git_exec_path();
-> +			system_wide = prefix_path(exec_path, strlen(exec_path),
-> +						system_wide);
-> +		}
-> +	}
-> +	return system_wide;
->  }
+Is that really the case, or is this _just_ when we have asked to include
+ignored files in the output? Or maybe I am missing something fundamental
+here.
 
-When I first stumbled over this code in msysgit I didn't
-understand how to use it for making git relocatable. Maybe
-I didn't appreciate the clue about the relative path, which
-indicates to change the Makefile to provide ETC_GITCONFIG
-starting with "..".
+git-add--interactive:list_untracked needs something like this, but I
+don't think your patch will work. We need something more like this (also
+on maint because your standard exclude patch is):
 
-I think I stumbled over the idea to build a path by starting
-with an absolute path to exec_path and than go up with
-".." before going down again to etc/gitconfig. So, a paths
-would for example be "C:/msysgit/bin/../etc/gitconfig".
+-- >8 --
+git-ls-files: add --exclude-standard
 
-Hence I wrote a function git_install_prefix(), which directly
-points to "C:/msysgit". It is used in the following way:
+This provides a way for scripts to get at the new standard exclude
+function.
 
-----
-			system_wide = prefix_path(exec_path, strlen(exec_path),
-						system_wide);
-		}
-+#if __MINGW32__
-+		/*
-+		 * If it is an absolute Unix path it is prefixed with
-+		 * the git_install_prefix().
-+		 */
-+		else if (system_wide[0] == '/') {
-+			const char* prefix = git_install_prefix();
-+			system_wide = prefix_path(prefix, strlen(prefix),
-+			                           system_wide);
+---
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+index 9e454f0..2ec0c0d 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -15,6 +15,7 @@ SYNOPSIS
+ 		[-x <pattern>|--exclude=<pattern>]
+ 		[-X <file>|--exclude-from=<file>]
+ 		[--exclude-per-directory=<file>]
++		[--exclude-standard]
+ 		[--error-unmatch] [--with-tree=<tree-ish>]
+ 		[--full-name] [--abbrev] [--] [<file>]\*
+ 
+@@ -77,6 +78,10 @@ OPTIONS
+ 	read additional exclude patterns that apply only to the
+ 	directory and its subdirectories in <file>.
+ 
++--exclude-standard::
++	Add the standard git exclusions: .git/info/exclude, .gitignore
++	in each directory, and the user's global exclusion file.
++
+ --error-unmatch::
+ 	If any <file> does not appear in the index, treat this as an
+ 	error (return 1).
+diff --git a/builtin-ls-files.c b/builtin-ls-files.c
+index 171d449..da97278 100644
+--- a/builtin-ls-files.c
++++ b/builtin-ls-files.c
+@@ -401,8 +401,8 @@ static void overlay_tree(const char *tree_name, const char *prefix)
+ static const char ls_files_usage[] =
+ 	"git-ls-files [-z] [-t] [-v] (--[cached|deleted|others|stage|unmerged|killed|modified])* "
+ 	"[ --ignored ] [--exclude=<pattern>] [--exclude-from=<file>] "
+-	"[ --exclude-per-directory=<filename> ] [--full-name] [--abbrev] "
+-	"[--] [<file>]*";
++	"[ --exclude-per-directory=<filename> ] [--exclude-standard] "
++	"[--full-name] [--abbrev] [--] [<file>]*";
+ 
+ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ {
+@@ -510,6 +510,11 @@ int cmd_ls_files(int argc, const char **argv, const char *prefix)
+ 			dir.exclude_per_dir = arg + 24;
+ 			continue;
+ 		}
++		if (!strcmp(arg, "--exclude-standard")) {
++			exc_given = 1;
++			setup_standard_excludes(&dir);
++			continue;
 +		}
-+#endif
-	}
-	return system_wide;
-}
-
-----
-
-This is not very portable.  Prefixing _every_ absolute Unix path
-makes sense for MINGW to map the fake unix root to its real
-location in the Windows filesystem. But this probably doesn't
-make sense on Unix at all.  And it's probably not needed at
-all. I should have just read your code more carefully ;)
-
-Your solution provides a sensible way to handle the issue.
-
-Now I'm wondering if we could make path relocation a bit more
-explicit.  How about doing something like.
-
-	system_wide = relocate_path(ETC_GITCONFIG);
-
-and relocate_path(const char *) would expand a format
-string in path.  At this point I see only a single %s
-that would be expanded with the install prefix.  If
-ETC_GITCONFIG is "%s/etc/gitconfig" relocate path will return
-"C:/msysgit/bin/etc/gitconfig" for my above example.  It is
-basically a printf with the install prefix path.
-
-This would support three cases:
-- absolute path
-- relative path
-- paths that will be relocated.  The path includes a '%s'
-   to indicate relocation.
-
-I'm not sure if we ever need to support relative paths
-without relocating them.
-
-What do you think?  If my comments make any sense to you,
-I could code a patch next weekend.
-
-BTW, if we changed PATCH 11/11 we'd obviously change PATCH
-9/11, too.
-
-	Steffen
-
-
->  int git_config(config_fn_t fn)
-> -- 
-> 1.5.3.5.1592.g0d6db
+ 		if (!strcmp(arg, "--full-name")) {
+ 			prefix_offset = 0;
+ 			continue;
+diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+index ac598f8..0317ad9 100755
+--- a/git-add--interactive.perl
++++ b/git-add--interactive.perl
+@@ -37,10 +37,7 @@ sub list_untracked {
+ 		chomp $_;
+ 		$_;
+ 	}
+-	run_cmd_pipe(qw(git ls-files --others
+-			--exclude-per-directory=.gitignore),
+-		     "--exclude-from=$GIT_DIR/info/exclude",
+-		     '--', @_);
++	run_cmd_pipe(qw(git ls-files --others --exclude-standard --), @_);
+ }
+ 
+ my $status_fmt = '%12s %12s %s';
