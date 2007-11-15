@@ -1,102 +1,62 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] Bisect reset: remove bisect refs that may have been
- packed.
-Date: Thu, 15 Nov 2007 08:18:07 +0100
-Message-ID: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Grammar fixes for gitattributes documentation
+Date: Thu, 15 Nov 2007 02:15:59 -0500
+Message-ID: <20071115071558.GE10185@sigill.intra.peff.net>
+References: <33080F0B-80C0-4860-9A74-C6878EE3B2CD@wincent.com> <7vfxz9kxz3.fsf@gitster.siamese.dyndns.org> <3461FD6E-1C46-4278-9EB0-5D730BB99084@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Junio Hamano <junkio@cox.net>
-X-From: git-owner@vger.kernel.org Thu Nov 15 08:12:26 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 08:16:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsYtg-0000zT-P2
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:12:21 +0100
+	id 1IsYy5-00028h-Mj
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 08:16:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764967AbXKOHL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 02:11:26 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S933897AbXKOHL0
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:11:26 -0500
-Received: from smtp1-g19.free.fr ([212.27.42.27]:49355 "EHLO smtp1-g19.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933940AbXKOHLY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 02:11:24 -0500
-Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
-	by smtp1-g19.free.fr (Postfix) with ESMTP id 3A26E1AB2E4;
-	Thu, 15 Nov 2007 08:11:23 +0100 (CET)
-Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
-	by smtp1-g19.free.fr (Postfix) with SMTP id 0266F1AB2C8;
-	Thu, 15 Nov 2007 08:11:22 +0100 (CET)
-X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
+	id S1754458AbXKOHQf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 02:16:35 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751798AbXKOHQf
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 02:16:35 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:2522 "EHLO
+	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755824AbXKOHQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 02:16:34 -0500
+Received: (qmail 6804 invoked by uid 111); 15 Nov 2007 07:16:02 -0000
+Received: from ppp-216-106-96-30.storm.ca (HELO sigill.intra.peff.net) (216.106.96.30)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.32) with ESMTP; Thu, 15 Nov 2007 02:16:02 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2007 02:15:59 -0500
+Content-Disposition: inline
+In-Reply-To: <3461FD6E-1C46-4278-9EB0-5D730BB99084@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65075>
 
-If refs were ever packed in the middle of bisection, the bisect
-refs were not removed from the "packed-refs" file.
+On Wed, Nov 14, 2007 at 10:04:25AM +0100, Wincent Colaiuta wrote:
 
-This patch fixes this problem by using "git update-ref -d $ref $hash"
-in "bisect_clean_state".
+>>> +A `filter` attribute can be set to a string value which names a
+>>> filter driver specified in the configuration.
+>>
+>> Will we get the canned "which vs that" discussion on this change?
+>
+> Perhaps. Neither would be incorrect, although technically "that" is a 
+> tighter match.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- git-bisect.sh               |   11 ++++++++++-
- t/t6030-bisect-porcelain.sh |   12 ++++++++++++
- 2 files changed, 22 insertions(+), 1 deletions(-)
+Really? I would think "which" works better, in that it is not
+restrictive. I.e., "The filter attribute is set to a string. This
+string, btw, names a filter driver" (which) rather than "The filter
+attribute is set to a string, and from the set of strings, it is set to
+the particular string that names a filter driver" (that).
 
-	Ooops, there was a problem with the previous patch
-	if "git bisect reset" was used when not bisecting.
+But in the non-restrictive case, it should be in a parenthetical phrase:
 
-	Sorry.
+  A `filter` attribute can be set to a string value, which names a
+  filter driver specified in the configuration.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 1ed44e5..584906f 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -351,7 +351,16 @@ bisect_reset() {
- 
- bisect_clean_state() {
- 	rm -fr "$GIT_DIR/refs/bisect"
--	rm -f "$GIT_DIR/refs/heads/bisect"
-+
-+	# There may be some refs packed during bisection.
-+	git for-each-ref --format='%(refname) %(objectname)' \
-+		"refs/bisect/*" | while read ref hash
-+	do
-+		git update-ref -d $ref $hash
-+	done
-+
-+	hash=$(git show-ref --hash refs/heads/bisect)
-+	test -n "$hash" && git update-ref -d refs/heads/bisect $hash
- 	rm -f "$GIT_DIR/BISECT_LOG"
- 	rm -f "$GIT_DIR/BISECT_NAMES"
- 	rm -f "$GIT_DIR/BISECT_RUN"
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 53956c0..f09db62 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -71,6 +71,18 @@ test_expect_success 'bisect start with one bad and good' '
- 	git bisect next
- '
- 
-+test_expect_success 'bisect reset removes packed refs' '
-+	git bisect reset &&
-+	git bisect start &&
-+	git bisect good $HASH1 &&
-+	git bisect bad $HASH3 &&
-+	git pack-refs --all --prune &&
-+	git bisect next &&
-+	git bisect reset &&
-+	test -z "$(git for-each-ref "refs/bisect/*")" &&
-+	test -z "$(git for-each-ref "refs/heads/bisect")"
-+'
-+
- # $HASH1 is good, $HASH4 is bad, we skip $HASH3
- # but $HASH2 is bad,
- # so we should find $HASH2 as the first bad commit
--- 
-1.5.3.5.722.g789fd-dirty
+I think either is readable, though. :)
+
+-Peff
