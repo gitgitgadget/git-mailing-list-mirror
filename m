@@ -1,73 +1,78 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: git-clean won't read global ignore
-Date: Thu, 15 Nov 2007 11:07:43 +0100
-Message-ID: <vpqbq9vlt3k.fsf@bauges.imag.fr>
-References: <30046e3b0711131349h51d253d5n4e5649bde36dc36f@mail.gmail.com>
-	<20071113225057.GB22836@artemis.corp>
-	<7vsl39l0b7.fsf@gitster.siamese.dyndns.org>
+From: David Kastrup <dak@gnu.org>
+Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
+Date: Thu, 15 Nov 2007 11:14:56 +0100
+Message-ID: <86hcjn4xy7.fsf@lola.quinscape.zz>
+References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+	<7voddv6fxz.fsf@gitster.siamese.dyndns.org>
+	<buozlxfeu0z.fsf@dhapc248.dev.necel.com>
+	<995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
+	<buotznnesw9.fsf@dhapc248.dev.necel.com> <473C1A29.2010703@op5.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pierre Habouzit <madcoder@debian.org>,
-	shunichi fuji <palglowr@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:08:39 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 15 11:15:56 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsbeI-0007GB-1j
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:08:38 +0100
+	id 1IsblL-00013K-JT
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:15:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754567AbXKOKIM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 05:08:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754638AbXKOKIL
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:08:11 -0500
-Received: from harmonie.imag.fr ([147.171.130.40]:50611 "EHLO harmonie.imag.fr"
+	id S1757613AbXKOKPR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 05:15:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757645AbXKOKPR
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:15:17 -0500
+Received: from main.gmane.org ([80.91.229.2]:52509 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753548AbXKOKIK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 05:08:10 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by harmonie.imag.fr (8.13.8/8.13.8) with ESMTP id lAFA7hmJ007899;
-	Thu, 15 Nov 2007 11:07:44 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IsbdP-0001xh-N0; Thu, 15 Nov 2007 11:07:43 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IsbdP-0003Cy-KN; Thu, 15 Nov 2007 11:07:43 +0100
-In-Reply-To: <7vsl39l0b7.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Wed\, 14 Nov 2007 00\:05\:00 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (harmonie.imag.fr [147.171.130.40]); Thu, 15 Nov 2007 11:07:44 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1757613AbXKOKPP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 05:15:15 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Isbka-0000I3-Dk
+	for git@vger.kernel.org; Thu, 15 Nov 2007 10:15:08 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 10:15:08 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 10:15:08 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+In-Reply-To: <473C1A29.2010703@op5.se> (Andreas Ericsson's message of "Thu\, 15 Nov 2007 11\:06\:33 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:abgLTklFKnoWarRJK2vIq0+ePWQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65104>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Andreas Ericsson <ae@op5.se> writes:
 
-> We probably could change git-ls-files to use the standard set
-> when no excludes are specified from the command line, or
-> something like that, but this will be a change in semantics that
-> would affect the scripts in a subtle way.  I am somewhat
-> reluctant to make such a change.
+>> Wincent Colaiuta <win@wincent.com> writes:
+>>> +		echo "${head#refs/heads/}" >"$GIT_DIR/head-name"
+>
+> It says "remove refs/heads/ from the beginning of the string pointed
+> to by $head".
+>
+> It's not a bashism. Some extensions to that syntax are though (I
+> think).
 
-+1 for your introduction of setup_standard_excludes().
+General replace anywhere.
 
-And woh, I was writting a mail to say that adding a --exclude-standard
-would be cool, but it has been implemented even before I said it would
-be cool.
+> If you want to be sure of portability, use sed instead.
 
-Nothing to add, except "Thanks Junio, Thanks Jeff!" :-).
+Guffaw.
 
-At last, I'll be able to write
+> git uses this syntax often enough that it's worth using everywhere,
+> but usually only in porcelain commands which one can relatively
+> safely assume are run on at least decently up-to-date developer
+> workstations.
 
-$ git ls-files -o --exclude-standard >> .gitignore
-$ $EDITOR .gitignore
+Huh?  It is used throughout.  That's why "make install" will install
+xxx.sh scripts as xxx after possibly replacing the initial #!/bin/sh
+line with a shell known to be reasonably conformant on a particular
+system.
 
 -- 
-Matthieu
+David Kastrup
