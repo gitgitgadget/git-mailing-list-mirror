@@ -1,58 +1,75 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: Re: [PATCH] rehabilitate some t5302 tests on 32-bit off_t machines
-Date: Thu, 15 Nov 2007 20:39:23 +0100
-Message-ID: <200711152039.23978.johannes.sixt@telecom.at>
-References: <alpine.LFD.0.9999.0711151211330.21255@xanadu.home> <alpine.LFD.0.9999.0711151349480.21255@xanadu.home> <7vsl3749hp.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 11/11] Allow ETC_GITCONFIG to be a relative path.
+Date: Thu, 15 Nov 2007 21:10:32 +0100
+Message-ID: <E652EC54-9F94-444F-AF94-2FA990355A78@zib.de>
+References: <1194984306-3181-1-git-send-email-johannes.sixt@telecom.at> <1194984306-3181-12-git-send-email-johannes.sixt@telecom.at> <9D2813B9-8E86-4551-94BF-2B04F5FBB141@zib.de> <200711151931.29029.johannes.sixt@telecom.at>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 20:39:45 2007
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Thu Nov 15 21:11:39 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IskYx-0004Ix-FV
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 20:39:43 +0100
+	id 1Isl3n-0001OP-Az
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 21:11:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760220AbXKOTj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 14:39:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759300AbXKOTj0
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 14:39:26 -0500
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:53610 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757175AbXKOTj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 14:39:26 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id 9AF6F13B7DA;
-	Thu, 15 Nov 2007 20:39:24 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 3633D59DCF;
-	Thu, 15 Nov 2007 20:39:24 +0100 (CET)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vsl3749hp.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1758794AbXKOULR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 15:11:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761551AbXKOULR
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 15:11:17 -0500
+Received: from mailer.zib.de ([130.73.108.11]:57161 "EHLO mailer.zib.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751719AbXKOULQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 15:11:16 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAFK9LqJ017843;
+	Thu, 15 Nov 2007 21:09:21 +0100 (CET)
+Received: from [192.168.178.21] (brln-4db82eaf.pool.einsundeins.de [77.184.46.175])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAFK9GlI029323
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Thu, 15 Nov 2007 21:09:17 +0100 (MET)
+In-Reply-To: <200711151931.29029.johannes.sixt@telecom.at>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65154>
 
-On Thursday 15 November 2007 20:03, Junio C Hamano wrote:
-> Nicolas Pitre <nico@cam.org> writes:
-> > On Thu, 15 Nov 2007, Johannes Sixt wrote:
-> >> Since you changed this test, I assume that the remaining
-> >> tests that you put back failed only because this one did
-> >> something wrong. If so, please mention that in the commit
-> >> message.
-> >
-> > It did nothing wrong.  It was simply relying on the product of
-> > a previous test that might still be disabled.
+
+On Nov 15, 2007, at 7:31 PM, Johannes Sixt wrote:
+
+> On Thursday 15 November 2007 07:53, Steffen Prohaska wrote:
+>> Now I'm wondering if we could make path relocation a bit more
+>> explicit.  How about doing something like.
+>>
+>> 	system_wide = relocate_path(ETC_GITCONFIG);
+>>
+>> and relocate_path(const char *) would expand a format
+>> string in path.  At this point I see only a single %s
+>> that would be expanded with the install prefix.  If
+>> ETC_GITCONFIG is "%s/etc/gitconfig" relocate path will return
+>> "C:/msysgit/bin/etc/gitconfig" for my above example.  It is
+>> basically a printf with the install prefix path.
 >
-> Thanks for a fix-up and clarification.   Hannes, otherwise this
-> passed in your environment?
+> I don't see the problem that you are trying to solve.
 
-Yes, it passes. Ack.
+Path relocation would be more explicit:
+1) Paths that need to be relocated are filtered through
+    relocate_path().  That's easy to understand.
+2) All the code prefixing the path is in relocate_path().
+    This avoids code duplication.
+3) Path that should be relocated contain "%s" in the Makefile.
+    This indicates that some string expansion may take place.
 
--- Hannes
+(1) and (2) would be useful even if you do not agree with (3).
+The code in PATCH 9/11 and PATCH 11/11 looks very similar.
+If the prefixing code went into a separate function, we'd
+have less code.  Also, relocate_path() could be useful at
+other places.  For example, I'd use it to locate the HTML
+documentation relative to the installation directory.
+
+	Steffen
