@@ -1,177 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's in git.git (stable)
-Date: Wed, 14 Nov 2007 16:20:55 -0800
-Message-ID: <7vabpg9x5k.fsf@gitster.siamese.dyndns.org>
-References: <20071022061115.GR14735@spearce.org>
-	<7vodeecyni.fsf@gitster.siamese.dyndns.org>
-	<7vpryqwtt7.fsf@gitster.siamese.dyndns.org>
-	<7vk5ot40w9.fsf@gitster.siamese.dyndns.org>
-	<7vy7d43ptc.fsf@gitster.siamese.dyndns.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: Cloning empty repositories, was Re: What is the idea for bare
+ repositories?
+Date: Thu, 15 Nov 2007 00:28:29 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711150018160.4362@racer.site>
+References: <86k5on8v6p.fsf@lola.quinscape.zz> <20071112131927.GA1701@c3sl.ufpr.br>
+ <Pine.LNX.4.64.0711121355380.4362@racer.site> <200711121719.54146.wielemak@science.uva.nl>
+ <Pine.LNX.4.64.0711121624330.4362@racer.site> <vpq3avbv2ju.fsf@bauges.imag.fr>
+ <Pine.LNX.4.64.0711121715090.4362@racer.site> <18232.35893.243300.179076@lisa.zopyra.com>
+ <Pine.LNX.4.64.0711121727130.4362@racer.site> <vpq7iknqrtp.fsf@bauges.imag.fr>
+ <Pine.LNX.4.64.0711121755460.4362@racer.site> <vpqy7d3pck0.fsf@bauges.imag.fr>
+ <Pine.LNX.4.64.0711121804400.4362@racer.site> <vpqoddzpc88.fsf@bauges.imag.fr>
+ <7v4pfr2kmh.fsf@gitster.siamese.dyndns.org> <87myth58r5.fsf@osv.gnss.ru>
+ <7vfxz8hbcf.fsf@gitster.siamese.dyndns.org> <18235.22445.16228.535898@lisa.zopyra.com>
+ <Pine.LNX.4.64.0711142047170.4362@racer.site> <18235.34578.886521.944550@lisa.zopyra.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:21:32 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bill Lear <rael@zopyra.com>
+X-From: git-owner@vger.kernel.org Thu Nov 15 01:29:06 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsSU7-0006Z2-Rh
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 01:21:32 +0100
+	id 1IsSbR-0000mB-Kc
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 01:29:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388AbXKOAVQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 19:21:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753363AbXKOAVP
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 19:21:15 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:36193 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753147AbXKOAVO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 19:21:14 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 1D58F2EF;
-	Wed, 14 Nov 2007 19:21:36 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6ADEF95CEA;
-	Wed, 14 Nov 2007 19:21:34 -0500 (EST)
-X-maint-at: b57321f57b324320bdcf9f453ec4788da166f8f4
-X-master-at: 039bc64e886716593d59910694a6c8ed5b72c515
-In-Reply-To: <7vy7d43ptc.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 11 Nov 2007 23:06:55 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1756817AbXKOA2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 14 Nov 2007 19:28:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756640AbXKOA2t
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 19:28:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:42295 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1755892AbXKOA2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 19:28:48 -0500
+Received: (qmail invoked by alias); 15 Nov 2007 00:28:46 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp058) with SMTP; 15 Nov 2007 01:28:46 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+sNncANXCsavYyhT0wUzr+AnIfUPoWMeS4knS0rU
+	T/aoQ/ayP2QYs7
+X-X-Sender: gene099@racer.site
+In-Reply-To: <18235.34578.886521.944550@lisa.zopyra.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65030>
 
-* The 'maint' branch has these fixes since the last announcement.
+Hi,
 
-Benoit Sigoure (1):
-  git-svn: prevent dcommitting if the index is dirty.
+On Wed, 14 Nov 2007, Bill Lear wrote:
 
-Christian Couder (1):
-  for-each-ref: fix off by one read.
+> On Wednesday, November 14, 2007 at 20:58:29 (+0000) Johannes Schindelin writes:
+> >...
+> >I have a better idea:
+> >
+> >[the initial import, on another machine:]
+> >% mkdir new_repo
+> >% cd new_repo
+> >% git init
+> >[add content]
+> >% git commit -a -m "Initial stuff"
+> >% git remote add origin git://host/repo
+> >% git push origin master
+> >
+> >If you do not want to be bothered with setting up the default 
+> >"remote" and "merge" config variables manually, it is reasonable to ask 
+> >for support to do that in "git remote".
+> 
+> Um, ok, but the above means that this repo now differs from other
+> repos, in that pushing now involves more than 'git push', i.e.,
+> 'git push origin master'.
 
-Jeff King (1):
-  git-branch: remove mention of non-existent '-b' option
+Nope.  That is necessary only for the initial push.
 
-Jing Xue (1):
-  replace reference to git-rm with git-reset in git-commit doc
+Remember: "git push" defaults to pushing to the remote "origin", and _all_ 
+local branches which the remote knows about.
 
-Jonas Fonseca (1):
-  Documentation: Fix man page breakage with DocBook XSL v1.72
+And the latter is the reason why the initial push needs a special 
+handling: the local and the remote repository have no branches in common, 
+because the remote one does not have _any_ branch yet!
 
-Junio C Hamano (3):
-  t/t3404: fix test for a bogus todo file.
-  revert/cherry-pick: allow starting from dirty work tree.
-  git-clean: honor core.excludesfile
+So, once you pushed the initial push, you can drop the "origin master" 
+from subsequent pushes!
 
-Sergei Organov (2):
-  core-tutorial.txt: Fix argument mistake in an example.
-  git-remote.txt: fix typo
+> What's wrong with 'git init --mirror git://host/repo'?
 
-Shawn O. Pearce (2):
-  Fix memory leak in traverse_commit_list
-  Don't allow fast-import tree delta chains to exceed maximum depth
+It's highly unlikely that you have the same in mind as git when you say 
+"--mirror" in this context.  Just have a look at git-push, which has 
+recently acquired that option.
 
-Wincent Colaiuta (1):
-  Grammar fixes for gitattributes documentation
+Besides, we really have "clone" for "init + fetch".
 
+> >(I actually think that it is another example of cvs/svn damage, where 
+> >you _need_ to clone first, or otherwise you will _never_ be able to 
+> >commit to the repository.)
+> 
+> I think there is a tendency here to blame every shortcoming of git on 
+> someone else's supposedly unsanitary past rather than facing up to 
+> inherent problems in git itself.
 
-* The 'master' branch has these since the last announcement
-  in addition to the above.
+I am not blaming here.  I just try to see where it comes from.
 
-Alex Riesen (1):
-  Fix dependencies of parse-options test program
+In git, all repositories are equal.  Provided you can connect two of them 
+(or not even that; think of bundles), you can push back and forth between 
+_all_ of them.
 
-Andreas Ericsson (1):
-  Simplify strchrnul() compat code
+Since this is something I like about git, I had some problems finding out 
+where this "I have to clone from the same repository I want to push to" 
+idea comes from.
 
-Bj=C3=B6rn Steinbrink (3):
-  git-commit.sh: Fix usage checks regarding paths given when they do
-      not make sense
-  t7005-editor.sh: Don't invoke real vi when it is in GIT_EXEC_PATH
-  git-commit: Add tests for invalid usage of -a/--interactive with
-      paths
+>  We have several very senior, very dedicated software developers who 
+> LOVE git, and who loathe CVS, but who nevertheless find many vexing 
+> issues in git.
 
-Brian Gernhardt (2):
-  format-patch: Add configuration and off switch for --numbered
-  format-patch: Test --[no-]numbered and format.numbered
+And I am thankful that you bring up the vexing issues so that we can 
+discuss (and hopefully fix) them.
 
-David Symonds (1):
-  Rearrange git-format-patch synopsis to improve clarity.
+> >BTW I am somewhat disgusted by your usage of git:// for pushing.
+> 
+> Whatever.  We went through this before on the list and push support was 
+> added to git://.  We have SUCKY sysadmin support at our company and 
+> permissions were getting HOSED using ssh pushes.  The git:// protocol 
+> makes everything clean on the repo side and no nasty surprises with 
+> permissions and no delays begging the support team to clean things up.
 
-Emil Medve (1):
-  git-stash: Fix listing stashes
+Hey, if it works for you, I am all the happier! (Of course, I am in a 
+better position than you, here; I _am_ the sysadmin, and my ssh setup Just 
+Works...)
 
-Eric Wong (1):
-  git-svn: support for funky branch and project names over HTTP(S)
-
-Gordon Hopper (1):
-  git-cvsimport: fix handling of user name when it is not set in
-      CVSROOT
-
-Johannes Schindelin (2):
-  rebase: operate on a detached HEAD
-  rebase: fix "rebase --continue" breakage
-
-Johannes Sixt (2):
-  git-clean: Fix error message if clean.requireForce is not set.
-  Fix preprocessor logic that determines the availablity of
-      strchrnul().
-
-Jonas Fonseca (1):
-  Documentation: Fix references to deprecated commands
-
-Junio C Hamano (9):
-  stash: implement "stash create"
-  rebase: allow starting from a dirty tree.
-  Revert "rebase: allow starting from a dirty tree."
-  git-merge: no reason to use cpio anymore
-  ce_match_stat, run_diff_files: use symbolic constants for
-      readability
-  git-add: make the entry stat-clean after re-adding the same
-      contents
-  t2200: test more cases of "add -u"
-  Resurrect git-revert.sh example and add comment to builtin-revert.c
-  core.excludesfile clean-up
-
-Mike Hommey (2):
-  Reuse previous annotation when overwriting a tag
-  Add tests for git tag
-
-Nicolas Pitre (6):
-  fix display overlap between remote and local progress
-  sideband.c: ESC is spelled '\033' not '\e' for portability.
-  make display of total transferred more accurate
-  remove dead code from the csum-file interface
-  make display of total transferred fully accurate
-  nicer display of thin pack completion
-
-Pierre Habouzit (1):
-  git-fetch: be even quieter.
-
-Ren=C3=A9 Scharfe (5):
-  Add strchrnul()
-  --pretty=3Dformat: on-demand format expansion
-  --pretty=3Dformat: parse commit message only once
-  add strbuf_adddup()
-  --format=3Dpretty: avoid calculating expensive expansions twice
-
-Robin Rosenberg (1):
-  cvsexportcommit: Add switch to specify CVS workdir
-
-R=C3=A9mi Vanicat (1):
-  Make GIT_INDEX_FILE apply to git-commit
-
-Sergei Organov (2):
-  user-manual.txt: fix a few mistakes
-  user-manual: minor rewording for clarity.
-
-Shawn O. Pearce (5):
-  git-fetch: Always fetch tags if the object they reference exists
-  run-command: Support sending stderr to /dev/null
-  rev-list: Introduce --quiet to avoid /dev/null redirects
-  git-fetch: avoid local fetching from alternate (again)
-  Handle broken vsnprintf implementations in strbuf
+Ciao,
+Dscho
