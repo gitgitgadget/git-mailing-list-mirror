@@ -1,64 +1,91 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: [PATCH] Fix Solaris Workshop Compiler issues
-Date: Thu, 15 Nov 2007 01:50:11 +0100
-Message-ID: <20071115005011.GC25021@atjola.homenet>
-References: <Pine.LNX.4.64.0711142125460.17530@bianca.dialin.t-online.de> <20071114204732.GE3973@steel.home> <7vprycfrk6.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711150011020.4135@bianca.dialin.t-online.de> <20071114232809.GH3973@steel.home> <20071115001756.GA25021@atjola.homenet> <7v3av89wq7.fsf@gitster.siamese.dyndns.org> <20071115004404.GB25021@atjola.homenet> <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+From: =?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
+Subject: [PATCH] Fix "identifier redeclared" compilation error with SUN cc.
+Date: Thu, 15 Nov 2007 02:15:03 +0100
+Message-ID: <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Alex Riesen <raa.lkml@gmail.com>,
-	Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:50:41 2007
+Cc: raa.lkml@gmail.com, git@ostkamp.fastmail.fm, git@vger.kernel.org,
+	=?utf-8?q?Bj=C3=B6rn=20Steinbrink?= <B.Steinbrink@gmx.de>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Nov 15 02:15:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsSwC-0007dL-TU
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 01:50:33 +0100
+	id 1IsTKI-0006IT-SG
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 02:15:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755920AbXKOAuQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 19:50:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755237AbXKOAuQ
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 19:50:16 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47423 "HELO mail.gmx.net"
+	id S1760391AbXKOBPJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 20:15:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1760175AbXKOBPI
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 20:15:08 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58060 "HELO mail.gmx.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754642AbXKOAuO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 14 Nov 2007 19:50:14 -0500
-Received: (qmail invoked by alias); 15 Nov 2007 00:50:12 -0000
+	id S1759741AbXKOBPG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 14 Nov 2007 20:15:06 -0500
+Received: (qmail invoked by alias); 15 Nov 2007 01:15:04 -0000
 Received: from i577BBF04.versanet.de (EHLO localhost) [87.123.191.4]
-  by mail.gmx.net (mp002) with SMTP; 15 Nov 2007 01:50:12 +0100
+  by mail.gmx.net (mp045) with SMTP; 15 Nov 2007 02:15:04 +0100
 X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX19Ohlojc2VO4uxbtntzMZQoPwkqiBIPahZmJ720NI
-	RvC8KusY8bSZai
-Content-Disposition: inline
+X-Provags-ID: V01U2FsdGVkX18eN2kfVzQev463T4JWaM7BOVEWWqCwWH7rwqeNie
+	WDj99ycXoW9TgX
+X-Mailer: git-send-email 1.5.3.5.643.g40e25
 In-Reply-To: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65037>
 
-On 2007.11.14 16:46:20 -0800, Junio C Hamano wrote:
-> Bj=F6rn Steinbrink <B.Steinbrink@gmx.de> writes:
->=20
-> > On 2007.11.14 16:30:08 -0800, Junio C Hamano wrote:
-> >
-> >> Maybe your compiler needs -DFLEX_ARRAY=3D0 in CFLAGS?
-> >
-> > Actually, I just created a test-case remotely on a Solaris box in m=
-y
-> > university (see below) and didn't compile the actual git code. With=
- the
-> > FAM, cc complains about a redeclared identifier, with a zero-sized
-> > array, it complains that an array cannot be zero-sized...
->=20
-> I think you can pass -DFLEX_ARRAY=3D1 as a workaround.  It would
-> waste one array member in a flexible structure but that is
-> better than compiler choking.
+Some versions of SUN's cc have a bug that causes them to complain about
+a redeclared identifier when you use a function declaration that takes =
+a
+struct with a FAM and this struct has only been declared but not yet
+defined.
 
-Yeah, that at least compiles (didn't do any further tests), forgot to
-say that in the last email.
+IOW, this will fail:
+	struct foo;
 
-Bj=F6rn
+	void bar(struct foo *);
+
+	struct foo {
+		int v;
+		long *a[];
+	};
+
+	void bar(struct foo *foo) {} // SUN cc bug strikes here
+
+So when we detect a SUN cc, we use an array size of 1 to workaround tha=
+t
+bug.
+
+Signed-off-by: Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de>
+---
+Guido, could you please test this patch?
+
+I have no clue which versions of SUN's cc are affected, so I simply ena=
+bled
+the workaround for all versions. Someone with more knowledge about that
+should probably limit the check to only do that for the broken versions=
+=2E
+
+ git-compat-util.h |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/git-compat-util.h b/git-compat-util.h
+index ede9408..c3ff4b4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -6,6 +6,8 @@
+ #ifndef FLEX_ARRAY
+ #if defined(__GNUC__) && (__GNUC__ < 3)
+ #define FLEX_ARRAY 0
++#elif defined(sun) || defined(__SUN__)
++#define FLEX_ARRAY 1
+ #else
+ #define FLEX_ARRAY /* empty */
+ #endif
+--=20
+1.5.3.5.643.g40e25
