@@ -1,78 +1,96 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH for kh/commit] Replace "runstatus" with "status" in the tests
-Date: Thu, 15 Nov 2007 06:27:57 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711150627100.4362@racer.site>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect reset: remove bisect refs that may have been packed.
+Date: Thu, 15 Nov 2007 07:40:13 +0100
+Message-ID: <20071115074013.8981761d.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Nov 15 07:29:38 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Thu Nov 15 07:35:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsYEB-0007i5-NQ
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 07:29:28 +0100
+	id 1IsYJm-0000ho-B4
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 07:35:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765904AbXKOG2T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 01:28:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765652AbXKOG2R
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 01:28:17 -0500
-Received: from mail.gmx.net ([213.165.64.20]:41684 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1765798AbXKOG2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 01:28:16 -0500
-Received: (qmail invoked by alias); 15 Nov 2007 06:28:14 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp056) with SMTP; 15 Nov 2007 07:28:14 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18HeGQ1dQEHzGXV9VNdI1EOK8tdT0fftqv+kRcpja
-	YOqfcflGHAV3rB
-X-X-Sender: gene099@racer.site
-X-Y-GMX-Trusted: 0
+	id S1761097AbXKOGde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 01:33:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1764653AbXKOGdd
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 01:33:33 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:48376 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1763964AbXKOGdb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 01:33:31 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id A9C031AB2CA;
+	Thu, 15 Nov 2007 07:33:28 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 631881AB2BB;
+	Thu, 15 Nov 2007 07:33:28 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65068>
 
+If refs were ever packed in the middle of bisection, the bisect
+refs were not removed from the "packed-refs" file.
 
-We no longer have "runstatus", but running "status" is no longer that 
-expensive anyway; it is a builtin.
+This patch fixes this problem by using "git update-ref -d $ref $hash"
+in "bisect_clean_state".
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- t/t3001-ls-files-others-exclude.sh |    2 +-
- t/t4001-diff-rename.sh             |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ git-bisect.sh               |   11 ++++++++++-
+ t/t6030-bisect-porcelain.sh |   12 ++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletions(-)
 
-diff --git a/t/t3001-ls-files-others-exclude.sh b/t/t3001-ls-files-others-exclude.sh
-index ae0639d..e25b255 100755
---- a/t/t3001-ls-files-others-exclude.sh
-+++ b/t/t3001-ls-files-others-exclude.sh
-@@ -86,7 +86,7 @@ EOF
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 3aac816..73a4da2 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -352,7 +352,16 @@ bisect_reset() {
  
- git config core.excludesFile excludes-file
+ bisect_clean_state() {
+ 	rm -fr "$GIT_DIR/refs/bisect"
+-	rm -f "$GIT_DIR/refs/heads/bisect"
++
++	# There may be some refs packed during bisection.
++	git for-each-ref --format='%(refname) %(objectname)' \
++		"refs/bisect/*" | while read ref hash
++	do
++		git update-ref -d $ref $hash
++	done
++
++	hash=$(git show-ref --hash refs/heads/bisect)
++	git update-ref -d refs/heads/bisect $hash
+ 	rm -f "$GIT_DIR/BISECT_LOG"
+ 	rm -f "$GIT_DIR/BISECT_NAMES"
+ 	rm -f "$GIT_DIR/BISECT_RUN"
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 53956c0..f09db62 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -71,6 +71,18 @@ test_expect_success 'bisect start with one bad and good' '
+ 	git bisect next
+ '
  
--git runstatus | grep "^#	" > output
-+git status | grep "^#	" > output
- 
- cat > expect << EOF
- #	.gitignore
-diff --git a/t/t4001-diff-rename.sh b/t/t4001-diff-rename.sh
-index 063e792..877c1ea 100755
---- a/t/t4001-diff-rename.sh
-+++ b/t/t4001-diff-rename.sh
-@@ -71,10 +71,10 @@ test_expect_success 'favour same basenames over different ones' '
- 	git rm path1 &&
- 	mkdir subdir &&
- 	git mv another-path subdir/path1 &&
--	git runstatus | grep "renamed: .*path1 -> subdir/path1"'
-+	git status | grep "renamed: .*path1 -> subdir/path1"'
- 
- test_expect_success  'favour same basenames even with minor differences' '
- 	git show HEAD:path1 | sed "s/15/16/" > subdir/path1 &&
--	git runstatus | grep "renamed: .*path1 -> subdir/path1"'
-+	git status | grep "renamed: .*path1 -> subdir/path1"'
- 
- test_done
++test_expect_success 'bisect reset removes packed refs' '
++	git bisect reset &&
++	git bisect start &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH3 &&
++	git pack-refs --all --prune &&
++	git bisect next &&
++	git bisect reset &&
++	test -z "$(git for-each-ref "refs/bisect/*")" &&
++	test -z "$(git for-each-ref "refs/heads/bisect")"
++'
++
+ # $HASH1 is good, $HASH4 is bad, we skip $HASH3
+ # but $HASH2 is bad,
+ # so we should find $HASH2 as the first bad commit
 -- 
-1.5.3.5.1785.g714b8
+1.5.3.5.1728.g34b3e-dirty
