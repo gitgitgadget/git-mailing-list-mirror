@@ -1,56 +1,66 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Fix Solaris Workshop Compiler issues
-Date: Wed, 14 Nov 2007 16:44:05 -0800 (PST)
-Message-ID: <alpine.LFD.0.9999.0711141640400.2786@woody.linux-foundation.org>
-References: <Pine.LNX.4.64.0711142125460.17530@bianca.dialin.t-online.de> <20071114204732.GE3973@steel.home> <7vprycfrk6.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711150011020.4135@bianca.dialin.t-online.de> <20071114232809.GH3973@steel.home>
- <20071115001756.GA25021@atjola.homenet> <7v3av89wq7.fsf@gitster.siamese.dyndns.org>
+Date: Wed, 14 Nov 2007 16:46:20 -0800
+Message-ID: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711142125460.17530@bianca.dialin.t-online.de>
+	<20071114204732.GE3973@steel.home>
+	<7vprycfrk6.fsf@gitster.siamese.dyndns.org>
+	<Pine.LNX.4.64.0711150011020.4135@bianca.dialin.t-online.de>
+	<20071114232809.GH3973@steel.home>
+	<20071115001756.GA25021@atjola.homenet>
+	<7v3av89wq7.fsf@gitster.siamese.dyndns.org>
+	<20071115004404.GB25021@atjola.homenet>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: =?ISO-8859-15?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
-	Alex Riesen <raa.lkml@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Alex Riesen <raa.lkml@gmail.com>,
 	Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 15 01:45:20 2007
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Nov 15 01:46:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsSr9-0005wx-A7
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 01:45:19 +0100
+	id 1IsSsY-0006PM-2z
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 01:46:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756645AbXKOApB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 14 Nov 2007 19:45:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755640AbXKOApB
-	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 19:45:01 -0500
-Received: from smtp2.linux-foundation.org ([207.189.120.14]:36600 "EHLO
-	smtp2.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755390AbXKOApA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 19:45:00 -0500
-Received: from imap1.linux-foundation.org (imap1.linux-foundation.org [207.189.120.55])
-	by smtp2.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAF0i5rH013998
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Wed, 14 Nov 2007 16:44:06 -0800
-Received: from localhost (localhost [127.0.0.1])
-	by imap1.linux-foundation.org (8.13.5.20060308/8.13.5/Debian-3ubuntu1.1) with ESMTP id lAF0i5dM002017;
-	Wed, 14 Nov 2007 16:44:05 -0800
-In-Reply-To: <7v3av89wq7.fsf@gitster.siamese.dyndns.org>
-X-Spam-Status: No, hits=-4.737 required=5 tests=AWL,BAYES_00,OSDL_HEADER_SUBJECT_BRACKETED,PATCH_SUBJECT_OSDL
-X-Spam-Checker-Version: SpamAssassin 3.1.0-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.53 on 207.189.120.14
+	id S1756762AbXKOAq3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 14 Nov 2007 19:46:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755271AbXKOAq3
+	(ORCPT <rfc822;git-outgoing>); Wed, 14 Nov 2007 19:46:29 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:40840 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965AbXKOAq2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 14 Nov 2007 19:46:28 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 90DFF2F0;
+	Wed, 14 Nov 2007 19:46:49 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0B12A95DA3;
+	Wed, 14 Nov 2007 19:46:44 -0500 (EST)
+In-Reply-To: <20071115004404.GB25021@atjola.homenet> (=?utf-8?Q?Bj=C3=B6rn?=
+ Steinbrink's
+	message of "Thu, 15 Nov 2007 01:44:04 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65034>
 
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
+> On 2007.11.14 16:30:08 -0800, Junio C Hamano wrote:
+>
+>> Maybe your compiler needs -DFLEX_ARRAY=3D0 in CFLAGS?
+>
+> Actually, I just created a test-case remotely on a Solaris box in my
+> university (see below) and didn't compile the actual git code. With t=
+he
+> FAM, cc complains about a redeclared identifier, with a zero-sized
+> array, it complains that an array cannot be zero-sized...
 
-On Wed, 14 Nov 2007, Junio C Hamano wrote:
-> 
-> Maybe your compiler needs -DFLEX_ARRAY=0 in CFLAGS?
-
-Actually, for old pre-C99 compilers, you're probably better off using 
--DFLEX_ARRAY=1, since a zero-sized array could be considered bogus by 
-some.
-
-			Linus
+I think you can pass -DFLEX_ARRAY=3D1 as a workaround.  It would
+waste one array member in a flexible structure but that is
+better than compiler choking.
