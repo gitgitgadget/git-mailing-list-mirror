@@ -1,79 +1,79 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>
-Subject: [BUG] encoding problem with format-patch + send-email
-Date: Thu, 15 Nov 2007 11:57:26 +0100
-Message-ID: <20071115105726.GA18555@bre-cln-ukleine.digi.com>
+From: "Miles Bader" <miles@gnu.org>
+Subject: Re: [PATCH 1/3] git-bisect: war on "sed"
+Date: Thu, 15 Nov 2007 20:00:14 +0900
+Message-ID: <fc339e4a0711150300n64b9d670o1e183553a9de0cba@mail.gmail.com>
+References: <20071115081807.06fe092b.chriscool@tuxfamily.org>
+	 <7voddv6fxz.fsf@gitster.siamese.dyndns.org>
+	 <buozlxfeu0z.fsf@dhapc248.dev.necel.com>
+	 <995F69D5-4ABC-44E7-BA2B-5E276479EDA1@wincent.com>
+	 <buotznnesw9.fsf@dhapc248.dev.necel.com>
+	 <86tznn4y7v.fsf@lola.quinscape.zz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brian Swetland <swetland@google.com>,
-	Russell King - ARM Linux <linux@arm.linux.org.uk>,
-	Nicolas Pitre <nico@cam.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 15 11:56:33 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Wincent Colaiuta" <win@wincent.com>,
+	"Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org,
+	"Christian Couder" <chriscool@tuxfamily.org>,
+	"Ralf Wildenhues" <Ralf.Wildenhues@gmx.de>
+To: "David Kastrup" <dak@gnu.org>
+X-From: git-owner@vger.kernel.org Thu Nov 15 12:01:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IscOe-00066G-57
-	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 11:56:32 +0100
+	id 1IscSi-0007cm-9Y
+	for gcvg-git-2@gmane.org; Thu, 15 Nov 2007 12:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631AbXKOK4J convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 05:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753048AbXKOK4H
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 05:56:07 -0500
-Received: from mail164.messagelabs.com ([216.82.253.131]:37683 "HELO
-	mail164.messagelabs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1750747AbXKOK4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 05:56:06 -0500
-X-VirusChecked: Checked
-X-Env-Sender: Uwe.Kleine-Koenig@digi.com
-X-Msg-Ref: server-12.tower-164.messagelabs.com!1195124164!19731325!1
-X-StarScan-Version: 5.5.12.14.2; banners=-,-,-
-X-Originating-IP: [66.77.174.21]
-Received: (qmail 1010 invoked from network); 15 Nov 2007 10:56:05 -0000
-Received: from unknown (HELO owa.digi.com) (66.77.174.21)
-  by server-12.tower-164.messagelabs.com with SMTP; 15 Nov 2007 10:56:05 -0000
-Received: from mtk-sms-mail01.digi.com ([10.10.8.120]) by owa.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 15 Nov 2007 04:56:04 -0600
-Received: from zentaur.digi.com ([10.100.10.144]) by mtk-sms-mail01.digi.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 15 Nov 2007 04:56:03 -0600
-Received: by zentaur.digi.com (Postfix, from userid 1080)
-	id E1F0749A5E; Thu, 15 Nov 2007 11:57:26 +0100 (CET)
-Mail-Followup-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <Uwe.Kleine-Koenig@digi.com>,
-	git@vger.kernel.org, Brian Swetland <swetland@google.com>,
-	Russell King - ARM Linux <linux@arm.linux.org.uk>,
-	Nicolas Pitre <nico@cam.org>
+	id S1752228AbXKOLAR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 06:00:17 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751294AbXKOLAR
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 06:00:17 -0500
+Received: from wr-out-0506.google.com ([64.233.184.235]:10227 "EHLO
+	wr-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752192AbXKOLAP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 06:00:15 -0500
+Received: by wr-out-0506.google.com with SMTP id 36so498939wra
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 03:00:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        bh=d9arTt9EWa7r4vwzK6iPCTf16mETDRgvW/M2VNeTKmQ=;
+        b=rtuP+5fNpCIsHVA0+s1tOyCnkTXuGXKZ4bidHyMK4QsAzfPTMR9fCu2w1pOO5FG+9+SajL6+TcxAgSQR/jxI/1G2RgWyZGr15Vdw+Zoo5KDG5LYWbd/kxC1OZ9Wp4fXfa2RCODxLDgBA4oJzffYMeq6J5gRRJugYrJPKaDML9Nk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:sender:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references:x-google-sender-auth;
+        b=ED4vQfTavSjwzIEvcTOo9pBsPMxUA8BmhHsQl8VfxSaTkuCZ9Oa+i0R99uE80mKHblxvXoBZS/VxZD7pPVmz3DKlAQ90NmthRAEYwCxTGdBIQpx6puk5ag4gqpyb0MfXNthzt2S/sIbB4Wo9JR4gOWz65WzIbcbpeSxNKj6Mr8A=
+Received: by 10.90.94.2 with SMTP id r2mr911186agb.1195124414695;
+        Thu, 15 Nov 2007 03:00:14 -0800 (PST)
+Received: by 10.90.63.8 with HTTP; Thu, 15 Nov 2007 03:00:14 -0800 (PST)
+In-Reply-To: <86tznn4y7v.fsf@lola.quinscape.zz>
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
-X-OriginalArrivalTime: 15 Nov 2007 10:56:03.0790 (UTC) FILETIME=[1DB22EE0:01C82776]
+X-Google-Sender-Auth: 5994d4f01b95782e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65106>
 
-Hello,
+On Nov 15, 2007 7:09 PM, David Kastrup <dak@gnu.org> wrote:
+> > Er, I suppose -- if you are acquainted with that particular shell
+> > variable syntax (I suspect knowledge of sed is far more widespread).
+>
+> sed is rather bad with regard to portability.  If you take a look at
+> the respective portability section in the autoconf file, it is almost
+> longer than that of Bourne shells.
 
-Brian just stumbled over a problem with format-patch + send-email.
+I don't think that's really a fair characterization -- almost all of
+the autoconf sed portability caveats concern weird corner cases in the
+dusty corners of the language (and some are "common" issues with other
+tools, i.e., avoiding ^ and $ inside of regexp groups).
 
-format-patch only adds Content-Type and Content-Transfer-Encoding
-headers iff the body needs it.
+For typical straightforward usage, there seems little problem.
 
-send-email adds "From: A. U. Thor <author@tld>" to the body if sender
-and From: in the patch to send differ.
+[The main portability problems I've actually _noticed_ with sed are
+the "-e" versus ";" issue and what happens with "\n" in various
+contexts...]
 
-Both is just fine, but if the author has some non-ascii characters in
-her name but the body is ascii-only the resulting mail is broken.
+-Miles
 
-What about adding the Content-Type and Content-Transfer-Encoding header=
-s
-in any case?
-
-Best regards
-Uwe
-
---=20
-Uwe Kleine-K=F6nig, Software Engineer
-Digi International GmbH Branch Breisach, K=FCferstrasse 8, 79206 Breisa=
-ch, Germany
-Tax: 315/5781/0242 / VAT: DE153662976 / Reg. Amtsgericht Dortmund HRB 1=
-3962
+-- 
+Do not taunt Happy Fun Ball.
