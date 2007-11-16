@@ -1,72 +1,83 @@
-From: Mike Hommey <mh@glandium.org>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Fix and improve t7004
-Date: Fri, 16 Nov 2007 22:35:38 +0100
-Organization: glandium.org
-Message-ID: <20071116213538.GA30076@glandium.org>
-References: <7vlk8yx9rp.fsf@gitster.siamese.dyndns.org> <1195244917-25659-1-git-send-email-mh@glandium.org> <EEE710FA-0408-489F-8128-B4C1F06D34FF@lrde.epita.fr> <20071116211148.GA28966@glandium.org> <EC3B30DC-E81C-4ECA-BE7F-F237E1338603@lrde.epita.fr>
+Date: Fri, 16 Nov 2007 13:42:44 -0800
+Message-ID: <7vbq9tyii3.fsf@gitster.siamese.dyndns.org>
+References: <7vlk8yx9rp.fsf@gitster.siamese.dyndns.org>
+	<1195244917-25659-1-git-send-email-mh@glandium.org>
+	<EEE710FA-0408-489F-8128-B4C1F06D34FF@lrde.epita.fr>
+	<20071116211148.GA28966@glandium.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Fri Nov 16 22:37:14 2007
+Cc: Benoit Sigoure <tsuna@lrde.epita.fr>, git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 22:43:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1It8sD-00059j-2v
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 22:37:13 +0100
+	id 1It8xx-0007Ym-W1
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 22:43:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757918AbXKPVg4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 16:36:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757828AbXKPVg4
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 16:36:56 -0500
-Received: from vawad.err.no ([85.19.200.177]:43683 "EHLO vawad.err.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757572AbXKPVgz (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 16:36:55 -0500
-Received: from aputeaux-153-1-42-198.w82-124.abo.wanadoo.fr ([82.124.6.198] helo=namakemono.glandium.org)
-	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.62)
-	(envelope-from <mh@glandium.org>)
-	id 1It8rl-0002fR-7y; Fri, 16 Nov 2007 22:36:47 +0100
-Received: from mh by namakemono.glandium.org with local (Exim 4.68)
-	(envelope-from <mh@glandium.org>)
-	id 1It8qg-0007qq-OM; Fri, 16 Nov 2007 22:35:38 +0100
-Content-Disposition: inline
-In-Reply-To: <EC3B30DC-E81C-4ECA-BE7F-F237E1338603@lrde.epita.fr>
-X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
-User-Agent: Mutt/1.5.17 (2007-11-01)
-X-Spam-Status: (score 5.0): Status=No hits=4.9 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_SORBS_DUL version=3.1.4
+	id S933284AbXKPVmw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 16:42:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S932076AbXKPVmw
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 16:42:52 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:43700 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1762264AbXKPVmv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 16:42:51 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 801652F0;
+	Fri, 16 Nov 2007 16:43:11 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id DBE3896786;
+	Fri, 16 Nov 2007 16:43:07 -0500 (EST)
+In-Reply-To: <20071116211148.GA28966@glandium.org> (Mike Hommey's message of
+	"Fri, 16 Nov 2007 22:11:48 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65250>
 
-On Fri, Nov 16, 2007 at 10:31:15PM +0100, Benoit Sigoure wrote:
-> On Nov 16, 2007, at 10:11 PM, Mike Hommey wrote:
->
->> On Fri, Nov 16, 2007 at 10:04:57PM +0100, Benoit Sigoure wrote:
->>> On Nov 16, 2007, at 9:28 PM, Mike Hommey wrote:
->>>>  test_expect_success \
->>>>  	'message in editor has initial comment' '
->>>>  	GIT_EDITOR=cat git tag -a initial-comment > actual || true &&
->>>> -	test $(sed -n "/^\(#\|\$\)/p" actual | wc -l) -gt 0
->>>> +	( read empty ;
->>>> +	  [ "$empty" ] && exit 1 ;
->>>
->>> What is this meant to do?  Did you mean [ -n "$empty" ] ?
+Mike Hommey <mh@glandium.org> writes:
+
+>>> +	( read empty ;
+>>> +	  [ "$empty" ] && exit 1 ;
 >>
->> Replacing with [ -n "$empty" ] would not work properly, except if you
->> replace the following ; with &&. Does that really make a readability
->> difference ?
+>> What is this meant to do?  Did you mean [ -n "$empty" ] ?
 >
-> I don't get it.  As far as I understand, you're trying to check whether 
-> $empty is indeed empty, right?  So how is `[ "$empty" ]' meant to work?
->   [ -n "$empty" ] && exit 1
+> Replacing with [ -n "$empty" ] would not work properly, except if you
+> replace the following ; with &&. Does that really make a readability
+> difference ?
 >
-> will exit 1 if empty isn't empty.
+>>> +	  ! grep -ve "^#" > /dev/null 2>&1 ) < actual
+>>
+>> The double negation is harder to read.  May I suggest something along these 
+>> lines (which seems more readable to me):
+>>   while read line; do
+>>     case $line in #(
+>>       '#'*) ;; # Accept comments (
+>>       *) exit 1;;
+>>     esac
+>>   done
+>
+> I'm not really convinced. What do other people have to say ?
 
-Sorry, I read '-z', not '-n'. [ "$empty" ] and [ -n "$empty" ] are the
-same thing.
+As shell "read" loses information (a backslash sequence is
+interpreted, and trailing whitespaces are stripped and not
+assigned to "line" above), it is not such a good vehicle if you
+want to make a reasonably strict test on top of.  Some shells
+do not implement "read -r" either, so it is also a portability
+hassle.
 
-Mike
+Perhaps...
+
+	# check the first line --- should be empty
+	first=$(sed -e 1q <actual) &&
+        test -z "$first" &&
+	# remove commented lines from the remainder -- should be empty
+        rest=$(sed -e 1d -e '/^#/d' <actual) &&
+        test -z "$rest"
