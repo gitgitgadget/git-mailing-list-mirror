@@ -1,74 +1,113 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-cvsimport bug with dates
-Date: Thu, 15 Nov 2007 22:06:44 -0800
-Message-ID: <7vr6iq207f.fsf@gitster.siamese.dyndns.org>
-References: <51419b2c0711152059q55ced86gd224310c8c4a1851@mail.gmail.com>
+From: Rich Morin <rdm@cfcl.com>
+Subject: (Git) PeepCode & Pizza, Tuesday 12/4
+Date: Thu, 15 Nov 2007 21:40:48 -0800
+Message-ID: <p06230928c362d85a7f63@[192.168.1.205]>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Elijah Newren" <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 07:07:10 2007
+Content-Type: text/plain; charset="us-ascii"
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 07:16:22 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsuM9-0000qr-9k
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 07:07:09 +0100
+	id 1IsuV4-0002nh-0k
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 07:16:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432AbXKPGGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 01:06:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751293AbXKPGGw
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 01:06:52 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:40529 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751264AbXKPGGv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 01:06:51 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 108A72F2;
-	Fri, 16 Nov 2007 01:07:12 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 836759403D;
-	Fri, 16 Nov 2007 01:07:08 -0500 (EST)
-In-Reply-To: <51419b2c0711152059q55ced86gd224310c8c4a1851@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 15 Nov 2007 21:59:44 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751538AbXKPGQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 01:16:01 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbXKPGQB
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 01:16:01 -0500
+Received: from cfcl.com ([208.201.233.106]:53460 "EHLO pop.cfcl.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751223AbXKPGQA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 01:16:00 -0500
+X-Greylist: delayed 2009 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Nov 2007 01:16:00 EST
+Received: from [192.168.1.205] (cerberus [192.168.1.205])
+	by pop.cfcl.com (Postfix) with ESMTP id E4C10EBFD36;
+	Thu, 15 Nov 2007 21:35:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65195>
 
-"Elijah Newren" <newren@gmail.com> writes:
 
-> $ git diff @{2007-10-01}
-> warning: Log for '' only goes back to Wed, 24 Oct 2007 19:31:38 +0000.
-> fatal: bad object @{2007-10-01}
->
->
-> It appears that passing a date to git diff on any repository imported
-> by git-cvsimport will show this error, as long as the date is prior to
-> when the repository was imported.
+       Free Food!  Free Movies!  Free Software!
 
-That is not a cvsimport specific issue.
+Come watch the newly released PeepCode screencast on Git,
+Linus Torvalds' distributed source-code management system.
 
-When you use "branch@{date}" notation, you are not asking a
-question on the project history, but a question on the local
-view from _your_ repository on that project.
+The plan is to munch on pizza, then watch a PeepCode video,
+with occasional pauses for questions, etc.  Reactrix uses
+Git extensively, so we can answer _some_ questions.  We're
+also hoping that some helpful wizards may show up...
 
-	$ git log --since=3.days.ago master
+This inaugural PeepCode & Pizza gathering is made possible
+by the generosity of PeepCode and Reactrix Systems.  The
+meeting will be held at the Reactrix offices in Redwood City
+from 6-9 pm on Tuesday, December 4.
 
-asks "go back from the master tip and show commits until you hit
-the commit made earlier than that date and stop traversing".
 
-On the other hand,
+About Git
 
-	$ git show master@{3.days.ago}
+Git is a distributed source-code management system, written
+by Linus Torvalds and used since 2005 on the Linux kernel.
+In his fun, opinionated Tech Talk, Linus explains why fast,
+reliable, and (most of all) distributed SCM systems rock:
 
-asks "show the commit that was the tip of 'master' branch in my
-repository three days ago."  Maybe you pulled from your upstream
-5 minutes ago, and the last time before that, you pulled three
-weeks ago and did not do any development on the branch.  In such
-a case, the latter question will give you the tip of your
-'master' as of three weeks ago which is the same as of three
-days ago.
+  http://www.youtube.com/watch?v=4XpnKHJAok8
+
+Additional information on Git can be found at:
+
+  http://en.wikipedia.org/wiki/Git_(software)
+  http://git.or.cz/
+
+
+About PeepCode and Reactrix Systems
+
+PeepCode (http://peepcode.com) produces economical, well-
+produced screencasts on technical topics (e.g., Capistrano,
+Git, httperf, Prototype.js, Rails, RJS, rSpec, TextMate).
+
+Reactrix develops and supports video-based interactive
+advertising devices.  Generally, these are placed in malls,
+theaters, etc.  We use a variety of Open Source technologies,
+including C++, Capistrano, Git, Linux, OpenGL, Perl, Rails,
+and Ruby.  Yes, we're hiring!
+
+    http://www.reactrix.com/
+    http://www.reactrix.com/index.php
+    http://www.reactrix.com/careers.php
+
+
+When:
+
+  Tuesday, December 4, 2007
+
+  6p - 7p   chat, munch pizza, etc.
+            Reactrix demo machines will be available.
+
+  7p - 9p   watch a PeepCode screencast, with pauses
+            for questions, discussion, etc.
+
+  9p - ??   retire (perhaps) to a local pub
+
+
+NOTE:  RSVPs (rdm@cfcl.com) are greatly appreciated; help
+       us to know how much pizza (and what kind) to order!
+
+
+Where:
+
+  Reactrix Systems, Inc.       650-980-2700
+  301 Chesapeake Drive
+  Redwood City, CA
+
+  Map:         http://tinyurl.com/27b22y
+  Directions:  http://www.reactrix.com/driving_directions.php
+
+-- 
+http://www.cfcl.com/rdm            Rich Morin
+http://www.cfcl.com/rdm/resume     rdm@cfcl.com
+http://www.cfcl.com/rdm/weblog     +1 650-873-7841
+
+Technical editing and writing, programming, and web development
