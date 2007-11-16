@@ -1,126 +1,107 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
-Subject: Fwd: problem with a fork on repo.or.cz
-Date: Fri, 16 Nov 2007 19:07:12 +0100
-Message-ID: <9545AC22-487C-452E-AC1D-58EC66497E73@lrde.epita.fr>
-References: <97E2BA6B-E66F-45BB-BA74-C73E7E2918FC@lrde.epita.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-44-33383745"
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 19:07:51 2007
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix t7004 which fails with retarded sed
+Date: Fri, 16 Nov 2007 10:26:58 -0800
+Message-ID: <7vpryaxczx.fsf@gitster.siamese.dyndns.org>
+References: <20071116165944.GB29272@glandium.org>
+	<1195233971-12288-1-git-send-email-mh@glandium.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mike Hommey <mh@glandium.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 19:27:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1It5bT-0005RA-Ta
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 19:07:44 +0100
+	id 1It5uc-0005I7-I3
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 19:27:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331AbXKPSH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 13:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755183AbXKPSH1
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 13:07:27 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:36127 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755155AbXKPSH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 13:07:26 -0500
-Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1It5bB-0006iJ-3M
-	for git@vger.kernel.org; Fri, 16 Nov 2007 19:07:25 +0100
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1762194AbXKPS1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 13:27:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761992AbXKPS1M
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 13:27:12 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:56200 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760345AbXKPS1K (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 13:27:10 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 7315E2F0;
+	Fri, 16 Nov 2007 13:27:26 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id E3C9596689;
+	Fri, 16 Nov 2007 13:27:23 -0500 (EST)
+In-Reply-To: <1195233971-12288-1-git-send-email-mh@glandium.org> (Mike
+	Hommey's message of "Fri, 16 Nov 2007 18:26:11 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65238>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-44-33383745
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+Mike Hommey <mh@glandium.org> writes:
 
-Hi list,
-Petr did not reply to my email, so even though this is off-topic WRT  
-Git (forgive me please :D), I guess someone on this ML may be able to  
-have a clue.
+> Brown paper bag fix to avoid test failure with retarded sed. The test
+> by itself didn't catch what it was supposed to, anyways.
 
-Begin forwarded message:
+I'd rather not to say "retarded sed".  It is not fair to blame
+the implementation when the script we feed to it is not
+portable.
 
-> From: Benoit Sigoure <tsuna@lrde.epita.fr>
-> Date: November 12, 2007 10:06:02 AM CEST
-> To: Petr Baudis <pasky@suse.cz>
-> Subject: problem with a fork on repo.or.cz
->
-> Hi Petr,
->
-> I'd like to use repo.or.cz to publish my patches for Autoconf.  I  
-> created a new
-> `autoconf' project that mirrors the GNU Autoconf Git repository.   
-> Then I forked it as
-> autoconf/tsuna (http://repo.or.cz/w/autoconf/tsuna.git).  Now I'm  
-> trying to push my
-> changes to that repo but, for some reason, it fails:
->
-> $ git remote show repo
-> * remote repo
->   URL: git+ssh://repo.or.cz/srv/git/autoconf/tsuna.git
-> $ git push -v --all repo
-> Pushing to git+ssh://repo.or.cz/srv/git/autoconf/tsuna.git
-> updating 'refs/heads/bootclean'
->   from 0000000000000000000000000000000000000000
->   to   793c1b38a094f57e6218653719bca30881cca5d0
-> updating 'refs/heads/docfix'
->   from 0000000000000000000000000000000000000000
->   to   e61c348bcd8036ab76deedf0952215d64a6cbfcb
-> updating 'refs/heads/master'
->   from 0000000000000000000000000000000000000000
->   to   00865ec8426eed430d9a36c906d6ce7d307f8cf1
-> updating 'refs/heads/mybootclean'
->   from 0000000000000000000000000000000000000000
->   to   8475204ea4094c864a40216a93f176a817906744
-> Counting objects: 63, done.
-> Compressing objects: 100% (45/45), done.
-> Writing objects: 100% (45/45), done.
-> Total 45 (delta 40), reused 0 (delta 0)
-> error: unable to create temporary sha1 filename ./objects/ 
-> tmp_obj_XTRbjJ: Permission denied
-> fatal: failed to write object
-> unpack unpacker exited with error code
-> ng refs/heads/bootclean n/a (unpacker error)
-> ng refs/heads/docfix n/a (unpacker error)
-> ng refs/heads/master n/a (unpacker error)
-> ng refs/heads/mybootclean n/a (unpacker error)
-> error: failed to push to 'git+ssh://repo.or.cz/srv/git/autoconf/ 
-> tsuna.git'
-> $ git version
-> git version 1.5.3.5.654.gdd5ec
->
->
-> any idea?
->
-> Cheers,
+>  test_expect_success \
+>  	'message in editor has initial comment' '
+>  	GIT_EDITOR=cat git tag -a initial-comment > actual || true &&
+> -	test $(sed -n "/^\(#\|\$\)/p" actual | wc -l) -gt 0
+> +	grep -e "^$" actual > /dev/null 2>&1 &&
+> +	grep -e "^#" actual > /dev/null 2>&1 &&
+> +	! grep -e "^[^#]" actual > /dev/null 2>&1
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+The test simulates a case where
 
+	$ git tag -a initial-comment
 
+is run and the user exits the editor without editing the file to
+add any text to annotate the tag.  The behaviour we want from
+such an invocation is (1) the user sees a sensible template in
+the editor, and (2) the command to error out, saying "Hey, you
+did not leave any message for us to use".
 
---Apple-Mail-44-33383745
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
+So the earlier part of the test
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
+	GIT_EDITOR=cat git tag -a initial-comment > actual || true &&
 
-iD8DBQFHPdxQwwE67wC8PUkRAkI0AJ4vzRluhyxSNJh4pNQfaNgRoczXGQCeMF0T
-WMYQ6o0lWQk0Rrxgcb9MDYs=
-=8VxT
------END PGP SIGNATURE-----
+is already bogus with respect to the latter point.  It will
+happily continue if "git tag" erroneously returns success, and
+the above does not catch it.
 
---Apple-Mail-44-33383745--
+	if GIT_EDITOR=cat git tag -a initial-comment >actual
+        then
+        	echo >&2 oops we should have errored out
+                false
+	else
+        	: happy -- anything else we want to check?
+	fi
+
+The "actual" file contains what the user saw in the editor and
+returned to the "git tag" command.
+
+The template we give to the user begins with a blank line,
+followed by a brief instruction "write a tag message" as
+comments to be stripped.  The test is trying to make sure that
+is what was given to the user.  As you already discussed in the
+thread, the exact wording may change in the future and we would
+not want to adjust the test every time.
+
+I think the important points about this template are:
+
+ * It begins with a single blank line, where the invoked editor
+   would typically place the editing curser at so that the user
+   can immediately start typing;
+
+ * It has some instruction but that comes after that initial
+   blank line, all lines prefixed with "#".  I do not think we
+   would want to check the wording of this instruction.
+
+ * And it has nothing else, as the expected behaviour is "Hey
+   you did not leave any message".
