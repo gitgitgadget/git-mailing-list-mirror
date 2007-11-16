@@ -1,155 +1,60 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] builtin-commit: fix "git add x y && git commit y"
- committing x, too
-Date: Fri, 16 Nov 2007 00:43:17 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711160036450.30886@racer.site>
-References: <Pine.LNX.4.64.0711150038020.4362@racer.site> 
- <1195138198-24511-1-git-send-email-krh@redhat.com> 
- <Pine.LNX.4.64.0711151611090.30886@racer.site> <1195146094.21076.6.camel@hinata.boston.redhat.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Git User's Survey 2007 summary at GitWiki
+Date: Fri, 16 Nov 2007 03:02:58 +0100
+Message-ID: <200711160302.59786.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 01:44:21 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 16 03:03:40 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IspJj-0002Yc-91
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 01:44:19 +0100
+	id 1IsqYT-0000G8-44
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 03:03:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765669AbXKPAnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 19:43:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765674AbXKPAnt
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 19:43:49 -0500
-Received: from mail.gmx.net ([213.165.64.20]:60653 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1765441AbXKPAnr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 19:43:47 -0500
-Received: (qmail invoked by alias); 16 Nov 2007 00:43:44 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp001) with SMTP; 16 Nov 2007 01:43:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18FALsgnwIF6KbhhmT4pzkN9KgY9fCBiXZIhZmPZn
-	UARuoVLKoyH4fL
-X-X-Sender: gene099@racer.site
-In-Reply-To: <1195146094.21076.6.camel@hinata.boston.redhat.com>
-X-Y-GMX-Trusted: 0
+	id S1757434AbXKPCDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 21:03:11 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756951AbXKPCDK
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 21:03:10 -0500
+Received: from ug-out-1314.google.com ([66.249.92.174]:39508 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754793AbXKPCDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 21:03:08 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so585316ugc
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 18:03:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=YrgorgLHflKeUGHzMe2BsMlMtZbjX2ogEi7HuVzhRvE=;
+        b=UFdL/duAITIW9LZ1q+oSWQ8Y2zj/pp7XVcbN7Qcyj5DZBFYe59R6MCfSB3RrEjQYEJvKiyxryNmmlxX1gNP2aTPZyd7v0sFYBblW8nICd1mGJNSffHKZupGsHrqfoavzn6S4+0RiMTxitgBC0/Xf7SS3gvIvKlxe1xnwTBuI9rk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=Nw7yhp0dqFPr5USh0JlZH9im2JgOcnZt19pqB9c0UO6Z7reVBxRyjha5wjfG3zgUljU7Q+CDJOXUMToFI65kJLl77s3PMYJhfwvsxWp2vfV8F6r4dYfTJPlzV3nb97d7lUzB+u+pQMYnwt4GWlq1PVy0PVbnaje0DSIp0VcDdDo=
+Received: by 10.66.217.6 with SMTP id p6mr290207ugg.1195178586801;
+        Thu, 15 Nov 2007 18:03:06 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.4.36.102])
+        by mx.google.com with ESMTPS id 40sm2418918uge.2007.11.15.18.03.03
+        (version=SSLv3 cipher=OTHER);
+        Thu, 15 Nov 2007 18:03:04 -0800 (PST)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65183>
 
-Hi,
+I'd like to announce that summary of Git User's Survey 2007 is now 
+present on Git Wiki at
 
-On Thu, 15 Nov 2007, Kristian H?gsberg wrote:
+  http://git.or.cz/gitwiki/GitSurvey2007
 
-> On Thu, 2007-11-15 at 16:11 +0000, Johannes Schindelin wrote:
-> > Earlier, builtin commit would implicitly commit also the staged
-> > changes.
-> > 
-> > This patch fixes that.
-> > 
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > 
-> > 	The function reset_index_to_head() could be moved to somewhere
-> > 	more central and be reused in builtin-reset.c instead of
-> > 	reset_index_file() later...
-> > 
-> >  builtin-add.c     |    1 +
-> >  builtin-commit.c  |   30 +++++++++++++++++++++++++++++-
-> >  t/t7500-commit.sh |   10 ++++++++++
-> >  3 files changed, 40 insertions(+), 1 deletions(-)
-> > 
-> > diff --git a/builtin-add.c b/builtin-add.c
-> > index 77dcde6..017c8f2 100644
-> > --- a/builtin-add.c
-> > +++ b/builtin-add.c
-> > @@ -100,6 +100,7 @@ static void update_callback(struct diff_queue_struct *q,
-> >  		case DIFF_STATUS_UNMERGED:
-> >  		case DIFF_STATUS_MODIFIED:
-> >  		case DIFF_STATUS_TYPE_CHANGED:
-> > +		case DIFF_STATUS_ADDED:
-> >  			add_file_to_cache(path, verbose);
-> >  			break;
-> >  		case DIFF_STATUS_DELETED:
-> > diff --git a/builtin-commit.c b/builtin-commit.c
-> > index 535039c..0dc6e1c 100644
-> > --- a/builtin-commit.c
-> > +++ b/builtin-commit.c
-> > @@ -19,6 +19,7 @@
-> >  #include "strbuf.h"
-> >  #include "utf8.h"
-> >  #include "parse-options.h"
-> > +#include "unpack-trees.h"
-> >  
-> >  static const char * const builtin_commit_usage[] = {
-> >  	"git-commit [options] [--] <filepattern>...",
-> > @@ -77,6 +78,31 @@ static struct option builtin_commit_options[] = {
-> >  	OPT_END()
-> >  };
-> >  
-> > +static int reset_index_to_head(void)
-> > +{
-> > +	struct unpack_trees_options opts;
-> > +	struct tree_desc tree_desc;
-> > +	struct tree *tree;
-> > +	unsigned char sha1[20];
-> > +
-> > +	/* ignore if it is an initial commit */
-> > +	if (get_sha1("HEAD", sha1))
-> > +		return 0;
-> > +	tree = parse_tree_indirect(sha1);
-> > +	if (!tree || parse_tree(tree))
-> > +		return error("Could not get HEAD's tree");
-> > +	init_tree_desc(&tree_desc, tree->buffer, tree->size);
-> > +
-> > +	memset(&opts, 0, sizeof(opts));
-> > +	opts.index_only = 1;
-> > +	opts.merge = 1;
-> > +	opts.head_idx = 1;
-> > +	opts.fn = oneway_merge;
-> > +	if (unpack_trees(1, &tree_desc, &opts))
-> > +		return error("Could not reset temporary index to HEAD");
-> > +	return 0;
-> > +}
-> > +
-> >  static char *prepare_index(const char **files, const char *prefix)
-> >  {
-> >  	int fd;
-> > @@ -120,12 +146,14 @@ static char *prepare_index(const char **files, const char *prefix)
-> >  			die("failed to read HEAD tree object");
-> >  	}
-> >  
-> > +	if (reset_index_to_head())
-> > +		die ("failed to reset temporary index to HEAD");
-> > +
-> 
-> If you look just above where you added these lines, there is code to
-> deal with this case, except it doesn't work.  I was trying to fix this
-> too by adding a discard_cache() call before building the temp index, but
-> then I couldn't add the files in question because the index was now
-> newer than those files.  Anyway, I don't know if your code is better
-> that just doing read_tree(), but we should only have one or the other in
-> there.
 
-It's not only about discarding the cache.  It's also about avoiding do 
-regenerate the index completely; this would waste time, especially for big 
-trees.
-
-But the code you are referencing is only updating the index.  The code I 
-added is to build the temporary index in a correct manner.
-
-Unfortunately, I guess that the index as calculated by the code you are 
-referencing would be needed to show the correct status.
-
-Therefore I propose to use a different struct index_state, copied from the 
-current one, for reset_index_to_head(), add_files_to_index() and 
-write_index() instead of working on the_index.
-
-But that has to be done by somebody else than me, or wait for Tuesday, as 
-I will be travelling.
-
-Ciao,
-Dscho
+P.S. There are still few questions for which there are not full 
+analysis, or are not analized at all.
+-- 
+Jakub Narebski
+Poland
