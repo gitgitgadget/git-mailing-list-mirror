@@ -1,120 +1,105 @@
-From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-Subject: Re: conversion from svn with renames
-Date: Fri, 16 Nov 2007 05:49:22 +0200
-Message-ID: <AFD16773-F585-43B1-878C-3CD4A54A26FB@pp.inet.fi>
-References: <20070729122301.GA17016@knight.manxome.org>
- <D5A64E6F-D80B-4FCD-8184-F53812D4312E@pp.inet.fi>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH] user-manual.txt: fix a few mistakes
+Date: Thu, 15 Nov 2007 22:54:16 -0500
+Message-ID: <20071116035416.GF18909@fieldses.org>
+References: <87bq9x7w4d.fsf@osv.gnss.ru> <20071114181858.GH14254@fieldses.org> <87lk8z3idj.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ricardo SIGNES <rjbs@cpan.org>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-X-From: git-owner@vger.kernel.org Fri Nov 16 04:51:18 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 04:54:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IssEX-0005Pr-8R
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 04:51:09 +0100
+	id 1IssHz-0006E5-B0
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 04:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757258AbXKPDuw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 22:50:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756994AbXKPDuw
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 22:50:52 -0500
-Received: from hyat.suomi.net ([82.128.152.22]:59382 "EHLO hyat.suomi.net"
+	id S1759354AbXKPDyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 22:54:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759473AbXKPDyT
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 22:54:19 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:33678 "EHLO fieldses.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756672AbXKPDuv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 22:50:51 -0500
-Received: from taku.suomi.net ([82.128.154.66])
- by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
- 2005)) with ESMTP id <0JRK00AYGYKVJS10@hyatt.suomi.net> for
- git@vger.kernel.org; Fri, 16 Nov 2007 05:48:31 +0200 (EET)
-Received: from spam2.suomi.net (spam2.suomi.net [212.50.131.166])
- by mailstore.suomi.net
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JRK00JWCYN6IF20@mailstore.suomi.net> for git@vger.kernel.org;
- Fri, 16 Nov 2007 05:49:54 +0200 (EET)
-Received: from Kaalimaa.fudeco.com
- (addr-213-139-166-27.baananet.fi [213.139.166.27])
-	by spam2.suomi.net (Postfix) with ESMTP id 223911A71E3; Fri,
- 16 Nov 2007 05:49:23 +0200 (EET)
-In-reply-to: <D5A64E6F-D80B-4FCD-8184-F53812D4312E@pp.inet.fi>
-X-Mailer: Apple Mail (2.912)
-X-OPOY-MailScanner-Information: Please contact the OPOY for more information
-X-OPOY-MailScanner: Found to be clean
-X-OPOY-MailScanner-SpamCheck: not spam, SpamAssassin (not cached,	score=-0.773,
- required 5, autolearn=not spam, AWL 0.09,	BAYES_00 -1.00,
- FORGED_RCVD_HELO 0.14)
-X-OPOY-MailScanner-From: v@pp.inet.fi
+	id S1759354AbXKPDyS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 22:54:18 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IssHY-0005sT-Ip; Thu, 15 Nov 2007 22:54:16 -0500
+Content-Disposition: inline
+In-Reply-To: <87lk8z3idj.fsf@osv.gnss.ru>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65185>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65186>
 
-Eh, sorry for replying to a old post, I had accidentally had my mail =20
-sorted in reverse. I hope the post was still useful.
+On Thu, Nov 15, 2007 at 01:36:40PM +0300, Sergei Organov wrote:
+> "J. Bruce Fields" <bfields@fieldses.org> writes:
+> 
+> > On Tue, Nov 13, 2007 at 09:19:39PM +0300, Sergei Organov wrote:
+> >> 
+> >> Signed-off-by: Sergei Organov <osv@javad.com>
+> >> ---
+> >>  Documentation/user-manual.txt |    8 ++++----
+> >>  1 files changed, 4 insertions(+), 4 deletions(-)
+> >> 
+> >> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+> >> index d99adc6..a169ef0 100644
+> >> --- a/Documentation/user-manual.txt
+> >> +++ b/Documentation/user-manual.txt
+> >> @@ -475,7 +475,7 @@ Bisecting: 3537 revisions left to test after this
+> >>  If you run "git branch" at this point, you'll see that git has
+> >>  temporarily moved you to a new branch named "bisect".  This branch
+> >>  points to a commit (with commit id 65934...) that is reachable from
+> >> -v2.6.19 but not from v2.6.18.  Compile and test it, and see whether
+> >> +"master" but not from v2.6.18.  Compile and test it, and see whether
+> >>  it crashes.  Assume it does crash.  Then:
+> >>  
+> >>  -------------------------------------------------
+> >> @@ -1367,7 +1367,7 @@ If you make a commit that you later wish you hadn't, there are two
+> >>  fundamentally different ways to fix the problem:
+> >>  
+> >>  	1. You can create a new commit that undoes whatever was done
+> >> -	by the previous commit.  This is the correct thing if your
+> >> +	by the old commit.  This is the correct thing if your
+> >>  	mistake has already been made public.
+> >>  
+> >>  	2. You can go back and modify the old commit.  You should
+> >> @@ -1567,8 +1567,8 @@ old history using, for example,
+> >>  $ git log master@{1}
+> >>  -------------------------------------------------
+> >>  
+> >> -This lists the commits reachable from the previous version of the head.
+> >> -This syntax can be used to with any git command that accepts a commit,
+> >
+> > I actually prefer "head" here.  On something like:
+> >
+> > 		 A--B--C
+> > 		/
+> > 	o--o--o
+> > 		\
+> > 		 o--o--o
+> >
+> >
+> > The term "branch" could be used to refer to the whole line of
+> > development consisting of A, B, and C.  The term "head", on the other
+> > hand, refers to either C or a ref that points to it.  We also use the
+> > terms "branch head" or just "branch" for that case, but I think "head"
+> > is more precise.
+> 
+> Then I'd suggest to be precise here, e.g.:
+> 
+> "This lists the commits reachable from the previous version of the
+> "master" branch head."
 
---
-V=E4in=F6
+That sounds sensible to me, sure.
 
-On Nov 16, 2007, at 05:16, V=E4in=F6 J=E4rvel=E4 wrote:
+> 
+> The real reason for me to replacing "head" with "branch" in the first
+> place was that a few lines below there is example for HEAD, and I wanted
+> to make it more obvious that those is entirely different.
 
-> Hi,
->
-> I tried importing an SVN project with svn-import, and the project =20
-> had been renamed once. It seems that git-svn is more mature tool for =
-=20
-> this, even if svn-import seems to be the one to use. If I remember =20
-> correctly, there was even talk about this very same case in the =20
-> mailing list archives.
->
-> To make a complete conversion from SVN repository to GIT =20
-> repositories, just use --no-metadata option to remove all the =20
-> metadata git-svn normally appends to the commit messages. There will =
-=20
-> also be some cruft in the .git/config file, I removed those, and =20
-> have had an working import with renames from SVN.
->
-> --
-> V=E4in=F6
->
-> On Jul 29, 2007, at 15:23, Ricardo SIGNES wrote:
->
->>
->> I'd like to convert svn.codesimply.com/projects' contents to git.
->>
->> Right now, the content is like this:
->>
->> /projects/$PROJECTNAME/{trunk,tags,branches}
->>
->> git-svnimport does well if I specify projects/$PROJECTNAME/trunk as =
-=20
->> the trunk
->> directory and that/tags as the tags directory.  (I am not =20
->> interested in
->> bothering with branches.)  The problem is this:
->>
->> For many of the projects, $PROJECTNAME was once "foo" and is now =20
->> "bar."
->> git-svnimport only imports the history from the current name.
->>
->> I tried to import foo, then bar, into one git repostiory, but the =20
->> histories
->> didn't seem to get connected.  Sam V. suggested git-filter-branch, =20
->> but I didn't
->> quite see how to make it do what I wanted.
->>
->> I would greatly appreciate any advice or help on this conversion.
->>
->> --=20
->> rjbs
->> -
->> To unsubscribe from this list: send the line "unsubscribe git" in
->> the body of a message to majordomo@vger.kernel.org
->> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+OK, sure.  Thanks for the thoughtful editing!
+
+--b.
