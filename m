@@ -1,105 +1,103 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: [PATCH] user-manual.txt: fix a few mistakes
-Date: Thu, 15 Nov 2007 22:54:16 -0500
-Message-ID: <20071116035416.GF18909@fieldses.org>
-References: <87bq9x7w4d.fsf@osv.gnss.ru> <20071114181858.GH14254@fieldses.org> <87lk8z3idj.fsf@osv.gnss.ru>
+From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
+Subject: Re: [BUG] t9101 (master) busted on Leopard
+Date: Fri, 16 Nov 2007 06:25:09 +0200
+Message-ID: <8B2E66EB-22C7-4C08-9947-C0D6A755309F@pp.inet.fi>
+References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com>
+ <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com>
+ <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 04:54:45 2007
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brian Gernhardt <benji@silverinsanity.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 05:25:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IssHz-0006E5-B0
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 04:54:43 +0100
+	id 1Issm4-0004lF-6a
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 05:25:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759354AbXKPDyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 22:54:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759473AbXKPDyT
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 22:54:19 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:33678 "EHLO fieldses.org"
+	id S1757661AbXKPEZb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 23:25:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756302AbXKPEZb
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 23:25:31 -0500
+Received: from hyat.suomi.net ([82.128.152.22]:60738 "EHLO hyat.suomi.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759354AbXKPDyS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 22:54:18 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IssHY-0005sT-Ip; Thu, 15 Nov 2007 22:54:16 -0500
-Content-Disposition: inline
-In-Reply-To: <87lk8z3idj.fsf@osv.gnss.ru>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1756120AbXKPEZ3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 23:25:29 -0500
+Received: from taku.suomi.net ([82.128.154.66])
+ by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
+ 2005)) with ESMTP id <0JRL00A50084JS20@hyatt.suomi.net> for
+ git@vger.kernel.org; Fri, 16 Nov 2007 06:24:04 +0200 (EET)
+Received: from spam3.suomi.net (spam3.suomi.net [212.50.131.167])
+ by mailstore.suomi.net
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0JRL00JTD0AFIF30@mailstore.suomi.net> for git@vger.kernel.org;
+ Fri, 16 Nov 2007 06:25:27 +0200 (EET)
+Received: from Kaalimaa.fudeco.com
+ (addr-213-139-166-27.baananet.fi [213.139.166.27])
+	by spam3.suomi.net (Postfix) with ESMTP id 1807A164EFA; Fri,
+ 16 Nov 2007 06:25:09 +0200 (EET)
+In-reply-to: <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com>
+X-Mailer: Apple Mail (2.912)
+X-DNA-MailScanner-Information: Please contact the ISP for more information
+X-DNA-MailScanner: Found to be clean
+X-DNA-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=-0.76,
+	required 5, AWL 0.14, BAYES_00 -1.00, RDNS_DYNAMIC 0.10)
+X-DNA-MailScanner-From: v@pp.inet.fi
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65187>
 
-On Thu, Nov 15, 2007 at 01:36:40PM +0300, Sergei Organov wrote:
-> "J. Bruce Fields" <bfields@fieldses.org> writes:
-> 
-> > On Tue, Nov 13, 2007 at 09:19:39PM +0300, Sergei Organov wrote:
-> >> 
-> >> Signed-off-by: Sergei Organov <osv@javad.com>
-> >> ---
-> >>  Documentation/user-manual.txt |    8 ++++----
-> >>  1 files changed, 4 insertions(+), 4 deletions(-)
-> >> 
-> >> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-> >> index d99adc6..a169ef0 100644
-> >> --- a/Documentation/user-manual.txt
-> >> +++ b/Documentation/user-manual.txt
-> >> @@ -475,7 +475,7 @@ Bisecting: 3537 revisions left to test after this
-> >>  If you run "git branch" at this point, you'll see that git has
-> >>  temporarily moved you to a new branch named "bisect".  This branch
-> >>  points to a commit (with commit id 65934...) that is reachable from
-> >> -v2.6.19 but not from v2.6.18.  Compile and test it, and see whether
-> >> +"master" but not from v2.6.18.  Compile and test it, and see whether
-> >>  it crashes.  Assume it does crash.  Then:
-> >>  
-> >>  -------------------------------------------------
-> >> @@ -1367,7 +1367,7 @@ If you make a commit that you later wish you hadn't, there are two
-> >>  fundamentally different ways to fix the problem:
-> >>  
-> >>  	1. You can create a new commit that undoes whatever was done
-> >> -	by the previous commit.  This is the correct thing if your
-> >> +	by the old commit.  This is the correct thing if your
-> >>  	mistake has already been made public.
-> >>  
-> >>  	2. You can go back and modify the old commit.  You should
-> >> @@ -1567,8 +1567,8 @@ old history using, for example,
-> >>  $ git log master@{1}
-> >>  -------------------------------------------------
-> >>  
-> >> -This lists the commits reachable from the previous version of the head.
-> >> -This syntax can be used to with any git command that accepts a commit,
-> >
-> > I actually prefer "head" here.  On something like:
-> >
-> > 		 A--B--C
-> > 		/
-> > 	o--o--o
-> > 		\
-> > 		 o--o--o
-> >
-> >
-> > The term "branch" could be used to refer to the whole line of
-> > development consisting of A, B, and C.  The term "head", on the other
-> > hand, refers to either C or a ref that points to it.  We also use the
-> > terms "branch head" or just "branch" for that case, but I think "head"
-> > is more precise.
-> 
-> Then I'd suggest to be precise here, e.g.:
-> 
-> "This lists the commits reachable from the previous version of the
-> "master" branch head."
 
-That sounds sensible to me, sure.
+On Nov 15, 2007, at 18:11, Wincent Colaiuta wrote:
 
-> 
-> The real reason for me to replacing "head" with "branch" in the first
-> place was that a few lines below there is example for HEAD, and I wanted
-> to make it more obvious that those is entirely different.
+> El 15/11/2007, a las 17:04, Brian Gernhardt escribi=F3:
+>
+>> On Nov 15, 2007, at 8:46 AM, Wincent Colaiuta wrote:
+>>
+>>> Was just running the test suite against the master branch and saw =20
+>>> that t9101 is currently failing on Leopard, and a review with git-=20
+>>> bisect indicates that it has been ever since it was first =20
+>>> introduced (in commit 15153451). Not sure if this problem is =20
+>>> Leopard-specific or not as I only have one machine.
+>>
+>> It is not a Leopard specific problem, as far as I can tell.  I just =
+=20
+>> ran the test and had no errors on my Leopard machine.  So perhaps =20
+>> it's some other detail of your setup?
+>>
+>>> I'm not a git-svn user myself, but if there's anything I can do to =
+=20
+>>> help diagnose this problem further on Leopard please let me know.
+>>
+>> I just tested it using svn from fink and (after discovering it =20
+>> exists) from Leopard.  No problems.  Do you have an old svn package =
+=20
+>> (client, admin, or perl binding) installed from Darwin Ports or =20
+>> Fink perhaps?
+>
+> I don't use Darwin Ports or Fink, and this is a clean Leopard =20
+> install (ie. nothing installed in /usr/local apart from git and a =20
+> very small number of other tools that aren't related to Subversion).
+>
+> This is the output of "/usr/bin/svn --version":
+>
+> svn, version 1.4.4 (r25188)
+>   compiled Sep 23 2007, 22:32:34
+>
+> Perhaps then it is something in the environment.
 
-OK, sure.  Thanks for the thoughtful editing!
+I cannot reproduce this on Leopard (not yet updated to 10.5.1). I =20
+tested this with self-compiled GIT from commit id ca2b71c
 
---b.
+svn version is the same as yours, I do use Fink, and I have used Fink =20
+to install Perl SVN bindings.
+
+--
+V=E4in=F6
