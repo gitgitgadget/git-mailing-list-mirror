@@ -1,141 +1,134 @@
-From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
-Subject: Re: [StGit RFC] A more structured way of calling git
-Date: Fri, 16 Nov 2007 08:42:55 +0100
-Message-ID: <20071116074255.GA16975@diana.vm.bytemark.co.uk>
-References: <20071026192418.GA19774@diana.vm.bytemark.co.uk> <b0943d9e0711151028y22b37e04y87a6bc74dc4c5031@mail.gmail.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH] Fix Solaris compiler warnings
+Date: Fri, 16 Nov 2007 08:48:50 +0100
+Message-ID: <20071116074850.GA3400@steel.home>
+References: <Pine.LNX.4.64.0711152317140.7416@bianca.dialin.t-online.de> <20071115230002.GA24069@steel.home> <7v1war3xrq.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David =?iso-8859-1?Q?K=E5gedal?= <davidk@lysator.liu.se>,
-	Git Mailing List <git@vger.kernel.org>,
-	Yann Dirson <ydirson@altern.org>
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 08:43:43 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 08:49:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsvrY-00063i-5i
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 08:43:40 +0100
+	id 1Isvws-0007Su-8C
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 08:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027AbXKPHnY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2007 02:43:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbXKPHnY
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 02:43:24 -0500
-Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1753 "EHLO
-	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752002AbXKPHnX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 02:43:23 -0500
-Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
-	id 1Isvqp-0004WH-00; Fri, 16 Nov 2007 07:42:55 +0000
+	id S1752084AbXKPHsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 02:48:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752021AbXKPHsx
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 02:48:53 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:17670 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751918AbXKPHsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 02:48:52 -0500
+Received: from tigra.home (Fcbc7.f.strato-dslnet.de [195.4.203.199])
+	by post.webmailer.de (mrclete mo21) (RZmta 14.0)
+	with ESMTP id 6026a0jAG2xHWH ; Fri, 16 Nov 2007 08:48:51 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id C1A15277AE;
+	Fri, 16 Nov 2007 08:48:50 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 3197A56D22; Fri, 16 Nov 2007 08:48:50 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <b0943d9e0711151028y22b37e04y87a6bc74dc4c5031@mail.gmail.com>
-X-Manual-Spam-Check: kha@treskal.com, clean
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <7v1war3xrq.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBsKmZA=
+X-RZG-CLASS-ID: mo07
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65201>
 
-On 2007-11-15 18:28:16 +0000, Catalin Marinas wrote:
-
-> I eventually managed to have a (not so in-depth) look at this
-
-Thanks!
-
-> and I am OK with it (but merging after 0.14).
-
-Yes, that seems like a good idea.
-
-> As you said the current structure and the new one will work in
-> parallel for some time.
-
-Yes. This is a very nice property that makes the whole enterprise
-feasible.
-
-> It would even be possible to implement unit testing.
-
-Yes. Unit testing would be easier with the new code, since it's more
-modular.
-
-> Commitdata maybe should be written as CommitData (as in the e-mail
-> text).
-
-Probably. I've alredy made that spelling error myself at least once
-when writing code.
-
-> The Repository.head property is not cached and it is probably OK to
-> avoid some problems I had. We could run profiling afterwards to see
-> how often it is called.
-
-Yes. This applies to a few other things as well -- I try to be careful
-to write things so that they could be cached transparently if it turns
-out we need it. But I also try to not optimize prematurely.
-
-In some cases the caching is more than just a speed optimization.
-Commits and trees can be compared with regular Python object identity,
-for example, because I never create duplicates.
-
-> > I started to implement a few StGit commands on top of gitlib.py
-> > and stacklib.py, and then realized something very appealing:
+Junio C Hamano, Fri, Nov 16, 2007 00:16:25 +0100:
+> Alex Riesen <raa.lkml@gmail.com> writes:
+> 
+> > Guido Ostkamp, Thu, Nov 15, 2007 23:19:11 +0100:
+> >> Hello,
+> >>
+> >> the below patch fixes some compiler warnings returned by Solaris Workshop 
+> >> Compilers.
+> >>
+> >>     CC builtin-apply.o
+> >> "builtin-apply.c", line 686: warning: statement not reached
+> >>     CC utf8.o
+> >> "utf8.c", line 287: warning: statement not reached
+> >>     CC xdiff/xdiffi.o
+> >> "xdiff/xdiffi.c", line 261: warning: statement not reached
 > >
-> >   Just about every StGit command can be accomplished by first
-> >   creating a bunch of new commit objects with gitlib.py, then
-> >   trying to check out the new HEAD, and then rewriting refs with
-> >   stacklib.py. Only the first and second steps can possibly fail,
-> >   and if they do, they do so without leaving any user-visible junk
-> >   behind. This can be used to make all commands either succeed
-> >   completely, or do nothing at all.
->
-> As you said, that's a bit difficult for 'push' as it is made of a
-> series of separate individual patch pushes. Can we not use a
-> temporary index by setting GIT_INDEX_FILE during the whole
-> transaction and freely update the working copy. Only if the
-> transaction fails, we clean the working copy and check out the
-> default index? This might slow down some operations though.
+> > All these are wrong. That's a fantastically broken piece of compiler
+> 
+> Eh?
+> 
+> I've looked at builtin-apply and utf8 cases but these returns
+> are after an endless loop whose exit paths always return
+> directly, so these return statements are in fact never reached.
+> 
+> Dumber compilers may not notice and if you remove these returns
+> they may start complaining, though. 
 
-The sample code I posted does exactly this index trick. So yes, I
-think it's a splendid idea. :-)
+Hmm... Guido, I owe you an appology. Still, consider this patch
+instead (it does not fix the return in xdiff/xdiffi.c though):
 
-Basically, what it does (or eventually should do) is repeatedly use
-the temp index to create the new commits without ever touching the
-default index or the worktree. Only if a merge conflicts would we
-check out one of the parents and spill the conflicts to the worktree.
-(And once we're finished pushing we'd want to check out the new stack
-top, obviously.)
 
-The only problem is that while git-read-tree can do a three-way merge
-in a temp index without touching the worktree, git-merge-recursive
-assumes that the worktree reflects one of the trees to be merged and
-can be written to. Which is _totally OK_ if there really is going to
-be a conflict. But merge-recursive does fancier conflict resolution
-than read-tree (I think -- I still have to look up exactly what, but I
-don't think read-tree does rename detection for example), so it might
-succeed even if read-tree failed.
-
-> In the future, it would be nice to record the stack state before
-> transactions in a git object (via pickle) together with HEAD id and
-> provide unlimited undo.
-
-Yes, this was exactly what I was refering to when I talked about
-transaction logging. The only difference is that I'd prefer a simple
-text format instead of a pickle, but we can have a fight about that
-detail later. :-)
-
-The complete state that would have to be saved would be
-
-  * (patchname, commit sha1) pairs for all patches
-
-  * (branchname, branch head sha1) pair
-
-  * the ordered lists of applied, unapplied, and eventually also
-    hidden patches
-
-This is somewhat redundant (applied/unapplied could be inferred from
-the commit DAG, etc.) but it would allow us to represent relevant
-illegal states as well, which is needed in order to be able to undo
-repairs of inconsistent stacks.
-
---=20
-Karl Hasselstr=F6m, kha@treskal.com
-      www.treskal.com/kalle
+diff --git a/builtin-apply.c b/builtin-apply.c
+index 8edcc08..6267396 100644
+--- a/builtin-apply.c
++++ b/builtin-apply.c
+@@ -668,13 +668,13 @@ static char *git_header_name(char *line, int llen)
+ 		default:
+ 			continue;
+ 		case '\n':
+-			return NULL;
++			goto eol;
+ 		case '\t': case ' ':
+ 			second = name+len;
+ 			for (;;) {
+ 				char c = *second++;
+ 				if (c == '\n')
+-					return NULL;
++					goto eol;
+ 				if (c == '/')
+ 					break;
+ 			}
+@@ -683,6 +683,7 @@ static char *git_header_name(char *line, int llen)
+ 			}
+ 		}
+ 	}
++eol:
+ 	return NULL;
+ }
+ 
+diff --git a/utf8.c b/utf8.c
+index 8095a71..50c46af 100644
+--- a/utf8.c
++++ b/utf8.c
+@@ -262,7 +262,7 @@ int print_wrapped_text(const char *text, int indent, int indent2, int width)
+ 					print_spaces(indent);
+ 				fwrite(start, text - start, 1, stdout);
+ 				if (!c)
+-					return w;
++					break;
+ 				else if (c == '\t')
+ 					w |= 0x07;
+ 				space = text;
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 2ade97b..533ff76 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -230,10 +230,9 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
+ 			i2++;
+ 		}
+ 		return i1 >= s1 && i2 >= s2;
+-	} else
+-		return s1 == s2 && !memcmp(l1, l2, s1);
++	}
+ 
+-	return 0;
++	return s1 == s2 && !memcmp(l1, l2, s1);
+ }
+ 
+ static unsigned long xdl_hash_record_with_whitespace(char const **data,
