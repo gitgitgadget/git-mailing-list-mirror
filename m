@@ -1,103 +1,121 @@
-From: =?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
-Subject: Re: [BUG] t9101 (master) busted on Leopard
-Date: Fri, 16 Nov 2007 06:25:09 +0200
-Message-ID: <8B2E66EB-22C7-4C08-9947-C0D6A755309F@pp.inet.fi>
-References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com>
- <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com>
- <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix "identifier redeclared" compilation error with SUN cc.
+Date: Thu, 15 Nov 2007 20:58:55 -0800
+Message-ID: <7vd4ua3hww.fsf@gitster.siamese.dyndns.org>
+References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+	<1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Brian Gernhardt <benji@silverinsanity.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 05:25:54 2007
+Cc: gitster@pobox.com, raa.lkml@gmail.com, git@ostkamp.fastmail.fm,
+	git@vger.kernel.org
+To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Nov 16 05:59:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Issm4-0004lF-6a
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 05:25:48 +0100
+	id 1IstIi-0003jX-FA
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 05:59:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757661AbXKPEZb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 23:25:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756302AbXKPEZb
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 23:25:31 -0500
-Received: from hyat.suomi.net ([82.128.152.22]:60738 "EHLO hyat.suomi.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756120AbXKPEZ3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 23:25:29 -0500
-Received: from taku.suomi.net ([82.128.154.66])
- by hyatt.suomi.net (Sun Java System Messaging Server 6.2-3.04 (built Jul 15
- 2005)) with ESMTP id <0JRL00A50084JS20@hyatt.suomi.net> for
- git@vger.kernel.org; Fri, 16 Nov 2007 06:24:04 +0200 (EET)
-Received: from spam3.suomi.net (spam3.suomi.net [212.50.131.167])
- by mailstore.suomi.net
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JRL00JTD0AFIF30@mailstore.suomi.net> for git@vger.kernel.org;
- Fri, 16 Nov 2007 06:25:27 +0200 (EET)
-Received: from Kaalimaa.fudeco.com
- (addr-213-139-166-27.baananet.fi [213.139.166.27])
-	by spam3.suomi.net (Postfix) with ESMTP id 1807A164EFA; Fri,
- 16 Nov 2007 06:25:09 +0200 (EET)
-In-reply-to: <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com>
-X-Mailer: Apple Mail (2.912)
-X-DNA-MailScanner-Information: Please contact the ISP for more information
-X-DNA-MailScanner: Found to be clean
-X-DNA-MailScanner-SpamCheck: not spam, SpamAssassin (not cached, score=-0.76,
-	required 5, AWL 0.14, BAYES_00 -1.00, RDNS_DYNAMIC 0.10)
-X-DNA-MailScanner-From: v@pp.inet.fi
-X-Spam-Status: No
+	id S1755269AbXKPE7M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 15 Nov 2007 23:59:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753179AbXKPE7M
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 23:59:12 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44996 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752726AbXKPE7K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 15 Nov 2007 23:59:10 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 403D82EF;
+	Thu, 15 Nov 2007 23:59:31 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 688BB9620C;
+	Thu, 15 Nov 2007 23:59:25 -0500 (EST)
+In-Reply-To: <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+ (=?utf-8?Q?Bj=C3=B6rn?=
+	Steinbrink's message of "Thu, 15 Nov 2007 02:15:03 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65188>
 
+Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
 
-On Nov 15, 2007, at 18:11, Wincent Colaiuta wrote:
-
-> El 15/11/2007, a las 17:04, Brian Gernhardt escribi=F3:
+> Guido, could you please test this patch?
 >
->> On Nov 15, 2007, at 8:46 AM, Wincent Colaiuta wrote:
->>
->>> Was just running the test suite against the master branch and saw =20
->>> that t9101 is currently failing on Leopard, and a review with git-=20
->>> bisect indicates that it has been ever since it was first =20
->>> introduced (in commit 15153451). Not sure if this problem is =20
->>> Leopard-specific or not as I only have one machine.
->>
->> It is not a Leopard specific problem, as far as I can tell.  I just =
-=20
->> ran the test and had no errors on my Leopard machine.  So perhaps =20
->> it's some other detail of your setup?
->>
->>> I'm not a git-svn user myself, but if there's anything I can do to =
-=20
->>> help diagnose this problem further on Leopard please let me know.
->>
->> I just tested it using svn from fink and (after discovering it =20
->> exists) from Leopard.  No problems.  Do you have an old svn package =
-=20
->> (client, admin, or perl binding) installed from Darwin Ports or =20
->> Fink perhaps?
+> I have no clue which versions of SUN's cc are affected, so I simply e=
+nabled
+> the workaround for all versions. Someone with more knowledge about th=
+at
+> should probably limit the check to only do that for the broken versio=
+ns.
 >
-> I don't use Darwin Ports or Fink, and this is a clean Leopard =20
-> install (ie. nothing installed in /usr/local apart from git and a =20
-> very small number of other tools that aren't related to Subversion).
->
-> This is the output of "/usr/bin/svn --version":
->
-> svn, version 1.4.4 (r25188)
->   compiled Sep 23 2007, 22:32:34
->
-> Perhaps then it is something in the environment.
+>  git-compat-util.h |    2 ++
+>  1 files changed, 2 insertions(+), 0 deletions(-)
 
-I cannot reproduce this on Leopard (not yet updated to 10.5.1). I =20
-tested this with self-compiled GIT from commit id ca2b71c
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index ede9408..c3ff4b4 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -6,6 +6,8 @@
+>  #ifndef FLEX_ARRAY
+>  #if defined(__GNUC__) && (__GNUC__ < 3)
+>  #define FLEX_ARRAY 0
+> +#elif defined(sun) || defined(__SUN__)
+> +#define FLEX_ARRAY 1
+>  #else
+>  #define FLEX_ARRAY /* empty */
+>  #endif
 
-svn version is the same as yours, I do use Fink, and I have used Fink =20
-to install Perl SVN bindings.
+This feels a bit too narrow and too broad at the same time,
+doesn't it?
 
---
-V=E4in=F6
+As I suspect there are other compilers that do not implement
+flexible array members (so you cannot use "member[]") nor older
+gcc extension of zero sized member (so you cannot use
+"member[0]" either), this checking specifically for Sun is too
+narrow.
+
+On the other hand, as you said, this is too broad, because not
+everybody may be using the SUN compiler on Sun, nor the version
+that does not understand flexible array members.
+
+But being broad should always be safer, albeit a bit wasteful.
+
+How about doing it this way?
+
+  # ifndef FLEX_ARRAY
+  #   if defined(__GNUC__)
+  #     if (__GNUC__ < 3)
+  #       define FLEX_ARRAY 0
+  #     else
+  #       define FLEX_ARRAY /* empty */
+  #     endif
+  #   else
+        /* more cases we know we can use 0 or empty can come here */
+  #   endif
+  # endif
+
+  /* if still undefined, default to the safe, old fashioned way */
+  # ifndef FLEX_ARRAY
+  #   define FLEX_ARRAY 1
+  # endif
+
+The basic idea is:
+
+ * The user (from Makefile command line, config.mak, or you
+   could add autoconf test) can pass -DFLEX_ARRAY=3D... to specify
+   exactly what should happen;
+
+ * Otherwise, if we happen to know for sure that we can use "0"
+   or "/* empty */" with the compiler, we define FLEX_ARRAY;
+   currently we know such things for gcc.
+
+ * For everybody else, we use safer default of "1".  IOW, if you
+   know your compiler does not grok "/* empty */" nor "0", you
+   do not have to do anything special but use the default case
+   as everybody else.
