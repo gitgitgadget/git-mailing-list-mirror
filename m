@@ -1,67 +1,59 @@
-From: Bruce Stephens <bruce.stephens@isode.com>
-Subject: Re: Fix per-directory exclude handing for "git add"
-Date: Fri, 16 Nov 2007 13:50:29 +0000
-Message-ID: <80y7cy2tay.fsf@tiny.isode.net>
-References: <80ir431xny.fsf@tiny.isode.net>
-            <alpine.LFD.0.9999.0711151044150.2786@woody.linux-foundation.org>
-            <80ir43e04o.fsf@tiny.isode.net>
-            <7vir4341ok.fsf@gitster.siamese.dyndns.org>
-            <7vodduzh36.fsf@gitster.siamese.dyndns.org>
+From: "Elijah Newren" <newren@gmail.com>
+Subject: Re: git-cvsimport bug with dates
+Date: Fri, 16 Nov 2007 07:12:29 -0700
+Message-ID: <51419b2c0711160612r1a80bd5o686040f945e8d9c3@mail.gmail.com>
+References: <51419b2c0711152059q55ced86gd224310c8c4a1851@mail.gmail.com>
+	 <7vr6iq207f.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 16 14:50:56 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Junio C Hamano" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 15:12:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1It1as-0002U2-Jd
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 14:50:51 +0100
+	id 1It1w7-0002ar-6y
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 15:12:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758338AbXKPNue (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 08:50:34 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758217AbXKPNue
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 08:50:34 -0500
-Received: from rufus.isode.com ([62.3.217.251]:38185 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757407AbXKPNud (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 08:50:33 -0500
-Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (smtp internal) via TCP with SMTP 
-          id <Rz2gJQBBVHAA@rufus.isode.com>; Fri, 16 Nov 2007 13:50:30 +0000
-Received: by tiny.isode.net (sSMTP sendmail emulation);
-          Fri, 16 Nov 2007 13:50:29 +0000
-X-Hashcash: 1:20:071116:gitster@pobox.com::J3Dbkzgv2AJYTiPF:0000000000000000000000000000000000000000000024Ij
-X-Hashcash: 1:20:071116:torvalds@linux-foundation.org::r2Q8a1X9dQ7MvKRz:000000000000000000000000000000006O/F
-X-Hashcash: 1:20:071116:git@vger.kernel.org::4g2z0kyWoQVvXkQx:0000000000000000000000000000000000000000001Ami
-In-Reply-To: <7vodduzh36.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 16 Nov 2007 01\:15\:41 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1758895AbXKPOMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 09:12:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758019AbXKPOMa
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 09:12:30 -0500
+Received: from wa-out-1112.google.com ([209.85.146.181]:48504 "EHLO
+	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472AbXKPOM3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 09:12:29 -0500
+Received: by wa-out-1112.google.com with SMTP id v27so1006995wah
+        for <git@vger.kernel.org>; Fri, 16 Nov 2007 06:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=uLZIoTeP4NRYe4lOGHa5+mHe4NRB5zX5/7R2ajCd9no=;
+        b=mDVMk83nR6ycTlxUrB0sNeNk/SIzTUFkU1J1JxJ+UbmeP4t789E/T7wiTQgDueK6Ni5V9rci4BdygT6I9W/cyBgcfgms2Ri/mJwpQU5kZW9QPOwkVy1C9Jgw6Wj0cPA3G99nRQBobkyxQc/8FtQ4X6btdNr1zy1ti75aiw1kNXM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=GtBSaq4cDifQqho+Q5puRSJZkBdH/rJTw2RuFfCwIUmD241ZNyfDAZW9vyXrdxjRHoOmJYJvtiEBLwESF0S3aU8jwJRBgkzLADt99Rkz0Dl+cZltGu8fRsmUK9MORA1OoAf+IqnQxW5rYMZAIJgev2BmiXzo8L/G34+rGa2DbqI=
+Received: by 10.114.60.19 with SMTP id i19mr422257waa.1195222349343;
+        Fri, 16 Nov 2007 06:12:29 -0800 (PST)
+Received: by 10.114.211.8 with HTTP; Fri, 16 Nov 2007 06:12:29 -0800 (PST)
+In-Reply-To: <7vr6iq207f.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65228>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Nov 15, 2007 11:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> When you use "branch@{date}" notation, you are not asking a
+> question on the project history, but a question on the local
+> view from _your_ repository on that project.
 
-[...]
+Interesting; that makes sense from a merge or pull viewpoint, but
+wouldn't it make more sense to have cvsimport ensure the commits are
+treated as though they actually existed in master as of the date
+specified in CVS?
 
-> While read_directory_recursive() runs, calls to excluded() makes use
-> the data in the exclusion elements, including this base string.  The
-> caller of read_directory_recursive() is not supposed to free the
-> buffer it gave to push_exclude_per_directory() earlier, until it
-> returns.
-
-Cool, that fixes the "git add" issue I was seeing.  (So Acked-by:
-Bruce Stephens <bruce.stephens@isode.com>, for what it's worth.)
-
-I guess really the output of "git status" (or "git runstatus") is more
-significant since that's what we'd normally be running (that's
-presumably what "git gui" and similar tools run, though perhaps they
-use "git ls-files"---probably the underlying code's the same, I
-guess).
-
-However, that doesn't mean the issue with git add shouldn't be
-resolved.
-
-[...]
+Elijah
