@@ -1,92 +1,72 @@
-From: "Marco Costalba" <mcostalba@gmail.com>
-Subject: Re: [PATCH 4/2] Fix parent rewriting in --early-output
-Date: Fri, 16 Nov 2007 09:30:55 +0200
-Message-ID: <e5bfff550711152330m401c39e8g7a2ff7be834f0d56@mail.gmail.com>
-References: <18211.59478.188419.397886@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0711021301200.3342@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711021809060.3342@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711031103340.3342@woody.linux-foundation.org>
-	 <18221.14113.498416.396006@cargo.ozlabs.ibm.com>
-	 <alpine.LFD.0.999.0711032234030.15101@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711041004220.15101@woody.linux-foundation.org>
-	 <alpine.LFD.0.999.0711041124050.15101@woody.linux-foundation.org>
-	 <alpine.LFD.0.9999.0711122046570.2786@woody.linux-foundation.org>
-	 <18233.30098.470244.421468@cargo.ozlabs.ibm.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: New repo quickly corrupted
+Date: Fri, 16 Nov 2007 08:35:03 +0100
+Message-ID: <473D4827.1060109@op5.se>
+References: <31e9dd080711151350u6c2ae40foc7c05e59496260fa@mail.gmail.com> <alpine.LFD.0.9999.0711151708470.21255@xanadu.home> <alpine.LFD.0.9999.0711151434290.4260@woody.linux-foundation.org> <200711160645.04352.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "Linus Torvalds" <torvalds@linux-foundation.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	"Git Mailing List" <git@vger.kernel.org>
-To: "Paul Mackerras" <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 08:31:14 2007
+Content-Type: text/plain; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Nicolas Pitre <nico@cam.org>,
+	Jason Sewall <jasonsewall@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 08:35:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsvfV-0002pB-Na
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 08:31:14 +0100
+	id 1Isvja-0003qG-Rd
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 08:35:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918AbXKPHa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 02:30:57 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751675AbXKPHa5
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 02:30:57 -0500
-Received: from rv-out-0910.google.com ([209.85.198.191]:44905 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751829AbXKPHa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 02:30:56 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so609047rvb
-        for <git@vger.kernel.org>; Thu, 15 Nov 2007 23:30:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=RJqDPux6Al9X0Yh/5V5iYbJz/PRiqw5Ukht2ynmbvTs=;
-        b=htjI4KLu+VnXUR9DnwcV9NfEsOJG9SA+qvfAd/rUN36vcs0cmW41B5HdUPYsYNgLsvpPp0KHPT9QcF42QMxTFSajEmOvRKjJUwc+CxNCDTLXhO4GVHJlPdKCimATPdz+293ZW/ogX5xSyZZk2H8roUxBTPzK09LqFhuLvBJ7IGA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=I7U+evSOW6mZdeAhtgg+UY7NfY7uH6qbIf+2cu2C0GnWxF29dx+DZuy5+0lNditNGjKcReUvv86jekfcr8LmjC4acuGnSRBGviHFk0LOjc0YnUhTNmKhfyR8QaN7U8PoHxWrJ5V9D0AI6YrvpeA8D9z2icOEijUt8+DnUG8veIs=
-Received: by 10.141.153.16 with SMTP id f16mr461423rvo.1195198255950;
-        Thu, 15 Nov 2007 23:30:55 -0800 (PST)
-Received: by 10.140.185.19 with HTTP; Thu, 15 Nov 2007 23:30:55 -0800 (PST)
-In-Reply-To: <18233.30098.470244.421468@cargo.ozlabs.ibm.com>
-Content-Disposition: inline
+	id S1751704AbXKPHfK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2007 02:35:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751836AbXKPHfJ
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 02:35:09 -0500
+Received: from mail.op5.se ([193.201.96.20]:39793 "EHLO mail.op5.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751669AbXKPHfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 02:35:07 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id 438091F08720;
+	Fri, 16 Nov 2007 08:35:06 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jFFRrdEBdHsl; Fri, 16 Nov 2007 08:35:05 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id C6DCC1F0871B;
+	Fri, 16 Nov 2007 08:35:04 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <200711160645.04352.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65199>
 
-On 11/13/07, Paul Mackerras <paulus@samba.org> wrote:
-> Linus Torvalds writes:
->
-> > However, while the parent is now correctly rewritten, it looks like gitk
-> > is confused by this. Gitk will remember the original parent information,
-> > even if a replay has given new parenthood information. Since the partial
-> > early-output information is triggered by timing, this means that gitk will
-> > show some totally random parent that quite possibly won't even be part of
-> > the final commit set at all!
->
-> Yep.  It will be a little complex to deal with that because there are
-> bits of state that I set up for the parents, and if they're the wrong
-> parents, I'll have to go back and undo that.
->
+Christian Couder wrote:
+> Le jeudi 15 novembre 2007, Linus Torvalds a =E9crit :
+>> On Thu, 15 Nov 2007, Nicolas Pitre wrote:
+>>> Does "dos2unix" override file access bits?  Because the object stor=
+e is
+>>> always made read-only.
+>> Almost all programs like that will entirely ignor the fact that some=
+thing
+>> is read-only.
+>=20
+> What if the .git/objects/ sudirectories were also read-only ?
+>=20
 
-Sorry to comment on a gitk thread, but the problem of different
-parents for the same sha while replaying was hitted by me also with
-qgit when tring to implement --early-output
+Then git wouldn't be able to write to it without chmod()'ing it each ti=
+me.
 
-I don't know if i is suitable also for gitk but in qgit I changed the
-match algorithm to check also for same parents and not only for same
-sha during a replay to detect something has changed, so to catch
-different parents cases early on and avoiding "going back" that is
-complex.
-
-IOW when git log print outs a replay qgit enter in a state where it
-checks all the arrived sha against the already sent ones and at the
-first mismatch flushes the tail at the point of mismatch.
-
-The modified algorithm instead of chek just the sha checks also
-parents info (because git log is called with --parents option this
-ends up comparing the first line of the commit message).
-
-Marco
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
