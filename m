@@ -1,78 +1,78 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] user-manual.txt: fix a few mistakes
-Date: Fri, 16 Nov 2007 14:34:22 +0300
-Message-ID: <87sl361l1d.fsf@osv.gnss.ru>
-References: <87bq9x7w4d.fsf@osv.gnss.ru> <20071114181858.GH14254@fieldses.org>
-	<87lk8z3idj.fsf@osv.gnss.ru> <20071116035416.GF18909@fieldses.org>
+From: Erik Warendorph <erik@warendorph.org>
+Subject: Re: preserving mtime
+Date: Fri, 16 Nov 2007 13:09:30 +0100
+Message-ID: <20071116120929.GA28144@localhost.localdomain>
+References: <473D63F9.4010201@inrim.it>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 12:34:50 2007
+Cc: git@vger.kernel.org
+To: Fabrizio Pollastri <f.pollastri@inrim.it>
+X-From: git-owner@vger.kernel.org Fri Nov 16 13:09:53 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IszTF-0006UU-JL
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 12:34:50 +0100
+	id 1It019-0000W3-0o
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 13:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757501AbXKPLec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 06:34:32 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757393AbXKPLec
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 06:34:32 -0500
-Received: from javad.com ([216.122.176.236]:4487 "EHLO javad.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754717AbXKPLec (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 06:34:32 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lAGBYSi09122;
-	Fri, 16 Nov 2007 11:34:28 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1IszSo-0000t1-Av; Fri, 16 Nov 2007 14:34:22 +0300
-In-Reply-To: <20071116035416.GF18909@fieldses.org> (J. Bruce Fields's message of "Thu\, 15 Nov 2007 22\:54\:16 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1756046AbXKPMJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 07:09:34 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756217AbXKPMJd
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 07:09:33 -0500
+Received: from lakepoint.domeneshop.no ([194.63.248.54]:54766 "EHLO
+	lakepoint.domeneshop.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753029AbXKPMJd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 07:09:33 -0500
+Received: from localhost ([195.1.76.68])
+	(authenticated bits=0)
+	by lakepoint.domeneshop.no (8.13.8/8.13.8) with ESMTP id lAGC9ULR020725;
+	Fri, 16 Nov 2007 13:09:30 +0100
+Content-Disposition: inline
+In-Reply-To: <473D63F9.4010201@inrim.it>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65219>
 
-"J. Bruce Fields" <bfields@fieldses.org> writes:
-
-> On Thu, Nov 15, 2007 at 01:36:40PM +0300, Sergei Organov wrote:
->> "J. Bruce Fields" <bfields@fieldses.org> writes:
-[...]
->> >> @@ -1567,8 +1567,8 @@ old history using, for example,
->> >>  $ git log master@{1}
->> >>  -------------------------------------------------
->> >>  
->> >> -This lists the commits reachable from the previous version of the head.
->> >> -This syntax can be used to with any git command that accepts a commit,
->> >
->> > I actually prefer "head" here.  On something like:
->> >
->> > 		 A--B--C
->> > 		/
->> > 	o--o--o
->> > 		\
->> > 		 o--o--o
->> >
->> >
->> > The term "branch" could be used to refer to the whole line of
->> > development consisting of A, B, and C.  The term "head", on the other
->> > hand, refers to either C or a ref that points to it.  We also use the
->> > terms "branch head" or just "branch" for that case, but I think "head"
->> > is more precise.
->> 
->> Then I'd suggest to be precise here, e.g.:
->> 
->> "This lists the commits reachable from the previous version of the
->> "master" branch head."
+* Fabrizio Pollastri <f.pollastri@inrim.it> [2007-11-16 10:33:45 +0100]:
 >
-> That sounds sensible to me, sure.
+> is it possible to tell git to preserve the file modification time in a 
+> checked out copy? It is useful when managing web files, where mtime is 
+> tested by spiders for download decisions.
 
-OK, I've just submitted patch for that.
+You may find the script "git-set-file-times" in the GitWiki
+useful:
+
+  ExampleScripts - GitWiki
+  Setting the timestamps of the files to the commit timestamp
+  of the commit which last touched them
+    <http://git.or.cz/gitwiki/ExampleScripts#head-a57deb2b4ab1e2de80ab5fd3c681a6055a9d3247>
+
+You should of course pay attention to advice about (and
+against) doing stuff like this, both in the description of that
+script and in other postings on this list.  But as you are
+using Git to manage web files and you (probably) don't care
+about build systems such as "make", you should be pretty safe.
+
+About the script:  I think it originally was made by Eric Wong
+(= normalperson) who is also on this list.  I have just made a
+tiny, tiny modification to it (adding " or s/\0$//" to the
+elsif test).
+
+I've also thought about adding a --prefix option to the script.
+This would enable it to be used together with git-archive,
+leaving the working directory alone and affecting the files in
+the directory where the archive is extracted instead.  In this
+way, you would distinguish between your working directory and
+your "live" directory, and the command sequence
+
+  git archive --prefix=foo/ HEAD | (cd /var/www/ && tar xf -)
+  git-set-file-times --prefix=/var/www/foo/
+
+would be part of the build system, publishing your working
+directory to your "live" directory (in this case
+/var/www/foo/).
 
 -- 
-Sergei.
+Erik Warendorph <erik@warendorph.org>
