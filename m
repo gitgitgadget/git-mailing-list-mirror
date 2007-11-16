@@ -1,59 +1,126 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Fix t7004 which fails with retarded sed
-Date: Fri, 16 Nov 2007 19:02:54 +0100
-Message-ID: <83DEF29B-4E72-4913-A77E-8C00D69B48E4@wincent.com>
-References: <20071116165944.GB29272@glandium.org> <1195233971-12288-1-git-send-email-mh@glandium.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 19:03:58 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Fwd: problem with a fork on repo.or.cz
+Date: Fri, 16 Nov 2007 19:07:12 +0100
+Message-ID: <9545AC22-487C-452E-AC1D-58EC66497E73@lrde.epita.fr>
+References: <97E2BA6B-E66F-45BB-BA74-C73E7E2918FC@lrde.epita.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-44-33383745"
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Nov 16 19:07:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1It5Xp-0003qT-2D
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 19:03:57 +0100
+	id 1It5bT-0005RA-Ta
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 19:07:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752258AbXKPSDk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 16 Nov 2007 13:03:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753968AbXKPSDj
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 13:03:39 -0500
-Received: from wincent.com ([72.3.236.74]:42500 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752258AbXKPSDj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 16 Nov 2007 13:03:39 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAGI3A8Y026732;
-	Fri, 16 Nov 2007 12:03:11 -0600
-In-Reply-To: <1195233971-12288-1-git-send-email-mh@glandium.org>
-X-Mailer: Apple Mail (2.915)
+	id S1755331AbXKPSH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 13:07:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755183AbXKPSH1
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 13:07:27 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:36127 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755155AbXKPSH0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 13:07:26 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1It5bB-0006iJ-3M
+	for git@vger.kernel.org; Fri, 16 Nov 2007 19:07:25 +0100
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65237>
 
-El 16/11/2007, a las 18:26, Mike Hommey escribi=F3:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-44-33383745
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-> index 096fe33..3813f23 100755
-> --- a/t/t7004-tag.sh
-> +++ b/t/t7004-tag.sh
-> @@ -1007,7 +1007,9 @@ test_expect_failure \
-> test_expect_success \
-> 	'message in editor has initial comment' '
-> 	GIT_EDITOR=3Dcat git tag -a initial-comment > actual || true &&
-> -	test $(sed -n "/^\(#\|\$\)/p" actual | wc -l) -gt 0
-> +	grep -e "^$" actual > /dev/null 2>&1 &&
-> +	grep -e "^#" actual > /dev/null 2>&1 &&
-> +	! grep -e "^[^#]" actual > /dev/null 2>&1
-> '
+Hi list,
+Petr did not reply to my email, so even though this is off-topic WRT  
+Git (forgive me please :D), I guess someone on this ML may be able to  
+have a clue.
 
-Yep, that works here, and is a much more rigourous test than what we =20
-had.
+Begin forwarded message:
 
-Cheers,
-Wincent
+> From: Benoit Sigoure <tsuna@lrde.epita.fr>
+> Date: November 12, 2007 10:06:02 AM CEST
+> To: Petr Baudis <pasky@suse.cz>
+> Subject: problem with a fork on repo.or.cz
+>
+> Hi Petr,
+>
+> I'd like to use repo.or.cz to publish my patches for Autoconf.  I  
+> created a new
+> `autoconf' project that mirrors the GNU Autoconf Git repository.   
+> Then I forked it as
+> autoconf/tsuna (http://repo.or.cz/w/autoconf/tsuna.git).  Now I'm  
+> trying to push my
+> changes to that repo but, for some reason, it fails:
+>
+> $ git remote show repo
+> * remote repo
+>   URL: git+ssh://repo.or.cz/srv/git/autoconf/tsuna.git
+> $ git push -v --all repo
+> Pushing to git+ssh://repo.or.cz/srv/git/autoconf/tsuna.git
+> updating 'refs/heads/bootclean'
+>   from 0000000000000000000000000000000000000000
+>   to   793c1b38a094f57e6218653719bca30881cca5d0
+> updating 'refs/heads/docfix'
+>   from 0000000000000000000000000000000000000000
+>   to   e61c348bcd8036ab76deedf0952215d64a6cbfcb
+> updating 'refs/heads/master'
+>   from 0000000000000000000000000000000000000000
+>   to   00865ec8426eed430d9a36c906d6ce7d307f8cf1
+> updating 'refs/heads/mybootclean'
+>   from 0000000000000000000000000000000000000000
+>   to   8475204ea4094c864a40216a93f176a817906744
+> Counting objects: 63, done.
+> Compressing objects: 100% (45/45), done.
+> Writing objects: 100% (45/45), done.
+> Total 45 (delta 40), reused 0 (delta 0)
+> error: unable to create temporary sha1 filename ./objects/ 
+> tmp_obj_XTRbjJ: Permission denied
+> fatal: failed to write object
+> unpack unpacker exited with error code
+> ng refs/heads/bootclean n/a (unpacker error)
+> ng refs/heads/docfix n/a (unpacker error)
+> ng refs/heads/master n/a (unpacker error)
+> ng refs/heads/mybootclean n/a (unpacker error)
+> error: failed to push to 'git+ssh://repo.or.cz/srv/git/autoconf/ 
+> tsuna.git'
+> $ git version
+> git version 1.5.3.5.654.gdd5ec
+>
+>
+> any idea?
+>
+> Cheers,
+
+-- 
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-44-33383745
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHPdxQwwE67wC8PUkRAkI0AJ4vzRluhyxSNJh4pNQfaNgRoczXGQCeMF0T
+WMYQ6o0lWQk0Rrxgcb9MDYs=
+=8VxT
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-44-33383745--
