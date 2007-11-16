@@ -1,113 +1,74 @@
-From: Rich Morin <rdm@cfcl.com>
-Subject: (Git) PeepCode & Pizza, Tuesday 12/4
-Date: Thu, 15 Nov 2007 21:40:48 -0800
-Message-ID: <p06230928c362d85a7f63@[192.168.1.205]>
+From: Dan Zwell <dzwell@gmail.com>
+Subject: [PATCH] Git.pm: Don't return 'undef' in vector context.
+Date: Fri, 16 Nov 2007 00:15:47 -0600
+Message-ID: <473D3593.9080806@zwell.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Nov 16 07:16:22 2007
+X-From: git-owner@vger.kernel.org Fri Nov 16 07:17:34 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsuV4-0002nh-0k
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 07:16:22 +0100
+	id 1IsuW9-00031t-GQ
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 07:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751538AbXKPGQB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 16 Nov 2007 01:16:01 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751319AbXKPGQB
-	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 01:16:01 -0500
-Received: from cfcl.com ([208.201.233.106]:53460 "EHLO pop.cfcl.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751223AbXKPGQA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 16 Nov 2007 01:16:00 -0500
-X-Greylist: delayed 2009 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Nov 2007 01:16:00 EST
-Received: from [192.168.1.205] (cerberus [192.168.1.205])
-	by pop.cfcl.com (Postfix) with ESMTP id E4C10EBFD36;
-	Thu, 15 Nov 2007 21:35:26 -0800 (PST)
+	id S1751581AbXKPGRM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 16 Nov 2007 01:17:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751432AbXKPGRL
+	(ORCPT <rfc822;git-outgoing>); Fri, 16 Nov 2007 01:17:11 -0500
+Received: from py-out-1112.google.com ([64.233.166.180]:5423 "EHLO
+	py-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751365AbXKPGRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 16 Nov 2007 01:17:09 -0500
+Received: by py-out-1112.google.com with SMTP id u77so4010381pyb
+        for <git@vger.kernel.org>; Thu, 15 Nov 2007 22:17:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
+        bh=qfID8tltHMnAjC+9R5Whsrzz8bOJc3ETYxiNv95JjPs=;
+        b=F+JGrj9OALk/9EYasEh+VdibvX/rGfIsDKQmtFNrkq17DdqquNbcBs+K6oV+Zuk4wNt1YpDxCkzuIqGRtrkG7YilQu2mvxolA23h4q9rNynLJYiCMzu0QYZd5phfRGE0NHAkbwpeWV0xa0nJ/vm2khWbX7x+1fsPNA4bQJnN9qc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:user-agent:mime-version:to:subject:content-type:content-transfer-encoding:from;
+        b=Th9sQT/l+j1HO4m5LKcBu+tL89TvMJBIsafIg4u6jy/kdByz6XKcou154oCizGbq7W81oe6R+xEvSJb6FsxoEDU5SAhbo4TWvBi10nJ70cgZgfzMVahGQE62dNfhpDV0VRFhHt2B12AWg/+UCwJDKIKo3rlU8UKc4CVi0pOC+hc=
+Received: by 10.35.102.1 with SMTP id e1mr1766902pym.1195193828857;
+        Thu, 15 Nov 2007 22:17:08 -0800 (PST)
+Received: from ?143.44.70.185? ( [143.44.70.185])
+        by mx.google.com with ESMTPS id f10sm6194440pyh.2007.11.15.22.17.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 15 Nov 2007 22:17:08 -0800 (PST)
+User-Agent: Thunderbird 2.0.0.6 (X11/20071031)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65196>
 
+Previously, the Git->repository()->config('non-existent.key')
+evaluated to as true in a vector context. Return an empty list
+instead.
+---
+I don't know whether this breaks anything, because I don't use most of 
+the git perl scripts. I can't imagine that there is a script that relies 
+on the fact that config('non-existent.key') actually returns (''), in an 
+array context. Is this a reasonable change?
 
-       Free Food!  Free Movies!  Free Software!
+  perl/Git.pm |    2 +-
+  1 files changed, 1 insertions(+), 1 deletions(-)
 
-Come watch the newly released PeepCode screencast on Git,
-Linus Torvalds' distributed source-code management system.
-
-The plan is to munch on pizza, then watch a PeepCode video,
-with occasional pauses for questions, etc.  Reactrix uses
-Git extensively, so we can answer _some_ questions.  We're
-also hoping that some helpful wizards may show up...
-
-This inaugural PeepCode & Pizza gathering is made possible
-by the generosity of PeepCode and Reactrix Systems.  The
-meeting will be held at the Reactrix offices in Redwood City
-from 6-9 pm on Tuesday, December 4.
-
-
-About Git
-
-Git is a distributed source-code management system, written
-by Linus Torvalds and used since 2005 on the Linux kernel.
-In his fun, opinionated Tech Talk, Linus explains why fast,
-reliable, and (most of all) distributed SCM systems rock:
-
-  http://www.youtube.com/watch?v=4XpnKHJAok8
-
-Additional information on Git can be found at:
-
-  http://en.wikipedia.org/wiki/Git_(software)
-  http://git.or.cz/
-
-
-About PeepCode and Reactrix Systems
-
-PeepCode (http://peepcode.com) produces economical, well-
-produced screencasts on technical topics (e.g., Capistrano,
-Git, httperf, Prototype.js, Rails, RJS, rSpec, TextMate).
-
-Reactrix develops and supports video-based interactive
-advertising devices.  Generally, these are placed in malls,
-theaters, etc.  We use a variety of Open Source technologies,
-including C++, Capistrano, Git, Linux, OpenGL, Perl, Rails,
-and Ruby.  Yes, we're hiring!
-
-    http://www.reactrix.com/
-    http://www.reactrix.com/index.php
-    http://www.reactrix.com/careers.php
-
-
-When:
-
-  Tuesday, December 4, 2007
-
-  6p - 7p   chat, munch pizza, etc.
-            Reactrix demo machines will be available.
-
-  7p - 9p   watch a PeepCode screencast, with pauses
-            for questions, discussion, etc.
-
-  9p - ??   retire (perhaps) to a local pub
-
-
-NOTE:  RSVPs (rdm@cfcl.com) are greatly appreciated; help
-       us to know how much pizza (and what kind) to order!
-
-
-Where:
-
-  Reactrix Systems, Inc.       650-980-2700
-  301 Chesapeake Drive
-  Redwood City, CA
-
-  Map:         http://tinyurl.com/27b22y
-  Directions:  http://www.reactrix.com/driving_directions.php
-
+diff --git a/perl/Git.pm b/perl/Git.pm
+index e9dc706..ffcc541 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -508,7 +508,7 @@ sub config {
+  		my $E = shift;
+  		if ($E->value() == 1) {
+  			# Key not found.
+-			return undef;
++			return wantarray ? () : undef;
+  		} else {
+  			throw $E;
+  		}
 -- 
-http://www.cfcl.com/rdm            Rich Morin
-http://www.cfcl.com/rdm/resume     rdm@cfcl.com
-http://www.cfcl.com/rdm/weblog     +1 650-873-7841
-
-Technical editing and writing, programming, and web development
+1.5.3.5.565.gf0b83-dirty
