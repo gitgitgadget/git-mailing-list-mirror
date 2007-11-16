@@ -1,72 +1,155 @@
-From: "Ollie Wild" <aaw@google.com>
-Subject: git-svn fetch failure: index.lock file exists
-Date: Thu, 15 Nov 2007 16:07:20 -0800
-Message-ID: <65dd6fd50711151607x50639232w6d79322129c3d82@mail.gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] builtin-commit: fix "git add x y && git commit y"
+ committing x, too
+Date: Fri, 16 Nov 2007 00:43:17 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711160036450.30886@racer.site>
+References: <Pine.LNX.4.64.0711150038020.4362@racer.site> 
+ <1195138198-24511-1-git-send-email-krh@redhat.com> 
+ <Pine.LNX.4.64.0711151611090.30886@racer.site> <1195146094.21076.6.camel@hinata.boston.redhat.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 16 01:07:44 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Kristian =?ISO-8859-1?Q?H=F8gsberg?= <krh@redhat.com>
+X-From: git-owner@vger.kernel.org Fri Nov 16 01:44:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IsokK-0007Ks-6w
-	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 01:07:44 +0100
+	id 1IspJj-0002Yc-91
+	for gcvg-git-2@gmane.org; Fri, 16 Nov 2007 01:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1765233AbXKPAH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 15 Nov 2007 19:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765110AbXKPAH1
-	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 19:07:27 -0500
-Received: from smtp-out.google.com ([216.239.33.17]:41787 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757460AbXKPAH0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 15 Nov 2007 19:07:26 -0500
-Received: from zps77.corp.google.com (zps77.corp.google.com [172.25.146.77])
-	by smtp-out.google.com with ESMTP id lAG07MvT030994
-	for <git@vger.kernel.org>; Fri, 16 Nov 2007 00:07:22 GMT
-DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
-	h=received:message-id:date:from:to:subject:mime-version:
-	content-type:content-transfer-encoding:content-disposition;
-	b=fN1pKaJ8S9hgupSo0WZBXa2doaFz69cCZZrHsx4mrHLtp6S7g0r1T+uu5etZ4ZBcv
-	7GFKkvETqlAK51R01FGhg==
-Received: from py-out-1112.google.com (pycj37.prod.google.com [10.34.111.37])
-	by zps77.corp.google.com with ESMTP id lAG06oUS020768
-	for <git@vger.kernel.org>; Thu, 15 Nov 2007 16:07:21 -0800
-Received: by py-out-1112.google.com with SMTP id j37so4044869pyc
-        for <git@vger.kernel.org>; Thu, 15 Nov 2007 16:07:21 -0800 (PST)
-Received: by 10.35.36.13 with SMTP id o13mr1435932pyj.1195171640170;
-        Thu, 15 Nov 2007 16:07:20 -0800 (PST)
-Received: by 10.35.46.15 with HTTP; Thu, 15 Nov 2007 16:07:20 -0800 (PST)
-Content-Disposition: inline
+	id S1765669AbXKPAnt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 15 Nov 2007 19:43:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1765674AbXKPAnt
+	(ORCPT <rfc822;git-outgoing>); Thu, 15 Nov 2007 19:43:49 -0500
+Received: from mail.gmx.net ([213.165.64.20]:60653 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1765441AbXKPAnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 15 Nov 2007 19:43:47 -0500
+Received: (qmail invoked by alias); 16 Nov 2007 00:43:44 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp001) with SMTP; 16 Nov 2007 01:43:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18FALsgnwIF6KbhhmT4pzkN9KgY9fCBiXZIhZmPZn
+	UARuoVLKoyH4fL
+X-X-Sender: gene099@racer.site
+In-Reply-To: <1195146094.21076.6.camel@hinata.boston.redhat.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65181>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65182>
 
 Hi,
 
-I've been using git-svn for a while now to work on gcc.  Last night, I did a
+On Thu, 15 Nov 2007, Kristian H?gsberg wrote:
 
-  git svn fetch
+> On Thu, 2007-11-15 at 16:11 +0000, Johannes Schindelin wrote:
+> > Earlier, builtin commit would implicitly commit also the staged
+> > changes.
+> > 
+> > This patch fixes that.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> > 
+> > 	The function reset_index_to_head() could be moved to somewhere
+> > 	more central and be reused in builtin-reset.c instead of
+> > 	reset_index_file() later...
+> > 
+> >  builtin-add.c     |    1 +
+> >  builtin-commit.c  |   30 +++++++++++++++++++++++++++++-
+> >  t/t7500-commit.sh |   10 ++++++++++
+> >  3 files changed, 40 insertions(+), 1 deletions(-)
+> > 
+> > diff --git a/builtin-add.c b/builtin-add.c
+> > index 77dcde6..017c8f2 100644
+> > --- a/builtin-add.c
+> > +++ b/builtin-add.c
+> > @@ -100,6 +100,7 @@ static void update_callback(struct diff_queue_struct *q,
+> >  		case DIFF_STATUS_UNMERGED:
+> >  		case DIFF_STATUS_MODIFIED:
+> >  		case DIFF_STATUS_TYPE_CHANGED:
+> > +		case DIFF_STATUS_ADDED:
+> >  			add_file_to_cache(path, verbose);
+> >  			break;
+> >  		case DIFF_STATUS_DELETED:
+> > diff --git a/builtin-commit.c b/builtin-commit.c
+> > index 535039c..0dc6e1c 100644
+> > --- a/builtin-commit.c
+> > +++ b/builtin-commit.c
+> > @@ -19,6 +19,7 @@
+> >  #include "strbuf.h"
+> >  #include "utf8.h"
+> >  #include "parse-options.h"
+> > +#include "unpack-trees.h"
+> >  
+> >  static const char * const builtin_commit_usage[] = {
+> >  	"git-commit [options] [--] <filepattern>...",
+> > @@ -77,6 +78,31 @@ static struct option builtin_commit_options[] = {
+> >  	OPT_END()
+> >  };
+> >  
+> > +static int reset_index_to_head(void)
+> > +{
+> > +	struct unpack_trees_options opts;
+> > +	struct tree_desc tree_desc;
+> > +	struct tree *tree;
+> > +	unsigned char sha1[20];
+> > +
+> > +	/* ignore if it is an initial commit */
+> > +	if (get_sha1("HEAD", sha1))
+> > +		return 0;
+> > +	tree = parse_tree_indirect(sha1);
+> > +	if (!tree || parse_tree(tree))
+> > +		return error("Could not get HEAD's tree");
+> > +	init_tree_desc(&tree_desc, tree->buffer, tree->size);
+> > +
+> > +	memset(&opts, 0, sizeof(opts));
+> > +	opts.index_only = 1;
+> > +	opts.merge = 1;
+> > +	opts.head_idx = 1;
+> > +	opts.fn = oneway_merge;
+> > +	if (unpack_trees(1, &tree_desc, &opts))
+> > +		return error("Could not reset temporary index to HEAD");
+> > +	return 0;
+> > +}
+> > +
+> >  static char *prepare_index(const char **files, const char *prefix)
+> >  {
+> >  	int fd;
+> > @@ -120,12 +146,14 @@ static char *prepare_index(const char **files, const char *prefix)
+> >  			die("failed to read HEAD tree object");
+> >  	}
+> >  
+> > +	if (reset_index_to_head())
+> > +		die ("failed to reset temporary index to HEAD");
+> > +
+> 
+> If you look just above where you added these lines, there is code to
+> deal with this case, except it doesn't work.  I was trying to fix this
+> too by adding a discard_cache() call before building the temp index, but
+> then I couldn't add the files in question because the index was now
+> newer than those files.  Anyway, I don't know if your code is better
+> that just doing read_tree(), but we should only have one or the other in
+> there.
 
-and got the following failure:
+It's not only about discarding the cache.  It's also about avoiding do 
+regenerate the index completely; this would waste time, especially for big 
+trees.
 
-  Found possible branch point: svn+ssh://aaw@gcc.gnu.org/svn/gcc/trunk =>
-      svn+ssh://aaw@gcc.gnu.org/svn/gcc/tags/libbid-last-merge, 128810
-  Found branch parent: (tags/libbid-last-merge)
-      789aa951bbc6a49f791bf5109136335fc33222c5
-  fatal: unable to create
-'.git/svn/tags/libbid-last-merge/index.lock': File exists
-  read-tree 789aa951bbc6a49f791bf5109136335fc33222c5:
-      command returned error: 128
+But the code you are referencing is only updating the index.  The code I 
+added is to build the temporary index in a correct manner.
 
-Naively, it looks to me like I've just got a stale lock file from a
-previous run.  However, I have no idea what the correct recovery
-strategy is.  Can I just delete the lock file?  Do I need to do some
-sort of data validation?
+Unfortunately, I guess that the index as calculated by the code you are 
+referencing would be needed to show the correct status.
 
-I'm using git version 1.5.2.5 with subversion version 1.4.5 (r25188).
+Therefore I propose to use a different struct index_state, copied from the 
+current one, for reset_index_to_head(), add_files_to_index() and 
+write_index() instead of working on the_index.
 
-Thanks,
-Ollie
+But that has to be done by somebody else than me, or wait for Tuesday, as 
+I will be travelling.
+
+Ciao,
+Dscho
