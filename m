@@ -1,170 +1,174 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [RFC PATCH] git-svn info: implement info command
-Date: Sat, 17 Nov 2007 14:54:02 -0800
-Message-ID: <20071117225402.GC28755@muzzle>
-References: <1194884349-11504-1-git-send-email-ddkilzer@kilzer.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: BUG: git-svn does not escape literal backslashes in author names.
+Date: Sun, 18 Nov 2007 00:17:13 +0100
+Message-ID: <473F7679.4010901@op5.se>
+References: <1213a9470711120628l4ccab632n17635295ec897a2@mail.gmail.com> <20071117204348.GA16333@muzzle>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "David D. Kilzer" <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Sat Nov 17 23:54:28 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Adrian Wilkins <adrian.wilkins@gmail.com>, git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Sun Nov 18 00:17:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItWYR-0005V6-Fy
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 23:54:23 +0100
+	id 1ItWuy-00048N-EE
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 00:17:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751974AbXKQWyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 17:54:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752129AbXKQWyF
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 17:54:05 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33747 "EHLO hand.yhbt.net"
+	id S1753366AbXKQXRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 18:17:19 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbXKQXRT
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 18:17:19 -0500
+Received: from mail.op5.se ([193.201.96.20]:54930 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751954AbXKQWyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 17:54:04 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id DF69A7DC0FE;
-	Sat, 17 Nov 2007 14:54:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1194884349-11504-1-git-send-email-ddkilzer@kilzer.net>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1753298AbXKQXRS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 18:17:18 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id E3D431F0873C;
+	Sun, 18 Nov 2007 00:17:16 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -2.499
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
+	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hwDM-rpSjv7j; Sun, 18 Nov 2007 00:17:15 +0100 (CET)
+Received: from nox.op5.se (unknown [172.27.78.26])
+	by mail.op5.se (Postfix) with ESMTP id 53A8B1F0871B;
+	Sun, 18 Nov 2007 00:17:15 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <20071117204348.GA16333@muzzle>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65318>
 
-"David D. Kilzer" <ddkilzer@kilzer.net> wrote:
-> Implement "git-svn info" for files and directories based on the "svn info"
-> command.  Note that the -r/--revision argument is not supported yet.
+Eric Wong wrote:
+> Adrian Wilkins <adrian.wilkins@gmail.com> wrote:
 > 
-> Added 18 tests in t/t9117-git-svn-info.sh.
+>> Can I suggest that you make the authors file compulsory by default as well?
 > 
-> Signed-off-by: David D. Kilzer <ddkilzer@kilzer.net>
-> ---
+> Not going to happen.  I personally _hate_ having to track down author
+> information and make an authors file, and I suspect many others feel the
+> same.  I've never used this feature in git-svn on any real repository.
 > 
-> Looking for feedback on this patch.  Specifically, I'm looking for insight
-> for the two FIXME comments in the cmd_info() function added to git-svn.
-> (I can't help but think I'm missing a plumbing command or a basic concept.
-> Pointers to code, web pages or man pages are welcome.)
-> 
-> Note that I've tried to cover all the bases that "svn info" does (by using
-> tests), except supporting the -r/--revision argument.
 
-Hi David,
+I wholeheartedly agree. One thing that could be improved in this area though
+is to do what git-cvsimport does, and stash the authors file in $GIT_DIR and
+re-read it on every invocation. I've forgotten to add that -A switch numerous
+times when fetching incrementally and it always annoys me enormously.
 
-Wow.  I can honestly say I've never even noticed the "Schedule:" field
-in `svn info'.  I would've been perfectly happy to accept an
-implementation of `git svn info' without that :)
+Something like this, perhaps? It needs checking. My perl is.. well, you can
+see for yourselves, and unfortunately I have no possibility to test this
+until monday when I'm back on a sane link. It should work as a starting
+point though. It applies cleanly on top of current next.
 
-> I've also tried to be aggressive in extracting common code into functions.
+---%<---%<---%<---
+From: Andreas Ericsson <ae@op5.se>
+Subject: git svn: Cache author info in $GIT_DIR/author-cache
 
-I like it, but this should be a separate patch.
+git-cvsimport does it, so it's reasonable that git-svn users
+expect the same functionality. It's also damn convenient.
 
-> +sub canonicalize_path {
-> +	my ($path) = @_;
-> +	my $dotSlashAdded = 0;
+Signed-off-by: Andreas Ericsson <ae@op5.se>
+---
+ Documentation/git-svn.txt |    3 +++
+ git-svn.perl              |   25 +++++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
 
-camelCase variables requires more time for the brain to parse (they're
-easier to write, but take more time to read), please use snake_case like
-the rest of git-svn (and git).
-
-> +sub cmd_info {
-> +	my $path = canonicalize_path(shift or ".");
-> +	unless (scalar(@_) == 0) {
-> +		die "Too many arguments specified\n";
-> +	}
-> +
-> +	# FIXME: We use a combination of git-diff, git-ls-files and git-cat-file
-> +	# to divine the state and type of object that was passed in as $path.
-> +	# There has to be a better way.  Note that only $diffStatus is used
-> +	# beyond setting $isDirectory below.
-
-I agree it's pretty ugly.  You can probably expand git-runstatus to do
-this.  git-commit.sh used to use something like this until git-runstatus
-was added.  On the other hand, I'd be content if we dropped support
-for this info entirely since `git-status' is perfectly good.
-
-IMNSHO, "URL:" and "Repository Root:" and occasionally "Revision:" (on the
-top-level directory) would be the only useful things this command would
-have to offer.
-
-Being able to run something like `git svn info --url <path>'
-to get something like http://svn.foo.org/project/trunk/<path> would be
-nice, too.
-
-> +
-> +	my $diffStatus = (split(' ', command_oneline(qw(diff --cached --name-status --), $path) || ""))[0] || "";
-
-Please wrap lines at 80 characters.  I have a hard time following long
-lines.
-
-> +		my $checksum;
-> +		# FIXME: We fail to generate the correct checksum for deleted
-> +		# symlinks here.  How do we know if a deleted file was a symlin
-
-git ls-tree HEAD <filename> will show the mode of a deleted file
-
-> @@ -0,0 +1,236 @@
-> +#!/bin/sh
-> +#
-> +# Copyright (c) 2007 David D. Kilzer
-> +
-> +test_description='git-svn info'
-> +
-> +. ./lib-git-svn.sh
-> +
-> +test_expect_success 'setup repository and import' "
-> +	rm -rf info gitwc svnwc &&
-
-All git tests should start you off on a clean trash/ directory...
-
-> +	mkdir info &&
-> +	cd info &&
-> +		echo one > file &&
-> +		ln -s file symlink-file &&
-> +		mkdir directory &&
-> +		touch directory/.placeholder &&
-> +		ln -s directory symlink-directory &&
-> +		svn import -m 'initial' . $svnrepo &&
-> +	cd .. &&
-> +	mkdir gitwc &&
-> +	cd gitwc &&
-> +		git-svn init $svnrepo &&
-> +		git-svn fetch &&
-> +	cd .. &&
-> +	svn co $svnrepo svnwc &&
-> +	touch -c -r svnwc/file gitwc/file &&
-> +	touch -c -r svnwc/directory gitwc/directory &&
-> +	touch -c -r svnwc/symlink-file gitwc/symlink-file &&
-> +	touch -c -r svnwc/symlink-directory gitwc/symlink-directory
-
-Are -r and -c portable?  I remember writing test-chmtime to workaround
-some arguments for touch not being portable.
-
-> +test_expect_success 'info no arguments' "
-> +	(cd svnwc; svn info) > expected.info-no-arguments &&
-> +	(cd gitwc; git-svn info) > actual.info-no-arguments &&
-> +	diff -u expected.info-no-arguments actual.info-no-arguments
-> +	"
-
-Can we expect the output of "svn info" to not change between
-versions?  I know "svn status" has changed between versions of
-svn.  I'd prefer if we keep the expected.* files hard-coded
-in a test directory and compare those instead.  Maybe use sed
-to substitute placeholders for timestamps..
-
-Also, git-diff can be used against arbitrary files nowadays, no
-need to rely on a working diff command in the system :)
-
-> +test_expect_success 'info added-file' "
-> +	echo two > gitwc/added-file &&
-> +	cd gitwc &&
-> +		git add added-file &&
-> +	cd .. &&
-> +	cp -p gitwc/added-file svnwc/added-file &&
-
-I can't remember if cp -p is portable, either...
+diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
+index 488e4b1..446a7d7 100644
+--- a/Documentation/git-svn.txt
++++ b/Documentation/git-svn.txt
+@@ -276,6 +276,9 @@ committer name that does not exist in the authors-file, git-svn
+ will abort operation. The user will then have to add the
+ appropriate entry.  Re-running the previous git-svn command
+ after the authors-file is modified should continue operation.
++For convenience, this data is saved to $GIT_DIR/author-cache
++each time the '-A' option is provided and read from that same
++file each time git-svn is run.
+ 
+ config key: svn.authorsfile
+ 
+diff --git a/git-svn.perl b/git-svn.perl
+index e3e00fd..0a989ed 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -14,6 +14,7 @@ my $cmd_dir_prefix = eval {
+        command_oneline([qw/rev-parse --show-prefix/], STDERR => 0)
+ } || '';
+ 
++my $author_cache;
+ my $git_dir_user_set = 1 if defined $ENV{GIT_DIR};
+ $ENV{GIT_DIR} ||= '.git';
+ $Git::SVN::default_repo_id = 'svn';
+@@ -203,7 +204,6 @@ exit 1 if (!$rv && $cmd && $cmd ne 'log');
+ usage(0) if $_help;
+ version() if $_version;
+ usage(1) unless defined $cmd;
+-load_authors() if $_authors;
+ 
+ # make sure we're always running
+ unless ($cmd =~ /(?:clone|init|multi-init)$/) {
+@@ -226,6 +226,14 @@ unless ($cmd =~ /(?:clone|init|multi-init)$/) {
+                $ENV{GIT_DIR} = $git_dir;
+        }
+ }
++
++$author_cache = $ENV{GIT_DIR} . "/author-cache";
++load_authors($_authors) if $_authors;
++unless ($cmd =~ /(?:clone|init|multi-init)$/) {
++       -f $author_cache and load_authors($author_cache);
++       write_author_cache();
++}
++
+ unless ($cmd =~ /^(?:clone|init|multi-init|commit-diff)$/) {
+        Git::SVN::Migration::migration_check();
+ }
+@@ -297,6 +305,8 @@ sub do_git_init_db {
+                command_noisy('config', "$pfx.$i", $icv{$i});
+                $set = $i;
+        }
++
++       write_author_cache() if %users;
+ }
+ 
+ sub init_subdir {
+@@ -900,7 +910,8 @@ sub file_to_s {
+ 
+ # '<svn username> = real-name <email address>' mapping based on git-svnimport:
+ sub load_authors {
+-       open my $authors, '<', $_authors or die "Can't open $_authors $!\n";
++       my ($file) = @_;
++       open my $authors, '<', $file or die "Can't open $file $!\n";
+        my $log = $cmd eq 'log';
+        while (<$authors>) {
+                chomp;
+@@ -915,6 +926,16 @@ sub load_authors {
+        close $authors or croak $!;
+ }
+ 
++sub write_author_cache {
++       open my $f, '>', $author_cache
++         or die "Can't open author cache $author_cache for writing: $!\n";
++       foreach (keys %users) {
++               print $f "$_=$users{$_}[0] <$users{$_}[1]>\n";
++       }
++
++       close $f or croak $!;
++}
++
+ # convert GetOpt::Long specs for use by git-config
+ sub read_repo_config {
+        return unless -d $ENV{GIT_DIR};
+-- 
+1.5.3.5.1527.g6161
+---%<---%<---%<---
 
 -- 
-Eric Wong
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
