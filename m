@@ -1,82 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: What's not in git.git
-Date: Sat, 17 Nov 2007 13:12:53 -0800
-Message-ID: <7vlk8wshii.fsf@gitster.siamese.dyndns.org>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: git-svn fetch failure: index.lock file exists
+Date: Sat, 17 Nov 2007 13:15:49 -0800
+Message-ID: <20071117211549.GC31598@mayonaise>
+References: <65dd6fd50711151607x50639232w6d79322129c3d82@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:13:29 2007
+Cc: git@vger.kernel.org
+To: Ollie Wild <aaw@google.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 22:16:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItUyn-0000vM-1B
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:13:29 +0100
+	id 1ItV1M-0001p5-Da
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:16:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752166AbXKQVNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 16:13:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXKQVNA
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:13:00 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:55623 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752051AbXKQVM7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 16:12:59 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 7EFAF2EF;
-	Sat, 17 Nov 2007 16:13:18 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CB7E96CF6;
-	Sat, 17 Nov 2007 16:13:16 -0500 (EST)
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1751942AbXKQVPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 16:15:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752064AbXKQVPv
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:15:51 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33674 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751655AbXKQVPv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 16:15:51 -0500
+Received: from hand.yhbt.net (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with SMTP id D4AAE7DC0FE;
+	Sat, 17 Nov 2007 13:15:49 -0800 (PST)
+Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 17 Nov 2007 13:15:49 -0800
+Content-Disposition: inline
+In-Reply-To: <65dd6fd50711151607x50639232w6d79322129c3d82@mail.gmail.com>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65310>
 
-A list of recent issues discussed without any patch landing in
-my tree.
+Ollie Wild <aaw@google.com> wrote:
+> Hi,
+> 
+> I've been using git-svn for a while now to work on gcc.  Last night, I did a
+> 
+>   git svn fetch
+> 
+> and got the following failure:
+> 
+>   Found possible branch point: svn+ssh://aaw@gcc.gnu.org/svn/gcc/trunk =>
+>       svn+ssh://aaw@gcc.gnu.org/svn/gcc/tags/libbid-last-merge, 128810
+>   Found branch parent: (tags/libbid-last-merge)
+>       789aa951bbc6a49f791bf5109136335fc33222c5
+>   fatal: unable to create
+> '.git/svn/tags/libbid-last-merge/index.lock': File exists
+>   read-tree 789aa951bbc6a49f791bf5109136335fc33222c5:
+>       command returned error: 128
+> 
+> Naively, it looks to me like I've just got a stale lock file from a
+> previous run.  However, I have no idea what the correct recovery
+> strategy is.  Can I just delete the lock file?  Do I need to do some
+> sort of data validation?
+> 
+> I'm using git version 1.5.2.5 with subversion version 1.4.5 (r25188).
 
-* git-revert <path>
+Did you interrupt git-svn in a previous run?  But you should be able to
+just remove it; git-svn should verify that the index is in a consistent
+state before it attempts to fetch again.
 
-  As discussed, I am in favor of the above command, only when
-  <path> cannot be interpreted as a valid commit object name and
-  <path> appears in the index, to run "git-checkout -- <path>".
-
-  Also, I am in favor of making "git-revert <commit> -- <path>"
-  and "git-cherry-pick <commit> -- <path>" create a commit that
-  reverts or cherry-picks the effect of named commit but only
-  on named paths, as proposed by Dscho.
-
-  Before the latter materializes, however, I think it is
-  possible to implement the former.
-
-  - "git-revert [--] <path>" runs "git-checkout -- <path>"
-    without complaining (only when unambiguous if no -- is
-    given);
-
-  - "git-cherry-pick [--] <path>" errors out, as it does not
-    make any sense.
-
-  - "git-(revert|cherry-pick) <commit> [--] <path>" gives
-    "unimplemented yet" error message;
-
-* "Why a merge is more difficult to bisect" document.
-
-  I think the last text with rewording suggestion on the list
-  was good.  Should I take that directly, or pull through
-  Bruce?
-
-* "Batch mode of git-cat-file" aka git-fast-export.
-
-  I think the idea is sound.
-
-   http://thread.gmane.org/gmane.comp.version-control.git/65053/focus=65057
-   http://thread.gmane.org/gmane.comp.version-control.git/62295/focus=62441
-
-* Solaris portability improvements and clean-up.
-
-  Test patches sent for git-compat-util.h and Makefile on
-  FLEX_ARRAY and mkdtemp() but they haven't resulted in any
-  appliable patch yet.
+-- 
+Eric Wong
