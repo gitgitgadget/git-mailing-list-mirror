@@ -1,174 +1,74 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: BUG: git-svn does not escape literal backslashes in author names.
-Date: Sun, 18 Nov 2007 00:17:13 +0100
-Message-ID: <473F7679.4010901@op5.se>
-References: <1213a9470711120628l4ccab632n17635295ec897a2@mail.gmail.com> <20071117204348.GA16333@muzzle>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [Advance Warning PATCH] Move gitk to its own subdirectory
+Date: Sun, 18 Nov 2007 00:25:19 +0100
+Message-ID: <20071117232519.GA7664@steel.home>
+References: <7vsl34u1iv.fsf@gitster.siamese.dyndns.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Adrian Wilkins <adrian.wilkins@gmail.com>, git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sun Nov 18 00:17:41 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <junio@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 18 00:25:45 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItWuy-00048N-EE
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 00:17:40 +0100
+	id 1ItX2m-0006OS-LW
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 00:25:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753366AbXKQXRT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 18:17:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753335AbXKQXRT
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 18:17:19 -0500
-Received: from mail.op5.se ([193.201.96.20]:54930 "EHLO mail.op5.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753298AbXKQXRS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 18:17:18 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id E3D431F0873C;
-	Sun, 18 Nov 2007 00:17:16 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -2.499
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.499 tagged_above=-10 required=6.6
-	tests=[BAYES_00=-2.599, RDNS_NONE=0.1]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hwDM-rpSjv7j; Sun, 18 Nov 2007 00:17:15 +0100 (CET)
-Received: from nox.op5.se (unknown [172.27.78.26])
-	by mail.op5.se (Postfix) with ESMTP id 53A8B1F0871B;
-	Sun, 18 Nov 2007 00:17:15 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <20071117204348.GA16333@muzzle>
+	id S1752766AbXKQXZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 18:25:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752445AbXKQXZX
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 18:25:23 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.188]:8474 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166AbXKQXZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 18:25:22 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAPrzg==
+Received: from tigra.home (Fc945.f.strato-dslnet.de [195.4.201.69])
+	by post.webmailer.de (fruni mo23) (RZmta 14.3)
+	with ESMTP id I00db2jAHLVoI1 ; Sun, 18 Nov 2007 00:25:20 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 37629277AE;
+	Sun, 18 Nov 2007 00:25:20 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 82F0A56D22; Sun, 18 Nov 2007 00:25:19 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <7vsl34u1iv.fsf@gitster.siamese.dyndns.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65319>
 
-Eric Wong wrote:
-> Adrian Wilkins <adrian.wilkins@gmail.com> wrote:
-> 
->> Can I suggest that you make the authors file compulsory by default as well?
-> 
-> Not going to happen.  I personally _hate_ having to track down author
-> information and make an authors file, and I suspect many others feel the
-> same.  I've never used this feature in git-svn on any real repository.
-> 
+Junio C Hamano, Sat, Nov 17, 2007 20:15:20 +0100:
+> The plan is to stop merging gitk.git as a single file project
+> into git.git but instead use the subtree merge strategy into its
+> own subdirectory of git.git.  We can use subproject support in
+> the future, but once _a_ subproject is used that means the
+> project's history is not pullable with subproject unaware
+> versions of git anymore, so I'd avoid it for now.
 
-I wholeheartedly agree. One thing that could be improved in this area though
-is to do what git-cvsimport does, and stash the authors file in $GIT_DIR and
-re-read it on every invocation. I've forgotten to add that -A switch numerous
-times when fetching incrementally and it always annoys me enormously.
+You made it part of "all" target, which we will have to change if gitk
+is to become a subproject: Makefile better handle absence of the
+Makefile under gitk-git, and continue build.
 
-Something like this, perhaps? It needs checking. My perl is.. well, you can
-see for yourselves, and unfortunately I have no possibility to test this
-until monday when I'm back on a sane link. It should work as a starting
-point though. It applies cleanly on top of current next.
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Makefile              |   14 +++-----------
+>  gitk-git/Makefile     |   29 +++++++++++++++++++++++++++++
+>  gitk => gitk-git/gitk |    0 
+>  3 files changed, 32 insertions(+), 11 deletions(-)
+>  create mode 100644 gitk-git/Makefile
+>  rename gitk => gitk-git/gitk (100%)
+>  mode change 100755 => 100644
+...
+>  all::
+>  ifndef NO_TCLTK
+>  	$(QUIET_SUBDIR0)git-gui $(QUIET_SUBDIR1) all
+> +	$(QUIET_SUBDIR0)gitk-git $(QUIET_SUBDIR1) all
 
----%<---%<---%<---
-From: Andreas Ericsson <ae@op5.se>
-Subject: git svn: Cache author info in $GIT_DIR/author-cache
-
-git-cvsimport does it, so it's reasonable that git-svn users
-expect the same functionality. It's also damn convenient.
-
-Signed-off-by: Andreas Ericsson <ae@op5.se>
----
- Documentation/git-svn.txt |    3 +++
- git-svn.perl              |   25 +++++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-svn.txt b/Documentation/git-svn.txt
-index 488e4b1..446a7d7 100644
---- a/Documentation/git-svn.txt
-+++ b/Documentation/git-svn.txt
-@@ -276,6 +276,9 @@ committer name that does not exist in the authors-file, git-svn
- will abort operation. The user will then have to add the
- appropriate entry.  Re-running the previous git-svn command
- after the authors-file is modified should continue operation.
-+For convenience, this data is saved to $GIT_DIR/author-cache
-+each time the '-A' option is provided and read from that same
-+file each time git-svn is run.
- 
- config key: svn.authorsfile
- 
-diff --git a/git-svn.perl b/git-svn.perl
-index e3e00fd..0a989ed 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -14,6 +14,7 @@ my $cmd_dir_prefix = eval {
-        command_oneline([qw/rev-parse --show-prefix/], STDERR => 0)
- } || '';
- 
-+my $author_cache;
- my $git_dir_user_set = 1 if defined $ENV{GIT_DIR};
- $ENV{GIT_DIR} ||= '.git';
- $Git::SVN::default_repo_id = 'svn';
-@@ -203,7 +204,6 @@ exit 1 if (!$rv && $cmd && $cmd ne 'log');
- usage(0) if $_help;
- version() if $_version;
- usage(1) unless defined $cmd;
--load_authors() if $_authors;
- 
- # make sure we're always running
- unless ($cmd =~ /(?:clone|init|multi-init)$/) {
-@@ -226,6 +226,14 @@ unless ($cmd =~ /(?:clone|init|multi-init)$/) {
-                $ENV{GIT_DIR} = $git_dir;
-        }
- }
-+
-+$author_cache = $ENV{GIT_DIR} . "/author-cache";
-+load_authors($_authors) if $_authors;
-+unless ($cmd =~ /(?:clone|init|multi-init)$/) {
-+       -f $author_cache and load_authors($author_cache);
-+       write_author_cache();
-+}
-+
- unless ($cmd =~ /^(?:clone|init|multi-init|commit-diff)$/) {
-        Git::SVN::Migration::migration_check();
- }
-@@ -297,6 +305,8 @@ sub do_git_init_db {
-                command_noisy('config', "$pfx.$i", $icv{$i});
-                $set = $i;
-        }
-+
-+       write_author_cache() if %users;
- }
- 
- sub init_subdir {
-@@ -900,7 +910,8 @@ sub file_to_s {
- 
- # '<svn username> = real-name <email address>' mapping based on git-svnimport:
- sub load_authors {
--       open my $authors, '<', $_authors or die "Can't open $_authors $!\n";
-+       my ($file) = @_;
-+       open my $authors, '<', $file or die "Can't open $file $!\n";
-        my $log = $cmd eq 'log';
-        while (<$authors>) {
-                chomp;
-@@ -915,6 +926,16 @@ sub load_authors {
-        close $authors or croak $!;
- }
- 
-+sub write_author_cache {
-+       open my $f, '>', $author_cache
-+         or die "Can't open author cache $author_cache for writing: $!\n";
-+       foreach (keys %users) {
-+               print $f "$_=$users{$_}[0] <$users{$_}[1]>\n";
-+       }
-+
-+       close $f or croak $!;
-+}
-+
- # convert GetOpt::Long specs for use by git-config
- sub read_repo_config {
-        return unless -d $ENV{GIT_DIR};
--- 
-1.5.3.5.1527.g6161
----%<---%<---%<---
-
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+maybe "git-gitk" instead of "gitk-git"? As "git-gui" and "gitweb"...
+Maybe even shorter: "gui", "web" and "k" :)
