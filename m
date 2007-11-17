@@ -1,79 +1,86 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH 3/3 v2] git-svn log: handle unreachable revisions like "svn log"
-Date: Sat, 17 Nov 2007 13:47:38 -0800
-Message-ID: <20071117214738.GB22835@soma>
-References: <1194761435-7286-4-git-send-email-ddkilzer@kilzer.net> <1194850612-6907-1-git-send-email-ddkilzer@kilzer.net>
+Subject: Re: Trivial patch to git-svn
+Date: Sat, 17 Nov 2007 13:54:32 -0800
+Message-ID: <20071117215432.GB28755@muzzle>
+References: <473A1D9F.4030103@facebook.com> <20071117211253.GB31598@mayonaise> <473F5C75.3040707@apple.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: David D Kilzer <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:48:03 2007
+Cc: David Reiss <dreiss@facebook.com>, git@vger.kernel.org
+To: Adam Roben <aroben@apple.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 22:54:54 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItVWA-00037S-3X
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:47:58 +0100
+	id 1ItVcq-000578-7m
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:54:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbXKQVrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 16:47:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXKQVrj
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:47:39 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33702 "EHLO hand.yhbt.net"
+	id S1752606AbXKQVyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 16:54:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbXKQVyd
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:54:33 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33711 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752152AbXKQVrj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 16:47:39 -0500
+	id S1752129AbXKQVyc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 16:54:32 -0500
 Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 784DA7DC0FE;
-	Sat, 17 Nov 2007 13:47:38 -0800 (PST)
+	by hand.yhbt.net (Postfix) with ESMTP id 686D87DC0FE;
+	Sat, 17 Nov 2007 13:54:32 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <1194850612-6907-1-git-send-email-ddkilzer@kilzer.net>
+In-Reply-To: <473F5C75.3040707@apple.com>
 User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65315>
 
-David D Kilzer <ddkilzer@kilzer.net> wrote:
-> When unreachable revisions are given to "svn log", it displays all commit
-> logs in the given range that exist in the current tree.  (If no commit
-> logs are found in the current tree, it simply prints a single commit log
-> separator.)  This patch makes "git-svn log" behave the same way.
+Adam Roben <aroben@apple.com> wrote:
+> Eric Wong wrote:
+> >David Reiss <dreiss@facebook.com> wrote:
+> >  
+> >>From d9f93dc1c503c5f42b27485b2c35b38e8c9bca44 Mon Sep 17 00:00:00 2001
+> >>From: David Reiss <dreiss@dreiss-vmware.(none)>
+> >>Date: Tue, 13 Nov 2007 13:47:26 -0800
+> >>Subject: [PATCH] Fix a typo and add a comma in an error message in 
+> >>git-svn
+> >>
+> >>Signed-off-by: David Reiss <dreiss@facebook.com>
+> >>---
+> >> git-svn.perl |    2 +-
+> >> 1 files changed, 1 insertions(+), 1 deletions(-)
+> >>
+> >>diff --git a/git-svn.perl b/git-svn.perl
+> >>index e3e00fd..981cdd6 100755
+> >>--- a/git-svn.perl
+> >>+++ b/git-svn.perl
+> >>@@ -391,7 +391,7 @@ sub cmd_set_tree {
+> >> sub cmd_dcommit {
+> >> 	my $head = shift;
+> >> 	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
+> >>-		'Cannot dcommit with a dirty index.  Commit your changes 
+> >>first'
+> >>+		'Cannot dcommit with a dirty index.  Commit your changes 
+> >>first, '
+> >> 		. "or stash them with `git stash'.\n";
+> >> 	$head ||= 'HEAD';
+> >> 	my @refs;
+> >>    
+> >
+> >I am not an English expert, but both seem acceptable to me.  Anybody else
+> >agree/disagree?
+> >  
 > 
-> Ten tests added to t/t9116-git-svn-log.sh.
-> 
-> Signed-off-by: David D Kilzer <ddkilzer@kilzer.net>
-> ---
-> 
-> No changes were needed to parts 1 and 2 of this series, so I am not
-> reposting them.
-> 
-> Updated this patch based on feedback from Benoit Sigoure and Eric Wong:
-> 
-> - Commented find_rev_before() and find_rev_after().
-> - Changed commit_log_separator() into a constant.
-> - Made return statement safer by adding another check in git_svn_log_cmd().
-> - Changed echo statement to printf in t/t9116-git-svn-log.sh.
-> 
-> All tests pass on maint branch.
+> I don't think the comma matters very much, but having a space between 
+> "first" and "or" is pretty important. :-)
 
-Thanks,
+Good eyes, thanks Adam.
 
-Acked and pushed out to http://git.bogomips.org/git-svn.git
+Acked-by: Eric Wong <normalperson@yhbt.net>
 
-David D Kilzer (3):
-      git-svn log: fix ascending revision ranges
-      git-svn log: include commit log for the smallest revision in a range
-      git-svn log: handle unreachable revisions like "svn log"
+Pushed out to http://git.bogomips.org/git-svn.git
 
-David Reiss (1):
-      git-svn: Fix a typo and add a comma in an error message in git-svn
-
-Eric Wong (1):
-      git-svn: add tests for command-line usage of init and clone commands
-
-Konstantin V. Arkhipov (1):
-      git-svn's dcommit must use subversion's config
+Along with several other changes
+(http://article.gmane.org/gmane.comp.version-control.git/65314)
 
 -- 
 Eric Wong
