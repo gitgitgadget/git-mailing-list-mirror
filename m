@@ -1,218 +1,63 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/3] send-pack: assign remote errors to each ref
-Date: Sat, 17 Nov 2007 07:56:03 -0500
-Message-ID: <20071117125602.GC23186@sigill.intra.peff.net>
-References: <20071117125323.GA23125@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Daniel Barkalow <barkalow@iabervon.org>
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: [PATCH] Fix t9101 test failure caused by Subversion "auto-props"
+Date: Sat, 17 Nov 2007 14:28:02 +0100
+Message-ID: <270B4D20-EC93-43C9-8BCD-EAE7018F2039@wincent.com>
+References: <D68F81D3-5833-460B-BC7A-98C7E1D8B3E4@wincent.com> <BB9A8E3F-DC19-4844-80E1-6AEAADF926CD@silverinsanity.com> <041C0054-5E50-483C-9779-B2FE1AE6947C@wincent.com> <1D7CC3C0-46C1-40D9-AAD5-B9ADFF99B58A@lrde.epita.fr> <73246E38-9C22-4279-A53E-678434238E5C@wincent.com> <20071116124850.GA14473@atjola.homenet> <2F7DFDC9-D4E2-42D0-9E48-E51E7905FF42@wincent.com> <7vy7cxwwoo.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Git Mailing List <git@vger.kernel.org>,
+	=?ISO-8859-1?Q?V=E4in=F6_J=E4rvel=E4?= <v@pp.inet.fi>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 17 13:56:26 2007
+X-From: git-owner@vger.kernel.org Sat Nov 17 14:28:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItNDl-0003qT-Es
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 13:56:25 +0100
+	id 1ItNip-0004Im-52
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 14:28:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752420AbXKQM4J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 07:56:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752299AbXKQM4I
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 07:56:08 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3887 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751928AbXKQM4H (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 07:56:07 -0500
-Received: (qmail 3945 invoked by uid 111); 17 Nov 2007 12:56:05 -0000
-Received: from ppp-216-106-96-70.storm.ca (HELO sigill.intra.peff.net) (216.106.96.70)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sat, 17 Nov 2007 07:56:05 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Nov 2007 07:56:03 -0500
-Content-Disposition: inline
-In-Reply-To: <20071117125323.GA23125@sigill.intra.peff.net>
+	id S1752552AbXKQN2M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 17 Nov 2007 08:28:12 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752347AbXKQN2M
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 08:28:12 -0500
+Received: from wincent.com ([72.3.236.74]:44346 "EHLO s69819.wincent.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751361AbXKQN2L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 17 Nov 2007 08:28:11 -0500
+Received: from cuzco.lan (localhost [127.0.0.1])
+	(authenticated bits=0)
+	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAHDS27o018202;
+	Sat, 17 Nov 2007 07:28:03 -0600
+In-Reply-To: <7vy7cxwwoo.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65276>
 
-This lets us show remote errors (e.g., a denied hook) along
-with the usual push output.
+El 17/11/2007, a las 1:19, Junio C Hamano escribi=F3:
 
-There is a slightly clever optimization in receive_status
-that bears explanation. We need to correlate the returned
-status and our ref objects, which naively could be an O(m*n)
-operation. However, since the current implementation of
-receive-pack returns the errors to us in the same order that
-we sent them, we optimistically look for the next ref to be
-looked up to come after the last one we have found. So it
-should be an O(m+n) merge if the receive-pack behavior
-holds, but we fall back to a correct but slower behavior if
-it should change.
+> Wincent Colaiuta <win@wincent.com> writes:
+>
+>> If a user has an "auto-prop" in his/her ~/.subversion/config file fo=
+r
+>> automatically setting the svn:keyword Id property on all ".c" files
+>> (a reasonably common configuration in the Subversion world) then one
+>> of the "svn propset" operations in the very first test would become =
+a
+>> no-op, which in turn would make the next commit a no-op.
+>
+> Thanks for diagnosing and fixing.
+>
+> I presume this fix also applies to both 'maint' and 'master',
+> right?
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin-send-pack.c       |   51 +++++++++++++++++++++++++++++++++++++++-----
- cache.h                   |    2 +
- t/t5406-remote-rejects.sh |   24 +++++++++++++++++++++
- 3 files changed, 71 insertions(+), 6 deletions(-)
- create mode 100755 t/t5406-remote-rejects.sh
+I prepared it against master, but I believe it will apply cleanly to =20
+maint, where it's also needed.
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index c7d07aa..bcf7143 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -146,19 +146,43 @@ static void get_local_heads(void)
- 	for_each_ref(one_local_ref, NULL);
- }
- 
--static int receive_status(int in)
-+static struct ref *set_ref_error(struct ref *refs, const char *line)
- {
-+	struct ref *ref;
-+
-+	for (ref = refs; ref; ref = ref->next) {
-+		const char *msg;
-+		if (prefixcmp(line, ref->name))
-+			continue;
-+		msg = line + strlen(ref->name);
-+		if (*msg++ != ' ')
-+			continue;
-+		ref->status = REF_STATUS_REMOTE_REJECT;
-+		ref->error = xstrdup(msg);
-+		ref->error[strlen(ref->error)-1] = '\0';
-+		return ref;
-+	}
-+	return NULL;
-+}
-+
-+/* a return value of -1 indicates that an error occurred,
-+ * but we were able to set individual ref errors. A return
-+ * value of -2 means we couldn't even get that far. */
-+static int receive_status(int in, struct ref *refs)
-+{
-+	struct ref *hint;
- 	char line[1000];
- 	int ret = 0;
- 	int len = packet_read_line(in, line, sizeof(line));
- 	if (len < 10 || memcmp(line, "unpack ", 7)) {
- 		fprintf(stderr, "did not receive status back\n");
--		return -1;
-+		return -2;
- 	}
- 	if (memcmp(line, "unpack ok\n", 10)) {
- 		fputs(line, stderr);
- 		ret = -1;
- 	}
-+	hint = NULL;
- 	while (1) {
- 		len = packet_read_line(in, line, sizeof(line));
- 		if (!len)
-@@ -171,7 +195,10 @@ static int receive_status(int in)
- 		}
- 		if (!memcmp(line, "ok", 2))
- 			continue;
--		fputs(line, stderr);
-+		if (hint)
-+			hint = set_ref_error(hint, line + 3);
-+		if (!hint)
-+			hint = set_ref_error(refs, line + 3);
- 		ret = -1;
- 	}
- 	return ret;
-@@ -297,6 +324,12 @@ static void print_push_status(const char *dest, struct ref *refs)
- 			print_ref_status('!', "[rejected]", ref, ref->peer_ref,
- 					"non-fast forward");
- 			break;
-+		case REF_STATUS_REMOTE_REJECT:
-+			if (ref->deletion)
-+				print_ref_status('!', "[remote rejected]", ref, NULL, ref->error);
-+			else
-+				print_ref_status('!', "[remote rejected]", ref, ref->peer_ref, ref->error);
-+			break;
- 		case REF_STATUS_OK:
- 			print_ok_ref_status(ref);
- 			break;
-@@ -312,6 +345,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	int allow_deleting_refs = 0;
- 	int expect_status_report = 0;
- 	int flags = MATCH_REFS_NONE;
-+	int ret;
- 
- 	if (args.send_all)
- 		flags |= MATCH_REFS_ALL;
-@@ -429,12 +463,15 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 	}
- 	close(out);
- 
--	print_push_status(dest, remote_refs);
--
- 	if (expect_status_report) {
--		if (receive_status(in))
-+		ret = receive_status(in, remote_refs);
-+		if (ret == -2)
- 			return -1;
- 	}
-+	else
-+		ret = 0;
-+
-+	print_push_status(dest, remote_refs);
- 
- 	if (!args.dry_run && remote) {
- 		for (ref = remote_refs; ref; ref = ref->next)
-@@ -443,6 +480,8 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 
- 	if (!new_refs)
- 		fprintf(stderr, "Everything up-to-date\n");
-+	if (ret < 0)
-+		return ret;
- 	for (ref = remote_refs; ref; ref = ref->next) {
- 		switch (ref->status) {
- 		case REF_STATUS_NONE:
-diff --git a/cache.h b/cache.h
-index 2768342..ba9178f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -510,7 +510,9 @@ struct ref {
- 		REF_STATUS_REJECT_NONFASTFORWARD,
- 		REF_STATUS_REJECT_NODELETE,
- 		REF_STATUS_UPTODATE,
-+		REF_STATUS_REMOTE_REJECT,
- 	} status;
-+	char *error;
- 	struct ref *peer_ref; /* when renaming */
- 	char name[FLEX_ARRAY]; /* more */
- };
-diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
-new file mode 100755
-index 0000000..46b2cb4
---- /dev/null
-+++ b/t/t5406-remote-rejects.sh
-@@ -0,0 +1,24 @@
-+#!/bin/sh
-+
-+test_description='remote push rejects are reported by client'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir .git/hooks &&
-+	(echo "#!/bin/sh" ; echo "exit 1") >.git/hooks/update &&
-+	chmod +x .git/hooks/update &&
-+	echo 1 >file &&
-+	git add file &&
-+	git commit -m 1 &&
-+	git clone . child &&
-+	cd child &&
-+	echo 2 >file &&
-+	git commit -a -m 2
-+'
-+
-+test_expect_success 'push reports error' '! git push 2>stderr'
-+
-+test_expect_success 'individual ref reports error' 'grep rejected stderr'
-+
-+test_done
--- 
-1.5.3.5.1795.gf2a4e-dirty
+Cheers,
+Wincent
