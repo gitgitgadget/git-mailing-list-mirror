@@ -1,86 +1,156 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Trivial patch to git-svn
-Date: Sat, 17 Nov 2007 13:54:32 -0800
-Message-ID: <20071117215432.GB28755@muzzle>
-References: <473A1D9F.4030103@facebook.com> <20071117211253.GB31598@mayonaise> <473F5C75.3040707@apple.com>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: [PATCH] fetch-pack: Prepare for a side-band demultiplexer in a thread.
+Date: Sat, 17 Nov 2007 23:09:28 +0100
+Message-ID: <200711172309.28364.johannes.sixt@telecom.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Reiss <dreiss@facebook.com>, git@vger.kernel.org
-To: Adam Roben <aroben@apple.com>
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:54:54 2007
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 23:09:55 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItVcq-000578-7m
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:54:52 +0100
+	id 1ItVrP-0000sX-1b
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 23:09:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606AbXKQVyd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 16:54:33 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752567AbXKQVyd
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:54:33 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33711 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752129AbXKQVyc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 16:54:32 -0500
-Received: from localhost.localdomain (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with ESMTP id 686D87DC0FE;
-	Sat, 17 Nov 2007 13:54:32 -0800 (PST)
+	id S1751638AbXKQWJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 17:09:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750921AbXKQWJc
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 17:09:32 -0500
+Received: from smtp5.srv.eunet.at ([193.154.160.227]:48836 "EHLO
+	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750701AbXKQWJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 17:09:31 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp5.srv.eunet.at (Postfix) with ESMTP id EA82013BCC2;
+	Sat, 17 Nov 2007 23:09:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 95AFB59466;
+	Sat, 17 Nov 2007 23:09:28 +0100 (CET)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <473F5C75.3040707@apple.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65316>
 
-Adam Roben <aroben@apple.com> wrote:
-> Eric Wong wrote:
-> >David Reiss <dreiss@facebook.com> wrote:
-> >  
-> >>From d9f93dc1c503c5f42b27485b2c35b38e8c9bca44 Mon Sep 17 00:00:00 2001
-> >>From: David Reiss <dreiss@dreiss-vmware.(none)>
-> >>Date: Tue, 13 Nov 2007 13:47:26 -0800
-> >>Subject: [PATCH] Fix a typo and add a comma in an error message in 
-> >>git-svn
-> >>
-> >>Signed-off-by: David Reiss <dreiss@facebook.com>
-> >>---
-> >> git-svn.perl |    2 +-
-> >> 1 files changed, 1 insertions(+), 1 deletions(-)
-> >>
-> >>diff --git a/git-svn.perl b/git-svn.perl
-> >>index e3e00fd..981cdd6 100755
-> >>--- a/git-svn.perl
-> >>+++ b/git-svn.perl
-> >>@@ -391,7 +391,7 @@ sub cmd_set_tree {
-> >> sub cmd_dcommit {
-> >> 	my $head = shift;
-> >> 	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
-> >>-		'Cannot dcommit with a dirty index.  Commit your changes 
-> >>first'
-> >>+		'Cannot dcommit with a dirty index.  Commit your changes 
-> >>first, '
-> >> 		. "or stash them with `git stash'.\n";
-> >> 	$head ||= 'HEAD';
-> >> 	my @refs;
-> >>    
-> >
-> >I am not an English expert, but both seem acceptable to me.  Anybody else
-> >agree/disagree?
-> >  
-> 
-> I don't think the comma matters very much, but having a space between 
-> "first" and "or" is pretty important. :-)
+get_pack() receives a pair of file descriptors that communicate with
+upload-pack at the remote end. In order to support the case where the
+side-band demultiplexer runs in a thread, and, hence, in the same process
+as the main routine, we must not close the readable file descriptor early.
 
-Good eyes, thanks Adam.
+The handling of the readable fd is changed in the case where upload-pack
+supports side-band communication: The old code closed the fd after it was
+inherited to the side-band demultiplexer process. Now we do not close it.
+The caller (do_fetch_pack) will close it later anyway. The demultiplexer
+is the only reader, it does not matter that the fd remains open in the
+main process as well as in unpack-objects/index-pack, which inherits it.
 
-Acked-by: Eric Wong <normalperson@yhbt.net>
+The writable fd is not needed in get_pack(), hence, the old code closed
+the fd. For symmetry with the readable fd, we now do not close it; the
+caller (do_fetch_pack) will close it later anyway. Therefore, the new
+behavior is that the channel now remains open during the entire
+conversation, but this has no ill effects because upload-pack does not read
+from it once it has begun to send the pack data. For the same reason it
+does not matter that the writable fd is now inherited to the demultiplexer
+and unpack-objects/index-pack processes.
 
-Pushed out to http://git.bogomips.org/git-svn.git
+Signed-off-by: Johannes Sixt <johannes.sixt@telecom.at>
+---
+	This change again originates from the MinGW port. Since we don't
+	have fork(2) on Windows, we must run the sideband demultiplexer
+	in a thread.
 
-Along with several other changes
-(http://article.gmane.org/gmane.comp.version-control.git/65314)
+	-- Hannes
 
+ builtin-fetch-pack.c |   42 ++++++++++++++++--------------------------
+ 1 files changed, 16 insertions(+), 26 deletions(-)
+
+diff --git a/builtin-fetch-pack.c b/builtin-fetch-pack.c
+index bb1742f..807fa93 100644
+--- a/builtin-fetch-pack.c
++++ b/builtin-fetch-pack.c
+@@ -462,34 +462,12 @@ static int sideband_demux(int fd, void *data)
+ {
+ 	int *xd = data;
+ 
+-	close(xd[1]);
+ 	return recv_sideband("fetch-pack", xd[0], fd, 2);
+ }
+ 
+-static void setup_sideband(int fd[2], int xd[2], struct async *demux)
+-{
+-	if (!use_sideband) {
+-		fd[0] = xd[0];
+-		fd[1] = xd[1];
+-		return;
+-	}
+-	/* xd[] is talking with upload-pack; subprocess reads from
+-	 * xd[0], spits out band#2 to stderr, and feeds us band#1
+-	 * through demux->out.
+-	 */
+-	demux->proc = sideband_demux;
+-	demux->data = xd;
+-	if (start_async(demux))
+-		die("fetch-pack: unable to fork off sideband demultiplexer");
+-	close(xd[0]);
+-	fd[0] = demux->out;
+-	fd[1] = xd[1];
+-}
+-
+ static int get_pack(int xd[2], char **pack_lockfile)
+ {
+ 	struct async demux;
+-	int fd[2];
+ 	const char *argv[20];
+ 	char keep_arg[256];
+ 	char hdr_arg[256];
+@@ -497,7 +475,20 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 	int do_keep = args.keep_pack;
+ 	struct child_process cmd;
+ 
+-	setup_sideband(fd, xd, &demux);
++	memset(&demux, 0, sizeof(demux));
++	if (use_sideband) {
++		/* xd[] is talking with upload-pack; subprocess reads from
++		 * xd[0], spits out band#2 to stderr, and feeds us band#1
++		 * through demux->out.
++		 */
++		demux.proc = sideband_demux;
++		demux.data = xd;
++		if (start_async(&demux))
++			die("fetch-pack: unable to fork off sideband"
++			    " demultiplexer");
++	}
++	else
++		demux.out = xd[0];
+ 
+ 	memset(&cmd, 0, sizeof(cmd));
+ 	cmd.argv = argv;
+@@ -506,7 +497,7 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 	if (!args.keep_pack && unpack_limit) {
+ 		struct pack_header header;
+ 
+-		if (read_pack_header(fd[0], &header))
++		if (read_pack_header(demux.out, &header))
+ 			die("protocol error: bad pack header");
+ 		snprintf(hdr_arg, sizeof(hdr_arg), "--pack_header=%u,%u",
+ 			 ntohl(header.hdr_version), ntohl(header.hdr_entries));
+@@ -542,11 +533,10 @@ static int get_pack(int xd[2], char **pack_lockfile)
+ 		*av++ = hdr_arg;
+ 	*av++ = NULL;
+ 
+-	cmd.in = fd[0];
++	cmd.in = demux.out;
+ 	cmd.git_cmd = 1;
+ 	if (start_command(&cmd))
+ 		die("fetch-pack: unable to fork off %s", argv[0]);
+-	close(fd[1]);
+ 	if (do_keep && pack_lockfile)
+ 		*pack_lockfile = index_pack_lockfile(cmd.out);
+ 
 -- 
-Eric Wong
+1.5.3.5.721.g039b-dirty
