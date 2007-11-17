@@ -1,61 +1,125 @@
-From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
-Subject: RE: gitk in a bare repo?
-Date: Sat, 17 Nov 2007 17:48:14 +0100
-Message-ID: <004201c82939$a5bb2840$5267a8c0@Jocke>
-References: <004101c8292b$cd4b5d20$5267a8c0@Jocke> <1f6632e50711170806x3d0c73eam7e341e73f637fc83@mail.gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: [Newbie] How to *actually* get rid of remote tracking branch?
+Date: Sat, 17 Nov 2007 17:56:57 +0100
+Message-ID: <20071117165657.GC5198@efreet.light.src>
+References: <874pfq9q8s.fsf@osv.gnss.ru> <fhcdpv$9u3$1@ger.gmane.org> <87ve86889o.fsf@osv.gnss.ru> <Pine.LNX.4.64.0711131600590.4362@racer.site> <87prye832v.fsf@osv.gnss.ru> <Pine.LNX.4.64.0711131819490.4362@racer.site> <874pfq7zpg.fsf@osv.gnss.ru>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Matthias Kestenholz'" <mk@spinlock.ch>
-X-From: git-owner@vger.kernel.org Sat Nov 17 17:48:37 2007
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="i9LlY+UWpKt15+FH"
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Sergei Organov <osv@javad.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 17:59:27 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItQqS-0005th-94
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 17:48:36 +0100
+	id 1ItR0s-0000uz-UY
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 17:59:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753938AbXKQQsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 11:48:20 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbXKQQsT
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 11:48:19 -0500
-Received: from mail.transmode.se ([83.241.175.147]:21189 "EHLO
-	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753504AbXKQQsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 11:48:19 -0500
-Received: from Jocke ([84.217.6.210]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
-	 Sat, 17 Nov 2007 17:48:16 +0100
-X-Mailer: Microsoft Office Outlook 11
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
-In-Reply-To: <1f6632e50711170806x3d0c73eam7e341e73f637fc83@mail.gmail.com>
-thread-index: AcgpM8qlrKXSdsFYQSCypPX/H0Ki/wABa/cA
-X-OriginalArrivalTime: 17 Nov 2007 16:48:16.0369 (UTC) FILETIME=[A6855610:01C82939]
+	id S1754293AbXKQQ5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 11:57:07 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbXKQQ5G
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 11:57:06 -0500
+Received: from ns1.bluetone.cz ([212.158.128.13]:33353 "EHLO ns1.bluetone.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751878AbXKQQ5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 11:57:04 -0500
+Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
+	by ns1.bluetone.cz (Postfix) with ESMTP id 48CE25745C;
+	Sat, 17 Nov 2007 17:57:02 +0100 (CET)
+Received: from ns1.bluetone.cz ([192.168.13.1])
+	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
+	with ESMTP id Vl6fEsVYnu43; Sat, 17 Nov 2007 17:56:59 +0100 (CET)
+Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
+	by ns1.bluetone.cz (Postfix) with ESMTP id E39E857413;
+	Sat, 17 Nov 2007 17:56:58 +0100 (CET)
+Received: from bulb by efreet.light.src with local (Exim 4.68)
+	(envelope-from <bulb@ucw.cz>)
+	id 1ItQyX-0006kA-RE; Sat, 17 Nov 2007 17:56:57 +0100
+Content-Disposition: inline
+In-Reply-To: <874pfq7zpg.fsf@osv.gnss.ru>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65289>
 
-> -----Original Message-----
-> From: mk@feinheit.ch [mailto:mk@feinheit.ch] On Behalf Of 
-> Matthias Kestenholz
-> Sent: den 17 november 2007 17:06
-> 
-> Hi Joakim,
-> 
-> 2007/11/17, Joakim Tjernlund <joakim.tjernlund@transmode.se>:
-> > How do I tell gitk I am in a bare repo?
+
+--i9LlY+UWpKt15+FH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Nov 13, 2007 at 21:44:11 +0300, Sergei Organov wrote:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>=20
+> > Hi,
 > >
-> 
-> The following command works for me:
-> 
-> $ ls
-> foo.git
-> $ GIT_DIR=foo.git gitk &
-> 
+> > On Tue, 13 Nov 2007, Sergei Organov wrote:
+> >
+> >> Sorry, but *I* didn't *explicitly* fetch it _again_!
+> >>=20
+> >> 1. I cloned git.git repo making no custom steps.
+> >
+> > Which means that you wanted to track that repository.  Yes, the complet=
+e=20
+> > repository.  Not a single branch.  Not all branches except a single one.
+> >
+> >> 2. I decided I don't need to track some of branches.
+> >
+> > The you should have done that.
+>=20
+> I think I did my best to try to do that (basing my attempts on current
+> git documentation). Isn't it?
+>=20
+> > But that is different from "I decided to delete the tracking
+> > _branch_".
+>=20
+> Yes, but the question is *why*? Isn't it an obvious application of
+> deleting tracking branch?
 
-Ahh, didn't think of that. Tride passing --bare in diffrent ways
+No, it's not. Fetching has to bring you any heads that were newly created in
+the remote repo. It can't tell whether a head is new since last fetch or you
+just for whatever reason didn't have the tracking branch before.
 
-Thanks,
-        Jocke
+> And, as I've already asked in another
+> sub-thread of this one, what the following example in the man git-branch
+> is supposed to achieve?:
+>=20
+> <quote Documentation/git-branch.txt>
+> Delete unneeded branch::
+> +
+> ------------
+> $ git clone git://git.kernel.org/.../git.git my.git
+> $ cd my.git
+> $ git branch -d -r origin/todo origin/html origin/man   <1>
+> $ git branch -D test                                    <2>
+> ------------
+> +
+> <1> Delete remote-tracking branches "todo", "html", "man"
+> </quote>
+>=20
+> Sorry, but I still believe that it's not me who needs fixing.
+
+That documentation is precise. But it could maybe contain a footnote saying,
+that if you remove a tracking branch, next fetch will create it again unless
+you reconfigure it not to.
+
+--=20
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+
+--i9LlY+UWpKt15+FH
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFHPx1ZRel1vVwhjGURAluXAJ93beuTpxyk1TIHoYWbCfJC4lJBAwCgwwEO
+J9yZ5+KpCX35vTiS/9ICuQg=
+=D5WT
+-----END PGP SIGNATURE-----
+
+--i9LlY+UWpKt15+FH--
