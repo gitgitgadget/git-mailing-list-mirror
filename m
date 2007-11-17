@@ -1,179 +1,68 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: [PATCH] Rewrite some function exit paths to avoid "unreachable
-	code" traps
-Date: Sat, 17 Nov 2007 10:46:17 +0100
-Message-ID: <20071117094617.GD4086@steel.home>
-References: <Pine.LNX.4.64.0711152317140.7416@bianca.dialin.t-online.de> <20071115230002.GA24069@steel.home> <7v1war3xrq.fsf@gitster.siamese.dyndns.org> <20071116074850.GA3400@steel.home> <Pine.LNX.4.64.0711162346270.7281@bianca.dialin.t-online.de>
-Reply-To: Alex Riesen <raa.lkml@gmail.com>
+From: Robin Rosenberg <robin.rosenberg.lists@dewire.com>
+Subject: Re: git-cvsimport bug with dates
+Date: Sat, 17 Nov 2007 11:12:22 +0100
+Message-ID: <200711171112.23150.robin.rosenberg.lists@dewire.com>
+References: <51419b2c0711152059q55ced86gd224310c8c4a1851@mail.gmail.com> <7vr6iq207f.fsf@gitster.siamese.dyndns.org> <51419b2c0711160612r1a80bd5o686040f945e8d9c3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Guido Ostkamp <git@ostkamp.fastmail.fm>
-X-From: git-owner@vger.kernel.org Sat Nov 17 10:46:41 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+To: "Elijah Newren" <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 17 11:10:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItKG7-00074X-UH
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 10:46:40 +0100
+	id 1ItKdI-0004Gt-Kw
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 11:10:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340AbXKQJqW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 04:46:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752196AbXKQJqW
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 04:46:22 -0500
-Received: from mo-p07-ob.rzone.de ([81.169.146.190]:13144 "EHLO
-	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750963AbXKQJqV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 04:46:21 -0500
-Received: from tigra.home (Fcbd3.f.strato-dslnet.de [195.4.203.211])
-	by post.webmailer.de (mrclete mo1) (RZmta 14.0)
-	with ESMTP id e02664jAH2b8Qm ; Sat, 17 Nov 2007 10:46:18 +0100 (MET)
-	(envelope-from: <raa.lkml@gmail.com>)
-Received: from steel.home (steel.home [192.168.1.2])
-	by tigra.home (Postfix) with ESMTP id 950F7277AE;
-	Sat, 17 Nov 2007 10:46:18 +0100 (CET)
-Received: by steel.home (Postfix, from userid 1000)
-	id 1149056D22; Sat, 17 Nov 2007 10:46:18 +0100 (CET)
+	id S1752340AbXKQKKQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 05:10:16 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752309AbXKQKKP
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 05:10:15 -0500
+Received: from [83.140.172.130] ([83.140.172.130]:9930 "EHLO dewire.com"
+	rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org with ESMTP
+	id S1750835AbXKQKKN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 05:10:13 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id CE7438030C5;
+	Sat, 17 Nov 2007 11:01:03 +0100 (CET)
+Received: from dewire.com ([127.0.0.1])
+ by localhost (torino [127.0.0.1]) (amavisd-new, port 10024) with ESMTP
+ id 22868-08; Sat, 17 Nov 2007 11:01:03 +0100 (CET)
+Received: from [10.9.0.5] (unknown [10.9.0.5])
+	by dewire.com (Postfix) with ESMTP id 7C24B802670;
+	Sat, 17 Nov 2007 11:01:03 +0100 (CET)
+User-Agent: KMail/1.9.7
+In-Reply-To: <51419b2c0711160612r1a80bd5o686040f945e8d9c3@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <Pine.LNX.4.64.0711162346270.7281@bianca.dialin.t-online.de>
-User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
-X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaHqBg+Ffo=
-X-RZG-CLASS-ID: mo07
+X-Virus-Scanned: by amavisd-new at dewire.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65266>
 
-Noticed by Guido Ostkamp for Sun's Workshop cc.
+fredag 16 november 2007 skrev Elijah Newren:
+> On Nov 15, 2007 11:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> > When you use "branch@{date}" notation, you are not asking a
+> > question on the project history, but a question on the local
+> > view from _your_ repository on that project.
+> 
+> Interesting; that makes sense from a merge or pull viewpoint, but
+> wouldn't it make more sense to have cvsimport ensure the commits are
+> treated as though they actually existed in master as of the date
+> specified in CVS?
 
-Originally-by: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Signed-off-by: Alex Riesen <raa.lkml@gmail.com>
----
-Guido Ostkamp, Fri, Nov 16, 2007 23:52:01 +0100:
->
-> What about the xdiff/xdiffi.c problem that should also be solved?
->
+Reflog do not work that way. They don't say when a commit entered a repo,
+only when a ref changed. For a CVS import things could work as you suggest
+but I think the confusion among newcomers would be massive if people start
+using reflogs  'as if' it said anyting about when a commit entered. It can be used
+as a hint.
 
-Here you go.
+Reflogs get pruned by git-gc and are not cloned (cannot be since they store
+local-only information.
 
- builtin-apply.c |    5 +++--
- utf8.c          |    2 +-
- xdiff/xdiffi.c  |   14 +++++++-------
- xdiff/xutils.c  |    5 ++---
- 4 files changed, 13 insertions(+), 13 deletions(-)
+Use the --since and --until switches instead.
 
-diff --git a/builtin-apply.c b/builtin-apply.c
-index 8edcc08..6267396 100644
---- a/builtin-apply.c
-+++ b/builtin-apply.c
-@@ -668,13 +668,13 @@ static char *git_header_name(char *line, int llen)
- 		default:
- 			continue;
- 		case '\n':
--			return NULL;
-+			goto eol;
- 		case '\t': case ' ':
- 			second = name+len;
- 			for (;;) {
- 				char c = *second++;
- 				if (c == '\n')
--					return NULL;
-+					goto eol;
- 				if (c == '/')
- 					break;
- 			}
-@@ -683,6 +683,7 @@ static char *git_header_name(char *line, int llen)
- 			}
- 		}
- 	}
-+eol:
- 	return NULL;
- }
- 
-diff --git a/utf8.c b/utf8.c
-index 8095a71..50c46af 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -262,7 +262,7 @@ int print_wrapped_text(const char *text, int indent, int indent2, int width)
- 					print_spaces(indent);
- 				fwrite(start, text - start, 1, stdout);
- 				if (!c)
--					return w;
-+					break;
- 				else if (c == '\t')
- 					w |= 0x07;
- 				space = text;
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 5cb7171..365d768 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -110,7 +110,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 				spl->i1 = i1;
- 				spl->i2 = i2;
- 				spl->min_lo = spl->min_hi = 1;
--				return ec;
-+				goto end;
- 			}
- 		}
- 
-@@ -145,7 +145,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 				spl->i1 = i1;
- 				spl->i2 = i2;
- 				spl->min_lo = spl->min_hi = 1;
--				return ec;
-+				goto end;
- 			}
- 		}
- 
-@@ -184,7 +184,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 			if (best > 0) {
- 				spl->min_lo = 1;
- 				spl->min_hi = 0;
--				return ec;
-+				goto end;
- 			}
- 
- 			for (best = 0, d = bmax; d >= bmin; d -= 2) {
-@@ -208,7 +208,7 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 			if (best > 0) {
- 				spl->min_lo = 0;
- 				spl->min_hi = 1;
--				return ec;
-+				goto end;
- 			}
- 		}
- 
-@@ -254,11 +254,11 @@ static long xdl_split(unsigned long const *ha1, long off1, long lim1,
- 				spl->min_lo = 0;
- 				spl->min_hi = 1;
- 			}
--			return ec;
-+			goto end;
- 		}
- 	}
--
--	return -1;
-+end:
-+	return ec;
- }
- 
- 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 2ade97b..533ff76 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -230,10 +230,9 @@ int xdl_recmatch(const char *l1, long s1, const char *l2, long s2, long flags)
- 			i2++;
- 		}
- 		return i1 >= s1 && i2 >= s2;
--	} else
--		return s1 == s2 && !memcmp(l1, l2, s1);
-+	}
- 
--	return 0;
-+	return s1 == s2 && !memcmp(l1, l2, s1);
- }
- 
- static unsigned long xdl_hash_record_with_whitespace(char const **data,
--- 
-1.5.3.5.750.g9f37
+-- robin
