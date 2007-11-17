@@ -1,135 +1,77 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: [PATCH] Improve description of git-branch -d and -D in man page.
-Date: Sat, 17 Nov 2007 20:51:44 +0100
-Message-ID: <20071117195144.GF5198@efreet.light.src>
-References: <874pfq9q8s.fsf@osv.gnss.ru> <200711131703.16357.jnareb@gmail.com> <A919E788-C5D0-4404-95D4-869BAFE868AC@zib.de> <200711131842.03622.jnareb@gmail.com> <87d4ue81tv.fsf@osv.gnss.ru> <20071117191256.GD5198@efreet.light.src>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] user-manual: Talk about tracking third-party snapshots
+Date: Sat, 17 Nov 2007 20:54:01 +0100
+Message-ID: <200711172054.02746.jnareb@gmail.com>
+References: <11949569992214-git-send-email-msmith@cbnco.com> <200711171918.40981.jnareb@gmail.com> <20071117191846.GE5198@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: osv@javad.com
-X-From: git-owner@vger.kernel.org Sat Nov 17 20:52:11 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Sat Nov 17 20:54:32 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItTi4-0001Ne-OV
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 20:52:09 +0100
+	id 1ItTkL-00021S-Ec
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 20:54:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759343AbXKQTvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 14:51:52 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758879AbXKQTvw
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 14:51:52 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:51962 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758660AbXKQTvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 14:51:51 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 411525736C;
-	Sat, 17 Nov 2007 20:51:50 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 2Uc609rL1Qyk; Sat, 17 Nov 2007 20:51:46 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 8002D572BE;
-	Sat, 17 Nov 2007 20:51:45 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ItThg-0000pq-AM; Sat, 17 Nov 2007 20:51:44 +0100
+	id S1759595AbXKQTyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 14:54:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759402AbXKQTyM
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 14:54:12 -0500
+Received: from nf-out-0910.google.com ([64.233.182.185]:64286 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759553AbXKQTyL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 14:54:11 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1090593nfb
+        for <git@vger.kernel.org>; Sat, 17 Nov 2007 11:54:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=hFxd4XZxahBrm3Qr9Tz2mikQ0vrwMSe8in7ln3yRBg8=;
+        b=Q86TeyKrzwFhG2BqpDZmjHGQKuAE6oja2MZEvhNmuYwnK5kzUFd09fb7vj/PR2AZvUgTImt1EC0uv/VjK8iSf1xp0EbnnQA432mfwiSC7V4hMkT3Glm81LwA070thhjoPXu7j2rlXzeuEQ0NTsds98H5+jphQwU20PwwRHL9EVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=WQTI9hGuP3eSZC8ngE8+VOpaYtRFyOzPkqKyREgfOxGzUtcBKSfoW0COk+lPc/L4mYanyPbZ7EVTJU6//Vn2OUKWE/h4CYWidKTRvDyqm8OzCX6PdEm30dHco0qPyWNpBSWvpYXtLIoMuY5IrC9+M65ACkS6uQHhNjYzo9J2/ek=
+Received: by 10.86.58.3 with SMTP id g3mr3155397fga.1195329249751;
+        Sat, 17 Nov 2007 11:54:09 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.236.102])
+        by mx.google.com with ESMTPS id e20sm4612193fga.2007.11.17.11.54.08
+        (version=SSLv3 cipher=OTHER);
+        Sat, 17 Nov 2007 11:54:08 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20071117191846.GE5198@efreet.light.src>
 Content-Disposition: inline
-In-Reply-To: <20071117191256.GD5198@efreet.light.src>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65299>
 
-Some users expect that deleting a remote-tracking branch would prevent
-fetch from creating it again, so be explcit about that it's not the case.
-Also be a little more explicit about what fully merged means.
+Jan Hudec wrote:
+> On Sat, Nov 17, 2007 at 19:18:40 +0100, Jakub Narebski wrote:
+>> On Sat, Nov 17, 2007, Jan Hudec wrote:
 
-Signed-off-by: Jan Hudec <bulb@ucw.cz>
----
-
-On Sat, Nov 17, 2007 at 20:12:56 +0100, Jan Hudec wrote:
-> On Tue, Nov 13, 2007 at 20:58:20 +0300, osv@javad.com wrote:
-> > <quote Documentation/git-branch.txt>
-> > Delete unneeded branch::
-> > +
-> > ------------
-> > $ git clone git://git.kernel.org/.../git.git my.git
-> > $ cd my.git
-> > $ git branch -d -r origin/todo origin/html origin/man   <1>
-> > $ git branch -D test                                    <2>
-> > ------------
-> > +
-> > <1> Delete remote-tracking branches "todo", "html", "man"
-> > </quote>
-> > 
-> > That's *exactly* what I did! And it *doesn't work*! Well, it does delete
-> > the branches, but they are automagically re-created on the next fetch,
-> > so "deleting" them this way is useless.
+>>> git log has such option?
+>>> 
+>>> $ man git-log | grep -e --left-right; echo $?
+>>> 1
+>>> $ git --version
+>>> git version 1.5.3.5
+>> 
+>> It has, although it is hidden in git-rev-list(1) manpage. It is a bit
+>> obscure corner...
 > 
-> Of course it *does* work. It *deletes* the branches. There is not a single
-> word about stopping fetch getting them!
-> 
-> Obviously given that the example is slightly contrived, it should really
-> be mentioned that it does not affect fetch at all.
+> I hope the new option parsing ifrastructure will take over quickly and start
+> to be used to generate the short help and probably even option section in the
+> man pages. It's unfortunately not the only option that is not mentioned in
+> the manual page of a command that has it.
 
-Would this make the description obvious enough?
+Truth to be told _this_ one option I don't mean it is only
+in git-rev-parse (which git-log references, together with git-diff)
 
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
-
- Documentation/git-branch.txt |   21 ++++++++++++++-------
- 1 files changed, 14 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 5ce905d..f87b696 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -45,17 +45,22 @@ to happen.
- 
- With a `-d` or `-D` option, `<branchname>` will be deleted.  You may
- specify more than one branch for deletion.  If the branch currently
--has a reflog then the reflog will also be deleted. Use -r together with -d
--to delete remote-tracking branches.
-+has a reflog then the reflog will also be deleted.
-+
-+Use -r together with -d to delete remote-tracking branches. Note, that it
-+only makes sense to delete remote-tracking branches if they no longer exist
-+in remote repository or if gitlink:git-fetch[1] was configured not to fetch
-+them again. See also 'prune' subcommand of gitlink:git-remote[1] for way to
-+clean up all obsolete remote-tracking branches.
- 
- 
- OPTIONS
- -------
- -d::
--	Delete a branch. The branch must be fully merged.
-+	Delete a branch. The branch must be fully merged in HEAD.
- 
- -D::
--	Delete a branch irrespective of its index status.
-+	Delete a branch irrespective of its merged status.
- 
- -l::
- 	Create the branch's reflog.  This activates recording of
-@@ -153,9 +158,11 @@ $ git branch -d -r origin/todo origin/html origin/man   <1>
- $ git branch -D test                                    <2>
- ------------
- +
--<1> Delete remote-tracking branches "todo", "html", "man"
--<2> Delete "test" branch even if the "master" branch does not have all
--commits from test branch.
-+<1> Delete remote-tracking branches "todo", "html", "man". Next 'fetch' or
-+'pull' will create them again unless you configure them not to. See
-+gitlink:git-fetch[1].
-+<2> Delete "test" branch even if the "master" branch (or whichever branch is
-+currently checked out) does not have all commits from test branch.
- 
- 
- Notes
--- 
-1.5.3.5
+Jakub Narebski
+Poland
