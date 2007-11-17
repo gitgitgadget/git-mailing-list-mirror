@@ -1,67 +1,79 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: git-cvsimport bug with dates
-Date: Sat, 17 Nov 2007 22:36:17 +0100
-Message-ID: <20071117213617.GG5198@efreet.light.src>
-References: <51419b2c0711152059q55ced86gd224310c8c4a1851@mail.gmail.com> <7vr6iq207f.fsf@gitster.siamese.dyndns.org> <51419b2c0711160612r1a80bd5o686040f945e8d9c3@mail.gmail.com> <200711171112.23150.robin.rosenberg.lists@dewire.com> <51419b2c0711170739p1a2bf6c7g87f615676f72aedf@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH 3/3 v2] git-svn log: handle unreachable revisions like "svn log"
+Date: Sat, 17 Nov 2007 13:47:38 -0800
+Message-ID: <20071117214738.GB22835@soma>
+References: <1194761435-7286-4-git-send-email-ddkilzer@kilzer.net> <1194850612-6907-1-git-send-email-ddkilzer@kilzer.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg.lists@dewire.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:36:49 2007
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: David D Kilzer <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Sat Nov 17 22:48:03 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItVLM-0008Mp-0L
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:36:48 +0100
+	id 1ItVWA-00037S-3X
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752364AbXKQVgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 16:36:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752278AbXKQVgb
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:36:31 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:43045 "EHLO ns1.bluetone.cz"
+	id S1752364AbXKQVrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 16:47:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXKQVrj
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:47:39 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:33702 "EHLO hand.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752193AbXKQVga (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 16:36:30 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 610CB572A6;
-	Sat, 17 Nov 2007 22:36:29 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id G9c7teaLnGMx; Sat, 17 Nov 2007 22:36:26 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id B9DCE57325;
-	Sat, 17 Nov 2007 22:36:25 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ItVKr-0001Kw-4b; Sat, 17 Nov 2007 22:36:17 +0100
+	id S1752152AbXKQVrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 16:47:39 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 784DA7DC0FE;
+	Sat, 17 Nov 2007 13:47:38 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <51419b2c0711170739p1a2bf6c7g87f615676f72aedf@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+In-Reply-To: <1194850612-6907-1-git-send-email-ddkilzer@kilzer.net>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65314>
 
-On Sat, Nov 17, 2007 at 08:39:08 -0700, Elijah Newren wrote:
-> Okay...so I guess my suggestion could be translated as: don't worry
-> about when the commit entered; instead make git-cvsimport mark the
-> refs as changed as of the CVS date mentioned instead of as of the
-> import time.
+David D Kilzer <ddkilzer@kilzer.net> wrote:
+> When unreachable revisions are given to "svn log", it displays all commit
+> logs in the given range that exist in the current tree.  (If no commit
+> logs are found in the current tree, it simply prints a single commit log
+> separator.)  This patch makes "git-svn log" behave the same way.
 > 
-> I guess there would be reluctance to do this whenever git-cvsimport
-> would be used for incremental commits on a repository that also had
-> local commits?  Sounds like the issue is deeper than I first realized
-> and this probably isn't worth the effort it'd take.
+> Ten tests added to t/t9116-git-svn-log.sh.
+> 
+> Signed-off-by: David D Kilzer <ddkilzer@kilzer.net>
+> ---
+> 
+> No changes were needed to parts 1 and 2 of this series, so I am not
+> reposting them.
+> 
+> Updated this patch based on feedback from Benoit Sigoure and Eric Wong:
+> 
+> - Commented find_rev_before() and find_rev_after().
+> - Changed commit_log_separator() into a constant.
+> - Made return statement safer by adding another check in git_svn_log_cmd().
+> - Changed echo statement to printf in t/t9116-git-svn-log.sh.
+> 
+> All tests pass on maint branch.
 
-Actually local commits don't need to be involved at all. Incremental import
-is enough.
+Thanks,
 
-One good reason to use reflog is when you notice something does not work and
-recall, that it worked yesterday evening. Than you need to know what you were
-looking at at that time, not at what was latest, because you didn't
-necessarily have to be up-to-date.
+Acked and pushed out to http://git.bogomips.org/git-svn.git
+
+David D Kilzer (3):
+      git-svn log: fix ascending revision ranges
+      git-svn log: include commit log for the smallest revision in a range
+      git-svn log: handle unreachable revisions like "svn log"
+
+David Reiss (1):
+      git-svn: Fix a typo and add a comma in an error message in git-svn
+
+Eric Wong (1):
+      git-svn: add tests for command-line usage of init and clone commands
+
+Konstantin V. Arkhipov (1):
+      git-svn's dcommit must use subversion's config
 
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Eric Wong
