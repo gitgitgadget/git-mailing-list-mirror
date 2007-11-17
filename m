@@ -1,77 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] user-manual: Talk about tracking third-party snapshots
-Date: Sat, 17 Nov 2007 20:54:01 +0100
-Message-ID: <200711172054.02746.jnareb@gmail.com>
-References: <11949569992214-git-send-email-msmith@cbnco.com> <200711171918.40981.jnareb@gmail.com> <20071117191846.GE5198@efreet.light.src>
+From: Yann Dirson <ydirson@altern.org>
+Subject: Re: [PATCH v3] Add to gitk an --argscmd flag to get the list of
+	refs to draw at refresh time.
+Date: Sat, 17 Nov 2007 20:56:59 +0100
+Message-ID: <20071117195659.GO8855@nan92-1-81-57-214-146.fbx.proxad.net>
+References: <20071102222436.23191.91785.stgit@gandelf.nowhere.earth> <18238.54272.198637.788805@cargo.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Sat Nov 17 20:54:32 2007
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Sat Nov 17 20:58:08 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItTkL-00021S-Ec
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 20:54:29 +0100
+	id 1ItTnn-000382-9u
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 20:58:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759595AbXKQTyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 14:54:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759402AbXKQTyM
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 14:54:12 -0500
-Received: from nf-out-0910.google.com ([64.233.182.185]:64286 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759553AbXKQTyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 14:54:11 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1090593nfb
-        for <git@vger.kernel.org>; Sat, 17 Nov 2007 11:54:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=hFxd4XZxahBrm3Qr9Tz2mikQ0vrwMSe8in7ln3yRBg8=;
-        b=Q86TeyKrzwFhG2BqpDZmjHGQKuAE6oja2MZEvhNmuYwnK5kzUFd09fb7vj/PR2AZvUgTImt1EC0uv/VjK8iSf1xp0EbnnQA432mfwiSC7V4hMkT3Glm81LwA070thhjoPXu7j2rlXzeuEQ0NTsds98H5+jphQwU20PwwRHL9EVo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=WQTI9hGuP3eSZC8ngE8+VOpaYtRFyOzPkqKyREgfOxGzUtcBKSfoW0COk+lPc/L4mYanyPbZ7EVTJU6//Vn2OUKWE/h4CYWidKTRvDyqm8OzCX6PdEm30dHco0qPyWNpBSWvpYXtLIoMuY5IrC9+M65ACkS6uQHhNjYzo9J2/ek=
-Received: by 10.86.58.3 with SMTP id g3mr3155397fga.1195329249751;
-        Sat, 17 Nov 2007 11:54:09 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.236.102])
-        by mx.google.com with ESMTPS id e20sm4612193fga.2007.11.17.11.54.08
-        (version=SSLv3 cipher=OTHER);
-        Sat, 17 Nov 2007 11:54:08 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20071117191846.GE5198@efreet.light.src>
+	id S1761970AbXKQT5r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 14:57:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761713AbXKQT5r
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 14:57:47 -0500
+Received: from smtp3-g19.free.fr ([212.27.42.29]:36486 "EHLO smtp3-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761539AbXKQT5q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 14:57:46 -0500
+Received: from smtp3-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id A46BA17B541;
+	Sat, 17 Nov 2007 20:57:44 +0100 (CET)
+Received: from gandelf.nowhere.earth (nan92-1-81-57-214-146.fbx.proxad.net [81.57.214.146])
+	by smtp3-g19.free.fr (Postfix) with ESMTP id 8582217B575;
+	Sat, 17 Nov 2007 20:57:44 +0100 (CET)
+Received: by gandelf.nowhere.earth (Postfix, from userid 1000)
+	id DB5311F048; Sat, 17 Nov 2007 20:56:59 +0100 (CET)
 Content-Disposition: inline
+In-Reply-To: <18238.54272.198637.788805@cargo.ozlabs.ibm.com>
+User-Agent: Mutt/1.5.16 (2007-06-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65300>
 
-Jan Hudec wrote:
-> On Sat, Nov 17, 2007 at 19:18:40 +0100, Jakub Narebski wrote:
->> On Sat, Nov 17, 2007, Jan Hudec wrote:
+Hi Paul,
 
->>> git log has such option?
->>> 
->>> $ man git-log | grep -e --left-right; echo $?
->>> 1
->>> $ git --version
->>> git version 1.5.3.5
->> 
->> It has, although it is hidden in git-rev-list(1) manpage. It is a bit
->> obscure corner...
+I hope I did not introduce other problems while trying to adress those.
+
+On Sat, Nov 17, 2007 at 10:44:00PM +1100, Paul Mackerras wrote:
+> What this will do is interpret the output of the program according to
+> Tcl list syntax.
+
+I'm not sure of why this interpretation is done, so it may well be that
+the updated patch would behave the same.
+
+> use error_popup rather than just writing to stderr.
+
+While testing that, I realized that the current behaviour is not very
+friendly.  While it is OK to exit on error here, when the command has
+been entered on command-line, it would be rude to exit when the user
+makes a typo when editing the view.  It would be more friendly to get
+back to the "edit view" dialog instead; I'm not sure we can already
+tell in which of the 2 situations we are - would you conisider adding
+a global flag for tracking this to be an adequate solution ?
+
+> > +set revtreeargscmd None
 > 
-> I hope the new option parsing ifrastructure will take over quickly and start
-> to be used to generate the short help and probably even option section in the
-> man pages. It's unfortunately not the only option that is not mentioned in
-> the manual page of a command that has it.
+> Why the string "None" rather than the empty string?  Is this a
+> python-ism that has crept in?
 
-Truth to be told _this_ one option I don't mean it is only
-in git-rev-parse (which git-log references, together with git-diff)
+Note completely - since there were already occurences of None in gitk, I
+assumed it was a special value in Tcl.  Should I have searched in more
+details, I would have noticed the string comparisons.
 
+Best regards,
 -- 
-Jakub Narebski
-Poland
+Yann
