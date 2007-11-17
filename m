@@ -1,69 +1,82 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Trivial patch to git-svn
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's not in git.git
 Date: Sat, 17 Nov 2007 13:12:53 -0800
-Message-ID: <20071117211253.GB31598@mayonaise>
-References: <473A1D9F.4030103@facebook.com>
+Message-ID: <7vlk8wshii.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: David Reiss <dreiss@facebook.com>
-X-From: git-owner@vger.kernel.org Sat Nov 17 22:13:16 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 17 22:13:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItUyY-0000qc-Dv
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:13:14 +0100
+	id 1ItUyn-0000vM-1B
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 22:13:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152AbXKQVM4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 16:12:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752051AbXKQVM4
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:12:56 -0500
-Received: from hand.yhbt.net ([66.150.188.102]:33667 "EHLO hand.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750971AbXKQVM4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 16:12:56 -0500
-Received: from hand.yhbt.net (localhost [127.0.0.1])
-	by hand.yhbt.net (Postfix) with SMTP id 60B947DC0FE;
-	Sat, 17 Nov 2007 13:12:54 -0800 (PST)
-Received: by hand.yhbt.net (sSMTP sendmail emulation); Sat, 17 Nov 2007 13:12:53 -0800
-Content-Disposition: inline
-In-Reply-To: <473A1D9F.4030103@facebook.com>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1752166AbXKQVNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 16:13:00 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752191AbXKQVNA
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 16:13:00 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:55623 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752051AbXKQVM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 16:12:59 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 7EFAF2EF;
+	Sat, 17 Nov 2007 16:13:18 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 0CB7E96CF6;
+	Sat, 17 Nov 2007 16:13:16 -0500 (EST)
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65309>
 
-David Reiss <dreiss@facebook.com> wrote:
-> From d9f93dc1c503c5f42b27485b2c35b38e8c9bca44 Mon Sep 17 00:00:00 2001
-> From: David Reiss <dreiss@dreiss-vmware.(none)>
-> Date: Tue, 13 Nov 2007 13:47:26 -0800
-> Subject: [PATCH] Fix a typo and add a comma in an error message in git-svn
-> 
-> Signed-off-by: David Reiss <dreiss@facebook.com>
-> ---
->  git-svn.perl |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
-> 
-> diff --git a/git-svn.perl b/git-svn.perl
-> index e3e00fd..981cdd6 100755
-> --- a/git-svn.perl
-> +++ b/git-svn.perl
-> @@ -391,7 +391,7 @@ sub cmd_set_tree {
->  sub cmd_dcommit {
->  	my $head = shift;
->  	git_cmd_try { command_oneline(qw/diff-index --quiet HEAD/) }
-> -		'Cannot dcommit with a dirty index.  Commit your changes 
-> first'
-> +		'Cannot dcommit with a dirty index.  Commit your changes 
-> first, '
->  		. "or stash them with `git stash'.\n";
->  	$head ||= 'HEAD';
->  	my @refs;
+A list of recent issues discussed without any patch landing in
+my tree.
 
-I am not an English expert, but both seem acceptable to me.  Anybody else
-agree/disagree?
+* git-revert <path>
 
--- 
-Eric Wong
+  As discussed, I am in favor of the above command, only when
+  <path> cannot be interpreted as a valid commit object name and
+  <path> appears in the index, to run "git-checkout -- <path>".
+
+  Also, I am in favor of making "git-revert <commit> -- <path>"
+  and "git-cherry-pick <commit> -- <path>" create a commit that
+  reverts or cherry-picks the effect of named commit but only
+  on named paths, as proposed by Dscho.
+
+  Before the latter materializes, however, I think it is
+  possible to implement the former.
+
+  - "git-revert [--] <path>" runs "git-checkout -- <path>"
+    without complaining (only when unambiguous if no -- is
+    given);
+
+  - "git-cherry-pick [--] <path>" errors out, as it does not
+    make any sense.
+
+  - "git-(revert|cherry-pick) <commit> [--] <path>" gives
+    "unimplemented yet" error message;
+
+* "Why a merge is more difficult to bisect" document.
+
+  I think the last text with rewording suggestion on the list
+  was good.  Should I take that directly, or pull through
+  Bruce?
+
+* "Batch mode of git-cat-file" aka git-fast-export.
+
+  I think the idea is sound.
+
+   http://thread.gmane.org/gmane.comp.version-control.git/65053/focus=65057
+   http://thread.gmane.org/gmane.comp.version-control.git/62295/focus=62441
+
+* Solaris portability improvements and clean-up.
+
+  Test patches sent for git-compat-util.h and Makefile on
+  FLEX_ARRAY and mkdtemp() but they haven't resulted in any
+  appliable patch yet.
