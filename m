@@ -1,64 +1,61 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: [PATCH] user-manual: Talk about tracking third-party snapshots
-Date: Sat, 17 Nov 2007 17:45:01 +0100
-Message-ID: <20071117164501.GB5198@efreet.light.src>
-References: <11949569992214-git-send-email-msmith@cbnco.com> <fhcb29$ef$2@ger.gmane.org>
+From: "Joakim Tjernlund" <joakim.tjernlund@transmode.se>
+Subject: RE: gitk in a bare repo?
+Date: Sat, 17 Nov 2007 17:48:14 +0100
+Message-ID: <004201c82939$a5bb2840$5267a8c0@Jocke>
+References: <004101c8292b$cd4b5d20$5267a8c0@Jocke> <1f6632e50711170806x3d0c73eam7e341e73f637fc83@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 17 17:45:41 2007
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Matthias Kestenholz'" <mk@spinlock.ch>
+X-From: git-owner@vger.kernel.org Sat Nov 17 17:48:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItQnS-0004ps-0W
-	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 17:45:30 +0100
+	id 1ItQqS-0005th-94
+	for gcvg-git-2@gmane.org; Sat, 17 Nov 2007 17:48:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405AbXKQQpM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 17 Nov 2007 11:45:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755018AbXKQQpM
-	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 11:45:12 -0500
-Received: from ns1.bluetone.cz ([212.158.128.13]:37680 "EHLO ns1.bluetone.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753377AbXKQQpK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 17 Nov 2007 11:45:10 -0500
-Received: from localhost (spamhole.bluetone.cz [192.168.13.2])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 9712757475;
-	Sat, 17 Nov 2007 17:45:08 +0100 (CET)
-Received: from ns1.bluetone.cz ([192.168.13.1])
-	by localhost (spamhole.bluetone.cz [192.168.13.2]) (amavisd-new, port 10026)
-	with ESMTP id 47L3i6+ViKyR; Sat, 17 Nov 2007 17:45:06 +0100 (CET)
-Received: from efreet.light.src (145-119-207-85.strcechy.adsl-llu.static.bluetone.cz [85.207.119.145])
-	by ns1.bluetone.cz (Postfix) with ESMTP id 9BD6357463;
-	Sat, 17 Nov 2007 17:45:05 +0100 (CET)
-Received: from bulb by efreet.light.src with local (Exim 4.68)
-	(envelope-from <bulb@ucw.cz>)
-	id 1ItQmz-0006hq-Sm; Sat, 17 Nov 2007 17:45:01 +0100
-Content-Disposition: inline
-In-Reply-To: <fhcb29$ef$2@ger.gmane.org>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1753938AbXKQQsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 17 Nov 2007 11:48:20 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753765AbXKQQsT
+	(ORCPT <rfc822;git-outgoing>); Sat, 17 Nov 2007 11:48:19 -0500
+Received: from mail.transmode.se ([83.241.175.147]:21189 "EHLO
+	tmnt04.transmode.se" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753504AbXKQQsT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 17 Nov 2007 11:48:19 -0500
+Received: from Jocke ([84.217.6.210]) by tmnt04.transmode.se with Microsoft SMTPSVC(5.0.2195.6713);
+	 Sat, 17 Nov 2007 17:48:16 +0100
+X-Mailer: Microsoft Office Outlook 11
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.3198
+In-Reply-To: <1f6632e50711170806x3d0c73eam7e341e73f637fc83@mail.gmail.com>
+thread-index: AcgpM8qlrKXSdsFYQSCypPX/H0Ki/wABa/cA
+X-OriginalArrivalTime: 17 Nov 2007 16:48:16.0369 (UTC) FILETIME=[A6855610:01C82939]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65288>
 
-On Tue, Nov 13, 2007 at 15:07:05 +0100, Jakub Narebski wrote:
-> Michael Smith wrote:
+> -----Original Message-----
+> From: mk@feinheit.ch [mailto:mk@feinheit.ch] On Behalf Of 
+> Matthias Kestenholz
+> Sent: den 17 november 2007 17:06
 > 
-> > +You can use the gitlink:git-cherry[1] command to display the commit
-> > +IDs that are only present on your local branch, or only on the remote
-> > +branch, respectively:
+> Hi Joakim,
 > 
-> I think git-cherry is deprecated in favor of "git log --left-right" (with
-> appropriate format, for example '--abbrev-commit --pretty=oneline')
+> 2007/11/17, Joakim Tjernlund <joakim.tjernlund@transmode.se>:
+> > How do I tell gitk I am in a bare repo?
+> >
+> 
+> The following command works for me:
+> 
+> $ ls
+> foo.git
+> $ GIT_DIR=foo.git gitk &
+> 
 
-git log has such option?
+Ahh, didn't think of that. Tride passing --bare in diffrent ways
 
-$ man git-log | grep -e --left-right; echo $?
-1
-$ git --version
-git version 1.5.3.5
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Thanks,
+        Jocke
