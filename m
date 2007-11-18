@@ -1,68 +1,91 @@
-From: "Jon Smirl" <jonsmirl@gmail.com>
-Subject: ! [rejected] master -> master (non-fast forward)
-Date: Sun, 18 Nov 2007 10:12:10 -0500
-Message-ID: <9e4733910711180712n6ee271fau774310e63ab08f6d@mail.gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] Bisect: use "$GIT_DIR/BISECT_NAMES" to check if we are
+ bisecting.
+Date: Sun, 18 Nov 2007 16:34:03 +0100
+Message-ID: <20071118163403.a6238371.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Nov 18 16:12:34 2007
+Cc: git@vger.kernel.org
+To: Junio Hamano <junkio@cox.net>
+X-From: git-owner@vger.kernel.org Sun Nov 18 16:27:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Itlp1-0005ac-FZ
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 16:12:31 +0100
+	id 1Itm3g-0001Wo-LM
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 16:27:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900AbXKRPMM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 10:12:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752868AbXKRPMM
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 10:12:12 -0500
-Received: from wa-out-1112.google.com ([209.85.146.181]:14915 "EHLO
-	wa-out-1112.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752837AbXKRPML (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 10:12:11 -0500
-Received: by wa-out-1112.google.com with SMTP id v27so1674832wah
-        for <git@vger.kernel.org>; Sun, 18 Nov 2007 07:12:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        bh=vh/JjSg28dOYxSMKPYW5kNUcwsSH7yobsu7GZhUJXeo=;
-        b=I5HafRj66SISsd9VROoTrFJFNgOJ+0Y80JZLvY5dEIHwsFvFBb5rbLnCHvLa1vAlpIunlZsld2ndeYqxlpP+O3e+heGm2VO7VdcNL80gJQbcRHVxznVYZ7LHLvdFZzi58YM57uAfyLKvF5NdS5IpMA934yhhMJsaF1fF11SQQqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:mime-version:content-type:content-transfer-encoding:content-disposition;
-        b=YcYyHwW18g6wPxeqCpBap+tSCBXYvJKJArHEhuRetVC6897dL/S9b0TbGb68dqBjEhksfyC/bM9/EFJpkGE/hQyTlKTrMLOVcmX5Ftm55O/Otr0168pd7fAwfbuLbQIkDr5ab8jAoxw7mEdqL1pfDmixAgU0nzXRx6QBiHpg2Dk=
-Received: by 10.114.184.7 with SMTP id h7mr401968waf.1195398730586;
-        Sun, 18 Nov 2007 07:12:10 -0800 (PST)
-Received: by 10.115.54.19 with HTTP; Sun, 18 Nov 2007 07:12:10 -0800 (PST)
-Content-Disposition: inline
+	id S1750912AbXKRP1Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 10:27:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750861AbXKRP1Y
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 10:27:24 -0500
+Received: from smtp1-g19.free.fr ([212.27.42.27]:53641 "EHLO smtp1-g19.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750778AbXKRP1X (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 10:27:23 -0500
+Received: from smtp1-g19.free.fr (localhost.localdomain [127.0.0.1])
+	by smtp1-g19.free.fr (Postfix) with ESMTP id 499BB1AB2CE;
+	Sun, 18 Nov 2007 16:27:21 +0100 (CET)
+Received: from localhost.boubyland (gre92-7-82-243-130-161.fbx.proxad.net [82.243.130.161])
+	by smtp1-g19.free.fr (Postfix) with SMTP id 130D91AB309;
+	Sun, 18 Nov 2007 16:27:21 +0100 (CET)
+X-Mailer: Sylpheed 2.4.7 (GTK+ 2.12.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65371>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65372>
 
-What's causing this? I'm using stgit on the master branch.
-I'm fixing it each time on the remote server by deleting the ref to master.
+Previously we tested if the "$GIT_DIR/refs/bisect" directory
+existed, to check if we were bisecting.
 
-jonsmirl@terra:~/ds$ git push digispeaker
-To ssh://jonsmirl1@git.digispeaker.com/~/projects/digispeaker-kernel.git
- ! [rejected]        master -> master (non-fast forward)
-error: failed to push to
-'ssh://jonsmirl1@git.digispeaker.com/~/projects/digispeaker-kernel.git'
-jonsmirl@terra:~/ds$
+Now with packed refs, it is simpler to check if the file
+"$GIT_DIR/BISECT_NAMES" exists, as it is already created when
+starting bisection and removed when reseting bisection.
 
-On the server I have:
-[core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = true
-        logallrefupdates = true
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ git-bisect.sh |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-bare was set false, I just flipped it to true. The server repo was
-originally created via a clone from kernel.org and then renamed to be
-a bare repo. Why do we need a 'bare' attribute?
-
+diff --git a/git-bisect.sh b/git-bisect.sh
+index 4748c6a..01593eb 100755
+--- a/git-bisect.sh
++++ b/git-bisect.sh
+@@ -37,7 +37,7 @@ sq() {
+ }
+ 
+ bisect_autostart() {
+-	test -d "$GIT_DIR/refs/bisect" || {
++	test -f "$GIT_DIR/BISECT_NAMES" || {
+ 		echo >&2 'You need to start by "git bisect start"'
+ 		if test -t 0
+ 		then
+@@ -83,7 +83,6 @@ bisect_start() {
+ 	# Get rid of any old bisect state
+ 	#
+ 	bisect_clean_state
+-	mkdir "$GIT_DIR/refs/bisect"
+ 
+ 	#
+ 	# Check for one bad and then some good revisions.
+@@ -192,7 +191,7 @@ bisect_next_check() {
+ 		;;
+ 	*)
+ 		THEN=''
+-		test -d "$GIT_DIR/refs/bisect" || {
++		test -f "$GIT_DIR/BISECT_NAMES" || {
+ 			echo >&2 'You need to start by "git bisect start".'
+ 			THEN='then '
+ 		}
+@@ -349,8 +348,6 @@ bisect_reset() {
+ }
+ 
+ bisect_clean_state() {
+-	rm -fr "$GIT_DIR/refs/bisect"
+-
+ 	# There may be some refs packed during bisection.
+ 	git for-each-ref --format='%(refname) %(objectname)' refs/bisect/\* refs/heads/bisect |
+ 	while read ref hash
 -- 
-Jon Smirl
-jonsmirl@gmail.com
+1.5.3.5.1815.g9445b-dirty
