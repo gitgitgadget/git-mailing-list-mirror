@@ -1,74 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] builtin-commit: run commit-msg hook with correct message file
-Date: Sun, 18 Nov 2007 12:30:13 -0800
-Message-ID: <7v1wanuwiy.fsf_-_@gitster.siamese.dyndns.org>
-References: <1195405834-1469-1-git-send-email-pkufranky@gmail.com>
-	<7vejenuy4i.fsf@gitster.siamese.dyndns.org>
+From: "Martin Langhoff" <martin.langhoff@gmail.com>
+Subject: Re: preserving mtime
+Date: Mon, 19 Nov 2007 09:36:52 +1300
+Message-ID: <46a038f90711181236o1acd00d4id9c5aeffd3065b80@mail.gmail.com>
+References: <473D63F9.4010201@inrim.it> <473D6DC6.8040804@op5.se>
+	 <20071117182236.GD23659@blorf.net>
+	 <20071118084511.GC16863@glandium.org>
+	 <46a038f90711180134j411bb9c9uf2476f564f9abb6@mail.gmail.com>
+	 <20071118184724.GA494@old.davidb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: krh@redhat.com, Johannes.Schindelin@gmx.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 18 21:30:51 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "Martin Langhoff" <martin.langhoff@gmail.com>,
+	"Mike Hommey" <mh@glandium.org>,
+	"Wayne Davison" <wayne@opencoder.net>,
+	"Andreas Ericsson" <ae@op5.se>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 18 21:37:15 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Itqn1-0004ST-Uo
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 21:30:48 +0100
+	id 1ItqtF-0006mZ-Bt
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 21:37:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752394AbXKRUaW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 15:30:22 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752449AbXKRUaW
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 15:30:22 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:39611 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752327AbXKRUaV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 15:30:21 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 578722F0;
-	Sun, 18 Nov 2007 15:30:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id DB403972BE;
-	Sun, 18 Nov 2007 15:30:37 -0500 (EST)
-In-Reply-To: <7vejenuy4i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Sun, 18 Nov 2007 11:55:41 -0800")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752387AbXKRUgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 15:36:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752139AbXKRUgz
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 15:36:55 -0500
+Received: from ug-out-1314.google.com ([66.249.92.172]:55456 "EHLO
+	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752054AbXKRUgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 15:36:54 -0500
+Received: by ug-out-1314.google.com with SMTP id z38so864829ugc
+        for <git@vger.kernel.org>; Sun, 18 Nov 2007 12:36:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=yZmbb9GieacwBxqso+sirm4jUT6QsxxCpL+HiOElTuY=;
+        b=tdOs0gnum1h8ozznsexGq6VljmWXHkyLXbtGLsp7umPWu2uGE3Cstss5/jlgrOYakfwOM/PL+arYSeCx8oHPq/wrW0UrLmLN7rziew0Y16IIOkVVLHiVnu4X+95/q/NVk8tgxZNys/JESAokwoFGSPmup67Hl2Iz/Blji8DuWPU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=jcdefv7fGC/cHgQ0DFqOKPnmnL+EOx9PIXSHTJGATJfBVszVZRgQcuylged8SIhKPeKWpLn4jHbQu9sqRfZwLG0fWNBj/qyIR3WPcbDtzVLeYSJ/4TLDBE8QHuxamrzeof0kPeJvTcdwCmm3oSrzhi1LyG7v5O9eXcJzBB2ApxQ=
+Received: by 10.66.221.6 with SMTP id t6mr190540ugg.1195418212984;
+        Sun, 18 Nov 2007 12:36:52 -0800 (PST)
+Received: by 10.66.250.13 with HTTP; Sun, 18 Nov 2007 12:36:52 -0800 (PST)
+In-Reply-To: <20071118184724.GA494@old.davidb.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65390>
 
-It should run with $GIT_DIR/COMMIT_EDITMSG, not just COMMIT_EDITMSG.
+On Nov 19, 2007 7:47 AM, David Brown <git@davidb.org> wrote:
+> On Sun, Nov 18, 2007 at 10:34:55PM +1300, Martin Langhoff wrote:
+>
+> >I do hope anyone doing those things is _very_ aware that the mtime
+> >metadata has a specific meaning -- when did this specific file in this
+> >filesystem last change -- and is used by many tools in that sense. You
+> >are trying to use it for something else. Lots of things will break.
+> >
+> >Like incremental backups, for example.
+>
+> 'mtime' does _not_ have the specific meaning of 'when did this specific
+> file last change'.  That is the 'ctime' field.  'mtime' is also updated
+> when a file is modified, but can be changed by the user.  Many utilities
+> restore mtime to older values, including tar.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Hmmm. After a bit of googling I've found conflicting descriptions of
+the mtime/ctime semantics (I thought - for 10 years now - that ctime
+was "creation time", it is "changed time"). Some people think that
+anything that updates mtime also updates ctime, and others say the
+opposite.
 
- * Other things I noticed that are still broken:
+Wikipedia says (at http://en.wikipedia.org/wiki/MAC_times and
+http://en.wikipedia.org/wiki/Stat_%28Unix%29 ) that mtime is about the
+content, and ctime about metadata (owner, permissions, moved inode,
+etc). Changes in content "touch" mtime + ctime.
 
-   - "git commit -v" does not give you the diff in the message
-     template for your final review;
+With that in mind, I think it makes sense for things like make and
+amanda to read mtime as referring to a real change of that concrete
+file. The abstract notion of the file having changed in the big DSCM
+in the sky is useful, but putting that data in mtime messes things up.
 
-   - message_is_empty() is bogus.  It does run stripspace() but
-     does not strip out the diff "git commit -v" would produce
-     before doing its comparison;
+> However, it will make 'make' very confusing, since it uses the mtime to
+> determine if files are out of date.  If moving to an older version of a
+> file causes the file to become older, make won't recompile.  This is
+> arguably a defect in make, but that is how it works.
 
- builtin-commit.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+It's not a bug in make. mtime has a definite meaning, and make is
+using that meaning. Same with amanda.
 
-diff --git a/builtin-commit.c b/builtin-commit.c
-index 058cd32..439fcc2 100644
---- a/builtin-commit.c
-+++ b/builtin-commit.c
-@@ -753,7 +753,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 		rollback_index_files();
- 		die("could not read commit message\n");
- 	}
--	if (run_hook(index_file, "commit-msg", commit_editmsg)) {
-+	if (run_hook(index_file, "commit-msg", git_path(commit_editmsg))) {
- 		rollback_index_files();
- 		exit(1);
- 	}
--- 
-1.5.3.5.1815.g9445b
+cheers,
+
+
+m
