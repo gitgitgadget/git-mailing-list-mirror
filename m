@@ -1,101 +1,63 @@
-From: David Brown <git@davidb.org>
-Subject: Re: preserving mtime
-Date: Sun, 18 Nov 2007 13:44:04 -0800
-Message-ID: <20071118214403.GA7182@old.davidb.org>
-References: <473D63F9.4010201@inrim.it> <473D6DC6.8040804@op5.se> <20071117182236.GD23659@blorf.net> <20071118084511.GC16863@glandium.org> <46a038f90711180134j411bb9c9uf2476f564f9abb6@mail.gmail.com> <20071118184724.GA494@old.davidb.org> <46a038f90711181236o1acd00d4id9c5aeffd3065b80@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: StGIT 0.13 recognizes but not list packed StGIT controlled branches
+Date: Mon, 19 Nov 2007 00:05:49 +0100
+Message-ID: <200711190005.49990.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Cc: Mike Hommey <mh@glandium.org>, Wayne Davison <wayne@opencoder.net>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 22:44:39 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+To: Catalin Marinas <catalin.marinas@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 00:06:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItrwU-0002ah-Uo
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 22:44:39 +0100
+	id 1IttDP-0000Zi-3E
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 00:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492AbXKRVoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 16:44:21 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752327AbXKRVoV
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 16:44:21 -0500
-Received: from mail.davidb.org ([66.93.32.219]:57992 "EHLO mail.davidb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751759AbXKRVoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 16:44:20 -0500
-Received: from davidb by mail.davidb.org with local (Exim 4.68 #1 (Debian))
-	id 1Itrvw-0002Cj-0W; Sun, 18 Nov 2007 13:44:04 -0800
-Mail-Followup-To: Martin Langhoff <martin.langhoff@gmail.com>,
-	Mike Hommey <mh@glandium.org>, Wayne Davison <wayne@opencoder.net>,
-	Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+	id S1752845AbXKRXFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 18:05:53 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752813AbXKRXFx
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 18:05:53 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:20670 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752807AbXKRXFw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 18:05:52 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1262134nfb
+        for <git@vger.kernel.org>; Sun, 18 Nov 2007 15:05:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=2ewTQZd5riPcSuYt/GpNssN655BrCUx/oRF/ik602Gw=;
+        b=iRJU8sRNlNF37mNgXytk8txvgiVUcO7bwaJJ55s9t5chvxh3KOdwdgC76aAY+lLCl2y8HdcYw0cPg540Jmr69eVyycdxIFgCDBqGXPwuoNq8ohjCZBEL40WIhKWjMhcsIScuZfrb0T0F5iAJxqjZthexIma52ESLR0GcmfE1W1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=pl5lev0fLCZcuOpwrFEj21NAqCzDJD+vPp7YUe7Yy1AyDB6xkzLmSTtco1eaeN6/6rr7DfJXIPZ9hxPN7HVIyZJvPTewMMGaEbzdByXuEwT9K2nuvThIIELzWK5H5vsn2zL+V6oI2MKBtKhGKG3I7FsVeeIMdFrH+GqfHDEVNag=
+Received: by 10.86.71.1 with SMTP id t1mr4374904fga.1195427151310;
+        Sun, 18 Nov 2007 15:05:51 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.208.67])
+        by mx.google.com with ESMTPS id 22sm7927548fkr.2007.11.18.15.05.49
+        (version=SSLv3 cipher=OTHER);
+        Sun, 18 Nov 2007 15:05:49 -0800 (PST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <46a038f90711181236o1acd00d4id9c5aeffd3065b80@mail.gmail.com>
-User-Agent: Mutt/1.5.16 (2007-06-09)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65392>
 
-On Mon, Nov 19, 2007 at 09:36:52AM +1300, Martin Langhoff wrote:
+I use Stacked GIT 0.13 with git 1.5.3.5 (and Python 2.4.3).
+StGIT does recognize old StGIT branches (and converts them),
+but "stg branch -l" list only one branch. I guess that is
+cause by the fact that all the rest of branches are packed.
 
->Hmmm. After a bit of googling I've found conflicting descriptions of
->the mtime/ctime semantics (I thought - for 10 years now - that ctime
->was "creation time", it is "changed time"). Some people think that
->anything that updates mtime also updates ctime, and others say the
->opposite.
+So the question is: how to unpack branches, and how to prevent
+branches from being packed by "git-gc"?
 
-One of them is wrong.  All modifications to the file change the ctime.
-Some modifications change the mtime.  There is also a call to change the
-mtime (which will touch the ctime).  It's been this way for a long time.
-I think most of the confusion comes from the 'c' in ctime.
+Another StGIT question: how to check if given branch is controlled
+by StGIT (needed for my bash prompt)?
 
-It doesn't help that the Posix spec is so hard to read on this.  Basically,
-you have to look up every command that might modify a file to figure out
-which time changes it is supposed to modify.
-
->Wikipedia says (at http://en.wikipedia.org/wiki/MAC_times and
->http://en.wikipedia.org/wiki/Stat_%28Unix%29 ) that mtime is about the
->content, and ctime about metadata (owner, permissions, moved inode,
->etc). Changes in content "touch" mtime + ctime.
->
->With that in mind, I think it makes sense for things like make and
->amanda to read mtime as referring to a real change of that concrete
->file. The abstract notion of the file having changed in the big DSCM
->in the sky is useful, but putting that data in mtime messes things up.
-
-Backup software should _never_ look at the mtime (other than to save it).
-Both GNU tar and dump use the ctime field exclusively for incremental
-purposes.
-
-Think about this:
-
-   wget .../linux-2.4.tar.gz
-   tar -xzf linux-2.4.tar.gz
-
-I've just expanded lots of files on my machine.  Tar is going to set the
-mtime to the date they were at when the tarball was made, which was
-probably several years ago.  It is crucial, though, that any backup
-software I run still back these files up, since they are newly added.
-
-There are backup programs that use mtime, but they are just broken, plain
-and simple.
-
->> However, it will make 'make' very confusing, since it uses the mtime to
->> determine if files are out of date.  If moving to an older version of a
->> file causes the file to become older, make won't recompile.  This is
->> arguably a defect in make, but that is how it works.
->
->It's not a bug in make. mtime has a definite meaning, and make is
->using that meaning. Same with amanda.
-
-It is very much a bug (well, a feature) in make.  But the whole date
-comparison model of make is completely wrong.  It should rebuild a file if
-it has changed, not if it is newer.  Most make replacements do something
-more intelligent (often similar to the index cache git uses).
-
-I haven't used Amanda for a while, but it at least used to do the right
-thing (using ctime).  They might have had to break things to support FAT,
-but I would guess it still works on a real filesystem.
-
-David
+-- 
+Jakub Narebski
+Poland
