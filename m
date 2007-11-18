@@ -1,90 +1,74 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH 3/2] send-pack: fix "everything up-to-date" message
-Date: Sun, 18 Nov 2007 03:08:22 -0500
-Message-ID: <20071118080820.GA25358@sigill.intra.peff.net>
-References: <20071118055804.GA19313@sigill.intra.peff.net>
+Subject: [PATCH] avoid "defined but not used" warning for
+	fetch_objs_via_walker
+Date: Sun, 18 Nov 2007 03:17:23 -0500
+Message-ID: <20071118081722.GA31563@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 09:08:45 2007
+X-From: git-owner@vger.kernel.org Sun Nov 18 09:17:49 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItfCt-0000DE-C2
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 09:08:43 +0100
+	id 1ItfLg-0001Z8-HZ
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 09:17:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398AbXKRIIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 03:08:25 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751377AbXKRIIZ
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 03:08:25 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3213 "EHLO
+	id S1751487AbXKRIR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 03:17:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbXKRIR2
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 03:17:28 -0500
+Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3732 "EHLO
 	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751366AbXKRIIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 03:08:25 -0500
-Received: (qmail 8792 invoked by uid 111); 18 Nov 2007 08:08:24 -0000
+	id S1751403AbXKRIR1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 03:17:27 -0500
+Received: (qmail 8828 invoked by uid 111); 18 Nov 2007 08:17:25 -0000
 Received: from ppp-216-106-96-70.storm.ca (HELO sigill.intra.peff.net) (216.106.96.70)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 18 Nov 2007 03:08:24 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Nov 2007 03:08:22 -0500
+  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 18 Nov 2007 03:17:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Nov 2007 03:17:23 -0500
 Content-Disposition: inline
-In-Reply-To: <20071118055804.GA19313@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65347>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65348>
 
-This has always been slightly inaccurate, since it used the
-new_refs counter, which really meant "did we send any
-objects," so deletions were not counted.
-
-It has gotten even worse with recent patches, since we no
-longer look at the 'ret' value, meaning we would say "up to
-date" if non-ff pushes were rejected.
-
-Instead, we now claim up to date iff every ref is either
-unmatched or up to date. Any other case should already have
-generated a status line.
+Because this function is static and used only by the
+http-walker, when NO_CURL is defined, gcc emits a "defined
+but not used" warning.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- builtin-send-pack.c |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+On master. I like to compile with -Werror to make sure I don't miss
+warnings as the compile scrolls by.
 
-diff --git a/builtin-send-pack.c b/builtin-send-pack.c
-index 14447bb..3aab89c 100644
---- a/builtin-send-pack.c
-+++ b/builtin-send-pack.c
-@@ -347,6 +347,20 @@ static void print_push_status(const char *dest, struct ref *refs)
- 	}
- }
+This fix feels a little wrong, since the function isn't specific to http
+support, but hopefully the comment should be obvious if we ever add
+another similar commit walker that needs it.
+
+ transport.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/transport.c b/transport.c
+index e8a2608..43b9e7c 100644
+--- a/transport.c
++++ b/transport.c
+@@ -344,6 +344,7 @@ static int rsync_transport_push(struct transport *transport,
  
-+static int refs_pushed(struct ref *ref)
-+{
-+	for (; ref; ref = ref->next) {
-+		switch(ref->status) {
-+		case REF_STATUS_NONE:
-+		case REF_STATUS_UPTODATE:
-+			break;
-+		default:
-+			return 1;
-+		}
-+	}
-+	return 0;
-+}
-+
- static int do_send_pack(int in, int out, struct remote *remote, const char *dest, int nr_refspec, const char **refspec)
+ /* Generic functions for using commit walkers */
+ 
++#ifndef NO_CURL /* http fetch is the only user */
+ static int fetch_objs_via_walker(struct transport *transport,
+ 				 int nr_objs, struct ref **to_fetch)
  {
- 	struct ref *ref;
-@@ -487,7 +501,7 @@ static int do_send_pack(int in, int out, struct remote *remote, const char *dest
- 			update_tracking_ref(remote, ref);
- 	}
+@@ -370,6 +371,7 @@ static int fetch_objs_via_walker(struct transport *transport,
+ 	free(dest);
+ 	return 0;
+ }
++#endif /* NO_CURL */
  
--	if (!new_refs)
-+	if (!refs_pushed(remote_refs))
- 		fprintf(stderr, "Everything up-to-date\n");
- 	if (ret < 0)
- 		return ret;
+ static int disconnect_walker(struct transport *transport)
+ {
 -- 
 1.5.3.5.1817.gd2b4b-dirty
