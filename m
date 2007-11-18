@@ -1,71 +1,67 @@
-From: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Subject: Re: [RFH] Solaris portability
-Date: Sun, 18 Nov 2007 13:08:20 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711181302360.3945@bianca.dialin.t-online.de>
-References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
- <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
- <Pine.LNX.4.64.0711152253430.4090@bianca.dialin.t-online.de>
- <7v640340kp.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711161954510.7139@bianca.dialin.t-online.de>
- <7vtznlww0t.fsf_-_@gitster.siamese.dyndns.org>
+From: Johannes Sixt <johannes.sixt@telecom.at>
+Subject: Re: [PATCH] fetch-pack: Prepare for a side-band demultiplexer in a thread.
+Date: Sun, 18 Nov 2007 13:23:35 +0100
+Message-ID: <200711181323.35219.johannes.sixt@telecom.at>
+References: <200711172309.28364.johannes.sixt@telecom.at> <200711181036.14565.johannes.sixt@telecom.at> <7v3av3yi1x.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org,
-	Shawn O Pearce <spearce@spearce.org>,
-	Jason Riedy <ejr@EECS.Berkeley.EDU>,
-	Dennis Stosberg <dennis@stosberg.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 13:08:58 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 18 13:24:16 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItixJ-0006cN-42
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 13:08:53 +0100
+	id 1ItjCB-0001fZ-9p
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 13:24:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844AbXKRMIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 07:08:36 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbXKRMIg
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 07:08:36 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56935 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751505AbXKRMIf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Nov 2007 07:08:35 -0500
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by out1.messagingengine.com (Postfix) with ESMTP id EC42346F03;
-	Sun, 18 Nov 2007 07:08:33 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sun, 18 Nov 2007 07:08:34 -0500
-X-Sasl-enc: JRh8FdSrySkp9AlZ8zoogT+HEoZyHaMWlX7v779isjBn 1195387713
-Received: from [192.168.2.101] (p549A2F35.dip0.t-ipconnect.de [84.154.47.53])
-	by mail.messagingengine.com (Postfix) with ESMTP id 44E8228D5E;
-	Sun, 18 Nov 2007 07:08:32 -0500 (EST)
-In-Reply-To: <7vtznlww0t.fsf_-_@gitster.siamese.dyndns.org>
+	id S1751659AbXKRMX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 07:23:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751518AbXKRMX5
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 07:23:57 -0500
+Received: from smtp2.srv.eunet.at ([193.154.160.116]:51863 "EHLO
+	smtp2.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751503AbXKRMX5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 07:23:57 -0500
+Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
+	by smtp2.srv.eunet.at (Postfix) with ESMTP id A128DBF31A;
+	Sun, 18 Nov 2007 13:23:36 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 746A85933E;
+	Sun, 18 Nov 2007 13:23:35 +0100 (CET)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v3av3yi1x.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65369>
 
-On Fri, 16 Nov 2007, Junio C Hamano wrote:
-> This makes me wonder if treating it just like strcasestr() might be 
-> simpler.  Could folks with access to Solaris boxes of different vintages 
-> please see if the attached patch makes sense?
+On Sunday 18 November 2007 11:16, Junio C Hamano wrote:
+> Johannes Sixt <johannes.sixt@telecom.at> writes:
+> >> If the rationale was "running in a thread is more natural on the
+> >> platform", I would understand it.
+> >
+> > Please take it as such.
+> >
+> >> But "_must_ run because there is no fork(2)" solicits a "Huh?
+> >> How does Cygwin does it then?" from me.
+> >
+> > Alex has answered this. We are not going to copy Cygwin's fork() into
+> > git.
+>
+> Wholeheartedly agree, and I feel dirty after looking at that
+> thing.  Nothing against Cygwin folks, of course.
+>
+> The reason I wanted to close pipes as early as possible was
+> because I did not want to get bitten by "read() waiting forever
+> for EOF due to an extra unclosed fd on the writer end of the
+> pipe() without the writer not writing anything to it" problem,
+> which is an often-seen mistake.
 
-I think the patch makes sense as neither Solaris 8, 9 nor 10 supports 
-mkdtemp().
+That was my concern, too, and I spent quite a few brain cycles to verify that 
+this is not the case here.
 
-> Can we also unify UNSETENV, SETENV, C99_FORMAT and STRTOUMAX, by the 
-> way?
-
-No.
-
-I've just checked on our Solaris Sparc systems, and found that the 
-C-library provides unsetenv(), setenv() and strtoumax() beginning with 
-Solaris 10; also the 'man sprintf' page mentions the 'z' and 't' 
-specifiers for printf (which is what is behind C99_FORMAT) only beginning 
-with Solaris 10.
-
-So workarounds are needed for all 4 cases for Solaris 8 and 9 but not 10.
-
-Regards
-
-Guido
+-- Hannes
