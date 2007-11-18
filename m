@@ -1,74 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] avoid "defined but not used" warning for
-	fetch_objs_via_walker
-Date: Sun, 18 Nov 2007 03:17:23 -0500
-Message-ID: <20071118081722.GA31563@sigill.intra.peff.net>
+From: Mike Hommey <mh@glandium.org>
+Subject: Re: preserving mtime
+Date: Sun, 18 Nov 2007 09:45:11 +0100
+Organization: glandium.org
+Message-ID: <20071118084511.GC16863@glandium.org>
+References: <473D63F9.4010201@inrim.it> <473D6DC6.8040804@op5.se> <20071117182236.GD23659@blorf.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Daniel Barkalow <barkalow@iabervon.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 18 09:17:49 2007
+Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
+To: Wayne Davison <wayne@opencoder.net>
+X-From: git-owner@vger.kernel.org Sun Nov 18 09:47:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItfLg-0001Z8-HZ
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 09:17:48 +0100
+	id 1Itfo1-0006dT-2x
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 09:47:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751487AbXKRIR2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 03:17:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751415AbXKRIR2
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 03:17:28 -0500
-Received: from 66-23-211-5.clients.speedfactory.net ([66.23.211.5]:3732 "EHLO
-	peff.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751403AbXKRIR1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 03:17:27 -0500
-Received: (qmail 8828 invoked by uid 111); 18 Nov 2007 08:17:25 -0000
-Received: from ppp-216-106-96-70.storm.ca (HELO sigill.intra.peff.net) (216.106.96.70)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.32) with ESMTP; Sun, 18 Nov 2007 03:17:25 -0500
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 18 Nov 2007 03:17:23 -0500
+	id S1750864AbXKRIqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 03:46:44 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750880AbXKRIqo
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 03:46:44 -0500
+Received: from vawad.err.no ([85.19.200.177]:55956 "EHLO vawad.err.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750843AbXKRIqn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 18 Nov 2007 03:46:43 -0500
+Received: from aputeaux-153-1-42-198.w82-124.abo.wanadoo.fr ([82.124.6.198] helo=namakemono.glandium.org)
+	by vawad.err.no with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.62)
+	(envelope-from <mh@glandium.org>)
+	id 1ItfnP-0004g9-El; Sun, 18 Nov 2007 09:46:30 +0100
+Received: from mh by namakemono.glandium.org with local (Exim 4.68)
+	(envelope-from <mh@glandium.org>)
+	id 1ItfmB-00055C-Nc; Sun, 18 Nov 2007 09:45:11 +0100
 Content-Disposition: inline
+In-Reply-To: <20071117182236.GD23659@blorf.net>
+X-GPG-Fingerprint: A479 A824 265C B2A5 FC54  8D1E DE4B DA2C 54FD 2A58
+User-Agent: Mutt/1.5.17 (2007-11-01)
+X-Spam-Status: (score 5.0): Status=No hits=4.9 required=5.0 tests=RCVD_IN_DSBL,RCVD_IN_SORBS_DUL version=3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65349>
 
-Because this function is static and used only by the
-http-walker, when NO_CURL is defined, gcc emits a "defined
-but not used" warning.
+On Sat, Nov 17, 2007 at 10:22:36AM -0800, Wayne Davison wrote:
+> On Fri, Nov 16, 2007 at 11:15:34AM +0100, Andreas Ericsson wrote:
+> >> is it possible to tell git to preserve the file modification time in
+> >> a checked out copy?
+> 
+> > Fabrizio Pollastri wrote:
+> > No. Doing so would seriously break build-systems.
+> 
+> I wish that the initial clone would set the modification time to the
+> commit time.  It would make the intial checkout have a more accurate
+> representation of when a file was last changed instead of all files
+> being set to the clone date.  Then, files that are being updated would
+> get their time set as they do now.  I supposed I'll just use the handy
+> git-set-file-times script (mentioned in another reply) every time I do
+> a clone.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-On master. I like to compile with -Werror to make sure I don't miss
-warnings as the compile scrolls by.
+For completeness, it would make sense to do so every time you git
+checkout (like, when switching branches).
 
-This fix feels a little wrong, since the function isn't specific to http
-support, but hopefully the comment should be obvious if we ever add
-another similar commit walker that needs it.
-
- transport.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/transport.c b/transport.c
-index e8a2608..43b9e7c 100644
---- a/transport.c
-+++ b/transport.c
-@@ -344,6 +344,7 @@ static int rsync_transport_push(struct transport *transport,
- 
- /* Generic functions for using commit walkers */
- 
-+#ifndef NO_CURL /* http fetch is the only user */
- static int fetch_objs_via_walker(struct transport *transport,
- 				 int nr_objs, struct ref **to_fetch)
- {
-@@ -370,6 +371,7 @@ static int fetch_objs_via_walker(struct transport *transport,
- 	free(dest);
- 	return 0;
- }
-+#endif /* NO_CURL */
- 
- static int disconnect_walker(struct transport *transport)
- {
--- 
-1.5.3.5.1817.gd2b4b-dirty
+Mike
