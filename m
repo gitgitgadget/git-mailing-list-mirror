@@ -1,73 +1,71 @@
-From: Johannes Sixt <johannes.sixt@telecom.at>
-Subject: [RFC] Alternates and broken repos: A pack and prune scheme to avoid them
-Date: Sun, 18 Nov 2007 12:25:52 +0100
-Message-ID: <200711181225.52288.johannes.sixt@telecom.at>
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: Re: [RFH] Solaris portability
+Date: Sun, 18 Nov 2007 13:08:20 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711181302360.3945@bianca.dialin.t-online.de>
+References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+ <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+ <Pine.LNX.4.64.0711152253430.4090@bianca.dialin.t-online.de>
+ <7v640340kp.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711161954510.7139@bianca.dialin.t-online.de>
+ <7vtznlww0t.fsf_-_@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 18 12:26:15 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>, git@vger.kernel.org,
+	Shawn O Pearce <spearce@spearce.org>,
+	Jason Riedy <ejr@EECS.Berkeley.EDU>,
+	Dennis Stosberg <dennis@stosberg.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Nov 18 13:08:58 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1ItiI2-0005hI-Dl
-	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 12:26:14 +0100
+	id 1ItixJ-0006cN-42
+	for gcvg-git-2@gmane.org; Sun, 18 Nov 2007 13:08:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751512AbXKRLZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 18 Nov 2007 06:25:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751503AbXKRLZz
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 06:25:55 -0500
-Received: from smtp5.srv.eunet.at ([193.154.160.227]:43419 "EHLO
-	smtp5.srv.eunet.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751487AbXKRLZy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 18 Nov 2007 06:25:54 -0500
-Received: from dx.sixt.local (at00d01-adsl-194-118-045-019.nextranet.at [194.118.45.19])
-	by smtp5.srv.eunet.at (Postfix) with ESMTP id BC06E13A331
-	for <git@vger.kernel.org>; Sun, 18 Nov 2007 12:25:52 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 7F52F594AE
-	for <git@vger.kernel.org>; Sun, 18 Nov 2007 12:25:52 +0100 (CET)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751844AbXKRMIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 07:08:36 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751760AbXKRMIg
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 07:08:36 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:56935 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751505AbXKRMIf (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Nov 2007 07:08:35 -0500
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by out1.messagingengine.com (Postfix) with ESMTP id EC42346F03;
+	Sun, 18 Nov 2007 07:08:33 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Sun, 18 Nov 2007 07:08:34 -0500
+X-Sasl-enc: JRh8FdSrySkp9AlZ8zoogT+HEoZyHaMWlX7v779isjBn 1195387713
+Received: from [192.168.2.101] (p549A2F35.dip0.t-ipconnect.de [84.154.47.53])
+	by mail.messagingengine.com (Postfix) with ESMTP id 44E8228D5E;
+	Sun, 18 Nov 2007 07:08:32 -0500 (EST)
+In-Reply-To: <7vtznlww0t.fsf_-_@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65368>
 
-As you know, repo.or.cz uses alternates in order to reduce the space that the 
-repositories of forked projects require.
+On Fri, 16 Nov 2007, Junio C Hamano wrote:
+> This makes me wonder if treating it just like strcasestr() might be 
+> simpler.  Could folks with access to Solaris boxes of different vintages 
+> please see if the attached patch makes sense?
 
-Recently, it happened that a fork (4msysgit.git) became broken because it was 
-using an object that was pruned away from the repository that it was 
-borrowing from (mingw.git). This happened even though 4msysgit did not use 
-the branch of mingw.git that was rebased and whose objects were pruned. The 
-reason is that a merge in 4msysgit.git resulted in a blob that was also in 
-the rebased branch.
+I think the patch makes sense as neither Solaris 8, 9 nor 10 supports 
+mkdtemp().
 
-To avoid such situations I propose to introduce "attic" packs. They contain 
-objects that are unreachable by the local set of refs. Otherwise they are 
-used like regular packs.
+> Can we also unify UNSETENV, SETENV, C99_FORMAT and STRTOUMAX, by the 
+> way?
 
-git-repack produces "attic" packs like this:
+No.
 
-- Places objects of the local object store that are unreachable in an "attic" 
-pack.
-- Copies objects that are reachable but borrowed from an alternate and are 
-only in the alternates' "attic" packs into the local regular pack.
+I've just checked on our Solaris Sparc systems, and found that the 
+C-library provides unsetenv(), setenv() and strtoumax() beginning with 
+Solaris 10; also the 'man sprintf' page mentions the 'z' and 't' 
+specifiers for printf (which is what is behind C99_FORMAT) only beginning 
+with Solaris 10.
 
-git-prune removes "attic" packs.
+So workarounds are needed for all 4 cases for Solaris 8 and 9 but not 10.
 
-Then the strategy of garbage collection can be arranged in the following way:
+Regards
 
-- Repack by starting at the "most complete" repo and work towards the "most 
-borrowing" ones. During this phase "attic" packs are created. Borrowing repos 
-get a chance to salvage objects before the alternates prune them away.
-
-- Prune by starting at the "most borrowing" repo and work towards the "most 
-complete" ones. During this phase the "attic" packs are cleaned up.
-
-What do you think? Is this a way for a solution?
-
--- Hannes
+Guido
