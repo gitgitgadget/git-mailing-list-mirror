@@ -1,222 +1,228 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] GIT 1.5.3.6
-Date: Sun, 18 Nov 2007 15:14:15 -0800
-Message-ID: <7vve7ztad4.fsf@gitster.siamese.dyndns.org>
-References: <7vpryugb7i.fsf@gitster.siamese.dyndns.org>
+From: "J. Bruce Fields" <bfields@fieldses.org>
+Subject: Re: [PATCH v4] user-manual: Add section "Why bisecting merge
+	commits can be harder ..."
+Date: Sun, 18 Nov 2007 18:18:09 -0500
+Message-ID: <20071118231809.GA23671@fieldses.org>
+References: <B622E814-D7D1-4DC8-A724-666BA0A1220F@zib.de> <1194702594213-git-send-email-prohaska@zib.de> <20071118035934.GA29374@fieldses.org> <C5A2CF54-7055-461A-86B6-5A68489DA2C3@zib.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: linux-kernel@vger.kernel.org
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 19 00:14:44 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Benoit Sigoure <tsuna@lrde.epita.fr>,
+	Andreas Ericsson <ae@op5.se>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 19 00:18:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IttLe-0002wz-FE
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 00:14:43 +0100
+	id 1IttPc-0003zB-VG
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 00:18:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753467AbXKRXOY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 18 Nov 2007 18:14:24 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753226AbXKRXOY
-	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 18:14:24 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:38405 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752869AbXKRXOW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 18 Nov 2007 18:14:22 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id EA9D62F0;
-	Sun, 18 Nov 2007 18:14:42 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 11A1997395;
-	Sun, 18 Nov 2007 18:14:38 -0500 (EST)
-In-Reply-To: <7vpryugb7i.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 31 Oct 2007 15:40:01 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1753483AbXKRXSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 18 Nov 2007 18:18:32 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753361AbXKRXSc
+	(ORCPT <rfc822;git-outgoing>); Sun, 18 Nov 2007 18:18:32 -0500
+Received: from mail.fieldses.org ([66.93.2.214]:54700 "EHLO fieldses.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753349AbXKRXSb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 18 Nov 2007 18:18:31 -0500
+Received: from bfields by fieldses.org with local (Exim 4.68)
+	(envelope-from <bfields@fieldses.org>)
+	id 1IttOz-0006zn-3J; Sun, 18 Nov 2007 18:18:09 -0500
+Content-Disposition: inline
+In-Reply-To: <C5A2CF54-7055-461A-86B6-5A68489DA2C3@zib.de>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65394>
 
-The latest maintenance release GIT 1.5.3.6 is available at the
-usual places:
+On Sun, Nov 18, 2007 at 10:47:24AM +0100, Steffen Prohaska wrote:
+>
+> On Nov 18, 2007, at 4:59 AM, J. Bruce Fields wrote:
+>
+>> On Sat, Nov 10, 2007 at 02:49:54PM +0100, Steffen Prohaska wrote:
+>>> +[[bisect-merges]]
+>>> +Why bisecting merge commits can be harder than bisecting linear history
+>>> +-----------------------------------------------------------------------
+>>> +
+>>> +This section discusses how gitlink:git-bisect[1] plays
+>>> +with differently shaped histories.  The text is based upon
+>>> +an email by Junio C. Hamano to the git mailing list
+>>> +(link:http://marc.info/?l=git&m=119403257315527&w=2[link:http://marc.info/?l=git&m=119403257315527&w=2]).
+>>> +It was adapted for the user manual.
+>>
+>> This is not the only text that's been taken from someplace else, but if
+>> we attributed them all in the text it would get a little cumbersome....
+>> I think the place for that kind of thing is in the commit message, but
+>> if we really think we need to include it in the main text, we could add
+>> a separate "'acknowledgements" section.
+>
+> ack for this change.
+>
+> And a general comment: I had two purposes in mind when I
+> added this paragraph
+> 1) Attribution;
+> 2) Giving a reference to the original discussion.  If someone disagrees,
+>    or has further questions, the original discussion on the mailing
+>    list could be useful.
+>
+> I believe the commit message is sufficient for attribution.
+> I don't think we need more.  Maybe if the manual goes to print
+> we need to reconsider.  But who know if this ever will happen.
+>
+> However, adding a References section with links to other
+> resources could be a useful thing.  Such resources could give
+> additional information, without sacrificing the conciseness of
+> the manual.  An example are links to the original discussion on
+> the list.  Often they contain more details, which may sometimes
+> be useful.
+>
+> Does asciidoc provide a mechanism for this?  Something like
+> \cite{} in LaTeX.
 
-  http://www.kernel.org/pub/software/scm/git/
+We could add a "for more details, see link:..." at the end, though I
+don't think it's necessary in this case.
 
-  git-1.5.3.6.tar.{gz,bz2}			(tarball)
-  git-htmldocs-1.5.3.6.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.5.3.6.tar.{gz,bz2}		(preformatted docs)
-  RPMS/$arch/git-*-1.5.3.6-1.$arch.rpm	(RPM)
+>>> +Using gitlink:git-bisect[1] on a history with merges can be
+>>> +challenging.  Bisecting through merges is not a technical
+>>> +problem. The real problem is what to do when the culprit turns
+>>> +out to be a merge commit.  How to spot what really is wrong, and
+>>> +figure out how to fix it.  The problem is not for the tool but
+>>> +for the human, and it is real.
+>>
+>> I think we can pare that down a little.
+>
+> From your 7df716bec6bf6e3dafe4c36a6313a4346de2585a
+>
+> +The gitlink:git-bisect[1] commands deals fine with history that includes
+> +merge commits.  However, when the final commit that ends on is a merge
+> +commit, the user may need to work harder than usual to figure out
+> +exactly what the problem was.
+>
+> If you don't take the text below, first line: s/commands/command/
 
-----------------------------------------------------------------
-GIT v1.5.3.6 Release Notes
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D
+Whoops, thanks!
 
-=46ixes since v1.5.3.5
---------------------
+>
+> I'd reverse the order of the sentences.  The section is about
+> the difficulty, not about praising git-bisect.  How about
+>
+> When the final commit that a bisect ends on is a merge commit,
+> the user may need to work harder than usual to figure out
+> exactly what the problem was.  This is not a technical
+> problem.  In principle, the gitlink:git-bisect[1] command
+> deals fine with history that includes merge commits.
+>
+> It's your call.  I'm also fine with your version.
 
- * git-cvsexportcommit handles root commits better.
+OK; I see your point but I think I'll stick with my version (with
+another minor fix or two)--the order seems more natural: first dismiss
+the obvious objection to the title, then introduce the problem that
+leads to the following discussion.
 
- * git-svn dcommit used to clobber when sending a series of
-   patches.
+>>> +
+>>> +Imagine this history:
+>>> +
+>>> +................................................
+>>> +      ---Z---o---X---...---o---A---C---D
+>>> +          \                       /
+>>> +           o---o---Y---...---o---B
+>>> +................................................
+>>> +
+>>> +Suppose that on the upper development line, the meaning of one
+>>> +of the functions that existed at Z was changed at commit X.  The
+>>> +commits from Z leading to A change both the function's
+>>> +implementation and all calling sites that existed at Z, as well
+>>> +as new calling sites they add, to be consistent.  There is no
+>>> +bug at A.
+>>> +
+>>> +Suppose that in the meantime the lower development line somebody
+>>> +added a new calling site for that function at commit Y.  The
+>>> +commits from Z leading to B all assume the old semantics of that
+>>> +function and the callers and the callee are consistent with each
+>>> +other.  There is no bug at B, either.
+>>> +
+>>> +Suppose further that the two development lines were merged at C
+>>> +and there was no textual conflict with this three way merge.
+>>> +The result merged cleanly.
+>>> +
+>>> +Now, during bisect you find that the merge C is broken.  You
+>>> +started to bisect, because you found D is bad and you know Z was
+>>> +good.  The breakage is understandable, as at C, the new calling
+>>> +site of the function added by the lower branch is not converted
+>>> +to the new semantics, while all the other calling sites that
+>>> +already existed at Z would have been converted by the merge.  The
+>>> +new calling site has semantic adjustment needed, but you do not
+>>> +know that yet.
+>>> +
+>
+> From your 7df716bec6bf6e3dafe4c36a6313a4346de2585a
+>
+> +Nevertheless, the code at C is broken, because the callers added
+> +on the lower line of development have not been converted to the new
+> +semantics introduced on the upper line of development.  So if all
+> +you know is that D was bad, Z was good, and that a
+>
+> s/a//?  I'm not sure; you are the native speaker ;)
 
- * git-svn dcommit failed after attempting to rebase when
-   started with a dirty index; now it stops upfront.
+I agree, it's better without the "a", thanks.
 
- * git-grep sometimes refused to work when your index was
-   unmerged.
+>
+> +gitlink:git-bisect[1] identified C as the culprit, how will you
+> +figure out that the problem was due to this change in semantics?
+>
+>
+>
+>>> +You need to find out what is the cause of the breakage by looking
+>>> +at the merge commit C and the history leading to it.  How would
+>>> +you do that?
+>>> +
+>>> +Both "git diff A C" and "git diff B C" would be an enormous patch.
+>>> +Each of them essentially shows the whole change on each branch
+>>> +since they diverged.  The developers may have well behaved to
+>>> +create good commits that follow the "commit small, commit often,
+>>> +commit well contained units" mantra, and each individual commit
+>>> +leading from Z to A and from Z to B may be easy to review and
+>>> +understand, but looking at these small and easily reviewable
+>>> +steps alone would not let you spot the breakage.  You need to
+>>> +have a global picture of what the upper branch did (and
+>>> +among many, one of them is to change the semantics of that
+>>> +particular function) and look first at the huge "diff A C"
+>>> +(which shows the change the lower branch introduces), and see if
+>>> +that huge change is consistent with what have been done between
+>>> +Z and A.
+>>> +
+>
+> From your 7df716bec6bf6e3dafe4c36a6313a4346de2585a
+>
+> +When the result of a git-bisect is a non-merge commit, you should
+> +normally be able to discover the problem be examining just that commit.
+>
+> s/be examining/by examining/
 
- * "git-grep -A1 -B2" acted as if it was told to run "git -A1 -B21".
+Oops, thanks.
 
- * git-hash-object did not honor configuration variables, such as
-   core.compression.
+>> I'd say "partly for this reason", as I don't think this is the only
+>> reason people do that.
+>>
+>> I've done the above revisions and a few others and pushed them to
+>>
+>> 	git://linux-nfs.org/~bfields/git.git maint
+>>
+>> I'll take another look in the morning.
+>
+> Besides the minor fixes above, ack from me.  We already spend
+> a lot of time on this section.  It improved compared to the
+> first version and I think it's now ready for the manual.
 
- * git-index-pack choked on a huge pack on 32-bit machines, even when
-   large file offsets are supported.
+OK, thanks for your patience!  This plus an unrelated trivial fix are
+available for Junio to pull from
 
- * atom feeds from git-web said "10" for the month of November.
+	git://linux-nfs.org/~bfields/git.git maint
 
- * a memory leak in commit walker was plugged.
+(Full history also available from the maint-history branch).
 
- * When git-send-email inserted the original author's From:
-   address in body, it did not mark the message with
-   Content-type: as needed.
-
- * git-revert and git-cherry-pick incorrectly refused to start
-   when the work tree was dirty.
-
- * git-clean did not honor core.excludesfile configuration.
-
- * git-add mishandled ".gitignore" files when applying them to
-   subdirectories.
-
- * While importing a too branchy history, git-fastimport did not
-   honor delta depth limit properly.
-
- * Support for zlib implementations that lack ZLIB_VERNUM and definitio=
-n
-   of deflateBound() has been added.
-
- * Quite a lot of documentation clarifications.
-
-
-----------------------------------------------------------------
-
-Changes since v1.5.3.5 are as follows:
-
-Alex Riesen (1):
-      stop t1400 hiding errors in tests
-
-Ask Bj=C3=B8rn Hansen (1):
-      When exec() fails include the failing command in the error messag=
-e
-
-Benoit Sigoure (2):
-      git-send-email: Change the prompt for the subject of the initial =
-message.
-      git-svn: prevent dcommitting if the index is dirty.
-
-Brad King (1):
-      cvsexportcommit: fix for commits that do not have parents
-
-Christian Couder (1):
-      for-each-ref: fix off by one read.
-
-David D Kilzer (2):
-      RelNotes-1.5.3.5: fix typo
-      RelNotes-1.5.3.5: fix another typo
-
-David Symonds (1):
-      Improve accuracy of check for presence of deflateBound.
-
-Eric Wong (2):
-      git-svn: fix dcommit clobbering when committing a series of diffs
-      git-svn: t9114: verify merge commit message in test
-
-Gerrit Pape (4):
-      git-diff.txt: add section "output format" describing the diff for=
-mats
-      git-cvsimport: really convert underscores in branch names to dots=
- with -u
-      git-daemon: fix remote port number in log entry
-      git-mailsplit: with maildirs not only process cur/, but also new/
-
-Jakub Narebski (1):
-      gitweb: Update config file example for snapshot feature in gitweb=
-/INSTALL
-
-Jeff King (2):
-      git-branch: remove mention of non-existent '-b' option
-      git-send-email: add charset header if we add encoded 'From'
-
-Jing Xue (1):
-      replace reference to git-rm with git-reset in git-commit doc
-
-Johannes Schindelin (1):
-      Add Documentation/CodingGuidelines
-
-Jonas Fonseca (3):
-      Remove escaping of '|' in manpage option sections
-      instaweb: Minor cleanups and fixes for potential problems
-      Documentation: Fix man page breakage with DocBook XSL v1.72
-
-Jonathan del Strother (1):
-      Fixing path quoting in git-rebase
-
-Junio C Hamano (12):
-      grep with unmerged index
-      refresh_index_quietly(): express "optional" nature of index writi=
-ng better
-      Makefile: add missing dependency on wt-status.h
-      Start preparing for 1.5.3.6
-      t/t3404: fix test for a bogus todo file.
-      revert/cherry-pick: allow starting from dirty work tree.
-      git-clean: honor core.excludesfile
-      core.excludesfile clean-up
-      Fix per-directory exclude handing for "git add"
-      Update draft release notes for 1.5.3.6
-      grep -An -Bm: fix invocation of external grep command
-      GIT 1.5.3.6
-
-Kristian H=C3=B8gsberg (1):
-      Remove unecessary hard-coding of EDITOR=3D':' VISUAL=3D':' in som=
-e test suites.
-
-Marco Costalba (1):
-      Remove a couple of duplicated include
-
-Mike Hommey (1):
-      Delay pager setup in git blame
-
-Nicolas Pitre (3):
-      print warning/error/fatal messages in one shot
-      git-hash-object should honor config variables
-      fix index-pack with packs >4GB containing deltas on 32-bit machin=
-es
-
-Ralf Wildenhues (3):
-      git-clone.txt: Improve --depth description.
-      Avoid a few unportable, needlessly nested "...`...".
-      Fix sed string regex escaping in module_name.
-
-Sergei Organov (6):
-      git-filter-branch.txt: fix a typo.
-      git-format-patch.txt: fix explanation of an example.
-      Documentation: quote commit messages consistently.
-      SubmittingPatches: improve the 'Patch:' section of the checklist
-      core-tutorial.txt: Fix argument mistake in an example.
-      git-remote.txt: fix typo
-
-Shawn O. Pearce (2):
-      Fix memory leak in traverse_commit_list
-      Don't allow fast-import tree delta chains to exceed maximum depth
-
-Vincent Zanotti (1):
-      gitweb: correct month in date display for atom feeds
-
-Wincent Colaiuta (2):
-      Grammar fixes for gitattributes documentation
-      Fix t9101 test failure caused by Subversion "auto-props"
+--b.
