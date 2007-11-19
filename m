@@ -1,86 +1,49 @@
-From: Vineet Kumar <vineet@doorstop.net>
-Subject: [PATCH] git-svn: add a show-externals command.
-Date: Mon, 19 Nov 2007 14:56:15 -0800
-Message-ID: <1195512975-3647-1-git-send-email-vineet@doorstop.net>
-Cc: Vineet Kumar <vineet@doorstop.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 20 00:51:39 2007
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Fix warning about bitfield in struct ref
+Date: Tue, 20 Nov 2007 00:58:58 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711200058270.16728@wbgn129.biozentrum.uni-wuerzburg.de>
+References: <20071118093137.GA2196@spearce.org>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Nov 20 00:59:23 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuGOo-0000GG-2K
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 00:51:30 +0100
+	id 1IuGWP-0002P4-6H
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 00:59:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751898AbXKSXvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 18:51:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751897AbXKSXvM
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 18:51:12 -0500
-Received: from doorstop.net ([69.55.226.61]:47155 "EHLO philo.doorstop.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751875AbXKSXvL (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 18:51:11 -0500
-X-Greylist: delayed 3295 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Nov 2007 18:51:11 EST
-Received: from vineet by philo.doorstop.net with local (Exim 4.63)
-	(envelope-from <vineet@doorstop.net>)
-	id 1IuFXL-00011T-SW; Mon, 19 Nov 2007 14:56:15 -0800
-X-Mailer: git-send-email 1.5.3.4
+	id S1751985AbXKSX7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 18:59:04 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbXKSX7D
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 18:59:03 -0500
+Received: from mail.gmx.net ([213.165.64.20]:58394 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751624AbXKSX7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 18:59:01 -0500
+Received: (qmail invoked by alias); 19 Nov 2007 23:58:59 -0000
+Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
+  by mail.gmx.net (mp055) with SMTP; 20 Nov 2007 00:58:59 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19jYpZrPkpjUlISMBhi7wZzfFsAhkeM/9r8qpabUD
+	FYSEKoqtMqg3HI
+X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
+In-Reply-To: <20071118093137.GA2196@spearce.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65519>
 
-show-externals can be used by scripts to provide svn:externals-like
-functionality.  For example, a script can list all of the externals and then
-use check out the listed URLs at the appropriate paths, similar to what the svn
-client does.  Said script (or perhaps git-svn itself, in the future) could
-simply invoke svn export on the paths, or it could go one further, using
-git-svn clone and even git-submodule together to better integrate externals
-checkouts.
+Hi,
 
-The implementation is shamelessly copied from show-ignores.  A more general
-command to list user-specified properties is probably a better idea.
+On Sun, 18 Nov 2007, Shawn O. Pearce wrote:
 
-Signed-off-by: Vineet Kumar <vineet@doorstop.net>
----
- git-svn.perl |   18 ++++++++++++++++++
- 1 files changed, 18 insertions(+), 0 deletions(-)
+> +	unsigned int force:1,
 
-diff --git a/git-svn.perl b/git-svn.perl
-index 5b1deea..74966ed 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -141,6 +141,9 @@ my %cmd = (
- 	'show-ignore' => [ \&cmd_show_ignore, "Show svn:ignore listings",
- 			{ 'revision|r=i' => \$_revision
- 			} ],
-+	'show-externals' => [ \&cmd_show_externals, "Show svn:externals listings",
-+			{ 'revision|r=i' => \$_revision
-+			} ],
- 	'multi-fetch' => [ \&cmd_multi_fetch,
- 	                   "Deprecated alias for $0 fetch --all",
- 			   { 'revision|r=s' => \$_revision, %fc_opts } ],
-@@ -560,6 +563,21 @@ sub cmd_show_ignore {
- 	});
- }
- 
-+sub cmd_show_externals {
-+	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
-+	$gs ||= Git::SVN->new;
-+	my $r = (defined $_revision ? $_revision : $gs->ra->get_latest_revnum);
-+	$gs->prop_walk($gs->{path}, $r, sub {
-+		my ($gs, $path, $props) = @_;
-+		print STDOUT "\n# $path\n";
-+		my $s = $props->{'svn:externals'} or return;
-+		$s =~ s/[\r\n]+/\n/g;
-+		chomp $s;
-+		$s =~ s#^#$path#gm;
-+		print STDOUT "$s\n";
-+	});
-+}
-+
- sub cmd_create_ignore {
- 	my ($url, $rev, $uuid, $gs) = working_head_info('HEAD');
- 	$gs ||= Git::SVN->new;
--- 
-1.5.3.4
+Isn't this "unsigned force:1" everywhere else in git's source?
+
+Ciao,
+Dscho
