@@ -1,129 +1,91 @@
-From: Ping Yin <pkufranky@gmail.com>
-Subject: [PATCH] Fix start_command closing cmd->out/in regardless of cmd->close_out/in
-Date: Tue, 20 Nov 2007 04:12:54 +0800
-Message-ID: <1195503174-29387-1-git-send-email-pkufranky@gmail.com>
-Cc: Ping Yin <pkufranky@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 19 21:17:27 2007
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Doc fix for git-reflog: mention @{...} syntax, and <ref> in synopsys.
+Date: Mon, 19 Nov 2007 21:28:53 +0100
+Message-ID: <1195504133-7823-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vtznim1s5.fsf@gitster.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 21:29:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuD3T-0007xN-Ev
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 21:17:15 +0100
+	id 1IuDFe-00059C-A1
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 21:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390AbXKSUQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 15:16:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751357AbXKSUQz
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 15:16:55 -0500
-Received: from mail.qikoo.org ([60.28.205.235]:57197 "EHLO mail.qikoo.org"
-	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751375AbXKSUQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 15:16:54 -0500
-Received: by mail.qikoo.org (Postfix, from userid 1029)
-	id C499447067; Tue, 20 Nov 2007 04:12:54 +0800 (CST)
-X-Mailer: git-send-email 1.5.3.5.1878.gb1da0-dirty
+	id S1751385AbXKSU3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 15:29:31 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751370AbXKSU3b
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 15:29:31 -0500
+Received: from imag.imag.fr ([129.88.30.1]:47582 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751302AbXKSU3a (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 15:29:30 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJKSs35023364
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 19 Nov 2007 21:28:54 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IuDEj-00028k-Ul; Mon, 19 Nov 2007 21:28:54 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IuDEj-0003Kt-Py; Mon, 19 Nov 2007 21:28:53 +0100
+X-Mailer: git-send-email 1.5.3.5.724.g49d9d
+In-Reply-To: <7vtznim1s5.fsf@gitster.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 21:28:54 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65496>
 
-When the file descriptor of 'FILE *fp' is assigned to child_process.out
-and then start_command or run_command is run, the standard output of the
-child process is expected to be outputed to fp.
+The HEAD@{...} syntax was documented in git-rev-parse manpage, which
+is hard to find by someone looking for the documentation of porcelain.
+git-reflog is probably the place where one expects to find this.
 
-start_command will always close fp in this case. However, sometimes fp is
-not expected to be closed since further IO may be still performmed on fp.
+While I'm there, "git revlog show whatever" was also undocumented.
 
-This patch disables the auto closing behavious of start_command
-and corrects all codes which depend on this kind of behaviour.
-
-Following is a case that the auto closing behaviour is not expected.
-
-When adding submodule summary feature to builtin-commit, in wt_status_print,
-I want to output the submodule summary between changed and untracked files
-as the following patch shows
-        wt_status_print_changed(s);
-+       wt_status_print_submodule_summary(s);
-        wt_status_print_untracked(s);
-
-All the three calls will output to s->fp (which points to a file instead of
-standard output when doing committing). So I don't want s->fp to be closed after
-wt_status_print_submodule_summary(s) which calls run_command.
-
-+static void wt_status_print_submodule_summary(struct wt_status *s)
-+{
-+       struct child_process sm_summary;
-+       memset(&sm_summary, 0, sizeof(sm_summary));
-+       ...
-+       sm_summary.out = fileno(s->fp);
-+       ...
-+       run_command(&sm_summary);
-+}
-
-Signed-off-by: Ping Yin <pkufranky@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- bundle.c      |    1 +
- convert.c     |    1 +
- run-command.c |    4 ----
- upload-pack.c |    3 ++-
- 4 files changed, 4 insertions(+), 5 deletions(-)
+ Documentation/git-reflog.txt |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index e4d60cd..fc253fb 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -336,6 +336,7 @@ int unbundle(struct bundle_header *header, int bundle_fd)
- 	memset(&ip, 0, sizeof(ip));
- 	ip.argv = argv_index_pack;
- 	ip.in = bundle_fd;
-+	ip.close_in = 1;
- 	ip.no_stdout = 1;
- 	ip.git_cmd = 1;
- 	if (run_command(&ip))
-diff --git a/convert.c b/convert.c
-index 4df7559..ce7bed0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -212,6 +212,7 @@ static int filter_buffer(int fd, void *data)
- 	child_process.argv = argv;
- 	child_process.in = -1;
- 	child_process.out = fd;
-+	child_process.close_out = 1;
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 5c7316c..aeac6f0 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -19,7 +19,7 @@ depending on the subcommand:
+ git reflog expire [--dry-run] [--stale-fix] [--verbose]
+ 	[--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...
  
- 	if (start_command(&child_process))
- 		return error("cannot fork to run external filter %s", params->cmd);
-diff --git a/run-command.c b/run-command.c
-index 476d00c..4e5f58d 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -115,13 +115,9 @@ int start_command(struct child_process *cmd)
+-git reflog [show] [log-options]
++git reflog [show] [log-options] [<ref>]
  
- 	if (need_in)
- 		close(fdin[0]);
--	else if (cmd->in)
--		close(cmd->in);
+ Reflog is a mechanism to record when the tip of branches are
+ updated.  This command is to manage the information recorded in it.
+@@ -32,10 +32,17 @@ directly by the end users -- instead, see gitlink:git-gc[1].
  
- 	if (need_out)
- 		close(fdout[1]);
--	else if (cmd->out > 1)
--		close(cmd->out);
+ The subcommand "show" (which is also the default, in the absence of any
+ subcommands) will take all the normal log options, and show the log of
+-`HEAD`, which will cover all recent actions, including branch switches.
++`HEAD`, or of the reference provided in the command-line, which will
++cover all recent actions, including branch switches.
+ It is basically an alias for 'git log -g --abbrev-commit
+ --pretty=oneline', see gitlink:git-log[1].
  
- 	if (need_err)
- 		close(fderr[1]);
-diff --git a/upload-pack.c b/upload-pack.c
-index 7e04311..7aeda80 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -163,7 +163,8 @@ static void create_pack_file(void)
- 	argv[arg++] = NULL;
++The reflog is useful in various git commands, to specify the old value
++of a reference. For example, `HEAD@\{2\}` means "where HEAD used to be
++two moves ago", `master@\{one.week.ago\}` means "where master used to
++point to one week ago", and so on. See gitlink:git-rev-parse[1] for
++more details.
++
  
- 	memset(&pack_objects, 0, sizeof(pack_objects));
--	pack_objects.in = rev_list.out;	/* start_command closes it */
-+	pack_objects.in = rev_list.out;	
-+	pack_objects.close_in = 1; /* finish_command closes rev_list.out */
- 	pack_objects.out = -1;
- 	pack_objects.err = -1;
- 	pack_objects.git_cmd = 1;
+ OPTIONS
+ -------
 -- 
-1.5.3.5.1878.gb1da0-dirty
+1.5.3.5.724.g49d9d
