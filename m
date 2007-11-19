@@ -1,55 +1,80 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: Git in a Nutshell guide
-Date: Mon, 19 Nov 2007 09:03:44 -0600
-Message-ID: <20071119150344.GG6212@lavos.net>
-References: <1195477504.8093.15.camel@localhost> <20071119150209.GF6212@lavos.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] gitweb: Style all tables using CSS
+Date: Mon, 19 Nov 2007 16:08:45 +0100
+Message-ID: <200711191608.46955.jnareb@gmail.com>
+References: <1195478172-17226-1-git-send-email-jnareb@gmail.com> <1195478172-17226-2-git-send-email-jnareb@gmail.com> <87d4u671kx.fsf@gollum.intra.norang.ca>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jonas Juselius <jonas.juselius@chem.uit.no>
-X-From: git-owner@vger.kernel.org Mon Nov 19 16:04:22 2007
+To: Bernt Hansen <bernt@alumni.uwaterloo.ca>
+X-From: git-owner@vger.kernel.org Mon Nov 19 16:09:47 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu8AQ-0003vR-LD
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 16:04:07 +0100
+	id 1Iu8Fp-0005xM-BK
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 16:09:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756109AbXKSPDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 10:03:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755993AbXKSPDr
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 10:03:47 -0500
-Received: from mxsf00.insightbb.com ([74.128.0.70]:49300 "EHLO
-	mxsf00.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755965AbXKSPDq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 10:03:46 -0500
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="116381922"
-Received: from unknown (HELO asav02.insightbb.com) ([172.31.249.124])
-  by mxsf00.insightbb.com with ESMTP; 19 Nov 2007 10:03:45 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAHM0QUdKhvkY/2dsb2JhbACBWA
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="162239322"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav02.insightbb.com with ESMTP; 19 Nov 2007 10:03:45 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id F1FC9309F21; Mon, 19 Nov 2007 09:03:44 -0600 (CST)
+	id S1752916AbXKSPIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 10:08:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755150AbXKSPIy
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 10:08:54 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:56755 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752916AbXKSPIx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 10:08:53 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1438975nfb
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 07:08:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=2rjVs4crFdK/Wgpvc0zNK6PJ7KCroPRpa/iM+dpF+6o=;
+        b=VL/j+3LhO9OSFytR+C7PBQtyc1u0C6r+DPQly4n/o256Qlx/4UFk4NXBf12FjIKuOtJ91cUr1dZRgFoacZG3kIDDqomKOwCFbdPR9hR7NghhnolB+Jv4TeLPjZ56ocJ2OANBJsXw56SkGTMFmrlbHKNOsRiD1PTr+fWUe2R1xnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=iiLCZZQtlgYzccSlEoXjCUaueDtAoDGoG+DsD3tjZek+DZFtJZvaduO4VDZQyaJEM+FCZ2X0Q2TVTas/GXW+xv5pb6aFe7MbP0VvI+GgOkHCAdMnUkbyTyS7b4YqWFExuEcJ2jR5TEKtBuUonrgictfBglA600cbmxwiaqpoccs=
+Received: by 10.86.80.5 with SMTP id d5mr5122879fgb.1195484931224;
+        Mon, 19 Nov 2007 07:08:51 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.241.246])
+        by mx.google.com with ESMTPS id 4sm3449567fgg.2007.11.19.07.08.49
+        (version=SSLv3 cipher=OTHER);
+        Mon, 19 Nov 2007 07:08:50 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <87d4u671kx.fsf@gollum.intra.norang.ca>
 Content-Disposition: inline
-In-Reply-To: <20071119150209.GF6212@lavos.net>
-User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65453>
 
-On Mon, Nov 19, 2007 at 09:02:09AM -0600, Brian Downing wrote:
-> The default, -1, is the zlib default, which is probably something like 3-6.
-> Setting these to 1 will probably result in less compression, not more.
+Bernt Hansen wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+> 
+> > -	print "<table cellspacing=\"0\">\n" .
+> > +	print "<table class=\"projects_list\">\n" .
+> 
+> Should this class be "project_list" instead?  I don't see a definition
+> of "projects_list" (plural) anywhere.
 
-It's 6:
+Now that you mentioned it, I have checked and... we have a bit of 
+inconsistency in gitweb here. There are $projects_list and 
+$projects_list_description_width variables (plural), 
+git_get_projects_list subroutine (also plural), but view is called 
+'project_list', it is generated by git_project_list subroutine using 
+git_get_project_list_from_file and git_project_lis_body subroutines.
 
->  Z_DEFAULT_COMPRESSION requests a default compromise between speed and
->  compression (currently equivalent to level 6).
+I am not native English speaker: gitweb mean here "list of projects".
+We should probably uniqueify number to either plural or singular, and 
+not mixed as it is now. But this is a bit of nitpicking/paintshed...
 
--bcd
+Changing action name from 'project_list' would be hard because of 
+backward compatibility... _if_ we officially used this action; it is 
+default action when no project is selected, and all links use this 
+form.
+
+-- 
+Jakub Narebski
+Poland
