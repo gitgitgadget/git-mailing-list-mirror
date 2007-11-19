@@ -1,75 +1,89 @@
-From: "Martin Langhoff" <martin.langhoff@gmail.com>
-Subject: Re: git merge no longer handles add/add
-Date: Tue, 20 Nov 2007 07:33:27 +1300
-Message-ID: <46a038f90711191033s4bc5ab50kd3e4f30d6b301e43@mail.gmail.com>
-References: <46a038f90711181918s2743137amc6a827db6d1a6a0@mail.gmail.com>
-	 <46a038f90711181929x4bf0794eue73a5dbac8e2688a@mail.gmail.com>
-	 <7vtznipweu.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git list" <git@vger.kernel.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 19:35:29 2007
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Doc fix for git-reflog: mention @{...} syntax, and <ref> in synopsys.
+Date: Mon, 19 Nov 2007 19:35:42 +0100
+Message-ID: <1195497342-26334-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqtznirtlk.fsf@bauges.imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 19:37:52 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuBS4-0004n4-I6
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:34:33 +0100
+	id 1IuBTy-0005NR-IZ
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:36:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751001AbXKSSda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 13:33:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751407AbXKSSd3
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:33:29 -0500
-Received: from ug-out-1314.google.com ([66.249.92.169]:54905 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751001AbXKSSd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 13:33:28 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so1008349ugc
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 10:33:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=hPdbdKnH/ibo+LzqUzcju7EU1DZVvqgMJAeKXPASQ9E=;
-        b=IaGRSuPK62Q7CwgggUR5PE7kom4fqGiCkNZBU1HerA8B58nLMkOO4QiWAg1JzxdbwiWrEACzbikJ7vtwsUmf9hgbfSOz/+yvspYlrXKfrssHwUpe+bvZtCGkF21LrI8f+n1vx9ip6fZSdv3uVpQqeSSlD+Mp7YtQGilsc4lZtpw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=gIVYzLasu2KWasJfkyYn22SBcgBL0I5+NSW/vSds2kxlc+wj6j9KaLdVwpTZ2ZZ1goNCgDddd8MhKi92rMQgvQJWpMb8ZrL57RESDsZ+XwdxYsbqxmVtaFfYYgtZrr2Z200kQ+rtLluKXqMfJDbtGreE5NYhCfX6fo7fsvcRZUo=
-Received: by 10.66.237.9 with SMTP id k9mr2520587ugh.1195497207211;
-        Mon, 19 Nov 2007 10:33:27 -0800 (PST)
-Received: by 10.66.250.13 with HTTP; Mon, 19 Nov 2007 10:33:27 -0800 (PST)
-In-Reply-To: <7vtznipweu.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752225AbXKSSf4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 13:35:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751976AbXKSSf4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:35:56 -0500
+Received: from imag.imag.fr ([129.88.30.1]:62688 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751255AbXKSSfz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 13:35:55 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJIZgBa029991
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 19 Nov 2007 19:35:42 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IuBTC-0007nC-DZ; Mon, 19 Nov 2007 19:35:42 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IuBTC-0006ux-8k; Mon, 19 Nov 2007 19:35:42 +0100
+X-Mailer: git-send-email 1.5.3.5.724.g49d9d
+In-Reply-To: <vpqtznirtlk.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 19:35:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65485>
 
-On Nov 19, 2007 7:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> As far as the point of the merge is concerned, that's an add/add
-> of _different_ contents, and we have always left the conflict to
-> resolve for you since day one.  The only case we handle without
-> complaining is the accidental *clean* merge.  Both branches adds
-> the path *identically* compared to the common ancestor.
+The HEAD@{...} syntax was documented in git-rev-parse manpage, which
+is hard to find by someone looking for the documentation of porcelain.
+git-reflog is probably the place where one expects to find this.
 
-Even if the 2 paths did have matching content at one point? In fact,
-the 2 files here get added with identicaly content and one of them is
-later modified...
+While I'm there, "git revlog show whatever" was also undocumented.
+---
+ Documentation/git-reflog.txt |   11 +++++++++--
+ 1 files changed, 9 insertions(+), 2 deletions(-)
 
-> The very initial implementation of merge may have used the total
-> emptyness as the common ancestor for the merge, and later we
-> made it a bit more pleasant to resolve by computing the common
-> part of the file from the two branches to be used as a fake
-> ancestor contents.  But the fact we left the result as conflict
-> for you to validate hasn't changed and will not change.
-
-In this case, if you use the common part (100%) as the ancestor, then
-you get a _clean_ merge. The file is added on both sides identically,
-and then it changes on one side.
-
-I'll see if I can repro with an older git install...
-
-
-m
+diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
+index 5c7316c..aeac6f0 100644
+--- a/Documentation/git-reflog.txt
++++ b/Documentation/git-reflog.txt
+@@ -19,7 +19,7 @@ depending on the subcommand:
+ git reflog expire [--dry-run] [--stale-fix] [--verbose]
+ 	[--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...
+ 
+-git reflog [show] [log-options]
++git reflog [show] [log-options] [<ref>]
+ 
+ Reflog is a mechanism to record when the tip of branches are
+ updated.  This command is to manage the information recorded in it.
+@@ -32,10 +32,17 @@ directly by the end users -- instead, see gitlink:git-gc[1].
+ 
+ The subcommand "show" (which is also the default, in the absence of any
+ subcommands) will take all the normal log options, and show the log of
+-`HEAD`, which will cover all recent actions, including branch switches.
++`HEAD`, or of the reference provided in the command-line, which will
++cover all recent actions, including branch switches.
+ It is basically an alias for 'git log -g --abbrev-commit
+ --pretty=oneline', see gitlink:git-log[1].
+ 
++The reflog is useful in various git commands, to specify the old value
++of a reference. For example, `HEAD@\{2\}` means "where HEAD used to be
++two moves ago", `master@\{one.week.ago\}` means "where master used to
++point to one week ago", and so on. See gitlink:git-rev-parse[1] for
++more details.
++
+ 
+ OPTIONS
+ -------
+-- 
+1.5.3.5.724.g49d9d
