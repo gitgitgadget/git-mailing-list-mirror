@@ -1,64 +1,71 @@
-From: Nicolas Pitre <nico@cam.org>
-Subject: Re: [PATCH] config: correct and clarify core.*compression documentation
-Date: Mon, 19 Nov 2007 11:43:56 -0500 (EST)
-Message-ID: <alpine.LFD.0.99999.0711191139240.19105@xanadu.home>
-References: <20071119152853.GH6212@lavos.net>
- <alpine.LFD.0.99999.0711191049440.19105@xanadu.home>
- <20071119162307.GI6212@lavos.net>
+From: "Lars Hjemli" <hjemli@gmail.com>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 17:45:45 +0100
+Message-ID: <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
+References: <1195477504.8093.15.camel@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonas Juselius <jonas.juselius@chem.uit.no>
-To: Brian Downing <bdowning@lavos.net>
-X-From: git-owner@vger.kernel.org Mon Nov 19 17:45:00 2007
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Jonas Juselius" <jonas.juselius@chem.uit.no>
+X-From: git-owner@vger.kernel.org Mon Nov 19 17:46:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu9js-0000ec-Eg
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:44:48 +0100
+	id 1Iu9lE-0001CO-RO
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:46:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752801AbXKSQob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 11:44:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752990AbXKSQob
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:44:31 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:44876 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752342AbXKSQoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 11:44:30 -0500
-Received: from xanadu.home ([74.56.106.175]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0JRR00G48IH861S0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 19 Nov 2007 11:43:57 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20071119162307.GI6212@lavos.net>
-User-Agent: Alpine 0.99999 (LFD 814 2007-11-14)
+	id S1753261AbXKSQpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 11:45:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753143AbXKSQpz
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:45:55 -0500
+Received: from nz-out-0506.google.com ([64.233.162.225]:35194 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753120AbXKSQpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 11:45:55 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so1334657nze
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 08:45:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=h6eXCZ4QR8G9SloZl36j9QyraEIc2dWUgBP4Z2W0PSY=;
+        b=G/vqK94MLahu9o8jRwRijBitp3QZ0slZ5NJuqsdymmq5LTkEn9wtsQ1tBLKd9HME6dhj6vLIlh23Yh/1rzJdx6l24ZDlctl1A9v03F3Fkx1rjAqnlo2/RZQsERGaOCkcbnalzU4Tlafdp89LsuG72kajElaXjREBlp82C05iw9k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=awXEgVSDNNXLkcNuoDyWnJbeJYnAiVc4gcIM7eLnSgV7tP8iIdJ3NE/ZU7JLjygT1AMNgYAEd/9KrVHNv4sHAEB1inFtzicuZLRtzrPkVTSUCmPEREYNzsbXAqeFdrQZ9ZOTBHMf7qA5ae4oKCEOCwEuxcL/56v8PwD4pXbCPqI=
+Received: by 10.114.196.1 with SMTP id t1mr93293waf.1195490745402;
+        Mon, 19 Nov 2007 08:45:45 -0800 (PST)
+Received: by 10.114.235.4 with HTTP; Mon, 19 Nov 2007 08:45:45 -0800 (PST)
+In-Reply-To: <1195477504.8093.15.camel@localhost>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65463>
 
-On Mon, 19 Nov 2007, Brian Downing wrote:
+On Nov 19, 2007 2:05 PM, Jonas Juselius <jonas.juselius@chem.uit.no> wrote:
+> All comments
+> and suggestions are welcome!
 
-> On Mon, Nov 19, 2007 at 10:51:31AM -0500, Nicolas Pitre wrote:
-> > > * Explain that the default of core.compression is -1, zlib default, and
-> > >   add a quote from zlib.h explaining what that actually means.
-> > 
-> > No, this is wrong.  core.compression has no default.  It is meaningful 
-> > only when an explicit value is configured.
-> 
-> Would you prefer this?
-> 
->        If not set, packs will be compressed to the zlib default level,
->        which is "a default compromise between speed and compression
->        (currently equivalent to level 6)."
+Very nice introduction, but I have a couple of comments.
 
-This is still rather incorrect.  If you want to be thorough, you should 
-say that this setting provides a global default for pack.compression and 
-core.loosecompression when those settings are not set.  Otherwise 
-pack.compression and core.loosecompression have a default of their own 
-when neither is set.
+In "Specifying revisions" you say that '^' and '~' are equal, but that
+is not true. ^ is used to select the first parent of a commit, ^2
+selects the second parent of a merge commit (and ^3 selects the third
+parent of an octopus merge), while the '~' is used to go back any
+number of generations, following the first parents of each commit (~
+selects the first parent, ~2 selects the first grand-parent etc).
 
+Also, I think you might scare users away from 'git reset':
 
-Nicolas
+  git reset resets the branch to a specified state invisibly and
+  without possibility to go back. Ever. Your call.
+
+That's not true, since any "modern" git has reflogs enabled. If you do
+'git reset --hard HEAD^^^' and then realize it was a mistake you can
+just 'git reset --hard HEAD@{1}'
+
+-- 
+larsh
