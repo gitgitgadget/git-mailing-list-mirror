@@ -1,156 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] autoconf: Add tests for memmem, strtoumax and mkdtemp functions
-Date: Mon, 19 Nov 2007 19:47:05 +0100
-Message-ID: <200711191947.05960.jnareb@gmail.com>
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: Re: [PATCH v2] git-send-email: show all headers when sending mail
+Date: Mon, 19 Nov 2007 10:50:27 -0800 (PST)
+Message-ID: <327906.50991.qm@web52410.mail.re2.yahoo.com>
+References: <7voddqodhs.fsf@gitster.siamese.dyndns.org>
+Reply-To: ddkilzer@kilzer.net
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 19 19:49:46 2007
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 19:51:30 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuBfr-0001Nh-QF
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:48:48 +0100
+	id 1IuBhn-0002Aa-Tv
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:50:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754552AbXKSSrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 13:47:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754300AbXKSSrR
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:47:17 -0500
-Received: from nf-out-0910.google.com ([64.233.182.187]:57942 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754123AbXKSSrP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 13:47:15 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1504195nfb
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 10:47:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=DLOzi5YBtM5DPQMpjhHmc9Cc1tLdTw1JyXcXKinMvE8=;
-        b=ZNn7+AtWYzyq0l9iMmB6PvEqMeYhR9fpwg3G+o1Z5dZFpBWLfJX49ulnfwqADoOiz7+zCmE6nK1P3FCvDilNaziE5znZ+dCIvVn3oMIc04jDpQpDfsaAL1pdO0W5jjRJhvkAX20LNI6Ka6kXZIxMxB0F43Ff4ZMjPtGxBLZEiEE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=RP6Pyy6iib0X4chPyQrD1nhtvRXslNOntKpOiUbtiedhlXK6yJvCnk+bTw4Y8F8jMnlG1Qh6apM215UPuDbt8M4BhqYgDCV6jGwn5IuJ3Xloc5dXsr3NdkEQPmGCUa5s4h/XRKFDJMU8m1Riwt+EX1c+uncYxuFHSR1GEUM3QT0=
-Received: by 10.86.86.12 with SMTP id j12mr5305892fgb.1195498033269;
-        Mon, 19 Nov 2007 10:47:13 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.241.246])
-        by mx.google.com with ESMTPS id 4sm3596451fge.2007.11.19.10.47.11
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Nov 2007 10:47:12 -0800 (PST)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1751097AbXKSSu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 13:50:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751340AbXKSSu3
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:50:29 -0500
+Received: from web52410.mail.re2.yahoo.com ([206.190.48.173]:27043 "HELO
+	web52410.mail.re2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1750948AbXKSSu2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2007 13:50:28 -0500
+Received: (qmail 53333 invoked by uid 60001); 19 Nov 2007 18:50:27 -0000
+X-YMail-OSG: MZOKpf8VM1ll_74YL7DxILt3SY6yRPZjezwIR27qawg1vErNgKTal5wF6zaeesBHmQ--
+Received: from [24.7.124.164] by web52410.mail.re2.yahoo.com via HTTP; Mon, 19 Nov 2007 10:50:27 PST
+X-RocketYMMF: ddkilzer
+In-Reply-To: <7voddqodhs.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65488>
 
-Update configure.ac (and config.mak.in) to keep up with git
-development by adding tests for memmem (NO_MEMMEM), strtoumax
-(NO_STRTOUMAX) and mkdtemp (NO_MKDTEMP) functions.
+I can't seem to reproduce this.  Could you send me (off-list)
+0001-branch-contains.txt and any relevant config bits?
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is beginning of "bring configure up to date" thingy.
-
-By the way, do you have idea how to test for the following
-in configure.ac:
-
-* Define NO_PREAD if you have a problem with pread() system call (e.g.
-  cygwin.dll before v1.5.22).
-
-  - what is the problem? how to detect it?
-
-* Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
-  generally faster on your platform than accessing the working directory.
-
-  - if at all possible
-
-* Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
-  the executable mode bit, but doesn't really do so.
-
-  - I think there were some code here
-
-* Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
-  that tells runtime paths to dynamic libraries;
-  "-Wl,-rpath=/path/lib" is used instead.
-
-* Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
-  MakeMaker (e.g. using ActiveState under Cygwin).
-
-* Define ASCIIDOC8 if you want to format documentation with AsciiDoc 8
-* Define DOCBOOK_XSL_172 if you want to format man pages with DocBook XSL v1.72.
-
-  - it needs some portable way to check asciidoc and docbook-xsl version
-
-* Define OLD_ICONV if your library has an old iconv(), where the second
-  (input buffer pointer) parameter is declared with type (const char **).
-
-  - perhaps compile with new iconv and check for compile errors?
+Dave
 
 
- config.mak.in |    3 +++
- configure.ac  |   18 ++++++++++++++++++
- 2 files changed, 21 insertions(+), 0 deletions(-)
+Junio C Hamano <gitster@pobox.com> wrote:
 
-diff --git a/config.mak.in b/config.mak.in
-index 776b805..11d256e 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -35,7 +35,10 @@ NO_SOCKADDR_STORAGE=@NO_SOCKADDR_STORAGE@
- NO_IPV6=@NO_IPV6@
- NO_C99_FORMAT=@NO_C99_FORMAT@
- NO_STRCASESTR=@NO_STRCASESTR@
-+NO_MEMMEM=@NO_MEMMEM@
- NO_STRLCPY=@NO_STRLCPY@
-+NO_STRTOUMAX=@NO_STRTOUMAX@
- NO_SETENV=@NO_SETENV@
-+NO_MKDTEMP=@NO_MKDTEMP@
- NO_ICONV=@NO_ICONV@
- NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
-diff --git a/configure.ac b/configure.ac
-index 53e9a17..7bcf1a4 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -289,18 +289,36 @@ AC_CHECK_FUNC(strcasestr,
- [NO_STRCASESTR=YesPlease])
- AC_SUBST(NO_STRCASESTR)
- #
-+# Define NO_MEMMEM if you don't have memmem.
-+AC_CHECK_FUNC(memmem,
-+[NO_MEMMEM=],
-+[NO_MEMMEM=YesPlease])
-+AC_SUBST(NO_MEMMEM)
-+#
- # Define NO_STRLCPY if you don't have strlcpy.
- AC_CHECK_FUNC(strlcpy,
- [NO_STRLCPY=],
- [NO_STRLCPY=YesPlease])
- AC_SUBST(NO_STRLCPY)
- #
-+# Define NO_STRTOUMAX if you don't have strtoumax in the C library.
-+AC_CHECK_FUNC(strtoumax,
-+[NO_STRTOUMAX=],
-+[NO_STRTOUMAX=YesPlease])
-+AC_SUBST(NO_STRTOUMAX)
-+#
- # Define NO_SETENV if you don't have setenv in the C library.
- AC_CHECK_FUNC(setenv,
- [NO_SETENV=],
- [NO_SETENV=YesPlease])
- AC_SUBST(NO_SETENV)
- #
-+# Define NO_MKDTEMP if you don't have mkdtemp in the C library.
-+AC_CHECK_FUNC(mkdtemp,
-+[NO_MKDTEMP=],
-+[NO_MKDTEMP=YesPlease])
-+AC_SUBST(NO_MKDTEMP)
-+#
- # Define NO_MMAP if you want to avoid mmap.
- #
- # Define NO_ICONV if your libc does not properly support iconv.
--- 
-1.5.3.5
+> Thanks.  Looks nice and obviously correct.
+> 
+> One thing that has been bugging me for a long time now stands
+> out like a sore thumb much more: empty Cc: is shown.
+> 
+>     $ git-send-email --dry-run --to=junio@my.isp.net 0001-branch-contains.txt
+>     Who should the emails appear to be from? [Junio C Hamano
+> <gitster@pobox.com>]
+>     Emails will be sent from: Junio C Hamano <gitster@pobox.com>
+>     Message-ID to be used as In-Reply-To for the first email?
+>     0001-branch-contains.txt
+>     Dry-OK. Log says:
+>     Date: Mon, 19 Nov 2007 00:10:04 -0800
+>     Server: my.isp.net
+>     MAIL FROM:<gitster@pobox.com>
+>     RCPT TO:<junio@my.isp.net>
+>     From: Junio C Hamano <gitster@pobox.com>
+>     Subject: [PATCH] branch --contains=<commit>
+>     Cc:
+>     To: junkio@cox.net
+> 
+>     Result: OK
