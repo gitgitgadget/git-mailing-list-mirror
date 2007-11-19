@@ -1,118 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-daemon
-Date: Mon, 19 Nov 2007 14:23:41 -0800
-Message-ID: <7vbq9pnac2.fsf@gitster.siamese.dyndns.org>
-References: <598D5675D34BE349929AF5EDE9B03E27017BCC42@az33exm24.fsl.freescale.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
+Date: Mon, 19 Nov 2007 23:29:44 +0100
+Message-ID: <200711192329.44905.jnareb@gmail.com>
+References: <Pine.LNX.4.64.0711121501500.4362@racer.site> <200711192204.26772.jnareb@gmail.com> <7vfxz1naq0.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Medve Emilian" <Emilian.Medve@freescale.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 23:24:12 2007
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 23:30:13 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuF2H-0006I2-TQ
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:24:10 +0100
+	id 1IuF88-0008Ht-6j
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:30:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520AbXKSWXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 17:23:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752209AbXKSWXr
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:23:47 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:53437 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753303AbXKSWXq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 17:23:46 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id 4A8B52F0;
-	Mon, 19 Nov 2007 17:24:07 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 9EE389793A;
-	Mon, 19 Nov 2007 17:24:04 -0500 (EST)
-In-Reply-To: <598D5675D34BE349929AF5EDE9B03E27017BCC42@az33exm24.fsl.freescale.net>
-	(Medve Emilian's message of "Mon, 19 Nov 2007 14:13:12 -0700")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752099AbXKSW3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 17:29:49 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbXKSW3s
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:29:48 -0500
+Received: from nf-out-0910.google.com ([64.233.182.190]:24891 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417AbXKSW3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 17:29:47 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1563536nfb
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 14:29:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=DY+jrx/09b1OtWNc2g6POCXJSBt7uws+JbOw082WnJw=;
+        b=Gm7IQWf+eqMulgrRbU04har4rryTd8l+SfcHBINKGlpD6IGr4BYxFmeaP7Ucd1AbiTQxgbIYAM3uil3MVQB2vRmP7lxL1PfqG2jrAwTgC6HE/+YHtEdE4yETTQ6Kv1QNtwQCwag9T6yAydAWIKwAl3u1RvzA8NAI9lhVPInj0JQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=iwhxXKLZ3Ke7JZ4Xezjaa9IZT/2bMLJB3jAqNvp1hx5YRdxpdDAkem9/wmrn+lEBTzcX6KTreUV7aKW5iUmI7outaTOvjf/NOotGYomOwRi4+VePRy+17ZekrfQrewyifRtw7A+3mdEyYDlq+VPNhGxPFpMnkURervQUftRZTbA=
+Received: by 10.86.26.11 with SMTP id 11mr5473683fgz.1195511386103;
+        Mon, 19 Nov 2007 14:29:46 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.241.246])
+        by mx.google.com with ESMTPS id e20sm7477255fga.2007.11.19.14.29.44
+        (version=SSLv3 cipher=OTHER);
+        Mon, 19 Nov 2007 14:29:45 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vfxz1naq0.fsf@gitster.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65510>
 
-"Medve Emilian" <Emilian.Medve@freescale.com> writes:
+Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>> Junio C Hamano wrote:
 
-> It seems that something changed since maint/v.1.5.3.6 such that on
-> master and next git-daemon doesn't seem to be working anymore in inetd
-> mode. Can somebody please confirm this?
+>>> IOW, make these: 
+>>> 
+>>> 	$ git push HEAD
+>>>     $ git push next
+>>> 
+>>> push the obvious thing to the default remote, I _think_ we can
+>>> achieve the same effect as --current and a bit more.
+>>
+>> The only problem would be when there is conflict between remote name and 
+>> branch name...
 
-Sorry, I cannot quite parse.  Do you mean:
+What about idea of using "--" to separate remote from branchname?
 
-	master and next used to work.  Recently 'maint' was
-	merged to them after v1.5.3.6 was cut.  master and next
-	does not work anymore after that.
+> Yes.  *If* we were to do that fallback it has to be something
+> like this:
+> 
+>  (1) does $0 look like remote and $1..$n look like a refspec?  If
+>      so do not fallback;
 
-Or do you mean:
-
-	maint (specifically at v1.5.3.6) works, but master and
-	next contain more changes on top of them, and they do
-	not work.
-
-In either case, the only change to the daemon code between
-v1.5.3.5 and master is this one:
-
-commit c67359be45be74e1056d6293c6bb09ee6d00a54a
-Author: Gerrit Pape <pape@smarden.org>
-Date:   Mon Nov 5 09:16:22 2007 +0000
-
-    git-daemon: fix remote port number in log entry
-    
-    The port number in struct sockaddr_in needs to be converted from network
-    byte order to host byte order (on some architectures).
-    
-    Signed-off-by: Gerrit Pape <pape@smarden.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- daemon.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/daemon.c b/daemon.c
-index 660e155..b8df980 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -540,7 +540,7 @@ static int execute(struct sockaddr *addr)
- 		if (addr->sa_family == AF_INET) {
- 			struct sockaddr_in *sin_addr = (void *) addr;
- 			inet_ntop(addr->sa_family, &sin_addr->sin_addr, addrbuf, sizeof(addrbuf));
--			port = sin_addr->sin_port;
-+			port = ntohs(sin_addr->sin_port);
- #ifndef NO_IPV6
- 		} else if (addr && addr->sa_family == AF_INET6) {
- 			struct sockaddr_in6 *sin6_addr = (void *) addr;
-@@ -550,7 +550,7 @@ static int execute(struct sockaddr *addr)
- 			inet_ntop(AF_INET6, &sin6_addr->sin6_addr, buf, sizeof(addrbuf) - 1);
- 			strcat(buf, "]");
+By "look like remote" you mean that there is [remote "$0"] section
+in config (I guess that we can not support old .git/remotes/<remote>
+configuration for _new_ features, especially that there exist script
+converting to new way of configuring remotes, contrib/remotes2config.sh)
  
--			port = sin6_addr->sin6_port;
-+			port = ntohs(sin6_addr->sin6_port);
- #endif
- 		}
- 		loginfo("Connection from %s:%d", addrbuf, port);
+>  (2) Do we have branch.$current.remote?  If not, we cannot
+>      fallback so error out.
 
-I do not see anything wrong in it.  The "port" variable is very
-local to this function and is used only for that loginfo() call
-at the end of the context.  So I am quite puzzled.
+Do not fallback to "origin"?
 
-We have another irrelevant style change that is full of things
-like this, but I do not think that makes any behaviour
-difference either.
+>  (3) otherwise, does $0 look like a refspec?  If so, try insert
+>      it before the params, treating $0..$n all refspecs.
 
-@@ -406,7 +406,8 @@ static struct daemon_service daemon_service[] = {
- 	{ "receive-pack", "receivepack", receive_pack, 0, 1 },
- };
- 
--static void enable_service(const char *name, int ena) {
-+static void enable_service(const char *name, int ena)
-+{
- 	int i;
- 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
- 		if (!strcmp(daemon_service[i].name, name)) {
+You mean $0 is existing branch, or of the form branch:<whatever>?
+Or should we forbid remote names containing ':'?
+
+>> BTW. what would happen for "git push branch1 branch2" if branch1 has 
+>> different remote than branch2?
+> 
+> Read my example more carefully.  It says "push HEAD" and "push
+> next" while on 'pu' and it takes branch.pu.remote.
+
+Somehow I missed that $current means _current branch_ (branch we are on,
+which defines default remote). 
+
+-- 
+Jakub Narebski
+Poland
