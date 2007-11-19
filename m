@@ -1,63 +1,156 @@
-From: "J. Bruce Fields" <bfields@fieldses.org>
-Subject: Re: git merge no longer handles add/add
-Date: Mon, 19 Nov 2007 13:46:57 -0500
-Message-ID: <20071119184657.GE14295@fieldses.org>
-References: <46a038f90711181918s2743137amc6a827db6d1a6a0@mail.gmail.com> <46a038f90711181929x4bf0794eue73a5dbac8e2688a@mail.gmail.com> <7vtznipweu.fsf@gitster.siamese.dyndns.org> <46a038f90711191033s4bc5ab50kd3e4f30d6b301e43@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] autoconf: Add tests for memmem, strtoumax and mkdtemp functions
+Date: Mon, 19 Nov 2007 19:47:05 +0100
+Message-ID: <200711191947.05960.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 19:48:27 2007
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 19:49:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuBeW-0000ja-3h
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:47:24 +0100
+	id 1IuBfr-0001Nh-QF
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:48:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753569AbXKSSrE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 13:47:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753418AbXKSSrD
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:47:03 -0500
-Received: from mail.fieldses.org ([66.93.2.214]:57020 "EHLO fieldses.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753180AbXKSSrA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 13:47:00 -0500
-Received: from bfields by fieldses.org with local (Exim 4.68)
-	(envelope-from <bfields@fieldses.org>)
-	id 1IuBe5-0004RZ-3E; Mon, 19 Nov 2007 13:46:57 -0500
+	id S1754552AbXKSSrS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 13:47:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754300AbXKSSrR
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:47:17 -0500
+Received: from nf-out-0910.google.com ([64.233.182.187]:57942 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754123AbXKSSrP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 13:47:15 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1504195nfb
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 10:47:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=DLOzi5YBtM5DPQMpjhHmc9Cc1tLdTw1JyXcXKinMvE8=;
+        b=ZNn7+AtWYzyq0l9iMmB6PvEqMeYhR9fpwg3G+o1Z5dZFpBWLfJX49ulnfwqADoOiz7+zCmE6nK1P3FCvDilNaziE5znZ+dCIvVn3oMIc04jDpQpDfsaAL1pdO0W5jjRJhvkAX20LNI6Ka6kXZIxMxB0F43Ff4ZMjPtGxBLZEiEE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=RP6Pyy6iib0X4chPyQrD1nhtvRXslNOntKpOiUbtiedhlXK6yJvCnk+bTw4Y8F8jMnlG1Qh6apM215UPuDbt8M4BhqYgDCV6jGwn5IuJ3Xloc5dXsr3NdkEQPmGCUa5s4h/XRKFDJMU8m1Riwt+EX1c+uncYxuFHSR1GEUM3QT0=
+Received: by 10.86.86.12 with SMTP id j12mr5305892fgb.1195498033269;
+        Mon, 19 Nov 2007 10:47:13 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.241.246])
+        by mx.google.com with ESMTPS id 4sm3596451fge.2007.11.19.10.47.11
+        (version=SSLv3 cipher=OTHER);
+        Mon, 19 Nov 2007 10:47:12 -0800 (PST)
+User-Agent: KMail/1.9.3
 Content-Disposition: inline
-In-Reply-To: <46a038f90711191033s4bc5ab50kd3e4f30d6b301e43@mail.gmail.com>
-User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65487>
 
-On Tue, Nov 20, 2007 at 07:33:27AM +1300, Martin Langhoff wrote:
-> On Nov 19, 2007 7:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> > As far as the point of the merge is concerned, that's an add/add
-> > of _different_ contents, and we have always left the conflict to
-> > resolve for you since day one.  The only case we handle without
-> > complaining is the accidental *clean* merge.  Both branches adds
-> > the path *identically* compared to the common ancestor.
-> 
-> Even if the 2 paths did have matching content at one point? In fact,
-> the 2 files here get added with identicaly content and one of them is
-> later modified...
-> 
-> > The very initial implementation of merge may have used the total
-> > emptyness as the common ancestor for the merge, and later we
-> > made it a bit more pleasant to resolve by computing the common
-> > part of the file from the two branches to be used as a fake
-> > ancestor contents.  But the fact we left the result as conflict
-> > for you to validate hasn't changed and will not change.
-> 
-> In this case, if you use the common part (100%) as the ancestor, then
-> you get a _clean_ merge. The file is added on both sides identically,
-> and then it changes on one side.
+Update configure.ac (and config.mak.in) to keep up with git
+development by adding tests for memmem (NO_MEMMEM), strtoumax
+(NO_STRTOUMAX) and mkdtemp (NO_MKDTEMP) functions.
 
-That sounds like an inevitable consequence of git's design--it only uses
-a global (not a per-file) common ancestor.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is beginning of "bring configure up to date" thingy.
 
---b.
+By the way, do you have idea how to test for the following
+in configure.ac:
+
+* Define NO_PREAD if you have a problem with pread() system call (e.g.
+  cygwin.dll before v1.5.22).
+
+  - what is the problem? how to detect it?
+
+* Define NO_FAST_WORKING_DIRECTORY if accessing objects in pack files is
+  generally faster on your platform than accessing the working directory.
+
+  - if at all possible
+
+* Define NO_TRUSTABLE_FILEMODE if your filesystem may claim to support
+  the executable mode bit, but doesn't really do so.
+
+  - I think there were some code here
+
+* Define NO_R_TO_GCC_LINKER if your gcc does not like "-R/path/lib"
+  that tells runtime paths to dynamic libraries;
+  "-Wl,-rpath=/path/lib" is used instead.
+
+* Define NO_PERL_MAKEMAKER if you cannot use Makefiles generated by perl's
+  MakeMaker (e.g. using ActiveState under Cygwin).
+
+* Define ASCIIDOC8 if you want to format documentation with AsciiDoc 8
+* Define DOCBOOK_XSL_172 if you want to format man pages with DocBook XSL v1.72.
+
+  - it needs some portable way to check asciidoc and docbook-xsl version
+
+* Define OLD_ICONV if your library has an old iconv(), where the second
+  (input buffer pointer) parameter is declared with type (const char **).
+
+  - perhaps compile with new iconv and check for compile errors?
+
+
+ config.mak.in |    3 +++
+ configure.ac  |   18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+), 0 deletions(-)
+
+diff --git a/config.mak.in b/config.mak.in
+index 776b805..11d256e 100644
+--- a/config.mak.in
++++ b/config.mak.in
+@@ -35,7 +35,10 @@ NO_SOCKADDR_STORAGE=@NO_SOCKADDR_STORAGE@
+ NO_IPV6=@NO_IPV6@
+ NO_C99_FORMAT=@NO_C99_FORMAT@
+ NO_STRCASESTR=@NO_STRCASESTR@
++NO_MEMMEM=@NO_MEMMEM@
+ NO_STRLCPY=@NO_STRLCPY@
++NO_STRTOUMAX=@NO_STRTOUMAX@
+ NO_SETENV=@NO_SETENV@
++NO_MKDTEMP=@NO_MKDTEMP@
+ NO_ICONV=@NO_ICONV@
+ NO_DEFLATE_BOUND=@NO_DEFLATE_BOUND@
+diff --git a/configure.ac b/configure.ac
+index 53e9a17..7bcf1a4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -289,18 +289,36 @@ AC_CHECK_FUNC(strcasestr,
+ [NO_STRCASESTR=YesPlease])
+ AC_SUBST(NO_STRCASESTR)
+ #
++# Define NO_MEMMEM if you don't have memmem.
++AC_CHECK_FUNC(memmem,
++[NO_MEMMEM=],
++[NO_MEMMEM=YesPlease])
++AC_SUBST(NO_MEMMEM)
++#
+ # Define NO_STRLCPY if you don't have strlcpy.
+ AC_CHECK_FUNC(strlcpy,
+ [NO_STRLCPY=],
+ [NO_STRLCPY=YesPlease])
+ AC_SUBST(NO_STRLCPY)
+ #
++# Define NO_STRTOUMAX if you don't have strtoumax in the C library.
++AC_CHECK_FUNC(strtoumax,
++[NO_STRTOUMAX=],
++[NO_STRTOUMAX=YesPlease])
++AC_SUBST(NO_STRTOUMAX)
++#
+ # Define NO_SETENV if you don't have setenv in the C library.
+ AC_CHECK_FUNC(setenv,
+ [NO_SETENV=],
+ [NO_SETENV=YesPlease])
+ AC_SUBST(NO_SETENV)
+ #
++# Define NO_MKDTEMP if you don't have mkdtemp in the C library.
++AC_CHECK_FUNC(mkdtemp,
++[NO_MKDTEMP=],
++[NO_MKDTEMP=YesPlease])
++AC_SUBST(NO_MKDTEMP)
++#
+ # Define NO_MMAP if you want to avoid mmap.
+ #
+ # Define NO_ICONV if your libc does not properly support iconv.
+-- 
+1.5.3.5
