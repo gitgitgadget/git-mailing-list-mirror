@@ -1,83 +1,88 @@
-From: Benoit Sigoure <tsuna@lrde.epita.fr>
+From: Daniel Barkalow <barkalow@iabervon.org>
 Subject: Re: Git in a Nutshell guide
-Date: Mon, 19 Nov 2007 22:51:35 +0100
-Message-ID: <0E0AA90A-2282-4AFE-8B94-EA0E35B57D65@lrde.epita.fr>
-References: <1195477504.8093.15.camel@localhost> <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com> <E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr> <8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com> <25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr> <vpqtznirtlk.fsf@bauges.imag.fr> <60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr> <vpq63zxq5s2.fsf@bauges.imag.fr>
-Mime-Version: 1.0 (Apple Message framework v752.3)
-Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-20-306047434"
-Content-Transfer-Encoding: 7bit
-Cc: Lars Hjemli <hjemli@gmail.com>,
-	"Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 19 22:52:17 2007
+Date: Mon, 19 Nov 2007 17:01:23 -0500 (EST)
+Message-ID: <Pine.LNX.4.64.0711191617150.12193@iabervon.org>
+References: <1195477504.8093.15.camel@localhost> <fhsc7b$k4g$1@ger.gmane.org>
+ <1195488877.10573.29.camel@localhost> <3057F6F3-BEAA-447A-AB79-A0AFB7DB8826@lrde.epita.fr>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Jonas Juselius <jonas.juselius@chem.uit.no>,
+	Git Mailing List <git@vger.kernel.org>
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 19 23:02:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuEXM-0003WN-71
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 22:52:12 +0100
+	id 1IuEhT-0007FK-Jj
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:02:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751710AbXKSVvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 16:51:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXKSVvy
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 16:51:54 -0500
-Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:51677 "EHLO
-	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751548AbXKSVvy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 16:51:54 -0500
-Received: from quanta.tsunanet.net ([82.229.223.213])
-	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
-	(Exim 4.63)
-	(envelope-from <tsuna@lrde.epita.fr>)
-	id 1IuEX2-00053A-7l; Mon, 19 Nov 2007 22:51:52 +0100
-In-Reply-To: <vpq63zxq5s2.fsf@bauges.imag.fr>
-X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
-X-Mailer: Apple Mail (2.752.3)
+	id S1755544AbXKSWB0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 17:01:26 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755509AbXKSWBZ
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:01:25 -0500
+Received: from iabervon.org ([66.92.72.58]:57433 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755409AbXKSWBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 17:01:24 -0500
+Received: (qmail 15234 invoked by uid 1000); 19 Nov 2007 22:01:23 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 19 Nov 2007 22:01:23 -0000
+In-Reply-To: <3057F6F3-BEAA-447A-AB79-A0AFB7DB8826@lrde.epita.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65504>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65505>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---Apple-Mail-20-306047434
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
+On Mon, 19 Nov 2007, Benoit Sigoure wrote:
 
-On Nov 19, 2007, at 10:33 PM, Matthieu Moy wrote:
+> On Nov 19, 2007, at 5:14 PM, Jonas Juselius wrote:
+> >On Mon, 2007-11-19 at 17:05 +0100, Jakub Narebski wrote:
+> > >Do I understand correctly that you don't support cloning via git://
+> > >protocol?
+> >
+> >Yes, that is correct. The machine is behind a number of firewalls, and I
+> >simply cannot be bothered to go through the bureaucracy...
+> 
+> You can create a repository on repo.or.cz then :)
+> 
+> As it is often the case different people happen to work on similar things
+> without knowing each other.  I started http://repo.or.cz/w/tutorial.git which
+> is meant to be a big Beamer presentation that presents Git thoroughly.  I
+> wrote some ideas but didn't start to write the slides.  Just in case you want
+> to have a look.
+> 
+> One of the things you said in your guide is that Git is easy to learn.  I
+> think this is wrong.  Git is way more complicated than most other SCMs,
+> especially compared to SVN.
 
-> Benoit Sigoure <tsuna@lrde.epita.fr> writes:
->
->> No please stop adding links from on man page to another.  If you read
->> man git-reflog, you surely want to learn the HEAD@{N} syntax and see
->> practical uses cases.
->
-> I don't understand your point.
->
-> Yes, if I read man git-reflog, I do surely want to learn HEAD@{N}
-> syntax, but that is _precisely_ what my patch does.
+I convinced my little company to switch to git (from arch, so take this 
+with a grain of salt). I'd previously written a document explaining how to 
+use arch, and I wrote a version for git, which said practically nothing, 
+because everything I'd been able to do in arch is trivial to do in git. 
+But I used the same format, anyway, to be sure to cover everything. I also 
+told them to ask me if they were trying to do something and couldn't. I 
+believe that all of the questions I've gotten were on how to use "advanced 
+features" (i.e., things not included in my document because I never 
+figured out how to do them with arch and decided to just live without), 
+and people are using git successfully.
 
-By telling you to read another man page which is annoying and a  
-recurring complaint.
+The main difference I see is that "save" and "publish" are separate 
+operations with git and the same with other SCMs, but the separate 
+concepts are obvious to anybody who's emailled a word processor document 
+to somebody, and the distinction just has to be mentioned.
 
--- 
-Benoit Sigoure aka Tsuna
-EPITA Research and Development Laboratory
+The challenge in writing a good introduction to git is leaving out 
+explanations of all of the wonderful things that git can do that people 
+don't expect to be within the abilities of an SCM. If you limit yourself 
+to saying how to do things that SCMs can traditionally do, and therefore 
+only explain how to do what people know they want to do, it's not to hard 
+for people to learn. Of course, that's not enough to make good use of git, 
+but it's enough to declare a transition from SVN or CVS successful.
 
+I personally think it would be worth having a pair of documents, with the 
+first being "everything you need to know", and the second being "things 
+you'll find helpful that aren't strictly necessary".
 
-
---Apple-Mail-20-306047434
-content-type: application/pgp-signature; x-mac-type=70674453;
-	name=PGP.sig
-content-description: This is a digitally signed message part
-content-disposition: inline; filename=PGP.sig
-content-transfer-encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.7 (Darwin)
-
-iD8DBQFHQgVnwwE67wC8PUkRAgXTAJ9o8WZcwC5yYl6AQN/g3fGEcY/KyQCgw3LZ
-h5gl5ecQvwuTnA04wfK+aws=
-=IXqr
------END PGP SIGNATURE-----
-
---Apple-Mail-20-306047434--
+	-Daniel
+*This .sig left intentionally blank*
