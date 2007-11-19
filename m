@@ -1,72 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
-Date: Mon, 19 Nov 2007 00:35:52 -0800
-Message-ID: <7vk5oeocnr.fsf@gitster.siamese.dyndns.org>
-References: <Pine.LNX.4.64.0711121501500.4362@racer.site>
-	<11954023881802-git-send-email-prohaska@zib.de>
-	<119540238994-git-send-email-prohaska@zib.de>
-	<7vwssfqb0w.fsf@gitster.siamese.dyndns.org>
-	<EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de>
-	<7vejempudf.fsf@gitster.siamese.dyndns.org>
-	<53F12F4D-73C5-446E-9A97-9D2D4CA9DF9F@zib.de>
+Subject: Re: [PATCH] Fix start_command closing cmd->out/in regardless of cmd->close_out/in
+Date: Mon, 19 Nov 2007 00:46:17 -0800
+Message-ID: <7vfxz2oc6e.fsf@gitster.siamese.dyndns.org>
+References: <1195407366-1610-1-git-send-email-pkufranky@gmail.com>
+	<47413DB9.9030306@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Steffen Prohaska <prohaska@zib.de>
-X-From: git-owner@vger.kernel.org Mon Nov 19 09:36:17 2007
+Cc: Ping Yin <pkufranky@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Mon Nov 19 09:46:43 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu276-0006x1-Js
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 09:36:17 +0100
+	id 1Iu2HC-0000u2-RW
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 09:46:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752205AbXKSIgA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 03:36:00 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752180AbXKSIf7
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 03:35:59 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:37959 "EHLO
+	id S1752270AbXKSIqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 03:46:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752165AbXKSIqY
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 03:46:24 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:45633 "EHLO
 	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752155AbXKSIf7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 03:35:59 -0500
+	with ESMTP id S1751905AbXKSIqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 03:46:23 -0500
 Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id E1C7B2EF;
-	Mon, 19 Nov 2007 03:36:19 -0500 (EST)
+	by sceptre.pobox.com (Postfix) with ESMTP id CE33C2EF;
+	Mon, 19 Nov 2007 03:46:44 -0500 (EST)
 Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6E9499656A;
-	Mon, 19 Nov 2007 03:36:16 -0500 (EST)
-In-Reply-To: <53F12F4D-73C5-446E-9A97-9D2D4CA9DF9F@zib.de> (Steffen Prohaska's
-	message of "Mon, 19 Nov 2007 09:17:06 +0100")
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 4EEBD96507;
+	Mon, 19 Nov 2007 03:46:41 -0500 (EST)
+In-Reply-To: <47413DB9.9030306@viscovery.net> (Johannes Sixt's message of
+	"Mon, 19 Nov 2007 08:39:37 +0100")
 User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65416>
 
-Steffen Prohaska <prohaska@zib.de> writes:
+Johannes Sixt <j.sixt@viscovery.net> writes:
 
-> What's left is a new switch "--current".  Less code, easy
-> to explain.
+> Ping Yin schrieb:
+>> When 'FILE *fp' is assigned to child_process.out and then start_command or
+>> run_command is run, the standard output of the child process is expected to
+>> be outputed to fp. However, sometimes fp is not expected to be closed since
+>> further IO may be still performmed on fp.
+>> ---
+>>  run-command.c |    4 ----
+>>  1 files changed, 0 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/run-command.c b/run-command.c
+>> index 476d00c..4e5f58d 100644
+>> --- a/run-command.c
+>> +++ b/run-command.c
+>> @@ -115,13 +115,9 @@ int start_command(struct child_process *cmd)
+>>   	if (need_in)
+>>  		close(fdin[0]);
+>> -	else if (cmd->in)
+>> -		close(cmd->in);
+>>   	if (need_out)
+>>  		close(fdout[1]);
+>> -	else if (cmd->out > 1)
+>> -		close(cmd->out);
+>>   	if (need_err)
+>>  		close(fderr[1]);
+>
+> This is dangerous! You have to audit all current callers whether they
+> close cmd->in or cmd->out (if they don't need the fd
+> anymore).
 
-But won't that force the "current" people always type that from
-the command line, as your previous point was that your earlier
-patch to say "remote.$there.push = HEAD" does not work that way?
-If that configuration works as expected, then I'd 100% agree
-that we would not need push.defaultRefs.  Either you do not have
-"push" at all if your preference is --matching, or you do have
-"push = HEAD" if your preference is --current.  But if it
-doesn't (which was what I gathered from your earlier response),
-having a configuration would help them, wouldn't it?
+I am reasonably sure that they are already relying on these auto
+closing of the file descriptors.
 
-Changing the default, if it will ever happen, is _NOT_ to help
-people who are already using git and want "current" NOW.  The
-current users cannot be helped _unless_ we switch overnight, but
-that is not an option as it introduces a regression to people's
-established workflow.
-
-Changing the default is to help new users who will come in the
-future, if majority of the existing users find --current easier
-to explain to new people _they_ need to train.
+Funny that somebody falls into the trap the day after we
+discussed it on another thread.
