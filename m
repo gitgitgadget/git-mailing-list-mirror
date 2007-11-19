@@ -1,66 +1,63 @@
-From: "Catalin Marinas" <catalin.marinas@gmail.com>
-Subject: Re: StGIT 0.13 recognizes but not list packed StGIT controlled branches
-Date: Mon, 19 Nov 2007 11:20:38 +0000
-Message-ID: <b0943d9e0711190320r28224763t5a6c9ed7758a12b3@mail.gmail.com>
-References: <200711190005.49990.jnareb@gmail.com>
+From: gerhard.oettl.ml@ogersoft.at
+Subject: [user] git-svn and svn cp
+Date: Mon, 19 Nov 2007 12:11:36 +0100
+Message-ID: <47416F68.9070908@ogersoft.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Jakub Narebski" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 12:21:03 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 12:24:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu4gS-0003Dc-Nn
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:20:57 +0100
+	id 1Iu4jc-0004Bk-W6
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751986AbXKSLUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 06:20:40 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751910AbXKSLUk
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:20:40 -0500
-Received: from rv-out-0910.google.com ([209.85.198.189]:60388 "EHLO
-	rv-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498AbXKSLUj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 06:20:39 -0500
-Received: by rv-out-0910.google.com with SMTP id k20so1390749rvb
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 03:20:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        bh=4s24slQPpHgisI4htGNinIG8+3hVT7xqkImVE4IG8J0=;
-        b=Jwb5Br0s2H3QErxV+HmbHAVYSst8rw9MjEXR1q0cc9fbNtz2keNX2LX2h03uKfo8mt6xv7madZVVjXFdjBOq3GedPwMoBLXzGi7DIP+sZ4/Sep6Iiix4OZcqfHPvahitZzKiGfLsn06293zY1CrHtNqZfazPL3Qzr3GJA+ofX0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
-        b=RQUayD/CLlK/FJlJwH3QY8lBwQiYtlr/CLcI4YgA2wQPDwt20kJP9HYIP7I99Kq1tjFDMyRphS+zrL2iRkp5pK4QSzLkXOR5PEN8eVCzOVQH0XXSboRPBRV5cxwv8lDKnDOLDaXTpCEEIaIcpSjsllRa8dxeMnLCskEH7FgZhpE=
-Received: by 10.141.197.8 with SMTP id z8mr1950947rvp.1195471238713;
-        Mon, 19 Nov 2007 03:20:38 -0800 (PST)
-Received: by 10.141.170.11 with HTTP; Mon, 19 Nov 2007 03:20:38 -0800 (PST)
-In-Reply-To: <200711190005.49990.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1751998AbXKSLX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 06:23:57 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbXKSLX4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:23:56 -0500
+Received: from h082218134240.host.wavenet.at ([82.218.134.240]:53989 "EHLO
+	h082218134240.host.wavenet.at" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751910AbXKSLX4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2007 06:23:56 -0500
+X-Greylist: delayed 852 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Nov 2007 06:23:55 EST
+Received: from [192.168.1.101] (85-124-70-106.work.xdsl-line.inode.at [85.124.70.106])
+	(authenticated bits=0)
+	by h082218134240.host.wavenet.at (8.13.8/8.13.8/SuSE Linux 0.8) with ESMTP id lAJB9TBS000993
+	for <git@vger.kernel.org>; Mon, 19 Nov 2007 12:09:42 +0100
+User-Agent: Thunderbird 2.0.0.6 (Windows/20070728)
+X-Virus-Scanned: by amavisd-new
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65430>
 
-On 18/11/2007, Jakub Narebski <jnareb@gmail.com> wrote:
-> I use Stacked GIT 0.13 with git 1.5.3.5 (and Python 2.4.3).
-> StGIT does recognize old StGIT branches (and converts them),
-> but "stg branch -l" list only one branch. I guess that is
-> cause by the fact that all the rest of branches are packed.
+I hope this is the correct mailing list. If not please point me in the 
+right direction.
 
-Have you tried the latest StGIT snapshot. We added support for this
-and it will be available in 0.14 (to be released pretty soon).
 
-> Another StGIT question: how to check if given branch is controlled
-> by StGIT (needed for my bash prompt)?
+I played a little with git (1.5.3.4 / debian) and had the following 
+observation:
+Doing a "svn cp" (for example for a tag) results in a large traffic when 
+doing a "git-svn fetch" afterwards.
 
-'stg branch -l' lists the branches and marks those controlled by
-StGIT. For a simple test, just use a command which would fail on
-non-stgit branches (stg id base). Yet another way is to check for the
-presence of '.git/patches/<branch>'.
+To verify I did:
+git-svn clone -s svn://www.ogersoft.at/ogerlit
+git-svn fetch
+svn cp svn://... svn://... (one file ca 3mb)
+svk checkout (a tcpflow output of about 3k - plaintext commands, I think 
+a svn checkout would be the same)
+git-svn fetch (a tcpflow output of 700k - containing a textdelta of 
+nearly 700k)
 
--- 
-Catalin
+
+So the question remains:
+Does svn-git dont know about lightweight svn copies?
+or can svn-git not handle them correct by now?
+or did I something wrong?
+
+
+thanks
+gerhard
