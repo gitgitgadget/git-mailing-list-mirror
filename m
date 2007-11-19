@@ -1,182 +1,102 @@
-From: Steffen Prohaska <prohaska@zib.de>
-Subject: [PATCH] push: Add "--current", which pushes only the current branch
-Date: Mon, 19 Nov 2007 17:51:57 +0100
-Message-ID: <11954911172958-git-send-email-prohaska@zib.de>
-References: <3FB7B6E8-FC22-4FDF-BDAD-08312202B29A@zib.de>
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 17:58:24 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 17:57:50 +0100
+Message-ID: <E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr>
+References: <1195477504.8093.15.camel@localhost> <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-11-288422153"
+Content-Transfer-Encoding: 7bit
+Cc: "Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 17:58:42 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu9x1-0005xl-Mq
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:58:24 +0100
+	id 1Iu9xH-00063g-DK
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:58:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752806AbXKSQ6G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1752323AbXKSQ6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 11:58:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752107AbXKSQ6I
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:58:08 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:39176 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752221AbXKSQ6G (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 19 Nov 2007 11:58:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752323AbXKSQ6G
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:58:06 -0500
-Received: from mailer.zib.de ([130.73.108.11]:50531 "EHLO mailer.zib.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751803AbXKSQ6E (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 11:58:04 -0500
-Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
-	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAJGpvOQ024700;
-	Mon, 19 Nov 2007 17:51:57 +0100 (CET)
-Received: from localhost.localdomain (vss6.zib.de [130.73.69.7])
-	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAJGpvlZ022115;
-	Mon, 19 Nov 2007 17:51:57 +0100 (MET)
-X-Mailer: git-send-email 1.5.2.4
-In-Reply-To: <3FB7B6E8-FC22-4FDF-BDAD-08312202B29A@zib.de>
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1Iu9wi-0007xe-Nt; Mon, 19 Nov 2007 17:58:04 +0100
+In-Reply-To: <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65467>
 
-Pushing only the current branch to the default remote was awkward
-in the past.  You needed to remember the default remote and type
-"git push $remote $current".  A recent commit added support for
-"git push $remote HEAD".  But still you need to remember and type
-the remote.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-11-288422153
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-This commit teaches push a short-cut: "git push --current" now
-pushes the current branch to the default remote.
+On Nov 19, 2007, at 5:45 PM, Lars Hjemli wrote:
 
-Note, this commit doesn't save you much if you want to push the
-current branch to a remote that is not the default:  You can now
-say either "git push --current foo" or "git push foo HEAD".
+> On Nov 19, 2007 2:05 PM, Jonas Juselius  
+> <jonas.juselius@chem.uit.no> wrote:
+> Also, I think you might scare users away from 'git reset':
+>
+>   git reset resets the branch to a specified state invisibly and
+>   without possibility to go back. Ever. Your call.
+>
+> That's not true, since any "modern" git has reflogs enabled. If you do
+> 'git reset --hard HEAD^^^' and then realize it was a mistake you can
+> just 'git reset --hard HEAD@{1}'
 
-Signed-off-by: Steffen Prohaska <prohaska@zib.de>
----
- Documentation/git-push.txt |    6 +++++-
- builtin-push.c             |   14 ++++++++++++--
- t/t5516-fetch-push.sh      |   25 +++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 3 deletions(-)
+Yes, I've always been very scared of git-reset until I had a somewhat  
+better understanding of Git internals.  In fact the only danger of  
+`git reset --hard' is that you loose dirty changes (not yet in the  
+index) and staged changes (in the index).  git-reset will never, ever  
+delete objects from your repo.  Thus, you can perfectly well remember  
+the current revision sha1 (let's call it `A') and then git reset -- 
+hard HEAD~42 and then git reset --hard A.  In between the two Git  
+commands, it's possible that all the objects of the history from  
+HEAD~42..A be unreachable.  Nothing wrong with this, it just that if  
+run, say, git gc --prune (note the --prune) you will loose them.
 
-Eventually, I gave in.  I accepted that the default is to push
-matching branches.  I'll not send further patches that try to
-change this.  This is the last patch.
+Understanding this is very important because ``error humanum est'',  
+and people happen to screw up their hard work and they don't realize  
+that they can go back without even knowing what the hell the reflog  
+is or how to use it (I personally don't know -- but I'd like to, give  
+me pointers please :D).  For instance, I once rebased a dozen of  
+commits on a given branch and I realised that I completely screwed my  
+nice patch series by collapsing changes, introducing changes at the  
+wrong revision etc.  I could start over again by simply doing a git  
+reset --hard <HEAD_sha1_before_rebase>.
 
-The patch applies on top of sp/refspec-match.
+Cheers,
 
-    Steffen
-
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index 4a68aab..6ec6078 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -9,7 +9,7 @@ git-push - Update remote refs along with associated objects
- SYNOPSIS
- --------
- [verse]
--'git-push' [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-+'git-push' [--all] [--current] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>]
-            [--repo=all] [-f | --force] [-v | --verbose] [<repository> <refspec>...]
- 
- DESCRIPTION
-@@ -63,6 +63,10 @@ the remote repository.
- 	Instead of naming each ref to push, specifies that all
- 	refs under `$GIT_DIR/refs/heads/` be pushed.
- 
-+\--current::
-+	Instead of naming each ref to push, specifies that only the
-+	current branch is pushed.
-+
- \--dry-run::
- 	Do everything except actually send the updates.
- 
-diff --git a/builtin-push.c b/builtin-push.c
-index 54fba0e..c5243ca 100644
---- a/builtin-push.c
-+++ b/builtin-push.c
-@@ -10,7 +10,7 @@
- #include "parse-options.h"
- 
- static const char * const push_usage[] = {
--	"git-push [--all] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
-+	"git-push [--all] [--current] [--dry-run] [--tags] [--receive-pack=<git-receive-pack>] [--repo=all] [-f | --force] [-v] [<repository> <refspec>...]",
- 	NULL,
- };
- 
-@@ -100,6 +100,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- {
- 	int flags = 0;
- 	int all = 0;
-+	int current = 0;
- 	int dry_run = 0;
- 	int force = 0;
- 	int tags = 0;
-@@ -109,6 +110,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		OPT__VERBOSE(&verbose),
- 		OPT_STRING( 0 , "repo", &repo, "repository", "repository"),
- 		OPT_BOOLEAN( 0 , "all", &all, "push all refs"),
-+		OPT_BOOLEAN( 0 , "current", &current, "push current branch"),
- 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags"),
- 		OPT_BOOLEAN( 0 , "dry-run", &dry_run, "dry run"),
- 		OPT_BOOLEAN('f', "force", &force, "force updates"),
-@@ -135,8 +137,16 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 		repo = argv[0];
- 		set_refspecs(argv + 1, argc - 1);
- 	}
--	if ((flags & TRANSPORT_PUSH_ALL) && refspec)
-+	if ((all != 0) + (current != 0) > 1) {
-+		fprintf(stderr, "--all and --current are mutual exclusive.\n");
- 		usage_with_options(push_usage, options);
-+	}
-+	if ((all || current) && refspec)
-+		usage_with_options(push_usage, options);
-+	if (current) {
-+		const char* head[1] = { "HEAD" };
-+		set_refspecs(head, 1);
-+	}
- 
- 	return do_push(repo, flags);
- }
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index fd5f284..11c078a 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -100,6 +100,14 @@ test_expect_success 'fetch with wildcard' '
- 	)
- '
- 
-+test_expect_code 129 'push: --current and --all mutual exclusive' '
-+	git push --all --current testrepo
-+'
-+
-+test_expect_code 129 'push: --current and refspec mutual exclusive' '
-+	git push --current testrepo master
-+'
-+
- test_expect_success 'push without wildcard' '
- 	mk_empty &&
- 
-@@ -271,6 +279,23 @@ test_expect_success 'push with HEAD nonexisting at remote' '
- 	check_push_result $the_commit heads/local
- '
- 
-+test_expect_success 'push with --current' '
-+
-+	mk_test heads/master &&
-+	git checkout master &&
-+	git push --current testrepo &&
-+	check_push_result $the_commit heads/master
-+
-+'
-+
-+test_expect_success 'push with --current nonexisting at remote' '
-+
-+	mk_test heads/master &&
-+	git checkout local &&
-+	git push --current testrepo &&
-+	check_push_result $the_commit heads/local
-+'
-+
- test_expect_success 'push with dry-run' '
- 
- 	mk_test heads/master &&
 -- 
-1.5.3.5.742.gb61a8b
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-11-288422153
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHQcCOwwE67wC8PUkRAuRLAKDEuS9fhNpdh6Om9xJ8HDhgtddCRQCfdQW0
+L8wBLA42alu49D4d8215PgE=
+=X5zb
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-11-288422153--
