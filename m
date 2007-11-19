@@ -1,89 +1,68 @@
-From: Brian Downing <bdowning@lavos.net>
-Subject: [PATCH 2/2] config: clarify compression defaults
-Date: Mon, 19 Nov 2007 10:58:51 -0600
-Message-ID: <1195491531-2701-2-git-send-email-bdowning@lavos.net>
-References: <alpine.LFD.0.99999.0711191139240.19105@xanadu.home>
- <1195491531-2701-1-git-send-email-bdowning@lavos.net>
-Cc: Nicolas Pitre <nico@cam.org>,
-	Jonas Juselius <jonas.juselius@chem.uit.no>,
-	git@vger.kernel.org, Brian Downing <bdowning@lavos.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 18:07:49 2007
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 18:05:32 +0100
+Message-ID: <vpqejemtbc3.fsf@bauges.imag.fr>
+References: <1195477504.8093.15.camel@localhost>
+	<8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
+	<E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Lars Hjemli <hjemli@gmail.com>,
+	"Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 19 18:14:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuA63-0000xe-C1
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 18:07:43 +0100
+	id 1IuACB-0003AL-Fp
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 18:14:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752690AbXKSRH1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 12:07:27 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753229AbXKSRH0
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 12:07:26 -0500
-Received: from mxsf04.insightbb.com ([74.128.0.74]:38046 "EHLO
-	mxsf04.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752690AbXKSRHZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 12:07:25 -0500
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="119310253"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO asav02.insightbb.com) ([74.134.249.24])
-  by mxsf04.insightbb.com with ESMTP; 19 Nov 2007 12:07:24 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAIJRQUdKhvkY/2dsb2JhbACBWA
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="162316094"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav02.insightbb.com with ESMTP; 19 Nov 2007 12:07:23 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 22BC7309F20; Mon, 19 Nov 2007 11:07:23 -0600 (CST)
-X-Original-To: bdowning@lavos.net
-Received: from silvara.lavos.net (silvara.lavos.net [10.4.0.20])
-	by mail.lavos.net (Postfix) with SMTP id 78747309F21;
-	Mon, 19 Nov 2007 10:58:48 -0600 (CST)
-Received: (nullmailer pid 2761 invoked by uid 1000);
-	Mon, 19 Nov 2007 16:58:51 -0000
-X-Mailer: git-send-email 1.5.3.5.1824.g5f389
-In-Reply-To: <1195491531-2701-1-git-send-email-bdowning@lavos.net>
+	id S1753635AbXKSRNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 12:13:46 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753607AbXKSRNq
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 12:13:46 -0500
+Received: from imag.imag.fr ([129.88.30.1]:54116 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753576AbXKSRNp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 12:13:45 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJH5XUJ010276
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 19 Nov 2007 18:05:33 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1IuA3x-00055y-25; Mon, 19 Nov 2007 18:05:33 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1IuA3w-0006Ua-VH; Mon, 19 Nov 2007 18:05:32 +0100
+In-Reply-To: <E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr> (Benoit Sigoure's message of "Mon\, 19 Nov 2007 17\:57\:50 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 18:05:33 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65473>
 
-* Clarify that core.compression provides a system-wide default to
-  other compression parameters.
+Benoit Sigoure <tsuna@lrde.epita.fr> writes:
 
-* Explain that the default for pack.compression, -1, is "a default
-  compromise between speed and compression (currently equivalent
-  to level 6)" according to zlib.h.
+>  git reset --hard HEAD~42 and then git reset --hard A.
 
-Signed-off-by: Brian Downing <bdowning@lavos.net>
----
- Documentation/config.txt |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+And if you don't "remember" A, the reflog is here for you.
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 9565652..5d1eb5d 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -226,6 +226,8 @@ core.compression::
- 	An integer -1..9, indicating a default compression level.
- 	-1 is the zlib default. 0 means no compression,
- 	and 1..9 are various speed/size tradeoffs, 9 being slowest.
-+	If set, this provides a default to other compression variables, 
-+	such as 'core.loosecompression' and 'pack.compression'.
- 
- core.loosecompression::
- 	An integer -1..9, indicating the compression level for objects that
-@@ -622,7 +624,9 @@ pack.compression::
- 	in a pack file. -1 is the zlib default. 0 means no
- 	compression, and 1..9 are various speed/size tradeoffs, 9 being
- 	slowest.  If not set,  defaults to core.compression.  If that is
--	not set,  defaults to -1.
-+	not set,  defaults to -1, the zlib default, which is "a default
-+	compromise between speed and compression (currently equivalent 
-+	to level 6)."
- 
- pack.deltaCacheSize::
- 	The maximum memory in bytes used for caching deltas in
+$ git reflog show HEAD
+$ git reset --hard HEAD@{42} # not "the 42th ancestor"
+                             # but "where HEAD was 42 moves ago".
+
+By default, the reflog will expire after IIRC, 3 months, and git-prune
+will not prune the objects while they are reachable.
+
+So, it's even safer than you say ;-).
+
 -- 
-1.5.3.5.1824.g5f389
+Matthieu
