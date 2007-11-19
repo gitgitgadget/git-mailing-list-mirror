@@ -1,68 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
 Subject: Re: Git in a Nutshell guide
-Date: Mon, 19 Nov 2007 22:33:49 +0100
-Message-ID: <vpq63zxq5s2.fsf@bauges.imag.fr>
-References: <1195477504.8093.15.camel@localhost>
-	<8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
-	<E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr>
-	<8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com>
-	<25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr>
-	<vpqtznirtlk.fsf@bauges.imag.fr>
-	<60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Date: Mon, 19 Nov 2007 22:51:35 +0100
+Message-ID: <0E0AA90A-2282-4AFE-8B94-EA0E35B57D65@lrde.epita.fr>
+References: <1195477504.8093.15.camel@localhost> <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com> <E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr> <8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com> <25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr> <vpqtznirtlk.fsf@bauges.imag.fr> <60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr> <vpq63zxq5s2.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-20-306047434"
+Content-Transfer-Encoding: 7bit
 Cc: Lars Hjemli <hjemli@gmail.com>,
 	"Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
-To: Benoit Sigoure <tsuna@lrde.epita.fr>
-X-From: git-owner@vger.kernel.org Mon Nov 19 22:34:52 2007
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 19 22:52:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuEGV-0005x3-3X
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 22:34:47 +0100
+	id 1IuEXM-0003WN-71
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 22:52:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751762AbXKSVe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 16:34:28 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751518AbXKSVe2
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 16:34:28 -0500
-Received: from imag.imag.fr ([129.88.30.1]:43741 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751756AbXKSVe1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 16:34:27 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJLXpom006849
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 19 Nov 2007 22:33:51 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IuEFZ-0003ac-Jc; Mon, 19 Nov 2007 22:33:49 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IuEFZ-0005Na-HC; Mon, 19 Nov 2007 22:33:49 +0100
-In-Reply-To: <60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr> (Benoit Sigoure's message of "Mon\, 19 Nov 2007 22\:15\:21 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 22:33:51 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751710AbXKSVvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 16:51:55 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751714AbXKSVvy
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 16:51:54 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:51677 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751548AbXKSVvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 16:51:54 -0500
+Received: from quanta.tsunanet.net ([82.229.223.213])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IuEX2-00053A-7l; Mon, 19 Nov 2007 22:51:52 +0100
+In-Reply-To: <vpq63zxq5s2.fsf@bauges.imag.fr>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65504>
 
-Benoit Sigoure <tsuna@lrde.epita.fr> writes:
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-20-306047434
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-> No please stop adding links from on man page to another.  If you read
-> man git-reflog, you surely want to learn the HEAD@{N} syntax and see
-> practical uses cases.
+On Nov 19, 2007, at 10:33 PM, Matthieu Moy wrote:
 
-I don't understand your point.
+> Benoit Sigoure <tsuna@lrde.epita.fr> writes:
+>
+>> No please stop adding links from on man page to another.  If you read
+>> man git-reflog, you surely want to learn the HEAD@{N} syntax and see
+>> practical uses cases.
+>
+> I don't understand your point.
+>
+> Yes, if I read man git-reflog, I do surely want to learn HEAD@{N}
+> syntax, but that is _precisely_ what my patch does.
 
-Yes, if I read man git-reflog, I do surely want to learn HEAD@{N}
-syntax, but that is _precisely_ what my patch does.
+By telling you to read another man page which is annoying and a  
+recurring complaint.
 
 -- 
-Matthieu
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-20-306047434
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHQgVnwwE67wC8PUkRAgXTAJ9o8WZcwC5yYl6AQN/g3fGEcY/KyQCgw3LZ
+h5gl5ecQvwuTnA04wfK+aws=
+=IXqr
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-20-306047434--
