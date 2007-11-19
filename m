@@ -1,63 +1,63 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] Documentation: fix git-clone manpage not to refer to
- itself
-Date: Mon, 19 Nov 2007 14:35:43 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711191430460.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <87ejeq1131.fsf@osv.gnss.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 14:29:23 +0100
+Organization: At home
+Message-ID: <fhs33j$eg9$1@ger.gmane.org>
+References: <1195477504.8093.15.camel@localhost>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sergei Organov <osv@javad.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 14:36:33 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 14:38:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu6nD-0004wf-EN
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 14:36:03 +0100
+	id 1Iu6pT-0005wO-7I
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 14:38:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752640AbXKSNfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 08:35:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752629AbXKSNfq
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 08:35:46 -0500
-Received: from mail.gmx.net ([213.165.64.20]:39366 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752040AbXKSNfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 08:35:46 -0500
-Received: (qmail invoked by alias); 19 Nov 2007 13:35:44 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp004) with SMTP; 19 Nov 2007 14:35:44 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19v331Ezw5vE8Nh3l2XysOSXrQRN3azjTp3eKdBtw
-	KN9KY25djLWTCG
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <87ejeq1131.fsf@osv.gnss.ru>
-X-Y-GMX-Trusted: 0
+	id S1752210AbXKSNiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 08:38:05 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753585AbXKSNiE
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 08:38:04 -0500
+Received: from main.gmane.org ([80.91.229.2]:50044 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752142AbXKSNiB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 08:38:01 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Iu6kQ-0002na-8I
+	for git@vger.kernel.org; Mon, 19 Nov 2007 13:33:10 +0000
+Received: from abwr246.neoplus.adsl.tpnet.pl ([83.8.241.246])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 13:33:10 +0000
+Received: from jnareb by abwr246.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 13:33:10 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwr246.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65443>
 
-Hi,
+A few comments (from what I checked so far):
 
-On Fri, 16 Nov 2007, Sergei Organov wrote:
+1. It is "man git-checkout" (or "git checkout --help"),
+   not "man git checkout"
 
-> +ifndef::git-clone[]
+2. Instead of using 'verbatim' environment directly to show example CLI
+   session it would be I think better to define verbatim-like environment
+   for this ('example', 'commands', 'CLI', 'session'); perhaps replacing
+   verbatim by lstlisting from the listings/lstlisting package for syntax
+   highlighting.
 
-It is laudable that you want to fix the _generated_ documentation, but 
-there are two things to keep in mind:
+I'll send more comments after reading it in full...
 
-- it does _nothing_ to help readers of the sources, and asciidoc was 
-  chosen purposely because the source is human-readable, and
-
-- it makes writing the perl script to do a very tiny subset of asciidoc 
-  formatting much harder.  We encounter enough problems with the different 
-  versions of asciidoc/docbook combinations that I think this perl script 
-  would be actually useful.
-
-I know that the user manual uses some advanced features, too, but it did 
-not use ifdef in the main text, for example, let alone nested ifdefs, 
-which your patch would encourage much more than the source before.
-
-Ciao,
-Dscho
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
