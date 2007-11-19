@@ -1,98 +1,103 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/2] gitweb: Put project README in div.readme, fix its padding
-Date: Mon, 19 Nov 2007 14:16:12 +0100
-Message-ID: <1195478172-17226-3-git-send-email-jnareb@gmail.com>
-References: <1195478172-17226-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 19 14:17:12 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: [user] git-svn and svn cp
+Date: Mon, 19 Nov 2007 14:20:09 +0100
+Message-ID: <EB96D9F3-D69C-4D46-961C-27885CBC0E52@lrde.epita.fr>
+References: <47416F68.9070908@ogersoft.at> <vpq3av25sg0.fsf@bauges.imag.fr> <86k5oez9f5.fsf@lola.quinscape.zz> <vpqzlxa2y2f.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-5-275361255"
+Content-Transfer-Encoding: 7bit
+Cc: David Kastrup <dak@gnu.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: gerhard.oettl.ml@ogersoft.at
+X-From: git-owner@vger.kernel.org Mon Nov 19 14:20:46 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu6Ux-00074K-Tz
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 14:17:12 +0100
+	id 1Iu6YO-00089C-Ok
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 14:20:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699AbXKSNQz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 08:16:55 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752696AbXKSNQz
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 08:16:55 -0500
-Received: from nf-out-0910.google.com ([64.233.182.189]:50007 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752510AbXKSNQy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 08:16:54 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1406693nfb
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 05:16:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:received:received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        bh=2+iYNvW6IMOOQysb6v1rYuGfaNPXz52ZU0vM7LZ7Mrg=;
-        b=dfiMZiEr1ZrGrwO5UieRvqMNcXWYswSZEPgKdbA7/rZhvAMH9u/BWuaYCapj+9Vicg32oxM4FhOPeQiRGalnwF1JHMFiIdmQvzYuSpcr70hOS13vkuEdSMOyKGq5ZGQ8XtCmR71ByuQreVCvtyU+OZNRbsmNZyGr0INQdCnlfFo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=KSJBtdVjVj7Tjnl306HXJxinTFaneVdbs8ZiZZR6BLINjpRWvs7Rns5f1gwJHlm4GzwgM7LkrfOSj6N1dVd+JOjB/f0VLRY0a2vnmHXjYRpFmr0WIX9se3j0unUUg6cZ4+2RRZU3oI26GTq4ISeZh32XduTpfyL2jiTFOHNTkAI=
-Received: by 10.86.60.7 with SMTP id i7mr5065491fga.1195478213465;
-        Mon, 19 Nov 2007 05:16:53 -0800 (PST)
-Received: from roke.D-201 ( [83.8.241.246])
-        by mx.google.com with ESMTPS id 31sm8802213fkt.2007.11.19.05.16.51
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 19 Nov 2007 05:16:52 -0800 (PST)
-Received: from roke.D-201 (localhost.localdomain [127.0.0.1])
-	by roke.D-201 (8.13.4/8.13.4) with ESMTP id lAJDGopQ017270;
-	Mon, 19 Nov 2007 14:16:50 +0100
-Received: (from jnareb@localhost)
-	by roke.D-201 (8.13.4/8.13.4/Submit) id lAJDGa1c017268;
-	Mon, 19 Nov 2007 14:16:36 +0100
-X-Mailer: git-send-email 1.5.3.5
-In-Reply-To: <1195478172-17226-1-git-send-email-jnareb@gmail.com>
+	id S1752786AbXKSNU2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 08:20:28 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752746AbXKSNU2
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 08:20:28 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:38187 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752696AbXKSNU1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 08:20:27 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1Iu6Y5-0002Kh-4z; Mon, 19 Nov 2007 14:20:25 +0100
+In-Reply-To: <vpqzlxa2y2f.fsf@bauges.imag.fr>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65440>
 
-Put (optional) projects README on "summary" page in <div> element
-using "readme" class.  This allow to style it using CSS.
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-5-275361255
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-Add padding to project's README to make it line out with the rest
-of the page.
+On Nov 19, 2007, at 1:56 PM, Matthieu Moy wrote:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- gitweb/gitweb.css  |    4 ++++
- gitweb/gitweb.perl |    4 +++-
- 2 files changed, 7 insertions(+), 1 deletions(-)
+> David Kastrup <dak@gnu.org> writes:
+>
+>> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>>
+>>>> To verify I did:
+>>>> git-svn clone -s svn://www.ogersoft.at/ogerlit
+>>>
+>>> I guess the --tags=... and --branches=... options of git-svn can  
+>>> help.
+>>
+>> You are aware of what the "-s" option does?
 
-diff --git a/gitweb/gitweb.css b/gitweb/gitweb.css
-index 17c60e4..446a1c3 100644
---- a/gitweb/gitweb.css
-+++ b/gitweb/gitweb.css
-@@ -85,6 +85,10 @@ div.title, a.title {
- 	color: #000000;
- }
- 
-+div.readme {
-+	padding: 8px;
-+}
-+
- a.title:hover {
- 	background-color: #d9d8d1;
- }
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 3d532dc..491a3f4 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3912,8 +3912,10 @@ sub git_summary {
- 
- 	if (-s "$projectroot/$project/README.html") {
- 		if (open my $fd, "$projectroot/$project/README.html") {
--			print "<div class=\"title\">readme</div>\n";
-+			print "<div class=\"title\">readme</div>\n" .
-+			      "<div class=\"readme\">\n";
- 			print $_ while (<$fd>);
-+			print "\n</div>\n"; # class="readme"
- 			close $fd;
- 		}
- 	}
+I personally don't know and I went through the code to see that it's  
+an (undocumented) alias for --stdlayout.
+
+> Not in the details. Well, I believe the accurate question (to original
+> poster) is: does your svn repository use the standard svn layout
+> (tags/, branches/, trunk/)?
+
+I think this is irrelevant to the question he asked.
+
+Now I think that the fact that SVN does "lightweight" copies by  
+recording that such modification was in fact an `svn cp' / `svn mv'  
+isn't important for git-svn, because the data end up in the Git  
+repository which handles copies and moves much much better than SVN  
+does.  But here the concerns raised by Gerhard seem to be more  
+network-wise, in which case I don't know.  I looked at the code,  
+things seem to happen under the hood of Git::SVN::Fetcher but I don't  
+see what can be optimized (the code isn't trivial).  Most of the  
+access are done through the underlying SVN Perl bindings, so if  
+someone knows how to use them better, I think Eric will be eager to  
+see the patches :)
+
 -- 
-1.5.3.5
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-5-275361255
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHQY2JwwE67wC8PUkRAq+oAKCdo79LWADWWJvlZj6GlvBobNosCQCgqzDe
+ynvzTpPCJtNNnI1BoOKwj28=
+=jqTb
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-5-275361255--
