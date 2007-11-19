@@ -1,68 +1,58 @@
 From: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
-Subject: [PATCH] Don't print an empty Cc header in SMTP mode when there's no cc recipient defined
-Date: Mon, 19 Nov 2007 02:48:14 -0800
-Message-ID: <1195469295-5774-1-git-send-email-ask@develooper.com>
-References: <7voddqodhs.fsf@gitster.siamese.dyndns.org>
+Subject: [PATCH] Don't add To: recipients to the Cc: header
+Date: Mon, 19 Nov 2007 03:00:26 -0800
+Message-ID: <1195470026-7389-1-git-send-email-ask@develooper.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?utf-8?q?Ask=20Bj=C3=B8rn=20Hansen?= <ask@develooper.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 19 12:00:17 2007
+X-From: git-owner@vger.kernel.org Mon Nov 19 12:00:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu4MM-00059G-EK
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:00:10 +0100
+	id 1Iu4Mv-0005LA-Fa
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:00:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751951AbXKSK7s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Nov 2007 05:59:48 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751930AbXKSK7s
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 05:59:48 -0500
-Received: from gw.develooper.com ([64.81.84.140]:50436 "EHLO
+	id S1751873AbXKSLA1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Nov 2007 06:00:27 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751687AbXKSLA1
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:00:27 -0500
+Received: from gw.develooper.com ([64.81.84.140]:62228 "EHLO
 	freja.develooper.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751910AbXKSK7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 05:59:48 -0500
-X-Greylist: delayed 690 seconds by postgrey-1.27 at vger.kernel.org; Mon, 19 Nov 2007 05:59:48 EST
+	with ESMTP id S1751396AbXKSLA0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 06:00:26 -0500
 Received: by freja.develooper.com (Postfix, from userid 500)
-	id 03CE117D028; Mon, 19 Nov 2007 02:48:15 -0800 (PST)
+	id 1ED7117D028; Mon, 19 Nov 2007 03:00:26 -0800 (PST)
 X-Mailer: git-send-email 1.5.3.6.735.ge0de
-In-Reply-To: <7voddqodhs.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65425>
 
 
 Signed-off-by: Ask Bj=C3=B8rn Hansen <ask@develooper.com>
 ---
-
-There's some duplicate code between "what we do for sendmail"
-and "what we do for SMTP" paths that should be fixed - this doesn't
-do that, it only makes the SMTP path skip empty Cc lines...
-
  git-send-email.perl |    6 +++++-
  1 files changed, 5 insertions(+), 1 deletions(-)
 
 diff --git a/git-send-email.perl b/git-send-email.perl
-index fd0a4ad..65620ab 100755
+index 65620ab..530b456 100755
 --- a/git-send-email.perl
 +++ b/git-send-email.perl
-@@ -651,7 +651,11 @@ X-Mailer: git-send-email $gitversion
- 		} else {
- 			print "Sendmail: $smtp_server ".join(' ',@sendmail_parameters)."\n"=
-;
- 		}
--		print "From: $sanitized_sender\nSubject: $subject\nCc: $cc\nTo: $to\=
-n\n";
-+		print "From: $sanitized_sender\n"
-+		     . "Subject: $subject\n"
-+		     . ($cc ? "Cc: $cc\n" : "")
-+		     . "To: $to\n"
-+		     . "\n";
- 		if ($smtp) {
- 			print "Result: ", $smtp->code, ' ',
- 				($smtp->message =3D~ /\n([^\n]+\n)$/s), "\n";
+@@ -557,8 +557,11 @@ sub sanitize_address
+ sub send_message
+ {
+ 	my @recipients =3D unique_email_list(@to);
+-	@cc =3D (map { sanitize_address($_) } @cc);
++	@cc =3D (grep { my $cc =3D extract_valid_address($_);
++		      not grep { $cc eq $_ } @recipients
++		    }
++	       map { sanitize_address($_) }
++	       @cc);
+ 	my $to =3D join (",\n\t", @recipients);
+ 	@recipients =3D unique_email_list(@recipients,@cc,@bcclist);
+ 	@recipients =3D (map { extract_valid_address($_) } @recipients);
 --=20
 1.5.3.5.561.g140d
