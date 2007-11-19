@@ -1,113 +1,57 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: [PATCH] Doc fix for git-reflog: mention @{...} syntax, and <ref> in synopsys.
-Date: Mon, 19 Nov 2007 21:31:58 +0100
-Message-ID: <vpqoddqq8n5.fsf@bauges.imag.fr>
-References: <7vtznim1s5.fsf@gitster.siamese.dyndns.org>
-	<1195504133-7823-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFH] Flush progress message buffer in display().
+Date: Mon, 19 Nov 2007 12:39:32 -0800
+Message-ID: <7voddqm0l7.fsf@gitster.siamese.dyndns.org>
+References: <200711192048.58864.johannes.sixt@telecom.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 21:33:52 2007
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@cam.org>
+To: Johannes Sixt <johannes.sixt@telecom.at>
+X-From: git-owner@vger.kernel.org Mon Nov 19 21:40:18 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuDJX-0006pr-P4
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 21:33:52 +0100
+	id 1IuDPW-0001AK-6P
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 21:40:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291AbXKSUdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 15:33:35 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751197AbXKSUde
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 15:33:34 -0500
-Received: from imag.imag.fr ([129.88.30.1]:49223 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751096AbXKSUde (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 15:33:34 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJKVwY3023944
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 19 Nov 2007 21:31:58 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IuDHi-0002Dm-Ez; Mon, 19 Nov 2007 21:31:58 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IuDHi-0004rm-Ch; Mon, 19 Nov 2007 21:31:58 +0100
-In-Reply-To: <1195504133-7823-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Mon\, 19 Nov 2007 21\:28\:53 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 21:31:58 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1751186AbXKSUjp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 15:39:45 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751201AbXKSUjp
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 15:39:45 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:46849 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751068AbXKSUjo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 15:39:44 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id E84BF2F0;
+	Mon, 19 Nov 2007 15:40:04 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6989E96A2B;
+	Mon, 19 Nov 2007 15:39:58 -0500 (EST)
+In-Reply-To: <200711192048.58864.johannes.sixt@telecom.at> (Johannes Sixt's
+	message of "Mon, 19 Nov 2007 20:48:58 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65498>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+Johannes Sixt <johannes.sixt@telecom.at> writes:
 
-> -`HEAD`, which will cover all recent actions, including branch switches.
-> +`HEAD`, or of the reference provided in the command-line, which will
-> +cover all recent actions, including branch switches.
+> I need this patch on Windows because appearently progress output is buffered
+> by stdio. Why doesn't Linux/glibc's stdio buffer output that goes to a pipe?
+> ...
+> ... What is flushing the progress
+> output?
 
-Ooops, appologize. I didn't commit my change, this patch isn't any
-better than the previous.
+The standard error stream is not "fully buffered":
 
-The one below should be correct (the sentence was getting long, I've
-splitted it):
+    http://www.opengroup.org/onlinepubs/000095399/functions/xsh_chap02_05.html#tag_02_05
 
-
-
->From d71c6c8e24a5a08600f3347b4ad014e459f9f3df Mon Sep 17 00:00:00 2001
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Date: Mon, 19 Nov 2007 19:25:11 +0100
-Subject: [PATCH] Doc fix for git-reflog: mention @{...} syntax, and <ref> in synopsys.
-
-The HEAD@{...} syntax was documented in git-rev-parse manpage, which
-is hard to find by someone looking for the documentation of porcelain.
-git-reflog is probably the place where one expects to find this.
-
-While I'm there, "git revlog show whatever" was also undocumented.
-
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/git-reflog.txt |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-reflog.txt b/Documentation/git-reflog.txt
-index 5c7316c..1bd54c5 100644
---- a/Documentation/git-reflog.txt
-+++ b/Documentation/git-reflog.txt
-@@ -19,7 +19,7 @@ depending on the subcommand:
- git reflog expire [--dry-run] [--stale-fix] [--verbose]
- 	[--expire=<time>] [--expire-unreachable=<time>] [--all] <refs>...
- 
--git reflog [show] [log-options]
-+git reflog [show] [log-options] [<ref>]
- 
- Reflog is a mechanism to record when the tip of branches are
- updated.  This command is to manage the information recorded in it.
-@@ -32,10 +32,17 @@ directly by the end users -- instead, see gitlink:git-gc[1].
- 
- The subcommand "show" (which is also the default, in the absence of any
- subcommands) will take all the normal log options, and show the log of
--`HEAD`, which will cover all recent actions, including branch switches.
-+the reference provided in the command-line (or `HEAD`, by default).
-+The log will cover all recent actions, including branch switches.
- It is basically an alias for 'git log -g --abbrev-commit
- --pretty=oneline', see gitlink:git-log[1].
- 
-+The reflog is useful in various git commands, to specify the old value
-+of a reference. For example, `HEAD@\{2\}` means "where HEAD used to be
-+two moves ago", `master@\{one.week.ago\}` means "where master used to
-+point to one week ago", and so on. See gitlink:git-rev-parse[1] for
-+more details.
-+
- 
- OPTIONS
- -------
--- 
-1.5.3.5.724.g49d9d
+Not "fully buffered" means either "unbuffered" or "line
+buffered".  Because the progress display does not terminate its
+line, it means that the additional fflush(stderr) you added are
+needed if the stream is line buffered (still conforming).
