@@ -1,48 +1,85 @@
-From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
-Subject: Re: [PATCH] Don't add To: recipients to the Cc: header
-Date: Mon, 19 Nov 2007 03:05:37 -0800
-Message-ID: <EE4271C0-CFFA-4714-8F4B-27CBDC33425B@develooper.com>
-References: <1195470026-7389-1-git-send-email-ask@develooper.com>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 19 12:06:12 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
+Date: Mon, 19 Nov 2007 12:17:17 +0100
+Organization: At home
+Message-ID: <fhrrbt$lvk$1@ger.gmane.org>
+References: <Pine.LNX.4.64.0711121501500.4362@racer.site> <11954023881802-git-send-email-prohaska@zib.de> <119540238994-git-send-email-prohaska@zib.de> <7vwssfqb0w.fsf@gitster.siamese.dyndns.org> <EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de> <7vejempudf.fsf@gitster.siamese.dyndns.org> <53F12F4D-73C5-446E-9A97-9D2D4CA9DF9F@zib.de> <7vk5oeocnr.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 12:17:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu4Rv-0006qV-Ko
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:05:56 +0100
+	id 1Iu4dS-0002Cu-76
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:17:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752064AbXKSLFj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 19 Nov 2007 06:05:39 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752040AbXKSLFj
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:05:39 -0500
-Received: from x8.develooper.com ([216.52.237.208]:44444 "EHLO
-	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751899AbXKSLFi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2007 06:05:38 -0500
-Received: (qmail 14253 invoked from network); 19 Nov 2007 11:05:37 -0000
-Received: from gw.develooper.com (HELO g5.bn.dev) (ask@mail.dev@64.81.84.140)
-  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 19 Nov 2007 11:05:37 -0000
-In-Reply-To: <1195470026-7389-1-git-send-email-ask@develooper.com>
-X-Mailer: Apple Mail (2.915)
+	id S1751688AbXKSLRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 06:17:33 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751498AbXKSLRc
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:17:32 -0500
+Received: from main.gmane.org ([80.91.229.2]:43526 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751396AbXKSLRc (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 06:17:32 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Iu4d6-00065X-RP
+	for git@vger.kernel.org; Mon, 19 Nov 2007 11:17:29 +0000
+Received: from abwr246.neoplus.adsl.tpnet.pl ([83.8.241.246])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 11:17:28 +0000
+Received: from jnareb by abwr246.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 11:17:28 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abwr246.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65428>
 
+Junio C Hamano wrote:
 
-On Nov 19, 2007, at 3:00 AM, Ask Bj=F8rn Hansen wrote:
+> Steffen Prohaska <prohaska@zib.de> writes:
+> 
+>> What's left is a new switch "--current".  Less code, easy
+>> to explain.
+> 
+> But won't that force the "current" people always type that from
+> the command line, as your previous point was that your earlier
+> patch to say "remote.$there.push = HEAD" does not work that way?
+> If that configuration works as expected, then I'd 100% agree
+> that we would not need push.defaultRefs.  Either you do not have
+> "push" at all if your preference is --matching, or you do have
+> "push = HEAD" if your preference is --current.  But if it
+> doesn't (which was what I gathered from your earlier response),
+> having a configuration would help them, wouldn't it?
 
-Whoops.  I thought I stopped the mailing of the first patch.  It was =20
-adding whitespace to the end of one of the lines.  Sorry about the =20
-duplication!
+Brief recap, to check if I understand things correctly:
 
+1. If you use "matching" more often, then it should be enough to provide
+   remote.<remotename>.push with refspec or wildcard refspec. "git push"
+   would push matching. If one wants to push only current branch, one
+   would use "git push --current" or "git push <remotename> HEAD".
 
-  - ask
+   Question: what to do if there is no remote.<remotename>.push? Assume
+   1-1 matching?
 
---=20
-http://develooper.com/ - http://askask.com/
+2. If you use "current" more often, then it should be anough (after
+   correcting git; although it was written that it is quite a bit of work)
+   to provide "remote.<remotename>.push = HEAD", or 
+   "push.defaultRefs = current" if one wants to set this up for all
+   remotes, or perhaps "remote.*.push = HEAD". "git push" would push
+   current. If one wants to push matching, one would use "git push
+   --matching"... although for matching one needs remote configured...
+
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
