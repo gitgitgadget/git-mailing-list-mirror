@@ -1,82 +1,69 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: StGIT 0.13 recognizes but not list packed StGIT controlled branches
-Date: Mon, 19 Nov 2007 12:57:07 +0100
-Message-ID: <200711191257.09158.jnareb@gmail.com>
-References: <200711190005.49990.jnareb@gmail.com> <b0943d9e0711190320r28224763t5a6c9ed7758a12b3@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: Re: [user] git-svn and svn cp
+Date: Mon, 19 Nov 2007 13:29:51 +0100
+Message-ID: <vpq3av25sg0.fsf@bauges.imag.fr>
+References: <47416F68.9070908@ogersoft.at>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "Catalin Marinas" <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 12:57:39 2007
+To: gerhard.oettl.ml@ogersoft.at
+X-From: git-owner@vger.kernel.org Mon Nov 19 13:31:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu5Fw-0005QY-8c
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 12:57:36 +0100
+	id 1Iu5mS-0000Q4-QC
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 13:31:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752153AbXKSL5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 06:57:17 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752093AbXKSL5R
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 06:57:17 -0500
-Received: from ug-out-1314.google.com ([66.249.92.170]:58405 "EHLO
-	ug-out-1314.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910AbXKSL5Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 06:57:16 -0500
-Received: by ug-out-1314.google.com with SMTP id z38so931606ugc
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 03:57:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=/lsp32bJ3D25MGKf7M13qoqcmjumPglv7K0cWhNO1Kk=;
-        b=Tl38fsch5m697MlsfHXxhKa4NsmKGUJz4p+xaoAh8jLzeyLzltVREfXEy9/7M5sTkOqHA6xUzW0ofA9xyVyt4Fdhyb69fRcTXOvWuugZ60Lq9Mg8t3jtCwKaIbm4Pzy7Y8BivvWUT1zETGgJVZJX1V4YNTpHYJHyVuxzws3gTjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=TQR7CpqPjpn4KuYpDY8uWwBWSjHCqKxdjSQVv4vHPzUqSfUGrDstwNAnjHeSwjbE4JXClUVPwwBRvAaJReHEPNJ3aDbVSqApkSi5aCyTahLBGBFS+cUEy7cyhBArQM9QwM6kZ80/eGSe3EJsWDRWZDiRsWU3ooTLnIbUG+vTvBA=
-Received: by 10.67.106.19 with SMTP id i19mr1231651ugm.1195473435206;
-        Mon, 19 Nov 2007 03:57:15 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.241.246])
-        by mx.google.com with ESMTPS id 13sm8705217fks.2007.11.19.03.57.12
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Nov 2007 03:57:13 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <b0943d9e0711190320r28224763t5a6c9ed7758a12b3@mail.gmail.com>
-Content-Disposition: inline
+	id S1751985AbXKSMa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 07:30:56 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbXKSMa4
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 07:30:56 -0500
+Received: from imag.imag.fr ([129.88.30.1]:54491 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751846AbXKSMaz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 07:30:55 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJCTxp2029825
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 19 Nov 2007 13:30:00 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
+	(Exim 4.50)
+	id 1Iu5l9-0003rZ-Cl; Mon, 19 Nov 2007 13:29:51 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.63)
+	(envelope-from <moy@imag.fr>)
+	id 1Iu5l9-0002Be-7z; Mon, 19 Nov 2007 13:29:51 +0100
+In-Reply-To: <47416F68.9070908@ogersoft.at> (gerhard oettl ml's message of "Mon\, 19 Nov 2007 12\:11\:36 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 13:30:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65432>
 
-Catalin Marinas wrote:
-> On 18/11/2007, Jakub Narebski <jnareb@gmail.com> wrote:
+gerhard.oettl.ml@ogersoft.at writes:
+
+> I hope this is the correct mailing list. If not please point me in the
+> right direction.
 >
-> > I use Stacked GIT 0.13 with git 1.5.3.5 (and Python 2.4.3).
-> > StGIT does recognize old StGIT branches (and converts them),
-> > but "stg branch -l" list only one branch. I guess that is
-> > cause by the fact that all the rest of branches are packed.
-> 
-> Have you tried the latest StGIT snapshot? We added support for this
-> and it will be available in 0.14 (to be released pretty soon).
+>
+> I played a little with git (1.5.3.4 / debian) and had the following
+> observation:
+> Doing a "svn cp" (for example for a tag) results in a large traffic
+> when doing a "git-svn fetch" afterwards.
+>
+> To verify I did:
+> git-svn clone -s svn://www.ogersoft.at/ogerlit
 
-Would it work with Python 2.4.3? Yes, I know I should upgrade my
-Linux distribution (I use now Aurox 11.1, which is based on Fedora
-Core 4)...
- 
-> > Another StGIT question: how to check if given branch is controlled
-> > by StGIT (needed for my bash prompt)?
-> 
-> 'stg branch -l' lists the branches and marks those controlled by
-> StGIT. For a simple test, just use a command which would fail on
-> non-stgit branches (stg id base). Yet another way is to check for the
-> presence of '.git/patches/<branch>'.
+I guess the --tags=... and --branches=... options of git-svn can help.
 
-Thanks. 'stg id base' is quite a lot slower than 
-'test -e "$(git rev-parse --git-dir)/patches/$branch"', and it _does_
-matter in prompt creating.
+[ disclaimer: I never used git-svn on a repository with branches and
+  tags ]
 
 -- 
-Jakub Narebski
-Poland
+Matthieu
