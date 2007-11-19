@@ -1,65 +1,78 @@
-From: bdowning@lavos.net (Brian Downing)
-Subject: Re: [PATCH] config: correct and clarify core.*compression documentation
-Date: Mon, 19 Nov 2007 10:23:08 -0600
-Message-ID: <20071119162307.GI6212@lavos.net>
-References: <20071119152853.GH6212@lavos.net> <alpine.LFD.0.99999.0711191049440.19105@xanadu.home>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [user] git-svn and svn cp
+Date: Mon, 19 Nov 2007 08:26:12 -0800
+Message-ID: <20071119162612.GA10122@soma>
+References: <47416F68.9070908@ogersoft.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonas Juselius <jonas.juselius@chem.uit.no>
-To: Nicolas Pitre <nico@cam.org>
-X-From: git-owner@vger.kernel.org Mon Nov 19 17:23:40 2007
+Cc: git@vger.kernel.org
+To: gerhard.oettl.ml@ogersoft.at
+X-From: git-owner@vger.kernel.org Mon Nov 19 17:26:33 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu9PF-0000fU-K1
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:23:30 +0100
+	id 1Iu9SB-0001rb-N3
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 17:26:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753213AbXKSQXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 11:23:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752933AbXKSQXL
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:23:11 -0500
-Received: from mxsf05.insightbb.com ([74.128.0.75]:38089 "EHLO
-	mxsf05.insightbb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752740AbXKSQXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 11:23:10 -0500
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="119846806"
-Received: from unknown (HELO asav00.insightbb.com) ([172.31.249.124])
-  by mxsf05.insightbb.com with ESMTP; 19 Nov 2007 11:23:09 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ah4FAG9HQUdKhvkY/2dsb2JhbACBWA
-X-IronPort-AV: E=Sophos;i="4.21,437,1188792000"; 
-   d="scan'208";a="134543442"
-Received: from 74-134-249-24.dhcp.insightbb.com (HELO mail.lavos.net) ([74.134.249.24])
-  by asav00.insightbb.com with ESMTP; 19 Nov 2007 11:23:08 -0500
-Received: by mail.lavos.net (Postfix, from userid 1000)
-	id 8C3BB309F21; Mon, 19 Nov 2007 10:23:08 -0600 (CST)
+	id S1752519AbXKSQ0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 11:26:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752773AbXKSQ0N
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 11:26:13 -0500
+Received: from hand.yhbt.net ([66.150.188.102]:35010 "EHLO hand.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752383AbXKSQ0N (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 11:26:13 -0500
+Received: from localhost.localdomain (localhost [127.0.0.1])
+	by hand.yhbt.net (Postfix) with ESMTP id 4EF717DC0FE;
+	Mon, 19 Nov 2007 08:26:12 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.0.99999.0711191049440.19105@xanadu.home>
-User-Agent: Mutt/1.5.9i
+In-Reply-To: <47416F68.9070908@ogersoft.at>
+User-Agent: Mutt/1.5.13 (2006-08-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65461>
 
-On Mon, Nov 19, 2007 at 10:51:31AM -0500, Nicolas Pitre wrote:
-> > * Explain that the default of core.compression is -1, zlib default, and
-> >   add a quote from zlib.h explaining what that actually means.
+gerhard.oettl.ml@ogersoft.at wrote:
+> I hope this is the correct mailing list. If not please point me in the 
+> right direction.
 > 
-> No, this is wrong.  core.compression has no default.  It is meaningful 
-> only when an explicit value is configured.
+> 
+> I played a little with git (1.5.3.4 / debian) and had the following 
+> observation:
+> Doing a "svn cp" (for example for a tag) results in a large traffic when 
+> doing a "git-svn fetch" afterwards.
+> 
+> To verify I did:
+> git-svn clone -s svn://www.ogersoft.at/ogerlit
+> git-svn fetch
+> svn cp svn://... svn://... (one file ca 3mb)
+> svk checkout (a tcpflow output of about 3k - plaintext commands, I think 
+> a svn checkout would be the same)
+> git-svn fetch (a tcpflow output of 700k - containing a textdelta of 
+> nearly 700k)
+> 
+> 
+> So the question remains:
+> Does svn-git dont know about lightweight svn copies?
+> or can svn-git not handle them correct by now?
+> or did I something wrong?
 
-Would you prefer this?
+Older versions of the Perl SVN bindings have a broken do_switch()
+function, so I fall back to the do_update() function which re-downloads
+the whole tree instead..
 
-       If not set, packs will be compressed to the zlib default level,
-       which is "a default compromise between speed and compression
-       (currently equivalent to level 6)."
+SVN 1.4.4+ has this fix which allows do_switch() to be used instead of
+do_update().
 
-I'm trying to make it reassuring as to the fact that, "yes, packs are
-compressed plenty, you really don't need to mess with this unless you
-want to."  As it stands I could see the potential confusion that no
-(or poor) compression will occur in packs unless this is set.
+do_switch() will only download the delta between two trees if the parent
+is present.
 
--bcd
+If you don't have easy access to 1.4.4+ packages, I have patched 1.4.3
+(x86) packages here for Debian Etch (I haven't built 1.4.4 or 1.4.5 yet):
+
+http://git-svn.yhbt.net/svn/
+
+-- 
+Eric Wong
