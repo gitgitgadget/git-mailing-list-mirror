@@ -1,69 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
+From: David Kastrup <dak@gnu.org>
 Subject: Re: [user] git-svn and svn cp
-Date: Mon, 19 Nov 2007 13:29:51 +0100
-Message-ID: <vpq3av25sg0.fsf@bauges.imag.fr>
-References: <47416F68.9070908@ogersoft.at>
+Date: Mon, 19 Nov 2007 13:50:22 +0100
+Message-ID: <86k5oez9f5.fsf@lola.quinscape.zz>
+References: <47416F68.9070908@ogersoft.at> <vpq3av25sg0.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gerhard.oettl.ml@ogersoft.at
-X-From: git-owner@vger.kernel.org Mon Nov 19 13:31:20 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 13:51:17 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu5mS-0000Q4-QC
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 13:31:13 +0100
+	id 1Iu65r-0006ER-MG
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 13:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751985AbXKSMa4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 07:30:56 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751875AbXKSMa4
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 07:30:56 -0500
-Received: from imag.imag.fr ([129.88.30.1]:54491 "EHLO imag.imag.fr"
+	id S1753367AbXKSMuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 07:50:52 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753240AbXKSMuu
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 07:50:50 -0500
+Received: from main.gmane.org ([80.91.229.2]:51122 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751846AbXKSMaz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 07:30:55 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJCTxp2029825
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 19 Nov 2007 13:30:00 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1Iu5l9-0003rZ-Cl; Mon, 19 Nov 2007 13:29:51 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1Iu5l9-0002Be-7z; Mon, 19 Nov 2007 13:29:51 +0100
-In-Reply-To: <47416F68.9070908@ogersoft.at> (gerhard oettl ml's message of "Mon\, 19 Nov 2007 12\:11\:36 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 13:30:00 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753064AbXKSMut (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 07:50:49 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1Iu65J-0006wJ-Nh
+	for git@vger.kernel.org; Mon, 19 Nov 2007 12:50:41 +0000
+Received: from pd95b0fdb.dip0.t-ipconnect.de ([217.91.15.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 12:50:41 +0000
+Received: from dak by pd95b0fdb.dip0.t-ipconnect.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 12:50:41 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: pd95b0fdb.dip0.t-ipconnect.de
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/23.0.50 (gnu/linux)
+Cancel-Lock: sha1:jSLzcdF9/fdopPTZv0Bw78GtFn4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65433>
 
-gerhard.oettl.ml@ogersoft.at writes:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> I hope this is the correct mailing list. If not please point me in the
-> right direction.
+> gerhard.oettl.ml@ogersoft.at writes:
 >
+>> I hope this is the correct mailing list. If not please point me in the
+>> right direction.
+>>
+>>
+>> I played a little with git (1.5.3.4 / debian) and had the following
+>> observation:
+>> Doing a "svn cp" (for example for a tag) results in a large traffic
+>> when doing a "git-svn fetch" afterwards.
+>>
+>> To verify I did:
+>> git-svn clone -s svn://www.ogersoft.at/ogerlit
 >
-> I played a little with git (1.5.3.4 / debian) and had the following
-> observation:
-> Doing a "svn cp" (for example for a tag) results in a large traffic
-> when doing a "git-svn fetch" afterwards.
->
-> To verify I did:
-> git-svn clone -s svn://www.ogersoft.at/ogerlit
+> I guess the --tags=... and --branches=... options of git-svn can help.
 
-I guess the --tags=... and --branches=... options of git-svn can help.
-
-[ disclaimer: I never used git-svn on a repository with branches and
-  tags ]
+You are aware of what the "-s" option does?
 
 -- 
-Matthieu
+David Kastrup
