@@ -1,103 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
-Date: Mon, 19 Nov 2007 23:29:44 +0100
-Message-ID: <200711192329.44905.jnareb@gmail.com>
-References: <Pine.LNX.4.64.0711121501500.4362@racer.site> <200711192204.26772.jnareb@gmail.com> <7vfxz1naq0.fsf@gitster.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 14:29:39 -0800
+Message-ID: <7v7ikdna24.fsf@gitster.siamese.dyndns.org>
+References: <1195477504.8093.15.camel@localhost>
+	<8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
+	<E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr>
+	<8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com>
+	<25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr>
+	<vpqtznirtlk.fsf@bauges.imag.fr>
+	<60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr>
+	<vpq63zxq5s2.fsf@bauges.imag.fr>
+	<0E0AA90A-2282-4AFE-8B94-EA0E35B57D65@lrde.epita.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Steffen Prohaska <prohaska@zib.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 23:30:13 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Lars Hjemli <hjemli@gmail.com>,
+	"Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
+To: Benoit Sigoure <tsuna@lrde.epita.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 19 23:30:21 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuF88-0008Ht-6j
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:30:12 +0100
+	id 1IuF88-0008Ht-Rd
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:30:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752099AbXKSW3t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 17:29:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752008AbXKSW3s
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:29:48 -0500
-Received: from nf-out-0910.google.com ([64.233.182.190]:24891 "EHLO
-	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751417AbXKSW3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 17:29:47 -0500
-Received: by nf-out-0910.google.com with SMTP id g13so1563536nfb
-        for <git@vger.kernel.org>; Mon, 19 Nov 2007 14:29:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=beta;
-        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        bh=DY+jrx/09b1OtWNc2g6POCXJSBt7uws+JbOw082WnJw=;
-        b=Gm7IQWf+eqMulgrRbU04har4rryTd8l+SfcHBINKGlpD6IGr4BYxFmeaP7Ucd1AbiTQxgbIYAM3uil3MVQB2vRmP7lxL1PfqG2jrAwTgC6HE/+YHtEdE4yETTQ6Kv1QNtwQCwag9T6yAydAWIKwAl3u1RvzA8NAI9lhVPInj0JQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=beta;
-        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
-        b=iwhxXKLZ3Ke7JZ4Xezjaa9IZT/2bMLJB3jAqNvp1hx5YRdxpdDAkem9/wmrn+lEBTzcX6KTreUV7aKW5iUmI7outaTOvjf/NOotGYomOwRi4+VePRy+17ZekrfQrewyifRtw7A+3mdEyYDlq+VPNhGxPFpMnkURervQUftRZTbA=
-Received: by 10.86.26.11 with SMTP id 11mr5473683fgz.1195511386103;
-        Mon, 19 Nov 2007 14:29:46 -0800 (PST)
-Received: from ?192.168.1.11? ( [83.8.241.246])
-        by mx.google.com with ESMTPS id e20sm7477255fga.2007.11.19.14.29.44
-        (version=SSLv3 cipher=OTHER);
-        Mon, 19 Nov 2007 14:29:45 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vfxz1naq0.fsf@gitster.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1752008AbXKSW3u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 17:29:50 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752014AbXKSW3u
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:29:50 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:53198 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751983AbXKSW3s (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 17:29:48 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 8275F2F0;
+	Mon, 19 Nov 2007 17:30:09 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id B65D997960;
+	Mon, 19 Nov 2007 17:30:02 -0500 (EST)
+In-Reply-To: <0E0AA90A-2282-4AFE-8B94-EA0E35B57D65@lrde.epita.fr> (Benoit
+	Sigoure's message of "Mon, 19 Nov 2007 22:51:35 +0100")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65510>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65511>
 
-Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
->> Junio C Hamano wrote:
+Benoit Sigoure <tsuna@lrde.epita.fr> writes:
 
->>> IOW, make these: 
->>> 
->>> 	$ git push HEAD
->>>     $ git push next
->>> 
->>> push the obvious thing to the default remote, I _think_ we can
->>> achieve the same effect as --current and a bit more.
+> On Nov 19, 2007, at 10:33 PM, Matthieu Moy wrote:
+>
+>> Benoit Sigoure <tsuna@lrde.epita.fr> writes:
 >>
->> The only problem would be when there is conflict between remote name and 
->> branch name...
+>>> No please stop adding links from on man page to another.  If you read
+>>> man git-reflog, you surely want to learn the HEAD@{N} syntax and see
+>>> practical uses cases.
+>>
+>> I don't understand your point.
+>>
+>> Yes, if I read man git-reflog, I do surely want to learn HEAD@{N}
+>> syntax, but that is _precisely_ what my patch does.
+>
+> By telling you to read another man page which is annoying and a
+> recurring complaint.
 
-What about idea of using "--" to separate remote from branchname?
+Which is a valid point.  We could move that part into a separate
+source file and include it from different places appropriately,
+just we have done for the common diff options.
 
-> Yes.  *If* we were to do that fallback it has to be something
-> like this:
-> 
->  (1) does $0 look like remote and $1..$n look like a refspec?  If
->      so do not fallback;
+However, you need to think about what's appropriate.  Any
+command that potentially takes a ref as (one of) its parameter?
+That means almost everybody.
 
-By "look like remote" you mean that there is [remote "$0"] section
-in config (I guess that we can not support old .git/remotes/<remote>
-configuration for _new_ features, especially that there exist script
-converting to new way of configuring remotes, contrib/remotes2config.sh)
- 
->  (2) Do we have branch.$current.remote?  If not, we cannot
->      fallback so error out.
-
-Do not fallback to "origin"?
-
->  (3) otherwise, does $0 look like a refspec?  If so, try insert
->      it before the params, treating $0..$n all refspecs.
-
-You mean $0 is existing branch, or of the form branch:<whatever>?
-Or should we forbid remote names containing ':'?
-
->> BTW. what would happen for "git push branch1 branch2" if branch1 has 
->> different remote than branch2?
-> 
-> Read my example more carefully.  It says "push HEAD" and "push
-> next" while on 'pu' and it takes branch.pu.remote.
-
-Somehow I missed that $current means _current branch_ (branch we are on,
-which defines default remote). 
-
--- 
-Jakub Narebski
-Poland
+I think the ref naming syntax is so commonly used and
+fundamental that we could treat it as prerequiste for individual
+manual pages.  Maybe move the section to git(7)?  That would
+certainly be better than having it in git-rev-parse(1), but does
+not reduce the cross referencing complaints.
