@@ -1,85 +1,94 @@
-From: Sergei Organov <osv@javad.com>
-Subject: Re: [PATCH] Improve description of git-branch -d and -D in man page.
-Date: Mon, 19 Nov 2007 12:49:54 +0300
-Message-ID: <877ike1s59.fsf@osv.gnss.ru>
-References: <874pfq9q8s.fsf@osv.gnss.ru> <200711131703.16357.jnareb@gmail.com>
-	<A919E788-C5D0-4404-95D4-869BAFE868AC@zib.de>
-	<200711131842.03622.jnareb@gmail.com> <87d4ue81tv.fsf@osv.gnss.ru>
-	<20071117191256.GD5198@efreet.light.src>
-	<20071117195144.GF5198@efreet.light.src>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 19 10:50:41 2007
+From: Steffen Prohaska <prohaska@zib.de>
+Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
+Date: Mon, 19 Nov 2007 10:54:55 +0100
+Message-ID: <3FB7B6E8-FC22-4FDF-BDAD-08312202B29A@zib.de>
+References: <Pine.LNX.4.64.0711121501500.4362@racer.site> <11954023881802-git-send-email-prohaska@zib.de> <119540238994-git-send-email-prohaska@zib.de> <7vwssfqb0w.fsf@gitster.siamese.dyndns.org> <EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de> <7vejempudf.fsf@gitster.siamese.dyndns.org> <53F12F4D-73C5-446E-9A97-9D2D4CA9DF9F@zib.de> <7vk5oeocnr.fsf@gitster.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 10:54:11 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu3H0-0001QO-Qe
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:50:35 +0100
+	id 1Iu3KN-0002QN-0w
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:54:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752655AbXKSJuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 04:50:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbXKSJuR
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:50:17 -0500
-Received: from javad.com ([216.122.176.236]:4105 "EHLO javad.com"
+	id S1752676AbXKSJxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 04:53:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbXKSJxq
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:53:46 -0500
+Received: from mailer.zib.de ([130.73.108.11]:46884 "EHLO mailer.zib.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752495AbXKSJuQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 04:50:16 -0500
-Received: from osv ([87.236.81.130])
-	by javad.com (8.11.6/8.11.0) with ESMTP id lAJ9o0i12993;
-	Mon, 19 Nov 2007 09:50:00 GMT
-	(envelope-from s.organov@javad.com)
-Received: from osv by osv with local (Exim 4.63)
-	(envelope-from <s.organov@javad.com>)
-	id 1Iu3GM-0007g0-IP; Mon, 19 Nov 2007 12:49:54 +0300
-In-Reply-To: <20071117195144.GF5198@efreet.light.src> (Jan Hudec's message of "Sat\, 17 Nov 2007 20\:51\:44 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
+	id S1752498AbXKSJxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 04:53:46 -0500
+Received: from mailsrv2.zib.de (sc2.zib.de [130.73.108.31])
+	by mailer.zib.de (8.13.7+Sun/8.13.7) with ESMTP id lAJ9rdkU016640;
+	Mon, 19 Nov 2007 10:53:40 +0100 (CET)
+Received: from [130.73.68.185] (cougar.zib.de [130.73.68.185])
+	(authenticated bits=0)
+	by mailsrv2.zib.de (8.13.4/8.13.4) with ESMTP id lAJ9rdJ2013186
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Mon, 19 Nov 2007 10:53:39 +0100 (MET)
+In-Reply-To: <7vk5oeocnr.fsf@gitster.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65421>
 
-Jan Hudec <bulb@ucw.cz> writes:
-> Some users expect that deleting a remote-tracking branch would prevent
-> fetch from creating it again, so be explcit about that it's not the case.
-> Also be a little more explicit about what fully merged means.
->
-> Signed-off-by: Jan Hudec <bulb@ucw.cz>
-> ---
->
-> On Sat, Nov 17, 2007 at 20:12:56 +0100, Jan Hudec wrote:
->> On Tue, Nov 13, 2007 at 20:58:20 +0300, osv@javad.com wrote:
->> > <quote Documentation/git-branch.txt>
->> > Delete unneeded branch::
->> > +
->> > ------------
->> > $ git clone git://git.kernel.org/.../git.git my.git
->> > $ cd my.git
->> > $ git branch -d -r origin/todo origin/html origin/man   <1>
->> > $ git branch -D test                                    <2>
->> > ------------
->> > +
->> > <1> Delete remote-tracking branches "todo", "html", "man"
->> > </quote>
->> > 
->> > That's *exactly* what I did! And it *doesn't work*! Well, it does delete
->> > the branches, but they are automagically re-created on the next fetch,
->> > so "deleting" them this way is useless.
->> 
->> Of course it *does* work. It *deletes* the branches. There is not a single
->> word about stopping fetch getting them!
->> 
->> Obviously given that the example is slightly contrived, it should really
->> be mentioned that it does not affect fetch at all.
->
-> Would this make the description obvious enough?
 
-Yes, I think now it describes the actual behavior much much better, --
-thanks.
+On Nov 19, 2007, at 9:35 AM, Junio C Hamano wrote:
 
--- 
-Sergei.
+> Steffen Prohaska <prohaska@zib.de> writes:
+>
+>> What's left is a new switch "--current".  Less code, easy
+>> to explain.
+>
+> But won't that force the "current" people always type that from
+> the command line, as your previous point was that your earlier
+> patch to say "remote.$there.push = HEAD" does not work that way?
+> If that configuration works as expected, then I'd 100% agree
+> that we would not need push.defaultRefs.  Either you do not have
+> "push" at all if your preference is --matching, or you do have
+> "push = HEAD" if your preference is --current.  But if it
+> doesn't (which was what I gathered from your earlier response),
+> having a configuration would help them, wouldn't it?
+
+My main point is that I want to have something that _always_
+works as expected without manually tweaking the configuration
+variables.  In a setting with shared repos, "git push" doesn't.
+Sooner or later it will complain about refusing an update
+because of non-fast-forward.  The only thing that currently
+works it "git push $correct-remote $correct-branch", but this
+depends on the local configuration and on the branch you're on.
+
+"git push --current" would always work as expected; without
+setting any configuration variable.
+
+I can tell my users that their workflow is
+
+	git checkout foo
+	git pull
+	work work work ...
+	git push --current
+
+That simple.  I'm fine with that.
+
+
+> Changing the default, if it will ever happen, is _NOT_ to help
+> people who are already using git and want "current" NOW.  The
+> current users cannot be helped _unless_ we switch overnight, but
+> that is not an option as it introduces a regression to people's
+> established workflow.
+>
+> Changing the default is to help new users who will come in the
+> future, if majority of the existing users find --current easier
+> to explain to new people _they_ need to train.
+
+I'll not change the default.  I'll only add the --current switch.
+
+	Steffen
