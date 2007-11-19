@@ -1,205 +1,175 @@
-From: Pierre Habouzit <madcoder@debian.org>
-Subject: Re: [PATCH/RFC] parse-options: allow to define hidden synonym options
-Date: Mon, 19 Nov 2007 10:22:07 +0100
-Message-ID: <20071119092207.GB9028@artemis.corp>
-References: <7v4pfircka.fsf@gitster.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current
+ branch
+Date: Mon, 19 Nov 2007 10:24:46 +0100
+Message-ID: <4741565E.1020500@op5.se>
+References: <Pine.LNX.4.64.0711121501500.4362@racer.site> <11954023881802-git-send-email-prohaska@zib.de> <119540238994-git-send-email-prohaska@zib.de> <7vwssfqb0w.fsf@gitster.siamese.dyndns.org> <EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="i9LlY+UWpKt15+FH";
-	protocol="application/pgp-signature"; micalg=SHA1
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 10:22:37 2007
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 19 10:25:12 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu2pw-0001fr-9X
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:22:36 +0100
+	id 1Iu2sR-0002JW-Ch
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752528AbXKSJWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 04:22:12 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752271AbXKSJWL
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:22:11 -0500
-Received: from pan.madism.org ([88.191.52.104]:49230 "EHLO hermes.madism.org"
+	id S1752533AbXKSJYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 04:24:54 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752510AbXKSJYy
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:24:54 -0500
+Received: from mail.op5.se ([193.201.96.20]:54380 "EHLO mail.op5.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752512AbXKSJWK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 04:22:10 -0500
-Received: from madism.org (unknown [81.57.219.236])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "artemis.madism.org", Issuer "madism.org" (not verified))
-	by hermes.madism.org (Postfix) with ESMTP id A764F29BC8;
-	Mon, 19 Nov 2007 10:22:08 +0100 (CET)
-Received: by madism.org (Postfix, from userid 1000)
-	id E8EBD2E3C; Mon, 19 Nov 2007 10:22:07 +0100 (CET)
-Mail-Followup-To: Pierre Habouzit <madcoder@debian.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v4pfircka.fsf@gitster.siamese.dyndns.org>
-X-Face: $(^e[V4D-[`f2EmMGz@fgWK!e.B~2g.{08lKPU(nc1J~z\4B>*JEVq:E]7G-\6$Ycr4<;Z!|VY6Grt]+RsS$IMV)f>2)M="tY:ZPcU;&%it2D81X^kNya0=L]"vZmLP+UmKhgq+u*\.dJ8G!N&=EvlD
-User-Agent: Madmutt/devel (Linux)
+	id S1752504AbXKSJYx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 04:24:53 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.op5.se (Postfix) with ESMTP id C62001F08755;
+	Mon, 19 Nov 2007 10:24:51 +0100 (CET)
+X-Virus-Scanned: amavisd-new at 
+X-Spam-Flag: NO
+X-Spam-Score: -4.399
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
+	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
+Received: from mail.op5.se ([127.0.0.1])
+	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id GFe-U9mLbr7M; Mon, 19 Nov 2007 10:24:50 +0100 (CET)
+Received: from nox.op5.se (unknown [192.168.1.20])
+	by mail.op5.se (Postfix) with ESMTP id 570171F08754;
+	Mon, 19 Nov 2007 10:24:49 +0100 (CET)
+User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
+In-Reply-To: <EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65418>
 
+Steffen Prohaska wrote:
+> 
+> On Nov 19, 2007, at 2:28 AM, Junio C Hamano wrote:
+> 
+> 
+> 
+>> I do not think it is "Often you want" that makes it awkward.
+>>
+>> Instead, the awkward case is if you do the "only the current"
+>> push NOT often enough.  If it is often enough, you set the
+>> configuration once and the awkwardness is behind you.
+>>
+>> If however it is not often enough, you cannot afford to have the
+>> configuration above, because that would force you to tell from
+>> the command line which branches, not just the current one, to
+>> push, and that is inconvenient because it is not rare enough.
+> 
+> Will try to rephrase the commit message.
+> 
+> 
+>> Together with your [PATCH 1/2], I like the general direction
+>> these patckes are taking us, but it feels a bit too hasty.  I
+>> personally am not convinced that switching to --current for
+>> everybody is a good move.
+>>
+>>> ...
+>>> Maybe in two years (that's twice an eternity in git time scales):
+>>>
+>>> 4) make "git push --current" the default.
+>>
+>> If these, both the uncertainly expressed by "Maybe" and "twice
+>> an eternity" are true, which they are, the new warning in the
+>> current patch are inappropriate.  Many people's settings depend
+>> on a working "push the matching refs" behaviour, and we need a
+>> very good excuse to annoy the existing happy users with such a
+>> warning.
+> 
+> I think 3) is the interesting case.  "git push" should do
+> nothing by default.  Either you can configure "git push" to do
+> something by setting a remote.$remote.push line or you need
+> to provide a command line switch.  But if you do not tell
+> explicitly what you want, "git push" will not do anything
+> for you.
+> 
 
---i9LlY+UWpKt15+FH
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'd really, really hate that. I often have changes on several branches
+when I push. I like the behaviour as it is today.
 
-On lun, nov 19, 2007 at 06:09:41 +0000, Junio C Hamano wrote:
-> By setting the help member to NULL, you can implement an option
-> that is not shown in the "git-cmd -h" help output.  This is
-> useful to support backward compatible synonyms without
-> cluttering the help text.
+> 
+>> Remember, how much vocal the dissenters might have been on the
+>> list in the recent discussions, we need to consider the needs of
+>> the silent majority that has been content with the current
+>> behaviour for a long time.
+>>
+>> The "warning" to annoy them may be a way to get their attention
+>> and get them involved in a discussion to decide what the default
+>> should be.  But changing the default without giving the people
+>> who do not like the _new_ default a way to avoid inconvenience
+>> of always typing --matching or --current is not nice.  And
+>> honestly, I do not think there is one single default that is
+>> good for everybody.
+> 
+> Personally, I'd switch to the do-nothing default immediately.
+> But you are right.  More work is needed to have a smooth transition.
+> 
+> 
+>> We should be doing better.
+>>
+>> A smoother transition route would be:
+>>
+>>  - Keep "matching" the built-in default for now;
+>>
+>>  - Take your patches (but drop "warning" bits at this point) to
+>>    introduce 'matching' and 'current' behaviours, and a way to
+>>    override the built-in default from the command line;
+>>
+>>  - Introduce a configuration 'push.defaultRefs' ('matching' or
+>>    'current') to override that built-in default, so people who
+>>    prefer 'current' can override the built-in default, without
+>>    having to type --current every time.
+> 
+> Sounds like a plan.
+> 
+> If we have the configuration variable, maybe we could switch
+> off the default behaviour immediately.  Setting a single global
+> config variable once would be sufficient to get it back.  So,
+> we could change the default and print a recommendation to run
+> 'git config --global push.defaultRefs matching' to get it back.
+> 
 
-  Sorry I'm not very present those days, but oh well...
+Ugh. People who neither know nor care about git development will
+wonder why the hell they now have to tell git something in order
+for it to do something it's always done anyway. The majority of
+git users never read release-notes. They just do "yum update" and
+then go about their business the same way they've always done.
 
-  The idea looks nice, though if we are doing this, I'd like to see it
-fix other problems at the same time. We sometimes have "internal"
-commands switches and other cases of alias.
+Newcomers that obviously have no such configuration will wonder
+why they're getting warnings from using the standard command-set.
 
-  I wonder if it wouldn't be better that we have some kind of --help-all
-switch that would show them _all_ and a way (through another flag ?) to
-hide those additional options by default.
+> ...
+> 
+>> After all that happens, we can start discussing what the
+>> built-in default should be.  When it is changed after the
+>> discussion concludes (which may never happen), people who want
+>> to keep 'matching' behaviour would have had the configuration
+>> mechanism to override that built-in default for some time during
+>> the discussion period.  So the beginning of that discussion
+>> period is when we should start talking about "We might change
+>> the default soon; set the configuration to your liking if you do
+>> not want to get affected" in the warning.
+> 
+> ... And we'd not even start the discussion.  Because there's no
+> need to.  Every user should make a choice, once.  We do not
+> provide a default (which obviously will trigger another discussion ;)
+> 
 
-  And defining an alias would then be:
+If the default's to be changed, making it default to no-op is really
+the only sensible thing to do. Otherwise I'm guessing a lot of people
+that actually count on the current behaviour will get quite vexed, and
+--current is definitely not the universally correct default thing to do.
 
-  { OPTION_SOME_TYPE, 0, "alias-name", &some_value, "some-arg",
-    "backward compatibility alias for \"foo\"", PARSE_OPT_HIDE, ... }
-
-or:
-
-  { OPTION_SOME_TYPE, 0, "plumbing-dark-think", &some_value, "some-arg",
-    "internal plumbing switch used in", PARSE_OPT_HIDE, ... }
-
-
-  I personnaly don't like that parse-opt sees more options than what it
-says it sees, else with your patch, if the user gives ambiguous
-abbreviated long switches, he'll get "--w is ambiguous, could be
-`--whith` or `--wibble`" whereas he never knew that --with existed in
-the first place.
-
-  That gives something more along the lines of :
-
-=46rom 860a5bf335e44dd2bbe5f30620c99d174b697f69 Mon Sep 17 00:00:00 2001
-=46rom: Pierre Habouzit <madcoder@debian.org>
-Date: Mon, 19 Nov 2007 10:21:44 +0100
-Subject: [PATCH] parse-options: Allow to hide options from the default usag=
-e.
-
-This is useful for backward-compatibility aliases, or very advanced command
-line switches introduced for internal git usages and have no real use for a
-user.
-
-parse-options still shows them if the user asks for --help-all.
-
-Signed-off-by: Pierre Habouzit <madcoder@debian.org>
----
- parse-options.c |   17 +++++++++++++++--
- parse-options.h |    3 +++
- 2 files changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index d3e608a..807e443 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -216,6 +216,9 @@ is_abbreviated:
- 	return error("unknown option `%s'", arg);
- }
-=20
-+static NORETURN void usage_with_options_internal(const char * const *,
-+                                                 const struct option *, in=
-t);
-+
- int parse_options(int argc, const char **argv, const struct option *option=
-s,
-                   const char * const usagestr[], int flags)
- {
-@@ -249,6 +252,8 @@ int parse_options(int argc, const char **argv, const st=
-ruct option *options,
- 			break;
- 		}
-=20
-+		if (!strcmp(arg + 2, "help-all"))
-+			usage_with_options_internal(usagestr, options, 1);
- 		if (!strcmp(arg + 2, "help"))
- 			usage_with_options(usagestr, options);
- 		if (parse_long_opt(&args, arg + 2, options))
-@@ -263,8 +268,8 @@ int parse_options(int argc, const char **argv, const st=
-ruct option *options,
- #define USAGE_OPTS_WIDTH 24
- #define USAGE_GAP         2
-=20
--void usage_with_options(const char * const *usagestr,
--                        const struct option *opts)
-+void usage_with_options_internal(const char * const *usagestr,
-+                                 const struct option *opts, int full)
- {
- 	fprintf(stderr, "usage: %s\n", *usagestr++);
- 	while (*usagestr && **usagestr)
-@@ -285,6 +290,8 @@ void usage_with_options(const char * const *usagestr,
- 				fprintf(stderr, "%s\n", opts->help);
- 			continue;
- 		}
-+		if (!full & (opts->flags & PARSE_OPT_HIDDEN))
-+			continue;
-=20
- 		pos =3D fprintf(stderr, "    ");
- 		if (opts->short_name)
-@@ -335,6 +342,12 @@ void usage_with_options(const char * const *usagestr,
- 	exit(129);
- }
-=20
-+void usage_with_options(const char * const *usagestr,
-+                        const struct option *opts)
-+{
-+	usage_with_options_internal(usagestr, opts, 0);
-+}
-+
- /*----- some often used options -----*/
- #include "cache.h"
-=20
-diff --git a/parse-options.h b/parse-options.h
-index a8760ac..102ac31 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -24,6 +24,7 @@ enum parse_opt_option_flags {
- 	PARSE_OPT_OPTARG  =3D 1,
- 	PARSE_OPT_NOARG   =3D 2,
- 	PARSE_OPT_NONEG   =3D 4,
-+	PARSE_OPT_HIDDEN  =3D 8,
- };
-=20
- struct option;
-@@ -57,6 +58,8 @@ typedef int parse_opt_cb(const struct option *, const cha=
-r *arg, int unset);
-  *   PARSE_OPT_OPTARG: says that the argument is optionnal (not for BOOLEA=
-Ns)
-  *   PARSE_OPT_NOARG: says that this option takes no argument, for CALLBAC=
-Ks
-  *   PARSE_OPT_NONEG: says that this option cannot be negated
-+ *   PARSE_OPT_HIDDEN this option is skipped in the default usage, showed =
-in
-+ *                    the long one.
-  *
-  * `callback`::
-  *   pointer to the callback to use for OPTION_CALLBACK.
---=20
-1.5.3.5.1795.g5421e-dirty
-
-
---i9LlY+UWpKt15+FH
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.6 (GNU/Linux)
-
-iD8DBQBHQVW/vGr7W6HudhwRAlepAJ0Se8nGt1YwGmBqU2TCSGRCjhjByACgiOz6
-BJK3dztOaaZ8Q/3/s921yOc=
-=b2JY
------END PGP SIGNATURE-----
-
---i9LlY+UWpKt15+FH--
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
