@@ -1,96 +1,83 @@
-From: Guido Ostkamp <git@ostkamp.fastmail.fm>
-Subject: [PATCH] Fix "identifier redeclared" compilation error with SUN cc
-Date: Mon, 19 Nov 2007 18:51:00 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711191847550.7957@bianca.dialin.t-online.de>
-References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
- <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
- <7vd4ua3hww.fsf@gitster.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
-	raa.lkml@gmail.com, git@ostkamp.fastmail.fm, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 18:53:37 2007
+From: Benoit Sigoure <tsuna@lrde.epita.fr>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 19:10:07 +0100
+Message-ID: <25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr>
+References: <1195477504.8093.15.camel@localhost> <8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com> <E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr> <8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v752.3)
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha1; boundary="Apple-Mail-13-292759052"
+Content-Transfer-Encoding: 7bit
+Cc: "Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
+To: Lars Hjemli <hjemli@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 19:11:10 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuAmO-0006qU-1F
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 18:51:28 +0100
+	id 1IuB4z-0004jn-2R
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 19:10:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085AbXKSRvL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 12:51:11 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753965AbXKSRvK
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 12:51:10 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54585 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753922AbXKSRvJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2007 12:51:09 -0500
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by out1.messagingengine.com (Postfix) with ESMTP id BE6654CA35;
-	Mon, 19 Nov 2007 12:51:06 -0500 (EST)
-Received: from heartbeat2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 19 Nov 2007 12:51:06 -0500
-X-Sasl-enc: a+fR/MAEJXGmFsXndr/29wb9iZLPca3B3WSY9ig+gAt6 1195494666
-Received: from [192.168.2.101] (p549A1A4B.dip0.t-ipconnect.de [84.154.26.75])
-	by mail.messagingengine.com (Postfix) with ESMTP id 79BDF172A1;
-	Mon, 19 Nov 2007 12:51:05 -0500 (EST)
-In-Reply-To: <7vd4ua3hww.fsf@gitster.siamese.dyndns.org>
+	id S1754434AbXKSSKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 13:10:24 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754446AbXKSSKY
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 13:10:24 -0500
+Received: from 2.139.39-62.rev.gaoland.net ([62.39.139.2]:56875 "EHLO
+	kualalumpur.lrde.epita.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754377AbXKSSKX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 13:10:23 -0500
+Received: from tsunaxbook.lrde.epita.fr ([192.168.101.162])
+	by kualalumpur.lrde.epita.fr with esmtpsa (TLS-1.0:RSA_AES_128_CBC_SHA1:16)
+	(Exim 4.63)
+	(envelope-from <tsuna@lrde.epita.fr>)
+	id 1IuB4f-0005YH-KT; Mon, 19 Nov 2007 19:10:21 +0100
+In-Reply-To: <8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com>
+X-Pgp-Agent: GPGMail 1.1.2 (Tiger)
+X-Mailer: Apple Mail (2.752.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65478>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65479>
 
-Hello Junio,
+This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
+--Apple-Mail-13-292759052
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII; delsp=yes; format=flowed
 
-On Thu, 15 Nov 2007, Junio C Hamano wrote:
-> As I suspect there are other compilers that do not implement flexible 
-> array members (so you cannot use "member[]") nor older gcc extension of 
-> zero sized member (so you cannot use "member[0]" either), this checking 
-> specifically for Sun is too narrow.
+On Nov 19, 2007, at 6:04 PM, Lars Hjemli wrote:
+
+> On Nov 19, 2007 5:57 PM, Benoit Sigoure <tsuna@lrde.epita.fr> wrote:
+>> Understanding this is very important because ``error humanum est'',
+>> and people happen to screw up their hard work and they don't realize
+>> that they can go back without even knowing what the hell the reflog
+>> is or how to use it (I personally don't know -- but I'd like to, give
+>> me pointers please :D).
 >
-> On the other hand, as you said, this is too broad, because not everybody 
-> may be using the SUN compiler on Sun, nor the version that does not 
-> understand flexible array members.
->
-> But being broad should always be safer, albeit a bit wasteful.
->
-> How about doing it this way?
+> You can simply try 'git reflog', and then 'man git-reflog' ;-)
 
-it looks ok on Solaris. I assembled the following patch from your posting, 
-could you please include it?
+Did you only read the man?  It doesn't explain how to use the reflog  
+or I must have a very hard time understanding it.  I don't know where  
+the HEAD@{N} syntax is documented, but surely not in man git-reflog.
 
+Cheers,
 
-Signed-off-by: Guido Ostkamp <git@ostkamp.fastmail.fm>
----
-  git-compat-util.h |   11 ++++++++++-
-  1 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 276a437..97759fd 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -4,11 +4,20 @@
-  #define _FILE_OFFSET_BITS 64
-
-  #ifndef FLEX_ARRAY
--#if defined(__GNUC__) && (__GNUC__ < 3)
-+#if defined(__GNUC__)
-+#if (__GNUC__ < 3)
-  #define FLEX_ARRAY 0
-  #else
-  #define FLEX_ARRAY /* empty */
-  #endif
-+#else
-+/* more cases we know we can use 0 or empty can come here */
-+#endif
-+#endif
-+
-+/* if still undefined, default to the safe, old fashioned way */
-+#ifndef FLEX_ARRAY
-+#define FLEX_ARRAY 1
-  #endif
-
-  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
 -- 
-1.5.3.6.728.gea559
+Benoit Sigoure aka Tsuna
+EPITA Research and Development Laboratory
+
+
+
+--Apple-Mail-13-292759052
+content-type: application/pgp-signature; x-mac-type=70674453;
+	name=PGP.sig
+content-description: This is a digitally signed message part
+content-disposition: inline; filename=PGP.sig
+content-transfer-encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.7 (Darwin)
+
+iD8DBQFHQdF/wwE67wC8PUkRAo3rAKC6HClqySAEbopET09wz4A9vIxHVwCdE64Y
+IwHaloH8qqWujkapATzvhRQ=
+=pdBi
+-----END PGP SIGNATURE-----
+
+--Apple-Mail-13-292759052--
