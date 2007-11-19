@@ -1,69 +1,85 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current
- branch
-Date: Mon, 19 Nov 2007 10:27:45 +0100
-Message-ID: <47415711.7060507@op5.se>
-References: <Pine.LNX.4.64.0711121501500.4362@racer.site>	<11954023881802-git-send-email-prohaska@zib.de>	<119540238994-git-send-email-prohaska@zib.de>	<7vwssfqb0w.fsf@gitster.siamese.dyndns.org>	<EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de>	<7vejempudf.fsf@gitster.siamese.dyndns.org> <7v4pfiptb5.fsf@gitster.siamese.dyndns.org>
+From: Sergei Organov <osv@javad.com>
+Subject: Re: [PATCH] Improve description of git-branch -d and -D in man page.
+Date: Mon, 19 Nov 2007 12:49:54 +0300
+Message-ID: <877ike1s59.fsf@osv.gnss.ru>
+References: <874pfq9q8s.fsf@osv.gnss.ru> <200711131703.16357.jnareb@gmail.com>
+	<A919E788-C5D0-4404-95D4-869BAFE868AC@zib.de>
+	<200711131842.03622.jnareb@gmail.com> <87d4ue81tv.fsf@osv.gnss.ru>
+	<20071117191256.GD5198@efreet.light.src>
+	<20071117195144.GF5198@efreet.light.src>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 19 10:28:17 2007
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Steffen Prohaska <prohaska@zib.de>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jan Hudec <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Mon Nov 19 10:50:41 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu2vI-0003BQ-2t
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:28:08 +0100
+	id 1Iu3H0-0001QO-Qe
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 10:50:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752446AbXKSJ1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 04:27:51 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752547AbXKSJ1v
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:27:51 -0500
-Received: from mail.op5.se ([193.201.96.20]:54414 "EHLO mail.op5.se"
+	id S1752655AbXKSJuS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 04:50:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752604AbXKSJuR
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 04:50:17 -0500
+Received: from javad.com ([216.122.176.236]:4105 "EHLO javad.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752247AbXKSJ1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 04:27:51 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.op5.se (Postfix) with ESMTP id B4B0D1F08755;
-	Mon, 19 Nov 2007 10:27:49 +0100 (CET)
-X-Virus-Scanned: amavisd-new at 
-X-Spam-Flag: NO
-X-Spam-Score: -4.399
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.399 tagged_above=-10 required=6.6
-	tests=[ALL_TRUSTED=-1.8, BAYES_00=-2.599]
-Received: from mail.op5.se ([127.0.0.1])
-	by localhost (mail.op5.se [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id ZXVxI6hwsyWW; Mon, 19 Nov 2007 10:27:48 +0100 (CET)
-Received: from nox.op5.se (unknown [192.168.1.20])
-	by mail.op5.se (Postfix) with ESMTP id 3DF371F08754;
-	Mon, 19 Nov 2007 10:27:48 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.5 (X11/20070727)
-In-Reply-To: <7v4pfiptb5.fsf@gitster.siamese.dyndns.org>
+	id S1752495AbXKSJuQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 04:50:16 -0500
+Received: from osv ([87.236.81.130])
+	by javad.com (8.11.6/8.11.0) with ESMTP id lAJ9o0i12993;
+	Mon, 19 Nov 2007 09:50:00 GMT
+	(envelope-from s.organov@javad.com)
+Received: from osv by osv with local (Exim 4.63)
+	(envelope-from <s.organov@javad.com>)
+	id 1Iu3GM-0007g0-IP; Mon, 19 Nov 2007 12:49:54 +0300
+In-Reply-To: <20071117195144.GF5198@efreet.light.src> (Jan Hudec's message of "Sat\, 17 Nov 2007 20\:51\:44 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65420>
 
-Junio C Hamano wrote:
-> 
-> If we can come up with a way to tell projects that use the
-> workflow better served with --current, perhaps when a remote is
-> added to the repository (either the initial clone or "git remote
-> add") and/or when a new branch is created.  If we automatically
-> set up the configuration "push.defaultRefs = current" in such a
-> case, I suspect that we do not have to have the built-in default
-> (at least, the value of the built-in default would not matter
-> much).
+Jan Hudec <bulb@ucw.cz> writes:
+> Some users expect that deleting a remote-tracking branch would prevent
+> fetch from creating it again, so be explcit about that it's not the case.
+> Also be a little more explicit about what fully merged means.
+>
+> Signed-off-by: Jan Hudec <bulb@ucw.cz>
+> ---
+>
+> On Sat, Nov 17, 2007 at 20:12:56 +0100, Jan Hudec wrote:
+>> On Tue, Nov 13, 2007 at 20:58:20 +0300, osv@javad.com wrote:
+>> > <quote Documentation/git-branch.txt>
+>> > Delete unneeded branch::
+>> > +
+>> > ------------
+>> > $ git clone git://git.kernel.org/.../git.git my.git
+>> > $ cd my.git
+>> > $ git branch -d -r origin/todo origin/html origin/man   <1>
+>> > $ git branch -D test                                    <2>
+>> > ------------
+>> > +
+>> > <1> Delete remote-tracking branches "todo", "html", "man"
+>> > </quote>
+>> > 
+>> > That's *exactly* what I did! And it *doesn't work*! Well, it does delete
+>> > the branches, but they are automagically re-created on the next fetch,
+>> > so "deleting" them this way is useless.
+>> 
+>> Of course it *does* work. It *deletes* the branches. There is not a single
+>> word about stopping fetch getting them!
+>> 
+>> Obviously given that the example is slightly contrived, it should really
+>> be mentioned that it does not affect fetch at all.
+>
+> Would this make the description obvious enough?
 
-So when someone who's been using git of today adds a new remote
-with a newer git, all of a sudden the default push behaviour
-changes for that repo?
+Yes, I think now it describes the actual behavior much much better, --
+thanks.
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Sergei.
