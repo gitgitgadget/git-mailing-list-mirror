@@ -1,149 +1,115 @@
-From: "Medve Emilian" <Emilian.Medve@freescale.com>
-Subject: RE: git-daemon
-Date: Mon, 19 Nov 2007 15:49:36 -0700
-Message-ID: <598D5675D34BE349929AF5EDE9B03E27017BCC8D@az33exm24.fsl.freescale.net>
-References: <598D5675D34BE349929AF5EDE9B03E27017BCC42@az33exm24.fsl.freescale.net> <7vbq9pnac2.fsf@gitster.siamese.dyndns.org>
+From: "Jon Smirl" <jonsmirl@gmail.com>
+Subject: Re: ! [rejected] master -> master (non-fast forward)
+Date: Mon, 19 Nov 2007 17:54:05 -0500
+Message-ID: <9e4733910711191454i40d56fa2h9791415c092b9b9c@mail.gmail.com>
+References: <9e4733910711180712n6ee271fau774310e63ab08f6d@mail.gmail.com>
+	 <7v7ikfwhkj.fsf@gitster.siamese.dyndns.org>
+	 <9e4733910711181042x123e99efjad38486654db17e2@mail.gmail.com>
+	 <tnxbq9qyvom.fsf@pc1117.cambridge.arm.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 19 23:50:00 2007
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Git Mailing List" <git@vger.kernel.org>
+To: "Catalin Marinas" <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 19 23:54:29 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuFRI-0006OB-6g
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:50:00 +0100
+	id 1IuFVa-0007sm-1S
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 23:54:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752396AbXKSWtn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 17:49:43 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752262AbXKSWtn
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:49:43 -0500
-Received: from de01egw01.freescale.net ([192.88.165.102]:64796 "EHLO
-	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752405AbXKSWtm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 19 Nov 2007 17:49:42 -0500
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id lAJMncFv008907
-	for <git@vger.kernel.org>; Mon, 19 Nov 2007 15:49:39 -0700 (MST)
-Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id lAJMnbLH015112
-	for <git@vger.kernel.org>; Mon, 19 Nov 2007 16:49:37 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <7vbq9pnac2.fsf@gitster.siamese.dyndns.org>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-daemon
-thread-index: Acgq+tx+fCPK5YYbQ4OMWxWRjzoLIQAAqzrQ
+	id S1751765AbXKSWyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 17:54:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751706AbXKSWyI
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 17:54:08 -0500
+Received: from nz-out-0506.google.com ([64.233.162.233]:6964 "EHLO
+	nz-out-0506.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914AbXKSWyG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 17:54:06 -0500
+Received: by nz-out-0506.google.com with SMTP id s18so1429284nze
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 14:54:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        bh=yBTjNKgTWbdj7HuLdNMK8oFKiIkgt5KtnQOhvoETQtM=;
+        b=tE29tKGKTFod6WKbCtY7InyCweQ6ckVanUVqnWCeuKPsY3U3Z4jW8RSctmcXotOxtfeVEjxpNNoSVcRtQANH3O1mHueGcZ6Ihx2/MJSbLx+bL1mbwn4R6W57zPfp2xLTuguSnW2dOSACQv2pQIdvqiQf0f2zRJbndx3V5RHHv6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:message-id:date:from:to:subject:cc:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:references;
+        b=T2Ab/LjGZ7QN6oTgSV4OI1/ouiJH+7OJ8YqudT8XsBgs4i0A/pnsCehq54fjwLNZc4JkFgZqNBrQNYoUO60TmbcaCQ9FEE2LmF212eqTgIygHrFJzLrxoNDgu8ju92bAb0xtkzmydZnjN3i3ipfjs5oRw1gva//uHOWnt9TVIwE=
+Received: by 10.114.204.7 with SMTP id b7mr273584wag.1195512845388;
+        Mon, 19 Nov 2007 14:54:05 -0800 (PST)
+Received: by 10.115.54.19 with HTTP; Mon, 19 Nov 2007 14:54:05 -0800 (PST)
+In-Reply-To: <tnxbq9qyvom.fsf@pc1117.cambridge.arm.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65514>
 
-Hello Junio,
+On 11/19/07, Catalin Marinas <catalin.marinas@arm.com> wrote:
+> "Jon Smirl" <jonsmirl@gmail.com> wrote:
+> > On 11/18/07, Junio C Hamano <gitster@pobox.com> wrote:
+> >> "Jon Smirl" <jonsmirl@gmail.com> writes:
+> >>
+> >> > What's causing this? I'm using stgit on the master branch.
+> [...]
+> >> pushed "A" to the remote's 'master', then built this history:
+> >>
+> >>          o---o---A
+> >>         /
+> >>     ---o---o---o---o---A'
+> >>
+> >> by rewinding and rebuilding, and the tip of the branch now
+> >> points at A', which you tried to push to the remote.
+> >
+> > stgit must be doing this when I rebase. It pops all of it's patches,
+> > moves to head of linus/master and then rebases them.
+> [...]
+> > What is the right way to share repositories using stgit? I have a set
+> > of patches which I am working on for kernel inclusion. I have them
+> > applied as a stgit stack on top of linus/master. I need to share this
+> > patch stack with other developers. These developers may want to change
+> > one of my patches. Right now they are emailing me deltas and I apply
+> > them to the appropriate stgit patch. I have seventeen patches in my
+> > stack currently.
+>
+> StGIT is meant for keeping a clean history but with the big
+> disadvantage that this history is volatile.
+>
+> A solution is for the other developers to use StGIT or just git-rebase
+> so that they always have the same base (volatile) history and keep
+> their patches on top of yours.
+>
+> A 2nd approach is to use topic branches rather than StGIT patches but
+> you might lose some flexibility.
+>
+> Yet another approach (which I used) is to keep a public branch (can be
+> maintained by StGIT) where the history doesn't change and a devel
+> volatile branch. When I modify some patches and they are ready for
+> publishing, switch to the public branch and cherry-pick them (stg
+> pick) from the devel branch. Because this is done with a three-way
+> merge in StGIT, you will only get the new changes rather than the full
+> patch. You need to change the patch message (as it is that of the
+> original patch) to describe the specific changes and run 'stg refresh
+> && stg commit' to store it into the immutable history (well, there is
+> an 'uncommit' command as well if something goes wrong).
 
 
-v1.5.3.6 works but the HEAD of master and next don't. I considered the
-patches below but they seemed harmless. I think the problem comes form
-upload-pack (and below it). Weirdly enough running git-daemon standalone
-seems to work fine. Cloning over ssh or on the same file system seems to
-work fine too.
+Is a StGit where we can transparently share patches under version
+control in the works?
 
-I was hoping somebody can repeat the experiment (build the latest master
-or maint) and invalidate my experience.
+Something like this:
+clone repo with stgit
+normal stg commands work with no setup
+change a patch
+stg push the repo
 
+I stg pull and the patch is updated.
+I also get rebased forward if the base repo has been updated
 
-Cheers,
-Emil.
-
-
-> -----Original Message-----
-> From: Junio C Hamano [mailto:gitster@pobox.com] 
-> Sent: Monday, November 19, 2007 4:24 PM
-> To: Medve Emilian
-> Cc: git@vger.kernel.org
-> Subject: Re: git-daemon
-> 
-> "Medve Emilian" <Emilian.Medve@freescale.com> writes:
-> 
-> > It seems that something changed since maint/v.1.5.3.6 such that on
-> > master and next git-daemon doesn't seem to be working 
-> anymore in inetd
-> > mode. Can somebody please confirm this?
-> 
-> Sorry, I cannot quite parse.  Do you mean:
-> 
-> 	master and next used to work.  Recently 'maint' was
-> 	merged to them after v1.5.3.6 was cut.  master and next
-> 	does not work anymore after that.
-> 
-> Or do you mean:
-> 
-> 	maint (specifically at v1.5.3.6) works, but master and
-> 	next contain more changes on top of them, and they do
-> 	not work.
-> 
-> In either case, the only change to the daemon code between
-> v1.5.3.5 and master is this one:
-> 
-> commit c67359be45be74e1056d6293c6bb09ee6d00a54a
-> Author: Gerrit Pape <pape@smarden.org>
-> Date:   Mon Nov 5 09:16:22 2007 +0000
-> 
->     git-daemon: fix remote port number in log entry
->     
->     The port number in struct sockaddr_in needs to be 
-> converted from network
->     byte order to host byte order (on some architectures).
->     
->     Signed-off-by: Gerrit Pape <pape@smarden.org>
->     Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  daemon.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/daemon.c b/daemon.c
-> index 660e155..b8df980 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -540,7 +540,7 @@ static int execute(struct sockaddr *addr)
->  		if (addr->sa_family == AF_INET) {
->  			struct sockaddr_in *sin_addr = (void *) addr;
->  			inet_ntop(addr->sa_family, 
-> &sin_addr->sin_addr, addrbuf, sizeof(addrbuf));
-> -			port = sin_addr->sin_port;
-> +			port = ntohs(sin_addr->sin_port);
->  #ifndef NO_IPV6
->  		} else if (addr && addr->sa_family == AF_INET6) {
->  			struct sockaddr_in6 *sin6_addr = (void *) addr;
-> @@ -550,7 +550,7 @@ static int execute(struct sockaddr *addr)
->  			inet_ntop(AF_INET6, 
-> &sin6_addr->sin6_addr, buf, sizeof(addrbuf) - 1);
->  			strcat(buf, "]");
->  
-> -			port = sin6_addr->sin6_port;
-> +			port = ntohs(sin6_addr->sin6_port);
->  #endif
->  		}
->  		loginfo("Connection from %s:%d", addrbuf, port);
-> 
-> I do not see anything wrong in it.  The "port" variable is very
-> local to this function and is used only for that loginfo() call
-> at the end of the context.  So I am quite puzzled.
-> 
-> We have another irrelevant style change that is full of things
-> like this, but I do not think that makes any behaviour
-> difference either.
-> 
-> @@ -406,7 +406,8 @@ static struct daemon_service daemon_service[] = {
->  	{ "receive-pack", "receivepack", receive_pack, 0, 1 },
->  };
->  
-> -static void enable_service(const char *name, int ena) {
-> +static void enable_service(const char *name, int ena)
-> +{
->  	int i;
->  	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
->  		if (!strcmp(daemon_service[i].name, name)) {
+-- 
+Jon Smirl
+jonsmirl@gmail.com
