@@ -1,90 +1,140 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: Re: Git in a Nutshell guide
-Date: Mon, 19 Nov 2007 23:59:40 +0100
-Message-ID: <vpqd4u5zvs3.fsf@bauges.imag.fr>
-References: <1195477504.8093.15.camel@localhost>
-	<8c5c35580711190845s71a4880ek4ab28170d277e0e6@mail.gmail.com>
-	<E983072E-E9FD-499E-A418-B630A275C4F3@lrde.epita.fr>
-	<8c5c35580711190904v5975e81k3d515dc44fee9c21@mail.gmail.com>
-	<25CF3422-A236-46CE-B243-3F01117B7743@lrde.epita.fr>
-	<vpqtznirtlk.fsf@bauges.imag.fr>
-	<60891A14-1D6E-4114-ACEF-4C981D326CFA@lrde.epita.fr>
-	<vpq63zxq5s2.fsf@bauges.imag.fr>
-	<0E0AA90A-2282-4AFE-8B94-EA0E35B57D65@lrde.epita.fr>
-	<7v7ikdna24.fsf@gitster.siamese.dyndns.org>
+From: carbonated beverage <ramune@net-ronin.org>
+Subject: t9106 failure, bisect weirdness
+Date: Mon, 19 Nov 2007 15:06:01 -0800
+Message-ID: <20071119230601.GA15624@net-ronin.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Benoit Sigoure <tsuna@lrde.epita.fr>,
-	Lars Hjemli <hjemli@gmail.com>,
-	"Jonas Juselius" <jonas.juselius@chem.uit.no>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 00:00:57 2007
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 20 00:07:50 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuFbk-0001Y2-1l
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 00:00:48 +0100
+	id 1IuFiW-0003qh-J2
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 00:07:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752235AbXKSXAa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 18:00:30 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752231AbXKSXAa
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 18:00:30 -0500
-Received: from imag.imag.fr ([129.88.30.1]:44652 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752209AbXKSXA3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 18:00:29 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id lAJMxeiV025502
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 19 Nov 2007 23:59:40 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS-1.0:RSA_AES_256_CBC_SHA:32)
-	(Exim 4.50)
-	id 1IuFae-0005L3-6F; Mon, 19 Nov 2007 23:59:40 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.63)
-	(envelope-from <moy@imag.fr>)
-	id 1IuFae-00010r-1g; Mon, 19 Nov 2007 23:59:40 +0100
-In-Reply-To: <7v7ikdna24.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 19 Nov 2007 14\:29\:39 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.1 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 19 Nov 2007 23:59:41 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact IMAG DMI for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1754327AbXKSXHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 18:07:10 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753818AbXKSXHK
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 18:07:10 -0500
+Received: from idcmail-mo1so.shaw.ca ([24.71.223.10]:59649 "EHLO
+	pd4mo1so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754218AbXKSXHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 18:07:07 -0500
+Received: from pd2mr5so.prod.shaw.ca (pd2mr5so-qfe3.prod.shaw.ca [10.0.141.8])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JRS00439064NY20@l-daemon> for git@vger.kernel.org; Mon,
+ 19 Nov 2007 16:06:04 -0700 (MST)
+Received: from pn2ml10so.prod.shaw.ca ([10.0.121.80])
+ by pd2mr5so.prod.shaw.ca (Sun Java System Messaging Server 6.2-7.05 (built Sep
+ 5 2006)) with ESMTP id <0JRS009HF06349A0@pd2mr5so.prod.shaw.ca> for
+ git@vger.kernel.org; Mon, 19 Nov 2007 16:06:05 -0700 (MST)
+Received: from prophet.net-ronin.org ([70.67.106.153])
+ by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
+ with ESMTP id <0JRS0081F062JJ30@l-daemon> for git@vger.kernel.org; Mon,
+ 19 Nov 2007 16:06:03 -0700 (MST)
+Received: from ramune by prophet.net-ronin.org with local (Exim 4.50)
+	id 1IuFgn-0004Af-TI	for git@vger.kernel.org; Mon, 19 Nov 2007 15:06:01 -0800
+Content-disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65516>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi all,
 
-> I think the ref naming syntax is so commonly used and
-> fundamental that we could treat it as prerequiste for individual
-> manual pages.  Maybe move the section to git(7)?  That would
-> certainly be better than having it in git-rev-parse(1), but does
-> not reduce the cross referencing complaints.
+Just checked out v1.5.3.6 from git, built it on a Debian/stable i386 box,
+and got a failure in one of the test suites:
 
-Well, obviously, something which isn't addressed by my patch is the
-fact that some of the documentation an average user needs is in the
-plumbing man pages.
+*** t9106-git-svn-dcommit-clobber-series.sh ***
+*   ok 1: initialize repo
+*   ok 2: (supposedly) non-conflicting change from SVN
+*   ok 3: some unrelated changes to git
+* FAIL 4: change file but in unrelated area
 
-(Gosh, I was going to cite the manpage for git-log and git-rev-parse
-as an example, but it has already been fixed :-). Good job !)
+                test x"`sed -n -e 4p < file`" = x4 &&
+                test x"`sed -n -e 7p < file`" = x7 &&
+                perl -i -p -e 's/^4$/4444/' file &&
+                perl -i -p -e 's/^7$/7777/' file &&
+                test x"`sed -n -e 4p < file`" = x4444 &&
+                test x"`sed -n -e 7p < file`" = x7777 &&
+                git commit -m '4 => 4444, 7 => 7777' file &&
+                git svn dcommit &&
+                svn up tmp &&
+                cd tmp &&
+                        test x"`sed -n -e 4p < file`" = x4444 &&
+                        test x"`sed -n -e 7p < file`" = x7777 &&
+                        test x"`sed -n -e 58p < file`" = x5588 &&
+                        test x"`sed -n -e 61p < file`" = x6611
 
-git-rev-parse(1) is full of terribly usefull information, and that
-information is definitely not in the place an average user would look
-at.
+*   ok 5: attempt to dcommit with a dirty index
+* failed 1 among 5 test(s)
+make[1]: *** [t9106-git-svn-dcommit-clobber-series.sh] Error 1
+make[1]: Leaving directory `/home/ramune/src/git/git/t'
+make: *** [test] Error 2
+ramune/lycaeum:git:
 
-I have no ideal solution for that. git(7) is already really long.
-Perhaps some "topic man pages" would be good. By "topic man page", I
-mean "man git-something" where "something" isn't a git command, but a
-crosscutting concept. For example, here, "man git-refspec" to document
-reference specifiers like HEAD@{42}, master~55, d71c6c8e24a and
-friends. "man git-i18n" would be another candidate.
+Bisecting gives me:
 
-Anyway, my patch is definitely a step forward, even if it's just the
-first, small one ;-).
+fb159580a1628947f0a088e24cfe6fe4c81d99d0 is first bad commit
+commit fb159580a1628947f0a088e24cfe6fe4c81d99d0
+Author: Eric Wong <normalperson@yhbt.net>
+Date:   Mon Nov 5 03:21:48 2007 -0800
 
--- 
-Matthieu
+    git-svn: t9114: verify merge commit message in test
+
+    It's possible that we end up with an incorrect commit message
+    in this test after making changes to fix the clobber bug
+    in dcommit.
+
+    Signed-off-by: Eric Wong <normalperson@yhbt.net>
+    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+:040000 040000 1c4f3776c031f9531869e736b661a0559fab5ff6 4f4c5ecd6c79f7e9732b554e2f8dd536a8a8f2a6 M      t
+
+Which seems odd -- the previous commit (marked good, because make test didn't
+fail) was the one that modified t9106-git-svn-dcommit-clobber-series.sh.
+
+I tried running the test manually and noticed something weird as well:
+
+ramune/lycaeum:t: sh t9106-git-svn-dcommit-clobber-series.sh
+*   ok 1: initialize repo
+*   ok 2: (supposedly) non-conflicting change from SVN
+*   ok 3: some unrelated changes to git
+*   ok 4: change file but in unrelated area
+* passed all 4 test(s)
+ramune/lycaeum:t:
+ramune/lycaeum:t: pwd
+/home/ramune/src/git/git/t
+ramune/lycaeum:t:
+ramune/lycaeum:t: sh t9106-git-svn-dcommit-clobber-series.sh
+*   ok 1: initialize repo
+*   ok 2: (supposedly) non-conflicting change from SVN
+*   ok 3: some unrelated changes to git
+* FAIL 4: change file but in unrelated area
+
+                test x"`sed -n -e 4p < file`" = x4 &&
+                test x"`sed -n -e 7p < file`" = x7 &&
+                perl -i -p -e 's/^4$/4444/' file &&
+                perl -i -p -e 's/^7$/7777/' file &&
+                test x"`sed -n -e 4p < file`" = x4444 &&
+                test x"`sed -n -e 7p < file`" = x7777 &&
+                git commit -m '4 => 4444, 7 => 7777' file &&
+                git svn dcommit &&
+                svn up tmp &&
+                cd tmp &&
+                        test x"`sed -n -e 4p < file`" = x4444 &&
+                        test x"`sed -n -e 7p < file`" = x7777 &&
+                        test x"`sed -n -e 58p < file`" = x5588 &&
+                        test x"`sed -n -e 61p < file`" = x6611
+
+* failed 1 among 4 test(s)
+
+So it succeeds once, then fails.
+
+/bin/sh is dash 0.5.3-7 from Debian.
+
+Any additional information needed?
+
+-- DN
+Daniel
