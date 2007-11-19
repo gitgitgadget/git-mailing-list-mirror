@@ -1,67 +1,88 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: [PATCH] Documentation: Fix references to deprecated commands
-Date: Mon, 19 Nov 2007 08:44:27 +0100
-Message-ID: <20071119074426.GA8700@diku.dk>
-References: <Pine.LNX.4.64.0711080041120.4362@racer.site> <20071108145435.GA18727@diku.dk> <4733249B.9020504@op5.se> <20071108160114.GB20988@diku.dk> <7vzlxo1mga.fsf@gitster.siamese.dyndns.org> <20071109002001.GB5082@diku.dk> <7vy7d8xlej.fsf_-_@gitster.siamese.dyndns.org> <20071112002410.GA21970@diku.dk> <20071112003251.GB21970@diku.dk> <20071119015411.GA4978@fieldses.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] push: Add '--current', which pushes only the current branch
+Date: Sun, 18 Nov 2007 23:50:54 -0800
+Message-ID: <7v4pfiptb5.fsf@gitster.siamese.dyndns.org>
+References: <Pine.LNX.4.64.0711121501500.4362@racer.site>
+	<11954023881802-git-send-email-prohaska@zib.de>
+	<119540238994-git-send-email-prohaska@zib.de>
+	<7vwssfqb0w.fsf@gitster.siamese.dyndns.org>
+	<EA5C3227-12E1-43C4-96E8-43BABF26792B@zib.de>
+	<7vejempudf.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Andreas Ericsson <ae@op5.se>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	git@vger.kernel.org
-To: "J. Bruce Fields" <bfields@fieldses.org>
-X-From: git-owner@vger.kernel.org Mon Nov 19 08:44:50 2007
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Steffen Prohaska <prohaska@zib.de>
+X-From: git-owner@vger.kernel.org Mon Nov 19 08:51:20 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu1JH-0004K8-LB
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 08:44:48 +0100
+	id 1Iu1Pb-0005ho-HW
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 08:51:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751237AbXKSHob (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 02:44:31 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750914AbXKSHob
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 02:44:31 -0500
-Received: from mgw1.diku.dk ([130.225.96.91]:43834 "EHLO mgw1.diku.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750988AbXKSHoa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 02:44:30 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mgw1.diku.dk (Postfix) with ESMTP id AAA8F77000E;
-	Mon, 19 Nov 2007 08:44:28 +0100 (CET)
-X-Virus-Scanned: amavisd-new at diku.dk
-Received: from mgw1.diku.dk ([127.0.0.1])
-	by localhost (mgw1.diku.dk [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id IJMIXoXqiCfR; Mon, 19 Nov 2007 08:44:27 +0100 (CET)
-Received: from nhugin.diku.dk (nhugin.diku.dk [130.225.96.140])
-	by mgw1.diku.dk (Postfix) with ESMTP id 2B745770009;
-	Mon, 19 Nov 2007 08:44:27 +0100 (CET)
-Received: from tyr.diku.dk (tyr.diku.dk [130.225.96.226])
-	by nhugin.diku.dk (Postfix) with ESMTP
-	id A85876DFFCA; Mon, 19 Nov 2007 08:43:50 +0100 (CET)
-Received: by tyr.diku.dk (Postfix, from userid 3873)
-	id 0EEDB5B8001; Mon, 19 Nov 2007 08:44:27 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071119015411.GA4978@fieldses.org>
-User-Agent: Mutt/1.5.13 (2006-08-11)
+	id S1750988AbXKSHvC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 02:51:02 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751215AbXKSHvB
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 02:51:01 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:44940 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914AbXKSHvA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 02:51:00 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id 3AD282FA;
+	Mon, 19 Nov 2007 02:51:21 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id A871D958C3;
+	Mon, 19 Nov 2007 02:51:17 -0500 (EST)
+In-Reply-To: <7vejempudf.fsf@gitster.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Sun, 18 Nov 2007 23:27:56 -0800")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65410>
 
-J. Bruce Fields <bfields@fieldses.org> wrote Sun, Nov 18, 2007:
-> On Mon, Nov 12, 2007 at 01:32:51AM +0100, Jonas Fonseca wrote:
-> > Subject: [PATCH] Documentation: Fix references to deprecated commands
-> > 
-> > ... by changing git-tar-tree reference to git-archive and removing
-> > seemingly unrelevant footnote about git-ssh-{fetch,upload}.
-> 
-> Makes sense to me, but for some reason git-am complains about a corrupt
-> patch when I feed it this email.  I reconstructed it by hand, fixed up
-> one more reference to git-tar-tree, and applied to my tree.
+Junio C Hamano <gitster@pobox.com> writes:
 
-It should have been merged in a4e57e75c95c66c32da6b106313bc847110794ba.
-And yes, as Junio also pointed out, I deleted some context lines at the
-end of the patch.
+> Steffen Prohaska <prohaska@zib.de> writes:
+> ...
+>> I think 3) is the interesting case.  "git push" should do
+>> nothing by default.
+>
+> NO WAY.
+>
+> Making things cumbersome to everybody does not achieve anything
+> useful except for a false sense of equality, does it?
+>
+> Drop that step (3).  That is not useful to anybody.
 
--- 
-Jonas Fonseca
+Thinking about it a bit more, I think my wording was a bit too
+strong and needs clarifying explanations.
+
+In a case like this, a fix of a "misfeature" for somebody is a
+regression for somebody else.  Because there is no single right
+default that is appropriate for everybody.
+
+At least having _one_ default (and picking arbitrarily the
+historical default as that one default) is better than no
+default at all.  The former will not inconvenience anybody by
+forcing what has been necessary from before.  The latter will
+hurt the lucky ones whose preferred way happened to be the
+historical default.
+
+Keeping the status quo, however, will inconvinience unfortunate
+people whose preferred way was not the historical default.
+That's where we start to tackle the problem, by introducing the
+configuration variable.
+
+If we can come up with a way to tell projects that use the
+workflow better served with --current, perhaps when a remote is
+added to the repository (either the initial clone or "git remote
+add") and/or when a new branch is created.  If we automatically
+set up the configuration "push.defaultRefs = current" in such a
+case, I suspect that we do not have to have the built-in default
+(at least, the value of the built-in default would not matter
+much).
