@@ -1,66 +1,71 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: preserving mtime
-Date: Mon, 19 Nov 2007 15:38:55 +0100 (CET)
-Message-ID: <Pine.LNX.4.64.0711191537030.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-References: <473D63F9.4010201@inrim.it> <473D6DC6.8040804@op5.se>
- <20071117182236.GD23659@blorf.net>
+From: Jonas Juselius <jonas.juselius@chem.uit.no>
+Subject: Re: Git in a Nutshell guide
+Date: Mon, 19 Nov 2007 14:33:15 +0000 (UTC)
+Message-ID: <loom.20071119T142453-421@post.gmane.org>
+References: <1195477504.8093.15.camel@localhost> <fhs33j$eg9$1@ger.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Andreas Ericsson <ae@op5.se>, git@vger.kernel.org
-To: Wayne Davison <wayne@opencoder.net>
-X-From: git-owner@vger.kernel.org Mon Nov 19 15:39:37 2007
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 19 15:40:31 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iu7mU-0002e0-4d
-	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 15:39:22 +0100
+	id 1Iu7nZ-00033F-Mx
+	for gcvg-git-2@gmane.org; Mon, 19 Nov 2007 15:40:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292AbXKSOjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 09:39:04 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbXKSOjD
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 09:39:03 -0500
-Received: from mail.gmx.net ([213.165.64.20]:45309 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753357AbXKSOjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 09:39:01 -0500
-Received: (qmail invoked by alias); 19 Nov 2007 14:38:59 -0000
-Received: from wbgn128.biozentrum.uni-wuerzburg.de (EHLO wrzx67.rz.uni-wuerzburg.de) [132.187.25.128]
-  by mail.gmx.net (mp001) with SMTP; 19 Nov 2007 15:38:59 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX19ju08w/n1j25HtKpvNF2H9kGDVM2G2cbAeDcX3Yb
-	hPIM3GF/cfGa/N
-X-X-Sender: gene099@wbgn129.biozentrum.uni-wuerzburg.de
-In-Reply-To: <20071117182236.GD23659@blorf.net>
-X-Y-GMX-Trusted: 0
+	id S1752483AbXKSOkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 09:40:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1753430AbXKSOkM
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 09:40:12 -0500
+Received: from main.gmane.org ([80.91.229.2]:47528 "EHLO ciao.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752183AbXKSOkL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 09:40:11 -0500
+Received: from root by ciao.gmane.org with local (Exim 4.43)
+	id 1Iu7n8-0003Lu-Pb
+	for git@vger.kernel.org; Mon, 19 Nov 2007 14:40:02 +0000
+Received: from snowflake.chem.uit.no ([129.242.24.54])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 14:40:02 +0000
+Received: from jonas.juselius by snowflake.chem.uit.no with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 19 Nov 2007 14:40:02 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: main.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 129.242.24.54 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.8) Gecko/20071022 Ubuntu/7.10 (gutsy) Firefox/2.0.0.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65449>
 
-Hi,
-
-On Sat, 17 Nov 2007, Wayne Davison wrote:
-
-> On Fri, Nov 16, 2007 at 11:15:34AM +0100, Andreas Ericsson wrote:
-> >> is it possible to tell git to preserve the file modification time in
-> >> a checked out copy?
+Jakub Narebski <jnareb <at> gmail.com> writes:
 > 
-> > Fabrizio Pollastri wrote:
-> > No. Doing so would seriously break build-systems.
+> A few comments (from what I checked so far):
 > 
-> I wish that the initial clone would set the modification time to the
-> commit time.
+> 1. It is "man git-checkout" (or "git checkout --help"),
+>    not "man git checkout"
+> 
+> 2. Instead of using 'verbatim' environment directly to show example CLI
+>    session it would be I think better to define verbatim-like environment
+>    for this ('example', 'commands', 'CLI', 'session'); perhaps replacing
+>    verbatim by lstlisting from the listings/lstlisting package for syntax
+>    highlighting.
+> 
 
-Could you stop this discussion, please?  This subject comes up every once 
-in a while, and in the meantime the archives contain more sane 
-explanations why this would be a bad behaviour of git than I could tell 
-off of my head.
+First, it seems that it was not entirely clear to everybody that it's possible
+to clone the repository:
 
-So no, this is not a sane behaviour.
+git clone http://git.jonas.iki.fi/git_guides.git
 
-If you _must_ inist on this behaviour, write your own hook, don't tell 
-anybody about it, especially not when things break.
+Thanks for the comments: 
 
-Hth,
-Dscho
+1. I did a global subst from the git-command to git
+command instead form, and forgot about the man pages ;)
+
+2. You are entirely right of course, but I was a bit lazy. I'll fix it at some
+point. lstlistings is a very nice package.
