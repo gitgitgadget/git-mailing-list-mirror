@@ -1,65 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: quilt/0.46-1 misbehaviour...
-Date: Mon, 19 Nov 2007 22:30:59 -0800
-Message-ID: <7vve7xl97g.fsf@gitster.siamese.dyndns.org>
-References: <20071120055149.GQ6372@mea-ext.zmailer.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: ! [rejected] master -> master (non-fast forward)
+Date: Tue, 20 Nov 2007 07:50:21 +0100
+Message-ID: <20071120065021.GA4172@steel.home>
+References: <9e4733910711180712n6ee271fau774310e63ab08f6d@mail.gmail.com> <20071118182901.GA5939@steel.home> <20071120041620.GA23566@sigill.intra.peff.net>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matti Aarnio <matti.aarnio@zmailer.org>
-X-From: git-owner@vger.kernel.org Tue Nov 20 07:31:37 2007
+Cc: Jon Smirl <jonsmirl@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 20 07:51:36 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuMdv-0005Of-Ax
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 07:31:31 +0100
+	id 1IuMwc-0001Bx-3H
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 07:50:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752715AbXKTGbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 01:31:13 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbXKTGbN
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 01:31:13 -0500
-Received: from sceptre.pobox.com ([207.106.133.20]:41775 "EHLO
-	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752063AbXKTGbM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 01:31:12 -0500
-Received: from sceptre (localhost.localdomain [127.0.0.1])
-	by sceptre.pobox.com (Postfix) with ESMTP id ED08C2F0;
-	Tue, 20 Nov 2007 01:31:32 -0500 (EST)
-Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6CDC695C64;
-	Tue, 20 Nov 2007 01:31:28 -0500 (EST)
-In-Reply-To: <20071120055149.GQ6372@mea-ext.zmailer.org> (Matti Aarnio's
-	message of "Tue, 20 Nov 2007 07:51:49 +0200")
-User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
+	id S1752668AbXKTGu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 01:50:29 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752557AbXKTGu3
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 01:50:29 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:16345 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751960AbXKTGu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 01:50:28 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CcuQaFzAck9IE=
+Received: from tigra.home (Fc9e9.f.strato-dslnet.de [195.4.201.233])
+	by post.webmailer.de (mrclete mo24) (RZmta 14.3)
+	with ESMTP id v04d0cjAJNtjEz ; Tue, 20 Nov 2007 07:50:23 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id 46154277AE;
+	Tue, 20 Nov 2007 07:50:22 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id A87FC56D22; Tue, 20 Nov 2007 07:50:21 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071120041620.GA23566@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65529>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65530>
 
-Matti Aarnio <matti.aarnio@zmailer.org> writes:
-
-> .. or perhaps Exim, but odd result in arriving and thus outgoing headers anyway.
->
-> From:	The Post Office <postmaster@vger.kernel.org>
-> Subject: Delivery reports about your email [FAILED(1)]
-> ...
+Jeff King, Tue, Nov 20, 2007 05:16:20 +0100:
+> On Sun, Nov 18, 2007 at 07:29:01PM +0100, Alex Riesen wrote:
 > 
-> Following is copy of the message headers. Original message content may
-> be in subsequent parts of this MESSAGE/DELIVERY-STATUS structure.
->
-> Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-> 	id S1757551AbXKTBQ5; Mon, 19 Nov 2007 20:16:57 -0500
-> ...
-> Message-Id: <20071120011333.850453474@sgi.com>
-> References: <20071120011132.143632442@sgi.com>
-> User-Agent: quilt/0.46-1
-> Date:	Mon, 19 Nov 2007 17:11:41 -0800
-> ...
+> > > jonsmirl@terra:~/ds$ git push digispeaker
+> > > To ssh://jonsmirl1@git.digispeaker.com/~/projects/digispeaker-kernel.git
+> > >  ! [rejected]        master -> master (non-fast forward)
+> > > error: failed to push to
+> > 
+> > the branch you are pushing does not fast-forward to the one on
+> > digispeaker. IOW, the master on digispeaker has changed since you made
+> > changes on your local master.
+> 
+> Alex, are you going to rework your "consolidate nonff errors and print a
+> more extended message" patch on top of what's in next (I think it should
+> be much simpler now).
 
-My condolences.  Is there anything the people on the git mailing
-list can help?
+Do you mean that "Beautify the output of send-pack a bit", Message-ID:
+<20071112221140.GD2918@steel.home>?
 
-Va bgure jbeqf, junk qbrf guvf unir gb qb jvgu tvg???
+If so, I'm confused. Didn't you already do that in your recent
+"send-pack:" patch series? It looked to me as if you did (except for
+the hint regarding non-ff branches to be updated everything is there).
