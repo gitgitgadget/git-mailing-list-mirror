@@ -1,95 +1,85 @@
-From: "Medve Emilian" <Emilian.Medve@freescale.com>
-Subject: RE: git-daemon
-Date: Tue, 20 Nov 2007 15:04:52 -0700
-Message-ID: <598D5675D34BE349929AF5EDE9B03E27017BCE24@az33exm24.fsl.freescale.net>
-References: <598D5675D34BE349929AF5EDE9B03E27017BCC42@az33exm24.fsl.freescale.net> <7vbq9pnac2.fsf@gitster.siamese.dyndns.org> <598D5675D34BE349929AF5EDE9B03E27017BCC8D@az33exm24.fsl.freescale.net> <20071120050756.GA29502@sigill.intra.peff.net> <598D5675D34BE349929AF5EDE9B03E27017BCD50@az33exm24.fsl.freescale.net> <20071120182606.GA9646@sigill.intra.peff.net>
+From: Jarek Poplawski <jarkao2@o2.pl>
+Subject: Re: gitweb: kernel versions in the history (feature request,	probably)
+Date: Wed, 21 Nov 2007 00:30:23 +0100
+Message-ID: <47436E0F.6080003@o2.pl>
+References: <20071120142042.GA4157@ff.dom.local> <20071120215904.GF1001@machine.or.cz>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 20 23:49:57 2007
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@gmane.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
+To: Petr Baudis <pasky@suse.cz>
+X-From: linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1762610AbXKTX3X@vger.kernel.org Wed Nov 21 00:29:54 2007
+Return-path: <linux-kernel-owner+glk-linux-kernel-3=40m.gmane.org-S1762610AbXKTX3X@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IubuY-0001lh-SL
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 23:49:43 +0100
+	id 1IucXI-0007rx-0T
+	for glk-linux-kernel-3@gmane.org; Wed, 21 Nov 2007 00:29:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1764775AbXKTWst (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 17:48:49 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755493AbXKTWst
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 17:48:49 -0500
-Received: from de01egw01.freescale.net ([192.88.165.102]:62349 "EHLO
-	de01egw01.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755724AbXKTWsr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Nov 2007 17:48:47 -0500
-Received: from de01smr02.am.mot.com (de01smr02.freescale.net [10.208.0.151])
-	by de01egw01.freescale.net (8.12.11/de01egw01) with ESMTP id lAKMlpK1027425
-	for <git@vger.kernel.org>; Tue, 20 Nov 2007 15:48:43 -0700 (MST)
-Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
-	by de01smr02.am.mot.com (8.13.1/8.13.0) with ESMTP id lAKM4rDP013034
-	for <git@vger.kernel.org>; Tue, 20 Nov 2007 16:04:53 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <20071120182606.GA9646@sigill.intra.peff.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-daemon
-thread-index: AcgrotXr4aEWxV+dQ/mxEk5hBGyGggABUS3w
-Sender: git-owner@vger.kernel.org
+	id S1762610AbXKTX3X (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Tue, 20 Nov 2007 18:29:23 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754606AbXKTX3G
+	(ORCPT <rfc822;linux-kernel-outgoing>);
+	Tue, 20 Nov 2007 18:29:06 -0500
+Received: from mx12.go2.pl ([193.17.41.142]:36656 "EHLO poczta.o2.pl"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754982AbXKTX3F (ORCPT <rfc822;linux-kernel@vger.kernel.org>);
+	Tue, 20 Nov 2007 18:29:05 -0500
+Received: from poczta.o2.pl (mx12 [127.0.0.1])
+	by poczta.o2.pl (Postfix) with ESMTP id A2A943E8064;
+	Wed, 21 Nov 2007 00:29:02 +0100 (CET)
+Received: from [83.27.8.67] (aua67.neoplus.adsl.tpnet.pl [83.27.8.67])
+	by poczta.o2.pl (Postfix) with ESMTP;
+	Wed, 21 Nov 2007 00:29:02 +0100 (CET)
+User-Agent: Icedove 1.5.0.14pre (X11/20071020)
+In-Reply-To: <20071120215904.GF1001@machine.or.cz>
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65579>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65580>
 
-Hi Jeff,
+Petr Baudis wrote, On 11/20/2007 10:59 PM:
 
-
-I think I found the explanation why v1.5.3.6 works for me (and others
-apparently) but master and next don't. The fairly recent changes to the
-PATH handling in exec_cmd.c done by Scott R Parish <srp@srparish.net>, I
-believe, didn't make it into maint. Adjusting the PATH git-daemon sees
-is fixing my problem even in master and next.
-
-Thanks for your help and time.
-
-
-Cheers,
-Emil.
-
-
-> -----Original Message-----
-> From: Jeff King [mailto:peff@peff.net] 
-> Sent: Tuesday, November 20, 2007 12:26 PM
-> To: Medve Emilian
-> Cc: git@vger.kernel.org
-> Subject: Re: git-daemon
+>   Hi,
 > 
-> On Tue, Nov 20, 2007 at 09:54:13AM -0700, Medve Emilian wrote:
+> On Tue, Nov 20, 2007 at 03:20:42PM +0100, Jarek Poplawski wrote:
+>> I see gitweb is much more usable (faster) than a few months ago, but
+>> there is one thing a bit problematic: in the history of patches I'm
+>> very often interested in which kernel version of Linus' tree the patch
+>> appeared for the first time. If it's not some big problem, and maybe
+>> somebody else finds this useful too, I'd really appreciate adding such
+>> a feature.
 > 
-> > I just built and installed the latest master (and next) and 
-> then I tried
-> > to clone (as I usualy do) one of my repositories. I run 
-> git-daemon only
-> > with the upload-pack service enabled.
-> > [...]
-> > 
-> > Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Connection from
-> > 10.82.124.104:2978
-> > Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Extended 
-> attributes (18
-> > bytes) exist <host=server>
-> > Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Request 
-> upload-pack for
-> > '/srv/scm/linux-2.6.git'
+>   in git terms, you'd like gitweb to provide output for command:
 > 
-> I don't see anything useful there.  Have you tried running git-daemon
-> with --verbose? If that doesn't turn up anything, can you try running
-> with GIT_TRACE=1 to see the upload pack command that is being executed
-> (and try running it yourself)?
+> 	git describe --contains
 > 
-> > Did you try this and is working for you?
+> This is interesting feature request. I guess the support would be nice,
+> though in theory this operation can be a bit resource-intensive in case
+> there is not many tags and a lot of development (with uncached
+> repository, this query took quite a bit of time on my copy of the kernel
+> git tree). Probably this should be an optional feature and somehow dwell
+> on a separate page, which doesn't fit too well in the current gitweb
+> page structure...
+ 
+
+I don't know git, but it seems, at least if done for web only, this
+shouldn't be so 'heavy'. It could be a 'simple' translation of commit
+date by querying a small database with kernel versions & dates. And it
+would suffice if it were shown on the commit page only. But, of course,
+it's not urgent at all! (And alas I'm no webmaster, so I can miss
+something.)
+
+>> Petr, I hope there is no necessity to subscribe to the git list for
+>> this one question, so I'd really feel greteful for forwarding, if you
+>> find this request reasonable.
 > 
-> Yes, it works fine (though I ran it under tcpserver, not xinetd).
-> 
-> -Peff
+>   Yes, there is no necessity - you can post this on the git mailing list
+> without subscribing yourself.
+
+
+Great! I misunderstood the page message. Btw., I know it's not the kernel,
+but IMHO there should be some place for it in the MAINTAINERS!
+
+Thanks,
+Jarek P.
