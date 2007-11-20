@@ -1,69 +1,103 @@
-From: Matti Aarnio <matti.aarnio@zmailer.org>
-Subject: Re: quilt/0.46-1 misbehaviour...
-Date: Wed, 21 Nov 2007 01:54:58 +0200
-Message-ID: <20071120235458.GT6372@mea-ext.zmailer.org>
-References: <20071120055149.GQ6372@mea-ext.zmailer.org> <20071120183402.GC3461@steel.home>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git in a Nutshell guide
+Date: Wed, 21 Nov 2007 00:57:28 +0100
+Organization: At home
+Message-ID: <fhvs95$5qk$1@ger.gmane.org>
+References: <1195477504.8093.15.camel@localhost> <fhsc7b$k4g$1@ger.gmane.org> <1195488877.10573.29.camel@localhost> <3057F6F3-BEAA-447A-AB79-A0AFB7DB8826@lrde.epita.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matti Aarnio <matti.aarnio@zmailer.org>, git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 21 00:55:50 2007
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 21 00:58:02 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IucwX-0000GE-M1
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 00:55:50 +0100
+	id 1Iucyc-0000uk-RF
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 00:57:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1763943AbXKTXzI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 18:55:08 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756275AbXKTXzG
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 18:55:06 -0500
-Received: from z2.cat.iki.fi ([212.16.98.133]:33462 "EHLO z2.cat.iki.fi"
+	id S1755139AbXKTX5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 18:57:41 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752923AbXKTX5l
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 18:57:41 -0500
+Received: from main.gmane.org ([80.91.229.2]:35357 "EHLO ciao.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1762357AbXKTXzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 18:55:04 -0500
-Received: (mea@mea-ext) by mail.zmailer.org id S3540317AbXKTXy6 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 21 Nov 2007 01:54:58 +0200
-Content-Disposition: inline
-In-Reply-To: <20071120183402.GC3461@steel.home>
+	id S1752507AbXKTX5k (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 18:57:40 -0500
+Received: from list by ciao.gmane.org with local (Exim 4.43)
+	id 1IucyC-0004n1-MC
+	for git@vger.kernel.org; Tue, 20 Nov 2007 23:57:32 +0000
+Received: from abvf224.neoplus.adsl.tpnet.pl ([83.8.203.224])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Nov 2007 23:57:32 +0000
+Received: from jnareb by abvf224.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 20 Nov 2007 23:57:32 +0000
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@ger.gmane.org
+X-Gmane-NNTP-Posting-Host: abvf224.neoplus.adsl.tpnet.pl
+Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
+User-Agent: KNode/0.10.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65582>
 
-On Tue, Nov 20, 2007 at 07:34:02PM +0100, Alex Riesen wrote:
-> Matti Aarnio, Tue, Nov 20, 2007 06:51:49 +0100:
-> > .. or perhaps Exim, but odd result in arriving and thus outgoing headers anyway.
-> >
-> ...
-> > Diagnostic-Code: smtp; 554 (Reject, id=10432-16 - BAD_HEADER: Duplicate header field: "From")
-> > 
-> > From:	clameter@sgi.com
-> > From:	Christoph Lameter <clameter@sgi.com>
-> > To:	ak@suse.de
-> > Cc:	akpm@linux-foundation.org
-> > Cc:	travis@sgi.com
-> > Cc:	Mathieu Desnoyers <mathieu.desnoyers@polymtl.ca>
-> > Cc:	linux-kernel@vger.kernel.org
-> ...
-> > Remote-MTA: dns; cartero.cs.tu-berlin.de (130.149.17.20|25|209.132.176.167|39031)
-> > Last-Attempt-Date: Mon, 19 Nov 2007 20:17:31 -0500
-> > Diagnostic-Code: smtp; 554 (Reject, id=10432-16 - BAD_HEADER: Duplicate header field: "From")
-> ...
-> > Date: Mon, 19 Nov 2007 17:11:41 -0800
-> > Subject: [rfc 09/45] cpu alloc: IA64 support
-> > From: clameter@sgi.com
-> > From: Christoph Lameter <clameter@sgi.com>
-> > Message-Id: <20071120011333.850453474@sgi.com>
+Benoit Sigoure wrote:
+
+> On Nov 19, 2007, at 5:14 PM, Jonas Juselius wrote:
+>> On Mon, 2007-11-19 at 17:05 +0100, Jakub Narebski wrote:
+>>> Do I understand correctly that you don't support cloning via git://
+>>> protocol?
+>>
+>> Yes, that is correct. The machine is behind a number of firewalls,  
+>> and I simply cannot be bothered to go through the bureaucracy...
 > 
-> Is this the problem: duplicate From: and quadriplicate Cc:?
+> You can create a repository on repo.or.cz then :)
 
-That kind of header multiples are are triggering spam filters all over the place,
-because spammers used to use such tricks as recently as 2 years ago.
+Which can then function as a mirror.
 
-Duplicate "From:" is plain simply broken, multiple "Cc:" is just questionable..
+> One of the things you said in your guide is that Git is easy to  
+> learn.  I think this is wrong.  Git is way more complicated than most  
+> other SCMs, especially compared to SVN.  Its documentation is far  
+> behind, compared to what other SCMs have.  There is no real user  
+> guide 
 
-git-tools should not produce such.
+What about "Git User's Manual"?
 
-  /Matti Aarnio
+> and the man pages are incomplete, at best.  I know saying this   
+> is a bit harsh, especially to the people out there that are working  
+> and sending patches to improve the documentation, but I think we have  
+> to admit that it's true, even though Git is making progress on this  
+> aspect.
+
+That's sadly true, and confirmed (somewhat) by the fact that both in 2006
+user's survey and in 2007 survey (see Git Wiki for summaries) one of more
+common requests are for "better documentation" and "The Git Book" (showing
+svnbook and hgbook as examples).
+
+[cut]
+
+I think that writing proper "Git Guide" aka "The Git Book" is hard because
+of some things:
+
+ 1. Git has many useful advanced features. Describing those advanced
+    features is not easy. For example git uses multiple branches in single
+    repository paradigm freely, which makes learning curve a bit steeper;
+    IIRC hgbook describes one branch per repos situation (at least at
+    beginning), which is easier.
+
+ 2. Git has some historical cruft, including the fact that it began as
+    series of low level tools (plumbing) and became proper SCM (acquired
+    proper porcelain) later, what can be even now seen in documentation...
+
+ 3. Explanation of some features (like object model) would be much easier
+    with some graphics (diagrams etc.), but chosen documentation format,
+    AsciiDoc, doesn't make it easy...
+
+Yust my 2 eurocents.
+-- 
+Jakub Narebski
+Warsaw, Poland
+ShadeHawk on #git
