@@ -1,69 +1,93 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: gitweb: kernel versions in the history (feature request,
-	probably)
-Date: Tue, 20 Nov 2007 22:59:04 +0100
-Message-ID: <20071120215904.GF1001@machine.or.cz>
-References: <20071120142042.GA4157@ff.dom.local>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] Improve documentation of git-filter-branch rev-list
+ specification.
+Date: Tue, 20 Nov 2007 22:28:01 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711202223150.27959@racer.site>
+References: <877ikc3gzc.wl%cworth@cworth.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org
-To: Jarek Poplawski <jarkao2@o2.pl>
-X-From: git-owner@vger.kernel.org Tue Nov 20 22:59:31 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Carl Worth <cworth@cworth.org>
+X-From: git-owner@vger.kernel.org Tue Nov 20 23:29:00 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iub7y-0005xI-Mw
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 22:59:31 +0100
+	id 1IubaK-00016k-AX
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 23:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753536AbXKTV7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 16:59:09 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752910AbXKTV7I
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 16:59:08 -0500
-Received: from w241.dkm.cz ([62.24.88.241]:34328 "EHLO machine.or.cz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752484AbXKTV7H (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 16:59:07 -0500
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 3A6DB5A4CB; Tue, 20 Nov 2007 22:59:04 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20071120142042.GA4157@ff.dom.local>
-User-Agent: Mutt/1.5.16 (2007-06-09)
+	id S1757908AbXKTW2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 17:28:30 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756318AbXKTW2a
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 17:28:30 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48000 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751506AbXKTW23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 17:28:29 -0500
+Received: (qmail invoked by alias); 20 Nov 2007 22:28:27 -0000
+Received: from unknown (EHLO openvpn-client) [138.251.11.103]
+  by mail.gmx.net (mp047) with SMTP; 20 Nov 2007 23:28:27 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1+vtud0Jsmvqj51r9RKZN1U1KywSqA/TzVDGWodMr
+	lfxojTMFEg8emu
+X-X-Sender: gene099@racer.site
+In-Reply-To: <877ikc3gzc.wl%cworth@cworth.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65578>
 
-  Hi,
+Hi,
 
-On Tue, Nov 20, 2007 at 03:20:42PM +0100, Jarek Poplawski wrote:
-> I see gitweb is much more usable (faster) than a few months ago, but
-> there is one thing a bit problematic: in the history of patches I'm
-> very often interested in which kernel version of Linus' tree the patch
-> appeared for the first time. If it's not some big problem, and maybe
-> somebody else finds this useful too, I'd really appreciate adding such
-> a feature.
+On Tue, 20 Nov 2007, Carl Worth wrote:
 
-  in git terms, you'd like gitweb to provide output for command:
+> diff --git a/Documentation/git-filter-branch.txt b/Documentation/git-filter-branch.txt
+> index ba9b4fb..985d7d5 100644
+> --- a/Documentation/git-filter-branch.txt
+> +++ b/Documentation/git-filter-branch.txt
+> @@ -13,23 +13,29 @@ SYNOPSIS
+>  	[--msg-filter <command>] [--commit-filter <command>]
+>  	[--tag-name-filter <command>] [--subdirectory-filter <directory>]
+>  	[--original <namespace>] [-d <directory>] [-f | --force]
+> -	[<rev-list options>...]
+> +	<rev-list options>...
 
-	git describe --contains
+This is correct AFAICT.
 
-This is interesting feature request. I guess the support would be nice,
-though in theory this operation can be a bit resource-intensive in case
-there is not many tags and a lot of development (with uncached
-repository, this query took quite a bit of time on my copy of the kernel
-git tree). Probably this should be an optional feature and somehow dwell
-on a separate page, which doesn't fit too well in the current gitweb
-page structure...
+>  DESCRIPTION
+>  -----------
+> -Lets you rewrite git revision history by rewriting the branches mentioned
+> -in the <rev-list options>, applying custom filters on each revision.
+> -Those filters can modify each tree (e.g. removing a file or running
+> -a perl rewrite on all files) or information about each commit.
+> -Otherwise, all information (including original commit times or merge
+> -information) will be preserved.
+> -
+> -The command will only rewrite the _positive_ refs mentioned in the
+> -command line (i.e. if you pass 'a..b', only 'b' will be rewritten).
+> -If you specify no filters, the commits will be recommitted without any
+> -changes, which would normally have no effect.  Nevertheless, this may be
+> -useful in the future for compensating for some git bugs or such,
+> -therefore such a usage is permitted.
+> +Rewrites git revision history by applying one or more filters to a set
+> +of commits. The set of commits to be rewritten is supplied in
+> +<rev-list options> and can be as simple as one or more branch names,
+> +(in which case all commits reachable from those branch names will be
+> +rewritten).
 
-> Petr, I hope there is no necessity to subscribe to the git list for
-> this one question, so I'd really feel greteful for forwarding, if you
-> find this request reasonable.
+I do not particularly like that you say "commits to be rewritten".  
+Because not the commits, but the branches are rewritten.  For example, if 
+you have branch A and B pointing to the same commit and you call 
+filter-branch on A, B will be left untouched _along with its commits_.
 
-  Yes, there is no necessity - you can post this on the git mailing list
-without subscribing yourself.
+IMHO the old version -- while maybe not as eloquent as yours -- made that 
+very clear.
 
--- 
-				Petr "Pasky" Baudis
-We don't know who it was that discovered water, but we're pretty sure
-that it wasn't a fish.		-- Marshall McLuhan
+This was probably the reason you confused the comment about a..b earlier.
+
+So I would appreciate rewriting the documentation in such a way that the 
+distinction between a commit and a ref is maintained clearly.
+
+Ciao,
+Dscho
