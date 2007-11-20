@@ -1,65 +1,64 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: git merge no longer handles add/add
-Date: Tue, 20 Nov 2007 01:15:38 +0000 (GMT)
-Message-ID: <Pine.LNX.4.64.0711200114290.27959@racer.site>
-References: <46a038f90711181918s2743137amc6a827db6d1a6a0@mail.gmail.com>
- <46a038f90711181929x4bf0794eue73a5dbac8e2688a@mail.gmail.com>
- <7vtznipweu.fsf@gitster.siamese.dyndns.org>
- <46a038f90711191033s4bc5ab50kd3e4f30d6b301e43@mail.gmail.com>
- <7vabpanilk.fsf@gitster.siamese.dyndns.org> <fhspor$9ci$1@ger.gmane.org>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 20 02:17:56 2007
+From: =?ISO-8859-1?Q?Ask_Bj=F8rn_Hansen?= <ask@develooper.com>
+Subject: Re: [PATCH v2] git-send-email: show all headers when sending mail
+Date: Mon, 19 Nov 2007 17:53:57 -0800
+Message-ID: <9B3C2B93-5C6D-42B9-9063-3DF911DF7D8F@develooper.com>
+References: <327906.50991.qm@web52410.mail.re2.yahoo.com>
+Mime-Version: 1.0 (Apple Message framework v915)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: ddkilzer@kilzer.net
+X-From: git-owner@vger.kernel.org Tue Nov 20 02:55:04 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuHkS-0006H4-1J
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 02:17:56 +0100
+	id 1IuIKD-0006js-3v
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 02:54:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756979AbXKTBQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 19 Nov 2007 20:16:06 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756699AbXKTBQG
-	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 20:16:06 -0500
-Received: from mail.gmx.net ([213.165.64.20]:47873 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1756921AbXKTBQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 19 Nov 2007 20:16:04 -0500
-Received: (qmail invoked by alias); 20 Nov 2007 01:16:01 -0000
-Received: from unknown (EHLO openvpn-client) [138.251.11.103]
-  by mail.gmx.net (mp044) with SMTP; 20 Nov 2007 02:16:01 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+IYFURJFaIMIk6oK3unRkzPWvfPw6Wc2pRBm8/4R
-	RTAlARptCZu7uH
-X-X-Sender: gene099@racer.site
-In-Reply-To: <fhspor$9ci$1@ger.gmane.org>
-X-Y-GMX-Trusted: 0
+	id S1758231AbXKTByJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 19 Nov 2007 20:54:09 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1759222AbXKTByG
+	(ORCPT <rfc822;git-outgoing>); Mon, 19 Nov 2007 20:54:06 -0500
+Received: from x8.develooper.com ([216.52.237.208]:49295 "EHLO
+	x8.develooper.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756810AbXKTBx6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 19 Nov 2007 20:53:58 -0500
+Received: (qmail 15583 invoked from network); 20 Nov 2007 01:53:57 -0000
+Received: from dsl081-039-130.lax1.dsl.speakeasy.net (HELO embla.bur.sol) (ask@mail.dev@64.81.39.130)
+  by smtp.develooper.com with (AES128-SHA encrypted) SMTP; 20 Nov 2007 01:53:57 -0000
+In-Reply-To: <327906.50991.qm@web52410.mail.re2.yahoo.com>
+X-Mailer: Apple Mail (2.915)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65522>
 
-Hi,
 
-On Mon, 19 Nov 2007, Jakub Narebski wrote:
+On Nov 19, 2007, at 10:50, David D. Kilzer wrote:
 
-> Junio C Hamano wrote:
-> 
-> > Exactly. ?We may keep conflict markers in the file left in the work 
-> > tree to highlight which lines are unique to the side that added more 
-> > (iow, one group of lines delimited by <<< === >>> is empty while the 
-> > other is not) but this is currently treated as "fishy, needs human 
-> > validation" to catch mismerges.
-> 
-> BTW can xdifflib merge use original diff3 conflict markers, i.e. <<< 
-> [main] |||| [ancestor] === [branch] >>>?
+> Junio C Hamano <gitster@pobox.com> wrote:
+>
+>> Thanks.  Looks nice and obviously correct.
+>>
+>> One thing that has been bugging me for a long time now stands
+>> out like a sore thumb much more: empty Cc: is shown.
+>
+> I can't seem to reproduce this.  Could you send me (off-list)
+> 0001-branch-contains.txt and any relevant config bits?
 
-There was a patch floating around which added git-diff3, just after I went 
-public with my xmerge patch.  This seemed to have the code you look for.
+You need to make git-send-email not have an implicit Cc (from signed- 
+off-by or some such), then it'll appear.
 
-Ciao,
-Dscho
+I sent a patch yesterday for it,
 
-P.S.: I will refuse to reply to you in future whenever you do not Cc: me.
+Subject: [PATCH] Don't print an empty Cc header in SMTP mode when  
+there's no cc recipient defined
+Message-Id: <1195469295-5774-1-git-send-email-ask@develooper.com>
+
+
+
+  - ask
+
+-- 
+http://develooper.com/ - http://askask.com/
