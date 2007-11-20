@@ -1,159 +1,126 @@
-From: "Medve Emilian" <Emilian.Medve@freescale.com>
-Subject: RE: git-daemon
-Date: Tue, 20 Nov 2007 09:54:13 -0700
-Message-ID: <598D5675D34BE349929AF5EDE9B03E27017BCD50@az33exm24.fsl.freescale.net>
-References: <598D5675D34BE349929AF5EDE9B03E27017BCC42@az33exm24.fsl.freescale.net> <7vbq9pnac2.fsf@gitster.siamese.dyndns.org> <598D5675D34BE349929AF5EDE9B03E27017BCC8D@az33exm24.fsl.freescale.net> <20071120050756.GA29502@sigill.intra.peff.net>
+From: Guido Ostkamp <git@ostkamp.fastmail.fm>
+Subject: Re: [PATCH] Fix "identifier redeclared" compilation error with SUN
+ cc
+Date: Tue, 20 Nov 2007 18:28:39 +0100 (CET)
+Message-ID: <Pine.LNX.4.64.0711201823460.4280@bianca.dialin.t-online.de>
+References: <7vy7d08her.fsf@gitster.siamese.dyndns.org>
+ <1195089303-28085-1-git-send-email-B.Steinbrink@gmx.de>
+ <7vd4ua3hww.fsf@gitster.siamese.dyndns.org> <Pine.LNX.4.64.0711191847550.7957@bianca.dialin.t-online.de>
+ <7vhcjhl3ni.fsf@gitster.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 20 17:54:49 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Guido Ostkamp <git@ostkamp.fastmail.fm>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>,
+	raa.lkml@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 18:29:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuWMu-0004qZ-H3
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 17:54:36 +0100
+	id 1IuWuK-0002IN-0i
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 18:29:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756549AbXKTQyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 11:54:19 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1755198AbXKTQyT
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 11:54:19 -0500
-Received: from az33egw02.freescale.net ([192.88.158.103]:37184 "EHLO
-	az33egw02.freescale.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754728AbXKTQyS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 20 Nov 2007 11:54:18 -0500
-Received: from az33smr02.freescale.net (az33smr02.freescale.net [10.64.34.200])
-	by az33egw02.freescale.net (8.12.11/az33egw02) with ESMTP id lAKGsElP008074
-	for <git@vger.kernel.org>; Tue, 20 Nov 2007 09:54:15 -0700 (MST)
-Received: from az33exm24.fsl.freescale.net (az33exm24.am.freescale.net [10.64.32.14])
-	by az33smr02.freescale.net (8.13.1/8.13.0) with ESMTP id lAKGsEh1013587
-	for <git@vger.kernel.org>; Tue, 20 Nov 2007 10:54:14 -0600 (CST)
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-Content-class: urn:content-classes:message
-In-Reply-To: <20071120050756.GA29502@sigill.intra.peff.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git-daemon
-thread-index: AcgrM1i9xj6yLffSQLq3SuDtPw1/ewAWJ+JA
+	id S1757425AbXKTR2r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 12:28:47 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1757395AbXKTR2r
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 12:28:47 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52074 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757043AbXKTR2p (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 20 Nov 2007 12:28:45 -0500
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by out1.messagingengine.com (Postfix) with ESMTP id 56D4145AE4;
+	Tue, 20 Nov 2007 12:28:44 -0500 (EST)
+Received: from heartbeat2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 20 Nov 2007 12:28:44 -0500
+X-Sasl-enc: bVBGsOnP1/wxFP2j3wr72gKqVO2Qct/Hzl5f3AuuHGX0 1195579723
+Received: from [192.168.2.101] (p549A271E.dip0.t-ipconnect.de [84.154.39.30])
+	by mail.messagingengine.com (Postfix) with ESMTP id E06021C104;
+	Tue, 20 Nov 2007 12:28:42 -0500 (EST)
+In-Reply-To: <7vhcjhl3ni.fsf@gitster.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65551>
 
-Hi Jeff,
+Hello Junio,
 
+On Tue, 20 Nov 2007, Junio C Hamano wrote:
+> I knew it would work on Solaris with gcc and cc that do not understand 
+> flexible array members, but I am a bit worried about other environments, 
+> where flexible array members are properly supported.  They've been 
+> happily using member[] but with the patch they suddenly start wasting a 
+> cell.
+>
+> But we should do this sooner rather than later to find out any breakage, 
+> and give people on platforms with a cc that supports flexible array 
+> members and care about wasted memory enough time to send patches to 
+> support their compiler in the way similar to how gcc is supported.
+>
+> But I cannot use your message with whitespace-broken patch (note 
+> "format=flawed") and insufficient commit log message, which means I have 
+> to do this myself.  Not tonight...
 
-I just built and installed the latest master (and next) and then I tried
-to clone (as I usualy do) one of my repositories. I run git-daemon only
-with the upload-pack service enabled.
+sorry for the whitespace-issues. I have attached the patch again with 
+improved log message and will turn off format-flawed for this email.
 
-On the client side this is the symptom:
+Please let me know if this one is ok and feel free to fix it.
 
-client:~> git-clone git://server/srv/scm/linux-2.6.git
-Initialized empty Git repository in /home/user/linux-2.6/.git/
-fatal: The remote end hung up unexpectedly
-fetch-pack from 'git://server/srv/scm/linux-2.6.git' failed.
+Log message starts here:
 
-On the server side I get this message:
+Fix "identifier redeclared" compilation error with SUN cc.
 
-xined.log:
+The problem is caused by incomplete arrays like
 
-07/11/20@10:17:04: START: git from=10.82.124.104
-07/11/20@10:17:04: EXIT: git status=255 duration=0(sec)
+   struct foo {
+     ...
+     char last_member_that_is_flexible[];
+   }
 
-messages:
+which cannot be handled by certain compilers.
+The solution is to change the last member to either
 
-Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Connection from
-10.82.124.104:2978
-Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Extended attributes (18
-bytes) exist <host=server>
-Nov 20 10:17:04 emmedve1-12 git-daemon: [3921] Request upload-pack for
-'/srv/scm/linux-2.6.git'
+     char last_member_that_is_flexible[0]
 
-And here is a small tcpdump snippet:
+or
 
-10:25:09.817726 IP client.msfrs > server.git: S 1311107296:1311107296(0)
-win 65535 <mss 1260,nop,nop,sackOK>
-10:25:09.817820 IP server.git > client.msfrs: S 3324794408:3324794408(0)
-ack 1311107297 win 5840 <mss 1460,nop,nop,sackOK>
-10:25:09.818028 IP client.msfrs > server.git: . ack 1 win 65535
-10:25:09.817726 IP (tos 0x0, ttl 128, id 16243, offset 0, flags [DF],
-proto: TCP (6), length: 48) client.msfrs > server.git: S, cksum 0x093b
-(correct), 1311107296:1311107296(0) win 65535 <mss 1260,nop,nop,sackOK>
-10:25:09.817820 IP (tos 0x0, ttl  64, id 0, offset 0, flags [DF], proto:
-TCP (6), length: 48) server.git > client.msfrs: S, cksum 0xd53c
-(correct), 33247944
-08:3324794408(0) ack 1311107297 win 5840 <mss 1460,nop,nop,sackOK>
-10:25:09.818028 IP (tos 0x0, ttl 128, id 16244, offset 0, flags [DF],
-proto: TCP (6), length: 40) client.msfrs > server.git: ., cksum 0x18d1
-(correct), 1:1(0) ack 1 win 65535
-10:25:09.819114 IP (tos 0x0, ttl 128, id 16246, offset 0, flags [DF],
-proto: TCP (6), length: 102) client.msfrs > server.git: P 1:63(62) ack 1
-win 65535
-10:25:09.819159 IP (tos 0x0, ttl  64, id 14907, offset 0, flags [DF],
-proto: TCP (6), length: 40) server.git > client.msfrs: ., cksum 0x01c3
-(correct), 1:1(0) ack 63 win 5840
-10:25:09.819114 IP client.msfrs > server.git: P 1:63(62) ack 1 win 65535
-10:25:09.819159 IP server.git > client.msfrs: . ack 63 win 5840
-10:25:09.821531 IP server.git > client.msfrs: F 1:1(0) ack 63 win 5840
-10:25:09.821531 IP (tos 0x0, ttl  64, id 14908, offset 0, flags [DF],
-proto: TCP (6), length: 40) server.git > client.msfrs: F, cksum 0x01c2
-(correct), 1:1(0) ack 63 win 5840
-10:25:09.821769 IP (tos 0x0, ttl 128, id 16248, offset 0, flags [DF],
-proto: TCP (6), length: 40) client.msfrs > server.git: ., cksum 0x1892
-(correct), 63:63(0) ack 2 win 65535
-10:25:09.821769 IP client.msfrs > server.git: . ack 2 win 65535
-10:25:09.826015 IP client.msfrs > server.git: F 63:63(0) ack 2 win 65535
-10:25:09.826040 IP server.git > client.msfrs: . ack 64 win 5840
-10:25:09.826015 IP (tos 0x0, ttl 128, id 16249, offset 0, flags [DF],
-proto: TCP (6), length: 40) client.msfrs > server.git: F, cksum 0x1891
-(correct), 63:63(0) ack 2 win 65535
-10:25:09.826040 IP (tos 0x0, ttl  64, id 0, offset 0, flags [DF], proto:
-TCP (6), length: 40) server.git > client.msfrs: ., cksum 0x01c1
-(correct), 2:2(0) ack 64 win 5840
+     char last_member_that_is_flexible[1]
 
-I'm not sure what other details would be relevant: tools versions,
-kernel version?
+as required. Currently GNU CC can handle [] format for 
+version 3 and later. Earlier versions need [0].
+Non-GNU compiler use the safe form [1].
 
-Did you try this and is working for you?
+Signed-off-by: Guido Ostkamp <git@ostkamp.fastmail.fm>
+---
+  git-compat-util.h |   11 ++++++++++-
+  1 files changed, 10 insertions(+), 1 deletions(-)
 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 276a437..97759fd 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -4,11 +4,20 @@
+  #define _FILE_OFFSET_BITS 64
 
-Cheers,
-Emil.
+  #ifndef FLEX_ARRAY
+-#if defined(__GNUC__) && (__GNUC__ < 3)
++#if defined(__GNUC__)
++#if (__GNUC__ < 3)
+  #define FLEX_ARRAY 0
+  #else
+  #define FLEX_ARRAY /* empty */
+  #endif
++#else
++/* more cases we know we can use 0 or empty can come here */
++#endif
++#endif
++
++/* if still undefined, default to the safe, old fashioned way */
++#ifndef FLEX_ARRAY
++#define FLEX_ARRAY 1
+  #endif
 
-
-> -----Original Message-----
-> From: git-owner@vger.kernel.org 
-> [mailto:git-owner@vger.kernel.org] On Behalf Of Jeff King
-> Sent: Monday, November 19, 2007 11:08 PM
-> To: Medve Emilian
-> Cc: git@vger.kernel.org
-> Subject: Re: git-daemon
-> 
-> On Mon, Nov 19, 2007 at 03:49:36PM -0700, Medve Emilian wrote:
-> 
-> > v1.5.3.6 works but the HEAD of master and next don't. I 
-> considered the
-> > patches below but they seemed harmless. I think the problem 
-> comes form
-> > upload-pack (and below it). Weirdly enough running 
-> git-daemon standalone
-> > seems to work fine. Cloning over ssh or on the same file 
-> system seems to
-> > work fine too.
-> > 
-> > I was hoping somebody can repeat the experiment (build the 
-> latest master
-> > or maint) and invalidate my experience.
-> 
-> I can't find any breakage on the current master (ea559605). Can you be
-> more specific about what you are trying, how it is breaking, other
-> details of your setup, etc?
-> 
-> -Peff
-> -
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+-- 
+1.5.3.6.728.gea559
