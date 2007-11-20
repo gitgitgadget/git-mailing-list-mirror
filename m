@@ -1,73 +1,70 @@
-From: Steven Grimm <koreth@midwinter.com>
-Subject: Re: Partial checkouts / submodules
-Date: Tue, 20 Nov 2007 10:26:43 -0800
-Message-ID: <1AD9B065-647B-4672-B6B0-8D4447960913@midwinter.com>
-References: <20071120155922.GA6271@pvv.org> <Pine.LNX.4.64.0711201226320.32410@iabervon.org>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Finn Arne Gangstad <finnag@pvv.org>, git@vger.kernel.org
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Tue Nov 20 19:27:49 2007
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: quilt/0.46-1 misbehaviour...
+Date: Tue, 20 Nov 2007 19:34:02 +0100
+Message-ID: <20071120183402.GC3461@steel.home>
+References: <20071120055149.GQ6372@mea-ext.zmailer.org>
+Reply-To: Alex Riesen <raa.lkml@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Matti Aarnio <matti.aarnio@zmailer.org>
+X-From: git-owner@vger.kernel.org Tue Nov 20 19:34:51 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuXoy-0001ne-CX
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 19:27:40 +0100
+	id 1IuXvg-0004WG-IG
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 19:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761583AbXKTS0q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 13:26:46 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1761577AbXKTS0q
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 13:26:46 -0500
-Received: from tater.midwinter.com ([216.32.86.90]:33391 "HELO midwinter.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1761569AbXKTS0p (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 13:26:45 -0500
-Received: (qmail 15820 invoked from network); 20 Nov 2007 18:26:44 -0000
-Comment: DomainKeys? See http://antispam.yahoo.com/domainkeys
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=200606; d=midwinter.com;
-  b=Kq21Kg73z1A82cTiC72dyaGO6tUD8WBEmaY4E2uQ57CVAs8cDdOk8W412ilstiAX  ;
-Received: from localhost (127.0.0.1)
-  by localhost with SMTP; 20 Nov 2007 18:26:44 -0000
-In-Reply-To: <Pine.LNX.4.64.0711201226320.32410@iabervon.org>
-X-Mailer: Apple Mail (2.915)
+	id S1763756AbXKTSeI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 13:34:08 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1763758AbXKTSeI
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 13:34:08 -0500
+Received: from mo-p07-ob.rzone.de ([81.169.146.190]:61378 "EHLO
+	mo-p07-ob.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1763624AbXKTSeG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 13:34:06 -0500
+X-RZG-CLASS-ID: mo07
+X-RZG-AUTH: z4gQVF2k5XWuW3CculzyClJ8+A==
+Received: from tigra.home (Fad1d.f.strato-dslnet.de [195.4.173.29])
+	by post.webmailer.de (klopstock mo15) (RZmta 14.3)
+	with ESMTP id U06a73jAKFWPIy ; Tue, 20 Nov 2007 19:34:02 +0100 (MET)
+	(envelope-from: <raa.lkml@gmail.com>)
+Received: from steel.home (steel.home [192.168.1.2])
+	by tigra.home (Postfix) with ESMTP id BE48D277AE;
+	Tue, 20 Nov 2007 19:34:02 +0100 (CET)
+Received: by steel.home (Postfix, from userid 1000)
+	id 9557256D22; Tue, 20 Nov 2007 19:34:02 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20071120055149.GQ6372@mea-ext.zmailer.org>
+User-Agent: Mutt/1.5.15+20070412 (2007-04-11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65561>
 
-On Nov 20, 2007, at 10:03 AM, Daniel Barkalow wrote:
-> This has theoretical problems: it's going to be practically  
-> impossible, in
-> most cases, to write a commit message that describes changes in three
-> submodules (which are sometimes used in the context of a different
-> supermodule) as well as the supermodule.
+Matti Aarnio, Tue, Nov 20, 2007 06:51:49 +0100:
+> .. or perhaps Exim, but odd result in arriving and thus outgoing headers anyway.
+>
+...
+> Diagnostic-Code: smtp; 554 (Reject, id=10432-16 - BAD_HEADER: Duplicate header field: "From")
+> 
+> From:	clameter@sgi.com
+> From:	Christoph Lameter <clameter@sgi.com>
+> To:	ak@suse.de
+> Cc:	akpm@linux-foundation.org
+> Cc:	travis@sgi.com
+> Cc:	Mathieu Desnoyers <mathieu.desnoyers@polymtl.ca>
+> Cc:	linux-kernel@vger.kernel.org
+...
+> Remote-MTA: dns; cartero.cs.tu-berlin.de (130.149.17.20|25|209.132.176.167|39031)
+> Last-Attempt-Date: Mon, 19 Nov 2007 20:17:31 -0500
+> Diagnostic-Code: smtp; 554 (Reject, id=10432-16 - BAD_HEADER: Duplicate header field: "From")
+...
+> Date: Mon, 19 Nov 2007 17:11:41 -0800
+> Subject: [rfc 09/45] cpu alloc: IA64 support
+> From: clameter@sgi.com
+> From: Christoph Lameter <clameter@sgi.com>
+> Message-Id: <20071120011333.850453474@sgi.com>
 
-I got the impression from his email that there *are* no other  
-supermodules. The submodules are submodules purely to reduce the  
-amount of data people have to transfer around, not because they're  
-logically distinct from the parent.
-
-Something like "Fix bug #10391 by closing the data file before  
-launching the GUI" or something like that would be just as valid a  
-commit comment in the submodules here as it would be in the  
-supermodules.
-
-Sounds like what he wants is actually partial checkout, but since git  
-doesn't (yet) support that, he's emulating it as best he can using  
-submodules.
-
-> I think it should be possible and sufficient to have "git commit"  
-> able to
-> recursively start a "git commit" in submodules (where you'd write a
-> separate message suitable for exposure to other supermodules), so  
-> you'd
-> have to write 4 messages but only type one command line.
-
-If the message in the submodule defaulted to the one from the  
-supermodule, and there was a way to just accept it without popping up  
-an editor N times, this might solve his problem.
-
--Steve
+Is this the problem: duplicate From: and quadriplicate Cc:?
