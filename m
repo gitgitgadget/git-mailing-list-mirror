@@ -1,130 +1,86 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: [PATCH] Documentation: fix git-clone manpage not to refer to itself
-Date: Tue, 20 Nov 2007 10:41:04 +0100
-Message-ID: <3FC9A391-AED0-4988-B1F7-EE5C06AD1137@wincent.com>
-References: <87ejeq1131.fsf@osv.gnss.ru> <Pine.LNX.4.64.0711191430460.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-Mime-Version: 1.0 (Apple Message framework v915)
-Content-Type: multipart/signed; boundary=Apple-Mail-1366-348620179; micalg=sha1; protocol="application/pkcs7-signature"
-Cc: Sergei Organov <osv@javad.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Nov 20 10:41:40 2007
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC/PATCH] gitweb: Try to sanitize mimetype for 'blob_plain' view
+Date: Tue, 20 Nov 2007 11:58:04 +0100
+Message-ID: <200711201158.06029.jnareb@gmail.com>
+References: <1195484054-18164-1-git-send-email-jnareb@gmail.com> <7vlk8tl4pv.fsf@gitster.siamese.dyndns.org> <4BAE81C8-EFF3-473D-B243-B7D0F66F131B@wincent.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Nov 20 11:58:38 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuPbq-0000iy-WC
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 10:41:35 +0100
+	id 1IuQoO-0008Gn-Rp
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 11:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751096AbXKTJlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 04:41:16 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1750884AbXKTJlQ
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 04:41:16 -0500
-Received: from wincent.com ([72.3.236.74]:51369 "EHLO s69819.wincent.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750702AbXKTJlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 04:41:15 -0500
-Received: from cuzco.lan (localhost [127.0.0.1])
-	(authenticated bits=0)
-	by s69819.wincent.com (8.12.11.20060308/8.12.11) with ESMTP id lAK9f9mu011570;
-	Tue, 20 Nov 2007 03:41:10 -0600
-In-Reply-To: <Pine.LNX.4.64.0711191430460.16728@wbgn129.biozentrum.uni-wuerzburg.de>
-X-Mailer: Apple Mail (2.915)
+	id S1755312AbXKTK6S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 20 Nov 2007 05:58:18 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1754606AbXKTK6S
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 05:58:18 -0500
+Received: from nf-out-0910.google.com ([64.233.182.188]:42298 "EHLO
+	nf-out-0910.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752715AbXKTK6R (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 05:58:17 -0500
+Received: by nf-out-0910.google.com with SMTP id g13so1707783nfb
+        for <git@vger.kernel.org>; Tue, 20 Nov 2007 02:58:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=beta;
+        h=domainkey-signature:received:received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        bh=7SlTfgtyRRKLlkk1385QFnijc7F9jqHRUJAXxZk8+8w=;
+        b=fmsLHJxCwnoiTt8FFqTs1/X55Xp7eFMkAEBS3yv9j34gyNE/ZBlGYziYg5KvLAp+N050q7bS97IJMmWufqOO21PQOk3ufGX39R7cgIfWhXDOVf98hLL+1LvobvyQ1ZGxZWFuW8GUfi8fLxYnChmUU/SMV5lD03FddHbfObrpm3Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=beta;
+        h=received:from:to:subject:date:user-agent:cc:references:in-reply-to:mime-version:content-type:content-transfer-encoding:content-disposition:message-id;
+        b=ptjRtyMgVw4T8rVFpbXH2B+c7uej7brMreK75ma1Mt2EFBEs+ePwet62FuHi6ugNCM7rZOHGTEaNT/zQ1q/dBhqBI4TgminelkK38Tq3o/88hGZ5CvFEVrDeYCFiVcwPrir6logKWYREIvmteURbxZ0kxL4tLaYmCUO6pj2lmwM=
+Received: by 10.86.73.17 with SMTP id v17mr999231fga.1195556296165;
+        Tue, 20 Nov 2007 02:58:16 -0800 (PST)
+Received: from ?192.168.1.11? ( [83.8.203.224])
+        by mx.google.com with ESMTPS id l19sm8182291fgb.2007.11.20.02.58.13
+        (version=SSLv3 cipher=OTHER);
+        Tue, 20 Nov 2007 02:58:14 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4BAE81C8-EFF3-473D-B243-B7D0F66F131B@wincent.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65537>
+
+Wincent Colaiuta wrote:
+
+> So yes, this is discarding information -- in a sense it is actually =A0
+> removing *correct* configuration from the server side to work around =
+=A0
+> undesired behaviour on the client side -- but it gave the behaviour I=
+ =A0
+> wanted. So I think this patch is actually a good idea, because the =A0
+> behaviour (the user experience) is more important than adhering to a =
+=A0
+> standard just because its a standard.
+
+Modifying gitweb to work around not configured web browser and=20
+mime.types not written for gitweb like in this RFC patch is one way of=20
+solving this. Is it good way? That is why it is an RFC... well that
+and details of sanitization.
+
+Another would be to use mime.types crafted specially for gitweb, and us=
+e=20
+it for $mimetypes_file (gitweb falls back to /etc/mime.types if it is=20
+not defined or not present). This might be better solution.
 
 
---Apple-Mail-1366-348620179
-Content-Type: text/plain;
-	charset=ISO-8859-1;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: quoted-printable
+QUESTION: Currently gitweb checks if $mimetypes_file is relative path=20
+(using nonportable m!^/! instead of File::Spec::file_name_is_absolute),
+and if it is then it is used as relative to project. Does anyone use=20
+this feature to provide per-project mimetypes? Would perhaps using=20
+relative path as-is (i.e. relative to gitweb script) be better=20
+solution, and checking for gitweb.mimetypes repo configuration variable=
+=20
+for per-repo relative to project if relative?
 
-El 19/11/2007, a las 14:35, Johannes Schindelin escribi=F3:
-
-> - it makes writing the perl script to do a very tiny subset of =20
-> asciidoc
->  formatting much harder.  We encounter enough problems with the =20
-> different
->  versions of asciidoc/docbook combinations that I think this perl =20
-> script
->  would be actually useful.
->
-> I know that the user manual uses some advanced features, too, but it =20=
-
-> did
-> not use ifdef in the main text, for example, let alone nested ifdefs,
-> which your patch would encourage much more than the source before.
-
-Out of curiosity, have you done any more work on that WIP AsciiDoc =20
-replacement since you last wrote to the list about it back in October?
-
-I'm on a new OS install now, so just yesterday and today I had to set =20=
-
-up the AsciiDoc/DocBook/xmlto toolchain again, and was reminded of how =20=
-
-painful it was. At least on Mac OS X, it requires installing a bunch =20
-of dependencies (and specific versions of them otherwise it won't =20
-work), hacking Makefiles, installing a bunch of XSL and DTDs, and =20
-setting up XML catalogs. Doable but annoying.
-
-Cheers,
-Wincent
-
-
-
---Apple-Mail-1366-348620179
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIGHzCCAtgw
-ggJBoAMCAQICEAUo1lDjgREx86QFfIYO5oUwDQYJKoZIhvcNAQEFBQAwYjELMAkGA1UEBhMCWkEx
-JTAjBgNVBAoTHFRoYXd0ZSBDb25zdWx0aW5nIChQdHkpIEx0ZC4xLDAqBgNVBAMTI1RoYXd0ZSBQ
-ZXJzb25hbCBGcmVlbWFpbCBJc3N1aW5nIENBMB4XDTA3MTExOTA3MzAwMFoXDTA4MTExODA3MzAw
-MFowQTEfMB0GA1UEAxMWVGhhd3RlIEZyZWVtYWlsIE1lbWJlcjEeMBwGCSqGSIb3DQEJARYPd2lu
-QHdpbmNlbnQuY29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmd/pgMVBWs0JR5Mn
-CXh3wz3j4eKI9nxSHNwkeJHP2UiATeMqFzc6uWHyef2g5tOLGyyu6SCdcS0WwtJknt/q1LZtHtJl
-KeaS5pGWFsO8+JWp5mrtygyMD394MnylCQQMB0695fDjdV+9R5GYn1EqhOwk9S1nwlc/XkFNtvk+
-pqcT8pjmCL6Eeapyy/etEpjQGfNefCw57+TqHyX2lmHXGc5AvbYsbyAHMRP5gmgUEBKne/YcWJwM
-tVsvciO+vBdZwnavRnqQ3sxlrCVvprLZyqvbBpD+xuETgYwYZvq2Vongq31hqwR0ZyG6FLg386eh
-SjNdWXof9G6CSCTGs12MPQIDAQABoywwKjAaBgNVHREEEzARgQ93aW5Ad2luY2VudC5jb20wDAYD
-VR0TAQH/BAIwADANBgkqhkiG9w0BAQUFAAOBgQCtrzOc75algdHXwDOZ8evhKFtOYXmkQUckV8IY
-1z5r/4j/JMuwYHfMwusvGhgGIIghtWeKs9sRUlnaYAxyoeMo9aw0f8frxBiHUHGKHoASDXxMmqBB
-sa0WjafwfPfIuJW96J1q2YwGCJqqWY5N8E88/Lseec6Bcy/VcQkETa+9eDCCAz8wggKooAMCAQIC
-AQ0wDQYJKoZIhvcNAQEFBQAwgdExCzAJBgNVBAYTAlpBMRUwEwYDVQQIEwxXZXN0ZXJuIENhcGUx
-EjAQBgNVBAcTCUNhcGUgVG93bjEaMBgGA1UEChMRVGhhd3RlIENvbnN1bHRpbmcxKDAmBgNVBAsT
-H0NlcnRpZmljYXRpb24gU2VydmljZXMgRGl2aXNpb24xJDAiBgNVBAMTG1RoYXd0ZSBQZXJzb25h
-bCBGcmVlbWFpbCBDQTErMCkGCSqGSIb3DQEJARYccGVyc29uYWwtZnJlZW1haWxAdGhhd3RlLmNv
-bTAeFw0wMzA3MTcwMDAwMDBaFw0xMzA3MTYyMzU5NTlaMGIxCzAJBgNVBAYTAlpBMSUwIwYDVQQK
-ExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVyc29uYWwg
-RnJlZW1haWwgSXNzdWluZyBDQTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAxKY8VXNV+065
-yplaHmjAdQRwnd/p/6Me7L3N9VvyGna9fww6YfK/Uc4B1OVQCjDXAmNaLIkVcI7dyfArhVqqP3FW
-y688Cwfn8R+RNiQqE88r1fOCdz0Dviv+uxg+B79AgAJk16emu59l0cUqVIUPSAR/p7bRPGEEQB5k
-GXJgt/sCAwEAAaOBlDCBkTASBgNVHRMBAf8ECDAGAQH/AgEAMEMGA1UdHwQ8MDowOKA2oDSGMmh0
-dHA6Ly9jcmwudGhhd3RlLmNvbS9UaGF3dGVQZXJzb25hbEZyZWVtYWlsQ0EuY3JsMAsGA1UdDwQE
-AwIBBjApBgNVHREEIjAgpB4wHDEaMBgGA1UEAxMRUHJpdmF0ZUxhYmVsMi0xMzgwDQYJKoZIhvcN
-AQEFBQADgYEASIzRUIPqCy7MDaNmrGcPf6+svsIXoUOWlJ1/TCG4+DYfqi2fNi/A9BxQIJNwPP2t
-4WFiw9k6GX6EsZkbAMUaC4J0niVQlGLH2ydxVyWN3amcOY6MIE9lX5Xa9/eH1sYITq726jTlEBpb
-NU1341YheILcIRk13iSx0x1G/11fZU8xggMQMIIDDAIBATB2MGIxCzAJBgNVBAYTAlpBMSUwIwYD
-VQQKExxUaGF3dGUgQ29uc3VsdGluZyAoUHR5KSBMdGQuMSwwKgYDVQQDEyNUaGF3dGUgUGVyc29u
-YWwgRnJlZW1haWwgSXNzdWluZyBDQQIQBSjWUOOBETHzpAV8hg7mhTAJBgUrDgMCGgUAoIIBbzAY
-BgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0wNzExMjAwOTQxMDRaMCMG
-CSqGSIb3DQEJBDEWBBSnTGCJesY0gRThGkOaiIluk1MTIjCBhQYJKwYBBAGCNxAEMXgwdjBiMQsw
-CQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UE
-AxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3VpbmcgQ0ECEAUo1lDjgREx86QFfIYO5oUw
-gYcGCyqGSIb3DQEJEAILMXigdjBiMQswCQYDVQQGEwJaQTElMCMGA1UEChMcVGhhd3RlIENvbnN1
-bHRpbmcgKFB0eSkgTHRkLjEsMCoGA1UEAxMjVGhhd3RlIFBlcnNvbmFsIEZyZWVtYWlsIElzc3Vp
-bmcgQ0ECEAUo1lDjgREx86QFfIYO5oUwDQYJKoZIhvcNAQEBBQAEggEAEF46hg/UTEIDgZZDgrBi
-3weuD4dIUN4rPXdvTCncJfnEjwUj1z+ZAoVFQzxpNn4xJQQkif4aizuaqpbpxMwanKD6uZ+9IAet
-dRo5eoBCJOs1PJoYuCuCPQ5vYRxqzCJrUXt/zdyfO0oSuwr6irJafeTvM0wy0egSSbKNQvWVdRd7
-DP/ntsxaDMvxpp42lbDUoB3Oz6JRwh+t76OFuk7XHtYBsvKzUq3hhzb5UCgHAyMI7kj3t/QHaW55
-Yih1N+RIbVzm9jj9wslQfDc+E1y+ob7Z0TIq24RvdCgm7w0eZ8V7Z68w9E6w7yRVKB6+cB5iB2m6
-GHzE6qyEWIkAZIGUBwAAAAAAAA==
-
---Apple-Mail-1366-348620179--
+--=20
+Jakub Narebski
+Poland
