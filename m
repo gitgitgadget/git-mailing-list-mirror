@@ -1,77 +1,65 @@
-From: carbonated beverage <ramune@net-ronin.org>
-Subject: Re: t9106 failure, bisect weirdness
-Date: Mon, 19 Nov 2007 22:13:14 -0800
-Message-ID: <20071120061314.GA21819@net-ronin.org>
-References: <20071119230601.GA15624@net-ronin.org>
- <200711200552.27001.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: quilt/0.46-1 misbehaviour...
+Date: Mon, 19 Nov 2007 22:30:59 -0800
+Message-ID: <7vve7xl97g.fsf@gitster.siamese.dyndns.org>
+References: <20071120055149.GQ6372@mea-ext.zmailer.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Nov 20 07:13:39 2007
+To: Matti Aarnio <matti.aarnio@zmailer.org>
+X-From: git-owner@vger.kernel.org Tue Nov 20 07:31:37 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuMMc-0001Tu-8R
-	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 07:13:38 +0100
+	id 1IuMdv-0005Of-Ax
+	for gcvg-git-2@gmane.org; Tue, 20 Nov 2007 07:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756705AbXKTGNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 20 Nov 2007 01:13:18 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1756667AbXKTGNS
-	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 01:13:18 -0500
-Received: from idcmail-mo1so.shaw.ca ([24.71.223.10]:48715 "EHLO
-	pd2mo2so.prod.shaw.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756565AbXKTGNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 20 Nov 2007 01:13:17 -0500
-Received: from pd2mr5so.prod.shaw.ca (pd2mr5so-qfe3.prod.shaw.ca [10.0.141.8])
- by l-daemon (Sun ONE Messaging Server 6.0 HotFix 1.01 (built Mar 15 2004))
- with ESMTP id <0JRS00J2KJY4GVD0@l-daemon> for git@vger.kernel.org; Mon,
- 19 Nov 2007 23:13:16 -0700 (MST)
-Received: from pn2ml2so.prod.shaw.ca ([10.0.121.146])
- by pd2mr5so.prod.shaw.ca (Sun Java System Messaging Server 6.2-7.05 (built Sep
- 5 2006)) with ESMTP id <0JRS0036XJY43E60@pd2mr5so.prod.shaw.ca> for
- git@vger.kernel.org; Mon, 19 Nov 2007 23:13:16 -0700 (MST)
-Received: from prophet.net-ronin.org ([70.67.106.153])
- by l-daemon (Sun Java System Messaging Server 6.2-7.05 (built Sep  5 2006))
- with ESMTP id <0JRS0073AJY3LP40@l-daemon> for git@vger.kernel.org; Mon,
- 19 Nov 2007 23:13:16 -0700 (MST)
-Received: from ramune by prophet.net-ronin.org with local (Exim 4.50)
-	id 1IuMME-0005i1-MB; Mon, 19 Nov 2007 22:13:14 -0800
-In-reply-to: <200711200552.27001.chriscool@tuxfamily.org>
-Content-disposition: inline
+	id S1752715AbXKTGbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 20 Nov 2007 01:31:13 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752483AbXKTGbN
+	(ORCPT <rfc822;git-outgoing>); Tue, 20 Nov 2007 01:31:13 -0500
+Received: from sceptre.pobox.com ([207.106.133.20]:41775 "EHLO
+	sceptre.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063AbXKTGbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 20 Nov 2007 01:31:12 -0500
+Received: from sceptre (localhost.localdomain [127.0.0.1])
+	by sceptre.pobox.com (Postfix) with ESMTP id ED08C2F0;
+	Tue, 20 Nov 2007 01:31:32 -0500 (EST)
+Received: from pobox.com (ip68-225-240-77.oc.oc.cox.net [68.225.240.77])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by sceptre.sasl.smtp.pobox.com (Postfix) with ESMTP id 6CDC695C64;
+	Tue, 20 Nov 2007 01:31:28 -0500 (EST)
+In-Reply-To: <20071120055149.GQ6372@mea-ext.zmailer.org> (Matti Aarnio's
+	message of "Tue, 20 Nov 2007 07:51:49 +0200")
+User-Agent: Gnus/5.110006 (No Gnus v0.6) Emacs/21.4 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65529>
 
-> Could you try running the test twice when you bisect ?
-> This way bisecting should give you the real first bad commit. 
+Matti Aarnio <matti.aarnio@zmailer.org> writes:
 
-I re-ran it several times, and also manually -- there were times it'd
-succeed 6 times in a row before failing.  Weird.
+> .. or perhaps Exim, but odd result in arriving and thus outgoing headers anyway.
+>
+> From:	The Post Office <postmaster@vger.kernel.org>
+> Subject: Delivery reports about your email [FAILED(1)]
+> ...
+> 
+> Following is copy of the message headers. Original message content may
+> be in subsequent parts of this MESSAGE/DELIVERY-STATUS structure.
+>
+> Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+> 	id S1757551AbXKTBQ5; Mon, 19 Nov 2007 20:16:57 -0500
+> ...
+> Message-Id: <20071120011333.850453474@sgi.com>
+> References: <20071120011132.143632442@sgi.com>
+> User-Agent: quilt/0.46-1
+> Date:	Mon, 19 Nov 2007 17:11:41 -0800
+> ...
 
-Finally, the bisect came down to:
+My condolences.  Is there anything the people on the git mailing
+list can help?
 
-  ramune/lycaeum:git: git bisect good
-  c74d9acf20ba0c69bbd67c5b0bb3bd3c2349cebe is first bad commit
-  commit c74d9acf20ba0c69bbd67c5b0bb3bd3c2349cebe
-  Author: Eric Wong <normalperson@yhbt.net>
-  Date:   Mon Nov 5 03:21:47 2007 -0800
-  
-      git-svn: fix dcommit clobbering when committing a series of diffs
-
-Modifying the failing t9106-git-svn-dcommit-clobber-series.sh test to
-add touch statements as so:
-
-  test x\"\`sed -n -e 4p < file\`\" = x4444 && touch '/tmp/eleven' &&
-  test x\"\`sed -n -e 7p < file\`\" = x7777 && touch '/tmp/twelve' &&
-  test x\"\`sed -n -e 58p < file\`\" = x5588 && touch '/tmp/thirteen' &&
-  test x\"\`sed -n -e 61p < file\`\" = x6611
-
-Line 52 was the culprit:
-
-  test x\"\`sed -n -e 58p < file\`\" = x5588 &&
-
--- DN
-Daniel
+Va bgure jbeqf, junk qbrf guvf unir gb qb jvgu tvg???
