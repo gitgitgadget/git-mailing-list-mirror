@@ -1,63 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Subject: Re: Wishlist for a bundle-only transport mode
-Date: Wed, 21 Nov 2007 18:06:55 +0100
-Organization: At home
-Message-ID: <fi1ojd$pva$1@ger.gmane.org>
+Date: Wed, 21 Nov 2007 17:26:36 +0000 (GMT)
+Message-ID: <Pine.LNX.4.64.0711211719330.27959@racer.site>
 References: <8aa486160711210654p357ccd87i4809e0cda9471303@mail.gmail.com>
+ <200711211752.40264.jnareb@gmail.com> <Pine.LNX.4.64.0711211658510.27959@racer.site>
+ <200711211811.34391.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 21 18:14:37 2007
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Santi =?iso-8859-1?q?B=E9jar?= <sbejar@gmail.com>,
+	git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 21 18:27:09 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1Iut9d-0002xR-MG
-	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 18:14:26 +0100
+	id 1IutLm-0000Ot-EY
+	for gcvg-git-2@gmane.org; Wed, 21 Nov 2007 18:26:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752387AbXKUROF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 12:14:05 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752101AbXKUROF
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 12:14:05 -0500
-Received: from main.gmane.org ([80.91.229.2]:49130 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751808AbXKUROD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 12:14:03 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1Iut7O-0006KD-Qk
-	for git@vger.kernel.org; Wed, 21 Nov 2007 17:12:06 +0000
-Received: from abxf19.neoplus.adsl.tpnet.pl ([83.8.255.19])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:12:06 +0000
-Received: from jnareb by abxf19.neoplus.adsl.tpnet.pl with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 17:12:06 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: abxf19.neoplus.adsl.tpnet.pl
-Mail-Copies-To: Jakub Narebski <jnareb@gmail.com>
-User-Agent: KNode/0.10.2
+	id S1752686AbXKUR0k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 21 Nov 2007 12:26:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752541AbXKUR0k
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 12:26:40 -0500
+Received: from mail.gmx.net ([213.165.64.20]:48077 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751897AbXKUR0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 12:26:39 -0500
+Received: (qmail invoked by alias); 21 Nov 2007 17:26:37 -0000
+Received: from unknown (EHLO [138.251.11.74]) [138.251.11.74]
+  by mail.gmx.net (mp024) with SMTP; 21 Nov 2007 18:26:37 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18MYCZRUNwMsLfKql/JQygBXtdoeiYuIAeSVPLuYr
+	gJowXy1aLMiv4q
+X-X-Sender: gene099@racer.site
+In-Reply-To: <200711211811.34391.jnareb@gmail.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65686>
 
-[Cc: Santi B=E9jar <sbejar@gmail.com>, git@vger.kernel.org]
+Hi,
 
-Santi B=E9jar wrote:
+On Wed, 21 Nov 2007, Jakub Narebski wrote:
 
-> 1) git-clone does not accept a bundle file, even if git-fetch does.
-> I've made a patch to use git-fetch in git-clone for this.
+> Johannes Schindelin wrote:
+> > On Wed, 21 Nov 2007, Jakub Narebski wrote:
+> >
+> >> That has the disadvantage of pushing to bundle when you make an error 
+> >> in the lastpart of path to existing repository.
+> > 
+> > As I wrote in another reply, I would not allow overwriting an existing 
+> > file.
+> 
+> > Specifying a non-existing file should be good enough.
+> 
+> What I meant here that if you do "git push /some/path/to/rpeo.git", with 
+> mistake in the last part of path to repository, you would end up with a 
+> bundle, and you would have to really watch what happened to catch the 
+> error.
 
-[...]=20
-> 3) I can "git fetch" a bundle but I cannot "git push" a bundle
+I use tab completion all the time, so this would not happen to me.  IMHO 
+that is a lesser issue than to introduce a "protocol".
 
-We would also need "git ls-remote <bundle>" and "git fsck <bundle>"
-to demote git-bundle to porcelain status :-)
+> I'd rather use "git push bundle:///some/path/to/bundle" or "git push 
+> --bundle bundlename" to catch errors better.
+> 
+> Besides it should be IMHO be possible to overwrite bundle if you are 
+> doing fast-forward push...
 
---=20
-Jakub Narebski
-Warsaw, Poland
-ShadeHawk on #git
+Not as far as I can see.  A push there would see what the bundle has 
+already, and put them into the new bundle as _prerequisites_.  So the 
+bundle would lose information.
+
+BTW this was my gripe (that I decided not to make public earlier) with 
+Santi's proposal to begin with: a push would not have any way to specify 
+what the other side has already.  So I think "git push <bundle>" is the 
+wrong way of creating a bundle.
+
+Except if we add some cunning strategy not to overwrite, ever, but to 
+create <bundle>.<n> with an incrementing <n>.  But that might be too much.
+
+Ciao,
+Dscho
