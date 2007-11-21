@@ -1,73 +1,55 @@
-From: Michael Donaghy <mike@mikedonaghy.org>
-Subject: Re: Git Screencast ?
-Date: Wed, 21 Nov 2007 18:45:33 -0500
-Message-ID: <fi2fv2$c0r$1@ger.gmane.org>
-References: <fi1a9f$30q$1@ger.gmane.org>
+From: Karl =?iso-8859-1?Q?Hasselstr=F6m?= <kha@treskal.com>
+Subject: Re: [StGit PATCH] Added test case for stg refresh
+Date: Thu, 22 Nov 2007 00:55:34 +0100
+Message-ID: <20071121235534.GA21008@diana.vm.bytemark.co.uk>
+References: <87tznfvqb4.fsf@lysator.liu.se> <87oddnvpzf.fsf@virtutech.se> <20071121231553.GA19422@diana.vm.bytemark.co.uk> <b0943d9e0711211531v2f7b9c0bl99033c0bd58971c7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 22 00:49:28 2007
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David =?iso-8859-1?Q?K=E5gedal?= <david@virtutech.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: Catalin Marinas <catalin.marinas@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 22 00:55:59 2007
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@gmane.org
 Received: from vger.kernel.org ([209.132.176.167])
 	by lo.gmane.org with esmtp (Exim 4.50)
-	id 1IuzJm-000834-3a
-	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 00:49:18 +0100
+	id 1IuzQD-00026H-V0
+	for gcvg-git-2@gmane.org; Thu, 22 Nov 2007 00:55:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752472AbXKUXs6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 21 Nov 2007 18:48:58 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1751836AbXKUXs6
-	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 18:48:58 -0500
-Received: from main.gmane.org ([80.91.229.2]:59864 "EHLO ciao.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751505AbXKUXs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 21 Nov 2007 18:48:57 -0500
-Received: from list by ciao.gmane.org with local (Exim 4.43)
-	id 1IuzIE-0003Jw-1d
-	for git@vger.kernel.org; Wed, 21 Nov 2007 23:47:42 +0000
-Received: from dt050nf4.tampabay.res.rr.com ([24.92.13.244])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 23:47:42 +0000
-Received: from mike by dt050nf4.tampabay.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 21 Nov 2007 23:47:42 +0000
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@ger.gmane.org
-X-Gmane-NNTP-Posting-Host: dt050nf4.tampabay.res.rr.com
-User-Agent: Thunderbird 2.0.0.9 (Windows/20071031)
-In-Reply-To: <fi1a9f$30q$1@ger.gmane.org>
+	id S1753193AbXKUXzk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 21 Nov 2007 18:55:40 -0500
+Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1752993AbXKUXzk
+	(ORCPT <rfc822;git-outgoing>); Wed, 21 Nov 2007 18:55:40 -0500
+Received: from diana.vm.bytemark.co.uk ([80.68.90.142]:1288 "EHLO
+	diana.vm.bytemark.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752846AbXKUXzk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 21 Nov 2007 18:55:40 -0500
+Received: from kha by diana.vm.bytemark.co.uk with local (Exim 3.36 #1 (Debian))
+	id 1IuzPq-0005VM-00; Wed, 21 Nov 2007 23:55:34 +0000
+Content-Disposition: inline
+In-Reply-To: <b0943d9e0711211531v2f7b9c0bl99033c0bd58971c7@mail.gmail.com>
+X-Manual-Spam-Check: kha@treskal.com, clean
+User-Agent: Mutt/1.5.9i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/65715>
 
-John Herland Said:
- > There's a company called PeepCode that apparently sell a Git
- > screencast, but
- > I have no idea if it demonstrates advanced features, or just do the
- > basics.
- >
- > There seems to be a TOC on their website, so you can check that to 
-see > if
- > contains what you need:
- >
- > http://peepcode.com/products/git
- >
- >
- > Have fun!
+On 2007-11-21 23:31:45 +0000, Catalin Marinas wrote:
 
+> I noticed the weirdness few days ago and fixed it in
+> e8813959aa3a7c41ffef61d06068b10519bd4830 (though no test caught it).
+> Do you still see problems after this commit?
 
-Peepcode has some really good quality screen casts ,yes, but they are 
-for pay , $10 per screen cast
-and my original message said
+Confirmed: the test fails before e8813959, and succeeds afterwards.
 
- >> "..is there a screencast of git somewhere (for free) that can
- >> demonstrate some of the advanced features of git..."
+(You can pull the test from
 
-Also thanks Johannes for that link , I will tak e a look at that
+  git://repo.or.cz/stgit/kha.git safe
 
-and Randal...
-you are *EVERYWHERE* ... how do you do that ... , keep up the good work 
-=) (see you in the irc --Ekim)
+if you like.)
+
+--=20
+Karl Hasselstr=F6m, kha@treskal.com
+      www.treskal.com/kalle
